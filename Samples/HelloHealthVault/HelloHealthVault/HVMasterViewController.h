@@ -44,6 +44,7 @@
 // Asynchronously get items from the user's HealthVault record
 //
 -(void) getWeightsFromHealthVault;
+-(void) getWeightsForLastNDays:(int) numDays;
 //
 // Asynchronously write items to the User's HealthVault record
 //

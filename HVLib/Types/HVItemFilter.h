@@ -61,10 +61,15 @@
 @end
 
 @interface HVItemFilter : HVTypeFilter
+{
+@private
+    HVStringCollection* m_typeIDs;
+}
 
 @property (readonly, nonatomic)  HVStringCollection* typeIDs;
 
 -(id) initWithTypeID:(NSString *) typeID;
+-(id) initWithTypeClass:(Class) typeClass;
 
 @end
 

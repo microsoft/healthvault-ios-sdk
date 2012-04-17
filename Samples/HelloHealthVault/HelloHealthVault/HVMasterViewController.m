@@ -66,7 +66,7 @@
     //
     // Fetch list of weights from HealthVault
     //
-    [self getWeightsFromHealthVault];    
+    [self getWeightsFromHealthVault];   
 }
 
 -(void)startupFailed
@@ -155,6 +155,39 @@
     item.weight.when = [[HVDateTime alloc] initNow];  
     
     return item;
+}
+
+-(void)getWeightsForLastNDays:(int)numDays
+{
+    //
+    // Set up a filter for HealthVault items
+    //
+    HVItemFilter* itemFilter = [[HVItemFilter alloc] initWithTypeClass:[HVWeight class]];  // Querying for weights
+    //
+    // We only want weights no older than numDays
+    //
+    itemFilter.effectiveDateMin = [[NSDate alloc] initWithTimeIntervalSinceNow:(-(numDays * (24 * 3600)))]; // Interval is in seconds
+    //
+    // Create a query to issue
+    //
+    HVItemQuery* query = [[HVItemQuery alloc] initWithFilter:itemFilter];
+    
+    [[HVClient current].currentRecord getItems:query callback:^(HVTask *task) {
+        
+        @try {
+            //
+            // Save the collection of items retrieved
+            //
+            m_items = [((HVGetItemsTask *) task).itemsRetrieved retain];
+            //
+            // Refresh UI
+            //
+            [self refreshView];
+        }
+        @catch (NSException *exception) {
+            [HVUIAlert showInformationalMessage:exception.description];
+        }       
+    }];
 }
 
 //-------------------------------------------
@@ -269,7 +302,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"HealthVault", @"Master view title");
+        self.title = NSLocalizedString(@"Hello HV", @"Master view title");
     }
     return self;
 }

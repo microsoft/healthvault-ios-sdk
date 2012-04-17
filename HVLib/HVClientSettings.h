@@ -29,6 +29,9 @@
     NSString *m_deviceName;
     NSString *m_country;
     NSString *m_language;
+    
+    NSString* m_signInTitle;
+    NSString* m_signInRetryMessage;
 }
 
 @property (readwrite, nonatomic) BOOL debug;
@@ -39,6 +42,9 @@
 @property (readwrite, nonatomic, retain) NSString* deviceName;
 @property (readwrite, nonatomic, retain) NSString* country;
 @property (readwrite, nonatomic, retain) NSString* language;
+
+@property (readwrite, nonatomic, retain) NSString* signInControllerTitle;
+@property (readwrite, nonatomic, retain) NSString* signinRetryMessage;
 
 +(HVClientSettings *) newSettingsFromResource;
 

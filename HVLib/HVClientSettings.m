@@ -28,6 +28,8 @@ static NSString* const c_element_shellUrl = @"shellUrl";
 static NSString* const c_element_deviceName = @"deviceName";
 static NSString* const c_element_country = @"country";
 static NSString* const c_element_language = @"language";
+static NSString* const c_element_signinTitle = @"signInTitle";
+static NSString* const c_element_signinRetryMessage = @"signInRetryMessage";
 
 
 @implementation HVClientSettings
@@ -40,6 +42,8 @@ static NSString* const c_element_language = @"language";
 @synthesize deviceName = m_deviceName;
 @synthesize country = m_country;
 @synthesize language = m_language;
+@synthesize signInControllerTitle = m_signInTitle;
+@synthesize signinRetryMessage = m_signInRetryMessage;
 
 -(NSURL *)serviceUrl
 {
@@ -89,7 +93,26 @@ static NSString* const c_element_language = @"language";
     }
     
     return m_language;
+}
+
+-(NSString *)signInControllerTitle
+{
+    if ([NSString isNilOrEmpty:m_signInTitle])
+    {
+        m_signInTitle = NSLocalizedString(@"Microsoft HealthVault", @"Sign in to HealthVault");
+    }
     
+    return m_signInTitle;
+}
+
+-(NSString *) signinRetryMessage
+{
+    if ([NSString isNilOrEmpty:m_signInRetryMessage])
+    {
+        m_signInRetryMessage = NSLocalizedString(@"Could not sign into Microsoft HealthVault. Try again?", @"Retry signin message");
+    }
+    
+    return m_signInRetryMessage;
 }
 
 -(id)init
@@ -114,6 +137,10 @@ LError:
     [m_deviceName release];
     [m_country release];
     [m_language release];
+    
+    [m_signInTitle release];
+    [m_signInRetryMessage release];
+    
     [super dealloc];
 }
 
@@ -127,6 +154,8 @@ LError:
     HVSERIALIZE_STRING(m_deviceName, c_element_deviceName);
     HVSERIALIZE_STRING(m_country, c_element_language);
     HVSERIALIZE_STRING(m_language, c_element_language);
+    HVSERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
+    HVSERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -139,6 +168,8 @@ LError:
     HVDESERIALIZE_STRING(m_deviceName, c_element_deviceName);
     HVDESERIALIZE_STRING(m_country, c_element_country);
     HVDESERIALIZE_STRING(m_language, c_element_language);
+    HVDESERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
+    HVDESERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
 }
 
 +(HVClientSettings *)newSettingsFromResource

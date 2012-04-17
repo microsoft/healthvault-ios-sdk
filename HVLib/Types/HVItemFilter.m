@@ -18,6 +18,7 @@
 
 #import "HVCommon.h"
 #import "HVItemFilter.h"
+#import "HVItemDataTyped.h"
 
 static NSString* const c_element_typeID = @"type-id";
 static NSString* const c_element_state = @"thing-state";
@@ -104,7 +105,16 @@ static NSString* const c_element_xpath = @"xpath";
 
 @implementation HVItemFilter
 
-@synthesize typeIDs = m_typeIDs;
+-(HVStringCollection *)typeIDs
+{
+    HVENSURE(m_typeIDs, HVStringCollection);
+    return m_typeIDs;
+}
+
+-(void)setTypeIDs:(HVStringCollection *)typeIDs
+{
+    HVRETAIN(m_typeIDs, typeIDs);
+}
 
 -(id) init
 {
@@ -116,17 +126,26 @@ static NSString* const c_element_xpath = @"xpath";
     self = [super init];
     HVCHECK_SELF;
     
-    m_typeIDs = [[HVStringCollection alloc] init];
-    HVCHECK_NOTNULL(m_typeIDs);
-    
     if (typeID)
     {
-        [m_typeIDs addObject:typeID];
+        [self.typeIDs addObject:typeID];
+        HVCHECK_NOTNULL(m_typeIDs);
     }
     
     m_state = HVItemStateActive;
     
     return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initWithTypeClass:(Class)typeClass
+{
+    NSString* typeID = [[HVTypeSystem current] getTypeIDForClassName:NSStringFromClass(typeClass)];
+    HVCHECK_NOTNULL(typeID);
+    
+    return [self initWithTypeID:typeID];
     
 LError:
     HVALLOC_FAIL;

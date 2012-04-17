@@ -25,12 +25,6 @@
 @synthesize target = m_target;
 @synthesize webView = m_webView;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self.title = @"Sign In";
-    return self;
-}
-
 -(void)dealloc
 {
     [m_target release];

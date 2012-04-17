@@ -31,6 +31,19 @@
     return (m_status == HVAppProvisionSuccess);
 }
 
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    HVCHECK_SELF;
+    
+    self.title = [HVClient current].settings.signInControllerTitle;
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(id)initWithAppCreateUrl:(NSURL *)url andCallback:(HVNotify)callback
 {
     HVCHECK_NOTNULL(url);
@@ -88,7 +101,8 @@ navigationType: (UIWebViewNavigationType)navigationType
     //
     // Check if the user wants to retry...
     //
-    NSString *message = [NSString stringWithFormat:@"%@\r\n%@", [error localizedDescription], NSLocalizedString(@"Retry sign in?", @"Soda auth retry?")];
+    NSString* retryMessage = [HVClient current].settings.signinRetryMessage;
+    NSString *message = [NSString stringWithFormat:@"%@\r\n%@", [error localizedDescription], retryMessage];
     
     [HVUIAlert showWithMessage:message callback:^(id sender) {
         
