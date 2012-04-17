@@ -33,15 +33,24 @@ static NSString* const c_attribute_version = @"version-stamp";
     return (![NSString isNilOrEmpty:m_version]);
 }
 
--(id) initWithID:(NSString *)value
+-(id)initWithID:(NSString *)itemID
 {
-    HVCHECK_NOTNULL(value);
-    
+    return [self initWithID:itemID andVersion:nil];
+}
+
+-(id) initWithID:(NSString *)itemID andVersion:(NSString *)version
+{
+    HVCHECK_NOTNULL(itemID);
+     
     self = [super init];
     HVCHECK_SELF;
     
-    self.itemID = value;
-     
+    self.itemID = itemID;
+    if (version)
+    {
+        self.version = version;
+    }
+    
     return self;
     
 LError:
@@ -52,14 +61,8 @@ LError:
 {
     HVCHECK_NOTNULL(key);
     
-    self = [super init];
-    HVCHECK_SELF;
-    
-    self.itemID = key.itemID;
-    self.version = key.version;
-    
-    return self;
-    
+    return [self initWithID:key.itemID andVersion:key.version];
+
 LError:
     HVALLOC_FAIL;
 }

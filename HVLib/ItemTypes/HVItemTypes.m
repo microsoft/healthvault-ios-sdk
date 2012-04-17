@@ -16,8 +16,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "HVCommon.h"
+#import "XLib.h"
 #import "HVItemTypes.h"
-
+/*
 #define HVDECLARE_GETTOR(type, name) \
 -(type *) name { \
     if (self.hasTypedData) { \
@@ -25,9 +27,26 @@
     } \
     return nil; \
 }
+*/
+
+#define HVDECLARE_GETTOR(type, name) \
+-(type *) name { \
+    return (type *) [self getDataOfType:[type typeID]]; \
+}
 
 
 @implementation HVItem (HVTypedExtensions)
+
+-(HVItemDataTyped *)getDataOfType:(NSString *)typeID
+{
+    if (!self.hasTypedData)
+    {
+        return nil;
+    }
+    
+    HVASSERT([self.type.typeID isEqualToString:typeID]);
+    return self.data.typed;
+}
 
 HVDECLARE_GETTOR(HVWeight, weight);
 

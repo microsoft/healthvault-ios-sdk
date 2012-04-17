@@ -42,7 +42,7 @@ static NSString* const c_element_current = @"current";
 
 @synthesize name = m_name;
 @synthesize records = m_records;
-@synthesize currentIndex = m_currentIndex;
+@synthesize currentRecordIndex = m_currentIndex;
 
 -(BOOL)hasRecords
 {
@@ -207,7 +207,7 @@ LError:
     
     int index = 0;
     HVDESERIALIZE_INT(index, c_element_current);
-    self.currentIndex = index;  // to make sure the index is valid
+    self.currentRecordIndex = index;  // to make sure the index is valid
 }
 
 @end

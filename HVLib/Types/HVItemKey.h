@@ -31,7 +31,8 @@
 @property (readonly, nonatomic) BOOL hasVersion;
 
 -(id) initNew;
--(id) initWithID:(NSString *) value;
+-(id) initWithID:(NSString *) itemID;
+-(id) initWithID:(NSString *) itemID andVersion:(NSString *) version;
 -(id) initWithKey:(HVItemKey *) key;
 
 @end

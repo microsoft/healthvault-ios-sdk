@@ -1,15 +1,15 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
-{\fonttbl\f0\fnil\fcharset0 Tahoma;\f1\fnil\fcharset0 LucidaGrande;\f2\fnil\fcharset0 Consolas;
-}
-{\colortbl;\red255\green255\blue255;\red255\green39\blue18;\red217\green11\blue0;\red170\green13\blue145;
-\red196\green26\blue22;\red0\green116\blue0;}
+{\fonttbl\f0\fnil\fcharset0 Tahoma;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
+\f3\fnil\fcharset0 LucidaGrande;\f4\fnil\fcharset0 Consolas;}
+{\colortbl;\red255\green255\blue255;\red255\green39\blue18;\red217\green11\blue0;\red0\green116\blue0;
+\red100\green56\blue32;\red196\green26\blue22;\red170\green13\blue145;}
 {\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
 {\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
 {\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid202\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid3}
 {\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid302\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid4}
 {\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid402\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid403\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li2160\lin2160 }{\listname ;}\listid5}}
 {\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}}
-\margl1440\margr1440\vieww19980\viewh16240\viewkind0
+\margl1440\margr1440\vieww19980\viewh15180\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 
 \f0\b\fs36 \cf2 [Status: Pre-Draft]\
@@ -65,6 +65,20 @@ You should link HVLib as a static library into your project.\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 
+\b \cf0 Header Files\
+\pard\tx640\pardeftab640\pardirnatural
+
+\f1\b0\fs26 \cf4 \CocoaLigature0 //\cf0 \
+\cf4 // Include HealthVault Library\cf0 \
+\cf4 //\cf0 \
+
+\f2\b \cf5 #import \cf6 "HVLib.h"
+\f1\b0 \
+\
+
+\f0\fs28 \cf0 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
 \b \cf0 Update Build Targets\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 
@@ -81,12 +95,12 @@ Make the following changes to your project Target:\
 \b0 \
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
 \ls3\ilvl1\cf0 {\listtext	
-\f1 \uc0\u8259 
+\f3 \uc0\u8259 
 \f0 	}Add 
 \b libHVLib.a  
 \b0 [This is the HealthVault Library. You should see it listed under "Workspace"]\
 {\listtext	
-\f1 \uc0\u8259 
+\f3 \uc0\u8259 
 \f0 	}Add 
 \b libxml2.2.dylib   
 \b0 [This is part of the core iOS SDK]\
@@ -102,7 +116,7 @@ Make the following changes to your project Target:\
 \b0 \
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
 \ls4\ilvl1\cf0 {\listtext	
-\f1 \uc0\u8259 
+\f3 \uc0\u8259 
 \f0 	}
 \b Other Linker Flags
 \b0  : Add the following:\
@@ -116,23 +130,23 @@ Make the following changes to your project Target:\
 \b0 \
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
 \ls5\ilvl1\cf0 {\listtext	
-\f1 \uc0\u8259 
+\f3 \uc0\u8259 
 \f0 	}
 \b Header Search Paths
 \b0 :  Add the following:\
 \pard\tx1660\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li2160\fi-2160\pardirnatural
 \ls5\ilvl2\cf0 {\listtext	
-\f1 \uc0\u8259 
+\f3 \uc0\u8259 
 \f0 	}$(SDK_DIR)/usr/include/libxml2/**\
 \pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\pardirnatural
 \ls5\ilvl1\cf0 {\listtext	
-\f1 \uc0\u8259 
+\f3 \uc0\u8259 
 \f0 	}
 \b User Header Search Paths
 \b0 : Add Relative Path to the HVLib directory. E.g. HealthVault samples use the path:\
 \pard\tx1660\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li2160\fi-2160\pardirnatural
 \ls5\ilvl2\cf0 {\listtext	
-\f1 \uc0\u8259 
+\f3 \uc0\u8259 
 \f0 	}../../HVLib/**\
 \
 \pard\tx1660\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li2160\fi-2160\pardirnatural
@@ -159,24 +173,24 @@ See HVLib/Samples/HelloHealthVault for sample code. \
 \fs28 \
 \pard\tx640\pardeftab640\pardirnatural
 
-\f2 \cf4 \CocoaLigature0 <?xml version=\cf5 "1.0"\cf4  encoding=\cf5 "utf-8"\cf4  ?>\cf0 \
-\cf4 <clientSettings>\cf0 \
-    \cf6 <!--\
+\f4 \cf7 \CocoaLigature0 <?xml version=\cf6 "1.0"\cf7  encoding=\cf6 "utf-8"\cf7  ?>\cf0 \
+\cf7 <clientSettings>\cf0 \
+    \cf4 <!--\
         HealthVault Application ID\
      This is the app ID for the default sample Hello World application. \
      Create your own application athttp://config.healthvault-ppe.com\
      -->\cf0 \
-	\cf4 <masterAppID>\cf0 cf36aef7-5d87-4688-88b2-f9b57c086d7d\cf4 </masterAppID>\cf0 \
-    \cf6 <!--Application name -->\cf0 \
-    \cf4 <appName>\cf0 Hello Healthvault\cf4 </appName>\cf0 \
-    \cf6 <!--\
+	\cf7 <masterAppID>\cf0 cf36aef7-5d87-4688-88b2-f9b57c086d7d\cf7 </masterAppID>\cf0 \
+    \cf4 <!--Application name -->\cf0 \
+    \cf7 <appName>\cf0 Hello Healthvault\cf7 </appName>\cf0 \
+    \cf4 <!--\
         Url for HealthVault service calls - set up for Pre-Production below\
      -->\cf0 \
-	\cf4 <serviceUrl>\cf0 https://platform.healthvault-ppe.com/platform/wildcat.ashx\cf4 </serviceUrl>\cf0 \
-    \cf6 <!--\
+	\cf7 <serviceUrl>\cf0 https://platform.healthvault-ppe.com/platform/wildcat.ashx\cf7 </serviceUrl>\cf0 \
+    \cf4 <!--\
         HealthVault Shell - used during app provisioning on the device\
      -->\cf0 \
-	\cf4 <shellUrl>\cf0 https://account.healthvault-ppe.com\cf4 </shellUrl>\cf0 \
-\cf4 </clientSettings>\cf0 \
+	\cf7 <shellUrl>\cf0 https://account.healthvault-ppe.com\cf7 </shellUrl>\cf0 \
+\cf7 </clientSettings>\cf0 \
 \
 }

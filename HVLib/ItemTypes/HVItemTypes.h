@@ -45,6 +45,8 @@
 
 @interface HVItem (HVTypedExtensions)
 
+-(HVItemDataTyped *) getDataOfType:(NSString *) typeID;
+
 -(HVWeight *) weight;
 -(HVBloodPressure *) bloodPressure;
 -(HVCholesterol *) cholesterol;

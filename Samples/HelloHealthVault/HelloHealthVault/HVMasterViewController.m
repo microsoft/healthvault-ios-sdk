@@ -139,7 +139,7 @@
             //
             [self getWeightsFromHealthVault];
         }
-        @catch (NSException *exception) {
+       @catch (NSException *exception) {
             [HVUIAlert showInformationalMessage:exception.description];
         }
     }];
@@ -151,10 +151,16 @@
 -(HVItem *)newWeight
 {
     HVItem* item = [HVWeight newItem];
+ 
     item.weight.inPounds = [HVRandom randomDoubleInRangeMin:130 max:150];
     item.weight.when = [[HVDateTime alloc] initNow];  
     
     return item;
+}
+
+-(void)changeWeight:(HVItem *)item
+{
+    item.weight.inPounds = [HVRandom randomDoubleInRangeMin:130 max:150];
 }
 
 -(void)getWeightsForLastNDays:(int)numDays
@@ -272,8 +278,9 @@
 {
     [self getWeightsFromHealthVault];
 }
+
 //
-// Add a new weight entry
+// Generate a random new weight entry for today and add it to HealthVault
 //
 - (IBAction)addButtonClicked:(id)sender 
 {
@@ -281,6 +288,9 @@
     [self putWeightInHealthVault:item];
 }
 
+//
+// Delete the selected item from HealthVault
+//
 - (IBAction)deleteButtonClicked:(id)sender 
 {
     NSIndexPath* selection = [self.itemsTable indexPathForSelectedRow];
@@ -291,6 +301,25 @@
     
     NSUInteger itemIndex = selection.row;
     [self removeWeightFromHealthVault:[m_items itemAtIndex:itemIndex].key];
+}
+
+//
+// Change the selected item to a new weight and push it to HealthVault
+//
+- (IBAction)updateButtonClicked:(id)sender 
+{
+    NSIndexPath* selection = [self.itemsTable indexPathForSelectedRow];
+    if (!selection)
+    {
+        return;
+    }
+    
+    NSUInteger itemIndex = selection.row;
+    HVItem* item = [m_items itemAtIndex:itemIndex];
+
+    [self changeWeight:item];
+    
+    [self putWeightInHealthVault:item];
 }
 
 //-------------------------------------------

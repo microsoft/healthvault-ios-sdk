@@ -71,6 +71,9 @@
 
 -(BOOL) isVersion:(NSString *) version;
 
+-(NSString *) toXmlString;
++(HVItem *) fromXmlString:(NSString *) xml;
+
 @end
 
 @interface HVItemCollection : HVCollection <XSerializable>

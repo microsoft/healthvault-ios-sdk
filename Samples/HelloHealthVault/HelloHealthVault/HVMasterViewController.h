@@ -57,6 +57,7 @@
 // Create a new weight measurement
 //
 -(HVItem *) newWeight;
+-(void) changeWeight:(HVItem *) item;
 //
 // Displaying Weights in TableView
 //
@@ -69,5 +70,6 @@
 - (IBAction)refreshButtonClicked:(id)sender;
 - (IBAction)addButtonClicked:(id)sender;
 - (IBAction)deleteButtonClicked:(id)sender;
+- (IBAction)updateButtonClicked:(id)sender;
 
 @end

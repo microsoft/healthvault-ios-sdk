@@ -47,7 +47,7 @@
 //
 // The records the application is currently working with
 //
-@property (readwrite, nonatomic) NSInteger currentIndex;
+@property (readwrite, nonatomic) NSInteger currentRecordIndex;
 @property (readonly, nonatomic) HVRecord* currentRecord;
 //
 // Refresh the list of authorized records - in case there were changes made using the HealthVault Shell

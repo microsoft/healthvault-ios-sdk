@@ -249,6 +249,16 @@ LError:
     HVDESERIALIZE(m_data, c_element_data, HVItemData);
 }
 
+-(NSString *)toXmlString
+{
+    return [XSerializer serializeToString:self withRoot:@"info"];
+}
+
++(HVItem *)fromXmlString:(NSString *) xml
+{
+    return (HVItem *) [NSObject newFromString:xml withRoot:@"info" asClass:[HVItem class]];
+}
+
 @end
 
 static NSString* const c_element_item = @"thing";
