@@ -162,15 +162,15 @@
     //
     // Set up a filter for HealthVault items
     //
-    HVItemFilter* itemFilter = [[HVItemFilter alloc] initWithTypeClass:[HVWeight class]];  // Querying for weights
+    HVItemFilter* itemFilter = [[[HVItemFilter alloc] initWithTypeClass:[HVWeight class]] autorelease];  // Querying for weights
     //
     // We only want weights no older than numDays
     //
-    itemFilter.effectiveDateMin = [[NSDate alloc] initWithTimeIntervalSinceNow:(-(numDays * (24 * 3600)))]; // Interval is in seconds
+    itemFilter.effectiveDateMin = [[[NSDate alloc] initWithTimeIntervalSinceNow:(-(numDays * (24 * 3600)))] autorelease]; // Interval is in seconds
     //
     // Create a query to issue
     //
-    HVItemQuery* query = [[HVItemQuery alloc] initWithFilter:itemFilter];
+    HVItemQuery* query = [[[HVItemQuery alloc] initWithFilter:itemFilter] autorelease];
     
     [[HVClient current].currentRecord getItems:query callback:^(HVTask *task) {
         
