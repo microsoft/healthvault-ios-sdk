@@ -1,0 +1,1771 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5D07A9571534B1780013DC2A /* HVProcedure.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D07A9551534B1780013DC2A /* HVProcedure.h */; };
+		5D07A9581534B1780013DC2A /* HVProcedure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D07A9561534B1780013DC2A /* HVProcedure.m */; };
+		5D0B4BE1151A7D50000849D0 /* HVCondition.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0B4BDF151A7D50000849D0 /* HVCondition.h */; };
+		5D0B4BE2151A7D50000849D0 /* HVCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0B4BE0151A7D50000849D0 /* HVCondition.m */; };
+		5D0B4BE6151A80A4000849D0 /* HVApproxDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0B4BE4151A80A4000849D0 /* HVApproxDateTime.h */; };
+		5D0B4BE7151A80A4000849D0 /* HVApproxDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0B4BE5151A80A4000849D0 /* HVApproxDateTime.m */; };
+		5D0DACB314E2FE14002CBE52 /* HVCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0DACB114E2FE14002CBE52 /* HVCore.h */; };
+		5D0DACB414E2FE14002CBE52 /* HVCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DACB214E2FE14002CBE52 /* HVCore.m */; };
+		5D195CFA151B886000E109AD /* HVRelatedItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195CF8151B886000E109AD /* HVRelatedItem.h */; };
+		5D195CFB151B886000E109AD /* HVRelatedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195CF9151B886000E109AD /* HVRelatedItem.m */; };
+		5D195CFF151BBC7D00E109AD /* HVMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195CFD151BBC7C00E109AD /* HVMeasurement.h */; };
+		5D195D00151BBC7D00E109AD /* HVMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195CFE151BBC7D00E109AD /* HVMeasurement.m */; };
+		5D195D03151BC72C00E109AD /* HVApproxMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D01151BC72B00E109AD /* HVApproxMeasurement.h */; };
+		5D195D04151BC72C00E109AD /* HVApproxMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D02151BC72C00E109AD /* HVApproxMeasurement.m */; };
+		5D195D07151BCAB400E109AD /* HVMedication.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D05151BCAB400E109AD /* HVMedication.h */; };
+		5D195D08151BCAB400E109AD /* HVMedication.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D06151BCAB400E109AD /* HVMedication.m */; };
+		5D195D0F151BEBA100E109AD /* HVAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D0D151BEB9F00E109AD /* HVAddress.h */; };
+		5D195D10151BEBA100E109AD /* HVAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D0E151BEBA000E109AD /* HVAddress.m */; };
+		5D195D13151BF01800E109AD /* HVPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D11151BF01600E109AD /* HVPhone.h */; };
+		5D195D14151BF01800E109AD /* HVPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D12151BF01700E109AD /* HVPhone.m */; };
+		5D195D1B151BF2E200E109AD /* HVEmailAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D19151BF2E100E109AD /* HVEmailAddress.h */; };
+		5D195D1C151BF2E200E109AD /* HVEmailAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D1A151BF2E100E109AD /* HVEmailAddress.m */; };
+		5D195D1F151BF54300E109AD /* HVEmail.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D1D151BF53F00E109AD /* HVEmail.h */; };
+		5D195D20151BF54300E109AD /* HVEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D1E151BF54100E109AD /* HVEmail.m */; };
+		5D195D23151BF61000E109AD /* HVContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D21151BF60D00E109AD /* HVContact.h */; };
+		5D195D24151BF61000E109AD /* HVContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D22151BF60F00E109AD /* HVContact.m */; };
+		5D195D27151BF9F400E109AD /* HVPerson.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D25151BF9F100E109AD /* HVPerson.h */; };
+		5D195D28151BF9F400E109AD /* HVPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D26151BF9F300E109AD /* HVPerson.m */; };
+		5D195D2B151BFA5300E109AD /* HVName.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D29151BFA4F00E109AD /* HVName.h */; };
+		5D195D2C151BFA5300E109AD /* HVName.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D2A151BFA5200E109AD /* HVName.m */; };
+		5D195D4915222AF900E109AD /* HVVector.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D4815222AF900E109AD /* HVVector.h */; };
+		5D195D4B15222B8A00E109AD /* HVVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D4A15222B8A00E109AD /* HVVector.cpp */; };
+		5D195D4E1522527100E109AD /* HVPutItemsTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D4C1522527100E109AD /* HVPutItemsTask.h */; };
+		5D195D4F1522527100E109AD /* HVPutItemsTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D4D1522527100E109AD /* HVPutItemsTask.m */; };
+		5D195D661522780800E109AD /* HVRemoveItemsTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D641522780600E109AD /* HVRemoveItemsTask.h */; };
+		5D195D671522780800E109AD /* HVRemoveItemsTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D651522780700E109AD /* HVRemoveItemsTask.m */; };
+		5D195D7215228C0200E109AD /* HVVocabSearchText.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D7015228C0200E109AD /* HVVocabSearchText.h */; };
+		5D195D7315228C0200E109AD /* HVVocabSearchText.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D7115228C0200E109AD /* HVVocabSearchText.m */; };
+		5D195D821522973500E109AD /* HVVocabSearchTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D801522973300E109AD /* HVVocabSearchTask.h */; };
+		5D195D831522973500E109AD /* HVVocabSearchTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D811522973400E109AD /* HVVocabSearchTask.m */; };
+		5D195D8E1523BC4900E109AD /* HVIndexList.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D8C1523BC4900E109AD /* HVIndexList.h */; };
+		5D195D8F1523BC4900E109AD /* HVIndexList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D8D1523BC4900E109AD /* HVIndexList.m */; };
+		5D1F13241539DD5200524425 /* HVSleepJournalPM.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F13221539DD5200524425 /* HVSleepJournalPM.h */; };
+		5D1F13251539DD5200524425 /* HVSleepJournalPM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F13231539DD5200524425 /* HVSleepJournalPM.m */; };
+		5D1F13291539E9E000524425 /* HVRelative.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F13271539E9DF00524425 /* HVRelative.h */; };
+		5D1F132A1539E9E000524425 /* HVRelative.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F13281539E9E000524425 /* HVRelative.m */; };
+		5D1F132D1539EDF100524425 /* HVFamilyHistory.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F132B1539EDF100524425 /* HVFamilyHistory.h */; };
+		5D1F132E1539EDF100524425 /* HVFamilyHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F132C1539EDF100524425 /* HVFamilyHistory.m */; };
+		5D1F13311539EF0600524425 /* HVConditionEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F132F1539EF0600524425 /* HVConditionEntry.h */; };
+		5D1F13321539EF0600524425 /* HVConditionEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F13301539EF0600524425 /* HVConditionEntry.m */; };
+		5D1F13381539FF6300524425 /* HVDietaryIntake.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F13361539FF6200524425 /* HVDietaryIntake.h */; };
+		5D1F13391539FF6300524425 /* HVDietaryIntake.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F13371539FF6300524425 /* HVDietaryIntake.m */; };
+		5D20D2DA14EDD32500160611 /* HVConstrainedDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2D814EDD32500160611 /* HVConstrainedDouble.h */; };
+		5D20D2DB14EDD32500160611 /* HVConstrainedDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2D914EDD32500160611 /* HVConstrainedDouble.m */; };
+		5D20D2DE14EDD5FE00160611 /* HVPositiveDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2DC14EDD5FE00160611 /* HVPositiveDouble.h */; };
+		5D20D2DF14EDD5FE00160611 /* HVPositiveDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2DD14EDD5FE00160611 /* HVPositiveDouble.m */; };
+		5D20D2E214EDD6C100160611 /* HVWeightMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2E014EDD6C000160611 /* HVWeightMeasurement.h */; };
+		5D20D2E314EDD6C100160611 /* HVWeightMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2E114EDD6C000160611 /* HVWeightMeasurement.m */; };
+		5D20D2E614EDDEF500160611 /* HVDisplayValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2E414EDDEF400160611 /* HVDisplayValue.h */; };
+		5D20D2E714EDDEF500160611 /* HVDisplayValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2E514EDDEF400160611 /* HVDisplayValue.m */; };
+		5D20D2EA14EDF16F00160611 /* HVBloodPressure.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2E814EDF16F00160611 /* HVBloodPressure.h */; };
+		5D20D2EB14EDF16F00160611 /* HVBloodPressure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2E914EDF16F00160611 /* HVBloodPressure.m */; };
+		5D20D2EE14EEF84400160611 /* HVInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2EC14EEF84300160611 /* HVInt.h */; };
+		5D20D2EF14EEF84400160611 /* HVInt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2ED14EEF84400160611 /* HVInt.m */; };
+		5D20D2F214EEF99400160611 /* HVDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2F014EEF99300160611 /* HVDouble.h */; };
+		5D20D2F314EEF99400160611 /* HVDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2F114EEF99300160611 /* HVDouble.m */; };
+		5D20D2F614EEFA7600160611 /* HVNonNegativeInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2F414EEFA7500160611 /* HVNonNegativeInt.h */; };
+		5D20D2F714EEFA7600160611 /* HVNonNegativeInt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2F514EEFA7500160611 /* HVNonNegativeInt.m */; };
+		5D20D2FA14EEFF6D00160611 /* HVBool.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2F814EEFF6B00160611 /* HVBool.h */; };
+		5D20D2FB14EEFF6D00160611 /* HVBool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2F914EEFF6B00160611 /* HVBool.m */; };
+		5D20D2FE14EF3DC300160611 /* HVItemQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D2FC14EF3DC000160611 /* HVItemQuery.h */; };
+		5D20D2FF14EF3DC300160611 /* HVItemQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D2FD14EF3DC200160611 /* HVItemQuery.m */; };
+		5D20D30314EF414500160611 /* HVCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D30114EF414500160611 /* HVCollection.h */; };
+		5D20D30414EF414500160611 /* HVCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D30214EF414500160611 /* HVCollection.m */; };
+		5D20D30714F2E21400160611 /* HVItemKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D30514F2E21000160611 /* HVItemKey.h */; };
+		5D20D30814F2E21400160611 /* HVItemKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D30614F2E21200160611 /* HVItemKey.m */; };
+		5D20D30B14F2E22C00160611 /* HVItemFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D30914F2E22800160611 /* HVItemFilter.h */; };
+		5D20D30C14F2E22C00160611 /* HVItemFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D30A14F2E22A00160611 /* HVItemFilter.m */; };
+		5D20D30F14F2E26900160611 /* HVItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D30D14F2E26400160611 /* HVItemView.h */; };
+		5D20D31014F2E26900160611 /* HVItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D30E14F2E26600160611 /* HVItemView.m */; };
+		5D20D31314F2F4F400160611 /* HVItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D31114F2F4EF00160611 /* HVItem.h */; };
+		5D20D31414F2F4F400160611 /* HVItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D31214F2F4F100160611 /* HVItem.m */; };
+		5D20D31B14F2FA5900160611 /* HVItemSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D31914F2FA5400160611 /* HVItemSection.h */; };
+		5D20D31C14F2FA5900160611 /* HVItemSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D31A14F2FA5600160611 /* HVItemSection.m */; };
+		5D20D32314F304E700160611 /* HVItemState.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D32114F304E100160611 /* HVItemState.h */; };
+		5D20D32414F304E700160611 /* HVItemState.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D32214F304E400160611 /* HVItemState.m */; };
+		5D20D32714F424F000160611 /* HVItemType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D32514F424EA00160611 /* HVItemType.h */; };
+		5D20D32814F424F000160611 /* HVItemType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D32614F424EC00160611 /* HVItemType.m */; };
+		5D20D32B14F42E1300160611 /* HVItemData.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D32914F42E0C00160611 /* HVItemData.h */; };
+		5D20D32C14F42E1300160611 /* HVItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D32A14F42E0F00160611 /* HVItemData.m */; };
+		5D20D32F14F4352A00160611 /* HVItemDataCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D32D14F4352200160611 /* HVItemDataCommon.h */; };
+		5D20D33014F4352A00160611 /* HVItemDataCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D32E14F4352500160611 /* HVItemDataCommon.m */; };
+		5D20D33314F4366200160611 /* HVConstrainedString.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D33114F4365E00160611 /* HVConstrainedString.h */; };
+		5D20D33414F4366200160611 /* HVConstrainedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D33214F4366000160611 /* HVConstrainedString.m */; };
+		5D20D33714F43A1400160611 /* HVString255.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D33514F43A1000160611 /* HVString255.h */; };
+		5D20D33814F43A1400160611 /* HVString255.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D33614F43A1200160611 /* HVString255.m */; };
+		5D20D33B14F43A9C00160611 /* HVStringZ512.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D33914F43A9800160611 /* HVStringZ512.h */; };
+		5D20D33C14F43A9C00160611 /* HVStringZ512.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D33A14F43A9A00160611 /* HVStringZ512.m */; };
+		5D20D33F14F4467C00160611 /* HVItemRaw.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D33D14F4467C00160611 /* HVItemRaw.h */; };
+		5D20D34014F4467C00160611 /* HVItemRaw.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D33E14F4467C00160611 /* HVItemRaw.m */; };
+		5D20D34314F44EF200160611 /* HVAudit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D34114F44EE800160611 /* HVAudit.h */; };
+		5D20D34414F44EF200160611 /* HVAudit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D34214F44EEC00160611 /* HVAudit.m */; };
+		5D20D34714F4804F00160611 /* HVRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D34514F4804600160611 /* HVRecord.h */; };
+		5D20D34814F4804F00160611 /* HVRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D34614F4804A00160611 /* HVRecord.m */; };
+		5D20D34B14F4808400160611 /* HVPersonInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D34914F4807900160611 /* HVPersonInfo.h */; };
+		5D20D34C14F4808400160611 /* HVPersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D34A14F4807D00160611 /* HVPersonInfo.m */; };
+		5D20D34F14F487C100160611 /* HVItemQueryResults.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D34D14F487B500160611 /* HVItemQueryResults.h */; };
+		5D20D35014F487C100160611 /* HVItemQueryResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D34E14F487BA00160611 /* HVItemQueryResults.m */; };
+		5D20D35314F487F100160611 /* HVPendingItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D35114F487E100160611 /* HVPendingItem.h */; };
+		5D20D35414F487F100160611 /* HVPendingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D35214F487E600160611 /* HVPendingItem.m */; };
+		5D20D35714F4883700160611 /* HVItemQueryResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D35514F4882C00160611 /* HVItemQueryResult.h */; };
+		5D20D35814F4883700160611 /* HVItemQueryResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D35614F4883100160611 /* HVItemQueryResult.m */; };
+		5D227B8D153766E500E12075 /* HVVocabIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D227B85153766E500E12075 /* HVVocabIdentifier.h */; };
+		5D227B8E153766E500E12075 /* HVVocabIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D227B86153766E500E12075 /* HVVocabIdentifier.m */; };
+		5D227B8F153766E500E12075 /* HVVocabItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D227B87153766E500E12075 /* HVVocabItem.h */; };
+		5D227B90153766E500E12075 /* HVVocabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D227B88153766E500E12075 /* HVVocabItem.m */; };
+		5D227B91153766E500E12075 /* HVVocabSearchParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D227B89153766E500E12075 /* HVVocabSearchParams.h */; };
+		5D227B92153766E500E12075 /* HVVocabSearchParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D227B8A153766E500E12075 /* HVVocabSearchParams.m */; };
+		5D227B93153766E500E12075 /* HVVocabCodeSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D227B8B153766E500E12075 /* HVVocabCodeSet.h */; };
+		5D227B94153766E500E12075 /* HVVocabCodeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D227B8C153766E500E12075 /* HVVocabCodeSet.m */; };
+		5D2D1C5D14E4A4F400C85B7E /* XWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2D1C5B14E4A4F400C85B7E /* XWriter.h */; };
+		5D2D1C5E14E4A4F400C85B7E /* XWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D1C5C14E4A4F400C85B7E /* XWriter.m */; };
+		5D2D1C6114E4AC9B00C85B7E /* XNodeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D1C6014E4AC9B00C85B7E /* XNodeType.m */; };
+		5D311729150FE26600B8F3D7 /* HVBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311728150FE26600B8F3D7 /* HVBlock.m */; };
+		5D362B55152F8541006CC30C /* HVPrescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D362B53152F84E2006CC30C /* HVPrescription.h */; };
+		5D362B56152F8542006CC30C /* HVPrescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D362B54152F84FA006CC30C /* HVPrescription.m */; };
+		5D39F9221513A07800208A7B /* HVRecordReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F9201513A07700208A7B /* HVRecordReference.h */; };
+		5D39F9271513A63500208A7B /* HVMethodCallTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F9251513A63500208A7B /* HVMethodCallTask.h */; };
+		5D39F9281513A63500208A7B /* HVMethodCallTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D39F9261513A63500208A7B /* HVMethodCallTask.m */; };
+		5D39F92B1513AA6000208A7B /* HVServerResponseStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F9291513AA5F00208A7B /* HVServerResponseStatus.h */; };
+		5D39F92C1513AA6000208A7B /* HVServerResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D39F92A1513AA5F00208A7B /* HVServerResponseStatus.m */; };
+		5D39F92F1513E41200208A7B /* HVGetItemsTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F92D1513E41200208A7B /* HVGetItemsTask.h */; };
+		5D39F9301513E41200208A7B /* HVGetItemsTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D39F92E1513E41200208A7B /* HVGetItemsTask.m */; };
+		5D39F9321513FFC600208A7B /* HVRecordReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D39F9311513FFC500208A7B /* HVRecordReference.m */; };
+		5D39F937151A3AA200208A7B /* HVLocalItemStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F935151A3AA000208A7B /* HVLocalItemStore.h */; };
+		5D39F938151A3AA200208A7B /* HVLocalItemStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D39F936151A3AA100208A7B /* HVLocalItemStore.m */; };
+		5D39F93B151A718C00208A7B /* HVLocalRecordStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F939151A718900208A7B /* HVLocalRecordStore.h */; };
+		5D39F93C151A718C00208A7B /* HVLocalRecordStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */; };
+		5D5299B014DCB3A700D2636E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AF14DCB3A700D2636E /* Foundation.framework */; };
+		5D561B0515365F74003D68D2 /* HVEmergencyOrProviderContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D561B0315365F74003D68D2 /* HVEmergencyOrProviderContact.h */; };
+		5D561B0615365F74003D68D2 /* HVEmergencyOrProviderContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D561B0415365F74003D68D2 /* HVEmergencyOrProviderContact.m */; };
+		5D57A8B6152F8A0C00A80C4A /* HVPositiveInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D57A8B4152F8A0C00A80C4A /* HVPositiveInt.h */; };
+		5D57A8B7152F8A0C00A80C4A /* HVPositiveInt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D57A8B5152F8A0C00A80C4A /* HVPositiveInt.m */; };
+		5D5F3112150E95E700ED11E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5F3111150E95E700ED11E7 /* UIKit.framework */; };
+		5D5F311B150E9A3E00ED11E7 /* HVCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3114150E9A3B00ED11E7 /* HVCollection.h */; };
+		5D5F311C150E9A3E00ED11E7 /* HVCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3115150E9A3B00ED11E7 /* HVCollection.m */; };
+		5D5F311D150E9A3E00ED11E7 /* HVMulticastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3116150E9A3B00ED11E7 /* HVMulticastDelegate.h */; };
+		5D5F311E150E9A3E00ED11E7 /* HVMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3117150E9A3B00ED11E7 /* HVMulticastDelegate.m */; };
+		5D5F311F150E9A3E00ED11E7 /* HVCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3118150E9A3B00ED11E7 /* HVCommon.c */; };
+		5D5F3120150E9A3E00ED11E7 /* HVClientSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3119150E9A3C00ED11E7 /* HVClientSettings.h */; };
+		5D5F3121150E9A3E00ED11E7 /* HVClientSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F311A150E9A3D00ED11E7 /* HVClientSettings.m */; };
+		5D5F3126150EAD8400ED11E7 /* HVDirectory.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3124150EAD8400ED11E7 /* HVDirectory.h */; };
+		5D5F3127150EAD8400ED11E7 /* HVDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3125150EAD8400ED11E7 /* HVDirectory.m */; };
+		5D5F3131150ED29F00ED11E7 /* HVBrowserController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F312E150ED29F00ED11E7 /* HVBrowserController.h */; };
+		5D5F3132150ED29F00ED11E7 /* HVBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F312F150ED29F00ED11E7 /* HVBrowserController.m */; };
+		5D5F315F150FAA2800ED11E7 /* HealthVaultConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F313B150FAA2800ED11E7 /* HealthVaultConfig.h */; };
+		5D5F3160150FAA2800ED11E7 /* HealthVaultRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F313C150FAA2800ED11E7 /* HealthVaultRecord.h */; };
+		5D5F3161150FAA2800ED11E7 /* HealthVaultRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F313D150FAA2800ED11E7 /* HealthVaultRecord.m */; };
+		5D5F3162150FAA2800ED11E7 /* HealthVaultRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F313E150FAA2800ED11E7 /* HealthVaultRequest.h */; };
+		5D5F3163150FAA2800ED11E7 /* HealthVaultRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F313F150FAA2800ED11E7 /* HealthVaultRequest.m */; };
+		5D5F3164150FAA2800ED11E7 /* HealthVaultResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3140150FAA2800ED11E7 /* HealthVaultResponse.h */; };
+		5D5F3165150FAA2800ED11E7 /* HealthVaultResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3141150FAA2800ED11E7 /* HealthVaultResponse.m */; };
+		5D5F3166150FAA2800ED11E7 /* HealthVaultService.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3142150FAA2800ED11E7 /* HealthVaultService.h */; };
+		5D5F3167150FAA2800ED11E7 /* HealthVaultService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3143150FAA2800ED11E7 /* HealthVaultService.m */; };
+		5D5F3168150FAA2800ED11E7 /* MobilePlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3144150FAA2800ED11E7 /* MobilePlatform.h */; };
+		5D5F3169150FAA2800ED11E7 /* MobilePlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3145150FAA2800ED11E7 /* MobilePlatform.m */; };
+		5D5F316A150FAA2800ED11E7 /* AuthenticationCheckState.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3147150FAA2800ED11E7 /* AuthenticationCheckState.h */; };
+		5D5F316B150FAA2800ED11E7 /* AuthenticationCheckState.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3148150FAA2800ED11E7 /* AuthenticationCheckState.m */; };
+		5D5F316C150FAA2800ED11E7 /* Provisioner.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3149150FAA2800ED11E7 /* Provisioner.h */; };
+		5D5F316D150FAA2800ED11E7 /* Provisioner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F314A150FAA2800ED11E7 /* Provisioner.m */; };
+		5D5F316E150FAA2800ED11E7 /* HealthVaultSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F314C150FAA2800ED11E7 /* HealthVaultSettings.h */; };
+		5D5F316F150FAA2800ED11E7 /* HealthVaultSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F314D150FAA2800ED11E7 /* HealthVaultSettings.m */; };
+		5D5F3170150FAA2800ED11E7 /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F314F150FAA2800ED11E7 /* Base64.h */; };
+		5D5F3171150FAA2800ED11E7 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3150150FAA2800ED11E7 /* Base64.m */; };
+		5D5F3172150FAA2800ED11E7 /* DateTimeUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3151150FAA2800ED11E7 /* DateTimeUtils.h */; };
+		5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3152150FAA2800ED11E7 /* DateTimeUtils.m */; };
+		5D5F3174150FAA2800ED11E7 /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3153150FAA2800ED11E7 /* Logger.h */; };
+		5D5F3175150FAA2800ED11E7 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3154150FAA2800ED11E7 /* Logger.m */; };
+		5D5F3176150FAA2800ED11E7 /* WebResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3156150FAA2800ED11E7 /* WebResponse.h */; };
+		5D5F3177150FAA2800ED11E7 /* WebResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3157150FAA2800ED11E7 /* WebResponse.m */; };
+		5D5F3178150FAA2800ED11E7 /* WebTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3158150FAA2800ED11E7 /* WebTransport.h */; };
+		5D5F3179150FAA2800ED11E7 /* WebTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3159150FAA2800ED11E7 /* WebTransport.m */; };
+		5D5F317A150FAA2800ED11E7 /* XmlElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F315B150FAA2800ED11E7 /* XmlElement.h */; };
+		5D5F317B150FAA2800ED11E7 /* XmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F315C150FAA2800ED11E7 /* XmlElement.m */; };
+		5D5F317C150FAA2800ED11E7 /* XmlTextReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F315D150FAA2800ED11E7 /* XmlTextReader.h */; };
+		5D5F317D150FAA2800ED11E7 /* XmlTextReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F315E150FAA2800ED11E7 /* XmlTextReader.m */; };
+		5D5F3184150FAE5300ED11E7 /* HVAppProvisionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3182150FAE5200ED11E7 /* HVAppProvisionController.h */; };
+		5D5F3185150FAE5300ED11E7 /* HVAppProvisionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3183150FAE5300ED11E7 /* HVAppProvisionController.m */; };
+		5D5F318C150FDD4A00ED11E7 /* HVBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F318B150FDD4700ED11E7 /* HVBlock.h */; };
+		5D76B9C914DCB92400BA865F /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D76B9C814DCB92400BA865F /* libxml2.2.dylib */; };
+		5D76B9D314DCC84C00BA865F /* HVValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D76B9D114DCC84C00BA865F /* HVValidator.h */; };
+		5D76B9D414DCC84C00BA865F /* HVValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D76B9D214DCC84C00BA865F /* HVValidator.m */; };
+		5D76B9D914DCC85B00BA865F /* HVStringExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D76B9D514DCC85B00BA865F /* HVStringExtensions.h */; };
+		5D76B9DA14DCC85B00BA865F /* HVStringExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D76B9D614DCC85B00BA865F /* HVStringExtensions.m */; };
+		5D76B9DB14DCC85B00BA865F /* HVExceptionExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D76B9D714DCC85B00BA865F /* HVExceptionExtensions.h */; };
+		5D76B9DC14DCC85B00BA865F /* HVExceptionExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D76B9D814DCC85B00BA865F /* HVExceptionExtensions.m */; };
+		5D76B9E914DCC9CF00BA865F /* HVLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D76B9E814DCC9CF00BA865F /* HVLib.h */; };
+		5D76B9EB14DCC9F500BA865F /* HVLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D76B9EA14DCC9F400BA865F /* HVLib.m */; };
+		5D775C7115389BD7000F01AE /* HVBasicDemographics.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C6F15389BD7000F01AE /* HVBasicDemographics.h */; };
+		5D775C7215389BD7000F01AE /* HVBasicDemographics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C7015389BD7000F01AE /* HVBasicDemographics.m */; };
+		5D775C741538A118000F01AE /* HVItemTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C731538A118000F01AE /* HVItemTypes.m */; };
+		5D775C771538C2BA000F01AE /* HVPersonalDemographics.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C751538C2B7000F01AE /* HVPersonalDemographics.h */; };
+		5D775C781538C2BA000F01AE /* HVPersonalDemographics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C761538C2B9000F01AE /* HVPersonalDemographics.m */; };
+		5D775C7B1538D050000F01AE /* HVPersonalContactInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C791538D04D000F01AE /* HVPersonalContactInfo.h */; };
+		5D775C7C1538D050000F01AE /* HVPersonalContactInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C7A1538D04F000F01AE /* HVPersonalContactInfo.m */; };
+		5D775C7F1538D2F9000F01AE /* HVDailyMedicationUsage.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C7D1538D2F6000F01AE /* HVDailyMedicationUsage.h */; };
+		5D775C801538D2F9000F01AE /* HVDailyMedicationUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C7E1538D2F8000F01AE /* HVDailyMedicationUsage.m */; };
+		5D775C831538D86C000F01AE /* HVEmotionalState.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C811538D869000F01AE /* HVEmotionalState.h */; };
+		5D775C841538D86C000F01AE /* HVEmotionalState.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C821538D86A000F01AE /* HVEmotionalState.m */; };
+		5D775C871538DED2000F01AE /* HVVitalSignResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C851538DED0000F01AE /* HVVitalSignResult.h */; };
+		5D775C881538DED2000F01AE /* HVVitalSignResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C861538DED1000F01AE /* HVVitalSignResult.m */; };
+		5D775C8B1538E433000F01AE /* HVVitalSigns.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C891538E42E000F01AE /* HVVitalSigns.h */; };
+		5D775C8C1538E433000F01AE /* HVVitalSigns.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C8A1538E430000F01AE /* HVVitalSigns.m */; };
+		5D775C8F1538E9BA000F01AE /* HVAssessmentField.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C8D1538E9B8000F01AE /* HVAssessmentField.h */; };
+		5D775C901538E9BA000F01AE /* HVAssessmentField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C8E1538E9B9000F01AE /* HVAssessmentField.m */; };
+		5D775C931538EBF9000F01AE /* HVAssessment.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C911538EBF5000F01AE /* HVAssessment.h */; };
+		5D775C941538EBF9000F01AE /* HVAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C921538EBF6000F01AE /* HVAssessment.m */; };
+		5D8E5A9E152FA913002BC6E2 /* HVCholesterol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8E5A9C152FA913002BC6E2 /* HVCholesterol.h */; };
+		5D8E5A9F152FA913002BC6E2 /* HVCholesterol.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E5A9D152FA913002BC6E2 /* HVCholesterol.m */; };
+		5D8E5AA7152FBBA4002BC6E2 /* HVAllergy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8E5AA5152FBBA3002BC6E2 /* HVAllergy.h */; };
+		5D8E5AA8152FBBA4002BC6E2 /* HVAllergy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E5AA6152FBBA4002BC6E2 /* HVAllergy.m */; };
+		5D8E5AB1152FC460002BC6E2 /* HVImmunization.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8E5AAF152FC45F002BC6E2 /* HVImmunization.h */; };
+		5D8E5AB2152FC460002BC6E2 /* HVImmunization.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E5AB0152FC45F002BC6E2 /* HVImmunization.m */; };
+		5D8E5AB5152FC552002BC6E2 /* HVApproxDate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8E5AB3152FC551002BC6E2 /* HVApproxDate.h */; };
+		5D8E5AB6152FC552002BC6E2 /* HVApproxDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E5AB4152FC551002BC6E2 /* HVApproxDate.m */; };
+		5D8FC3E114E2EDDF000F28EB /* HVCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8FC3E014E2EDDF000F28EB /* HVCommon.h */; };
+		5D925DD715376F21006BAAA8 /* HVGetVocabTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D925DD515376F21006BAAA8 /* HVGetVocabTask.h */; };
+		5D925DD815376F21006BAAA8 /* HVGetVocabTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D925DD615376F21006BAAA8 /* HVGetVocabTask.m */; };
+		5D925DDC15376F8A006BAAA8 /* HVVocab.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D925DDA15376F8A006BAAA8 /* HVVocab.h */; };
+		5D925DE015377348006BAAA8 /* HVVocabParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D925DDE15377348006BAAA8 /* HVVocabParams.h */; };
+		5D925DE115377348006BAAA8 /* HVVocabParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D925DDF15377348006BAAA8 /* HVVocabParams.m */; };
+		5D97B93C1511743C0004B551 /* HVUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D97B93A1511743C0004B551 /* HVUser.h */; };
+		5D97B93D1511743C0004B551 /* HVUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97B93B1511743C0004B551 /* HVUser.m */; };
+		5D97B94015125A280004B551 /* HVObjectStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D97B93F15125A270004B551 /* HVObjectStore.h */; };
+		5D983BB814E5949B00C287B7 /* HVGuid.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BB614E5949B00C287B7 /* HVGuid.h */; };
+		5D983BB914E5949B00C287B7 /* HVGuid.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BB714E5949B00C287B7 /* HVGuid.m */; };
+		5D983BD014E5BF6700C287B7 /* XSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BCF14E5BF6700C287B7 /* XSerializer.h */; };
+		5D983BD314E5CA3300C287B7 /* XSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BD214E5CA3300C287B7 /* XSerializer.m */; };
+		5D983BD514E5E87000C287B7 /* HVTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BD414E5E87000C287B7 /* HVTypes.h */; };
+		5D983BD814E5F4BD00C287B7 /* HVItemDataTyped.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BD614E5F4BD00C287B7 /* HVItemDataTyped.h */; };
+		5D983BD914E5F4BD00C287B7 /* HVItemDataTyped.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BD714E5F4BD00C287B7 /* HVItemDataTyped.m */; };
+		5D983BDC14E5F50600C287B7 /* HVWeight.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BDA14E5F50600C287B7 /* HVWeight.h */; };
+		5D983BDD14E5F50600C287B7 /* HVWeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BDB14E5F50600C287B7 /* HVWeight.m */; };
+		5D983BDF14E5F7A300C287B7 /* HVItemTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BDE14E5F7A300C287B7 /* HVItemTypes.h */; };
+		5D983BE214E5FE2B00C287B7 /* HVClientException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BE014E5FE2A00C287B7 /* HVClientException.h */; };
+		5D983BE314E5FE2B00C287B7 /* HVClientException.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BE114E5FE2A00C287B7 /* HVClientException.m */; };
+		5D983BE614E6006400C287B7 /* HVConstrainedInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BE414E6006400C287B7 /* HVConstrainedInt.h */; };
+		5D983BE714E6006400C287B7 /* HVConstrainedInt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BE514E6006400C287B7 /* HVConstrainedInt.m */; };
+		5D983BEA14E6035900C287B7 /* HVDay.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BE814E6035900C287B7 /* HVDay.h */; };
+		5D983BEB14E6035900C287B7 /* HVDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BE914E6035900C287B7 /* HVDay.m */; };
+		5D983BEE14E6038000C287B7 /* HVMonth.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BEC14E6038000C287B7 /* HVMonth.h */; };
+		5D983BEF14E6038000C287B7 /* HVMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BED14E6038000C287B7 /* HVMonth.m */; };
+		5D983BF214E6039C00C287B7 /* HVYear.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BF014E6039C00C287B7 /* HVYear.h */; };
+		5D983BF314E6039C00C287B7 /* HVYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BF114E6039C00C287B7 /* HVYear.m */; };
+		5D983BF614E6070600C287B7 /* HVDate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BF414E6070500C287B7 /* HVDate.h */; };
+		5D983BF714E6070600C287B7 /* HVDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BF514E6070500C287B7 /* HVDate.m */; };
+		5D983BF914E60D1D00C287B7 /* HVBaseTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BF814E60D1D00C287B7 /* HVBaseTypes.h */; };
+		5D983BFC14E984B600C287B7 /* HVHour.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BFA14E984B500C287B7 /* HVHour.h */; };
+		5D983BFD14E984B600C287B7 /* HVHour.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BFB14E984B500C287B7 /* HVHour.m */; };
+		5D983C0014E984CE00C287B7 /* HVMinute.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BFE14E984CC00C287B7 /* HVMinute.h */; };
+		5D983C0114E984CE00C287B7 /* HVMinute.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BFF14E984CD00C287B7 /* HVMinute.m */; };
+		5D983C0414E984EE00C287B7 /* HVSecond.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983C0214E984ED00C287B7 /* HVSecond.h */; };
+		5D983C0514E984EE00C287B7 /* HVSecond.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983C0314E984ED00C287B7 /* HVSecond.m */; };
+		5D983C0814E9850500C287B7 /* HVMillisecond.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983C0614E9850300C287B7 /* HVMillisecond.h */; };
+		5D983C0914E9850500C287B7 /* HVMillisecond.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983C0714E9850400C287B7 /* HVMillisecond.m */; };
+		5DC3C43715360123008BBDBF /* HVGetAuthorizedPeopleResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC3C43515360123008BBDBF /* HVGetAuthorizedPeopleResult.h */; };
+		5DC3C43815360123008BBDBF /* HVGetAuthorizedPeopleResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC3C43615360123008BBDBF /* HVGetAuthorizedPeopleResult.m */; };
+		5DC44B7C14FEA3E600E2E02F /* HVRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC44B7A14FEA3E600E2E02F /* HVRandom.h */; };
+		5DC44B7D14FEA3E600E2E02F /* HVRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC44B7B14FEA3E600E2E02F /* HVRandom.m */; };
+		5DC50C24150019650078D85F /* HVItemTestExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C22150019650078D85F /* HVItemTestExtensions.h */; };
+		5DC50C25150019650078D85F /* HVItemTestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C23150019650078D85F /* HVItemTestExtensions.m */; };
+		5DC50C2D15003C2A0078D85F /* HVTypeViewItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C2B15003C2A0078D85F /* HVTypeViewItem.h */; };
+		5DC50C2E15003C2A0078D85F /* HVTypeViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C2C15003C2A0078D85F /* HVTypeViewItem.m */; };
+		5DC50C3115003C3D0078D85F /* HVTypeViewItems.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C2F15003C3D0078D85F /* HVTypeViewItems.h */; };
+		5DC50C3215003C3D0078D85F /* HVTypeViewItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C3015003C3D0078D85F /* HVTypeViewItems.m */; };
+		5DC50C3915004E040078D85F /* HVItemStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C3815004E040078D85F /* HVItemStore.h */; };
+		5DC50C40150051DD0078D85F /* HVMemoryStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C3E150051DC0078D85F /* HVMemoryStore.h */; };
+		5DC50C41150051DD0078D85F /* HVMemoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C3F150051DC0078D85F /* HVMemoryStore.m */; };
+		5DC50C4415015EE60078D85F /* HVTypeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C4215015EE60078D85F /* HVTypeView.h */; };
+		5DC50C4515015EE60078D85F /* HVTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C4315015EE60078D85F /* HVTypeView.m */; };
+		5DC50C48150160CE0078D85F /* HVSynchronizedStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C46150160CD0078D85F /* HVSynchronizedStore.h */; };
+		5DC50C49150160CE0078D85F /* HVSynchronizedStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C47150160CD0078D85F /* HVSynchronizedStore.m */; };
+		5DC50C4C150172610078D85F /* HVMulticastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C4A150172610078D85F /* HVMulticastDelegate.h */; };
+		5DC50C4D150172610078D85F /* HVMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C4B150172610078D85F /* HVMulticastDelegate.m */; };
+		5DC50C5015017CC50078D85F /* HVAsyncTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C4E15017CC10078D85F /* HVAsyncTask.h */; };
+		5DC50C5115017CC50078D85F /* HVAsyncTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C4F15017CC20078D85F /* HVAsyncTask.m */; };
+		5DC50C5C1506F6040078D85F /* HVClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C5A1506F5FF0078D85F /* HVClient.h */; };
+		5DC50C5D1506F6040078D85F /* HVClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C5B1506F6010078D85F /* HVClient.m */; };
+		5DC50C601508049F0078D85F /* HVLocalVault.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C5E1508049E0078D85F /* HVLocalVault.h */; };
+		5DC50C611508049F0078D85F /* HVLocalVault.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C5F1508049F0078D85F /* HVLocalVault.m */; };
+		5DC7995F1534C95A00193A3B /* HVBloodGlucose.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC7995D1534C95A00193A3B /* HVBloodGlucose.h */; };
+		5DC799601534C95A00193A3B /* HVBloodGlucose.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7995E1534C95A00193A3B /* HVBloodGlucose.m */; };
+		5DC799641534C97200193A3B /* HVOneToFive.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799621534C97200193A3B /* HVOneToFive.h */; };
+		5DC799651534C97200193A3B /* HVOneToFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC799631534C97200193A3B /* HVOneToFive.m */; };
+		5DC7996C1534CB0F00193A3B /* HVBloodGlucoseMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC7996A1534CB0E00193A3B /* HVBloodGlucoseMeasurement.h */; };
+		5DC7996D1534CB0F00193A3B /* HVBloodGlucoseMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7996B1534CB0E00193A3B /* HVBloodGlucoseMeasurement.m */; };
+		5DC799741534E3EF00193A3B /* HVNameValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799721534E3ED00193A3B /* HVNameValue.h */; };
+		5DC799751534E3EF00193A3B /* HVNameValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC799731534E3EE00193A3B /* HVNameValue.m */; };
+		5DC799781534EC2E00193A3B /* HVLengthMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799761534EC2D00193A3B /* HVLengthMeasurement.h */; };
+		5DC799791534EC2E00193A3B /* HVLengthMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC799771534EC2E00193A3B /* HVLengthMeasurement.m */; };
+		5DC7997C1534F3A300193A3B /* HVHeight.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC7997A1534F3A200193A3B /* HVHeight.h */; };
+		5DC7997D1534F3A300193A3B /* HVHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7997B1534F3A200193A3B /* HVHeight.m */; };
+		5DC799801534FCD100193A3B /* HVExercise.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC7997E1534FCCF00193A3B /* HVExercise.h */; };
+		5DC799811534FCD100193A3B /* HVExercise.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7997F1534FCD000193A3B /* HVExercise.m */; };
+		5DC799921535FEE300193A3B /* HVGetAuthorizedPeopleTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799901535FEE300193A3B /* HVGetAuthorizedPeopleTask.h */; };
+		5DC799931535FEE300193A3B /* HVGetAuthorizedPeopleTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC799911535FEE300193A3B /* HVGetAuthorizedPeopleTask.m */; };
+		5DC799961535FF4200193A3B /* HVMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799941535FF4100193A3B /* HVMethods.h */; };
+		5DD0B80A14F81DDE00AAD54F /* XSerializableType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD0B80814F81DDE00AAD54F /* XSerializableType.h */; };
+		5DD0B80B14F81DDE00AAD54F /* XSerializableType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0B80914F81DDE00AAD54F /* XSerializableType.m */; };
+		5DE34C7C153925F2003C24E8 /* HVQuestionAnswer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C7A153925F2003C24E8 /* HVQuestionAnswer.h */; };
+		5DE34C7D153925F2003C24E8 /* HVQuestionAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE34C7B153925F2003C24E8 /* HVQuestionAnswer.m */; };
+		5DE34C8615393B88003C24E8 /* HVEncounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C8415393B87003C24E8 /* HVEncounter.h */; };
+		5DE34C8715393B88003C24E8 /* HVEncounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE34C8515393B87003C24E8 /* HVEncounter.m */; };
+		5DE34C8A15393C62003C24E8 /* HVDuration.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C8815393C61003C24E8 /* HVDuration.h */; };
+		5DE34C8B15393C62003C24E8 /* HVDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE34C8915393C61003C24E8 /* HVDuration.m */; };
+		5DE34C8E15394314003C24E8 /* HVOrganization.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C8C15394313003C24E8 /* HVOrganization.h */; };
+		5DE34C8F15394314003C24E8 /* HVOrganization.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE34C8D15394313003C24E8 /* HVOrganization.m */; };
+		5DE34C94153951FD003C24E8 /* HVOccurence.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C92153951FC003C24E8 /* HVOccurence.h */; };
+		5DE34C95153951FD003C24E8 /* HVOccurence.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE34C93153951FD003C24E8 /* HVOccurence.m */; };
+		5DE34C98153957AC003C24E8 /* HVSleepJournalAM.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C96153957AA003C24E8 /* HVSleepJournalAM.h */; };
+		5DE34C99153957AC003C24E8 /* HVSleepJournalAM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE34C97153957AB003C24E8 /* HVSleepJournalAM.m */; };
+		5DE382FB14E338C900DFA11D /* HVArrayExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE382F914E338C900DFA11D /* HVArrayExtensions.h */; };
+		5DE382FC14E338C900DFA11D /* HVArrayExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE382FA14E338C900DFA11D /* HVArrayExtensions.m */; };
+		5DE3830C14E4447800DFA11D /* XConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830214E4447800DFA11D /* XConverter.h */; };
+		5DE3830D14E4447800DFA11D /* XConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3830314E4447800DFA11D /* XConverter.m */; };
+		5DE3830E14E4447800DFA11D /* XException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830414E4447800DFA11D /* XException.h */; };
+		5DE3830F14E4447800DFA11D /* XException.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3830514E4447800DFA11D /* XException.m */; };
+		5DE3831014E4447800DFA11D /* XLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830614E4447800DFA11D /* XLib.h */; };
+		5DE3831114E4447800DFA11D /* XNodeType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830714E4447800DFA11D /* XNodeType.h */; };
+		5DE3831214E4447800DFA11D /* XReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830814E4447800DFA11D /* XReader.h */; };
+		5DE3831314E4447800DFA11D /* XReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3830914E4447800DFA11D /* XReader.m */; };
+		5DE3831414E4447800DFA11D /* XString.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830A14E4447800DFA11D /* XString.h */; };
+		5DE3831514E4447800DFA11D /* XString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3830B14E4447800DFA11D /* XString.m */; };
+		5DE57A1B1510F75400829CC2 /* HVUIAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE57A191510F75300829CC2 /* HVUIAlert.h */; };
+		5DE57A1C1510F75400829CC2 /* HVUIAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE57A1A1510F75300829CC2 /* HVUIAlert.m */; };
+		5DEF154A14E985C5009D05D5 /* HVType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF154814E985C5009D05D5 /* HVType.h */; };
+		5DEF154B14E985C5009D05D5 /* HVType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF154914E985C5009D05D5 /* HVType.m */; };
+		5DEF154F14E98DCB009D05D5 /* HVTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF154D14E98DCA009D05D5 /* HVTime.h */; };
+		5DEF155014E98DCB009D05D5 /* HVTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF154E14E98DCA009D05D5 /* HVTime.m */; };
+		5DEF155714E9987F009D05D5 /* HVDateExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF155514E9987E009D05D5 /* HVDateExtensions.h */; };
+		5DEF155814E9987F009D05D5 /* HVDateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF155614E9987F009D05D5 /* HVDateExtensions.m */; };
+		5DEF156714EB0988009D05D5 /* HVClientResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF156514EB0985009D05D5 /* HVClientResult.h */; };
+		5DEF156814EB0988009D05D5 /* HVClientResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF156614EB0986009D05D5 /* HVClientResult.m */; };
+		5DEF156B14EB180F009D05D5 /* HVDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF156914EB180D009D05D5 /* HVDateTime.h */; };
+		5DEF156C14EB180F009D05D5 /* HVDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF156A14EB180E009D05D5 /* HVDateTime.m */; };
+		5DEF156F14EC2431009D05D5 /* HVCodedValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF156D14EC242E009D05D5 /* HVCodedValue.h */; };
+		5DEF157014EC2431009D05D5 /* HVCodedValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF156E14EC2430009D05D5 /* HVCodedValue.m */; };
+		5DEF157314EC2458009D05D5 /* HVCodableValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF157114EC2455009D05D5 /* HVCodableValue.h */; };
+		5DEF157414EC2458009D05D5 /* HVCodableValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF157214EC2456009D05D5 /* HVCodableValue.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5D07A9551534B1780013DC2A /* HVProcedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVProcedure.h; sourceTree = "<group>"; };
+		5D07A9561534B1780013DC2A /* HVProcedure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVProcedure.m; sourceTree = "<group>"; };
+		5D0B4BDF151A7D50000849D0 /* HVCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCondition.h; sourceTree = "<group>"; };
+		5D0B4BE0151A7D50000849D0 /* HVCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCondition.m; sourceTree = "<group>"; };
+		5D0B4BE4151A80A4000849D0 /* HVApproxDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVApproxDateTime.h; sourceTree = "<group>"; };
+		5D0B4BE5151A80A4000849D0 /* HVApproxDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVApproxDateTime.m; sourceTree = "<group>"; };
+		5D0DACB114E2FE14002CBE52 /* HVCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCore.h; sourceTree = "<group>"; };
+		5D0DACB214E2FE14002CBE52 /* HVCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCore.m; sourceTree = "<group>"; };
+		5D195CF8151B886000E109AD /* HVRelatedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRelatedItem.h; sourceTree = "<group>"; };
+		5D195CF9151B886000E109AD /* HVRelatedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVRelatedItem.m; sourceTree = "<group>"; };
+		5D195CFD151BBC7C00E109AD /* HVMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMeasurement.h; sourceTree = "<group>"; };
+		5D195CFE151BBC7D00E109AD /* HVMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMeasurement.m; sourceTree = "<group>"; };
+		5D195D01151BC72B00E109AD /* HVApproxMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVApproxMeasurement.h; sourceTree = "<group>"; };
+		5D195D02151BC72C00E109AD /* HVApproxMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVApproxMeasurement.m; sourceTree = "<group>"; };
+		5D195D05151BCAB400E109AD /* HVMedication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMedication.h; sourceTree = "<group>"; };
+		5D195D06151BCAB400E109AD /* HVMedication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMedication.m; sourceTree = "<group>"; };
+		5D195D0D151BEB9F00E109AD /* HVAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAddress.h; sourceTree = "<group>"; };
+		5D195D0E151BEBA000E109AD /* HVAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAddress.m; sourceTree = "<group>"; };
+		5D195D11151BF01600E109AD /* HVPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPhone.h; sourceTree = "<group>"; };
+		5D195D12151BF01700E109AD /* HVPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPhone.m; sourceTree = "<group>"; };
+		5D195D19151BF2E100E109AD /* HVEmailAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEmailAddress.h; sourceTree = "<group>"; };
+		5D195D1A151BF2E100E109AD /* HVEmailAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVEmailAddress.m; sourceTree = "<group>"; };
+		5D195D1D151BF53F00E109AD /* HVEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEmail.h; sourceTree = "<group>"; };
+		5D195D1E151BF54100E109AD /* HVEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVEmail.m; sourceTree = "<group>"; };
+		5D195D21151BF60D00E109AD /* HVContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVContact.h; sourceTree = "<group>"; };
+		5D195D22151BF60F00E109AD /* HVContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVContact.m; sourceTree = "<group>"; };
+		5D195D25151BF9F100E109AD /* HVPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPerson.h; sourceTree = "<group>"; };
+		5D195D26151BF9F300E109AD /* HVPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPerson.m; sourceTree = "<group>"; };
+		5D195D29151BFA4F00E109AD /* HVName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVName.h; sourceTree = "<group>"; };
+		5D195D2A151BFA5200E109AD /* HVName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVName.m; sourceTree = "<group>"; };
+		5D195D4815222AF900E109AD /* HVVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVector.h; sourceTree = "<group>"; };
+		5D195D4A15222B8A00E109AD /* HVVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HVVector.cpp; sourceTree = "<group>"; };
+		5D195D4C1522527100E109AD /* HVPutItemsTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPutItemsTask.h; sourceTree = "<group>"; };
+		5D195D4D1522527100E109AD /* HVPutItemsTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPutItemsTask.m; sourceTree = "<group>"; };
+		5D195D641522780600E109AD /* HVRemoveItemsTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRemoveItemsTask.h; sourceTree = "<group>"; };
+		5D195D651522780700E109AD /* HVRemoveItemsTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVRemoveItemsTask.m; sourceTree = "<group>"; };
+		5D195D7015228C0200E109AD /* HVVocabSearchText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabSearchText.h; sourceTree = "<group>"; };
+		5D195D7115228C0200E109AD /* HVVocabSearchText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabSearchText.m; sourceTree = "<group>"; };
+		5D195D801522973300E109AD /* HVVocabSearchTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabSearchTask.h; sourceTree = "<group>"; };
+		5D195D811522973400E109AD /* HVVocabSearchTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabSearchTask.m; sourceTree = "<group>"; };
+		5D195D8C1523BC4900E109AD /* HVIndexList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVIndexList.h; sourceTree = "<group>"; };
+		5D195D8D1523BC4900E109AD /* HVIndexList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVIndexList.m; sourceTree = "<group>"; };
+		5D1F13221539DD5200524425 /* HVSleepJournalPM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSleepJournalPM.h; sourceTree = "<group>"; };
+		5D1F13231539DD5200524425 /* HVSleepJournalPM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSleepJournalPM.m; sourceTree = "<group>"; };
+		5D1F13271539E9DF00524425 /* HVRelative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRelative.h; sourceTree = "<group>"; };
+		5D1F13281539E9E000524425 /* HVRelative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVRelative.m; sourceTree = "<group>"; };
+		5D1F132B1539EDF100524425 /* HVFamilyHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFamilyHistory.h; sourceTree = "<group>"; };
+		5D1F132C1539EDF100524425 /* HVFamilyHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFamilyHistory.m; sourceTree = "<group>"; };
+		5D1F132F1539EF0600524425 /* HVConditionEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConditionEntry.h; sourceTree = "<group>"; };
+		5D1F13301539EF0600524425 /* HVConditionEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVConditionEntry.m; sourceTree = "<group>"; };
+		5D1F13361539FF6200524425 /* HVDietaryIntake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDietaryIntake.h; sourceTree = "<group>"; };
+		5D1F13371539FF6300524425 /* HVDietaryIntake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDietaryIntake.m; sourceTree = "<group>"; };
+		5D20D2D814EDD32500160611 /* HVConstrainedDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConstrainedDouble.h; sourceTree = "<group>"; };
+		5D20D2D914EDD32500160611 /* HVConstrainedDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVConstrainedDouble.m; sourceTree = "<group>"; };
+		5D20D2DC14EDD5FE00160611 /* HVPositiveDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPositiveDouble.h; sourceTree = "<group>"; };
+		5D20D2DD14EDD5FE00160611 /* HVPositiveDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPositiveDouble.m; sourceTree = "<group>"; };
+		5D20D2E014EDD6C000160611 /* HVWeightMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVWeightMeasurement.h; sourceTree = "<group>"; };
+		5D20D2E114EDD6C000160611 /* HVWeightMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVWeightMeasurement.m; sourceTree = "<group>"; };
+		5D20D2E414EDDEF400160611 /* HVDisplayValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDisplayValue.h; sourceTree = "<group>"; };
+		5D20D2E514EDDEF400160611 /* HVDisplayValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDisplayValue.m; sourceTree = "<group>"; };
+		5D20D2E814EDF16F00160611 /* HVBloodPressure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBloodPressure.h; sourceTree = "<group>"; };
+		5D20D2E914EDF16F00160611 /* HVBloodPressure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBloodPressure.m; sourceTree = "<group>"; };
+		5D20D2EC14EEF84300160611 /* HVInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVInt.h; sourceTree = "<group>"; };
+		5D20D2ED14EEF84400160611 /* HVInt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVInt.m; sourceTree = "<group>"; };
+		5D20D2F014EEF99300160611 /* HVDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDouble.h; sourceTree = "<group>"; };
+		5D20D2F114EEF99300160611 /* HVDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDouble.m; sourceTree = "<group>"; };
+		5D20D2F414EEFA7500160611 /* HVNonNegativeInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVNonNegativeInt.h; sourceTree = "<group>"; };
+		5D20D2F514EEFA7500160611 /* HVNonNegativeInt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVNonNegativeInt.m; sourceTree = "<group>"; };
+		5D20D2F814EEFF6B00160611 /* HVBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBool.h; sourceTree = "<group>"; };
+		5D20D2F914EEFF6B00160611 /* HVBool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBool.m; sourceTree = "<group>"; };
+		5D20D2FC14EF3DC000160611 /* HVItemQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemQuery.h; sourceTree = "<group>"; };
+		5D20D2FD14EF3DC200160611 /* HVItemQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemQuery.m; sourceTree = "<group>"; };
+		5D20D30114EF414500160611 /* HVCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCollection.h; sourceTree = "<group>"; };
+		5D20D30214EF414500160611 /* HVCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCollection.m; sourceTree = "<group>"; };
+		5D20D30514F2E21000160611 /* HVItemKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemKey.h; sourceTree = "<group>"; };
+		5D20D30614F2E21200160611 /* HVItemKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemKey.m; sourceTree = "<group>"; };
+		5D20D30914F2E22800160611 /* HVItemFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemFilter.h; sourceTree = "<group>"; };
+		5D20D30A14F2E22A00160611 /* HVItemFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemFilter.m; sourceTree = "<group>"; };
+		5D20D30D14F2E26400160611 /* HVItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemView.h; sourceTree = "<group>"; };
+		5D20D30E14F2E26600160611 /* HVItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemView.m; sourceTree = "<group>"; };
+		5D20D31114F2F4EF00160611 /* HVItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItem.h; sourceTree = "<group>"; };
+		5D20D31214F2F4F100160611 /* HVItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItem.m; sourceTree = "<group>"; };
+		5D20D31914F2FA5400160611 /* HVItemSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemSection.h; sourceTree = "<group>"; };
+		5D20D31A14F2FA5600160611 /* HVItemSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemSection.m; sourceTree = "<group>"; };
+		5D20D32114F304E100160611 /* HVItemState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemState.h; sourceTree = "<group>"; };
+		5D20D32214F304E400160611 /* HVItemState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemState.m; sourceTree = "<group>"; };
+		5D20D32514F424EA00160611 /* HVItemType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemType.h; sourceTree = "<group>"; };
+		5D20D32614F424EC00160611 /* HVItemType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemType.m; sourceTree = "<group>"; };
+		5D20D32914F42E0C00160611 /* HVItemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemData.h; sourceTree = "<group>"; };
+		5D20D32A14F42E0F00160611 /* HVItemData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemData.m; sourceTree = "<group>"; };
+		5D20D32D14F4352200160611 /* HVItemDataCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemDataCommon.h; sourceTree = "<group>"; };
+		5D20D32E14F4352500160611 /* HVItemDataCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemDataCommon.m; sourceTree = "<group>"; };
+		5D20D33114F4365E00160611 /* HVConstrainedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConstrainedString.h; sourceTree = "<group>"; };
+		5D20D33214F4366000160611 /* HVConstrainedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVConstrainedString.m; sourceTree = "<group>"; };
+		5D20D33514F43A1000160611 /* HVString255.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVString255.h; sourceTree = "<group>"; };
+		5D20D33614F43A1200160611 /* HVString255.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVString255.m; sourceTree = "<group>"; };
+		5D20D33914F43A9800160611 /* HVStringZ512.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVStringZ512.h; sourceTree = "<group>"; };
+		5D20D33A14F43A9A00160611 /* HVStringZ512.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVStringZ512.m; sourceTree = "<group>"; };
+		5D20D33D14F4467C00160611 /* HVItemRaw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemRaw.h; sourceTree = "<group>"; };
+		5D20D33E14F4467C00160611 /* HVItemRaw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemRaw.m; sourceTree = "<group>"; };
+		5D20D34114F44EE800160611 /* HVAudit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAudit.h; sourceTree = "<group>"; };
+		5D20D34214F44EEC00160611 /* HVAudit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAudit.m; sourceTree = "<group>"; };
+		5D20D34514F4804600160611 /* HVRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRecord.h; sourceTree = "<group>"; };
+		5D20D34614F4804A00160611 /* HVRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVRecord.m; sourceTree = "<group>"; };
+		5D20D34914F4807900160611 /* HVPersonInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPersonInfo.h; sourceTree = "<group>"; };
+		5D20D34A14F4807D00160611 /* HVPersonInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPersonInfo.m; sourceTree = "<group>"; };
+		5D20D34D14F487B500160611 /* HVItemQueryResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemQueryResults.h; sourceTree = "<group>"; };
+		5D20D34E14F487BA00160611 /* HVItemQueryResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemQueryResults.m; sourceTree = "<group>"; };
+		5D20D35114F487E100160611 /* HVPendingItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPendingItem.h; sourceTree = "<group>"; };
+		5D20D35214F487E600160611 /* HVPendingItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPendingItem.m; sourceTree = "<group>"; };
+		5D20D35514F4882C00160611 /* HVItemQueryResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemQueryResult.h; sourceTree = "<group>"; };
+		5D20D35614F4883100160611 /* HVItemQueryResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemQueryResult.m; sourceTree = "<group>"; };
+		5D227B85153766E500E12075 /* HVVocabIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabIdentifier.h; sourceTree = "<group>"; };
+		5D227B86153766E500E12075 /* HVVocabIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabIdentifier.m; sourceTree = "<group>"; };
+		5D227B87153766E500E12075 /* HVVocabItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabItem.h; sourceTree = "<group>"; };
+		5D227B88153766E500E12075 /* HVVocabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabItem.m; sourceTree = "<group>"; };
+		5D227B89153766E500E12075 /* HVVocabSearchParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabSearchParams.h; sourceTree = "<group>"; };
+		5D227B8A153766E500E12075 /* HVVocabSearchParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabSearchParams.m; sourceTree = "<group>"; };
+		5D227B8B153766E500E12075 /* HVVocabCodeSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabCodeSet.h; sourceTree = "<group>"; };
+		5D227B8C153766E500E12075 /* HVVocabCodeSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabCodeSet.m; sourceTree = "<group>"; };
+		5D2D1C5B14E4A4F400C85B7E /* XWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWriter.h; sourceTree = "<group>"; };
+		5D2D1C5C14E4A4F400C85B7E /* XWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWriter.m; sourceTree = "<group>"; };
+		5D2D1C6014E4AC9B00C85B7E /* XNodeType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNodeType.m; sourceTree = "<group>"; };
+		5D311728150FE26600B8F3D7 /* HVBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlock.m; sourceTree = "<group>"; };
+		5D362B53152F84E2006CC30C /* HVPrescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPrescription.h; sourceTree = "<group>"; };
+		5D362B54152F84FA006CC30C /* HVPrescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPrescription.m; sourceTree = "<group>"; };
+		5D39F9201513A07700208A7B /* HVRecordReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRecordReference.h; sourceTree = "<group>"; };
+		5D39F9251513A63500208A7B /* HVMethodCallTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMethodCallTask.h; sourceTree = "<group>"; };
+		5D39F9261513A63500208A7B /* HVMethodCallTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMethodCallTask.m; sourceTree = "<group>"; };
+		5D39F9291513AA5F00208A7B /* HVServerResponseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVServerResponseStatus.h; sourceTree = "<group>"; };
+		5D39F92A1513AA5F00208A7B /* HVServerResponseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVServerResponseStatus.m; sourceTree = "<group>"; };
+		5D39F92D1513E41200208A7B /* HVGetItemsTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGetItemsTask.h; sourceTree = "<group>"; };
+		5D39F92E1513E41200208A7B /* HVGetItemsTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGetItemsTask.m; sourceTree = "<group>"; };
+		5D39F9311513FFC500208A7B /* HVRecordReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVRecordReference.m; sourceTree = "<group>"; };
+		5D39F935151A3AA000208A7B /* HVLocalItemStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalItemStore.h; sourceTree = "<group>"; };
+		5D39F936151A3AA100208A7B /* HVLocalItemStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalItemStore.m; sourceTree = "<group>"; };
+		5D39F939151A718900208A7B /* HVLocalRecordStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalRecordStore.h; sourceTree = "<group>"; };
+		5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalRecordStore.m; sourceTree = "<group>"; };
+		5D5299AC14DCB3A700D2636E /* libHVLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHVLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D5299AF14DCB3A700D2636E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5D5299B314DCB3A700D2636E /* HVLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HVLib-Prefix.pch"; sourceTree = "<group>"; };
+		5D561B0315365F74003D68D2 /* HVEmergencyOrProviderContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEmergencyOrProviderContact.h; sourceTree = "<group>"; };
+		5D561B0415365F74003D68D2 /* HVEmergencyOrProviderContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVEmergencyOrProviderContact.m; sourceTree = "<group>"; };
+		5D57A8B4152F8A0C00A80C4A /* HVPositiveInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPositiveInt.h; sourceTree = "<group>"; };
+		5D57A8B5152F8A0C00A80C4A /* HVPositiveInt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPositiveInt.m; sourceTree = "<group>"; };
+		5D5F3111150E95E700ED11E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5D5F3114150E9A3B00ED11E7 /* HVCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCollection.h; sourceTree = "<group>"; };
+		5D5F3115150E9A3B00ED11E7 /* HVCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCollection.m; sourceTree = "<group>"; };
+		5D5F3116150E9A3B00ED11E7 /* HVMulticastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMulticastDelegate.h; sourceTree = "<group>"; };
+		5D5F3117150E9A3B00ED11E7 /* HVMulticastDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMulticastDelegate.m; sourceTree = "<group>"; };
+		5D5F3118150E9A3B00ED11E7 /* HVCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = HVCommon.c; sourceTree = "<group>"; };
+		5D5F3119150E9A3C00ED11E7 /* HVClientSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVClientSettings.h; sourceTree = "<group>"; };
+		5D5F311A150E9A3D00ED11E7 /* HVClientSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVClientSettings.m; sourceTree = "<group>"; };
+		5D5F3124150EAD8400ED11E7 /* HVDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDirectory.h; sourceTree = "<group>"; };
+		5D5F3125150EAD8400ED11E7 /* HVDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDirectory.m; sourceTree = "<group>"; };
+		5D5F312E150ED29F00ED11E7 /* HVBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBrowserController.h; sourceTree = "<group>"; };
+		5D5F312F150ED29F00ED11E7 /* HVBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBrowserController.m; sourceTree = "<group>"; };
+		5D5F313B150FAA2800ED11E7 /* HealthVaultConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthVaultConfig.h; sourceTree = "<group>"; };
+		5D5F313C150FAA2800ED11E7 /* HealthVaultRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthVaultRecord.h; sourceTree = "<group>"; };
+		5D5F313D150FAA2800ED11E7 /* HealthVaultRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthVaultRecord.m; sourceTree = "<group>"; };
+		5D5F313E150FAA2800ED11E7 /* HealthVaultRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthVaultRequest.h; sourceTree = "<group>"; };
+		5D5F313F150FAA2800ED11E7 /* HealthVaultRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthVaultRequest.m; sourceTree = "<group>"; };
+		5D5F3140150FAA2800ED11E7 /* HealthVaultResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthVaultResponse.h; sourceTree = "<group>"; };
+		5D5F3141150FAA2800ED11E7 /* HealthVaultResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthVaultResponse.m; sourceTree = "<group>"; };
+		5D5F3142150FAA2800ED11E7 /* HealthVaultService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthVaultService.h; sourceTree = "<group>"; };
+		5D5F3143150FAA2800ED11E7 /* HealthVaultService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthVaultService.m; sourceTree = "<group>"; };
+		5D5F3144150FAA2800ED11E7 /* MobilePlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobilePlatform.h; sourceTree = "<group>"; };
+		5D5F3145150FAA2800ED11E7 /* MobilePlatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobilePlatform.m; sourceTree = "<group>"; };
+		5D5F3147150FAA2800ED11E7 /* AuthenticationCheckState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationCheckState.h; sourceTree = "<group>"; };
+		5D5F3148150FAA2800ED11E7 /* AuthenticationCheckState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationCheckState.m; sourceTree = "<group>"; };
+		5D5F3149150FAA2800ED11E7 /* Provisioner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Provisioner.h; sourceTree = "<group>"; };
+		5D5F314A150FAA2800ED11E7 /* Provisioner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Provisioner.m; sourceTree = "<group>"; };
+		5D5F314C150FAA2800ED11E7 /* HealthVaultSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthVaultSettings.h; sourceTree = "<group>"; };
+		5D5F314D150FAA2800ED11E7 /* HealthVaultSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthVaultSettings.m; sourceTree = "<group>"; };
+		5D5F314F150FAA2800ED11E7 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		5D5F3150150FAA2800ED11E7 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		5D5F3151150FAA2800ED11E7 /* DateTimeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimeUtils.h; sourceTree = "<group>"; };
+		5D5F3152150FAA2800ED11E7 /* DateTimeUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimeUtils.m; sourceTree = "<group>"; };
+		5D5F3153150FAA2800ED11E7 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		5D5F3154150FAA2800ED11E7 /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
+		5D5F3156150FAA2800ED11E7 /* WebResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebResponse.h; sourceTree = "<group>"; };
+		5D5F3157150FAA2800ED11E7 /* WebResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebResponse.m; sourceTree = "<group>"; };
+		5D5F3158150FAA2800ED11E7 /* WebTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebTransport.h; sourceTree = "<group>"; };
+		5D5F3159150FAA2800ED11E7 /* WebTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebTransport.m; sourceTree = "<group>"; };
+		5D5F315B150FAA2800ED11E7 /* XmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlElement.h; sourceTree = "<group>"; };
+		5D5F315C150FAA2800ED11E7 /* XmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XmlElement.m; sourceTree = "<group>"; };
+		5D5F315D150FAA2800ED11E7 /* XmlTextReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlTextReader.h; sourceTree = "<group>"; };
+		5D5F315E150FAA2800ED11E7 /* XmlTextReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XmlTextReader.m; sourceTree = "<group>"; };
+		5D5F3182150FAE5200ED11E7 /* HVAppProvisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAppProvisionController.h; sourceTree = "<group>"; };
+		5D5F3183150FAE5300ED11E7 /* HVAppProvisionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAppProvisionController.m; sourceTree = "<group>"; };
+		5D5F318B150FDD4700ED11E7 /* HVBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlock.h; sourceTree = "<group>"; };
+		5D76B9C814DCB92400BA865F /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		5D76B9D114DCC84C00BA865F /* HVValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVValidator.h; sourceTree = "<group>"; };
+		5D76B9D214DCC84C00BA865F /* HVValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVValidator.m; sourceTree = "<group>"; };
+		5D76B9D514DCC85B00BA865F /* HVStringExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVStringExtensions.h; sourceTree = "<group>"; };
+		5D76B9D614DCC85B00BA865F /* HVStringExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVStringExtensions.m; sourceTree = "<group>"; };
+		5D76B9D714DCC85B00BA865F /* HVExceptionExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVExceptionExtensions.h; sourceTree = "<group>"; };
+		5D76B9D814DCC85B00BA865F /* HVExceptionExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVExceptionExtensions.m; sourceTree = "<group>"; };
+		5D76B9E814DCC9CF00BA865F /* HVLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLib.h; sourceTree = "<group>"; };
+		5D76B9EA14DCC9F400BA865F /* HVLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLib.m; sourceTree = "<group>"; };
+		5D775C6F15389BD7000F01AE /* HVBasicDemographics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBasicDemographics.h; sourceTree = "<group>"; };
+		5D775C7015389BD7000F01AE /* HVBasicDemographics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBasicDemographics.m; sourceTree = "<group>"; };
+		5D775C731538A118000F01AE /* HVItemTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemTypes.m; sourceTree = "<group>"; };
+		5D775C751538C2B7000F01AE /* HVPersonalDemographics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPersonalDemographics.h; sourceTree = "<group>"; };
+		5D775C761538C2B9000F01AE /* HVPersonalDemographics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPersonalDemographics.m; sourceTree = "<group>"; };
+		5D775C791538D04D000F01AE /* HVPersonalContactInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPersonalContactInfo.h; sourceTree = "<group>"; };
+		5D775C7A1538D04F000F01AE /* HVPersonalContactInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPersonalContactInfo.m; sourceTree = "<group>"; };
+		5D775C7D1538D2F6000F01AE /* HVDailyMedicationUsage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDailyMedicationUsage.h; sourceTree = "<group>"; };
+		5D775C7E1538D2F8000F01AE /* HVDailyMedicationUsage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDailyMedicationUsage.m; sourceTree = "<group>"; };
+		5D775C811538D869000F01AE /* HVEmotionalState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEmotionalState.h; sourceTree = "<group>"; };
+		5D775C821538D86A000F01AE /* HVEmotionalState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVEmotionalState.m; sourceTree = "<group>"; };
+		5D775C851538DED0000F01AE /* HVVitalSignResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVitalSignResult.h; sourceTree = "<group>"; };
+		5D775C861538DED1000F01AE /* HVVitalSignResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVitalSignResult.m; sourceTree = "<group>"; };
+		5D775C891538E42E000F01AE /* HVVitalSigns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVitalSigns.h; sourceTree = "<group>"; };
+		5D775C8A1538E430000F01AE /* HVVitalSigns.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVitalSigns.m; sourceTree = "<group>"; };
+		5D775C8D1538E9B8000F01AE /* HVAssessmentField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAssessmentField.h; sourceTree = "<group>"; };
+		5D775C8E1538E9B9000F01AE /* HVAssessmentField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAssessmentField.m; sourceTree = "<group>"; };
+		5D775C911538EBF5000F01AE /* HVAssessment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAssessment.h; sourceTree = "<group>"; };
+		5D775C921538EBF6000F01AE /* HVAssessment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAssessment.m; sourceTree = "<group>"; };
+		5D8E5A9C152FA913002BC6E2 /* HVCholesterol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCholesterol.h; sourceTree = "<group>"; };
+		5D8E5A9D152FA913002BC6E2 /* HVCholesterol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCholesterol.m; sourceTree = "<group>"; };
+		5D8E5AA5152FBBA3002BC6E2 /* HVAllergy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAllergy.h; sourceTree = "<group>"; };
+		5D8E5AA6152FBBA4002BC6E2 /* HVAllergy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAllergy.m; sourceTree = "<group>"; };
+		5D8E5AAF152FC45F002BC6E2 /* HVImmunization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVImmunization.h; sourceTree = "<group>"; };
+		5D8E5AB0152FC45F002BC6E2 /* HVImmunization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVImmunization.m; sourceTree = "<group>"; };
+		5D8E5AB3152FC551002BC6E2 /* HVApproxDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVApproxDate.h; sourceTree = "<group>"; };
+		5D8E5AB4152FC551002BC6E2 /* HVApproxDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVApproxDate.m; sourceTree = "<group>"; };
+		5D8FC3E014E2EDDF000F28EB /* HVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCommon.h; sourceTree = "<group>"; };
+		5D925DD515376F21006BAAA8 /* HVGetVocabTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGetVocabTask.h; sourceTree = "<group>"; };
+		5D925DD615376F21006BAAA8 /* HVGetVocabTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGetVocabTask.m; sourceTree = "<group>"; };
+		5D925DDA15376F8A006BAAA8 /* HVVocab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocab.h; sourceTree = "<group>"; };
+		5D925DDE15377348006BAAA8 /* HVVocabParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabParams.h; sourceTree = "<group>"; };
+		5D925DDF15377348006BAAA8 /* HVVocabParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabParams.m; sourceTree = "<group>"; };
+		5D97B93A1511743C0004B551 /* HVUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVUser.h; sourceTree = "<group>"; };
+		5D97B93B1511743C0004B551 /* HVUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVUser.m; sourceTree = "<group>"; };
+		5D97B93F15125A270004B551 /* HVObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVObjectStore.h; sourceTree = "<group>"; };
+		5D983BB614E5949B00C287B7 /* HVGuid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGuid.h; sourceTree = "<group>"; };
+		5D983BB714E5949B00C287B7 /* HVGuid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGuid.m; sourceTree = "<group>"; };
+		5D983BCF14E5BF6700C287B7 /* XSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XSerializer.h; sourceTree = "<group>"; };
+		5D983BD214E5CA3300C287B7 /* XSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSerializer.m; sourceTree = "<group>"; };
+		5D983BD414E5E87000C287B7 /* HVTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTypes.h; sourceTree = "<group>"; };
+		5D983BD614E5F4BD00C287B7 /* HVItemDataTyped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemDataTyped.h; sourceTree = "<group>"; };
+		5D983BD714E5F4BD00C287B7 /* HVItemDataTyped.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemDataTyped.m; sourceTree = "<group>"; };
+		5D983BDA14E5F50600C287B7 /* HVWeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVWeight.h; sourceTree = "<group>"; };
+		5D983BDB14E5F50600C287B7 /* HVWeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVWeight.m; sourceTree = "<group>"; };
+		5D983BDE14E5F7A300C287B7 /* HVItemTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemTypes.h; sourceTree = "<group>"; };
+		5D983BE014E5FE2A00C287B7 /* HVClientException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVClientException.h; sourceTree = "<group>"; };
+		5D983BE114E5FE2A00C287B7 /* HVClientException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVClientException.m; sourceTree = "<group>"; };
+		5D983BE414E6006400C287B7 /* HVConstrainedInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConstrainedInt.h; sourceTree = "<group>"; };
+		5D983BE514E6006400C287B7 /* HVConstrainedInt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVConstrainedInt.m; sourceTree = "<group>"; };
+		5D983BE814E6035900C287B7 /* HVDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDay.h; sourceTree = "<group>"; };
+		5D983BE914E6035900C287B7 /* HVDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDay.m; sourceTree = "<group>"; };
+		5D983BEC14E6038000C287B7 /* HVMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMonth.h; sourceTree = "<group>"; };
+		5D983BED14E6038000C287B7 /* HVMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMonth.m; sourceTree = "<group>"; };
+		5D983BF014E6039C00C287B7 /* HVYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVYear.h; sourceTree = "<group>"; };
+		5D983BF114E6039C00C287B7 /* HVYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVYear.m; sourceTree = "<group>"; };
+		5D983BF414E6070500C287B7 /* HVDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDate.h; sourceTree = "<group>"; };
+		5D983BF514E6070500C287B7 /* HVDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDate.m; sourceTree = "<group>"; };
+		5D983BF814E60D1D00C287B7 /* HVBaseTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBaseTypes.h; sourceTree = "<group>"; };
+		5D983BFA14E984B500C287B7 /* HVHour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVHour.h; sourceTree = "<group>"; };
+		5D983BFB14E984B500C287B7 /* HVHour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVHour.m; sourceTree = "<group>"; };
+		5D983BFE14E984CC00C287B7 /* HVMinute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMinute.h; sourceTree = "<group>"; };
+		5D983BFF14E984CD00C287B7 /* HVMinute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMinute.m; sourceTree = "<group>"; };
+		5D983C0214E984ED00C287B7 /* HVSecond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSecond.h; sourceTree = "<group>"; };
+		5D983C0314E984ED00C287B7 /* HVSecond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSecond.m; sourceTree = "<group>"; };
+		5D983C0614E9850300C287B7 /* HVMillisecond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMillisecond.h; sourceTree = "<group>"; };
+		5D983C0714E9850400C287B7 /* HVMillisecond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMillisecond.m; sourceTree = "<group>"; };
+		5DC3C43515360123008BBDBF /* HVGetAuthorizedPeopleResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGetAuthorizedPeopleResult.h; sourceTree = "<group>"; };
+		5DC3C43615360123008BBDBF /* HVGetAuthorizedPeopleResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGetAuthorizedPeopleResult.m; sourceTree = "<group>"; };
+		5DC44B7A14FEA3E600E2E02F /* HVRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRandom.h; sourceTree = "<group>"; };
+		5DC44B7B14FEA3E600E2E02F /* HVRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVRandom.m; sourceTree = "<group>"; };
+		5DC50C22150019650078D85F /* HVItemTestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemTestExtensions.h; sourceTree = "<group>"; };
+		5DC50C23150019650078D85F /* HVItemTestExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemTestExtensions.m; sourceTree = "<group>"; };
+		5DC50C2B15003C2A0078D85F /* HVTypeViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTypeViewItem.h; sourceTree = "<group>"; };
+		5DC50C2C15003C2A0078D85F /* HVTypeViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTypeViewItem.m; sourceTree = "<group>"; };
+		5DC50C2F15003C3D0078D85F /* HVTypeViewItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTypeViewItems.h; sourceTree = "<group>"; };
+		5DC50C3015003C3D0078D85F /* HVTypeViewItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTypeViewItems.m; sourceTree = "<group>"; };
+		5DC50C3815004E040078D85F /* HVItemStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemStore.h; sourceTree = "<group>"; };
+		5DC50C3E150051DC0078D85F /* HVMemoryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMemoryStore.h; sourceTree = "<group>"; };
+		5DC50C3F150051DC0078D85F /* HVMemoryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMemoryStore.m; sourceTree = "<group>"; };
+		5DC50C4215015EE60078D85F /* HVTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTypeView.h; sourceTree = "<group>"; };
+		5DC50C4315015EE60078D85F /* HVTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTypeView.m; sourceTree = "<group>"; };
+		5DC50C46150160CD0078D85F /* HVSynchronizedStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSynchronizedStore.h; sourceTree = "<group>"; };
+		5DC50C47150160CD0078D85F /* HVSynchronizedStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSynchronizedStore.m; sourceTree = "<group>"; };
+		5DC50C4A150172610078D85F /* HVMulticastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMulticastDelegate.h; sourceTree = "<group>"; };
+		5DC50C4B150172610078D85F /* HVMulticastDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMulticastDelegate.m; sourceTree = "<group>"; };
+		5DC50C4E15017CC10078D85F /* HVAsyncTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAsyncTask.h; sourceTree = "<group>"; };
+		5DC50C4F15017CC20078D85F /* HVAsyncTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAsyncTask.m; sourceTree = "<group>"; };
+		5DC50C5A1506F5FF0078D85F /* HVClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVClient.h; sourceTree = "<group>"; };
+		5DC50C5B1506F6010078D85F /* HVClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVClient.m; sourceTree = "<group>"; };
+		5DC50C5E1508049E0078D85F /* HVLocalVault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalVault.h; sourceTree = "<group>"; };
+		5DC50C5F1508049F0078D85F /* HVLocalVault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalVault.m; sourceTree = "<group>"; };
+		5DC7995D1534C95A00193A3B /* HVBloodGlucose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBloodGlucose.h; sourceTree = "<group>"; };
+		5DC7995E1534C95A00193A3B /* HVBloodGlucose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBloodGlucose.m; sourceTree = "<group>"; };
+		5DC799621534C97200193A3B /* HVOneToFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVOneToFive.h; sourceTree = "<group>"; };
+		5DC799631534C97200193A3B /* HVOneToFive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVOneToFive.m; sourceTree = "<group>"; };
+		5DC7996A1534CB0E00193A3B /* HVBloodGlucoseMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBloodGlucoseMeasurement.h; sourceTree = "<group>"; };
+		5DC7996B1534CB0E00193A3B /* HVBloodGlucoseMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBloodGlucoseMeasurement.m; sourceTree = "<group>"; };
+		5DC799721534E3ED00193A3B /* HVNameValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVNameValue.h; sourceTree = "<group>"; };
+		5DC799731534E3EE00193A3B /* HVNameValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVNameValue.m; sourceTree = "<group>"; };
+		5DC799761534EC2D00193A3B /* HVLengthMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLengthMeasurement.h; sourceTree = "<group>"; };
+		5DC799771534EC2E00193A3B /* HVLengthMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLengthMeasurement.m; sourceTree = "<group>"; };
+		5DC7997A1534F3A200193A3B /* HVHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVHeight.h; sourceTree = "<group>"; };
+		5DC7997B1534F3A200193A3B /* HVHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVHeight.m; sourceTree = "<group>"; };
+		5DC7997E1534FCCF00193A3B /* HVExercise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVExercise.h; sourceTree = "<group>"; };
+		5DC7997F1534FCD000193A3B /* HVExercise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVExercise.m; sourceTree = "<group>"; };
+		5DC799901535FEE300193A3B /* HVGetAuthorizedPeopleTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGetAuthorizedPeopleTask.h; sourceTree = "<group>"; };
+		5DC799911535FEE300193A3B /* HVGetAuthorizedPeopleTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGetAuthorizedPeopleTask.m; sourceTree = "<group>"; };
+		5DC799941535FF4100193A3B /* HVMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMethods.h; sourceTree = "<group>"; };
+		5DD0B80814F81DDE00AAD54F /* XSerializableType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XSerializableType.h; sourceTree = "<group>"; };
+		5DD0B80914F81DDE00AAD54F /* XSerializableType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSerializableType.m; sourceTree = "<group>"; };
+		5DE34C7A153925F2003C24E8 /* HVQuestionAnswer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVQuestionAnswer.h; sourceTree = "<group>"; };
+		5DE34C7B153925F2003C24E8 /* HVQuestionAnswer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVQuestionAnswer.m; sourceTree = "<group>"; };
+		5DE34C8415393B87003C24E8 /* HVEncounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEncounter.h; sourceTree = "<group>"; };
+		5DE34C8515393B87003C24E8 /* HVEncounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVEncounter.m; sourceTree = "<group>"; };
+		5DE34C8815393C61003C24E8 /* HVDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDuration.h; sourceTree = "<group>"; };
+		5DE34C8915393C61003C24E8 /* HVDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDuration.m; sourceTree = "<group>"; };
+		5DE34C8C15394313003C24E8 /* HVOrganization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVOrganization.h; sourceTree = "<group>"; };
+		5DE34C8D15394313003C24E8 /* HVOrganization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVOrganization.m; sourceTree = "<group>"; };
+		5DE34C92153951FC003C24E8 /* HVOccurence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVOccurence.h; sourceTree = "<group>"; };
+		5DE34C93153951FD003C24E8 /* HVOccurence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVOccurence.m; sourceTree = "<group>"; };
+		5DE34C96153957AA003C24E8 /* HVSleepJournalAM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSleepJournalAM.h; sourceTree = "<group>"; };
+		5DE34C97153957AB003C24E8 /* HVSleepJournalAM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSleepJournalAM.m; sourceTree = "<group>"; };
+		5DE382F914E338C900DFA11D /* HVArrayExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVArrayExtensions.h; sourceTree = "<group>"; };
+		5DE382FA14E338C900DFA11D /* HVArrayExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVArrayExtensions.m; sourceTree = "<group>"; };
+		5DE3830214E4447800DFA11D /* XConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XConverter.h; sourceTree = "<group>"; };
+		5DE3830314E4447800DFA11D /* XConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XConverter.m; sourceTree = "<group>"; };
+		5DE3830414E4447800DFA11D /* XException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XException.h; sourceTree = "<group>"; };
+		5DE3830514E4447800DFA11D /* XException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XException.m; sourceTree = "<group>"; };
+		5DE3830614E4447800DFA11D /* XLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLib.h; sourceTree = "<group>"; };
+		5DE3830714E4447800DFA11D /* XNodeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNodeType.h; sourceTree = "<group>"; };
+		5DE3830814E4447800DFA11D /* XReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XReader.h; sourceTree = "<group>"; };
+		5DE3830914E4447800DFA11D /* XReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XReader.m; sourceTree = "<group>"; };
+		5DE3830A14E4447800DFA11D /* XString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XString.h; sourceTree = "<group>"; };
+		5DE3830B14E4447800DFA11D /* XString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XString.m; sourceTree = "<group>"; };
+		5DE57A191510F75300829CC2 /* HVUIAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVUIAlert.h; sourceTree = "<group>"; };
+		5DE57A1A1510F75300829CC2 /* HVUIAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVUIAlert.m; sourceTree = "<group>"; };
+		5DE57A251511573500829CC2 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5DEF154814E985C5009D05D5 /* HVType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVType.h; sourceTree = "<group>"; };
+		5DEF154914E985C5009D05D5 /* HVType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVType.m; sourceTree = "<group>"; };
+		5DEF154D14E98DCA009D05D5 /* HVTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTime.h; sourceTree = "<group>"; };
+		5DEF154E14E98DCA009D05D5 /* HVTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTime.m; sourceTree = "<group>"; };
+		5DEF155514E9987E009D05D5 /* HVDateExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDateExtensions.h; sourceTree = "<group>"; };
+		5DEF155614E9987F009D05D5 /* HVDateExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDateExtensions.m; sourceTree = "<group>"; };
+		5DEF156514EB0985009D05D5 /* HVClientResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVClientResult.h; sourceTree = "<group>"; };
+		5DEF156614EB0986009D05D5 /* HVClientResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVClientResult.m; sourceTree = "<group>"; };
+		5DEF156914EB180D009D05D5 /* HVDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDateTime.h; sourceTree = "<group>"; };
+		5DEF156A14EB180E009D05D5 /* HVDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDateTime.m; sourceTree = "<group>"; };
+		5DEF156D14EC242E009D05D5 /* HVCodedValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCodedValue.h; sourceTree = "<group>"; };
+		5DEF156E14EC2430009D05D5 /* HVCodedValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCodedValue.m; sourceTree = "<group>"; };
+		5DEF157114EC2455009D05D5 /* HVCodableValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCodableValue.h; sourceTree = "<group>"; };
+		5DEF157214EC2456009D05D5 /* HVCodableValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCodableValue.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5D5299A914DCB3A700D2636E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D5F3112150E95E700ED11E7 /* UIKit.framework in Frameworks */,
+				5D76B9C914DCB92400BA865F /* libxml2.2.dylib in Frameworks */,
+				5D5299B014DCB3A700D2636E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5D20D30014EF412500160611 /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				5D20D30114EF414500160611 /* HVCollection.h */,
+				5D20D30214EF414500160611 /* HVCollection.m */,
+				5DC50C4A150172610078D85F /* HVMulticastDelegate.h */,
+				5DC50C4B150172610078D85F /* HVMulticastDelegate.m */,
+			);
+			path = Collections;
+			sourceTree = "<group>";
+		};
+		5D227B84153766E500E12075 /* Vocab */ = {
+			isa = PBXGroup;
+			children = (
+				5D925DDA15376F8A006BAAA8 /* HVVocab.h */,
+				5D227B85153766E500E12075 /* HVVocabIdentifier.h */,
+				5D227B86153766E500E12075 /* HVVocabIdentifier.m */,
+				5D227B87153766E500E12075 /* HVVocabItem.h */,
+				5D227B88153766E500E12075 /* HVVocabItem.m */,
+				5D227B8B153766E500E12075 /* HVVocabCodeSet.h */,
+				5D227B8C153766E500E12075 /* HVVocabCodeSet.m */,
+				5D227B89153766E500E12075 /* HVVocabSearchParams.h */,
+				5D227B8A153766E500E12075 /* HVVocabSearchParams.m */,
+				5D925DDE15377348006BAAA8 /* HVVocabParams.h */,
+				5D925DDF15377348006BAAA8 /* HVVocabParams.m */,
+			);
+			path = Vocab;
+			sourceTree = "<group>";
+		};
+		5D5299A114DCB3A700D2636E = {
+			isa = PBXGroup;
+			children = (
+				5D5F3111150E95E700ED11E7 /* UIKit.framework */,
+				5D76B9C814DCB92400BA865F /* libxml2.2.dylib */,
+				5D5299B114DCB3A700D2636E /* HVLib */,
+				5D5299AE14DCB3A700D2636E /* Frameworks */,
+				5D5299AD14DCB3A700D2636E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5D5299AD14DCB3A700D2636E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D5299AC14DCB3A700D2636E /* libHVLib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5D5299AE14DCB3A700D2636E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5D5299AF14DCB3A700D2636E /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5D5299B114DCB3A700D2636E /* HVLib */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F3138150FAA2600ED11E7 /* HVMobile */,
+				5D5F312D150ED26700ED11E7 /* Controllers */,
+				5D5F3113150E9A3A00ED11E7 /* Collections */,
+				5DC50C2A15003A9A0078D85F /* Store */,
+				5D20D30014EF412500160611 /* Collections */,
+				5D983BB514E58EE400C287B7 /* Methods */,
+				5D983BB414E58EDA00C287B7 /* ItemTypes */,
+				5D983BB214E58DF800C287B7 /* Types */,
+				5DE3830114E4447800DFA11D /* Xml */,
+				5D76B9EA14DCC9F400BA865F /* HVLib.m */,
+				5D76B9E814DCC9CF00BA865F /* HVLib.h */,
+				5D5F318B150FDD4700ED11E7 /* HVBlock.h */,
+				5D311728150FE26600B8F3D7 /* HVBlock.m */,
+				5DC44B7A14FEA3E600E2E02F /* HVRandom.h */,
+				5DC44B7B14FEA3E600E2E02F /* HVRandom.m */,
+				5D76B9D514DCC85B00BA865F /* HVStringExtensions.h */,
+				5D76B9D614DCC85B00BA865F /* HVStringExtensions.m */,
+				5D76B9D714DCC85B00BA865F /* HVExceptionExtensions.h */,
+				5D76B9D814DCC85B00BA865F /* HVExceptionExtensions.m */,
+				5D76B9D114DCC84C00BA865F /* HVValidator.h */,
+				5D76B9D214DCC84C00BA865F /* HVValidator.m */,
+				5D8FC3E014E2EDDF000F28EB /* HVCommon.h */,
+				5D5F3118150E9A3B00ED11E7 /* HVCommon.c */,
+				5D0DACB114E2FE14002CBE52 /* HVCore.h */,
+				5D0DACB214E2FE14002CBE52 /* HVCore.m */,
+				5DE382F914E338C900DFA11D /* HVArrayExtensions.h */,
+				5DE382FA14E338C900DFA11D /* HVArrayExtensions.m */,
+				5DEF155514E9987E009D05D5 /* HVDateExtensions.h */,
+				5DEF155614E9987F009D05D5 /* HVDateExtensions.m */,
+				5DE57A191510F75300829CC2 /* HVUIAlert.h */,
+				5DE57A1A1510F75300829CC2 /* HVUIAlert.m */,
+				5DC50C4E15017CC10078D85F /* HVAsyncTask.h */,
+				5DC50C4F15017CC20078D85F /* HVAsyncTask.m */,
+				5D97B93F15125A270004B551 /* HVObjectStore.h */,
+				5D39F9201513A07700208A7B /* HVRecordReference.h */,
+				5D39F9311513FFC500208A7B /* HVRecordReference.m */,
+				5D39F9291513AA5F00208A7B /* HVServerResponseStatus.h */,
+				5D39F92A1513AA5F00208A7B /* HVServerResponseStatus.m */,
+				5D983BE014E5FE2A00C287B7 /* HVClientException.h */,
+				5D983BE114E5FE2A00C287B7 /* HVClientException.m */,
+				5DEF156514EB0985009D05D5 /* HVClientResult.h */,
+				5DEF156614EB0986009D05D5 /* HVClientResult.m */,
+				5D5F3119150E9A3C00ED11E7 /* HVClientSettings.h */,
+				5D5F311A150E9A3D00ED11E7 /* HVClientSettings.m */,
+				5D97B93A1511743C0004B551 /* HVUser.h */,
+				5D97B93B1511743C0004B551 /* HVUser.m */,
+				5DC50C5A1506F5FF0078D85F /* HVClient.h */,
+				5DC50C5B1506F6010078D85F /* HVClient.m */,
+				5D5299B214DCB3A700D2636E /* Supporting Files */,
+			);
+			path = HVLib;
+			sourceTree = "<group>";
+		};
+		5D5299B214DCB3A700D2636E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5D5299B314DCB3A700D2636E /* HVLib-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5D5F3113150E9A3A00ED11E7 /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F3114150E9A3B00ED11E7 /* HVCollection.h */,
+				5D5F3115150E9A3B00ED11E7 /* HVCollection.m */,
+				5D5F3116150E9A3B00ED11E7 /* HVMulticastDelegate.h */,
+				5D5F3117150E9A3B00ED11E7 /* HVMulticastDelegate.m */,
+				5D195D4815222AF900E109AD /* HVVector.h */,
+				5D195D4A15222B8A00E109AD /* HVVector.cpp */,
+				5D195D8C1523BC4900E109AD /* HVIndexList.h */,
+				5D195D8D1523BC4900E109AD /* HVIndexList.m */,
+			);
+			path = Collections;
+			sourceTree = "<group>";
+		};
+		5D5F312D150ED26700ED11E7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F312E150ED29F00ED11E7 /* HVBrowserController.h */,
+				5D5F312F150ED29F00ED11E7 /* HVBrowserController.m */,
+				5D5F3182150FAE5200ED11E7 /* HVAppProvisionController.h */,
+				5D5F3183150FAE5300ED11E7 /* HVAppProvisionController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		5D5F3138150FAA2600ED11E7 /* HVMobile */ = {
+			isa = PBXGroup;
+			children = (
+				5DE57A241511573500829CC2 /* Localizable.strings */,
+				5D5F313B150FAA2800ED11E7 /* HealthVaultConfig.h */,
+				5D5F313C150FAA2800ED11E7 /* HealthVaultRecord.h */,
+				5D5F313D150FAA2800ED11E7 /* HealthVaultRecord.m */,
+				5D5F313E150FAA2800ED11E7 /* HealthVaultRequest.h */,
+				5D5F313F150FAA2800ED11E7 /* HealthVaultRequest.m */,
+				5D5F3140150FAA2800ED11E7 /* HealthVaultResponse.h */,
+				5D5F3141150FAA2800ED11E7 /* HealthVaultResponse.m */,
+				5D5F3142150FAA2800ED11E7 /* HealthVaultService.h */,
+				5D5F3143150FAA2800ED11E7 /* HealthVaultService.m */,
+				5D5F3144150FAA2800ED11E7 /* MobilePlatform.h */,
+				5D5F3145150FAA2800ED11E7 /* MobilePlatform.m */,
+				5D5F3146150FAA2800ED11E7 /* Provisioner */,
+				5D5F314B150FAA2800ED11E7 /* Settings */,
+				5D5F314E150FAA2800ED11E7 /* Support */,
+				5D5F3155150FAA2800ED11E7 /* WebTransport */,
+				5D5F315A150FAA2800ED11E7 /* Xml */,
+			);
+			path = HVMobile;
+			sourceTree = "<group>";
+		};
+		5D5F3146150FAA2800ED11E7 /* Provisioner */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F3147150FAA2800ED11E7 /* AuthenticationCheckState.h */,
+				5D5F3148150FAA2800ED11E7 /* AuthenticationCheckState.m */,
+				5D5F3149150FAA2800ED11E7 /* Provisioner.h */,
+				5D5F314A150FAA2800ED11E7 /* Provisioner.m */,
+			);
+			path = Provisioner;
+			sourceTree = "<group>";
+		};
+		5D5F314B150FAA2800ED11E7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F314C150FAA2800ED11E7 /* HealthVaultSettings.h */,
+				5D5F314D150FAA2800ED11E7 /* HealthVaultSettings.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		5D5F314E150FAA2800ED11E7 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F314F150FAA2800ED11E7 /* Base64.h */,
+				5D5F3150150FAA2800ED11E7 /* Base64.m */,
+				5D5F3151150FAA2800ED11E7 /* DateTimeUtils.h */,
+				5D5F3152150FAA2800ED11E7 /* DateTimeUtils.m */,
+				5D5F3153150FAA2800ED11E7 /* Logger.h */,
+				5D5F3154150FAA2800ED11E7 /* Logger.m */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		5D5F3155150FAA2800ED11E7 /* WebTransport */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F3156150FAA2800ED11E7 /* WebResponse.h */,
+				5D5F3157150FAA2800ED11E7 /* WebResponse.m */,
+				5D5F3158150FAA2800ED11E7 /* WebTransport.h */,
+				5D5F3159150FAA2800ED11E7 /* WebTransport.m */,
+			);
+			path = WebTransport;
+			sourceTree = "<group>";
+		};
+		5D5F315A150FAA2800ED11E7 /* Xml */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F315B150FAA2800ED11E7 /* XmlElement.h */,
+				5D5F315C150FAA2800ED11E7 /* XmlElement.m */,
+				5D5F315D150FAA2800ED11E7 /* XmlTextReader.h */,
+				5D5F315E150FAA2800ED11E7 /* XmlTextReader.m */,
+			);
+			path = Xml;
+			sourceTree = "<group>";
+		};
+		5D983BB214E58DF800C287B7 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				5D983BB314E58DF800C287B7 /* Base */,
+				5D227B84153766E500E12075 /* Vocab */,
+				5D983BD414E5E87000C287B7 /* HVTypes.h */,
+				5DEF154814E985C5009D05D5 /* HVType.h */,
+				5DEF154914E985C5009D05D5 /* HVType.m */,
+				5D983BF414E6070500C287B7 /* HVDate.h */,
+				5D983BF514E6070500C287B7 /* HVDate.m */,
+				5D8E5AB3152FC551002BC6E2 /* HVApproxDate.h */,
+				5D8E5AB4152FC551002BC6E2 /* HVApproxDate.m */,
+				5DEF154D14E98DCA009D05D5 /* HVTime.h */,
+				5DEF154E14E98DCA009D05D5 /* HVTime.m */,
+				5DEF156914EB180D009D05D5 /* HVDateTime.h */,
+				5DEF156A14EB180E009D05D5 /* HVDateTime.m */,
+				5D0B4BE4151A80A4000849D0 /* HVApproxDateTime.h */,
+				5D0B4BE5151A80A4000849D0 /* HVApproxDateTime.m */,
+				5DEF156D14EC242E009D05D5 /* HVCodedValue.h */,
+				5DEF156E14EC2430009D05D5 /* HVCodedValue.m */,
+				5DEF157114EC2455009D05D5 /* HVCodableValue.h */,
+				5DEF157214EC2456009D05D5 /* HVCodableValue.m */,
+				5D195CFD151BBC7C00E109AD /* HVMeasurement.h */,
+				5D195CFE151BBC7D00E109AD /* HVMeasurement.m */,
+				5D195D01151BC72B00E109AD /* HVApproxMeasurement.h */,
+				5D195D02151BC72C00E109AD /* HVApproxMeasurement.m */,
+				5DE34C8815393C61003C24E8 /* HVDuration.h */,
+				5DE34C8915393C61003C24E8 /* HVDuration.m */,
+				5DE34C92153951FC003C24E8 /* HVOccurence.h */,
+				5DE34C93153951FD003C24E8 /* HVOccurence.m */,
+				5D20D2E014EDD6C000160611 /* HVWeightMeasurement.h */,
+				5D20D2E114EDD6C000160611 /* HVWeightMeasurement.m */,
+				5DC799761534EC2D00193A3B /* HVLengthMeasurement.h */,
+				5DC799771534EC2E00193A3B /* HVLengthMeasurement.m */,
+				5DC7996A1534CB0E00193A3B /* HVBloodGlucoseMeasurement.h */,
+				5DC7996B1534CB0E00193A3B /* HVBloodGlucoseMeasurement.m */,
+				5D775C851538DED0000F01AE /* HVVitalSignResult.h */,
+				5D775C861538DED1000F01AE /* HVVitalSignResult.m */,
+				5D20D2E414EDDEF400160611 /* HVDisplayValue.h */,
+				5D20D2E514EDDEF400160611 /* HVDisplayValue.m */,
+				5DC799721534E3ED00193A3B /* HVNameValue.h */,
+				5DC799731534E3EE00193A3B /* HVNameValue.m */,
+				5D195D0D151BEB9F00E109AD /* HVAddress.h */,
+				5D195D0E151BEBA000E109AD /* HVAddress.m */,
+				5D195D11151BF01600E109AD /* HVPhone.h */,
+				5D195D12151BF01700E109AD /* HVPhone.m */,
+				5D195D1D151BF53F00E109AD /* HVEmail.h */,
+				5D195D1E151BF54100E109AD /* HVEmail.m */,
+				5D195D21151BF60D00E109AD /* HVContact.h */,
+				5D195D22151BF60F00E109AD /* HVContact.m */,
+				5D195D29151BFA4F00E109AD /* HVName.h */,
+				5D195D2A151BFA5200E109AD /* HVName.m */,
+				5D195D25151BF9F100E109AD /* HVPerson.h */,
+				5D195D26151BF9F300E109AD /* HVPerson.m */,
+				5D362B53152F84E2006CC30C /* HVPrescription.h */,
+				5D362B54152F84FA006CC30C /* HVPrescription.m */,
+				5D1F132F1539EF0600524425 /* HVConditionEntry.h */,
+				5D1F13301539EF0600524425 /* HVConditionEntry.m */,
+				5D775C8D1538E9B8000F01AE /* HVAssessmentField.h */,
+				5D775C8E1538E9B9000F01AE /* HVAssessmentField.m */,
+				5DE34C8C15394313003C24E8 /* HVOrganization.h */,
+				5DE34C8D15394313003C24E8 /* HVOrganization.m */,
+				5D1F13271539E9DF00524425 /* HVRelative.h */,
+				5D1F13281539E9E000524425 /* HVRelative.m */,
+				5D20D30514F2E21000160611 /* HVItemKey.h */,
+				5D20D30614F2E21200160611 /* HVItemKey.m */,
+				5D20D31114F2F4EF00160611 /* HVItem.h */,
+				5D20D31214F2F4F100160611 /* HVItem.m */,
+				5D195CF8151B886000E109AD /* HVRelatedItem.h */,
+				5D195CF9151B886000E109AD /* HVRelatedItem.m */,
+				5D20D31914F2FA5400160611 /* HVItemSection.h */,
+				5D20D31A14F2FA5600160611 /* HVItemSection.m */,
+				5D20D32114F304E100160611 /* HVItemState.h */,
+				5D20D32214F304E400160611 /* HVItemState.m */,
+				5D20D32514F424EA00160611 /* HVItemType.h */,
+				5D20D32614F424EC00160611 /* HVItemType.m */,
+				5D20D32914F42E0C00160611 /* HVItemData.h */,
+				5D20D32A14F42E0F00160611 /* HVItemData.m */,
+				5D983BD614E5F4BD00C287B7 /* HVItemDataTyped.h */,
+				5D983BD714E5F4BD00C287B7 /* HVItemDataTyped.m */,
+				5D20D32D14F4352200160611 /* HVItemDataCommon.h */,
+				5D20D32E14F4352500160611 /* HVItemDataCommon.m */,
+				5D20D34114F44EE800160611 /* HVAudit.h */,
+				5D20D34214F44EEC00160611 /* HVAudit.m */,
+				5D20D34514F4804600160611 /* HVRecord.h */,
+				5D20D34614F4804A00160611 /* HVRecord.m */,
+				5D20D34914F4807900160611 /* HVPersonInfo.h */,
+				5D20D34A14F4807D00160611 /* HVPersonInfo.m */,
+				5D20D35114F487E100160611 /* HVPendingItem.h */,
+				5D20D35214F487E600160611 /* HVPendingItem.m */,
+				5D20D30914F2E22800160611 /* HVItemFilter.h */,
+				5D20D30A14F2E22A00160611 /* HVItemFilter.m */,
+				5D20D30D14F2E26400160611 /* HVItemView.h */,
+				5D20D30E14F2E26600160611 /* HVItemView.m */,
+				5D20D2FC14EF3DC000160611 /* HVItemQuery.h */,
+				5D20D2FD14EF3DC200160611 /* HVItemQuery.m */,
+				5D20D35514F4882C00160611 /* HVItemQueryResult.h */,
+				5D20D35614F4883100160611 /* HVItemQueryResult.m */,
+				5D20D34D14F487B500160611 /* HVItemQueryResults.h */,
+				5D20D34E14F487BA00160611 /* HVItemQueryResults.m */,
+				5DC3C43515360123008BBDBF /* HVGetAuthorizedPeopleResult.h */,
+				5DC3C43615360123008BBDBF /* HVGetAuthorizedPeopleResult.m */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		5D983BB314E58DF800C287B7 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				5D983BF814E60D1D00C287B7 /* HVBaseTypes.h */,
+				5D983BB614E5949B00C287B7 /* HVGuid.h */,
+				5D983BB714E5949B00C287B7 /* HVGuid.m */,
+				5D20D2EC14EEF84300160611 /* HVInt.h */,
+				5D20D2ED14EEF84400160611 /* HVInt.m */,
+				5D983BE414E6006400C287B7 /* HVConstrainedInt.h */,
+				5D983BE514E6006400C287B7 /* HVConstrainedInt.m */,
+				5D20D2F414EEFA7500160611 /* HVNonNegativeInt.h */,
+				5D20D2F514EEFA7500160611 /* HVNonNegativeInt.m */,
+				5D20D2F014EEF99300160611 /* HVDouble.h */,
+				5D20D2F114EEF99300160611 /* HVDouble.m */,
+				5D20D2D814EDD32500160611 /* HVConstrainedDouble.h */,
+				5D20D2D914EDD32500160611 /* HVConstrainedDouble.m */,
+				5D20D2DC14EDD5FE00160611 /* HVPositiveDouble.h */,
+				5D20D2DD14EDD5FE00160611 /* HVPositiveDouble.m */,
+				5D983BE814E6035900C287B7 /* HVDay.h */,
+				5D983BE914E6035900C287B7 /* HVDay.m */,
+				5D983BEC14E6038000C287B7 /* HVMonth.h */,
+				5D983BED14E6038000C287B7 /* HVMonth.m */,
+				5D983BF014E6039C00C287B7 /* HVYear.h */,
+				5D983BF114E6039C00C287B7 /* HVYear.m */,
+				5D983BFA14E984B500C287B7 /* HVHour.h */,
+				5D983BFB14E984B500C287B7 /* HVHour.m */,
+				5D983BFE14E984CC00C287B7 /* HVMinute.h */,
+				5D983BFF14E984CD00C287B7 /* HVMinute.m */,
+				5D983C0214E984ED00C287B7 /* HVSecond.h */,
+				5D983C0314E984ED00C287B7 /* HVSecond.m */,
+				5D983C0614E9850300C287B7 /* HVMillisecond.h */,
+				5D983C0714E9850400C287B7 /* HVMillisecond.m */,
+				5D20D2F814EEFF6B00160611 /* HVBool.h */,
+				5D20D2F914EEFF6B00160611 /* HVBool.m */,
+				5D20D33114F4365E00160611 /* HVConstrainedString.h */,
+				5D20D33214F4366000160611 /* HVConstrainedString.m */,
+				5D20D33514F43A1000160611 /* HVString255.h */,
+				5D20D33614F43A1200160611 /* HVString255.m */,
+				5D20D33914F43A9800160611 /* HVStringZ512.h */,
+				5D20D33A14F43A9A00160611 /* HVStringZ512.m */,
+				5D195D19151BF2E100E109AD /* HVEmailAddress.h */,
+				5D195D1A151BF2E100E109AD /* HVEmailAddress.m */,
+				5D195D7015228C0200E109AD /* HVVocabSearchText.h */,
+				5D195D7115228C0200E109AD /* HVVocabSearchText.m */,
+				5D57A8B4152F8A0C00A80C4A /* HVPositiveInt.h */,
+				5D57A8B5152F8A0C00A80C4A /* HVPositiveInt.m */,
+				5DC799621534C97200193A3B /* HVOneToFive.h */,
+				5DC799631534C97200193A3B /* HVOneToFive.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		5D983BB414E58EDA00C287B7 /* ItemTypes */ = {
+			isa = PBXGroup;
+			children = (
+				5DC50C22150019650078D85F /* HVItemTestExtensions.h */,
+				5DC50C23150019650078D85F /* HVItemTestExtensions.m */,
+				5D983BDE14E5F7A300C287B7 /* HVItemTypes.h */,
+				5D775C731538A118000F01AE /* HVItemTypes.m */,
+				5D983BDA14E5F50600C287B7 /* HVWeight.h */,
+				5D983BDB14E5F50600C287B7 /* HVWeight.m */,
+				5D20D2E814EDF16F00160611 /* HVBloodPressure.h */,
+				5D20D2E914EDF16F00160611 /* HVBloodPressure.m */,
+				5D8E5A9C152FA913002BC6E2 /* HVCholesterol.h */,
+				5D8E5A9D152FA913002BC6E2 /* HVCholesterol.m */,
+				5DC7995D1534C95A00193A3B /* HVBloodGlucose.h */,
+				5DC7995E1534C95A00193A3B /* HVBloodGlucose.m */,
+				5DC7997A1534F3A200193A3B /* HVHeight.h */,
+				5DC7997B1534F3A200193A3B /* HVHeight.m */,
+				5DC7997E1534FCCF00193A3B /* HVExercise.h */,
+				5DC7997F1534FCD000193A3B /* HVExercise.m */,
+				5D775C7D1538D2F6000F01AE /* HVDailyMedicationUsage.h */,
+				5D775C7E1538D2F8000F01AE /* HVDailyMedicationUsage.m */,
+				5D775C811538D869000F01AE /* HVEmotionalState.h */,
+				5D775C821538D86A000F01AE /* HVEmotionalState.m */,
+				5D1F13361539FF6200524425 /* HVDietaryIntake.h */,
+				5D1F13371539FF6300524425 /* HVDietaryIntake.m */,
+				5DE34C96153957AA003C24E8 /* HVSleepJournalAM.h */,
+				5DE34C97153957AB003C24E8 /* HVSleepJournalAM.m */,
+				5D1F13221539DD5200524425 /* HVSleepJournalPM.h */,
+				5D1F13231539DD5200524425 /* HVSleepJournalPM.m */,
+				5D8E5AA5152FBBA3002BC6E2 /* HVAllergy.h */,
+				5D8E5AA6152FBBA4002BC6E2 /* HVAllergy.m */,
+				5D0B4BDF151A7D50000849D0 /* HVCondition.h */,
+				5D0B4BE0151A7D50000849D0 /* HVCondition.m */,
+				5D8E5AAF152FC45F002BC6E2 /* HVImmunization.h */,
+				5D8E5AB0152FC45F002BC6E2 /* HVImmunization.m */,
+				5D195D05151BCAB400E109AD /* HVMedication.h */,
+				5D195D06151BCAB400E109AD /* HVMedication.m */,
+				5D07A9551534B1780013DC2A /* HVProcedure.h */,
+				5D07A9561534B1780013DC2A /* HVProcedure.m */,
+				5D775C891538E42E000F01AE /* HVVitalSigns.h */,
+				5D775C8A1538E430000F01AE /* HVVitalSigns.m */,
+				5DE34C8415393B87003C24E8 /* HVEncounter.h */,
+				5DE34C8515393B87003C24E8 /* HVEncounter.m */,
+				5D1F132B1539EDF100524425 /* HVFamilyHistory.h */,
+				5D1F132C1539EDF100524425 /* HVFamilyHistory.m */,
+				5D561B0315365F74003D68D2 /* HVEmergencyOrProviderContact.h */,
+				5D561B0415365F74003D68D2 /* HVEmergencyOrProviderContact.m */,
+				5D775C791538D04D000F01AE /* HVPersonalContactInfo.h */,
+				5D775C7A1538D04F000F01AE /* HVPersonalContactInfo.m */,
+				5D775C6F15389BD7000F01AE /* HVBasicDemographics.h */,
+				5D775C7015389BD7000F01AE /* HVBasicDemographics.m */,
+				5D775C751538C2B7000F01AE /* HVPersonalDemographics.h */,
+				5D775C761538C2B9000F01AE /* HVPersonalDemographics.m */,
+				5D775C911538EBF5000F01AE /* HVAssessment.h */,
+				5D775C921538EBF6000F01AE /* HVAssessment.m */,
+				5DE34C7A153925F2003C24E8 /* HVQuestionAnswer.h */,
+				5DE34C7B153925F2003C24E8 /* HVQuestionAnswer.m */,
+				5D20D33D14F4467C00160611 /* HVItemRaw.h */,
+				5D20D33E14F4467C00160611 /* HVItemRaw.m */,
+			);
+			path = ItemTypes;
+			sourceTree = "<group>";
+		};
+		5D983BB514E58EE400C287B7 /* Methods */ = {
+			isa = PBXGroup;
+			children = (
+				5DC799941535FF4100193A3B /* HVMethods.h */,
+				5D39F9251513A63500208A7B /* HVMethodCallTask.h */,
+				5D39F9261513A63500208A7B /* HVMethodCallTask.m */,
+				5D39F92D1513E41200208A7B /* HVGetItemsTask.h */,
+				5D39F92E1513E41200208A7B /* HVGetItemsTask.m */,
+				5D195D4C1522527100E109AD /* HVPutItemsTask.h */,
+				5D195D4D1522527100E109AD /* HVPutItemsTask.m */,
+				5D195D641522780600E109AD /* HVRemoveItemsTask.h */,
+				5D195D651522780700E109AD /* HVRemoveItemsTask.m */,
+				5D195D801522973300E109AD /* HVVocabSearchTask.h */,
+				5D195D811522973400E109AD /* HVVocabSearchTask.m */,
+				5DC799901535FEE300193A3B /* HVGetAuthorizedPeopleTask.h */,
+				5DC799911535FEE300193A3B /* HVGetAuthorizedPeopleTask.m */,
+				5D925DD515376F21006BAAA8 /* HVGetVocabTask.h */,
+				5D925DD615376F21006BAAA8 /* HVGetVocabTask.m */,
+			);
+			path = Methods;
+			sourceTree = "<group>";
+		};
+		5DC50C2A15003A9A0078D85F /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				5D5F3124150EAD8400ED11E7 /* HVDirectory.h */,
+				5D5F3125150EAD8400ED11E7 /* HVDirectory.m */,
+				5DC50C2B15003C2A0078D85F /* HVTypeViewItem.h */,
+				5DC50C2C15003C2A0078D85F /* HVTypeViewItem.m */,
+				5DC50C2F15003C3D0078D85F /* HVTypeViewItems.h */,
+				5DC50C3015003C3D0078D85F /* HVTypeViewItems.m */,
+				5DC50C4215015EE60078D85F /* HVTypeView.h */,
+				5DC50C4315015EE60078D85F /* HVTypeView.m */,
+				5DC50C3815004E040078D85F /* HVItemStore.h */,
+				5DC50C3E150051DC0078D85F /* HVMemoryStore.h */,
+				5DC50C3F150051DC0078D85F /* HVMemoryStore.m */,
+				5DC50C46150160CD0078D85F /* HVSynchronizedStore.h */,
+				5DC50C47150160CD0078D85F /* HVSynchronizedStore.m */,
+				5DC50C5E1508049E0078D85F /* HVLocalVault.h */,
+				5DC50C5F1508049F0078D85F /* HVLocalVault.m */,
+				5D39F935151A3AA000208A7B /* HVLocalItemStore.h */,
+				5D39F936151A3AA100208A7B /* HVLocalItemStore.m */,
+				5D39F939151A718900208A7B /* HVLocalRecordStore.h */,
+				5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		5DE3830114E4447800DFA11D /* Xml */ = {
+			isa = PBXGroup;
+			children = (
+				5DE3830214E4447800DFA11D /* XConverter.h */,
+				5DE3830314E4447800DFA11D /* XConverter.m */,
+				5DE3830414E4447800DFA11D /* XException.h */,
+				5DE3830514E4447800DFA11D /* XException.m */,
+				5DE3830614E4447800DFA11D /* XLib.h */,
+				5DE3830714E4447800DFA11D /* XNodeType.h */,
+				5DE3830814E4447800DFA11D /* XReader.h */,
+				5DE3830914E4447800DFA11D /* XReader.m */,
+				5DE3830A14E4447800DFA11D /* XString.h */,
+				5DE3830B14E4447800DFA11D /* XString.m */,
+				5D2D1C5B14E4A4F400C85B7E /* XWriter.h */,
+				5D2D1C5C14E4A4F400C85B7E /* XWriter.m */,
+				5D2D1C6014E4AC9B00C85B7E /* XNodeType.m */,
+				5D983BCF14E5BF6700C287B7 /* XSerializer.h */,
+				5D983BD214E5CA3300C287B7 /* XSerializer.m */,
+				5DD0B80814F81DDE00AAD54F /* XSerializableType.h */,
+				5DD0B80914F81DDE00AAD54F /* XSerializableType.m */,
+			);
+			path = Xml;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5D5299AA14DCB3A700D2636E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D76B9D314DCC84C00BA865F /* HVValidator.h in Headers */,
+				5D76B9D914DCC85B00BA865F /* HVStringExtensions.h in Headers */,
+				5D76B9DB14DCC85B00BA865F /* HVExceptionExtensions.h in Headers */,
+				5D76B9E914DCC9CF00BA865F /* HVLib.h in Headers */,
+				5D8FC3E114E2EDDF000F28EB /* HVCommon.h in Headers */,
+				5D0DACB314E2FE14002CBE52 /* HVCore.h in Headers */,
+				5DE382FB14E338C900DFA11D /* HVArrayExtensions.h in Headers */,
+				5DE3830C14E4447800DFA11D /* XConverter.h in Headers */,
+				5DE3830E14E4447800DFA11D /* XException.h in Headers */,
+				5DE3831014E4447800DFA11D /* XLib.h in Headers */,
+				5DE3831114E4447800DFA11D /* XNodeType.h in Headers */,
+				5DE3831214E4447800DFA11D /* XReader.h in Headers */,
+				5DE3831414E4447800DFA11D /* XString.h in Headers */,
+				5D2D1C5D14E4A4F400C85B7E /* XWriter.h in Headers */,
+				5D983BB814E5949B00C287B7 /* HVGuid.h in Headers */,
+				5D983BD014E5BF6700C287B7 /* XSerializer.h in Headers */,
+				5D983BD514E5E87000C287B7 /* HVTypes.h in Headers */,
+				5D983BD814E5F4BD00C287B7 /* HVItemDataTyped.h in Headers */,
+				5D983BDC14E5F50600C287B7 /* HVWeight.h in Headers */,
+				5D983BDF14E5F7A300C287B7 /* HVItemTypes.h in Headers */,
+				5D983BE214E5FE2B00C287B7 /* HVClientException.h in Headers */,
+				5D983BE614E6006400C287B7 /* HVConstrainedInt.h in Headers */,
+				5D983BEA14E6035900C287B7 /* HVDay.h in Headers */,
+				5D983BEE14E6038000C287B7 /* HVMonth.h in Headers */,
+				5D983BF214E6039C00C287B7 /* HVYear.h in Headers */,
+				5D983BF614E6070600C287B7 /* HVDate.h in Headers */,
+				5D983BF914E60D1D00C287B7 /* HVBaseTypes.h in Headers */,
+				5D983BFC14E984B600C287B7 /* HVHour.h in Headers */,
+				5D983C0014E984CE00C287B7 /* HVMinute.h in Headers */,
+				5D983C0414E984EE00C287B7 /* HVSecond.h in Headers */,
+				5D983C0814E9850500C287B7 /* HVMillisecond.h in Headers */,
+				5DEF154A14E985C5009D05D5 /* HVType.h in Headers */,
+				5DEF154F14E98DCB009D05D5 /* HVTime.h in Headers */,
+				5DEF155714E9987F009D05D5 /* HVDateExtensions.h in Headers */,
+				5DEF156714EB0988009D05D5 /* HVClientResult.h in Headers */,
+				5DEF156B14EB180F009D05D5 /* HVDateTime.h in Headers */,
+				5DEF156F14EC2431009D05D5 /* HVCodedValue.h in Headers */,
+				5DEF157314EC2458009D05D5 /* HVCodableValue.h in Headers */,
+				5D20D2DA14EDD32500160611 /* HVConstrainedDouble.h in Headers */,
+				5D20D2DE14EDD5FE00160611 /* HVPositiveDouble.h in Headers */,
+				5D20D2E214EDD6C100160611 /* HVWeightMeasurement.h in Headers */,
+				5D20D2E614EDDEF500160611 /* HVDisplayValue.h in Headers */,
+				5D20D2EA14EDF16F00160611 /* HVBloodPressure.h in Headers */,
+				5D20D2EE14EEF84400160611 /* HVInt.h in Headers */,
+				5D20D2F214EEF99400160611 /* HVDouble.h in Headers */,
+				5D20D2F614EEFA7600160611 /* HVNonNegativeInt.h in Headers */,
+				5D20D2FA14EEFF6D00160611 /* HVBool.h in Headers */,
+				5D20D2FE14EF3DC300160611 /* HVItemQuery.h in Headers */,
+				5D20D30314EF414500160611 /* HVCollection.h in Headers */,
+				5D20D30714F2E21400160611 /* HVItemKey.h in Headers */,
+				5D20D30B14F2E22C00160611 /* HVItemFilter.h in Headers */,
+				5D20D30F14F2E26900160611 /* HVItemView.h in Headers */,
+				5D20D31314F2F4F400160611 /* HVItem.h in Headers */,
+				5D20D31B14F2FA5900160611 /* HVItemSection.h in Headers */,
+				5D20D32314F304E700160611 /* HVItemState.h in Headers */,
+				5D20D32714F424F000160611 /* HVItemType.h in Headers */,
+				5D20D32B14F42E1300160611 /* HVItemData.h in Headers */,
+				5D20D32F14F4352A00160611 /* HVItemDataCommon.h in Headers */,
+				5D20D33314F4366200160611 /* HVConstrainedString.h in Headers */,
+				5D20D33714F43A1400160611 /* HVString255.h in Headers */,
+				5D20D33B14F43A9C00160611 /* HVStringZ512.h in Headers */,
+				5D20D33F14F4467C00160611 /* HVItemRaw.h in Headers */,
+				5D20D34314F44EF200160611 /* HVAudit.h in Headers */,
+				5D20D34714F4804F00160611 /* HVRecord.h in Headers */,
+				5D20D34B14F4808400160611 /* HVPersonInfo.h in Headers */,
+				5D20D34F14F487C100160611 /* HVItemQueryResults.h in Headers */,
+				5D20D35314F487F100160611 /* HVPendingItem.h in Headers */,
+				5D20D35714F4883700160611 /* HVItemQueryResult.h in Headers */,
+				5DD0B80A14F81DDE00AAD54F /* XSerializableType.h in Headers */,
+				5DC44B7C14FEA3E600E2E02F /* HVRandom.h in Headers */,
+				5DC50C24150019650078D85F /* HVItemTestExtensions.h in Headers */,
+				5DC50C2D15003C2A0078D85F /* HVTypeViewItem.h in Headers */,
+				5DC50C3115003C3D0078D85F /* HVTypeViewItems.h in Headers */,
+				5DC50C3915004E040078D85F /* HVItemStore.h in Headers */,
+				5DC50C40150051DD0078D85F /* HVMemoryStore.h in Headers */,
+				5DC50C4415015EE60078D85F /* HVTypeView.h in Headers */,
+				5DC50C48150160CE0078D85F /* HVSynchronizedStore.h in Headers */,
+				5DC50C4C150172610078D85F /* HVMulticastDelegate.h in Headers */,
+				5DC50C5015017CC50078D85F /* HVAsyncTask.h in Headers */,
+				5DC50C5C1506F6040078D85F /* HVClient.h in Headers */,
+				5DC50C601508049F0078D85F /* HVLocalVault.h in Headers */,
+				5D5F311B150E9A3E00ED11E7 /* HVCollection.h in Headers */,
+				5D5F311D150E9A3E00ED11E7 /* HVMulticastDelegate.h in Headers */,
+				5D5F3120150E9A3E00ED11E7 /* HVClientSettings.h in Headers */,
+				5D5F3126150EAD8400ED11E7 /* HVDirectory.h in Headers */,
+				5D5F3131150ED29F00ED11E7 /* HVBrowserController.h in Headers */,
+				5D5F315F150FAA2800ED11E7 /* HealthVaultConfig.h in Headers */,
+				5D5F3160150FAA2800ED11E7 /* HealthVaultRecord.h in Headers */,
+				5D5F3162150FAA2800ED11E7 /* HealthVaultRequest.h in Headers */,
+				5D5F3164150FAA2800ED11E7 /* HealthVaultResponse.h in Headers */,
+				5D5F3166150FAA2800ED11E7 /* HealthVaultService.h in Headers */,
+				5D5F3168150FAA2800ED11E7 /* MobilePlatform.h in Headers */,
+				5D5F316A150FAA2800ED11E7 /* AuthenticationCheckState.h in Headers */,
+				5D5F316C150FAA2800ED11E7 /* Provisioner.h in Headers */,
+				5D5F316E150FAA2800ED11E7 /* HealthVaultSettings.h in Headers */,
+				5D5F3170150FAA2800ED11E7 /* Base64.h in Headers */,
+				5D5F3172150FAA2800ED11E7 /* DateTimeUtils.h in Headers */,
+				5D5F3174150FAA2800ED11E7 /* Logger.h in Headers */,
+				5D5F3176150FAA2800ED11E7 /* WebResponse.h in Headers */,
+				5D5F3178150FAA2800ED11E7 /* WebTransport.h in Headers */,
+				5D5F317A150FAA2800ED11E7 /* XmlElement.h in Headers */,
+				5D5F317C150FAA2800ED11E7 /* XmlTextReader.h in Headers */,
+				5D5F3184150FAE5300ED11E7 /* HVAppProvisionController.h in Headers */,
+				5D5F318C150FDD4A00ED11E7 /* HVBlock.h in Headers */,
+				5DE57A1B1510F75400829CC2 /* HVUIAlert.h in Headers */,
+				5D97B93C1511743C0004B551 /* HVUser.h in Headers */,
+				5D97B94015125A280004B551 /* HVObjectStore.h in Headers */,
+				5D39F9221513A07800208A7B /* HVRecordReference.h in Headers */,
+				5D39F9271513A63500208A7B /* HVMethodCallTask.h in Headers */,
+				5D39F92B1513AA6000208A7B /* HVServerResponseStatus.h in Headers */,
+				5D39F92F1513E41200208A7B /* HVGetItemsTask.h in Headers */,
+				5D39F937151A3AA200208A7B /* HVLocalItemStore.h in Headers */,
+				5D39F93B151A718C00208A7B /* HVLocalRecordStore.h in Headers */,
+				5D0B4BE1151A7D50000849D0 /* HVCondition.h in Headers */,
+				5D0B4BE6151A80A4000849D0 /* HVApproxDateTime.h in Headers */,
+				5D195CFA151B886000E109AD /* HVRelatedItem.h in Headers */,
+				5D195CFF151BBC7D00E109AD /* HVMeasurement.h in Headers */,
+				5D195D03151BC72C00E109AD /* HVApproxMeasurement.h in Headers */,
+				5D195D07151BCAB400E109AD /* HVMedication.h in Headers */,
+				5D195D0F151BEBA100E109AD /* HVAddress.h in Headers */,
+				5D195D13151BF01800E109AD /* HVPhone.h in Headers */,
+				5D195D1B151BF2E200E109AD /* HVEmailAddress.h in Headers */,
+				5D195D1F151BF54300E109AD /* HVEmail.h in Headers */,
+				5D195D23151BF61000E109AD /* HVContact.h in Headers */,
+				5D195D27151BF9F400E109AD /* HVPerson.h in Headers */,
+				5D195D2B151BFA5300E109AD /* HVName.h in Headers */,
+				5D195D4915222AF900E109AD /* HVVector.h in Headers */,
+				5D195D4E1522527100E109AD /* HVPutItemsTask.h in Headers */,
+				5D195D661522780800E109AD /* HVRemoveItemsTask.h in Headers */,
+				5D195D7215228C0200E109AD /* HVVocabSearchText.h in Headers */,
+				5D195D821522973500E109AD /* HVVocabSearchTask.h in Headers */,
+				5D195D8E1523BC4900E109AD /* HVIndexList.h in Headers */,
+				5D362B55152F8541006CC30C /* HVPrescription.h in Headers */,
+				5D57A8B6152F8A0C00A80C4A /* HVPositiveInt.h in Headers */,
+				5D8E5A9E152FA913002BC6E2 /* HVCholesterol.h in Headers */,
+				5D8E5AA7152FBBA4002BC6E2 /* HVAllergy.h in Headers */,
+				5D8E5AB1152FC460002BC6E2 /* HVImmunization.h in Headers */,
+				5D8E5AB5152FC552002BC6E2 /* HVApproxDate.h in Headers */,
+				5D07A9571534B1780013DC2A /* HVProcedure.h in Headers */,
+				5DC7995F1534C95A00193A3B /* HVBloodGlucose.h in Headers */,
+				5DC799641534C97200193A3B /* HVOneToFive.h in Headers */,
+				5DC7996C1534CB0F00193A3B /* HVBloodGlucoseMeasurement.h in Headers */,
+				5DC799741534E3EF00193A3B /* HVNameValue.h in Headers */,
+				5DC799781534EC2E00193A3B /* HVLengthMeasurement.h in Headers */,
+				5DC7997C1534F3A300193A3B /* HVHeight.h in Headers */,
+				5DC799801534FCD100193A3B /* HVExercise.h in Headers */,
+				5DC799921535FEE300193A3B /* HVGetAuthorizedPeopleTask.h in Headers */,
+				5DC799961535FF4200193A3B /* HVMethods.h in Headers */,
+				5DC3C43715360123008BBDBF /* HVGetAuthorizedPeopleResult.h in Headers */,
+				5D561B0515365F74003D68D2 /* HVEmergencyOrProviderContact.h in Headers */,
+				5D227B8D153766E500E12075 /* HVVocabIdentifier.h in Headers */,
+				5D227B8F153766E500E12075 /* HVVocabItem.h in Headers */,
+				5D227B91153766E500E12075 /* HVVocabSearchParams.h in Headers */,
+				5D227B93153766E500E12075 /* HVVocabCodeSet.h in Headers */,
+				5D925DD715376F21006BAAA8 /* HVGetVocabTask.h in Headers */,
+				5D925DDC15376F8A006BAAA8 /* HVVocab.h in Headers */,
+				5D925DE015377348006BAAA8 /* HVVocabParams.h in Headers */,
+				5D775C7115389BD7000F01AE /* HVBasicDemographics.h in Headers */,
+				5D775C771538C2BA000F01AE /* HVPersonalDemographics.h in Headers */,
+				5D775C7B1538D050000F01AE /* HVPersonalContactInfo.h in Headers */,
+				5D775C7F1538D2F9000F01AE /* HVDailyMedicationUsage.h in Headers */,
+				5D775C831538D86C000F01AE /* HVEmotionalState.h in Headers */,
+				5D775C871538DED2000F01AE /* HVVitalSignResult.h in Headers */,
+				5D775C8B1538E433000F01AE /* HVVitalSigns.h in Headers */,
+				5D775C8F1538E9BA000F01AE /* HVAssessmentField.h in Headers */,
+				5D775C931538EBF9000F01AE /* HVAssessment.h in Headers */,
+				5DE34C7C153925F2003C24E8 /* HVQuestionAnswer.h in Headers */,
+				5DE34C8615393B88003C24E8 /* HVEncounter.h in Headers */,
+				5DE34C8A15393C62003C24E8 /* HVDuration.h in Headers */,
+				5DE34C8E15394314003C24E8 /* HVOrganization.h in Headers */,
+				5DE34C94153951FD003C24E8 /* HVOccurence.h in Headers */,
+				5DE34C98153957AC003C24E8 /* HVSleepJournalAM.h in Headers */,
+				5D1F13241539DD5200524425 /* HVSleepJournalPM.h in Headers */,
+				5D1F13291539E9E000524425 /* HVRelative.h in Headers */,
+				5D1F132D1539EDF100524425 /* HVFamilyHistory.h in Headers */,
+				5D1F13311539EF0600524425 /* HVConditionEntry.h in Headers */,
+				5D1F13381539FF6300524425 /* HVDietaryIntake.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5D5299AB14DCB3A700D2636E /* HVLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D5299B914DCB3A700D2636E /* Build configuration list for PBXNativeTarget "HVLib" */;
+			buildPhases = (
+				5D5299A814DCB3A700D2636E /* Sources */,
+				5D5299A914DCB3A700D2636E /* Frameworks */,
+				5D5299AA14DCB3A700D2636E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HVLib;
+			productName = HVLib;
+			productReference = 5D5299AC14DCB3A700D2636E /* libHVLib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5D5299A314DCB3A700D2636E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Microsoft Corporation";
+			};
+			buildConfigurationList = 5D5299A614DCB3A700D2636E /* Build configuration list for PBXProject "HVLib" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				English,
+			);
+			mainGroup = 5D5299A114DCB3A700D2636E;
+			productRefGroup = 5D5299AD14DCB3A700D2636E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5D5299AB14DCB3A700D2636E /* HVLib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5D5299A814DCB3A700D2636E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D76B9D414DCC84C00BA865F /* HVValidator.m in Sources */,
+				5D76B9DA14DCC85B00BA865F /* HVStringExtensions.m in Sources */,
+				5D76B9DC14DCC85B00BA865F /* HVExceptionExtensions.m in Sources */,
+				5D76B9EB14DCC9F500BA865F /* HVLib.m in Sources */,
+				5D0DACB414E2FE14002CBE52 /* HVCore.m in Sources */,
+				5DE382FC14E338C900DFA11D /* HVArrayExtensions.m in Sources */,
+				5DE3830D14E4447800DFA11D /* XConverter.m in Sources */,
+				5DE3830F14E4447800DFA11D /* XException.m in Sources */,
+				5DE3831314E4447800DFA11D /* XReader.m in Sources */,
+				5DE3831514E4447800DFA11D /* XString.m in Sources */,
+				5D2D1C5E14E4A4F400C85B7E /* XWriter.m in Sources */,
+				5D2D1C6114E4AC9B00C85B7E /* XNodeType.m in Sources */,
+				5D983BB914E5949B00C287B7 /* HVGuid.m in Sources */,
+				5D983BD314E5CA3300C287B7 /* XSerializer.m in Sources */,
+				5D983BD914E5F4BD00C287B7 /* HVItemDataTyped.m in Sources */,
+				5D983BDD14E5F50600C287B7 /* HVWeight.m in Sources */,
+				5D983BE314E5FE2B00C287B7 /* HVClientException.m in Sources */,
+				5D983BE714E6006400C287B7 /* HVConstrainedInt.m in Sources */,
+				5D983BEB14E6035900C287B7 /* HVDay.m in Sources */,
+				5D983BEF14E6038000C287B7 /* HVMonth.m in Sources */,
+				5D983BF314E6039C00C287B7 /* HVYear.m in Sources */,
+				5D983BF714E6070600C287B7 /* HVDate.m in Sources */,
+				5D983BFD14E984B600C287B7 /* HVHour.m in Sources */,
+				5D983C0114E984CE00C287B7 /* HVMinute.m in Sources */,
+				5D983C0514E984EE00C287B7 /* HVSecond.m in Sources */,
+				5D983C0914E9850500C287B7 /* HVMillisecond.m in Sources */,
+				5DEF154B14E985C5009D05D5 /* HVType.m in Sources */,
+				5DEF155014E98DCB009D05D5 /* HVTime.m in Sources */,
+				5DEF155814E9987F009D05D5 /* HVDateExtensions.m in Sources */,
+				5DEF156814EB0988009D05D5 /* HVClientResult.m in Sources */,
+				5DEF156C14EB180F009D05D5 /* HVDateTime.m in Sources */,
+				5DEF157014EC2431009D05D5 /* HVCodedValue.m in Sources */,
+				5DEF157414EC2458009D05D5 /* HVCodableValue.m in Sources */,
+				5D20D2DB14EDD32500160611 /* HVConstrainedDouble.m in Sources */,
+				5D20D2DF14EDD5FE00160611 /* HVPositiveDouble.m in Sources */,
+				5D20D2E314EDD6C100160611 /* HVWeightMeasurement.m in Sources */,
+				5D20D2E714EDDEF500160611 /* HVDisplayValue.m in Sources */,
+				5D20D2EB14EDF16F00160611 /* HVBloodPressure.m in Sources */,
+				5D20D2EF14EEF84400160611 /* HVInt.m in Sources */,
+				5D20D2F314EEF99400160611 /* HVDouble.m in Sources */,
+				5D20D2F714EEFA7600160611 /* HVNonNegativeInt.m in Sources */,
+				5D20D2FB14EEFF6D00160611 /* HVBool.m in Sources */,
+				5D20D2FF14EF3DC300160611 /* HVItemQuery.m in Sources */,
+				5D20D30414EF414500160611 /* HVCollection.m in Sources */,
+				5D20D30814F2E21400160611 /* HVItemKey.m in Sources */,
+				5D20D30C14F2E22C00160611 /* HVItemFilter.m in Sources */,
+				5D20D31014F2E26900160611 /* HVItemView.m in Sources */,
+				5D20D31414F2F4F400160611 /* HVItem.m in Sources */,
+				5D20D31C14F2FA5900160611 /* HVItemSection.m in Sources */,
+				5D20D32414F304E700160611 /* HVItemState.m in Sources */,
+				5D20D32814F424F000160611 /* HVItemType.m in Sources */,
+				5D20D32C14F42E1300160611 /* HVItemData.m in Sources */,
+				5D20D33014F4352A00160611 /* HVItemDataCommon.m in Sources */,
+				5D20D33414F4366200160611 /* HVConstrainedString.m in Sources */,
+				5D20D33814F43A1400160611 /* HVString255.m in Sources */,
+				5D20D33C14F43A9C00160611 /* HVStringZ512.m in Sources */,
+				5D20D34014F4467C00160611 /* HVItemRaw.m in Sources */,
+				5D20D34414F44EF200160611 /* HVAudit.m in Sources */,
+				5D20D34814F4804F00160611 /* HVRecord.m in Sources */,
+				5D20D34C14F4808400160611 /* HVPersonInfo.m in Sources */,
+				5D20D35014F487C100160611 /* HVItemQueryResults.m in Sources */,
+				5D20D35414F487F100160611 /* HVPendingItem.m in Sources */,
+				5D20D35814F4883700160611 /* HVItemQueryResult.m in Sources */,
+				5DD0B80B14F81DDE00AAD54F /* XSerializableType.m in Sources */,
+				5DC44B7D14FEA3E600E2E02F /* HVRandom.m in Sources */,
+				5DC50C25150019650078D85F /* HVItemTestExtensions.m in Sources */,
+				5DC50C2E15003C2A0078D85F /* HVTypeViewItem.m in Sources */,
+				5DC50C3215003C3D0078D85F /* HVTypeViewItems.m in Sources */,
+				5DC50C41150051DD0078D85F /* HVMemoryStore.m in Sources */,
+				5DC50C4515015EE60078D85F /* HVTypeView.m in Sources */,
+				5DC50C49150160CE0078D85F /* HVSynchronizedStore.m in Sources */,
+				5DC50C4D150172610078D85F /* HVMulticastDelegate.m in Sources */,
+				5DC50C5115017CC50078D85F /* HVAsyncTask.m in Sources */,
+				5DC50C5D1506F6040078D85F /* HVClient.m in Sources */,
+				5DC50C611508049F0078D85F /* HVLocalVault.m in Sources */,
+				5D5F311C150E9A3E00ED11E7 /* HVCollection.m in Sources */,
+				5D5F311E150E9A3E00ED11E7 /* HVMulticastDelegate.m in Sources */,
+				5D5F311F150E9A3E00ED11E7 /* HVCommon.c in Sources */,
+				5D5F3121150E9A3E00ED11E7 /* HVClientSettings.m in Sources */,
+				5D5F3127150EAD8400ED11E7 /* HVDirectory.m in Sources */,
+				5D5F3132150ED29F00ED11E7 /* HVBrowserController.m in Sources */,
+				5D5F3161150FAA2800ED11E7 /* HealthVaultRecord.m in Sources */,
+				5D5F3163150FAA2800ED11E7 /* HealthVaultRequest.m in Sources */,
+				5D5F3165150FAA2800ED11E7 /* HealthVaultResponse.m in Sources */,
+				5D5F3167150FAA2800ED11E7 /* HealthVaultService.m in Sources */,
+				5D5F3169150FAA2800ED11E7 /* MobilePlatform.m in Sources */,
+				5D5F316B150FAA2800ED11E7 /* AuthenticationCheckState.m in Sources */,
+				5D5F316D150FAA2800ED11E7 /* Provisioner.m in Sources */,
+				5D5F316F150FAA2800ED11E7 /* HealthVaultSettings.m in Sources */,
+				5D5F3171150FAA2800ED11E7 /* Base64.m in Sources */,
+				5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */,
+				5D5F3175150FAA2800ED11E7 /* Logger.m in Sources */,
+				5D5F3177150FAA2800ED11E7 /* WebResponse.m in Sources */,
+				5D5F3179150FAA2800ED11E7 /* WebTransport.m in Sources */,
+				5D5F317B150FAA2800ED11E7 /* XmlElement.m in Sources */,
+				5D5F317D150FAA2800ED11E7 /* XmlTextReader.m in Sources */,
+				5D5F3185150FAE5300ED11E7 /* HVAppProvisionController.m in Sources */,
+				5D311729150FE26600B8F3D7 /* HVBlock.m in Sources */,
+				5DE57A1C1510F75400829CC2 /* HVUIAlert.m in Sources */,
+				5D97B93D1511743C0004B551 /* HVUser.m in Sources */,
+				5D39F9281513A63500208A7B /* HVMethodCallTask.m in Sources */,
+				5D39F92C1513AA6000208A7B /* HVServerResponseStatus.m in Sources */,
+				5D39F9301513E41200208A7B /* HVGetItemsTask.m in Sources */,
+				5D39F9321513FFC600208A7B /* HVRecordReference.m in Sources */,
+				5D39F938151A3AA200208A7B /* HVLocalItemStore.m in Sources */,
+				5D39F93C151A718C00208A7B /* HVLocalRecordStore.m in Sources */,
+				5D0B4BE2151A7D50000849D0 /* HVCondition.m in Sources */,
+				5D0B4BE7151A80A4000849D0 /* HVApproxDateTime.m in Sources */,
+				5D195CFB151B886000E109AD /* HVRelatedItem.m in Sources */,
+				5D195D00151BBC7D00E109AD /* HVMeasurement.m in Sources */,
+				5D195D04151BC72C00E109AD /* HVApproxMeasurement.m in Sources */,
+				5D195D08151BCAB400E109AD /* HVMedication.m in Sources */,
+				5D195D10151BEBA100E109AD /* HVAddress.m in Sources */,
+				5D195D14151BF01800E109AD /* HVPhone.m in Sources */,
+				5D195D1C151BF2E200E109AD /* HVEmailAddress.m in Sources */,
+				5D195D20151BF54300E109AD /* HVEmail.m in Sources */,
+				5D195D24151BF61000E109AD /* HVContact.m in Sources */,
+				5D195D28151BF9F400E109AD /* HVPerson.m in Sources */,
+				5D195D2C151BFA5300E109AD /* HVName.m in Sources */,
+				5D195D4B15222B8A00E109AD /* HVVector.cpp in Sources */,
+				5D195D4F1522527100E109AD /* HVPutItemsTask.m in Sources */,
+				5D195D671522780800E109AD /* HVRemoveItemsTask.m in Sources */,
+				5D195D7315228C0200E109AD /* HVVocabSearchText.m in Sources */,
+				5D195D831522973500E109AD /* HVVocabSearchTask.m in Sources */,
+				5D195D8F1523BC4900E109AD /* HVIndexList.m in Sources */,
+				5D362B56152F8542006CC30C /* HVPrescription.m in Sources */,
+				5D57A8B7152F8A0C00A80C4A /* HVPositiveInt.m in Sources */,
+				5D8E5A9F152FA913002BC6E2 /* HVCholesterol.m in Sources */,
+				5D8E5AA8152FBBA4002BC6E2 /* HVAllergy.m in Sources */,
+				5D8E5AB2152FC460002BC6E2 /* HVImmunization.m in Sources */,
+				5D8E5AB6152FC552002BC6E2 /* HVApproxDate.m in Sources */,
+				5D07A9581534B1780013DC2A /* HVProcedure.m in Sources */,
+				5DC799601534C95A00193A3B /* HVBloodGlucose.m in Sources */,
+				5DC799651534C97200193A3B /* HVOneToFive.m in Sources */,
+				5DC7996D1534CB0F00193A3B /* HVBloodGlucoseMeasurement.m in Sources */,
+				5DC799751534E3EF00193A3B /* HVNameValue.m in Sources */,
+				5DC799791534EC2E00193A3B /* HVLengthMeasurement.m in Sources */,
+				5DC7997D1534F3A300193A3B /* HVHeight.m in Sources */,
+				5DC799811534FCD100193A3B /* HVExercise.m in Sources */,
+				5DC799931535FEE300193A3B /* HVGetAuthorizedPeopleTask.m in Sources */,
+				5DC3C43815360123008BBDBF /* HVGetAuthorizedPeopleResult.m in Sources */,
+				5D561B0615365F74003D68D2 /* HVEmergencyOrProviderContact.m in Sources */,
+				5D227B8E153766E500E12075 /* HVVocabIdentifier.m in Sources */,
+				5D227B90153766E500E12075 /* HVVocabItem.m in Sources */,
+				5D227B92153766E500E12075 /* HVVocabSearchParams.m in Sources */,
+				5D227B94153766E500E12075 /* HVVocabCodeSet.m in Sources */,
+				5D925DD815376F21006BAAA8 /* HVGetVocabTask.m in Sources */,
+				5D925DE115377348006BAAA8 /* HVVocabParams.m in Sources */,
+				5D775C7215389BD7000F01AE /* HVBasicDemographics.m in Sources */,
+				5D775C741538A118000F01AE /* HVItemTypes.m in Sources */,
+				5D775C781538C2BA000F01AE /* HVPersonalDemographics.m in Sources */,
+				5D775C7C1538D050000F01AE /* HVPersonalContactInfo.m in Sources */,
+				5D775C801538D2F9000F01AE /* HVDailyMedicationUsage.m in Sources */,
+				5D775C841538D86C000F01AE /* HVEmotionalState.m in Sources */,
+				5D775C881538DED2000F01AE /* HVVitalSignResult.m in Sources */,
+				5D775C8C1538E433000F01AE /* HVVitalSigns.m in Sources */,
+				5D775C901538E9BA000F01AE /* HVAssessmentField.m in Sources */,
+				5D775C941538EBF9000F01AE /* HVAssessment.m in Sources */,
+				5DE34C7D153925F2003C24E8 /* HVQuestionAnswer.m in Sources */,
+				5DE34C8715393B88003C24E8 /* HVEncounter.m in Sources */,
+				5DE34C8B15393C62003C24E8 /* HVDuration.m in Sources */,
+				5DE34C8F15394314003C24E8 /* HVOrganization.m in Sources */,
+				5DE34C95153951FD003C24E8 /* HVOccurence.m in Sources */,
+				5DE34C99153957AC003C24E8 /* HVSleepJournalAM.m in Sources */,
+				5D1F13251539DD5200524425 /* HVSleepJournalPM.m in Sources */,
+				5D1F132A1539E9E000524425 /* HVRelative.m in Sources */,
+				5D1F132E1539EDF100524425 /* HVFamilyHistory.m in Sources */,
+				5D1F13321539EF0600524425 /* HVConditionEntry.m in Sources */,
+				5D1F13391539FF6300524425 /* HVDietaryIntake.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		5DE57A241511573500829CC2 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5DE57A251511573500829CC2 /* English */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5D5299B714DCB3A700D2636E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5D5299B814DCB3A700D2636E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5D5299BA14DCB3A700D2636E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DSTROOT = /tmp/HVLib.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HVLib/HVLib-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
+				LIBRARY_SEARCH_PATHS = /usr/lib;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		5D5299BB14DCB3A700D2636E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DSTROOT = /tmp/HVLib.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HVLib/HVLib-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
+				LIBRARY_SEARCH_PATHS = /usr/lib;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5D5299A614DCB3A700D2636E /* Build configuration list for PBXProject "HVLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D5299B714DCB3A700D2636E /* Debug */,
+				5D5299B814DCB3A700D2636E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D5299B914DCB3A700D2636E /* Build configuration list for PBXNativeTarget "HVLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D5299BA14DCB3A700D2636E /* Debug */,
+				5D5299BB14DCB3A700D2636E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5D5299A314DCB3A700D2636E /* Project object */;
+}
