@@ -21,6 +21,11 @@
 #import "HVPositiveDouble.h"
 #import "HVDisplayValue.h"
 
+//-------------------------
+//
+// Weights are always measured in KG
+//
+//-------------------------
 @interface HVWeightMeasurement : HVType
 {
 @private
@@ -28,24 +33,54 @@
     HVDisplayValue* m_display;
 }
 
+//-------------------------
+//
+// Weight Data
+//
+//-------------------------
+//
+// (Required) - weight - in KG
+//
 @property (readwrite, nonatomic, retain) HVPositiveDouble* value;
 //
-// Required - either KG or Pounds
-//
-@property (readwrite, nonatomic) double kg;
-@property (readwrite, nonatomic) double pounds;
-//
-// Optional
+// (Optional) - what the user entered - before conversion to standard units
 //
 @property (readwrite, nonatomic, retain) HVDisplayValue *display;
+//
+// Convenience properties
+//
+@property (readwrite, nonatomic) double inKg;
+@property (readwrite, nonatomic) double inGrams;
+@property (readwrite, nonatomic) double inMilligrams;
+@property (readwrite, nonatomic) double inPounds;
+@property (readwrite, nonatomic) double inOunces;
 
-
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithKg:(double) value;
 -(id) initwithPounds:(double) value;
 
--(BOOL) updateDisplayValue:(double) displayValue andUnits:(NSString *) unitValue;
+//-------------------------
+//
+// Methods
+//
+//-------------------------
+//
+// Vocabulary for units and code: weight-units
+//
+-(BOOL) updateDisplayValue:(double) displayValue units:(NSString *) unitValue andUnitsCode:(NSString *) code;
 
--(NSString *) toString;
++(double) kgToPounds:(double) kg;
++(double) poundsToKg:(double) pounds;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
 //
 // These methods expect a format string with one %f in it.
 //
@@ -54,10 +89,8 @@
 -(NSString *) stringInOunces:(NSString *) format;
 -(NSString *) stringInKg:(NSString *) format;
 -(NSString *) stringInGrams:(NSString *) format;
+-(NSString *) stringInMilligrams:(NSString *) format;
 
-+(double) kgToPounds:(double) kg;
-+(double) poundsToKg:(double) pounds;
-+(double) roundKg:(double) kg;
-+(double) roundPounds:(double) pounds;
+-(NSString *) toString;
 
 @end

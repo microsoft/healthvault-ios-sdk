@@ -19,6 +19,11 @@
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
 
+//------------------------
+//
+// DAILY Dietary Intake
+//
+//------------------------
 @interface HVDietaryIntake : HVItemDataTyped
 {
 @private
@@ -35,16 +40,69 @@
     HVWeightMeasurement* m_cholesterol;
 }
 
+//-------------------------
+//
+// Dietary intake Data
+//
+//-------------------------
+//
+// (Required) - the day for this intake
+//
 @property (readwrite, nonatomic, retain) HVDate* when;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVPositiveInt* calories;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* totalFat;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* saturatedFat;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* transFat;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* protein;
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* carbs;
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* fiber;
+//
+// (Optional)
+//
+@property (readwrite, nonatomic, retain) HVWeightMeasurement* totalCarbs;
+//
+// (Optional)
+//
+@property (readwrite, nonatomic, retain) HVWeightMeasurement* sugar;
+//
+// (Optional)
+//
+@property (readwrite, nonatomic, retain) HVWeightMeasurement* dietaryFiber;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* sodium;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* cholesterol;
+
+//
+// Convenience properties
+//
+@property (readwrite, nonatomic) int caloriesValue;
+@property (readwrite, nonatomic) double totalFatGrams;
+@property (readwrite, nonatomic) double saturatedFatGrams;
+@property (readwrite, nonatomic) double transFatGrams;
+@property (readwrite, nonatomic) double proteinGrams;
+@property (readwrite, nonatomic) double totalCarbGrams;
+@property (readwrite, nonatomic) double sugarGrams;
+@property (readwrite, nonatomic) double dietaryFiberGrams;
+@property (readwrite, nonatomic) double sodiumMillgrams;
+@property (readwrite, nonatomic) double cholesterolMilligrams;
 
 +(NSString *) typeID;
 +(NSString *) XRootElement;

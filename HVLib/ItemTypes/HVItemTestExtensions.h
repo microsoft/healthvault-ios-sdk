@@ -21,6 +21,8 @@
 #import "HVSynchronizedStore.h"
 
 NSDate* createRandomDate(void);
+HVDateTime* createRandomHVDateTime(void);
+HVDate* createRandomHVDate(void);
 
 @interface HVItem (HVTestExtensions)
 
@@ -34,6 +36,30 @@ NSDate* createRandomDate(void);
 
 @interface HVBloodPressure (HVTestExtensions)
 +(HVItem *) createRandom;
+@end
+
+@interface HVBloodGlucose (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVCholesterol (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVHeight (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVDietaryIntake (HVTestExtensions)
+
++(HVItem *) createRandom;
+
 @end
 
 @interface HVTestSynchronizedStore : HVSynchronizedStore

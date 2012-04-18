@@ -20,7 +20,7 @@
 #import "HVDisplayValue.h"
 
 static NSString* const c_attribute_units = @"units";
-static NSString* const c_attribute_code = @"code";
+static NSString* const c_attribute_code = @"units-code";
 static NSString* const c_attribute_text = @"text";
 
 @implementation HVDisplayValue

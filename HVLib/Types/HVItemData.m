@@ -74,6 +74,19 @@ static NSString* const c_element_common = @"common";
     [super dealloc];
 }
 
+-(HVClientResult *)validate
+{
+    HVVALIDATE_BEGIN
+    
+    HVVALIDATE_OPTIONAL(m_common);
+    HVVALIDATE_OPTIONAL(m_typed);
+    
+    HVVALIDATE_SUCCESS
+    
+LError:
+    HVVALIDATE_FAIL
+}
+
 -(void) serialize:(XWriter *)writer
 {
     if (m_typed)

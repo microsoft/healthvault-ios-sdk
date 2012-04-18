@@ -42,10 +42,121 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 @synthesize saturatedFat = m_saturatedFat;
 @synthesize transFat = m_transFat;
 @synthesize protein = m_protein;
-@synthesize carbs = m_carbs;
-@synthesize fiber = m_fiber;
+@synthesize totalCarbs = m_carbs;
+@synthesize sugar = m_sugar;
+@synthesize dietaryFiber = m_fiber;
 @synthesize sodium = m_sodium;
 @synthesize cholesterol = m_cholesterol;
+
+-(int)caloriesValue
+{
+    return (m_calories) ? m_calories.value : -1;
+}
+
+-(void)setCaloriesValue:(int)caloriesValue
+{
+    HVENSURE(m_calories, HVPositiveInt);
+    m_calories.value = caloriesValue;
+}
+
+-(double)totalFatGrams
+{
+    return (m_totalFat) ? m_totalFat.inGrams : NAN;
+}
+
+-(void)setTotalFatGrams:(double)totalFatGrams
+{
+    HVENSURE(m_totalFat, HVWeightMeasurement);
+    m_totalFat.inGrams = totalFatGrams;
+}
+
+-(double)saturatedFatGrams
+{
+    return (m_saturatedFat) ? m_saturatedFat.inGrams : NAN;
+}
+
+-(void)setSaturatedFatGrams:(double)saturatedFatGrams
+{
+    HVENSURE(m_saturatedFat, HVWeightMeasurement);
+    m_saturatedFat.inGrams = saturatedFatGrams;   
+}
+
+-(double)transFatGrams
+{
+    return (m_transFat) ? m_transFat.inGrams : NAN;
+}
+
+-(void)setTransFatGrams:(double)transFatGrams
+{
+    HVENSURE(m_transFat, HVWeightMeasurement);
+    m_transFat.inGrams = transFatGrams;   
+}
+
+-(double)proteinGrams
+{
+    return (m_protein) ? m_protein.inGrams : NAN;
+}
+
+-(void)setProteinGrams:(double)proteinGrams
+{
+    HVENSURE(m_protein, HVWeightMeasurement);
+    m_protein.inGrams = proteinGrams;       
+}
+
+-(double)totalCarbGrams
+{
+    return (m_carbs) ? m_carbs.inGrams : NAN;
+}
+
+-(void)setTotalCarbGrams:(double)totalCarbGrams
+{
+    HVENSURE(m_carbs, HVWeightMeasurement);
+    m_carbs.inGrams = totalCarbGrams;   
+}
+
+-(double)sugarGrams
+{
+    return (m_sugar) ? m_sugar.inGrams : NAN;
+}
+
+-(void)setSugarGrams:(double)sugarGrams
+{
+    HVENSURE(m_sugar, HVWeightMeasurement);
+    m_sugar.inGrams = sugarGrams;   
+}
+
+-(double)dietaryFiberGrams
+{
+    return (m_fiber) ? m_fiber.inGrams : NAN;
+}
+
+-(void)setDietaryFiberGrams:(double)dietaryFiberGrams
+{
+    HVENSURE(m_fiber, HVWeightMeasurement);
+    m_fiber.inGrams = dietaryFiberGrams;       
+}
+
+-(double)sodiumMillgrams
+{
+    return (m_sodium) ? m_sodium.inMilligrams : NAN;
+}
+
+-(void)setSodiumMillgrams:(double)sodiumMillgrams
+{
+    HVENSURE(m_sodium, HVWeightMeasurement);
+    m_sodium.inMilligrams = sodiumMillgrams;       
+}
+
+-(double)cholesterolMilligrams
+{
+    return (m_cholesterol) ? m_cholesterol.inMilligrams : NAN;
+}
+
+-(void)setCholesterolMilligrams:(double)cholesterolMilligrams
+{
+    HVENSURE(m_cholesterol, HVWeightMeasurement);
+    m_cholesterol.inMilligrams = cholesterolMilligrams;          
+}
 
 -(void)dealloc
 {

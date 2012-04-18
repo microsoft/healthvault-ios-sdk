@@ -32,17 +32,29 @@ static NSString* const c_element_version = @"version";
 @synthesize vocabularyFamily = m_family;
 @synthesize vocabularyVersion = m_version;
 
--(id) initWithCode:(NSString *)value andVocab:(NSString *)vocab
+-(id) initWithCode:(NSString *)code andVocab:(NSString *)vocab
 {
-    HVCHECK_STRING(value);
+    return [self initWithCode:code vocab:vocab vocabFamily:nil vocabVersion:nil];
+}
+
+-(id)initWithCode:(NSString *)code vocab:(NSString *)vocab vocabFamily:(NSString *)family vocabVersion:(NSString *)version
+{    
+    HVCHECK_STRING(code);
     HVCHECK_STRING(vocab);
     
     self = [super init];
     HVCHECK_SELF;
     
-    self.code = value;
+    self.code = code;
     self.vocabularyName = vocab;
-    
+    if (family)
+    {
+        self.vocabularyFamily = family;
+    }
+    if (version)
+    {
+        self.vocabularyVersion = version;
+    }
     return self;
     
 LError:
@@ -57,6 +69,27 @@ LError:
     [m_version release];
     [super dealloc];
  }
+
+-(BOOL)isEqualToCode:(NSString *)code fromVocab:(NSString *)vocabName
+{
+    return ([m_code isEqualToString:code] && [m_vocab isEqualToString:vocabName]);
+}
+
+-(BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[HVCodedValue class]])
+    {
+        return FALSE;
+    }
+    
+    HVCodedValue* other = (HVCodedValue *) object;
+    return (
+            [m_vocab isEqualToString:other.vocabularyName]
+        &&  [m_code isEqualToString:other.code]
+        &&  [m_family isEqualToString:other.vocabularyFamily]
+        &&  [m_version isEqualToString:other.vocabularyVersion]
+    );
+}
 
 -(HVClientResult *) validate
 {

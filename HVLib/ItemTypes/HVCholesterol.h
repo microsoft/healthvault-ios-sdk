@@ -19,6 +19,9 @@
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
 
+//
+// Cholesterol (Lipid) profile
+//
 @interface HVCholesterol : HVItemDataTyped
 {
 @private
@@ -29,23 +32,55 @@
     HVInt* m_triglycerides;
 }
 
+//-------------------------
+//
+// Cholesterol Data
+//
+//-------------------------
+//
+// (Required) When the measurement was taken
+//
 @property (readwrite, nonatomic, retain) HVDate* when;
+//
+// (Optional)
+// 
 @property (readwrite, nonatomic, retain) HVInt* ldl;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVInt* hdl;
+//
+// (Optional) Total cholesterol
+//
 @property (readwrite, nonatomic, retain) HVInt* total;
+//
+// (Optional) 
+//
 @property (readwrite, nonatomic, retain) HVInt* triglycerides;
-
+//
+// Convenience properties
+//
 @property (readwrite, nonatomic) int ldlValue;
 @property (readwrite, nonatomic) int hdlValue;
 @property (readwrite, nonatomic) int totalValue;
 @property (readwrite, nonatomic) int triglyceridesValue;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 //
 // Creates a string for ldl/hdl
 //
 -(NSString *) toString;
 -(NSString *) toStringWithFormat:(NSString *) format;
 
+//-------------------------
+//
+// Type information
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 

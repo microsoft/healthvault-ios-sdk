@@ -32,24 +32,24 @@ static NSString* const c_element_value = @"value";
 
 -(double)inPounds
 {
-    return (m_value) ? m_value.pounds : NAN;
+    return (m_value) ? m_value.inPounds : NAN;
 }
 
 -(void)setInPounds:(double)inPounds
 {
     HVENSURE(m_value, HVWeightMeasurement);
-    m_value.pounds = inPounds;
+    m_value.inPounds = inPounds;
 }
 
 -(void)setInKg:(double)inKg
 {
     HVENSURE(m_value, HVWeightMeasurement);
-    m_value.kg = inKg;
+    m_value.inKg = inKg;
 }
 
 -(double)inKg
 {
-    return (m_value) ? m_value.kg : NAN;
+    return (m_value) ? m_value.inKg : NAN;
 }
 
 -(void) dealloc

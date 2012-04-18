@@ -30,32 +30,95 @@
     HVOneToFive* m_normalcy;
     HVCodableValue* m_context;
 }
+
+//-------------------------
 //
-// Required
+// Blood Glucose Data
+//
+//-------------------------
+//
+// (Required) when this measurement was taken
 //
 @property (readwrite, nonatomic, retain) HVDateTime* when;
+//
+// (Required) Blood glucose value). 
+// You can also use the convenience inMmolPerLiter and inMgPerDL properties
+//
 @property (readwrite, nonatomic, retain) HVBloodGlucoseMeasurement* value;
+//
+// (Required) What type of measurement (plasma, whole blood)
+//  Preferred Vocabulary: glucose-measurement-type
+//  You can use the createPlasmaMeasurementCode & createWholeBloodMeasurentCode methods
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* measurementType;
 //
-// Optional
+// (Optional) Is the reading outside operating tempature of the measuring device
 //
 @property (readwrite, nonatomic, retain) HVBool* isOutsideOperatingTemp;
+//
+// (Optional) Was this reading the result of a control test? 
+//
 @property (readwrite, nonatomic, retain) HVBool* isControlTest;
+//
+// (Optional) How did this reading rate, relative to normal? 
+//
 @property (readwrite, nonatomic) enum HVRelativeRating normalcy;
+//
+// (Optional) measurement context
+// Preferred Vocab: glucose-measurement-context
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* context;
+
+//
+// Convenience properties
+//
 
 @property (readwrite, nonatomic) double inMmolPerLiter;
 @property (readwrite, nonatomic) double inMgPerDL;
 
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithMmolPerLiter:(double) value andDate:(NSDate *) date;
 
++(HVItem *) newItem;
+
+//-------------------------
+//
+// Factory methods
+//
+//-------------------------
+//
+// You can use this to set the measurementType
+//
++(HVCodableValue *) createPlasmaMeasurementType;
+//
+// You can use this to set the measurementType
+//
++(HVCodableValue *) createWholeBloodMeasurementType;
+
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
+//
+// These methods expect a format string containing a single %f
+//
 -(NSString *) stringInMmolPerLiter:(NSString *) format;
 -(NSString *) stringInMgPerDL:(NSString *) format;
 -(NSString *) toString;
 
+//-------------------------
+//
+// Type information
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
-
-+(HVItem *) newItem;
 
 @end

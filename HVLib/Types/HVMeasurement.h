@@ -19,6 +19,8 @@
 #import "HVType.h"
 #import "HVCodableValue.h"
 
+double roundToPrecision(double value, int precision);
+
 @interface HVMeasurement : HVType
 {
     double m_value;

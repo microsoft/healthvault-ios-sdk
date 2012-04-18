@@ -22,7 +22,6 @@
 static double const c_PoundsPerKg = 2.20462262185;
 static double const c_KgPerPound = 0.45359237;
 
-static NSString* const c_KgUnits = @"kilograms";
 static NSString* const c_PoundUnits = @"pounds";
 
 static NSString* const c_element_kg = @"kg";
@@ -33,29 +32,69 @@ static NSString* const c_element_display = @"display";
 @synthesize value = m_kg;
 @synthesize display = m_display;
 
--(double) kg
+-(double) inKg
 {
     return (m_kg) ? m_kg.value : NAN;
 }
 
--(void) setKg:(double)valueInKg
+-(void) setInKg:(double)valueInKg
 {
     HVENSURE(m_kg, HVPositiveDouble);
     m_kg.value = valueInKg;
     
-    [self updateDisplayValue:[HVWeightMeasurement roundKg:valueInKg] andUnits:c_KgUnits];
+    [self updateDisplayValue:valueInKg units:@"kilogram" andUnitsCode:@"kg"];
 }
 
--(double) pounds
+-(double)inGrams
 {
-    return [HVWeightMeasurement kgToPounds:self.kg];
+    return self.inKg * 1000;
 }
 
--(void) setPounds:(double)valueInPounds
+-(void)setInGrams:(double)grams
 {
-    self.kg = [HVWeightMeasurement poundsToKg:valueInPounds];
-    [self updateDisplayValue:[HVWeightMeasurement roundPounds:valueInPounds] andUnits:c_PoundUnits];
+    HVENSURE(m_kg, HVPositiveDouble);
+    m_kg.value = grams / 1000;
     
+    [self updateDisplayValue:grams units:@"gram" andUnitsCode:@"g"];   
+}
+
+-(double)inMilligrams
+{
+    return self.inGrams * 1000;
+}
+
+-(void)setInMilligrams:(double)milligrams
+{
+    HVENSURE(m_kg, HVPositiveDouble);
+    m_kg.value = milligrams / (1000 * 1000);
+    
+    [self updateDisplayValue:milligrams units:@"milligram" andUnitsCode:@"mg"];   
+}
+
+-(double) inPounds
+{
+    return [HVWeightMeasurement kgToPounds:self.inKg];
+}
+
+-(void) setInPounds:(double)valueInPounds
+{
+    HVENSURE(m_kg, HVPositiveDouble);
+    m_kg.value = [HVWeightMeasurement poundsToKg:valueInPounds];
+
+    [self updateDisplayValue:valueInPounds units:@"pound" andUnitsCode:@"lb"];
+}
+
+-(double)inOunces
+{
+    return self.inPounds * 16;
+}
+
+-(void)setInOunces:(double)ounces
+{
+    HVENSURE(m_kg, HVPositiveDouble);
+    m_kg.value = [HVWeightMeasurement poundsToKg:(ounces / 16)];
+    
+    [self updateDisplayValue:ounces units:@"ounce" andUnitsCode:@"oz"];
 }
 
 -(id) initWithKg:(double)value
@@ -63,7 +102,9 @@ static NSString* const c_element_display = @"display";
     self = [super init];
     HVCHECK_SELF;
     
-    self.kg = value;
+    self.inKg = value;
+    
+    HVCHECK_NOTNULL(m_kg);
     HVCHECK_NOTNULL(m_display);
 
     return self;
@@ -76,7 +117,7 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    self.pounds = value;
+    self.inPounds = value;
     HVCHECK_NOTNULL(m_display);
     
     return self;
@@ -92,10 +133,14 @@ LError:
     [super dealloc];
 }
 
--(BOOL) updateDisplayValue:(double)displayValue andUnits:(NSString *)unitValue
+-(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     HVDisplayValue *newValue = [[HVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
     HVCHECK_NOTNULL(newValue);
+    if (code)
+    {
+        newValue.unitsCode = code;
+    }
     
     HVASSIGN(m_display, newValue);
     
@@ -112,32 +157,37 @@ LError:
 
 -(NSString *)toString
 {
-    return [self toStringWithFormat:@"%.2f kg"];
+    return [self toStringWithFormat:@"%.2f kilogram"];
 }
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.kg];
+    return [NSString stringWithFormat:format, self.inKg];
 }
 
 -(NSString *)stringInPounds:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.pounds];
+    return [NSString stringWithFormat:format, self.inPounds];
 }
 
 -(NSString *)stringInOunces:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.pounds * 16];    
-}
-
--(NSString *)stringInGrams:(NSString *)format
-{
-    return [NSString stringWithFormat:format, self.kg * 1000];
+    return [NSString stringWithFormat:format, self.inOunces];    
 }
 
 -(NSString *)stringInKg:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.kg];
+    return [NSString stringWithFormat:format, self.inKg];
+}
+
+-(NSString *)stringInGrams:(NSString *)format
+{
+    return [NSString stringWithFormat:format, self.inGrams];
+}
+
+-(NSString *)stringInMilligrams:(NSString *)format
+{
+    return [NSString stringWithFormat:format, self.inMilligrams];
 }
 
 -(HVClientResult *) validate
@@ -175,14 +225,5 @@ LError:
     return pounds * c_KgPerPound;
 }
 
-+(double) roundKg:(double)kg
-{
-    return (round(kg * 1000) )/ 1000;  // round to third place (grams)    
-}
-
-+(double) roundPounds:(double)pounds
-{
-    return (round(pounds * 100) )/ 100;  // round to second place (ounces)
-}
 @end
 

@@ -18,12 +18,13 @@
 
 #import "HVCommon.h"
 #import "HVBloodGlucoseMeasurement.h"
+#import "HVMeasurement.h"
 
 static NSString* const c_element_mmolPL = @"mmolPerL";
 static NSString* const c_element_display = @"display";
 
-static NSString* const c_mmolPlUnits = @"mmol/l";
-static NSString* const c_mgDLUnits = @"mg/dl";
+static NSString* const c_mmolPlUnits = @"mmol/L";
+static NSString* const c_mgDLUnits = @"mg/dL";
 
 
 @implementation HVBloodGlucoseMeasurement
@@ -55,7 +56,8 @@ static NSString* const c_mgDLUnits = @"mg/dl";
 
 -(void)setMgPerDL:(double)mgPerDL
 {
-    self.mmolPerLiter = [HVBloodGlucoseMeasurement mgPerDLToMmolPerLiter:mgPerDL];
+    HVENSURE(m_mmolPerl, HVPositiveDouble);
+    m_mmolPerl.value = [HVBloodGlucoseMeasurement mgPerDLToMmolPerLiter:mgPerDL];
     [self updateDisplayValue:mgPerDL andUnits:c_mgDLUnits];
 }
 
@@ -129,7 +131,7 @@ LError:
 
 +(double)mgPerDLToMmolPerLiter:(double)value
 {
-    return value * 0.055;
+    return value / 18;
 }
 
 -(HVClientResult *)validate

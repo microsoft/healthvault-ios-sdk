@@ -38,24 +38,24 @@ static NSString* const c_element_value = @"value";
 
 -(double)inMeters
 {
-    return (m_height) ? m_height.meters : NAN;
+    return (m_height) ? m_height.inMeters : NAN;
 }
 
 -(void)setInMeters:(double)inMeters 
 {
     HVENSURE(m_height, HVLengthMeasurement);
-    m_height.meters = inMeters;        
+    m_height.inMeters = inMeters;        
 }
 
 -(double)inInches
 {
-    return (m_height) ? m_height.inches : NAN;
+    return (m_height) ? m_height.inInches : NAN;
 }
 
 -(void)setInInches:(double)inInches
 {
     HVENSURE(m_height, HVLengthMeasurement);
-    m_height.inches = inInches;
+    m_height.inInches = inInches;
 }
 
 -(void)dealloc
@@ -112,6 +112,16 @@ LError:
 -(NSString *)stringInFeetAndInches:(NSString *)format
 {
     return (m_height) ? [m_height stringInFeetAndInches:format] : c_emptyString;
+}
+
+-(NSString *)toString
+{
+    return (m_height) ? [m_height toString] : c_emptyString;
+}
+
+-(NSString *)description
+{
+    return [self toString];
 }
 
 -(HVClientResult *)validate

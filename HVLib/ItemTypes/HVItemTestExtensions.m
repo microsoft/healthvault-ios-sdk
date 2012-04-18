@@ -22,21 +22,34 @@
 
 NSDate* createRandomDate(void)
 {
-    return [[HVRandom createRandomDayOffsetFromTodayInRangeMin:0 max:-365] autorelease];
+    return [[HVRandom newRandomDayOffsetFromTodayInRangeMin:0 max:-365] autorelease];
+}
+
+HVDateTime* createRandomHVDateTime(void)
+{
+    return [[[HVDateTime alloc] initWithDate:createRandomDate()] autorelease];
+}
+
+HVDate* createRandomHVDate(void)
+{
+    return [[[HVDate alloc] initWithDate:createRandomDate()] autorelease]; 
 }
 
 @implementation HVItem (HVTestExtensions)
 
 +(HVItem *)createRandomOfClass:(NSString *)className
 {
-    if ([className isEqualToString:@"HVWeight"])
+    Class cls = NSClassFromString(className);
+    if (cls == nil)
     {
-        return [HVWeight createRandom];
+        return nil;
     }
- 
-    if ([className isEqualToString:@"HVBloodPressure"])
+    
+    @try {
+        return [cls createRandom];
+    }
+    @catch (NSException *exception) 
     {
-        return [HVBloodPressure createRandom];
     }
     
     return nil;
@@ -48,10 +61,10 @@ NSDate* createRandomDate(void)
 
 +(HVItem *)createRandom
 {
-    HVItem *item = [HVWeight newItem];
+    HVItem *item = [[HVWeight newItem] autorelease];
     
     item.weight.inPounds = [HVRandom randomDoubleInRangeMin:120 max:145];
-    item.weight.when = [[HVDateTime alloc] initWithDate:createRandomDate()];
+    item.weight.when = createRandomHVDateTime();
     
     return item;    
 }
@@ -62,16 +75,90 @@ NSDate* createRandomDate(void)
     
 +(HVItem *)createRandom
 {
-    HVItem *item = [HVBloodPressure newItem];
+    HVItem *item = [[HVBloodPressure newItem] autorelease];
     HVBloodPressure *bp = item.bloodPressure;
-    
+
+    bp.when = createRandomHVDateTime();
+
     int s = [HVRandom randomIntInRangeMin:120 max:150];
     int d = s - [HVRandom randomIntInRangeMin:25 max:40];
     
     bp.systolicValue = s;
     bp.diastolicValue = d;
+        
+    return item;
+}
+
+@end
+
+@implementation HVBloodGlucose (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVBloodGlucose newItem] autorelease];
     
-    bp.when = [[HVDateTime alloc] initWithDate:createRandomDate()];
+    HVBloodGlucose* glucose = item.bloodGlucose;
+    glucose.when = createRandomHVDateTime();
+    
+    glucose.inMgPerDL = [HVRandom randomDoubleInRangeMin:70 max:120];
+    glucose.measurementType = [HVBloodGlucose createWholeBloodMeasurementType];
+    
+    glucose.isOutsideOperatingTemp = FALSE;
+    
+    return item;
+}
+
+@end
+
+@implementation HVCholesterol (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVCholesterol newItem] autorelease];
+    HVCholesterol* cholesterol = item.cholesterol;
+    
+    cholesterol.when = createRandomHVDate();
+    cholesterol.ldlValue = [HVRandom randomIntInRangeMin:80 max:130];
+    cholesterol.hdlValue = [HVRandom randomIntInRangeMin:30 max:60];
+    cholesterol.totalValue = cholesterol.ldlValue + cholesterol.hdlValue + [HVRandom randomIntInRangeMin:20 max:50];
+    cholesterol.triglyceridesValue = [HVRandom randomIntInRangeMin:150 max:250];
+    
+    return item;
+}
+
+@end
+
+@implementation HVHeight (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVHeight newItem] autorelease];
+    HVHeight* height = item.height;
+    
+    height.when = createRandomHVDateTime();
+    height.inInches = [HVRandom randomIntInRangeMin:12 max:84];
+    
+    return item;
+}
+
+@end
+
+@implementation HVDietaryIntake (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVDietaryIntake newItem] autorelease];
+    HVDietaryIntake* diet = item.dietaryIntake;
+    
+    diet.when = createRandomHVDate();
+    diet.caloriesValue = [HVRandom randomIntInRangeMin:1800 max:3000];
+    diet.totalFatGrams = [HVRandom randomDoubleInRangeMin:0 max:100];
+    diet.saturatedFatGrams = [HVRandom randomDoubleInRangeMin:0 max:diet.totalFatGrams];
+    diet.proteinGrams = [HVRandom randomDoubleInRangeMin:1 max:100];
+    diet.sugarGrams = [HVRandom randomDoubleInRangeMin:10 max:400];
+    diet.dietaryFiberGrams = [HVRandom randomDoubleInRangeMin:1 max:100];
+    diet.totalCarbGrams = diet.dietaryFiberGrams + diet.sugarGrams + [HVRandom randomDoubleInRangeMin:10 max:400];
+    diet.cholesterolMilligrams = [HVRandom randomDoubleInRangeMin:0 max:100];
     
     return item;
 }

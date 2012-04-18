@@ -254,7 +254,7 @@ LError:
     return [XSerializer serializeToString:self withRoot:@"info"];
 }
 
-+(HVItem *)fromXmlString:(NSString *) xml
++(HVItem *)newFromXmlString:(NSString *) xml
 {
     return (HVItem *) [NSObject newFromString:xml withRoot:@"info" asClass:[HVItem class]];
 }

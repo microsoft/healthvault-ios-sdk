@@ -19,7 +19,6 @@
 #import "HVCommon.h"
 #import "HVBloodGlucose.h"
 
-
 static NSString* const c_typeid = @"879e7c04-4e8a-4707-9ad3-b054df467ce4";
 static NSString* const c_typename = @"blood-glucose";
 
@@ -30,6 +29,15 @@ static NSString* const c_element_operatingTemp = @"outside-operating-temp";
 static NSString* const c_element_controlTest = @"is-control-test";
 static NSString* const c_element_normalcy = @"normalcy";
 static NSString* const c_element_context = @"measurement-context";
+
+static NSString* const c_vocab_measurement = @"glucose-measurement-type";
+
+@interface HVBloodGlucose (HVPrivate)
+
++(HVCodableValue *) newMeasurementText:(NSString *) text andCode:(NSString *) code;
++(HVCodedValue *) newMeasurementCode:(NSString *) code;
+
+@end
 
 @implementation HVBloodGlucose
 
@@ -85,8 +93,11 @@ static NSString* const c_element_context = @"measurement-context";
     }
 }
 
+
 -(id)initWithMmolPerLiter:(double)value andDate:(NSDate *)date
 {
+    HVCHECK_NOTNULL(date);
+    
     self = [super init];
     HVCHECK_SELF;
     
@@ -127,7 +138,17 @@ LError:
 
 -(NSString *)toString
 {
-    return [self stringInMmolPerLiter:@"%.3f mmol/l"];
+    return [self stringInMmolPerLiter:@"%.3f mmol/L"];
+}
+
++(HVCodableValue *)createPlasmaMeasurementType
+{
+    return [[HVBloodGlucose newMeasurementText:@"Plasma" andCode:@"p"] autorelease];
+}
+
++(HVCodableValue *)createWholeBloodMeasurementType
+{
+    return [[HVBloodGlucose newMeasurementText:@"Whole blood" andCode:@"wb"] autorelease];
 }
 
 -(HVClientResult *)validate
@@ -183,6 +204,23 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVBloodGlucose typeID]];
+}
+
+@end
+
+@implementation HVBloodGlucose (HVPrivate)
+    
++(HVCodableValue *)newMeasurementText:(NSString *)text andCode:(NSString *)code
+{
+    HVCodedValue* codedValue = [HVBloodGlucose newMeasurementCode:code];
+    HVCodableValue* codableValue = [[HVCodableValue alloc] initWithText:text andCode:codedValue];
+    [codedValue release];
+    return codableValue;
+}
+
++(HVCodedValue *) newMeasurementCode:(NSString *)code
+{
+    return [[HVCodedValue alloc] initWithCode:code andVocab:c_vocab_measurement];
 }
 
 @end

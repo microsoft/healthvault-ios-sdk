@@ -29,18 +29,46 @@
     NSString* m_family;
     NSString* m_version;    
 }
+
+//-------------------------
 //
-// Required
+// CodedValue Data
+//
+//-------------------------
+//
+// (Required) Vocabulary Code
 //
 @property (readwrite, nonatomic, retain) NSString* code;
+//
+// (Required)The vocabulary code is from E.g. "Rx Norm Active Medications"
+//
 @property (readwrite, nonatomic, retain) NSString* vocabularyName;
 //
-// Optional
+// (Optional) Vocabulary Family. E.g. "RxNorm"
 //
 @property (readwrite, nonatomic, retain) NSString* vocabularyFamily;
+//
+// (Optional) Vocabulary Version
+//
 @property (readwrite, nonatomic, retain) NSString* vocabularyVersion;
 
--(id) initWithCode:(NSString *) value andVocab:(NSString *) vocab; 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+
+-(id) initWithCode:(NSString *) code andVocab:(NSString *) vocab; 
+-(id) initWithCode:(NSString *) code vocab:(NSString *) vocab vocabFamily:(NSString *) family vocabVersion:(NSString *) version; 
+
+//-------------------------
+//
+// Methods
+//
+//-------------------------
+
+-(BOOL) isEqualToCode:(NSString *) code fromVocab:(NSString *) vocabName;
+-(BOOL) isEqual:(id)object;
 
 @end
 

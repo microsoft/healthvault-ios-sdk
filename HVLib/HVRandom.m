@@ -55,7 +55,7 @@
     return max + arc4random_uniform((min - max)) + [HVRandom randomDouble];   
 }
 
-+(NSDate *) createRandomDayOffsetFromTodayInRangeMin:(int)min max:(int)max
++(NSDate *) newRandomDayOffsetFromTodayInRangeMin:(int)min max:(int)max
 {
     int nextDay = [HVRandom randomIntInRangeMin:min max:max];
     

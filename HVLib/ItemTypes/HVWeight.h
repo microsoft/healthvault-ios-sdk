@@ -26,19 +26,42 @@
     HVWeightMeasurement* m_value;
 }
 
+//-------------------------
+//
+// Weight Data
+//
+//-------------------------
+//
+// (Required) When the measurement was made
+//
 @property (readwrite, nonatomic, retain) HVDateTime* when;
+//
+// (Required) The weight measurement
+// You can also use the inPounds and inKg properties to set the weight value
+//
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* value;
+
+//
+// Helper properties for manipulating weight
+//
 @property (readwrite, nonatomic) double inPounds;
 @property (readwrite, nonatomic) double inKg;
 
+//-------------------------
+//
+// Initializers 
+//
+//-------------------------
 -(id) initWithKg:(double) kg andDate:(NSDate*) date;
 -(id) initWithPounds:(double) pounds andDate:(NSDate *) date;
++(HVItem *) newItem;
 
+//-------------------------
 //
-// Returns weight value in KG
+// Text 
 //
--(NSString *) toString;
-
+//-------------------------
+-(NSString *) toString;  // Returns weight in kg
 -(NSString *) stringInPounds;
 -(NSString *) stringInKg;
 //
@@ -47,9 +70,13 @@
 -(NSString *) stringInPoundsWithFormat:(NSString *) format;
 -(NSString *) stringInKgWithFormat:(NSString *) format;
 
+//-------------------------
+//
+// Type Information
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 
-+(HVItem *) newItem;
 
 @end

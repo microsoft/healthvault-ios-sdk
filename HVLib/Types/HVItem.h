@@ -72,7 +72,7 @@
 -(BOOL) isVersion:(NSString *) version;
 
 -(NSString *) toXmlString;
-+(HVItem *) fromXmlString:(NSString *) xml;
++(HVItem *) newFromXmlString:(NSString *) xml;
 
 @end
 

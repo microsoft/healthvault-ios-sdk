@@ -49,7 +49,7 @@ static NSString* const c_element_current = @"current";
     return (![NSArray isNilOrEmpty:m_records]);
 }
 
--(void)setCurrentIndex:(NSInteger)currentIndex
+-(void)setCurrentRecordIndex:(NSInteger)currentIndex
 {
     if (currentIndex < 0 || currentIndex > m_records.count)
     {

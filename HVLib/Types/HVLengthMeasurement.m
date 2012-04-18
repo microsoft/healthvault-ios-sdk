@@ -20,9 +20,6 @@
 #import "HVCommon.h"
 #import "HVLengthMeasurement.h"
 
-static NSString* const c_metersUnits = @"m";
-static NSString* const c_inchesUnits = @"in";
-
 static NSString* const c_element_meters = @"m";
 static NSString* const c_element_display = @"display";
 
@@ -31,28 +28,76 @@ static NSString* const c_element_display = @"display";
 @synthesize value = m_meters;
 @synthesize display = m_display;
 
--(double)meters
+-(double)inMeters
 {
     return (m_meters) ? m_meters.value : NAN;
 }
 
--(void)setMeters:(double)meters
+-(void)setInMeters:(double)meters
 {
     HVENSURE(m_meters, HVPositiveDouble);
     m_meters.value = meters;
-    [self updateDisplayValue:meters andUnits:c_metersUnits];
+    [self updateDisplayValue:meters units:@"meters" andUnitsCode:@"m"];
 }
 
--(double) inches
+-(double)inCentimeters
+{
+    return self.inMeters * 100;
+}
+
+-(void)setInCentimeters:(double)inCentimeters
+{
+    HVENSURE(m_meters, HVPositiveDouble);
+    m_meters.value = inCentimeters / 100;
+    [self updateDisplayValue:inCentimeters units:@"centimeters" andUnitsCode:@"cm"];
+}
+
+-(double)inKilometers
+{
+    return self.inMeters / 1000;
+}
+
+-(void)setInKilometers:(double)inKilometers
+{
+    HVENSURE(m_meters, HVPositiveDouble);
+    m_meters.value = inKilometers * 1000;
+    [self updateDisplayValue:inKilometers units:@"kilometers" andUnitsCode:@"km"];
+}
+
+-(double) inInches
 {
     return (m_meters) ? [HVLengthMeasurement metersToInches:m_meters.value] : NAN;
 }
 
--(void)setInches:(double)inches
+-(void)setInInches:(double)inches
 {
     HVENSURE(m_meters, HVPositiveDouble);
     m_meters.value = [HVLengthMeasurement inchesToMeters:inches];
-    [self updateDisplayValue:inches andUnits:c_inchesUnits];
+    [self updateDisplayValue:inches units:@"inches" andUnitsCode:@"in"];
+}
+
+-(double)inFeet
+{
+    return self.inInches / 12;
+}
+
+-(void)setInFeet:(double)inFeet
+{
+    HVENSURE(m_meters, HVPositiveDouble);
+    m_meters.value = [HVLengthMeasurement inchesToMeters:inFeet * 12];
+    [self updateDisplayValue:inFeet units:@"feet" andUnitsCode:@"ft"];    
+}
+
+-(double)inMiles
+{
+    return self.inFeet / 5280;
+}
+
+-(void)setInMiles:(double)inMiles
+{
+    HVENSURE(m_meters, HVPositiveDouble);
+    m_meters.value = [HVLengthMeasurement inchesToMeters:inMiles * 5280 * 12];
+    [self updateDisplayValue:inMiles units:@"miles" andUnitsCode:@"mi"];        
 }
 
 -(void)dealloc
@@ -67,7 +112,8 @@ static NSString* const c_element_display = @"display";
     self = [super init];
     HVCHECK_SELF;
     
-    self.inches = inches;
+    self.inInches = inches;
+    HVCHECK_NOTNULL(m_meters);
     HVCHECK_NOTNULL(m_display);
     
     return self;
@@ -80,7 +126,8 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    self.meters = meters;
+    self.inMeters = meters;
+    HVCHECK_NOTNULL(m_meters);
     HVCHECK_NOTNULL(m_display);
     
     return self;
@@ -88,7 +135,7 @@ LError:
     HVALLOC_FAIL;
 }
 
--(BOOL) updateDisplayValue:(double)displayValue andUnits:(NSString *)unitValue
+-(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     HVDisplayValue *newValue = [[HVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
     HVCHECK_NOTNULL(newValue);
@@ -108,22 +155,22 @@ LError:
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.meters];
+    return [NSString stringWithFormat:format, self.inMeters];
 }
 
 -(NSString *)stringInMeters:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.meters];
+    return [NSString stringWithFormat:format, self.inMeters];
 }
 
 -(NSString *) stringInInches:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inches];
+    return [NSString stringWithFormat:format, self.inInches];
 }
 
 -(NSString *)stringInFeetAndInches:(NSString *)format
 {
-    long totalInches = (long) round(self.inches);
+    long totalInches = (long) round(self.inInches);
     long feet = totalInches / 12;
     long inches = totalInches % 12;
     

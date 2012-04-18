@@ -19,6 +19,13 @@
 #import "HVCommon.h"
 #import "HVMeasurement.h"
 
+double roundToPrecision(double value, int precision)
+{
+    double places = pow(10, precision);
+    double boosted = round(value * places);
+    return (boosted / places);
+}
+
 static NSString* const c_element_value = @"value";
 static NSString* const c_element_units = @"units";
 

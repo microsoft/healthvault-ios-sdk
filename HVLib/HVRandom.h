@@ -24,6 +24,6 @@
 +(int) randomIntInRangeMin:(int) min max:(int) max;
 +(double) randomDouble;
 +(double) randomDoubleInRangeMin:(int) min max:(int) max;
-+(NSDate *) createRandomDayOffsetFromTodayInRangeMin:(int) min max:(int) max;
++(NSDate *) newRandomDayOffsetFromTodayInRangeMin:(int) min max:(int) max;
 
 @end
