@@ -20,25 +20,46 @@
 #import "HVType.h"
 #import "HVCodedValue.h"
 
+//-------------------------
+//
+// A Text value with an optional set of associated vocabulary codes
+// E.g. the name of a medication, with optional RXNorm codes
+//
+//-------------------------
 @interface HVCodableValue : HVType
 {
+@private
     NSString* m_text;
     HVCodedValueCollection* m_codes;
 }
 
+//-------------------------
 //
-// Required
+// Data
+//
+//-------------------------
+//
+// (Required)
 //
 @property (readwrite, nonatomic, retain) NSString* text;
 //
-// Optional
+// (Optional)
 //
 @property (readwrite, nonatomic, retain) HVCodedValueCollection* codes;
+//
+// Convenience properties
+//
 @property (readonly, nonatomic) BOOL hasCodes;
+@property (readonly, nonatomic) HVCodedValue* firstCode;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithText:(NSString *) textValue;
 -(id) initWithText:(NSString *)textValue andCode:(HVCodedValue *) code;
--(id) initWithText:(NSString *)textValue andCode:(NSString *) code andVocab:(NSString *) vocab;
+-(id) initWithText:(NSString *)textValue code:(NSString *) code andVocab:(NSString *) vocab;
 
 -(NSString *) toString;
 

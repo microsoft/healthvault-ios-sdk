@@ -15,14 +15,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
 #import <Foundation/Foundation.h>
 #import "HVItemTypes.h"
 #import "HVSynchronizedStore.h"
 
+//
+//
+//
+
 NSDate* createRandomDate(void);
 HVDateTime* createRandomHVDateTime(void);
 HVDate* createRandomHVDate(void);
+HVApproxDateTime* createRandomApproxHVDate(void);
+NSString* pickRandomString(int count, ...);
+
 
 @interface HVItem (HVTestExtensions)
 
@@ -57,6 +65,12 @@ HVDate* createRandomHVDate(void);
 @end
 
 @interface HVDietaryIntake (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVExercise (HVTestExtensions)
 
 +(HVItem *) createRandom;
 

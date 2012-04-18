@@ -99,4 +99,43 @@ LError:
     return (HVNameValue *) [self objectAtIndex:index];
 }
 
+-(NSUInteger)indexOfItemWithName:(HVCodedValue *)code
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        if ([[self itemAtIndex:i].name isEqualToCodedValue:code])
+        {
+            return i;
+        }
+     }     
+    
+    return NSNotFound;
+}
+
+-(NSUInteger)indexOfItemWithNameCode:(NSString *)nameCode
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        if ([[self itemAtIndex:i].name.code isEqualToString:nameCode])
+        {
+            return i;
+        }
+    }     
+    
+    return NSNotFound;   
+}
+
+-(void)addOrUpdate:(HVNameValue *)value
+{
+    NSUInteger indexOf = [self indexOfItemWithName:value.name];
+    if (indexOf != NSNotFound)
+    {
+        [self replaceObjectAtIndex:indexOf withObject:value];
+    }
+    else
+    {
+        [super addObject:value];
+    }
+}
+
 @end

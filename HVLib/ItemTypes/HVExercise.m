@@ -30,6 +30,12 @@ static NSString* const c_element_duration = @"duration";
 static NSString* const c_element_detail = @"detail";
 static NSString* const c_element_segment = @"segment";
 
+@interface HVExercise (HVPrivate)
+
++(HVCodableValue *) newActivity:(NSString *) activity;
++(HVNameValue *) newDetailWithName:(NSString *)name andValue:(HVMeasurement *)value;
+
+@end
 
 @implementation HVExercise
 
@@ -37,8 +43,7 @@ static NSString* const c_element_segment = @"segment";
 @synthesize activity = m_activity;
 @synthesize title = m_title;
 @synthesize distance = m_distance;
-@synthesize durationInMinutes = m_duration;
-@synthesize details = m_details;
+@synthesize durationMinutes = m_duration;
 @synthesize segmentsXml = m_segmentsXml;
 
 -(NSDate *)getDate
@@ -49,6 +54,28 @@ static NSString* const c_element_segment = @"segment";
 -(BOOL)hasDetails
 {
     return (m_details && m_details.count > 0);
+}
+
+-(HVNameValueCollection *)details
+{
+    HVENSURE(m_details, HVNameValueCollection);
+    return m_details;
+}
+
+-(void)setDetails:(HVNameValueCollection *)details
+{
+    HVRETAIN(m_details, details);
+}
+
+-(double)durationMinutesValue
+{
+    return (m_duration) ? m_duration.value : NAN;
+}
+
+-(void)setDurationMinutesValue:(double)durationMinutesValue
+{
+    HVENSURE(m_duration, HVPositiveDouble);
+    m_duration.value = durationMinutesValue;
 }
 
 -(void)dealloc
@@ -62,6 +89,52 @@ static NSString* const c_element_segment = @"segment";
     [m_segmentsXml release];
     
     [super dealloc];
+}
+
+-(id)initWithDate:(NSDate *)date
+{
+    HVCHECK_NOTNULL(date);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    m_when = [[HVApproxDateTime alloc] initWithDate:date];
+    HVCHECK_NOTNULL(m_when);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
++(HVCodableValue *)createActivity:(NSString *)activity
+{
+    return [[HVExercise newActivity:activity] autorelease];
+}
+
+-(BOOL)setStandardActivity:(NSString *)activity
+{
+    HVRETAIN(m_activity, [HVExercise newActivity:activity]);
+    return (m_activity != nil);
+}
+
++(HVNameValue *)createDetailWithName:(NSString *)name andValue:(HVMeasurement *)value
+{
+    return [[HVExercise newDetailWithName:name andValue:value] autorelease];
+}
+
+-(BOOL)addOrUpdateDetailWithName:(NSString *)name andValue:(HVMeasurement *)value
+{
+    HVNameValue* detail = [HVExercise newDetailWithName:name andValue:value];
+    HVCHECK_NOTNULL(detail);
+    
+    [self.details addOrUpdate:detail];
+    [detail release];
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
 }
 
 -(HVClientResult *)validate
@@ -118,6 +191,24 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVExercise typeID]];
+}
+
+@end
+
+@implementation HVExercise (HVPrivate)
+
++(HVCodableValue *)newActivity:(NSString *)activity
+{
+    return [[HVCodableValue alloc] initWithText:activity code:activity andVocab:@"exercise-activities"];
+}
+
++(HVNameValue *) newDetailWithName:(NSString *)name andValue:(HVMeasurement *)value
+{
+    HVCodedValue* codedValue = [[HVCodedValue alloc] initWithCode:name andVocab:@"exercise-detail-names"];
+    HVNameValue* nv = [[HVNameValue alloc] initWithName:codedValue andValue:value];
+    [codedValue release];
+    
+    return nv;
 }
 
 @end

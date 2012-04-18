@@ -42,6 +42,11 @@ static NSString* const c_element_code = @"code";
     HVRETAIN(m_codes, codes);
 }
 
+-(HVCodedValue *)firstCode
+{
+    return (self.hasCodes) ? [m_codes itemAtIndex:0] : nil;
+}
+
 -(id) initWithText:(NSString *)textValue
 {
     return [self initWithText:textValue andCode:nil];
@@ -68,7 +73,7 @@ LError:
     HVALLOC_FAIL;    
 }
 
--(id) initWithText:(NSString *)textValue andCode:(NSString *)code andVocab:(NSString *)vocab
+-(id) initWithText:(NSString *)textValue code:(NSString *)code andVocab:(NSString *)vocab
 {
     HVCodedValue* codedValue = [[HVCodedValue alloc] initWithCode:code andVocab:vocab];
     HVCHECK_NOTNULL(codedValue);

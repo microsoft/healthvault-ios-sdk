@@ -31,26 +31,85 @@
     NSMutableArray* m_segmentsXml;
 }
 
+//-------------------------
 //
-// Required
+// Data
+//
+//-------------------------
+//
+// (Required) When did you do this exercise
 //
 @property (readwrite, nonatomic, retain) HVApproxDateTime* when;
+//
+// (Required) What activity did you perform?
+// Preferred Vocabulary: exercise-activities
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* activity;
 //
-// Optional
+// Optional (a label)
 //
 @property (readwrite, nonatomic, retain) NSString* title;
+//
+// (Optional): Distance covered, if any
+//
 @property (readwrite, nonatomic, retain) HVLengthMeasurement* distance;
-@property (readwrite, nonatomic, retain) HVPositiveDouble* durationInMinutes;
+//
+// (Optional): Duration, if any
+//
+@property (readwrite, nonatomic, retain) HVPositiveDouble* durationMinutes;
+//
+// (Optional): Additional details about the exercise
+// E.g number of steps, calories burned...
+// 
+// This collection of Name Value Pairs uses standardized names
+// Standardized names should be taken from the vocabulary: exercise-detail-names
+//
 @property (readwrite, nonatomic, retain) HVNameValueCollection* details;
+//
+// (Optional): Information about exercise segments
+//
 @property (readwrite, nonatomic, retain) NSMutableArray* segmentsXml;
 
+//
+// Convenience properties
+//
 @property (readonly, nonatomic) BOOL hasDetails;
+@property (readwrite, nonatomic) double durationMinutesValue;
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
++(HVItem *) newItem;
+
+-(id) initWithDate:(NSDate *) date;
+
+//-------------------------
+//
+// Methods
+//
+//-------------------------
+//
+// This assumes that the activity is from the standard vocabulary: exercise-activties
+//
++(HVCodableValue *) createActivity:(NSString *) activity;
+-(BOOL) setStandardActivity:(NSString *) activity;
+//
+// This assume that the exercise detail is from the standard vocab:exercise-detail-names
+// 
++(HVNameValue *) createDetailWithName:(NSString *) name andValue:(HVMeasurement *) value;
+
+-(BOOL) addOrUpdateDetailWithName:(NSString *) name andValue:(HVMeasurement *) value;
+
+//-------------------------
+//
+// Type Information
+//
+//-------------------------
 
 +(NSString *) typeID;
 +(NSString *) XRootElement;
-
-+(HVItem *) newItem;
 
 @end
 

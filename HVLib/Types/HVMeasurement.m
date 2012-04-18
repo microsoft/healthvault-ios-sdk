@@ -19,13 +19,6 @@
 #import "HVCommon.h"
 #import "HVMeasurement.h"
 
-double roundToPrecision(double value, int precision)
-{
-    double places = pow(10, precision);
-    double boosted = round(value * places);
-    return (boosted / places);
-}
-
 static NSString* const c_element_value = @"value";
 static NSString* const c_element_units = @"units";
 
@@ -70,6 +63,16 @@ LError:
 {
     [m_units release];
     [super dealloc];
+}
+
++(HVMeasurement *)fromValue:(double)value andUnits:(HVCodableValue *)units
+{
+    return [[[HVMeasurement alloc] initWithValue:value andUnits:units] autorelease];
+}
+
++(HVMeasurement *)fromValue:(double)value andUnitsString:(NSString *)units
+{
+    return [[[HVMeasurement alloc] initWithValue:value andUnitsString:units] autorelease];
 }
 
 -(NSString *)description

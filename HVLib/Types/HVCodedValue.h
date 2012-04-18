@@ -21,6 +21,12 @@
 
 @class HVCodedValueCollection;
 
+//-------------------------
+//
+// A code from a standard vocabulary
+// Includes the code, the vocabulary name, family and version
+//
+//-------------------------
 @interface HVCodedValue : HVType
 {
 @private
@@ -32,7 +38,7 @@
 
 //-------------------------
 //
-// CodedValue Data
+// Data
 //
 //-------------------------
 //
@@ -61,17 +67,23 @@
 -(id) initWithCode:(NSString *) code andVocab:(NSString *) vocab; 
 -(id) initWithCode:(NSString *) code vocab:(NSString *) vocab vocabFamily:(NSString *) family vocabVersion:(NSString *) version; 
 
++(HVCodedValue *) fromCode:(NSString *) code andVocab:(NSString *) vocab; 
++(HVCodedValue *) fromCode:(NSString *) code vocab:(NSString *) vocab vocabFamily:(NSString *) family vocabVersion:(NSString *) version; 
+
 //-------------------------
 //
 // Methods
 //
 //-------------------------
 
+-(BOOL) isEqualToCodedValue:(HVCodedValue *) value;
 -(BOOL) isEqualToCode:(NSString *) code fromVocab:(NSString *) vocabName;
 -(BOOL) isEqual:(id)object;
 
 @end
 
 @interface HVCodedValueCollection : HVCollection 
+
+-(HVCodedValue *) itemAtIndex:(NSUInteger) index;
 
 @end

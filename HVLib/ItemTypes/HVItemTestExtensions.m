@@ -35,6 +35,34 @@ HVDate* createRandomHVDate(void)
     return [[[HVDate alloc] initWithDate:createRandomDate()] autorelease]; 
 }
 
+HVApproxDateTime* createRandomApproxHVDate(void)
+{
+    return [[[HVApproxDateTime alloc] initWithDateTime:createRandomHVDateTime()] autorelease];
+}
+
+NSString* pickRandomString(int count, ...)
+{
+    va_list args;
+    va_start(args, count);
+    NSString* retVal = nil;
+    
+    int randomIndex = [HVRandom randomIntInRangeMin:0 max:count - 1];
+    if (randomIndex >= 0 && randomIndex < count)
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            NSString *string = va_arg(args, NSString *);
+            if (i == randomIndex)
+            {
+                retVal = string;
+              }
+         }
+    }
+        
+    va_end(args);
+    return retVal;
+}
+
 @implementation HVItem (HVTestExtensions)
 
 +(HVItem *)createRandomOfClass:(NSString *)className
@@ -159,6 +187,42 @@ HVDate* createRandomHVDate(void)
     diet.dietaryFiberGrams = [HVRandom randomDoubleInRangeMin:1 max:100];
     diet.totalCarbGrams = diet.dietaryFiberGrams + diet.sugarGrams + [HVRandom randomDoubleInRangeMin:10 max:400];
     diet.cholesterolMilligrams = [HVRandom randomDoubleInRangeMin:0 max:100];
+    
+    return item;
+}
+
+@end
+
+@implementation HVExercise (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVExercise newItem] autorelease];
+    
+    HVExercise* exercise = item.exercise;
+    
+    exercise.when = createRandomApproxHVDate();
+    
+    NSString* activity = pickRandomString(3, @"Aerobics", @"Walking", @"Running");
+    [exercise setStandardActivity:activity];
+    
+    exercise.durationMinutesValue = [HVRandom randomDoubleInRangeMin:15 max:45];
+    
+    NSString* detailCode;
+    HVMeasurement* measurement;
+    if (activity == @"Walking") 
+    {
+        detailCode = @"Steps_count"; // see exercise-detail-names vocabulary
+        measurement = [HVMeasurement fromValue:exercise.durationMinutesValue * 100 andUnitsString:@"steps"];
+    }
+    else 
+    {
+        detailCode = @"CaloriesBurned_calories";
+        measurement = [HVMeasurement fromValue:exercise.durationMinutesValue * 5 andUnitsString:@"calories"];
+    }
+    
+    [exercise addOrUpdateDetailWithName:detailCode andValue:measurement];
+    [exercise addOrUpdateDetailWithName:detailCode andValue:measurement];  
     
     return item;
 }

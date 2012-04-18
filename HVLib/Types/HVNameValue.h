@@ -21,21 +21,47 @@
 #import "HVCodedValue.h"
 #import "HVMeasurement.h"
 
+//-------------------------
+//
+// Named Measurements
+//
+//-------------------------
 @interface HVNameValue : HVType
 {
     HVCodedValue* m_name;
     HVMeasurement* m_value;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
 @property (readwrite, nonatomic, retain) HVCodedValue* name;
 @property (readwrite, nonatomic, retain) HVMeasurement* value;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithName:(HVCodedValue *) name andValue:(HVMeasurement *) value;
 
 @end
 
+//-------------------------
+//
+// Collection of Named Measurements
+//
+//-------------------------
 @interface HVNameValueCollection : HVCollection 
 
 -(HVNameValue *) itemAtIndex:(NSUInteger) index;
+
+-(NSUInteger) indexOfItemWithNameCode:(NSString *) nameCode;
+-(NSUInteger) indexOfItemWithName:(HVCodedValue *) code;
+
+-(void) addOrUpdate:(HVNameValue *) value;
+
 
 @end

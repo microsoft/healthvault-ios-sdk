@@ -70,6 +70,31 @@ LError:
     [super dealloc];
  }
 
++(HVCodedValue *)fromCode:(NSString *)code andVocab:(NSString *)vocab
+{
+    return [[[HVCodedValue alloc] initWithCode:code andVocab:vocab] autorelease];
+}
+
++(HVCodedValue *)fromCode:(NSString *)code vocab:(NSString *)vocab vocabFamily:(NSString *)family vocabVersion:(NSString *)version
+{
+    return [[[HVCodedValue alloc] initWithCode:code vocab:vocab vocabFamily:family vocabVersion:version] autorelease];
+}
+
+-(BOOL)isEqualToCodedValue:(HVCodedValue *)value
+{
+    if (value == nil)
+    {
+        return FALSE;
+    }
+    
+    return (
+                ((m_vocab == nil && value.vocabularyName == nil) || [m_vocab isEqualToString:value.vocabularyName])
+            &&  ((m_code == nil && value.code == nil) || [m_code isEqualToString:value.code])
+            &&  ((m_family == nil && value.vocabularyFamily == nil) || [m_family isEqualToString:value.vocabularyFamily])
+            &&  ((m_version == nil && value.vocabularyVersion == nil) || [m_version isEqualToString:value.vocabularyVersion])
+            );
+}
+
 -(BOOL)isEqualToCode:(NSString *)code fromVocab:(NSString *)vocabName
 {
     return ([m_code isEqualToString:code] && [m_vocab isEqualToString:vocabName]);
@@ -82,13 +107,7 @@ LError:
         return FALSE;
     }
     
-    HVCodedValue* other = (HVCodedValue *) object;
-    return (
-            [m_vocab isEqualToString:other.vocabularyName]
-        &&  [m_code isEqualToString:other.code]
-        &&  [m_family isEqualToString:other.vocabularyFamily]
-        &&  [m_version isEqualToString:other.vocabularyVersion]
-    );
+    return [self isEqualToCodedValue:(HVCodedValue *) object];
 }
 
 -(HVClientResult *) validate
@@ -139,4 +158,8 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(HVCodedValue *)itemAtIndex:(NSUInteger)index
+{
+    return (HVCodedValue *) [self objectAtIndex:index];
+}
 @end
