@@ -35,27 +35,88 @@
     HVPrescription* m_prescription;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) Medication Name
+// Vocabularies: RxNorm, NDC
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* name;
+//
+// (Optional)
+// Vocabularies: RxNorm, NDC
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* genericName;
+// 
+// (Optional)
+// Vocabulary for Units: medication-dose-units
+//
 @property (readwrite, nonatomic, retain) HVApproxMeasurement* dose;
+// 
+// (Optional)
+// Vocabulary for Units: medication-strength-unit
+//
 @property (readwrite, nonatomic, retain) HVApproxMeasurement* strength;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVApproxMeasurement* frequency;
+// 
+// (Optional)
+// Vocabulary for Units: medication-route
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* route;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* indication;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVApproxDateTime* startDate;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVApproxDateTime* stopDate;
+// 
+// (Optional) Was the medication prescribed? 
+// Vocabulary: medication-prescribed
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* prescribed;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVPrescription* prescription;
 
+//
+// Convenience Properties
+//
 @property (readonly, nonatomic) HVPerson* prescriber;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithName:(NSString *) name;
 
+//-------------------------
+//
+// Text
+//
+//-------------------------
 -(NSString *) toString;
++(HVItem *) newItem;
 
+//-------------------------
+//
+// Type information
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
-
-+(HVItem *) newItem;
 
 @end

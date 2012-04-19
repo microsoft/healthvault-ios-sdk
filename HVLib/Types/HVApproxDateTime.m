@@ -102,6 +102,16 @@ LError:
     [super dealloc];
 }
 
++(HVApproxDateTime *)fromDate:(NSDate *)date
+{
+    return [[[HVApproxDateTime alloc] initWithDate:date] autorelease];
+}
+
++(HVApproxDateTime *)fromDescription:(NSString *)descr
+{
+    return [[[HVApproxDateTime alloc] initWithDescription:descr] autorelease];
+}
+
 -(NSString *)description
 {
     return [self toString];

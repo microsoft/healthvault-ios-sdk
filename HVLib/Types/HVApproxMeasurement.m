@@ -29,12 +29,22 @@ static NSString* const c_element_structured = @"structured";
 
 -(id)initWithDisplayText:(NSString *)text
 {
+    return [self initWithDisplayText:text andMeasurement:nil];
+}
+
+-(id)initWithDisplayText:(NSString *)text andMeasurement:(HVMeasurement *)measurement
+{
     HVCHECK_STRING(text);
     
     self = [super init];
     HVCHECK_SELF;
     
     self.displayText = text;
+    
+    if (measurement)
+    {
+        self.measurement = measurement;
+    }
     
     return self;
     
@@ -47,6 +57,40 @@ LError:
     [m_display release];
     [m_measurement release];
     [super dealloc];
+}
+
++(HVApproxMeasurement *)fromDisplayText:(NSString *)text
+{
+    return [[[HVApproxMeasurement alloc] initWithDisplayText:text] autorelease];
+}
+
++(HVApproxMeasurement *)fromDisplayText:(NSString *)text andMeasurement:(HVMeasurement *)measurement
+{
+    return [[[HVApproxMeasurement alloc] initWithDisplayText:text andMeasurement:measurement] autorelease];
+}
+
++(HVApproxMeasurement *) fromValue:(double)value unitsText:(NSString *)unitsText unitsCode:(NSString *)code unitsVocab:(NSString *) vocab
+{
+    HVMeasurement* measurement = [HVMeasurement fromValue:value unitsDisplayText:unitsText unitsCode:code unitsVocab:vocab];
+    HVCHECK_NOTNULL(measurement);
+    
+    NSString* displayFormat;
+    if (floor(value) == value)
+    {
+        displayFormat = @"%.0f %@";
+    }
+    else 
+    {
+        displayFormat = @"%.3f %@";
+    }
+    NSString* displayText = [NSString stringWithFormat:displayFormat, value, unitsText];
+    HVCHECK_NOTNULL(displayText);
+    
+    HVApproxMeasurement* approxMeasurement = [HVApproxMeasurement fromDisplayText:displayText andMeasurement:measurement];
+    return approxMeasurement;
+    
+LError:
+    return nil;
 }
 
 -(NSString *)description

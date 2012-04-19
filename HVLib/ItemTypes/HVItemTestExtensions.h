@@ -16,14 +16,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
 #import <Foundation/Foundation.h>
 #import "HVItemTypes.h"
 #import "HVSynchronizedStore.h"
 
+//--------------------------
 //
+// Extensions that generate new HealthVault items
+// with random, BUT VALID values. 
 //
-//
+//--------------------------
 
 NSDate* createRandomDate(void);
 HVDateTime* createRandomHVDateTime(void);
@@ -76,6 +78,23 @@ NSString* pickRandomString(int count, ...);
 
 @end
 
+@interface HVAllergy (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVCondition (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVMedication (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
 @interface HVTestSynchronizedStore : HVSynchronizedStore
 
 @property (readwrite, nonatomic) double failureProbability;

@@ -52,6 +52,7 @@
 -(id) initWithValue:(double) value andUnits:(HVCodableValue *) units;
 -(id) initWithValue:(double) value andUnitsString:(NSString *) units;
 
++(HVMeasurement *) fromValue:(double) value unitsDisplayText:(NSString *) unitsText unitsCode:(NSString *) code unitsVocab:(NSString *) vocab;
 +(HVMeasurement *) fromValue:(double) value andUnits:(HVCodableValue *) units;
 +(HVMeasurement *) fromValue:(double) value andUnitsString:(NSString *) units;
 
@@ -61,7 +62,10 @@
 //
 //-------------------------
 -(NSString *) toString;
-// Value + Units
+//
+// Value  Units
+// Expects string in the format "%f %@"
+//
 -(NSString *) toStringWithFormat:(NSString *) format;
 
 @end

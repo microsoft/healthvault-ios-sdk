@@ -33,8 +33,6 @@
     NSInteger m_currentIndex;
 }
 
--(id) initFromLegacyRecords:(NSArray *) recordArray;
-
 //
 // The user's display name in HealthVault
 //
@@ -46,9 +44,14 @@
 @property (readonly, nonatomic) BOOL hasRecords; // true if user has authorized records
 //
 // The records the application is currently working with
+// To change the current record, set the currentRecordIndex property
 //
 @property (readwrite, nonatomic) NSInteger currentRecordIndex;
 @property (readonly, nonatomic) HVRecord* currentRecord;
+
+
+-(id) initFromLegacyRecords:(NSArray *) recordArray;  // Infrastructure - will eventually go away
+
 //
 // Refresh the list of authorized records - in case there were changes made using the HealthVault Shell
 //

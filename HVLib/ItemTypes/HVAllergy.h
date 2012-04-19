@@ -30,15 +30,59 @@
     HVBool* m_isNegated;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) E.g. Allergy to Pollen
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* name;
+//
+// (Optional) Reaction to the allergy
+// Preferred Vocab: icd9cm
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* reaction;
+//
+// (Optional) Approximately when first observed
+//
 @property (readwrite, nonatomic, retain) HVApproxDateTime* firstObserved;
+//
+// (Optional) E.g. Pollen
+// Preferred Vocab: allergen-type
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* allergenType;
+//
+// (Optional) Clinical allergen code
+// Preferred Vocab: icd9cm
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* allergenCode;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVPerson* treatmentProvider;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* treatment;
+//
+// (Optional) - Does treatment negate the effects of the allergy? 
+//
 @property (readwrite, nonatomic, retain) HVBool* isNegated;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithName:(NSString *) name;
+
+//-------------------------
+//
+// Type Information
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 

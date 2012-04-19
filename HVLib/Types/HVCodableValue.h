@@ -61,6 +61,15 @@
 -(id) initWithText:(NSString *)textValue andCode:(HVCodedValue *) code;
 -(id) initWithText:(NSString *)textValue code:(NSString *) code andVocab:(NSString *) vocab;
 
++(HVCodableValue *) fromText:(NSString *) textValue;
++(HVCodableValue *) fromText:(NSString *)textValue andCode:(HVCodedValue *) code;
++(HVCodableValue *) fromText:(NSString *)textValue code:(NSString *) code andVocab:(NSString *) vocab;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
 -(NSString *) toString;
 
 @end

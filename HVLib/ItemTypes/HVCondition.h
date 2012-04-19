@@ -29,22 +29,53 @@
     NSString* m_stopReason;
 }
 
+//-------------------------
 //
-// Required
+// Data
+//
+//-------------------------
+//
+// (Required) This condition's name
+// Vocabularies: icd9cm, Snomed etc
 //
 @property (readwrite, nonatomic, retain) HVCodableValue* name;
 //
-// Optional
+// Optional: 
 //
 @property (readwrite, nonatomic, retain) HVApproxDateTime* onsetDate;
+//
+// Optional: 'acute', 'chronic' etc
+// Vocabulary: condition-occurence
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* status;
+//
+// Optional: Has the condition stoped? 
+//
 @property (readwrite, nonatomic, retain) HVApproxDateTime* stopDate;
+//
+// Optional
+//
 @property (readwrite, nonatomic, retain) NSString* stopReason;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithName:(NSString *) name;
 
+//-------------------------
+//
+// Text
+//
+//-------------------------
 -(NSString *) toString;
 
+//-------------------------
+//
+// Type Information
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 

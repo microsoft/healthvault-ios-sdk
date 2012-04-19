@@ -198,7 +198,6 @@ NSString* pickRandomString(int count, ...)
 +(HVItem *)createRandom
 {
     HVItem* item = [[HVExercise newItem] autorelease];
-    
     HVExercise* exercise = item.exercise;
     
     exercise.when = createRandomApproxHVDate();
@@ -223,6 +222,87 @@ NSString* pickRandomString(int count, ...)
     
     [exercise addOrUpdateDetailWithName:detailCode andValue:measurement];
     [exercise addOrUpdateDetailWithName:detailCode andValue:measurement];  
+    
+    return item;
+}
+
+@end
+
+@implementation HVAllergy (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVAllergy newItem] autorelease];
+    HVAllergy* allergy = item.allergy;
+    
+    NSString* allergen = pickRandomString(3, @"Pollen", @"Peanuts", @"Penicillin");
+    NSString* onset = pickRandomString(3, @"High School", @"As a child", @"Can't remember");
+    
+    allergy.name = [HVCodableValue fromText:[NSString stringWithFormat:@"Allergy to %@", allergen]];
+    allergy.firstObserved = [HVApproxDateTime fromDescription:onset];
+    if (allergen == @"Pollen")
+    {
+        allergy.allergenType = [HVCodableValue fromText:@"environmental"];
+        allergy.reaction = [HVCodableValue fromText:@"sneezing"];
+    }
+    else if (allergen == @"Peanuts")
+    {
+        allergy.allergenType = [HVCodableValue fromText:@"food"];
+        allergy.reaction = [HVCodableValue fromText:@"anaphylactic shock"];
+    }
+    else 
+    {
+        allergy.allergenType = [HVCodableValue fromText:@"medication"];
+        allergy.reaction = [HVCodableValue fromText:@"anaphylactic shock"];
+    }
+    
+    return item;
+}
+
+@end
+
+@implementation HVCondition (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVCondition newItem] autorelease];
+    HVCondition* condition = item.condition;
+    
+    NSString* conditionName = pickRandomString(5, @"Migraine", @"Pancreatitis", @"Mild Depression", @"Ulcer", @"Endometriosis");
+    condition.name = [HVCodableValue fromText:conditionName];
+    condition.status = [HVCodableValue fromText:pickRandomString(2, @"chronic", @"acute")];
+    
+    if ([HVRandom randomDouble] > 0.5)
+    {
+        condition.onsetDate = [HVApproxDateTime fromDescription:@"As a teenager"];
+    }
+    else 
+    {
+        condition.onsetDate = createRandomApproxHVDate();
+    }
+ 
+    return item;
+}
+
+@end
+
+@implementation HVMedication (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVMedication newItem] autorelease];
+    HVMedication* medication = item.medication;
+    
+    NSString* medicationName = pickRandomString(8, @"Lipitor", @"Ibuprofen", @"Celebrex", @"Prozac", @"Claritin", @"Viagra", @"Omega 3 Supplement", @"Multi-vitamins");
+    
+    medication.name = [HVCodableValue fromText:medicationName];
+    medication.dose = [HVApproxMeasurement fromValue:[HVRandom randomIntInRangeMin:1 max:4]
+                                           unitsText:@"Tablets" unitsCode:@"Tablets" unitsVocab:@"medication-dose-units"];
+    medication.strength = [HVApproxMeasurement fromValue:[HVRandom randomIntInRangeMin:100 max:1000] 
+                                               unitsText:@"Milligrams" unitsCode:@"mg" unitsVocab:@"medication-strength-unit"];
+    medication.frequency = [HVApproxMeasurement fromDisplayText:pickRandomString(3, @"Once a day", @"Twice a day", @"As needed")];
+    
+    medication.startDate = createRandomApproxHVDate();
     
     return item;
 }

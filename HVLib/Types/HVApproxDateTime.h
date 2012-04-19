@@ -64,6 +64,9 @@
 -(id) initWithDate:(NSDate *) date;
 -(id) initWithDateTime:(HVDateTime *) dateTime;
 
++(HVApproxDateTime *) fromDate:(NSDate *) date;
++(HVApproxDateTime *) fromDescription:(NSString *) descr;
+
 //-------------------------
 //
 // Methods

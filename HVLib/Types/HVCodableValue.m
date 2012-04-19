@@ -87,6 +87,21 @@ LError:
     HVALLOC_FAIL; 
 }
 
++(HVCodableValue *)fromText:(NSString *)textValue
+{
+    return [[[HVCodableValue alloc] initWithText:textValue] autorelease];
+}
+
++(HVCodableValue *)fromText:(NSString *)textValue andCode:(HVCodedValue *)code
+{
+    return [[[HVCodableValue alloc] initWithText:textValue andCode:code] autorelease];
+}
+
++(HVCodableValue *)fromText:(NSString *)textValue code:(NSString *)code andVocab:(NSString *)vocab
+{
+    return [[[HVCodableValue alloc] initWithText:textValue code:code andVocab:vocab] autorelease];
+}
+
 -(void) dealloc
 {
     [m_text release];

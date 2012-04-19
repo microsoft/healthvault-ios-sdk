@@ -75,6 +75,20 @@ LError:
     return [[[HVMeasurement alloc] initWithValue:value andUnitsString:units] autorelease];
 }
 
++(HVMeasurement *)fromValue:(double)value unitsDisplayText:(NSString *)unitsText unitsCode:(NSString *)code unitsVocab:(NSString *)vocab
+{
+    HVCodableValue* unitCode = [[HVCodableValue alloc] initWithText:unitsText code:code andVocab:vocab];
+    HVCHECK_NOTNULL(unitCode);
+    
+    HVMeasurement* measurement = [[HVMeasurement alloc] initWithValue:value andUnits:unitCode];
+    [unitCode release];
+    
+    return measurement;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(NSString *)description
 {
     return [self toString];

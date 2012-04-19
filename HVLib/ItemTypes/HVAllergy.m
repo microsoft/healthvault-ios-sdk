@@ -40,6 +40,22 @@ static NSString* const c_element_negated = @"is-negated";
 @synthesize treatment = m_treatment;
 @synthesize isNegated = m_isNegated;
 
+-(id)initWithName:(NSString *)name
+{
+    HVCHECK_NOTNULL(name);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    m_name = [[HVCodableValue alloc] initWithText:name];
+    HVCHECK_NOTNULL(m_name);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void)dealloc
 {
     [m_name release];
