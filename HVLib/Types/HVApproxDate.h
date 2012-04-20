@@ -19,8 +19,11 @@
 #import <Foundation/Foundation.h>
 #import "HVDate.h"
 
+//-------------------------
+//
+// An ApproxDate is a date where Year is required
+// However, Month and Day are optional
+//
+//-------------------------
 @interface HVApproxDate : HVDate
-//
-// Year is required, Month and Day are optional
-//
 @end

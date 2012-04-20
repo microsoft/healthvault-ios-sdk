@@ -25,17 +25,42 @@ static NSString* const c_element_number = @"number";
 
 @implementation HVPhone
 
+@synthesize number = m_number;
 @synthesize description = m_description;
 @synthesize isPrimary = m_isprimary;
-@synthesize number = m_number;
+
+-(id)initWithNumber:(NSString *)number
+{
+    HVCHECK_STRING(number);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    self.number = number;
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
 
 -(void)dealloc
 {
+    [m_number release];
     [m_description release];
     [m_isprimary release];
-    [m_number release];
     
     [super dealloc];
+}
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
+-(NSString *)toString
+{
+    return (m_number) ? m_number : c_emptyString;
 }
 
 -(HVClientResult *)validate
@@ -81,4 +106,10 @@ LError:
 LError:
     HVALLOC_FAIL;
 }
+
+-(HVPhone *)itemAtIndex:(NSUInteger)index
+{
+    return (HVPhone *) [self objectAtIndex:index];
+}
+
 @end

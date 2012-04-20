@@ -114,7 +114,7 @@ LError:
 {
     if (!other)
     {
-        return NSOrderedAscending;
+        return NSOrderedDescending;
     }
     
     return [self.itemID compare:other.itemID];

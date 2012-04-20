@@ -28,12 +28,44 @@
     HVEmailAddress* m_address;
 }
 
-@property (readwrite, nonatomic, retain) NSString* description;
-@property (readwrite, nonatomic, retain) HVBool* isPrimary;
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required)
+// Note: HVEmailAddress currently does the minimal validation, so you may want
+// to run any RegEx or other validation scripts on the address
+//
 @property (readwrite, nonatomic, retain) HVEmailAddress* address;
+//
+// (Optional) A description of this email
+//
+@property (readwrite, nonatomic, retain) NSString* description;
+//
+// (Optional) 
+//
+@property (readwrite, nonatomic, retain) HVBool* isPrimary;
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithEmailAddress:(NSString *) email;
+
+//-------------------------
+//
+// TEXT
+//
+//-------------------------
+-(NSString *) toString;
 
 @end
 
 @interface HVEmailCollection : HVCollection
+
+-(HVEmailAddress *) itemAtIndex:(NSUInteger) index;
 
 @end

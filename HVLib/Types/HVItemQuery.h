@@ -59,8 +59,10 @@
 
 -(id) initWithTypeID:(NSString *) typeID;
 -(id) initWithFilter:(HVItemFilter *) filter;
+-(id) initWithItemKey:(HVItemKey *) key;
 -(id) initWithItemKeys:(NSArray *) keys;
 -(id) initWithItemIDs:(NSArray *) ids;
+-(id) initwithItemID:(NSString *) itemID;
 -(id) initWithPendingItems:(NSArray *) pendingItems;
 
 @end

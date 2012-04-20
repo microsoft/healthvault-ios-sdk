@@ -28,12 +28,46 @@
     NSString* m_number;
 }
 
-@property (readwrite, nonatomic, retain) NSString* description;
-@property (readwrite, nonatomic, retain) HVBool* isPrimary;
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) Phone number
+// Note: the SDK does not validate if the phone number is in valid
+// phone number format. 
+//
 @property (readwrite, nonatomic, retain) NSString* number;
+//
+// (Optional) A description of this number
+//
+@property (readwrite, nonatomic, retain) NSString* description;
+//
+// (Optional) 
+//
+@property (readwrite, nonatomic, retain) HVBool* isPrimary;
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithNumber:(NSString *) number;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
+
+-(NSString *) toString;
 
 @end
 
+
 @interface HVPhoneCollection : HVCollection
+
+-(HVPhone *) itemAtIndex:(NSUInteger) index;
 
 @end

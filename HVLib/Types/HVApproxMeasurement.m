@@ -100,12 +100,17 @@ LError:
 
 -(NSString *)toString
 {
+    if (m_display)
+    {
+        return m_display;
+    }
+    
     if (m_measurement)
     {
         return [m_measurement toString];
     }
     
-    return m_display;    
+    return c_emptyString;    
 }
 
 -(NSString *)toStringWithFormat:(NSString *)format
@@ -115,7 +120,7 @@ LError:
         return [m_measurement toStringWithFormat:format];
     }
     
-    return m_display;
+    return (m_display) ? m_display : c_emptyString;
 }
 
 -(HVClientResult *)validate

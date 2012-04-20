@@ -30,19 +30,57 @@
     HVCodableValue* m_suffix;
 }
 
+//-------------------------
 //
-// Required
+// Data
+//
+//-------------------------
+//
+// (Required)
 //
 @property (readwrite, nonatomic, retain) NSString* fullName;
 //
-// Optional
+// (Optional)
+// Vocabulary: name-prefixes
 //
 @property (readwrite, nonatomic, retain) HVCodableValue* title;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* first;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* middle;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* last;
+//
+// (Optional)
+// Vocabulary: name-suffixes
 @property (readwrite, nonatomic, retain) HVCodableValue* suffix;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithFirst:(NSString *) first andLastName:(NSString *) last;
+-(id) initWithFirst:(NSString *) first middle:(NSString *) middle andLastName:(NSString *) last;
+
+//-------------------------
+//
+// Methods
+//
+//-------------------------
+-(BOOL) buildFullName;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
 // Returns the full name
 -(NSString *) toString;
 

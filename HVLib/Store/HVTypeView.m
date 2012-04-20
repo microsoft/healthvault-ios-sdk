@@ -145,6 +145,11 @@ LError:
     return [m_items indexOfItemID:itemID];
 }
 
+-(BOOL)containsItemID:(NSString *)itemID
+{
+    return ([self indexOfItemID:itemID] != NSNotFound);
+}
+
 -(HVItem *)getLocalItemAtIndex:(NSUInteger)index
 {
     return [m_store.data getLocalItemWithKey:[self itemKeyAtIndex:index]];

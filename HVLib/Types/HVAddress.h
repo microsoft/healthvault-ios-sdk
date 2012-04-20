@@ -33,20 +33,47 @@
     NSString* m_county;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Optional) A description of this address, such as "Home"
+//
 @property (readwrite, nonatomic, retain) NSString* description;
 @property (readwrite, nonatomic, retain) HVBool* isPrimary;
+//
+// (Required)
+//
 @property (readwrite, nonatomic, retain) HVStringCollection* street;
+//
+// (Required)
+// 
 @property (readwrite, nonatomic, retain) NSString* city;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* state;
+//
+// (Required)
+//
 @property (readwrite, nonatomic, retain) NSString* postalCode;
+//
+// (Required)
+//
 @property (readwrite, nonatomic, retain) NSString* country;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* county;
 
 @property (readonly, nonatomic) BOOL hasStreet;
 
-
 @end
 
 @interface HVAddressCollection : HVCollection
+
+-(HVAddress *) itemAtIndex:(NSUInteger) index;
 
 @end

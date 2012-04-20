@@ -43,6 +43,11 @@
     return (HVItemKeyCollection *) self.result;
 }
 
+-(HVItemKey *)firstKey
+{
+    return self.putResults ? [self.putResults itemAtIndex:0] : nil;
+}
+
 -(NSString *)name
 {
     return @"PutThings";

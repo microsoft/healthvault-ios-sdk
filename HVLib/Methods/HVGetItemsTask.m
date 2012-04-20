@@ -45,6 +45,11 @@
     return (result) ? result.items : nil;
 }
 
+-(HVItem *)firstItemRetrieved
+{
+    return (self.itemsRetrieved) ? [self.itemsRetrieved itemAtIndex:0] : nil;
+}
+
 -(NSString *)name
 {
     return @"GetThings";

@@ -70,6 +70,7 @@
 
 -(HVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
+-(BOOL) containsItemID:(NSString *) itemID;
 
 -(BOOL) isStale:(NSTimeInterval) maxAge;
 

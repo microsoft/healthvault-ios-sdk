@@ -42,6 +42,7 @@ static NSString* const c_element_county = @"county";
 {
     return ![NSArray isNilOrEmpty:m_street];
 }
+
 -(HVStringCollection *)street
 {
     HVENSURE(m_street, HVStringCollection);
@@ -121,5 +122,10 @@ LError:
     
 LError:
     HVALLOC_FAIL;
+}
+
+-(HVAddress *)itemAtIndex:(NSUInteger)index
+{
+    return (HVAddress *) [self objectAtIndex:index];
 }
 @end

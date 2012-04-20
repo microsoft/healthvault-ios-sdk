@@ -25,9 +25,56 @@ static NSString* const c_element_email = @"email";
 
 @implementation HVContact
 
-@synthesize address = m_address;
 @synthesize phone = m_phone;
 @synthesize email = m_email;
+
+-(BOOL)hasAddress
+{
+    return ![NSArray isNilOrEmpty:m_address];
+}
+
+-(HVAddressCollection *)address
+{
+    HVENSURE(m_address, HVAddressCollection);
+    return m_address;
+}
+
+-(void)setAddress:(HVAddressCollection *)address
+{
+    HVRETAIN(m_address, address);
+}
+
+-(BOOL)hasPhone
+{
+    return ![NSArray isNilOrEmpty:m_phone];
+}
+
+-(HVPhoneCollection *)phone
+{
+    HVENSURE(m_phone, HVPhoneCollection);
+    return m_phone;
+}
+
+-(void)setPhone:(HVPhoneCollection *)phone
+{
+    HVRETAIN(m_phone, phone);
+}
+
+-(BOOL)hasEmail
+{
+    return ![NSArray isNilOrEmpty:m_email];
+}
+
+-(HVEmailCollection *)email
+{
+    HVENSURE(m_email, HVEmailCollection);
+    return m_email;
+}
+
+-(void)setEmail:(HVEmailCollection *)email
+{
+    HVRETAIN(m_email, email);
+}
 
 -(void)dealloc
 {

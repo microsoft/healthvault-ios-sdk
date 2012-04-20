@@ -158,6 +158,11 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(HVCodedValue *)firstCode
+{
+    return [self itemAtIndex:0];
+}
+
 -(HVCodedValue *)itemAtIndex:(NSUInteger)index
 {
     return (HVCodedValue *) [self objectAtIndex:index];

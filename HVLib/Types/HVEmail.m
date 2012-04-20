@@ -25,17 +25,41 @@ static NSString* const c_element_address = @"address";
 
 @implementation HVEmail
 
+@synthesize address = m_address;
 @synthesize description = m_description;
 @synthesize isPrimary = m_isprimary;
-@synthesize address = m_address;
+
+-(id)initWithEmailAddress:(NSString *)email
+{
+    self = [super init];
+    HVCHECK_SELF;
+    
+    m_address = [[HVEmailAddress alloc] initWith:email];
+    HVCHECK_NOTNULL(m_address);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
 
 -(void)dealloc
 {
+    [m_address release];
     [m_description release];
     [m_isprimary release];
-    [m_address release];
     
     [super dealloc];
+}
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
+-(NSString *)toString
+{
+    return (m_address) ? m_address.value : c_emptyString;
 }
 
 -(HVClientResult *)validate
@@ -48,7 +72,6 @@ static NSString* const c_element_address = @"address";
     
 LError:
     HVVALIDATE_FAIL
-    
 }
 
 -(void)serialize:(XWriter *)writer
@@ -81,5 +104,11 @@ LError:
 LError:
     HVALLOC_FAIL;
 }
+
+-(HVEmailAddress *)itemAtIndex:(NSUInteger)index
+{
+    return (HVEmailAddress *) [self objectAtIndex:index];
+}
+
 @end
 

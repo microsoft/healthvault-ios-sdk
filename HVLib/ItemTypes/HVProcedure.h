@@ -29,22 +29,52 @@
     HVPerson* m_secondaryProvider;
 }
 
+//-------------------------
 //
-// Required
+// Data
+//
+//-------------------------
+//
+// (Required)
+// Vocabulary: SNOMED
 //
 @property (readwrite, nonatomic, retain) HVCodableValue* name;
 //
-// Optional
+// (Optional)
 //
 @property (readwrite, nonatomic, retain) HVApproxDateTime* when;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* anatomicLocation;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVPerson* primaryProvider;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVPerson* secondaryProvider;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithName:(NSString *) name;
 
+//-------------------------
+//
+// Text
+//
+//-------------------------
 -(NSString *) toString;
 
+//-------------------------
+//
+// Type info
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 

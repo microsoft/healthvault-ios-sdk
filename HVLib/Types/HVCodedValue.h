@@ -84,6 +84,8 @@
 
 @interface HVCodedValueCollection : HVCollection 
 
+-(HVCodedValue *) firstCode;
+
 -(HVCodedValue *) itemAtIndex:(NSUInteger) index;
 
 @end

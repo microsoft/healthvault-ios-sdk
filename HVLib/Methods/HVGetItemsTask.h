@@ -50,6 +50,10 @@
 // Returns items retrieved by the FIRST query in the list of queries you issued
 //
 @property (readonly, nonatomic) HVItemCollection* itemsRetrieved;
+//
+// Returns the first item retrieved by the FIRST query in the list of issued queries
+//
+@property (readonly, nonatomic) HVItem* firstItemRetrieved;
 
 
 @end

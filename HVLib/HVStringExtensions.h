@@ -72,6 +72,9 @@ NSString* const c_emptyString;
 -(void) appendStringAsLine:(NSString *) string;
 -(void) appendStringsAsLines:(NSArray *) strings;
 
+-(void) appendOptionalString:(NSString *) string;
+-(void) appendOptionalString:(NSString *)string withSeparator:(NSString *) separator;
+
 -(NSString *) trim;
 -(void) trimLeft;
 -(void) trimRight;

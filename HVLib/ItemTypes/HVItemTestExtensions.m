@@ -63,6 +63,31 @@ NSString* pickRandomString(int count, ...)
     return retVal;
 }
 
+@implementation HVPerson (HVTestExtensions)
+
++(HVPerson *) createRandom
+{
+    HVPerson* person = [[[HVPerson alloc] init] autorelease];
+    
+    person.name = [[[HVName alloc] initWithFirst:@"Toby" middle:@"R." andLastName:@"McDuff"] autorelease];
+    person.organization = @"Justice League of Doctors";
+    person.training = @"MD, Phd., AB, FRCS, PQRS, XYZ";
+    
+    HVContact* contact = [[[HVContact alloc] init] autorelease];
+    
+    HVEmail* email = [[[HVEmail alloc] initWithEmailAddress:@"foo@bar.xyz"] autorelease];
+    HVPhone* phone = [[[HVPhone alloc] initWithNumber:@"555-555-5555"] autorelease];
+    
+    [contact.email addObject:email];
+    [contact.phone addObject:phone];
+    
+    person.contact = contact;
+    
+    return person;
+}
+
+@end
+
 @implementation HVItem (HVTestExtensions)
 
 +(HVItem *)createRandomOfClass:(NSString *)className
@@ -74,7 +99,7 @@ NSString* pickRandomString(int count, ...)
     }
     
     @try {
-        return [cls createRandom];
+        return (HVItem *) [cls createRandom];
     }
     @catch (NSException *exception) 
     {
@@ -307,6 +332,66 @@ NSString* pickRandomString(int count, ...)
     return item;
 }
 
+@end
+
+@implementation HVImmunization (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVImmunization newItem] autorelease];
+    HVImmunization* immunization = item.immunization;
+    
+    if ([HVRandom randomDouble] > 0.5)
+    {
+        immunization.name = [HVCodableValue fromText:@"hepatitis A and hepatitis B vaccine" code:@"104" andVocab:@"vaccines-cvx"];
+    }
+    else 
+    {
+        immunization.name = [HVCodableValue fromText:@"influenza virus vaccine, whole virus" code:@"16" andVocab:@"vaccines-cvx"];
+    }
+    immunization.name.codes.firstCode.vocabularyFamily = @"HL7";
+    immunization.name.codes.firstCode.vocabularyVersion = @"2.3 09_2008";
+    
+    if ([HVRandom randomDouble] > 0.5)
+    {
+        immunization.administeredDate = [HVApproxDateTime fromDescription:@"As an adult"];
+    }
+    else
+    {
+        immunization.administeredDate = createRandomApproxHVDate();
+    }
+    if ([HVRandom randomDouble] > 0.5)
+    {
+        immunization.manufacturer = [HVCodableValue fromText:@"Merck & Co., Inc." code:@"MSD" andVocab:@"vaccine-manufacturers-mvx"];       
+    }
+    else 
+    {
+        immunization.manufacturer = [HVCodableValue fromText:@"GlaxoSmithKline" code:@"SKB" andVocab:@"vaccine-manufacturers-mvx"];       
+    }
+    
+    immunization.lot = [NSString stringWithFormat:@"%d", [HVRandom randomIntInRangeMin:5000 max:20000]];
+    immunization.route = [HVCodableValue fromText:@"Injected"];
+            
+    immunization.anatomicSurface = [HVCodableValue fromText:@"Right arm"];
+    
+    return item;
+}
+
+@end
+
+@implementation HVProcedure (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVProcedure newItem] autorelease];
+    HVProcedure* procedure = item.procedure;
+    
+    procedure.name = [HVCodableValue fromText:pickRandomString(3, @"eye surgery", @"root canal", @"colonoscopy")];
+    procedure.when = createRandomApproxHVDate();
+    procedure.primaryProvider = [HVPerson createRandom];
+    
+    return item;
+}
 @end
 
 @implementation HVTestSynchronizedStore : HVSynchronizedStore

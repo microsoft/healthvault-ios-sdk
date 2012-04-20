@@ -36,17 +36,46 @@
 
 @interface HVRecordReference (HVMethods)
 
+//-------------------------
+//
+// Get Data
+// Each of these work with an HVGetItemsTask
 //
 // On success, the result property of HVTask will contain any found items
+// You can also do: ((HVGetItemsTask *) task).itemsRetrieved in your callback
+//
+//-------------------------
+
+//
+// Get all items of the given type
 //
 -(HVGetItemsTask *) getItemsForClass:(Class) cls callback:(HVTaskCompletion) callback;
 -(HVGetItemsTask *) getItemsForType:(NSString *) typeID callback:(HVTaskCompletion) callback;
--(HVGetItemsTask *) getPendingItems:(HVPendingItemCollection *) items callback:(HVTaskCompletion) callback;
+//
+// Get the item with the given key
+//
+-(HVGetItemsTask *) getItemWithKey:(HVItemKey *) key callback:(HVTaskCompletion) callback;
+//
+// Get all items matching the given query
+//
 -(HVGetItemsTask *) getItems:(HVItemQuery *) query callback:(HVTaskCompletion) callback;
 
+-(HVGetItemsTask *) getPendingItems:(HVPendingItemCollection *) items callback:(HVTaskCompletion) callback;
+
+//-------------------------
+//
+// Put Data
+// Each of these work with a HVPutItemsTask
+//
+//-------------------------
 -(HVPutItemsTask *) putItem:(HVItem *) item callback:(HVTaskCompletion) callback;
 -(HVPutItemsTask *) putItems:(HVItemCollection *) items callback:(HVTaskCompletion)callback;
 
+//-------------------------
+//
+// Remove Data
+//
+//-------------------------
 -(HVRemoveItemsTask *) removeItemWithKey:(HVItemKey *) key callback:(HVTaskCompletion) callback;
 -(HVRemoveItemsTask *) removeItemsWithKeys:(HVItemKeyCollection *)keys callback:(HVTaskCompletion)callback;
 

@@ -270,6 +270,26 @@ LError:
     }
 }
 
+-(void)appendOptionalString:(NSString *)string
+{
+    if (![NSString isNilOrEmpty:string])
+    {
+        [self appendString:string];
+    }
+}
+
+-(void)appendOptionalString:(NSString *)string withSeparator:(NSString *)separator
+{
+    if (![NSString isNilOrEmpty:string])
+    {
+        if (self.length > 0)
+        {
+            [self appendString:separator];
+        }
+        [self appendString:string];
+    }
+}
+
 -(NSString *) trim
 {
     [self trimLeft];

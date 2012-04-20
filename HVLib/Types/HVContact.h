@@ -29,8 +29,27 @@
     HVEmailCollection* m_email;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVAddressCollection* address;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVPhoneCollection* phone;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVEmailCollection* email;
+
+@property (readonly, nonatomic) BOOL hasAddress;
+@property (readonly, nonatomic) BOOL hasPhone;
+@property (readonly, nonatomic) BOOL hasEmail;
+
 
 @end

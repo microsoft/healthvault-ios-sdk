@@ -78,7 +78,10 @@ LError:
     HVItemQuery *query = [[HVItemQuery alloc] initWithTypeID:typeID];
     HVCHECK_NOTNULL(query);
     
-    return [self getItems:query callback:callback];
+    HVGetItemsTask* task = [self getItems:query callback:callback];
+    [query release];
+    
+    return task;
     
 LError:
     return nil;
@@ -89,10 +92,28 @@ LError:
     HVItemQuery *query = [[HVItemQuery alloc] initWithPendingItems:items];
     HVCHECK_NOTNULL(query);
     
-    return [self getItems:query callback:callback];
+    HVGetItemsTask* task = [self getItems:query callback:callback];
+    [query release];
+    
+    return task;
     
 LError:
     return nil;
+}
+
+-(HVGetItemsTask *)getItemWithKey:(HVItemKey *)key callback:(HVTaskCompletion)callback
+{
+    HVItemQuery *query = [[HVItemQuery alloc] initWithItemKey:key];
+    HVCHECK_NOTNULL(query);
+    
+    HVGetItemsTask* task = [self getItems:query callback:callback];
+    [query release];
+    
+    return task;
+    
+LError:
+    return nil;
+
 }
 
 -(HVGetItemsTask *)getItems:(HVItemQuery *)query callback:(HVTaskCompletion)callback

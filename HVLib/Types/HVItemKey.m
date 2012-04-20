@@ -145,6 +145,11 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(HVItemKey *)itemAtIndex:(NSUInteger)index
+{
+    return (HVItemKey *) [self objectAtIndex:index];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

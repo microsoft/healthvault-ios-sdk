@@ -124,6 +124,22 @@ LError:
     }
     
     return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initwithItemID:(NSString *)itemID
+{
+    HVCHECK_STRING(itemID);
+
+    self = [self init];
+    HVCHECK_SELF;
+    
+    [m_itemIDs addObject:itemID];
+
+    return self;
+
 LError:
     HVALLOC_FAIL;
 }
@@ -136,6 +152,21 @@ LError:
     HVCHECK_SELF;
     
     [m_itemIDs addObjectsFromArray:ids];
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initWithItemKey:(HVItemKey *)key
+{
+    HVCHECK_NOTNULL(key);
+    
+    self = [self init];
+    HVCHECK_SELF;
+    
+    [m_keys addObject:key];
     
     return self;
     

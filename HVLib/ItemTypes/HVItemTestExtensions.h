@@ -34,6 +34,12 @@ HVApproxDateTime* createRandomApproxHVDate(void);
 NSString* pickRandomString(int count, ...);
 
 
+@interface HVPerson (HVTestExtensions)
+
++(HVPerson *) createRandom;
+
+@end
+
 @interface HVItem (HVTestExtensions)
 
 +(HVItem *) createRandomOfClass:(NSString *) className;
@@ -95,6 +101,19 @@ NSString* pickRandomString(int count, ...);
 +(HVItem *) createRandom;
 
 @end
+
+@interface HVImmunization (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVProcedure (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
 @interface HVTestSynchronizedStore : HVSynchronizedStore
 
 @property (readwrite, nonatomic) double failureProbability;

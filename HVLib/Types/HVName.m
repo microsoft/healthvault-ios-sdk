@@ -47,6 +47,58 @@ static NSString* const c_element_suffix = @"suffix";
     [super dealloc];
 }
 
+-(id)initWithFirst:(NSString *)first andLastName:(NSString *)last
+{
+    return [self initWithFirst:first middle:nil andLastName:last];
+}
+
+-(id)initWithFirst:(NSString *)first middle:(NSString *)middle andLastName:(NSString *)last
+{
+    HVCHECK_NOTNULL(first);
+    HVCHECK_NOTNULL(last);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    self.first = first;
+    self.middle = middle;
+    self.last = last;
+    
+    [self buildFullName];
+    HVCHECK_NOTNULL(m_full);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(BOOL)buildFullName
+{
+    NSMutableString* fullName = [[[NSMutableString alloc] init] autorelease];
+    HVCHECK_NOTNULL(fullName);
+    
+    if (m_title)
+    {
+        [fullName appendOptionalString:m_title.text];
+    }
+    
+    [fullName appendOptionalString:m_first withSeparator:@" "];
+    [fullName appendOptionalString:m_middle withSeparator:@" "];
+    [fullName appendOptionalString:m_last withSeparator:@" "];
+    if (m_suffix)
+    {
+        [fullName appendOptionalString:m_suffix.text withSeparator:@" "];
+    }
+    
+    self.fullName = fullName;
+    
+    return TRUE;
+
+LError:
+    return FALSE;
+}
+
 -(NSString *)description
 {
     return [self toString];
@@ -54,7 +106,7 @@ static NSString* const c_element_suffix = @"suffix";
 
 -(NSString *)toString
 {
-    return m_full;
+    return (m_full) ? m_full : c_emptyString;
 }
 
 -(HVClientResult *)validate

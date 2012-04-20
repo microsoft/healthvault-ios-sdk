@@ -32,11 +32,35 @@
     HVCodableValue* m_type;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) Person's name
+//
 @property (readwrite, nonatomic, retain) HVName* name;
+//
+// (Optional) 
+//
 @property (readwrite, nonatomic, retain) NSString* organization;
+//
+// (Optional) 
+//
 @property (readwrite, nonatomic, retain) NSString* training;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* idNumber;
+//
+// (Optional) Contact information
+//
 @property (readwrite, nonatomic, retain) HVContact* contact;
+//
+// (Optional) 
+// Vocabulary: person-types
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* type;
 
 //

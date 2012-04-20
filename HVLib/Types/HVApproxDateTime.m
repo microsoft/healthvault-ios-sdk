@@ -124,7 +124,7 @@ LError:
         return [m_dateTime toString];
     }
     
-    return m_descriptive;
+    return (m_descriptive) ? m_descriptive : c_emptyString;
 }
 
 -(NSString *)toStringWithFormat:(NSString *)format
@@ -134,7 +134,7 @@ LError:
         return [m_dateTime toStringWithFormat:format];
     }
     
-    return m_descriptive;
+    return (m_descriptive) ? m_descriptive : c_emptyString;
 }
 
 -(NSDate *)toDate

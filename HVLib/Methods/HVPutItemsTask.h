@@ -33,6 +33,7 @@
 @property (readonly, nonatomic) BOOL hasItems;
 
 @property (readonly, nonatomic) HVItemKeyCollection* putResults;
+@property (readonly, nonatomic) HVItemKey* firstKey;
 
 -(id) initWithItems:(HVItemCollection *) items andCallback:(HVTaskCompletion) callback;
 
