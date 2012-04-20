@@ -63,6 +63,30 @@ NSString* pickRandomString(int count, ...)
     return retVal;
 }
 
+@implementation HVContact (HVTestExtensions)
+
++(HVContact *)createRandom
+{
+    HVContact* contact = [[[HVContact alloc] init] autorelease];
+    
+    HVAddress* address = [[[HVAddress alloc] init] autorelease];
+    [address.street addObject:@"1234 Princess Street"];
+    address.city = @"Edinburgh";
+    address.postalCode = @"ABCDEF";
+    address.country = @"Scotland";
+    
+    HVEmail* email = [[[HVEmail alloc] initWithEmailAddress:@"foo@bar.xyz"] autorelease];
+    HVPhone* phone = [[[HVPhone alloc] initWithNumber:@"555-555-5555"] autorelease];
+    
+    [contact.address addObject:address];
+    [contact.email addObject:email];
+    [contact.phone addObject:phone];
+    
+    return contact;
+}
+
+@end
+
 @implementation HVPerson (HVTestExtensions)
 
 +(HVPerson *) createRandom
@@ -73,17 +97,22 @@ NSString* pickRandomString(int count, ...)
     person.organization = @"Justice League of Doctors";
     person.training = @"MD, Phd., AB, FRCS, PQRS, XYZ";
     
-    HVContact* contact = [[[HVContact alloc] init] autorelease];
-    
-    HVEmail* email = [[[HVEmail alloc] initWithEmailAddress:@"foo@bar.xyz"] autorelease];
-    HVPhone* phone = [[[HVPhone alloc] initWithNumber:@"555-555-5555"] autorelease];
-    
-    [contact.email addObject:email];
-    [contact.phone addObject:phone];
-    
-    person.contact = contact;
+    person.contact = [HVContact createRandom];
     
     return person;
+}
+
+@end
+
+@implementation HVOrganization (HVTestExtensions)
+
++(HVOrganization *)createRandom
+{
+    HVOrganization* org = [[[HVOrganization alloc] init] autorelease];
+    org.name = @"Toto Memorial Hospital";
+    org.contact = [HVContact createRandom];
+    
+    return org;
 }
 
 @end
@@ -392,6 +421,45 @@ NSString* pickRandomString(int count, ...)
     
     return item;
 }
+
+@end
+
+@implementation HVVitalSigns (HVTestExtensions)
+
++(HVItem *) createRandom
+{
+    HVItem* item = [[HVVitalSigns newItem] autorelease];
+    HVVitalSigns* vitals = item.vitalSigns;
+    
+    double temperature = [HVRandom randomDoubleInRangeMin:97 max:103];
+    long temp = (long) (temperature * 10);
+    temperature = ((double) temp) * 0.1;
+    
+    HVVitalSignResult* result = [[[HVVitalSignResult alloc] initWithTemperature:temperature inCelsius:FALSE] autorelease];
+    
+    vitals.when = createRandomHVDateTime();
+    [vitals.results addObject:result];
+    
+    return item;
+}
+
+@end
+
+@implementation HVEncounter (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVEncounter newItem] autorelease];
+    HVEncounter* encounter = item.encounter;
+    
+    encounter.when = createRandomHVDateTime();
+    encounter.encounterType = [HVCodableValue fromText:pickRandomString(3, @"Checkup Examination", @"Dental Procedures", @"Acute care")];
+    encounter.duration = [[[HVDuration alloc] initWithDate:[encounter.when toDate] andDurationInSeconds:3600] autorelease];
+    encounter.facility = [HVOrganization createRandom];
+    
+    return item;
+}
+
 @end
 
 @implementation HVTestSynchronizedStore : HVSynchronizedStore

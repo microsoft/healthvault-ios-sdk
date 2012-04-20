@@ -28,20 +28,46 @@
     NSString* m_position;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) When the vital sign was taken
+//
 @property (readwrite, nonatomic, retain) HVDateTime* when;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVVitalSignResultCollection* results;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* site;
 @property (readwrite, nonatomic, retain) NSString* position;
 
 @property (readonly, nonatomic) BOOL hasResults;
 @property (readonly, nonatomic) HVVitalSignResult* firstResult;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+
 -(id) initWithDate:(NSDate *) date;
 -(id) initWithResult:(HVVitalSignResult *) result onDate:(NSDate *) date;
 
++(HVItem *) newItem;
+
+//-------------------------
+//
+// Type Info
+//
+//-------------------------
+
 +(NSString *) typeID;
 +(NSString *) XRootElement;
-
-+(HVItem *) newItem;
 
 @end

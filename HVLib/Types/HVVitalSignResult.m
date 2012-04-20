@@ -37,21 +37,15 @@ static NSString* const c_element_flag = @"flag";
 @synthesize textValue = m_textValue;
 @synthesize flag = m_flag;
 
--(id)initWithTitle:(NSString *)title andValue:(double)value
+-(id)initWithTitle:(HVCodableValue *)title value:(double)value andUnit:(NSString *)unit
 {
-    return [self initWithTitle:title value:value andUnit:nil];
-}
-
--(id)initWithTitle:(NSString *)title value:(double)value andUnit:(NSString *)unit
-{
-    HVCHECK_STRING(title);
+    HVCHECK_NOTNULL(title);
     
     self = [super init];
     HVCHECK_SELF;
     
-    m_title = [[HVCodableValue alloc] initWithText:title];
-    HVCHECK_NOTNULL(m_title);
-    
+    self.title = title;
+
     m_value = [[HVDouble alloc] initWith:value];
     HVCHECK_NOTNULL(m_value);
     
@@ -65,6 +59,12 @@ static NSString* const c_element_flag = @"flag";
     
 LError:
     HVALLOC_FAIL;
+}
+
+-(id)initWithTemperature:(double)value inCelsius:(BOOL)celsius
+{
+    HVCodableValue* title = [HVCodableValue fromText:@"Temperature" code:@"Tmp" andVocab:@"vital-statistics"];
+    return [self initWithTitle:title value:value andUnit:(celsius) ? @"celsius" : @"fahrenheit"];
 }
 
 -(void)dealloc

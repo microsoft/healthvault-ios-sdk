@@ -44,6 +44,11 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(id)initWithDate:(NSDate *)start andDurationInSeconds:(double)duration
+{
+    return [self initWithStartDate:start endDate:[start dateByAddingTimeInterval:duration]];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

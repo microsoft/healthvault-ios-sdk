@@ -33,16 +33,49 @@
     HVCodableValue* m_flag;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required)
+// Vocabulary: vital-statistics
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* title;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVDouble* value;
+//
+// (Optional)
+// Vocabulary: lab-results-units
 @property (readwrite, nonatomic, retain) HVCodableValue* unit;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVDouble* referenceMin;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVDouble* referenceMax;
 @property (readwrite, nonatomic, retain) NSString* textValue;
 @property (readwrite, nonatomic, retain) HVCodableValue* flag;
 
--(id) initWithTitle:(NSString *) title andValue:(double) value;
--(id) initWithTitle:(NSString *)title value:(double)value andUnit:(NSString *) unit;
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+
+-(id) initWithTitle:(HVCodableValue *) title value:(double)value andUnit:(NSString *) unit;
+-(id) initWithTemperature:(double) value inCelsius:(BOOL) celsius;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
 
 // 
 // Format template => %@ %f %@

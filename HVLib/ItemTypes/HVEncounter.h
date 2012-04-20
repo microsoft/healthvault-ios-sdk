@@ -30,11 +30,34 @@
     HVOrganization* m_facility;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVDateTime* when;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* encounterType;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* reason;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVDuration* duration;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVBool* consent;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVOrganization* facility;
 
 +(NSString *) typeID;

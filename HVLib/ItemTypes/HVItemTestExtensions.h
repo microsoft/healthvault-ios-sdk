@@ -33,17 +33,20 @@ HVDate* createRandomHVDate(void);
 HVApproxDateTime* createRandomApproxHVDate(void);
 NSString* pickRandomString(int count, ...);
 
+@interface HVContact (HVTestExtensions)
++(HVContact *) createRandom;
+@end
 
 @interface HVPerson (HVTestExtensions)
-
 +(HVPerson *) createRandom;
+@end
 
+@interface HVOrganization (HVTestExtensions)
++(HVOrganization *) createRandom;
 @end
 
 @interface HVItem (HVTestExtensions)
-
 +(HVItem *) createRandomOfClass:(NSString *) className;
-
 @end
 
 @interface HVWeight (HVTestExtensions)
@@ -109,6 +112,18 @@ NSString* pickRandomString(int count, ...);
 @end
 
 @interface HVProcedure (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVVitalSigns (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVEncounter (HVTestExtensions)
 
 +(HVItem *) createRandom;
 
