@@ -60,6 +60,9 @@
 -(id) initwithComponents:(NSDateComponents *) components;
 -(id) initNow;
 
++(HVDateTime *) now;
++(HVDateTime *) fromDate:(NSDate *) date;
+
 //-------------------------
 //
 // Methods

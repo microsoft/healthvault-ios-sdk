@@ -29,6 +29,8 @@ enum HVRelativeRating
     HVRelativeRating_VeryHigh
 };
 
+NSString* stringFromRating(enum HVRelativeRating rating);
+
 enum HVNormalcyRating
 {
     HVNormalcy_Unknown = 0,
@@ -38,6 +40,9 @@ enum HVNormalcyRating
     HVNormalcy_AboveNormal,
     HVNormalcy_WellAboveNormal
 };
+
+NSString* stringFromNormalcy(enum HVNormalcyRating rating);
+
 
 @interface HVOneToFive : HVConstrainedInt
 

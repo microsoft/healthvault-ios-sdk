@@ -21,6 +21,7 @@
 
 @interface HVDailyMedicationUsage : HVItemDataTyped
 {
+@private
     HVDate* m_when;
     HVCodableValue* m_drugName;
     HVInt* m_dosesConsumed;
@@ -32,19 +33,55 @@
     HVCodableValue* m_singleDoseDescription;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// Required
+//
 @property (readwrite, nonatomic, retain) HVDate* when;
 @property (readwrite, nonatomic, retain) HVCodableValue* drugName;
 @property (readwrite, nonatomic, retain) HVInt* dosesConsumed;
+//
+// Optional
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* purpose;
 @property (readwrite, nonatomic, retain) HVInt* dosesIntended;
 @property (readwrite, nonatomic, retain) HVCodableValue* usageSchedule;
 @property (readwrite, nonatomic, retain) HVCodableValue* drugForm;
 @property (readwrite, nonatomic, retain) HVCodableValue* prescriptionType;
 @property (readwrite, nonatomic, retain) HVCodableValue* singleDoseDescription;
+//
+// Convenience
+//
+@property (readwrite, nonatomic) int dosesConsumedValue;
+@property (readwrite, nonatomic) int dosesIntendedValue;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithDoses:(int) doses forDrug:(HVCodableValue *) drug onDay:(NSDate *) day;
+
++(HVItem *) newItem;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
+-(NSString *) toString;
+
+//-------------------------
+//
+// Type Info
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 
-+(HVItem *) newItem;
 
 @end

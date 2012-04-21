@@ -29,6 +29,8 @@ enum HVMood
     HVMood_Elated
 };
 
+NSString* stringFromMood(enum HVMood mood);
+
 enum HVWellBeing 
 {
     HVWellBeing_Unknown = 0,
@@ -39,22 +41,63 @@ enum HVWellBeing
     HVWellBeing_Vigorous
 };
 
+NSString* stringFromWellBeing(enum HVWellBeing wellBeing);
+
 @interface HVEmotionalState : HVItemDataTyped
 {
+@private
     HVDateTime* m_when;
     HVOneToFive* m_mood;
     HVOneToFive* m_stress;
     HVOneToFive* m_wellbeing;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// All Optional
+//
 @property (readwrite, nonatomic, retain) HVDateTime* when;
 @property (readwrite, nonatomic) enum HVMood mood;
 @property (readwrite, nonatomic) enum HVRelativeRating stress;
 @property (readwrite, nonatomic) enum HVWellBeing wellbeing;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
++(HVItem *) newItem;
+
+//-------------------------
+//
+// Methods
+//
+//-------------------------
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
+-(NSString *) moodAsString;
+-(NSString *) stressAsString;
+-(NSString *) wellBeingAsString;
+
+-(NSString *) toString;
+// @Mood @Stress @WellBeing
+-(NSString *) toStringWithFormat:(NSString *) format;
+
+//-------------------------
+//
+// Type Info
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 
-+(HVItem *) newItem;
 
 @end

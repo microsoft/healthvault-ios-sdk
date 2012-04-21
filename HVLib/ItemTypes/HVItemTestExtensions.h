@@ -32,6 +32,7 @@ HVDateTime* createRandomHVDateTime(void);
 HVDate* createRandomHVDate(void);
 HVApproxDateTime* createRandomApproxHVDate(void);
 NSString* pickRandomString(int count, ...);
+NSString* pickRandomDrug(void);
 
 @interface HVContact (HVTestExtensions)
 +(HVContact *) createRandom;
@@ -166,6 +167,18 @@ NSString* pickRandomString(int count, ...);
 @end
 
 @interface HVSleepJournalPM (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVEmotionalState (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVDailyMedicationUsage (HVTestExtensions)
 
 +(HVItem *) createRandom;
 

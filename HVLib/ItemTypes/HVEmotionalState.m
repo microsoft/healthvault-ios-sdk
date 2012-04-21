@@ -19,6 +19,59 @@
 #import "HVCommon.h"
 #import "HVEmotionalState.h"
 
+
+NSString* stringFromMood(enum HVMood mood)
+{
+    switch (mood) 
+    {
+        case HVMood_Depressed:
+            return @"Depressed";
+        
+        case HVMood_Sad:
+            return @"Sad";
+        
+        case HVMood_Neutral:
+            return @"Neutral";
+        
+        case HVMood_Happy:
+            return @"Happy";
+        
+        case HVMood_Elated:
+            return @"Elated";
+            
+        default:
+            break;
+    }
+    
+    return c_emptyString;
+}
+
+NSString* stringFromWellBeing(enum HVWellBeing wellBeing)
+{
+    switch (wellBeing) 
+    {
+        case HVWellBeing_Sick:
+            return @"Sick";
+        
+        case HVWellBeing_Impaired:
+            return @"Impaired";
+        
+        case HVWellBeing_Able:
+            return @"Able";
+        
+        case HVWellBeing_Healthy:
+            return @"Healthy";
+        
+        case HVWellBeing_Vigorous:
+            return @"Vigorous";
+            
+        default:
+            break;
+    }
+    
+    return c_emptyString;
+}
+
 static NSString* const c_typeid = @"4b7971d6-e427-427d-bf2c-2fbcf76606b3";
 static NSString* const c_typename = @"emotion";
 
@@ -98,6 +151,36 @@ static NSString* const c_element_wellbeing = @"wellbeing";
     [m_stress release];
     [m_wellbeing release];
     [super dealloc];
+}
+
+-(NSString *)moodAsString
+{
+    return stringFromMood(self.mood);
+}
+
+-(NSString *)wellBeingAsString
+{
+    return stringFromWellBeing(self.wellbeing);
+}
+
+-(NSString *)stressAsString
+{
+    return stringFromRating(self.stress);
+}
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
+-(NSString *)toString
+{
+    return [self toStringWithFormat:@"Mood=%@, Stress=%@, Wellbeing=%@"];
+}
+
+-(NSString *)toStringWithFormat:(NSString *)format
+{
+    return [NSString stringWithFormat:format, [self moodAsString], [self stressAsString], [self wellBeingAsString]];
 }
 
 -(HVClientResult *)validate

@@ -45,6 +45,50 @@ static NSString* const c_element_singleDoseDescr = @"single-dose-description";
 @synthesize prescriptionType = m_prescriptionType;
 @synthesize singleDoseDescription = m_singleDoseDescription;
 
+-(int)dosesConsumedValue
+{
+    return (m_dosesConsumed) ? m_dosesConsumed.value : -1;
+}
+
+-(void)setDosesConsumedValue:(int)dosesConsumedValue
+{
+    HVENSURE(m_dosesConsumed, HVInt);
+    m_dosesConsumed.value = dosesConsumedValue;
+}
+
+-(int)dosesIntendedValue
+{
+    return (m_dosesIntended) ? m_dosesIntended.value : -1;
+}
+
+-(void)setDosesIntendedValue:(int)dosesIntendedValue
+{
+    HVENSURE(m_dosesIntended, HVInt);
+    m_dosesIntended.value = dosesIntendedValue;
+}
+
+-(id)initWithDoses:(int)doses forDrug:(HVCodableValue *)drug onDay:(NSDate *)day
+{
+    HVCHECK_NOTNULL(drug);
+    HVCHECK_NOTNULL(day);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    m_when = [[HVDate alloc] initWithDate:day];
+    HVCHECK_NOTNULL(m_when);
+    
+    self.drugName = drug;
+    
+    self.dosesConsumedValue = doses;
+    HVCHECK_NOTNULL(m_dosesConsumed);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void)dealloc
 {
     [m_when release];
@@ -63,6 +107,16 @@ static NSString* const c_element_singleDoseDescr = @"single-dose-description";
 -(NSDate *)getDate
 {
     return [m_when toDate];
+}
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
+-(NSString *)toString
+{
+    return (m_drugName) ? [m_drugName toString] : c_emptyString;
 }
 
 -(HVClientResult *)validate

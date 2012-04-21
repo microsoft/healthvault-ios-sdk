@@ -75,6 +75,16 @@ LError:
     HVALLOC_FAIL;
 }
 
++(HVDateTime *)now
+{
+    return [[[HVDateTime alloc] initNow] autorelease];
+}
+
++(HVDateTime *)fromDate:(NSDate *)date
+{
+    return [[[HVDateTime alloc] initWithDate:date] autorelease];
+}
+
 -(void) dealloc
 {
     [m_date release];

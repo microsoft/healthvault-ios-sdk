@@ -27,7 +27,7 @@ NSDate* createRandomDate(void)
 
 HVDateTime* createRandomHVDateTime(void)
 {
-    return [[[HVDateTime alloc] initWithDate:createRandomDate()] autorelease];
+    return [HVDateTime fromDate:createRandomDate()];
 }
 
 HVDate* createRandomHVDate(void)
@@ -61,6 +61,11 @@ NSString* pickRandomString(int count, ...)
         
     va_end(args);
     return retVal;
+}
+
+NSString* pickRandomDrug(void)
+{
+    return pickRandomString(8, @"Lipitor", @"Ibuprofen", @"Celebrex", @"Prozac", @"Claritin", @"Viagra", @"Omega 3 Supplement", @"Multi-vitamins");
 }
 
 @implementation HVContact (HVTestExtensions)
@@ -348,7 +353,7 @@ NSString* pickRandomString(int count, ...)
     HVItem* item = [[HVMedication newItem] autorelease];
     HVMedication* medication = item.medication;
     
-    NSString* medicationName = pickRandomString(8, @"Lipitor", @"Ibuprofen", @"Celebrex", @"Prozac", @"Claritin", @"Viagra", @"Omega 3 Supplement", @"Multi-vitamins");
+    NSString* medicationName = pickRandomDrug();
     
     medication.name = [HVCodableValue fromText:medicationName];
     medication.dose = [HVApproxMeasurement fromValue:[HVRandom randomIntInRangeMin:1 max:4]
@@ -586,7 +591,7 @@ NSString* pickRandomString(int count, ...)
     HVSleepJournalPM* journal = item.sleepJournalPM;
     
     journal.when = createRandomHVDateTime();
-    journal.sleepiness = (enum HVSleepiness) [HVRandom randomIntInRangeMin:0 max:5];
+    journal.sleepiness = (enum HVSleepiness) [HVRandom randomIntInRangeMin:1 max:4];
     
     for (int i = 0, count = [HVRandom randomIntInRangeMin:3 max:5]; i < count; ++i)
     {
@@ -599,6 +604,35 @@ NSString* pickRandomString(int count, ...)
 
 @end
 
+@implementation HVEmotionalState (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVEmotionalState newItem] autorelease];
+    HVEmotionalState* es = item.emotionalState;
+    
+    es.when = createRandomHVDateTime();
+    es.stress = (enum HVRelativeRating) [HVRandom randomIntInRangeMin:1 max:5];
+    es.mood = (enum HVMood) [HVRandom randomIntInRangeMin:1 max:5];
+    es.wellbeing = (enum HVWellBeing) [HVRandom randomIntInRangeMin:1 max:5];
+
+    return item;
+}
+
+@end
+
+@implementation HVDailyMedicationUsage (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVDailyMedicationUsage* usage = [[HVDailyMedicationUsage alloc] 
+                                    initWithDoses:[HVRandom randomDoubleInRangeMin:0 max:5]
+                                     forDrug:[HVCodableValue fromText:pickRandomDrug()] 
+                                     onDay:createRandomDate()];    
+    return [[[HVItem alloc] initWithTypedData:[usage autorelease]] autorelease];
+}
+
+@end
 
 @implementation HVTestSynchronizedStore : HVSynchronizedStore
 
@@ -613,6 +647,5 @@ NSString* pickRandomString(int count, ...)
     
     return [super getLocalItemWithKey:key];
 }
-
 
 @end

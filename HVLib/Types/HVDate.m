@@ -118,6 +118,16 @@ LError:
     HVALLOC_FAIL;
 }
 
++(HVDate *)fromDate:(NSDate *)date
+{
+    return [[[HVDate alloc] initWithDate:date] autorelease];
+}
+
++(HVDate *)fromYear:(int)year month:(int)month day:(int)day
+{
+    return [[[HVDate alloc] initWithYear:year month:month day:day] autorelease];
+}
+
 -(void) dealloc
 {
     [m_year release];
