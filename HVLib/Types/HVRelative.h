@@ -32,10 +32,46 @@
     HVCodableValue* m_regionOfOrigin;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) - Mom, Dad, uncle etc
+// Vocabulary: personal-relationship
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* relationship;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVPerson* person;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVApproxDate* dateOfBirth;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVApproxDate* dateOfDeath;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* regionOfOrigin;
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithRelationship:(NSString *) relationship;
+-(id) initWithPerson:(HVPerson *) person andRelationship:(HVCodableValue *) relationship;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
+-(NSString *) toString;
 
 @end

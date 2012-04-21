@@ -20,11 +20,26 @@
 #import "HVEmergencyOrProviderContact.h"
 
 static NSString* const c_typeid = @"25c94a9f-9d3d-4576-96dc-6791178a8143";
-static NSString* const c_typename = @"procedure";
+static NSString* const c_typename = @"person";
 
 @implementation HVEmergencyOrProviderContact
 
 @synthesize person = m_person;
+
+-(id)initWithPerson:(HVPerson *)person
+{
+    HVCHECK_NOTNULL(person);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    self.person = person;
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
 
 -(void)dealloc
 {

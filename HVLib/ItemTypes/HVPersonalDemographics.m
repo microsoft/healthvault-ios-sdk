@@ -20,7 +20,7 @@
 #import "HVCommon.h"
 #import "HVPersonalDemographics.h"
 
-static NSString* const c_typeid = @"3b3e6b16-eb69-483c-8d7e-dfe116ae6092";
+static NSString* const c_typeid = @"92ba621e-66b3-4a01-bd73-74844aed4f5b";
 static NSString* const c_typename = @"personal";
 
 static NSString* const c_element_name = @"name";
@@ -72,6 +72,16 @@ static NSString* const c_element_donor = @"organ-donor";
     [m_disabled release];
     [m_donor release];
     [super dealloc];
+}
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
+-(NSString *)toString
+{
+    return (m_name) ? [m_name toString] : c_emptyString;
 }
 
 -(HVClientResult *)validate

@@ -62,7 +62,7 @@ static NSString* const c_typeid = @"3b3e6b16-eb69-483c-8d7e-dfe116ae6092";
 static NSString* const c_typename = @"basic";
 
 static NSString* const c_element_gender = @"gender";
-static NSString* const c_element_birthyear = @"birthYear";
+static NSString* const c_element_birthyear = @"birthyear";
 static NSString* const c_element_country = @"country";
 static NSString* const c_element_postcode = @"postcode";
 static NSString* const c_element_city = @"city";

@@ -35,18 +35,6 @@ static NSString* const c_element_suffix = @"suffix";
 @synthesize last = m_last;
 @synthesize suffix = m_suffix;
 
--(void)dealloc
-{
-    [m_full release];
-    [m_title release];
-    [m_first release];
-    [m_middle release];
-    [m_last release];
-    [m_suffix release];
-     
-    [super dealloc];
-}
-
 -(id)initWithFirst:(NSString *)first andLastName:(NSString *)last
 {
     return [self initWithFirst:first middle:nil andLastName:last];
@@ -71,6 +59,33 @@ static NSString* const c_element_suffix = @"suffix";
     
 LError:
     HVALLOC_FAIL;
+}
+
+-(id)initWithFullName:(NSString *)name
+{
+    HVCHECK_STRING(name);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    self.fullName = name;
+    
+    return self;
+
+LError:
+    HVALLOC_FAIL;
+}
+
+-(void)dealloc
+{
+    [m_full release];
+    [m_title release];
+    [m_first release];
+    [m_middle release];
+    [m_last release];
+    [m_suffix release];
+    
+    [super dealloc];
 }
 
 -(BOOL)buildFullName

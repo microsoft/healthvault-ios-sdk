@@ -50,6 +50,25 @@ static NSString* const c_element_relative = @"relative";
     return (self.hasConditions) ? [m_conditions objectAtIndex:0] : nil;
 }
 
+-(id)initWithRelative:(HVRelative *)relative andCondition:(HVConditionEntry *)condition
+{
+    HVCHECK_NOTNULL(relative);
+    HVCHECK_NOTNULL(condition);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    self.relative = relative;
+
+    [self.conditions addObject:condition];
+    HVCHECK_NOTNULL(m_conditions);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void)dealloc
 {
     [m_relative release];

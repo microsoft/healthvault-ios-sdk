@@ -35,6 +35,60 @@ static NSString* const c_element_type = @"type";
 @synthesize contact = m_contact;
 @synthesize type = m_type;
 
+-(id)initWithName:(NSString *)name andEmail:(NSString *)email
+{
+    return [self initWithName:name phone:nil andEmail:email];
+}
+
+-(id)initWithName:(NSString *)name andPhone:(NSString *)number
+{
+    return [self initWithName:name phone:number andEmail:nil];
+}
+
+-(id)initWithName:(NSString *)name phone:(NSString *)number andEmail:(NSString *)email
+{
+    self = [super init];
+    HVCHECK_SELF;
+    
+    m_name = [[HVName alloc] initWithFullName:name];
+    HVCHECK_NOTNULL(m_name);
+    
+    m_contact = [[HVContact alloc] initWithPhone:number andEmail:email];
+    HVCHECK_NOTNULL(m_contact);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initWithFirstName:(NSString *)first lastName:(NSString *)last andEmail:(NSString *)email
+{
+    return [self initWithFirstName:first lastName:last phone:nil andEmail:email];
+}
+
+-(id)initWithFirstName:(NSString *)first lastName:(NSString *)last andPhone:(NSString *)number
+{
+    return [self initWithFirstName:first lastName:last phone:number andEmail:nil];
+}
+
+-(id)initWithFirstName:(NSString *)first lastName:(NSString *)last phone:(NSString *)phone andEmail:(NSString *)email
+{
+    self = [super init];
+    HVCHECK_SELF;
+    
+    m_name = [[HVName alloc] initWithFirst:first andLastName:last];
+    HVCHECK_NOTNULL(m_name);
+    
+    m_contact = [[HVContact alloc] initWithPhone:phone andEmail:email];
+    HVCHECK_NOTNULL(m_contact);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void)dealloc
 {
     [m_name release];

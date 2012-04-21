@@ -21,6 +21,7 @@
 
 @interface HVPersonalDemographics : HVItemDataTyped
 {
+@private
     HVName* m_name;
     HVDateTime* m_birthdate;
     HVCodableValue* m_bloodType;
@@ -37,6 +38,14 @@
     NSString* m_donor;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// ALL information is optional
+//
 @property (readwrite, nonatomic, retain) HVName* name;
 @property (readwrite, nonatomic, retain) HVDateTime* birthDate;
 @property (readwrite, nonatomic, retain) HVCodableValue* bloodType;
@@ -52,9 +61,23 @@
 @property (readwrite, nonatomic, retain) HVBool* isDisabled;
 @property (readwrite, nonatomic, retain) NSString* organDonor;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
++(HVItem *) newItem;
+
+
+-(NSString *) toString;
+
+//-------------------------
+//
+// Type Information
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 
-+(HVItem *) newItem;
 
 @end

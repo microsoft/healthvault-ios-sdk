@@ -30,7 +30,7 @@ enum HVGender
 NSString* stringFromGender(enum HVGender gender);
 enum HVGender stringToGender(NSString* genderString);
     
-@interface HVBasicDemographics : HVItemDataCommon
+@interface HVBasicDemographics : HVItemDataTyped
 {
 @private
     enum HVGender m_gender;
@@ -43,6 +43,14 @@ enum HVGender stringToGender(NSString* genderString);
     NSString* m_languageXml;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// ALL fields are optional
+//
 @property (readwrite, nonatomic) enum HVGender gender;
 @property (readwrite, nonatomic, retain) HVYear* birthYear;
 @property (readwrite, nonatomic, retain) HVCodableValue* country;
@@ -51,9 +59,19 @@ enum HVGender stringToGender(NSString* genderString);
 @property (readwrite, nonatomic, retain) NSString* state;
 @property (readwrite, nonatomic, retain) NSString* languageXml;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
++(HVItem *) newItem;
+
+//-------------------------
+//
+// Type Information
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
-
-+(HVItem *) newItem;
 
 @end

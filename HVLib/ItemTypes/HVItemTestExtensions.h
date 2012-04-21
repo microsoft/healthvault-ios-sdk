@@ -129,6 +129,36 @@ NSString* pickRandomString(int count, ...);
 
 @end
 
+@interface HVFamilyHistory (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVAssessment (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVQuestionAnswer (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVEmergencyOrProviderContact (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
+@interface HVPersonalContactInfo (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
 @interface HVTestSynchronizedStore : HVSynchronizedStore
 
 @property (readwrite, nonatomic) double failureProbability;

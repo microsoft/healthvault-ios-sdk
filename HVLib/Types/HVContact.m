@@ -76,6 +76,63 @@ static NSString* const c_element_email = @"email";
     HVRETAIN(m_email, email);
 }
 
+-(HVAddress *)firstAddress
+{
+    return (m_address) ? [m_address itemAtIndex:0] : nil;
+}
+
+-(HVEmail *) firstEmail
+{
+    return (m_email) ? [m_email itemAtIndex:0] : nil;
+}
+
+-(HVPhone *)firstPhone
+{
+    return (m_phone) ? [m_phone itemAtIndex:0] : nil;
+}
+
+-(id)initWithEmail:(NSString *)email
+{
+    return [self initWithPhone:nil andEmail:email];
+}
+
+-(id)initWithPhone:(NSString *)phone
+{
+    return [self initWithPhone:phone andEmail:nil];
+}
+
+-(id)initWithPhone:(NSString *)phone andEmail:(NSString *)email
+{
+    self = [super init];
+    HVCHECK_SELF;
+    
+    if (phone)
+    {
+        HVPhone* phoneObj = [[HVPhone alloc] initWithNumber:phone];
+        HVCHECK_NOTNULL(phoneObj);
+        
+        [self.phone addObject:phoneObj];
+        [phoneObj release];
+        
+        HVCHECK_NOTNULL(m_phone);
+    }
+    
+    if (email)
+    {
+        HVEmail* emailObj = [[HVEmail alloc] initWithEmailAddress:email];
+        HVCHECK_NOTNULL(emailObj);
+        [self.email addObject:emailObj];
+        [emailObj release];
+        
+        HVCHECK_NOTNULL(m_email);
+    }
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void)dealloc
 {
     [m_address release];

@@ -66,6 +66,6 @@
 
 @interface HVEmailCollection : HVCollection
 
--(HVEmailAddress *) itemAtIndex:(NSUInteger) index;
+-(HVEmail *) itemAtIndex:(NSUInteger) index;
 
 @end

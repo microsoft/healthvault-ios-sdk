@@ -63,6 +63,25 @@
 //
 @property (readwrite, nonatomic, retain) HVCodableValue* type;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithName:(NSString *) name andPhone:(NSString *) number;
+-(id) initWithName:(NSString *)name andEmail:(NSString *)email;
+-(id) initWithName:(NSString *)name phone:(NSString *) number andEmail:(NSString *)email;
+
+-(id) initWithFirstName:(NSString *) first lastName:(NSString *) last andPhone:(NSString *) number;
+-(id) initWithFirstName:(NSString *) first lastName:(NSString *) last andEmail:(NSString *)email;
+-(id) initWithFirstName:(NSString *) first lastName:(NSString *) last phone:(NSString *) phone andEmail:(NSString *)email;
+
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
 //
 // Returns the person's full name, if any
 //

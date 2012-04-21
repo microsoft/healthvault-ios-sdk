@@ -26,11 +26,28 @@
     HVContact* m_contact;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
 @property (readwrite, nonatomic, retain) HVContact* contact;
 
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithContact:(HVContact *) contact;
 
 +(HVItem *) newItem;
+
+//-------------------------
+//
+// Type Info
+//
+//-------------------------
++(NSString *) typeID;
++(NSString *) XRootElement;
 
 @end

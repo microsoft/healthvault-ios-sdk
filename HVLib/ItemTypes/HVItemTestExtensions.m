@@ -111,6 +111,7 @@ NSString* pickRandomString(int count, ...)
     HVOrganization* org = [[[HVOrganization alloc] init] autorelease];
     org.name = @"Toto Memorial Hospital";
     org.contact = [HVContact createRandom];
+    org.website = @"http://www.bing.com";
     
     return org;
 }
@@ -456,6 +457,88 @@ NSString* pickRandomString(int count, ...)
     encounter.encounterType = [HVCodableValue fromText:pickRandomString(3, @"Checkup Examination", @"Dental Procedures", @"Acute care")];
     encounter.duration = [[[HVDuration alloc] initWithDate:[encounter.when toDate] andDurationInSeconds:3600] autorelease];
     encounter.facility = [HVOrganization createRandom];
+    
+    return item;
+}
+
+@end
+
+@implementation HVFamilyHistory (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVRelative* relative = [[[HVRelative alloc] initWithRelationship:pickRandomString(4, @"Mother", @"Father", @"Grandmother", @"Grandfather")] autorelease];
+    HVConditionEntry* condition = [[[HVConditionEntry alloc] initWithName:pickRandomString(4, @"Cancer", @"Heart Disease", @"Diabetes", @"Alzheimers")] autorelease];
+    
+    HVFamilyHistory* history = [[[HVFamilyHistory alloc] initWithRelative:relative andCondition:condition] autorelease];
+    
+    return [[[HVItem alloc] initWithTypedData:history] autorelease];
+}
+
+@end
+
+@implementation HVAssessment (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVAssessment newItem] autorelease];
+    HVAssessment* assessment = item.assessment;
+    
+    assessment.when = createRandomHVDateTime();
+    assessment.category = [HVCodableValue fromText:@"Self Assessment"];
+    assessment.name = pickRandomString(3, @"Stress Assessment", @"Aerobic Fitness", @"Mental Fitness");
+    [assessment.results addObject:[HVAssessmentField from:@"Status" andValue:pickRandomString(2, @"Good", @"Bad")]];
+    [assessment.results addObject:[HVAssessmentField from:@"Needs Help" andValue:pickRandomString(2, @"Yes", @"No")]];
+
+    return item;
+}
+
+@end
+
+@implementation HVQuestionAnswer (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    int number = [HVRandom randomIntInRangeMin:1 max:100];
+    NSString* question = [NSString stringWithFormat:@"Question %d ?", number];
+    NSString* answer = [NSString stringWithFormat:@"Answer to %d", number];
+    
+    HVQuestionAnswer* qa = [[[HVQuestionAnswer alloc] initWithQuestion:question answer:answer andDate:createRandomDate()] autorelease];
+    
+    return [[[HVItem alloc] initWithTypedData:qa] autorelease];
+}
+
+@end
+
+@implementation HVEmergencyOrProviderContact (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVPerson* person;
+    
+    if ([HVRandom randomDouble] > 0.5)
+    {
+        person = [[[HVPerson alloc] initWithFirstName:@"Bingo" lastName:@"Little" phone:@"555-555-0000" andEmail:@"bingo@little.pqr"] autorelease];
+    }
+    else 
+    {
+        person = [[[HVPerson alloc] initWithName:@"Toby R. McDuff" phone:@"555-555-1111" andEmail:@"toby@mcduff.pqr"] autorelease];
+    }
+    person.type = [HVCodableValue fromText:@"Provider"];
+    HVEmergencyOrProviderContact* contact = [[[HVEmergencyOrProviderContact alloc] initWithPerson:person] autorelease];
+    return [[[HVItem alloc] initWithTypedData:contact] autorelease];
+}
+
+@end
+
+@implementation HVPersonalContactInfo (HVTestExtensions)
+
++(HVItem *) createRandom
+{
+    HVItem* item = [[HVPersonalContactInfo newItem] autorelease];
+    HVPersonalContactInfo* personalContact = item.personalContact;
+    
+    personalContact.contact = [HVContact createRandom];
     
     return item;
 }

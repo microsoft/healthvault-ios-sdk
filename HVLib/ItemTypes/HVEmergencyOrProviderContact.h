@@ -26,11 +26,29 @@
     HVPerson* m_person;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
 @property (readwrite, nonatomic, retain) HVPerson* person;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithPerson:(HVPerson *) person;
+
++(HVItem *) newItem;
+
+//-------------------------
+//
+// Type info
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 
-+(HVItem *) newItem;
 
 @end

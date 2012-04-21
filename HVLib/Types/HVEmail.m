@@ -105,9 +105,9 @@ LError:
     HVALLOC_FAIL;
 }
 
--(HVEmailAddress *)itemAtIndex:(NSUInteger)index
+-(HVEmail *)itemAtIndex:(NSUInteger)index
 {
-    return (HVEmailAddress *) [self objectAtIndex:index];
+    return (HVEmail *) [self objectAtIndex:index];
 }
 
 @end

@@ -79,12 +79,12 @@ static NSString* const c_element_answer = @"answer";
     [super dealloc];
 }
 
--(id)initWithQuestion:(HVCodableValue *)question andDate:(NSDate *)date
+-(id)initWithQuestion:(NSString *)question andDate:(NSDate *)date
 {
     return [self initWithQuestion:question answer:nil andDate:date];
 }
 
--(id)initWithQuestion:(HVCodableValue *)question answer:(HVCodableValue *)answer andDate:(NSDate *)date
+-(id)initWithQuestion:(NSString *)question answer:(NSString *)answer andDate:(NSDate *)date
 {
     HVCHECK_NOTNULL(question);
     HVCHECK_NOTNULL(date);
@@ -95,11 +95,15 @@ static NSString* const c_element_answer = @"answer";
     m_when = [[HVDateTime alloc] initWithDate:date];
     HVCHECK_NOTNULL(m_when);
     
-    self.question = question;
+    m_question = [[HVCodableValue alloc] initWithText:question];
+    HVCHECK_NOTNULL(m_question);
     
     if (answer)
     {
-        [self.answers addObject:answer];
+        HVCodableValue* answerValue = [[HVCodableValue alloc] initWithText:answer];
+        HVCHECK_NOTNULL(answerValue);
+        
+        [self.answers addObject:answerValue];
         HVCHECK_NOTNULL(m_answers);
     }
     

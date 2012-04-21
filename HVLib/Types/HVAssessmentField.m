@@ -29,6 +29,39 @@ static NSString* const c_element_group = @"group";
 @synthesize value = m_value;
 @synthesize fieldGroup = m_group;
 
+-(id)initWithName:(NSString *)name andValue:(NSString *)value
+{
+    return [self initWithName:name value:value andGroup:nil];
+}
+
+-(id)initWithName:(NSString *)name value:(NSString *)value andGroup:(NSString *)group
+{
+    self = [super init];
+    HVCHECK_SELF;
+    
+    m_name = [[HVCodableValue alloc] initWithText:name];
+    HVCHECK_NOTNULL(m_name);
+    
+    m_value = [[HVCodableValue alloc] initWithText:value];
+    HVCHECK_NOTNULL(m_value);
+    
+    if (group)
+    {
+        m_group = [[HVCodableValue alloc] initWithText:group];
+        HVCHECK_NOTNULL(m_group);
+    }
+        
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
++(HVAssessmentField *)from:(NSString *)name andValue:(NSString *)value
+{
+    return [[[HVAssessmentField alloc] initWithName:name andValue:value] autorelease];
+}
+
 -(void)dealloc
 {
     [m_name release];

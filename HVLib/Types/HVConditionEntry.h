@@ -30,13 +30,49 @@
     HVCodableValue* m_severity;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required)
+// Vocabularies: icd9, snomed
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* name;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVApproxDate* onsetDate;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVApproxDate* resolutionDate;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* resolution;
+// 
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* occurrence;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* severity;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithName:(NSString *) name;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
 -(NSString *) toString;
 
 @end

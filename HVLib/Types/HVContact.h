@@ -47,9 +47,24 @@
 //
 @property (readwrite, nonatomic, retain) HVEmailCollection* email;
 
+//
+// Convenience
+//
 @property (readonly, nonatomic) BOOL hasAddress;
 @property (readonly, nonatomic) BOOL hasPhone;
 @property (readonly, nonatomic) BOOL hasEmail;
 
+@property (readonly, nonatomic) HVAddress* firstAddress;
+@property (readonly, nonatomic) HVPhone* firstPhone;
+@property (readonly, nonatomic) HVEmail* firstEmail;
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithPhone:(NSString *) phone;
+-(id) initWithEmail:(NSString *) email;
+-(id) initWithPhone:(NSString *) phone andEmail:(NSString *) email;
 
 @end

@@ -68,6 +68,7 @@
 //-------------------------
 -(id) initWithFirst:(NSString *) first andLastName:(NSString *) last;
 -(id) initWithFirst:(NSString *) first middle:(NSString *) middle andLastName:(NSString *) last;
+-(id) initWithFullName:(NSString *) name;
 
 //-------------------------
 //

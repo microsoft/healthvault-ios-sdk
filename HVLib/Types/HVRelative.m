@@ -33,6 +33,32 @@ static NSString* const c_element_region = @"region-of-origin";
 @synthesize dateOfDeath = m_dateOfDeath;
 @synthesize regionOfOrigin = m_regionOfOrigin;
 
+-(id)initWithRelationship:(NSString *)relationship
+{
+    return [self initWithPerson:nil andRelationship:[HVCodableValue fromText:relationship]];
+}
+
+-(id)initWithPerson:(HVPerson *)person andRelationship :(HVCodableValue *)relationship 
+{
+    self = [super init];
+    HVCHECK_SELF;
+    
+    if (person)
+    {
+        self.person = person;
+    }
+    
+    if (relationship)
+    {
+        self.relationship = relationship;
+    }
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void)dealloc
 {
     [m_relationship release];
@@ -43,6 +69,17 @@ static NSString* const c_element_region = @"region-of-origin";
     
     [super dealloc];
 }
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
+-(NSString *)toString
+{
+    return (m_relationship) ? [m_relationship toString] : c_emptyString;
+}
+
 
 -(HVClientResult *)validate
 {

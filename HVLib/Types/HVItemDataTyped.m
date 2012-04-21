@@ -82,6 +82,7 @@ static HVTypeSystem* s_typeRegistry;
     [s_typeRegistry addClass:[HVEmergencyOrProviderContact class] forTypeID:[HVEmergencyOrProviderContact typeID]];
     [s_typeRegistry addClass:[HVPersonalContactInfo class] forTypeID:[HVPersonalContactInfo typeID]];
     [s_typeRegistry addClass:[HVBasicDemographics class] forTypeID:[HVBasicDemographics typeID]];
+    [s_typeRegistry addClass:[HVPersonalDemographics class] forTypeID:[HVPersonalDemographics typeID]];
     
     [s_typeRegistry addClass:[HVAssessment class] forTypeID:[HVAssessment typeID]];
     [s_typeRegistry addClass:[HVQuestionAnswer class] forTypeID:[HVQuestionAnswer typeID]];

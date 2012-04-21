@@ -22,9 +22,26 @@
 static NSString* const c_typeid = @"162dd12d-9859-4a66-b75f-96760d67072b";
 static NSString* const c_typename = @"contact";
 
+static NSString* const c_element_contact = @"contact";
+
 @implementation HVPersonalContactInfo
 
 @synthesize contact = m_contact;
+
+-(id)initWithContact:(HVContact *)contact
+{
+    HVCHECK_NOTNULL(contact);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    self.contact = contact;
+    
+    return self;
+
+LError:
+    HVALLOC_FAIL;
+}
 
 -(void)dealloc
 {
@@ -46,20 +63,12 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    if (m_contact)
-    {
-        [m_contact serialize:writer];
-    }
+    HVSERIALIZE(m_contact, c_element_contact);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVContact* contact = [[HVContact alloc] init];
-    
-    HVCHECK_OOM(contact);
-    HVASSIGN(m_contact, contact);
-    
-    [contact deserialize:reader];
+    HVDESERIALIZE(m_contact, c_element_contact, HVContact);
 }
 
 +(NSString *)typeID

@@ -23,6 +23,7 @@
 
 @interface HVOrganization : HVType
 {
+@private
     NSString* m_name;
     HVContact* m_contact;
     HVCodableValue* m_type;

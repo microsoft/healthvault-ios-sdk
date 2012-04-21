@@ -22,6 +22,7 @@
 
 @interface HVEncounter : HVItemDataTyped
 {
+@private
     HVDateTime* m_when;
     HVCodableValue* m_type;
     NSString* m_reason;
