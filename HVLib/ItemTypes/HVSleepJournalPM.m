@@ -17,7 +17,7 @@
 #import "HVCommon.h"
 #import "HVSleepJournalPM.h"
 
-static NSString* const c_typeid = @"11c52484-7f1a-11db-aeac-87d355d89593";
+static NSString* const c_typeid = @"031f5706-7f1a-11db-ad56-7bd355d89593";
 static NSString* const c_typename = @"sleep-am";
 
 static NSString* const c_element_when = @"when";

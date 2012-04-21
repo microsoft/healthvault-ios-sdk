@@ -32,6 +32,11 @@
     HVMillisecond *m_milliseconds;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
 //
 // Required
 //
@@ -45,10 +50,21 @@
 @property (readonly, nonatomic) BOOL hasSecond;
 @property (readonly, nonatomic) BOOL hasMillisecond;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithHour:(int) hour minute:(int) minute;
 -(id) initWithHour:(int) hour minute:(int) minute second:(int) second;
 -(id) initWithDate:(NSDate *) date;
 -(id) initwithComponents:(NSDateComponents *) components;
 
+//-------------------------
+//
+// Methods
+//
+//-------------------------
 -(NSDateComponents *) toComponents;
 -(BOOL) getComponents:(NSDateComponents *) components;
 

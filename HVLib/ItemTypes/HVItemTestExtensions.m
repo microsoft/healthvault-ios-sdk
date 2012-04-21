@@ -545,6 +545,34 @@ NSString* pickRandomString(int count, ...)
 
 @end
 
+@implementation HVSleepJournalAM (HVTestExtensions)
+
++(HVItem *) createRandom
+{
+    HVItem* item = [[HVSleepJournalAM newItem] autorelease];
+    HVSleepJournalAM* journal = item.sleepJournalAM;
+    
+    journal.when = createRandomHVDateTime();
+    
+    HVTime* bedtime = [[[HVTime alloc] initWithHour:[HVRandom randomIntInRangeMin:11 max:12] minute:[HVRandom randomIntInRangeMin:1 max:59]] autorelease];
+    
+    journal.bedTime = bedtime;
+    journal.settlingMinutesValue = [HVRandom randomIntInRangeMin:5 max:30];
+    journal.sleepMinutesValue = [HVRandom randomIntInRangeMin:180 max:360];
+    
+    int bedMinutes = journal.settlingMinutesValue + journal.sleepMinutesValue + [HVRandom randomIntInRangeMin:5 max:55];
+    HVTime* wakeTime = [[[HVTime alloc] initWithHour:journal.bedTime.hour + (bedMinutes / 60) minute:bedMinutes % 60] autorelease];
+    
+    journal.wakeTime = wakeTime;
+    
+    journal.wakeState = (enum HVWakeState) [HVRandom randomIntInRangeMin:1 max:3];
+    
+    return item;
+}
+
+@end
+
+
 @implementation HVTestSynchronizedStore : HVSynchronizedStore
 
 @synthesize failureProbability;

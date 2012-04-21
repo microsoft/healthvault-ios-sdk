@@ -27,7 +27,7 @@ static NSString* const c_element_minutes = @"minutes";
 @synthesize when = m_when;
 @synthesize minutes = m_minutes;
 
--(id)initWithMinutes:(int)minutes forTime:(NSDate *)time
+-(id)initWithMinutes:(int)minutes startingAtTime:(NSDate *)time
 {
     HVCHECK_NOTNULL(time);
     

@@ -26,6 +26,12 @@ static NSString* const c_typename = @"person";
 
 @synthesize person = m_person;
 
+-(void)dealloc
+{
+    [m_person release];
+    [super dealloc];
+}
+
 -(id)initWithPerson:(HVPerson *)person
 {
     HVCHECK_NOTNULL(person);
@@ -39,12 +45,6 @@ static NSString* const c_typename = @"person";
     
 LError:
     HVALLOC_FAIL;
-}
-
--(void)dealloc
-{
-    [m_person release];
-    [super dealloc];
 }
 
 -(HVClientResult *)validate

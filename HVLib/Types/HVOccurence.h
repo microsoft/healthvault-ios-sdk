@@ -27,10 +27,21 @@
     HVNonNegativeInt* m_minutes;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
 @property(readwrite, nonatomic, retain) HVTime* when;
 @property(readwrite, nonatomic, retain) HVNonNegativeInt* minutes;
 
--(id) initWithMinutes:(int)minutes forTime:(NSDate *) time;
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+
+-(id) initWithMinutes:(int)minutes startingAtTime:(NSDate *) time;
 
 @end
 

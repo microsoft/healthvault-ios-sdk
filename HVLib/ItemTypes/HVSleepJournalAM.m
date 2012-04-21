@@ -74,6 +74,27 @@ static NSString* const c_element_state = @"wake-state";
     return ![NSArray isNilOrEmpty:m_awakenings];
 }
 
+-(int)sleepMinutesValue
+{
+    return (m_sleepMinutes) ? m_sleepMinutes.value : -1;
+}
+
+-(void)setSleepMinutesValue:(int)sleepMinutesValue
+{
+    HVENSURE(m_sleepMinutes, HVNonNegativeInt);
+    m_sleepMinutes.value = sleepMinutesValue;
+}
+
+-(int)settlingMinutesValue
+{
+    return m_settlingMinutes ? m_settlingMinutes.value : -1;
+}
+
+-(void)setSettlingMinutesValue:(int)settlingMinutesValue
+{
+    HVENSURE(m_settlingMinutes, HVNonNegativeInt);
+    m_settlingMinutes.value = settlingMinutesValue;
+}
 
 -(void)dealloc
 {
@@ -131,7 +152,7 @@ LError:
     HVVALIDATE(m_settlingMinutes, HVClientError_InvalidSleepJournal);
     HVVALIDATE(m_sleepMinutes, HVClientError_InvalidSleepJournal);
     HVVALIDATE(m_wakeTime, HVClientError_InvalidSleepJournal);
-    
+    HVVALIDATE(m_wakeState, HVClientError_InvalidSleepJournal);
     HVVALIDATE_ARRAYOPTIONAL(m_awakenings, HVClientError_InvalidSleepJournal);
     HVVALIDATE_OPTIONAL(m_medications);
     

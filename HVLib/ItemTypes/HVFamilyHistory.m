@@ -50,6 +50,13 @@ static NSString* const c_element_relative = @"relative";
     return (self.hasConditions) ? [m_conditions objectAtIndex:0] : nil;
 }
 
+-(void)dealloc
+{
+    [m_relative release];
+    [m_conditions release];
+    [super dealloc];
+}
+
 -(id)initWithRelative:(HVRelative *)relative andCondition:(HVConditionEntry *)condition
 {
     HVCHECK_NOTNULL(relative);
@@ -67,13 +74,6 @@ static NSString* const c_element_relative = @"relative";
     
 LError:
     HVALLOC_FAIL;
-}
-
--(void)dealloc
-{
-    [m_relative release];
-    [m_conditions release];
-    [super dealloc];
 }
 
 -(HVClientResult *)validate

@@ -159,6 +159,12 @@ NSString* pickRandomString(int count, ...);
 
 @end
 
+@interface HVSleepJournalAM (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
 @interface HVTestSynchronizedStore : HVSynchronizedStore
 
 @property (readwrite, nonatomic) double failureProbability;

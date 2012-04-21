@@ -28,6 +28,12 @@ static NSString* const c_element_contact = @"contact";
 
 @synthesize contact = m_contact;
 
+-(void)dealloc
+{
+    [m_contact release];
+    [super dealloc];
+}
+
 -(id)initWithContact:(HVContact *)contact
 {
     HVCHECK_NOTNULL(contact);
@@ -38,16 +44,12 @@ static NSString* const c_element_contact = @"contact";
     self.contact = contact;
     
     return self;
-
+    
 LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_contact release];
-    [super dealloc];
-}
+
 
 -(HVClientResult *)validate
 {

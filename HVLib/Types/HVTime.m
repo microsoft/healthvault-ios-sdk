@@ -109,17 +109,28 @@ static NSString* const c_element_millis = @"f";
     }
 }
 
+-(id)initWithHour:(int)hour minute:(int)minute
+{
+    return [self initWithHour:hour minute:minute second:-1];
+}
+
 -(id) initWithHour:(int)hour minute:(int)minute second:(int)second
 {
     self = [super init];
     HVCHECK_SELF;
     
     m_hours = [[HVHour alloc] initWith:hour];
+    HVCHECK_NOTNULL(m_hours);
+    
     m_minutes = [[HVMinute alloc] initWith:minute];
-    m_seconds = [[HVSecond alloc] initWith:second];
+    HVCHECK_NOTNULL(m_minutes);
     
-    HVCHECK_TRUE(m_hours && m_minutes && m_seconds);
-    
+    if (second >= 0)
+    {
+        m_seconds = [[HVSecond alloc] initWith:second];
+        HVCHECK_NOTNULL(m_seconds);
+    }
+        
     return self;
 
 LError:

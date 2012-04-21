@@ -28,6 +28,11 @@ enum HVWakeState
     HVWakeState_Sleepy
 };
 
+//-------------------------
+//
+// Journal entries you make when you wake up in the morning
+//
+//-------------------------
 @interface HVSleepJournalAM : HVItemDataTyped
 {
 @private
@@ -41,22 +46,38 @@ enum HVWakeState
     HVPositiveInt* m_wakeState;
 }
 
+//-------------------------
 //
-// Required
+// Data
+//
+//-------------------------
+//
+// (Required)
 //
 @property (readwrite, nonatomic, retain) HVDateTime* when;
 @property (readwrite, nonatomic, retain) HVTime* bedTime;
 @property (readwrite, nonatomic, retain) HVTime* wakeTime;
 @property (readwrite, nonatomic, retain) HVNonNegativeInt* sleepMinutes;
 @property (readwrite, nonatomic, retain) HVNonNegativeInt* settlingMinutes;
+@property (readwrite, nonatomic) enum HVWakeState wakeState;
 //
 // Optional
 //
 @property (readwrite, nonatomic, retain) HVOccurenceCollection* awakenings;
 @property (readwrite, nonatomic, retain) HVCodableValue* medicationsBeforeBed;
-@property (readwrite, nonatomic) enum HVWakeState wakeState;
 
+//
+// Convenience
+//
 @property (readonly, nonatomic) BOOL hasAwakenings;
+@property (readwrite, nonatomic) int sleepMinutesValue;
+@property (readwrite, nonatomic) int settlingMinutesValue;
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 
 -(id)initWithBedtime:(NSDate *)bedtime onDate :(NSDate *)date settlingMinutes:(int) settlingMinutes sleepingMinutes:(int) sleepingMinutes wokeupAt:(NSDate *) wakeTime;
 
