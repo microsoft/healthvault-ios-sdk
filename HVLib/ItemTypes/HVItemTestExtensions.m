@@ -554,19 +554,46 @@ NSString* pickRandomString(int count, ...)
     
     journal.when = createRandomHVDateTime();
     
-    HVTime* bedtime = [[[HVTime alloc] initWithHour:[HVRandom randomIntInRangeMin:11 max:12] minute:[HVRandom randomIntInRangeMin:1 max:59]] autorelease];
+    HVTime* bedtime = [HVTime fromHour:[HVRandom randomIntInRangeMin:11 max:12] andMinute:[HVRandom randomIntInRangeMin:1 max:59]];
     
     journal.bedTime = bedtime;
     journal.settlingMinutesValue = [HVRandom randomIntInRangeMin:5 max:30];
     journal.sleepMinutesValue = [HVRandom randomIntInRangeMin:180 max:360];
     
+    int awakeMinutes =  [HVRandom randomIntInRangeMin:0 max:55];
+    if (awakeMinutes > 0)
+    {
+        HVOccurence* awakening = [HVOccurence forDuration:awakeMinutes atHour:(bedtime.hour) + 2 andMinute:bedtime.minute];
+        [journal.awakenings addObject:awakening];
+    }
     int bedMinutes = journal.settlingMinutesValue + journal.sleepMinutesValue + [HVRandom randomIntInRangeMin:5 max:55];
-    HVTime* wakeTime = [[[HVTime alloc] initWithHour:journal.bedTime.hour + (bedMinutes / 60) minute:bedMinutes % 60] autorelease];
+    HVTime* wakeTime = [HVTime fromHour:journal.bedTime.hour + (bedMinutes / 60) andMinute:bedMinutes % 60];
     
     journal.wakeTime = wakeTime;
     
     journal.wakeState = (enum HVWakeState) [HVRandom randomIntInRangeMin:1 max:3];
     
+    return item;
+}
+
+@end
+
+@implementation HVSleepJournalPM (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    HVItem* item = [[HVSleepJournalPM newItem] autorelease];
+    HVSleepJournalPM* journal = item.sleepJournalPM;
+    
+    journal.when = createRandomHVDateTime();
+    journal.sleepiness = (enum HVSleepiness) [HVRandom randomIntInRangeMin:0 max:5];
+    
+    for (int i = 0, count = [HVRandom randomIntInRangeMin:3 max:5]; i < count; ++i)
+    {
+        HVTime* time = [HVTime fromHour:[HVRandom randomIntInRangeMin:7 max:20] andMinute:[HVRandom randomIntInRangeMin:1 max:59]];
+        [journal.caffeineIntakeTimes addObject:time];        
+    }
+                                                                                    
     return item;
 }
 

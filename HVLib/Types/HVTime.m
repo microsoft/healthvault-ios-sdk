@@ -157,6 +157,11 @@ LError:
     HVALLOC_FAIL;
 }
 
++(HVTime *)fromHour:(int)hour andMinute:(int)minute
+{
+    return [[[HVTime alloc] initWithHour:hour minute:minute] autorelease];
+}
+
 -(void) dealloc
 {
     [m_hours release];
@@ -201,6 +206,39 @@ LError:
     
 LError:
     return FALSE;
+}
+
+-(NSDate *) toDate
+{
+    NSDateComponents *components = [NSCalendar newComponents];
+    HVCHECK_NOTNULL(components);
+    
+    HVCHECK_SUCCESS([self getComponents:components]);
+    
+    NSDate* newDate = [components date];
+    [components release];
+    
+    return newDate;
+    
+LError:
+    [components release];
+    return nil;
+}
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
+-(NSString *) toString
+{
+    return [self toStringWithFormat:@"hh:mm aaa"];
+}
+
+-(NSString *)toStringWithFormat:(NSString *)format
+{
+    NSDate *date = [self toDate];
+    return [date toStringWithFormat:format];
 }
 
 -(HVClientResult *) validate
@@ -249,6 +287,11 @@ LError:
     
 LError:
     HVALLOC_FAIL;
+}
+
+-(HVTime *)itemAtIndex:(NSUInteger)index
+{
+    return (HVTime *) [self objectAtIndex:index];
 }
 
 @end

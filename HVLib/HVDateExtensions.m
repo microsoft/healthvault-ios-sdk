@@ -72,6 +72,29 @@ LError:
     return -([self compare:other]);
 }
 
++(NSDate *)fromHour:(int)hour
+{
+    return [NSDate fromHour:hour andMinute:0];
+}
+
++(NSDate *)fromHour:(int)hour andMinute:(int)minute
+{
+    NSDateComponents *components = [NSCalendar newComponents];
+    HVCHECK_NOTNULL(components);
+    
+    components.hour = hour;
+    components.minute = minute;
+    
+    NSDate* newDate = [components date];
+    [components release];
+    
+    return newDate;
+    
+LError:
+    [components release];
+    return nil;
+}
+
 @end
 
 

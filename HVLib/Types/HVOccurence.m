@@ -25,17 +25,23 @@ static NSString* const c_element_minutes = @"minutes";
 @implementation HVOccurence
 
 @synthesize when = m_when;
-@synthesize minutes = m_minutes;
+@synthesize durationMinutes = m_minutes;
 
--(id)initWithMinutes:(int)minutes startingAtTime:(NSDate *)time
+-(void)dealloc
+{
+    [m_when release];
+    [m_minutes release];
+    [super dealloc];
+}
+
+-(id)initForDuration:(int)minutes startingAt:(HVTime *)time
 {
     HVCHECK_NOTNULL(time);
     
     self = [super init];
     HVCHECK_SELF;
     
-    m_when = [[HVTime alloc] initWithDate:time];
-    HVCHECK_NOTNULL(m_when);
+    self.when = time;
     
     m_minutes = [[HVNonNegativeInt alloc] initWith:minutes];
     HVCHECK_NOTNULL(m_minutes);
@@ -46,11 +52,23 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
+-(id)initForDuration:(int)minutes startingAtHour:(int)hour andMinute:(int)minute
 {
-    [m_when release];
-    [m_minutes release];
-    [super dealloc];
+    HVTime* time = [[HVTime alloc] initWithHour:hour minute:minute];
+    HVCHECK_NOTNULL(time);
+    
+    self = [self initForDuration:minutes startingAt:time];
+    [time release];
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
++(HVOccurence *)forDuration:(int)minutes atHour:(int)hour andMinute:(int)minute
+{
+    return [[[HVOccurence alloc] initForDuration:minutes startingAtHour:hour andMinute:minute] autorelease];
 }
 
 -(HVClientResult *)validate
@@ -95,4 +113,8 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(HVOccurence *)itemAtIndex:(NSUInteger)index
+{
+    return (HVOccurence *) [self objectAtIndex:0];
+}
 @end

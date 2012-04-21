@@ -81,9 +81,15 @@ enum HVWakeState
 
 -(id)initWithBedtime:(NSDate *)bedtime onDate :(NSDate *)date settlingMinutes:(int) settlingMinutes sleepingMinutes:(int) sleepingMinutes wokeupAt:(NSDate *) wakeTime;
 
++(HVItem *) newItem;
+
+//-------------------------
+//
+// Type info
+//
+//-------------------------
+
 +(NSString *) typeID;
 +(NSString *) XRootElement;
-
-+(HVItem *) newItem;
 
 @end

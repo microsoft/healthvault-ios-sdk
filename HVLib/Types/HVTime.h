@@ -60,6 +60,8 @@
 -(id) initWithDate:(NSDate *) date;
 -(id) initwithComponents:(NSDateComponents *) components;
 
++(HVTime *) fromHour:(int) hour andMinute:(int)minute;
+
 //-------------------------
 //
 // Methods
@@ -68,8 +70,20 @@
 -(NSDateComponents *) toComponents;
 -(BOOL) getComponents:(NSDateComponents *) components;
 
+-(NSDate *) toDate;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
+-(NSString *) toString;
+-(NSString *) toStringWithFormat:(NSString *) format;
+
 @end
 
 @interface HVTimeCollection : HVCollection
+
+-(HVTime *) itemAtIndex:(NSUInteger) index;
 
 @end

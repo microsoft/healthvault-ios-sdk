@@ -27,6 +27,8 @@ enum HVSleepiness
     HVSleepiness_WideAwake
 };
 
+NSString* stringFromSleepiness(enum HVSleepiness sleepiness);
+
 @interface HVSleepJournalPM : HVItemDataTyped
 {
 @private
@@ -38,7 +40,12 @@ enum HVSleepiness
     HVPositiveInt* m_sleepiness;
 }
 
+//-------------------------
 //
+// Data
+//
+//-------------------------
+///
 // Required
 //
 @property (readwrite, nonatomic, retain) HVDateTime* when;
@@ -51,17 +58,27 @@ enum HVSleepiness
 @property (readwrite, nonatomic, retain) HVOccurenceCollection* naps;
 @property (readwrite, nonatomic, retain) HVOccurenceCollection* exercise;
 
-
 @property (readonly, nonatomic) BOOL hasCaffeineIntakeTimes;
 @property (readonly, nonatomic) BOOL hasAlcoholIntakeTimes;
 @property (readonly, nonatomic) BOOL hasNaps;
 @property (readonly, nonatomic) BOOL hasExercise;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
++(HVItem *) newItem;
 
+-(NSString *) sleepinessAsString;
+
+//-------------------------
+//
+// Type info
+//
+//-------------------------
 +(NSString *) typeID;
 +(NSString *) XRootElement;
-
-+(HVItem *) newItem;
 
 
 @end

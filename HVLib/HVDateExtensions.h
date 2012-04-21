@@ -28,6 +28,9 @@ const NSUInteger NSAllCalendarUnits;
 
 -(NSComparisonResult) compareDescending:(NSDate*) other;
 
++(NSDate *) fromHour:(int) hour;
++(NSDate *) fromHour:(int)hour andMinute:(int) minute;
+
 @end
 
 

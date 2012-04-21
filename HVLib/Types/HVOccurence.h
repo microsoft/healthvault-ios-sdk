@@ -23,6 +23,7 @@
 
 @interface HVOccurence : HVType
 {
+@private
     HVTime* m_when;
     HVNonNegativeInt* m_minutes;
 }
@@ -33,7 +34,7 @@
 //
 //-------------------------
 @property(readwrite, nonatomic, retain) HVTime* when;
-@property(readwrite, nonatomic, retain) HVNonNegativeInt* minutes;
+@property(readwrite, nonatomic, retain) HVNonNegativeInt* durationMinutes;
 
 //-------------------------
 //
@@ -41,10 +42,15 @@
 //
 //-------------------------
 
--(id) initWithMinutes:(int)minutes startingAtTime:(NSDate *) time;
+-(id) initForDuration:(int)minutes startingAt:(HVTime *) time;
+-(id) initForDuration:(int)minutes startingAtHour:(int) hour andMinute:(int) minute;
+
++(HVOccurence *) forDuration:(int) minutes atHour:(int) hour andMinute:(int) minute;
 
 @end
 
 @interface HVOccurenceCollection : HVCollection
+
+-(HVOccurence *) itemAtIndex:(NSUInteger) index;
 
 @end

@@ -18,7 +18,7 @@
 #import "HVSleepJournalPM.h"
 
 static NSString* const c_typeid = @"031f5706-7f1a-11db-ad56-7bd355d89593";
-static NSString* const c_typename = @"sleep-am";
+static NSString* const c_typename = @"sleep-pm";
 
 static NSString* const c_element_when = @"when";
 static NSString* const c_element_caffeine = @"caffeine";
@@ -26,6 +26,29 @@ static NSString* const c_element_alcohol = @"alcohol";
 static NSString* const c_element_nap = @"nap";
 static NSString* const c_element_exercise = @"exercise";
 static NSString* const c_element_sleepiness = @"sleepiness";
+
+NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
+{
+    switch (sleepiness)
+    {
+        case HVSleepiness_VerySleepy:
+            return @"Very Sleepy";
+        
+        case HVSleepiness_Tired:
+            return @"Tired";
+            
+        case HVSleepiness_Alert:
+            return @"Alert";
+        
+        case HVSleepiness_WideAwake:
+            return @"Wide Awake";
+        
+        default:
+            break;
+    }
+    
+    return c_emptyString;
+}
 
 @implementation HVSleepJournalPM
 
@@ -100,7 +123,7 @@ static NSString* const c_element_sleepiness = @"sleepiness";
     return (m_sleepiness) ? (enum HVSleepiness) (m_sleepiness.value) : HVSleepiness_Unknown;
 }
 
--(void)setSleepiness:(enum HVSleepiness)sleepiness
+-(void) setSleepiness:(enum HVSleepiness)sleepiness
 {
     if (sleepiness == HVSleepiness_Unknown)
     {
@@ -111,6 +134,11 @@ static NSString* const c_element_sleepiness = @"sleepiness";
         HVENSURE(m_sleepiness, HVPositiveInt);
         m_sleepiness.value = sleepiness;
     }
+}
+
+-(NSString *)sleepinessAsString
+{
+    return stringFromSleepiness(self.sleepiness);
 }
 
 -(void)dealloc

@@ -23,7 +23,18 @@
 #import "HVCodableValue.h"
 
 @interface HVDateTime : HVType
+{
+@private
+    HVDate* m_date;
+    HVTime* m_time;
+    HVCodableValue* m_timeZone;
+}
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
 //
 // Reqired
 //
@@ -34,17 +45,35 @@
 @property (readwrite, nonatomic, retain) HVTime* time;
 @property (readwrite, nonatomic, retain) HVCodableValue *timeZone;
 
+//
+// Convenience
+//
 @property (readonly, nonatomic) BOOL hasTime;
 @property (readonly, nonatomic) BOOL hasTimeZone;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithDate:(NSDate *) dateValue;
 -(id) initwithComponents:(NSDateComponents *) components;
 -(id) initNow;
 
+//-------------------------
+//
+// Methods
+//
+//-------------------------
 -(NSDateComponents *) toComponents;
 -(BOOL) getComponents:(NSDateComponents *) components;
 -(NSDate *) toDate;
 
+//-------------------------
+//
+// Text
+//
+//-------------------------
 -(NSString *) toString;
 -(NSString *) toStringWithFormat:(NSString *) format;
 
