@@ -35,10 +35,13 @@
 #import "HVVitalSigns.h"
 #import "HVEncounter.h"
 #import "HVFamilyHistory.h"
+#import "HVCCD.h"
+#import "HVCCR.h"
 #import "HVEmergencyOrProviderContact.h"
 #import "HVPersonalContactInfo.h"
 #import "HVBasicDemographics.h"
 #import "HVPersonalDemographics.h"
+#import "HVPersonalImage.h"
 #import "HVAssessment.h"
 #import "HVQuestionAnswer.h"
 #import "HVFile.h"
@@ -70,12 +73,15 @@
 -(HVVitalSigns *) vitalSigns;
 -(HVEncounter *) encounter;
 -(HVFamilyHistory *) familyHistory;
+-(HVCCD *) ccd;
+-(HVCCR *) ccr;
 
 -(HVEmergencyOrProviderContact *) emergencyOrProviderContact;
 -(HVPersonalContactInfo *) personalContact;
 
 -(HVBasicDemographics *) basicDemographics;
 -(HVPersonalDemographics *) personalDemographics;
+-(HVPersonalImage *) personalImage;
 
 -(HVFile *) file;
 

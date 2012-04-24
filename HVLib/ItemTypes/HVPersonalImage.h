@@ -1,5 +1,5 @@
 //
-//  HVItemRaw.h
+//  HVPersonalImage.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,17 +15,27 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
 
-@interface HVItemRaw : HVItemDataTyped
-{
-@protected
-    NSString* m_root;
-    NSString* m_xml;
-}
+@interface HVPersonalImage : HVItemDataTyped
 
-@property (readwrite, nonatomic, retain) NSString* xml;
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+
++(HVItem *) newItem;
+
+//-------------------------
+//
+// Type Info
+//
+//-------------------------
++(NSString *) typeID;
++(NSString *) XRootElement;
 
 @end

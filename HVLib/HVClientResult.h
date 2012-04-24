@@ -121,6 +121,8 @@ enum HVClientResultCode
     HVClientError_InvalidSleepJournal,
     HVClientError_InvalidDietaryIntake,
     HVClientError_InvalidFile,
+    HVClientError_InvalidCCD,
+    HVClientError_InvalidCCR,
     //
     // Store
     //

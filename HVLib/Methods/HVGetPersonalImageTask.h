@@ -1,5 +1,5 @@
 //
-//  HVItemRaw.h
+//  HVGetPersonalImageTask.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -17,15 +17,17 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "HVTypes.h"
+#import "HVAsyncTask.h"
+#import "HVRecordReference.h"
 
-@interface HVItemRaw : HVItemDataTyped
+@interface HVGetPersonalImageTask : HVTask
 {
-@protected
-    NSString* m_root;
-    NSString* m_xml;
+@private
+    HVRecordReference* m_record;
 }
 
-@property (readwrite, nonatomic, retain) NSString* xml;
+@property (readonly, nonatomic) NSData* imageData;
+
+-(id) initWithRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 
 @end

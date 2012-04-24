@@ -187,6 +187,17 @@ LError:
    
 }
 
+-(BOOL)createFile:(NSString *)fileName
+{
+    NSString* filePath = [self makeChildPath:fileName];
+    HVCHECK_NOTNULL(filePath);
+    
+    return [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
+    
+LError:
+    return FALSE;
+}
+
 -(BOOL)deleteFile:(NSString *)fileName
 {
     NSString* filePath = [self makeChildPath:fileName];
@@ -292,6 +303,11 @@ LError:
 -(BOOL)putBlob:(NSData *)blob withKey:(NSString *)key
 {
     NSFileHandle *handle = [self openFileForWrite:key];
+    if (handle == nil)
+    {
+        [self createFile:key];
+        handle = [self openFileForWrite:key];
+    }
     HVCHECK_NOTNULL(handle);
     
     @try 

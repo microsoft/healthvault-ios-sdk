@@ -195,8 +195,14 @@
 	}
 	if(self.currentRecord != nil) {
 		
-		request.personId = self.currentRecord.personId;
-		request.recordId = self.currentRecord.recordId;
+        if (request.personId == nil)
+        {
+            request.personId = self.currentRecord.personId;
+        }
+        if (request.recordId == nil)
+        {
+            request.recordId = self.currentRecord.recordId;
+        }
 	}
 	request.authorizationSessionToken = self.authorizationSessionToken;
 	request.sessionSharedSecret = self.sessionSharedSecret;

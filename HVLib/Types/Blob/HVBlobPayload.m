@@ -40,6 +40,21 @@ static NSString* const c_element_blob = @"blob";
     [super dealloc];
 }
 
+-(HVBlobPayloadItem *)getDefaultBlob
+{
+    return [self getBlobNamed:c_emptyString];
+}
+
+-(HVBlobPayloadItem *)getBlobNamed:(NSString *)name
+{
+    if (!self.hasItems)
+    {
+        return nil;
+    }
+    
+    return [m_blobItems getBlobNamed:name];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

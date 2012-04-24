@@ -18,6 +18,8 @@
 
 #import "HVCommon.h"
 #import "HVRecord.h"
+#import "HVPersonalImage.h"
+#import "HVBlobPayloadItem.h"
 
 static NSString* const c_element_displayname = @"display-name";
 static NSString* const c_element_relationship = @"rel-name";
@@ -53,6 +55,18 @@ LError:
     [m_relationship release];
     
     [super dealloc];
+}
+
+-(HVGetPersonalImageTask *)downloadPersonalImageWithCallback:(HVTaskCompletion)callback
+{
+    HVGetPersonalImageTask* task = [[HVGetPersonalImageTask alloc] initWithRecord:self andCallback:callback];
+    HVCHECK_NOTNULL(task);
+    
+    [task start];
+    return task;
+    
+LError:
+    return nil;
 }
 
 -(HVClientResult *)validate

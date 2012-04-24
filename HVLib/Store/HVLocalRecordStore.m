@@ -22,6 +22,7 @@
 #import "HVSynchronizedStore.h"
 
 static NSString* const c_view = @"view";
+static NSString* const c_personalImage = @"personalImage";
 
 @interface HVLocalRecordStore (HVPrivate)
 -(NSString *) makeViewKey:(NSString *) name;
@@ -89,6 +90,21 @@ LError:
 -(void)deleteView:(NSString *)name
 {
     [m_metadata deleteKey:[self makeViewKey:name]];
+}
+
+-(NSData *)getPersonalImage
+{
+    return [m_metadata getBlob:c_personalImage];
+}
+
+-(BOOL) putPersonalImage:(NSData *)imageData
+{
+    return [m_metadata putBlob:imageData withKey:c_personalImage];
+}
+
+-(void)deletePersonalImage
+{
+    [m_metadata deleteKey:c_personalImage];
 }
 
 @end

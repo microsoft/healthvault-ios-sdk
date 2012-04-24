@@ -1,5 +1,5 @@
 //
-//  HVItemRaw.h
+//  HVPersonalImage.m
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,17 +15,28 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
+#import "HVCommon.h"
+#import "HVPersonalImage.h"
 
-#import <Foundation/Foundation.h>
-#import "HVTypes.h"
+static NSString* const c_typeid = @"a5294488-f865-4ce3-92fa-187cd3b58930";
+static NSString* const c_typename = @"personal-image";
 
-@interface HVItemRaw : HVItemDataTyped
+@implementation HVPersonalImage
+
++(NSString *)typeID
 {
-@protected
-    NSString* m_root;
-    NSString* m_xml;
+    return c_typeid;
 }
 
-@property (readwrite, nonatomic, retain) NSString* xml;
++(NSString *) XRootElement
+{
+    return c_typename;
+}
+
++(HVItem *) newItem
+{
+    return [[HVItem alloc] initWithType:[HVPersonalImage typeID]];
+}
 
 @end

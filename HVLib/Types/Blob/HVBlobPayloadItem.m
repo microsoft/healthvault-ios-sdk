@@ -60,12 +60,22 @@ LError:
     [super dealloc];
 }
 
--(HVHttpResponse *)downloadWithCallback:(HVTaskCompletion)callback
+-(HVHttpResponse *)createDownloadTaskWithCallback:(HVTaskCompletion)callback
 {
     NSURL* url = [NSURL URLWithString:m_blobUrl];
     HVCHECK_NOTNULL(url);
     
-    HVHttpResponse* response = [[[HVHttpResponse alloc] initWithUrl:url andCallback:callback] autorelease];
+    return [[[HVHttpResponse alloc] initWithUrl:url andCallback:callback] autorelease];
+
+LError:
+    return nil;
+}
+
+-(HVHttpResponse *)downloadWithCallback:(HVTaskCompletion)callback
+{
+    HVHttpResponse* response = [self createDownloadTaskWithCallback:callback];
+    HVCHECK_NOTNULL(response);
+    
     [response start];
     
     return response;

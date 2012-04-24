@@ -162,6 +162,14 @@
 		5D591CFD15464FD800EAC934 /* HVBlobPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D591CFB15464FD800EAC934 /* HVBlobPayload.m */; };
 		5D591D0115465F5900EAC934 /* HVFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D591CFF15465F5900EAC934 /* HVFile.h */; };
 		5D591D0215465F5900EAC934 /* HVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D591D0015465F5900EAC934 /* HVFile.m */; };
+		5D591D1A1547136D00EAC934 /* HVCCD.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D591D181547136D00EAC934 /* HVCCD.h */; };
+		5D591D1B1547136D00EAC934 /* HVCCD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D591D191547136D00EAC934 /* HVCCD.m */; };
+		5D591D2215471A2800EAC934 /* HVCCR.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D591D2015471A2700EAC934 /* HVCCR.h */; };
+		5D591D2315471A2800EAC934 /* HVCCR.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D591D2115471A2800EAC934 /* HVCCR.m */; };
+		5D591D281547242E00EAC934 /* HVPersonalImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D591D261547242D00EAC934 /* HVPersonalImage.h */; };
+		5D591D291547242E00EAC934 /* HVPersonalImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D591D271547242D00EAC934 /* HVPersonalImage.m */; };
+		5D591D2C1547330100EAC934 /* HVGetPersonalImageTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D591D2A1547330100EAC934 /* HVGetPersonalImageTask.h */; };
+		5D591D2D1547330100EAC934 /* HVGetPersonalImageTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D591D2B1547330100EAC934 /* HVGetPersonalImageTask.m */; };
 		5D5F3112150E95E700ED11E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5F3111150E95E700ED11E7 /* UIKit.framework */; };
 		5D5F311B150E9A3E00ED11E7 /* HVCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3114150E9A3B00ED11E7 /* HVCollection.h */; };
 		5D5F311C150E9A3E00ED11E7 /* HVCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3115150E9A3B00ED11E7 /* HVCollection.m */; };
@@ -536,6 +544,14 @@
 		5D591CFB15464FD800EAC934 /* HVBlobPayload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlobPayload.m; sourceTree = "<group>"; };
 		5D591CFF15465F5900EAC934 /* HVFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFile.h; sourceTree = "<group>"; };
 		5D591D0015465F5900EAC934 /* HVFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFile.m; sourceTree = "<group>"; };
+		5D591D181547136D00EAC934 /* HVCCD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCCD.h; sourceTree = "<group>"; };
+		5D591D191547136D00EAC934 /* HVCCD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCCD.m; sourceTree = "<group>"; };
+		5D591D2015471A2700EAC934 /* HVCCR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCCR.h; sourceTree = "<group>"; };
+		5D591D2115471A2800EAC934 /* HVCCR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCCR.m; sourceTree = "<group>"; };
+		5D591D261547242D00EAC934 /* HVPersonalImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPersonalImage.h; sourceTree = "<group>"; };
+		5D591D271547242D00EAC934 /* HVPersonalImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPersonalImage.m; sourceTree = "<group>"; };
+		5D591D2A1547330100EAC934 /* HVGetPersonalImageTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGetPersonalImageTask.h; sourceTree = "<group>"; };
+		5D591D2B1547330100EAC934 /* HVGetPersonalImageTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGetPersonalImageTask.m; sourceTree = "<group>"; };
 		5D5F3111150E95E700ED11E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5D5F3114150E9A3B00ED11E7 /* HVCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCollection.h; sourceTree = "<group>"; };
 		5D5F3115150E9A3B00ED11E7 /* HVCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCollection.m; sourceTree = "<group>"; };
@@ -1229,6 +1245,10 @@
 				5DE34C8515393B87003C24E8 /* HVEncounter.m */,
 				5D1F132B1539EDF100524425 /* HVFamilyHistory.h */,
 				5D1F132C1539EDF100524425 /* HVFamilyHistory.m */,
+				5D591D181547136D00EAC934 /* HVCCD.h */,
+				5D591D191547136D00EAC934 /* HVCCD.m */,
+				5D591D2015471A2700EAC934 /* HVCCR.h */,
+				5D591D2115471A2800EAC934 /* HVCCR.m */,
 				5D561B0315365F74003D68D2 /* HVEmergencyOrProviderContact.h */,
 				5D561B0415365F74003D68D2 /* HVEmergencyOrProviderContact.m */,
 				5D775C791538D04D000F01AE /* HVPersonalContactInfo.h */,
@@ -1237,14 +1257,16 @@
 				5D775C7015389BD7000F01AE /* HVBasicDemographics.m */,
 				5D775C751538C2B7000F01AE /* HVPersonalDemographics.h */,
 				5D775C761538C2B9000F01AE /* HVPersonalDemographics.m */,
+				5D591D261547242D00EAC934 /* HVPersonalImage.h */,
+				5D591D271547242D00EAC934 /* HVPersonalImage.m */,
+				5D591CFF15465F5900EAC934 /* HVFile.h */,
+				5D591D0015465F5900EAC934 /* HVFile.m */,
 				5D775C911538EBF5000F01AE /* HVAssessment.h */,
 				5D775C921538EBF6000F01AE /* HVAssessment.m */,
 				5DE34C7A153925F2003C24E8 /* HVQuestionAnswer.h */,
 				5DE34C7B153925F2003C24E8 /* HVQuestionAnswer.m */,
 				5D20D33D14F4467C00160611 /* HVItemRaw.h */,
 				5D20D33E14F4467C00160611 /* HVItemRaw.m */,
-				5D591CFF15465F5900EAC934 /* HVFile.h */,
-				5D591D0015465F5900EAC934 /* HVFile.m */,
 			);
 			path = ItemTypes;
 			sourceTree = "<group>";
@@ -1267,6 +1289,8 @@
 				5DC799911535FEE300193A3B /* HVGetAuthorizedPeopleTask.m */,
 				5D925DD515376F21006BAAA8 /* HVGetVocabTask.h */,
 				5D925DD615376F21006BAAA8 /* HVGetVocabTask.m */,
+				5D591D2A1547330100EAC934 /* HVGetPersonalImageTask.h */,
+				5D591D2B1547330100EAC934 /* HVGetPersonalImageTask.m */,
 			);
 			path = Methods;
 			sourceTree = "<group>";
@@ -1515,6 +1539,10 @@
 				5D1B7BEF154642F600854881 /* HVBlobHashInfo.h in Headers */,
 				5D591CFC15464FD800EAC934 /* HVBlobPayload.h in Headers */,
 				5D591D0115465F5900EAC934 /* HVFile.h in Headers */,
+				5D591D1A1547136D00EAC934 /* HVCCD.h in Headers */,
+				5D591D2215471A2800EAC934 /* HVCCR.h in Headers */,
+				5D591D281547242E00EAC934 /* HVPersonalImage.h in Headers */,
+				5D591D2C1547330100EAC934 /* HVGetPersonalImageTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1749,6 +1777,10 @@
 				5D1B7BF0154642F600854881 /* HVBlobHashInfo.m in Sources */,
 				5D591CFD15464FD800EAC934 /* HVBlobPayload.m in Sources */,
 				5D591D0215465F5900EAC934 /* HVFile.m in Sources */,
+				5D591D1B1547136D00EAC934 /* HVCCD.m in Sources */,
+				5D591D2315471A2800EAC934 /* HVCCR.m in Sources */,
+				5D591D291547242E00EAC934 /* HVPersonalImage.m in Sources */,
+				5D591D2D1547330100EAC934 /* HVGetPersonalImageTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

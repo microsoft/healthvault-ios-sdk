@@ -32,6 +32,11 @@
     return [[self class] XRootElement];
 }
 
+-(BOOL)hasRawData
+{
+    return FALSE;
+}
+
 -(NSDate *)getDate
 {
     return nil;
@@ -78,11 +83,14 @@ static HVTypeSystem* s_typeRegistry;
     [s_typeRegistry addClass:[HVVitalSigns class] forTypeID:[HVVitalSigns typeID]];
     [s_typeRegistry addClass:[HVEncounter class] forTypeID:[HVEncounter typeID]];
     [s_typeRegistry addClass:[HVFamilyHistory class] forTypeID:[HVFamilyHistory typeID]];
-  
+    [s_typeRegistry addClass:[HVCCD class] forTypeID:[HVCCD typeID]];
+    [s_typeRegistry addClass:[HVCCR class] forTypeID:[HVCCR typeID]];
+
     [s_typeRegistry addClass:[HVEmergencyOrProviderContact class] forTypeID:[HVEmergencyOrProviderContact typeID]];
     [s_typeRegistry addClass:[HVPersonalContactInfo class] forTypeID:[HVPersonalContactInfo typeID]];
     [s_typeRegistry addClass:[HVBasicDemographics class] forTypeID:[HVBasicDemographics typeID]];
     [s_typeRegistry addClass:[HVPersonalDemographics class] forTypeID:[HVPersonalDemographics typeID]];
+    [s_typeRegistry addClass:[HVPersonalImage class] forTypeID:[HVPersonalImage typeID]];
     
     [s_typeRegistry addClass:[HVAssessment class] forTypeID:[HVAssessment typeID]];
     [s_typeRegistry addClass:[HVQuestionAnswer class] forTypeID:[HVQuestionAnswer typeID]];

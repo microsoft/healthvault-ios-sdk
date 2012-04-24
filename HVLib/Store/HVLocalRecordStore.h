@@ -25,20 +25,49 @@
 
 @interface HVLocalRecordStore : NSObject 
 {
+@private
     HVRecordReference* m_record;
     id<HVObjectStore> m_root;
     id<HVObjectStore> m_metadata;
     HVSynchronizedStore* m_data;   
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// Record for which this is a store
+//
 @property (readonly, nonatomic) HVRecordReference* record;
+//
+// Metadata, such as view definitions, etc..
+//
 @property (readonly, nonatomic) id<HVObjectStore> metadata;
+//
+// Item Data stored here (Xml)
+//
 @property (readonly, nonatomic) HVSynchronizedStore* data;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initForRecord:(HVRecordReference *) record overRoot:(id<HVObjectStore>) root;
 
+//-------------------------
+//
+// Methods
+//
+//-------------------------s
 -(HVTypeView *) loadView:(NSString *) name;
 -(BOOL) saveView:(HVTypeView *) view name:(NSString*) name;
 -(void) deleteView:(NSString *) name;
+
+-(NSData *) getPersonalImage;
+-(BOOL) putPersonalImage:(NSData *) imageData;
+-(void) deletePersonalImage;
 
 @end

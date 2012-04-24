@@ -23,6 +23,11 @@
 
 @synthesize xml = m_xml;
 
+-(BOOL)hasRawData
+{
+    return TRUE;
+}
+
 -(void) dealloc
 {
     [m_root release];

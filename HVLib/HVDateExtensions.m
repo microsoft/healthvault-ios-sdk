@@ -25,17 +25,7 @@
 
 -(NSString *)toString
 {
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init]; 
-    HVCHECK_NOTNULL(formatter);
-    
-    NSString* string = [formatter stringFromDate:self];
-    
-    [formatter release];
-    
-    return string;
-    
-LError:
-    return nil;
+    return self.description;
 }
 
 -(NSString*) toStringWithFormat:(id)format

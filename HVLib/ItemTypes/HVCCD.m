@@ -1,5 +1,5 @@
 //
-//  HVItemRaw.h
+//  HVCCD.m
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,17 +15,40 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
+#import "HVCommon.h"
+#import "HVCCD.h"
 
-#import <Foundation/Foundation.h>
-#import "HVTypes.h"
+static NSString* const c_typeid = @"9c48a2b8-952c-4f5a-935d-f3292326bf54";
+static NSString* const c_typename = @"ClinicalDocument";
 
-@interface HVItemRaw : HVItemDataTyped
+@implementation HVCCD
+
+-(HVClientResult *)validate
 {
-@protected
-    NSString* m_root;
-    NSString* m_xml;
+    HVVALIDATE_BEGIN
+    
+    HVVALIDATE_STRING(m_xml, HVClientError_InvalidCCD);
+    
+    HVVALIDATE_SUCCESS
+    
+LError:
+    HVVALIDATE_FAIL
 }
 
-@property (readwrite, nonatomic, retain) NSString* xml;
++(NSString *)typeID
+{
+    return c_typeid;
+}
+
++(NSString *) XRootElement
+{
+    return c_typename;
+}
+
++(HVItem *) newItem
+{
+    return [[HVItem alloc] initWithType:[HVCCD typeID]];
+}
 
 @end

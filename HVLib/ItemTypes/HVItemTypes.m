@@ -90,6 +90,10 @@ HVDECLARE_GETTOR(HVEncounter, encounter);
 
 HVDECLARE_GETTOR(HVFamilyHistory, familyHistory);
 
+HVDECLARE_GETTOR(HVCCD, ccd);
+
+HVDECLARE_GETTOR(HVCCR, ccr);
+
 HVDECLARE_GETTOR(HVEmergencyOrProviderContact, emergencyOrProviderContact);
 
 HVDECLARE_GETTOR(HVPersonalContactInfo, personalContact);
@@ -97,6 +101,8 @@ HVDECLARE_GETTOR(HVPersonalContactInfo, personalContact);
 HVDECLARE_GETTOR(HVBasicDemographics, basicDemographics);
 
 HVDECLARE_GETTOR(HVPersonalDemographics, personalDemographics);
+
+HVDECLARE_GETTOR(HVPersonalImage, personalImage);
 
 HVDECLARE_GETTOR(HVFile, file);
 

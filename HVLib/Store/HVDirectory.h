@@ -51,6 +51,7 @@
 
 -(BOOL) fileExists:(NSString *) fileName;
 -(NSString *) makeFilePathIfExists:(NSString *) fileName;
+-(BOOL) createFile:(NSString *) fileName;
 -(BOOL) deleteFile:(NSString *) fileName;
 
 -(NSFileHandle *) openFileForRead:(NSString *) fileName;

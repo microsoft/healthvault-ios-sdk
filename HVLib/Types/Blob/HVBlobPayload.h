@@ -29,4 +29,7 @@
 @property (readonly, nonatomic) HVBlobPayloadItemCollection* items;
 @property (readonly, nonatomic) BOOL hasItems;
 
+-(HVBlobPayloadItem *) getDefaultBlob;
+-(HVBlobPayloadItem *) getBlobNamed:(NSString *) name;
+
 @end

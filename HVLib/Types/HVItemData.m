@@ -130,7 +130,14 @@ LError:
     HVItemDataTyped* typedItem = [[HVTypeSystem current] newFromTypeID:typeID];
     if (typedItem)
     {
-        [reader readElementRequired:reader.localName intoObject:typedItem];          
+        if (typedItem.hasRawData)
+        {
+            [typedItem deserialize:reader];
+        }
+        else 
+        {
+            [reader readElementRequired:reader.localName intoObject:typedItem];          
+        }
     }
     
     return typedItem;
