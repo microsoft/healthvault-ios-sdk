@@ -22,5 +22,6 @@
 #import "HVValidator.h"
 #import "HVExceptionExtensions.h"
 #import "HVDateExtensions.h"
+#import "HVDataExtensions.h"
 #import "HVClientException.h"
 #import "HVServerResponseStatus.h"

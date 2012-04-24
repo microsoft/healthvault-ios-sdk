@@ -86,6 +86,8 @@ static HVTypeSystem* s_typeRegistry;
     
     [s_typeRegistry addClass:[HVAssessment class] forTypeID:[HVAssessment typeID]];
     [s_typeRegistry addClass:[HVQuestionAnswer class] forTypeID:[HVQuestionAnswer typeID]];
+
+    [s_typeRegistry addClass:[HVFile class] forTypeID:[HVFile typeID]];
 }
 
 +(HVTypeSystem *) current

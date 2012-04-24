@@ -30,6 +30,7 @@ static NSString* const c_element_country = @"country";
 static NSString* const c_element_language = @"language";
 static NSString* const c_element_signinTitle = @"signInTitle";
 static NSString* const c_element_signinRetryMessage = @"signInRetryMessage";
+static NSString* const c_element_httpTimeout = @"httpTimeout";
 
 
 @implementation HVClientSettings
@@ -44,6 +45,7 @@ static NSString* const c_element_signinRetryMessage = @"signInRetryMessage";
 @synthesize language = m_language;
 @synthesize signInControllerTitle = m_signInTitle;
 @synthesize signinRetryMessage = m_signInRetryMessage;
+@synthesize httpTimeout = m_httpTimeout;
 
 -(NSURL *)serviceUrl
 {
@@ -156,6 +158,7 @@ LError:
     HVSERIALIZE_STRING(m_language, c_element_language);
     HVSERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
     HVSERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
+    HVSERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -170,6 +173,7 @@ LError:
     HVDESERIALIZE_STRING(m_language, c_element_language);
     HVDESERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
     HVDESERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
+    HVDESERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
 }
 
 +(HVClientSettings *)newSettingsFromResource

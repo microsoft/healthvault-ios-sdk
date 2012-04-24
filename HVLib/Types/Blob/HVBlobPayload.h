@@ -1,5 +1,5 @@
 //
-//  HVStringZ512.m
+//  HVBlobPayload.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,28 +15,18 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "HVStringZ512.h"
+#import <Foundation/Foundation.h>
+#import "HVBlobPayloadItem.h"
 
-@implementation HVStringZ512
-
--(NSUInteger) minLength
+@interface HVBlobPayload : HVType
 {
-    return 0;
+@private
+    HVBlobPayloadItemCollection* m_blobItems;
 }
 
--(NSUInteger) maxLength
-{
-    return 512;
-}
-
-@end
-
-@implementation HVStringNZ512
-
--(NSUInteger)minLength
-{
-    return 1;
-}
+@property (readonly, nonatomic) HVBlobPayloadItemCollection* items;
+@property (readonly, nonatomic) BOOL hasItems;
 
 @end

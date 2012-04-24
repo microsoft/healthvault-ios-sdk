@@ -1,5 +1,5 @@
 //
-//  HVStringZ512.m
+//  HVString1024.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,28 +15,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "HVStringZ512.h"
+#import <Foundation/Foundation.h>
+#import "HVConstrainedString.h"
 
-@implementation HVStringZ512
-
--(NSUInteger) minLength
-{
-    return 0;
-}
-
--(NSUInteger) maxLength
-{
-    return 512;
-}
-
-@end
-
-@implementation HVStringNZ512
-
--(NSUInteger)minLength
-{
-    return 1;
-}
+@interface HVStringZ1024 : HVConstrainedString
 
 @end

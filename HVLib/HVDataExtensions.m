@@ -1,5 +1,5 @@
 //
-//  HVStringZ512.m
+//  HVDataExtensions.m
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,28 +15,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "HVStringZ512.h"
+#import "HVDataExtensions.h"
 
-@implementation HVStringZ512
+@implementation NSData (HVDataExtensions)
 
--(NSUInteger) minLength
+-(NSString *)newUTF8String
 {
-    return 0;
+    return [[NSString alloc] initWithData:self encoding: NSUTF8StringEncoding];    
 }
 
--(NSUInteger) maxLength
+-(NSString *)toUTF8String
 {
-    return 512;
+    return [[self newUTF8String] autorelease];
 }
-
-@end
-
-@implementation HVStringNZ512
-
--(NSUInteger)minLength
-{
-    return 1;
-}
-
 @end

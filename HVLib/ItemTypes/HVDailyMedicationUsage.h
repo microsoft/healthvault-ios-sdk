@@ -39,20 +39,34 @@
 //
 //-------------------------
 //
-// Required
+// (Required) The day when the medication was consumed
 //
 @property (readwrite, nonatomic, retain) HVDate* when;
+//
+// (Required) The drug/substance/supplement used
+// Vocabulary: RxNorm
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* drugName;
+//
+// (Required) number of doses. 
+// 
 @property (readwrite, nonatomic, retain) HVInt* dosesConsumed;
 //
-// Optional
+// (Optional) why the medication was taken
 //
 @property (readwrite, nonatomic, retain) HVCodableValue* purpose;
+//
+// (Optional) How many doses were meant to be taken 
+//
 @property (readwrite, nonatomic, retain) HVInt* dosesIntended;
+//
+// All Optional
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* usageSchedule;
 @property (readwrite, nonatomic, retain) HVCodableValue* drugForm;
 @property (readwrite, nonatomic, retain) HVCodableValue* prescriptionType;
 @property (readwrite, nonatomic, retain) HVCodableValue* singleDoseDescription;
+
 //
 // Convenience
 //

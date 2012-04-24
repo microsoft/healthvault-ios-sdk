@@ -23,6 +23,10 @@
 #import "HVItemState.h"
 #import "HVAudit.h"
 #import "HVItemData.h"
+#import "HVBlobPayload.h"
+#import "HVAsyncTask.h"
+
+@class HVRecordReference;
 
 @interface HVItem : HVType
 {
@@ -35,10 +39,21 @@
     HVAudit* m_created;
     HVAudit* m_updated;    
     HVItemData* m_data;
+    HVBlobPayload* m_blobs;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+
+//
+// (Optional) The key for this item (id + version)
+// All existing items that have been successfully committed to HealthVault
+// will always have a key. 
+//
 @property (readwrite, nonatomic, retain) HVItemKey* key;
-@property (readonly, nonatomic) BOOL hasKey;
 
 @property (readwrite, nonatomic, retain) HVItemType* type;
 
@@ -51,19 +66,40 @@
 @property (readwrite, nonatomic, retain) HVAudit* updated;
 
 @property (readwrite, nonatomic, retain) HVItemData* data;
-@property (readonly, nonatomic) BOOL hasData;
+@property (readwrite, nonatomic, retain) HVBlobPayload* blobs;
 
-@property (readonly, nonatomic) BOOL hasTypedData;
 @property (readonly, nonatomic) NSString* itemID;
 
-@property (readonly, nonatomic) BOOL hasCommonData;
 @property (readwrite, nonatomic, retain) NSString* note;
+
+//
+// Convenience
+//
+@property (readonly, nonatomic) BOOL hasKey;
+@property (readonly, nonatomic) BOOL hasData;
+@property (readonly, nonatomic) BOOL hasTypedData;
+@property (readonly, nonatomic) BOOL hasCommonData;
+@property (readonly, nonatomic) BOOL hasBlobData;
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 
 -(id) initWithType:(NSString *) typeID;
 -(id) initWithTypedData:(HVItemDataTyped *) data;
 -(id) initWithTypedDataClassName:(NSString *) name;
 -(id) initWithTypedDataClass:(Class) cls;
 
+-(NSString *) toXmlString;
++(HVItem *) newFromXmlString:(NSString *) xml;
+
+//-------------------------
+//
+// Methods
+//
+//-------------------------
 -(BOOL) setKeyToNew;
 -(BOOL) ensureKey;
 
@@ -71,8 +107,14 @@
 
 -(BOOL) isVersion:(NSString *) version;
 
--(NSString *) toXmlString;
-+(HVItem *) newFromXmlString:(NSString *) xml;
+//
+// Update blob data. Assume that we are working with [HVClient current].currentRecord
+//
+-(HVTask *) updateBlobData:(HVTaskCompletion) callback;
+//
+// Download updated information about blobs associated with this item in the parent record
+//
+-(HVTask *) updateBlobDataFromRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 
 @end
 

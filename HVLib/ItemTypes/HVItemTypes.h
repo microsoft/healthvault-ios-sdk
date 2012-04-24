@@ -41,6 +41,7 @@
 #import "HVPersonalDemographics.h"
 #import "HVAssessment.h"
 #import "HVQuestionAnswer.h"
+#import "HVFile.h"
 #import "HVItemRaw.h"
 
 @interface HVItem (HVTypedExtensions)
@@ -75,5 +76,7 @@
 
 -(HVBasicDemographics *) basicDemographics;
 -(HVPersonalDemographics *) personalDemographics;
+
+-(HVFile *) file;
 
 @end

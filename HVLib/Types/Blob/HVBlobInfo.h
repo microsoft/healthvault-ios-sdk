@@ -1,5 +1,5 @@
 //
-//  HVStringZ512.m
+//  HVBlobInfo.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,28 +15,31 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "HVStringZ512.h"
+#import <Foundation/Foundation.h>
+#import "HVBaseTypes.h"
 
-@implementation HVStringZ512
-
--(NSUInteger) minLength
+@interface HVBlobInfo : HVType
 {
-    return 0;
+@private
+    HVStringZ255* m_name;
+    HVStringZ1024* m_contentType;    
 }
 
--(NSUInteger) maxLength
-{
-    return 512;
-}
-
-@end
-
-@implementation HVStringNZ512
-
--(NSUInteger)minLength
-{
-    return 1;
-}
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Optional). Most blobs are named (like named streams). 
+// However, you can have a 'default' blob with no name (empty string)
+//
+@property (readwrite, nonatomic, retain) NSString* name;
+//
+// (Optional) MIME type for this blob
+//
+@property (readwrite, nonatomic, retain) NSString* contentType;
 
 @end

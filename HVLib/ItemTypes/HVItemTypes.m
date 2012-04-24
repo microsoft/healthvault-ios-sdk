@@ -98,4 +98,6 @@ HVDECLARE_GETTOR(HVBasicDemographics, basicDemographics);
 
 HVDECLARE_GETTOR(HVPersonalDemographics, personalDemographics);
 
+HVDECLARE_GETTOR(HVFile, file);
+
 @end

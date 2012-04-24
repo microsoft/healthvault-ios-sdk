@@ -51,7 +51,6 @@ NSString* const c_emptyString;
 
 -(NSString *) stringByAppendingName:(NSString *) name andExtension:(NSString *) ext;
 
-
 @end
 
 //---------------------------------

@@ -18,6 +18,7 @@
 
 #import "HVCommon.h"
 #import "HVItem.h"
+#import "HVClient.h"
 
 static NSString* const c_element_key = @"thing-id";
 static NSString* const c_element_type = @"type-id";
@@ -27,6 +28,7 @@ static NSString* const c_element_effectiveDate = @"eff-date";
 static NSString* const c_element_created = @"created";
 static NSString* const c_element_updated = @"updated";
 static NSString* const c_element_data = @"data-xml";
+static NSString* const c_element_blobs = @"blob-payload";  
 
 @implementation HVItem
 
@@ -41,6 +43,7 @@ static NSString* const c_element_data = @"data-xml";
 @synthesize updated = m_updated;
 
 @synthesize data = m_data;
+@synthesize blobs = m_blobs;
 
 -(BOOL)hasKey
 {
@@ -71,6 +74,11 @@ static NSString* const c_element_data = @"data-xml";
 -(BOOL)hasCommonData
 {
     return (self.hasData && self.data.hasCommon);
+}
+
+-(BOOL)hasBlobData
+{
+    return (m_blobs && m_blobs.hasItems);
 }
 
 -(NSString *)note
@@ -211,6 +219,45 @@ LError:
     return FALSE;
 }
 
+-(HVTask *)updateBlobData:(HVTaskCompletion)callback
+{
+    return [self updateBlobDataFromRecord:nil andCallback:callback];
+}
+
+-(HVTask *)updateBlobDataFromRecord:(HVRecordReference *)record andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(m_key);
+    if (!record)
+    {
+        record = [HVClient current].currentRecord;
+    }
+
+    HVItemQuery *query = [[[HVItemQuery alloc] initWithItemKey:m_key] autorelease];
+    HVCHECK_NOTNULL(query);
+    
+    query.view.sections = HVItemSection_Blobs;
+        
+    HVGetItemsTask* getItemsTask = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
+        
+        HVItem* blobItem = ((HVGetItemsTask *) task).firstItemRetrieved;
+        HVRETAIN(m_blobs, blobItem.blobs);
+        
+    } ] autorelease];
+    
+    HVCHECK_NOTNULL(getItemsTask);
+    getItemsTask.record = record;
+
+    HVTask* getBlobTask = [[[HVTask alloc] initWithCallback:callback andChildTask:getItemsTask] autorelease];
+    HVCHECK_NOTNULL(getBlobTask);
+
+    [getBlobTask start];
+    
+    return getBlobTask;
+    
+LError:
+    return nil;
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN;
@@ -218,6 +265,7 @@ LError:
     HVVALIDATE_OPTIONAL(m_key);
     HVVALIDATE_OPTIONAL(m_type);
     HVVALIDATE_OPTIONAL(m_data);
+    HVVALIDATE_OPTIONAL(m_blobs);
     
     HVVALIDATE_SUCCESS;
     
@@ -235,6 +283,7 @@ LError:
     HVSERIALIZE(m_created, c_element_created);
     HVSERIALIZE(m_updated, c_element_updated);
     HVSERIALIZE(m_data, c_element_data);
+    HVSERIALIZE(m_blobs, c_element_blobs);
 }
 
 -(void) deserialize:(XReader *)reader
@@ -247,6 +296,7 @@ LError:
     HVDESERIALIZE(m_created, c_element_created, HVAudit);
     HVDESERIALIZE(m_updated, c_element_updated, HVAudit);
     HVDESERIALIZE(m_data, c_element_data, HVItemData);
+    HVDESERIALIZE(m_blobs, c_element_blobs, HVBlobPayload);
 }
 
 -(NSString *)toXmlString

@@ -1,5 +1,5 @@
 //
-//  HVStringZ512.m
+//  HVBlobHashInfo.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,28 +15,34 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
+#import <Foundation/Foundation.h>
+#import "HVType.h"
+#import "HVBaseTypes.h"
 
-#import "HVStringZ512.h"
-
-@implementation HVStringZ512
-
--(NSUInteger) minLength
+@interface HVBlobHashAlgorithmParams : HVType
 {
-    return 0;
+@private
+    HVPositiveInt* m_blockSize;
 }
 
--(NSUInteger) maxLength
-{
-    return 512;
-}
+//
+// (Optional)
+//
+@property (readwrite, nonatomic, retain) HVPositiveInt* blockSize;
 
 @end
 
-@implementation HVStringNZ512
-
--(NSUInteger)minLength
+@interface HVBlobHashInfo : HVType
 {
-    return 1;
+@private
+    HVStringZ255* m_algorithm;
+    HVBlobHashAlgorithmParams* m_params;
+    HVStringNZ512* m_hash;
 }
+
+@property (readwrite, nonatomic, retain) NSString* algorithm;
+@property (readwrite, nonatomic, retain) HVBlobHashAlgorithmParams* params;
+@property (readwrite, nonatomic, retain) NSString* hash;
 
 @end

@@ -32,6 +32,8 @@
     
     NSString* m_signInTitle;
     NSString* m_signInRetryMessage;
+    
+    NSTimeInterval m_httpTimeout;
 }
 
 @property (readwrite, nonatomic) BOOL debug;
@@ -45,6 +47,8 @@
 
 @property (readwrite, nonatomic, retain) NSString* signInControllerTitle;
 @property (readwrite, nonatomic, retain) NSString* signinRetryMessage;
+
+@property (readwrite, nonatomic) NSTimeInterval httpTimeout;
 
 +(HVClientSettings *) newSettingsFromResource;
 

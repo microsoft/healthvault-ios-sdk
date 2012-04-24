@@ -26,3 +26,17 @@
 }
 
 @end
+
+@implementation HVStringZ255
+
+-(NSUInteger) minLength
+{
+    return 0;
+}
+
+-(NSUInteger) maxLength
+{
+    return 255;
+}
+
+@end

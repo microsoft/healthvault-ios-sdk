@@ -52,18 +52,36 @@ enum HVWakeState
 //
 //-------------------------
 //
-// (Required)
+// (Required) - Journal Entry is for this date/time
 //
 @property (readwrite, nonatomic, retain) HVDateTime* when;
+//
+// (Required) - time you went to bed
+//
 @property (readwrite, nonatomic, retain) HVTime* bedTime;
+//
+// (Required) - time you finally woke up and got out of bed
+//
 @property (readwrite, nonatomic, retain) HVTime* wakeTime;
+//
+// (Required) - how long you slept for
+//
 @property (readwrite, nonatomic, retain) HVNonNegativeInt* sleepMinutes;
+//
+// (Required) - how long it took you to fall asleep
+//
 @property (readwrite, nonatomic, retain) HVNonNegativeInt* settlingMinutes;
+//
+// (Required) - how you felt when you woke up
+//
 @property (readwrite, nonatomic) enum HVWakeState wakeState;
 //
-// Optional
+// (Optional) - how many times you woke up or had your sleep interrupted
 //
 @property (readwrite, nonatomic, retain) HVOccurenceCollection* awakenings;
+//
+// (Optional) - medications you took before going to bed
+//
 @property (readwrite, nonatomic, retain) HVCodableValue* medicationsBeforeBed;
 
 //

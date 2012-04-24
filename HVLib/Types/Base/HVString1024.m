@@ -1,7 +1,6 @@
 //
-//  HVStringZ512.m
+//  HVString1024.m
 //  HVLib
-//
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +14,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "HVStringZ512.h"
+#import "HVString1024.h"
 
-@implementation HVStringZ512
+@implementation HVStringZ1024
 
 -(NSUInteger) minLength
 {
@@ -27,16 +27,7 @@
 
 -(NSUInteger) maxLength
 {
-    return 512;
-}
-
-@end
-
-@implementation HVStringNZ512
-
--(NSUInteger)minLength
-{
-    return 1;
+    return 1024;
 }
 
 @end

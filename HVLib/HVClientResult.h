@@ -91,6 +91,10 @@ enum HVClientResultCode
     HVClientError_InvalidOccurrence,
     HVClientError_InvalidRelative,
     //
+    // Blobs
+    //
+    HVClientError_InvalidBlobInfo,
+    //
     // Item Types
     //
     HVClientError_InvalidWeight,
@@ -116,6 +120,7 @@ enum HVClientResultCode
     HVClientError_InvalidQuestionAnswer,
     HVClientError_InvalidSleepJournal,
     HVClientError_InvalidDietaryIntake,
+    HVClientError_InvalidFile,
     //
     // Store
     //

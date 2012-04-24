@@ -17,7 +17,6 @@
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
 
-
 enum HVSleepiness
 {
     HVSleepiness_Unknown,

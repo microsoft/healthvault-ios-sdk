@@ -35,4 +35,5 @@
 #import "HVConstrainedString.h"
 #import "HVString255.h"
 #import "HVStringZ512.h"
+#import "HVString1024.h"
 #import "HVEmailAddress.h"

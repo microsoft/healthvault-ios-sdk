@@ -22,3 +22,7 @@
 @interface HVString255 : HVConstrainedString
 
 @end
+
+@interface HVStringZ255 :  HVConstrainedString 
+
+@end

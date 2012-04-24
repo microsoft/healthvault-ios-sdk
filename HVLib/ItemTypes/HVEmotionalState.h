@@ -58,11 +58,20 @@ NSString* stringFromWellBeing(enum HVWellBeing wellBeing);
 //
 //-------------------------
 //
-// All Optional
+// (Optional) Emotional state this THIS time
 //
 @property (readwrite, nonatomic, retain) HVDateTime* when;
+//
+// (Optional) Mood rating - happy, depressed, sad..
+//
 @property (readwrite, nonatomic) enum HVMood mood;
+//
+// (Optional) A relative stress level
+//
 @property (readwrite, nonatomic) enum HVRelativeRating stress;
+//
+// (Optional) Sick, Healthy etc
+//
 @property (readwrite, nonatomic) enum HVWellBeing wellbeing;
 
 //-------------------------
@@ -71,12 +80,6 @@ NSString* stringFromWellBeing(enum HVWellBeing wellBeing);
 //
 //-------------------------
 +(HVItem *) newItem;
-
-//-------------------------
-//
-// Methods
-//
-//-------------------------
 
 //-------------------------
 //

@@ -1,5 +1,5 @@
 //
-//  HVStringZ512.m
+//  HVHttpDownload.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -15,28 +15,33 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "HVStringZ512.h"
+#import <Foundation/Foundation.h>
+#import "HVHttp.h"
 
-@implementation HVStringZ512
-
--(NSUInteger) minLength
+@interface HVHttpDownload : HVHttp
 {
-    return 0;
+@protected
+    NSFileHandle* m_file;
 }
 
--(NSUInteger) maxLength
-{
-    return 512;
-}
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) - download to this file
+//
+@property (readwrite, nonatomic, retain) NSFileHandle* file;
 
-@end
-
-@implementation HVStringNZ512
-
--(NSUInteger)minLength
-{
-    return 1;
-}
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithUrl:(NSURL *) url filePath:(NSString *) path andCallback:(HVTaskCompletion) callback;
+-(id) initWithUrl:(NSURL *) url fileHandle:(NSFileHandle *) file andCallback:(HVTaskCompletion) callback;
 
 @end
