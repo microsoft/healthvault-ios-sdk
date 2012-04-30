@@ -99,6 +99,11 @@ static HVClient* s_app;
     
     [self loadState];
     
+    if (m_user.hasRecords)
+    {
+        m_provisionStatus = HVAppProvisionSuccess;
+    }
+    
     return self;
     
 LError:

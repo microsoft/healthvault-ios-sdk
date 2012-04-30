@@ -533,6 +533,7 @@
 		5D39F936151A3AA100208A7B /* HVLocalItemStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalItemStore.m; sourceTree = "<group>"; };
 		5D39F939151A718900208A7B /* HVLocalRecordStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalRecordStore.h; sourceTree = "<group>"; };
 		5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalRecordStore.m; sourceTree = "<group>"; };
+		5D4F8667154AE40200E71300 /* libHVUILib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHVUILib.a; path = "../HVUILib/build/Release-iphoneos/libHVUILib.a"; sourceTree = "<group>"; };
 		5D5299AC14DCB3A700D2636E /* libHVLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHVLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5299AF14DCB3A700D2636E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5D5299B314DCB3A700D2636E /* HVLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HVLib-Prefix.pch"; sourceTree = "<group>"; };
@@ -828,6 +829,7 @@
 		5D5299A114DCB3A700D2636E = {
 			isa = PBXGroup;
 			children = (
+				5D4F8667154AE40200E71300 /* libHVUILib.a */,
 				5D5F3111150E95E700ED11E7 /* UIKit.framework */,
 				5D76B9C814DCB92400BA865F /* libxml2.2.dylib */,
 				5D5299B114DCB3A700D2636E /* HVLib */,

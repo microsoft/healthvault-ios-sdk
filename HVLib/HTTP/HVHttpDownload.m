@@ -19,6 +19,7 @@
 
 #import "HVCommon.h"
 #import "HVHttpDownload.h"
+#import "HVDirectory.h"
 
 @implementation HVHttpDownload
 
@@ -26,7 +27,7 @@
 
 -(id)initWithUrl:(NSURL *)url filePath:(NSString *)path andCallback:(HVTaskCompletion)callback
 {
-    return [self initWithUrl:url fileHandle:[NSFileHandle fileHandleForWritingAtPath:path] andCallback:callback];
+    return [self initWithUrl:url fileHandle:[NSFileHandle createOrOpenForWriteAtPath:path] andCallback:callback];
 }
 
 -(id)initWithUrl:(NSURL *)url fileHandle:(NSFileHandle *)file andCallback:(HVTaskCompletion)callback

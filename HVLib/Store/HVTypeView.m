@@ -377,6 +377,7 @@ LError:
     
     [query release];
     
+    getItems.record = self.record;
     [getItems start];
     
     return getItems;

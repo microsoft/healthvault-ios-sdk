@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "HVObjectStore.h"
 
-@interface NSFileManager (HVDirectorExtensions) 
+@interface NSFileManager (HVDirectoryExtensions) 
 
 -(NSURL *) pathForStandardDirectory:(NSSearchPathDirectory) name;
 -(NSURL *) documentDirectoryPath;
@@ -27,6 +27,11 @@
 
 @end
 
+@interface NSFileHandle (HVDirectoryExtensions)
+
++(NSFileHandle *) createOrOpenForWriteAtPath:(NSString *) path;
+
+@end
 //
 // HVDirect implements all methods in HVObjectStore
 //

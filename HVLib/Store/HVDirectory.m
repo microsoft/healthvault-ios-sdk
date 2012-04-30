@@ -20,7 +20,7 @@
 #import "HVDirectory.h"
 #import "XLib.h"
 
-@implementation NSFileManager (HVDirectorExtensions) 
+@implementation NSFileManager (HVDirectoryExtensions) 
 
 -(NSURL *) pathForStandardDirectory:(NSSearchPathDirectory)name
 {
@@ -42,6 +42,22 @@
 -(NSURL *)cacheDirectoryPath
 {
     return [self pathForStandardDirectory:NSCachesDirectory];
+}
+
+@end
+
+@implementation NSFileHandle (HVDirectoryExtensions)
+
++(NSFileHandle *)createOrOpenForWriteAtPath:(NSString *)path
+{
+    NSFileHandle* fileHandle = [NSFileHandle fileHandleForWritingAtPath:path];
+    if (!fileHandle)
+    {
+        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil]; 
+        fileHandle = [NSFileHandle fileHandleForWritingAtPath:path];
+    }
+    
+    return fileHandle;
 }
 
 @end
