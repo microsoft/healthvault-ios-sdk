@@ -94,6 +94,8 @@
 
 -(HVItemCollection *) getItemsInRange:(NSRange) range downloadTask:(HVTask **) task;
 
+-(BOOL) removeItemAtIndex:(NSUInteger) index;
+
 -(NSUInteger) putItem:(HVItem *) item;
 -(BOOL) putItems:(HVItemCollection *) items;
 

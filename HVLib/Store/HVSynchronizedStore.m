@@ -270,6 +270,11 @@ LError:
     // Exceptions will fall through and propagate to caller
     //
     HVItemQueryResult* result = getItems.queryResults.firstResult;
+    if (!result.hasItems)
+    {
+        // Nothing returned
+        return;
+    }
     //
     // Write items we got back from the server to the local store
     //

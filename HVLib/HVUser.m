@@ -36,6 +36,8 @@ static NSString* const c_element_current = @"current";
 -(void) updateLegacyCurrentRecord;
 -(BOOL) updateWithPerson:(HVPersonInfo *) person;
 
+-(void)imageDownloadComplete:(HVTask *)task forRecord:(HVRecord *)record;
+
 @end
 
 @implementation HVUser
@@ -150,7 +152,7 @@ LError:
     HVCHECK_NOTNULL(url);
     
     HVAppProvisionController* controller = [[HVAppProvisionController alloc] initWithAppCreateUrl:url andCallback:^(HVAppProvisionController *controller) {
-        
+                
         if (controller.error)
         {
             [HVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_Web)];
@@ -170,6 +172,25 @@ LError:
     [controller release];
 
     return authTask;
+    
+LError:
+    return nil;
+}
+
+-(HVTask *)downloadRecordImageFor:(HVRecord *)record withCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(record);
+    
+    HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVCHECK_NOTNULL(task);
+    
+    HVGetPersonalImageTask* getImageTask = [[[HVGetPersonalImageTask alloc] initWithRecord:record andCallback:^(HVTask *task) {
+        [self imageDownloadComplete:task forRecord:record];
+    }] autorelease];
+    HVCHECK_NOTNULL(getImageTask);
+    
+    [task setNextTask:getImageTask];
+    [task start];
     
 LError:
     return nil;
@@ -274,6 +295,19 @@ LError:
 LError:
     return FALSE;    
     
+}
+
+-(void)imageDownloadComplete:(HVTask *)task forRecord:(HVRecord *)record
+{
+    NSData* imageData = ((HVGetPersonalImageTask *) task).imageData;
+    if (imageData)
+    {
+        [[[HVClient current].localVault getRecordStore:record] putPersonalImage:imageData];
+    }
+    else
+    {
+        [[[HVClient current].localVault getRecordStore:record] deletePersonalImage];
+    }
 }
 
 @end

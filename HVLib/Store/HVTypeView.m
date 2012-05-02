@@ -278,6 +278,14 @@ LError:
     return FALSE;
 }
 
+-(BOOL)removeItemAtIndex:(NSUInteger)index
+{
+    [self removeLocalItemAtIndex:index];
+    [m_items removeItemAtIndex:index];
+    [self stampUpdated];
+    return TRUE;
+}
+
 -(BOOL)updateItemInView:(HVItem *)item
 {
     if (![m_items updateDateForHVItem:item])

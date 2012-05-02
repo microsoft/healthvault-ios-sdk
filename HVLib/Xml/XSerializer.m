@@ -190,7 +190,7 @@ LError:
 {
     HVCHECK_STRING(filePath);
     
-#ifdef DEBUG
+#ifdef LOGXML
     NSString *rawXml = [[NSString alloc] initWithContentsOfFile:filePath usedEncoding:nil error:nil];
     NSLog(@"%@\r\n%@", filePath, rawXml);
     [rawXml release];

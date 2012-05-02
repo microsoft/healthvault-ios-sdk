@@ -60,7 +60,11 @@
 // Authorize additional records for this application to work with
 //
 -(HVTask *) authorizeAdditionalRecords:(UIViewController *) parentController andCallback:(HVTaskCompletion) callback;
-
+//
+// Refresh personal images for each record
+// Automatically store the downloaded image in local storage
+//
+-(HVTask *) downloadRecordImageFor:(HVRecord *) record withCallback:(HVTaskCompletion) callback;
 
 -(HVClientResult *) validate;
 -(BOOL) updateWithLegacyRecords:(NSArray *) records;

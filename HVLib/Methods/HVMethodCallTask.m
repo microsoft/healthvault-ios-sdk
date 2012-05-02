@@ -238,8 +238,10 @@ LError:
     {
         return nil;
     }
-    
+
+#ifdef LOGXML
     NSLog(@"%@", response.infoXml);
+#endif
     
     XReader *reader = [[XReader alloc] initFromString:response.infoXml];
     HVCHECK_OOM(reader);
