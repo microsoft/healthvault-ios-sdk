@@ -25,6 +25,9 @@ static NSString* const c_element_version = @"version";
 static NSString* const c_element_lang = @"xml:lang";
 static NSString* const c_element_code = @"code-value";
 
+static NSString* const c_rxNormFamily = @"RxNorm";
+static NSString* const c_snomedFamily = @"Snomed";
+
 @implementation HVVocabIdentifier
 
 @synthesize name = m_name;
@@ -57,6 +60,7 @@ LError:
     [m_version release];
     [super dealloc];
 }
+
 
 -(HVClientResult *)validate
 {
@@ -94,6 +98,16 @@ LError:
     HVDESERIALIZE_STRING(m_family, c_element_family);
     HVDESERIALIZE_STRING(m_version, c_element_version);
     HVDESERIALIZE_STRING(m_codeValue, c_element_code);
+}
+
++(HVVocabIdentifier *)forMedications
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_rxNormFamily andName:@"RxNorm Active Medicines"] autorelease];
+}
+
++(HVVocabIdentifier *)forConditions
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_snomedFamily andName:@"SnomedConditions_Filtered"] autorelease];    
 }
 
 @end

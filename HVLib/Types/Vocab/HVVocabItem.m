@@ -40,6 +40,16 @@ static NSString* const c_element_data = @"info-xml";
     [super dealloc];
 }
 
+-(NSString *)toString
+{
+    return m_displayText;
+}
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN;
@@ -85,5 +95,8 @@ LError:
     HVALLOC_FAIL;
 }
 
-
+-(HVVocabItem *)itemAtIndex:(NSUInteger)index
+{
+    return (HVVocabItem *) [self objectAtIndex:index];
+}
 @end

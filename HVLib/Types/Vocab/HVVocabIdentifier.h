@@ -28,12 +28,45 @@
     NSString* m_codeValue;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) - the vocabulary name. E.g Rx Norm Active Medications
+//
 @property (readwrite, nonatomic, retain) NSString* name;
+//
+// (Optional) - e.g. RxNorm...
+//
 @property (readwrite, nonatomic, retain) NSString* family;
+//
+// (Optional) Vocabulary version
+//
 @property (readwrite, nonatomic, retain) NSString* version;
+//
+// (Optional) Language, in ISO code. E.g. 'en'. 
+//
 @property (readwrite, nonatomic, retain) NSString* language;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* codeValue;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithFamily:(NSString *) family andName:(NSString *) name;
+
+//-------------------------
+//
+// Standard Vocabs
+//
+//-------------------------
++(HVVocabIdentifier *) forMedications;  // RxNorm active medications
++(HVVocabIdentifier *) forConditions;
 
 @end

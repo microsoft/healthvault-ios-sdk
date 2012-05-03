@@ -87,17 +87,28 @@ LError:
     HVVocabIdentifier* vocab = [[HVVocabIdentifier alloc] initWithFamily:family andName:name];
     HVCHECK_NOTNULL(vocab);
     
-    HVVocabSearchTask* searchTask = [[[HVVocabSearchTask alloc] initWithVocab:vocab searchText:text andCallback:callback] autorelease];
+    HVVocabSearchTask* searchTask = [HVVocabSearchTask searchForText:text inVocab:vocab callback:callback];
     [vocab release];
-    
-    HVCHECK_NOTNULL(searchTask);
-    
-    [searchTask start];    
     
     return searchTask;
 
 LError:
     return nil;
+}
+
++(HVVocabSearchTask *)searchForText:(NSString *)text inVocab:(HVVocabIdentifier *)vocab callback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(vocab);
+    
+    HVVocabSearchTask* searchTask = [[[HVVocabSearchTask alloc] initWithVocab:vocab searchText:text andCallback:callback] autorelease];
+    HVCHECK_NOTNULL(searchTask);
+    
+    [searchTask start];    
+    
+    return searchTask;
+    
+LError:
+    return nil;    
 }
 
 +(HVVocabSearchTask *)searchMedications:(NSString *)text callback:(HVTaskCompletion)callback

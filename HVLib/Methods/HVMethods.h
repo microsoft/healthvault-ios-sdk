@@ -24,4 +24,6 @@
 #import "HVRemoveItemsTask.h"
 #import "HVVocabSearchTask.h"
 #import "HVGetAuthorizedPeopleTask.h"
+#import "HVGetPersonalImageTask.h"
 #import "HVGetVocabTask.h"
+#import "HVVocabSearcher.h"

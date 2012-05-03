@@ -28,12 +28,35 @@
     NSString* m_data;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
+//
+// (Required) - Vocabulary Code - such as RxNorm or Snomed code
+//
 @property (readwrite, nonatomic, retain) NSString* code;
+//
+// (Required) - Vocab Display Text - the actual text
+//
 @property (readwrite, nonatomic, retain) NSString* displayText;
+//
+// (Optional)
+//
 @property (readwrite, nonatomic, retain) NSString* abbreviation;
+//
+// (Optional) - additional information about this vocab entry
+// E.g. RxNorm can contain information about dosages and strengths
+//
 @property (readwrite, nonatomic, retain) NSString* dataXml;
+
+-(NSString *) toString;
 
 @end
 
 @interface HVVocabItemCollection : HVCollection 
+
+-(HVVocabItem *) itemAtIndex:(NSUInteger) index;
+
 @end

@@ -72,6 +72,9 @@
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
 -(BOOL) containsItemID:(NSString *) itemID;
 
+//
+// maxAgeInSeconds
+//
 -(BOOL) isStale:(NSTimeInterval) maxAge;
 
 //

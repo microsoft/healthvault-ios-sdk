@@ -36,7 +36,17 @@ void safeInvokeAction(HVAction action)
 
 void safeInvokeActionInMainThread(HVAction action)
 {
-    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void) { action();}];
+    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void){ 
+        @try 
+        {
+            action();
+        }
+        @catch (id ex) 
+        {
+            [ex log];
+        }
+    }];
+    
     [[NSOperationQueue mainQueue] addOperation:op];
 }
 
