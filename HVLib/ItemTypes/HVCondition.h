@@ -18,6 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
 
 @interface HVCondition : HVItemDataTyped
 {
@@ -70,6 +71,16 @@
 //
 //-------------------------
 -(NSString *) toString;
+
+//-------------------------
+//
+// Standard Vocabs
+//
+//-------------------------
+//
+// SNOMED. Assumes you have a license for Snomed and have permissions to access it
+//
++(HVVocabIdentifier *) vocabForName;
 
 //-------------------------
 //

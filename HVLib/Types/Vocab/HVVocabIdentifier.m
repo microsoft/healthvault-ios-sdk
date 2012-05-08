@@ -25,8 +25,9 @@ static NSString* const c_element_version = @"version";
 static NSString* const c_element_lang = @"xml:lang";
 static NSString* const c_element_code = @"code-value";
 
-static NSString* const c_rxNormFamily = @"RxNorm";
-static NSString* const c_snomedFamily = @"Snomed";
+NSString* const c_rxNormFamily = @"RxNorm";
+NSString* const c_snomedFamily = @"Snomed";
+NSString* const c_hvFamily = @"wc";
 
 @implementation HVVocabIdentifier
 
@@ -61,6 +62,20 @@ LError:
     [super dealloc];
 }
 
+-(HVCodedValue *)codedValueForItem:(HVVocabItem *)vocabItem
+{
+    HVCHECK_NOTNULL(vocabItem);
+    
+    return [[[HVCodedValue alloc] initWithCode:vocabItem.code vocab:m_name vocabFamily:m_family vocabVersion:m_version] autorelease];
+    
+LError:
+    return nil;
+}
+
+-(NSString *)toKeyString
+{
+    return [NSString stringWithFormat:@"%@_%@_%@", m_name, m_family, m_version];
+}
 
 -(HVClientResult *)validate
 {
@@ -98,16 +113,6 @@ LError:
     HVDESERIALIZE_STRING(m_family, c_element_family);
     HVDESERIALIZE_STRING(m_version, c_element_version);
     HVDESERIALIZE_STRING(m_codeValue, c_element_code);
-}
-
-+(HVVocabIdentifier *)forMedications
-{
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_rxNormFamily andName:@"RxNorm Active Medicines"] autorelease];
-}
-
-+(HVVocabIdentifier *)forConditions
-{
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_snomedFamily andName:@"SnomedConditions_Filtered"] autorelease];    
 }
 
 @end

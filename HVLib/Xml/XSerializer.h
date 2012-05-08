@@ -188,7 +188,7 @@ void throwWriterError(void);
 #define HVDESERIALIZE_RAWARRAY(var, name) HVSETIF(var, [reader readRawElementArray:name])
 
 #define HVDESERIALIZE_ATTRIBUTE(var, name) HVSETIF(var, [reader readAttribute:name])
-#define HVDESERIALIZE_INTATTRIBUTE(var, name) [reader readIntAttribute:name intValue:&value]
+#define HVDESERIALIZE_INTATTRIBUTE(var, name) [reader readIntAttribute:name intValue:&var]
 
 //---------------------------------------
 //

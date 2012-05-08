@@ -20,15 +20,41 @@
 #import "HVMethodCallTask.h"
 #import "HVVocab.h"
 
+//-------------------------
+//
+// Get Vocabularies from HealthVault
+//
+//-------------------------
 @interface HVGetVocabTask : HVMethodCallTask
 {
+@private
     HVVocabParams* m_params;
 }
 
+//-------------------------
+//
+// Properties
+//
+//-------------------------
+//
+// (Required) - Request - which vocabulary to get
+//
 @property (readwrite, nonatomic, retain) HVVocabParams* params;
+//
+// Response - retrieved vocabulary data
+//
 @property (readonly, nonatomic) HVVocabGetResults* vocabResults;
+//
+// Convenience property to get the vocabulary from vocabResults
+//
 @property (readonly, nonatomic) HVVocabCodeSet* vocabulary;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithVocabID:(HVVocabIdentifier *) vocabID andCallback:(HVTaskCompletion) callback;
+
 
 @end

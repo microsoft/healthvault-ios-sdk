@@ -22,6 +22,8 @@
 
 -(NSEnumerator *) allKeys;
 
+-(NSDate *) updateDateForKey:(NSString *) key;
+
 -(BOOL) keyExists:(NSString *) key;
 -(BOOL) deleteKey:(NSString *) key;
 

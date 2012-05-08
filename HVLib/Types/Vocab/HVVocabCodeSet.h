@@ -37,11 +37,14 @@
 
 @property (readonly, nonatomic) BOOL hasItems;
 
+-(NSArray *) displayStrings;
+
 @end
 
 @interface HVVocabSetCollection : HVCollection 
 
 -(HVVocabCodeSet *) itemAtIndex:(NSUInteger) index;
+
 
 @end
 

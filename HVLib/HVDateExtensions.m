@@ -21,7 +21,7 @@
 #import "HVValidator.h"
 
 
-@implementation NSDate (HVDateExtensions)
+@implementation NSDate (HVExtensions)
 
 -(NSString *)toString
 {
@@ -62,6 +62,11 @@ LError:
     return -([self compare:other]);
 }
 
+-(NSTimeInterval)offsetFromNow
+{
+    return [[NSDate date] timeIntervalSinceDate:self];
+}
+
 +(NSDate *)fromHour:(int)hour
 {
     return [NSDate fromHour:hour andMinute:0];
@@ -85,6 +90,7 @@ LError:
     return nil;
 }
 
+
 @end
 
 
@@ -95,7 +101,7 @@ const NSUInteger NSAllCalendarUnits =   NSDayCalendarUnit       |
                                         NSMinuteCalendarUnit    | 
                                         NSSecondCalendarUnit;
 
-@implementation NSCalendar (HVCalendarExtensions)
+@implementation NSCalendar (HVExtensions)
 
 -(NSDateComponents *)getComponentsFor:(NSDate *)date
 {
@@ -188,7 +194,7 @@ LError:
 
 @end
 
-@implementation NSDateFormatter (HVDateFormatterExtensions)
+@implementation NSDateFormatter (HVExtensions)
 
 +(NSDateFormatter *) newUtcFormatter
 {

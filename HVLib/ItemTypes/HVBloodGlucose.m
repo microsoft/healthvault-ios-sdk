@@ -141,6 +141,11 @@ LError:
     return [self stringInMmolPerLiter:@"%.3f mmol/L"];
 }
 
+-(NSString *)normalcyText
+{
+    return stringFromNormalcy(self.normalcy);
+}
+
 +(HVCodableValue *)createPlasmaMeasurementType
 {
     return [[HVBloodGlucose newMeasurementText:@"Plasma" andCode:@"p"] autorelease];

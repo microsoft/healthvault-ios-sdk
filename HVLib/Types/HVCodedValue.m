@@ -167,4 +167,23 @@ LError:
 {
     return (HVCodedValue *) [self objectAtIndex:index];
 }
+
+-(NSUInteger)indexOfCode:(HVCodedValue *)code
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        if ([[self itemAtIndex:i] isEqualToCodedValue:code])
+        {
+            return i;
+        }
+    }
+    
+    return NSNotFound;
+}
+
+-(BOOL)containsCode:(HVCodedValue *)code
+{
+    return ([self indexOfCode:code] != NSNotFound);
+}
+
 @end

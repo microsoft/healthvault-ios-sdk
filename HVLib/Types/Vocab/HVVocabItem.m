@@ -50,6 +50,11 @@ static NSString* const c_element_data = @"info-xml";
     return [self toString];
 }
 
+-(BOOL) matchesDisplayText:(NSString *)text
+{
+    return ([m_displayText caseInsensitiveCompare:[text trim]] == NSOrderedSame);
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN;
@@ -99,4 +104,20 @@ LError:
 {
     return (HVVocabItem *) [self objectAtIndex:index];
 }
+
+-(NSArray *)displayStrings
+{
+    NSMutableArray* strings = [[NSMutableArray alloc]initWithCapacity:self.count];
+    [self addDisplayStringsTo:strings];
+    return strings;
+}
+
+-(void)addDisplayStringsTo:(NSMutableArray *)strings
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        [strings addObject:[self itemAtIndex:i].displayText];
+    }    
+}
+
 @end

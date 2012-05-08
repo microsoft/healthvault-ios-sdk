@@ -49,6 +49,11 @@
 @property (readwrite, nonatomic) NSInteger currentRecordIndex;
 @property (readonly, nonatomic) HVRecord* currentRecord;
 
+//-------------------------
+//
+// Methods
+//
+//-------------------------
 
 -(id) initFromLegacyRecords:(NSArray *) recordArray;  // Infrastructure - will eventually go away
 

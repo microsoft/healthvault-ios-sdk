@@ -18,6 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVType.h"
+#import "HVVocabItem.h"
 
 @class HVCodedValueCollection;
 
@@ -87,5 +88,7 @@
 -(HVCodedValue *) firstCode;
 
 -(HVCodedValue *) itemAtIndex:(NSUInteger) index;
+-(NSUInteger) indexOfCode:(HVCodedValue *) code;
+-(BOOL) containsCode:(HVCodedValue *) code;
 
 @end

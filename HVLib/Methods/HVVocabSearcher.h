@@ -23,9 +23,10 @@
 
 @protocol HVVocabSearcherDelegate <NSObject>
 
--(void) resultsAvailable:(HVVocabCodeSet *) results forSearch:(NSString *) searchText inSearcher:(HVVocabSearcher *) searcher;
+-(void) resultsAvailable:(HVVocabCodeSet *) results forSearch:(NSString *) searchText inSearcher:(HVVocabSearcher *) searcher 
+seqNumber:(NSUInteger) seq;
 
--(void) searchFailedFor:(NSString *) search inSearcher:(HVVocabSearcher *) searcher;
+-(void) searchFailedFor:(NSString *) search inSearcher:(HVVocabSearcher *) searcher seqNumber:(NSUInteger) seq;
 
 @end
 
@@ -37,6 +38,7 @@
 }
 
 @property (readonly, nonatomic) NSCache* cache; 
+@property (readwrite, nonatomic) NSUInteger maxCachedResults; 
 
 -(id) init;
 -(id) initWithCache:(NSCache *) cache;
@@ -70,7 +72,8 @@
     HVVocabSearchCache* m_cache;
     enum HVVocabMatchType m_matchType;
     int m_maxResults;
-    
+    NSUInteger m_seqNumber;
+
     id<HVVocabSearcherDelegate> m_delegate; // Weak reference
 }
 

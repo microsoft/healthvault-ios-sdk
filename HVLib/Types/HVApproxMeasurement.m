@@ -27,6 +27,11 @@ static NSString* const c_element_structured = @"structured";
 @synthesize displayText = m_display;
 @synthesize measurement = m_measurement;
 
+-(BOOL)hasMeasurement
+{
+    return (m_measurement != nil);
+}
+
 -(id)initWithDisplayText:(NSString *)text
 {
     return [self initWithDisplayText:text andMeasurement:nil];

@@ -21,9 +21,11 @@
 
 @interface HVMemoryStore : NSObject <HVObjectStore>
 {
+@private
     NSMutableDictionary* m_store;
+    NSMutableDictionary* m_metadata;
 }
 
-//-(HVItem *) loadItem:(NSString *) itemID;
+-(void) touchObjectWithKey:(NSString *) key;
 
 @end

@@ -29,6 +29,9 @@
     m_store = [[NSMutableDictionary alloc] init];
     HVCHECK_NOTNULL(m_store);
     
+    m_metadata = [[NSMutableDictionary alloc] init];
+    HVCHECK_NOTNULL(m_metadata);
+    
     return self;
     
 LError:
@@ -38,6 +41,8 @@ LError:
 -(void) dealloc
 {
     [m_store release];
+    [m_metadata release];
+    
     [super dealloc];
 }
 
@@ -49,6 +54,11 @@ LError:
 -(BOOL)keyExists:(NSString *)key
 {
     return ([m_store objectForKey:key] != nil);
+}
+
+-(NSDate *)updateDateForKey:(NSString *)key
+{
+    return [m_metadata objectForKey:key];
 }
 
 -(id)getObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls
@@ -78,6 +88,7 @@ LError:
     HVCHECK_NOTNULL(key);
     
     [m_store setObject:blob forKey:key];
+    [self touchObjectWithKey:key];
     
     return TRUE;
 
@@ -90,6 +101,7 @@ LError:
     HVCHECK_NOTNULL(key);
     
     [m_store setObject:obj forKey:key];
+    [self touchObjectWithKey:key];
     
     return TRUE;
     
@@ -103,60 +115,14 @@ LError:
     return TRUE;
 }
 
+-(void)touchObjectWithKey:(NSString *)key
+{
+    [m_metadata setObject:[NSDate date] forKey:key];
+    
+}
 -(id<HVObjectStore>)newChildStore:(NSString *)name
 {
     return [[HVMemoryStore alloc] init];
 }
-/*
--(NSEnumerator *) all
-{
-    return [m_store objectEnumerator];
-}
-            
--(BOOL) existsItem:(NSString *)itemID
-{
-    return ([m_store objectForKey:itemID] != nil);
-}
-
--(HVItem *) getItem:(NSString *)itemID
-{
-    HVItem* item = [m_store objectForKey:itemID];
-    if (!item)
-    {
-        item = [self loadItem:itemID];
-        if (item)
-        {
-            [m_store setObject:item forKey:itemID];
-        }
-    }
-    
-    return item;
-}
-
--(BOOL) putItem:(HVItem *)item
-{
-    HVCHECK_NOTNULL(item);
-    
-    HVItemKey* key = item.key;
-    HVCHECK_NOTNULL(key);
-    
-    [m_store setObject:item forKey:key.itemID];
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
-}
-
--(void) removeItem:(NSString *)itemID
-{
-    [m_store removeObjectForKey:itemID];
-}
-
--(HVItem *) loadItem:(NSString *)itemID
-{
-    return nil;
-}
-*/
 
 @end

@@ -78,6 +78,11 @@ LError:
     [super dealloc];
 }
 
++(HVVocabIdentifier *)vocabForName
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_snomedFamily andName:@"SnomedConditions_Filtered"] autorelease];    
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

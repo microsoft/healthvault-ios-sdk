@@ -18,6 +18,8 @@
 
 #import "HVCommon.h"
 #import "HVMedication.h"
+#import "HVClient.h"
+#import "HVLocalVocabStore.h"
 
 static NSString* const c_typeid = @"30cafccc-047d-4288-94ef-643571f7919d";
 static NSString* const c_typename = @"medication";
@@ -97,6 +99,41 @@ LError:
 -(NSDate *)getDate
 {
     return m_startDate ? [m_startDate toDate] : nil;
+}
+
++(HVVocabIdentifier *) vocabForName
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_rxNormFamily andName:@"RxNorm Active Medicines"] autorelease];
+}
+
++(HVVocabIdentifier *) vocabForDoseUnits
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-dose-units"] autorelease];
+}
+
++(HVVocabIdentifier *)vocabForStrengthUnits
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-strength-unit"] autorelease];    
+}
+
++(HVVocabIdentifier *)vocabForRoute
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-routes"] autorelease];
+}
+
++(void)ensureVocabsDownloaded
+{
+    HVLocalVocabStore* vocabStore = [HVClient current].localVault.vocabs;
+    @try 
+    {
+        [vocabStore ensureVocabDownloaded:[HVMedication vocabForDoseUnits]];
+        [vocabStore ensureVocabDownloaded:[HVMedication vocabForStrengthUnits]];
+        [vocabStore ensureVocabDownloaded:[HVMedication vocabForRoute]];
+    }
+    @catch (id exception) 
+    {
+        [exception log];
+    }
 }
 
 -(HVClientResult *)validate

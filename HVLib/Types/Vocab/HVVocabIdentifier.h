@@ -17,6 +17,11 @@
 // limitations under the License.
 
 #import "HVType.h"
+#import "HVCodedValue.h"
+
+NSString* const c_rxNormFamily;
+NSString* const c_snomedFamily;
+NSString* const c_hvFamily;
 
 @interface HVVocabIdentifier : HVType
 {
@@ -63,10 +68,17 @@
 
 //-------------------------
 //
-// Standard Vocabs
+// Methods
 //
 //-------------------------
-+(HVVocabIdentifier *) forMedications;  // RxNorm active medications
-+(HVVocabIdentifier *) forConditions;
+//
+// Create a codedValue for the vocabItem
+//
+-(HVCodedValue *) codedValueForItem:(HVVocabItem *) vocabItem;
+//
+// Generate a single string representing this vocab identifier
+//
+-(NSString *) toKeyString;
+
 
 @end

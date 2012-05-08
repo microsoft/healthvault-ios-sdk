@@ -67,10 +67,24 @@
 
 //-------------------------
 //
+// Methods
+//
+//-------------------------
+
+-(BOOL) containsCode:(HVCodedValue *) code;
+-(BOOL) addCode:(HVCodedValue *) code;
+-(void) clearCodes;
+
+//-------------------------
+//
 // Text
 //
 //-------------------------
 -(NSString *) toString;
+//
+// Does a trimmed case insensitive comparison
+//
+-(BOOL) matchesDisplayText:(NSString *) text;
 
 @end
 

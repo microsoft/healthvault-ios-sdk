@@ -51,12 +51,29 @@
 //
 @property (readwrite, nonatomic, retain) NSString* dataXml;
 
+//-------------------------
+//
+// Text
+//
+//-------------------------
 -(NSString *) toString;
+//
+// Will do a trimmed, lower case comparison
+//
+-(BOOL) matchesDisplayText:(NSString *) text;
 
 @end
 
+//-------------------------
+//
+// Collection of Vocabulary Items
+//
+//-------------------------
 @interface HVVocabItemCollection : HVCollection 
 
 -(HVVocabItem *) itemAtIndex:(NSUInteger) index;
+
+-(NSArray *) displayStrings;
+-(void) addDisplayStringsTo:(NSMutableArray *) strings;
 
 @end

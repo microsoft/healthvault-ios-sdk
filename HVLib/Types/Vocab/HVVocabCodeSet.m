@@ -48,6 +48,11 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
     HVRETAIN(m_items, items);
 }
 
+-(NSArray *)displayStrings
+{
+    return (m_items) ? [m_items displayStrings] : nil;
+}
+
 -(void)dealloc
 {
     [m_name release];

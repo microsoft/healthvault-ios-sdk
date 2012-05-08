@@ -112,6 +112,7 @@
 -(NSString *) stringInMmolPerLiter:(NSString *) format;
 -(NSString *) stringInMgPerDL:(NSString *) format;
 -(NSString *) toString;
+-(NSString *) normalcyText;
 
 //-------------------------
 //

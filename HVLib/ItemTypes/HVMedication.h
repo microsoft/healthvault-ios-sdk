@@ -18,6 +18,8 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
+
 
 @interface HVMedication : HVItemDataTyped
 {
@@ -110,6 +112,22 @@
 //-------------------------
 -(NSString *) toString;
 +(HVItem *) newItem;
+
+//-------------------------
+//
+// Standard Vocabularies
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForName;  // RxNorm active medications
+
++(HVVocabIdentifier *) vocabForDoseUnits;
++(HVVocabIdentifier *) vocabForStrengthUnits;
++(HVVocabIdentifier *) vocabForRoute;
+
+//
+// Trigger downloads of Vocabularies
+//
++(void) ensureVocabsDownloaded;
 
 //-------------------------
 //

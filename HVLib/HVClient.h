@@ -35,6 +35,12 @@ enum HVAppProvisionStatus
 
 @class HVAppProvisionController;
 
+//-------------------------
+//
+// HealthVault Client
+// Use the "current" singleton. It represents the client application.
+//
+//-------------------------
 @interface HVClient : NSObject
 {
     NSOperationQueue *m_queue;
@@ -55,7 +61,13 @@ enum HVAppProvisionStatus
     HVUser *m_user;
 }
 
+//-------------------------
+//
+// Singelton you should work with
+//
+//-------------------------
 +(HVClient *) current;
+
 
 @property (readonly, nonatomic) HVClientSettings* settings;
 @property (readonly, nonatomic) HVLocalVault *localVault;
@@ -67,18 +79,33 @@ enum HVAppProvisionStatus
 @property (readonly, nonatomic) HVRecordCollection* records;
 @property (readonly, nonatomic) HVRecord* currentRecord;
 
--(void) queueOperation:(NSOperation *) op;
-
+//-------------------------
 //
 // Startup and provisioning
+// You must ALWAYS call this method when starting your application
+// It will ensure that your application is provisioned and has access
+// to at least one user record
 //
+//-------------------------
 -(BOOL) startWithParentController:(UIViewController *) controller andStartedCallback:(HVNotify) callback;
-//
-// Common healthvault methods
-//
 
 //
-// State management
+// See HVUser for user specific methods
+// See HVRecordReference for record specific methods
+// You can also look at the Methods folder
+//
+
+//-------------------------
+//
+// Methods
+//
+//-------------------------
+//
+// HVClient maintains a background operation/task queue
+//
+-(void) queueOperation:(NSOperation *) op;
+//
+// State management - use these when your app is being rehydrated/put to sleep
 //
 -(BOOL) loadState;
 -(BOOL) saveState;

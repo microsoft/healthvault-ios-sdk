@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "HVObjectStore.h"
 
-@interface NSFileManager (HVDirectoryExtensions) 
+@interface NSFileManager (HVExtensions) 
 
 -(NSURL *) pathForStandardDirectory:(NSSearchPathDirectory) name;
 -(NSURL *) documentDirectoryPath;
@@ -27,16 +27,18 @@
 
 @end
 
-@interface NSFileHandle (HVDirectoryExtensions)
+@interface NSFileHandle (HVExtensions)
 
 +(NSFileHandle *) createOrOpenForWriteAtPath:(NSString *) path;
 
 @end
+
 //
 // HVDirect implements all methods in HVObjectStore
 //
 @interface HVDirectory : NSObject <HVObjectStore>
 {
+@private
     NSURL *m_path;
     NSString *m_stringPath;
 }
@@ -58,6 +60,7 @@
 -(NSString *) makeFilePathIfExists:(NSString *) fileName;
 -(BOOL) createFile:(NSString *) fileName;
 -(BOOL) deleteFile:(NSString *) fileName;
+-(NSDictionary *) getFileProperties:(NSString *) fileName;
 
 -(NSFileHandle *) openFileForRead:(NSString *) fileName;
 -(NSFileHandle *) openFileForWrite:(NSString *) fileName;

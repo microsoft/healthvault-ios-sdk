@@ -46,6 +46,10 @@
 //
 @property (readwrite, nonatomic, retain) HVMeasurement* measurement;
 
+//
+// Convenience
+//
+@property (readonly, nonatomic) BOOL hasMeasurement;
 //-------------------------
 //
 // Initializers

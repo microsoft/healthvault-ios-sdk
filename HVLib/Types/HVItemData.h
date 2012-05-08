@@ -21,6 +21,13 @@
 #import "HVItemDataCommon.h"
 #import "HVItemDataTyped.h"
 
+//-------------------------
+//
+// Xml data associated with an HVItem
+//   - Typed data [e.g. Medication, Allergy, Exercise etc.] with associated HV Schemas
+//   - Common data [Notes, tags, extensions...] 
+//
+//-------------------------
 @interface HVItemData : HVType
 {
 @private
@@ -28,6 +35,11 @@
     HVItemDataTyped* m_typed;
 }
 
+//-------------------------
+//
+// Data
+//
+//-------------------------
 @property (readwrite, nonatomic, retain) HVItemDataCommon* common;
 @property (readwrite, nonatomic, retain) HVItemDataTyped* typed;
 

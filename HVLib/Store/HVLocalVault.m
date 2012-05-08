@@ -27,6 +27,7 @@
 @implementation HVLocalVault
 
 @synthesize root = m_root;
+@synthesize vocabs = m_vocabs;
 
 -(id)initWithRoot:(HVDirectory *)root
 {
@@ -39,6 +40,14 @@
     
     m_recordStores = [[NSMutableDictionary alloc] initWithCapacity:2];
     HVCHECK_NOTNULL(m_recordStores);
+    
+    id<HVObjectStore> vocabObjectStore = [root newChildStore:@"vocabs"];
+    HVCHECK_NOTNULL(vocabObjectStore);
+    
+    m_vocabs = [[HVLocalVocabStore alloc] initWithObjectStore:vocabObjectStore];
+    [vocabObjectStore release];
+    
+    HVCHECK_NOTNULL(m_vocabs)
     
     return self;
     
@@ -70,6 +79,8 @@ LError:
 {
     [m_root release];
     [m_recordStores release];
+    [m_vocabs release];
+    
     [super dealloc];
 }
 

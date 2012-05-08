@@ -73,9 +73,7 @@ LError:
     HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
     [m_stringBuffer trim];
     
-    HVCHECK_SUCCESS([m_stringBuffer parseInt: result]);
-    
-    return TRUE;
+    return [m_stringBuffer parseInt: result];
     
 LError:
     return FALSE;
@@ -135,9 +133,7 @@ LError:
         return TRUE;
     }
     
-    HVCHECK_SUCCESS([m_stringBuffer parseFloat: result]);
-    
-    return TRUE;
+    return [m_stringBuffer parseFloat: result];
     
 LError:
     return FALSE;
@@ -211,9 +207,7 @@ LError:
         return TRUE;
     }
     
-    HVCHECK_SUCCESS([m_stringBuffer parseDouble: result]);
-    
-    return TRUE;
+    return [m_stringBuffer parseDouble: result];
    
 LError:
     return FALSE;
@@ -321,7 +315,7 @@ LError:
     HVCHECK_NOTNULL(result);
     
     //
-    // Hack, since NSDateFormatter is otherwise incapable of parsing xsd:datetime
+    // Since NSDateFormatter is otherwise incapable of parsing xsd:datetime
     // ISO 8601 expresses UTC/GMT offsets as "2001-10-26T21:32:52+02:00"
     // DateFormatter does not like the : in the +02:00
     // So, we simply whack all : in the string, and change our dateformat strings accordingly

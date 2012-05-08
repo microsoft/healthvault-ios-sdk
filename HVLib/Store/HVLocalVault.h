@@ -20,17 +20,21 @@
 #import "HVDirectory.h"
 #import "HVObjectStore.h"
 #import "HVLocalRecordStore.h"
+#import "HVLocalVocabStore.h"
 
 @interface HVLocalVault : NSObject
 {
     HVDirectory* m_root;
     NSMutableDictionary* m_recordStores;
+    HVLocalVocabStore* m_vocabs;
 }
 
 -(id) initWithRoot:(HVDirectory *) root;
 
 @property (readonly, nonatomic) id<HVObjectStore> root;
+@property (readonly, nonatomic) HVLocalVocabStore* vocabs;
 
 -(HVLocalRecordStore *) getRecordStore:(HVRecordReference *) record;
+
 
 @end

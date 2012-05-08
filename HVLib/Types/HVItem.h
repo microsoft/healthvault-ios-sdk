@@ -28,6 +28,19 @@
 
 @class HVRecordReference;
 
+//-------------------------
+//
+// A single Item ("thing") in a record
+// Each item has:
+//   - Key and Version 
+//   - Metadata, such as creation dates
+//   - Xml Data
+//      - Typed data [e.g. Medication, Allergy, Exercise etc.] with associated HV Schemas
+//      - Common data [Related Items, Notes, tags, extensions...] 
+//   - Blob Data
+//      - A collection of named blob streams. 
+//
+//-------------------------
 @interface HVItem : HVType
 {
 @private
@@ -108,16 +121,23 @@
 -(BOOL) isVersion:(NSString *) version;
 
 //
-// Update blob data. Assume that we are working with [HVClient current].currentRecord
+// Update blob data into this item. 
+// Assumes that we are working with [HVClient current].currentRecord
 //
 -(HVTask *) updateBlobData:(HVTaskCompletion) callback;
 //
-// Download updated information about blobs associated with this item in the parent record
+// Download updated information about blobs associated with this item
+// Assumes that we are working with [HVClient current].currentRecord
 //
 -(HVTask *) updateBlobDataFromRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 
 @end
 
+//-------------------------
+//
+// A serializable collection of items
+//
+//-------------------------
 @interface HVItemCollection : HVCollection <XSerializable>
 
 -(id) initwithItem:(HVItem *) item;

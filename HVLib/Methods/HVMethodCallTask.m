@@ -189,6 +189,7 @@ LError:
             m_status.errorDetailsXml = response.errorContextXml;    
             if (m_status.hasError)
             {
+                NSLog(@"Protocol Error for %@", response.request.infoXml);
                 return;
             }
             

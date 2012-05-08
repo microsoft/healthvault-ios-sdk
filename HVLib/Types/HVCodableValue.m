@@ -109,6 +109,42 @@ LError:
     [super dealloc];
 }
 
+-(BOOL)matchesDisplayText:(NSString *)text
+{
+    return ([m_text caseInsensitiveCompare:[text trim]] == NSOrderedSame);
+}
+
+-(BOOL)containsCode:(HVCodedValue *)code
+{
+    if (!m_codes)
+    {
+        return FALSE;
+    }
+    
+    return [m_codes containsCode:code];
+}
+
+-(BOOL)addCode:(HVCodedValue *)code
+{
+    HVCodedValueCollection* codes = self.codes;
+    HVCHECK_NOTNULL(codes);
+    
+    [codes addObject:code];
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
+-(void)clearCodes
+{
+    if (m_codes)
+    {
+        [m_codes removeAllObjects];
+    }
+}
+
 -(NSString *) description
 {
     return [self toString];

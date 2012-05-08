@@ -346,6 +346,8 @@
 		5DC799961535FF4200193A3B /* HVMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799941535FF4100193A3B /* HVMethods.h */; };
 		5DD0B80A14F81DDE00AAD54F /* XSerializableType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD0B80814F81DDE00AAD54F /* XSerializableType.h */; };
 		5DD0B80B14F81DDE00AAD54F /* XSerializableType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0B80914F81DDE00AAD54F /* XSerializableType.m */; };
+		5DD216211556E18A001C8F31 /* HVLocalVocabStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD2161F1556E18A001C8F31 /* HVLocalVocabStore.h */; };
+		5DD216221556E18A001C8F31 /* HVLocalVocabStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD216201556E18A001C8F31 /* HVLocalVocabStore.m */; };
 		5DE34C7C153925F2003C24E8 /* HVQuestionAnswer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C7A153925F2003C24E8 /* HVQuestionAnswer.h */; };
 		5DE34C7D153925F2003C24E8 /* HVQuestionAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE34C7B153925F2003C24E8 /* HVQuestionAnswer.m */; };
 		5DE34C8615393B88003C24E8 /* HVEncounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C8415393B87003C24E8 /* HVEncounter.h */; };
@@ -731,6 +733,8 @@
 		5DC799941535FF4100193A3B /* HVMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMethods.h; sourceTree = "<group>"; };
 		5DD0B80814F81DDE00AAD54F /* XSerializableType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XSerializableType.h; sourceTree = "<group>"; };
 		5DD0B80914F81DDE00AAD54F /* XSerializableType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSerializableType.m; sourceTree = "<group>"; };
+		5DD2161F1556E18A001C8F31 /* HVLocalVocabStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalVocabStore.h; sourceTree = "<group>"; };
+		5DD216201556E18A001C8F31 /* HVLocalVocabStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalVocabStore.m; sourceTree = "<group>"; };
 		5DE34C7A153925F2003C24E8 /* HVQuestionAnswer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVQuestionAnswer.h; sourceTree = "<group>"; };
 		5DE34C7B153925F2003C24E8 /* HVQuestionAnswer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVQuestionAnswer.m; sourceTree = "<group>"; };
 		5DE34C8415393B87003C24E8 /* HVEncounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEncounter.h; sourceTree = "<group>"; };
@@ -1325,6 +1329,8 @@
 				5D39F936151A3AA100208A7B /* HVLocalItemStore.m */,
 				5D39F939151A718900208A7B /* HVLocalRecordStore.h */,
 				5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */,
+				5DD2161F1556E18A001C8F31 /* HVLocalVocabStore.h */,
+				5DD216201556E18A001C8F31 /* HVLocalVocabStore.m */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -1552,6 +1558,7 @@
 				5D591D281547242E00EAC934 /* HVPersonalImage.h in Headers */,
 				5D591D2C1547330100EAC934 /* HVGetPersonalImageTask.h in Headers */,
 				5D9E83731553000000072A0C /* HVVocabSearcher.h in Headers */,
+				5DD216211556E18A001C8F31 /* HVLocalVocabStore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1791,6 +1798,7 @@
 				5D591D291547242E00EAC934 /* HVPersonalImage.m in Sources */,
 				5D591D2D1547330100EAC934 /* HVGetPersonalImageTask.m in Sources */,
 				5D9E83741553000000072A0C /* HVVocabSearcher.m in Sources */,
+				5DD216221556E18A001C8F31 /* HVLocalVocabStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

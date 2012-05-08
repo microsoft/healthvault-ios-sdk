@@ -20,7 +20,7 @@
 
 const NSUInteger NSAllCalendarUnits;
 
-@interface NSDate (HVDateExtensions)
+@interface NSDate (HVExtensions)
 
 -(NSString*) toString;
 -(NSString*) toStringWithFormat:(NSString*) format;
@@ -31,10 +31,12 @@ const NSUInteger NSAllCalendarUnits;
 +(NSDate *) fromHour:(int) hour;
 +(NSDate *) fromHour:(int)hour andMinute:(int) minute;
 
+-(NSTimeInterval) offsetFromNow;
+
 @end
 
 
-@interface NSCalendar (HVCalendarExtensions)
+@interface NSCalendar (HVExtensions)
 
 -(NSDateComponents *) getComponentsFor:(NSDate *) date;
 
@@ -49,7 +51,7 @@ const NSUInteger NSAllCalendarUnits;
 
 @end
 
-@interface NSDateFormatter (HVDateFormatterExtensions) 
+@interface NSDateFormatter (HVExtensions) 
 
 +(NSDateFormatter *) newUtcFormatter;
 +(NSDateFormatter *) newZuluFormatter;

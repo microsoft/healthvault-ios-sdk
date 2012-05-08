@@ -20,7 +20,7 @@
 #import "HVDirectory.h"
 #import "XLib.h"
 
-@implementation NSFileManager (HVDirectoryExtensions) 
+@implementation NSFileManager (HVExtensions) 
 
 -(NSURL *) pathForStandardDirectory:(NSSearchPathDirectory)name
 {
@@ -46,7 +46,7 @@
 
 @end
 
-@implementation NSFileHandle (HVDirectoryExtensions)
+@implementation NSFileHandle (HVExtensions)
 
 +(NSFileHandle *)createOrOpenForWriteAtPath:(NSString *)path
 {
@@ -225,6 +225,17 @@ LError:
     return FALSE;
 }
 
+-(NSDictionary *)getFileProperties:(NSString *)fileName
+{
+    NSString* filePath = [self makeChildPath:fileName];
+    HVCHECK_NOTNULL(filePath);
+
+    return [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+    
+LError:
+    return nil;
+}
+
 -(NSFileHandle *)openFileForRead:(NSString *)fileName
 {
     NSString* filePath = [self makeFilePathIfExists:fileName];
@@ -256,6 +267,12 @@ LError:
 -(NSEnumerator *)allKeys
 {
     return [[[HVFileNameEnumerator alloc] initWithFileNames:[self getFileNames]] autorelease];
+}
+
+-(NSDate *)updateDateForKey:(NSString *)key
+{
+    NSDictionary* fileProperties = [self getFileProperties:key];
+    return fileProperties ? fileProperties.fileModificationDate : nil;
 }
 
 -(BOOL)keyExists:(NSString *)key

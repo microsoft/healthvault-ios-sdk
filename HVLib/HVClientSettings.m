@@ -101,7 +101,7 @@ static NSString* const c_element_httpTimeout = @"httpTimeout";
 {
     if ([NSString isNilOrEmpty:m_signInTitle])
     {
-        m_signInTitle = NSLocalizedString(@"Microsoft HealthVault", @"Sign in to HealthVault");
+        m_signInTitle = NSLocalizedString(@"HealthVault", @"Sign in to HealthVault");
     }
     
     return m_signInTitle;
@@ -111,7 +111,7 @@ static NSString* const c_element_httpTimeout = @"httpTimeout";
 {
     if ([NSString isNilOrEmpty:m_signInRetryMessage])
     {
-        m_signInRetryMessage = NSLocalizedString(@"Could not sign into Microsoft HealthVault. Try again?", @"Retry signin message");
+        m_signInRetryMessage = NSLocalizedString(@"Could not sign into HealthVault. Try again?", @"Retry signin message");
     }
     
     return m_signInRetryMessage;

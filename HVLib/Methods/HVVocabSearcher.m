@@ -24,6 +24,16 @@
 
 @synthesize cache = m_cache;
 
+-(NSUInteger)maxCachedResults
+{
+    return [m_cache countLimit];
+}
+
+-(void)setMaxCachedResults:(NSUInteger)maxCachedResults
+{
+    [m_cache setCountLimit:maxCachedResults];
+}
+
 -(id)init
 {
     return [self initWithCache:nil];
@@ -116,9 +126,9 @@ LError:
 
 @interface HVVocabSearcher (HVPrivate)
 
--(void) searchComplete:(HVVocabSearchTask *) task forString:(NSString *) searchText;
--(void) notifySearchComplete:(HVVocabCodeSet *) results forSearch:(NSString *) searchText;
--(void) notifySearchFailedFor:(NSString *) searchText;
+-(void) searchComplete:(HVVocabSearchTask *) task forString:(NSString *) searchText seqNumber:(NSUInteger) seq;
+-(void) notifySearchComplete:(HVVocabCodeSet *) results forSearch:(NSString *) searchText seqNumber:(NSUInteger) seq;
+-(void) notifySearchFailedFor:(NSString *) searchText seqNumber:(NSUInteger) seq;
 
 @end
 
@@ -183,11 +193,17 @@ LError:
 
 -(HVVocabSearchTask *)searchFor:(NSString *)text
 {
+    NSUInteger seqNumber;
+    @synchronized(self)
+    {
+        seqNumber = ++m_seqNumber;
+    }
+    
     HVVocabCodeSet* results = [self.cache getResultsForSearch:text];
     
     if (results)
     {
-        [m_delegate resultsAvailable:results forSearch:text inSearcher:self];
+        [m_delegate resultsAvailable:results forSearch:text inSearcher:self seqNumber:seqNumber];
         return nil;
     }
     //
@@ -198,7 +214,7 @@ LError:
     
     return [HVVocabSearchTask searchForText:text inVocab:m_vocab callback:^(HVTask *task) {
         
-        [self searchComplete:(HVVocabSearchTask *) task forString:text];
+        [self searchComplete:(HVVocabSearchTask *) task forString:text seqNumber:seqNumber];
         
     }];
 }
@@ -215,7 +231,7 @@ LError:
 
 @implementation HVVocabSearcher (HVPrivate)
 
--(void)searchComplete:(HVVocabSearchTask *)task forString:(NSString *)searchText
+-(void)searchComplete:(HVVocabSearchTask *)task forString:(NSString *)searchText seqNumber:(NSUInteger)seq
 {
     @try 
     {
@@ -225,38 +241,38 @@ LError:
             [self.cache cacheResults:results forSearch:searchText];
         }
         
-        [self notifySearchComplete:results forSearch:searchText];
+        [self notifySearchComplete:results forSearch:searchText seqNumber:seq];
     }
     @catch (id ex) 
     {
         [self.cache removeCachedResultsForSearch:searchText];
         
-        [self notifySearchFailedFor:searchText];
+        [self notifySearchFailedFor:searchText seqNumber:seq];
         [ex log];
     }
 }
 
--(void)notifySearchComplete:(HVVocabCodeSet *)results forSearch:(NSString *)searchText
+-(void)notifySearchComplete:(HVVocabCodeSet *)results forSearch:(NSString *)searchText seqNumber:(NSUInteger) seq
 {
     safeInvokeActionEx(^{
         @synchronized(self)
         {
             if (m_delegate)
             {
-                [m_delegate resultsAvailable:results forSearch:searchText inSearcher:self];
+                [m_delegate resultsAvailable:results forSearch:searchText inSearcher:self seqNumber:seq];
             }
         }
     },  TRUE);
 }
 
--(void)notifySearchFailedFor:(NSString *)searchText
+-(void)notifySearchFailedFor:(NSString *)searchText seqNumber:(NSUInteger) seq
 {
     safeInvokeActionEx(^{
         @synchronized(self)
         {
             if (m_delegate)
             {
-                [m_delegate searchFailedFor:searchText inSearcher:self];
+                [m_delegate searchFailedFor:searchText inSearcher:self seqNumber:seq];
             }
         }
     },  TRUE);
