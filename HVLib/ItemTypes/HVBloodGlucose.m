@@ -143,7 +143,7 @@ LError:
 
 -(NSString *)normalcyText
 {
-    return stringFromNormalcy(self.normalcy);
+    return stringFromRating(self.normalcy);
 }
 
 +(HVCodableValue *)createPlasmaMeasurementType
