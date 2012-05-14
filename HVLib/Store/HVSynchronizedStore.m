@@ -25,6 +25,12 @@
 
 -(void) setLocalStore:(id<HVItemStore>) store;
 
+//
+// Works differently from getLocalItemsWithKeys
+// If a local item is not found, does not create an NSNull entry...
+//
+-(HVItemCollection *) getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL) includeNull;
+
 -(void) completedGetItemsTask:(HVTask *) task;
 -(void) completedDownloadKeys:(NSArray *) keys inView:(HVTypeView *) view task:(HVTask *) task;
 -(HVItemQuery *) queryFromKeys:(NSArray *) keys;
@@ -97,27 +103,7 @@ LError:
 
 -(HVItemCollection *)getLocalItemsWithKeys:(NSArray *)keys
 {
-    HVCHECK_NOTNULL(keys);
-    
-    HVItemCollection *results = [[[HVItemCollection alloc] init] autorelease];
-    
-    for (HVItemKey* key in keys)
-    {
-        HVItem* item = [self getLocalItemWithKey:key];
-        if (item)
-        {
-            [results addObject:item];
-        }
-        else
-        {
-            [results addObject:[NSNull null]];
-        }
-    }
-    
-    return results;
-    
-LError:
-    return nil;
+    return [self getLocalItemsWithKeys:keys nullForNotFound:TRUE];
 }
 
 -(BOOL)updateItemsInLocalStore:(HVItemCollection *)items
@@ -171,7 +157,7 @@ LError:
         //
         // When the download sub-task completes, collect up all local items and return them to the caller...
         //
-        task.parent.result = [self getLocalItemsWithKeys:keys];
+        task.parent.result = [self getLocalItemsWithKeys:keys nullForNotFound:FALSE];
     }];
     HVCHECK_NOTNULL(downloadTask);
     [getItemsTask setNextTask:downloadTask];
@@ -240,6 +226,31 @@ LError:
 
 
 @implementation HVSynchronizedStore (HVPrivate)
+
+-(HVItemCollection *)getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL)includeNull
+{
+    HVCHECK_NOTNULL(keys);
+    
+    HVItemCollection *results = [[[HVItemCollection alloc] init] autorelease];
+    
+    for (HVItemKey* key in keys)
+    {
+        HVItem* item = [self getLocalItemWithKey:key];
+        if (item)
+        {
+            [results addObject:item];
+        }
+        else if (includeNull)
+        {
+            [results addObject:[NSNull null]];
+        }
+    }
+        
+    return results;
+    
+LError:
+    return nil;
+}
 
 -(HVItemQuery *)queryFromKeys:(NSArray *)keys
 {

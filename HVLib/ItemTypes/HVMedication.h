@@ -123,6 +123,7 @@
 +(HVVocabIdentifier *) vocabForDoseUnits;
 +(HVVocabIdentifier *) vocabForStrengthUnits;
 +(HVVocabIdentifier *) vocabForRoute;
++(HVVocabIdentifier *) vocabForIsPrescribed;
 
 //
 // Trigger downloads of Vocabularies

@@ -52,6 +52,16 @@
     return c_emptyString;
 }
 
+-(NSString *)typeName
+{
+    return c_emptyString;
+}
+
++(void)ensureVocabsDownloaded
+{
+    
+}
+
 @end
 
 

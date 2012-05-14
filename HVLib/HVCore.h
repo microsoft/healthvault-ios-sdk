@@ -59,8 +59,10 @@ void HVReleaseRef(CFTypeRef cf);
 -(void) safeInvoke:(SEL) sel withParam:(id) param;
 
 -(void) invokeOnMainThread:(SEL)aSelector;
+-(void) invokeOnMainThread:(SEL)aSelector withObject:(id) obj;
 
 -(void) log;
+-(NSString *) descriptionForLog;
 
 @end
 

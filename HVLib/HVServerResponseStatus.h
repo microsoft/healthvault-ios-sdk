@@ -18,14 +18,26 @@
 
 #import <Foundation/Foundation.h>
 
+enum HVServerStatusCode 
+{
+    HVServerStatusCodeNone = 0,
+    HVServerStatusCodeItemNotFound = 13
+};
+
 @interface HVServerResponseStatus : NSObject
 {
+@private
     int m_statusCode;
     NSString* m_errorText;
     NSString* m_errorDetails;
 }
 
 @property (readonly, nonatomic) BOOL hasError;
+@property (readonly, nonatomic) BOOL isHVError;
+//
+// If status code is <= 0, then the error was due to Connectivity or
+// other failure, but not a HealthVault failure. 
+//
 @property (readwrite, nonatomic) int statusCode;
 @property (readwrite, nonatomic, retain) NSString* errorText;
 @property (readwrite, nonatomic, retain) NSString* errorDetailsXml;

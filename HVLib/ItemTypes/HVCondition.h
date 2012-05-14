@@ -81,6 +81,12 @@
 // SNOMED. Assumes you have a license for Snomed and have permissions to access it
 //
 +(HVVocabIdentifier *) vocabForName;
++(HVVocabIdentifier *) vocabForStatus;
+
+//
+// Trigger downloads of Vocabularies
+//
++(void) ensureVocabsDownloaded;
 
 //-------------------------
 //

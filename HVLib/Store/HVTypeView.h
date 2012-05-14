@@ -107,7 +107,15 @@
 -(void) removeAllLocalItems;
 
 // TODO: rename these view specific methods
--(BOOL) updateItemInView:(HVItem *) item;
+
+//
+// Returns the new position of item.
+// Also returns the old positon of the item, if it already existed, or NSNotFound
+//
+-(NSUInteger) updateItemInView:(HVItem *) item prevIndex:(NSUInteger *) prevIndex;
+//
+// Returns true if the update changed the sort order
+//
 -(BOOL) updateItemsInView:(HVItemCollection *) items;
 -(BOOL) removeItemFromViewByID:(NSString *) itemID;
 -(BOOL) removeItemsFromViewByID:(NSArray *) itemIDs;

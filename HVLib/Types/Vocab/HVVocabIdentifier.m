@@ -28,6 +28,7 @@ static NSString* const c_element_code = @"code-value";
 NSString* const c_rxNormFamily = @"RxNorm";
 NSString* const c_snomedFamily = @"Snomed";
 NSString* const c_hvFamily = @"wc";
+NSString* const c_icdFamily = @"icd";
 
 @implementation HVVocabIdentifier
 
@@ -74,7 +75,12 @@ LError:
 
 -(NSString *)toKeyString
 {
-    return [NSString stringWithFormat:@"%@_%@_%@", m_name, m_family, m_version];
+    if (m_version)
+    {
+        return [NSString stringWithFormat:@"%@_%@_%@", m_name, m_family, m_version];
+    }
+    
+    return [NSString stringWithFormat:@"%@_%@", m_name, m_family];
 }
 
 -(HVClientResult *)validate

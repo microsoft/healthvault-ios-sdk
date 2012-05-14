@@ -47,6 +47,7 @@ enum HVUIAlertResult
 -(void) show;
 
 +(HVUIAlert *) showWithMessage:(NSString *) message callback:(HVNotify) callback;
++(HVUIAlert *) showYesNoWithMessage:(NSString *) message callback:(HVNotify) callback;
 +(HVUIAlert *) showWithTitle:(NSString *) title message:(NSString *) message callback:(HVNotify) callback;
 +(HVUIAlert *) showInformationalMessage:(NSString *) message;
 +(HVUIAlert *) showPromptWithMessage:(NSString *) message callback:(HVNotify) callback;

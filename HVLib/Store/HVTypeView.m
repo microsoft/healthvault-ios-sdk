@@ -286,15 +286,24 @@ LError:
     return TRUE;
 }
 
--(BOOL)updateItemInView:(HVItem *)item
+-(NSUInteger)updateItemInView:(HVItem *)item prevIndex:(NSUInteger *)prevIndex
 {
-    if (![m_items updateDateForHVItem:item])
+    NSUInteger indexAt = [m_items indexOfItemID:item.itemID];
+    if (prevIndex)
     {
-        return FALSE;
+        *prevIndex = indexAt;
     }
-
+    
+    NSUInteger newIndex;    
+    if (indexAt != NSNotFound)
+    {
+        [m_items removeItemAtIndex:indexAt];
+    }
+    newIndex = [m_items insertHVItemInOrder:item];
+ 
     [self stampUpdated];
-    return TRUE;
+    
+    return newIndex;
 }
 
 -(BOOL) updateItemsInView:(HVItemCollection *)items
@@ -323,7 +332,7 @@ LError:
 
 -(BOOL)removeItemFromViewByID:(NSString *)itemID
 {
-    if (![m_items removeItemByID:itemID])
+    if ([m_items removeItemByID:itemID] == NSNotFound)
     {
         return FALSE;
     }

@@ -34,7 +34,12 @@
 -(id) initOverItemStore:(id<HVItemStore>) store;
 
 -(HVItem *) getLocalItemWithKey:(HVItemKey *) key;
+//
+// Retrieve locally stored items for the given keys
+// If no item is found for a key, returns NSNull
+//
 -(HVItemCollection *) getLocalItemsWithKeys:(NSArray *) keys;
+
 -(HVItem *) getlocalItemWithID:(NSString *) itemID;
 -(BOOL)updateItemsInLocalStore:(HVItemCollection *)items;
 -(void) removeLocalItemWithKey:(HVItemKey *) key;

@@ -121,6 +121,11 @@ LError:
     return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-routes"] autorelease];
 }
 
++(HVVocabIdentifier *)vocabForIsPrescribed
+{    
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-prescribed"] autorelease];
+}
+
 +(void)ensureVocabsDownloaded
 {
     HVLocalVocabStore* vocabStore = [HVClient current].localVault.vocabs;
@@ -129,6 +134,7 @@ LError:
         [vocabStore ensureVocabDownloaded:[HVMedication vocabForDoseUnits]];
         [vocabStore ensureVocabDownloaded:[HVMedication vocabForStrengthUnits]];
         [vocabStore ensureVocabDownloaded:[HVMedication vocabForRoute]];
+        [vocabStore ensureVocabDownloaded:[HVMedication vocabForIsPrescribed]];
     }
     @catch (id exception) 
     {
@@ -195,6 +201,11 @@ LError:
 +(NSString *) XRootElement
 {
     return c_typename;
+}
+
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Medication", @"Medication Type Name");
 }
 
 +(HVItem *) newItem

@@ -34,7 +34,7 @@ static NSString* const c_clientExceptionName = @"HVClientException";
 
 +(void) throwExceptionWithError:(HVClientResult *)error
 {
-    HVClientException* ex = [[HVClientException alloc] initWithName:c_clientExceptionName reason:c_emptyString userInfo:nil];
+    HVClientException* ex = [[[HVClientException alloc] initWithName:c_clientExceptionName reason:c_emptyString userInfo:nil] autorelease];
     ex.details = error;
     
     @throw ex;

@@ -46,6 +46,9 @@
 
 +(NSString *) typeID;
 +(NSString *) XRootElement;
+-(NSString *) typeName;
+
++(void) ensureVocabsDownloaded;
 
 @end
 

@@ -121,6 +121,29 @@ LError:
     return nil;
 }
 
++(HVUIAlert *)showYesNoWithMessage:(NSString *)message callback:(HVNotify)callback
+{
+    NSString* title = [HVClient current].settings.appName;
+    NSString* noText = NSLocalizedString(@"No", @"No button");
+    NSString* yesText = NSLocalizedString(@"Yes", @"Yes button");
+    
+    HVUIAlert* alert = [[HVUIAlert alloc]   initWithTitle:title 
+                                            message:message 
+                                            cancelButtonText:noText 
+                                             okButtonText:yesText 
+                                            callback:callback];
+    [alert show];
+
+    //
+    // DO NOT RELEASE. Releases itself when dialog delegate completes
+    //
+    return alert;
+    
+LError:
+    return nil;
+    
+}
+
 +(HVUIAlert *) showWithTitle:(NSString *) title message:(NSString *) message callback:(HVNotify) callback
 {
     HVUIAlert* alert = [[HVUIAlert alloc] initWithTitle:title message:message callback:callback];

@@ -16,6 +16,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
 
 @interface HVAllergy : HVItemDataTyped
 {
@@ -77,6 +78,17 @@
 //
 //-------------------------
 -(id) initWithName:(NSString *) name;
+
+//-------------------------
+//
+// Standard Vocabs
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForName;
++(HVVocabIdentifier *) vocabForType;
++(HVVocabIdentifier *) vocabForReaction;
+
++(void) ensureVocabsDownloaded;
 
 //-------------------------
 //

@@ -96,6 +96,11 @@ LError:
 
 -(NSString *)toString
 {
+    if (!m_units)
+    {
+        return [NSString stringWithFormat:@"%.2f", m_value]; 
+    }
+    
     return [self toStringWithFormat:@"%.2f %@"];
 }
 

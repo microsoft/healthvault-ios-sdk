@@ -123,16 +123,33 @@ void HVReleaseRef(CFTypeRef cf)
     [self performSelectorOnMainThread:aSelector withObject:nil waitUntilDone:FALSE];
 }
 
+-(void)invokeOnMainThread:(SEL)aSelector withObject:(id)obj
+{
+    [self performSelectorOnMainThread:aSelector withObject:obj waitUntilDone:FALSE];    
+}
+
 -(void)log
 {
     @try
     {
-        NSLog(@"%@", self.description);
+        NSLog(@"%@", [self descriptionForLog]);
     }
     @catch (id ex) 
     {
         
     }
+}
+
+-(NSString *)descriptionForLog
+{
+    if ([self respondsToSelector:@selector(description)])
+    {
+        return [self description];
+    }
+    else 
+    {
+        return NSStringFromClass([self class]);
+    }    
 }
 
 @end

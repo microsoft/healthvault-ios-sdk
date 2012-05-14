@@ -19,6 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "HVCommon.h"
 #import "HVRandom.h"
+#import "XLib.h"
 #import "HVClient.h"
 #import "HVUIAlert.h"
 #import "HVItemTypes.h"

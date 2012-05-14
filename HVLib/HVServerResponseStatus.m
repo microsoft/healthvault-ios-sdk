@@ -30,6 +30,11 @@
     return (m_statusCode != 0 || m_errorText != nil);
 }
 
+-(BOOL)isHVError
+{
+    return (m_statusCode > 0);
+}
+
 -(void)dealloc
 {
     [m_errorText release];
@@ -39,7 +44,12 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"[StatusCode=%d], %@", m_statusCode, m_errorText];
+    if (self.isHVError)
+    {
+        return [NSString stringWithFormat:@"[StatusCode=%d], %@", m_statusCode, m_errorText];
+    }
+    
+    return m_errorText;
 }
 
 @end
@@ -76,7 +86,7 @@ LError:
 
 +(void)throwExceptionWithStatus:(HVServerResponseStatus *)status
 {
-    @throw [[HVServerException alloc] initWithStatus:status];
+    @throw [[[HVServerException alloc] initWithStatus:status] autorelease];
 }
 
 @end

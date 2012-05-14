@@ -18,6 +18,8 @@
 
 #import "HVCommon.h"
 #import "HVCondition.h"
+#import "HVClient.h"
+#import "HVLocalVocabStore.h"
 
 static NSString* const c_typeid = @"7ea7a1f9-880b-4bd4-b593-f5660f20eda8";
 static NSString* const c_typename = @"condition";
@@ -83,6 +85,24 @@ LError:
     return [[[HVVocabIdentifier alloc] initWithFamily:c_snomedFamily andName:@"SnomedConditions_Filtered"] autorelease];    
 }
 
++(HVVocabIdentifier *)vocabForStatus
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"condition-occurrence"] autorelease];    
+}
+
++(void)ensureVocabsDownloaded
+{
+    HVLocalVocabStore* vocabStore = [HVClient current].localVault.vocabs;
+    @try 
+    {
+        [vocabStore ensureVocabDownloaded:[HVCondition vocabForStatus]];
+    }
+    @catch (id exception) 
+    {
+        [exception log];
+    }
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN
@@ -130,6 +150,11 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVCondition typeID]];
+}
+
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Condition", @"Condition Type Name");
 }
 
 @end
