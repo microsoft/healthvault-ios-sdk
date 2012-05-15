@@ -193,6 +193,11 @@ LError:
     return TRUE;
 }
 
+-(HVLocalRecordStore *)getCurrentRecordStore
+{
+    return [m_localVault getRecordStore:self.currentRecord];
+}
+
 @end
 
 static NSString* const c_userfileName = @"user.xml";

@@ -19,7 +19,7 @@
 #import "HVCommon.h"
 #import "XConverter.h"
 
-const int c_xDateFormatCount = 6;
+static int const c_xDateFormatCount = 6;
 static NSString* s_xDateFormats[c_xDateFormatCount] = 
 {
     @"yyyy'-'MM'-'dd'T'HHmmss.SSS'Z'",      // Zulu form

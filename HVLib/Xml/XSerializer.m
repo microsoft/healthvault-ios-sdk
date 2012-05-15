@@ -672,7 +672,7 @@ void throwWriterError(void)
 
 -(void) writeElementRequired:(NSString *)name value:(NSString *)value
 {
-    if ([NSString isNilOrEmpty:value])
+    if (!value)
     {
         [NSException throwInvalidArg];
     }
@@ -721,7 +721,7 @@ void throwWriterError(void)
 
 -(void) writeElement:(NSString *)name value:(NSString *)value
 {
-    if ([NSString isNilOrEmpty:value])
+    if (!value)
     {
         return;
     }

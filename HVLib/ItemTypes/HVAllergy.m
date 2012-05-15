@@ -123,6 +123,7 @@ LError:
     HVSERIALIZE(m_allergenType, c_element_allergenType);
     HVSERIALIZE(m_allergenCode, c_element_allergenCode);
     HVSERIALIZE(m_treatmentProvider, c_element_treatmentProvider);
+    HVSERIALIZE(m_treatment, c_element_treatment);
     HVSERIALIZE(m_isNegated, c_element_negated);
 }
 
@@ -134,6 +135,7 @@ LError:
     HVDESERIALIZE(m_allergenType, c_element_allergenType, HVCodableValue);
     HVDESERIALIZE(m_allergenCode, c_element_allergenCode, HVCodableValue);
     HVDESERIALIZE(m_treatmentProvider, c_element_treatmentProvider, HVPerson);
+    HVDESERIALIZE(m_treatment, c_element_treatment, HVCodableValue);
     HVDESERIALIZE(m_isNegated, c_element_negated, HVBool);
 }
 

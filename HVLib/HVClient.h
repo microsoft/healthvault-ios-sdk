@@ -111,4 +111,6 @@ enum HVAppProvisionStatus
 -(BOOL) saveState;
 -(BOOL) deleteState;
 
+-(HVLocalRecordStore *) getCurrentRecordStore;
+
 @end

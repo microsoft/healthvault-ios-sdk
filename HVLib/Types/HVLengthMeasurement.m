@@ -163,6 +163,11 @@ LError:
     return [NSString stringWithFormat:format, self.inMeters];
 }
 
+-(NSString *)stringInKilometers:(NSString *)format  
+{
+    return [NSString stringWithFormat:format, self.inKilometers];    
+}
+
 -(NSString *) stringInInches:(NSString *)format
 {
     return [NSString stringWithFormat:format, self.inInches];
@@ -175,6 +180,11 @@ LError:
     long inches = totalInches % 12;
     
     return [NSString stringWithFormat:format, feet, inches];
+}
+
+-(NSString *)stringInMiles:(NSString *)format
+{
+    return [NSString stringWithFormat:format, self.inMiles];        
 }
 
 -(HVClientResult *) validate

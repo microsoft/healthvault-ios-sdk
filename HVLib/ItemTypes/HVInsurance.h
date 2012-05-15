@@ -18,6 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
 
 @interface HVInsurance : HVItemDataTyped
 {
@@ -91,6 +92,13 @@
 +(HVItem *) newItem;
 
 -(NSString *) toString;
+
+//-------------------------
+//
+// Vocabulary
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForCoverage;
 
 //-------------------------
 //

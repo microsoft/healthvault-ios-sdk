@@ -78,6 +78,11 @@ static NSString* const c_element_contact = @"contact";
     return [self toString];
 }
 
++(HVVocabIdentifier *)vocabForCoverage
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"coverage-types"] autorelease];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN
@@ -146,6 +151,11 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVInsurance typeID]];
+}
+
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Insurance", @"Insurance Type Name");
 }
 
 @end

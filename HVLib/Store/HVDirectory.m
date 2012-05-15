@@ -20,6 +20,11 @@
 #import "HVDirectory.h"
 #import "XLib.h"
 
+//---------------------------
+//
+// NSFileManager
+//
+//---------------------------
 @implementation NSFileManager (HVExtensions) 
 
 -(NSURL *) pathForStandardDirectory:(NSSearchPathDirectory)name
@@ -46,6 +51,11 @@
 
 @end
 
+//---------------------------
+//
+// NSFileHandle
+//
+//---------------------------
 @implementation NSFileHandle (HVExtensions)
 
 +(NSFileHandle *)createOrOpenForWriteAtPath:(NSString *)path
@@ -62,6 +72,11 @@
 
 @end
 
+//---------------------------
+//
+// FileEnumerator
+//
+//---------------------------
 @interface HVFileNameEnumerator : NSEnumerator 
 {
     NSEnumerator* m_fileNames;
@@ -71,6 +86,11 @@
 
 @end
 
+//---------------------------
+//
+// FileNameEnumerator
+//
+//---------------------------
 @implementation HVFileNameEnumerator
 
 -(id)initWithFileNames:(NSEnumerator *)fileNames
@@ -103,6 +123,11 @@ LError:
 }
 @end
 
+//---------------------------
+//
+// HVDirectory
+//
+//---------------------------
 @implementation HVDirectory
 
 @synthesize url = m_path;
@@ -263,7 +288,6 @@ LError:
 // HVObjectStore
 //
 //---------------------
-
 -(NSEnumerator *)allKeys
 {
     return [[[HVFileNameEnumerator alloc] initWithFileNames:[self getFileNames]] autorelease];
@@ -277,32 +301,41 @@ LError:
 
 -(BOOL)keyExists:(NSString *)key
 {
-    return [self fileExists:key];
+    @synchronized(self)
+    {
+        return [self fileExists:key];
+    }
 }
 
 -(BOOL)deleteKey:(NSString *)key
 {
-    @try 
+    @synchronized(self)
     {
-        return [self deleteFile:key]; 
+        @try 
+        {
+            return [self deleteFile:key]; 
+        }
+        @catch (id ex) 
+        {
+            [ex log];
+        }
+        
+        return FALSE;
     }
-    @catch (id ex) 
-    {
-        [ex log];
-    }
-    
-    return FALSE;
 }
 
 -(id)newObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls
 {
-    NSString *filePath = [self makeFilePathIfExists:key];
-    if (!filePath)
+    @synchronized(self)
     {
-        return nil;
+        NSString *filePath = [self makeFilePathIfExists:key];
+        if (!filePath)
+        {
+            return nil;
+        }
+        
+        return [NSObject newFromFilePath:filePath withRoot:name asClass:cls];
     }
-    
-    return [NSObject newFromFilePath:filePath withRoot:name asClass:cls];
 }
 
 -(id)getObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls
@@ -312,50 +345,77 @@ LError:
 
 -(BOOL) putObject:(id)obj withKey:(NSString *)key andName:(NSString *)name
 {
-    return [XSerializer serialize:obj withRoot:name toFilePath:[self makeChildPath:key]];
+    @synchronized(self)
+    {
+        @try 
+        {
+            return [XSerializer serialize:obj withRoot:name toFilePath:[self makeChildPath:key]];
+        }
+        @catch (id exception) 
+        {
+            [exception log];
+        }
+        
+        return FALSE;
+    }
 }
 
 -(NSData *)getBlob:(NSString *)key
 {
-    NSFileHandle *handle = [self openFileForRead:key];
-    if (!handle)
+    @synchronized(self)
     {
+        NSFileHandle *handle = [self openFileForRead:key];
+        if (!handle)
+        {
+            return nil;
+        }
+        
+        @try 
+        {
+            return [handle readDataToEndOfFile];
+        }
+        @catch (id exception) 
+        {
+            [exception log];
+        }
+        @finally 
+        {
+            [handle closeFile];
+        }
+        
         return nil;
-    }
-    
-    @try 
-    {
-        return [handle readDataToEndOfFile];
-    }
-    @finally 
-    {
-        [handle closeFile];
     }
 }
 
 -(BOOL)putBlob:(NSData *)blob withKey:(NSString *)key
 {
-    NSFileHandle *handle = [self openFileForWrite:key];
-    if (handle == nil)
+    @synchronized(self)
     {
-        [self createFile:key];
-        handle = [self openFileForWrite:key];
+        NSFileHandle *handle = [self openFileForWrite:key];
+        if (handle == nil)
+        {
+            [self createFile:key];
+            handle = [self openFileForWrite:key];
+        }
+        HVCHECK_NOTNULL(handle);
+        
+        @try 
+        {
+            [handle writeData:blob];
+            return TRUE;
+        }
+        @catch (id exception) 
+        {
+            [exception log];
+        }
+        @finally 
+        {
+            [handle closeFile];
+        }
+        
+    LError:
+        return FALSE;
     }
-    HVCHECK_NOTNULL(handle);
-    
-    @try 
-    {
-        [handle writeData:blob];
-    }
-    @finally 
-    {
-        [handle closeFile];
-    }
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
 }
 
 -(id<HVObjectStore>)newChildStore:(NSString *)name
@@ -368,4 +428,5 @@ LError:
     [m_path release];
     [super dealloc];
 }
+
 @end

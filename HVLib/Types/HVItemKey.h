@@ -41,6 +41,7 @@
 
 -(id) initWithKey:(HVItemKey *) key;
 
+-(HVItemKey *) firstKey;
 -(HVItemKey *) itemAtIndex:(NSUInteger) index;
 
 -(HVClientResult *) validate;

@@ -145,6 +145,11 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(HVItemKey *)firstKey
+{
+    return [self itemAtIndex:0];
+}
+
 -(HVItemKey *)itemAtIndex:(NSUInteger)index
 {
     return (HVItemKey *) [self objectAtIndex:index];

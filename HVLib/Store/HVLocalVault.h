@@ -29,10 +29,10 @@
     HVLocalVocabStore* m_vocabs;
 }
 
--(id) initWithRoot:(HVDirectory *) root;
-
 @property (readonly, nonatomic) id<HVObjectStore> root;
 @property (readonly, nonatomic) HVLocalVocabStore* vocabs;
+
+-(id) initWithRoot:(HVDirectory *) root;
 
 -(HVLocalRecordStore *) getRecordStore:(HVRecordReference *) record;
 

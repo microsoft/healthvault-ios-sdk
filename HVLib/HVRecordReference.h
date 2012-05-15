@@ -79,4 +79,5 @@
 -(HVRemoveItemsTask *) removeItemWithKey:(HVItemKey *) key callback:(HVTaskCompletion) callback;
 -(HVRemoveItemsTask *) removeItemsWithKeys:(HVItemKeyCollection *)keys callback:(HVTaskCompletion)callback;
 
+
 @end

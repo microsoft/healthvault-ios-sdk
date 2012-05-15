@@ -88,8 +88,13 @@
 -(NSString *) toString;
 -(NSString *) toStringWithFormat:(NSString *) format;
 
+//
+// These methods expect a string in format @%f...[you can set your own precision]
+//
 -(NSString *) stringInMeters:(NSString *) format;
+-(NSString *) stringInKilometers:(NSString *) format;
 -(NSString *) stringInInches:(NSString *) format;
 -(NSString *) stringInFeetAndInches:(NSString *) format;
+-(NSString *) stringInMiles:(NSString *) format;
 
 @end
