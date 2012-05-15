@@ -37,6 +37,7 @@
 #import "HVFamilyHistory.h"
 #import "HVCCD.h"
 #import "HVCCR.h"
+#import "HVInsurance.h"
 #import "HVEmergencyOrProviderContact.h"
 #import "HVPersonalContactInfo.h"
 #import "HVBasicDemographics.h"
@@ -75,6 +76,7 @@
 -(HVFamilyHistory *) familyHistory;
 -(HVCCD *) ccd;
 -(HVCCR *) ccr;
+-(HVInsurance *) insurance;
 
 -(HVEmergencyOrProviderContact *) emergencyOrProviderContact;
 -(HVPersonalContactInfo *) personalContact;

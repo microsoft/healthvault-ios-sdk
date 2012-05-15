@@ -327,6 +327,8 @@
 		5DC50C5D1506F6040078D85F /* HVClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C5B1506F6010078D85F /* HVClient.m */; };
 		5DC50C601508049F0078D85F /* HVLocalVault.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC50C5E1508049E0078D85F /* HVLocalVault.h */; };
 		5DC50C611508049F0078D85F /* HVLocalVault.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC50C5F1508049F0078D85F /* HVLocalVault.m */; };
+		5DC7260A1561E06C00734BC4 /* HVInsurance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC726081561E06C00734BC4 /* HVInsurance.h */; };
+		5DC7260B1561E06C00734BC4 /* HVInsurance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC726091561E06C00734BC4 /* HVInsurance.m */; };
 		5DC7995F1534C95A00193A3B /* HVBloodGlucose.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC7995D1534C95A00193A3B /* HVBloodGlucose.h */; };
 		5DC799601534C95A00193A3B /* HVBloodGlucose.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7995E1534C95A00193A3B /* HVBloodGlucose.m */; };
 		5DC799641534C97200193A3B /* HVOneToFive.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799621534C97200193A3B /* HVOneToFive.h */; };
@@ -714,6 +716,8 @@
 		5DC50C5B1506F6010078D85F /* HVClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVClient.m; sourceTree = "<group>"; };
 		5DC50C5E1508049E0078D85F /* HVLocalVault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalVault.h; sourceTree = "<group>"; };
 		5DC50C5F1508049F0078D85F /* HVLocalVault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalVault.m; sourceTree = "<group>"; };
+		5DC726081561E06C00734BC4 /* HVInsurance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVInsurance.h; sourceTree = "<group>"; };
+		5DC726091561E06C00734BC4 /* HVInsurance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVInsurance.m; sourceTree = "<group>"; };
 		5DC7995D1534C95A00193A3B /* HVBloodGlucose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBloodGlucose.h; sourceTree = "<group>"; };
 		5DC7995E1534C95A00193A3B /* HVBloodGlucose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBloodGlucose.m; sourceTree = "<group>"; };
 		5DC799621534C97200193A3B /* HVOneToFive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVOneToFive.h; sourceTree = "<group>"; };
@@ -1255,6 +1259,8 @@
 				5DE34C8515393B87003C24E8 /* HVEncounter.m */,
 				5D1F132B1539EDF100524425 /* HVFamilyHistory.h */,
 				5D1F132C1539EDF100524425 /* HVFamilyHistory.m */,
+				5DC726081561E06C00734BC4 /* HVInsurance.h */,
+				5DC726091561E06C00734BC4 /* HVInsurance.m */,
 				5D591D181547136D00EAC934 /* HVCCD.h */,
 				5D591D191547136D00EAC934 /* HVCCD.m */,
 				5D591D2015471A2700EAC934 /* HVCCR.h */,
@@ -1559,6 +1565,7 @@
 				5D591D2C1547330100EAC934 /* HVGetPersonalImageTask.h in Headers */,
 				5D9E83731553000000072A0C /* HVVocabSearcher.h in Headers */,
 				5DD216211556E18A001C8F31 /* HVLocalVocabStore.h in Headers */,
+				5DC7260A1561E06C00734BC4 /* HVInsurance.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1799,6 +1806,7 @@
 				5D591D2D1547330100EAC934 /* HVGetPersonalImageTask.m in Sources */,
 				5D9E83741553000000072A0C /* HVVocabSearcher.m in Sources */,
 				5DD216221556E18A001C8F31 /* HVLocalVocabStore.m in Sources */,
+				5DC7260B1561E06C00734BC4 /* HVInsurance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

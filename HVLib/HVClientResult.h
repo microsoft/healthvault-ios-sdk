@@ -123,6 +123,7 @@ enum HVClientResultCode
     HVClientError_InvalidFile,
     HVClientError_InvalidCCD,
     HVClientError_InvalidCCR,
+    HVClientError_InvalidInsurance,
     //
     // Store
     //
