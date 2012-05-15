@@ -72,6 +72,9 @@
 -(BOOL) getComponents:(NSDateComponents *) components;
 -(NSDate *) toDate;
 
+-(BOOL) setWithDate:(NSDate *) dateValue;
+-(BOOL) setWithComponents:(NSDateComponents *) components;
+
 //-------------------------
 //
 // Text

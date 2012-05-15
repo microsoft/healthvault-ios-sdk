@@ -85,6 +85,34 @@ LError:
     return [[[HVDateTime alloc] initWithDate:date] autorelease];
 }
 
+-(BOOL) setWithDate:(NSDate *) dateValue
+{
+    HVCHECK_NOTNULL(dateValue);
+    
+    NSDateComponents *components = [NSCalendar componentsFromDate:dateValue];
+    HVCHECK_NOTNULL(components);
+    
+    return [self setWithComponents:components];
+
+LError:
+    return FALSE;
+}
+
+-(BOOL) setWithComponents:(NSDateComponents *)components
+{
+    HVCHECK_NOTNULL(components);
+    
+    HVRETAIN(m_date, [[HVDate alloc] initWithComponents:components]);
+    HVRETAIN(m_time, [[HVTime alloc] initwithComponents:components]);
+    
+    HVCHECK_TRUE(m_date && m_time);
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
 -(void) dealloc
 {
     [m_date release];

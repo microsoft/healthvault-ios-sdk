@@ -193,6 +193,11 @@ LError:
     return [[self stringByAppendingPathComponent:name] stringByAppendingPathExtension:ext];
 }
 
+-(NSString *)toString
+{
+    return self;
+}
+
 @end
 
 @implementation NSMutableString (HVNSMutableStringExtensions)

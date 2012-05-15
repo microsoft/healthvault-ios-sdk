@@ -70,7 +70,7 @@
 // (Optional) Person code OR SUFFIX. E.g. 01 = Subscriber
 //
 @property (readwrite, nonatomic, retain) NSString* personCode;
-@property (readwrite, nonatomic, retain) NSString* subsriberName;
+@property (readwrite, nonatomic, retain) NSString* subscriberName;
 //
 // 
 @property (readwrite, nonatomic, retain) HVDateTime* subscriberDOB;
