@@ -18,6 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
 
 @interface HVImmunization : HVItemDataTyped
 {
@@ -107,6 +108,18 @@
 //-------------------------
 
 -(NSString *) toString;
+
+//-------------------------
+//
+// Standard Vocabs
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForName;
+
++(HVVocabIdentifier *) vocabForManufacturer;
++(HVVocabIdentifier *) vocabForAdverseEvent;
++(HVVocabIdentifier *) vocabForRoute;
++(HVVocabIdentifier *) vocabForSurface;
 
 //-------------------------
 //

@@ -127,4 +127,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVProcedure typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Procedure", @"Procedure Type Name");
+}
+
 @end

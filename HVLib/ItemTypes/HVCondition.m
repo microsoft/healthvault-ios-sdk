@@ -80,27 +80,9 @@ LError:
     [super dealloc];
 }
 
-+(HVVocabIdentifier *)vocabForName
-{
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_snomedFamily andName:@"SnomedConditions_Filtered"] autorelease];    
-}
-
 +(HVVocabIdentifier *)vocabForStatus
 {
     return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"condition-occurrence"] autorelease];    
-}
-
-+(void)ensureVocabsDownloaded
-{
-    HVLocalVocabStore* vocabStore = [HVClient current].localVault.vocabs;
-    @try 
-    {
-        [vocabStore ensureVocabDownloaded:[HVCondition vocabForStatus]];
-    }
-    @catch (id exception) 
-    {
-        [exception log];
-    }
 }
 
 -(HVClientResult *)validate

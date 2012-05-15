@@ -84,11 +84,8 @@
 // Standard Vocabs
 //
 //-------------------------
-+(HVVocabIdentifier *) vocabForName;
 +(HVVocabIdentifier *) vocabForType;
 +(HVVocabIdentifier *) vocabForReaction;
-
-+(void) ensureVocabsDownloaded;
 
 //-------------------------
 //

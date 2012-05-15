@@ -57,11 +57,6 @@
     return c_emptyString;
 }
 
-+(void)ensureVocabsDownloaded
-{
-    
-}
-
 @end
 
 

@@ -86,11 +86,6 @@ LError:
     return (m_name) ? [m_name toString] : c_emptyString;
 }
 
-+(HVVocabIdentifier *)vocabForName
-{
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_snomedFamily andName:@"SnomedAllergies_Filtered"] autorelease];    
-}
-
 +(HVVocabIdentifier *)vocabForType
 {
     return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"allergen-type"] autorelease];    
@@ -101,19 +96,6 @@ LError:
     return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"reactions"] autorelease];    
 }
 
-+(void)ensureVocabsDownloaded
-{
-    HVLocalVocabStore* vocabStore = [HVClient current].localVault.vocabs;
-    @try 
-    {
-        [vocabStore ensureVocabDownloaded:[HVAllergy vocabForReaction]];
-        [vocabStore ensureVocabDownloaded:[HVAllergy vocabForType]];
-    }
-    @catch (id exception) 
-    {
-        [exception log];
-    }
-}
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

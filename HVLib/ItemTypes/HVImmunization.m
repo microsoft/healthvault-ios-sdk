@@ -16,9 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #import "HVCommon.h"
 #import "HVImmunization.h"
+#import "HVClient.h"
 
 static NSString* const c_typeid = @"cd3587b5-b6e1-4565-ab3b-1c3ad45eb04f";
 static NSString* const c_typename = @"immunization";
@@ -97,6 +97,31 @@ LError:
     return (m_name) ? [m_name toString] : c_emptyString;
 }
 
++(HVVocabIdentifier *)vocabForName
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunizations"] autorelease];    
+}
+
++(HVVocabIdentifier *)vocabForAdverseEvent
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-adverse-effect"] autorelease];        
+}
+
++(HVVocabIdentifier *)vocabForManufacturer
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hl7Family andName:@"vaccine-manufacturers-mvx"] autorelease];            
+}
+
++(HVVocabIdentifier *)vocabForSurface
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-anatomic-surface"] autorelease];                
+}
+
++(HVVocabIdentifier *)vocabForRoute
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-routes"] autorelease];                    
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN
@@ -162,6 +187,11 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVImmunization typeID]];
+}
+
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Immunization", @"Immunization Type Name");
 }
 
 @end

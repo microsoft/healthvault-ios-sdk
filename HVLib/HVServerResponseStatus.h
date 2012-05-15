@@ -18,10 +18,30 @@
 
 #import <Foundation/Foundation.h>
 
+//
+// Common Status codes
+//
 enum HVServerStatusCode 
 {
-    HVServerStatusCodeNone = 0,
-    HVServerStatusCodeItemNotFound = 13
+    HVServerStatusCodeOK = 0,
+    HVServerStatusCodeFailed = 1,
+    HVServerStatusCodeBadHttp = 2,
+    HVServerStatusCodeInvaliXml = 3,
+    HVServerStatusCodeInvalidRequestIntegrity = 4,
+    HVServerStatusCodeBadMethod = 5,
+    HVServerStatusCodeInvalidApp = 6,
+    HVServerStatusCodeCredentialTokenExpired = 7,
+    HVServerStatusCodeInvalidToken = 8,
+    HVServerStatusCodeInvalidPerson = 9,
+    HVServerStatusCodeInvalidRecord = 10,
+    HVServerStatusCodeAccessDenied = 11,
+    HVServerStatusCodeInvalidItem = 13,
+    HVServerStatusCodeInvalidFilter = 15,
+    HVServerStatusCodeRequestTimedOut = 0x31,
+    HVServerStatusCodeVersionStampMismatch = 0x3d,
+    HVServerStatusCodeRecordQuotaExceeded = 0x44,
+    HVServerStatusCodeApplicationLimitExceeded = 0x5d,
+    HVServerStatusCodeVocabAccessDenied = 130,
 };
 
 @interface HVServerResponseStatus : NSObject

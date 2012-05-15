@@ -18,6 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
 
 @interface HVProcedure : HVItemDataTyped
 {
@@ -36,7 +37,7 @@
 //-------------------------
 //
 // (Required)
-// Vocabulary: SNOMED
+// Vocabulary: SNOMED (SnomedProcedures-Filtered)
 //
 @property (readwrite, nonatomic, retain) HVCodableValue* name;
 //
@@ -45,6 +46,7 @@
 @property (readwrite, nonatomic, retain) HVApproxDateTime* when;
 //
 // (Optional)
+// Vocabulary: (SnomedBodyLocations-Filtered)
 //
 @property (readwrite, nonatomic, retain) HVCodableValue* anatomicLocation;
 //

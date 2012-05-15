@@ -18,8 +18,6 @@
 
 #import "HVCommon.h"
 #import "HVMedication.h"
-#import "HVClient.h"
-#import "HVLocalVocabStore.h"
 
 static NSString* const c_typeid = @"30cafccc-047d-4288-94ef-643571f7919d";
 static NSString* const c_typename = @"medication";
@@ -124,22 +122,6 @@ LError:
 +(HVVocabIdentifier *)vocabForIsPrescribed
 {    
     return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-prescribed"] autorelease];
-}
-
-+(void)ensureVocabsDownloaded
-{
-    HVLocalVocabStore* vocabStore = [HVClient current].localVault.vocabs;
-    @try 
-    {
-        [vocabStore ensureVocabDownloaded:[HVMedication vocabForDoseUnits]];
-        [vocabStore ensureVocabDownloaded:[HVMedication vocabForStrengthUnits]];
-        [vocabStore ensureVocabDownloaded:[HVMedication vocabForRoute]];
-        [vocabStore ensureVocabDownloaded:[HVMedication vocabForIsPrescribed]];
-    }
-    @catch (id exception) 
-    {
-        [exception log];
-    }
 }
 
 -(HVClientResult *)validate

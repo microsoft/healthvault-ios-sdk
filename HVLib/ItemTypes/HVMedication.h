@@ -125,11 +125,6 @@
 +(HVVocabIdentifier *) vocabForRoute;
 +(HVVocabIdentifier *) vocabForIsPrescribed;
 
-//
-// Trigger downloads of Vocabularies
-//
-+(void) ensureVocabsDownloaded;
-
 //-------------------------
 //
 // Type information
