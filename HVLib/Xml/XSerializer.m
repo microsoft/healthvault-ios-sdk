@@ -572,6 +572,21 @@ LError:
     return TRUE;
 }
 
+-(BOOL)readBoolAttribute:(NSString *)name boolValue:(BOOL *)value
+{
+    if (!self.hasAttributes || ![self moveToAttribute:name])
+    {
+        return FALSE;
+    }
+    
+    NSString* string = self.value;
+    *value = [self.converter stringToBool:string];
+    
+    [self moveToElement];
+    
+    return TRUE;    
+}
+
 -(BOOL) readUntilNodeType:(enum XNodeType)type
 {
     while ([self read])

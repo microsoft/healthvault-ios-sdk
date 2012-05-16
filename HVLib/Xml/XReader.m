@@ -196,7 +196,7 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
 
 -(BOOL) hasAttributes
 {
-    return xmlTextReaderHasValue(m_reader);
+    return xmlTextReaderHasAttributes(m_reader);
 }
 
 -(int) attributeCount

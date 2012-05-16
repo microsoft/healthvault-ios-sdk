@@ -77,6 +77,11 @@ LError:
 
 -(NSString *)toString
 {
+    if (m_person)
+    {
+        return [m_person toString];
+    }
+    
     return (m_relationship) ? [m_relationship toString] : c_emptyString;
 }
 

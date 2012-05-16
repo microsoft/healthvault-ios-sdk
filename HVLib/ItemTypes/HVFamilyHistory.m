@@ -50,6 +50,36 @@ static NSString* const c_element_relative = @"relative";
     return (self.hasConditions) ? [m_conditions objectAtIndex:0] : nil;
 }
 
+-(NSString *)toString
+{
+    if (!self.hasConditions)
+    {
+        return c_emptyString;
+    }
+    
+    if (m_conditions.count == 1)
+    {
+        return [[m_conditions objectAtIndex:0] toString];
+    }
+    
+    NSMutableString* output = [[[NSMutableString alloc] init] autorelease];
+    for (NSUInteger i = 0, count = m_conditions.count; i < count; ++i)
+    {
+        if (i > 0)
+        {
+            [output appendString:@","];
+        }
+        [output appendString:[[m_conditions objectAtIndex:i] toString]];
+    }
+
+    return output;
+}
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
 -(void)dealloc
 {
     [m_relative release];

@@ -18,6 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
 
 @interface HVFamilyHistory : HVItemDataTyped
 {
@@ -53,6 +54,13 @@
 -(id) initWithRelative:(HVRelative *) relative andCondition:(HVConditionEntry *) condition;
 
 +(HVItem *) newItem;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
+-(NSString *) toString;
 
 //-------------------------
 //
