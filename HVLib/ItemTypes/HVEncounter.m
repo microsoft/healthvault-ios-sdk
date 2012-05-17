@@ -107,4 +107,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVEncounter typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Encounter", @"Encounter Type Name");
+}
+
 @end

@@ -258,6 +258,11 @@ LError:
 
 -(void) appendStringAsLine:(NSString *)string
 {
+    if (!string)
+    {
+        return;
+    }
+    
     [self appendString:string];
     [self appendNewLine];
 }

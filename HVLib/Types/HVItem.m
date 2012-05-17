@@ -192,11 +192,6 @@ LError:
 
 -(NSDate *)getDate
 {
-    if (m_effectiveDate)
-    {
-        return m_effectiveDate;
-    }
-    
     if (self.hasTypedData)
     {
         NSDate *date = [m_data.typed getDate];
@@ -204,6 +199,11 @@ LError:
         {
             return date;
         }
+    }
+
+    if (m_effectiveDate)
+    {
+        return m_effectiveDate;
     }
     
     return nil;
@@ -256,6 +256,29 @@ LError:
     
 LError:
     return nil;
+}
+
+-(HVItem *)shallowClone
+{
+    HVItem* item = [[[HVItem alloc] init] autorelease];
+    item.key = self.key;
+    item.type = self.type;
+    item.state = self.state;
+    item.flags = self.flags;
+    item.effectiveDate = self.effectiveDate;
+    item.created = self.created;
+    item.updated = self.updated;
+    item.data = self.data;
+    item.blobs = self.blobs;
+    
+    return item;
+}
+
+-(void)clearSystemFields
+{
+    self.effectiveDate = nil;
+    self.updated = nil;
+    self.updated = nil;
 }
 
 -(HVClientResult *) validate

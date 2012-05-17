@@ -72,7 +72,10 @@
 
 @property (readwrite, nonatomic) enum HVItemState state;
 @property (readwrite, nonatomic) int flags;
-
+//
+// 
+// The effective date impacts the default sort order of returned results
+//
 @property (readwrite, nonatomic, retain) NSDate* effectiveDate;
 
 @property (readwrite, nonatomic, retain) HVAudit* created;
@@ -107,6 +110,17 @@
 
 -(NSString *) toXmlString;
 +(HVItem *) newFromXmlString:(NSString *) xml;
+
+//
+// Does a SHALLOW CLONE. 
+// You get a new HVItem but pointed at all the same internal objects
+//
+-(HVItem*) shallowClone;
+//
+// Call this to clear fields that are typically set by the HV service
+// - EffectiveDate, UpdateDate, etc...
+//
+-(void) clearSystemFields; 
 
 //-------------------------
 //

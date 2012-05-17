@@ -172,4 +172,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVWeight typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Weight", @"Weight Type Name");
+}
+
 @end
