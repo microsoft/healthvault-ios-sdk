@@ -38,7 +38,7 @@ HVClientResult* HVValidateArray(NSArray* array, enum HVClientResultCode error)
         if ([obj isKindOfClass:hvClass])
         {
             HVType* hvType = (HVType *) obj;
-            HVVALIDATE_SUCCESS([hvType validate]);
+            HVCHECK_RESULT([hvType validate]);
         }
         else if ([obj isKindOfClass:stringClass])
         {

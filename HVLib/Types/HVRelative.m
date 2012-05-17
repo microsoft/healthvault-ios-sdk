@@ -85,6 +85,15 @@ LError:
     return (m_relationship) ? [m_relationship toString] : c_emptyString;
 }
 
++(HVVocabIdentifier *)vocabForRelationship
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"personal-relationship"] autorelease];
+}
+
++(HVVocabIdentifier *)vocabForRegionOfOrigin
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"family-history-region-of-origin"] autorelease];
+}
 
 -(HVClientResult *)validate
 {
@@ -117,7 +126,7 @@ LError:
     HVDESERIALIZE(m_person, c_element_name, HVPerson);
     HVDESERIALIZE(m_dateOfBirth, c_element_dateOfBirth, HVApproxDate);
     HVDESERIALIZE(m_dateOfDeath, c_element_dateOfDeath, HVApproxDate);
-    HVDESERIALIZE(m_regionOfOrigin, c_element_region, HVApproxDate);    
+    HVDESERIALIZE(m_regionOfOrigin, c_element_region, HVCodableValue);    
 }
 
 @end

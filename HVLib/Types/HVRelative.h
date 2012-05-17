@@ -21,6 +21,7 @@
 #import "HVCodableValue.h"
 #import "HVPerson.h"
 #import "HVApproxDate.h"
+#import "HVVocab.h"
 
 @interface HVRelative : HVType
 {
@@ -73,5 +74,13 @@
 //
 //-------------------------
 -(NSString *) toString;
+
+//-------------------------
+//
+// Vocab
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForRelationship;  
++(HVVocabIdentifier *) vocabForRegionOfOrigin;  
 
 @end

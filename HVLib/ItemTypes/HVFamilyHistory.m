@@ -146,4 +146,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVFamilyHistory typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Family History", @"Family History Type Name");
+}
+
 @end
