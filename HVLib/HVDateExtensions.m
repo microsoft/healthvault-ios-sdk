@@ -209,7 +209,7 @@ LError:
 
 +(NSDateFormatter *) newZuluFormatter
 {
-    NSDateFormatter *formatter = [NSDateFormatter newUtcFormatter];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     if (formatter)
     {
         [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH:mm:ss.SSS'Z'"]; // Zulu time format

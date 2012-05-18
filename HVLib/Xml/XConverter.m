@@ -42,7 +42,7 @@ static NSString* const c_FALSE = @"false";
     self = [super init];
     HVCHECK_SELF;
 
-    m_parser = [NSDateFormatter newUtcFormatter];
+    m_parser = [[NSDateFormatter alloc] init]; // Default timezone
     HVCHECK_NOTNULL(m_parser);
     
     m_formatter = [NSDateFormatter newZuluFormatter]; // always emit Zulu form

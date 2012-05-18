@@ -192,6 +192,11 @@ LError:
 
 -(NSDate *)getDate
 {
+    if (m_effectiveDate)
+    {
+        return m_effectiveDate;
+    }
+    
     if (self.hasTypedData)
     {
         NSDate *date = [m_data.typed getDate];
@@ -200,12 +205,7 @@ LError:
             return date;
         }
     }
-
-    if (m_effectiveDate)
-    {
-        return m_effectiveDate;
-    }
-    
+ 
     return nil;
 }
 
