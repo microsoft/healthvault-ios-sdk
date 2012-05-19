@@ -26,8 +26,7 @@
 -(void) setLocalStore:(id<HVItemStore>) store;
 
 //
-// Works differently from getLocalItemsWithKeys
-// If a local item is not found, does not create an NSNull entry...
+// If a local item is not found and nullForNotFound is FALSE, does not create an NSNull entry...
 //
 -(HVItemCollection *) getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL) includeNull;
 
@@ -92,7 +91,18 @@ LError:
     HVCHECK_NOTNULL(key);
     
     HVItem* item  = [self getlocalItemWithID:key.itemID];
-    if (item && key.hasVersion && [item isVersion:key.version])
+    if (!item)
+    {
+        return nil;
+    }
+    
+    if (!key.hasVersion)
+    {
+        // Did not want a version specific item.. so return the item we have
+        return item;
+    }
+    
+    if ([item isVersion:key.version]) // Check version stamp
     {
         return item;
     }
@@ -158,6 +168,7 @@ LError:
         // When the download sub-task completes, collect up all local items and return them to the caller...
         //
         task.parent.result = [self getLocalItemsWithKeys:keys nullForNotFound:FALSE];
+        
     }];
     HVCHECK_NOTNULL(downloadTask);
     [getItemsTask setNextTask:downloadTask];
@@ -198,7 +209,7 @@ LError:
     
     HVCHECK_NOTNULL(record); 
     HVCHECK_NOTNULL(query);
-
+        
     downloadTask = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(downloadTask);
     downloadTask.taskName = @"downloadItems";

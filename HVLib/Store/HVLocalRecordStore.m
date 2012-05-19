@@ -20,6 +20,7 @@
 #import "HVLocalRecordStore.h"
 #import "HVTypeView.h"
 #import "HVSynchronizedStore.h"
+#import "HVCachingObjectStore.h"
 
 static NSString* const c_view = @"view";
 static NSString* const c_personalImage = @"personalImage";
@@ -36,6 +37,11 @@ static NSString* const c_personalImage = @"personalImage";
 
 -(id)initForRecord:(HVRecordReference *)record overRoot:(id<HVObjectStore>)root
 {
+    return [self initForRecord:record overRoot:root withCache:FALSE];
+}
+
+-(id)initForRecord:(HVRecordReference *)record overRoot:(id<HVObjectStore>)root withCache:(BOOL)cache
+{
     HVCHECK_NOTNULL(record);
     HVCHECK_NOTNULL(root);
     
@@ -51,8 +57,18 @@ static NSString* const c_personalImage = @"personalImage";
     id<HVObjectStore> dataStore = [m_root newChildStore:@"Data"];
     HVCHECK_NOTNULL(dataStore);
     
+    if (cache)
+    {
+        id<HVObjectStore> cachingDataStore = [[HVCachingObjectStore alloc] initWithObjectStore:dataStore];
+        [dataStore release];
+        HVCHECK_NOTNULL(cachingDataStore);
+        
+        dataStore = cachingDataStore;
+    }
+    
     m_data = [[HVSynchronizedStore alloc] initOverStore:dataStore];
     [dataStore release];
+    
     HVCHECK_NOTNULL(m_data);
     
     HVRETAIN(m_record, record);

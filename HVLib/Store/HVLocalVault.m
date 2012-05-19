@@ -28,6 +28,7 @@
 
 @synthesize root = m_root;
 @synthesize vocabs = m_vocabs;
+@synthesize cache = m_cache;
 
 -(id)initWithRoot:(HVDirectory *)root
 {
@@ -64,7 +65,7 @@ LError:
         HVLocalRecordStore* recordStore = [m_recordStores objectForKey:record.ID];
         if (!recordStore)
         {
-            recordStore = [[HVLocalRecordStore alloc] initForRecord:record overRoot:m_root];
+            recordStore = [[HVLocalRecordStore alloc] initForRecord:record overRoot:m_root withCache:m_cache];
             [m_recordStores setObject:recordStore forKey:record.ID];
         }
         

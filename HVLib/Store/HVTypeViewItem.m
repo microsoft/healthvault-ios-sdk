@@ -52,7 +52,11 @@ LError:
 {
     HVCHECK_NOTNULL(item);
     
-    return [self initWithDate:item.date andID:item.itemID];
+    self = [super initWithKey:item];
+    HVCHECK_SELF;
+    
+    self.date = item.date;
+    return self;
     
 LError:
     HVALLOC_FAIL;
@@ -146,7 +150,7 @@ LError:
 
 -(NSString *) description
 {
-    return [NSString stringWithFormat:@"%@ [%@]", [m_date toStringWithFormat:@"MM/dd/YY hh:mmL:ss aaa"], self.itemID];
+    return [NSString stringWithFormat:@"%@ [%@, %@]", [m_date toStringWithFormat:@"MM/dd/YY hh:mmL:ss aaa"], self.itemID, self.version];
 }
 
 -(void) serialize:(XWriter *)writer

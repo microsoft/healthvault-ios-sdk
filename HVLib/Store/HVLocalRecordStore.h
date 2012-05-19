@@ -55,7 +55,11 @@
 // Initializers
 //
 //-------------------------
+//
+// NO caching by default.
+//
 -(id) initForRecord:(HVRecordReference *) record overRoot:(id<HVObjectStore>) root;
+-(id) initForRecord:(HVRecordReference *) record overRoot:(id<HVObjectStore>) root withCache:(BOOL) cache;
 
 //-------------------------
 //

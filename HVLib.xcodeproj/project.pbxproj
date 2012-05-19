@@ -139,6 +139,8 @@
 		5D2D1C5E14E4A4F400C85B7E /* XWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D1C5C14E4A4F400C85B7E /* XWriter.m */; };
 		5D2D1C6114E4AC9B00C85B7E /* XNodeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D1C6014E4AC9B00C85B7E /* XNodeType.m */; };
 		5D311729150FE26600B8F3D7 /* HVBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311728150FE26600B8F3D7 /* HVBlock.m */; };
+		5D338B6115680895005A6C55 /* HVCachingObjectStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D338B5F15680893005A6C55 /* HVCachingObjectStore.h */; };
+		5D338B6215680895005A6C55 /* HVCachingObjectStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D338B6015680894005A6C55 /* HVCachingObjectStore.m */; };
 		5D362B55152F8541006CC30C /* HVPrescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D362B53152F84E2006CC30C /* HVPrescription.h */; };
 		5D362B56152F8542006CC30C /* HVPrescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D362B54152F84FA006CC30C /* HVPrescription.m */; };
 		5D39F9221513A07800208A7B /* HVRecordReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F9201513A07700208A7B /* HVRecordReference.h */; };
@@ -525,6 +527,8 @@
 		5D2D1C5C14E4A4F400C85B7E /* XWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWriter.m; sourceTree = "<group>"; };
 		5D2D1C6014E4AC9B00C85B7E /* XNodeType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNodeType.m; sourceTree = "<group>"; };
 		5D311728150FE26600B8F3D7 /* HVBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlock.m; sourceTree = "<group>"; };
+		5D338B5F15680893005A6C55 /* HVCachingObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCachingObjectStore.h; sourceTree = "<group>"; };
+		5D338B6015680894005A6C55 /* HVCachingObjectStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCachingObjectStore.m; sourceTree = "<group>"; };
 		5D362B53152F84E2006CC30C /* HVPrescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVPrescription.h; sourceTree = "<group>"; };
 		5D362B54152F84FA006CC30C /* HVPrescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVPrescription.m; sourceTree = "<group>"; };
 		5D39F9201513A07700208A7B /* HVRecordReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRecordReference.h; sourceTree = "<group>"; };
@@ -1337,6 +1341,8 @@
 				5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */,
 				5DD2161F1556E18A001C8F31 /* HVLocalVocabStore.h */,
 				5DD216201556E18A001C8F31 /* HVLocalVocabStore.m */,
+				5D338B5F15680893005A6C55 /* HVCachingObjectStore.h */,
+				5D338B6015680894005A6C55 /* HVCachingObjectStore.m */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -1566,6 +1572,7 @@
 				5D9E83731553000000072A0C /* HVVocabSearcher.h in Headers */,
 				5DD216211556E18A001C8F31 /* HVLocalVocabStore.h in Headers */,
 				5DC7260A1561E06C00734BC4 /* HVInsurance.h in Headers */,
+				5D338B6115680895005A6C55 /* HVCachingObjectStore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1807,6 +1814,7 @@
 				5D9E83741553000000072A0C /* HVVocabSearcher.m in Sources */,
 				5DD216221556E18A001C8F31 /* HVLocalVocabStore.m in Sources */,
 				5DC7260B1561E06C00734BC4 /* HVInsurance.m in Sources */,
+				5D338B6215680895005A6C55 /* HVCachingObjectStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
