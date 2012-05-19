@@ -118,6 +118,27 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(BOOL)setWithDate:(NSDate *)date
+{
+    return [self setWithComponents:[NSCalendar componentsFromDate:date]];
+}
+
+-(BOOL)setWithComponents:(NSDateComponents *)components
+{
+    HVCHECK_NOTNULL(components);
+    
+    HVRETAIN(m_year, [[HVYear alloc] initWith:components.year]);
+    HVRETAIN(m_month, [[HVMonth alloc] initWith:components.month]);
+    HVRETAIN(m_day, [[HVDay alloc] initWith:components.day]);
+
+    HVCHECK_TRUE(m_year && m_month && m_day);
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
 +(HVDate *)fromDate:(NSDate *)date
 {
     return [[[HVDate alloc] initWithDate:date] autorelease];

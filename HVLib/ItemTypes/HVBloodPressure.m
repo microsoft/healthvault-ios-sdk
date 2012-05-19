@@ -194,4 +194,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVBloodPressure typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Blood Pressure", @"Blood Pressure Type Name");
+}
+
 @end

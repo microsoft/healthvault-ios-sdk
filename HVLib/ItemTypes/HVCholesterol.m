@@ -157,4 +157,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVCholesterol typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Cholesterol", @"Cholesterol Type Name");
+}
+
 @end

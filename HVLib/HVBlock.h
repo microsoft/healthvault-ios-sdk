@@ -26,6 +26,7 @@
 typedef void (^HVAction) (void);
 typedef BOOL (^HVPredicate) (void);
 typedef void (^HVNotify) (id sender);
+typedef id (^HVFactory) (id key);
 
 
 void safeInvokeAction(HVAction action);
