@@ -164,4 +164,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVHeight typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Height", @"Height Type Name");
+}
+
 @end

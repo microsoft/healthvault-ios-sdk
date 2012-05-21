@@ -91,9 +91,13 @@
 //
 // These methods expect a string in format @%f...[you can set your own precision]
 //
+-(NSString *) stringInCentimeters:(NSString *) format;
 -(NSString *) stringInMeters:(NSString *) format;
 -(NSString *) stringInKilometers:(NSString *) format;
 -(NSString *) stringInInches:(NSString *) format;
+//
+// Feet/Inches are rounded, so pass in a string with %@d...
+//
 -(NSString *) stringInFeetAndInches:(NSString *) format;
 -(NSString *) stringInMiles:(NSString *) format;
 

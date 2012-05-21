@@ -158,6 +158,11 @@ LError:
     return [NSString stringWithFormat:format, self.inMeters];
 }
 
+-(NSString *)stringInCentimeters:(NSString *)format
+{
+    return [NSString stringWithFormat:format, self.inCentimeters];    
+}
+
 -(NSString *)stringInMeters:(NSString *)format
 {
     return [NSString stringWithFormat:format, self.inMeters];

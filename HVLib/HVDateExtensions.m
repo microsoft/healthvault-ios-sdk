@@ -28,7 +28,7 @@
     return self.description;
 }
 
--(NSString*) toStringWithFormat:(id)format
+-(NSString*) toStringWithFormat:(NSString *)format
 {
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init]; 
     HVCHECK_NOTNULL(formatter);
@@ -53,6 +53,20 @@ LError:
     
     return string;
 
+LError:
+    return nil;
+}
+
+-(NSString *)toStringWithStyle:(NSDateFormatterStyle)style
+{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init]; 
+    HVCHECK_NOTNULL(formatter);
+    
+    NSString* string = [formatter dateToString:self withStyle:style];
+    [formatter release];
+    
+    return string;
+    
 LError:
     return nil;
 }

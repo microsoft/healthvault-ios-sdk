@@ -93,7 +93,7 @@ LError:
 
 -(void)ensureVocabDownloaded:(HVVocabIdentifier *)vocab
 {
-    [self ensureVocabDownloaded:vocab maxAge:30 * 24 * 3600]; // Every 30 days - these many seconds
+    [self ensureVocabDownloaded:vocab maxAge:60 * 24 * 3600]; // Every 60 days - these many seconds
 }
 
 -(void)ensureVocabDownloaded:(HVVocabIdentifier *)vocab maxAge:(NSTimeInterval)ageInSeconds

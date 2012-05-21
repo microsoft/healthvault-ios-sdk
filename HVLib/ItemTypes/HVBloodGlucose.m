@@ -156,6 +156,21 @@ LError:
     return [[HVBloodGlucose newMeasurementText:@"Whole blood" andCode:@"wb"] autorelease];
 }
 
++(HVVocabIdentifier *)vocabForContext
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-context"] autorelease];    
+}
+
++(HVVocabIdentifier *)vocabForMeasurementType
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-type"] autorelease];    
+}
+
++(HVVocabIdentifier *)vocabForNormalcy
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"normalcy-one-to-five"] autorelease];    
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN
@@ -209,6 +224,11 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVBloodGlucose typeID]];
+}
+
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Blood Glucose", @"Blood Glucose Type Name");
 }
 
 @end

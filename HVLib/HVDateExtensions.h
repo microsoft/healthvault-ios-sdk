@@ -25,6 +25,7 @@ const NSUInteger NSAllCalendarUnits;
 -(NSString*) toString;
 -(NSString*) toStringWithFormat:(NSString*) format;
 -(NSString *) toZuluString;
+-(NSString*) toStringWithStyle:(NSDateFormatterStyle) style;
 
 -(NSComparisonResult) compareDescending:(NSDate*) other;
 

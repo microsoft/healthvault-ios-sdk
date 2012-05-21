@@ -100,6 +100,9 @@
 //
 +(HVCodableValue *) createWholeBloodMeasurementType;
 
++(HVVocabIdentifier *) vocabForMeasurementType;
++(HVVocabIdentifier *) vocabForContext;
++(HVVocabIdentifier *) vocabForNormalcy;
 
 //-------------------------
 //
