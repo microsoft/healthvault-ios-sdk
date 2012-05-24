@@ -26,7 +26,6 @@
 -(NSURL *) cacheDirectoryPath;
 
 -(long) sizeOfFileAtPath:(NSString *) path;
--(NSString *) mimeTypeForFileExtension:(NSString *) ext;
 
 @end
 

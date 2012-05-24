@@ -310,7 +310,6 @@
 		5D983C0914E9850500C287B7 /* HVMillisecond.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983C0714E9850400C287B7 /* HVMillisecond.m */; };
 		5D9E83731553000000072A0C /* HVVocabSearcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D9E83711553000000072A0C /* HVVocabSearcher.h */; };
 		5D9E83741553000000072A0C /* HVVocabSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9E83721553000000072A0C /* HVVocabSearcher.m */; };
-		5DB42069156C78F300E1A473 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB42068156C78F300E1A473 /* MobileCoreServices.framework */; };
 		5DB4206D156C959200E1A473 /* HVItemBlobUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB4206B156C959200E1A473 /* HVItemBlobUploadTask.h */; };
 		5DB4206E156C959200E1A473 /* HVItemBlobUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4206C156C959200E1A473 /* HVItemBlobUploadTask.m */; };
 		5DC3C43715360123008BBDBF /* HVGetAuthorizedPeopleResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC3C43515360123008BBDBF /* HVGetAuthorizedPeopleResult.h */; };
@@ -561,7 +560,6 @@
 		5D39F936151A3AA100208A7B /* HVLocalItemStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalItemStore.m; sourceTree = "<group>"; };
 		5D39F939151A718900208A7B /* HVLocalRecordStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalRecordStore.h; sourceTree = "<group>"; };
 		5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalRecordStore.m; sourceTree = "<group>"; };
-		5D4F8667154AE40200E71300 /* libHVUILib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHVUILib.a; path = "../HVUILib/build/Release-iphoneos/libHVUILib.a"; sourceTree = "<group>"; };
 		5D5299AC14DCB3A700D2636E /* libHVLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHVLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5299AF14DCB3A700D2636E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5D5299B314DCB3A700D2636E /* HVLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HVLib-Prefix.pch"; sourceTree = "<group>"; };
@@ -815,7 +813,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DB42069156C78F300E1A473 /* MobileCoreServices.framework in Frameworks */,
 				5D5F3112150E95E700ED11E7 /* UIKit.framework in Frameworks */,
 				5D76B9C914DCB92400BA865F /* libxml2.2.dylib in Frameworks */,
 				5D5299B014DCB3A700D2636E /* Foundation.framework in Frameworks */,
@@ -870,7 +867,6 @@
 		5D5299A114DCB3A700D2636E = {
 			isa = PBXGroup;
 			children = (
-				5D4F8667154AE40200E71300 /* libHVUILib.a */,
 				5D76B9C814DCB92400BA865F /* libxml2.2.dylib */,
 				5D5299B114DCB3A700D2636E /* HVLib */,
 				5D5299AE14DCB3A700D2636E /* Frameworks */,
