@@ -302,9 +302,14 @@ LError:
     item.effectiveDate = self.effectiveDate;
     item.created = self.created;
     item.updated = self.updated;
-    item.data = self.data;
-    item.blobs = self.blobs;
-    
+    if (item.hasData)
+    {
+        item.data = self.data;
+    }
+    if (item.hasBlobData)
+    {
+        item.blobs = self.blobs;
+    }
     return item;
 }
 
