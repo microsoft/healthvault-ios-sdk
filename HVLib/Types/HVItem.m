@@ -19,6 +19,7 @@
 #import "HVCommon.h"
 #import "HVItem.h"
 #import "HVClient.h"
+#import "HVItemBlobUploadTask.h"
 
 static NSString* const c_element_key = @"thing-id";
 static NSString* const c_element_type = @"type-id";
@@ -42,9 +43,6 @@ static NSString* const c_element_blobs = @"blob-payload";
 @synthesize created = m_created;
 @synthesize updated = m_updated;
 
-@synthesize data = m_data;
-@synthesize blobs = m_blobs;
-
 -(BOOL)hasKey
 {
     return (m_key != nil);
@@ -64,6 +62,17 @@ static NSString* const c_element_blobs = @"blob-payload";
 -(void) setData:(HVItemData *)data
 {
     HVRETAIN(m_data, data);
+}
+
+-(HVBlobPayload *)blobs
+{
+    HVENSURE(m_blobs, HVBlobPayload);
+    return m_blobs;
+}
+
+-(void)setBlobs:(HVBlobPayload *)blobs
+{
+    HVRETAIN(m_blobs, blobs);
 }
 
 -(BOOL) hasTypedData
@@ -220,6 +229,11 @@ LError:
     return FALSE;
 }
 
+//------------------------
+//
+// Blob - Helper methods
+//
+//------------------------
 -(HVTask *)updateBlobData:(HVTaskCompletion)callback
 {
     return [self updateBlobDataFromRecord:nil andCallback:callback];
@@ -232,11 +246,12 @@ LError:
     {
         record = [HVClient current].currentRecord;
     }
-
+    //
+    // We'll query for the latest blob information for this item
+    //
     HVItemQuery *query = [[[HVItemQuery alloc] initWithItemKey:m_key] autorelease];
     HVCHECK_NOTNULL(query);
-    
-    query.view.sections = HVItemSection_Blobs;
+    query.view.sections = HVItemSection_Blobs;  // Blob data only
         
     HVGetItemsTask* getItemsTask = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
         
@@ -258,6 +273,24 @@ LError:
 LError:
     return nil;
 }
+
+-(HVItemBlobUploadTask *)uploadBlob:(id<HVBlobSource>)data contentType:(NSString *)contentType andCallback:(HVTaskCompletion)callback
+{
+    return [self uploadBlob:data forBlobName:c_emptyString contentType:contentType andCallback:callback];
+}
+
+-(HVItemBlobUploadTask *)uploadBlob:(id<HVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType andCallback:(HVTaskCompletion)callback
+{
+    HVBlobInfo* blobInfo = [[HVBlobInfo alloc] initWithName:name andContentType:contentType];
+    
+    HVItemBlobUploadTask* task = [[[HVItemBlobUploadTask alloc] initWithSource:data blobInfo:blobInfo forItem:self andCallback:callback] autorelease];
+    [blobInfo release];
+    
+    [task start];
+    
+    return task;
+}
+
 
 -(HVItem *)shallowClone
 {

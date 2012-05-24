@@ -1,5 +1,5 @@
 //
-//  HVBlobInfo.h
+//  HVBlobPutParameters.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -18,35 +18,33 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HVBaseTypes.h"
+#import "HVType.h"
 
-@interface HVBlobInfo : HVType
+@interface HVBlobHashAlgorithmParameters : HVType
 {
 @private
-    HVStringZ255* m_name;
-    HVStringZ1024* m_contentType;    
+    int m_blockSize;
 }
 
-//-------------------------
-//
-// Data
-//
-//-------------------------
-//
-// (Optional). Most blobs are named (like named streams). 
-// However, you can have a 'default' blob with no name (empty string)
-//
-@property (readwrite, nonatomic, retain) NSString* name;
-//
-// (Optional) MIME type for this blob
-//
-@property (readwrite, nonatomic, retain) NSString* contentType;
+@property (readwrite, nonatomic) int blockSize;
 
-//-------------------------
-//
-// Initializers
-//
-//-------------------------
--(id) initWithName:(NSString *) name andContentType:(NSString *) contentType;
+@end
+
+@interface HVBlobPutParameters : HVType
+{
+@private
+    NSString* m_url;
+    int m_chunkSize;
+    int m_maxSize;
+    NSString* m_hashAlgorithm;
+    HVBlobHashAlgorithmParameters* m_hashParams;
+}
+
+@property (readwrite, nonatomic, retain) NSString* url;
+@property (readwrite, nonatomic) int chunkSize;
+@property (readwrite, nonatomic) int maxSize;
+@property (readwrite, nonatomic, retain) NSString* hashAlgorithm;
+@property (readwrite, nonatomic, retain) HVBlobHashAlgorithmParameters* hashParams;
+
 
 @end

@@ -112,8 +112,7 @@ LError:
             request.personId = m_record.personID;
         }
         
-        [[HVClient current].service sendRequest:request];        
-
+        [[HVClient current].service sendRequest:request];   
     }
     @catch (id ex) 
     {

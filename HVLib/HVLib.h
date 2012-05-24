@@ -24,4 +24,6 @@
 #import "HVUIAlert.h"
 #import "HVItemTypes.h"
 #import "HVAsyncTask.h"
+#import "HVBlob.h"
+#import "HVVocab.h"
 #import "HVMethods.h"

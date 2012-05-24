@@ -1,7 +1,6 @@
 //
-//  HVBlobPayload.h
+//  HVBlob.h
 //  HVLib
-//
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,21 +16,7 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "HVBlobPayloadItem.h"
-
-@interface HVBlobPayload : HVType
-{
-@private
-    HVBlobPayloadItemCollection* m_blobItems;
-}
-
-@property (readonly, nonatomic) HVBlobPayloadItemCollection* items;
-@property (readonly, nonatomic) BOOL hasItems;
-
--(HVBlobPayloadItem *) getDefaultBlob;
--(HVBlobPayloadItem *) getBlobNamed:(NSString *) name;
-
--(BOOL) addOrUpdateBlob:(HVBlobPayloadItem *) blob;
-
-@end
+#import "HVBlobInfo.h"
+#import "HVBlobPayload.h"
+#import "HVBlobHashInfo.h"
+#import "HVBlobPutParameters.h"

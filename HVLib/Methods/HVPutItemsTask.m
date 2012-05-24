@@ -58,6 +58,14 @@
     return 2;
 }
 
+-(id)initWithItem:(HVItem *)item andCallback:(HVTaskCompletion)callback
+{
+    HVItemCollection* items = [[HVItemCollection alloc]initwithItem:item];
+    self = [self initWithItems:items andCallback:callback];
+    [items release];
+    return self;
+}
+
 -(id)initWithItems:(HVItemCollection *)items andCallback:(HVTaskCompletion)callback
 {
     HVCHECK_TRUE((![NSArray isNilOrEmpty:items]));
@@ -81,7 +89,7 @@ LError:
 
 -(void)prepare
 {
-    [super ensureRecord];
+    [self ensureRecord];
 }
 
 -(void)serializeRequestBodyToWriter:(XWriter *)writer

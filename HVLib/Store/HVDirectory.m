@@ -19,6 +19,8 @@
 #import "HVCommon.h"
 #import "HVDirectory.h"
 #import "XLib.h"
+#import <MobileCoreServices/UTType.h>
+#import <MobileCoreServices/UTCoreTypes.h>
 
 //---------------------------
 //
@@ -47,6 +49,18 @@
 -(NSURL *)cacheDirectoryPath
 {
     return [self pathForStandardDirectory:NSCachesDirectory];
+}
+
+-(long)sizeOfFileAtPath:(NSString *)path
+{
+    return [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil].fileSize;
+}
+
+-(NSString *)mimeTypeForFileExtension:(NSString *)ext
+{
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef) ext, NULL);
+    NSString* mimeType = (NSString *) UTTypeCopyPreferredTagWithClass (uti, kUTTagClassMIMEType);
+    return [mimeType autorelease];
 }
 
 @end

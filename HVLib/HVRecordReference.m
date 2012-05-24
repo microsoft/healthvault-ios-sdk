@@ -145,7 +145,7 @@ LError:
 
 -(HVPutItemsTask *)putItems:(HVItemCollection *)items callback:(HVTaskCompletion)callback
 {
-    HVPutItemsTask* task = [[HVPutItemsTask alloc] initWithItems:items andCallback:callback];
+    HVPutItemsTask* task = [[[HVPutItemsTask alloc] initWithItems:items andCallback:callback] autorelease];
     HVCHECK_NOTNULL(task);
     
     task.record = self;
@@ -170,7 +170,7 @@ LError:
 
 -(HVRemoveItemsTask *)removeItemsWithKeys:(HVItemKeyCollection *)keys callback:(HVTaskCompletion)callback
 {
-    HVRemoveItemsTask* task = [[HVRemoveItemsTask alloc] initWithKeys:keys andCallback:callback];
+    HVRemoveItemsTask* task = [[[HVRemoveItemsTask alloc] initWithKeys:keys andCallback:callback] autorelease];
     HVCHECK_NOTNULL(task);
     
     task.record = self;

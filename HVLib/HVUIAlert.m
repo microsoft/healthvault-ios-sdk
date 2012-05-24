@@ -174,15 +174,27 @@ LError:
 
 +(HVUIAlert *)showPromptWithMessage:(NSString *)message callback:(HVNotify)callback
 {
+    return [HVUIAlert showPromptWithMessage:message defaultText:nil andCallback:callback];
+}
+
++(HVUIAlert *)showPromptWithMessage:(NSString *)message defaultText:(NSString *)defaultText andCallback:(HVNotify)callback
+{
     HVUIAlert* alert = [[HVUIAlert alloc] initWithMessage:message callback:callback];
     HVCHECK_NOTNULL(alert);
+    
     alert.view.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField* textField = [alert.view textFieldAtIndex:0];
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    if (defaultText)
+    {
+        textField.text = defaultText;
+    }
     
     [alert show];
-    return alert;
-    
+    return alert;    
+
 LError:
-    return nil; 
+    return nil;
 }
 
 //------------------------------------

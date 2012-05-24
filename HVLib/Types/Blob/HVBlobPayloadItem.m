@@ -50,6 +50,26 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(id)initWithBlobName:(NSString *)name contentType:(NSString *)contentType length:(NSInteger)length andUrl:(NSString *)blobUrl
+{
+    HVCHECK_STRING(blobUrl);
+    
+    self = [self init];
+    HVCHECK_SELF;
+    
+    m_blobInfo = [[HVBlobInfo alloc] initWithName:name andContentType:contentType];
+    HVCHECK_NOTNULL(m_blobInfo);
+    
+    m_length = length;
+   
+    HVRETAIN(m_blobUrl, blobUrl);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void)dealloc
 {
     [m_blobInfo release];

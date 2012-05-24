@@ -34,16 +34,31 @@ enum HVUIAlertResult
     NSString* m_text;
 }
 
+//-------------------------
+//
+// Properties
+//
+//-------------------------
 @property (readonly, nonatomic) UIAlertView* view;
 @property (readonly, nonatomic) enum HVUIAlertResult result;
 @property (readonly, nonatomic) NSString* inputText;
 
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
 -(id) initWithMessage:(NSString *) message callback:(HVNotify) callback;
 -(id) initWithTitle:(NSString *) title message:(NSString *) message callback:(HVNotify) callback;
 -(id) initWithTitle:(NSString *) title message:(NSString *) message cancelButtonText:(NSString *) cancelText okButtonText:(NSString *) okText callback:(HVNotify) callback;
 -(id) initWithInformationalMessage:(NSString *) message;
 -(id) initWithTitle:(NSString *) title forInformationalMessage:(NSString *) message;
 
+//-------------------------
+//
+// Methods
+//
+//-------------------------
 -(void) show;
 
 +(HVUIAlert *) showWithMessage:(NSString *) message callback:(HVNotify) callback;
@@ -51,5 +66,6 @@ enum HVUIAlertResult
 +(HVUIAlert *) showWithTitle:(NSString *) title message:(NSString *) message callback:(HVNotify) callback;
 +(HVUIAlert *) showInformationalMessage:(NSString *) message;
 +(HVUIAlert *) showPromptWithMessage:(NSString *) message callback:(HVNotify) callback;
++(HVUIAlert *) showPromptWithMessage:(NSString *) message defaultText:(NSString *) defaultText andCallback:(HVNotify) callback;
 
 @end

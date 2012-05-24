@@ -47,6 +47,23 @@ static NSString* const c_element_contentType = @"content-type";
     m_contentType.value = contentType;
 }
 
+-(id)initWithName:(NSString *)name andContentType:(NSString *)contentType
+{
+    self = [self init];
+    HVCHECK_SELF;
+    
+    self.name = name;
+    self.contentType = contentType;
+    
+    HVCHECK_NOTNULL(m_name);
+    HVCHECK_NOTNULL(m_contentType);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void)dealloc
 {
     [m_name release];

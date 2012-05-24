@@ -74,3 +74,6 @@
 #import "HVItemQuery.h"
 #import "HVItemQueryResult.h"
 #import "HVItemQueryResults.h"
+
+#import "HVVocab.h"
+#import "HVBlob.h"

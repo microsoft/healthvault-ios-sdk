@@ -1,8 +1,6 @@
 //
-//  HVBlobPayload.h
+//  HVBeginBlobPut.m
 //  HVLib
-//
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,21 +15,34 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "HVBlobPayloadItem.h"
+#import "HVCommon.h"
+#import "HVBeginBlobPutTask.h"
+#import "HVBlobPutParameters.h"
 
-@interface HVBlobPayload : HVType
+@implementation HVBeginBlobPutTask
+
+-(NSString *)name
 {
-@private
-    HVBlobPayloadItemCollection* m_blobItems;
+    return @"BeginPutBlob";
 }
 
-@property (readonly, nonatomic) HVBlobPayloadItemCollection* items;
-@property (readonly, nonatomic) BOOL hasItems;
+-(float)version
+{
+    return 1;
+}
 
--(HVBlobPayloadItem *) getDefaultBlob;
--(HVBlobPayloadItem *) getBlobNamed:(NSString *) name;
+-(HVBlobPutParameters *)putParams
+{
+    return (HVBlobPutParameters *) self.result;
+}
 
--(BOOL) addOrUpdateBlob:(HVBlobPayloadItem *) blob;
+-(void)serializeRequestBodyToWriter:(XWriter *)writer
+{
+    // Empty request body
+}
 
+-(id)deserializeResponseBodyFromReader:(XReader *)reader
+{
+    return [self deserializeResponseBodyFromReader:reader asClass:[HVBlobPutParameters class]];
+}
 @end

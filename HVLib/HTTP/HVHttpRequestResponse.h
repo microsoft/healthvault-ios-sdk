@@ -20,12 +20,6 @@
 #import <Foundation/Foundation.h>
 #import "HVHttp.h"
 
-@interface NSMutableURLRequest (HVURLRequestExtensions)
-
--(void) setContentLength:(uint) length;
-
-@end
-
 
 //-------------------------
 //

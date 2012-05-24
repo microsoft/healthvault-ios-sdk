@@ -1,8 +1,6 @@
 //
-//  HVBlobPayload.h
+//  HVBeginBlobPut.h
 //  HVLib
-//
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,20 +16,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HVBlobPayloadItem.h"
+#import "HVMethodCallTask.h"
+#import "HVBlobPutParameters.h"
 
-@interface HVBlobPayload : HVType
-{
-@private
-    HVBlobPayloadItemCollection* m_blobItems;
-}
+//------------------------------
+//
+// To push a blob into HealthVault, you must first retrieve a storage URL
+// The URL is valid only for a system configured length of time
+// 
+//------------------------------
+@interface HVBeginBlobPutTask : HVMethodCallTask
 
-@property (readonly, nonatomic) HVBlobPayloadItemCollection* items;
-@property (readonly, nonatomic) BOOL hasItems;
-
--(HVBlobPayloadItem *) getDefaultBlob;
--(HVBlobPayloadItem *) getBlobNamed:(NSString *) name;
-
--(BOOL) addOrUpdateBlob:(HVBlobPayloadItem *) blob;
+@property (readonly, nonatomic) HVBlobPutParameters* putParams;
 
 @end

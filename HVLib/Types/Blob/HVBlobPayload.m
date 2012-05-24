@@ -55,6 +55,30 @@ static NSString* const c_element_blob = @"blob";
     return [m_blobItems getBlobNamed:name];
 }
 
+-(BOOL)addOrUpdateBlob:(HVBlobPayloadItem *)blob
+{
+    HVCHECK_NOTNULL(blob);
+    
+    if (m_blobItems)
+    {
+        NSUInteger existingIndex = [m_blobItems indexOfBlobNamed:blob.name];
+        if (existingIndex != NSNotFound)
+        {
+            [m_blobItems removeObjectAtIndex:existingIndex];
+        }
+    }
+    
+    HVENSURE(m_blobItems, HVBlobPayloadItemCollection);
+    HVCHECK_NOTNULL(m_blobItems);
+    
+    [m_blobItems addObject:blob];
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

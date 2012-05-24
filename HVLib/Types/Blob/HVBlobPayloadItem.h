@@ -22,6 +22,7 @@
 #import "HVBlobInfo.h"
 #import "HVHttpRequestResponse.h"
 #import "HVHttpDownload.h"
+#import "HVBlobPutParameters.h"
 
 @interface HVBlobPayloadItem : HVType
 {
@@ -57,6 +58,13 @@
 // Convenience properties
 //
 @property (readonly, nonatomic) NSString* name;
+
+//-------------------------
+//
+// Initializers
+//
+//-------------------------
+-(id) initWithBlobName:(NSString *) name contentType:(NSString *) contentType length:(NSInteger) length andUrl:(NSString *) blobUrl;
 
 //-------------------------
 //

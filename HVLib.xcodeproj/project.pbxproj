@@ -57,6 +57,12 @@
 		5D195D8F1523BC4900E109AD /* HVIndexList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D8D1523BC4900E109AD /* HVIndexList.m */; };
 		5D1B7BEF154642F600854881 /* HVBlobHashInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1B7BED154642F600854881 /* HVBlobHashInfo.h */; };
 		5D1B7BF0154642F600854881 /* HVBlobHashInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B7BEE154642F600854881 /* HVBlobHashInfo.m */; };
+		5D1BE475156B427F00718832 /* HVBlobPutParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1BE473156B427F00718832 /* HVBlobPutParameters.h */; };
+		5D1BE476156B427F00718832 /* HVBlobPutParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BE474156B427F00718832 /* HVBlobPutParameters.m */; };
+		5D1BE479156B464400718832 /* HVBeginBlobPutTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1BE477156B464400718832 /* HVBeginBlobPutTask.h */; };
+		5D1BE47A156B464400718832 /* HVBeginBlobPutTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BE478156B464400718832 /* HVBeginBlobPutTask.m */; };
+		5D1BE47D156B483900718832 /* HVBlobUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1BE47B156B483800718832 /* HVBlobUploadTask.h */; };
+		5D1BE47E156B483900718832 /* HVBlobUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BE47C156B483900718832 /* HVBlobUploadTask.m */; };
 		5D1F13241539DD5200524425 /* HVSleepJournalPM.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F13221539DD5200524425 /* HVSleepJournalPM.h */; };
 		5D1F13251539DD5200524425 /* HVSleepJournalPM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F13231539DD5200524425 /* HVSleepJournalPM.m */; };
 		5D1F13291539E9E000524425 /* HVRelative.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F13271539E9DF00524425 /* HVRelative.h */; };
@@ -304,6 +310,9 @@
 		5D983C0914E9850500C287B7 /* HVMillisecond.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983C0714E9850400C287B7 /* HVMillisecond.m */; };
 		5D9E83731553000000072A0C /* HVVocabSearcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D9E83711553000000072A0C /* HVVocabSearcher.h */; };
 		5D9E83741553000000072A0C /* HVVocabSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9E83721553000000072A0C /* HVVocabSearcher.m */; };
+		5DB42069156C78F300E1A473 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB42068156C78F300E1A473 /* MobileCoreServices.framework */; };
+		5DB4206D156C959200E1A473 /* HVItemBlobUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB4206B156C959200E1A473 /* HVItemBlobUploadTask.h */; };
+		5DB4206E156C959200E1A473 /* HVItemBlobUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4206C156C959200E1A473 /* HVItemBlobUploadTask.m */; };
 		5DC3C43715360123008BBDBF /* HVGetAuthorizedPeopleResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC3C43515360123008BBDBF /* HVGetAuthorizedPeopleResult.h */; };
 		5DC3C43815360123008BBDBF /* HVGetAuthorizedPeopleResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC3C43615360123008BBDBF /* HVGetAuthorizedPeopleResult.m */; };
 		5DC44B7C14FEA3E600E2E02F /* HVRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC44B7A14FEA3E600E2E02F /* HVRandom.h */; };
@@ -348,6 +357,8 @@
 		5DC799921535FEE300193A3B /* HVGetAuthorizedPeopleTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799901535FEE300193A3B /* HVGetAuthorizedPeopleTask.h */; };
 		5DC799931535FEE300193A3B /* HVGetAuthorizedPeopleTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC799911535FEE300193A3B /* HVGetAuthorizedPeopleTask.m */; };
 		5DC799961535FF4200193A3B /* HVMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC799941535FF4100193A3B /* HVMethods.h */; };
+		5DC8D505156D9FFF00CA119A /* HVBlobSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC8D503156D9FFF00CA119A /* HVBlobSource.h */; };
+		5DC8D506156D9FFF00CA119A /* HVBlobSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC8D504156D9FFF00CA119A /* HVBlobSource.m */; };
 		5DD0B80A14F81DDE00AAD54F /* XSerializableType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD0B80814F81DDE00AAD54F /* XSerializableType.h */; };
 		5DD0B80B14F81DDE00AAD54F /* XSerializableType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0B80914F81DDE00AAD54F /* XSerializableType.m */; };
 		5DD216211556E18A001C8F31 /* HVLocalVocabStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD2161F1556E18A001C8F31 /* HVLocalVocabStore.h */; };
@@ -392,6 +403,7 @@
 		5DEF157014EC2431009D05D5 /* HVCodedValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF156E14EC2430009D05D5 /* HVCodedValue.m */; };
 		5DEF157314EC2458009D05D5 /* HVCodableValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF157114EC2455009D05D5 /* HVCodableValue.h */; };
 		5DEF157414EC2458009D05D5 /* HVCodableValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF157214EC2456009D05D5 /* HVCodableValue.m */; };
+		5DF44784156BC54000532EAA /* HVBlob.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF44782156BC54000532EAA /* HVBlob.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -445,6 +457,12 @@
 		5D195D8D1523BC4900E109AD /* HVIndexList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVIndexList.m; sourceTree = "<group>"; };
 		5D1B7BED154642F600854881 /* HVBlobHashInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlobHashInfo.h; sourceTree = "<group>"; };
 		5D1B7BEE154642F600854881 /* HVBlobHashInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlobHashInfo.m; sourceTree = "<group>"; };
+		5D1BE473156B427F00718832 /* HVBlobPutParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlobPutParameters.h; sourceTree = "<group>"; };
+		5D1BE474156B427F00718832 /* HVBlobPutParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlobPutParameters.m; sourceTree = "<group>"; };
+		5D1BE477156B464400718832 /* HVBeginBlobPutTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBeginBlobPutTask.h; sourceTree = "<group>"; };
+		5D1BE478156B464400718832 /* HVBeginBlobPutTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBeginBlobPutTask.m; sourceTree = "<group>"; };
+		5D1BE47B156B483800718832 /* HVBlobUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlobUploadTask.h; sourceTree = "<group>"; };
+		5D1BE47C156B483900718832 /* HVBlobUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlobUploadTask.m; sourceTree = "<group>"; };
 		5D1F13221539DD5200524425 /* HVSleepJournalPM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSleepJournalPM.h; sourceTree = "<group>"; };
 		5D1F13231539DD5200524425 /* HVSleepJournalPM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSleepJournalPM.m; sourceTree = "<group>"; };
 		5D1F13271539E9DF00524425 /* HVRelative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRelative.h; sourceTree = "<group>"; };
@@ -695,6 +713,9 @@
 		5D983C0714E9850400C287B7 /* HVMillisecond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMillisecond.m; sourceTree = "<group>"; };
 		5D9E83711553000000072A0C /* HVVocabSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabSearcher.h; sourceTree = "<group>"; };
 		5D9E83721553000000072A0C /* HVVocabSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabSearcher.m; sourceTree = "<group>"; };
+		5DB42068156C78F300E1A473 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5DB4206B156C959200E1A473 /* HVItemBlobUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemBlobUploadTask.h; sourceTree = "<group>"; };
+		5DB4206C156C959200E1A473 /* HVItemBlobUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemBlobUploadTask.m; sourceTree = "<group>"; };
 		5DC3C43515360123008BBDBF /* HVGetAuthorizedPeopleResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGetAuthorizedPeopleResult.h; sourceTree = "<group>"; };
 		5DC3C43615360123008BBDBF /* HVGetAuthorizedPeopleResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGetAuthorizedPeopleResult.m; sourceTree = "<group>"; };
 		5DC44B7A14FEA3E600E2E02F /* HVRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRandom.h; sourceTree = "<group>"; };
@@ -739,6 +760,8 @@
 		5DC799901535FEE300193A3B /* HVGetAuthorizedPeopleTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGetAuthorizedPeopleTask.h; sourceTree = "<group>"; };
 		5DC799911535FEE300193A3B /* HVGetAuthorizedPeopleTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGetAuthorizedPeopleTask.m; sourceTree = "<group>"; };
 		5DC799941535FF4100193A3B /* HVMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMethods.h; sourceTree = "<group>"; };
+		5DC8D503156D9FFF00CA119A /* HVBlobSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlobSource.h; sourceTree = "<group>"; };
+		5DC8D504156D9FFF00CA119A /* HVBlobSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlobSource.m; sourceTree = "<group>"; };
 		5DD0B80814F81DDE00AAD54F /* XSerializableType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XSerializableType.h; sourceTree = "<group>"; };
 		5DD0B80914F81DDE00AAD54F /* XSerializableType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSerializableType.m; sourceTree = "<group>"; };
 		5DD2161F1556E18A001C8F31 /* HVLocalVocabStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalVocabStore.h; sourceTree = "<group>"; };
@@ -784,6 +807,7 @@
 		5DEF156E14EC2430009D05D5 /* HVCodedValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCodedValue.m; sourceTree = "<group>"; };
 		5DEF157114EC2455009D05D5 /* HVCodableValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCodableValue.h; sourceTree = "<group>"; };
 		5DEF157214EC2456009D05D5 /* HVCodableValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCodableValue.m; sourceTree = "<group>"; };
+		5DF44782156BC54000532EAA /* HVBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlob.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -791,6 +815,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DB42069156C78F300E1A473 /* MobileCoreServices.framework in Frameworks */,
 				5D5F3112150E95E700ED11E7 /* UIKit.framework in Frameworks */,
 				5D76B9C914DCB92400BA865F /* libxml2.2.dylib in Frameworks */,
 				5D5299B014DCB3A700D2636E /* Foundation.framework in Frameworks */,
@@ -846,7 +871,6 @@
 			isa = PBXGroup;
 			children = (
 				5D4F8667154AE40200E71300 /* libHVUILib.a */,
-				5D5F3111150E95E700ED11E7 /* UIKit.framework */,
 				5D76B9C814DCB92400BA865F /* libxml2.2.dylib */,
 				5D5299B114DCB3A700D2636E /* HVLib */,
 				5D5299AE14DCB3A700D2636E /* Frameworks */,
@@ -865,6 +889,8 @@
 		5D5299AE14DCB3A700D2636E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DB42068156C78F300E1A473 /* MobileCoreServices.framework */,
+				5D5F3111150E95E700ED11E7 /* UIKit.framework */,
 				5D5299AF14DCB3A700D2636E /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -1045,6 +1071,7 @@
 		5D6EDDA515462F3B00420262 /* Blob */ = {
 			isa = PBXGroup;
 			children = (
+				5DF44782156BC54000532EAA /* HVBlob.h */,
 				5D6EDDA61546306200420262 /* HVBlobInfo.h */,
 				5D6EDDA71546306200420262 /* HVBlobInfo.m */,
 				5D591CFA15464FD800EAC934 /* HVBlobPayload.h */,
@@ -1053,6 +1080,10 @@
 				5D6EDDAB154631B700420262 /* HVBlobPayloadItem.m */,
 				5D1B7BED154642F600854881 /* HVBlobHashInfo.h */,
 				5D1B7BEE154642F600854881 /* HVBlobHashInfo.m */,
+				5D1BE473156B427F00718832 /* HVBlobPutParameters.h */,
+				5D1BE474156B427F00718832 /* HVBlobPutParameters.m */,
+				5DC8D503156D9FFF00CA119A /* HVBlobSource.h */,
+				5DC8D504156D9FFF00CA119A /* HVBlobSource.m */,
 			);
 			path = Blob;
 			sourceTree = "<group>";
@@ -1313,6 +1344,12 @@
 				5D591D2B1547330100EAC934 /* HVGetPersonalImageTask.m */,
 				5D9E83711553000000072A0C /* HVVocabSearcher.h */,
 				5D9E83721553000000072A0C /* HVVocabSearcher.m */,
+				5D1BE477156B464400718832 /* HVBeginBlobPutTask.h */,
+				5D1BE478156B464400718832 /* HVBeginBlobPutTask.m */,
+				5D1BE47B156B483800718832 /* HVBlobUploadTask.h */,
+				5D1BE47C156B483900718832 /* HVBlobUploadTask.m */,
+				5DB4206B156C959200E1A473 /* HVItemBlobUploadTask.h */,
+				5DB4206C156C959200E1A473 /* HVItemBlobUploadTask.m */,
 			);
 			path = Methods;
 			sourceTree = "<group>";
@@ -1573,6 +1610,12 @@
 				5DD216211556E18A001C8F31 /* HVLocalVocabStore.h in Headers */,
 				5DC7260A1561E06C00734BC4 /* HVInsurance.h in Headers */,
 				5D338B6115680895005A6C55 /* HVCachingObjectStore.h in Headers */,
+				5D1BE475156B427F00718832 /* HVBlobPutParameters.h in Headers */,
+				5D1BE479156B464400718832 /* HVBeginBlobPutTask.h in Headers */,
+				5D1BE47D156B483900718832 /* HVBlobUploadTask.h in Headers */,
+				5DF44784156BC54000532EAA /* HVBlob.h in Headers */,
+				5DB4206D156C959200E1A473 /* HVItemBlobUploadTask.h in Headers */,
+				5DC8D505156D9FFF00CA119A /* HVBlobSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1815,6 +1858,11 @@
 				5DD216221556E18A001C8F31 /* HVLocalVocabStore.m in Sources */,
 				5DC7260B1561E06C00734BC4 /* HVInsurance.m in Sources */,
 				5D338B6215680895005A6C55 /* HVCachingObjectStore.m in Sources */,
+				5D1BE476156B427F00718832 /* HVBlobPutParameters.m in Sources */,
+				5D1BE47A156B464400718832 /* HVBeginBlobPutTask.m in Sources */,
+				5D1BE47E156B483900718832 /* HVBlobUploadTask.m in Sources */,
+				5DB4206E156C959200E1A473 /* HVItemBlobUploadTask.m in Sources */,
+				5DC8D506156D9FFF00CA119A /* HVBlobSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -122,6 +122,22 @@ LError:
     HVALLOC_FAIL;
 }
 
+//
+// Override - useful for debugging memory leaks
+//
+- (oneway void)release
+{
+    [super release];
+}
+
+//
+// Override - useful for debugging memory leaks
+//
+-(id) retain
+{
+    return [super retain];
+}
+
 -(void) dealloc
 {
     [m_taskName release];

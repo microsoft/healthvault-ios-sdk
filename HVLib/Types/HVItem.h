@@ -24,9 +24,11 @@
 #import "HVAudit.h"
 #import "HVItemData.h"
 #import "HVBlobPayload.h"
+#import "HVBlobSource.h"
 #import "HVAsyncTask.h"
 
 @class HVRecordReference;
+@class HVItemBlobUploadTask;
 
 //-------------------------
 //
@@ -108,9 +110,19 @@
 -(id) initWithTypedDataClassName:(NSString *) name;
 -(id) initWithTypedDataClass:(Class) cls;
 
+//-------------------------
+//
+// Serialization
+//
+//-------------------------
 -(NSString *) toXmlString;
 +(HVItem *) newFromXmlString:(NSString *) xml;
 
+//-------------------------
+//
+// Methods
+//
+//-------------------------
 //
 // Does a SHALLOW CLONE. 
 // You get a new HVItem but pointed at all the same internal objects
@@ -122,11 +134,6 @@
 //
 -(void) clearSystemFields; 
 
-//-------------------------
-//
-// Methods
-//
-//-------------------------
 -(BOOL) setKeyToNew;
 -(BOOL) ensureKey;
 
@@ -134,16 +141,26 @@
 
 -(BOOL) isVersion:(NSString *) version;
 
+//-------------------------
 //
-// Update blob data into this item. 
+// Blob
+//
+//-------------------------
+//
+// Refreshes information about blobs associated this item 
 // Assumes that we are working with [HVClient current].currentRecord
 //
 -(HVTask *) updateBlobData:(HVTaskCompletion) callback;
 //
-// Download updated information about blobs associated with this item
+// Refreshes information about blobs associated with this item
 // Assumes that we are working with [HVClient current].currentRecord
 //
 -(HVTask *) updateBlobDataFromRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+//
+// Upload data into the default blob and put the item...
+//
+-(HVItemBlobUploadTask *) uploadBlob:(id<HVBlobSource>) data contentType:(NSString *) contentType andCallback:(HVTaskCompletion) callback;
+-(HVItemBlobUploadTask *) uploadBlob:(id<HVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType andCallback:(HVTaskCompletion) callback;
 
 @end
 

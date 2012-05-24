@@ -60,7 +60,6 @@
     return 3;
 }
 
-
 -(id)initWithQuery:(HVItemQuery *)query andCallback:(HVTaskCompletion)callback
 {
     self = [super initWithCallback:callback];
@@ -86,7 +85,7 @@ LError:
 
 -(void)prepare
 {
-    [super ensureRecord];
+    [self ensureRecord];
 }
 
 -(void)serializeRequestBodyToWriter:(XWriter *)writer

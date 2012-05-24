@@ -19,18 +19,6 @@
 #import "HVCommon.h"
 #import "HVHttpRequestResponse.h"
 
-static NSString* const c_header_contentLength = @"Content-Length";
-
-@implementation NSMutableURLRequest (HVURLRequestExtensions)
-
--(void)setContentLength:(uint)length
-{
-    NSString* value = [NSString stringWithFormat: @"%d", length];
-    [self addValue: value forHTTPHeaderField: c_header_contentLength];
-}
-
-@end
-
 @implementation HVHttpResponse
 
 @synthesize response = m_response;
@@ -61,7 +49,7 @@ static NSString* const c_header_contentLength = @"Content-Length";
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     HVRETAIN(m_response, response);
-    [m_responseBody setLength:0];
+    [m_responseBody setLength:0];    
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -71,6 +59,14 @@ static NSString* const c_header_contentLength = @"Content-Length";
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    int statusCode = [((NSHTTPURLResponse *)m_response) statusCode];
+    if (statusCode != 200)
+    {       
+        HVHttpException* ex = [[HVHttpException alloc] initWithStatusCode:statusCode];
+        [super handleError:ex];
+        [ex release];
+    }
+    
     [self complete];
 }
 

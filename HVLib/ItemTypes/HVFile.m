@@ -18,6 +18,8 @@
 //
 #import "HVCommon.h"
 #import "HVFile.h"
+#import "HVBlob.h"
+#import "HVCodableValue.h"
 
 static NSString* const c_typeid = @"bd0403c5-4ae2-4b0e-a8db-1888678e4528";
 static NSString* const c_typename = @"file";
@@ -46,6 +48,7 @@ static NSString* const c_element_contentType = @"content-type";
 {
     [m_name release];
     [m_contentType release];
+    
     [super dealloc];
 }
 
@@ -71,7 +74,7 @@ static NSString* const c_element_contentType = @"content-type";
         return [NSString stringWithFormat:@"%.1f %@", ((double) m_size)/ 1024, NSLocalizedString(@"KB", @"Size in KB")];        
     }
     
-return [NSString stringWithFormat:@"%.1f %@", ((double) m_size)/ 1024 * 1024, NSLocalizedString(@"MB", @"Size in MB")];            
+    return [NSString stringWithFormat:@"%.1f %@", ((double) m_size)/ 1024 * 1024, NSLocalizedString(@"MB", @"Size in MB")];            
 }
 
 -(HVClientResult *)validate
@@ -113,6 +116,21 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVFile typeID]];
+}
+
++(HVItem *)newItemWithName:(NSString *)name andContentType:(NSString *)contentType
+{
+    HVItem* item = [self newItem];
+    HVCHECK_NOTNULL(item);
+    
+    HVFile* file = (HVFile *) item.data.typed;
+    file.name = name;
+    file.contentType = [HVCodableValue fromText:contentType];
+        
+    return item;
+    
+LError:
+    return item;
 }
 
 @end

@@ -27,3 +27,6 @@
 #import "HVGetPersonalImageTask.h"
 #import "HVGetVocabTask.h"
 #import "HVVocabSearcher.h"
+#import "HVBeginBlobPutTask.h"
+#import "HVBlobUploadTask.h"
+#import "HVItemBlobUploadTask.h"

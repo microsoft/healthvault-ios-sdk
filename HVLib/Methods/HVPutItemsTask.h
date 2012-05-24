@@ -35,6 +35,7 @@
 @property (readonly, nonatomic) HVItemKeyCollection* putResults;
 @property (readonly, nonatomic) HVItemKey* firstKey;
 
+-(id) initWithItem:(HVItem *) item andCallback:(HVTaskCompletion) callback;
 -(id) initWithItems:(HVItemCollection *) items andCallback:(HVTaskCompletion) callback;
 
 @end

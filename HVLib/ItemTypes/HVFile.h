@@ -19,6 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVItemBlobUploadTask.h"
 
 @interface HVFile : HVItemDataTyped
 {
@@ -53,6 +54,7 @@
 //-------------------------
 
 +(HVItem *) newItem;
++(HVItem *) newItemWithName:(NSString *) name andContentType:(NSString *) contentType;
 
 //-------------------------
 //

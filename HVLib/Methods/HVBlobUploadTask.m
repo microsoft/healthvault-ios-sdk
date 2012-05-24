@@ -1,0 +1,192 @@
+//
+//  HVBlobUploadTask.m
+//  HVLib
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+// http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#import "HVCommon.h"
+#import "HVBlobUploadTask.h"
+#import "HVBeginBlobPutTask.h"
+#import "HVHttpRequestResponse.h"
+#import "HVDirectory.h"
+
+static NSString* const c_mimeTypeOctet = @"application/octet-stream";
+
+//------------------------------
+//
+// HVBlobUpload
+//
+//------------------------------
+@interface HVBlobUploadTask (HVPrivate)
+
+-(void) beginPutBlobComplete:(HVTask *) task;
+-(void) postNextChunk;
+-(void) postChunkComplete:(HVTask *) task;
+-(void) uploadComplete;
+
+@end
+
+@implementation HVBlobUploadTask
+
+@synthesize source = m_source;
+@synthesize delegate = m_delegate;
+
+-(NSString *)blobUrl
+{
+    return (NSString *) self.result;
+}
+
+-(id)initWithData:(NSData *)data andCallback:(HVTaskCompletion)callback
+{
+    HVBlobMemorySource* blobSource = [[HVBlobMemorySource alloc] initWithData:data];
+    self = [self initWithSource:blobSource andCallback:callback];
+    [blobSource release];
+    
+    return self;
+}
+
+-(id)initWithFilePath:(NSString *)filePath andCallback:(HVTaskCompletion)callback
+{
+    HVBlobFileHandleSource* blobSource = [[HVBlobFileHandleSource alloc] initWithFilePath:filePath];
+    self = [self initWithSource:blobSource andCallback:callback];
+    [blobSource release];
+    
+    return self;    
+}
+
+-(id)initWithSource:(id<HVBlobSource>)source andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(source);
+    
+    self = [super initWithCallback:callback];
+    HVCHECK_SELF;
+    
+    HVRETAIN(m_source, source);
+    //
+    // First, we'll issue an operation to retrieve a Blob Url.
+    // This is the  blobUrl to which we'll push the blob
+    // The app can subsequently 'commit' the blob by adding to an HVItem's Blob collection and saving it to HV
+    //
+    HVBeginBlobPutTask* beginPutTask = [[HVBeginBlobPutTask alloc] initWithCallback:^(HVTask *task) {
+        [self beginPutBlobComplete:task];
+    } ];
+    
+    [self setNextTask:beginPutTask];
+    [beginPutTask release];
+    
+    return self;
+LError:
+    HVALLOC_FAIL;
+}
+
+-(void)dealloc
+{
+    [m_putParams release];
+    [m_source release];
+    [m_blobUrl release];
+    
+    [super dealloc];
+}
+
+-(void)totalBytesWritten:(NSInteger)byteCount
+{
+    if (m_delegate)
+    {
+        [m_delegate totalBytesWritten:m_byteCountUploaded + byteCount];
+    }
+}
+
++(HVHttpRequestResponse *)newUploadRequestForUrl:(NSURL *)url withCallback:(HVTaskCompletion)callback
+{
+    HVHttpRequestResponse* postRequest = [[HVHttpRequestResponse alloc] initWithVerb:@"POST" url:url andCallback:callback]; 
+    [postRequest.request setContentType:@"application/octet-stream"];
+ 
+    return postRequest;    
+}
+
++(void)addIsFinalUploadChunkHeaderTo:(NSMutableURLRequest *)request
+{
+    [request setValue:@"1" forHTTPHeaderField:@"x-hv-blob-complete"];
+}
+
+@end
+
+@implementation HVBlobUploadTask (HVPrivate)
+
+-(void)beginPutBlobComplete:(HVTask *)task
+{
+    HVBeginBlobPutTask* blobTask = (HVBeginBlobPutTask *) task;
+    HVRETAIN(m_putParams, blobTask.putParams);
+
+    HVRETAIN(m_blobUrl, [NSURL URLWithString:m_putParams.url]);
+    HVCHECK_OOM(m_blobUrl);
+    //
+    // Now that we know where to write the blob to, and in what chunks, we can begin
+    //
+    [self postNextChunk];
+}
+
+-(void)postNextChunk
+{
+    HVHttpRequestResponse* postRequest = [HVBlobUploadTask newUploadRequestForUrl:m_blobUrl withCallback:^(HVTask *task) {
+        
+        [self postChunkComplete:task];
+    }];
+    HVCHECK_OOM(postRequest);
+    
+    postRequest.delegate = m_delegate;
+    
+    @try 
+    {
+        NSUInteger nextChunkSize = MIN(m_putParams.chunkSize, (m_source.length - m_byteCountUploaded));
+        if (nextChunkSize > 0)
+        {
+            NSData* nextChunk = [m_source readStartAt:m_byteCountUploaded chunkSize:nextChunkSize];
+            postRequest.requestBody = nextChunk;
+            
+            [postRequest.request setContentRangeStart:m_byteCountUploaded end:(m_byteCountUploaded + nextChunkSize - 1)];
+        }
+        
+        if (nextChunkSize < m_putParams.chunkSize)
+        {
+            [HVBlobUploadTask addIsFinalUploadChunkHeaderTo:postRequest.request];
+        }
+        
+        [self setNextTask:postRequest];
+    }
+    @finally 
+    {
+        [postRequest release];
+    }    
+}
+
+-(void)postChunkComplete:(HVTask *)task
+{
+    HVHttpRequestResponse* putTask = (HVHttpRequestResponse *) task;
+    [putTask checkSuccess];
+    
+    m_byteCountUploaded += putTask.requestBody.length;
+    if (m_byteCountUploaded < m_source.length)
+    {
+        [self postNextChunk];
+        return;
+    }
+    
+    [self uploadComplete];
+}
+
+-(void)uploadComplete
+{
+    self.result = m_putParams.url;
+}
+@end
