@@ -30,6 +30,14 @@
 @class HVRecordReference;
 @class HVItemBlobUploadTask;
 
+enum HVItemFlags
+{
+    HVItemFlagNone = 0x00,
+    HVItemFlagPersonal = 0x01,  // Item is only accessible to custodians
+    HVItemDownVersioned = 0x02, // Item converted from a newer format to an older format [cannot update]
+    HVITemUpVersioned = 0x04    // Item converted from an older format to a new format [can update]
+};
+
 //-------------------------
 //
 // A single Item ("thing") in a record
@@ -73,6 +81,9 @@
 @property (readwrite, nonatomic, retain) HVItemType* type;
 
 @property (readwrite, nonatomic) enum HVItemState state;
+//
+// (Optional) See HVItemFlags enumeration...
+//
 @property (readwrite, nonatomic) int flags;
 //
 // 
@@ -82,12 +93,27 @@
 
 @property (readwrite, nonatomic, retain) HVAudit* created;
 @property (readwrite, nonatomic, retain) HVAudit* updated;
-
+//
+// (Optional) Structured data for this item. May be null if you did not 
+// ask for Core data (see enum HVItemSection) when you issued a query for items
+//
 @property (readwrite, nonatomic, retain) HVItemData* data;
+//
+// (Optional) Information about unstructured blob streams associated with this item
+// May be null if you did not ask for Blob information (see enum HVItemSectionBlob)
+//
 @property (readwrite, nonatomic, retain) HVBlobPayload* blobs;
 
+//-----------------------
+//
+// Convenience Properties
+//
+//------------------------
 @property (readonly, nonatomic) NSString* itemID;
-
+//
+// (Optional) All items can have arbitrary notes...
+// References data.common.note 
+//
 @property (readwrite, nonatomic, retain) NSString* note;
 
 //

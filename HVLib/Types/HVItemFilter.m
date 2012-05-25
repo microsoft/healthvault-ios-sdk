@@ -83,6 +83,7 @@ static NSString* const c_element_xpath = @"xpath";
     HVSERIALIZE_DATE(m_cDateMax, c_element_cdateMax);
     HVSERIALIZE_DATE(m_uDateMin, c_element_udateMin);
     HVSERIALIZE_DATE(m_udateMax, c_element_udateMax);
+    HVSERIALIZE_STRING(m_xpath, c_element_xpath);
 }
 
 -(void) deserialize:(XReader *)reader
@@ -99,6 +100,7 @@ static NSString* const c_element_xpath = @"xpath";
     HVDESERIALIZE_DATE(m_cDateMax, c_element_cdateMax);
     HVDESERIALIZE_DATE(m_uDateMin, c_element_udateMin);
     HVDESERIALIZE_DATE(m_udateMax, c_element_udateMax);
+    HVDESERIALIZE_STRING(m_xpath, c_element_xpath);
 }
 
 @end

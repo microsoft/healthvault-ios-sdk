@@ -280,8 +280,8 @@ NSString* pickRandomDrug(void)
         measurement = [HVMeasurement fromValue:exercise.durationMinutesValue * 5 andUnitsString:@"calories"];
     }
     
-    [exercise addOrUpdateDetailWithName:detailCode andValue:measurement];
-    [exercise addOrUpdateDetailWithName:detailCode andValue:measurement];  
+    [exercise addOrUpdateDetailWithNameCode:detailCode andValue:measurement];
+    [exercise addOrUpdateDetailWithNameCode:detailCode andValue:measurement];  
     
     return item;
 }

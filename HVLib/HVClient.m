@@ -91,7 +91,7 @@ static HVClient* s_app;
     m_rootDirectory = [[HVDirectory alloc] initWithRelativePath:@"HealthVault"];
     HVCHECK_NOTNULL(m_rootDirectory);
     
-    m_localVault = [[HVLocalVault alloc] initWithRoot:m_rootDirectory];
+    m_localVault = [[HVLocalVault alloc] initWithRoot:m_rootDirectory andCache:m_settings.useCachingInStore];
     
     // Set up the HealthVault Service (for now)
     m_service = [self newService];

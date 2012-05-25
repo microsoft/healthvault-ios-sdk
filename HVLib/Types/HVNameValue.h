@@ -58,8 +58,12 @@
 
 -(HVNameValue *) itemAtIndex:(NSUInteger) index;
 
--(NSUInteger) indexOfItemWithNameCode:(NSString *) nameCode;
 -(NSUInteger) indexOfItemWithName:(HVCodedValue *) code;
+//
+// Name codes should typically be from [HVExercise vocabForDetails]
+//
+-(NSUInteger) indexOfItemWithNameCode:(NSString *) nameCode;
+-(HVNameValue *) getItemWithNameCode:(NSString *) nameCode;
 
 -(void) addOrUpdate:(HVNameValue *) value;
 

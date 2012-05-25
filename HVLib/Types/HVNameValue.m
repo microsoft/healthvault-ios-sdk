@@ -125,6 +125,17 @@ LError:
     return NSNotFound;   
 }
 
+-(HVNameValue *)getItemWithNameCode:(NSString *)nameCode
+{
+    NSUInteger index = [self indexOfItemWithNameCode:nameCode];
+    if (index == NSNotFound)
+    {
+        return nil;
+    }
+    
+    return [self itemAtIndex:index];
+}
+
 -(void)addOrUpdate:(HVNameValue *)value
 {
     NSUInteger indexOf = [self indexOfItemWithName:value.name];

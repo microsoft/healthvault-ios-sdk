@@ -34,6 +34,7 @@
     NSString* m_signInRetryMessage;
     
     NSTimeInterval m_httpTimeout;
+    BOOL m_useCachingInStore;
 }
 
 @property (readwrite, nonatomic) BOOL debug;
@@ -49,6 +50,7 @@
 @property (readwrite, nonatomic, retain) NSString* signinRetryMessage;
 
 @property (readwrite, nonatomic) NSTimeInterval httpTimeout;
+@property (readwrite, nonatomic) BOOL useCachingInStore;
 
 +(HVClientSettings *) newSettingsFromResource;
 

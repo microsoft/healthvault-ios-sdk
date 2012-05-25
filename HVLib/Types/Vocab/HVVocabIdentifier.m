@@ -61,6 +61,11 @@ LError:
     [m_name release];
     [m_family release];
     [m_version release];
+    [m_lang release];
+    [m_codeValue release];
+    
+    [m_keyString release];
+    
     [super dealloc];
 }
 
@@ -76,12 +81,23 @@ LError:
 
 -(NSString *)toKeyString
 {
-    if (m_version)
+    if (m_keyString)
     {
-        return [NSString stringWithFormat:@"%@_%@_%@", m_name, m_family, m_version];
+        return m_keyString;
     }
     
-    return [NSString stringWithFormat:@"%@_%@", m_name, m_family];
+    NSString* keyString;
+    if (m_version)
+    {
+        keyString = [NSString stringWithFormat:@"%@_%@_%@", m_name, m_family, m_version];
+    }
+    else 
+    {
+        keyString = [NSString stringWithFormat:@"%@_%@", m_name, m_family];
+    }
+    
+    HVRETAIN(m_keyString, keyString);
+    return m_keyString;
 }
 
 -(HVClientResult *)validate

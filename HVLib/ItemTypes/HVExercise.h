@@ -70,11 +70,14 @@
 //
 @property (readwrite, nonatomic, retain) NSMutableArray* segmentsXml;
 
+//-----------------------------
 //
 // Convenience properties
 //
+//-----------------------------
 @property (readonly, nonatomic) BOOL hasDetails;
 @property (readwrite, nonatomic) double durationMinutesValue;
+
 
 //-------------------------
 //
@@ -98,9 +101,20 @@
 //
 // This assume that the exercise detail is from the standard vocab:exercise-detail-names
 // 
-+(HVNameValue *) createDetailWithName:(NSString *) name andValue:(HVMeasurement *) value;
+-(HVNameValue *) getDetailWithNameCode:(NSString *) name;
+-(BOOL) addOrUpdateDetailWithNameCode:(NSString *) name andValue:(HVMeasurement *) value;
 
--(BOOL) addOrUpdateDetailWithName:(NSString *) name andValue:(HVMeasurement *) value;
++(HVNameValue *) createDetailWithNameCode:(NSString *) name andValue:(HVMeasurement *) value;
+
+//-------------------------
+//
+// Vocabs
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForActivities;
++(HVVocabIdentifier *) vocabForDetails;
++(HVVocabIdentifier *) vocabForUnits;
+
 
 //-------------------------
 //

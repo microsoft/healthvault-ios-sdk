@@ -73,6 +73,18 @@
 
 -(HVVocabItem *) itemAtIndex:(NSUInteger) index;
 
+//------------------------
+// 
+// Search vocabs
+//
+// Basic linear scans
+// You'll be working with small vocabs locally
+// 
+//------------------------
+-(NSUInteger) indexOfVocabCode:(NSString *) code;
+-(HVVocabItem *) getItemWithCode:(NSString *) code;
+-(NSString *) displayTextForCode:(NSString *) code;
+
 -(NSArray *) displayStrings;
 -(void) addDisplayStringsTo:(NSMutableArray *) strings;
 

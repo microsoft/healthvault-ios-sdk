@@ -40,10 +40,6 @@
 
 @property (readonly, nonatomic) id<HVObjectStore> root;
 @property (readonly, nonatomic) HVLocalVocabStore* vocabs;
-//
-// You should set this property at startup. Default is FALSE
-// 
-@property (readwrite, nonatomic) BOOL cache; 
 
 //-------------------------
 //
@@ -54,6 +50,7 @@
 // No caching by default
 //
 -(id) initWithRoot:(HVDirectory *) root;
+-(id) initWithRoot:(HVDirectory *) root andCache:(BOOL) cache;
 
 //-------------------------
 //

@@ -30,12 +30,20 @@ static NSString* const c_element_duration = @"duration";
 static NSString* const c_element_detail = @"detail";
 static NSString* const c_element_segment = @"segment";
 
+static NSString* const c_vocabName_Activities = @"exercise-activities";
+static NSString* const c_vocabName_Details = @"exercise-detail-names";
+static NSString* const c_vocabName_Units = @"exercise-units";
+    
 @interface HVExercise (HVPrivate)
 
 +(HVCodableValue *) newActivity:(NSString *) activity;
-+(HVNameValue *) newDetailWithName:(NSString *)name andValue:(HVMeasurement *)value;
++(HVNameValue *) newDetailWithNameCode:(NSString *)name andValue:(HVMeasurement *)value;
 
 @end
+
+static HVVocabIdentifier* s_vocabIDActivities;
+static HVVocabIdentifier* s_vocabIDDetails;
+static HVVocabIdentifier* s_vocabIDUnits;
 
 @implementation HVExercise
 
@@ -78,6 +86,13 @@ static NSString* const c_element_segment = @"segment";
     m_duration.value = durationMinutesValue;
 }
 
++(void)initialize
+{
+    s_vocabIDActivities = [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Activities];
+    s_vocabIDDetails = [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Details];
+    s_vocabIDUnits = [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Units];
+}
+
 -(void)dealloc
 {
     [m_when release];
@@ -118,14 +133,25 @@ LError:
     return (m_activity != nil);
 }
 
-+(HVNameValue *)createDetailWithName:(NSString *)name andValue:(HVMeasurement *)value
+-(HVNameValue *)getDetailWithNameCode:(NSString *)name
 {
-    return [[HVExercise newDetailWithName:name andValue:value] autorelease];
+    if (!self.hasDetails)
+    {
+        return nil;
+    }
+    
+    NSUInteger index = [m_details indexOfItemWithNameCode:name];
+    if (index == NSNotFound)
+    {
+        return nil;
+    }
+    
+    return [m_details objectAtIndex:index];
 }
 
--(BOOL)addOrUpdateDetailWithName:(NSString *)name andValue:(HVMeasurement *)value
+-(BOOL)addOrUpdateDetailWithNameCode:(NSString *)name andValue:(HVMeasurement *)value
 {
-    HVNameValue* detail = [HVExercise newDetailWithName:name andValue:value];
+    HVNameValue* detail = [HVExercise newDetailWithNameCode:name andValue:value];
     HVCHECK_NOTNULL(detail);
     
     [self.details addOrUpdate:detail];
@@ -135,6 +161,26 @@ LError:
     
 LError:
     return FALSE;
+}
+
++(HVNameValue *)createDetailWithNameCode:(NSString *)name andValue:(HVMeasurement *)value
+{
+    return [[HVExercise newDetailWithNameCode:name andValue:value] autorelease];
+}
+
++(HVVocabIdentifier *)vocabForActivities
+{
+    return s_vocabIDActivities;
+}
+
++(HVVocabIdentifier *)vocabForDetails
+{
+    return s_vocabIDDetails;                
+}
+
++(HVVocabIdentifier *)vocabForUnits
+{
+    return s_vocabIDUnits;                
 }
 
 -(HVClientResult *)validate
@@ -199,12 +245,12 @@ LError:
 
 +(HVCodableValue *)newActivity:(NSString *)activity
 {
-    return [[HVCodableValue alloc] initWithText:activity code:activity andVocab:@"exercise-activities"];
+    return [[HVCodableValue alloc] initWithText:activity code:activity andVocab:c_vocabName_Activities];
 }
 
-+(HVNameValue *) newDetailWithName:(NSString *)name andValue:(HVMeasurement *)value
++(HVNameValue *) newDetailWithNameCode:(NSString *)name andValue:(HVMeasurement *)value
 {
-    HVCodedValue* codedValue = [[HVCodedValue alloc] initWithCode:name andVocab:@"exercise-detail-names"];
+    HVCodedValue* codedValue = [[HVCodedValue alloc] initWithCode:name andVocab:c_vocabName_Details];
     HVNameValue* nv = [[HVNameValue alloc] initWithName:codedValue andValue:value];
     [codedValue release];
     

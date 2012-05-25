@@ -33,6 +33,8 @@ NSString* const c_hl7Family;
     NSString* m_version;
     NSString* m_lang;
     NSString* m_codeValue;
+    
+    NSString* m_keyString;
 }
 
 //-------------------------

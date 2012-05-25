@@ -46,14 +46,15 @@
 //-------------------------
 
 -(BOOL) containsVocabWithID:(HVVocabIdentifier *) vocabID;
-
 -(HVVocabCodeSet *) getVocabWithID:(HVVocabIdentifier *) vocabID;
-
 -(BOOL) putVocab:(HVVocabCodeSet *) vocab withID:(HVVocabIdentifier *) vocabID;
-
 -(void) removeVocabWithID:(HVVocabIdentifier *) vocabID;
 
+//------------
 //
+// Download Support
+//
+//------------
 // Download the given vocab and save it in the LocalVault
 // Use [[HVClient current].localVault getVocab] to load it subsequently
 //
@@ -61,5 +62,11 @@
 
 -(void) ensureVocabDownloaded:(HVVocabIdentifier *) vocab; // default - will check for new vocabs once a month
 -(void) ensureVocabDownloaded:(HVVocabIdentifier *) vocab maxAge:(NSTimeInterval) ageInSeconds;
+
+//
+// Convenience Lookup of codes
+//
+-(HVVocabItem *) getVocabItemForCode:(NSString *) code inVocab:(HVVocabIdentifier *) vocabID;
+-(NSString *) getDisplayTextForCode:(NSString *) code inVocab:(HVVocabIdentifier *) vocabID;
 
 @end

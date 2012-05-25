@@ -105,6 +105,42 @@ LError:
     return (HVVocabItem *) [self objectAtIndex:index];
 }
 
+-(NSUInteger)indexOfVocabCode:(NSString *)code
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        HVVocabItem* item = [self itemAtIndex:i];
+        if ([item.code isEqualToString:code])
+        {
+            return i;
+        }
+    }
+    
+    return NSNotFound;
+}
+
+-(HVVocabItem *)getItemWithCode:(NSString *)code
+{
+    NSUInteger index = [self indexOfVocabCode:code];
+    if (index == NSNotFound)
+    {
+        return nil;
+    }
+    
+    return [self itemAtIndex:index];
+}
+
+-(NSString *)displayTextForCode:(NSString *)code
+{
+    HVVocabItem* vocabItem = [self getItemWithCode:code];
+    if (!vocabItem)
+    {
+        return nil;
+    }
+    
+    return vocabItem.displayText;
+}
+
 -(NSArray *)displayStrings
 {
     NSMutableArray* strings = [[NSMutableArray alloc]initWithCapacity:self.count];

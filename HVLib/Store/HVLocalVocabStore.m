@@ -109,6 +109,28 @@ LError:
     }
 }
 
+-(HVVocabItem *)getVocabItemForCode:(NSString *)code inVocab:(HVVocabIdentifier *)vocabID
+{
+    HVVocabCodeSet* vocab  = [self getVocabWithID:vocabID];
+    if (!vocab)
+    {
+        return nil;
+    }
+    
+    return [vocab.items getItemWithCode:code];
+}
+
+-(NSString *)getDisplayTextForCode:(NSString *)code inVocab:(HVVocabIdentifier *)vocabID
+{
+    HVVocabItem* vocabItem = [self getVocabItemForCode:code inVocab:vocabID];
+    if (!vocabItem)
+    {
+        return nil;
+    }
+    
+    return vocabItem.displayText;
+}
+
 @end
 
 @implementation HVLocalVocabStore (HVPrivate)

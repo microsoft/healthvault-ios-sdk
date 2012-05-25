@@ -19,6 +19,7 @@
 #import "HVCommon.h"
 #import "HVLocalVault.h"
 #import "XLib.h"
+#import "HVCachingObjectStore.h"
 
 @interface HVLocalVault (HVPrivate)
 -(void) setRoot:(HVDirectory *) root;
@@ -28,15 +29,20 @@
 
 @synthesize root = m_root;
 @synthesize vocabs = m_vocabs;
-@synthesize cache = m_cache;
 
 -(id)initWithRoot:(HVDirectory *)root
+{
+    return [self initWithRoot:root andCache:FALSE];
+}
+
+-(id)initWithRoot:(HVDirectory *)root andCache:(BOOL)cache
 {
     HVCHECK_NOTNULL(root);
     
     self = [super init];
     HVCHECK_SELF;
     
+    m_cache = cache;
     self.root = root;
     
     m_recordStores = [[NSMutableDictionary alloc] initWithCapacity:2];
@@ -44,6 +50,15 @@
     
     id<HVObjectStore> vocabObjectStore = [root newChildStore:@"vocabs"];
     HVCHECK_NOTNULL(vocabObjectStore);
+    
+    if (m_cache)
+    {
+        id<HVObjectStore> cachingDataStore = [[HVCachingObjectStore alloc] initWithObjectStore:vocabObjectStore];
+        [vocabObjectStore release];
+        HVCHECK_NOTNULL(cachingDataStore);
+        
+        vocabObjectStore = cachingDataStore;
+    }
     
     m_vocabs = [[HVLocalVocabStore alloc] initWithObjectStore:vocabObjectStore];
     [vocabObjectStore release];

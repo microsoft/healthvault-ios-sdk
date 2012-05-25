@@ -150,7 +150,7 @@ LError:
 
 -(NSString *)toString
 {
-    return [self stringInMeters:@"%d m"];
+    return [self stringInMeters:@"%.2f m"];
 }
 
 -(NSString *)toStringWithFormat:(NSString *)format
