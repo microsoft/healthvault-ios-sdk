@@ -239,6 +239,11 @@ LError:
     return [[HVItem alloc] initWithType:[HVExercise typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Exercise", @"Exercise Type Name");
+}
+
 @end
 
 @implementation HVExercise (HVPrivate)

@@ -48,7 +48,7 @@ LError:
 
 -(BOOL) validateValue:(double)value
 {
-    return(self.min <= value || value <= self.max);
+    return(self.min <= value && value <= self.max);
 }
 
 @end
