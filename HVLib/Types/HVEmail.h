@@ -23,7 +23,7 @@
 @interface HVEmail : HVType
 {
 @private
-    NSString* m_description;
+    NSString* m_type;
     HVBool* m_isprimary;
     HVEmailAddress* m_address;
 }
@@ -40,9 +40,9 @@
 //
 @property (readwrite, nonatomic, retain) HVEmailAddress* address;
 //
-// (Optional) A description of this email
+// (Optional) A description of this email (Personal, Work, etc)
 //
-@property (readwrite, nonatomic, retain) NSString* description;
+@property (readwrite, nonatomic, retain) NSString* type;
 //
 // (Optional) 
 //
@@ -64,6 +64,11 @@
 
 @end
 
+//-------------------------
+//
+// HVEmailCollection
+//
+//-------------------------
 @interface HVEmailCollection : HVCollection
 
 -(HVEmail *) itemAtIndex:(NSUInteger) index;

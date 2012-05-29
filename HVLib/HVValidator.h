@@ -109,7 +109,7 @@
                                             goto LError; \
                                         } \
 
-#define HVVALIDATE_STRINGOPTIONAL(string, error) if (string) { HVVALIDATE_STRING(string, error);}
+#define HVVALIDATE_STRINGOPTIONAL(string, error)
 
 #define HVVALIDATE_ARRAY(var, error) HVCHECK_RESULT(HVValidateArray(var, error));
 #define HVVALIDATE_ARRAYOPTIONAL(var, error) if (var) { HVVALIDATE_ARRAY(var, error);}

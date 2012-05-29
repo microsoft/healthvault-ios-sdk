@@ -99,7 +99,7 @@ LError:
 
 +(HVVocabIdentifier *)vocabForName
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunizations"] autorelease];    
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunizations-common"] autorelease];    
 }
 
 +(HVVocabIdentifier *)vocabForAdverseEvent

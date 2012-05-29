@@ -587,6 +587,36 @@ LError:
     return TRUE;    
 }
 
+-(BOOL)readDoubleAttribute:(NSString *)name doubleValue:(double *)value
+{
+    if (!self.hasAttributes || ![self moveToAttribute:name])
+    {
+        return FALSE;
+    }
+    
+    NSString* string = self.value;
+    *value = [self.converter stringToDouble:string];
+    
+    [self moveToElement];
+    
+    return TRUE;    
+}
+
+-(BOOL)readFloatAttribute:(NSString *)name floatValue:(float *)value
+{
+    if (!self.hasAttributes || ![self moveToAttribute:name])
+    {
+        return FALSE;
+    }
+    
+    NSString* string = self.value;
+    *value = [self.converter stringToFloat:string];
+    
+    [self moveToElement];
+    
+    return TRUE;    
+}
+
 -(BOOL) readUntilNodeType:(enum XNodeType)type
 {
     while ([self read])

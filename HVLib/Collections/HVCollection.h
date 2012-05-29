@@ -31,6 +31,13 @@
 
 -(void) validateNewObject:(id) obj;
 
+//-----------------
+//
+// Text
+//
+//-----------------
+-(NSString *) toString;
+
 @end
 
 @interface HVStringCollection : HVCollection 

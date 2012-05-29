@@ -26,7 +26,7 @@ static NSString* const c_element_number = @"number";
 @implementation HVPhone
 
 @synthesize number = m_number;
-@synthesize description = m_description;
+@synthesize type = m_type;
 @synthesize isPrimary = m_isprimary;
 
 -(id)initWithNumber:(NSString *)number
@@ -47,7 +47,7 @@ LError:
 -(void)dealloc
 {
     [m_number release];
-    [m_description release];
+    [m_type release];
     [m_isprimary release];
     
     [super dealloc];
@@ -78,14 +78,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_description, c_element_description);
+    HVSERIALIZE_STRING(m_type, c_element_description);
     HVSERIALIZE(m_isprimary, c_element_isPrimary);
     HVSERIALIZE_STRING(m_number, c_element_number);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_description, c_element_description);
+    HVDESERIALIZE_STRING(m_type, c_element_description);
     HVDESERIALIZE(m_isprimary, c_element_isPrimary, HVBool);
     HVDESERIALIZE_STRING(m_number, c_element_number);
 }

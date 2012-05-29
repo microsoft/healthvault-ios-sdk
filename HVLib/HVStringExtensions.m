@@ -300,6 +300,23 @@ LError:
     }
 }
 
+-(void)appendOptionalStringAsLine:(NSString *)string
+{
+    if (![NSString isNilOrEmpty:string])
+    {
+        [self appendStringAsLine:string];
+    }    
+}
+
+-(void)appendOptionalWords:(NSString *)string
+{
+    if (self.length > 0)
+    {
+        [self appendString:@" "];
+    }
+    [self appendOptionalString:string];
+}
+
 -(NSString *) trim
 {
     [self trimLeft];

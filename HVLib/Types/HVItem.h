@@ -34,8 +34,8 @@ enum HVItemFlags
 {
     HVItemFlagNone = 0x00,
     HVItemFlagPersonal = 0x01,  // Item is only accessible to custodians
-    HVItemDownVersioned = 0x02, // Item converted from a newer format to an older format [cannot update]
-    HVITemUpVersioned = 0x04    // Item converted from an older format to a new format [can update]
+    HVItemFlagDownVersioned = 0x02, // Item converted from a newer format to an older format [cannot update]
+    HVItemFlagUpVersioned = 0x04    // Item converted from an older format to a new format [can update]
 };
 
 //-------------------------

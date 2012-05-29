@@ -26,7 +26,7 @@ static NSString* const c_element_address = @"address";
 @implementation HVEmail
 
 @synthesize address = m_address;
-@synthesize description = m_description;
+@synthesize type = m_type;
 @synthesize isPrimary = m_isprimary;
 
 -(id)initWithEmailAddress:(NSString *)email
@@ -46,7 +46,7 @@ LError:
 -(void)dealloc
 {
     [m_address release];
-    [m_description release];
+    [m_type release];
     [m_isprimary release];
     
     [super dealloc];
@@ -76,14 +76,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_description, c_element_description);
+    HVSERIALIZE_STRING(m_type, c_element_description);
     HVSERIALIZE(m_isprimary, c_element_isPrimary);
     HVSERIALIZE(m_address, c_element_address);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_description, c_element_description);
+    HVDESERIALIZE_STRING(m_type, c_element_description);
     HVDESERIALIZE(m_isprimary, c_element_isPrimary, HVBool);
     HVDESERIALIZE(m_address, c_element_address, HVEmailAddress);
 }

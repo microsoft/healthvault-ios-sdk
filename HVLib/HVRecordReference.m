@@ -113,7 +113,20 @@ LError:
     
 LError:
     return nil;
+}
 
+-(HVGetItemsTask *)getItemWithID:(NSString *)itemID callback:(HVTaskCompletion)callback
+{
+    HVItemQuery *query = [[HVItemQuery alloc] initwithItemID:itemID];
+    HVCHECK_NOTNULL(query);
+    
+    HVGetItemsTask* task = [self getItems:query callback:callback];
+    [query release];
+    
+    return task;
+    
+LError:
+    return nil;
 }
 
 -(HVGetItemsTask *)getItems:(HVItemQuery *)query callback:(HVTaskCompletion)callback

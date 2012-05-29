@@ -23,7 +23,7 @@
 @interface HVAddress : HVType
 {
 @private
-    NSString* m_description;
+    NSString* m_type;
     HVBool* m_isprimary;
     HVStringCollection* m_street;
     NSString* m_city;
@@ -41,7 +41,7 @@
 //
 // (Optional) A description of this address, such as "Home"
 //
-@property (readwrite, nonatomic, retain) NSString* description;
+@property (readwrite, nonatomic, retain) NSString* type;
 @property (readwrite, nonatomic, retain) HVBool* isPrimary;
 //
 // (Required)
@@ -70,7 +70,21 @@
 
 @property (readonly, nonatomic) BOOL hasStreet;
 
+//-------------------------
+//
+// Text
+//
+//-------------------------
+-(NSString *) toString;
+
 @end
+
+
+//-------------------------
+//
+// HVAddressCollection
+//
+//-------------------------
 
 @interface HVAddressCollection : HVCollection
 

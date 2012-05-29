@@ -63,6 +63,7 @@
 -(id) initWithDescription:(NSString *) descr;
 -(id) initWithDate:(NSDate *) date;
 -(id) initWithDateTime:(HVDateTime *) dateTime;
+-(id) initNow;
 
 +(HVApproxDateTime *) fromDate:(NSDate *) date;
 +(HVApproxDateTime *) fromDescription:(NSString *) descr;

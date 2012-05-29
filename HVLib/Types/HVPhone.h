@@ -23,7 +23,7 @@
 @interface HVPhone : HVType
 {
 @private
-    NSString* m_description;
+    NSString* m_type;
     HVBool* m_isprimary;
     NSString* m_number;
 }
@@ -40,9 +40,9 @@
 //
 @property (readwrite, nonatomic, retain) NSString* number;
 //
-// (Optional) A description of this number
+// (Optional) A description of this number (Cell, Home, Work)
 //
-@property (readwrite, nonatomic, retain) NSString* description;
+@property (readwrite, nonatomic, retain) NSString* type;
 //
 // (Optional) 
 //
@@ -65,7 +65,11 @@
 
 @end
 
-
+//-------------------------
+//
+// HVPhoneCollection
+//
+//-------------------------
 @interface HVPhoneCollection : HVCollection
 
 -(HVPhone *) itemAtIndex:(NSUInteger) index;

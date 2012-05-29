@@ -110,6 +110,40 @@ LError:
         }
     }
 }
+
+-(NSString *)toString
+{
+    if (self.count == 0)
+    {
+        return c_emptyString;
+    }
+    
+    NSMutableString* text = [[[NSMutableString alloc] init] autorelease];
+    
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        id obj = [self objectAtIndex:i];
+        NSString* descr = [obj description];
+        if ([NSString isNilOrEmpty:descr])
+        {
+            continue;
+        }
+        if (i > 0)
+        {
+            [text appendNewLine];
+        }
+        [text appendString:descr];
+    }
+    
+    return text;
+}
+
+
+-(NSString *)description
+{
+    return [self toString];
+}
+
 @end
 
 @implementation HVStringCollection

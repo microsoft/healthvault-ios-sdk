@@ -95,6 +95,11 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(id)initNow
+{
+    return [self initWithDate:[NSDate date]];
+}
+
 -(void)dealloc
 {
     [m_descriptive release];

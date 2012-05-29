@@ -75,6 +75,8 @@ NSString* const c_emptyString;
 
 -(void) appendOptionalString:(NSString *) string;
 -(void) appendOptionalString:(NSString *)string withSeparator:(NSString *) separator;
+-(void) appendOptionalStringAsLine:(NSString *) string;
+-(void) appendOptionalWords:(NSString *) string;
 
 -(NSString *) trim;
 -(void) trimLeft;

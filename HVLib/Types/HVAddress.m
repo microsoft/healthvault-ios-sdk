@@ -30,7 +30,7 @@ static NSString* const c_element_county = @"county";
 
 @implementation HVAddress
 
-@synthesize description = m_description;
+@synthesize type = m_type;
 @synthesize isPrimary = m_isprimary;
 @synthesize city = m_city;
 @synthesize state = m_state;
@@ -56,7 +56,7 @@ static NSString* const c_element_county = @"county";
 
 -(void)dealloc
 {
-    [m_description release];
+    [m_type release];
     [m_isprimary release];
     [m_street release];
     [m_city release];
@@ -66,6 +66,31 @@ static NSString* const c_element_county = @"county";
     [m_county release];
 
     [super dealloc];
+}
+
+-(NSString *)toString
+{
+    NSMutableString* text = [[[NSMutableString alloc] init] autorelease];
+    
+    [text appendOptionalStringAsLine:[m_street toString]];
+    
+    [text appendOptionalWords:m_city];
+    [text appendOptionalWords:m_county];
+    [text appendOptionalWords:m_state];
+    [text appendOptionalWords:m_postalCode];
+    
+    if (m_country && text.length > 0)
+    {
+        [text appendNewLine];
+        [text appendStringAsLine:m_country];
+    }
+    
+    return text;
+}
+
+-(NSString *)description
+{
+    return [self toString];
 }
 
 -(HVClientResult *)validate
@@ -85,7 +110,7 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_description, c_element_description);
+    HVSERIALIZE_STRING(m_type, c_element_description);
     HVSERIALIZE(m_isprimary, c_element_isPrimary);
     HVSERIALIZE_STRINGCOLLECTION(m_street, c_element_street);
     HVSERIALIZE_STRING(m_city, c_element_city);
@@ -97,7 +122,7 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_description, c_element_description);
+    HVDESERIALIZE_STRING(m_type, c_element_description);
     HVDESERIALIZE(m_isprimary, c_element_isPrimary, HVBool);
     HVDESERIALIZE_STRINGCOLLECTION(m_street, c_element_street);
     HVDESERIALIZE_STRING(m_city, c_element_city);

@@ -103,6 +103,8 @@ NSString* const XExceptionNotSerializable;
 -(NSString *) readAttribute:(NSString *) name;
 -(BOOL) readIntAttribute:(NSString *) name intValue:(int *) value;
 -(BOOL) readBoolAttribute:(NSString *) name boolValue:(BOOL *) value;
+-(BOOL) readDoubleAttribute:(NSString *) name doubleValue:(double *) value;
+-(BOOL) readFloatAttribute:(NSString *) name floatValue:(float *) value;
 
 -(BOOL) readUntilNodeType:(enum XNodeType) type;
 -(BOOL) skipElement:(NSString *) name;
@@ -191,6 +193,8 @@ void throwWriterError(void);
 #define HVDESERIALIZE_ATTRIBUTE(var, name) HVSETIF(var, [reader readAttribute:name])
 #define HVDESERIALIZE_INTATTRIBUTE(var, name) [reader readIntAttribute:name intValue:&var]
 #define HVDESERIALIZE_BOOLATTRIBUTE(var, name) [reader readBoolAttribute:name boolValue:&var]
+#define HVDESERIALIZE_DOUBLEATTRIBUTE(var, name) [reader readDoubleAttribute:name doubleValue:&var]
+#define HVDESERIALIZE_FLOATATTRIBUTE(var, name) [reader readFloatAttribute:name floatValue:&var]
 
 //---------------------------------------
 //
