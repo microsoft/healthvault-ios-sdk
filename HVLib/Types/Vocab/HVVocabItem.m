@@ -105,6 +105,29 @@ LError:
     return (HVVocabItem *) [self objectAtIndex:index];
 }
 
+-(void)sortByDisplayText
+{
+    [self sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        
+        HVVocabItem* x = (HVVocabItem *) obj1;
+        HVVocabItem* y = (HVVocabItem *) obj2;
+        
+        return [x.displayText compare:y.displayText];
+        
+    } ];
+}
+
+-(void)sortByCode
+{
+    [self sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        
+        HVVocabItem* x = (HVVocabItem *) obj1;
+        HVVocabItem* y = (HVVocabItem *) obj2;
+        
+        return [x.code compare:y.code];
+    }];
+}
+
 -(NSUInteger)indexOfVocabCode:(NSString *)code
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)

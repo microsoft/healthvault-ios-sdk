@@ -45,7 +45,8 @@
 
 -(HVItemKey *)firstKey
 {
-    return self.putResults ? [self.putResults itemAtIndex:0] : nil;
+    HVItemKeyCollection* results = self.putResults;
+    return (![NSArray isNilOrEmpty:results]) ? [results itemAtIndex:0] : nil;
 }
 
 -(NSString *)name

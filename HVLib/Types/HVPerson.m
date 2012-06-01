@@ -111,6 +111,11 @@ LError:
     return (m_name) ? [m_name toString] : c_emptyString;
 }
 
++(HVVocabIdentifier *)vocabForPersonType
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"person-types"] autorelease];                
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

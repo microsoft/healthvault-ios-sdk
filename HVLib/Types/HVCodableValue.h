@@ -82,6 +82,10 @@
 //-------------------------
 -(NSString *) toString;
 //
+// Expects a format containing @%
+//
+-(NSString *) toStringWithFormat:(NSString *) format;
+//
 // Does a trimmed case insensitive comparison
 //
 -(BOOL) matchesDisplayText:(NSString *) text;

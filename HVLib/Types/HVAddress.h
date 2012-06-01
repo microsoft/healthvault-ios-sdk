@@ -19,6 +19,7 @@
 #import "HVType.h"
 #import "HVBaseTypes.h"
 #import "HVCollection.h"
+#import "HVVocab.h"
 
 @interface HVAddress : HVType
 {
@@ -69,6 +70,14 @@
 @property (readwrite, nonatomic, retain) NSString* county;
 
 @property (readonly, nonatomic) BOOL hasStreet;
+
+//-------------------------
+//
+// Vocabs
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForCountries;
++(HVVocabIdentifier *) vocabForUSStates;
 
 //-------------------------
 //

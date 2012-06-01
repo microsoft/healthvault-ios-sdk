@@ -19,6 +19,7 @@
 #import "HVType.h"
 #import "HVBaseTypes.h"
 #import "HVCollection.h"
+#import "HVVocab.h"
 
 @interface HVEmail : HVType
 {
@@ -54,6 +55,8 @@
 //
 //-------------------------
 -(id) initWithEmailAddress:(NSString *) email;
+
++(HVVocabIdentifier *) vocabForType;
 
 //-------------------------
 //

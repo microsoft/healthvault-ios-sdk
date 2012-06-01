@@ -155,6 +155,11 @@ LError:
     return m_text;
 }
 
+-(NSString *)toStringWithFormat:(NSString *)format
+{
+    return [NSString stringWithFormat:format, m_text];
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN;

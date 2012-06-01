@@ -56,7 +56,7 @@ static NSString* const c_element_answer = @"answer";
 
 -(HVCodableValue *)firstAnswer
 {
-    return (m_answers) ? [m_answers itemAtIndex:0] : nil;
+    return (self.hasAnswers) ? [m_answers itemAtIndex:0] : nil;
 }
 
 -(BOOL)hasAnswerChoices

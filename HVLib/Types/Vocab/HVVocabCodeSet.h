@@ -38,13 +38,13 @@
 @property (readonly, nonatomic) BOOL hasItems;
 
 -(NSArray *) displayStrings;
+-(void) sortItemsByDisplayText;
 
 @end
 
 @interface HVVocabSetCollection : HVCollection 
 
 -(HVVocabCodeSet *) itemAtIndex:(NSUInteger) index;
-
 
 @end
 

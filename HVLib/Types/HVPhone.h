@@ -19,6 +19,7 @@
 #import "HVType.h"
 #import "HVBaseTypes.h"
 #import "HVCollection.h"
+#import "HVVocab.h"
 
 @interface HVPhone : HVType
 {
@@ -62,6 +63,8 @@
 //-------------------------
 
 -(NSString *) toString;
+
++(HVVocabIdentifier *) vocabForType;
 
 @end
 

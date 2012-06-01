@@ -193,9 +193,19 @@ LError:
     return [[self stringByAppendingPathComponent:name] stringByAppendingPathExtension:ext];
 }
 
+-(NSString *)urlEncode
+{
+    return [self stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
 -(NSString *)toString
 {
     return self;
+}
+
+-(NSString *)toStringWithFormat:(NSString *)format
+{
+    return [NSString stringWithFormat:format, self];
 }
 
 @end
@@ -306,6 +316,18 @@ LError:
     {
         [self appendStringAsLine:string];
     }    
+}
+
+-(void)appendOptionalStringOnNewLine:(NSString *)string
+{
+    if (![NSString isNilOrEmpty:string])
+    {
+        if (self.length > 0)
+        {
+            [self appendNewLine];
+        }
+        [self appendString:string];
+    }        
 }
 
 -(void)appendOptionalWords:(NSString *)string

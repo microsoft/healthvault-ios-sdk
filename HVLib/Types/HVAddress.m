@@ -72,18 +72,14 @@ static NSString* const c_element_county = @"county";
 {
     NSMutableString* text = [[[NSMutableString alloc] init] autorelease];
     
-    [text appendOptionalStringAsLine:[m_street toString]];
+    [text appendOptionalWords:[m_street toString]];
     
-    [text appendOptionalWords:m_city];
-    [text appendOptionalWords:m_county];
-    [text appendOptionalWords:m_state];
+    [text appendOptionalStringOnNewLine:m_city];
+    [text appendOptionalStringOnNewLine:m_county];        
+    
+    [text appendOptionalStringOnNewLine:m_state];
     [text appendOptionalWords:m_postalCode];
-    
-    if (m_country && text.length > 0)
-    {
-        [text appendNewLine];
-        [text appendStringAsLine:m_country];
-    }
+    [text appendOptionalStringOnNewLine:m_country];
     
     return text;
 }
@@ -91,6 +87,16 @@ static NSString* const c_element_county = @"county";
 -(NSString *)description
 {
     return [self toString];
+}
+
++(HVVocabIdentifier *)vocabForCountries
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_isoFamily andName:@"iso3166"] autorelease];        
+}
+
++(HVVocabIdentifier *)vocabForUSStates
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"states"] autorelease];        
 }
 
 -(HVClientResult *)validate

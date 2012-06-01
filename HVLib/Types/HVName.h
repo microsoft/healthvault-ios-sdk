@@ -18,6 +18,7 @@
 
 #import "HVType.h"
 #import "HVCodableValue.h"
+#import "HVVocab.h"
 
 @interface HVName : HVType
 {
@@ -76,6 +77,9 @@
 //
 //-------------------------
 -(BOOL) buildFullName;
+
++(HVVocabIdentifier *) vocabForTitle;
++(HVVocabIdentifier *) vocabForSuffix;
 
 //-------------------------
 //

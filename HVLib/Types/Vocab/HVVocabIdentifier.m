@@ -30,6 +30,7 @@ NSString* const c_snomedFamily = @"Snomed";
 NSString* const c_hvFamily = @"wc";
 NSString* const c_icdFamily = @"icd";
 NSString* const c_hl7Family = @"HL7";
+NSString* const c_isoFamily = @"iso";
 
 @implementation HVVocabIdentifier
 

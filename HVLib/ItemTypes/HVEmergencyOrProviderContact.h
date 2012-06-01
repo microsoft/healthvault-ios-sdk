@@ -19,6 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
 
 @interface HVEmergencyOrProviderContact : HVItemDataTyped
 {

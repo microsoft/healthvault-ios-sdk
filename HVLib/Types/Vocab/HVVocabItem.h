@@ -73,6 +73,9 @@
 
 -(HVVocabItem *) itemAtIndex:(NSUInteger) index;
 
+-(void) sortByDisplayText;
+-(void) sortByCode;
+
 //------------------------
 // 
 // Search vocabs

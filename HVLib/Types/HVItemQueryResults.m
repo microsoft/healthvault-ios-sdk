@@ -32,7 +32,7 @@ static NSString* const c_element_result = @"group";
 
 -(HVItemQueryResult *)firstResult
 {
-    return (m_results) ? [m_results objectAtIndex:0] : nil;
+    return (self.hasResults) ? [m_results objectAtIndex:0] : nil;
 }
 
 -(void) dealloc

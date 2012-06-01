@@ -92,4 +92,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVEmergencyOrProviderContact typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Contact", @"Emergency or provider contact  Type Name");
+}
+
 @end

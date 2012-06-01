@@ -23,17 +23,16 @@
 
 #define HVLOG(message)
 
-//
-// TODO: Add Logging to HVASSERT
-//
 #ifdef DEBUG
-#define HVASSERT(condition) NSAssert(condition, @#condition)
-#define HVASSERT_MESSAGE(message) NSAssert(FALSE, message)
+
+#define HVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
+
+#define HVASSERT(condition) if (!(condition)) { HVASSERT_MESSAGE(@#condition)}
 #define HVASSERT_C(condition) assert(condition);
                 
 #else
 
-#define HVASSERT(condition)     
+#define HVASSERT(condition) 
 #define HVASSERT_MESSAGE(message) 
 #define HVASSERT_C(condition)
 

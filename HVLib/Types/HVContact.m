@@ -78,17 +78,17 @@ static NSString* const c_element_email = @"email";
 
 -(HVAddress *)firstAddress
 {
-    return (m_address) ? [m_address itemAtIndex:0] : nil;
+    return (self.hasAddress) ? [m_address itemAtIndex:0] : nil;
 }
 
 -(HVEmail *) firstEmail
 {
-    return (m_email) ? [m_email itemAtIndex:0] : nil;
+    return (self.hasEmail) ? [m_email itemAtIndex:0] : nil;
 }
 
 -(HVPhone *)firstPhone
 {
-    return (m_phone) ? [m_phone itemAtIndex:0] : nil;
+    return (self.hasPhone) ? [m_phone itemAtIndex:0] : nil;
 }
 
 -(id)initWithEmail:(NSString *)email

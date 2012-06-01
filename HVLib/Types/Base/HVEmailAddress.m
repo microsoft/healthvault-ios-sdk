@@ -31,18 +31,4 @@
     return 128;
 }
 
--(HVClientResult *)validate
-{
-    HVVALIDATE_BEGIN
-    
-    HVCHECK_RESULT([super validate]);
-    
-    HVVALIDATE_TRUE(([self.value indexOfFirstChar:'@'] != NSNotFound), HVClientError_InvalidEmailAddress);
-    
-    HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
-}
-
 @end

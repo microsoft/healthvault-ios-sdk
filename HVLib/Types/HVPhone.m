@@ -63,6 +63,11 @@ LError:
     return (m_number) ? m_number : c_emptyString;
 }
 
++(HVVocabIdentifier *)vocabForType
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"phone-types"] autorelease];        
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

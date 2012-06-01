@@ -99,7 +99,11 @@ LError:
     }
     
     [fullName appendOptionalString:m_first withSeparator:@" "];
-    [fullName appendOptionalString:m_middle withSeparator:@" "];
+    if (![NSString isNilOrEmpty:m_middle])
+    {
+        NSString* middleInitial = [NSString stringWithFormat:@"%c.", toupper([m_middle characterAtIndex:0])];
+        [fullName appendOptionalString:middleInitial withSeparator:@" "];
+    }
     [fullName appendOptionalString:m_last withSeparator:@" "];
     if (m_suffix)
     {
@@ -122,6 +126,16 @@ LError:
 -(NSString *)toString
 {
     return (m_full) ? m_full : c_emptyString;
+}
+
++(HVVocabIdentifier *)vocabForTitle
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-prefixes"] autorelease];    
+}
+
++(HVVocabIdentifier *)vocabForSuffix
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-suffixes"] autorelease];        
 }
 
 -(HVClientResult *)validate

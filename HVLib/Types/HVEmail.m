@@ -62,6 +62,11 @@ LError:
     return (m_address) ? m_address.value : c_emptyString;
 }
 
++(HVVocabIdentifier *)vocabForType
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"email-types"] autorelease];        
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

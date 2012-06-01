@@ -53,6 +53,14 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
     return (m_items) ? [m_items displayStrings] : nil;
 }
 
+-(void)sortItemsByDisplayText
+{
+    if (m_items)
+    {
+        [m_items sortByDisplayText];
+    }
+}
+
 -(void)dealloc
 {
     [m_name release];
