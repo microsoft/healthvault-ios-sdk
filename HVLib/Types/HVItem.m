@@ -313,7 +313,7 @@ LError:
     return item;
 }
 
--(void)clearSystemFields
+-(void)prepareForUpdate
 {
     self.effectiveDate = nil;
     self.updated = nil;
@@ -396,6 +396,18 @@ static NSString* const c_element_item = @"thing";
     
     return self;
     
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initWithItems:(NSArray *)items
+{
+    self = [self  init];
+    HVCHECK_SELF;
+    
+    [self addObjectsFromArray:items];
+    
+    return self;
 LError:
     HVALLOC_FAIL;
 }
@@ -510,6 +522,30 @@ LError:
     
 LError:
     HVVALIDATE_FAIL
+}
+
+-(BOOL)shallowCloneItems
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        HVItem* clone = [[self itemAtIndex:i] shallowClone];
+        HVCHECK_NOTNULL(clone);
+        
+        [self replaceObjectAtIndex:i withObject:clone];
+    }
+
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
+-(void)prepareForUpdate
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        [[self itemAtIndex:i] prepareForUpdate];
+    }    
 }
 
 -(void)serializeAttributes:(XWriter *)writer

@@ -76,6 +76,17 @@
 -(HVPutItemsTask *) putItem:(HVItem *) item callback:(HVTaskCompletion) callback;
 -(HVPutItemsTask *) putItems:(HVItemCollection *) items callback:(HVTaskCompletion)callback;
 
+//
+// Update Item assumes that you fetched items from HV, made some changes, and are now 
+// writing it back. It will automatically CLEAR system fields that are *typically* set by the HV service, 
+// such as effectiveDates. It does so by calling [item prepareForPut]. 
+// If the fields are not cleared, the system data present in the item will get persisted into HV. 
+//
+// If you wish to manage this information yourself, you should call putItem/putItems directly
+//
+-(HVPutItemsTask *) updateItem:(HVItem *) item callback:(HVTaskCompletion) callback;
+-(HVPutItemsTask *) updateItems:(HVItemCollection *) items callback:(HVTaskCompletion)callback;
+
 //-------------------------
 //
 // Remove Data

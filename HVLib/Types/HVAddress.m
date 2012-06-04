@@ -99,6 +99,11 @@ static NSString* const c_element_county = @"county";
     return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"states"] autorelease];        
 }
 
++(HVVocabIdentifier *)vocabForCanadianProvinces
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"provinces"] autorelease];        
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

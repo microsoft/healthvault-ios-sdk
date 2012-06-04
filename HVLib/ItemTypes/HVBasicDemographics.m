@@ -87,6 +87,7 @@ static NSString* const c_element_lang = @"language";
     [m_postalCode release];
     [m_city release];
     [m_state release];
+    [m_firstDOW release];
     [m_languageXml release];
     [super dealloc];
 }
@@ -94,6 +95,11 @@ static NSString* const c_element_lang = @"language";
 -(NSString *)genderAsString
 {
     return stringFromGender(m_gender);
+}
+
++(HVVocabIdentifier *)vocabForGender
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"gender-types"] autorelease];
 }
 
 -(HVClientResult *)validate
@@ -117,7 +123,7 @@ LError:
     HVSERIALIZE_STRING(m_postalCode, c_element_postcode);
     HVSERIALIZE_STRING(m_city, c_element_city);
     HVSERIALIZE(m_state, c_element_state);
-    HVSERIALIZE_INT(m_firstDOW, c_element_dow);
+    HVSERIALIZE(m_firstDOW, c_element_dow);
     HVSERIALIZE_RAW(m_languageXml);
 }
 
@@ -129,7 +135,7 @@ LError:
     HVDESERIALIZE_STRING(m_postalCode, c_element_postcode);
     HVDESERIALIZE_STRING(m_city, c_element_city);
     HVDESERIALIZE(m_state, c_element_state, HVCodableValue);
-    HVDESERIALIZE_INT(m_firstDOW, c_element_dow);
+    HVDESERIALIZE(m_firstDOW, c_element_dow, HVInt);
     HVDESERIALIZE_RAW(m_languageXml, c_element_lang);
 }
 

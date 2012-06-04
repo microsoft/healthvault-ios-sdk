@@ -19,6 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
+#import "HVVocab.h"
 
 enum HVGender 
 {
@@ -46,7 +47,7 @@ enum HVGender stringToGender(NSString* genderString);
     NSString* m_postalCode;
     NSString* m_city;
     HVCodableValue* m_state;
-    int m_firstDOW;
+    HVInt* m_firstDOW;
     NSString* m_languageXml;
 }
 
@@ -79,6 +80,13 @@ enum HVGender stringToGender(NSString* genderString);
 //
 //-------------------------
 -(NSString *) genderAsString;
+
+//-------------------------
+//
+// Vocab
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForGender;
 
 //-------------------------
 //

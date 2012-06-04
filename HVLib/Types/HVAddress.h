@@ -78,6 +78,7 @@
 //-------------------------
 +(HVVocabIdentifier *) vocabForCountries;
 +(HVVocabIdentifier *) vocabForUSStates;
++(HVVocabIdentifier *) vocabForCanadianProvinces;
 
 //-------------------------
 //

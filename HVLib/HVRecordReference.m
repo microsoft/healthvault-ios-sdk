@@ -170,6 +170,18 @@ LError:
     return nil;
 }
 
+-(HVPutItemsTask *)updateItem:(HVItem *)item callback:(HVTaskCompletion)callback
+{
+    [item prepareForUpdate];
+    return [self putItem:item callback:callback];
+}
+
+-(HVPutItemsTask *)updateItems:(HVItemCollection *)items callback:(HVTaskCompletion)callback
+{
+    [items prepareForUpdate];
+    return [self putItems:items callback:callback];
+}
+
 -(HVRemoveItemsTask *)removeItemWithKey:(HVItemKey *)key callback:(HVTaskCompletion)callback
 {
     HVItemKeyCollection* keys = [[[HVItemKeyCollection alloc] initWithKey:key] autorelease];

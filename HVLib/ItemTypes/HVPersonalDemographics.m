@@ -84,6 +84,21 @@ static NSString* const c_element_donor = @"organ-donor";
     return (m_name) ? [m_name toString] : c_emptyString;
 }
 
++(HVVocabIdentifier *)vocabForBloodType
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"blood-types"] autorelease];
+}
+
++(HVVocabIdentifier *)vocabForEthnicity
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"ethnicity-types"] autorelease];
+}
+
++(HVVocabIdentifier *)vocabForMaritalStatus
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"marital-status"] autorelease];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

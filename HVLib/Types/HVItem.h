@@ -157,8 +157,10 @@ enum HVItemFlags
 //
 // Call this to clear fields that are typically set by the HV service
 // - EffectiveDate, UpdateDate, etc...
+// You will want to do this if you fetch an item from HV, update it and then
+// do a put. 
 //
--(void) clearSystemFields; 
+-(void) prepareForUpdate; 
 
 -(BOOL) setKeyToNew;
 -(BOOL) ensureKey;
@@ -198,6 +200,7 @@ enum HVItemFlags
 @interface HVItemCollection : HVCollection <XSerializable>
 
 -(id) initwithItem:(HVItem *) item;
+-(id) initWithItems:(NSArray *) items;
 
 -(HVItem *) itemAtIndex:(NSUInteger) index;
 
@@ -213,5 +216,7 @@ enum HVItemFlags
 +(HVStringCollection *) idsFromItems:(NSArray *) items;
 
 -(HVClientResult *) validate;
+-(BOOL) shallowCloneItems;
+-(void) prepareForUpdate;
 
 @end

@@ -73,6 +73,15 @@
 
 //-------------------------
 //
+// Vocab
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForBloodType;
++(HVVocabIdentifier *) vocabForEthnicity;
++(HVVocabIdentifier *) vocabForMaritalStatus;
+
+//-------------------------
+//
 // Type Information
 //
 //-------------------------
