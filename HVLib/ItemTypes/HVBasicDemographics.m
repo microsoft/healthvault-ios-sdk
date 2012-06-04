@@ -27,11 +27,11 @@ NSString* stringFromGender(enum HVGender gender)
     NSString* genderString = nil;
     
     switch (gender) {
-        case HVGender_Female:
+        case HVGenderFemale:
             genderString = c_gender_female; 
             break;
         
-        case HVGender_Male:
+        case HVGenderMale:
             genderString = c_gender_male;
             break;
             
@@ -46,15 +46,15 @@ enum HVGender stringToGender(NSString* genderString)
 {
     if ([genderString isEqualToString:c_gender_female])
     {
-        return HVGender_Female;
+        return HVGenderFemale;
     }
     
     if ([genderString isEqualToString:c_gender_male])
     {
-        return HVGender_Male;
+        return HVGenderMale;
     }
     
-    return HVGender_None;   
+    return HVGenderNone;   
 }
 
 
@@ -91,6 +91,11 @@ static NSString* const c_element_lang = @"language";
     [super dealloc];
 }
 
+-(NSString *)genderAsString
+{
+    return stringFromGender(m_gender);
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN
@@ -111,7 +116,7 @@ LError:
     HVSERIALIZE(m_country, c_element_country);
     HVSERIALIZE_STRING(m_postalCode, c_element_postcode);
     HVSERIALIZE_STRING(m_city, c_element_city);
-    HVSERIALIZE_STRING(m_state, c_element_state);
+    HVSERIALIZE(m_state, c_element_state);
     HVSERIALIZE_INT(m_firstDOW, c_element_dow);
     HVSERIALIZE_RAW(m_languageXml);
 }
@@ -123,7 +128,7 @@ LError:
     HVDESERIALIZE(m_country, c_element_country, HVCodableValue);
     HVDESERIALIZE_STRING(m_postalCode, c_element_postcode);
     HVDESERIALIZE_STRING(m_city, c_element_city);
-    HVDESERIALIZE_STRING(m_state, c_element_state);
+    HVDESERIALIZE(m_state, c_element_state, HVCodableValue);
     HVDESERIALIZE_INT(m_firstDOW, c_element_dow);
     HVDESERIALIZE_RAW(m_languageXml, c_element_lang);
 }

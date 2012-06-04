@@ -18,10 +18,20 @@
 
 #import "HVCommon.h"
 #import "HVItemQueryResult.h"
+#import "HVGetItemsTask.h"
+#import "HVClient.h"
 
 static NSString* const c_element_item = @"thing";
 static NSString* const c_element_pending = @"unprocessed-thing-key-info";
 static NSString* const c_attribute_name = @"name";
+
+@interface HVItemQueryResult (HVPrivate)
+
+-(HVGetItemsTask *) newGetTaskFor:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *) record;
+-(BOOL) nextGetPendingItems:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *) record andParentTask:(HVTask *) parentTask; 
+-(void) getItemsComplete:(HVTask *) task forRecord:(HVRecordReference *) record;
+
+@end
 
 @implementation HVItemQueryResult
 
@@ -47,6 +57,39 @@ static NSString* const c_attribute_name = @"name";
     [super dealloc];
 }
 
+-(HVTask *)getPendingItemsForRecord:(HVRecordReference *)record withCallback:(HVTaskCompletion)callback
+{
+    HVTask* task = [self createTaskToGetPendingItemsForRecord:record withCallback:callback];
+    if (task)
+    {
+        [task start];
+    }
+    return task;
+}
+
+-(HVTask *)getPendingItemsWithCallback:(HVTaskCompletion)callback
+{
+    return [self getPendingItemsForRecord:[HVClient current].currentRecord withCallback:callback];
+}
+
+-(HVTask *)createTaskToGetPendingItemsForRecord:(HVRecordReference *)record withCallback:(HVTaskCompletion)callback
+{
+    if (!self.hasPendingItems)
+    {
+        return nil;
+    }
+    
+    HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVCHECK_NOTNULL(task);
+    
+    HVCHECK_SUCCESS([self nextGetPendingItems:self.pendingItems forRecord:record andParentTask:task]);
+    
+    return task;
+    
+LError:
+    return nil;
+}
+
 -(void) serializeAttributes:(XWriter *)writer
 {
     HVSERIALIZE_ATTRIBUTE(m_name, c_attribute_name);
@@ -67,6 +110,64 @@ static NSString* const c_attribute_name = @"name";
 {
     HVDESERIALIZE_TYPEDARRAY(m_items, c_element_item, HVItem, HVItemCollection);
     HVDESERIALIZE_TYPEDARRAY(m_pendingItems, c_element_pending, HVPendingItem, HVPendingItemCollection);
+}
+
+@end
+
+@implementation HVItemQueryResult (HVPrivate)
+
+-(HVGetItemsTask *) newGetTaskFor:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *)record
+{
+    HVItemQuery *pendingQuery = [[HVItemQuery alloc] initWithPendingItems:pendingItems];
+    HVGetItemsTask* getPendingTask = [[HVGetItemsTask alloc] initWithQuery:pendingQuery andCallback:^(HVTask *task) {
+        
+        [self getItemsComplete:task forRecord:record];
+    
+    }];
+    
+    [pendingQuery release];
+    return getPendingTask;
+}
+
+-(BOOL)nextGetPendingItems:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *)record andParentTask:(HVTask *)parentTask
+{
+    HVGetItemsTask* getPendingTask = [self newGetTaskFor:pendingItems forRecord:record];
+    HVCHECK_NOTNULL(getPendingTask);
+    
+    [parentTask setNextTask:getPendingTask];    
+    [getPendingTask release];
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
+-(void)getItemsComplete:(HVTask *)task forRecord:(HVRecordReference *)record
+{
+    HVGetItemsTask* getItems = (HVGetItemsTask *) task;
+    HVItemQueryResult* result = getItems.queryResults.firstResult;
+    
+    if (result.hasItems)
+    {
+        //
+        // Append items to this query result's item list
+        //
+        [self.items addObjectsFromArray:result.items];
+    }
+    
+    if (!result.hasPendingItems)
+    {
+        // No more pending items!
+        // We can clear the pending items in this query
+        HVCLEAR(m_pendingItems);
+        return;
+    }
+    //
+    // The pending item query did not return all the items we had requested... MORE pending items!
+    // So we have to issue another query
+    //
+    [self nextGetPendingItems:result.pendingItems forRecord:record andParentTask:task.parent];   
 }
 
 @end

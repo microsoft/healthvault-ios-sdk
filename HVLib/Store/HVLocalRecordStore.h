@@ -22,6 +22,7 @@
 
 @class HVTypeView;
 @class HVSynchronizedStore;
+@class HVStoredQuery;
 
 @interface HVLocalRecordStore : NSObject 
 {
@@ -66,12 +67,17 @@
 // Methods
 //
 //-------------------------s
--(HVTypeView *) loadView:(NSString *) name;
--(BOOL) saveView:(HVTypeView *) view name:(NSString*) name;
+-(HVTypeView *) getView:(NSString *) name;
+-(BOOL) putView:(HVTypeView *) view name:(NSString*) name;
 -(void) deleteView:(NSString *) name;
 
 -(NSData *) getPersonalImage;
 -(BOOL) putPersonalImage:(NSData *) imageData;
 -(void) deletePersonalImage;
 
+-(HVStoredQuery *) getStoredQuery:(NSString *) name;
+-(BOOL) putStoredQuery:(HVStoredQuery *) query withName:(NSString *) name;
+-(void) deleteStoredQuery:(NSString *) name;
+
+                                    
 @end

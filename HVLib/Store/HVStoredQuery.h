@@ -1,5 +1,5 @@
 //
-//  HVCachingObjectStore.h
+//  HVStoredQuery.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -18,18 +18,29 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HVObjectStore.h"
+#import "XLib.h"
+#import "HVTypes.h"
 
-//
-// Places a transparent caching facade over an inner object store
-//
-@interface HVCachingObjectStore : NSObject <HVObjectStore>
+@interface HVStoredQuery : XSerializableType
 {
 @private
-    NSCache* m_cache;
-    id<HVObjectStore> m_inner;
+    HVItemQuery* m_query;
+    HVItemQueryResult* m_result;
+    NSDate* m_timestamp;
 }
 
--(id)initWithObjectStore:(id<HVObjectStore>) store;
+@property (readwrite, nonatomic, retain) HVItemQuery* query;
+@property (readwrite, nonatomic, retain) HVItemQueryResult* result;
+@property (readwrite, nonatomic, retain) NSDate* timestamp;
+
+-(id) initWithQuery:(HVItemQuery *) query;
+-(id) initWithQuery:(HVItemQuery *) query andResult:(HVItemQueryResult *) result;
+
+//
+// maxAgeInSeconds
+//
+-(BOOL) isStale:(NSTimeInterval) maxAge;
+
+-(HVTask *) synchronizeForRecord:(HVRecordReference *) record withCallback:(HVTaskCompletion) callback;
 
 @end

@@ -430,7 +430,7 @@ LError:
     return NSNotFound;
 }
 
--(NSMutableDictionary *)createIndexByID
+-(NSMutableDictionary *) newIndexByID
 {
     NSMutableDictionary* index = [[NSMutableDictionary alloc] initWithCapacity:self.count];
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
@@ -450,7 +450,38 @@ LError:
 
 -(NSMutableDictionary *)getItemsIndexedByID
 {
-    return [[self createIndexByID] autorelease];
+    return [[self newIndexByID] autorelease];
+}
+
+-(NSUInteger)indexOfTypeID:(NSString *)typeID
+{
+    for (NSUInteger i = 0, count = m_inner.count; i < count; ++i)
+    {
+        id obj = [m_inner objectAtIndex:i];
+        if (IsNsNull(obj))
+        {
+            continue;
+        }
+        
+        HVItem* item = (HVItem *) obj;
+        if ([item.type.typeID isEqualToString:typeID])
+        {
+            return i;
+        }
+    }
+    
+    return NSNotFound;    
+}
+
+-(HVItem *)firstItemOfType:(NSString *)typeID
+{
+    NSUInteger index = [self indexOfTypeID:typeID];
+    if (index != NSNotFound)
+    {
+        return [m_inner objectAtIndex:index];
+    }
+    
+    return nil;
 }
 
 +(HVStringCollection *)idsFromItems:(NSArray *)items

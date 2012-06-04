@@ -49,7 +49,7 @@ static NSString* const c_element_contentType = @"content-type";
 
 -(id)initWithName:(NSString *)name andContentType:(NSString *)contentType
 {
-    self = [self init];
+    self = [super init];
     HVCHECK_SELF;
     
     self.name = name;

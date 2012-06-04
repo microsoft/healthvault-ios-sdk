@@ -42,7 +42,7 @@
 {
     HVCHECK_NOTNULL(data);
     
-    self = [self init];
+    self = [super init];
     HVCHECK_SELF;
     
     HVRETAIN(m_source, data);
@@ -75,7 +75,7 @@ LError:
 
 -(id)initWithFilePath:(NSString *)filePath
 {
-    self = [self init];
+    self = [super init];
     HVCHECK_SELF;
     
     HVRETAIN(m_file, [NSFileHandle fileHandleForReadingAtPath:filePath]);

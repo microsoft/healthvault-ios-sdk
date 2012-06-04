@@ -204,8 +204,11 @@ enum HVItemFlags
 -(BOOL) containsItemID:(NSString *) itemID;
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
 
--(NSMutableDictionary *) createIndexByID;
+-(NSMutableDictionary *) newIndexByID;
 -(NSMutableDictionary *) getItemsIndexedByID;
+
+-(NSUInteger) indexOfTypeID:(NSString *) typeID;
+-(HVItem *) firstItemOfType:(NSString *) typeID;
 
 +(HVStringCollection *) idsFromItems:(NSArray *) items;
 

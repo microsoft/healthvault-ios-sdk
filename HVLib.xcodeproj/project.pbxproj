@@ -232,6 +232,8 @@
 		5D6EDDAD154631B700420262 /* HVBlobPayloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6EDDAB154631B700420262 /* HVBlobPayloadItem.m */; };
 		5D6EDDB015463DB700420262 /* HVString1024.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D6EDDAE15463DB700420262 /* HVString1024.h */; };
 		5D6EDDB115463DB700420262 /* HVString1024.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6EDDAF15463DB700420262 /* HVString1024.m */; };
+		5D74847E157A7C5E001A7713 /* HVStoredQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D74847C157A7C5E001A7713 /* HVStoredQuery.h */; };
+		5D74847F157A7C5E001A7713 /* HVStoredQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D74847D157A7C5E001A7713 /* HVStoredQuery.m */; };
 		5D76B9C914DCB92400BA865F /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D76B9C814DCB92400BA865F /* libxml2.2.dylib */; };
 		5D76B9D314DCC84C00BA865F /* HVValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D76B9D114DCC84C00BA865F /* HVValidator.h */; };
 		5D76B9D414DCC84C00BA865F /* HVValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D76B9D214DCC84C00BA865F /* HVValidator.m */; };
@@ -633,6 +635,8 @@
 		5D6EDDAB154631B700420262 /* HVBlobPayloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlobPayloadItem.m; sourceTree = "<group>"; };
 		5D6EDDAE15463DB700420262 /* HVString1024.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVString1024.h; sourceTree = "<group>"; };
 		5D6EDDAF15463DB700420262 /* HVString1024.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVString1024.m; sourceTree = "<group>"; };
+		5D74847C157A7C5E001A7713 /* HVStoredQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVStoredQuery.h; sourceTree = "<group>"; };
+		5D74847D157A7C5E001A7713 /* HVStoredQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVStoredQuery.m; sourceTree = "<group>"; };
 		5D76B9C814DCB92400BA865F /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		5D76B9D114DCC84C00BA865F /* HVValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVValidator.h; sourceTree = "<group>"; };
 		5D76B9D214DCC84C00BA865F /* HVValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVValidator.m; sourceTree = "<group>"; };
@@ -1376,6 +1380,8 @@
 				5DD216201556E18A001C8F31 /* HVLocalVocabStore.m */,
 				5D338B5F15680893005A6C55 /* HVCachingObjectStore.h */,
 				5D338B6015680894005A6C55 /* HVCachingObjectStore.m */,
+				5D74847C157A7C5E001A7713 /* HVStoredQuery.h */,
+				5D74847D157A7C5E001A7713 /* HVStoredQuery.m */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -1612,6 +1618,7 @@
 				5DF44784156BC54000532EAA /* HVBlob.h in Headers */,
 				5DB4206D156C959200E1A473 /* HVItemBlobUploadTask.h in Headers */,
 				5DC8D505156D9FFF00CA119A /* HVBlobSource.h in Headers */,
+				5D74847E157A7C5E001A7713 /* HVStoredQuery.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1859,6 +1866,7 @@
 				5D1BE47E156B483900718832 /* HVBlobUploadTask.m in Sources */,
 				5DB4206E156C959200E1A473 /* HVItemBlobUploadTask.m in Sources */,
 				5DC8D506156D9FFF00CA119A /* HVBlobSource.m in Sources */,
+				5D74847F157A7C5E001A7713 /* HVStoredQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

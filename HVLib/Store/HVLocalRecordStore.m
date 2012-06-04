@@ -21,12 +21,17 @@
 #import "HVTypeView.h"
 #import "HVSynchronizedStore.h"
 #import "HVCachingObjectStore.h"
+#import "HVStoredQuery.h"
 
 static NSString* const c_view = @"view";
 static NSString* const c_personalImage = @"personalImage";
+static NSString* const c_storedQuery = @"storedQuery";
 
 @interface HVLocalRecordStore (HVPrivate)
+
 -(NSString *) makeViewKey:(NSString *) name;
+-(NSString *) makeStoredQueryKey:(NSString *) name;
+
 @end
 
 @implementation HVLocalRecordStore
@@ -88,7 +93,7 @@ LError:
     [super dealloc];
 }
 
--(HVTypeView *)loadView:(NSString *)name
+-(HVTypeView *)getView:(NSString *)name
 {
     HVTypeView* view = [m_metadata getObjectWithKey:[self makeViewKey:name] name:c_view andClass:[HVTypeView class]];
     if (view)
@@ -98,7 +103,7 @@ LError:
     return view;
 }
 
--(BOOL)saveView:(HVTypeView *)view name:(NSString *)name
+-(BOOL)putView:(HVTypeView *)view name:(NSString *)name
 {
     return [m_metadata putObject:view withKey:[self makeViewKey:name] andName:c_view];
 }
@@ -123,6 +128,25 @@ LError:
     [m_metadata deleteKey:c_personalImage];
 }
 
+-(HVStoredQuery *)getStoredQuery:(NSString *)name
+{
+    HVStoredQuery* storedQuery = [m_metadata getObjectWithKey:[self makeStoredQueryKey:name] 
+                                                                name:c_storedQuery 
+                                                                andClass:[HVStoredQuery class]];
+ 
+    return storedQuery;    
+}
+
+-(BOOL)putStoredQuery:(HVStoredQuery *)query withName:(NSString *)name
+{
+    return [m_metadata putObject:query withKey:[self makeStoredQueryKey:name] andName:c_storedQuery];
+}
+
+-(void)deleteStoredQuery:(NSString *)name
+{
+    [m_metadata deleteKey:[self makeStoredQueryKey:name]];    
+}
+
 @end
 
 @implementation HVLocalRecordStore (HVPrivate)
@@ -130,6 +154,11 @@ LError:
 -(NSString *)makeViewKey:(NSString *)name
 {
     return [name stringByAppendingString:c_view];
+}
+
+-(NSString *)makeStoredQueryKey:(NSString *)name
+{
+    return [name stringByAppendingString:c_storedQuery];    
 }
 
 @end

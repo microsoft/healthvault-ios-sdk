@@ -21,6 +21,8 @@
 #import "HVItem.h"
 #import "HVPendingItem.h"
 
+@class HVGetItemsTask;
+
 @interface HVItemQueryResult : HVType
 {
 @private
@@ -48,6 +50,17 @@
 //
 @property (readonly, nonatomic) BOOL hasItems;
 @property (readonly, nonatomic) BOOL hasPendingItems;
+
+//
+// If the query result has pending items, get them and ADD them to the items collection
+// 
+-(HVTask *) getPendingItemsForRecord:(HVRecordReference *) record withCallback:(HVTaskCompletion) callback;
+//
+// Get all pending items - assumes that these query results are for a query issued on [HVClient current].currentRecord
+//
+-(HVTask *) getPendingItemsWithCallback:(HVTaskCompletion) callback;
+
+-(HVTask *) createTaskToGetPendingItemsForRecord:(HVRecordReference *) record withCallback:(HVTaskCompletion) callback;
 
 @end
 

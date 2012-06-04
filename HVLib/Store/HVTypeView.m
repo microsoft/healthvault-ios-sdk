@@ -1,5 +1,5 @@
 //
-//  HVDataView.m
+//  HVTypeView.m
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -132,6 +132,7 @@ LError:
     [m_items release];
     [m_store release];
     [m_delegate release];
+    
     [super dealloc];
 }
 
@@ -421,12 +422,12 @@ LError:
 
 -(BOOL)saveWithName:(NSString *)name
 {
-    return [m_store saveView:self name:name];
+    return [m_store putView:self name:name];
 }
 
 +(HVTypeView *)loadViewNamed:(NSString *)name fromStore:(HVLocalRecordStore *)store
 {
-    return [store loadView:name];
+    return [store getView:name];
 }
 
 +(HVTypeView *)getViewForTypeClassName:(NSString *)className
@@ -473,7 +474,7 @@ LError:
     //   
     if (items.count < keys.count)
     {
-        NSMutableDictionary* itemsByID = [items createIndexByID];
+        NSMutableDictionary* itemsByID = [items newIndexByID];
         if (itemsByID)
         {
             NSMutableArray* keysNotFound = [[[NSMutableArray alloc] init] autorelease];

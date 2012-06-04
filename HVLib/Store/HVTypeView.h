@@ -1,5 +1,5 @@
 //
-//  HVDataView.h
+//  HVTypeView.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -65,8 +65,19 @@
 @property (readwrite, nonatomic, retain) HVLocalRecordStore* store;
 @property (readwrite, nonatomic, retain) id<HVTypeViewDelegate> delegate;
 
+//------------------
+//
+// Initializers
+//
+//-------------------
 -(id) initForTypeID:(NSString *) typeID overStore:(HVLocalRecordStore *) store;
 -(id) initForTypeID:(NSString *)typeID filter:(HVTypeFilter *) filter overStore:(HVLocalRecordStore *) store;
+
+//------------------
+//
+// Methods
+//
+//-------------------
 
 -(HVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
@@ -76,7 +87,6 @@
 // maxAgeInSeconds
 //
 -(BOOL) isStale:(NSTimeInterval) maxAge;
-
 //
 // Synchronize view but not data
 //

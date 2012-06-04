@@ -22,14 +22,21 @@
 
 enum HVGender 
 {
-    HVGender_None = 0,
-    HVGender_Female,
-    HVGender_Male
+    HVGenderNone = 0,
+    HVGenderFemale,
+    HVGenderMale
 };
 
 NSString* stringFromGender(enum HVGender gender);
 enum HVGender stringToGender(NSString* genderString);
-    
+
+//
+// Basic demographics contain less private information about the person - and may be
+// easier for the user to share with others. 
+//
+// HVPersonalDemographics contains more personal information that the user may wish to
+// keep entirely private. 
+//
 @interface HVBasicDemographics : HVItemDataTyped
 {
 @private
@@ -38,7 +45,7 @@ enum HVGender stringToGender(NSString* genderString);
     HVCodableValue* m_country;
     NSString* m_postalCode;
     NSString* m_city;
-    NSString* m_state;
+    HVCodableValue* m_state;
     int m_firstDOW;
     NSString* m_languageXml;
 }
@@ -56,7 +63,7 @@ enum HVGender stringToGender(NSString* genderString);
 @property (readwrite, nonatomic, retain) HVCodableValue* country;
 @property (readwrite, nonatomic, retain) NSString* postalCode;
 @property (readwrite, nonatomic, retain) NSString* city;
-@property (readwrite, nonatomic, retain) NSString* state;
+@property (readwrite, nonatomic, retain) HVCodableValue* state;
 @property (readwrite, nonatomic, retain) NSString* languageXml;
 
 //-------------------------
@@ -65,6 +72,13 @@ enum HVGender stringToGender(NSString* genderString);
 //
 //-------------------------
 +(HVItem *) newItem;
+
+//-------------------------
+//
+// Text
+//
+//-------------------------
+-(NSString *) genderAsString;
 
 //-------------------------
 //
