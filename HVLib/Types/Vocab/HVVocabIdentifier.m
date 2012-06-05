@@ -140,3 +140,21 @@ LError:
 }
 
 @end
+
+@implementation HVVocabIdentifierCollection
+
+-(id)init
+{
+    self = [super init];
+    HVCHECK_SELF;
+    
+    self.type = [HVVocabIdentifier class];
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+@end
+

@@ -20,6 +20,13 @@
 #import "HVBrowserController.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface HVBrowserController (HVPrivate)
+
+-(void) showActivitySpinner;
+-(void) hideActivitySpinner;
+
+@end
+
 @implementation HVBrowserController
 
 @synthesize target = m_target;
@@ -29,6 +36,7 @@
 {
     [m_target release];
     [m_webView release];
+    [m_activityView release];
     
     [super dealloc];
 }
@@ -81,22 +89,22 @@ LError:
 -(BOOL)webView: (UIWebView *)webView shouldStartLoadWithRequest: (NSURLRequest *)request
  navigationType: (UIWebViewNavigationType)navigationType 
 {
+    [self showActivitySpinner];
  	return YES;
 }
 
 -(void)webViewDidStartLoad:(UIWebView *)webView
 {
-    
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    
+    [self hideActivitySpinner];
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    
+    [self hideActivitySpinner];
 }
 
 //-----------------------
@@ -153,6 +161,35 @@ LError:
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+@end
+
+@implementation HVBrowserController (HVPrivate)
+
+-(void)showActivitySpinner
+{    
+    //
+    // Find any existing indicators already in place
+    //
+    if (!m_activityView)
+    {
+        m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        m_activityView.center = m_webView.center;
+        m_activityView.hidesWhenStopped = TRUE;
+        
+        [m_webView addSubview:m_activityView];
+    }
+    
+    [m_activityView startAnimating];
+}
+
+-(void)hideActivitySpinner
+{
+    if (m_activityView)
+    {
+        [m_activityView stopAnimating];
+    }
 }
 
 @end

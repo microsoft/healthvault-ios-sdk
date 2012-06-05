@@ -62,6 +62,9 @@
 -(NSString *) makeFilePathIfExists:(NSString *) fileName;
 -(BOOL) createFile:(NSString *) fileName;
 -(BOOL) deleteFile:(NSString *) fileName;
+
++(void) deleteUrl:(NSURL *) url;
+
 -(NSDictionary *) getFileProperties:(NSString *) fileName;
 
 -(NSFileHandle *) openFileForRead:(NSString *) fileName;

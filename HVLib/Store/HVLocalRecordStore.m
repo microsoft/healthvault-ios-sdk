@@ -36,6 +36,7 @@ static NSString* const c_storedQuery = @"storedQuery";
 
 @implementation HVLocalRecordStore
 
+@synthesize root = m_root;
 @synthesize record = m_record;
 @synthesize metadata = m_metadata;
 @synthesize data = m_data;
@@ -56,10 +57,10 @@ static NSString* const c_storedQuery = @"storedQuery";
     m_root = [root newChildStore:record.ID];
     HVCHECK_NOTNULL(m_root);
     
-    m_metadata = [m_root newChildStore:@"Metadata"];
+    m_metadata = [m_root newChildStore:[HVLocalRecordStore metadataStoreKey]];
     HVCHECK_NOTNULL(m_metadata);
     
-    id<HVObjectStore> dataStore = [m_root newChildStore:@"Data"];
+    id<HVObjectStore> dataStore = [m_root newChildStore:[HVLocalRecordStore dataStoreKey]];
     HVCHECK_NOTNULL(dataStore);
     
     if (cache)
@@ -145,6 +146,16 @@ LError:
 -(void)deleteStoredQuery:(NSString *)name
 {
     [m_metadata deleteKey:[self makeStoredQueryKey:name]];    
+}
+
++(NSString *)metadataStoreKey
+{
+    return @"Metadata";
+}
+
++(NSString *)dataStoreKey
+{
+    return @"Data";
 }
 
 @end

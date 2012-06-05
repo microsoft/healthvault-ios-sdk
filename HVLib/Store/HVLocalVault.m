@@ -91,6 +91,27 @@ LError:
     return nil;
 }
 
+-(BOOL)deleteRecordStore:(HVRecordReference *)record
+{
+    HVCHECK_NOTNULL(record);
+    
+    NSString* recordID = record.ID;
+    @synchronized(m_recordStores)
+    {
+        HVLocalRecordStore* recordStore = [m_recordStores objectForKey:recordID];
+        if (recordStore)
+        {
+            [m_recordStores removeObjectForKey:recordID];
+            [m_root deleteChildStore:recordID];
+        }        
+    }
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
 -(void)dealloc
 {
     [m_root release];

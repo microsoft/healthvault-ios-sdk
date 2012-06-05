@@ -120,9 +120,15 @@ LError:
     [m_metadata setObject:[NSDate date] forKey:key];
     
 }
+
 -(id<HVObjectStore>)newChildStore:(NSString *)name
 {
     return [[HVMemoryStore alloc] init];
+}
+
+-(void)deleteChildStore:(NSString *)name
+{
+    // Not supported
 }
 
 @end

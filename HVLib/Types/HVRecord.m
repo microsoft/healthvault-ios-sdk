@@ -147,5 +147,19 @@ LError:
     return (HVRecord *) [m_inner objectAtIndex:index];
 }
 
+-(NSInteger)indexOfRecordID:(NSString *)recordID
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        HVRecord* record = [self itemAtIndex:i];
+        if ([record.ID isEqualToString:recordID])
+        {
+            return i;
+        }
+    }
+    
+    return NSNotFound;
+}
+
 @end
 

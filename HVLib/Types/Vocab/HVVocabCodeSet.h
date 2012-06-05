@@ -58,12 +58,3 @@
 @property (readonly, nonatomic) BOOL hasMatches;
 
 @end
-
-@interface HVVocabGetResults : HVType 
-{
-    HVVocabCodeSet* m_vocab;
-}
-
-@property (readwrite, nonatomic, retain) HVVocabCodeSet* vocab;
-
-@end

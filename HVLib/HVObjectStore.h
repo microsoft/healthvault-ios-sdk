@@ -34,5 +34,6 @@
 -(BOOL) putBlob:(NSData *) blob withKey:(NSString *) key;
 
 -(id<HVObjectStore>) newChildStore:(NSString *) name;
+-(void) deleteChildStore:(NSString *) name;
 
 @end

@@ -146,6 +146,12 @@ LError:
     return [m_inner newChildStore:name];
 }
 
+-(void)deleteChildStore:(NSString *)name
+{
+    // Child store is NOT caching. 
+    return [m_inner deleteChildStore:name];
+}
+
 @end
 
 @implementation HVCachingObjectStore (HVPrivate)

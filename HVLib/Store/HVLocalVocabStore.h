@@ -60,9 +60,11 @@
 // Use [[HVClient current].localVault getVocab] to load it subsequently
 //
 -(HVTask *) downloadVocab:(HVVocabIdentifier *) vocab withCallback:(HVTaskCompletion) callback;
+-(HVTask *) downloadVocabs:(HVVocabIdentifierCollection *) vocabIDs withCallback:(HVTaskCompletion) callback;
 
 -(void) ensureVocabDownloaded:(HVVocabIdentifier *) vocab; // default - will check for new vocabs once a month
 -(void) ensureVocabDownloaded:(HVVocabIdentifier *) vocab maxAge:(NSTimeInterval) ageInSeconds;
+-(BOOL) ensureVocabsDownloaded:(HVVocabIdentifierCollection *) vocabIDs maxAge:(NSTimeInterval) ageInSeconds;
 
 //
 // Convenience Lookup of codes

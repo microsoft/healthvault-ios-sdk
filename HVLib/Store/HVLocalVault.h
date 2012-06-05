@@ -61,6 +61,6 @@
 // Return a record store for the given record
 //
 -(HVLocalRecordStore *) getRecordStore:(HVRecordReference *) record;
-
+-(BOOL) deleteRecordStore:(HVRecordReference *) record;
 
 @end

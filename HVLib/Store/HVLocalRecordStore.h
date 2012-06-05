@@ -43,11 +43,17 @@
 //
 @property (readonly, nonatomic) HVRecordReference* record;
 //
+// Root store for this record
+//
+@property (readonly, nonatomic) id<HVObjectStore> root;
+//
 // Metadata, such as view definitions, etc..
+// Child of root
 //
 @property (readonly, nonatomic) id<HVObjectStore> metadata;
 //
 // Item Data stored here (Xml)
+// Child of root
 //
 @property (readonly, nonatomic) HVSynchronizedStore* data;
 
@@ -79,5 +85,7 @@
 -(BOOL) putStoredQuery:(HVStoredQuery *) query withName:(NSString *) name;
 -(void) deleteStoredQuery:(NSString *) name;
 
-                                    
++(NSString *) metadataStoreKey;
++(NSString *) dataStoreKey;
+
 @end

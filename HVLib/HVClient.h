@@ -111,6 +111,13 @@ enum HVAppProvisionStatus
 -(BOOL) saveState;
 -(BOOL) deleteState;
 
+//
+// After this call, app will no longer be provisioned
+// All local state will be deleted, including anything stored on disk. 
+// You will need to re-provision the app (by calling startWithParentController)...
+//
+-(BOOL) resetProvisioning;
+
 -(HVLocalRecordStore *) getCurrentRecordStore;
 
 @end

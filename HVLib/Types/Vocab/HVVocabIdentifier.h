@@ -85,5 +85,8 @@ NSString* const c_isoFamily;
 //
 -(NSString *) toKeyString;
 
+@end
+
+@interface HVVocabIdentifierCollection :  HVCollection 
 
 @end

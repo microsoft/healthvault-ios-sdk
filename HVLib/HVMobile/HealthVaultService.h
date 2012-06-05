@@ -157,4 +157,9 @@
 /// @param name - the filename to use.
 - (void)loadSettings: (NSString *)name;
 
+//
+// Delete all provisioning state
+//
+-(void) reset;
+
 @end

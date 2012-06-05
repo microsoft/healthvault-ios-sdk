@@ -20,6 +20,16 @@
 #import "HVMethodCallTask.h"
 #import "HVVocab.h"
 
+@interface HVVocabGetResults : HVType 
+{
+    HVVocabSetCollection* m_vocabs;
+}
+
+@property (readwrite, nonatomic, retain) HVVocabSetCollection* vocabs;
+@property (readonly, nonatomic) HVVocabCodeSet* firstVocab;
+
+@end
+
 //-------------------------
 //
 // Get Vocabularies from HealthVault
@@ -37,7 +47,7 @@
 //
 //-------------------------
 //
-// (Required) - Request - which vocabulary to get
+// (Required) - Request - which vocabularies to get
 //
 @property (readwrite, nonatomic, retain) HVVocabParams* params;
 //
@@ -55,6 +65,5 @@
 //
 //-------------------------
 -(id) initWithVocabID:(HVVocabIdentifier *) vocabID andCallback:(HVTaskCompletion) callback;
-
 
 @end

@@ -25,6 +25,8 @@ static HVClient* s_app;
 
 @interface HVClient (HVPrivate)
 
+-(BOOL) ensureLocalVault;
+
 -(HealthVaultService *) newService;
 -(void) updateUser;
 -(HVUser *) loadUser;
@@ -88,12 +90,9 @@ static HVClient* s_app;
     m_settings = [HVClientSettings newSettingsFromResource];
     HVCHECK_NOTNULL(m_settings);
     
-    m_rootDirectory = [[HVDirectory alloc] initWithRelativePath:@"HealthVault"];
-    HVCHECK_NOTNULL(m_rootDirectory);
+    HVCHECK_SUCCESS([self ensureLocalVault]);
     
-    m_localVault = [[HVLocalVault alloc] initWithRoot:m_rootDirectory andCache:m_settings.useCachingInStore];
-    
-    // Set up the HealthVault Service (for now)
+    // Set up the HealthVault Service
     m_service = [self newService];
     HVCHECK_NOTNULL(m_service);
     
@@ -193,6 +192,40 @@ LError:
     return TRUE;
 }
 
+-(BOOL)resetProvisioning
+{
+    m_provisionStatus = HVAppProvisionCancelled;
+    
+    if (m_service)
+    {
+        [m_service reset];
+        [m_service saveSettings:@"HVClient"];
+    }
+    //
+    // Delete local state
+    //
+    [self deleteUser];
+    //
+    // And local storage
+    //
+    NSURL* storeUrl = m_rootDirectory.url;
+    [HVDirectory deleteUrl:storeUrl];
+    
+    HVCLEAR(m_rootDirectory);
+    HVCLEAR(m_localVault);
+
+    m_service = [self newService];
+    HVCHECK_NOTNULL(m_service);
+    [m_service saveSettings:@"HVClient"];
+
+    HVCHECK_SUCCESS([self ensureLocalVault]); // So the HVClient object remains in valid state
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
 -(HVLocalRecordStore *)getCurrentRecordStore
 {
     return [m_localVault getRecordStore:self.currentRecord];
@@ -203,6 +236,26 @@ LError:
 static NSString* const c_userfileName = @"user.xml";
 
 @implementation HVClient (HVPrivate)
+
+-(BOOL)ensureLocalVault
+{
+    if (!m_rootDirectory)
+    {
+        m_rootDirectory = [[HVDirectory alloc] initWithRelativePath:@"HealthVault"];
+        HVCHECK_NOTNULL(m_rootDirectory);
+    }
+    
+    if (!m_localVault)
+    {
+        m_localVault = [[HVLocalVault alloc] initWithRoot:m_rootDirectory andCache:m_settings.useCachingInStore];
+        HVCHECK_NOTNULL(m_localVault);
+    }
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
 
 -(void)updateUser
 {

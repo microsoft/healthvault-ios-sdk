@@ -82,4 +82,6 @@
 -(id) initWithRecordArray:(NSArray *) records;
 -(HVRecord *) itemAtIndex:(NSUInteger) index;
 
+-(NSInteger) indexOfRecordID:(NSString *) recordID;
+
 @end

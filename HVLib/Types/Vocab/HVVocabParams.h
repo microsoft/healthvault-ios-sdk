@@ -23,13 +23,15 @@
 
 @interface HVVocabParams : HVType
 {
-    HVVocabIdentifier* m_vocabID;
+    HVVocabIdentifierCollection* m_vocabIDs;
     BOOL m_fixedCulture;
 }
 
-@property (readwrite, nonatomic, retain) HVVocabIdentifier* vocabID;
+@property (readonly, nonatomic) HVVocabIdentifierCollection* vocabIDs;
 @property (readwrite, nonatomic) BOOL fixedCulture;
 
 -(id) initWithVocabID:(HVVocabIdentifier *) vocabID;
+-(id) initWithVocabIDs:(HVVocabIdentifierCollection *) vocabIDs;
 
 @end
+

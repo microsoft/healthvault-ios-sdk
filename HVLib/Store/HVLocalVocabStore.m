@@ -21,8 +21,13 @@
 
 @interface HVLocalVocabStore (HVPrivate)
 
+-(BOOL) isStaleVocabWithID:(HVVocabIdentifier *) vocabID maxAge:(NSTimeInterval) maxAgeSeconds;
+
 -(HVGetVocabTask *) newDownloadVocabTaskForVocab:(HVVocabIdentifier *) vocabID;
 -(void) downloadTaskComplete:(HVTask *) task forVocabID:(HVVocabIdentifier *) vocabID;
+
+-(HVGetVocabTask *) newDownloadVocabTaskForVocabs:(HVVocabIdentifierCollection *) vocabIDs;
+-(void) downloadTaskComplete:(HVTask *) task forVocabs:(HVVocabIdentifierCollection *) vocabIDs;
 
 @end
 
@@ -91,6 +96,26 @@ LError:
     return nil;
 }
 
+-(HVTask *)downloadVocabs:(HVVocabIdentifierCollection *)vocabIDs withCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(vocabIDs);
+    
+    HVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocabs:vocabIDs];    
+    HVCHECK_NOTNULL(getVocab);
+    
+    HVTask* downloadTask = [[[HVTask alloc] initWithCallback:callback andChildTask:getVocab] autorelease];
+    [getVocab release];
+    
+    HVCHECK_NOTNULL(downloadTask);
+    
+    [downloadTask start];
+    
+    return downloadTask;
+    
+LError:
+    return nil;
+}
+
 -(void)ensureVocabDownloaded:(HVVocabIdentifier *)vocab
 {
     [self ensureVocabDownloaded:vocab maxAge:60 * 24 * 3600]; // Every 60 days - these many seconds
@@ -98,15 +123,43 @@ LError:
 
 -(void)ensureVocabDownloaded:(HVVocabIdentifier *)vocab maxAge:(NSTimeInterval)ageInSeconds
 {
-    NSString* key = [vocab toKeyString];
-    NSDate* lastUpdate = [m_objectStore updateDateForKey:key];
-    
-    if (!lastUpdate || [lastUpdate offsetFromNow] >= ageInSeconds)
+    if ([self isStaleVocabWithID:vocab maxAge:ageInSeconds])
     {
-        HVGetVocabTask* task = [[self newDownloadVocabTaskForVocab:vocab] autorelease];
+        HVGetVocabTask* task = [[self newDownloadVocabTaskForVocab:vocab] autorelease];        
+        [task start];
+    }
+}
+
+-(BOOL)ensureVocabsDownloaded:(HVVocabIdentifierCollection *)vocabIDs maxAge:(NSTimeInterval)ageInSeconds
+{
+    HVCHECK_NOTNULL(vocabIDs);
+    
+    HVVocabIdentifierCollection* vocabsToDownload = nil;
+    
+    for (NSUInteger i = 0, count = vocabIDs.count; i < count; ++i)
+    {
+        HVVocabIdentifier* vocabID = [vocabIDs objectAtIndex:i];
+        if ([self isStaleVocabWithID:vocabID maxAge:ageInSeconds])
+        {
+            HVENSURE(vocabsToDownload, HVVocabIdentifierCollection);
+            [vocabsToDownload addObject:vocabID];
+        }
+    }
+ 
+    if (![NSArray isNilOrEmpty:vocabsToDownload])
+    {
+        HVGetVocabTask* task = [[self newDownloadVocabTaskForVocabs:vocabsToDownload] autorelease];
+        [vocabsToDownload release];
+        
+        HVCHECK_NOTNULL(task);
         
         [task start];
     }
+    
+    return TRUE;
+
+LError:
+    return FALSE;
 }
 
 -(HVVocabItem *)getVocabItemForCode:(NSString *)code inVocab:(HVVocabIdentifier *)vocabID
@@ -135,6 +188,19 @@ LError:
 
 @implementation HVLocalVocabStore (HVPrivate)
 
+-(BOOL)isStaleVocabWithID:(HVVocabIdentifier *)vocabID maxAge:(NSTimeInterval)maxAgeSeconds
+{
+    NSString* key = [vocabID toKeyString];
+    NSDate* lastUpdate = [m_objectStore updateDateForKey:key];
+    if (!lastUpdate || [lastUpdate offsetFromNow] >= maxAgeSeconds)
+    {
+        return TRUE;
+    }
+    
+    return FALSE;
+
+}
+
 -(HVGetVocabTask *)newDownloadVocabTaskForVocab:(HVVocabIdentifier *)vocabID
 {
     return [[HVGetVocabTask alloc] initWithVocabID:vocabID andCallback:^(HVTask *task) {
@@ -156,4 +222,36 @@ LError:
     }
 }
 
+-(HVGetVocabTask *)newDownloadVocabTaskForVocabs:(HVVocabIdentifierCollection *)vocabIDs
+{
+    HVGetVocabTask* task = [[HVGetVocabTask alloc] initWithCallback:^(HVTask *task) {
+        
+        [self downloadTaskComplete:task forVocabs:vocabIDs];
+        
+    }];
+    
+    HVVocabParams* params = [[HVVocabParams alloc] initWithVocabIDs:vocabIDs];
+    task.params = params;
+    [params release];
+    
+    return task;
+}
+
+-(void)downloadTaskComplete:(HVTask *)task forVocabs:(HVVocabIdentifierCollection *)vocabIDs
+{
+    @try 
+    {
+        HVGetVocabTask* getVocab = (HVGetVocabTask *) task;
+        HVVocabSetCollection* downloadedVocabs = getVocab.vocabResults.vocabs;
+        for (NSUInteger i = 0, count = vocabIDs.count; i < count; ++i) 
+        {
+            HVVocabCodeSet* vocab = [downloadedVocabs objectAtIndex:i];
+            [self putVocab:vocab withID:[vocabIDs objectAtIndex:i]];
+        }        
+    }
+    @catch (id exception) 
+    {
+        [exception log];
+    }
+}
 @end

@@ -417,6 +417,17 @@
 	[pool release];
 }
 
+-(void)reset
+{
+    self.authorizationSessionToken = nil;
+    self.sharedSecret = nil;
+    self.sessionSharedSecret = nil;
+    self.appIdInstance = nil;
+    self.applicationCreationToken = nil;
+    self.records = nil;
+    self.currentRecord = nil;
+}
+
 #pragma mark Settings Logic End
 
 - (void)performAppCallBack: (HealthVaultRequest *)request

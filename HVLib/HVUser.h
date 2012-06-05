@@ -56,7 +56,6 @@
 //-------------------------
 
 -(id) initFromLegacyRecords:(NSArray *) recordArray;  // Infrastructure - will eventually go away
-
 //
 // Refresh the list of authorized records - in case there were changes made using the HealthVault Shell
 //
@@ -70,6 +69,7 @@
 // Automatically store the downloaded image in local storage
 //
 -(HVTask *) downloadRecordImageFor:(HVRecord *) record withCallback:(HVTaskCompletion) callback;
+
 
 -(HVClientResult *) validate;
 -(BOOL) updateWithLegacyRecords:(NSArray *) records;

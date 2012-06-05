@@ -19,6 +19,35 @@
 #import "HVCommon.h"
 #import "HVGetVocabTask.h"
 
+static NSString* const c_element_vocab = @"vocabulary";
+
+@implementation HVVocabGetResults
+
+@synthesize vocabs = m_vocabs;
+
+-(HVVocabCodeSet *)firstVocab
+{
+    return (m_vocabs) ? [m_vocabs itemAtIndex:0] : nil;
+}
+
+-(void)dealloc
+{
+    [m_vocabs release];
+    [super dealloc];
+}
+
+-(void)serialize:(XWriter *)writer  
+{
+    HVSERIALIZE_ARRAY(m_vocabs, c_element_vocab);
+}
+
+-(void)deserialize:(XReader *)reader
+{
+    HVDESERIALIZE_TYPEDARRAY(m_vocabs, c_element_vocab, HVVocabCodeSet, HVVocabSetCollection);
+}
+
+@end
+
 @implementation HVGetVocabTask
 
 @synthesize params = m_params;
@@ -41,7 +70,7 @@
 -(HVVocabCodeSet *)vocabulary
 {
     HVVocabGetResults* results = self.vocabResults;
-    return (results) ? results.vocab : nil;
+    return (results) ? results.firstVocab : nil;
 }
 
 -(id)initWithVocabID:(HVVocabIdentifier *)vocabID andCallback:(HVTaskCompletion)callback
@@ -53,7 +82,7 @@
     
     m_params = [[HVVocabParams alloc] initWithVocabID:vocabID];
     HVCHECK_NOTNULL(m_params);
-    
+        
     return self;
     
 LError:

@@ -191,6 +191,12 @@ LError:
     return nil;
 }
 
++(void)deleteUrl:(NSURL *)url
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtURL:url error:nil];    
+}
+
 -(NSEnumerator *)getFileNames
 {
     return [[NSFileManager defaultManager] enumeratorAtPath:m_stringPath];
@@ -426,6 +432,12 @@ LError:
 -(id<HVObjectStore>)newChildStore:(NSString *)name
 {
     return [self newChildNamed:name];
+}
+
+-(void)deleteChildStore:(NSString *)name
+{
+    NSURL *path = [self makeChildUrl:name];
+    [HVDirectory deleteUrl:path];
 }
 
 -(void)dealloc

@@ -24,6 +24,7 @@
 
 @interface HVAppProvisionController : HVBrowserController
 {
+@private
     enum HVAppProvisionStatus m_status;
     NSError *m_error;
     HVNotify m_callback;

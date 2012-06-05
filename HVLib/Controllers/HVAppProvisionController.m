@@ -80,6 +80,8 @@ LError:
 -(BOOL)webView: (UIWebView *)webView shouldStartLoadWithRequest: (NSURLRequest *)request
 navigationType: (UIWebViewNavigationType)navigationType 
 {
+    [super webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+
     NSString* queryString = [[request URL] query];
     NSRange authSuccess = [queryString rangeOfString:@"target=AppAuthSuccess"];
     
@@ -87,13 +89,15 @@ navigationType: (UIWebViewNavigationType)navigationType
     {
         m_status = HVAppProvisionSuccess;
         [self abort];
-    }
-    
+    }    
+
     return TRUE;
 }
 
 - (void)webView: (UIWebView *)webView didFailLoadWithError: (NSError *)error
 {
+    [super webView:webView didFailLoadWithError:error];
+    
     if([error code] == -999)
     {
 		return;   

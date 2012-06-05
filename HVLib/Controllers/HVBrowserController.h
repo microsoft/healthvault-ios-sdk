@@ -20,8 +20,10 @@
 
 @interface HVBrowserController : UIViewController <UIWebViewDelegate>
 {
-    NSURL *m_target;
-    UIWebView *m_webView;
+@private
+    NSURL* m_target;
+    UIWebView* m_webView;
+    UIActivityIndicatorView* m_activityView;
 }
 
 @property (readwrite, nonatomic, retain) NSURL* target;

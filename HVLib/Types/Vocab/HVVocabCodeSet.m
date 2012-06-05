@@ -144,27 +144,3 @@ static NSString* const c_element_codeset = @"code-set-result";
 @end
 
 
-static NSString* const c_element_vocab = @"vocabulary";
-
-@implementation HVVocabGetResults
-
-@synthesize vocab = m_vocab;
-
--(void)dealloc
-{
-    [m_vocab release];
-    [super dealloc];
-}
-
--(void)serialize:(XWriter *)writer  
-{
-    HVSERIALIZE(m_vocab, c_element_vocab);
-}
-
--(void)deserialize:(XReader *)reader
-{
-    HVDESERIALIZE(m_vocab, c_element_vocab, HVVocabCodeSet);
-}
-
-@end
-
