@@ -64,6 +64,22 @@ static HVClient* s_app;
     return s_app;
 }
 
+-(enum HVAppProvisionStatus)provisionStatus
+{
+    @synchronized(self)
+    {
+        return m_provisionStatus;
+    }
+}
+
+-(void)setProvisionStatus:(enum HVAppProvisionStatus)provisionStatus
+{
+    @synchronized(self)
+    {
+        m_provisionStatus = provisionStatus;
+    }    
+}
+
 -(BOOL)isProvisioned
 {
     return (![NSString isNilOrEmpty:m_service.sessionSharedSecret] && m_user && m_user.hasRecords);
@@ -127,32 +143,35 @@ LError:
 
 -(BOOL)startWithParentController:(UIViewController *)controller andStartedCallback:(HVNotify)callback
 {
-    HVCHECK_NOTNULL(controller);
-    HVCHECK_NOTNULL(callback);
-    
-    HVRETAIN(m_parentController, controller);
-    HVCLEAR(m_provisionCallback);
-    
-    m_provisionCallback = [callback copy];
-    
-    [self loadState];
-    
-    if (self.isProvisioned)
+    @synchronized(self)
     {
-        // Already provisioned. 
-        m_provisionStatus = HVAppProvisionSuccess;
-        [self notifyOfProvisionStatus];
+        HVCHECK_NOTNULL(controller);
+        HVCHECK_NOTNULL(callback);
+        
+        HVRETAIN(m_parentController, controller);
+        HVCLEAR(m_provisionCallback);
+        
+        m_provisionCallback = [callback copy];
+        
+        [self loadState];
+        
+        if (self.isProvisioned)
+        {
+            // Already provisioned. 
+            self.provisionStatus = HVAppProvisionSuccess;
+            [self notifyOfProvisionStatus];
+        }
+        else
+        {
+             // Gonna have to provision this application - perhaps authorize some records
+            [self beginAuth];
+        }
+        
+        return TRUE;
+        
+    LError:
+        return FALSE;
     }
-    else
-    {
-         // Gonna have to provision this application - perhaps authorize some records
-        [self beginAuth];
-    }
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
 }
 
 -(void)queueOperation:(NSOperation *)op
@@ -162,68 +181,80 @@ LError:
 
 -(BOOL)loadState
 {
-    if (m_service)
+    @synchronized(self)
     {
-        [m_service loadSettings:@"HVClient"];
+        if (m_service)
+        {
+            [m_service loadSettings:@"HVClient"];
+        }
+        
+        HVCLEAR(m_user);
+        self.user = [self loadUser]; // ok if this is null
+        
+        return TRUE;
+        
+    LError:
+        return FALSE;
     }
-    
-    HVCLEAR(m_user);
-    self.user = [self loadUser]; // ok if this is null
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
 }
 
 -(BOOL)saveState
 {
-    if (m_service)
+    @synchronized(self)
     {
-        [m_service saveSettings:@"HVClient"];
+        if (m_service)
+        {
+            [m_service saveSettings:@"HVClient"];
+        }
+        
+        return [self saveUser];
     }
-    
-    return [self saveUser];
 }
 
 -(BOOL)deleteState
 {
-    [self deleteUser];
-    return TRUE;
+    @synchronized(self)
+    {
+        [self deleteUser];
+        return TRUE;
+    }
 }
 
 -(BOOL)resetProvisioning
 {
-    m_provisionStatus = HVAppProvisionCancelled;
-    
-    if (m_service)
+    @synchronized(self)
     {
-        [m_service reset];
+        self.provisionStatus = HVAppProvisionCancelled;
+        
+        if (m_service)
+        {
+            [m_service reset];
+            [m_service saveSettings:@"HVClient"];
+        }
+        //
+        // Delete local state
+        //
+        [self deleteUser];
+        //
+        // And local storage
+        //
+        NSURL* storeUrl = m_rootDirectory.url;
+        [HVDirectory deleteUrl:storeUrl];
+        
+        HVCLEAR(m_rootDirectory);
+        HVCLEAR(m_localVault);
+
+        m_service = [self newService];
+        HVCHECK_NOTNULL(m_service);
         [m_service saveSettings:@"HVClient"];
+
+        HVCHECK_SUCCESS([self ensureLocalVault]); // So the HVClient object remains in valid state
+        
+        return TRUE;
+        
+    LError:
+        return FALSE;
     }
-    //
-    // Delete local state
-    //
-    [self deleteUser];
-    //
-    // And local storage
-    //
-    NSURL* storeUrl = m_rootDirectory.url;
-    [HVDirectory deleteUrl:storeUrl];
-    
-    HVCLEAR(m_rootDirectory);
-    HVCLEAR(m_localVault);
-
-    m_service = [self newService];
-    HVCHECK_NOTNULL(m_service);
-    [m_service saveSettings:@"HVClient"];
-
-    HVCHECK_SUCCESS([self ensureLocalVault]); // So the HVClient object remains in valid state
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
 }
 
 -(HVLocalRecordStore *)getCurrentRecordStore
@@ -259,50 +290,65 @@ LError:
 
 -(void)updateUser
 {
-    //
-    // Capture authorized records
-    //
-    if (m_user)
+    @synchronized(self)
     {
-        [m_user updateWithLegacyRecords:m_service.records];
+        //
+        // Capture authorized records
+        //
+        if (m_user)
+        {
+            [m_user updateWithLegacyRecords:m_service.records];
+        }
+        else
+        {
+            m_user = [[HVUser alloc] initFromLegacyRecords:m_service.records];
+        }    
     }
-    else
-    {
-        m_user = [[HVUser alloc] initFromLegacyRecords:m_service.records];
-    }    
 }
 
 -(HVUser *)loadUser
 {
-    HVUser *user = [m_localVault.root getObjectWithKey:c_userfileName name:@"user" andClass:[HVUser class]];
-    if (user && [user validate].isError)
+    @synchronized(self)
     {
-        [self deleteUser];
-        user = nil;
+        HVUser *user = [m_localVault.root getObjectWithKey:c_userfileName name:@"user" andClass:[HVUser class]];
+        if (user && [user validate].isError)
+        {
+            [self deleteUser];
+            user = nil;
+        }
+        
+        return user;
     }
-    
-    return user;
 }
 
 -(void)setUser:(HVUser *)user
 {
-    HVRETAIN(m_user, user);
+    @synchronized(self)
+    {
+        HVRETAIN(m_user, user);
+    }
 }
 
 -(BOOL)saveUser
 {
-    if (!m_user)
+    @synchronized(self)
     {
-        return TRUE;
+        if (!m_user)
+        {
+            return TRUE;
+        }
+        
+        return [m_localVault.root putObject:m_user withKey:c_userfileName andName:@"user"];
     }
-    
-    return [m_localVault.root putObject:m_user withKey:c_userfileName andName:@"user"];
 }
 
 -(void)deleteUser
 {
-    [m_localVault.root deleteKey:c_userfileName];
-    self.user = nil;
+    @synchronized(self)
+    {
+        [m_localVault.root deleteKey:c_userfileName];
+        self.user = nil;
+    }
 }
 
 -(HealthVaultService *)newService
@@ -338,7 +384,7 @@ LError:
 {
     [self saveState];
     
-    m_provisionStatus = HVAppProvisionCancelled;
+    self.provisionStatus = HVAppProvisionCancelled;
 
     NSURL* creationUrl = [NSURL URLWithString:[m_service getApplicationCreationUrl]];
     HVCHECK_NOTNULL(creationUrl);
@@ -372,11 +418,11 @@ LError:
     //
     if (response && response.hasError)
     {
-        m_provisionStatus = HVAppProvisionFailed;
+        self.provisionStatus = HVAppProvisionFailed;
     }
     else
     {
-        m_provisionStatus = HVAppProvisionSuccess;
+        self.provisionStatus = HVAppProvisionSuccess;
         //
         // Capture authorized records
         //

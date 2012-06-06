@@ -70,6 +70,9 @@
 -(NSDateComponents *) toComponents;
 -(BOOL) getComponents:(NSDateComponents *) components;
 
+-(BOOL) setWithComponents:(NSDateComponents *) components;
+-(BOOL) setWithDate:(NSDate *) date;
+
 -(NSDate *) toDate;
 
 //-------------------------

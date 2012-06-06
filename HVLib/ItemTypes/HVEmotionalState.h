@@ -21,24 +21,24 @@
 
 enum HVMood 
 {
-    HVMood_Unknown = 0,
-    HVMood_Depressed,
-    HVMood_Sad,
-    HVMood_Neutral,
-    HVMood_Happy,
-    HVMood_Elated
+    HVMoodUnknown = 0,
+    HVMoodDepressed,
+    HVMoodSad,
+    HVMoodNeutral,
+    HVMoodHappy,
+    HVMoodElated
 };
 
 NSString* stringFromMood(enum HVMood mood);
 
 enum HVWellBeing 
 {
-    HVWellBeing_Unknown = 0,
-    HVWellBeing_Sick,
-    HVWellBeing_Impaired,
-    HVWellBeing_Able,
-    HVWellBeing_Healthy,
-    HVWellBeing_Vigorous
+    HVWellBeingUnknown = 0,
+    HVWellBeingSick,
+    HVWellBeingImpaired,
+    HVWellBeingAble,
+    HVWellBeingHealthy,
+    HVWellBeingVigorous
 };
 
 NSString* stringFromWellBeing(enum HVWellBeing wellBeing);

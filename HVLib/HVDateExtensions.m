@@ -105,6 +105,15 @@ LError:
 }
 
 
++(NSDate *)yesterday
+{
+    //
+    // 86400 seconds in a day
+    // This method doesn't need to be perfect - just good enough.
+    //
+    return [NSDate dateWithTimeIntervalSinceNow:-86400]; 
+}
+
 @end
 
 

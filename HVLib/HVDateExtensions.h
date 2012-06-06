@@ -34,6 +34,8 @@ const NSUInteger NSAllCalendarUnits;
 
 -(NSTimeInterval) offsetFromNow;
 
++(NSDate *) yesterday;
+
 @end
 
 

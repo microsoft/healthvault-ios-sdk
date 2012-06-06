@@ -117,6 +117,11 @@ LError:
     return [[[HVApproxDateTime alloc] initWithDescription:descr] autorelease];
 }
 
++(HVApproxDateTime *)now
+{
+    return [[[HVApproxDateTime alloc] initNow] autorelease];
+}
+
 -(NSString *)description
 {
     return [self toString];

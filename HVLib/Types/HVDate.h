@@ -45,11 +45,13 @@
 //
 //-------------------------
 -(id) initWithYear:(int) year month:(int) monthValue day:(int) dayValue;
+-(id) initNow;
 -(id) initWithDate:(NSDate *) date;
 -(id) initWithComponents:(NSDateComponents *) components;
 
 +(HVDate *) fromYear:(int) year month:(int) month day:(int) day;
 +(HVDate *) fromDate:(NSDate *) date;
++(HVDate *) now;
 
 //-------------------------
 //

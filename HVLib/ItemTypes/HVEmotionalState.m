@@ -24,19 +24,19 @@ NSString* stringFromMood(enum HVMood mood)
 {
     switch (mood) 
     {
-        case HVMood_Depressed:
+        case HVMoodDepressed:
             return @"Depressed";
         
-        case HVMood_Sad:
+        case HVMoodSad:
             return @"Sad";
         
-        case HVMood_Neutral:
+        case HVMoodNeutral:
             return @"Neutral";
         
-        case HVMood_Happy:
+        case HVMoodHappy:
             return @"Happy";
         
-        case HVMood_Elated:
+        case HVMoodElated:
             return @"Elated";
             
         default:
@@ -50,19 +50,19 @@ NSString* stringFromWellBeing(enum HVWellBeing wellBeing)
 {
     switch (wellBeing) 
     {
-        case HVWellBeing_Sick:
+        case HVWellBeingSick:
             return @"Sick";
         
-        case HVWellBeing_Impaired:
+        case HVWellBeingImpaired:
             return @"Impaired";
         
-        case HVWellBeing_Able:
+        case HVWellBeingAble:
             return @"Able";
         
-        case HVWellBeing_Healthy:
+        case HVWellBeingHealthy:
             return @"Healthy";
         
-        case HVWellBeing_Vigorous:
+        case HVWellBeingVigorous:
             return @"Vigorous";
             
         default:
@@ -91,12 +91,12 @@ static NSString* const c_element_wellbeing = @"wellbeing";
 
 -(enum HVMood)mood
 {
-    return (m_mood) ? (enum HVMood) m_mood.value : HVMood_Unknown;
+    return (m_mood) ? (enum HVMood) m_mood.value : HVMoodUnknown;
 }
 
 -(void)setMood:(enum HVMood)mood
 {
-    if (mood == HVMood_Unknown)
+    if (mood == HVMoodUnknown)
     {
         HVCLEAR(m_mood);
     }
@@ -110,7 +110,7 @@ static NSString* const c_element_wellbeing = @"wellbeing";
 
 -(enum HVRelativeRating)stress
 {
-    return (m_stress) ? (enum HVRelativeRating) m_mood.value : HVRelativeRating_None;
+    return (m_stress) ? (enum HVRelativeRating) m_stress.value : HVRelativeRating_None;
 }
 
 -(void)setStress:(enum HVRelativeRating)stress
@@ -128,12 +128,12 @@ static NSString* const c_element_wellbeing = @"wellbeing";
 
 -(enum HVWellBeing)wellbeing
 {
-    return (m_wellbeing) ? (enum HVWellBeing) m_wellbeing.value : HVWellBeing_Unknown;    
+    return (m_wellbeing) ? (enum HVWellBeing) m_wellbeing.value : HVWellBeingUnknown;    
 }
 
 -(void)setWellbeing:(enum HVWellBeing)wellbeing
 {
-    if (wellbeing == HVWellBeing_Unknown)
+    if (wellbeing == HVWellBeingUnknown)
     {
         HVCLEAR(m_wellbeing);
     }
@@ -228,6 +228,11 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVEmotionalState typeID]];
+}
+
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Emotional state", @"Emotional state Type Name");
 }
 
 @end

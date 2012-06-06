@@ -67,6 +67,7 @@
 
 +(HVApproxDateTime *) fromDate:(NSDate *) date;
 +(HVApproxDateTime *) fromDescription:(NSString *) descr;
++(HVApproxDateTime *) now;
 
 //-------------------------
 //

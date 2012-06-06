@@ -225,6 +225,30 @@ LError:
     return nil;
 }
 
+-(BOOL)setWithComponents:(NSDateComponents *)components 
+{
+    HVCHECK_NOTNULL(components);
+    
+    self.hour = [components hour];
+    self.minute = [components minute];
+    self.second = [components second];
+    
+    return TRUE;
+
+LError:
+    return FALSE;
+}
+
+-(BOOL)setWithDate:(NSDate *)date
+{
+    HVCHECK_NOTNULL(date);
+    
+    return [self setWithComponents:[NSCalendar componentsFromDate:date]]; 
+    
+LError:
+    return FALSE;
+}
+
 -(NSString *)description
 {
     return [self toString];

@@ -181,4 +181,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVDailyMedicationUsage typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Medication usage", @"Daily medication usage Type Name");
+}
+
 @end

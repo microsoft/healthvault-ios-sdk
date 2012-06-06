@@ -33,7 +33,13 @@
 // Data
 //
 //-------------------------
+//
+// (Required)
+//
 @property(readwrite, nonatomic, retain) HVTime* when;
+//
+// (Required)
+//
 @property(readwrite, nonatomic, retain) HVNonNegativeInt* durationMinutes;
 
 //-------------------------

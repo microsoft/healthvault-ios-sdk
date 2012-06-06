@@ -79,6 +79,11 @@ static NSString* const c_element_day   = @"d";
     }
 }
 
+-(id) initNow
+{
+    return [self initWithDate:[NSDate date]];
+}
+
 -(id) initWithDate:(NSDate *) date
 {
     HVCHECK_NOTNULL(date);
@@ -147,6 +152,11 @@ LError:
 +(HVDate *)fromYear:(int)year month:(int)month day:(int)day
 {
     return [[[HVDate alloc] initWithYear:year month:month day:day] autorelease];
+}
+
++(HVDate *)now
+{
+    return [[[HVDate alloc] initNow] autorelease];
 }
 
 -(void) dealloc

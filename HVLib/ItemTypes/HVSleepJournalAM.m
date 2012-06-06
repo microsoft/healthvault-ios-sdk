@@ -201,4 +201,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVSleepJournalAM typeID]];
 }
 
+-(NSString *)typeName
+{
+    return NSLocalizedString(@"Sleep Journal", @"Daily sleep journal");
+}
+
 @end
