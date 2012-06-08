@@ -32,4 +32,6 @@
 
 -(id)initWithObjectStore:(id<HVObjectStore>) store;
 
+-(void) deleteKeyFromCache:(NSString *) key;
+
 @end

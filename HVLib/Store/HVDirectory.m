@@ -440,6 +440,16 @@ LError:
     [HVDirectory deleteUrl:path];
 }
 
+-(NSData *)refreshAndGetBlob:(NSString *)key
+{
+    return [self getBlob:key];
+}
+
+-(id)refreshAndGetObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls
+{
+    return [self getObjectWithKey:key name:name andClass:cls];
+}
+
 -(void)dealloc
 {
     [m_path release];

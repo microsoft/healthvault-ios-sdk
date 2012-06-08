@@ -47,7 +47,7 @@ static NSString* const c_element_triglycerides = @"triglyceride";
 
 -(void)setLdlValue:(int)ldl
 {
-    HVENSURE(m_ldl, HVInt);
+    HVENSURE(m_ldl, HVPositiveInt);
     m_ldl.value = ldl;
 }
 
@@ -58,7 +58,7 @@ static NSString* const c_element_triglycerides = @"triglyceride";
 
 -(void)setHdlValue:(int)hdl
 {
-    HVENSURE(m_hdl, HVInt);
+    HVENSURE(m_hdl, HVPositiveInt);
     m_hdl.value = hdl;        
 }
 
@@ -69,7 +69,7 @@ static NSString* const c_element_triglycerides = @"triglyceride";
 
 -(void)setTriglyceridesValue:(int)triglycerides
 {
-    HVENSURE(m_triglycerides, HVInt);
+    HVENSURE(m_triglycerides, HVPositiveInt);
     m_triglycerides.value = triglycerides;       
 }
 
@@ -80,7 +80,7 @@ static NSString* const c_element_triglycerides = @"triglyceride";
 
 -(void)setTotalValue:(int)total
 {
-    HVENSURE(m_total, HVInt);
+    HVENSURE(m_total, HVPositiveInt);
     m_total.value = total;
 }
 
@@ -136,10 +136,10 @@ LError:
 -(void)deserialize:(XReader *)reader
 {
     HVDESERIALIZE(m_date, c_element_when, HVDate);
-    HVDESERIALIZE(m_ldl, c_element_ldl, HVInt);
-    HVDESERIALIZE(m_hdl, c_element_hdl, HVInt);
-    HVDESERIALIZE(m_total, c_element_total, HVInt);
-    HVDESERIALIZE(m_triglycerides, c_element_triglycerides, HVInt);    
+    HVDESERIALIZE(m_ldl, c_element_ldl, HVPositiveInt);
+    HVDESERIALIZE(m_hdl, c_element_hdl, HVPositiveInt);
+    HVDESERIALIZE(m_total, c_element_total, HVPositiveInt);
+    HVDESERIALIZE(m_triglycerides, c_element_triglycerides, HVPositiveInt);    
 }
 
 +(NSString *)typeID

@@ -32,7 +32,7 @@
 
 -(void) completedGetItemsTask:(HVTask *) task;
 -(void) completedDownloadKeys:(NSArray *) keys inView:(HVTypeView *) view task:(HVTask *) task;
--(HVItemQuery *) queryFromKeys:(NSArray *) keys;
+-(HVItemQuery *) newQueryFromKeys:(NSArray *) keys;
 
 -(void) notifyView:(HVTypeView *) view ofItems:(HVItemCollection *) items requestedKeys:(NSArray *) requestedKeys;
 -(void) notifyView:(HVTypeView *)view ofError:(id) error retrievingKeys:(NSArray *) keys;
@@ -150,7 +150,7 @@ LError:
 
 -(HVTask *)getItemsInRecord:(HVRecordReference *)record withKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVItemQuery* query = [self queryFromKeys:keys];
+    HVItemQuery* query = [self newQueryFromKeys:keys];
     HVCHECK_NOTNULL(query);
 
     HVTask* getItemsTask = [[[HVTask alloc] initWithCallback:callback] autorelease]; 
@@ -263,7 +263,7 @@ LError:
     return nil;
 }
 
--(HVItemQuery *)queryFromKeys:(NSArray *)keys
+-(HVItemQuery *)newQueryFromKeys:(NSArray *)keys
 {
     HVItemQuery* query = [[HVItemQuery alloc] init];
     HVCHECK_NOTNULL(query);

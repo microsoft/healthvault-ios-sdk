@@ -92,6 +92,13 @@ LError:
     }
 }
 
+-(HVItem *)refreshAndGetItem:(NSString *)itemID
+{
+    @synchronized(m_objectStore)
+    {
+        return [m_objectStore refreshAndGetObjectWithKey:itemID name:c_root andClass:[HVItem class]]; 
+    }
+}
 @end
 
 @implementation HVLocalItemStore (HVPrivate)

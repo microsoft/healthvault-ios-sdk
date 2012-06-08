@@ -26,10 +26,10 @@
 {
 @private
     HVDate* m_date;
-    HVInt* m_ldl;
-    HVInt* m_hdl;
-    HVInt* m_total;
-    HVInt* m_triglycerides;
+    HVPositiveInt* m_ldl;
+    HVPositiveInt* m_hdl;
+    HVPositiveInt* m_total;
+    HVPositiveInt* m_triglycerides;
 }
 
 //-------------------------
@@ -44,19 +44,19 @@
 //
 // (Optional)
 // 
-@property (readwrite, nonatomic, retain) HVInt* ldl;
+@property (readwrite, nonatomic, retain) HVPositiveInt* ldl;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVInt* hdl;
+@property (readwrite, nonatomic, retain) HVPositiveInt* hdl;
 //
 // (Optional) Total cholesterol
 //
-@property (readwrite, nonatomic, retain) HVInt* total;
+@property (readwrite, nonatomic, retain) HVPositiveInt* total;
 //
 // (Optional) 
 //
-@property (readwrite, nonatomic, retain) HVInt* triglycerides;
+@property (readwrite, nonatomic, retain) HVPositiveInt* triglycerides;
 //
 // Convenience properties
 //

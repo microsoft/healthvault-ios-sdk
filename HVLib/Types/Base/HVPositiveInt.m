@@ -22,7 +22,12 @@
 
 -(int) min
 {
-    return 1;
+    return 0;
+}
+
+-(BOOL)validateValue:(int)value
+{
+    return(self.min < value && value <= self.max);
 }
 
 @end

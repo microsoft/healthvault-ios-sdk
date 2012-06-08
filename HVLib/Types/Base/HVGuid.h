@@ -35,7 +35,7 @@
 
 @end
 
-CFUUIDRef newGuid(void);
+CFUUIDRef newGuidCreate(void);
 NSString* guidString(void);
 CFUUIDRef parseGuid(NSString *string);
 NSString* guidToString(CFUUIDRef guid);

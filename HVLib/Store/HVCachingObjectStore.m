@@ -152,6 +152,26 @@ LError:
     return [m_inner deleteChildStore:name];
 }
 
+-(id)refreshAndGetObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls
+{
+    [self deleteKeyFromCache:key];
+    return [self getObjectWithKey:key name:name andClass:cls];
+}
+
+-(NSData *)refreshAndGetBlob:(NSString *)key
+{
+    [self deleteKeyFromCache:key];
+    return [self getBlob:key];
+}
+
+-(void)deleteKeyFromCache:(NSString *)key
+{
+    @synchronized(self)
+    {
+        [m_cache removeObjectForKey:key];
+    }
+}
+
 @end
 
 @implementation HVCachingObjectStore (HVPrivate)

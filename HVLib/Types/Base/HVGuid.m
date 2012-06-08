@@ -21,14 +21,14 @@
 
 // Empty Guid "00000000-0000-0000- 0000-000000000000"
 
-CFUUIDRef newGuid(void)
+CFUUIDRef newGuidCreate(void)
 {
     return CFUUIDCreate(nil);
 }
 
 NSString* guidString(void)
 {
-    CFUUIDRef guid = newGuid();
+    CFUUIDRef guid = newGuidCreate();
     if (!guid)
     {
         return nil;
@@ -80,7 +80,7 @@ NSString* guidToString(CFUUIDRef guid)
 
 -(id) initWithNewGuid
 {
-    CFUUIDRef guidValue = newGuid();
+    CFUUIDRef guidValue = newGuidCreate();
     
     self = [self initWithGuid:guidValue];
     HVReleaseRef(guidValue);

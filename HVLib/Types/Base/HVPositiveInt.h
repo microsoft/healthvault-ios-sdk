@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-#import "HVInt.h"
+#import "HVConstrainedInt.h"
 
-@interface HVPositiveInt : HVInt
+@interface HVPositiveInt : HVConstrainedInt
 
 @end

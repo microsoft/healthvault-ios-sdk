@@ -181,7 +181,6 @@ LError:
     return components;
     
 LError:
-    [components release];
     return nil;
 }
 

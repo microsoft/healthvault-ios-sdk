@@ -36,4 +36,7 @@
 -(id<HVObjectStore>) newChildStore:(NSString *) name;
 -(void) deleteChildStore:(NSString *) name;
 
+-(id) refreshAndGetObjectWithKey:(NSString *) key name:(NSString *) name andClass:(Class) cls; 
+-(NSData *) refreshAndGetBlob:(NSString *) key;
+
 @end

@@ -29,4 +29,6 @@
 -(BOOL) putItem:(HVItem *) item;
 -(void) removeItem:(NSString *) itemID;
 
+-(HVItem *) refreshAndGetItem:(NSString *) itemID;
+
 @end

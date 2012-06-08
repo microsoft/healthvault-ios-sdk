@@ -131,4 +131,14 @@ LError:
     // Not supported
 }
 
+-(id)refreshAndGetObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls
+{
+    return [self refreshAndGetObjectWithKey:key name:name andClass:cls];
+}
+
+-(NSData *)refreshAndGetBlob:(NSString *)key
+{
+    return [self getBlob:key];
+}
+
 @end
