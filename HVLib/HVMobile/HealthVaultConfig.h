@@ -20,7 +20,7 @@
 #ifndef __OPTIMIZE__
 
 	/// If TRUE then the library traces all requests, responses and other debug information to a console. 
-	#define HEALTH_VAULT_TRACE_ENABLED 1
+	#define HEALTH_VAULT_TRACE_ENABLED 0
 
 #else
 

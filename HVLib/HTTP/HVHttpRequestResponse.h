@@ -31,6 +31,7 @@
 @interface HVHttpResponse : HVHttp
 {
 @protected
+    NSURLResponse* m_response;
     NSMutableData* m_responseBody;
 }
 

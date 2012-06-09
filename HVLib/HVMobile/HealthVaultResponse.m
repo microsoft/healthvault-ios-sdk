@@ -38,6 +38,7 @@
 @implementation HealthVaultResponse
 
 @synthesize statusCode = _statusCode;
+@synthesize webStatusCode = _webStatusCode;
 @synthesize infoXml = _infoXml;
 @synthesize responseXml = _responseXml;
 @synthesize errorText = _errorText;
@@ -54,7 +55,8 @@
 		
 		self.request = request;
 		self.responseXml = xml;
-		
+		self.webStatusCode = webResponse.webStatusCode;
+        
 		if(webResponse.hasError) {
 			
 			self.errorText = webResponse.errorText;

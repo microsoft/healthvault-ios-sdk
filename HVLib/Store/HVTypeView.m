@@ -42,7 +42,7 @@ static NSString* const c_element_items = @"items";
 -(void) setDownloadStatus:(BOOL) status forKeys:(NSArray *) keys;
 -(void) setDownloadStatus:(BOOL)status forItems:(NSArray *) items;
 
--(void) synchronizeViewCompleted:(HVItemQueryResults *) results;
+-(void) synchronizeViewCompleted:(HVTask *) task;
 -(void) stampUpdated;
 
 -(void) itemsAvailableInStore:(HVItemCollection *) items;
@@ -85,14 +85,6 @@ static NSString* const c_element_items = @"items";
     @synchronized(self)
     {
         HVRETAIN(m_delegate, delegate);
-        if (delegate)
-        {
-            m_isDelegateInMainThread = [NSThread isMainThread];
-        }
-        else
-        {
-            m_isDelegateInMainThread = FALSE;
-        }
     }
 }
 
@@ -389,7 +381,7 @@ LError:
     
     HVGetItemsTask* getItems = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
         
-        [self synchronizeViewCompleted:task.result];
+        [self invokeOnMainThread:@selector(synchronizeViewCompleted:) withObject:task];
         
     }] autorelease];  
     
@@ -537,12 +529,15 @@ LError:
     HVRETAIN(m_items, items);
 }
 
--(void)synchronizeViewCompleted:(HVItemQueryResults *)results
+-(void)synchronizeViewCompleted:(HVTask *)task
 {
     HVTypeViewItems* newViewItems = [[HVTypeViewItems alloc] init];
     HVTypeViewItems* prevItems = [m_items retain];
+
     @try 
     {
+        HVItemQueryResults* results = task.result;
+
         if (results.hasResults)
         {
             HVItemQueryResult* result = results.firstResult;
@@ -557,6 +552,7 @@ LError:
         //
         NSMutableArray *keysRemoved = [prevItems selectItemsNotIn:newViewItems];
         [self stampUpdated];
+        
         [self notifySynchronized:keysRemoved];
     }
     @catch (id ex) 
@@ -706,7 +702,7 @@ LError:
                 [m_delegate itemsAvailable:items inView:self];
             }
         }
-    },  m_isDelegateInMainThread);
+    },  TRUE);
   
 }
 
@@ -720,7 +716,7 @@ LError:
                 [m_delegate keysNotAvailable:keys inView:self];
             }
         }
-    }, m_isDelegateInMainThread);
+    }, TRUE);
  }
 
 -(void)notifySynchronized:(NSArray *) keysRemoved
@@ -733,7 +729,7 @@ LError:
                 [m_delegate synchronizationCompletedInView:self keysRemoved:keysRemoved];
             }
         }
-    }, m_isDelegateInMainThread);
+    }, TRUE);
 }
 
 -(void)notifySyncFailed:(id)error
@@ -746,7 +742,7 @@ LError:
                 [m_delegate synchronizationFailedInView:self withError:error];
             }
         }
-    }, m_isDelegateInMainThread);
+    }, TRUE);
 }
 
 -(void)notifyItemsAvailableAtIndexes:(HVIndexList *)indexes
@@ -759,7 +755,7 @@ LError:
                 [m_delegate itemsAvailableAtIndexes:indexes inView:self];
             }
         }
-    }, m_isDelegateInMainThread);   
+    }, TRUE);   
 }
 
 -(void) notifyItemsNotAvailableAtIndexes:(HVIndexList *)indexes
@@ -772,7 +768,7 @@ LError:
                 [m_delegate itemsNotAvailableAtIndexes:indexes inView:self];
             }
         }
-    }, m_isDelegateInMainThread);   
+    }, TRUE);   
  
 }
 

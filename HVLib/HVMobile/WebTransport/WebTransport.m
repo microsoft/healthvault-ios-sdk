@@ -20,7 +20,7 @@
 #import "WebResponse.h"
 #import "Logger.h"
 #import "HealthVaultConfig.h"
-
+#import "HVClient.h"
 
 /// Default HTTP method.
 #define DEFAULT_HTTP_METHOD @"POST"
@@ -41,7 +41,7 @@
 /// @param context - any object will be passed to callBack with response.
 /// @param target - callback method owner.
 /// @param callBack - the method to call when the request has completed.
-- (void)sendRequestForURL: (NSString *)url
+- (NSURLConnection *)sendRequestForURL: (NSString *)url
                  withData: (NSString *)data
                   context: (NSObject *)context
                    target: (NSObject *)target
@@ -61,10 +61,11 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 
 - (void)dealloc {
 
-    [_target release];
-    [_context release];
+    [_response release];
     [_responseBody release];
-
+    [_context release];
+    [_target release];
+ 
     [super dealloc];
 }
 
@@ -95,21 +96,21 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 
 #pragma mark Static Messages End
 
-+ (void)sendRequestForURL: (NSString *)url
++ (NSURLConnection *)sendRequestForURL: (NSString *)url
                  withData: (NSString *)data
                   context: (NSObject *)context
                    target: (NSObject *)target
                  callBack: (SEL)callBack {
 
     WebTransport *transport = [[WebTransport new] autorelease];
-    [transport sendRequestForURL: url
+    return [transport sendRequestForURL: url
             withData: data
             context: context
             target: target
             callBack: callBack];
 }
 
-- (void)sendRequestForURL: (NSString *)url
+- (NSURLConnection *)sendRequestForURL: (NSString *)url
                  withData: (NSString *)data
                   context: (NSObject *)context
                    target: (NSObject *)target
@@ -129,7 +130,7 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 	// http://stackoverflow.com/questions/933331/
 #endif
 	
-    [request setTimeoutInterval: DEFAULT_REQUEST_TIMEOUT];
+    [request setTimeoutInterval: [HVClient current].settings.httpTimeout];
 
     if (data) {
         [WebTransport addMessageToRequestResponseLog: data];
@@ -143,12 +144,17 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest: request delegate: self];
     [connection start];
+    
+    return connection;
 }
 
 #pragma mark Connection Events
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse: (NSURLResponse *)response {
 
+    [_response release];
+    _response = [response retain];
+    
     if (_responseBody) {
         [_responseBody setLength: 0];
     }
@@ -163,16 +169,29 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 
 - (void)connectionDidFinishLoading: (NSURLConnection *)conn {
 
-	TraceComponentMessage(@"WebTransport", NSLocalizedString(@"Received bytes key",
-															 @"Format to display amount of received bytes"), _responseBody.length);
-
-    NSString *responseString = [[NSString alloc] initWithData: _responseBody encoding: NSUTF8StringEncoding];
-
-    [WebTransport addMessageToRequestResponseLog: responseString];
-
     WebResponse *response = [WebResponse new];
-    response.responseData = responseString;
-    [self performCallBack: response];
+    NSString* responseString = nil;
+    @try 
+    {
+        response.webStatusCode = [((NSHTTPURLResponse *)_response) statusCode];
+        if (response.webStatusCode >= 400)
+        {       
+            response.errorText = [NSHTTPURLResponse localizedStringForStatusCode:response.webStatusCode];
+        }
+        else 
+        {
+            responseString = [[NSString alloc] initWithData: _responseBody encoding: NSUTF8StringEncoding];
+            [WebTransport addMessageToRequestResponseLog: responseString];
+            
+            response.responseData = responseString;
+        }
+        
+        [self performCallBack: response];
+    }
+    @catch (id exception) 
+    {
+    }
+    
     [response release];
     [responseString release];
 
@@ -187,12 +206,22 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 														   @"Format to display connection error"), errorString);
 
     [WebTransport addMessageToRequestResponseLog: errorString];
-
+    
     WebResponse *response = [WebResponse new];
-    response.errorText = errorString;
-    [self performCallBack: response];
+    @try 
+    {
+        response.errorText = errorString;
+        if (_response)
+        {
+            response.webStatusCode = [((NSHTTPURLResponse *)_response) statusCode];
+        }
+        [self performCallBack: response];
+    }
+    @catch (id exception) 
+    {
+    }
+    
     [response release];
-
     [conn release];
 }
 

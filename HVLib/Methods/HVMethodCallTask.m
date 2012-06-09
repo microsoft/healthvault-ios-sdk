@@ -26,9 +26,13 @@
 
 @interface HVMethodCallTask (HVPrivate)
 
+-(void) sendRequest;
 -(void) handleResponse:(HealthVaultResponse *) response;
+
 -(NSString *) serializeRequestBody;
 -(id) deserializeResponse:(HealthVaultResponse *) response;
+
+-(BOOL) shouldRetry:(HealthVaultResponse *) response;
 
 @end
 
@@ -67,7 +71,6 @@
     
 LError:
     HVALLOC_FAIL;    
-    
 }
 
 -(void)dealloc
@@ -89,41 +92,16 @@ LError:
 -(void )start
 {
     [self prepare];
-    
-    NSString* xml = [self serializeRequestBody];
-    HealthVaultRequest* request = nil;
-    
     [self retain];
     @try 
     {
-        request = [[HealthVaultRequest alloc] 
-                        initWithMethodName:self.name 
-                        methodVersion:self.version 
-                        infoSection:xml 
-                        target:self 
-                        callBack:@selector(handleResponse:)];
-        HVCHECK_OOM(request);
-        
-        self.operation = request;
-        
-        if (m_record)
-        {
-            request.recordId = m_record.ID;
-            request.personId = m_record.personID;
-        }
-        
-        [[HVClient current].service sendRequest:request];   
+        [self sendRequest];
     }
     @catch (id ex) 
     {
         [self release];
         [self handleError:ex];
         @throw;
-    }
-    @finally 
-    {
-        [request release];
-        [xml release];
     }
 }
 
@@ -177,18 +155,59 @@ LError:
 
 @implementation HVMethodCallTask (HVPrivate)
 
+-(void)sendRequest
+{
+    ++m_attempt;
+    HealthVaultRequest* request = nil;    
+    NSString* xml = [self serializeRequestBody];
+    @try 
+    {
+        request = [[HealthVaultRequest alloc] 
+                   initWithMethodName:self.name 
+                   methodVersion:self.version 
+                   infoSection:xml 
+                   target:self 
+                   callBack:@selector(handleResponse:)];
+        HVCHECK_OOM(request);
+        
+        self.operation = request;        
+        if (m_record)
+        {
+            request.recordId = m_record.ID;
+            request.personId = m_record.personID;
+        }
+        
+        [[HVClient current].service sendRequest:request];   
+    }
+    @finally 
+    {
+        [request release];
+        [xml release];
+    }
+}
+
 -(void)handleResponse:(HealthVaultResponse *)response
 {
+    BOOL isDone = TRUE;
     @try 
     {
         @synchronized(self)
         {
+            if ([self shouldRetry:response])
+            {
+                isDone = FALSE;
+                NSLog(@"Retrying request \r\n%@", response.request.infoXml);
+                [self sendRequest];
+                return;
+            }
+            
             m_status.statusCode = response.statusCode;
             m_status.errorText = response.errorText;
             m_status.errorDetailsXml = response.errorContextXml;    
+            
             if (m_status.hasError)
             {
-                NSLog(@"Protocol Error for %@", response.request.infoXml);
+                NSLog(@"Error for \r\n%@", response.request.infoXml);
                 return;
             }
             
@@ -203,7 +222,10 @@ LError:
     }
     @finally 
     {
-        [self complete];
+        if (isDone)
+        {
+            [self complete];
+        }
     }
 }
 
@@ -255,4 +277,8 @@ LError:
     }
 }
 
+-(BOOL)shouldRetry:(HealthVaultResponse *) response
+{
+    return (m_attempt < [HVClient current].settings.maxAttemptsPerRequest && response.webStatusCode >= 500);
+}
 @end

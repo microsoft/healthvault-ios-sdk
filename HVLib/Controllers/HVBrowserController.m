@@ -20,6 +20,11 @@
 #import "HVBrowserController.h"
 #import <QuartzCore/QuartzCore.h>
 
+
+#define RGBColor(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+
+#define HVBLUE RGBColor(0, 176, 240)
+
 @interface HVBrowserController (HVPrivate)
 
 -(void) showActivitySpinner;
@@ -174,7 +179,17 @@ LError:
     //
     if (!m_activityView)
     {
-        m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        if ([m_activityView respondsToSelector:@selector(setColor:)])
+        {
+            [m_activityView setColor:HVBLUE];
+        }
+        else 
+        {
+            HVCLEAR(m_activityView);
+            // < iOS5... use older style. The large indication won't be visible on HV pages
+            m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        }
         m_activityView.center = m_webView.center;
         m_activityView.hidesWhenStopped = TRUE;
         

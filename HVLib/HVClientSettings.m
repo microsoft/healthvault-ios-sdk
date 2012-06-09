@@ -31,6 +31,7 @@ static NSString* const c_element_language = @"language";
 static NSString* const c_element_signinTitle = @"signInTitle";
 static NSString* const c_element_signinRetryMessage = @"signInRetryMessage";
 static NSString* const c_element_httpTimeout = @"httpTimeout";
+static NSString* const c_element_maxAttemptsPerRequest = @"maxAttemptsPerRequest";
 static NSString* const c_element_useCachingInStore = @"useCachingInStore";
 
 @implementation HVClientSettings
@@ -46,6 +47,7 @@ static NSString* const c_element_useCachingInStore = @"useCachingInStore";
 @synthesize signInControllerTitle = m_signInTitle;
 @synthesize signinRetryMessage = m_signInRetryMessage;
 @synthesize httpTimeout = m_httpTimeout;
+@synthesize maxAttemptsPerRequest = m_maxAttemptsPerRequest;
 @synthesize useCachingInStore = m_useCachingInStore;
 
 -(NSURL *)serviceUrl
@@ -124,6 +126,8 @@ static NSString* const c_element_useCachingInStore = @"useCachingInStore";
     HVCHECK_SELF;
     
     m_debug = FALSE;
+    m_httpTimeout = 60;             // Default timeout in seconds
+    m_maxAttemptsPerRequest = 3;    // Retry thrice...
     
     return self;
     
@@ -160,6 +164,7 @@ LError:
     HVSERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
     HVSERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
     HVSERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
+    HVSERIALIZE_INT(m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
     HVSERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
 }
 
@@ -176,6 +181,7 @@ LError:
     HVDESERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
     HVDESERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
     HVDESERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
+    HVDESERIALIZE_INT(m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
     HVDESERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
 }
 

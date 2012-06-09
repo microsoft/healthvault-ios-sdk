@@ -41,6 +41,9 @@
 
 @end
 
+//
+// Assumes that all manipulation happens from WITHIN THE MAIN THREAD
+// 
 @interface HVTypeView : XSerializableType
 {
     NSString* m_typeID;
@@ -51,7 +54,6 @@
     HVTypeViewItems* m_items;
     HVLocalRecordStore* m_store;
     
-    BOOL m_isDelegateInMainThread;
     id<HVTypeViewDelegate> m_delegate;
 }
 

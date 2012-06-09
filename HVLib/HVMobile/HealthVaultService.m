@@ -28,6 +28,7 @@
 #import "XmlTextReader.h"
 #import "HealthVaultSettings.h"
 #import "HealthVaultConfig.h"
+#import "HVClient.h"
 
 @interface HealthVaultService (Private)
 
@@ -75,8 +76,8 @@
 
 - (id)initWithDefaultUrl: (NSString *)masterAppId {
 	
-	return [self initWithUrl: HEALTH_VAULT_PLATFORM_URL
-					shellUrl: HEALTH_VAULT_SHELL_URL
+	return [self initWithUrl: [HVClient current].settings.serviceUrl.absoluteString
+					shellUrl: [HVClient current].settings.shellUrl.absoluteString
 				 masterAppId: masterAppId];
 }
 
@@ -209,7 +210,7 @@
 
 	NSString *requestXml = [request toXml];
 
-	[WebTransport sendRequestForURL: self.healthServiceUrl
+	request.connection = [WebTransport sendRequestForURL: self.healthServiceUrl
 						   withData: requestXml
 							context: request
 							 target: self

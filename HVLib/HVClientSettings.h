@@ -34,6 +34,7 @@
     NSString* m_signInRetryMessage;
     
     NSTimeInterval m_httpTimeout;
+    NSInteger m_maxAttemptsPerRequest;
     BOOL m_useCachingInStore;
 }
 
@@ -49,7 +50,11 @@
 @property (readwrite, nonatomic, retain) NSString* signInControllerTitle;
 @property (readwrite, nonatomic, retain) NSString* signinRetryMessage;
 
-@property (readwrite, nonatomic) NSTimeInterval httpTimeout;
+@property (readwrite, nonatomic) NSTimeInterval httpTimeout; // Standard timeout in seconds
+//
+// Set this to > 0 to automatically retry requests if they fail due to network errors
+//
+@property (readwrite, nonatomic) NSInteger maxAttemptsPerRequest;
 @property (readwrite, nonatomic) BOOL useCachingInStore;
 
 +(HVClientSettings *) newSettingsFromResource;

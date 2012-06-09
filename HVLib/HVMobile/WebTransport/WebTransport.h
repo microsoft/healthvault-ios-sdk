@@ -22,6 +22,7 @@
 /// Class to simplify making POSTs and obtaining the responses.
 @interface WebTransport : NSObject {
 
+    NSURLResponse* _response;
     NSMutableData *_responseBody;
     NSObject *_context;
     NSObject *_target;
@@ -41,7 +42,7 @@
 /// @param context - any object will be passed to callBack with response.
 /// @param target - callback method owner.
 /// @param callBack - the method to call when the request has completed.
-+ (void)sendRequestForURL: (NSString *)url
++ (NSURLConnection *)sendRequestForURL: (NSString *)url
                  withData: (NSString *)data
                   context: (NSObject *)context
                    target: (NSObject *)target

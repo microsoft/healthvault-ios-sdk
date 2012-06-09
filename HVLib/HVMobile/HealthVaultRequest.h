@@ -40,6 +40,8 @@
 
 	NSObject *_target;
 	SEL _callBack;
+    
+    NSURLConnection* _connection;
 }
 
 /// Gets or sets the name of the method to be called.
@@ -95,6 +97,8 @@
 /// Gets or sets the callback that will be called when the request has completed.
 @property (assign) SEL callBack;
 
+@property (retain) NSURLConnection* connection;
+
 /// Initializes a new instance of the HealthVaultRequest class.
 /// @param name - the name of the method.
 /// @param methodVersion - the version of the method.
@@ -114,5 +118,7 @@
 /// Converts the request to xml representation ready to be submitted to HealthVault service.
 /// @returns xml representation of the request.
 - (NSString *)toXml;
+
+-(void) cancel;
 
 @end

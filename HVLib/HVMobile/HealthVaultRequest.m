@@ -43,6 +43,8 @@
 @synthesize target = _target;
 @synthesize callBack = _callBack;
 
+@synthesize connection = _connection;
+
 - (id)initWithMethodName: (NSString *)name
 		   methodVersion: (float)methodVersion
 			 infoSection: (NSString *)info
@@ -83,13 +85,14 @@
 	self.userState = nil;
 
 	self.target = nil;
+    self.connection = nil;
 
 	[super dealloc];
 }
 
 - (NSString *)toXml {
 
-	NSMutableString *xml = [NSMutableString new];
+	NSMutableString *xml = [[NSMutableString new] autorelease];
 
 	[xml appendString:@"<wc-request:request xmlns:wc-request=\"urn:com.microsoft.wc.request\">"];
 
@@ -160,7 +163,15 @@
 
 	[header release];
 	[infoString release];
-	return [xml autorelease];
+	return xml;
+}
+
+-(void)cancel
+{
+    if (_connection)
+    {
+        [_connection cancel];
+    }
 }
 
 @end

@@ -31,6 +31,8 @@
 {
     HVServerResponseStatus* m_status;
     HVRecordReference* m_record;
+    
+    NSInteger m_attempt;
 }
 
 @property (readonly, nonatomic) NSString* name;

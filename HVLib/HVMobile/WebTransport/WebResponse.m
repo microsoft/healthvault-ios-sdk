@@ -23,6 +23,7 @@
 
 @synthesize responseData = _responseData;
 @synthesize errorText = _errorText;
+@synthesize webStatusCode = _webStatusCode;
 
 - (void)dealloc {
 
