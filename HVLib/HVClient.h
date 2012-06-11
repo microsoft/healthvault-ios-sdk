@@ -47,7 +47,7 @@ enum HVAppProvisionStatus
     
     HVClientSettings *m_settings;
     HVDirectory *m_rootDirectory;
-    HealthVaultService *m_service;
+    id<HealthVaultService> m_service;
     //
     // Provisioning
     //
@@ -74,7 +74,7 @@ enum HVAppProvisionStatus
 @property (readonly, nonatomic) enum HVAppProvisionStatus provisionStatus;
 @property (readonly, nonatomic) BOOL isProvisioned;
 
-@property (readonly, nonatomic) HealthVaultService* service;
+@property (readonly, nonatomic) id<HealthVaultService> service;
 @property (readonly, nonatomic) HVUser* user;
 @property (readonly, nonatomic) HVRecordCollection* records;
 @property (readonly, nonatomic) HVRecord* currentRecord;

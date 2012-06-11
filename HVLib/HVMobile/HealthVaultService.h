@@ -25,8 +25,39 @@
 #import "WebResponse.h"
 #import "WebTransport.h"
 
+@protocol HealthVaultService <NSObject>
+
+@property (retain) NSString *healthServiceUrl;
+@property (retain) NSString *shellUrl;
+@property (retain) NSString *authorizationSessionToken;
+@property (retain) NSString *sharedSecret;
+@property (retain) NSString *sessionSharedSecret;
+@property (retain) NSString *masterAppId;
+@property (retain) NSString *language;
+@property (retain) NSString *country;
+@property (retain) NSString* deviceName;
+@property (retain) NSString *appIdInstance;
+@property (retain) NSString *applicationCreationToken;
+@property (retain) NSMutableArray *records;
+@property (retain) HealthVaultRecord *currentRecord;
+
+- (NSString *)getApplicationCreationUrl;
+- (NSString *)getUserAuthorizationUrl;
+
+- (void)sendRequest:(HealthVaultRequest *)request;
+- (void)authorizeRecords: (NSObject *)target authenticationCompleted: (SEL)authCompleted shellAuthRequired: (SEL)shellAuthRequired;
+
+- (void)performAuthenticationCheck: (NSObject *)target authenticationCompleted: (SEL)authCompleted shellAuthRequired: (SEL)shellAuthRequired;
+
+- (void)saveSettings: (NSString *)name;
+- (void)loadSettings: (NSString *)name;
+-(void) reset;
+
+@end
+
 /// A class used to communicate with the HealthVault web service.
-@interface HealthVaultService : NSObject {
+@interface HealthVaultService : NSObject<HealthVaultService>
+{
 
 	NSString *_healthServiceUrl;
 	NSString *_shellUrl;

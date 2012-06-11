@@ -175,13 +175,7 @@ enum HVItemFlags
 //
 //-------------------------
 //
-// Refreshes information about blobs associated this item 
-// Assumes that we are working with [HVClient current].currentRecord
-//
--(HVTask *) updateBlobData:(HVTaskCompletion) callback;
-//
 // Refreshes information about blobs associated with this item
-// Assumes that we are working with [HVClient current].currentRecord
 //
 -(HVTask *) updateBlobDataFromRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 //

@@ -19,6 +19,7 @@
 #import "HVType.h"
 #import "HVBaseTypes.h"
 #import "HVVocabItem.h"
+#import "HVVocabIdentifier.h"
 
 @interface HVVocabCodeSet : HVType
 {
@@ -39,6 +40,8 @@
 
 -(NSArray *) displayStrings;
 -(void) sortItemsByDisplayText;
+
+-(HVVocabIdentifier *) getVocabID;
 
 @end
 

@@ -100,6 +100,7 @@ LError:
         }
     } ];
     
+    getItemsTask.record = record;
     [task setNextTask:getItemsTask];
     [task start];
     

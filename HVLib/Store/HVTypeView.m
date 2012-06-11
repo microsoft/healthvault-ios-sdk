@@ -47,11 +47,12 @@ static NSString* const c_element_items = @"items";
 
 -(void) itemsAvailableInStore:(HVItemCollection *) items;
 -(void) keysNotAvailableInStore:(NSArray *) keys;
+-(void) keysFailed:(NSArray *) params;
 
 -(void) notifyItemsAvailable:(HVItemCollection *) items;
 -(void) notifyKeysNotAvailable:(NSArray *) keys;
 
--(void) notifySynchronized:(NSArray *) keysRemoved;
+-(void) notifySynchronized;
 -(void) notifySyncFailed:(id) error;
 
 @end
@@ -82,10 +83,7 @@ static NSString* const c_element_items = @"items";
 
 -(void)setDelegate:(id<HVTypeViewDelegate>)delegate
 {
-    @synchronized(self)
-    {
-        HVRETAIN(m_delegate, delegate);
-    }
+    HVRETAIN(m_delegate, delegate);
 }
 
 -(NSUInteger)count
@@ -380,7 +378,11 @@ LError:
     }
     
     HVGetItemsTask* getItems = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
-        
+        //
+        // Always invoke the completion on the main UI thread. 
+        // The contract of HVTypeView is that all changes to the object happen in the main UI thread - which lets
+        // us serialize operations
+        //
         [self invokeOnMainThread:@selector(synchronizeViewCompleted:) withObject:task];
         
     }] autorelease];  
@@ -449,17 +451,28 @@ LError:
     [self stampUpdated];
 }
 
+//-------------------------
+//
+// Called by SynchronizedStore.
+// These can come in on any thread. We can do local computation, but
+// we must push all changes we need to make to TypeView - to the UI thread
+//
+//------------------------
 -(void)keysNotRetrieved:(NSArray *)keys withError:(id)error
 {
-    [self setDownloadStatus:FALSE forKeys:keys];
-    [self notifySyncFailed:error];
+    NSMutableArray* params = [[NSMutableArray alloc] initWithCapacity:2];
+    [params addObject:keys];
+    [params addObject:error];
+    
+    [self invokeOnMainThread:@selector(keysFailed:) withObject:params];
+    [params release];
 }
 
 -(void)itemsRetrieved:(HVItemCollection *)items forKeys:(NSArray *)keys
 {
     if (items && items.count > 0)
     {
-        [self itemsAvailableInStore:items];
+        [self invokeOnMainThread:@selector(itemsAvailableInStore:) withObject:items];
     }
     //
     // Not all keys may have resulted in items being retrieved
@@ -478,10 +491,14 @@ LError:
                 }
             }
             [itemsByID release];
-            [self keysNotAvailableInStore:keysNotFound];
+            //
+            // Must call on main thread
+            //
+            [self invokeOnMainThread:@selector(keysNotAvailableInStore:) withObject:keysNotFound];
         }
     }
 }
+
 
 -(void)serialize:(XWriter *)writer
 {
@@ -529,11 +546,12 @@ LError:
     HVRETAIN(m_items, items);
 }
 
+//
+// This MUST always be called in the main UI thread
+//
 -(void)synchronizeViewCompleted:(HVTask *)task
 {
     HVTypeViewItems* newViewItems = [[HVTypeViewItems alloc] init];
-    HVTypeViewItems* prevItems = [m_items retain];
-
     @try 
     {
         HVItemQueryResults* results = task.result;
@@ -547,13 +565,9 @@ LError:
             }
         }
         self.items = newViewItems;
-        //
-        // Collect set of keys that are no longer in this view
-        //
-        NSMutableArray *keysRemoved = [prevItems selectItemsNotIn:newViewItems];
         [self stampUpdated];
         
-        [self notifySynchronized:keysRemoved];
+        [self notifySynchronized];
     }
     @catch (id ex) 
     {
@@ -563,7 +577,6 @@ LError:
     @finally 
     {
         [newViewItems release];
-        [prevItems release];
     }
 }
 
@@ -647,12 +660,18 @@ LError:
     return task;
 }
 
+//
+// MUST ALWAYS BE CALLED IN THE UI THREAD
+//
 -(void)itemsAvailableInStore:(HVItemCollection *)items
 {
     [self setDownloadStatus:FALSE forItems:items];
     [self notifyItemsAvailable:items];
 }
 
+//
+// MUST ALWAYS BE CALLED IN THE UI THREAD
+//
 -(void)keysNotAvailableInStore:(NSArray *)keys
 {
     if ([NSArray isNilOrEmpty:keys])
@@ -661,6 +680,18 @@ LError:
     }
     
     [self notifyKeysNotAvailable:keys];
+}
+
+//
+// MUST ALWAYS BE CALLED IN THE UI THREAD
+//
+-(void)keysFailed:(NSArray *)params
+{
+    NSArray* keys = [params objectAtIndex:0];
+    id error = [params objectAtIndex:1];
+    
+    [self setDownloadStatus:FALSE forKeys:keys]; 
+    [self notifySyncFailed:error];
 }
 
 -(void)setDownloadStatus:(BOOL)status forIndex:(NSUInteger)index
@@ -694,82 +725,42 @@ LError:
 
 -(void)notifyItemsAvailable:(HVItemCollection *)items
 {
-    safeInvokeActionEx(^{
-        @synchronized(self)
+    safeInvokeAction(^{
+        if (m_delegate)
         {
-            if (m_delegate)
-            {
-                [m_delegate itemsAvailable:items inView:self];
-            }
+            [m_delegate itemsAvailable:items inView:self];
         }
-    },  TRUE);
-  
+    });
 }
 
 -(void)notifyKeysNotAvailable:(NSArray *)keys
 {
-    safeInvokeActionEx(^{
-        @synchronized(self)
+    safeInvokeAction(^{
+        if (m_delegate)
         {
-            if (m_delegate)
-            {
-                [m_delegate keysNotAvailable:keys inView:self];
-            }
+            [m_delegate keysNotAvailable:keys inView:self];
         }
-    }, TRUE);
+    });
  }
 
--(void)notifySynchronized:(NSArray *) keysRemoved
+-(void)notifySynchronized
 {
-    safeInvokeActionEx(^{
-        @synchronized(self)
+    safeInvokeAction(^{
+        if (m_delegate)
         {
-            if (m_delegate)
-            {
-                [m_delegate synchronizationCompletedInView:self keysRemoved:keysRemoved];
-            }
+            [m_delegate synchronizationCompletedInView:self];
         }
-    }, TRUE);
+    });
 }
 
 -(void)notifySyncFailed:(id)error
 {
     safeInvokeActionEx(^{
-        @synchronized(self)
+        if (m_delegate)
         {
-            if (m_delegate)
-            {
-                [m_delegate synchronizationFailedInView:self withError:error];
-            }
+            [m_delegate synchronizationFailedInView:self withError:error];
         }
-    }, TRUE);
-}
-
--(void)notifyItemsAvailableAtIndexes:(HVIndexList *)indexes
-{
-    safeInvokeActionEx(^{
-        @synchronized(self)
-        {
-            if (m_delegate)
-            {
-                [m_delegate itemsAvailableAtIndexes:indexes inView:self];
-            }
-        }
-    }, TRUE);   
-}
-
--(void) notifyItemsNotAvailableAtIndexes:(HVIndexList *)indexes
-{
-    safeInvokeActionEx(^{
-        @synchronized(self)
-        {
-            if (m_delegate)
-            {
-                [m_delegate itemsNotAvailableAtIndexes:indexes inView:self];
-            }
-        }
-    }, TRUE);   
- 
+    }, TRUE);  // Ensures that delegate is called in UI thread
 }
 
 -(void)stampUpdated

@@ -55,10 +55,6 @@
 // If the query result has pending items, get them and ADD them to the items collection
 // 
 -(HVTask *) getPendingItemsForRecord:(HVRecordReference *) record withCallback:(HVTaskCompletion) callback;
-//
-// Get all pending items - assumes that these query results are for a query issued on [HVClient current].currentRecord
-//
--(HVTask *) getPendingItemsWithCallback:(HVTaskCompletion) callback;
 
 -(HVTask *) createTaskToGetPendingItemsForRecord:(HVRecordReference *) record withCallback:(HVTaskCompletion) callback;
 

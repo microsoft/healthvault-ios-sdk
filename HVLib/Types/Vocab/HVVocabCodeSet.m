@@ -68,10 +68,13 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
     [m_version release];
     [m_items release];
     [m_isTruncated release];
-    
     [super dealloc];
 }
 
+-(HVVocabIdentifier *)getVocabID
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:m_family andName:m_name] autorelease];
+}
 -(void)serialize:(XWriter *)writer
 {
     HVSERIALIZE_STRING(m_name, c_element_name);

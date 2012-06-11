@@ -54,11 +54,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(NSDate *)getDate
-{
-    return (m_onsetDate) ? [m_onsetDate toDate] : nil;
-}
-
 -(NSString *)description
 {
     return [self toString];

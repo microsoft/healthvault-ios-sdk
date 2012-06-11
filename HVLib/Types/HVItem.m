@@ -234,18 +234,10 @@ LError:
 // Blob - Helper methods
 //
 //------------------------
--(HVTask *)updateBlobData:(HVTaskCompletion)callback
-{
-    return [self updateBlobDataFromRecord:nil andCallback:callback];
-}
-
 -(HVTask *)updateBlobDataFromRecord:(HVRecordReference *)record andCallback:(HVTaskCompletion)callback
 {
     HVCHECK_NOTNULL(m_key);
-    if (!record)
-    {
-        record = [HVClient current].currentRecord;
-    }
+    HVCHECK_NOTNULL(record);
     //
     // We'll query for the latest blob information for this item
     //

@@ -125,9 +125,15 @@ LError:
 
 -(void)ensureRecord
 {
+    //
+    // We need to make sure the caller specified exactly which record they are using
+    // Can't use [HVClient current].currentRecord - which won't necessarily be the one the
+    // user intended to use - in multi-threaded cases
+    //
     if (!m_record)
     {
-        self.record = [HVClient current].currentRecord;
+        //self.record = [HVClient current].currentRecord;
+        [HVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_InvalidRecordReference)];
     }
 }
 

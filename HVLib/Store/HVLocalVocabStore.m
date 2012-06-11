@@ -246,7 +246,11 @@ LError:
         for (NSUInteger i = 0, count = vocabIDs.count; i < count; ++i) 
         {
             HVVocabCodeSet* vocab = [downloadedVocabs objectAtIndex:i];
-            [self putVocab:vocab withID:[vocabIDs objectAtIndex:i]];
+            if (vocab.isTruncated)
+            {
+                continue;
+            }
+            [self putVocab:vocab withID:[vocab getVocabID]];
         }        
     }
     @catch (id exception) 

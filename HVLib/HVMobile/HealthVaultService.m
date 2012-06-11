@@ -194,14 +194,17 @@
 
 		request.appIdInstance = self.masterAppId;
 	}
+    
 	if(self.currentRecord != nil) {
 		
         if (request.personId == nil)
         {
+            NSLog(@"%@", @"request.personID is nil. Using currentRecord");
             request.personId = self.currentRecord.personId;
         }
         if (request.recordId == nil)
         {
+            NSLog(@"%@", @"request.recordID is nil. Using currentRecord");
             request.recordId = self.currentRecord.recordId;
         }
 	}
@@ -283,6 +286,8 @@
 	// Saves source response to userState property, it will be resent
 	// after token updating.
 	refreshTokenRequest.userState = request;
+    refreshTokenRequest.personId = request.personId;
+    refreshTokenRequest.recordId = request.recordId;
 
 	[self sendRequest: refreshTokenRequest];
 	[refreshTokenRequest release];

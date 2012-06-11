@@ -69,6 +69,11 @@ LError:
     [super dealloc];
 }
 
+-(void)prepare
+{
+    [self ensureRecord];
+}
+
 -(void)serializeRequestBodyToWriter:(XWriter *)writer
 {
     for (NSUInteger i = 0, count = m_keys.count; i < count; ++i)

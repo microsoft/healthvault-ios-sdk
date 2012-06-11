@@ -319,6 +319,8 @@ LError:
     
     }];
     
+    getPendingTask.record = getItems.record;
+    
     [task.parent setNextTask:getPendingTask];
     
     [pendingQuery release];

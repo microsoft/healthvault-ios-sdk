@@ -67,13 +67,10 @@ static NSString* const c_attribute_name = @"name";
     return task;
 }
 
--(HVTask *)getPendingItemsWithCallback:(HVTaskCompletion)callback
-{
-    return [self getPendingItemsForRecord:[HVClient current].currentRecord withCallback:callback];
-}
-
 -(HVTask *)createTaskToGetPendingItemsForRecord:(HVRecordReference *)record withCallback:(HVTaskCompletion)callback
 {
+    HVCHECK_NOTNULL(record);
+    
     if (!self.hasPendingItems)
     {
         return nil;

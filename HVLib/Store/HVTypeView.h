@@ -32,18 +32,20 @@
 -(void) itemsAvailable:(HVItemCollection *) items inView:(HVTypeView *) view;
 -(void) keysNotAvailable:(NSArray *) keys inView:(HVTypeView *) view;
 
--(void) synchronizationCompletedInView:(HVTypeView *) view keysRemoved:(NSArray *) keys;
+-(void) synchronizationCompletedInView:(HVTypeView *) view;
 -(void) synchronizationFailedInView:(HVTypeView *) view withError:(id) ex;
-
-@optional
--(void) itemsAvailableAtIndexes:(HVIndexList *) indexes inView:(HVTypeView *) view;
--(void) itemsNotAvailableAtIndexes:(HVIndexList *) indexes inView:(HVTypeView *) view;
 
 @end
 
+//----------------------------------------------
 //
-// Assumes that all manipulation happens from WITHIN THE MAIN THREAD
-// 
+// HVTypeView makes it easy to write asynchronous fluid UITableView displays of HealthVault data
+// that leverages offline local data storage/replication/background sync - without freezing the UI. 
+//
+// Assumes that all manipulation happens from WITHIN THE MAIN UI THREAD
+// All manipulation *must* happen within the main UI thread
+//
+//----------------------------------------------
 @interface HVTypeView : XSerializableType
 {
     NSString* m_typeID;

@@ -94,11 +94,6 @@ LError:
     return (m_name) ? [m_name toString] : c_emptyString;
 }
 
--(NSDate *)getDate
-{
-    return m_startDate ? [m_startDate toDate] : nil;
-}
-
 +(HVVocabIdentifier *) vocabForName
 {
     return [[[HVVocabIdentifier alloc] initWithFamily:c_rxNormFamily andName:@"RxNorm Active Medicines"] autorelease];
