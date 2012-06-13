@@ -23,6 +23,7 @@
 @interface HVHttpDownload : HVHttp
 {
 @protected
+    NSURLResponse* m_response;
     NSFileHandle* m_file;
 }
 

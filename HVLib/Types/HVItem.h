@@ -181,8 +181,8 @@ enum HVItemFlags
 //
 // Upload data into the default blob and put the item...
 //
--(HVItemBlobUploadTask *) uploadBlob:(id<HVBlobSource>) data contentType:(NSString *) contentType andCallback:(HVTaskCompletion) callback;
--(HVItemBlobUploadTask *) uploadBlob:(id<HVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType andCallback:(HVTaskCompletion) callback;
+-(HVItemBlobUploadTask *) uploadBlob:(id<HVBlobSource>) data contentType:(NSString *) contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(HVItemBlobUploadTask *) uploadBlob:(id<HVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 
 @end
 

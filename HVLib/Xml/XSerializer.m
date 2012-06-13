@@ -653,6 +653,23 @@ LError:
     return TRUE;
 }
 
+-(BOOL)skipToElement:(NSString *)name
+{
+    while ([self isStartElement])
+    {
+        if ([name isEqualToString:self.localName])
+        {
+            return TRUE;
+        }
+        
+        if (![self skipElement:self.localName])
+        {
+            break;
+        }
+    }
+    
+    return FALSE;
+}
 
 @end
 

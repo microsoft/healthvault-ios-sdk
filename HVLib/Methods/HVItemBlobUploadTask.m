@@ -30,31 +30,35 @@
 @synthesize blobInfo = m_blobInfo;
 @synthesize item = m_item;
 @synthesize delegate = m_delegate; // Weak ref
+@synthesize record = m_record;
 
 -(HVItemKey *)itemKey
 {
     return (HVItemKey *) self.result;
 }
 
--(id)initWithSource:(id<HVBlobSource>)data blobInfo:(HVBlobInfo *)blobInfo forItem:(HVItem *)item andCallback:(HVTaskCompletion)callback
+-(id)initWithSource:(id<HVBlobSource>)data blobInfo:(HVBlobInfo *)blobInfo forItem:(HVItem *)item record:(HVRecordReference *) record andCallback:(HVTaskCompletion)callback
 {
     HVCHECK_NOTNULL(data);
     HVCHECK_NOTNULL(blobInfo);
+    HVCHECK_NOTNULL(record);
     
     self = [super initWithCallback:callback];
     HVCHECK_SELF;
     
     HVRETAIN(m_blobInfo, blobInfo);
     HVRETAIN(m_item, item);
+    HVRETAIN(m_record, record);
     //
     // Step 1 - upload the blob to HealthVault
     // If that succeeds, then update the item
     //
-    HVBlobUploadTask* uploadTask = [[HVBlobUploadTask alloc] initWithSource:data andCallback:^(HVTask *task) {
+    HVBlobUploadTask* uploadTask = [[HVBlobUploadTask alloc] initWithSource:data record:record andCallback:^(HVTask *task) {
         
         [self uploadBlobComplete:task];
         
     } ];
+    
     HVCHECK_NOTNULL(uploadTask);
     uploadTask.delegate = self;
     
@@ -71,6 +75,7 @@ LError:
 {
     [m_blobInfo release];
     [m_item release];
+    [m_record release];
     [super dealloc];
 }
 
@@ -127,6 +132,7 @@ LError:
         
     } ] autorelease];
     
+    putTask.record = m_record;
     [self setNextTask:putTask];    
 }
 @end

@@ -66,6 +66,7 @@
 +(void) deleteUrl:(NSURL *) url;
 
 -(NSDictionary *) getFileProperties:(NSString *) fileName;
+-(BOOL) isFileNamed:(NSString *) name aged:(NSTimeInterval) maxAge;
 
 -(NSFileHandle *) openFileForRead:(NSString *) fileName;
 -(NSFileHandle *) openFileForWrite:(NSString *) fileName;

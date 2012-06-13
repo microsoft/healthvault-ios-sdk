@@ -40,31 +40,32 @@ static NSString* const c_mimeTypeOctet = @"application/octet-stream";
 
 @synthesize source = m_source;
 @synthesize delegate = m_delegate;
+@synthesize record = m_record;
 
 -(NSString *)blobUrl
 {
     return (NSString *) self.result;
 }
 
--(id)initWithData:(NSData *)data andCallback:(HVTaskCompletion)callback
+-(id)initWithData:(NSData *)data record:(HVRecordReference *) record andCallback:(HVTaskCompletion)callback
 {
     HVBlobMemorySource* blobSource = [[HVBlobMemorySource alloc] initWithData:data];
-    self = [self initWithSource:blobSource andCallback:callback];
+    self = [self initWithSource:blobSource record:record andCallback:callback];
     [blobSource release];
     
     return self;
 }
 
--(id)initWithFilePath:(NSString *)filePath andCallback:(HVTaskCompletion)callback
+-(id)initWithFilePath:(NSString *)filePath record:(HVRecordReference *) record  andCallback:(HVTaskCompletion)callback
 {
     HVBlobFileHandleSource* blobSource = [[HVBlobFileHandleSource alloc] initWithFilePath:filePath];
-    self = [self initWithSource:blobSource andCallback:callback];
+    self = [self initWithSource:blobSource record:record andCallback:callback];
     [blobSource release];
     
     return self;    
 }
 
--(id)initWithSource:(id<HVBlobSource>)source andCallback:(HVTaskCompletion)callback
+-(id)initWithSource:(id<HVBlobSource>)source record:(HVRecordReference *) record  andCallback:(HVTaskCompletion)callback
 {
     HVCHECK_NOTNULL(source);
     
@@ -72,6 +73,7 @@ static NSString* const c_mimeTypeOctet = @"application/octet-stream";
     HVCHECK_SELF;
     
     HVRETAIN(m_source, source);
+    HVRETAIN(m_record, record);
     //
     // First, we'll issue an operation to retrieve a Blob Url.
     // This is the  blobUrl to which we'll push the blob
@@ -80,6 +82,8 @@ static NSString* const c_mimeTypeOctet = @"application/octet-stream";
     HVBeginBlobPutTask* beginPutTask = [[HVBeginBlobPutTask alloc] initWithCallback:^(HVTask *task) {
         [self beginPutBlobComplete:task];
     } ];
+    
+    beginPutTask.record = m_record;
     
     [self setNextTask:beginPutTask];
     [beginPutTask release];
@@ -94,6 +98,7 @@ LError:
     [m_putParams release];
     [m_source release];
     [m_blobUrl release];
+    [m_record release];
     
     [super dealloc];
 }

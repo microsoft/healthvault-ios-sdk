@@ -272,6 +272,17 @@ LError:
     return nil;
 }
 
+-(BOOL)isFileNamed:(NSString *)name aged:(NSTimeInterval)maxAge
+{
+    if (![self fileExists:name])
+    {
+        return TRUE; // A non-existent file is considered stale by definition
+    }
+    
+    NSDate* lastUpdated = [self updateDateForKey:name];
+    return ([[NSDate date  ]timeIntervalSinceDate:lastUpdated] > maxAge);
+}
+
 -(NSFileHandle *)openFileForRead:(NSString *)fileName
 {
     NSString* filePath = [self makeFilePathIfExists:fileName];

@@ -14,11 +14,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
 #import <Foundation/Foundation.h>
+#import "HVAsyncTask.h"
 #import "HVBlob.h"
 #import "HVHttp.h"
 #import "HVBlobSource.h"
+#import "HVRecordReference.h"
 
 //----------------------------
 //
@@ -42,19 +43,21 @@
     int m_byteCountUploaded;
     
     id<HVHttpDelegate> m_delegate;
+    HVRecordReference* m_record; // Target record
 }
 
 @property (readonly, nonatomic) id<HVBlobSource> source;
 @property (readwrite, nonatomic, assign) id<HVHttpDelegate> delegate;
+@property (readonly, nonatomic) HVRecordReference* record;
 
 //
 // The result of the task, if successful, is the Url of the blob uploaded
 //
 @property (readonly, nonatomic) NSString* blobUrl;
 
--(id) initWithData:(NSData *) data andCallback:(HVTaskCompletion) callback;
--(id) initWithFilePath:(NSString *) filePath andCallback:(HVTaskCompletion) callback;
--(id) initWithSource:(id<HVBlobSource>) source andCallback:(HVTaskCompletion) callback;
+-(id) initWithData:(NSData *) data record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(id) initWithFilePath:(NSString *) filePath record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(id) initWithSource:(id<HVBlobSource>) source record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 
 //
 // Create a web request configured to upload blobs correctly

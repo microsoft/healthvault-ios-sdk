@@ -35,6 +35,8 @@ NSString* const c_emptyString;
 -(NSRange) getRange;
 -(BOOL) isIndexInRange:(NSUInteger) index;
 
+-(BOOL) isEqualToStringCaseInsensitive:(NSString *)aString;
+
 -(NSScanner *) newScanner;
 
 -(NSUInteger) indexOfFirstChar:(unichar) ch;

@@ -131,6 +131,11 @@ NSString* const c_emptyString = @"";
     return NSNotFound;
 }
 
+-(BOOL)isEqualToStringCaseInsensitive:(NSString *)aString
+{
+    return ([self caseInsensitiveCompare:aString] == NSOrderedSame);
+}
+
 -(NSString *) trim
 {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

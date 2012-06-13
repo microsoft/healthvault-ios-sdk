@@ -108,6 +108,7 @@ NSString* const XExceptionNotSerializable;
 
 -(BOOL) readUntilNodeType:(enum XNodeType) type;
 -(BOOL) skipElement:(NSString *) name;
+-(BOOL) skipToElement:(NSString *) name;
 
 @end
 

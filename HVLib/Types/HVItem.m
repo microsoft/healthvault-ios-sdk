@@ -266,16 +266,16 @@ LError:
     return nil;
 }
 
--(HVItemBlobUploadTask *)uploadBlob:(id<HVBlobSource>)data contentType:(NSString *)contentType andCallback:(HVTaskCompletion)callback
+-(HVItemBlobUploadTask *)uploadBlob:(id<HVBlobSource>)data contentType:(NSString *)contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion)callback
 {
-    return [self uploadBlob:data forBlobName:c_emptyString contentType:contentType andCallback:callback];
+    return [self uploadBlob:data forBlobName:c_emptyString contentType:contentType record:record andCallback:callback];
 }
 
--(HVItemBlobUploadTask *)uploadBlob:(id<HVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType andCallback:(HVTaskCompletion)callback
+-(HVItemBlobUploadTask *)uploadBlob:(id<HVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion)callback
 {
     HVBlobInfo* blobInfo = [[HVBlobInfo alloc] initWithName:name andContentType:contentType];
     
-    HVItemBlobUploadTask* task = [[[HVItemBlobUploadTask alloc] initWithSource:data blobInfo:blobInfo forItem:self andCallback:callback] autorelease];
+    HVItemBlobUploadTask* task = [[[HVItemBlobUploadTask alloc] initWithSource:data blobInfo:blobInfo forItem:self record:record andCallback:callback] autorelease];
     [blobInfo release];
     
     [task start];

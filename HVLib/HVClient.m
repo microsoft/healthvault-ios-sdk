@@ -50,6 +50,7 @@ static HVClient* s_app;
 
 @synthesize settings = m_settings;
 @synthesize localVault = m_localVault;
+@synthesize rootDirectory = m_rootDirectory;
 @synthesize provisionStatus = m_provisionStatus;
 @synthesize service = m_service;
 @synthesize user = m_user;

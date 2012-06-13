@@ -71,6 +71,8 @@ enum HVAppProvisionStatus
 
 @property (readonly, nonatomic) HVClientSettings* settings;
 @property (readonly, nonatomic) HVLocalVault *localVault;
+@property (readonly, nonatomic) HVDirectory* rootDirectory;
+
 @property (readonly, nonatomic) enum HVAppProvisionStatus provisionStatus;
 @property (readonly, nonatomic) BOOL isProvisioned;
 
@@ -118,6 +120,11 @@ enum HVAppProvisionStatus
 //
 -(BOOL) resetProvisioning;
 
+//-------------------------
+//
+// Storage
+//
+//-------------------------
 -(HVLocalRecordStore *) getCurrentRecordStore;
 
 @end

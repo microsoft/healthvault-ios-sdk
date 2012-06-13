@@ -195,6 +195,7 @@
 		request.appIdInstance = self.masterAppId;
 	}
     
+    /*
 	if(self.currentRecord != nil) {
 		
         if (request.personId == nil)
@@ -208,6 +209,7 @@
             request.recordId = self.currentRecord.recordId;
         }
 	}
+    */
 	request.authorizationSessionToken = self.authorizationSessionToken;
 	request.sessionSharedSecret = self.sessionSharedSecret;
 

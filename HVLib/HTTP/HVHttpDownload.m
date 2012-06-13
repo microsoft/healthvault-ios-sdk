@@ -48,11 +48,14 @@ LError:
 -(void)dealloc
 {
     [m_file release];
+    [m_response release];
     [super dealloc];
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    HVRETAIN(m_response, response);
+
     if (m_file)
     {
         [m_file truncateFileAtOffset:0];
@@ -66,6 +69,14 @@ LError:
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    int statusCode = [((NSHTTPURLResponse *)m_response) statusCode];
+    if (statusCode >= 400)
+    {       
+        HVHttpException* ex = [[HVHttpException alloc] initWithStatusCode:statusCode];
+        [super handleError:ex];
+        [ex release];
+    }
+
     [self complete];
 }
 

@@ -31,6 +31,11 @@
     return 1;
 }
 
+-(void)prepare
+{
+    [self ensureRecord];
+}
+
 -(HVBlobPutParameters *)putParams
 {
     return (HVBlobPutParameters *) self.result;

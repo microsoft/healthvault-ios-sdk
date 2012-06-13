@@ -64,7 +64,12 @@ static NSString* const c_element_current = @"current";
 
 -(HVRecord *)currentRecord
 {
-    return m_records ? [m_records objectAtIndex:m_currentIndex] : nil;
+    if ([NSArray isNilOrEmpty:m_records])
+    {
+        return nil;
+    }
+    
+    return [m_records objectAtIndex:m_currentIndex];
 }
 
 -(id)initFromLegacyRecords:(NSArray *)recordArray
@@ -91,7 +96,7 @@ LError:
 
 -(BOOL)updateWithLegacyRecords:(NSArray *)records
 {
-    HVRecord* current = [self currentRecord];
+    HVRecord* current = [[[self currentRecord] retain] autorelease];
     
     HVCLEAR(m_name);
     HVCLEAR(m_records);
