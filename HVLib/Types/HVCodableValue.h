@@ -75,6 +75,8 @@
 -(BOOL) addCode:(HVCodedValue *) code;
 -(void) clearCodes;
 
+-(HVCodableValue *) clone;
+
 //-------------------------
 //
 // Text

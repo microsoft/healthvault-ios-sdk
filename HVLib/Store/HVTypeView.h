@@ -86,6 +86,7 @@
 -(HVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
 -(BOOL) containsItemID:(NSString *) itemID;
+-(HVTypeViewItem *) itemForItemID:(NSString *) itemID;
 
 //
 // maxAgeInSeconds

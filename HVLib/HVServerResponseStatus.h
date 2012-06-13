@@ -26,7 +26,7 @@ enum HVServerStatusCode
     HVServerStatusCodeOK = 0,
     HVServerStatusCodeFailed = 1,
     HVServerStatusCodeBadHttp = 2,
-    HVServerStatusCodeInvaliXml = 3,
+    HVServerStatusCodeInvalidXml = 3,
     HVServerStatusCodeInvalidRequestIntegrity = 4,
     HVServerStatusCodeBadMethod = 5,
     HVServerStatusCodeInvalidApp = 6,

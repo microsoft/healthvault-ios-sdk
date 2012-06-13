@@ -145,6 +145,29 @@ LError:
     }
 }
 
+-(HVCodableValue *)clone
+{
+    HVCodableValue* cloned = [[[HVCodableValue alloc] initWithText:m_text] autorelease];
+    HVCHECK_NOTNULL(cloned);
+    
+    if (self.hasCodes)
+    {
+        HVCodedValueCollection* codes = self.codes;
+        for (NSUInteger i = 0, count = codes.count; i < count; ++i)
+        {
+            HVCodedValue* clonedCode = [[codes itemAtIndex:i] clone];
+            HVCHECK_NOTNULL(clonedCode);
+            
+            [cloned addCode:clonedCode];
+        }
+    }
+    
+    return cloned;
+
+LError:
+    return nil;
+}
+
 -(NSString *) description
 {
     return [self toString];

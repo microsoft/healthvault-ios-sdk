@@ -110,6 +110,22 @@ LError:
     return [self isEqualToCodedValue:(HVCodedValue *) object];
 }
 
+-(HVCodedValue *)clone
+{
+    HVCodedValue* cloned = [[[HVCodedValue alloc] init] autorelease];
+    HVCHECK_NOTNULL(cloned);
+    
+    cloned.code = m_code;
+    cloned.vocabularyName = m_vocab;
+    cloned.vocabularyFamily = m_family;
+    cloned.vocabularyVersion = m_version;
+    
+    return cloned;
+    
+LError:
+    return nil;
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN; 

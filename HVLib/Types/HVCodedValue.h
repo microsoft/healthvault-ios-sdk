@@ -81,6 +81,8 @@
 -(BOOL) isEqualToCode:(NSString *) code fromVocab:(NSString *) vocabName;
 -(BOOL) isEqual:(id)object;
 
+-(HVCodedValue *) clone;
+
 @end
 
 @interface HVCodedValueCollection : HVCollection 

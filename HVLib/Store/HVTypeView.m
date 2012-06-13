@@ -141,6 +141,17 @@ LError:
     return ([self indexOfItemID:itemID] != NSNotFound);
 }
 
+-(HVTypeViewItem *)itemForItemID:(NSString *)itemID
+{
+    NSUInteger index = [self indexOfItemID:itemID];
+    if (index == NSNotFound)
+    {
+        return nil;
+    }
+    
+    return [self itemKeyAtIndex:index];
+}
+
 -(HVItem *)getLocalItemAtIndex:(NSUInteger)index
 {
     return [m_store.data getLocalItemWithKey:[self itemKeyAtIndex:index]];
