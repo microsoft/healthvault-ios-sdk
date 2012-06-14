@@ -27,6 +27,9 @@
 
 @interface HVBrowserController (HVPrivate)
 
+-(BOOL) createBrowser;
+-(BOOL) addBackButton;
+-(void) backButtonClicked:(id) sender;
 -(void) showActivitySpinner;
 -(void) hideActivitySpinner;
 
@@ -118,30 +121,14 @@ LError:
 //
 //-----------------------
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
     
-    UIView* superView = super.view;
-    CGRect frame = superView.frame;
-    frame.origin.x = 0;
-    frame.origin.y = 0;
-    
-    m_webView = [[UIWebView alloc] initWithFrame:frame];
-    m_webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    m_webView.delegate = self;
-    
-    [superView addSubview:m_webView];
+    [self createBrowser];    
+    [self addBackButton];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -164,13 +151,60 @@ LError:
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    switch (interfaceOrientation) 
+    {
+        case UIInterfaceOrientationLandscapeLeft:
+        case UIInterfaceOrientationLandscapeRight:
+            return FALSE;
+            
+        default:
+            break;
+    }
+    
+    return TRUE;
 }
 
 @end
 
 @implementation HVBrowserController (HVPrivate)
+
+-(BOOL)createBrowser
+{
+    UIView* superView = super.view;
+    CGRect frame = superView.frame;
+    frame.origin.x = 0;
+    frame.origin.y = 0;
+    
+    m_webView = [[UIWebView alloc] initWithFrame:frame];
+    HVCHECK_NOTNULL(m_webView);
+    
+    m_webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    m_webView.delegate = self;
+    
+    [superView addSubview:m_webView];  
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
+-(BOOL)addBackButton
+{
+    self.navigationItem.hidesBackButton = TRUE;
+
+    NSString* buttonTitle = NSLocalizedString(@"Back", @"Back button text");
+    
+    UIBarButtonItem* button = [[[UIBarButtonItem alloc] initWithTitle:buttonTitle style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked:)] autorelease];
+    HVCHECK_NOTNULL(button);
+    
+    self.navigationItem.leftBarButtonItem = button;
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
 
 -(void)showActivitySpinner
 {    
@@ -197,6 +231,18 @@ LError:
     }
     
     [m_activityView startAnimating];
+}
+
+-(void)backButtonClicked:(id)sender
+{
+    if (m_webView.canGoBack)
+    {
+        [m_webView goBack];
+    }
+    else 
+    {
+        [self.navigationController popViewControllerAnimated:TRUE];
+    }
 }
 
 -(void)hideActivitySpinner
