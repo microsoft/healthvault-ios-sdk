@@ -119,6 +119,7 @@ enum HVAppProvisionStatus
 // You will need to re-provision the app (by calling startWithParentController)...
 //
 -(BOOL) resetProvisioning;
+-(BOOL) resetLocalVault;
 
 //-------------------------
 //

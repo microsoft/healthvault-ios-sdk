@@ -28,6 +28,12 @@ NSRange HVEmptyRange(void)
     return NSMakeRange(0, 0);
 }
 
+double roundToPrecision(double value, NSInteger precision)
+{
+    double places = pow(10, precision);
+    return round(value * places) / places;
+}
+
 id HVClear(id obj)
 {
     if (obj)

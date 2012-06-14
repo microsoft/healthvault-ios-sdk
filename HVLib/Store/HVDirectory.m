@@ -193,8 +193,15 @@ LError:
 
 +(void)deleteUrl:(NSURL *)url
 {
-    NSFileManager *fm = [NSFileManager defaultManager];
-    [fm removeItemAtURL:url error:nil];    
+    @try 
+    {
+        NSFileManager *fm = [NSFileManager defaultManager];
+        [fm removeItemAtURL:url error:nil];    
+    }
+    @catch (id exception) 
+    {
+        [exception log];
+    }
 }
 
 -(NSEnumerator *)getFileNames

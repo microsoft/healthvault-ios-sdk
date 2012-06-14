@@ -33,6 +33,7 @@ static NSString* const c_element_signinRetryMessage = @"signInRetryMessage";
 static NSString* const c_element_httpTimeout = @"httpTimeout";
 static NSString* const c_element_maxAttemptsPerRequest = @"maxAttemptsPerRequest";
 static NSString* const c_element_useCachingInStore = @"useCachingInStore";
+static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
 
 @implementation HVClientSettings
 
@@ -49,6 +50,7 @@ static NSString* const c_element_useCachingInStore = @"useCachingInStore";
 @synthesize httpTimeout = m_httpTimeout;
 @synthesize maxAttemptsPerRequest = m_maxAttemptsPerRequest;
 @synthesize useCachingInStore = m_useCachingInStore;
+@synthesize autoRequestDelay = m_autoRequestDelay;
 
 -(NSURL *)serviceUrl
 {
@@ -166,6 +168,7 @@ LError:
     HVSERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
     HVSERIALIZE_INT(m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
     HVSERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
+    HVSERIALIZE_DOUBLE(m_autoRequestDelay, c_element_autoRequestDelay);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -183,6 +186,7 @@ LError:
     HVDESERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
     HVDESERIALIZE_INT(m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
     HVDESERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
+    HVDESERIALIZE_DOUBLE(m_autoRequestDelay, c_element_autoRequestDelay);
 }
 
 +(HVClientSettings *)newSettingsFromResource

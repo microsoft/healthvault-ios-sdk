@@ -1,5 +1,5 @@
 //
-//  HVTypedCollection.h
+//  HVCollection.h
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.

@@ -32,6 +32,8 @@
 
 @interface HealthVaultService (Private)
 
+- (void)sendRequestImpl: (HealthVaultRequest *)request;
+
 /// Generates the info section for the cast call.
 /// @returns the generate info section.
 - (NSString *)getCastCallInfoSection;
@@ -66,6 +68,8 @@
 @synthesize applicationCreationToken = _applicationCreationToken;
 @synthesize records = _records;
 @synthesize currentRecord = _currentRecord;
+
+@synthesize requestSendDelay = m_requestDelay;
 
 - (id)init {
 
@@ -182,44 +186,21 @@
 
 #pragma mark Send Request Logic
 
-- (void)sendRequest: (HealthVaultRequest *)request {
+- (void)sendRequest: (HealthVaultRequest *)request 
+{
+    if (m_requestDelay > 0)
+    {
+        [self sendRequest:request withDelay:m_requestDelay];
+    }
+    else 
+    {
+        [self sendRequestImpl:request];
+    }
+}
 
-	request.msgTime = [NSDate date];
-	
-	if (self.appIdInstance && self.appIdInstance.length > 0) {
-
-		request.appIdInstance = self.appIdInstance;
-	}
-	else {
-
-		request.appIdInstance = self.masterAppId;
-	}
-    
-    /*
-	if(self.currentRecord != nil) {
-		
-        if (request.personId == nil)
-        {
-            NSLog(@"%@", @"request.personID is nil. Using currentRecord");
-            request.personId = self.currentRecord.personId;
-        }
-        if (request.recordId == nil)
-        {
-            NSLog(@"%@", @"request.recordID is nil. Using currentRecord");
-            request.recordId = self.currentRecord.recordId;
-        }
-	}
-    */
-	request.authorizationSessionToken = self.authorizationSessionToken;
-	request.sessionSharedSecret = self.sessionSharedSecret;
-
-	NSString *requestXml = [request toXml];
-
-	request.connection = [WebTransport sendRequestForURL: self.healthServiceUrl
-						   withData: requestXml
-							context: request
-							 target: self
-						   callBack: @selector(sendRequestCallback: context:)];
+-(void)sendRequest:(HealthVaultRequest *)request withDelay:(NSTimeInterval)delay
+{
+    [self performSelector:@selector(sendRequestImpl:) withObject:request afterDelay:delay];
 }
 
 - (void)sendRequestCallback: (WebResponse *)response
@@ -267,6 +248,31 @@
 - (BOOL)getIsApplicationCreated {
 	
 	return self.authorizationSessionToken != nil;
+}
+
+
+- (void)sendRequestImpl: (HealthVaultRequest *)request 
+{    
+	request.msgTime = [NSDate date];	
+	if (self.appIdInstance && self.appIdInstance.length > 0) 
+    {
+		request.appIdInstance = self.appIdInstance;
+	}
+	else 
+    {
+		request.appIdInstance = self.masterAppId;
+	}
+    
+	request.authorizationSessionToken = self.authorizationSessionToken;
+	request.sessionSharedSecret = self.sessionSharedSecret;
+    
+	NSString *requestXml = [request toXml];
+    
+	request.connection = [WebTransport sendRequestForURL: self.healthServiceUrl
+                                                withData: requestXml
+                                                 context: request
+                                                  target: self
+                                                callBack: @selector(sendRequestCallback: context:)];
 }
 
 #pragma mark Auth Logic End

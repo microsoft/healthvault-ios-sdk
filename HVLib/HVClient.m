@@ -239,23 +239,41 @@ LError:
         //
         // And local storage
         //
-        NSURL* storeUrl = m_rootDirectory.url;
-        [HVDirectory deleteUrl:storeUrl];
-        
-        HVCLEAR(m_rootDirectory);
-        HVCLEAR(m_localVault);
+        [self resetLocalVault];
 
         m_service = [self newService];
         HVCHECK_NOTNULL(m_service);
         [m_service saveSettings:@"HVClient"];
 
+        return TRUE;
+        
+    LError:
+        return FALSE;
+    }
+}
+
+-(BOOL)resetLocalVault
+{
+    @synchronized(self)
+    {
+        if (!m_localVault)
+        {
+            return TRUE;
+        }
+
+        NSURL* storeUrl = m_rootDirectory.url;
+        [HVDirectory deleteUrl:storeUrl];
+        
+        HVCLEAR(m_rootDirectory);
+        HVCLEAR(m_localVault);
+        
         HVCHECK_SUCCESS([self ensureLocalVault]); // So the HVClient object remains in valid state
         
         return TRUE;
         
     LError:
         return FALSE;
-    }
+    }    
 }
 
 -(HVLocalRecordStore *)getCurrentRecordStore
@@ -364,6 +382,10 @@ LError:
     service.country = m_settings.country;
     service.language = m_settings.language;
     service.deviceName = m_settings.deviceName;
+    if (m_settings.autoRequestDelay > 0)
+    {
+        service.requestSendDelay = m_settings.autoRequestDelay;
+    }
     
     return service;
     

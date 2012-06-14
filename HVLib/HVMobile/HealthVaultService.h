@@ -72,6 +72,8 @@
 
 	NSMutableArray *_records;
 	HealthVaultRecord *_currentRecord;
+    
+    NSTimeInterval m_requestDelay;
 }
 
 /// Gets or sets the URL that is used to talk to the HealthVault Web Service.
@@ -119,6 +121,8 @@
 /// Is YES if current application instance has already been created, otherwise FALSE.
 @property (readonly, getter = getIsApplicationCreated) BOOL isApplicationCreated;
 
+@property (readwrite, nonatomic) NSTimeInterval requestSendDelay;
+
 /// Initializes a new instance of the HealthVaultService class 
 /// using default platform and shell URLs.
 /// The master application id must come from the HealthVault Application Configuration
@@ -156,7 +160,12 @@
 /// completion method stored in the request.
 /// Please ensure that the method performAuthenticationCheck is called before making requests.
 /// @param request - the request to send.
+///
 - (void)sendRequest:(HealthVaultRequest *)request;
+///
+/// This is useful when faking testing (poor man's) for slower 3G networks.
+///
+- (void)sendRequest:(HealthVaultRequest *)request withDelay:(NSTimeInterval) delay;
 
 /// Authorizes more records.
 /// @param target - callback handler.

@@ -36,6 +36,8 @@
     NSTimeInterval m_httpTimeout;
     NSInteger m_maxAttemptsPerRequest;
     BOOL m_useCachingInStore;
+    
+    NSTimeInterval m_autoRequestDelay;
 }
 
 @property (readwrite, nonatomic) BOOL debug;
@@ -56,6 +58,10 @@
 //
 @property (readwrite, nonatomic) NSInteger maxAttemptsPerRequest;
 @property (readwrite, nonatomic) BOOL useCachingInStore;
+//
+// If > 0, will automatically delay each request... useful for faking "slow" networks
+//
+@property (readwrite, nonatomic) NSTimeInterval autoRequestDelay;
 
 +(HVClientSettings *) newSettingsFromResource;
 

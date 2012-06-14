@@ -1,5 +1,5 @@
 //
-//  HVStringCollection.m
+//  HVCollection.m
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.

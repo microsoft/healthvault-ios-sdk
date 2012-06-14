@@ -24,6 +24,8 @@
 NSRange HVMakeRange(NSUInteger i);
 NSRange HVEmptyRange(void);
 
+double roundToPrecision(double value, NSInteger precision);
+
 //--------------------------------------
 //
 // MEMORY MANAGEMENT 

@@ -32,4 +32,12 @@
 
 +(NSMutableArray *) ensure:(NSMutableArray **) pArray;
 
+//
+// STACK EXTENSIONS
+//
+-(BOOL) isEmpty;
+-(void) pushObject:(id) object;
+-(id) peek;
+-(id) popObject;
+
 @end

@@ -50,4 +50,28 @@
     return *pArray;
 }
 
+-(BOOL)isEmpty
+{
+    return (self.count == 0);
+}
+
+-(void)pushObject:(id)object
+{
+    [self addObject:object];
+}
+
+-(id)peek
+{
+    return [self lastObject];
+}
+
+-(id)popObject
+{
+    id popped = [[[self peek] retain] autorelease];
+ 
+    [self removeLastObject];
+    
+    return popped;
+}
+
 @end
