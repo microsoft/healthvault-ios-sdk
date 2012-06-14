@@ -112,6 +112,21 @@ LError:
     return FALSE;
 }
 
+-(void)resetDataStoreForRecords:(NSArray *)records
+{
+    @synchronized(m_recordStores)
+    { 
+        for (HVRecordReference* record in records) 
+        {
+            HVLocalRecordStore* recordStore = [self getRecordStore:record];
+            if (recordStore)
+            {
+                [recordStore resetData];
+            }
+        }
+    }
+}
+
 -(void)dealloc
 {
     [m_root release];

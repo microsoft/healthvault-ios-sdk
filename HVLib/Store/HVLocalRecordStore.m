@@ -29,6 +29,8 @@ static NSString* const c_storedQuery = @"storedQuery";
 
 @interface HVLocalRecordStore (HVPrivate)
 
+-(BOOL) ensureDataStore;
+
 -(NSString *) makeViewKey:(NSString *) name;
 -(NSString *) makeStoredQueryKey:(NSString *) name;
 
@@ -51,6 +53,8 @@ static NSString* const c_storedQuery = @"storedQuery";
     HVCHECK_NOTNULL(record);
     HVCHECK_NOTNULL(root);
     
+    m_cache = cache;
+    
     self = [super init];
     HVCHECK_SELF;
     
@@ -60,22 +64,7 @@ static NSString* const c_storedQuery = @"storedQuery";
     m_metadata = [m_root newChildStore:[HVLocalRecordStore metadataStoreKey]];
     HVCHECK_NOTNULL(m_metadata);
     
-    id<HVObjectStore> dataStore = [m_root newChildStore:[HVLocalRecordStore dataStoreKey]];
-    HVCHECK_NOTNULL(dataStore);
-    
-    if (cache)
-    {
-        id<HVObjectStore> cachingDataStore = [[HVCachingObjectStore alloc] initWithObjectStore:dataStore];
-        [dataStore release];
-        HVCHECK_NOTNULL(cachingDataStore);
-        
-        dataStore = cachingDataStore;
-    }
-    
-    m_data = [[HVSynchronizedStore alloc] initOverStore:dataStore];
-    [dataStore release];
-    
-    HVCHECK_NOTNULL(m_data);
+    HVCHECK_SUCCESS([self ensureDataStore]);
     
     HVRETAIN(m_record, record);
     
@@ -158,9 +147,46 @@ LError:
     return @"Data";
 }
 
+-(BOOL)resetData
+{
+    HVCLEAR(m_data);
+    [m_root deleteChildStore:[HVLocalRecordStore dataStoreKey]];
+    return [self ensureDataStore];
+}
+
 @end
 
 @implementation HVLocalRecordStore (HVPrivate)
+
+-(BOOL) ensureDataStore
+{
+    if (m_data)
+    {
+        return TRUE;
+    }
+    
+    id<HVObjectStore> dataStore = [m_root newChildStore:[HVLocalRecordStore dataStoreKey]];
+    HVCHECK_NOTNULL(dataStore);
+    
+    if (m_cache)
+    {
+        id<HVObjectStore> cachingDataStore = [[HVCachingObjectStore alloc] initWithObjectStore:dataStore];
+        [dataStore release];
+        HVCHECK_NOTNULL(cachingDataStore);
+        
+        dataStore = cachingDataStore;
+    }
+    
+    m_data = [[HVSynchronizedStore alloc] initOverStore:dataStore];
+    [dataStore release];
+    
+    HVCHECK_NOTNULL(m_data);
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
 
 -(NSString *)makeViewKey:(NSString *)name
 {

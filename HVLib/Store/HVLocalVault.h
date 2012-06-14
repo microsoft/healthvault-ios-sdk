@@ -63,4 +63,6 @@
 -(HVLocalRecordStore *) getRecordStore:(HVRecordReference *) record;
 -(BOOL) deleteRecordStore:(HVRecordReference *) record;
 
+-(void) resetDataStoreForRecords:(NSArray *) records;
+
 @end

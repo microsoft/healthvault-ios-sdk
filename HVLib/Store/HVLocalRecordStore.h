@@ -30,7 +30,8 @@
     HVRecordReference* m_record;
     id<HVObjectStore> m_root;
     id<HVObjectStore> m_metadata;
-    HVSynchronizedStore* m_data;   
+    HVSynchronizedStore* m_data;  
+    BOOL m_cache;
 }
 
 //-------------------------
@@ -87,5 +88,7 @@
 
 +(NSString *) metadataStoreKey;
 +(NSString *) dataStoreKey;
+
+-(BOOL) resetData;
 
 @end
