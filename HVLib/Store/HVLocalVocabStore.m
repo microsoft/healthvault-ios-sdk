@@ -243,7 +243,7 @@ LError:
     {
         HVGetVocabTask* getVocab = (HVGetVocabTask *) task;
         HVVocabSetCollection* downloadedVocabs = getVocab.vocabResults.vocabs;
-        for (NSUInteger i = 0, count = vocabIDs.count; i < count; ++i) 
+        for (NSUInteger i = 0, count = downloadedVocabs.count; i < count; ++i) 
         {
             HVVocabCodeSet* vocab = [downloadedVocabs objectAtIndex:i];
             if (vocab.isTruncated)
