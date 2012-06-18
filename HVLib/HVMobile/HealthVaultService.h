@@ -49,8 +49,9 @@
 
 - (void)performAuthenticationCheck: (NSObject *)target authenticationCompleted: (SEL)authCompleted shellAuthRequired: (SEL)shellAuthRequired;
 
-- (void)saveSettings: (NSString *)name;
-- (void)loadSettings: (NSString *)name;
+- (void)saveSettings;
+- (void)loadSettings;
+
 -(void) reset;
 
 @end
@@ -73,7 +74,8 @@
 	NSMutableArray *_records;
 	HealthVaultRecord *_currentRecord;
     
-    NSTimeInterval m_requestDelay;
+    NSTimeInterval _requestDelay;
+    NSString* _settingsFileName;
 }
 
 /// Gets or sets the URL that is used to talk to the HealthVault Web Service.
@@ -122,6 +124,7 @@
 @property (readonly, getter = getIsApplicationCreated) BOOL isApplicationCreated;
 
 @property (readwrite, nonatomic) NSTimeInterval requestSendDelay;
+@property (readwrite, nonatomic, retain) NSString* settingsFileName;
 
 /// Initializes a new instance of the HealthVaultService class 
 /// using default platform and shell URLs.
@@ -189,13 +192,15 @@
 	authenticationCompleted: (SEL)authCompleted
 		  shellAuthRequired: (SEL)shellAuthRequired;
 
-/// Saves the current configuration to isolated storage.
-/// @param name - the filename to use.
-- (void)saveSettings: (NSString *)name;
+//
+// Saves settings to .settingsFileName.
+// By default, writes to a file named "HVClient"
+//
+- (void)saveSettings;
 
 /// Loads the last-saved configuration from isolated storage.
 /// @param name - the filename to use.
-- (void)loadSettings: (NSString *)name;
+- (void)loadSettings;
 
 //
 // Delete all provisioning state

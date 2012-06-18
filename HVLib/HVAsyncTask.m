@@ -190,12 +190,15 @@ LError:
             if (m_operation && [m_operation respondsToSelector:@selector(cancel)])
             {
                 [m_operation performSelector:@selector(cancel)];
+                self.operation = nil;
             }
         }
         @catch (id exception) 
         {
             // Eat cancellation exceptions, since they are harmless
         }
+        
+        [self release];
     }
 }
 
@@ -211,10 +214,14 @@ LError:
         }
         
         m_completed = TRUE;
+        if (m_cancelled)
+        {
+            return;
+        }
         
         @try 
         {
-            if (!m_cancelled && m_callback)
+            if (m_callback)
             {
                 m_callback(self);
             }
@@ -223,9 +230,9 @@ LError:
         {
             [exception log];
         }
-    }
-    
-   [self release];
+ 
+        [self release];
+    }    
 }
 
 -(void) handleError:(id)error

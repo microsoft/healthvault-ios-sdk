@@ -65,6 +65,7 @@ static NSString* const c_element_items = @"items";
 @synthesize maxItems = m_maxItems;
 @synthesize store = m_store;
 @synthesize delegate = m_delegate;
+@synthesize tag = m_tag;
 
 -(HVRecordReference *)record
 {
@@ -435,16 +436,16 @@ LError:
     return [store getView:name];
 }
 
-+(HVTypeView *)getViewForTypeClassName:(NSString *)className
++(HVTypeView *)getViewForTypeClassName:(NSString *)className inRecord:(HVRecordReference *)record
 {
     NSString *typeID = [[HVTypeSystem current] getTypeIDForClassName:className]; 
-    return [HVTypeView getViewForTypeID:typeID];
+    return [HVTypeView getViewForTypeID:typeID inRecord:record];
 }
 
-+(HVTypeView *)getViewForTypeID:(NSString *)typeID
++(HVTypeView *)getViewForTypeID:(NSString *)typeID inRecord:(HVRecordReference *)record
 {
-    HVRecordReference* record = [HVClient current].currentRecord;
     HVLocalRecordStore* recordStore = [[HVClient current].localVault getRecordStore:record];
+    HVCHECK_NOTNULL(recordStore);
     
     HVTypeView *view = [HVTypeView loadViewNamed:typeID fromStore:recordStore];
     if (!view)
@@ -452,7 +453,10 @@ LError:
         view = [[[HVTypeView alloc] initForTypeID:typeID overStore:recordStore] autorelease];
     }
     
-    return view;
+    return view; 
+
+LError:
+    return nil;
 }
 
 -(void)updateViewWith:(HVTypeViewItems *)items

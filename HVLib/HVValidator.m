@@ -22,6 +22,38 @@
 #import "HVClientException.h"
 #import "HVType.h"
 
+static id<HVEventLog> s_eventLog;
+
+void HVRegisterEventLog(id<HVEventLog> log)
+{
+    s_eventLog = log;
+}
+
+void HVLogEvent(NSString* message)
+{
+    if (s_eventLog)
+    {
+        @try 
+        {
+            [s_eventLog writeMessage:message];
+            NSLog(@"%@", message);
+        }
+        @catch (id exception) 
+        {
+            
+        }
+    }
+}
+
+void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line)
+{
+    NSString* logLine = [NSString stringWithFormat:@"%@ file:%@ line:%d", 
+                                                message, 
+                                                [NSString stringWithUTF8String:fileName], 
+                                                line];
+    HVLogEvent(logLine);
+}
+
 HVClientResult* HVValidateArray(NSArray* array, enum HVClientResultCode error)
 {
     HVVALIDATE_BEGIN;

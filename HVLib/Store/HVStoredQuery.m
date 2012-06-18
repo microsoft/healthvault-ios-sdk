@@ -23,9 +23,16 @@ static NSString* const c_element_query = @"query";
 static NSString* const c_element_result = @"result";
 static NSString* const c_element_timestamp = @"timestamp";
 
+@interface HVStoredQuery (HVPrivate)
+
+-(void) getItemsComplete:(HVTask *) task forRecord:(HVRecordReference *) record;
+
+@end
+
 @implementation HVStoredQuery
 
 @synthesize query = m_query;
+
 -(HVItemQueryResult *)result
 {
     return m_result;
@@ -85,19 +92,8 @@ LError:
     
     HVGetItemsTask* getItemsTask = [[HVGetItemsTask alloc] initWithQuery:m_query andCallback:^(HVTask *task) {
         
-        HVItemQueryResult* queryResult = ((HVGetItemsTask*) task).queryResult;
-        self.result = queryResult;
+        [self getItemsComplete:task forRecord:record];
 
-        if (queryResult.hasPendingItems)
-        {
-            HVTask* pendingItemsTask = [queryResult createTaskToGetPendingItemsForRecord:record withCallback:^(HVTask *task) {
-                
-                [task checkSuccess];
-                
-            }];
-            
-            [task.parent setNextTask:pendingItemsTask];
-        }
     } ];
     
     getItemsTask.record = record;
@@ -122,6 +118,30 @@ LError:
     HVDESERIALIZE_DATE(m_timestamp, c_element_timestamp);
     HVDESERIALIZE(m_query, c_element_query, HVItemQuery);
     HVDESERIALIZE(m_result, c_element_result, HVItemQueryResult);    
+}
+
+@end
+
+@implementation HVStoredQuery (HVPrivate)
+
+-(void)getItemsComplete:(HVTask *)task forRecord:(HVRecordReference *)record
+{
+    HVItemQueryResult* queryResult = ((HVGetItemsTask*) task).queryResult;
+    if (!queryResult.hasPendingItems)
+    {
+        self.result = queryResult;
+        return;
+    }
+    //
+    // Populate the query result's pending items
+    //
+    HVTask* pendingItemsTask = [queryResult createTaskToGetPendingItemsForRecord:record withCallback:^(HVTask *task) {
+        
+        [task checkSuccess];
+        self.result = queryResult;
+    }];
+    
+    [task.parent setNextTask:pendingItemsTask];
 }
 
 @end

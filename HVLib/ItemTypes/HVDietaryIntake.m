@@ -34,7 +34,7 @@ static NSString* const c_element_sugar = @"sugars";
 static NSString* const c_element_sodium = @"sodium";
 static NSString* const c_element_cholesterol = @"cholesterol";
 
-@implementation HVDietaryIntake
+@implementation HVDailyDietaryIntake
 
 @synthesize when = m_when;
 @synthesize calories = m_calories;
@@ -245,7 +245,7 @@ LError:
 
 +(HVItem *) newItem
 {
-    return [[HVItem alloc] initWithType:[HVDietaryIntake typeID]];
+    return [[HVItem alloc] initWithType:[HVDailyDietaryIntake typeID]];
 }
 
 @end

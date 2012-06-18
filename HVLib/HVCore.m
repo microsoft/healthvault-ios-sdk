@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "HVCore.h"
+#import "HVValidator.h"
 
 NSRange HVMakeRange(NSUInteger i)
 {
@@ -138,7 +139,7 @@ void HVReleaseRef(CFTypeRef cf)
 {
     @try
     {
-        NSLog(@"%@", [self descriptionForLog]);
+        HVLogEvent([self descriptionForLog]);
     }
     @catch (id ex) 
     {

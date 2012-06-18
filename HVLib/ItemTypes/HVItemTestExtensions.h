@@ -76,7 +76,7 @@ NSString* pickRandomDrug(void);
 
 @end
 
-@interface HVDietaryIntake (HVTestExtensions)
+@interface HVDailyDietaryIntake (HVTestExtensions)
 
 +(HVItem *) createRandom;
 

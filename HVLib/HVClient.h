@@ -112,7 +112,6 @@ enum HVAppProvisionStatus
 -(BOOL) loadState;
 -(BOOL) saveState;
 -(BOOL) deleteState;
-
 //
 // After this call, app will no longer be provisioned
 // All local state will be deleted, including anything stored on disk. 

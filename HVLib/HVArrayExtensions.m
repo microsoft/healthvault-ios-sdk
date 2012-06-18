@@ -62,16 +62,51 @@
 
 -(id)peek
 {
+    if (self.isEmpty)
+    {
+        return nil;
+    }
+    
     return [self lastObject];
 }
 
 -(id)popObject
 {
-    id popped = [[[self peek] retain] autorelease];
- 
-    [self removeLastObject];
+    id popped = [self peek];
+    if (popped)
+    {
+        popped = [[popped retain] autorelease];
+        [self removeLastObject];
+    }
     
     return popped;
+}
+
+-(void)enqueueObject:(id)object
+{
+    if (self.isEmpty)
+    {
+        [self addObject:object];
+    }
+    else 
+    {
+        [self insertObject:object atIndex:0];
+    }
+}
+
+-(void)enqueueObject:(id)object maxQueueSize:(NSUInteger)size
+{
+    if (self.count >= size)
+    {
+        [self popObject];
+    }
+    
+    [self enqueueObject:object];
+}
+
+-(id)dequeueObject
+{
+    return [self popObject];
 }
 
 @end

@@ -20,7 +20,7 @@
 #import "DateTimeUtils.h"
 #import "MobilePlatform.h"
 #import "Base64.h"
-
+#import "HVCommon.h"
 
 @implementation HealthVaultRequest
 
@@ -43,7 +43,21 @@
 @synthesize target = _target;
 @synthesize callBack = _callBack;
 
-@synthesize connection = _connection;
+-(NSURLConnection *)connection
+{
+    @synchronized(self)
+    {
+        return _connection;
+    }
+}
+
+-(void)setConnection:(NSURLConnection *)connection
+{
+    @synchronized(self)
+    {
+        HVRETAIN(_connection, connection);
+    }    
+}
 
 - (id)initWithMethodName: (NSString *)name
 		   methodVersion: (float)methodVersion
@@ -85,7 +99,8 @@
 	self.userState = nil;
 
 	self.target = nil;
-    self.connection = nil;
+    
+    [_connection release];
 
 	[super dealloc];
 }
@@ -168,9 +183,13 @@
 
 -(void)cancel
 {
-    if (_connection)
+    @synchronized(self)
     {
-        [_connection cancel];
+        if (_connection)
+        {
+            [_connection cancel];
+        }
+        HVCLEAR(_connection);
     }
 }
 

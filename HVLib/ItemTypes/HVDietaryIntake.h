@@ -24,7 +24,7 @@
 // DAILY Dietary Intake
 //
 //------------------------
-@interface HVDietaryIntake : HVItemDataTyped
+@interface HVDailyDietaryIntake : HVItemDataTyped
 {
 @private
     HVDate* m_when;

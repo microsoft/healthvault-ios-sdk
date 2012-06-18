@@ -75,6 +75,61 @@
     return fileHandle;
 }
 
+-(BOOL)writeText:(NSString *)text
+{
+    if ([NSString isNilOrEmpty:text])
+    {
+        return TRUE;
+    }
+    
+    @try 
+    {
+        NSData* bytes = [text dataUsingEncoding:NSUTF8StringEncoding];
+        if (bytes && bytes.length > 0)
+        {
+            [self writeData:bytes];
+            return TRUE;
+        }
+    }
+    @catch (id exception) {
+        
+    }
+    
+    return FALSE;
+}
+
+-(BOOL)appendText:(NSString *)text
+{
+    [self seekToEndOfFile];
+    return [self writeText:text];
+}
+
++(NSString *) stringFromFileAtPath:(NSString *)path
+{
+    NSFileHandle* file = [NSFileHandle fileHandleForReadingAtPath:path];
+    if (!file)
+    {
+        return nil;
+    }
+    @try
+    {
+        NSData* data = [file readDataToEndOfFile];
+        if (!data)
+        {
+            return nil;
+        }
+        
+        return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    }
+    @catch(id exception)
+    {
+    }
+    @finally
+    {
+        [file closeFile];
+    }
+}
+
 @end
 
 //---------------------------

@@ -65,7 +65,8 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
     [_responseBody release];
     [_context release];
     [_target release];
- 
+    [_connection release];
+    
     [super dealloc];
 }
 
@@ -142,10 +143,10 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
         [request setHTTPBody: xmlData];
     }
 
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest: request delegate: self];
-    [connection start];
+    _connection = [[NSURLConnection alloc] initWithRequest: request delegate: self];
+    [_connection start];
     
-    return connection;
+    return _connection;
 }
 
 #pragma mark Connection Events
@@ -194,8 +195,6 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
     
     [response release];
     [responseString release];
-
-    [conn release];
 }
 
 - (void)connection: (NSURLConnection *)conn didFailWithError: (NSError *)error {
@@ -222,7 +221,6 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
     }
     
     [response release];
-    [conn release];
 }
 
 #pragma mark Connection Events End

@@ -33,6 +33,11 @@
 
 +(NSFileHandle *) createOrOpenForWriteAtPath:(NSString *) path;
 
+-(BOOL) writeText:(NSString *) text;
+-(BOOL) appendText:(NSString *) text;
+
++(NSString *) stringFromFileAtPath:(NSString *) path;
+
 @end
 
 //

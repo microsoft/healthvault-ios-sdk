@@ -190,6 +190,37 @@ LError:
     return [NSString stringWithFormat:format, self.inMilligrams];
 }
 
++(HVWeightMeasurement *)fromKg:(double)kg
+{
+    return [[[HVWeightMeasurement alloc] initWithKg:kg] autorelease];
+}
+
++(HVWeightMeasurement *)fromPounds:(double)pounds
+{
+    return [[[HVWeightMeasurement alloc] initwithPounds:pounds] autorelease];    
+}
+
++(HVWeightMeasurement *)fromGrams:(double)grams
+{
+    HVWeightMeasurement* weight = [[[HVWeightMeasurement alloc] init] autorelease];
+    weight.inGrams = grams;
+    return weight;
+}
+
++(HVWeightMeasurement *)fromMillgrams:(double)mg
+{
+    HVWeightMeasurement* weight = [[[HVWeightMeasurement alloc] init] autorelease];
+    weight.inMilligrams = mg;
+    return weight;
+}
+
++(HVWeightMeasurement *)fromOunces:(double)ounces
+{
+    HVWeightMeasurement* weight = [[[HVWeightMeasurement alloc] init] autorelease];
+    weight.inOunces = ounces;
+    return weight;    
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN;

@@ -62,7 +62,7 @@
 -(HVEmotionalState *) emotionalState;
 -(HVAssessment *) assessment;
 -(HVQuestionAnswer *) questionAnswer;
--(HVDietaryIntake *) dietaryIntake;
+-(HVDailyDietaryIntake *) dailyDietaryIntake;
 -(HVSleepJournalAM *) sleepJournalAM;
 -(HVSleepJournalPM *) sleepJournalPM;
 

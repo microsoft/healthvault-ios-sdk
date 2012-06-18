@@ -28,6 +28,7 @@
 #import "XmlTextReader.h"
 #import "HealthVaultSettings.h"
 #import "HealthVaultConfig.h"
+#import "HVCommon.h"
 #import "HVClient.h"
 
 @interface HealthVaultService (Private)
@@ -69,7 +70,17 @@
 @synthesize records = _records;
 @synthesize currentRecord = _currentRecord;
 
-@synthesize requestSendDelay = m_requestDelay;
+@synthesize requestSendDelay = _requestDelay;
+
+-(NSString *)settingsFileName
+{
+    return (_settingsFileName) ? _settingsFileName : @"HVClient";
+}
+
+-(void)setSettingsFileName:(NSString *)settingsFileName
+{
+    HVRETAIN(_settingsFileName, settingsFileName);
+}
 
 - (id)init {
 
@@ -119,7 +130,9 @@
 	self.applicationCreationToken = nil;
 	self.records = nil;
 	self.currentRecord = nil;
-
+    
+    [_settingsFileName release];
+    
 	[super dealloc];
 }
 
@@ -188,9 +201,9 @@
 
 - (void)sendRequest: (HealthVaultRequest *)request 
 {
-    if (m_requestDelay > 0)
+    if (_requestDelay > 0)
     {
-        [self sendRequest:request withDelay:m_requestDelay];
+        [self sendRequest:request withDelay:_requestDelay];
     }
     else 
     {
@@ -318,6 +331,10 @@
 	// If the CAST was successful the results were saved and
 	// the original request is restarted.
 	[self saveCastCallResults: response.infoXml];
+    //
+    // Persist the new session token
+    //
+    [self saveSettings];
 
 	// Resend original request.
 	[self sendRequest: originalRequest];
@@ -330,16 +347,22 @@
 - (void)saveCastCallResults: (NSString *)responseXml {
 
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    @try 
+    {
+        XmlTextReader *xmlReader = [XmlTextReader new];
+        XmlElement *responseRootNode = [xmlReader read: responseXml];
+        
+        self.authorizationSessionToken = [responseRootNode selectSingleNode: @"token"].text;
+        self.sessionSharedSecret = [responseRootNode selectSingleNode: @"shared-secret"].text;
 
-	XmlTextReader *xmlReader = [XmlTextReader new];
-	XmlElement *responseRootNode = [xmlReader read: responseXml];
+    	[xmlReader release];
+    }
+    @finally 
+    {
+        [pool release];
+    }
 
-	self.authorizationSessionToken = [responseRootNode selectSingleNode: @"token"].text;
-	self.sessionSharedSecret = [responseRootNode selectSingleNode: @"shared-secret"].text;
 
-	[xmlReader release];
-
-	[pool release];
 }
 
 - (NSString *)getCastCallInfoSection {
@@ -381,9 +404,9 @@
 
 #pragma mark Settings Logic
 
-- (void)saveSettings: (NSString *)name {
-
-	HealthVaultSettings *settings = [[HealthVaultSettings alloc] initWithName: name];
+- (void)saveSettings
+{
+	HealthVaultSettings *settings = [[HealthVaultSettings alloc] initWithName: self.settingsFileName];
 
 	settings.applicationId = self.appIdInstance;
 	settings.authorizationSessionToken = self.authorizationSessionToken;
@@ -403,32 +426,35 @@
 	[settings release];
 }
 
-- (void)loadSettings: (NSString *)name {
-
+- (void)loadSettings
+{
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-
-	HealthVaultSettings *settings = [HealthVaultSettings loadWithName: name];
-
-	self.appIdInstance = settings.applicationId;
-	self.authorizationSessionToken = settings.authorizationSessionToken;
-	self.sharedSecret = settings.sharedSecret;
-	self.country = settings.country;
-	self.language = settings.language;
-	self.sessionSharedSecret = settings.sessionSharedSecret;
-
-	if (settings.personId && settings.recordId) {
-
-		HealthVaultRecord *record = [HealthVaultRecord new];
-		record.personId = settings.personId;
-		record.recordId = settings.recordId;
-		self.currentRecord = record;
-		[record release];
-	} else {
-
-		self.currentRecord = nil;
-	}
-
-	[pool release];
+    @try 
+    {
+        HealthVaultSettings *settings = [HealthVaultSettings loadWithName: self.settingsFileName];
+        
+        self.appIdInstance = settings.applicationId;
+        self.authorizationSessionToken = settings.authorizationSessionToken;
+        self.sharedSecret = settings.sharedSecret;
+        self.country = settings.country;
+        self.language = settings.language;
+        self.sessionSharedSecret = settings.sessionSharedSecret;
+        
+        if (settings.personId && settings.recordId) {
+            
+            HealthVaultRecord *record = [HealthVaultRecord new];
+            record.personId = settings.personId;
+            record.recordId = settings.recordId;
+            self.currentRecord = record;
+            [record release];
+        } else {
+            
+            self.currentRecord = nil;
+        }
+    }
+    @finally {
+        [pool release];
+    }
 }
 
 -(void)reset

@@ -93,4 +93,13 @@
 
 -(NSString *) toString;
 
++(HVWeightMeasurement *) fromKg:(double) kg;
++(HVWeightMeasurement *) fromGrams:(double) grams;
++(HVWeightMeasurement *) fromMillgrams:(double) grams;
+
+
++(HVWeightMeasurement *) fromPounds:(double) pounds;
++(HVWeightMeasurement *) fromOunces:(double) ounces;
+
+
 @end

@@ -186,7 +186,7 @@ LError:
     {
         if (m_service)
         {
-            [m_service loadSettings:@"HVClient"];
+            [m_service loadSettings];
         }
         
         HVCLEAR(m_user);
@@ -203,11 +203,7 @@ LError:
 {
     @synchronized(self)
     {
-        if (m_service)
-        {
-            [m_service saveSettings:@"HVClient"];
-        }
-        
+        [m_service saveSettings];
         return [self saveUser];
     }
 }
@@ -230,7 +226,7 @@ LError:
         if (m_service)
         {
             [m_service reset];
-            [m_service saveSettings:@"HVClient"];
+            [m_service saveSettings];
         }
         //
         // Delete local state
@@ -243,8 +239,9 @@ LError:
 
         m_service = [self newService];
         HVCHECK_NOTNULL(m_service);
-        [m_service saveSettings:@"HVClient"];
-
+        
+        [m_service saveSettings];
+ 
         return TRUE;
         
     LError:

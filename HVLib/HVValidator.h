@@ -20,20 +20,48 @@
 #import "HVExceptionExtensions.h"
 #import "HVClientResult.h"
 
+//-----------------------------
+//
+// Basic Event Logging
+//
+//------------------------------
+@protocol HVEventLog <NSObject>
+
+-(void) writeMessage:(NSString *) message;
+
+@end
+
+void HVRegisterEventLog(id<HVEventLog> log);
+void HVLogEvent(NSString* message);
+void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line);
+
+//-----------------------------
+//
+// Asserts, checks...
+//
+//------------------------------
 
 #define HVLOG(message)
 
-#ifdef DEBUG
+#ifndef NOERRORLOG
 
-#define HVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
-
+//#define HVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
+#define HVASSERT_MESSAGE(message) HVLogEventFromCode(message, __FILE__, __LINE__);
 #define HVASSERT(condition) if (!(condition)) { HVASSERT_MESSAGE(@#condition)}
-#define HVASSERT_C(condition) assert(condition);
-                
+
 #else
 
 #define HVASSERT(condition) 
 #define HVASSERT_MESSAGE(message) 
+
+#endif
+
+#ifdef DEBUG
+
+#define HVASSERT_C(condition) assert(condition);
+                
+#else
+
 #define HVASSERT_C(condition)
 
 #endif

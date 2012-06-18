@@ -231,12 +231,12 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation HVDietaryIntake (HVTestExtensions)
+@implementation HVDailyDietaryIntake (HVTestExtensions)
 
 +(HVItem *)createRandom
 {
-    HVItem* item = [[HVDietaryIntake newItem] autorelease];
-    HVDietaryIntake* diet = item.dietaryIntake;
+    HVItem* item = [[HVDailyDietaryIntake newItem] autorelease];
+    HVDailyDietaryIntake* diet = item.dailyDietaryIntake;
     
     diet.when = createRandomHVDate();
     diet.caloriesValue = [HVRandom randomIntInRangeMin:1800 max:3000];

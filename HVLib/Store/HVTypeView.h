@@ -57,6 +57,8 @@
     HVLocalRecordStore* m_store;
     
     id<HVTypeViewDelegate> m_delegate;
+    
+    NSInteger m_tag;
 }
 
 @property (readonly, nonatomic, retain) HVRecordReference* record;
@@ -68,6 +70,8 @@
 @property (readonly, nonatomic) NSUInteger count;
 @property (readwrite, nonatomic, retain) HVLocalRecordStore* store;
 @property (readwrite, nonatomic, retain) id<HVTypeViewDelegate> delegate;
+
+@property (readwrite, nonatomic) NSInteger tag;
 
 //------------------
 //
@@ -137,10 +141,11 @@
 
 -(BOOL) save;
 -(BOOL) saveWithName:(NSString*) name;
+
 +(HVTypeView *) loadViewNamed:(NSString *) name fromStore:(HVLocalRecordStore *) store;
 
-+(HVTypeView *) getViewForTypeClassName:(NSString *) className;
-+(HVTypeView *) getViewForTypeID:(NSString *)typeID;
++(HVTypeView *) getViewForTypeClassName:(NSString *) className inRecord:(HVRecordReference *) record;
++(HVTypeView *) getViewForTypeID:(NSString *)typeID inRecord:(HVRecordReference *) record;
 
 
 //

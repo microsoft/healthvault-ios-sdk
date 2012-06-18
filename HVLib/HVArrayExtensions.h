@@ -32,12 +32,26 @@
 
 +(NSMutableArray *) ensure:(NSMutableArray **) pArray;
 
+-(BOOL) isEmpty;
+
+//---------------------
 //
 // STACK EXTENSIONS
 //
--(BOOL) isEmpty;
+//---------------------
 -(void) pushObject:(id) object;
 -(id) peek;
 -(id) popObject;
+
+//---------------------
+//
+// Queue EXTENSIONS
+// Using a simple array is NOT the best way to build a queue, but will do in a pinch.
+//
+//---------------------
+-(void) enqueueObject:(id) object;
+-(void) enqueueObject:(id)object maxQueueSize:(NSUInteger) size;
+
+-(id) dequeueObject;
 
 @end

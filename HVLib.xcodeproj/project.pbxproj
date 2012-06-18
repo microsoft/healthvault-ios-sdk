@@ -405,6 +405,8 @@
 		5DEF157314EC2458009D05D5 /* HVCodableValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF157114EC2455009D05D5 /* HVCodableValue.h */; };
 		5DEF157414EC2458009D05D5 /* HVCodableValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF157214EC2456009D05D5 /* HVCodableValue.m */; };
 		5DF44784156BC54000532EAA /* HVBlob.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF44782156BC54000532EAA /* HVBlob.h */; };
+		5DF91081158D09930027E0A8 /* HVNonNegativeDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */; };
+		5DF91082158D09930027E0A8 /* HVNonNegativeDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -810,6 +812,8 @@
 		5DEF157114EC2455009D05D5 /* HVCodableValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCodableValue.h; sourceTree = "<group>"; };
 		5DEF157214EC2456009D05D5 /* HVCodableValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCodableValue.m; sourceTree = "<group>"; };
 		5DF44782156BC54000532EAA /* HVBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlob.h; sourceTree = "<group>"; };
+		5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVNonNegativeDouble.h; sourceTree = "<group>"; };
+		5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVNonNegativeDouble.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1215,6 +1219,8 @@
 				5D20D2D914EDD32500160611 /* HVConstrainedDouble.m */,
 				5D20D2DC14EDD5FE00160611 /* HVPositiveDouble.h */,
 				5D20D2DD14EDD5FE00160611 /* HVPositiveDouble.m */,
+				5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */,
+				5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */,
 				5D983BE814E6035900C287B7 /* HVDay.h */,
 				5D983BE914E6035900C287B7 /* HVDay.m */,
 				5D983BEC14E6038000C287B7 /* HVMonth.h */,
@@ -1619,6 +1625,7 @@
 				5DB4206D156C959200E1A473 /* HVItemBlobUploadTask.h in Headers */,
 				5DC8D505156D9FFF00CA119A /* HVBlobSource.h in Headers */,
 				5D74847E157A7C5E001A7713 /* HVStoredQuery.h in Headers */,
+				5DF91081158D09930027E0A8 /* HVNonNegativeDouble.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1867,6 +1874,7 @@
 				5DB4206E156C959200E1A473 /* HVItemBlobUploadTask.m in Sources */,
 				5DC8D506156D9FFF00CA119A /* HVBlobSource.m in Sources */,
 				5D74847F157A7C5E001A7713 /* HVStoredQuery.m in Sources */,
+				5DF91082158D09930027E0A8 /* HVNonNegativeDouble.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

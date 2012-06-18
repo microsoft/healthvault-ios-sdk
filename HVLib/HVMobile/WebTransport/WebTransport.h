@@ -27,6 +27,8 @@
     NSObject *_context;
     NSObject *_target;
     SEL _callBack;
+    
+    NSURLConnection* _connection;
 }
 
 /// Returns whether all requests and responses should be logged.
