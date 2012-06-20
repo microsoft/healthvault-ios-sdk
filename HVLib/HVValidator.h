@@ -41,8 +41,6 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 //
 //------------------------------
 
-#define HVLOG(message)
-
 #ifndef NOERRORLOG
 
 //#define HVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
@@ -108,6 +106,7 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 #define HVCHECK_RESULT(method)  hr = method; \
                                 if (hr.isError) \
                                 { \
+                                    HVASSERT_MESSAGE(@"Validation Failed"); \
                                     goto LError; \
                                 }
 

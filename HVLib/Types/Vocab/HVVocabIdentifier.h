@@ -25,6 +25,7 @@ NSString* const c_hvFamily;
 NSString* const c_icdFamily;
 NSString* const c_hl7Family;
 NSString* const c_isoFamily;
+NSString* const c_usdaFamily;
 
 @interface HVVocabIdentifier : HVType
 {

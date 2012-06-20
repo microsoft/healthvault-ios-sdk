@@ -47,9 +47,15 @@ void HVLogEvent(NSString* message)
 
 void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line)
 {
+    //
+    // FileNames can have full paths with embedded names of developers!
+    // Remove them before logging. We'll only log the actual file name
+    //
+    NSString* fileNameString = [NSString stringWithUTF8String:fileName];
+    fileNameString = [fileNameString lastPathComponent];
     NSString* logLine = [NSString stringWithFormat:@"%@ file:%@ line:%d", 
                                                 message, 
-                                                [NSString stringWithUTF8String:fileName], 
+                                                fileNameString, 
                                                 line];
     HVLogEvent(logLine);
 }
