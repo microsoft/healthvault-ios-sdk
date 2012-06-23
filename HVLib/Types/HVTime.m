@@ -119,13 +119,19 @@ static NSString* const c_element_millis = @"f";
     self = [super init];
     HVCHECK_SELF;
     
-    m_hours = [[HVHour alloc] initWith:hour];
+    if (hour != NSUndefinedDateComponent)
+    {
+        m_hours = [[HVHour alloc] initWith:hour];
+    }
     HVCHECK_NOTNULL(m_hours);
     
-    m_minutes = [[HVMinute alloc] initWith:minute];
+    if (minute != NSUndefinedDateComponent)
+    {
+        m_minutes = [[HVMinute alloc] initWith:minute];
+    }
     HVCHECK_NOTNULL(m_minutes);
     
-    if (second >= 0)
+    if (second >= 0 && second != NSUndefinedDateComponent)
     {
         m_seconds = [[HVSecond alloc] initWith:second];
         HVCHECK_NOTNULL(m_seconds);

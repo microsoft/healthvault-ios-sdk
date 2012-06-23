@@ -465,7 +465,7 @@ LError:
     {
         NSString* xml = [self readOuterXml];
         
-        [self skipElement:name];
+        [self skipSingleElement:name];
         
         return xml;
     }
@@ -651,6 +651,28 @@ LError:
       }
     
     return TRUE;
+}
+
+-(BOOL)skipSingleElement:(NSString *)name
+{
+    if ([self isStartElementWithName:name])
+    {
+        int currentDepth = [self depth];
+        if ([self readStartElement])
+        {  
+            // A non-empty element
+            while (self.depth > currentDepth)
+            {
+                if (![self read])
+                {
+                    return FALSE;
+                }
+            }
+            [self readEndElement];
+        }
+    }
+    
+    return TRUE;    
 }
 
 -(BOOL)skipToElement:(NSString *)name

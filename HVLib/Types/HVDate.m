@@ -110,11 +110,20 @@ LError:
 {
     self = [super init];
     HVCHECK_SELF;
-      
-    m_year = [[HVYear alloc] initWith:yearValue];
-    m_month = [[HVMonth alloc] initWith:monthValue];
-    m_day = [[HVDay alloc] initWith:dayValue];
-  
+    
+    if (yearValue != NSUndefinedDateComponent)
+    {
+        m_year = [[HVYear alloc] initWith:yearValue];
+    }
+    if (monthValue != NSUndefinedDateComponent)
+    {
+        m_month = [[HVMonth alloc] initWith:monthValue];
+    }
+    if (dayValue != NSUndefinedDateComponent)
+    {
+        m_day = [[HVDay alloc] initWith:dayValue];
+    }
+    
     HVCHECK_TRUE(m_year && m_month && m_day);
   
     return self;

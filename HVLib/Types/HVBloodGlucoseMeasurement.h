@@ -43,7 +43,7 @@
 -(id) initWithMmolPerLiter:(double) value;
 -(id) initWithMgPerDL:(double) value;
 
--(BOOL) updateDisplayValue:(double) displayValue andUnits:(NSString *) unitValue;
+-(BOOL) updateDisplayValue:(double) displayValue units:(NSString *) unitValue andUnitsCode:(NSString *)code;
 
 -(NSString *) toString;
 -(NSString *) toStringWithFormat:(NSString *) format;

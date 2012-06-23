@@ -37,6 +37,7 @@ enum HVServerStatusCode
     HVServerStatusCodeAccessDenied = 11,
     HVServerStatusCodeInvalidItem = 13,
     HVServerStatusCodeInvalidFilter = 15,
+    HVServerStatusTypeIDNotFound = 19,
     HVServerStatusCodeRequestTimedOut = 0x31,
     HVServerStatusCodeVersionStampMismatch = 0x3d,
     HVServerStatusCodeRecordQuotaExceeded = 0x44,

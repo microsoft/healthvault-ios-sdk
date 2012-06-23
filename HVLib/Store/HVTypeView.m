@@ -370,6 +370,11 @@ LError:
 
 -(BOOL)isStale:(NSTimeInterval) maxAge
 {
+    if (!m_lastUpdateDate)
+    {
+        return TRUE;
+    }
+    
     NSDate* now = [NSDate date];
     return ([now timeIntervalSinceDate:m_lastUpdateDate] > maxAge);
 }

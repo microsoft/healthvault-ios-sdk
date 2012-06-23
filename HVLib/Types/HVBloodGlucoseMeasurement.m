@@ -24,8 +24,9 @@ static NSString* const c_element_mmolPL = @"mmolPerL";
 static NSString* const c_element_display = @"display";
 
 static NSString* const c_mmolPlUnits = @"mmol/L";
+static NSString* const c_mmolUnitsCode = @"mmol-per-l";
 static NSString* const c_mgDLUnits = @"mg/dL";
-
+static NSString* const c_mgDLUnitsCode = @"mg-per-dl";
 
 @implementation HVBloodGlucoseMeasurement
 
@@ -41,7 +42,7 @@ static NSString* const c_mgDLUnits = @"mg/dL";
 {
     HVENSURE(m_mmolPerl, HVPositiveDouble);
     m_mmolPerl.value = mmolPerLiter;
-    [self updateDisplayValue:mmolPerLiter andUnits:c_mmolPlUnits];
+    [self updateDisplayValue:mmolPerLiter units:c_mmolPlUnits andUnitsCode:c_mmolUnitsCode];
 }
 
 -(double)mgPerDL
@@ -58,7 +59,7 @@ static NSString* const c_mgDLUnits = @"mg/dL";
 {
     HVENSURE(m_mmolPerl, HVPositiveDouble);
     m_mmolPerl.value = [HVBloodGlucoseMeasurement mgPerDLToMmolPerLiter:mgPerDL];
-    [self updateDisplayValue:mgPerDL andUnits:c_mgDLUnits];
+    [self updateDisplayValue:mgPerDL units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
 
 -(void)dealloc
@@ -96,10 +97,15 @@ LError:
     HVALLOC_FAIL;
 }
 
--(BOOL) updateDisplayValue:(double)displayValue andUnits:(NSString *)unitValue
+-(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     HVDisplayValue *newValue = [[HVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
     HVCHECK_NOTNULL(newValue);
+    
+    if (code)
+    {
+        newValue.unitsCode = code;
+    }
     
     HVASSIGN(m_display, newValue);
     

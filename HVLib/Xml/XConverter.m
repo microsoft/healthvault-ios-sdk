@@ -166,7 +166,7 @@ LError:
         return TRUE;
     }
     
-    *result = [NSString stringWithFormat:@"%g", source];
+    *result = [NSString stringWithFormat:@"%f", source];
     HVCHECK_STRING(*result);
     
     return TRUE;
@@ -239,7 +239,7 @@ LError:
         return TRUE;
     }
     
-    *result = [NSString stringWithFormat:@"%g", source];
+    *result = [NSString stringWithFormat:@"%f", source];
     HVCHECK_STRING(*result);
     
     return TRUE;
