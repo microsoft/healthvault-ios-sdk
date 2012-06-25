@@ -63,6 +63,9 @@
 		5D1BE47A156B464400718832 /* HVBeginBlobPutTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BE478156B464400718832 /* HVBeginBlobPutTask.m */; };
 		5D1BE47D156B483900718832 /* HVBlobUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1BE47B156B483800718832 /* HVBlobUploadTask.h */; };
 		5D1BE47E156B483900718832 /* HVBlobUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BE47C156B483900718832 /* HVBlobUploadTask.m */; };
+		5D1D460D1596301B00383979 /* HVKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1D460B1596301A00383979 /* HVKeyChain.h */; };
+		5D1D460E1596301B00383979 /* HVKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1D460C1596301A00383979 /* HVKeyChain.m */; };
+		5D1D461E1597982700383979 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D1D461C1597976800383979 /* Security.framework */; };
 		5D1F13241539DD5200524425 /* HVSleepJournalPM.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F13221539DD5200524425 /* HVSleepJournalPM.h */; };
 		5D1F13251539DD5200524425 /* HVSleepJournalPM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F13231539DD5200524425 /* HVSleepJournalPM.m */; };
 		5D1F13291539E9E000524425 /* HVRelative.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F13271539E9DF00524425 /* HVRelative.h */; };
@@ -466,6 +469,9 @@
 		5D1BE478156B464400718832 /* HVBeginBlobPutTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBeginBlobPutTask.m; sourceTree = "<group>"; };
 		5D1BE47B156B483800718832 /* HVBlobUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlobUploadTask.h; sourceTree = "<group>"; };
 		5D1BE47C156B483900718832 /* HVBlobUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlobUploadTask.m; sourceTree = "<group>"; };
+		5D1D460B1596301A00383979 /* HVKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVKeyChain.h; sourceTree = "<group>"; };
+		5D1D460C1596301A00383979 /* HVKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVKeyChain.m; sourceTree = "<group>"; };
+		5D1D461C1597976800383979 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5D1F13221539DD5200524425 /* HVSleepJournalPM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSleepJournalPM.h; sourceTree = "<group>"; };
 		5D1F13231539DD5200524425 /* HVSleepJournalPM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSleepJournalPM.m; sourceTree = "<group>"; };
 		5D1F13271539E9DF00524425 /* HVRelative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRelative.h; sourceTree = "<group>"; };
@@ -824,6 +830,7 @@
 				5D5F3112150E95E700ED11E7 /* UIKit.framework in Frameworks */,
 				5D76B9C914DCB92400BA865F /* libxml2.2.dylib in Frameworks */,
 				5D5299B014DCB3A700D2636E /* Foundation.framework in Frameworks */,
+				5D1D461E1597982700383979 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,6 +900,7 @@
 		5D5299AE14DCB3A700D2636E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D1D461C1597976800383979 /* Security.framework */,
 				5DB42068156C78F300E1A473 /* MobileCoreServices.framework */,
 				5D5F3111150E95E700ED11E7 /* UIKit.framework */,
 				5D5299AF14DCB3A700D2636E /* Foundation.framework */,
@@ -954,6 +962,8 @@
 				5D97B93B1511743C0004B551 /* HVUser.m */,
 				5DC50C5A1506F5FF0078D85F /* HVClient.h */,
 				5DC50C5B1506F6010078D85F /* HVClient.m */,
+				5D1D460B1596301A00383979 /* HVKeyChain.h */,
+				5D1D460C1596301A00383979 /* HVKeyChain.m */,
 				5D5299B214DCB3A700D2636E /* Supporting Files */,
 			);
 			path = HVLib;
@@ -1626,6 +1636,7 @@
 				5DC8D505156D9FFF00CA119A /* HVBlobSource.h in Headers */,
 				5D74847E157A7C5E001A7713 /* HVStoredQuery.h in Headers */,
 				5DF91081158D09930027E0A8 /* HVNonNegativeDouble.h in Headers */,
+				5D1D460D1596301B00383979 /* HVKeyChain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1875,6 +1886,7 @@
 				5DC8D506156D9FFF00CA119A /* HVBlobSource.m in Sources */,
 				5D74847F157A7C5E001A7713 /* HVStoredQuery.m in Sources */,
 				5DF91082158D09930027E0A8 /* HVNonNegativeDouble.m in Sources */,
+				5D1D460E1596301B00383979 /* HVKeyChain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

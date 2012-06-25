@@ -16,7 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "HVCommon.h"
 #import "HealthVaultSettings.h"
+#import "HVKeyChain.h"
 
 /// Used for unique identification setting in preferences.
 #define HEALTHVAULT_SETTINGS_PREFIX @"HealthVault"
@@ -88,22 +90,19 @@
 
 	[perfs setObject: self.applicationCreationToken
 			  forKey: [NSString stringWithFormat: @"%@applicationCreationToken", prefix]];
-
+    
 	[perfs setObject: self.authorizationSessionToken
 			  forKey: [NSString stringWithFormat: @"%@authorizationSessionToken", prefix]];
-
-	[perfs setObject: self.sharedSecret
-			  forKey: [NSString stringWithFormat: @"%@sharedSecret", prefix]];
-
+    
+    [HVKeyChain setPassword:self.sharedSecret forName:@"sharedSecret"];
+    [HVKeyChain setPassword:self.sessionSharedSecret forName:@"sessionSharedSecret"];
+    
 	[perfs setObject: self.country
 			  forKey: [NSString stringWithFormat: @"%@country", prefix]];
 
 	[perfs setObject: self.language
 			  forKey: [NSString stringWithFormat: @"%@language", prefix]];
-
-	[perfs setObject: self.sessionSharedSecret
-			  forKey: [NSString stringWithFormat: @"%@sessionSharedSecret", prefix]];
-	
+        
 	[perfs setObject: self.personId
 			  forKey: [NSString stringWithFormat: @"%@personId", prefix]];
 	
@@ -125,16 +124,15 @@
 	settings.applicationId = [perfs objectForKey: [NSString stringWithFormat: @"%@applicationId", prefix]];
 
 	settings.applicationCreationToken = [perfs objectForKey: [NSString stringWithFormat: @"%@applicationCreationToken", prefix]];
-
-	settings.authorizationSessionToken = [perfs objectForKey: [NSString stringWithFormat: @"%@authorizationSessionToken", prefix]];
-
-	settings.sharedSecret = [perfs objectForKey: [NSString stringWithFormat: @"%@sharedSecret", prefix]];
-
+    settings.authorizationSessionToken = [perfs objectForKey: [NSString stringWithFormat: @"%@authorizationSessionToken", prefix]];
+ 
+    settings.sharedSecret = [HVKeyChain getPasswordString:@"sharedSecret"];
+    settings.sessionSharedSecret = [HVKeyChain getPasswordString:@"sessionSharedSecret"];
+    
 	settings.country = [perfs objectForKey: [NSString stringWithFormat: @"%@country", prefix]];
 
 	settings.language = [perfs objectForKey: [NSString stringWithFormat: @"%@language", prefix]];
 
-	settings.sessionSharedSecret = [perfs objectForKey: [NSString stringWithFormat: @"%@sessionSharedSecret", prefix]];
 	
 	settings.personId = [perfs objectForKey: [NSString stringWithFormat: @"%@personId", prefix]];
 	

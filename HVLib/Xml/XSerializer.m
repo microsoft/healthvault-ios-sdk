@@ -103,6 +103,33 @@ LError:
     return FALSE;
 }
 
++(BOOL)secureSerialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *)filePath
+{
+    XWriter* writer = [[XWriter alloc] initWithBufferSize:2048];   
+    HVCHECK_NOTNULL(writer);
+    
+    NSData* rawData = nil;
+    @try 
+    {
+        HVCHECK_SUCCESS([XSerializer serialize:obj withRoot:root toWriter:writer]);
+        
+        rawData = [[NSData alloc] initWithBytesNoCopy:[writer getXml] length:[writer getLength] freeWhenDone:FALSE];
+        HVCHECK_NOTNULL(rawData);
+        
+        return [rawData writeToFile:filePath 
+                options:NSDataWritingAtomic | NSDataWritingFileProtectionComplete 
+                error:nil];
+    }
+    @finally 
+    {
+        [rawData release];
+        [writer release];
+    }
+
+LError:
+    return FALSE;
+}
+
 +(BOOL) deserialize:(XReader *)reader withRoot:(NSString *)root into:(id)obj
 {
     HVCHECK_NOTNULL(reader);
@@ -214,6 +241,32 @@ LError:
     
 LError:
     return nil;    
+}
+
++(id)newFromSecureFilePath:(NSString *)filePath withRoot:(NSString *)root asClass:(Class)classObj
+{
+    HVCHECK_STRING(filePath);
+    
+    XReader* reader = nil;
+    NSData* fileData = [[NSData alloc] initWithContentsOfFile:filePath];
+    if (!fileData)
+    {
+        return nil;
+    }
+    @try 
+    {
+        reader = [[XReader alloc] initFromMemory:fileData];
+        HVCHECK_NOTNULL(reader);
+        return [NSObject newFromReader:reader withRoot:root asClass:classObj];
+    }
+    @finally 
+    {
+        [fileData release];
+        [reader release];
+    }
+    
+LError:
+    return nil;
 }
 
 +(id) newFromFileUrl:(NSURL *)url withRoot:(NSString *)root asClass:(Class)classObj

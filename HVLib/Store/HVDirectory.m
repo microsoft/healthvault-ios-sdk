@@ -418,7 +418,8 @@ LError:
             return nil;
         }
         
-        return [NSObject newFromFilePath:filePath withRoot:name asClass:cls];
+        //return [NSObject newFromFilePath:filePath withRoot:name asClass:cls];
+        return [NSObject newFromSecureFilePath:filePath withRoot:name asClass:cls];
     }
 }
 
@@ -433,7 +434,8 @@ LError:
     {
         @try 
         {
-            return [XSerializer serialize:obj withRoot:name toFilePath:[self makeChildPath:key]];
+            //return [XSerializer serialize:obj withRoot:name toFilePath:[self makeChildPath:key]];
+            return [XSerializer secureSerialize:obj withRoot:name toFilePath:[self makeChildPath:key]];
         }
         @catch (id exception) 
         {

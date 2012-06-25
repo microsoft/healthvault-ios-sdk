@@ -40,6 +40,7 @@ NSString* const XExceptionNotSerializable;
 +(NSString *) serializeToString:(id) obj withRoot:(NSString *) root;
 +(BOOL) serialize:(id) obj withRoot:(NSString *) root toWriter:(XWriter *) writer;
 +(BOOL) serialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *) filePath;
++(BOOL) secureSerialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *) filePath;
 
 +(BOOL) deserialize:(XReader *) reader withRoot:(NSString *) root into:(id) obj;
 
@@ -50,8 +51,10 @@ NSString* const XExceptionNotSerializable;
 +(id) newFromString:(NSString *)xml withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromReader:(XReader *) reader withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromFilePath:(NSString*) filePath withRoot:(NSString *) root asClass:(Class) classObj;
++(id) newFromSecureFilePath:(NSString*) filePath withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromFileUrl:(NSURL*) url withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromResource:(NSString*) name withRoot:(NSString *) root asClass:(Class) classObj;
+
 
 @end
 
