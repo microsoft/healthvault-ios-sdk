@@ -28,6 +28,6 @@
 +(void) throwNotImpl;
 
 -(void) printSymbolsTo:(NSMutableString *) buffer;
--(NSString *) description;
+-(NSString *) detailedDescription;
 
 @end

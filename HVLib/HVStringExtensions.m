@@ -290,8 +290,11 @@ LError:
     }
     
     for (NSString* string in strings) {
-        [self appendString:string];
-        [self appendNewLine];
+        if (![NSString isNilOrEmpty:string])
+        {
+            [self appendString:string];
+            [self appendNewLine];
+        }
     }
 }
 

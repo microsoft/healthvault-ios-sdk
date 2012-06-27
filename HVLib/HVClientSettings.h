@@ -83,6 +83,7 @@
 @property (readonly, nonatomic) HVEnvironmentSettings* firstEnvironment;
 
 -(HVEnvironmentSettings *) environmentWithName:(NSString *) name;
+-(HVEnvironmentSettings *) environmentAtIndex:(NSUInteger) index;
 
 +(HVClientSettings *) newSettingsFromResource;
 

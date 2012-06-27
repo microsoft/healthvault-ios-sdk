@@ -62,12 +62,12 @@
     }    
 }
 
--(NSString *) description
+-(NSString *) detailedDescription
 {
     NSMutableString *buffer = [[[NSMutableString alloc] init]autorelease];
     if (buffer)
     {
-        [buffer appendLines:1, [super description]];
+        [buffer appendLines:1, [self description]];
         [buffer appendNewLine];
         [buffer appendLines:2, [self name], [self reason]];
         [buffer appendNewLines:2];

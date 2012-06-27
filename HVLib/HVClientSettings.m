@@ -268,8 +268,10 @@ LError:
 {
     HVCHECK_NOTNULL(name);
     
-    for (HVEnvironmentSettings* environment in self.environments) 
+    NSArray* environments = self.environments;
+    for (NSUInteger i = 0, count = environments.count; i < count; ++i)
     {
+        HVEnvironmentSettings* environment = [environments objectAtIndex:i];
         if ([environment.name isEqualToStringCaseInsensitive:name])
         {
             return environment;
@@ -278,6 +280,11 @@ LError:
     
 LError:
     return nil;
+}
+
+-(HVEnvironmentSettings *)environmentAtIndex:(NSUInteger)index
+{
+    return [m_environments objectAtIndex:index];
 }
 
 +(HVClientSettings *)newSettingsFromResource

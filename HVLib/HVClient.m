@@ -196,7 +196,7 @@ LError:
         if (![NSString isNilOrEmpty:userEnvironment])
         {
             HVEnvironmentSettings* environment = [m_settings environmentWithName:userEnvironment];
-            if (!environment)
+            if (environment)
             {
                 [m_service applyEnvironmentSettings:environment];
             }
