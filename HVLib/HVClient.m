@@ -192,6 +192,15 @@ LError:
         HVCLEAR(m_user);
         self.user = [self loadUser]; // ok if this is null
         
+        NSString* userEnvironment = self.user.environment;
+        if (![NSString isNilOrEmpty:userEnvironment])
+        {
+            HVEnvironmentSettings* environment = [m_settings environmentWithName:userEnvironment];
+            if (!environment)
+            {
+                [m_service applyEnvironmentSettings:environment];
+            }
+        }
         return TRUE;
         
     LError:
@@ -369,10 +378,10 @@ LError:
 
 -(HealthVaultService *)newService
 {
-    HealthVaultService *service =  [[HealthVaultService alloc] 
-                                    initWithUrl:m_settings.serviceUrl.absoluteString 
-                                    shellUrl:m_settings.shellUrl.absoluteString 
-                                    masterAppId:m_settings.masterAppID];
+    HVEnvironmentSettings* environment = [m_settings firstEnvironment];
+    HealthVaultService* service = [[HealthVaultService alloc] 
+                                   initForAppID:m_settings.masterAppID 
+                                   andEnvironment:environment];
     
     HVCHECK_NOTNULL(service);
     

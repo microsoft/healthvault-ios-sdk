@@ -77,7 +77,7 @@
 
 + (void)performAuthenticationCheck: (AuthenticationCheckState *)state {
 
-    if (state.service.authorizationSessionToken) {
+    if (state.service.authorizationSessionToken && state.service.sharedSecret) {
 
         // We have a session token for the app, but we don't know who authorized the app.
         // We'll call GetAuthorizedPeople.

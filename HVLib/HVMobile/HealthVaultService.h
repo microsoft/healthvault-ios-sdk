@@ -24,6 +24,7 @@
 #import "MobilePlatform.h"
 #import "WebResponse.h"
 #import "WebTransport.h"
+#import "HVClientSettings.h"
 
 @protocol HealthVaultService <NSObject>
 
@@ -53,6 +54,7 @@
 - (void)loadSettings;
 
 -(void) reset;
+-(void) applyEnvironmentSettings:(HVEnvironmentSettings *) settings;
 
 @end
 
@@ -145,6 +147,8 @@
 		shellUrl:(NSString *)shellUrl
 		masterAppId:(NSString *)masterAppId;
 
+-(id) initForAppID:(NSString *) appID andEnvironment:(HVEnvironmentSettings *) environment;
+
 /// Returns the URL string to use to provision the application.
 - (NSString *)getApplicationCreationUrl;
 
@@ -206,5 +210,7 @@
 // Delete all provisioning state
 //
 -(void) reset;
+
+-(void) applyEnvironmentSettings:(HVEnvironmentSettings *) settings;
 
 @end

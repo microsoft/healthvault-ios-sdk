@@ -94,8 +94,8 @@
 	[perfs setObject: self.authorizationSessionToken
 			  forKey: [NSString stringWithFormat: @"%@authorizationSessionToken", prefix]];
     
-    [HVKeyChain setPassword:self.sharedSecret forName:@"sharedSecret"];
-    [HVKeyChain setPassword:self.sessionSharedSecret forName:@"sessionSharedSecret"];
+    [HVKeyChain setPassword:self.sharedSecret forName:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
+    [HVKeyChain setPassword:self.sessionSharedSecret forName:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
     
 	[perfs setObject: self.country
 			  forKey: [NSString stringWithFormat: @"%@country", prefix]];
@@ -126,8 +126,17 @@
 	settings.applicationCreationToken = [perfs objectForKey: [NSString stringWithFormat: @"%@applicationCreationToken", prefix]];
     settings.authorizationSessionToken = [perfs objectForKey: [NSString stringWithFormat: @"%@authorizationSessionToken", prefix]];
  
-    settings.sharedSecret = [HVKeyChain getPasswordString:@"sharedSecret"];
-    settings.sessionSharedSecret = [HVKeyChain getPasswordString:@"sessionSharedSecret"];
+    NSString* sessionToken = settings.authorizationSessionToken;
+    if ([NSString isNilOrEmpty:sessionToken])
+    {
+        settings.sharedSecret = nil;
+        settings.sessionSharedSecret = nil;
+    }
+    else 
+    {
+        settings.sharedSecret = [HVKeyChain getPasswordString:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
+        settings.sessionSharedSecret = [HVKeyChain getPasswordString:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
+    }
     
 	settings.country = [perfs objectForKey: [NSString stringWithFormat: @"%@country", prefix]];
 

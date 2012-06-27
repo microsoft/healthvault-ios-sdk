@@ -31,6 +31,7 @@
     NSString * m_name;
     HVRecordCollection *m_records;
     NSInteger m_currentIndex;
+    NSString* m_environment;
 }
 
 //
@@ -48,6 +49,11 @@
 //
 @property (readwrite, nonatomic) NSInteger currentRecordIndex;
 @property (readonly, nonatomic) HVRecord* currentRecord;
+
+//
+// Which service environment this user set up their app to work with
+//
+@property (readwrite, nonatomic, retain) NSString* environment;
 
 //-------------------------
 //

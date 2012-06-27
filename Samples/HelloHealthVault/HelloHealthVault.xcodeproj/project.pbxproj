@@ -17,6 +17,7 @@
 		5DB54E1A153C85A500E1C6BE /* ClientSettings.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5DB54E19153C85A500E1C6BE /* ClientSettings.xml */; };
 		5DB54E45153C8C1500E1C6BE /* libHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB54E44153C8C1500E1C6BE /* libHVLib.a */; };
 		5DB54E48153C8C3B00E1C6BE /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB54E47153C8C3B00E1C6BE /* libxml2.2.dylib */; };
+		5DFD4832159B72E30003EA49 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFD4831159B72E30003EA49 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		5DB54E19153C85A500E1C6BE /* ClientSettings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ClientSettings.xml; sourceTree = "<group>"; };
 		5DB54E44153C8C1500E1C6BE /* libHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHVLib.a; path = "../../build/Release-iphoneos/libHVLib.a"; sourceTree = "<group>"; };
 		5DB54E47153C8C3B00E1C6BE /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		5DFD4831159B72E30003EA49 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DFD4832159B72E30003EA49 /* Security.framework in Frameworks */,
 				5DB54E48153C8C3B00E1C6BE /* libxml2.2.dylib in Frameworks */,
 				5DB54E45153C8C1500E1C6BE /* libHVLib.a in Frameworks */,
 				5DB54DD0153C765700E1C6BE /* UIKit.framework in Frameworks */,
@@ -56,6 +59,7 @@
 		5DB54DC0153C765700E1C6BE = {
 			isa = PBXGroup;
 			children = (
+				5DFD4831159B72E30003EA49 /* Security.framework */,
 				5DB54E47153C8C3B00E1C6BE /* libxml2.2.dylib */,
 				5DB54E44153C8C1500E1C6BE /* libHVLib.a */,
 				5DB54DD5153C765700E1C6BE /* HelloHealthVault */,

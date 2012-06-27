@@ -19,13 +19,29 @@
 #import <Foundation/Foundation.h>
 #import "XSerializableType.h"
 
+@interface HVEnvironmentSettings : XSerializableType
+{
+    NSString* m_name;
+    NSString* m_friendlyName;
+    NSURL* m_serviceUrl;
+    NSURL* m_shellUrl;    
+}
+
+@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, retain) NSString* friendlyName;
+@property (readwrite, nonatomic, retain) NSURL* serviceUrl;
+@property (readwrite, nonatomic, retain) NSURL* shellUrl;
+
+@end
+
 @interface HVClientSettings : XSerializableType
 {
     BOOL m_debug;
     NSString *m_appID;
     NSString *m_appName;
-    NSURL *m_serviceUrl;
-    NSURL *m_shellUrl;
+    
+    NSArray* m_environments;
+    
     NSString *m_deviceName;
     NSString *m_country;
     NSString *m_language;
@@ -43,8 +59,9 @@
 @property (readwrite, nonatomic) BOOL debug;
 @property (readwrite, nonatomic, retain) NSString* masterAppID;
 @property (readwrite, nonatomic, retain) NSString* appName;
-@property (readwrite, nonatomic, retain) NSURL* serviceUrl;
-@property (readwrite, nonatomic, retain) NSURL* shellUrl;
+
+@property (readwrite, nonatomic, retain) NSArray* environments;
+
 @property (readwrite, nonatomic, retain) NSString* deviceName;
 @property (readwrite, nonatomic, retain) NSString* country;
 @property (readwrite, nonatomic, retain) NSString* language;
@@ -62,6 +79,10 @@
 // If > 0, will automatically delay each request... useful for faking "slow" networks
 //
 @property (readwrite, nonatomic) NSTimeInterval autoRequestDelay;
+
+@property (readonly, nonatomic) HVEnvironmentSettings* firstEnvironment;
+
+-(HVEnvironmentSettings *) environmentWithName:(NSString *) name;
 
 +(HVClientSettings *) newSettingsFromResource;
 

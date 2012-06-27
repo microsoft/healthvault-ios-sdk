@@ -28,6 +28,7 @@ static NSString* const c_element_name = @"name";
 static NSString* const c_element_recordarray = @"records";
 static NSString* const c_element_record = @"record";
 static NSString* const c_element_current = @"current";
+static NSString* const c_element_environment = @"environment";
 
 @interface HVUser (HVPrivate)
 
@@ -45,6 +46,7 @@ static NSString* const c_element_current = @"current";
 @synthesize name = m_name;
 @synthesize records = m_records;
 @synthesize currentRecordIndex = m_currentIndex;
+@synthesize environment = m_environment;
 
 -(BOOL)hasRecords
 {
@@ -91,6 +93,7 @@ LError:
 {
     [m_name release];
     [m_records release];
+    [m_environment release];
     [super dealloc];
 }
 
@@ -224,6 +227,7 @@ LError:
     HVSERIALIZE_STRING(m_name, c_element_name);
     HVSERIALIZE_ARRAYNESTED(m_records, c_element_recordarray, c_element_record);
     HVSERIALIZE_INT(m_currentIndex, c_element_current);
+    HVSERIALIZE_STRING(m_environment, c_element_environment);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -234,6 +238,8 @@ LError:
     int index = 0;
     HVDESERIALIZE_INT(index, c_element_current);
     self.currentRecordIndex = index;  // to make sure the index is valid
+    
+    HVDESERIALIZE_STRING(m_environment, c_element_environment);
 }
 
 @end

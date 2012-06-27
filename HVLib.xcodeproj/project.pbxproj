@@ -1955,6 +1955,11 @@
 				GCC_PREFIX_HEADER = "HVLib/HVLib-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
 				LIBRARY_SEARCH_PATHS = /usr/lib;
+				OTHER_CFLAGS = (
+					"-fpie",
+					"-fstack-protector-all",
+					"-D_FORTIFY_SOURCE=2",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1971,6 +1976,12 @@
 				GCC_PREFIX_HEADER = "HVLib/HVLib-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
 				LIBRARY_SEARCH_PATHS = /usr/lib;
+				OTHER_CFLAGS = (
+					"-fpie",
+					"-fstack-protector-all",
+					"-D_FORTIFY_SOURCE=2",
+					"-DNS_BLOCK_ASSERTIONS",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

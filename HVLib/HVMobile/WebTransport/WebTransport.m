@@ -124,13 +124,14 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString: url]];
 	
+/*
 #ifdef CONNECTION_ALLOW_ANY_HTTPS_CERTIFICATE
 	// required for unit tests, see http://www.openradar.me/8385355
     [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[[NSURL URLWithString: url] host]];
 	// alternative way is handling canAuthenticateAgainstProtectionSpace challannge
 	// http://stackoverflow.com/questions/933331/
 #endif
-	
+*/	
     [request setTimeoutInterval: [HVClient current].settings.httpTimeout];
 
     if (data) {

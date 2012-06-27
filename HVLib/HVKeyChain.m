@@ -25,7 +25,7 @@
 +(NSMutableDictionary *) attributesForPasswordName:(NSString *)passwordName
 {
     HVCHECK_STRING(passwordName);
-        
+    
     NSMutableDictionary* attrib = [NSMutableDictionary dictionary];
     HVCHECK_NOTNULL(attrib);
     
@@ -83,7 +83,7 @@ LError:
 +(NSString *)getPasswordString:(NSString *)passwordName
 {
     NSData* password = [HVKeyChain getPassword:passwordName];
-    if (!password)
+    if (!password || password.length == 0)
     {
         return nil;
     }
@@ -91,6 +91,9 @@ LError:
     NSString* string = [[[NSString alloc] initWithData:password encoding:NSUTF8StringEncoding] autorelease];
     [password release];
     return string;
+    
+LError:
+    return nil;
 }
 
 +(BOOL)setPassword:(NSString *)password forName:(NSString *)passwordName

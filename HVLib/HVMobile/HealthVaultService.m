@@ -91,9 +91,13 @@
 
 - (id)initWithDefaultUrl: (NSString *)masterAppId {
 	
-	return [self initWithUrl: [HVClient current].settings.serviceUrl.absoluteString
-					shellUrl: [HVClient current].settings.shellUrl.absoluteString
-				 masterAppId: masterAppId];
+    HVEnvironmentSettings* defaultEnvironment = [[HVClient current].settings firstEnvironment];
+    HVCHECK_NOTNULL(defaultEnvironment);
+    
+    return [self initForAppID:masterAppId andEnvironment:defaultEnvironment];
+
+LError:
+    HVALLOC_FAIL;
 }
 
 - (id)initWithUrl: (NSString *)healthServiceUrl
@@ -101,7 +105,8 @@
 	  masterAppId: (NSString *)masterAppId {
 
 	if (self = [super init]) {
-
+        
+        self.settingsFileName = masterAppId;
 		self.healthServiceUrl = healthServiceUrl;
 		self.shellUrl = shellUrl;
 		self.masterAppId = masterAppId;
@@ -114,6 +119,12 @@
 	return self;
 }
 
+-(id)initForAppID:(NSString *)appID andEnvironment:(HVEnvironmentSettings *)environment
+{
+	return [self initWithUrl: environment.serviceUrl.absoluteString
+					shellUrl: environment.shellUrl.absoluteString
+				 masterAppId: appID];    
+}
 
 - (void)dealloc {
 
@@ -466,6 +477,12 @@
     self.applicationCreationToken = nil;
     self.records = nil;
     self.currentRecord = nil;
+}
+
+-(void)applyEnvironmentSettings:(HVEnvironmentSettings *)settings
+{
+    self.healthServiceUrl = settings.serviceUrl.absoluteString;
+    self.shellUrl = settings.shellUrl.absoluteString;
 }
 
 #pragma mark Settings Logic End
