@@ -196,6 +196,7 @@
             record.recordId = [recordNode attrValue: @"id"];
             record.relationship = [recordNode attrValue:@"rel-name"];
             record.recordName = [recordNode text];
+            record.displayName = [recordNode attrValue:@"display-name"];
             record.authStatus = [recordNode attrValue: @"app-record-auth-action"];
 
             if (!record.isValid) {

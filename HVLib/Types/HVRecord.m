@@ -40,6 +40,7 @@ static NSString* const c_element_relationship = @"rel-name";
     self.ID = record.recordId;
     self.personID = record.personId;
     self.name = record.recordName;
+    self.displayName = record.displayName;
     self.relationship = record.relationship;
     
     return self;

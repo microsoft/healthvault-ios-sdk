@@ -29,7 +29,8 @@
 	NSString *_recordId;
 	NSString *_recordName;
     NSString *_relationship;
-
+    NSString *_displayName;
+    
 	NSString *_authStatus;
 }
 
@@ -49,6 +50,8 @@
 @property (retain) NSString *recordName;
 
 @property (retain) NSString *relationship;
+
+@property (retain) NSString *displayName;
 
 /// Gets or sets the authorization status.
 @property (retain) NSString *authStatus;

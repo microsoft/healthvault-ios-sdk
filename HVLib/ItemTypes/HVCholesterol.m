@@ -101,6 +101,7 @@ static NSString* const c_element_triglycerides = @"triglyceride";
 
 -(void)dealloc
 {
+    [m_date release];
     [m_ldl release];
     [m_hdl release];
     [m_total release];

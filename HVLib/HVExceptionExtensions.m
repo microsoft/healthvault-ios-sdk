@@ -70,9 +70,11 @@
         [buffer appendLines:1, [self description]];
         [buffer appendNewLine];
         [buffer appendLines:2, [self name], [self reason]];
+#ifdef DEBUG
         [buffer appendNewLines:2];
         [self printSymbolsTo:buffer];
         [buffer appendNewLine];
+#endif
     }
     
     return buffer;

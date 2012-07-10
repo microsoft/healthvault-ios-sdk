@@ -78,6 +78,7 @@ LError:
 -(void) dealloc
 {
     [m_items release];
+    [m_itemsByID release];
     [super dealloc];
 }
 

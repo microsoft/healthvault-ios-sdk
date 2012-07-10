@@ -36,6 +36,7 @@
 @synthesize recordId = _recordId;
 @synthesize recordName = _recordName;
 @synthesize relationship = _relationship;
+@synthesize displayName = _displayName;
 @synthesize authStatus = _authStatus;
 
 + (id)newFromXml: (NSString *)xml
@@ -81,6 +82,8 @@
 	self.personName = nil;
 	self.recordId = nil;
 	self.recordName = nil;
+    self.relationship = nil;
+    self.displayName = nil;
 	self.authStatus = nil;
 
 	[super dealloc];
