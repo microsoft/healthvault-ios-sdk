@@ -528,6 +528,8 @@ LError:
 -(void)dealloc
 {
     [m_path release];
+    [m_stringPath release];
+    
     [super dealloc];
 }
 
