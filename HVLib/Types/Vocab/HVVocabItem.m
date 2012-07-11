@@ -166,7 +166,7 @@ LError:
 
 -(NSArray *)displayStrings
 {
-    NSMutableArray* strings = [[NSMutableArray alloc]initWithCapacity:self.count];
+    NSMutableArray* strings = [[[NSMutableArray alloc]initWithCapacity:self.count] autorelease];
     [self addDisplayStringsTo:strings];
     return strings;
 }

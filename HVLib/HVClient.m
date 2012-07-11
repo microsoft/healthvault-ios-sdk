@@ -57,7 +57,10 @@ static HVClient* s_app;
 
 +(void)initialize
 {
-    s_app = [[HVClient alloc] init];
+    if (!s_app)
+    {
+        s_app = [[HVClient alloc] init];
+    }
 }
 
 +(HVClient *)current

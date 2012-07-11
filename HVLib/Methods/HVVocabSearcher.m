@@ -65,6 +65,7 @@ LError:
 -(void)dealloc
 {
     [m_cache release];
+    [m_emptySet release];
     [super dealloc];
 }
 

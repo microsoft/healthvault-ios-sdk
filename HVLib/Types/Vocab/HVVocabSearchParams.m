@@ -34,7 +34,7 @@ static NSString* const c_element_max = @"max-results";
     self = [super init];
     HVCHECK_SELF;
     
-    self.text = [[HVVocabSearchText alloc] initWith:text];
+    m_text = [[HVVocabSearchText alloc] initWith:text];
     HVCHECK_NOTNULL(m_text);
     
     m_maxResults = 25;

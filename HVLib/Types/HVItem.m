@@ -171,6 +171,7 @@ LError:
     [m_updated release];
     
     [m_data release];
+    [m_blobs release];
     
     [super dealloc];
 }
