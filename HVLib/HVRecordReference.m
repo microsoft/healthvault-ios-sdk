@@ -131,7 +131,6 @@ LError:
 
 -(HVGetItemsTask *)getItems:(HVItemQuery *)query callback:(HVTaskCompletion)callback
 {
-    // Task will release itself when done
     HVGetItemsTask* task = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:callback] autorelease]; 
     HVCHECK_NOTNULL(task);
     

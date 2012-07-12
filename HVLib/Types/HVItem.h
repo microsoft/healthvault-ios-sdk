@@ -184,6 +184,8 @@ enum HVItemFlags
 -(HVItemBlobUploadTask *) uploadBlob:(id<HVBlobSource>) data contentType:(NSString *) contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 -(HVItemBlobUploadTask *) uploadBlob:(id<HVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 
+-(HVItemBlobUploadTask *) newUploadBlobTask:(id<HVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+
 @end
 
 //-------------------------

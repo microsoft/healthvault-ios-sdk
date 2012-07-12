@@ -274,16 +274,22 @@ LError:
 
 -(HVItemBlobUploadTask *)uploadBlob:(id<HVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion)callback
 {
-    HVBlobInfo* blobInfo = [[HVBlobInfo alloc] initWithName:name andContentType:contentType];
-    
-    HVItemBlobUploadTask* task = [[[HVItemBlobUploadTask alloc] initWithSource:data blobInfo:blobInfo forItem:self record:record andCallback:callback] autorelease];
-    [blobInfo release];
+    HVItemBlobUploadTask* task = [[self newUploadBlobTask:data forBlobName:name contentType:contentType record:record andCallback:callback] autorelease];
     
     [task start];
     
     return task;
 }
 
+-(HVItemBlobUploadTask *)newUploadBlobTask:(id<HVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(HVRecordReference *)record andCallback:(HVTaskCompletion)callback
+{
+    HVBlobInfo* blobInfo = [[HVBlobInfo alloc] initWithName:name andContentType:contentType];
+    
+    HVItemBlobUploadTask* task = [[HVItemBlobUploadTask alloc] initWithSource:data blobInfo:blobInfo forItem:self record:record andCallback:callback];
+    [blobInfo release];
+    
+    return task;
+}
 
 -(HVItem *)shallowClone
 {
