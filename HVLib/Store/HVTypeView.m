@@ -393,6 +393,7 @@ LError:
     {
         query.maxResults = m_maxItems;
     }
+    query.maxFullResults = 0;
     
     HVGetItemsTask* getItems = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
         //
