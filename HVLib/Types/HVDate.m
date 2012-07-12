@@ -141,9 +141,13 @@ LError:
 {
     HVCHECK_NOTNULL(components);
     
-    HVRETAIN(m_year, [[HVYear alloc] initWith:components.year]);
-    HVRETAIN(m_month, [[HVMonth alloc] initWith:components.month]);
-    HVRETAIN(m_day, [[HVDay alloc] initWith:components.day]);
+    HVCLEAR(m_year);
+    HVCLEAR(m_month);
+    HVCLEAR(m_day);
+    
+    m_year = [[HVYear alloc] initWith:components.year];
+    m_month = [[HVMonth alloc] initWith:components.month];
+    m_day = [[HVDay alloc] initWith:components.day];
 
     HVCHECK_TRUE(m_year && m_month && m_day);
     

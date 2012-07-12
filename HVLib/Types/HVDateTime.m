@@ -102,8 +102,11 @@ LError:
 {
     HVCHECK_NOTNULL(components);
     
-    HVRETAIN(m_date, [[HVDate alloc] initWithComponents:components]);
-    HVRETAIN(m_time, [[HVTime alloc] initwithComponents:components]);
+    HVCLEAR(m_date);
+    HVCLEAR(m_time);
+    
+    m_date = [[HVDate alloc] initWithComponents:components];
+    m_time = [[HVTime alloc] initwithComponents:components];
     
     HVCHECK_TRUE(m_date && m_time);
     

@@ -129,7 +129,8 @@ LError:
 
 -(BOOL)setStandardActivity:(NSString *)activity
 {
-    HVRETAIN(m_activity, [HVExercise newActivity:activity]);
+    HVCLEAR(m_activity);
+    m_activity = [HVExercise newActivity:activity];
     return (m_activity != nil);
 }
 
