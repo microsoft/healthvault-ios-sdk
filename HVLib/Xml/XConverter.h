@@ -40,6 +40,7 @@
 -(BOOL) tryString:(NSString *) source toDouble:(double *) result;
 -(double) stringToDouble:(NSString *) source;
 -(BOOL) tryDouble:(double) source toString:(NSString **) result;
+-(BOOL) tryDoubleRoundtrip:(double) source toString:(NSString **) result;
 -(NSString *) doubleToString:(double) source;
 
 -(BOOL) tryString:(NSString *) source toBool:(BOOL *) result;

@@ -239,11 +239,37 @@ LError:
         return TRUE;
     }
     
-    *result = [NSString stringWithFormat:@"%f", source];
+    //*result = [NSString stringWithFormat:@"%f", source];
+    [self tryDoubleRoundtrip:source toString:result];
     HVCHECK_STRING(*result);
     
     return TRUE;
    
+LError:
+    return FALSE;
+}
+
+//
+// We have to do this to prevent loss of precision in doubles during serialization
+// http://msdn.microsoft.com/en-us/library/dwhawy9k.aspx#RFormatString
+//
+-(BOOL)tryDoubleRoundtrip:(double)source toString:(NSString **)result
+{
+    NSString* asString = [NSString stringWithFormat:@"%.15g", source];
+    HVCHECK_NOTNULL(asString);
+    
+    double parsedBack = [self stringToDouble:asString];
+    if (parsedBack == source)
+    {
+        *result = asString;
+    }
+    else 
+    {
+        *result = [NSString stringWithFormat:@"%.17g", source];
+    }
+    
+    return (*result != nil);
+    
 LError:
     return FALSE;
 }
