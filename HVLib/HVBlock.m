@@ -39,7 +39,10 @@ void safeInvokeActionInMainThread(HVAction action)
     NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void){ 
         @try 
         {
-            action();
+            if (action)
+            {
+                action();
+            }
         }
         @catch (id ex) 
         {

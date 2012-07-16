@@ -98,10 +98,10 @@ LError:
 {
     if (!m_units)
     {
-        return [NSString stringWithFormat:@"%.2f", m_value]; 
+        return [NSString stringWithFormat:@"%g", m_value]; 
     }
     
-    return [self toStringWithFormat:@"%.2f %@"];
+    return [self toStringWithFormat:@"%g %@"];
 }
 
 -(NSString *)toStringWithFormat:(NSString *)format
