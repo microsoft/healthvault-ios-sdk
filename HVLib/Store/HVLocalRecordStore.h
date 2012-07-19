@@ -89,6 +89,7 @@
 +(NSString *) metadataStoreKey;
 +(NSString *) dataStoreKey;
 
+-(BOOL) resetMetadata;
 -(BOOL) resetData;
 
 @end

@@ -29,6 +29,7 @@ static NSString* const c_storedQuery = @"storedQuery";
 
 @interface HVLocalRecordStore (HVPrivate)
 
+-(BOOL) ensureMetadataStore;
 -(BOOL) ensureDataStore;
 
 -(NSString *) makeViewKey:(NSString *) name;
@@ -61,9 +62,7 @@ static NSString* const c_storedQuery = @"storedQuery";
     m_root = [root newChildStore:record.ID];
     HVCHECK_NOTNULL(m_root);
     
-    m_metadata = [m_root newChildStore:[HVLocalRecordStore metadataStoreKey]];
-    HVCHECK_NOTNULL(m_metadata);
-    
+    HVCHECK_SUCCESS([self ensureMetadataStore]);    
     HVCHECK_SUCCESS([self ensureDataStore]);
     
     HVRETAIN(m_record, record);
@@ -147,16 +146,41 @@ LError:
     return @"Data";
 }
 
+-(BOOL)resetMetadata
+{
+    HVCLEAR(m_metadata);
+    [m_root deleteChildStore:[HVLocalRecordStore metadataStoreKey]];
+    
+    return [self ensureMetadataStore];
+}
+
 -(BOOL)resetData
 {
     HVCLEAR(m_data);
     [m_root deleteChildStore:[HVLocalRecordStore dataStoreKey]];
+    
     return [self ensureDataStore];
 }
 
 @end
 
 @implementation HVLocalRecordStore (HVPrivate)
+
+-(BOOL)ensureMetadataStore
+{
+    if (m_metadata)
+    {
+        return TRUE;
+    }
+    
+    m_metadata = [m_root newChildStore:[HVLocalRecordStore metadataStoreKey]];
+    HVCHECK_NOTNULL(m_metadata);
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
 
 -(BOOL) ensureDataStore
 {
