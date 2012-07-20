@@ -20,6 +20,7 @@
 #import "HVTypeViewItem.h"
 
 static NSString* const c_element_date = @"date";
+static NSString* const c_element_dateShort = @"dt";
 
 @interface HVTypeViewItem (HVPrivate)
 
@@ -157,13 +158,31 @@ LError:
 {
     [super serialize:writer];
     
-    HVSERIALIZE_DATE(m_date, c_element_date);
+    if (m_date)
+    {
+        double timespan = (double) [m_date timeIntervalSinceReferenceDate];
+        HVSERIALIZE_DOUBLE(timespan, c_element_dateShort);
+        
+        //HVSERIALIZE_DATE(m_date, c_element_date);
+    }
 }
 
 -(void) deserialize:(XReader *)reader
 {
     [super deserialize:reader];
-    HVDESERIALIZE_DATE(m_date, c_element_date);
+    
+    double timespan = DBL_MIN;
+    HVDESERIALIZE_DOUBLE(timespan, c_element_dateShort);
+    if (timespan != DBL_MIN)
+    {
+        HVCLEAR(m_date);
+        m_date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:(NSTimeInterval) timespan];
+        HVCHECK_OOM(m_date);
+    }
+    else 
+    {
+        HVDESERIALIZE_DATE(m_date, c_element_date);
+    }
 }
 
 @end

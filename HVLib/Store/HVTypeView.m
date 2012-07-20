@@ -28,6 +28,8 @@ static NSString* const c_element_filter = @"filter";
 static NSString* const c_element_updateDate = @"updateDate";
 static NSString* const c_element_items = @"items";
 
+const int c_defaultReadAheadChunkSize = 25;
+
 @interface HVTypeView (HVPrivate)
 
 -(void) setTypeID:(NSString *) typeID;
@@ -173,7 +175,7 @@ LError:
 
 -(HVItem *)getItemAtIndex:(NSUInteger)index
 {
-    return [self getItemAtIndex:index readAheadCount:20];
+    return [self getItemAtIndex:index readAheadCount:c_defaultReadAheadChunkSize];
 }
 
 -(HVItem *)getItemAtIndex:(NSUInteger)index readAheadCount:(NSUInteger)readAheadCount
