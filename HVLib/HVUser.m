@@ -117,7 +117,7 @@ LError:
         HVRecord* hvRecord = [[HVRecord alloc] initWithRecord:record];
         HVCHECK_NOTNULL(hvRecord);
     
-        if (hvRecord.ID == current.ID)
+        if ([hvRecord.ID isEqualToString:current.ID])
         {
             m_currentIndex = m_records.count;
         }
@@ -294,7 +294,7 @@ LError:
     for (NSUInteger i = 0, count = m_records.count; i < count; ++i)
     {
         HVRecord* record = [m_records itemAtIndex:i];
-        if (currentRecordID && record.ID == currentRecordID)
+        if (currentRecordID && [record.ID isEqualToString:currentRecordID])
         {
             m_currentIndex = i;
         }
