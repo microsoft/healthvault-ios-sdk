@@ -39,6 +39,7 @@
 -(void) setContentLength:(NSUInteger) length;
 -(void) setContentRangeStart:(NSUInteger) start end:(NSUInteger) end;
 -(void) setContentType:(NSString *) type;
+-(void) setGzipCompression;
 
 @end
 

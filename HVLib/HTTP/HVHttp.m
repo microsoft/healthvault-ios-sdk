@@ -60,7 +60,7 @@ LError:
     
     if (m_error)
     {
-        return [m_error description];
+        return [m_error localizedDescription];
     }
     
     return [super description];
@@ -95,6 +95,11 @@ static NSString* const c_header_contentRange = @"Content-Range";
 -(void)setContentType:(NSString *)type
 {
     [self setValue:type forHTTPHeaderField:c_header_contentType];
+}
+
+-(void)setGzipCompression
+{
+    [self setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"]; 
 }
 
 @end
