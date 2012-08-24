@@ -34,10 +34,15 @@ static NSString* const c_element_environment = @"environment";
 
 -(void) getPeopleComplete:(HVTask *) task;
 -(HVGetAuthorizedPeopleTask *) createGetPeopleTask;
--(void) updateLegacyCurrentRecord;
+
 -(BOOL) updateWithPerson:(HVPersonInfo *) person;
 
 -(void)imageDownloadComplete:(HVTask *)task forRecord:(HVRecord *)record;
+
+-(void) updateLegacyRecords;
+-(void) updateLegacyCurrentRecord;
+-(HealthVaultRecord *) newLegacyRecord:(HVRecord *) record;
+-(void) clearLegacyRecords;
 
 @end
 
@@ -101,8 +106,7 @@ LError:
 {
     HVRecord* current = [[[self currentRecord] retain] autorelease];
     
-    HVCLEAR(m_name);
-    HVCLEAR(m_records);
+    [self clear];
     
     m_records = [[HVRecordCollection alloc] init];
     HVCHECK_NOTNULL(m_records);
@@ -117,7 +121,7 @@ LError:
         HVRecord* hvRecord = [[HVRecord alloc] initWithRecord:record];
         HVCHECK_NOTNULL(hvRecord);
     
-        if ([hvRecord.ID isEqualToString:current.ID])
+        if (current && [hvRecord.ID isEqualToString:current.ID])
         {
             m_currentIndex = m_records.count;
         }
@@ -204,6 +208,13 @@ LError:
     return nil;
 }
 
+-(void)clear
+{
+    HVCLEAR(m_name);
+    HVCLEAR(m_records);
+    m_currentIndex = 0;    
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN
@@ -252,6 +263,9 @@ LError:
     NSArray* persons = getPeopleTask.persons;
     if ([NSArray isNilOrEmpty:persons])
     {
+        // NO authorized people! App must be reauthorized
+        [self clear];
+        [self clearLegacyRecords];
         return;
     }
     
@@ -267,20 +281,6 @@ LError:
     
 }
 
--(void)updateLegacyCurrentRecord
-{
-    HVRecord* currentRecord = self.currentRecord;
-    
-    HealthVaultRecord* legacyRecord = [[HealthVaultRecord alloc] init];
-    legacyRecord.personId = currentRecord.personID;
-    legacyRecord.recordId = currentRecord.ID;
-    legacyRecord.recordName = currentRecord.name;
-    legacyRecord.relationship = currentRecord.relationship;
-    
-    [HVClient current].service.currentRecord = legacyRecord;
-    [legacyRecord release];
-}
-
 -(BOOL) updateWithPerson:(HVPersonInfo *) person
 {
     HVCHECK_NOTNULL(person);
@@ -291,16 +291,23 @@ LError:
     self.name = person.name;
     self.records = person.records;
     
-    for (NSUInteger i = 0, count = m_records.count; i < count; ++i)
+    if ([self hasRecords])
     {
-        HVRecord* record = [m_records itemAtIndex:i];
-        if (currentRecordID && [record.ID isEqualToString:currentRecordID])
+        for (NSUInteger i = 0, count = m_records.count; i < count; ++i)
         {
-            m_currentIndex = i;
+            HVRecord* record = [m_records itemAtIndex:i];
+            if (currentRecordID && [record.ID isEqualToString:currentRecordID])
+            {
+                m_currentIndex = i;
+            }
         }
+        [self updateLegacyRecords];
+   }
+    else 
+    {
+        [self clearLegacyRecords];
     }
     
-    [self updateLegacyCurrentRecord];
     return TRUE;
     
 LError:
@@ -319,6 +326,43 @@ LError:
     {
         [[[HVClient current].localVault getRecordStore:record] deletePersonalImage];
     }
+}
+
+-(void)updateLegacyRecords
+{
+    [self clearLegacyRecords];    
+    [self updateLegacyCurrentRecord];
+}
+
+-(void)updateLegacyCurrentRecord
+{
+    HVRecord* currentRecord = self.currentRecord;
+    if (currentRecord == nil)
+    {
+        [HVClient current].service.currentRecord = nil;
+        return;
+    }
+    
+    HealthVaultRecord* legacyRecord = [self newLegacyRecord:currentRecord];
+    [HVClient current].service.currentRecord = legacyRecord;
+    [legacyRecord release];
+}
+
+-(HealthVaultRecord *)newLegacyRecord:(HVRecord *)record
+{
+    HealthVaultRecord* legacyRecord = [[HealthVaultRecord alloc] init];
+    legacyRecord.personId = record.personID;
+    legacyRecord.recordId = record.ID;
+    legacyRecord.recordName = record.name;
+    legacyRecord.relationship = record.relationship;
+    
+    return legacyRecord;
+}
+
+-(void)clearLegacyRecords
+{
+    [[HVClient current].service.records removeAllObjects];
+    [HVClient current].service.currentRecord = nil;
 }
 
 @end

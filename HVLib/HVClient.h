@@ -75,11 +75,14 @@ enum HVAppProvisionStatus
 
 @property (readonly, nonatomic) enum HVAppProvisionStatus provisionStatus;
 @property (readonly, nonatomic) BOOL isProvisioned;
+@property (readonly, nonatomic) BOOL isAppCreated;
 
 @property (readonly, nonatomic) id<HealthVaultService> service;
 @property (readonly, nonatomic) HVUser* user;
+@property (readonly, nonatomic) BOOL hasUser;
 @property (readonly, nonatomic) HVRecordCollection* records;
 @property (readonly, nonatomic) HVRecord* currentRecord;
+@property (readonly, nonatomic) BOOL hasAuthorizedRecords;
 
 //-------------------------
 //
@@ -119,6 +122,8 @@ enum HVAppProvisionStatus
 //
 -(BOOL) resetProvisioning;
 -(BOOL) resetLocalVault;
+
+-(BOOL) isCurrentRecord:(HVRecord *) record;
 
 //-------------------------
 //

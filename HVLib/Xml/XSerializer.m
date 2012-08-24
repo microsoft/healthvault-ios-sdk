@@ -120,6 +120,10 @@ LError:
                 options:NSDataWritingAtomic | NSDataWritingFileProtectionComplete 
                 error:nil];
     }
+    @catch (id exception) 
+    {
+        [exception log];
+    }
     @finally 
     {
         [rawData release];
@@ -248,16 +252,23 @@ LError:
     HVCHECK_STRING(filePath);
     
     XReader* reader = nil;
-    NSData* fileData = [[NSData alloc] initWithContentsOfFile:filePath];
-    if (!fileData)
-    {
-        return nil;
-    }
+    NSData* fileData = nil;
     @try 
     {
+        fileData = [[NSData alloc] initWithContentsOfFile:filePath];
+        if (!fileData)
+        {
+            return nil;
+        }
+        
         reader = [[XReader alloc] initFromMemory:fileData];
         HVCHECK_NOTNULL(reader);
+        
         return [NSObject newFromReader:reader withRoot:root asClass:classObj];
+    }
+    @catch (id ex) 
+    {
+        [ex log];
     }
     @finally 
     {

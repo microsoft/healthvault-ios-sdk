@@ -85,11 +85,16 @@ LError:
 
 -(id)initWithTitle:(NSString *)title forInformationalMessage:(NSString *)message
 {
+    return [self initWithTitle:title forInformationalMessage:message withCallback:nil];
+}
+
+-(id)initWithTitle:(NSString *)title forInformationalMessage:(NSString *)message withCallback:(HVNotify)callback
+{
     return [self initWithTitle:title 
                     message:message 
                     cancelButtonText:NSLocalizedString(@"OK", @"OK button text")
                     okButtonText:nil 
-                    callback:nil];
+                    callback:callback];
 }
 
 -(void)dealloc
@@ -163,6 +168,22 @@ LError:
 +(HVUIAlert *)showInformationalMessage:(NSString *)message
 {
     HVUIAlert* alert = [[HVUIAlert alloc] initWithInformationalMessage:message];
+    HVCHECK_NOTNULL(alert);
+    
+    [alert show];
+    return alert;
+    
+LError:
+    return nil;
+}
+
++(HVUIAlert *)showInformationalMessage:(NSString *)message withCallback:(HVNotify) callback
+{
+    HVUIAlert* alert = [[HVUIAlert alloc] 
+                        initWithTitle:[HVClient current].settings.appName 
+                        forInformationalMessage:message 
+                        withCallback:callback];
+    
     HVCHECK_NOTNULL(alert);
     
     [alert show];

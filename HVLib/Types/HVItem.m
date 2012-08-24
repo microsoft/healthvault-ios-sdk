@@ -316,7 +316,6 @@ LError:
 {
     self.effectiveDate = nil;
     self.updated = nil;
-    self.updated = nil;
 }
 
 -(HVClientResult *) validate

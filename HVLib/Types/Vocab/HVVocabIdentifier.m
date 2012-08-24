@@ -36,7 +36,7 @@ NSString* const c_usdaFamily = @"usda";
 @implementation HVVocabIdentifier
 
 @synthesize name = m_name;
-@synthesize family = m_family;
+@synthesize family = m_family; 
 @synthesize version = m_version;
 @synthesize language = m_lang;
 @synthesize codeValue = m_codeValue;

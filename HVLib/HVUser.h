@@ -64,10 +64,12 @@
 -(id) initFromLegacyRecords:(NSArray *) recordArray;  // Infrastructure - will eventually go away
 //
 // Refresh the list of authorized records - in case there were changes made using the HealthVault Shell
+// It is possible that when this returns, you no longer have any authorized records
 //
 -(HVTask *) refreshAuthorizedRecords:(HVTaskCompletion) callback;
 //
 // Authorize additional records for this application to work with
+// It is possible that when this returns, you no longer have any authorized records
 //
 -(HVTask *) authorizeAdditionalRecords:(UIViewController *) parentController andCallback:(HVTaskCompletion) callback;
 //
@@ -76,8 +78,13 @@
 //
 -(HVTask *) downloadRecordImageFor:(HVRecord *) record withCallback:(HVTaskCompletion) callback;
 
+-(void) clear;
 
 -(HVClientResult *) validate;
+
+//
+// For internal use only. Do not call
+//
 -(BOOL) updateWithLegacyRecords:(NSArray *) records;
 
 @end

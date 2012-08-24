@@ -33,6 +33,7 @@ static HVClient* s_app;
 -(void) setUser:(HVUser *) user;
 -(BOOL) saveUser;
 -(void) deleteUser;
+-(void) applyUserEnvironment;
 
 //
 // Callbacks from HealthVaultService
@@ -86,7 +87,17 @@ static HVClient* s_app;
 
 -(BOOL)isProvisioned
 {
-    return (![NSString isNilOrEmpty:m_service.sessionSharedSecret] && m_user && m_user.hasRecords);
+    return ([self isAppCreated] && m_user && m_user.hasRecords);
+}
+
+-(BOOL)isAppCreated
+{
+    return [m_service isAppCreated];
+}
+
+-(BOOL)hasUser
+{
+    return (m_user != nil);
 }
 
 -(HVRecordCollection *)records
@@ -97,6 +108,11 @@ static HVClient* s_app;
 -(HVRecord *)currentRecord
 {
     return (m_user) ? m_user.currentRecord : nil;
+}
+
+-(BOOL)hasAuthorizedRecords
+{
+    return ![NSArray isNilOrEmpty:self.records];
 }
 
 -(id) init
@@ -118,7 +134,7 @@ static HVClient* s_app;
     
     [self loadState];
     
-    if (m_user.hasRecords)
+    if (self.hasAuthorizedRecords)
     {
         m_provisionStatus = HVAppProvisionSuccess;
     }
@@ -195,15 +211,8 @@ LError:
         HVCLEAR(m_user);
         self.user = [self loadUser]; // ok if this is null
         
-        NSString* userEnvironment = self.user.environment;
-        if (![NSString isNilOrEmpty:userEnvironment])
-        {
-            HVEnvironmentSettings* environment = [m_settings environmentWithName:userEnvironment];
-            if (environment)
-            {
-                [m_service applyEnvironmentSettings:environment];
-            }
-        }
+        [self applyUserEnvironment];
+        
         return TRUE;
         
     LError:
@@ -283,6 +292,16 @@ LError:
     LError:
         return FALSE;
     }    
+}
+
+-(BOOL)isCurrentRecord:(HVRecord *)record
+{
+    if (!record)
+    {
+        return FALSE;
+    }
+    
+    return (self.currentRecord && [self.currentRecord.ID isEqualToString:record.ID]);
 }
 
 -(HVLocalRecordStore *)getCurrentRecordStore
@@ -377,6 +396,26 @@ LError:
         [m_localVault.root deleteKey:c_userfileName];
         self.user = nil;
     }
+}
+
+-(void)applyUserEnvironment
+{
+    if (!self.hasUser)
+    {
+        return;
+    }
+    
+    NSString* userEnvironment = self.user.environment;
+    if ([NSString isNilOrEmpty:userEnvironment])
+    {
+        return;
+    }
+    
+    HVEnvironmentSettings* environment = [m_settings environmentWithName:userEnvironment];
+    if (environment)
+    {
+        [m_service applyEnvironmentSettings:environment];
+    }    
 }
 
 -(HealthVaultService *)newService

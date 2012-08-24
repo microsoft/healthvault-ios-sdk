@@ -123,6 +123,7 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
     _responseBody = [[NSMutableData data] retain];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString: url]];
+    [request setGzipCompression];
 	
 /*
 #ifdef CONNECTION_ALLOW_ANY_HTTPS_CERTIFICATE

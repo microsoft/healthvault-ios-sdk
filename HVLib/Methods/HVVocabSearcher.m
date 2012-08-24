@@ -233,7 +233,7 @@ LError:
 @implementation HVVocabSearcher (HVPrivate)
 
 -(void)searchComplete:(HVVocabSearchTask *)task forString:(NSString *)searchText seqNumber:(NSUInteger)seq
-{
+{    
     @try 
     {
         HVVocabCodeSet* results = task.searchResult;

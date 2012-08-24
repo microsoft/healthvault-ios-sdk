@@ -269,6 +269,11 @@ LError:
 				shellAuthRequired: shellAuthRequired];
 }
 
+-(BOOL)isAppCreated
+{
+    return [self getIsApplicationCreated];
+}
+
 - (BOOL)getIsApplicationCreated {
 	
 	return self.authorizationSessionToken != nil;

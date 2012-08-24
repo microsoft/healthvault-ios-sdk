@@ -41,6 +41,7 @@
 @property (retain) NSString *applicationCreationToken;
 @property (retain) NSMutableArray *records;
 @property (retain) HealthVaultRecord *currentRecord;
+@property (readonly) BOOL isAppCreated;
 
 - (NSString *)getApplicationCreationUrl;
 - (NSString *)getUserAuthorizationUrl;
@@ -121,6 +122,7 @@
 
 /// Gets or sets the person and record that will be used.
 @property (retain) HealthVaultRecord *currentRecord;
+@property (readonly) BOOL isAppCreated;
 
 /// Is YES if current application instance has already been created, otherwise FALSE.
 @property (readonly, getter = getIsApplicationCreated) BOOL isApplicationCreated;

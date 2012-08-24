@@ -53,6 +53,7 @@ enum HVUIAlertResult
 -(id) initWithTitle:(NSString *) title message:(NSString *) message cancelButtonText:(NSString *) cancelText okButtonText:(NSString *) okText callback:(HVNotify) callback;
 -(id) initWithInformationalMessage:(NSString *) message;
 -(id) initWithTitle:(NSString *) title forInformationalMessage:(NSString *) message;
+-(id) initWithTitle:(NSString *) title forInformationalMessage:(NSString *) message withCallback:(HVNotify) callback;
 
 //-------------------------
 //
@@ -65,6 +66,7 @@ enum HVUIAlertResult
 +(HVUIAlert *) showYesNoWithMessage:(NSString *) message callback:(HVNotify) callback;
 +(HVUIAlert *) showWithTitle:(NSString *) title message:(NSString *) message callback:(HVNotify) callback;
 +(HVUIAlert *) showInformationalMessage:(NSString *) message;
++(HVUIAlert *) showInformationalMessage:(NSString *)message withCallback:(HVNotify) callback;
 +(HVUIAlert *) showPromptWithMessage:(NSString *) message callback:(HVNotify) callback;
 +(HVUIAlert *) showPromptWithMessage:(NSString *) message defaultText:(NSString *) defaultText andCallback:(HVNotify) callback;
 

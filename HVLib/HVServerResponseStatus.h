@@ -40,6 +40,7 @@ enum HVServerStatusCode
     HVServerStatusTypeIDNotFound = 19,
     HVServerStatusCodeRequestTimedOut = 0x31,
     HVServerStatusCodeVersionStampMismatch = 0x3d,
+    HVServerStatusAuthSessionTokenExpired = 0x41,
     HVServerStatusCodeRecordQuotaExceeded = 0x44,
     HVServerStatusCodeApplicationLimitExceeded = 0x5d,
     HVServerStatusCodeVocabAccessDenied = 130,
