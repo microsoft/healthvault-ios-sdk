@@ -284,7 +284,7 @@ LError:
 
 -(NSString *)dateTimeToString:(NSDate *)date
 {
-    return [self dateToString:date withFormat:@"MM/dd/YY hh:mm aaa"];
+    return [self dateToString:date withFormat:@"MM/dd/yy hh:mm aaa"];
 }
 
 @end

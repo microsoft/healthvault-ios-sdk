@@ -131,7 +131,7 @@ LError:
 
 -(NSString *) toString
 {
-    return [self toStringWithFormat:@"MM/dd/YY hh:mm aaa"];
+    return [self toStringWithFormat:@"MM/dd/yy hh:mm aaa"];
 }
 
 -(NSString *)toStringWithFormat:(NSString *)format

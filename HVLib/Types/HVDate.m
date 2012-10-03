@@ -239,7 +239,7 @@ LError:
 
 -(NSString *) toString
 {
-    return [self toStringWithFormat:@"MM/dd/YY"];   
+    return [self toStringWithFormat:@"MM/dd/yy"];   
 }
 
 -(NSString *)toStringWithFormat:(NSString *)format
