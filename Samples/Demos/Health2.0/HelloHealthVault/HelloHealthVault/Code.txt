@@ -1,0 +1,83 @@
+
+//------------  
+//
+// StartApp
+//
+//------------
+ // [[HVClient current] resetProvisioning];
+ [[HVClient current] startWithParentController:self andStartedCallback:^(id sender) 
+     {
+         if ([HVClient current].provisionStatus == HVAppProvisionSuccess)
+         {
+             self.navigationItem.title = [HVClient current].currentRecord.name;  // Show the record owner's name
+             [self getWeights];   
+         }
+     }];
+
+
+//------------
+//
+// Get Weights
+//
+//------------
+
+    [[HVClient current].currentRecord getItemsForType:[HVWeight typeID] callback:^(HVTask *task) 
+     {
+         m_items = [((HVGetItemsTask *) task).itemsRetrieved retain];
+         //
+         // Refresh UI
+         //
+         [self.itemsTable reloadData];
+     }];
+
+//----------
+//
+// Display Weights
+//
+//-----------
+    HVWeight* weight = [m_items itemAtIndex:index].weight;
+    //
+    // Display WHEN the weight measurement was taken
+    //
+    cell.textLabel.text = [weight.when toStringWithFormat:@"MM/dd/YY hh:mm aaa"];
+    //
+    // Display the weight in pounds
+    //
+    cell.detailTextLabel.text = [weight stringInPounds];
+
+//------------
+//
+// Add new weight
+//
+//------------
+    HVItem* item = [[HVWeight newItem] autorelease];
+    
+    item.weight.inPounds = 135;
+    item.weight.when = [[HVDateTime alloc] initNow];  
+    
+    [[HVClient current].currentRecord putItem:item callback:^(HVTask *task) 
+     {
+         [self getWeights];  // refresh the UI  
+     } ];
+
+
+
+//
+// RESET
+//
+-(void)startApp
+{
+}
+
+-(void)getWeights
+{
+}
+
+-(void)displayItemAtIndex:(NSUInteger)index inCell:(UITableViewCell *)cell
+{
+}
+
+-(void)addNewWeight
+{
+}
+
