@@ -70,6 +70,8 @@ HVDECLARE_GETTOR(HVQuestionAnswer, questionAnswer);
 
 HVDECLARE_GETTOR(HVDailyDietaryIntake, dailyDietaryIntake);
 
+HVDECLARE_GETTOR(HVDietaryIntake, dietaryIntake);
+
 HVDECLARE_GETTOR(HVSleepJournalAM, sleepJournalAM);
 
 HVDECLARE_GETTOR(HVSleepJournalPM, sleepJournalPM);

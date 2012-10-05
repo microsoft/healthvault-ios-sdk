@@ -76,7 +76,8 @@ static HVTypeSystem* s_typeRegistry;
     [s_typeRegistry addClass:[HVExercise class] forTypeID:[HVExercise typeID]];
     [s_typeRegistry addClass:[HVDailyMedicationUsage class] forTypeID:[HVDailyMedicationUsage typeID]];
     [s_typeRegistry addClass:[HVEmotionalState class] forTypeID:[HVEmotionalState typeID]];
-    [s_typeRegistry addClass:[HVDailyDietaryIntake class] forTypeID:[HVDailyDietaryIntake typeID]];   
+    [s_typeRegistry addClass:[HVDailyDietaryIntake class] forTypeID:[HVDailyDietaryIntake typeID]]; 
+    [s_typeRegistry addClass:[HVDietaryIntake class] forTypeID:[HVDietaryIntake typeID]]; 
     [s_typeRegistry addClass:[HVSleepJournalAM class] forTypeID:[HVSleepJournalAM typeID]];
     [s_typeRegistry addClass:[HVSleepJournalPM class] forTypeID:[HVSleepJournalPM typeID]];
 

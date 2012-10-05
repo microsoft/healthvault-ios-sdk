@@ -182,10 +182,6 @@
 		5D591D2C1547330100EAC934 /* HVGetPersonalImageTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D591D2A1547330100EAC934 /* HVGetPersonalImageTask.h */; };
 		5D591D2D1547330100EAC934 /* HVGetPersonalImageTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D591D2B1547330100EAC934 /* HVGetPersonalImageTask.m */; };
 		5D5F3112150E95E700ED11E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5F3111150E95E700ED11E7 /* UIKit.framework */; };
-		5D5F311B150E9A3E00ED11E7 /* HVCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3114150E9A3B00ED11E7 /* HVCollection.h */; };
-		5D5F311C150E9A3E00ED11E7 /* HVCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3115150E9A3B00ED11E7 /* HVCollection.m */; };
-		5D5F311D150E9A3E00ED11E7 /* HVMulticastDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3116150E9A3B00ED11E7 /* HVMulticastDelegate.h */; };
-		5D5F311E150E9A3E00ED11E7 /* HVMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3117150E9A3B00ED11E7 /* HVMulticastDelegate.m */; };
 		5D5F311F150E9A3E00ED11E7 /* HVCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3118150E9A3B00ED11E7 /* HVCommon.c */; };
 		5D5F3120150E9A3E00ED11E7 /* HVClientSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3119150E9A3C00ED11E7 /* HVClientSettings.h */; };
 		5D5F3121150E9A3E00ED11E7 /* HVClientSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F311A150E9A3D00ED11E7 /* HVClientSettings.m */; };
@@ -265,6 +261,12 @@
 		5D775C901538E9BA000F01AE /* HVAssessmentField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C8E1538E9B9000F01AE /* HVAssessmentField.m */; };
 		5D775C931538EBF9000F01AE /* HVAssessment.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D775C911538EBF5000F01AE /* HVAssessment.h */; };
 		5D775C941538EBF9000F01AE /* HVAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D775C921538EBF6000F01AE /* HVAssessment.m */; };
+		5D88C5DB161F4E5700F74D54 /* HVDailyDietaryIntake.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D88C5D9161F4E5700F74D54 /* HVDailyDietaryIntake.h */; };
+		5D88C5DC161F4E5700F74D54 /* HVDailyDietaryIntake.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D88C5DA161F4E5700F74D54 /* HVDailyDietaryIntake.m */; };
+		5D88C5E0161F4EDF00F74D54 /* HVFoodEnergyValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D88C5DE161F4EDF00F74D54 /* HVFoodEnergyValue.h */; };
+		5D88C5E1161F4EDF00F74D54 /* HVFoodEnergyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D88C5DF161F4EDF00F74D54 /* HVFoodEnergyValue.m */; };
+		5D88C5E4161F4F1700F74D54 /* HVNutritionFact.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D88C5E2161F4F1700F74D54 /* HVNutritionFact.h */; };
+		5D88C5E5161F4F1700F74D54 /* HVNutritionFact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D88C5E3161F4F1700F74D54 /* HVNutritionFact.m */; };
 		5D8E5A9E152FA913002BC6E2 /* HVCholesterol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8E5A9C152FA913002BC6E2 /* HVCholesterol.h */; };
 		5D8E5A9F152FA913002BC6E2 /* HVCholesterol.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8E5A9D152FA913002BC6E2 /* HVCholesterol.m */; };
 		5D8E5AA7152FBBA4002BC6E2 /* HVAllergy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8E5AA5152FBBA3002BC6E2 /* HVAllergy.h */; };
@@ -673,6 +675,12 @@
 		5D775C8E1538E9B9000F01AE /* HVAssessmentField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAssessmentField.m; sourceTree = "<group>"; };
 		5D775C911538EBF5000F01AE /* HVAssessment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAssessment.h; sourceTree = "<group>"; };
 		5D775C921538EBF6000F01AE /* HVAssessment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVAssessment.m; sourceTree = "<group>"; };
+		5D88C5D9161F4E5700F74D54 /* HVDailyDietaryIntake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDailyDietaryIntake.h; sourceTree = "<group>"; };
+		5D88C5DA161F4E5700F74D54 /* HVDailyDietaryIntake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDailyDietaryIntake.m; sourceTree = "<group>"; };
+		5D88C5DE161F4EDF00F74D54 /* HVFoodEnergyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFoodEnergyValue.h; sourceTree = "<group>"; };
+		5D88C5DF161F4EDF00F74D54 /* HVFoodEnergyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFoodEnergyValue.m; sourceTree = "<group>"; };
+		5D88C5E2161F4F1700F74D54 /* HVNutritionFact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVNutritionFact.h; sourceTree = "<group>"; };
+		5D88C5E3161F4F1700F74D54 /* HVNutritionFact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVNutritionFact.m; sourceTree = "<group>"; };
 		5D8E5A9C152FA913002BC6E2 /* HVCholesterol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCholesterol.h; sourceTree = "<group>"; };
 		5D8E5A9D152FA913002BC6E2 /* HVCholesterol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCholesterol.m; sourceTree = "<group>"; };
 		5D8E5AA5152FBBA3002BC6E2 /* HVAllergy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVAllergy.h; sourceTree = "<group>"; };
@@ -1145,6 +1153,10 @@
 				5D20D2E514EDDEF400160611 /* HVDisplayValue.m */,
 				5DC799721534E3ED00193A3B /* HVNameValue.h */,
 				5DC799731534E3EE00193A3B /* HVNameValue.m */,
+				5D88C5DE161F4EDF00F74D54 /* HVFoodEnergyValue.h */,
+				5D88C5DF161F4EDF00F74D54 /* HVFoodEnergyValue.m */,
+				5D88C5E2161F4F1700F74D54 /* HVNutritionFact.h */,
+				5D88C5E3161F4F1700F74D54 /* HVNutritionFact.m */,
 				5D195D0D151BEB9F00E109AD /* HVAddress.h */,
 				5D195D0E151BEBA000E109AD /* HVAddress.m */,
 				5D195D11151BF01600E109AD /* HVPhone.h */,
@@ -1290,6 +1302,8 @@
 				5D775C821538D86A000F01AE /* HVEmotionalState.m */,
 				5D1F13361539FF6200524425 /* HVDietaryIntake.h */,
 				5D1F13371539FF6300524425 /* HVDietaryIntake.m */,
+				5D88C5D9161F4E5700F74D54 /* HVDailyDietaryIntake.h */,
+				5D88C5DA161F4E5700F74D54 /* HVDailyDietaryIntake.m */,
 				5DE34C96153957AA003C24E8 /* HVSleepJournalAM.h */,
 				5DE34C97153957AB003C24E8 /* HVSleepJournalAM.m */,
 				5D1F13221539DD5200524425 /* HVSleepJournalPM.h */,
@@ -1514,8 +1528,6 @@
 				5DC50C5015017CC50078D85F /* HVAsyncTask.h in Headers */,
 				5DC50C5C1506F6040078D85F /* HVClient.h in Headers */,
 				5DC50C601508049F0078D85F /* HVLocalVault.h in Headers */,
-				5D5F311B150E9A3E00ED11E7 /* HVCollection.h in Headers */,
-				5D5F311D150E9A3E00ED11E7 /* HVMulticastDelegate.h in Headers */,
 				5D5F3120150E9A3E00ED11E7 /* HVClientSettings.h in Headers */,
 				5D5F3126150EAD8400ED11E7 /* HVDirectory.h in Headers */,
 				5D5F3131150ED29F00ED11E7 /* HVBrowserController.h in Headers */,
@@ -1637,6 +1649,9 @@
 				5D74847E157A7C5E001A7713 /* HVStoredQuery.h in Headers */,
 				5DF91081158D09930027E0A8 /* HVNonNegativeDouble.h in Headers */,
 				5D1D460D1596301B00383979 /* HVKeyChain.h in Headers */,
+				5D88C5DB161F4E5700F74D54 /* HVDailyDietaryIntake.h in Headers */,
+				5D88C5E0161F4EDF00F74D54 /* HVFoodEnergyValue.h in Headers */,
+				5D88C5E4161F4F1700F74D54 /* HVNutritionFact.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1666,7 +1681,7 @@
 		5D5299A314DCB3A700D2636E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Microsoft Corporation";
 			};
 			buildConfigurationList = 5D5299A614DCB3A700D2636E /* Build configuration list for PBXProject "HVLib" */;
@@ -1767,8 +1782,6 @@
 				5DC50C5115017CC50078D85F /* HVAsyncTask.m in Sources */,
 				5DC50C5D1506F6040078D85F /* HVClient.m in Sources */,
 				5DC50C611508049F0078D85F /* HVLocalVault.m in Sources */,
-				5D5F311C150E9A3E00ED11E7 /* HVCollection.m in Sources */,
-				5D5F311E150E9A3E00ED11E7 /* HVMulticastDelegate.m in Sources */,
 				5D5F311F150E9A3E00ED11E7 /* HVCommon.c in Sources */,
 				5D5F3121150E9A3E00ED11E7 /* HVClientSettings.m in Sources */,
 				5D5F3127150EAD8400ED11E7 /* HVDirectory.m in Sources */,
@@ -1887,6 +1900,9 @@
 				5D74847F157A7C5E001A7713 /* HVStoredQuery.m in Sources */,
 				5DF91082158D09930027E0A8 /* HVNonNegativeDouble.m in Sources */,
 				5D1D460E1596301B00383979 /* HVKeyChain.m in Sources */,
+				5D88C5DC161F4E5700F74D54 /* HVDailyDietaryIntake.m in Sources */,
+				5D88C5E1161F4EDF00F74D54 /* HVFoodEnergyValue.m in Sources */,
+				5D88C5E5161F4F1700F74D54 /* HVNutritionFact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

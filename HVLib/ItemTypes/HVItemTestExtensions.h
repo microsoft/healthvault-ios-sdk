@@ -82,6 +82,12 @@ NSString* pickRandomDrug(void);
 
 @end
 
+@interface HVDietaryIntake (HVTestExtensions)
+
++(HVItem *) createRandom;
+
+@end
+
 @interface HVExercise (HVTestExtensions)
 
 +(HVItem *) createRandom;
@@ -189,3 +195,4 @@ NSString* pickRandomDrug(void);
 @property (readwrite, nonatomic) double failureProbability;
 
 @end
+

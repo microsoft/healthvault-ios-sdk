@@ -27,6 +27,7 @@
 #import "HVSleepJournalAM.h"
 #import "HVSleepJournalPM.h"
 #import "HVDietaryIntake.h"
+#import "HVDailyDietaryIntake.h"
 #import "HVAllergy.h"
 #import "HVCondition.h"
 #import "HVImmunization.h"
@@ -63,6 +64,7 @@
 -(HVAssessment *) assessment;
 -(HVQuestionAnswer *) questionAnswer;
 -(HVDailyDietaryIntake *) dailyDietaryIntake;
+-(HVDietaryIntake *) dietaryIntake;
 -(HVSleepJournalAM *) sleepJournalAM;
 -(HVSleepJournalPM *) sleepJournalPM;
 

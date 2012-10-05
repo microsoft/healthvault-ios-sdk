@@ -45,6 +45,9 @@
 #import "HVAssessmentField.h"
 #import "HVConditionEntry.h"
 
+#import "HVFoodEnergyValue.h"
+#import "HVNutritionFact.h"
+
 #import "HVAddress.h"
 #import "HVPhone.h"
 #import "HVEmail.h"
