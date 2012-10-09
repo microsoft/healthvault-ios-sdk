@@ -69,12 +69,12 @@ static NSString* const c_element_contentType = @"content-type";
         return [NSString stringWithFormat:@"%d %@", m_size, NSLocalizedString(@"bytes", @"Size in bytes")];
     }
     
-    if (m_size < 1024 * 1024)
+    if (m_size < (1024 * 1024))
     {
         return [NSString stringWithFormat:@"%.1f %@", ((double) m_size)/ 1024, NSLocalizedString(@"KB", @"Size in KB")];        
     }
     
-    return [NSString stringWithFormat:@"%.1f %@", ((double) m_size)/ 1024 * 1024, NSLocalizedString(@"MB", @"Size in MB")];            
+    return [NSString stringWithFormat:@"%.1f %@", ((double) m_size)/ (1024 * 1024), NSLocalizedString(@"MB", @"Size in MB")];
 }
 
 -(HVClientResult *)validate
