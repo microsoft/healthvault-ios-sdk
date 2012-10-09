@@ -361,7 +361,7 @@ LError:
 
 -(NSString *)toXmlString
 {
-    return [XSerializer serializeToString:self withRoot:@"info"];
+    return [self toXmlStringWithRoot:@"info"];
 }
 
 +(HVItem *)newFromXmlString:(NSString *) xml

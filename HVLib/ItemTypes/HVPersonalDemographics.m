@@ -174,5 +174,9 @@ LError:
     return [[HVItem alloc] initWithType:[HVPersonalDemographics typeID]];
 }
 
++(BOOL)isSingletonType
+{
+    return TRUE;
+}
 
 @end

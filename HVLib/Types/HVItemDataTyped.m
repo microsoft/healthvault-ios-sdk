@@ -37,6 +37,11 @@
     return FALSE;
 }
 
+-(BOOL)isSingleton
+{
+    return [[self class] isSingletonType];
+}
+
 -(NSDate *)getDate
 {
     return nil;
@@ -55,6 +60,11 @@
 -(NSString *)typeName
 {
     return c_emptyString;
+}
+
++(BOOL)isSingletonType
+{
+    return FALSE;
 }
 
 @end

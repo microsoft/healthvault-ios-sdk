@@ -35,6 +35,13 @@ static NSString* const c_NEGATIVEINF = @"-INF";
 static NSString* const c_TRUE = @"true";
 static NSString* const c_FALSE = @"false";
 
+@interface XConverter (HVPrivate)
+
+-(NSDateFormatter *) ensureDateFormatter;
+-(NSDateFormatter *) ensureDateParser;
+
+@end
+
 @implementation XConverter
 
 -(id) init
@@ -42,12 +49,6 @@ static NSString* const c_FALSE = @"false";
     self = [super init];
     HVCHECK_SELF;
 
-    m_parser = [[NSDateFormatter alloc] init]; // Default timezone
-    HVCHECK_NOTNULL(m_parser);
-    
-    m_formatter = [NSDateFormatter newZuluFormatter]; // always emit Zulu form
-    HVCHECK_NOTNULL(m_formatter);
-    
     m_stringBuffer = [[NSMutableString alloc] init];
     HVCHECK_NOTNULL(m_stringBuffer);
     
@@ -352,11 +353,13 @@ LError:
     HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
     [m_stringBuffer replaceOccurrencesOfString:@":" withString:@""];
     
+    NSDateFormatter* parser = [self ensureDateParser];
     for (int i = 0; i < c_xDateFormatCount; ++i)
     {
         NSString *format = s_xDateFormats[i];
-        [m_parser setDateFormat:format];
-        *result = [m_parser dateFromString:m_stringBuffer];
+        
+        [parser setDateFormat:format];
+        *result = [parser dateFromString:m_stringBuffer];
         if (*result)
         {
             return TRUE;
@@ -383,7 +386,8 @@ LError:
     HVCHECK_NOTNULL(source);
     HVCHECK_NOTNULL(result);
     
-    *result = [m_formatter stringFromDate:source];
+    NSDateFormatter* formatter = [self ensureDateFormatter];
+    *result = [formatter stringFromDate:source];
     HVCHECK_STRING(*result);
     
     return TRUE;
@@ -450,6 +454,32 @@ LError:
         [XException throwException:XExceptionTypeConversion reason:@"guidToString"]; 
     }
     return string;
+}
+
+@end
+
+@implementation XConverter (HVPrivate)
+
+-(NSDateFormatter *)ensureDateFormatter
+{
+    if (!m_formatter)
+    {
+        m_formatter = [NSDateFormatter newZuluFormatter]; // always emit Zulu form
+        HVCHECK_OOM(m_formatter);
+    }
+    
+    return m_formatter;    
+}
+
+-(NSDateFormatter *)ensureDateParser
+{
+    if (!m_parser)
+    {
+        m_parser = [[NSDateFormatter alloc] init];
+        HVCHECK_OOM(m_parser);
+    }
+    
+    return m_parser;    
 }
 
 @end

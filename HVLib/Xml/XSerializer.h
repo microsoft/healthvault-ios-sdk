@@ -48,6 +48,8 @@ NSString* const XExceptionNotSerializable;
 
 @interface NSObject (XSerializer)
 
+-(NSString *) toXmlStringWithRoot:(NSString *) root;
+
 +(id) newFromString:(NSString *)xml withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromReader:(XReader *) reader withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromFilePath:(NSString*) filePath withRoot:(NSString *) root asClass:(Class) classObj;

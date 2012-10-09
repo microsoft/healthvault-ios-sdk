@@ -34,8 +34,6 @@ const int c_defaultReadAheadChunkSize = 25;
 
 -(void) setTypeID:(NSString *) typeID;
 -(void) setFilter:(HVTypeFilter *) filter;
--(void) setLastUpdateDate:(NSDate *)lastUpdateDate;
--(void) setStore:(HVLocalRecordStore *) store;
 -(void) setItems:(HVTypeViewItems *) items;
 
 -(HVItemCollection *) getLocalItemsInRange:(NSRange) range andPendingList:(NSMutableArray **) pending;
@@ -82,6 +80,17 @@ const int c_defaultReadAheadChunkSize = 25;
     }
     
     return m_lastUpdateDate;
+}
+
+-(void)setLastUpdateDate:(NSDate *)lastUpdateDate
+{
+    HVRETAIN(m_lastUpdateDate, lastUpdateDate);
+}
+
+-(void)setStore:(HVLocalRecordStore *)store
+{
+    HVASSERT(store);
+    HVRETAIN(m_store, store);
 }
 
 -(void)setDelegate:(id<HVTypeViewDelegate>)delegate
@@ -551,17 +560,6 @@ LError:
 -(void)setFilter:(HVTypeFilter *)filter
 {
     HVRETAIN(m_filter, filter);
-}
-
--(void)setLastUpdateDate:(NSDate *)lastUpdateDate
-{
-    HVRETAIN(m_lastUpdateDate, lastUpdateDate);
-}
-
--(void)setStore:(HVLocalRecordStore *)store
-{
-    HVASSERT(store);
-    HVRETAIN(m_store, store);
 }
 
 -(void)setItems:(HVTypeViewItems *)items

@@ -16,6 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "HVCommon.h"
 #import "XSerializableType.h"
 
 @implementation XSerializableType
@@ -36,6 +37,17 @@
 
 -(void) deserialize:(XReader *)reader
 {
+}
+
+-(id) deepCopy
+{
+    NSString* xml = [self toXmlStringWithRoot:@"clone"];
+    HVCHECK_NOTNULL(xml);
+    
+    return [NSObject newFromString:xml withRoot:@"clone" asClass:[self class]];
+    
+LError:
+    return nil;
 }
 
 @end

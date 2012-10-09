@@ -33,7 +33,7 @@
 enum HVItemFlags
 {
     HVItemFlagNone = 0x00,
-    HVItemFlagPersonal = 0x01,  // Item is only accessible to custodians
+    HVItemFlagPersonal = 0x01,      // Item is only accessible to custodians
     HVItemFlagDownVersioned = 0x02, // Item converted from a newer format to an older format [cannot update]
     HVItemFlagUpVersioned = 0x04    // Item converted from an older format to a new format [can update]
 };
@@ -155,10 +155,11 @@ enum HVItemFlags
 //
 -(HVItem*) shallowClone;
 //
+// Sometimes you will take an existing item object, edit it inline and them PUT it back to HealthVault
 // Call this to clear fields that are typically set by the HV service
 // - EffectiveDate, UpdateDate, etc...
-// You will want to do this if you fetch an item from HV, update it and then
-// do a put. 
+//
+// NOTE: if you call HVRecordReference::update, this method will get called automatically
 //
 -(void) prepareForUpdate; 
 

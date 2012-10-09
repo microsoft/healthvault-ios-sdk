@@ -41,12 +41,15 @@
 // e.g. CCR & CCD
 //
 @property (readonly, nonatomic) BOOL hasRawData;
+@property (readonly, nonatomic) BOOL isSingleton;
 
 -(NSDate *) getDate;
 
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 -(NSString *) typeName;
+
++(BOOL) isSingletonType;
 
 @end
 

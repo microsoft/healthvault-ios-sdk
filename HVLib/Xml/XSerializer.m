@@ -170,6 +170,16 @@ LError:
 
 @implementation NSObject (XSerializer)
 
+-(NSString *)toXmlStringWithRoot:(NSString *)root
+{
+    HVCHECK_STRING(root);
+    
+    return [XSerializer serializeToString:self withRoot:root];
+    
+LError:
+    return nil;
+}
+
 +(id) newFromString:(NSString *)xml withRoot:(NSString *)root asClass:(Class)classObj
 {
     HVCHECK_STRING(xml);
