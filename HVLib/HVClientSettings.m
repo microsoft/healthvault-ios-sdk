@@ -28,6 +28,7 @@ static NSString* const c_element_friendlyName = @"friendlyName";
 static NSString* const c_element_serviceUrl = @"serviceUrl";
 static NSString* const c_element_shellUrl = @"shellUrl";
 static NSString* const c_element_environment = @"environment";
+static NSString* const c_element_appData = @"appData";
 static NSString* const c_element_deviceName = @"deviceName";
 static NSString* const c_element_country = @"country";
 static NSString* const c_element_language = @"language";
@@ -84,6 +85,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     return m_shellUrl;
 }
 
+@synthesize appDataXml = m_appData;
 
 -(void)dealloc
 {
@@ -91,6 +93,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     [m_friendlyName release];
     [m_serviceUrl release];
     [m_shellUrl release];
+    [m_appData release];
     
     [super dealloc];
 }
@@ -101,6 +104,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     HVSERIALIZE_STRING(m_friendlyName, c_element_friendlyName);
     HVSERIALIZE_URL(m_serviceUrl, c_element_serviceUrl);
     HVSERIALIZE_URL(m_shellUrl, c_element_shellUrl);
+    HVSERIALIZE_RAW(m_appData);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -109,6 +113,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     HVDESERIALIZE_STRING(m_friendlyName, c_element_friendlyName);
     HVDESERIALIZE_URL(m_serviceUrl, c_element_serviceUrl);
     HVDESERIALIZE_URL(m_shellUrl, c_element_shellUrl);
+    HVDESERIALIZE_RAW(m_appData, c_element_appData);
 }
 
 @end
@@ -128,6 +133,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
 @synthesize maxAttemptsPerRequest = m_maxAttemptsPerRequest;
 @synthesize useCachingInStore = m_useCachingInStore;
 @synthesize autoRequestDelay = m_autoRequestDelay;
+@synthesize appDataXml = m_appData;
 
 -(NSArray *)environments
 {
@@ -223,6 +229,8 @@ LError:
     [m_signInTitle release];
     [m_signInRetryMessage release];
     
+    [m_appData release];
+    
     [super dealloc];
 }
 
@@ -241,6 +249,8 @@ LError:
     HVSERIALIZE_INT(m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
     HVSERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
     HVSERIALIZE_DOUBLE(m_autoRequestDelay, c_element_autoRequestDelay);
+    
+    HVSERIALIZE_RAW(m_appData);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -262,6 +272,8 @@ LError:
     HVDESERIALIZE_INT(m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
     HVDESERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
     HVDESERIALIZE_DOUBLE(m_autoRequestDelay, c_element_autoRequestDelay);
+    
+    HVDESERIALIZE_RAW(m_appData, c_element_appData);
 }
 
 -(HVEnvironmentSettings *)environmentWithName:(NSString *)name

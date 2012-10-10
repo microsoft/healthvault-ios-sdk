@@ -24,13 +24,19 @@
     NSString* m_name;
     NSString* m_friendlyName;
     NSURL* m_serviceUrl;
-    NSURL* m_shellUrl;    
+    NSURL* m_shellUrl;
+    NSString* m_appData;
 }
 
 @property (readwrite, nonatomic, retain) NSString* name;
 @property (readwrite, nonatomic, retain) NSString* friendlyName;
 @property (readwrite, nonatomic, retain) NSURL* serviceUrl;
 @property (readwrite, nonatomic, retain) NSURL* shellUrl;
+//
+// Get/Set the outXml for an <appData> element
+// <appData> contain arbitray Xml that you can use as you see fit
+//
+@property (readwrite, nonatomic, retain) NSString* appDataXml;
 
 @end
 
@@ -54,6 +60,8 @@
     BOOL m_useCachingInStore;
     
     NSTimeInterval m_autoRequestDelay;
+    
+    NSString* m_appData;
 }
 
 @property (readwrite, nonatomic) BOOL debug;
@@ -79,6 +87,11 @@
 // If > 0, will automatically delay each request... useful for faking "slow" networks
 //
 @property (readwrite, nonatomic) NSTimeInterval autoRequestDelay;
+//
+// Get/Set the outXml for an <appData> element
+// <appData> contain arbitray Xml that you can use as you see fit
+//
+@property (readwrite, nonatomic, retain) NSString* appDataXml;
 
 @property (readonly, nonatomic) HVEnvironmentSettings* firstEnvironment;
 
