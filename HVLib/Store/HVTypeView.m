@@ -148,6 +148,34 @@ LError:
     return [m_items indexOfItemID:itemID];
 }
 
+-(NSUInteger)indexOfItemWithClosestDate:(NSDate *)date
+{    
+    NSUInteger index = [m_items searchForItem:date options:NSBinarySearchingInsertionIndex usingComparator:^(id o1, id o2) {
+        
+        HVTypeViewItem* item;
+        NSComparisonResult cmp;
+        if (date == o1)
+        {
+            item = (HVTypeViewItem *) o2;
+            cmp = [date compareDescending:item.date];
+        }
+        else
+        {
+            item = (HVTypeViewItem *) o1;
+            cmp = [item.date compareDescending:date];
+        }
+    
+        return cmp;
+    }];
+    
+    if (index != NSNotFound && index == m_items.count)
+    {
+        index = m_items.count - 1;
+    }
+    
+    return index;
+}
+
 -(BOOL)containsItemID:(NSString *)itemID
 {
     return ([self indexOfItemID:itemID] != NSNotFound);

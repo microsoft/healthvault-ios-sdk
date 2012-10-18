@@ -36,7 +36,8 @@
 -(HVTypeViewItem *) objectAtIndex:(NSUInteger) index;
 -(HVTypeViewItem *) objectForItemID:(NSString *) itemID;
 
--(NSUInteger) searchForItem:(HVTypeViewItem *)item withOptions:(NSBinarySearchingOptions) opts; 
+-(NSUInteger) searchForItem:(HVTypeViewItem *)item withOptions:(NSBinarySearchingOptions) opts;
+-(NSUInteger) searchForItem:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp;
 
 -(BOOL) contains:(HVTypeViewItem *) item;
 -(BOOL) containsID:(NSString *) itemID;
@@ -57,7 +58,6 @@
 -(NSArray *) selectIDsInRange:(NSRange) range;
 -(NSRange) correctRange:(NSRange) range;
 -(NSMutableArray*) selectItemsNotIn:(HVTypeViewItems *) items;
-
 //
 // 
 //

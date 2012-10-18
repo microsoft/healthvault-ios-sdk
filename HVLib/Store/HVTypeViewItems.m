@@ -120,6 +120,13 @@ LError:
     }];
 }
 
+-(NSUInteger)searchForItem:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp
+{
+    [self ensureOrdered];
+    
+    return [m_items binarySearch:object options:opts usingComparator:cmp];
+}
+
 -(BOOL) addItem:(HVTypeViewItem *)item
 {
     HVCHECK_NOTNULL(item);

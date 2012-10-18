@@ -27,6 +27,16 @@ static NSString* const c_element_hdl = @"hdl";
 static NSString* const c_element_total = @"total-cholesterol";
 static NSString* const c_element_triglycerides = @"triglyceride";
 
+double const c_cholesterolMolarMass = 386.6;  // g/mol
+double const c_triglyceridesMolarMass = 885.7; // g/mol
+
+@interface HVCholesterol (HVPrivate)
+
+-(double) cholesterolInMmolPerLiter:(HVPositiveInt *) value;
+-(int) cholesterolMgDLFromMmolPerLiter:(double) value;
+
+@end
+
 @implementation HVCholesterol
 
 @synthesize when = m_date;
@@ -82,6 +92,46 @@ static NSString* const c_element_triglycerides = @"triglyceride";
 {
     HVENSURE(m_total, HVPositiveInt);
     m_total.value = total;
+}
+
+-(double)ldlValueMmolPerLiter
+{
+    return [self cholesterolInMmolPerLiter:m_ldl];
+}
+
+-(void)setLdlValueMmolPerLiter:(double)ldlValueMmolPerLiter
+{
+    self.ldlValue = [self cholesterolMgDLFromMmolPerLiter:ldlValueMmolPerLiter];
+}
+
+-(double)hdlValueMmolPerLiter
+{
+    return [self cholesterolInMmolPerLiter:m_hdl];
+}
+
+-(void)setHdlValueMmolPerLiter:(double)hdlValueMmolPerLiter
+{
+    self.hdlValue = [self cholesterolMgDLFromMmolPerLiter:hdlValueMmolPerLiter];
+}
+
+-(double)totalValueMmolPerLiter
+{
+    return [self cholesterolInMmolPerLiter:m_total];
+}
+
+-(void)setTotalValueMmolPerLiter:(double)totalValueMmolPerLiter
+{
+    self.totalValue = [self cholesterolMgDLFromMmolPerLiter:totalValueMmolPerLiter];
+}
+
+-(double)triglyceridesValueMmolPerLiter
+{
+    return (m_triglycerides) ? (mgDLToMmolPerL(m_triglycerides.value, c_triglyceridesMolarMass)) : NAN;
+}
+
+-(void)setTriglyceridesValueMmolPerLiter:(double)triglyceridesValueMmolPerLiter
+{
+    self.triglyceridesValue = mmolPerLToMgDL(triglyceridesValueMmolPerLiter, c_triglyceridesMolarMass);
 }
 
 -(NSString *)description
@@ -161,6 +211,25 @@ LError:
 -(NSString *)typeName
 {
     return NSLocalizedString(@"Cholesterol", @"Cholesterol Type Name");
+}
+
+@end
+
+@implementation HVCholesterol (HVPrivate)
+
+-(double)cholesterolInMmolPerLiter:(HVPositiveInt *)value
+{
+    if (!value)
+    {
+        return NAN;
+    }
+    
+    return mgDLToMmolPerL(value.value, c_cholesterolMolarMass);
+}
+
+-(int)cholesterolMgDLFromMmolPerLiter:(double)value
+{
+    return round(mmolPerLToMgDL(value, c_cholesterolMolarMass));
 }
 
 @end

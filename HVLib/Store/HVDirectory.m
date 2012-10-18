@@ -412,7 +412,8 @@ LError:
 {
     @synchronized(self)
     {
-        NSString *filePath = [self makeFilePathIfExists:key];
+        //NSString *filePath = [self makeFilePathIfExists:key];
+        NSString* filePath = [self makeChildPath:key];
         if (!filePath)
         {
             return nil;

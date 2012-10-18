@@ -35,6 +35,24 @@ double roundToPrecision(double value, NSInteger precision)
     return round(value * places) / places;
 }
 
+double mgDLToMmolPerL(double mgDLValue, double molarWeight)
+{
+    //
+    // DL = 0.1 Liters
+    // (10 * mgDL)/1000 = g/L
+    // molarWeight * g/L = mol/L
+    // (mol/L) / 1000 = mmol/L
+    //
+    // ((10 * mgDL)/1000 * molarWeight) * 1000)
+    
+    return ((10 * mgDLValue) / molarWeight);
+}
+
+double mmolPerLToMgDL(double mmolPerL, double molarWeight)
+{
+    return (mmolPerL * molarWeight) / 10;
+}
+
 id HVClear(id obj)
 {
     if (obj)

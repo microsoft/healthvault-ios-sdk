@@ -151,7 +151,7 @@ LError:
 
 -(NSString *) description
 {
-    return [NSString stringWithFormat:@"%@ [%@, %@]", [m_date toStringWithFormat:@"MM/dd/yy hh:mmL:ss aaa"], self.itemID, self.version];
+    return [NSString stringWithFormat:@"%@ [%@, %@]", [m_date toStringWithFormat:@"MM/dd/yy hh:mm:ss aaa"], self.itemID, self.version];
 }
 
 -(void) serialize:(XWriter *)writer

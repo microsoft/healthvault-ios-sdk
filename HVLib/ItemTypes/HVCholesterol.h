@@ -19,6 +19,9 @@
 #import <Foundation/Foundation.h>
 #import "HVTypes.h"
 
+double const c_cholesterolMolarMass;
+double const c_triglyceridesMolarMass;
+
 //
 // Cholesterol (Lipid) profile
 //
@@ -42,19 +45,19 @@
 //
 @property (readwrite, nonatomic, retain) HVDate* when;
 //
-// (Optional)
+// (Optional) LDL value in mg/DL
 // 
 @property (readwrite, nonatomic, retain) HVPositiveInt* ldl;
 //
-// (Optional)
+// (Optional) HDL value in mg/DL
 //
 @property (readwrite, nonatomic, retain) HVPositiveInt* hdl;
 //
-// (Optional) Total cholesterol
+// (Optional) Total cholesterol in mg/DL
 //
 @property (readwrite, nonatomic, retain) HVPositiveInt* total;
 //
-// (Optional) 
+// (Optional) Triglycerides in mg/DL
 //
 @property (readwrite, nonatomic, retain) HVPositiveInt* triglycerides;
 //
@@ -64,6 +67,10 @@
 @property (readwrite, nonatomic) int hdlValue;
 @property (readwrite, nonatomic) int totalValue;
 @property (readwrite, nonatomic) int triglyceridesValue;
+@property (readwrite, nonatomic) double ldlValueMmolPerLiter;
+@property (readwrite, nonatomic) double hdlValueMmolPerLiter;
+@property (readwrite, nonatomic) double totalValueMmolPerLiter;
+@property (readwrite, nonatomic) double triglyceridesValueMmolPerLiter;
 
 //-------------------------
 //

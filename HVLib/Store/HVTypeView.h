@@ -89,6 +89,7 @@
 
 -(HVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
+-(NSUInteger) indexOfItemWithClosestDate:(NSDate *) date;
 -(BOOL) containsItemID:(NSString *) itemID;
 -(HVTypeViewItem *) itemForItemID:(NSString *) itemID;
 
