@@ -132,12 +132,12 @@ LError:
 
 +(double)mMolPerLiterToMgPerDL:(double)value
 {
-    return value * 0.0555;
+    return value * 18;
 }
 
 +(double)mgPerDLToMmolPerLiter:(double)value
 {
-    return value / 18.0182;
+    return value / 18;
 }
 
 -(HVClientResult *)validate
