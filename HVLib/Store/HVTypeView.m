@@ -36,8 +36,11 @@ const int c_defaultReadAheadChunkSize = 25;
 -(void) setFilter:(HVTypeFilter *) filter;
 -(void) setItems:(HVTypeViewItems *) items;
 
+-(NSRange) getChunkForIndex:(NSUInteger) index chunkSize:(NSUInteger) chunkSize;
+-(NSRange) getReadAheadRangeForIndex:(NSUInteger) index readAheadCount:(NSUInteger) readAheadCount;
 -(HVItemCollection *) getLocalItemsInRange:(NSRange) range andPendingList:(NSMutableArray **) pending;
 -(HVTask *) downloadItemsWithKeys:(NSMutableArray *) keys;
+
 -(void) setDownloadStatus:(BOOL) status forIndex:(NSUInteger) index;
 -(void) setDownloadStatus:(BOOL) status forKeys:(NSArray *) keys;
 -(void) setDownloadStatus:(BOOL)status forItems:(NSArray *) items;
@@ -66,6 +69,7 @@ const int c_defaultReadAheadChunkSize = 25;
 @synthesize store = m_store;
 @synthesize delegate = m_delegate;
 @synthesize tag = m_tag;
+@synthesize readAheadModeChunky = m_readAheadModeChunky;
 
 -(HVRecordReference *)record
 {
@@ -119,6 +123,7 @@ const int c_defaultReadAheadChunkSize = 25;
     self.typeID = typeID;
     self.filter = filter;
     self.store = store;
+    self.readAheadModeChunky = FALSE;
     
     return self;
     
@@ -235,7 +240,16 @@ LError:
     //
     // Find the items we don't already have cached, and start loading them
     //
-    NSRange range = [m_items correctRange:NSMakeRange(index, readAheadCount)];
+    NSRange range;
+    if (m_readAheadModeChunky)
+    {
+        range = [self getChunkForIndex:index chunkSize:readAheadCount];
+    }
+    else
+    {
+        range = [self getReadAheadRangeForIndex:index readAheadCount:readAheadCount];
+    }
+    
     HVItemCollection* items = [self getItemsInRange:range];
     //
     // In case one showed up while we were working
@@ -627,6 +641,19 @@ LError:
     {
         [newViewItems release];
     }
+}
+
+-(NSRange)getChunkForIndex:(NSUInteger)index chunkSize:(NSUInteger)chunkSize
+{
+    NSUInteger chunk = index / chunkSize;
+    NSUInteger chunkStartAt = chunk * chunkSize;
+    NSRange range = [m_items correctRange:NSMakeRange(chunkStartAt, chunkSize)];
+    return range;
+}
+
+-(NSRange)getReadAheadRangeForIndex:(NSUInteger)index readAheadCount:(NSUInteger)readAheadCount
+{
+    return [m_items correctRange:NSMakeRange(index, readAheadCount)];
 }
 
 -(HVItemCollection *)getLocalItemsInRange:(NSRange)range andPendingList:(NSMutableArray **)pending

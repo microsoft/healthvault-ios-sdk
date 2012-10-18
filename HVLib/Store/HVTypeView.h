@@ -57,6 +57,7 @@
     HVLocalRecordStore* m_store;
     
     id<HVTypeViewDelegate> m_delegate;
+    BOOL m_readAheadModeChunky;
     
     NSInteger m_tag;
 }
@@ -72,6 +73,7 @@
 @property (readwrite, nonatomic, retain) id<HVTypeViewDelegate> delegate;
 
 @property (readwrite, nonatomic) NSInteger tag;
+@property (readwrite, nonatomic, assign) BOOL readAheadModeChunky;
 
 //------------------
 //
