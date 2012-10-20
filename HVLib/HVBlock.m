@@ -96,3 +96,20 @@ void safeInvokeNotify(HVNotify notify, id sender)
         }
     }
 }
+
+BOOL safeInvokeHandler(HVHandler handler, id value)
+{
+    if (handler)
+    {
+        @try
+        {
+            return handler(value);
+        }
+        @catch(id ex)
+        {
+            [ex log];
+        }
+    }
+    
+    return false;
+}

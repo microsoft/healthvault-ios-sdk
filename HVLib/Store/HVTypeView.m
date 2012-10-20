@@ -107,6 +107,16 @@ const int c_defaultReadAheadChunkSize = 25;
     return m_items.count;
 }
 
+-(NSDate *)minDate
+{
+    return m_items.minDate;
+}
+
+-(NSDate *)maxDate
+{
+    return m_items.maxDate;
+}
+
 -(id)initForTypeID:(NSString *)typeID overStore:(HVLocalRecordStore *)store
 {
     return [self initForTypeID:typeID filter:nil overStore:store];

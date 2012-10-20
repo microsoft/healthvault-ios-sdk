@@ -30,6 +30,8 @@
 @property (readonly, nonatomic) NSUInteger count;
 @property (readonly, nonatomic) NSDate* maxDate;
 @property (readonly, nonatomic) NSDate* minDate;
+@property (readonly, nonatomic) HVTypeViewItem* firstItem;
+@property (readonly, nonatomic) HVTypeViewItem* lastItem;
 
 -(id) init;
 

@@ -75,6 +75,9 @@
 @property (readwrite, nonatomic) NSInteger tag;
 @property (readwrite, nonatomic, assign) BOOL readAheadModeChunky;
 
+@property (readonly, nonatomic) NSDate* minDate;
+@property (readonly, nonatomic) NSDate* maxDate;
+
 //------------------
 //
 // Initializers

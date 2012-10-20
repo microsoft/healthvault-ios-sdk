@@ -56,6 +56,27 @@ static NSString* const c_element_item = @"item";
     return [self objectAtIndex:count - 1].date;
 }
 
+-(HVTypeViewItem *)firstItem
+{
+    if (m_items.count == 0)
+    {
+        return nil;
+    }
+    
+    return [self objectAtIndex:0];    
+}
+
+-(HVTypeViewItem *)lastItem
+{
+    NSUInteger count = m_items.count;
+    if (count == 0)
+    {
+        return nil;
+    }
+    
+    return [self objectAtIndex:count - 1];    
+}
+
 -(id) init
 {
     self = [super init];
