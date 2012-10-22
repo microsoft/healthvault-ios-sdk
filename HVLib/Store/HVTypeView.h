@@ -22,7 +22,6 @@
 #import "HVTypeViewItems.h"
 #import "HVLocalVault.h"
 #import "HVItemFilter.h"
-#import "HVIndexList.h"
 
 @class HVSynchronizedStore;
 @class HVTypeView;

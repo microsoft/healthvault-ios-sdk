@@ -139,9 +139,14 @@ NSString* const XExceptionNotSerializable;
 -(void) writeElement:(NSString *) name content:(id<XSerializable>) content; 
 -(void) writeElement:(NSString *) name intValue:(int) value;
 -(void) writeElement:(NSString *) name doubleValue:(double) value;
-
 -(void) writeElement:(NSString *) name dateValue:(NSDate*) value;
 -(void) writeElement:(NSString *) name boolValue:(BOOL) value;
+//
+// If value conforms to XSerializable, calls writeElementRequired:content
+// If NSString, writes out raw string as element content
+// Else calls value.description and writes that
+//
+-(void) writeElement:(NSString *) name object:(id) value;
 
 -(void) writeElementArray:(NSString *)name elements:(NSArray *) array;
 -(void) writeElementArray:(NSString *)name itemName:(NSString*) itemName elements:(NSArray *)array;

@@ -164,6 +164,8 @@
 		5D39F938151A3AA200208A7B /* HVLocalItemStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D39F936151A3AA100208A7B /* HVLocalItemStore.m */; };
 		5D39F93B151A718C00208A7B /* HVLocalRecordStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F939151A718900208A7B /* HVLocalRecordStore.h */; };
 		5D39F93C151A718C00208A7B /* HVLocalRecordStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */; };
+		5D4A93211635BC49007390B7 /* HVDictionaryExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4A931F1635BC48007390B7 /* HVDictionaryExtensions.h */; };
+		5D4A93221635BC49007390B7 /* HVDictionaryExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4A93201635BC49007390B7 /* HVDictionaryExtensions.m */; };
 		5D5299B014DCB3A700D2636E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AF14DCB3A700D2636E /* Foundation.framework */; };
 		5D561B0515365F74003D68D2 /* HVEmergencyOrProviderContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D561B0315365F74003D68D2 /* HVEmergencyOrProviderContact.h */; };
 		5D561B0615365F74003D68D2 /* HVEmergencyOrProviderContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D561B0415365F74003D68D2 /* HVEmergencyOrProviderContact.m */; };
@@ -572,6 +574,8 @@
 		5D39F936151A3AA100208A7B /* HVLocalItemStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalItemStore.m; sourceTree = "<group>"; };
 		5D39F939151A718900208A7B /* HVLocalRecordStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalRecordStore.h; sourceTree = "<group>"; };
 		5D39F93A151A718A00208A7B /* HVLocalRecordStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalRecordStore.m; sourceTree = "<group>"; };
+		5D4A931F1635BC48007390B7 /* HVDictionaryExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDictionaryExtensions.h; sourceTree = "<group>"; };
+		5D4A93201635BC49007390B7 /* HVDictionaryExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDictionaryExtensions.m; sourceTree = "<group>"; };
 		5D5299AC14DCB3A700D2636E /* libHVLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHVLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5299AF14DCB3A700D2636E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5D5299B314DCB3A700D2636E /* HVLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HVLib-Prefix.pch"; sourceTree = "<group>"; };
@@ -947,6 +951,8 @@
 				5D0DACB214E2FE14002CBE52 /* HVCore.m */,
 				5DE382F914E338C900DFA11D /* HVArrayExtensions.h */,
 				5DE382FA14E338C900DFA11D /* HVArrayExtensions.m */,
+				5D4A931F1635BC48007390B7 /* HVDictionaryExtensions.h */,
+				5D4A93201635BC49007390B7 /* HVDictionaryExtensions.m */,
 				5DEF155514E9987E009D05D5 /* HVDateExtensions.h */,
 				5DEF155614E9987F009D05D5 /* HVDateExtensions.m */,
 				5D1139B915461F740008C362 /* HVDataExtensions.h */,
@@ -1652,6 +1658,7 @@
 				5D88C5DB161F4E5700F74D54 /* HVDailyDietaryIntake.h in Headers */,
 				5D88C5E0161F4EDF00F74D54 /* HVFoodEnergyValue.h in Headers */,
 				5D88C5E4161F4F1700F74D54 /* HVNutritionFact.h in Headers */,
+				5D4A93211635BC49007390B7 /* HVDictionaryExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1903,6 +1910,7 @@
 				5D88C5DC161F4E5700F74D54 /* HVDailyDietaryIntake.m in Sources */,
 				5D88C5E1161F4EDF00F74D54 /* HVFoodEnergyValue.m in Sources */,
 				5D88C5E5161F4F1700F74D54 /* HVNutritionFact.m in Sources */,
+				5D4A93221635BC49007390B7 /* HVDictionaryExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -849,22 +849,10 @@ void throwWriterError(void)
         [XException throwException:XExceptionRequiredDataMissing reason:name];
     }
     
-    Class stringClass = [NSString class];
     for (id obj in array)
     {
-        if ([obj conformsToProtocol:@protocol(XSerializable)])
-        {
-            [self writeElement:name content:(id<XSerializable>)obj];
-        }
-        else if ([obj isKindOfClass:stringClass])
-        {
-            [self writeElement:name value:(NSString *) obj];
-        }
-        else
-        {
-            [NSException throwNotImpl];
-        }
-     }
+        [self writeElement:name object:obj];
+    }
 }
 
 -(void) writeElement:(NSString *)name content:(id<XSerializable>)content
@@ -963,6 +951,23 @@ void throwWriterError(void)
         [self writeBool:value];
     }
     HVCHECK_XWRITE([self writeEndElement]);    
+}
+
+-(void)writeElement:(NSString *)name object:(id)value
+{
+    if ([value conformsToProtocol:@protocol(XSerializable)])
+    {
+        [self writeElement:name content:(id<XSerializable>)value];
+    }
+    else if ([value isKindOfClass:[NSString class]])
+    {
+        [self writeElement:name value:(NSString *) value];
+    }
+    else
+    {
+        NSString* description = [value description];
+        [self writeElement:name value:description];
+    }
 }
 
 -(void) writeAttribute:(NSString *)name intValue:(int)value
