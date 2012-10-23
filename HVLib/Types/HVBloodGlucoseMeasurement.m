@@ -127,7 +127,7 @@ LError:
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.mmolPerLiter];
+    return [NSString localizedStringWithFormat:format, self.mmolPerLiter];
 }
 
 +(double)mMolPerLiterToMgPerDL:(double)value

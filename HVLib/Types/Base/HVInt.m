@@ -48,7 +48,7 @@ LError:
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, m_value];
+    return [NSString localizedStringWithFormat:format, m_value];
 }
 
 -(void) serialize:(XWriter *)writer

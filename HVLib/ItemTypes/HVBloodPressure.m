@@ -137,7 +137,7 @@ LError:
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.systolicValue, self.diastolicValue];
+    return [NSString localizedStringWithFormat:format, self.systolicValue, self.diastolicValue];
 }
 
 -(HVClientResult *) validate

@@ -162,32 +162,32 @@ LError:
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inKg];
+    return [NSString localizedStringWithFormat:format, self.inKg];
 }
 
 -(NSString *)stringInPounds:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inPounds];
+    return [NSString localizedStringWithFormat:format, self.inPounds];
 }
 
 -(NSString *)stringInOunces:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inOunces];    
+    return [NSString localizedStringWithFormat:format, self.inOunces];    
 }
 
 -(NSString *)stringInKg:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inKg];
+    return [NSString localizedStringWithFormat:format, self.inKg];
 }
 
 -(NSString *)stringInGrams:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inGrams];
+    return [NSString localizedStringWithFormat:format, self.inGrams];
 }
 
 -(NSString *)stringInMilligrams:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inMilligrams];
+    return [NSString localizedStringWithFormat:format, self.inMilligrams];
 }
 
 +(HVWeightMeasurement *)fromKg:(double)kg

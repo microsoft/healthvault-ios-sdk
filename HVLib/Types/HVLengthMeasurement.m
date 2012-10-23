@@ -155,27 +155,27 @@ LError:
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inMeters];
+    return [NSString localizedStringWithFormat:format, self.inMeters];
 }
 
 -(NSString *)stringInCentimeters:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inCentimeters];    
+    return [NSString localizedStringWithFormat:format, self.inCentimeters];    
 }
 
 -(NSString *)stringInMeters:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inMeters];
+    return [NSString localizedStringWithFormat:format, self.inMeters];
 }
 
 -(NSString *)stringInKilometers:(NSString *)format  
 {
-    return [NSString stringWithFormat:format, self.inKilometers];    
+    return [NSString localizedStringWithFormat:format, self.inKilometers];    
 }
 
 -(NSString *) stringInInches:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inInches];
+    return [NSString localizedStringWithFormat:format, self.inInches];
 }
 
 -(NSString *)stringInFeetAndInches:(NSString *)format
@@ -184,12 +184,12 @@ LError:
     long feet = totalInches / 12;
     long inches = totalInches % 12;
     
-    return [NSString stringWithFormat:format, feet, inches];
+    return [NSString localizedStringWithFormat:format, feet, inches];
 }
 
 -(NSString *)stringInMiles:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inMiles];        
+    return [NSString localizedStringWithFormat:format, self.inMiles];        
 }
 
 -(HVClientResult *) validate

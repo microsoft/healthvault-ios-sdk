@@ -146,7 +146,7 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.ldlValue, self.hdlValue];
+    return [NSString localizedStringWithFormat:format, self.ldlValue, self.hdlValue];
 }
 
 -(void)dealloc

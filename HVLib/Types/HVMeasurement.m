@@ -98,7 +98,7 @@ LError:
 {
     if (!m_units)
     {
-        return [NSString stringWithFormat:@"%g", m_value]; 
+        return [NSString localizedStringWithFormat:@"%g", m_value]; 
     }
     
     return [self toStringWithFormat:@"%g %@"];
@@ -106,7 +106,7 @@ LError:
 
 -(NSString *)toStringWithFormat:(NSString *)format
 {
-    return [NSString stringWithFormat:format, m_value, m_units.text];
+    return [NSString localizedStringWithFormat:format, m_value, m_units.text];
 }
 
 -(HVClientResult *)validate

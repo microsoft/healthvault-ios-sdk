@@ -94,7 +94,7 @@ LError:
         return c_emptyString;
     }
     
-    return [NSString stringWithFormat:format, self.caloriesValue];
+    return [NSString localizedStringWithFormat:format, self.caloriesValue];
 }
 
 +(NSString *)calorieUnits

@@ -128,12 +128,12 @@ LError:
 
 -(NSString *)stringInMgPerDL:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inMgPerDL];
+    return [NSString localizedStringWithFormat:format, self.inMgPerDL];
 }
 
 -(NSString *)stringInMmolPerLiter:(NSString *)format
 {
-    return [NSString stringWithFormat:format, self.inMmolPerLiter];
+    return [NSString localizedStringWithFormat:format, self.inMmolPerLiter];
 }
 
 -(NSString *)toString

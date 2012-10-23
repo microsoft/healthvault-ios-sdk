@@ -79,7 +79,7 @@ LError:
     HVMeasurement* measurement = [HVMeasurement fromValue:value unitsDisplayText:unitsText unitsCode:code unitsVocab:vocab];
     HVCHECK_NOTNULL(measurement);
     
-    NSString* displayText = [NSString stringWithFormat:@"%g %@", value, unitsText];
+    NSString* displayText = [NSString localizedStringWithFormat:@"%g %@", value, unitsText];
     HVCHECK_NOTNULL(displayText);
     
     HVApproxMeasurement* approxMeasurement = [HVApproxMeasurement fromDisplayText:displayText andMeasurement:measurement];
