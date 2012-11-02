@@ -23,6 +23,13 @@
 typedef BOOL (^HVTaskMethod) (HVTask * task);
 typedef void (^HVTaskCompletion) (HVTask* task);
 
+//-----------------------
+//
+// Interacting with HealthVault can require a series of nested and/or
+// related asynchronous operations. This class makes it easier to compose, manage
+// and cancel these operations in a consistent way
+//
+//-----------------------
 @interface HVTask : NSObject
 {
     NSString* m_taskName;  // Mainly for Debugging and Logging
@@ -47,14 +54,42 @@ typedef void (^HVTaskCompletion) (HVTask* task);
 @property (readonly, nonatomic) BOOL isStarted;
 @property (readonly, nonatomic) BOOL isComplete;
 @property (readonly, nonatomic) BOOL isDone;
-
+//
+// Task name - optional. Good for debugging
+//
 @property (readwrite, nonatomic, retain) NSString* taskName;
+//
+// The RESULT of the Async task. Can be null if the task returns nothing.
+// The gettor automatically calls [self checkSuccess], which can throw if there was an
+// error while executing the asynchronous task
+//
 @property (readwrite, nonatomic, retain) id result;
+//
+// Any exception that the may have been thrown when the task ran, possibly in another thread
+//
 @property (readonly, nonatomic, retain) id exception;
+//
+// The actual operation being run by this task. Can include a system operation (NSUrlRequest) or (NSBlockOperation),
+// OR another task.
+//
+// We keep a reference in this property and use it to issue nested cancellations
+//
 @property (readwrite, nonatomic, retain) id operation;
-
+//
+// This task's parent task
+//
 @property (readonly, nonatomic) HVTask* parent;
+//
+// This task executes this method asynchronously by queuing an NSBlockOperation
+//
 @property (readwrite, nonatomic, copy) HVTaskMethod method;
+//
+// THE CALLBACK the task calls when it is done. In the callback you typically:
+//  1. call task.result to get the task's result, if it returns any
+//  2. and/or call [task checkSuccess]  {task.result does it for you}
+//
+// Either can throw, so make sure you have an exception handler around it
+//
 @property (readwrite, nonatomic, copy) HVTaskCompletion callback;
 
 -(id) initWith:(HVTaskMethod) current;
@@ -72,6 +107,11 @@ typedef void (^HVTaskCompletion) (HVTask* task);
 -(void) complete;
 -(void) handleError:(id) error;
 
+//
+// Tasks run asnchronously. They capture any exceptions in self.exception, then invoke
+// the task completion callback.
+// This exception is then thrown when you call [task checkSuccess], 
+//
 -(void) checkSuccess;
 
 @end

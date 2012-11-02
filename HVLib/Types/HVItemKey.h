@@ -35,6 +35,8 @@
 -(id) initWithID:(NSString *) itemID andVersion:(NSString *) version;
 -(id) initWithKey:(HVItemKey *) key;
 
+-(BOOL) isVersion:(NSString *) version;
+
 @end
 
 @interface HVItemKeyCollection : HVCollection <XSerializable>

@@ -28,6 +28,7 @@ const NSUInteger NSAllCalendarUnits;
 -(NSString*) toStringWithStyle:(NSDateFormatterStyle) style;
 
 -(NSComparisonResult) compareDescending:(NSDate*) other;
+-(BOOL) isEqualToDateAccuracySeconds:(NSDate *) other;
 
 +(NSDate *) fromHour:(int) hour;
 +(NSDate *) fromHour:(int)hour andMinute:(int) minute;
@@ -42,6 +43,7 @@ const NSUInteger NSAllCalendarUnits;
 @interface NSCalendar (HVExtensions)
 
 -(NSDateComponents *) getComponentsFor:(NSDate *) date;
+-(NSDateComponents *) yearMonthDayFrom:(NSDate *) date;
 
 +(NSDateComponents *) componentsFromDate:(NSDate *) date;
 +(NSDateComponents *) newComponents;

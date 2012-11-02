@@ -26,23 +26,48 @@
 @class HVSynchronizedStore;
 @class HVTypeView;
 
+//
+// See notes on HVTypeView before you read this
+//
 @protocol HVTypeViewDelegate <NSObject>
-
--(void) itemsAvailable:(HVItemCollection *) items inView:(HVTypeView *) view;
+//
+// Called when asynchronously retrieved items become available locally
+// viewChanged indicates that the SORT order of the typeView was impacted when new items were pulled.
+// If so, you should RELOAD any associated views, such as UITableView
+// Otherwise you can do a more target reload of changed rows only
+//
+-(void) itemsAvailable:(HVItemCollection *)items inView:(HVTypeView *)view viewChanged:(BOOL) viewChanged;
+//
+// Keys for items no longer available in HealthVault. They have been REMOVED from the view. 
+// You should now refresh your UI etc. 
+//
 -(void) keysNotAvailable:(NSArray *) keys inView:(HVTypeView *) view;
-
+//
+// The full view sync is complete
+//
 -(void) synchronizationCompletedInView:(HVTypeView *) view;
+//
+// Called whenever there was an error pulling data from HealthVault asynchronously
+//
 -(void) synchronizationFailedInView:(HVTypeView *) view withError:(id) ex;
 
 @end
 
 //----------------------------------------------
 //
-// HVTypeView makes it easy to write asynchronous fluid UITableView displays of HealthVault data
-// that leverages offline local data storage/replication/background sync - without freezing the UI. 
+// HVTypeView makes it easy to write asynchronous UITableView displays of HealthVault data.
+// It leverages offline local data storage/replication/background sync. All data download happens
+// transparently, as needed, in the background.
 //
-// Assumes that all manipulation happens from WITHIN THE MAIN UI THREAD
-// All manipulation *must* happen within the main UI thread
+// HVTypeViews are persistable - i.e. they can be saved and loaded from disk. 
+//
+// HVTypeView uses HVTypeViewDelegate to notify you of changes.
+//
+// Guarantees that all CHANGES are made in THE MAIN UI THREAD.
+//
+// Sticking to the UI thread also allows you to null out the delegate safely.
+// When you do so, you will no longer receive (or protect against) any pending background notifications
+// that could confuse your code.
 //
 //----------------------------------------------
 @interface HVTypeView : XSerializableType
@@ -102,59 +127,109 @@
 //
 -(BOOL) isStale:(NSTimeInterval) maxAge;
 //
-// Synchronize view but not data
+// Synchronize view but not data.
+// Calls delegate when complete
 //
 -(HVTask *) synchronize;
 //
 // Synchronize HVItems associated with this view
+// Calls delegate when complete
 //
 -(HVTask *) synchronizeData;
 -(HVTask *) synchronizeDataInRange:(NSRange) range;
+
+//---------------------------
 //
 // Synchronized get/put Methods
-// These methods locally cached items immediately. If no local item available, returns nil
-// Pending items are returned through delegate callbacks as they become available
+// These methods return locally cached items immediately. If no local item available, return nil
+// PENDING items are fetched in the background.
+// When they become available, self.delegate is notified
 //
+//------------------------------
 -(HVItem *) getItemAtIndex:(NSUInteger) index;
--(HVItem *) getItemAtIndex:(NSUInteger) index readAheadCount:(NSUInteger) readAheadCount; 
--(HVItemCollection *) getItemsInRange:(NSRange) range; 
-
+-(HVItem *) getItemAtIndex:(NSUInteger) index readAheadCount:(NSUInteger) readAheadCount;
+//
+// Returns what items it has, and triggers an async pull of the remaining
+//  HVItemCollection.count == range.length
+//  Any positions that do not have a local item get an NSNull object
+//
+-(HVItemCollection *) getItemsInRange:(NSRange) range;
 -(HVItemCollection *) getItemsInRange:(NSRange) range downloadTask:(HVTask **) task;
+//
+// If includeNull is true:
+//  HVItemCollection.count == range.length
+//  Any positions that do not have a local item get an NSNull object
+//
+-(HVItemCollection *) getItemsInRange:(NSRange) range nullIfNotFound:(BOOL) includeNull;
+-(HVItemCollection *) getItemsInRange:(NSRange) range nullIfNotFound:(BOOL) includeNull downloadTask:(HVTask **) task;
 
+//------------------
+//
+// Operations that alter the view AND any items in the local store
+//
+//------------------
+//
+// Removes item from the view AND any associated data stored LOCALLY only.
+// Does not however delete the item from HealthVault
+//
 -(BOOL) removeItemAtIndex:(NSUInteger) index;
-
+//
+// Stores items in the local store AND updates the view
+//
 -(NSUInteger) putItem:(HVItem *) item;
 -(BOOL) putItems:(HVItemCollection *) items;
+
+//------------------
+//
+// Operations that go directly against the local store
+// They do NOT alter the view
+//
+//------------------
 
 -(HVItem *) getLocalItemAtIndex:(NSUInteger) index;
 -(void) removeLocalItemAtIndex:(NSUInteger) index;
 -(void) removeAllLocalItems;
 
-// TODO: rename these view specific methods
-
+//------------------
 //
-// Returns the new position of item.
-// Also returns the old positon of the item, if it already existed, or NSNotFound
+// Operations that alter the view ONLY
+// They do not touch the local store
+//
+//------------------
+//
+// Updates the view and stores the item locally
+// Returns the new position of item in the view.
+// Also returns the old position of the item, if it already existed, or NSNotFound
 //
 -(NSUInteger) updateItemInView:(HVItem *) item prevIndex:(NSUInteger *) prevIndex;
-//
-// Returns true if the update changed the sort order
-//
--(BOOL) updateItemsInView:(HVItemCollection *) items;
+
 -(BOOL) removeItemFromViewByID:(NSString *) itemID;
 -(BOOL) removeItemsFromViewByID:(NSArray *) itemIDs;
 
+//----------------------------------
+//
+// Persistance and factory methods
+//
+//----------------------------------
+//
+// Saves the view to disk.
+// The view name is autogenerated using self.typeID
+//
 -(BOOL) save;
 -(BOOL) saveWithName:(NSString*) name;
-
+//
+// If a saved view is found on disk, load it...
+//
 +(HVTypeView *) loadViewNamed:(NSString *) name fromStore:(HVLocalRecordStore *) store;
-
+//
+// Loads views - using a name autogenerated using typeID
+// 
 +(HVTypeView *) getViewForTypeClassName:(NSString *) className inRecord:(HVRecordReference *) record;
 +(HVTypeView *) getViewForTypeID:(NSString *)typeID inRecord:(HVRecordReference *) record;
 
 
 //
-// Delegate callbacks for HVSynchronizedStore
+// Delegate callbacks invoked by HVSynchronizedStore
 //
 -(void) keysNotRetrieved:(NSArray *) keys withError:(id) error;
 -(void) itemsRetrieved:(HVItemCollection *) items forKeys:(NSArray *) keys; // Not all keys may result in a match

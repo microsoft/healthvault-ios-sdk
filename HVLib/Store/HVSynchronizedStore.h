@@ -20,6 +20,7 @@
 #import "HVAsyncTask.h"
 #import "HVItemStore.h"
 #import "HVTypeView.h"
+#import "HVDownloadItemsTask.h"
 
 @interface HVSynchronizedStore : NSObject
 {
@@ -33,26 +34,66 @@
 -(id) initOverStore:(id<HVObjectStore>) store;
 -(id) initOverItemStore:(id<HVItemStore>) store;
 
+//---------------------------------
+//
+// Operations on items locally available on this machine
+//
+//---------------------------------
+
 -(HVItem *) getLocalItemWithKey:(HVItemKey *) key;
 //
 // Retrieve locally stored items for the given keys
-// If no item is found for a key, returns NSNull
+// HVItemCollection.count is always == keys.count
+// If no local item is found for a key, returns its equivalent position in HVItemCollection
+// contains NSNull
 //
 -(HVItemCollection *) getLocalItemsWithKeys:(NSArray *) keys;
 
 -(HVItem *) getlocalItemWithID:(NSString *) itemID;
--(BOOL)updateItemsInLocalStore:(HVItemCollection *)items;
+-(BOOL) putLocalItem:(HVItem *) item;
+-(BOOL) updateItemsInLocalStore:(HVItemCollection *)items;
 -(void) removeLocalItemWithKey:(HVItemKey *) key;
 
+//---------------------------------
+//
+// Operations that go to HealthVault
+// They pull items down to the local store
+//
+//---------------------------------
+//
+// Downloads items for the given keys and store them locally.
+// Always retrieves the LATEST item for the key 
+// When complete, notify HVTypeView of completions by calling:
+//   - keysNotRetrieved (if error)
+//   - itemsRetrieved
+//
 -(HVTask *) downloadItemsWithKeys:(NSArray *) keys inView:(HVTypeView *) view;
-
+//
+// Fetch items with given keys into the local store
+// Always retrieves the LATEST item for the key
+// In the callback, HVTask.result has an HVItemCollection containing those items that were found
+//
 -(HVTask *) getItemsInRecord:(HVRecordReference *) record withKeys:(NSArray *) keys callback:(HVTaskCompletion) callback;
+//
+// Currently, puts the given item in the local store
+// Future versions may include a reliable async upload queue for offline behavior
+//
 -(BOOL) putItem:(HVItem *) item;
-
 //
-// The query identifies the items to synchronize
+// In the callback, use [task checkForSuccess] to confirm that the operation succeeded
+// task.result will contain updated keys - in case the items 
+// Always retrieves the LATEST item for the keys
 //
--(HVTask *) downloadItemsInRecord:(HVRecordReference *) record query:(HVItemQuery *) query callback:(HVTaskCompletion) callback;
--(HVTask *) newDownloadItemsInRecord:(HVRecordReference *) record forQuery:(HVItemQuery *) query callback:(HVTaskCompletion) callback;
+-(HVDownloadItemsTask *) downloadItemsInRecord:(HVRecordReference *) record forKeys:(NSArray *) keys callback:(HVTaskCompletion) callback;
+//
+// In the callback, use [task checkForSuccess] to confirm that the operation succeeded
+//
+-(HVDownloadItemsTask *) downloadItemsInRecord:(HVRecordReference *) record query:(HVItemQuery *) query callback:(HVTaskCompletion) callback;
+//
+// These create new download tasks but do NOT start them.
+// You can make the task a child of another task
+// 
+-(HVDownloadItemsTask *) newDownloadItemsInRecord:(HVRecordReference *) record forKeys:(NSArray *) keys callback:(HVTaskCompletion) callback;
+-(HVDownloadItemsTask *) newDownloadItemsInRecord:(HVRecordReference *) record forQuery:(HVItemQuery *) query callback:(HVTaskCompletion) callback;
 
 @end

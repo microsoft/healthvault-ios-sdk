@@ -20,6 +20,16 @@
 #import "HVTypeViewItem.h"
 #import "XLib.h"
 
+//-------------------------------------
+//
+// An ORDERED collection of HVTypeViewItem
+// The sort order is:
+//  - HVTypeView.date [descending]
+//  THEN HVTypeView.itemID [ascending]
+//
+// Matches the default sort order of HealthVault query results
+//
+//-----------------------------------
 @interface HVTypeViewItems : XSerializableType
 {
     BOOL m_sorted;
@@ -53,28 +63,39 @@
 -(void) removeItemAtIndex:(NSUInteger) index;
 -(NSUInteger) removeItemByID:(NSString *) itemID;
 -(BOOL) replaceItemAt:(NSUInteger) index with:(HVTypeViewItem *) item;
-// Returns false if no change made
--(BOOL) setDate:(NSDate *) date forItemID:(NSString *) itemID;
 
 -(NSArray *) selectRange:(NSRange) range;
 -(NSArray *) selectIDsInRange:(NSRange) range;
 -(NSRange) correctRange:(NSRange) range;
 -(NSMutableArray*) selectItemsNotIn:(HVTypeViewItems *) items;
+
 //
-// 
+// Adds an item into the collection using information taken from HVItem
+// Returns true if collection updated
 //
 -(BOOL) addHVItem:(HVItem *) item;
--(NSUInteger) insertHVItemInOrder:(HVItem *) item;
--(BOOL) addPendingItem:(HVPendingItem *) item;
 -(BOOL) addHVItems:(HVItemCollection *) items;
+//
+// Adds an item into the collection using information taken from HVItem
+// Maintains the sort order - so a full sort is not required. 
+// 
+-(NSUInteger) insertHVItemInOrder:(HVItem *) item;
+//
+// Adds an item into the collection using information taken from HVPendingItem
+// Returns true if collection updated
+//
+-(BOOL) addPendingItem:(HVPendingItem *) item;
 -(BOOL) addPendingItems:(HVPendingItemCollection *) items;
+//
+// Adds items into the collection using information taken from HVItemQueryResult
+// Returns true if collection updated
+//
 -(BOOL) addQueryResult:(HVItemQueryResult *) result;
-
 //
-// Returns true if update made. If item not found, or no change made, returns false
+// Returns true if an update to the collection was necessary, and made.
+// If item not found, or no change made, returns false If the item does not exist, will add it
 //
--(BOOL) updateDateForHVItem:(HVItem *) item;
-
+-(BOOL) updateHVItem:(HVItem *) item;
 
 
 @end

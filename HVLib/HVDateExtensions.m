@@ -76,6 +76,12 @@ LError:
     return -([self compare:other]);
 }
 
+-(BOOL)isEqualToDateAccuracySeconds:(NSDate *)other
+{
+    double interval = (double) [self timeIntervalSinceDate:other];
+    return (interval <= 1);
+}
+
 -(NSTimeInterval)offsetFromNow
 {
     return [[NSDate date] timeIntervalSinceDate:self];
@@ -129,6 +135,14 @@ const NSUInteger NSAllCalendarUnits =   NSDayCalendarUnit       |
 -(NSDateComponents *)getComponentsFor:(NSDate *)date
 {
     return [self components: NSAllCalendarUnits fromDate: date];
+}
+
+-(NSDateComponents *)yearMonthDayFrom:(NSDate *)date
+{
+    NSDateComponents* components =  [self components: NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
+    [components setCalendar:self];
+    
+    return components;
 }
 
 +(NSDateComponents *) componentsFromDate:(NSDate *)date

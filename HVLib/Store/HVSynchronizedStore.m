@@ -26,7 +26,7 @@
 -(void) setLocalStore:(id<HVItemStore>) store;
 
 //
-// If a local item is not found and nullForNotFound is FALSE, does not create an NSNull entry...
+// If a local item with the right version is not found and nullForNotFound is FALSE, does not create an NSNull entry...
 //
 -(HVItemCollection *) getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL) includeNull;
 
@@ -116,6 +116,11 @@ LError:
     return [self getLocalItemsWithKeys:keys nullForNotFound:TRUE];
 }
 
+-(BOOL)putLocalItem:(HVItem *)item
+{
+    return [m_localStore putItem:item];
+}
+
 -(BOOL)updateItemsInLocalStore:(HVItemCollection *)items
 {
     HVCHECK_NOTNULL(items);
@@ -159,15 +164,16 @@ LError:
     //
     // We'll run the download task as a child of the parent getItemsTask
     //
-    HVTask *downloadTask = [self newDownloadItemsInRecord:record forQuery:query callback:^(HVTask *task) {
+    HVDownloadItemsTask *downloadTask = [self newDownloadItemsInRecord:record forQuery:query callback:^(HVTask *task) {
         //
         // Make sure the download succeeded
         //
         [task checkSuccess];
+        NSArray* downloadedKeys = ((HVDownloadItemsTask *) task).downloadedKeys;
         //
         // When the download sub-task completes, collect up all local items and return them to the caller...
         //
-        task.parent.result = [self getLocalItemsWithKeys:keys nullForNotFound:FALSE];
+        task.parent.result = [self getLocalItemsWithKeys:downloadedKeys nullForNotFound:FALSE];
         
     }];
     HVCHECK_NOTNULL(downloadTask);
@@ -187,12 +193,25 @@ LError:
 
 -(BOOL)putItem:(HVItem *)item
 {
-    return [m_localStore putItem:item];
+    return [self putLocalItem:item];
 }
 
--(HVTask *)downloadItemsInRecord:(HVRecordReference *) record query :(HVItemQuery *)query callback:(HVTaskCompletion)callback
+-(HVDownloadItemsTask *)downloadItemsInRecord:(HVRecordReference *)record forKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVTask* task = [self newDownloadItemsInRecord:record forQuery:query callback:callback]; // do not autorelease
+    HVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forKeys:keys callback:callback]; // do not autorelease
+    HVCHECK_NOTNULL(task);
+    
+    [task start];
+    
+    return task;
+    
+LError:
+    return nil;    
+}
+
+-(HVDownloadItemsTask *)downloadItemsInRecord:(HVRecordReference *) record query :(HVItemQuery *)query callback:(HVTaskCompletion)callback
+{
+    HVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forQuery:query callback:callback]; // do not autorelease
     HVCHECK_NOTNULL(task);
     
     [task start];
@@ -203,14 +222,25 @@ LError:
     return nil;
 }
 
--(HVTask *)newDownloadItemsInRecord:(HVRecordReference *)record forQuery:(HVItemQuery *)query callback:(HVTaskCompletion)callback
+-(HVDownloadItemsTask *)newDownloadItemsInRecord:(HVRecordReference *)record forKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVTask* downloadTask = nil;
+    HVItemQuery* query = [self newQueryFromKeys:keys];
+    HVCHECK_NOTNULL(query);
+    
+    return [self newDownloadItemsInRecord:record forQuery:query callback:callback];
+    
+LError:
+    return nil;
+}
+
+-(HVDownloadItemsTask *)newDownloadItemsInRecord:(HVRecordReference *)record forQuery:(HVItemQuery *)query callback:(HVTaskCompletion)callback
+{
+    HVDownloadItemsTask* downloadTask = nil;
     
     HVCHECK_NOTNULL(record); 
     HVCHECK_NOTNULL(query);
         
-    downloadTask = [[HVTask alloc] initWithCallback:callback];
+    downloadTask = [[HVDownloadItemsTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(downloadTask);
     downloadTask.taskName = @"downloadItems";
 
@@ -239,30 +269,36 @@ LError:
 @implementation HVSynchronizedStore (HVPrivate)
 
 -(HVItemCollection *)getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL)includeNull
-{
-    HVCHECK_NOTNULL(keys);
-    
+{    
     HVItemCollection *results = [[[HVItemCollection alloc] init] autorelease];
+    HVCHECK_NOTNULL(results);
     
-    for (HVItemKey* key in keys)
+    if (keys)
     {
-        HVItem* item = [self getLocalItemWithKey:key];
-        if (item)
+        for (HVItemKey* key in keys)
         {
-            [results addObject:item];
-        }
-        else if (includeNull)
-        {
-            [results addObject:[NSNull null]];
+            HVItem* item = [self getLocalItemWithKey:key];
+            if (item)
+            {
+                [results addObject:item];
+            }
+            else if (includeNull)
+            {
+                [results addObject:[NSNull null]];
+            }
         }
     }
-        
+    
     return results;
     
 LError:
     return nil;
 }
 
+//
+// We actually query for items by their IDs only
+// This allows to retrieve the latest version of a particular item always, which is what we want
+//
 -(HVItemQuery *)newQueryFromKeys:(NSArray *)keys
 {
     HVItemQuery* query = [[HVItemQuery alloc] init];
@@ -304,6 +340,11 @@ LError:
     {
         [HVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_PutLocalStore)];
     }
+    //
+    // Record keys that were successfully downloaded
+    //
+    [((HVDownloadItemsTask *) task.parent) recordItemsAsDownloaded:result.items];
+    
     if (!result.hasPendingItems)
     {
         return;

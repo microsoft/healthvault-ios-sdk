@@ -116,7 +116,8 @@ LError:
 
 -(NSUInteger) indexOfItem:(HVTypeViewItem *)item
 {
-    return [self searchForItem:item withOptions:NSBinarySearchingInsertionIndex];
+   // return [self searchForItem:item withOptions:(NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual)];
+    return [self searchForItem:item withOptions:0];
 }
 
 -(NSUInteger) indexOfItemID:(NSString *)itemID
@@ -127,7 +128,13 @@ LError:
         return NSNotFound;
     }
     
-    return [self indexOfItem:item];
+    NSUInteger index =  [self indexOfItem:item];
+    if (index >= m_items.count)
+    {
+        index = NSNotFound;
+    }
+    
+    return index;
 }
 
 -(NSUInteger) searchForItem:(HVTypeViewItem *)item withOptions:(NSBinarySearchingOptions)opts
@@ -214,7 +221,7 @@ LError:
 
 -(void) removeItemAtIndex:(NSUInteger)index
 {
-   HVTypeViewItem* item = [m_items objectAtIndex:index];
+    HVTypeViewItem* item = [m_items objectAtIndex:index];
     if (!item)
     {
         return;
@@ -239,36 +246,6 @@ LError:
     
     return TRUE;
 
-LError:
-    return FALSE;
-}
-
--(BOOL)setDate:(NSDate *)date forItemID:(NSString *)itemID
-{
-    HVCHECK_NOTNULL(date);
-    HVCHECK_STRING(itemID);
-    
-    NSUInteger index = [self indexOfItemID:itemID];
-    if (index == NSNotFound)
-    {
-        return FALSE;
-    }
-    
-    HVTypeViewItem *item = [self objectAtIndex:index];
-    if ([item.date isEqualToDate:date])
-    {
-        // No change
-        return FALSE;
-    }
-    
-    HVTypeViewItem *newItem = [[HVTypeViewItem alloc] initWithItem:item];
-    HVCHECK_NOTNULL(newItem);
-    
-    [self replaceItemAt:index with:newItem];
-    [newItem release];
-    
-    return TRUE;
-    
 LError:
     return FALSE;
 }
@@ -421,15 +398,37 @@ LError:
     }
     
     return TRUE;
+
 LError:
     return FALSE;
 }
 
--(BOOL) updateDateForHVItem:(HVItem *)item
+-(BOOL)updateHVItem:(HVItem *)item
 {
     HVCHECK_NOTNULL(item);
     
-    return [self setDate:[item getDate] forItemID:item.itemID];
+    NSUInteger itemIndex = [self indexOfItemID:item.itemID];
+    if (itemIndex == NSNotFound)
+    {
+        return [self addHVItem:item];
+    }
+        
+    HVTypeViewItem* typeViewItem = [self objectAtIndex:itemIndex];
+    //
+    // Update version stamps if needed
+    //
+    if ([typeViewItem isVersion:item.key.version])
+    {
+        return FALSE; // NO change. Same key.
+    }
+    
+    HVTypeViewItem *newItem = [[HVTypeViewItem alloc] initWithHVItem:item];
+    HVCHECK_NOTNULL(newItem);
+    
+    [self replaceItemAt:itemIndex with:newItem];
+    [newItem release];
+    
+    return TRUE;
     
 LError:
     return FALSE;

@@ -72,6 +72,11 @@ LError:
     return [self initWithID:guidString()];
 }
 
+-(BOOL)isVersion:(NSString *)version
+{
+    return [self.version isEqualToString:version];
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN
