@@ -33,6 +33,8 @@
     id<HVObjectStore> m_objectStore;
 }
 
+@property (readonly, nonatomic) id<HVObjectStore> store;
+
 //-------------------------
 //
 // Initializers

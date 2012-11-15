@@ -27,9 +27,11 @@ static NSString* const c_attribute_name = @"name";
 
 @interface HVItemQueryResult (HVPrivate)
 
--(HVGetItemsTask *) newGetTaskFor:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *) record;
--(BOOL) nextGetPendingItems:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *) record andParentTask:(HVTask *) parentTask; 
--(void) getItemsComplete:(HVTask *) task forRecord:(HVRecordReference *) record;
+-(HVGetItemsTask *) newGetTaskFor:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *) record itemView:(HVItemView *) view;
+-(BOOL) nextGetPendingItems:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *) record itemView:(HVItemView *) view andParentTask:(HVTask *) parentTask; 
+-(void) getItemsComplete:(HVTask *) task forRecord:(HVRecordReference *) record itemView:(HVItemView *) view;
+
+-(void) appendFoundItems:(HVItemCollection *) items;
 
 @end
 
@@ -59,15 +61,25 @@ static NSString* const c_attribute_name = @"name";
 
 -(HVTask *)getPendingItemsForRecord:(HVRecordReference *)record withCallback:(HVTaskCompletion)callback
 {
-    HVTask* task = [self createTaskToGetPendingItemsForRecord:record withCallback:callback];
+    return [self getPendingItemsForRecord:record itemView:nil withCallback:callback];
+}
+
+-(HVTask *)getPendingItemsForRecord:(HVRecordReference *)record itemView:(HVItemView *)view withCallback:(HVTaskCompletion)callback
+{
+    HVTask* task = [self createTaskToGetPendingItemsForRecord:record itemView:view withCallback:callback];
     if (task)
     {
         [task start];
     }
-    return task;
+    return task;    
 }
 
 -(HVTask *)createTaskToGetPendingItemsForRecord:(HVRecordReference *)record withCallback:(HVTaskCompletion)callback
+{
+    return [self createTaskToGetPendingItemsForRecord:record itemView:nil withCallback:callback];
+}
+
+-(HVTask *)createTaskToGetPendingItemsForRecord:(HVRecordReference *)record itemView:(HVItemView *)view withCallback:(HVTaskCompletion)callback
 {
     HVCHECK_NOTNULL(record);
     
@@ -79,12 +91,13 @@ static NSString* const c_attribute_name = @"name";
     HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
     HVCHECK_NOTNULL(task);
     
-    HVCHECK_SUCCESS([self nextGetPendingItems:self.pendingItems forRecord:record andParentTask:task]);
+    HVCHECK_SUCCESS([self nextGetPendingItems:self.pendingItems forRecord:record itemView:view andParentTask:task]);
     
     return task;
     
 LError:
     return nil;
+    
 }
 
 -(void) serializeAttributes:(XWriter *)writer
@@ -113,22 +126,31 @@ LError:
 
 @implementation HVItemQueryResult (HVPrivate)
 
--(HVGetItemsTask *) newGetTaskFor:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *)record
+-(HVGetItemsTask *) newGetTaskFor:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *)record itemView:(HVItemView *) view
 {
     HVItemQuery *pendingQuery = [[HVItemQuery alloc] initWithPendingItems:pendingItems];
+    HVCHECK_NOTNULL(pendingQuery);
+    if (view)
+    {
+        pendingQuery.view = view;
+    }
     HVGetItemsTask* getPendingTask = [[HVGetItemsTask alloc] initWithQuery:pendingQuery andCallback:^(HVTask *task) {
         
-        [self getItemsComplete:task forRecord:record];
+        [self getItemsComplete:task forRecord:record itemView:view];
     
     }];
+    getPendingTask.record = record;
     
     [pendingQuery release];
     return getPendingTask;
+
+LError:
+    return nil;
 }
 
--(BOOL)nextGetPendingItems:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *)record andParentTask:(HVTask *)parentTask
+-(BOOL)nextGetPendingItems:(HVPendingItemCollection *)pendingItems forRecord:(HVRecordReference *)record itemView:(HVItemView *) view andParentTask:(HVTask *)parentTask
 {
-    HVGetItemsTask* getPendingTask = [self newGetTaskFor:pendingItems forRecord:record];
+    HVGetItemsTask* getPendingTask = [self newGetTaskFor:pendingItems forRecord:record itemView:view];
     HVCHECK_NOTNULL(getPendingTask);
     
     [parentTask setNextTask:getPendingTask];    
@@ -140,7 +162,7 @@ LError:
     return FALSE;
 }
 
--(void)getItemsComplete:(HVTask *)task forRecord:(HVRecordReference *)record
+-(void)getItemsComplete:(HVTask *)task forRecord:(HVRecordReference *)record itemView:(HVItemView *) view
 {
     HVGetItemsTask* getItems = (HVGetItemsTask *) task;
     HVItemQueryResult* result = getItems.queryResults.firstResult;
@@ -150,7 +172,7 @@ LError:
         //
         // Append items to this query result's item list
         //
-        [self.items addObjectsFromArray:result.items];
+        [self appendFoundItems:result.items];
     }
     
     if (!result.hasPendingItems)
@@ -164,7 +186,13 @@ LError:
     // The pending item query did not return all the items we had requested... MORE pending items!
     // So we have to issue another query
     //
-    [self nextGetPendingItems:result.pendingItems forRecord:record andParentTask:task.parent];   
+    [self nextGetPendingItems:result.pendingItems forRecord:record itemView:view andParentTask:task.parent];
+}
+
+-(void)appendFoundItems:(HVItemCollection *)items
+{
+    HVENSURE(m_items, HVItemCollection);
+    [m_items addObjectsFromArray:items];
 }
 
 @end

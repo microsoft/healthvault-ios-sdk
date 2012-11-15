@@ -95,8 +95,8 @@
 //--------------------
 
 @property (readwrite, nonatomic, retain) HVFoodEnergyValue* calories;           // Cal
+@property (readwrite, nonatomic, retain) HVFoodEnergyValue* caloriesFromFat;    // Cal
 
-@property (readwrite, nonatomic, retain) HVFoodEnergyValue* caloriesFromFat;      // g
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* totalFat;         // g
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* saturatedFat;     // g
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* transFat;         // g
@@ -107,9 +107,9 @@
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* carbs;        // g
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* dietaryFiber; // g
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* sugar;        // g
+
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* sodium;       // mg
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* cholesterol;  // mg
-
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* calcium;      // mg
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* iron;         // mg
 @property (readwrite, nonatomic, retain) HVWeightMeasurement* magnesium;    // mg

@@ -23,7 +23,11 @@ double const c_cholesterolMolarMass;
 double const c_triglyceridesMolarMass;
 
 //
+// DEPRECATED. NEW APPS SHOULD SWITCH TO HVCholesterolV2.
+//
 // Cholesterol (Lipid) profile
+// Measures Cholesterol #s in mg/DL
+// Use HVCholesterolV2, which uses the SI mmolPerl units
 //
 @interface HVCholesterol : HVItemDataTyped
 {

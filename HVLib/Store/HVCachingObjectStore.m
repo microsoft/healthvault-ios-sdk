@@ -41,6 +41,8 @@
     m_cache = [[NSCache alloc] init];
     HVCHECK_NOTNULL(m_cache);
     
+    //m_cache.delegate = self;
+    
     HVRETAIN(m_inner, store);
     
     return self;
@@ -172,6 +174,24 @@ LError:
     }
 }
 
+-(void)clear
+{
+    [self clearCache];
+}
+
+-(void)clearCache
+{
+    @synchronized(self)
+    {
+        [m_cache removeAllObjects];
+    }
+}
+
+-(void)cache:(NSCache *)cache willEvictObject:(id)obj
+{
+    NSLog(@"Evicting %@", obj);
+}
+
 @end
 
 @implementation HVCachingObjectStore (HVPrivate)
@@ -183,4 +203,5 @@ LError:
         [m_cache setObject:obj forKey:key];
     }
 }
+
 @end

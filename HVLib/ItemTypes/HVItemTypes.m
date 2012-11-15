@@ -54,6 +54,8 @@ HVDECLARE_GETTOR(HVBloodPressure, bloodPressure);
 
 HVDECLARE_GETTOR(HVCholesterol, cholesterol);
 
+HVDECLARE_GETTOR(HVCholesterolV2, cholesterolV2);
+
 HVDECLARE_GETTOR(HVBloodGlucose, bloodGlucose);
 
 HVDECLARE_GETTOR(HVHeight, height);

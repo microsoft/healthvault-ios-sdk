@@ -81,6 +81,7 @@ static HVTypeSystem* s_typeRegistry;
     [s_typeRegistry addClass:[HVWeight class] forTypeID:[HVWeight typeID]];
     [s_typeRegistry addClass:[HVBloodPressure class] forTypeID:[HVBloodPressure typeID]];
     [s_typeRegistry addClass:[HVCholesterol class] forTypeID:[HVCholesterol typeID]];
+    [s_typeRegistry addClass:[HVCholesterolV2 class] forTypeID:[HVCholesterolV2 typeID]];
     [s_typeRegistry addClass:[HVBloodGlucose class] forTypeID:[HVBloodGlucose typeID]];
     [s_typeRegistry addClass:[HVHeight class] forTypeID:[HVHeight typeID]];
     [s_typeRegistry addClass:[HVExercise class] forTypeID:[HVExercise typeID]];
@@ -162,7 +163,14 @@ LError:
     
     @synchronized(m_types)
     {
-        return [m_types objectForKey:type];
+        Class cls = [m_types objectForKey:type];
+        if (!cls)
+        {
+            // Try forcing lower case
+            cls = [m_types objectForKey:[type lowercaseString]];
+        }
+        
+        return cls;
     }
     
 LError:
@@ -181,6 +189,8 @@ LError:
     
     @synchronized(m_types)
     {
+        typeID = [typeID lowercaseString];
+        
         [m_types setObject:class forKey:typeID];
         
         NSString* name = NSStringFromClass(class);

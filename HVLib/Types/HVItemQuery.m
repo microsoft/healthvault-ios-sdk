@@ -39,6 +39,14 @@ static NSString* const c_element_view = @"format";
 @synthesize keys = m_keys;
 @synthesize filters = m_filters;
 @synthesize view = m_view;
+-(void)setView:(HVItemView *)view
+{
+    HVASSERT(view != nil);
+    if (view)
+    {
+        HVRETAIN(m_view, view);
+    }
+}
 
 -(int) maxResults
 {

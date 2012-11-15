@@ -132,6 +132,14 @@ const NSUInteger NSAllCalendarUnits =   NSDayCalendarUnit       |
 
 @implementation NSCalendar (HVExtensions)
 
+-(NSDateComponents *)componentsForCalendar
+{
+    NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
+    [components setCalendar:self];
+    
+    return components;
+}
+
 -(NSDateComponents *)getComponentsFor:(NSDate *)date
 {
     return [self components: NSAllCalendarUnits fromDate: date];

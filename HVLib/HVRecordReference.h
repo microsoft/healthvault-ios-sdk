@@ -55,10 +55,12 @@
 // Get the item with the given key. ItemKey includes a version stamp
 //
 -(HVGetItemsTask *) getItemWithKey:(HVItemKey *) key callback:(HVTaskCompletion) callback;
+-(HVGetItemsTask *) getItemWithKey:(HVItemKey *) key ofType:(NSString *) typeID callback:(HVTaskCompletion) callback;
 //
 // Get item with the given ID. If the item exists, will retrieve the latest version
 //
 -(HVGetItemsTask *) getItemWithID:(NSString *) itemID callback:(HVTaskCompletion) callback;
+-(HVGetItemsTask *) getItemWithID:(NSString *) itemID ofType:(NSString *) typeID callback:(HVTaskCompletion) callback;
 
 //
 // Get all items matching the given query
@@ -66,6 +68,7 @@
 -(HVGetItemsTask *) getItems:(HVItemQuery *) query callback:(HVTaskCompletion) callback;
 
 -(HVGetItemsTask *) getPendingItems:(HVPendingItemCollection *) items callback:(HVTaskCompletion) callback;
+-(HVGetItemsTask *) getPendingItems:(HVPendingItemCollection *) items ofType:(NSString *) typeID callback:(HVTaskCompletion) callback;
 
 //-------------------------
 //

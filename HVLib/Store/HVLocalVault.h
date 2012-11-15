@@ -65,4 +65,9 @@
 
 -(void) resetDataStoreForRecords:(NSArray *) records;
 
+//
+// For memory management
+//
+-(void) clearCache;
+
 @end

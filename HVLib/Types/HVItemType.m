@@ -49,6 +49,11 @@ LError:
     [super dealloc];
 }
 
+-(BOOL)isType:(NSString *)typeID
+{
+    return [m_typeID isEqualToStringCaseInsensitive:typeID];
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN;

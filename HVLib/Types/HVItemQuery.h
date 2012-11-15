@@ -52,7 +52,7 @@
 //
 // What format to pull data down in
 //
-@property (readonly, nonatomic, retain) HVItemView* view;
+@property (readwrite, nonatomic, retain) HVItemView* view;
 
 @property (readwrite, nonatomic) int maxResults;
 @property (readwrite, nonatomic) int maxFullResults;

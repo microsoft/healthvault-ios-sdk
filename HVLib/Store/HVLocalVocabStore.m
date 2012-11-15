@@ -33,6 +33,8 @@
 
 @implementation HVLocalVocabStore
 
+@synthesize store = m_objectStore;
+
 -(id)initWithObjectStore:(id<HVObjectStore>)store
 {
     HVCHECK_NOTNULL(store);

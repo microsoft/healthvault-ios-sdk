@@ -42,6 +42,7 @@ const NSUInteger NSAllCalendarUnits;
 
 @interface NSCalendar (HVExtensions)
 
+-(NSDateComponents *) componentsForCalendar;
 -(NSDateComponents *) getComponentsFor:(NSDate *) date;
 -(NSDateComponents *) yearMonthDayFrom:(NSDate *) date;
 

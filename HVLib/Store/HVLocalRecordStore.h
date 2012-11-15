@@ -92,4 +92,9 @@
 -(BOOL) resetMetadata;
 -(BOOL) resetData;
 
+//
+// Clears any in-memory caches. Does NOT wipe disk storage
+//
+-(void) clearCache;
+
 @end

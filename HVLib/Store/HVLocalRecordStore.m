@@ -162,6 +162,14 @@ LError:
     return [self ensureDataStore];
 }
 
+-(void)clearCache
+{
+   if (m_data)
+   {
+       [m_data.localStore clearCache];
+   }
+}
+
 @end
 
 @implementation HVLocalRecordStore (HVPrivate)

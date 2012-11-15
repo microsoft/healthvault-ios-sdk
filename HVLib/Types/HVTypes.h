@@ -40,6 +40,7 @@
 #import "HVWeightMeasurement.h"
 #import "HVLengthMeasurement.h"
 #import "HVBloodGlucoseMeasurement.h"
+#import "HVConcentrationValue.h"
 #import "HVNameValue.h"
 #import "HVVitalSignResult.h"
 #import "HVAssessmentField.h"

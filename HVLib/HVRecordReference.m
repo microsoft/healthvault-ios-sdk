@@ -89,44 +89,65 @@ LError:
 
 -(HVGetItemsTask *)getPendingItems:(HVPendingItemCollection *)items callback:(HVTaskCompletion)callback
 {
-    HVItemQuery *query = [[HVItemQuery alloc] initWithPendingItems:items];
+    return [self getPendingItems:items ofType:nil callback:callback];
+}
+
+-(HVGetItemsTask *)getPendingItems:(HVPendingItemCollection *)items ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
+{
+    HVItemQuery *query = [[[HVItemQuery alloc] initWithPendingItems:items] autorelease];
     HVCHECK_NOTNULL(query);
-    
-    HVGetItemsTask* task = [self getItems:query callback:callback];
-    [query release];
-    
-    return task;
+
+    if (![NSString isNilOrEmpty:typeID])
+    {
+        [query.view.typeVersions addObject:typeID];
+    }
+
+    return [self getItems:query callback:callback];
     
 LError:
-    return nil;
+    return nil;    
 }
 
 -(HVGetItemsTask *)getItemWithKey:(HVItemKey *)key callback:(HVTaskCompletion)callback
 {
-    HVItemQuery *query = [[HVItemQuery alloc] initWithItemKey:key];
+    return [self getItemWithKey:key ofType:nil callback:callback];
+}
+
+-(HVGetItemsTask *)getItemWithKey:(HVItemKey *)key ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
+{
+    HVItemQuery *query = [[[HVItemQuery alloc] initWithItemKey:key] autorelease];
     HVCHECK_NOTNULL(query);
-    
-    HVGetItemsTask* task = [self getItems:query callback:callback];
-    [query release];
-    
-    return task;
+ 
+    if (![NSString isNilOrEmpty:typeID])
+    {
+        [query.view.typeVersions addObject:typeID];
+    }
+
+    return [self getItems:query callback:callback];
     
 LError:
-    return nil;
+    return nil;    
 }
 
 -(HVGetItemsTask *)getItemWithID:(NSString *)itemID callback:(HVTaskCompletion)callback
 {
-    HVItemQuery *query = [[HVItemQuery alloc] initwithItemID:itemID];
+    return [self getItemWithID:itemID ofType:nil callback:callback];
+}
+
+-(HVGetItemsTask *)getItemWithID:(NSString *)itemID ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
+{
+    HVItemQuery *query = [[[HVItemQuery alloc] initwithItemID:itemID] autorelease];
     HVCHECK_NOTNULL(query);
     
-    HVGetItemsTask* task = [self getItems:query callback:callback];
-    [query release];
+    if (![NSString isNilOrEmpty:typeID])
+    {
+        [query.view.typeVersions addObject:typeID];
+    }
     
-    return task;
+    return [self getItems:query callback:callback];
     
 LError:
-    return nil;
+    return nil;    
 }
 
 -(HVGetItemsTask *)getItems:(HVItemQuery *)query callback:(HVTaskCompletion)callback

@@ -50,7 +50,14 @@ void safeInvokeActionInMainThread(HVAction action)
         }
     }];
     
-    [[NSOperationQueue mainQueue] addOperation:op];
+    @try
+    {
+        [[NSOperationQueue mainQueue] addOperation:op];
+    }
+    @catch (id exception)
+    {
+        [exception log];
+    }
 }
 
 void safeInvokeActionEx(HVAction action, BOOL useMainThread)

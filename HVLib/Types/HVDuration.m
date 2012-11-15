@@ -49,6 +49,13 @@ LError:
     return [self initWithStartDate:start endDate:[start dateByAddingTimeInterval:duration]];
 }
 
+-(void)dealloc
+{
+    [m_startDate release];
+    [m_endDate release];
+    [super dealloc];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

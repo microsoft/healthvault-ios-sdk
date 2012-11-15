@@ -40,10 +40,9 @@ double mgDLToMmolPerL(double mgDLValue, double molarWeight)
     //
     // DL = 0.1 Liters
     // (10 * mgDL)/1000 = g/L
-    // molarWeight * g/L = mol/L
-    // (mol/L) / 1000 = mmol/L
+    // Molar weight = grams/mole
     //
-    // ((10 * mgDL)/1000 * molarWeight) * 1000)
+    // ((10 * mgDL)/1000 / molarWeight) * 1000)
     
     return ((10 * mgDLValue) / molarWeight);
 }

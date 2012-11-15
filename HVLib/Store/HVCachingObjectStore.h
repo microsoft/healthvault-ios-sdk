@@ -23,7 +23,7 @@
 //
 // Places a transparent caching facade over an inner object store
 //
-@interface HVCachingObjectStore : NSObject <HVObjectStore>
+@interface HVCachingObjectStore : NSObject <HVObjectStore, NSCacheDelegate>
 {
 @private
     NSCache* m_cache;
@@ -33,5 +33,7 @@
 -(id)initWithObjectStore:(id<HVObjectStore>) store;
 
 -(void) deleteKeyFromCache:(NSString *) key;
+-(void) clear;  // OBSOLETE. Use clearCache instead
+-(void) clearCache;
 
 @end

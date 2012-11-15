@@ -110,6 +110,7 @@ enum HVItemFlags
 //
 //------------------------
 @property (readonly, nonatomic) NSString* itemID;
+@property (readonly, nonatomic) NSString* typeID;
 //
 // (Optional) All items can have arbitrary notes...
 // References data.common.note 
@@ -120,6 +121,7 @@ enum HVItemFlags
 // Convenience
 //
 @property (readonly, nonatomic) BOOL hasKey;
+@property (readonly, nonatomic) BOOL hasTypeInfo;
 @property (readonly, nonatomic) BOOL hasData;
 @property (readonly, nonatomic) BOOL hasTypedData;
 @property (readonly, nonatomic) BOOL hasCommonData;
@@ -169,6 +171,7 @@ enum HVItemFlags
 -(NSDate *) getDate;
 
 -(BOOL) isVersion:(NSString *) version;
+-(BOOL) isType:(NSString *) typeID;
 
 //-------------------------
 //

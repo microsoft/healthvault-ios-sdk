@@ -143,10 +143,25 @@ LError:
       
 -(HVTask *)downloadItemsWithKeys:(NSArray *)keys inView:(HVTypeView *)view
 {
+    return [self downloadItemsWithKeys:keys typeID:nil inView:view];
+}
+
+-(HVTask *)downloadItemsWithKeys:(NSArray *)keys typeID:(NSString *)typeID inView:(HVTypeView *)view
+{
     HVCHECK_NOTNULL(keys);
     
-    return [self getItemsInRecord:view.record withKeys:keys callback:^(HVTask *task) {
+    HVItemQuery* query = [[self newQueryFromKeys:keys] autorelease];
+    HVCHECK_NOTNULL(query);
+    
+    if (![NSString isNilOrEmpty:typeID])
+    {
+        [query.view.typeVersions addObject:typeID];
+    }
+    
+    return [self getItemsInRecord:view.record forQuery:query callback:^(HVTask *task) {
+        
         [self completedDownloadKeys:keys inView:view task:task];
+        
     }];
     
 LError:
@@ -155,10 +170,15 @@ LError:
 
 -(HVTask *)getItemsInRecord:(HVRecordReference *)record withKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVItemQuery* query = [self newQueryFromKeys:keys];
-    HVCHECK_NOTNULL(query);
+    HVItemQuery* query = [[self newQueryFromKeys:keys] autorelease];
+    return [self getItemsInRecord:record forQuery:query callback:callback];
+}
 
-    HVTask* getItemsTask = [[[HVTask alloc] initWithCallback:callback] autorelease]; 
+-(HVTask *)getItemsInRecord:(HVRecordReference *)record forQuery:(HVItemQuery *)query callback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(query);
+    
+    HVTask* getItemsTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
     HVCHECK_NOTNULL(getItemsTask);
     getItemsTask.taskName = @"getItemsInRecord";
     //
@@ -177,17 +197,15 @@ LError:
         
     }];
     HVCHECK_NOTNULL(downloadTask);
+    
     [getItemsTask setNextTask:downloadTask];
-
-    [query release];
     [downloadTask release];
     
     [getItemsTask start];  // this can throw
     
     return getItemsTask;
-    
+
 LError:
-    [query release];
     return nil;
 }
 
@@ -243,7 +261,7 @@ LError:
     downloadTask = [[HVDownloadItemsTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(downloadTask);
     downloadTask.taskName = @"downloadItems";
-
+        
     HVGetItemsTask* getItemsTask = [[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
         
         [self completedGetItemsTask:task];
@@ -353,7 +371,11 @@ LError:
     // Trigger a load of pending items
     //
     HVItemQuery *pendingQuery = [[HVItemQuery alloc] initWithPendingItems:result.pendingItems];
-    
+    if (!pendingQuery)
+    {
+        return;
+    }
+    pendingQuery.view = getItems.firstQuery.view;
     HVGetItemsTask* getPendingTask = [[HVGetItemsTask alloc] initWithQuery:pendingQuery andCallback:^(HVTask *task) {
         
         [self completedGetItemsTask:task];

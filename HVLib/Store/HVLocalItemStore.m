@@ -99,6 +99,18 @@ LError:
         return [m_objectStore refreshAndGetObjectWithKey:itemID name:c_root andClass:[HVItem class]]; 
     }
 }
+
+-(void)clearCache
+{
+    @synchronized(m_objectStore)
+    {
+        if ([m_objectStore respondsToSelector:@selector(clearCache)])
+        {
+            [m_objectStore performSelector:@selector(clearCache)];
+        }
+    }
+}
+
 @end
 
 @implementation HVLocalItemStore (HVPrivate)

@@ -34,6 +34,7 @@
 // For most typical tasks though, you will issue a single query at a time
 //
 @property (readonly, nonatomic) HVItemQueryCollection* queries;
+@property (readonly, nonatomic) HVItemQuery* firstQuery;
 //
 // When the task completes, retrieve results from this property
 // If there was an error - such as network, or error code returned by HealthVault - this

@@ -81,6 +81,7 @@ const int c_defaultReadAheadChunkSize = 25;
 @synthesize delegate = m_delegate;
 @synthesize tag = m_tag;
 @synthesize readAheadModeChunky = m_readAheadModeChunky;
+@synthesize enforceTypeCheck = m_enforceTypeCheck;
 
 -(HVRecordReference *)record
 {
@@ -135,6 +136,11 @@ const int c_defaultReadAheadChunkSize = 25;
 
 -(id)initForTypeID:(NSString *)typeID filter:(HVTypeFilter *)filter overStore:(HVLocalRecordStore *)store
 {
+    return [self initForTypeID:typeID filter:filter items:nil overStore:store];
+}
+
+-(id)initForTypeID:(NSString *)typeID filter:(HVTypeFilter *)filter items:(HVTypeViewItems *)items overStore:(HVLocalRecordStore *)store
+{
     HVCHECK_NOTNULL(typeID);
     HVCHECK_NOTNULL(store);
     
@@ -145,6 +151,26 @@ const int c_defaultReadAheadChunkSize = 25;
     self.filter = filter;
     self.store = store;
     self.readAheadModeChunky = FALSE;
+    self.enforceTypeCheck = FALSE;
+    if (items)
+    {
+        HVRETAIN(m_items, items);
+    }
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;    
+}
+
+-(id)initFromTypeView:(HVTypeView *)typeView andItems:(HVTypeViewItems *)items
+{
+    HVCHECK_NOTNULL(typeView);
+    
+    self = [self initForTypeID:typeView.typeID filter:typeView.filter items:items overStore:typeView.store];
+    HVCHECK_SELF;
+    
+    self.readAheadModeChunky = typeView.readAheadModeChunky;
     
     return self;
     
@@ -175,8 +201,9 @@ LError:
 }
 
 -(NSUInteger)indexOfItemWithClosestDate:(NSDate *)date
-{    
-    NSUInteger index = [m_items searchForItem:date options:NSBinarySearchingInsertionIndex usingComparator:^(id o1, id o2) {
+{
+    NSBinarySearchingOptions searchOptions = NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual;
+    NSUInteger index = [m_items searchForItem:date options:searchOptions usingComparator:^(id o1, id o2) {
         
         HVTypeViewItem* item;
         NSComparisonResult cmp;
@@ -220,7 +247,21 @@ LError:
 
 -(HVItem *)getLocalItemAtIndex:(NSUInteger)index
 {
-    return [m_store.data getLocalItemWithKey:[self itemKeyAtIndex:index]];
+    return [self getLocalItemWithKey:[self itemKeyAtIndex:index]];
+}
+
+-(HVItem *)getLocalItemWithKey:(HVItemKey *)key
+{
+    HVItem* item = [m_store.data getLocalItemWithKey:key];
+    if (item && m_enforceTypeCheck)
+    {
+        if (![item isType:m_typeID])
+        {
+            item = nil;
+        }
+    }
+    
+    return item;
 }
 
 -(void)removeLocalItemAtIndex:(NSUInteger)index
@@ -253,7 +294,7 @@ LError:
     //
     // Check if we already have this item
     //
-    HVItem* item = [m_store.data getLocalItemWithKey:key];
+    HVItem* item = [self getLocalItemWithKey:key];
     if (item)
     {
         return item;
@@ -557,7 +598,8 @@ LError:
     
     [self invokeOnMainThread:@selector(processItemsRetrieved:) withObject:params];
     [params release];
- }
+}
+
 
 -(void)serialize:(XWriter *)writer
 {
@@ -573,6 +615,22 @@ LError:
     HVDESERIALIZE(m_filter, c_element_filter, HVItemFilter);
     HVDESERIALIZE_DATE(m_lastUpdateDate, c_element_updateDate);
     HVDESERIALIZE(m_items, c_element_items, HVTypeViewItems);
+}
+
+-(HVTypeView *)subviewForRange:(NSRange)range
+{
+    HVTypeViewItems* subItems = [[[HVTypeViewItems alloc] init] autorelease];
+    
+    if (m_items)
+    {
+        [m_items correctRange:range];
+        for (NSUInteger i = 0, max = NSMaxRange(range); i < max; ++i)
+        {
+            [subItems addItem:[m_items objectAtIndex:i]];
+        }
+    }
+    
+    return [[[HVTypeView alloc] initFromTypeView:self andItems:subItems] autorelease];
 }
 
 @end
@@ -655,7 +713,7 @@ LError:
     for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
     {
         HVTypeViewItem* key = [m_items objectAtIndex:i];
-        HVItem* item = [m_store.data getLocalItemWithKey:key];
+        HVItem* item = [self getLocalItemWithKey:key];
         if (item)
         {
             [items addObject:item];
@@ -689,7 +747,7 @@ LError:
     for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
     {
         HVTypeViewItem* key = [m_items objectAtIndex:i];
-        HVItem* item = [m_store.data getLocalItemWithKey:key];
+        HVItem* item = [self getLocalItemWithKey:key];
         if (!item)
         {
             if (!pendingKeys)
@@ -725,7 +783,7 @@ LError:
     //
     // Launch the download task
     //
-    HVTask* task = [m_store.data downloadItemsWithKeys:keys inView:self];
+    HVTask* task = [m_store.data downloadItemsWithKeys:keys typeID:m_typeID inView:self];
     if (task != nil)
     {
         return task;

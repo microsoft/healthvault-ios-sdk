@@ -27,6 +27,8 @@ typedef void (^HVAction) (void);
 typedef BOOL (^HVPredicate) (void);
 typedef void (^HVNotify) (id sender);
 typedef BOOL (^HVHandler) (id value);
+typedef BOOL (^HVFilter) (id value);
+typedef id (^HVFunc) (id value);
 typedef id (^HVFactory) (id key);
 
 

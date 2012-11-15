@@ -71,6 +71,15 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(void)dealloc
+{
+    [m_root release];
+    [m_recordStores release];
+    [m_vocabs release];
+    
+    [super dealloc];
+}
+
 -(HVLocalRecordStore *)getRecordStore:(HVRecordReference *)record
 {
     HVCHECK_NOTNULL(record);
@@ -116,7 +125,7 @@ LError:
 {
     @synchronized(m_recordStores)
     { 
-        for (HVRecordReference* record in records) 
+        for (HVRecordReference* record in records)
         {
             HVLocalRecordStore* recordStore = [self getRecordStore:record];
             if (recordStore)
@@ -127,13 +136,21 @@ LError:
     }
 }
 
--(void)dealloc
+-(void)clearCache
 {
-    [m_root release];
-    [m_recordStores release];
-    [m_vocabs release];
+    @synchronized(m_recordStores)
+    {
+        NSArray* stores = [m_recordStores allValues];
+        for (HVLocalRecordStore* recordStore in stores)
+        {
+            [recordStore clearCache];
+        }
+    }
     
-    [super dealloc];
+    if (m_vocabs && [m_vocabs.store respondsToSelector:@selector(clearCache)])
+    {
+        [m_vocabs.store performSelector:@selector(clearCache)];
+    }
 }
 
 @end

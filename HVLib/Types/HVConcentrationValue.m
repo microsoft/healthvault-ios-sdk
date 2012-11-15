@@ -1,5 +1,5 @@
 //
-//  HVBloodGlucoseMeasurement.m
+//  HVConcentrationValue.m
 //  HVLib
 //
 //  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
@@ -7,9 +7,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,41 +17,54 @@
 // limitations under the License.
 
 #import "HVCommon.h"
-#import "HVBloodGlucoseMeasurement.h"
-#import "HVMeasurement.h"
+#import "HVConcentrationValue.h"
 
-@implementation HVBloodGlucoseMeasurement
+NSString* const c_element_mmolPL = @"mmolPerL";
+NSString* const c_element_display = @"display";
 
-@synthesize value = m_mmolPerl;
-@synthesize display = m_display;
+NSString* const c_mmolPlUnits = @"mmol/L";
+NSString* const c_mmolUnitsCode = @"mmol-per-l";
+NSString* const c_mgDLUnits = @"mg/dL";
+NSString* const c_mgDLUnitsCode = @"mg-per-dl";
+
+@implementation HVConcentrationValue
 
 -(double)mmolPerLiter
 {
-    return (m_mmolPerl) ? m_mmolPerl.value : NAN;
+    return m_mmolPerl ? m_mmolPerl.value : NAN;
 }
 
 -(void)setMmolPerLiter:(double)mmolPerLiter
 {
-    HVENSURE(m_mmolPerl, HVPositiveDouble);
+    HVENSURE(m_mmolPerl, HVNonNegativeDouble);
     m_mmolPerl.value = mmolPerLiter;
     [self updateDisplayValue:mmolPerLiter units:c_mmolPlUnits andUnitsCode:c_mmolUnitsCode];
 }
 
--(double)mgPerDL
+-(id)initWithMmolPerLiter:(double)value
 {
-    if (m_mmolPerl)
-    {
-        return [HVBloodGlucoseMeasurement mMolPerLiterToMgPerDL:m_mmolPerl.value];
-    }
+    self = [super init];
+    HVCHECK_SELF;
     
-    return NAN;
+    self.mmolPerLiter = value;
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
 }
 
--(void)setMgPerDL:(double)mgPerDL
+-(id)initWithMgPerDL:(double)value gramsPerMole:(double)gramsPerMole
 {
-    HVENSURE(m_mmolPerl, HVPositiveDouble);
-    m_mmolPerl.value = [HVBloodGlucoseMeasurement mgPerDLToMmolPerLiter:mgPerDL];
-    [self updateDisplayValue:mgPerDL units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
+    self = [super init];
+    HVCHECK_SELF;
+    
+    [self setMgPerDL:value gramsPerMole:gramsPerMole];
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
 }
 
 -(void)dealloc
@@ -61,32 +74,23 @@
     [super dealloc];
 }
 
--(id)initWithMmolPerLiter:(double)value
+-(double)mgPerDL:(double)gramsPerMole
 {
-    self = [super init];
-    HVCHECK_SELF;
+    if (m_mmolPerl)
+    {
+        return mmolPerLToMgDL(m_mmolPerl.value, gramsPerMole);
+    }
     
-    self.mmolPerLiter = value;
-    HVCHECK_NOTNULL(m_mmolPerl);
-    
-    return self;
-    
-LError:
-    HVALLOC_FAIL;
+    return NAN;
 }
 
--(id)initWithMgPerDL:(double)value
+-(void)setMgPerDL:(double)value gramsPerMole:(double)gramsPerMole
 {
-    self = [super init];
-    HVCHECK_SELF;
+    double mmolPerl = mgDLToMmolPerL(value, gramsPerMole);
     
-    self.mgPerDL = value;
-    HVCHECK_NOTNULL(m_mmolPerl);
-    
-    return self;
-    
-LError:
-    HVALLOC_FAIL;
+    HVENSURE(m_mmolPerl, HVNonNegativeDouble);
+    m_mmolPerl.value = mmolPerl;
+    [self updateDisplayValue:value units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
 
 -(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
@@ -122,27 +126,17 @@ LError:
     return [NSString localizedStringWithFormat:format, self.mmolPerLiter];
 }
 
-+(double)mMolPerLiterToMgPerDL:(double)value
-{
-    return value * 18;
-}
-
-+(double)mgPerDLToMmolPerLiter:(double)value
-{
-    return value / 18;
-}
-
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_mmolPerl, HVClientError_InvalidBloodGlucoseMeasurement);
+    HVVALIDATE(m_mmolPerl, HVClientError_InvalidConcentrationValue);
     HVVALIDATE_OPTIONAL(m_display);
     
     HVVALIDATE_SUCCESS;
     
 LError:
-    HVVALIDATE_FAIL;  
+    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -152,8 +146,8 @@ LError:
 }
 
 -(void)deserialize:(XReader *)reader
-{    
-    HVDESERIALIZE(m_mmolPerl, c_element_mmolPL, HVPositiveDouble);
+{
+    HVDESERIALIZE(m_mmolPerl, c_element_mmolPL, HVNonNegativeDouble);
     HVDESERIALIZE(m_display, c_element_display, HVDisplayValue);
 }
 

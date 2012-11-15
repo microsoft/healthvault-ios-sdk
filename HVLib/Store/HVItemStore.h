@@ -31,4 +31,9 @@
 
 -(HVItem *) refreshAndGetItem:(NSString *) itemID;
 
+//
+// Clear any in-memory caches to free up memory
+//
+-(void) clearCache;
+
 @end

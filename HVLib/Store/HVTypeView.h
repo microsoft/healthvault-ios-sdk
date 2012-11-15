@@ -82,6 +82,7 @@
     
     id<HVTypeViewDelegate> m_delegate;
     BOOL m_readAheadModeChunky;
+    BOOL m_enforceTypeCheck;
     
     NSInteger m_tag;
 }
@@ -98,6 +99,7 @@
 
 @property (readwrite, nonatomic) NSInteger tag;
 @property (readwrite, nonatomic, assign) BOOL readAheadModeChunky;
+@property (readwrite, nonatomic, assign) BOOL enforceTypeCheck;
 
 @property (readonly, nonatomic) NSDate* minDate;
 @property (readonly, nonatomic) NSDate* maxDate;
@@ -109,6 +111,8 @@
 //-------------------
 -(id) initForTypeID:(NSString *) typeID overStore:(HVLocalRecordStore *) store;
 -(id) initForTypeID:(NSString *)typeID filter:(HVTypeFilter *) filter overStore:(HVLocalRecordStore *) store;
+-(id) initForTypeID:(NSString *)typeID filter:(HVTypeFilter *) filter items:(HVTypeViewItems *) items overStore:(HVLocalRecordStore *) store;
+-(id) initFromTypeView:(HVTypeView *) typeView andItems:(HVTypeViewItems *) items;
 
 //------------------
 //
@@ -187,6 +191,7 @@
 //------------------
 
 -(HVItem *) getLocalItemAtIndex:(NSUInteger) index;
+-(HVItem *) getLocalItemWithKey:(HVItemKey *) key;
 -(void) removeLocalItemAtIndex:(NSUInteger) index;
 -(void) removeAllLocalItems;
 
@@ -233,6 +238,13 @@
 //
 -(void) keysNotRetrieved:(NSArray *) keys withError:(id) error;
 -(void) itemsRetrieved:(HVItemCollection *) items forKeys:(NSArray *) keys; // Not all keys may result in a match
+
+//----------------------------------
+//
+// Subviews
+//
+//----------------------------------
+-(HVTypeView *) subviewForRange:(NSRange) range;
 
 @end
 

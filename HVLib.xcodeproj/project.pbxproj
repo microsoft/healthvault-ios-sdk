@@ -373,6 +373,10 @@
 		5DD0B80B14F81DDE00AAD54F /* XSerializableType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0B80914F81DDE00AAD54F /* XSerializableType.m */; };
 		5DD216211556E18A001C8F31 /* HVLocalVocabStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DD2161F1556E18A001C8F31 /* HVLocalVocabStore.h */; };
 		5DD216221556E18A001C8F31 /* HVLocalVocabStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD216201556E18A001C8F31 /* HVLocalVocabStore.m */; };
+		5DDB6D511653FE59001BCB16 /* HVConcentrationValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DDB6D4F1653FE59001BCB16 /* HVConcentrationValue.h */; };
+		5DDB6D521653FE59001BCB16 /* HVConcentrationValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDB6D501653FE59001BCB16 /* HVConcentrationValue.m */; };
+		5DDB6D5616540B50001BCB16 /* HVCholesterolV2.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DDB6D5416540B4E001BCB16 /* HVCholesterolV2.h */; };
+		5DDB6D5716540B50001BCB16 /* HVCholesterolV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDB6D5516540B4F001BCB16 /* HVCholesterolV2.m */; };
 		5DE34C7C153925F2003C24E8 /* HVQuestionAnswer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C7A153925F2003C24E8 /* HVQuestionAnswer.h */; };
 		5DE34C7D153925F2003C24E8 /* HVQuestionAnswer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE34C7B153925F2003C24E8 /* HVQuestionAnswer.m */; };
 		5DE34C8615393B88003C24E8 /* HVEncounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE34C8415393B87003C24E8 /* HVEncounter.h */; };
@@ -792,6 +796,10 @@
 		5DD0B80914F81DDE00AAD54F /* XSerializableType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSerializableType.m; sourceTree = "<group>"; };
 		5DD2161F1556E18A001C8F31 /* HVLocalVocabStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLocalVocabStore.h; sourceTree = "<group>"; };
 		5DD216201556E18A001C8F31 /* HVLocalVocabStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLocalVocabStore.m; sourceTree = "<group>"; };
+		5DDB6D4F1653FE59001BCB16 /* HVConcentrationValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConcentrationValue.h; sourceTree = "<group>"; };
+		5DDB6D501653FE59001BCB16 /* HVConcentrationValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVConcentrationValue.m; sourceTree = "<group>"; };
+		5DDB6D5416540B4E001BCB16 /* HVCholesterolV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCholesterolV2.h; sourceTree = "<group>"; };
+		5DDB6D5516540B4F001BCB16 /* HVCholesterolV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCholesterolV2.m; sourceTree = "<group>"; };
 		5DE34C7A153925F2003C24E8 /* HVQuestionAnswer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVQuestionAnswer.h; sourceTree = "<group>"; };
 		5DE34C7B153925F2003C24E8 /* HVQuestionAnswer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVQuestionAnswer.m; sourceTree = "<group>"; };
 		5DE34C8415393B87003C24E8 /* HVEncounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEncounter.h; sourceTree = "<group>"; };
@@ -1157,6 +1165,8 @@
 				5DC799771534EC2E00193A3B /* HVLengthMeasurement.m */,
 				5DC7996A1534CB0E00193A3B /* HVBloodGlucoseMeasurement.h */,
 				5DC7996B1534CB0E00193A3B /* HVBloodGlucoseMeasurement.m */,
+				5DDB6D4F1653FE59001BCB16 /* HVConcentrationValue.h */,
+				5DDB6D501653FE59001BCB16 /* HVConcentrationValue.m */,
 				5D775C851538DED0000F01AE /* HVVitalSignResult.h */,
 				5D775C861538DED1000F01AE /* HVVitalSignResult.m */,
 				5D20D2E414EDDEF400160611 /* HVDisplayValue.h */,
@@ -1300,6 +1310,8 @@
 				5D20D2E914EDF16F00160611 /* HVBloodPressure.m */,
 				5D8E5A9C152FA913002BC6E2 /* HVCholesterol.h */,
 				5D8E5A9D152FA913002BC6E2 /* HVCholesterol.m */,
+				5DDB6D5416540B4E001BCB16 /* HVCholesterolV2.h */,
+				5DDB6D5516540B4F001BCB16 /* HVCholesterolV2.m */,
 				5DC7997A1534F3A200193A3B /* HVHeight.h */,
 				5DC7997B1534F3A200193A3B /* HVHeight.m */,
 				5DC7997E1534FCCF00193A3B /* HVExercise.h */,
@@ -1666,6 +1678,8 @@
 				5D88C5E4161F4F1700F74D54 /* HVNutritionFact.h in Headers */,
 				5D4A93211635BC49007390B7 /* HVDictionaryExtensions.h in Headers */,
 				5D7D05C51639E83800D32AD5 /* HVDownloadItemsTask.h in Headers */,
+				5DDB6D511653FE59001BCB16 /* HVConcentrationValue.h in Headers */,
+				5DDB6D5616540B50001BCB16 /* HVCholesterolV2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1919,6 +1933,8 @@
 				5D88C5E5161F4F1700F74D54 /* HVNutritionFact.m in Sources */,
 				5D4A93221635BC49007390B7 /* HVDictionaryExtensions.m in Sources */,
 				5D7D05C61639E83800D32AD5 /* HVDownloadItemsTask.m in Sources */,
+				5DDB6D521653FE59001BCB16 /* HVConcentrationValue.m in Sources */,
+				5DDB6D5716540B50001BCB16 /* HVCholesterolV2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

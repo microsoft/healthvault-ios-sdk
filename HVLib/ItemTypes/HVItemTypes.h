@@ -19,7 +19,9 @@
 #import "HVWeight.h"
 #import "HVBloodPressure.h"
 #import "HVCholesterol.h"
+#import "HVCholesterolV2.h"
 #import "HVBloodGlucose.h"
+#import "HVCholesterolV2.h"
 #import "HVHeight.h"
 #import "HVExercise.h"
 #import "HVDailyMedicationUsage.h"
@@ -55,7 +57,11 @@
 
 -(HVWeight *) weight;
 -(HVBloodPressure *) bloodPressure;
+//
+// Deprecated. Use cholesterolV2
+//
 -(HVCholesterol *) cholesterol;
+-(HVCholesterolV2 *) cholesterolV2;
 -(HVBloodGlucose *) bloodGlucose;
 -(HVHeight *) height;
 -(HVExercise *) exercise;

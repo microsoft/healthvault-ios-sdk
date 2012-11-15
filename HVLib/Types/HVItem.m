@@ -48,6 +48,11 @@ static NSString* const c_element_blobs = @"blob-payload";
     return (m_key != nil);
 }
 
+-(BOOL)hasTypeInfo
+{
+    return (m_type != nil);
+}
+
 -(BOOL) hasData
 {
     return (m_data != nil);
@@ -108,6 +113,11 @@ static NSString* const c_element_blobs = @"blob-payload";
     }
     
     return m_key.itemID;
+}
+
+-(NSString *)typeID
+{
+    return (m_type) ? m_type.typeID : c_emptyString;
 }
 
 -(id) initWithType:(NSString *)typeID
@@ -225,6 +235,16 @@ LError:
     if (self.hasKey && m_key.hasVersion)
     {
         return [m_key.version isEqualToString:version];       
+    }
+    
+    return FALSE;
+}
+
+-(BOOL)isType:(NSString *)typeID
+{
+    if (self.hasTypeInfo)
+    {
+        return [self.type isType:typeID];
     }
     
     return FALSE;

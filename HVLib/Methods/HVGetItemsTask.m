@@ -28,6 +28,16 @@
     return m_queries;
 }
 
+-(HVItemQuery *)firstQuery
+{
+    if ([NSArray isNilOrEmpty:m_queries])
+    {
+        return nil;
+    }
+    
+    return [m_queries itemAtIndex:0];
+}
+
 -(HVItemQueryResults *)queryResults
 {
     return (HVItemQueryResults *) self.result;

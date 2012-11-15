@@ -22,6 +22,9 @@
 //------------------------
 //
 // DAILY Dietary Intake
+// DEPRECATED.
+// This type is obsolete.
+// Use HVDietaryIntake
 //
 //------------------------
 @interface HVDailyDietaryIntake : HVItemDataTyped

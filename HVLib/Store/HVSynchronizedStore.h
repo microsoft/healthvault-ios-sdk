@@ -68,12 +68,14 @@
 //   - itemsRetrieved
 //
 -(HVTask *) downloadItemsWithKeys:(NSArray *) keys inView:(HVTypeView *) view;
+-(HVTask *) downloadItemsWithKeys:(NSArray *) keys typeID:(NSString *) typeID inView:(HVTypeView *) view;
 //
 // Fetch items with given keys into the local store
 // Always retrieves the LATEST item for the key
 // In the callback, HVTask.result has an HVItemCollection containing those items that were found
 //
 -(HVTask *) getItemsInRecord:(HVRecordReference *) record withKeys:(NSArray *) keys callback:(HVTaskCompletion) callback;
+-(HVTask *) getItemsInRecord:(HVRecordReference *) record forQuery:(HVItemQuery *) query callback:(HVTaskCompletion) callback;
 //
 // Currently, puts the given item in the local store
 // Future versions may include a reliable async upload queue for offline behavior

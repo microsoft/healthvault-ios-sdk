@@ -89,7 +89,7 @@ LError:
     
     HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
     HVCHECK_NOTNULL(task);
-    
+        
     HVGetItemsTask* getItemsTask = [[HVGetItemsTask alloc] initWithQuery:m_query andCallback:^(HVTask *task) {
         
         [self getItemsComplete:task forRecord:record];
@@ -135,7 +135,7 @@ LError:
     //
     // Populate the query result's pending items
     //
-    HVTask* pendingItemsTask = [queryResult createTaskToGetPendingItemsForRecord:record withCallback:^(HVTask *task) {
+    HVTask* pendingItemsTask = [queryResult createTaskToGetPendingItemsForRecord:record itemView:m_query.view withCallback:^(HVTask *task) {
         
         [task checkSuccess];
         self.result = queryResult;

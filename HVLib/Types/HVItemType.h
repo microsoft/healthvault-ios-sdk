@@ -31,4 +31,6 @@
 
 -(id) initWithTypeID:(NSString *) typeID;
 
+-(BOOL) isType:(NSString *) typeID;
+
 @end

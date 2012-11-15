@@ -93,7 +93,6 @@ static NSString* const c_vocab_measurement = @"glucose-measurement-type";
     }
 }
 
-
 -(id)initWithMmolPerLiter:(double)value andDate:(NSDate *)date
 {
     HVCHECK_NOTNULL(date);

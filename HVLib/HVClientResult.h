@@ -61,6 +61,7 @@ enum HVClientResultCode
     HVClientError_InvalidWeightMeasurement,
     HVClientError_InvalidLengthMeasurement,
     HVClientError_InvalidBloodGlucoseMeasurement,
+    HVClientError_InvalidConcentrationValue,
     HVClientError_InvalidVitalSignResult,
     HVClientError_InvalidNameValue,
     HVClientError_InvalidDuration,

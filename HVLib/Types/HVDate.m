@@ -132,6 +132,14 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(void) dealloc
+{
+    [m_year release];
+    [m_month release];
+    [m_day release];
+    [super dealloc];
+}
+
 -(BOOL)setWithDate:(NSDate *)date
 {
     return [self setWithComponents:[NSCalendar componentsFromDate:date]];
@@ -172,14 +180,6 @@ LError:
     return [[[HVDate alloc] initNow] autorelease];
 }
 
--(void) dealloc
-{
-    [m_year release];
-    [m_month release];
-    [m_day release];
-    [super dealloc];
-}
-
 -(NSDateComponents *) toComponents
 {
     NSDateComponents *components = [[NSCalendar newComponents] autorelease];
@@ -191,6 +191,19 @@ LError:
     
 LError:
     return nil;
+}
+
+-(NSDateComponents *)toComponentsForCalendar:(NSCalendar *)calendar
+{
+    NSDateComponents *components = [calendar componentsForCalendar];
+    HVCHECK_NOTNULL(components);
+    
+    HVCHECK_SUCCESS([self getComponents:components]);
+    
+    return components;
+    
+LError:
+    return nil;    
 }
 
 -(BOOL) getComponents:(NSDateComponents *)components

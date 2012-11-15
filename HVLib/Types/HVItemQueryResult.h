@@ -20,6 +20,7 @@
 #import "HVType.h"
 #import "HVItem.h"
 #import "HVPendingItem.h"
+#import "HVItemView.h"
 
 @class HVGetItemsTask;
 
@@ -55,8 +56,10 @@
 // If the query result has pending items, get them and ADD them to the items collection
 // 
 -(HVTask *) getPendingItemsForRecord:(HVRecordReference *) record withCallback:(HVTaskCompletion) callback;
+-(HVTask *) getPendingItemsForRecord:(HVRecordReference *) record itemView:(HVItemView *) view withCallback:(HVTaskCompletion) callback;
 
 -(HVTask *) createTaskToGetPendingItemsForRecord:(HVRecordReference *) record withCallback:(HVTaskCompletion) callback;
+-(HVTask *) createTaskToGetPendingItemsForRecord:(HVRecordReference *) record itemView:(HVItemView *) view withCallback:(HVTaskCompletion) callback;
 
 @end
 
