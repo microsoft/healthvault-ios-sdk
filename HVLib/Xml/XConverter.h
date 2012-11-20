@@ -37,8 +37,13 @@
 -(BOOL) tryFloat:(float) source toString:(NSString **) result;
 -(NSString *) floatToString:(float) source;
 
+//
+// Try to parse the given Xml string into a double.
+// Automatically takes care of trimming for leading/trailing spaces
+//
 -(BOOL) tryString:(NSString *) source toDouble:(double *) result;
 -(double) stringToDouble:(NSString *) source;
+
 -(BOOL) tryDouble:(double) source toString:(NSString **) result;
 -(BOOL) tryDoubleRoundtrip:(double) source toString:(NSString **) result;
 -(NSString *) doubleToString:(double) source;

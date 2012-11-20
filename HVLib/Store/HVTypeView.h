@@ -22,6 +22,7 @@
 #import "HVTypeViewItems.h"
 #import "HVLocalVault.h"
 #import "HVItemFilter.h"
+#import "HVBlock.h"
 
 @class HVSynchronizedStore;
 @class HVTypeView;
@@ -122,9 +123,17 @@
 
 -(HVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
+//
+// Returns the FIRST item that has the closest (or equal) date to the one supplied
+//
 -(NSUInteger) indexOfItemWithClosestDate:(NSDate *) date;
 -(BOOL) containsItemID:(NSString *) itemID;
 -(HVTypeViewItem *) itemForItemID:(NSString *) itemID;
+//
+// Very useful for finding the closest item by DAY
+//
+-(NSUInteger) indexOfFirstDay:(NSDate *)date;
+-(NSUInteger) indexOfFirstDay:(NSDate *)date startAt:(NSUInteger) baseIndex;
 
 //
 // maxAgeInSeconds

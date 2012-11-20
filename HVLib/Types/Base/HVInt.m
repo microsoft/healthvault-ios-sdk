@@ -61,4 +61,9 @@ LError:
     m_value = [reader readInt];
 }
 
++(HVInt *)fromInt:(int)value
+{
+    return [[[HVInt alloc] initWith:value] autorelease];
+}
+
 @end

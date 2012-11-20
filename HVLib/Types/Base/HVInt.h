@@ -36,4 +36,6 @@
 -(NSString *) toString;
 -(NSString *) toStringWithFormat:(NSString *) format;
 
++(HVInt *) fromInt:(int) value;
+
 @end

@@ -74,17 +74,22 @@ NSString* const XExceptionNotSerializable;
 -(float) readFloat;
 -(BOOL) readBool;
 
+-(NSString *) readNextElement;
 -(NSString *) readStringElementRequired:(NSString *) name;
 -(NSString *) readStringElement:(NSString *)name;
 
--(NSDate*) readDateElement:(NSString *) name;
+-(NSDate *) readNextDate;
+-(NSDate *) readDateElement:(NSString *) name;
 
+-(int) readNextInt;
 -(int) readIntElement:(NSString *) name;
 -(BOOL) readIntElement:(NSString *) name into:(int *) value;
 
+-(double) readNextDouble;
 -(double) readDoubleElement:(NSString *) name;
 -(BOOL) readDoubleElement:(NSString *) name into:(double *) value;
 
+-(BOOL) readNextBool;
 -(BOOL) readBoolElement:(NSString*) name;
 -(BOOL) readBoolElement:(NSString *) name into:(BOOL *) value;
 

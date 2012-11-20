@@ -151,7 +151,7 @@ LError:
 
 -(NSString *) description
 {
-    return [NSString stringWithFormat:@"%@ [%@, %@]", [m_date toStringWithFormat:@"MM/dd/yy hh:mm:ss aaa"], self.itemID, self.version];
+    return [NSString stringWithFormat:@"%@ [%@, %@]", [m_date toStringWithStyle:NSDateFormatterShortStyle], self.itemID, self.version];
 }
 
 -(void) serialize:(XWriter *)writer
@@ -171,18 +171,11 @@ LError:
 {
     [super deserialize:reader];
     
-    double timespan = DBL_MIN;
-    HVDESERIALIZE_DOUBLE(timespan, c_element_dateShort);
-    if (timespan != DBL_MIN)
-    {
-        HVCLEAR(m_date);
-        m_date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:(NSTimeInterval) timespan];
-        HVCHECK_OOM(m_date);
-    }
-    else 
-    {
-        HVDESERIALIZE_DATE(m_date, c_element_date);
-    }
+    double timespan = [reader readNextDouble];
+
+    HVCLEAR(m_date);
+    m_date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:(NSTimeInterval) timespan];
+    HVCHECK_OOM(m_date);
 }
 
 @end

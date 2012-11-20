@@ -21,6 +21,8 @@
 #import "HVItemKey.h"
 #import "HVCollection.h"
 
+@class HVItem;
+
 @interface HVRelatedItem : HVType
 {
 @private
@@ -42,7 +44,15 @@
 -(id) initRelationship:(NSString *) relationship toItemWithKey:(HVItemKey *) key;
 -(id) initRelationship:(NSString *)relationship toItemWithClientID:(NSString *) clientID;
 
++(HVRelatedItem *) relationNamed:(NSString *) name toItemKey:(HVItemKey *) item;
++(HVRelatedItem *) relationNamed:(NSString *) name toItem:(HVItem *) key;
+
 @end
 
-@interface HVRelatedItemCollection : HVCollection 
+@interface HVRelatedItemCollection : HVCollection
+
+-(NSUInteger) indexOfRelation:(NSString *) name;
+-(HVRelatedItem *) addRelation:(NSString *) name toItem:(HVItem *) item;
+-(BOOL) ensureRelation:(NSString *) name toItem:(HVItem *) item;
+
 @end

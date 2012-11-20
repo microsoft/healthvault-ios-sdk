@@ -229,6 +229,44 @@ LError:
     return index;
 }
 
+-(NSUInteger)indexOfFirstDay:(NSDate *)date
+{
+    NSDate* day = [date toStartOfDay];
+    NSUInteger index = [self indexOfItemWithClosestDate:day];
+    if (index == NSNotFound)
+    {
+        return index;
+    }
+    
+    return [self indexOfFirstDay:date startAt:index];
+}
+
+-(NSUInteger)indexOfFirstDay:(NSDate *)date startAt:(NSUInteger)baseIndex
+{
+    NSUInteger index = baseIndex;
+    
+    NSCalendar* calendar = [[NSCalendar newGregorian] autorelease];
+    NSDateComponents* baseComponents = [calendar getComponentsFor:date];
+    
+    for (; index > 0; --index)
+    {
+        NSDateComponents* itemComponents = [calendar getComponentsFor:[self itemKeyAtIndex:index].date];
+        NSComparisonResult cmp = [NSDateComponents compareYearMonthDay:itemComponents and:baseComponents];
+        if (cmp == NSOrderedDescending)
+        {
+            index++;
+            break;
+        }
+    }
+    
+    if (index >= self.count)
+    {
+        index = self.count - 1;
+    }
+    
+    return index;
+}
+
 -(BOOL)containsItemID:(NSString *)itemID
 {
     return ([self indexOfItemID:itemID] != NSNotFound);
@@ -676,6 +714,7 @@ LError:
             }
         }
         self.items = newViewItems;
+                
         [self stampUpdated];
         
         [self notifySynchronized];

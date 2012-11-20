@@ -110,6 +110,20 @@ LError:
     return nil;
 }
 
+-(NSDate *)toStartOfDay
+{
+    NSCalendar* calendar = [NSCalendar newGregorian];
+    HVCHECK_NOTNULL(calendar);
+    
+    NSDate* day = [[calendar yearMonthDayFrom:self] date];
+    
+    [calendar release];
+    
+    return day;
+    
+LError:
+    return nil;
+}
 
 +(NSDate *)yesterday
 {
@@ -307,6 +321,42 @@ LError:
 -(NSString *)dateTimeToString:(NSDate *)date
 {
     return [self dateToString:date withFormat:@"MM/dd/yy hh:mm aaa"];
+}
+
+@end
+
+@implementation NSDateComponents (HVExtensions)
+
++(BOOL)isEqualYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2
+{
+    return (d1.year == d2.year && d1.month == d2.month && d1.day == d2.day);
+}
+
++(NSComparisonResult)compareYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2
+{
+    NSInteger cmp = d1.year - d2.year;
+    if (cmp != 0)
+    {
+        return (cmp > 0) ? NSOrderedDescending : NSOrderedAscending;
+    }
+    //
+    // Year is equal
+    //
+    cmp = d1.month - d2.month;
+    if (cmp != 0)
+    {
+        return (cmp > 0) ? NSOrderedDescending : NSOrderedAscending;
+    }
+    //
+    // Month is equal
+    //
+    cmp = d1.day - d2.day;
+    if (cmp != 0)
+    {
+        return (cmp > 0) ? NSOrderedDescending : NSOrderedAscending;
+    }
+    
+    return NSOrderedSame;
 }
 
 @end

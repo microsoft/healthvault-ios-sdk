@@ -18,6 +18,7 @@
 
 #import "HVCommon.h"
 #import "HVRelatedItem.h"
+#import "HVItem.h"
 
 static NSString* const c_element_thingID = @"thing-id";
 static NSString* const c_element_version = @"version-stamp";
@@ -110,6 +111,16 @@ LError:
     HVDESERIALIZE_STRING(m_relationship, c_element_relationship);
 }
 
++(HVRelatedItem *)relationNamed:(NSString *)name toItem:(HVItem *)item
+{
+    return [HVRelatedItem relationNamed:name toItemKey:item.key];
+}
+
++(HVRelatedItem *)relationNamed:(NSString *)name toItemKey:(HVItemKey *)key
+{
+    return [[[HVRelatedItem alloc] initRelationship:name toItemWithKey:key] autorelease];
+}
+
 @end
 
 @implementation HVRelatedItemCollection
@@ -126,4 +137,43 @@ LError:
 LError:
     HVALLOC_FAIL;
 }
+
+-(NSUInteger)indexOfRelation:(NSString *)name
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        HVRelatedItem* item = (HVRelatedItem *) [self objectAtIndex:i];
+        if (item.relationship && [item.relationship isEqualToStringCaseInsensitive:name])
+        {
+            return i;
+        }
+    }
+    
+    return NSNotFound;
+}
+
+-(HVRelatedItem *)addRelation:(NSString *)name toItem:(HVItem *)item
+{
+    HVRelatedItem* relation = [HVRelatedItem relationNamed:name toItem:item];
+    HVCHECK_NOTNULL(relation);
+    
+    [self addObject:relation];
+    
+    return relation;
+
+LError:
+    return nil;
+}
+
+-(BOOL)ensureRelation:(NSString *)name toItem:(HVItem *)item
+{
+    NSUInteger index = [self indexOfRelation:name];
+    if (index != NSNotFound)
+    {
+        return TRUE;
+    }
+    
+    return ([self addRelation:name toItem:item] != nil);
+}
+
 @end

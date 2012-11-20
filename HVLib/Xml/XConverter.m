@@ -72,7 +72,7 @@ LError:
     HVCHECK_NOTNULL(result);
         
     HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
-    [m_stringBuffer trim];
+    //[m_stringBuffer trim];  // parseInt skips whitespace by default
     
     return [m_stringBuffer parseInt: result];
     
@@ -185,8 +185,7 @@ LError:
         [XException throwException:XExceptionTypeConversion reason:@"floatToString"];
     }
     
-    return string;
-    
+    return string;    
 }
 
 -(BOOL) tryString:(NSString *)source toDouble:(double *)result
@@ -195,8 +194,13 @@ LError:
     HVCHECK_NOTNULL(result);
     
     HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
-    [m_stringBuffer trim];
+    //[m_stringBuffer trim];  // parseInt skips whitespace by default
     
+    if ([m_stringBuffer parseDouble: result])
+    {
+        return TRUE;
+    }
+ 
     if ([m_stringBuffer isEqualToString:c_NEGATIVEINF])
     {
         *result = -INFINITY;
@@ -207,9 +211,7 @@ LError:
         *result = INFINITY;
         return TRUE;
     }
-    
-    return [m_stringBuffer parseDouble: result];
-   
+
 LError:
     return FALSE;
 }

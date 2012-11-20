@@ -34,6 +34,7 @@ const NSUInteger NSAllCalendarUnits;
 +(NSDate *) fromHour:(int)hour andMinute:(int) minute;
 
 -(NSTimeInterval) offsetFromNow;
+-(NSDate *) toStartOfDay;
 
 +(NSDate *) yesterday;
 
@@ -68,3 +69,11 @@ const NSUInteger NSAllCalendarUnits;
 -(NSString *) dateTimeToString:(NSDate *)date;
 
 @end
+
+@interface NSDateComponents (HVExtensions)
+
++(BOOL)isEqualYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2;
++(NSComparisonResult) compareYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2;
+
+@end
+

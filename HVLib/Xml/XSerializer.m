@@ -372,6 +372,23 @@ LError:
     return [self.converter stringToBool:[self readValueEnsure]];
 }
 
+-(NSString *)readNextElement
+{
+    NSString *value = nil;
+    
+    if ([self readStartElement])
+    {
+        value = [self readValue];
+        
+        if (value != nil || self.nodeType == XEndElement)
+        {
+            [self readEndElement];
+        }
+    }
+    
+    return (value != nil) ? value : c_emptyString;
+}
+
 -(NSString *) readStringElementRequired:(NSString *)name
 {
     NSString *value = nil;
@@ -393,10 +410,22 @@ LError:
 {
     if ([self isStartElementWithName:name])
     {
-        return [self readStringElementRequired:name];
+        //return [self readStringElementRequired:name];
+        return [self readNextElement];
     }
     
     return nil;
+}
+
+-(NSDate *)readNextDate
+{
+    NSString* string = [self readNextElement];
+    if ([NSString isNilOrEmpty:string])
+    {
+        return nil;
+    }
+    
+    return [self.converter stringToDate:string];    
 }
 
 -(NSDate*) readDateElement:(NSString *)name
@@ -408,6 +437,17 @@ LError:
     }
     
     return [self.converter stringToDate:string];
+}
+
+-(int)readNextInt
+{
+    NSString* string = [self readNextElement];
+    if ([NSString isNilOrEmpty:string])
+    {
+        return 0;
+    }
+    
+    return [self.converter stringToInt:string];    
 }
 
 -(int) readIntElement:(NSString *)name
@@ -432,6 +472,16 @@ LError:
     return FALSE;
 }
 
+-(double)readNextDouble
+{
+    NSString* string = [self readNextElement];
+    if ([NSString isNilOrEmpty:string])
+    {
+        return 0.0;
+    }
+    
+    return [self.converter stringToDouble:string];    
+}
 
 -(double) readDoubleElement:(NSString *)name
 {
@@ -453,6 +503,17 @@ LError:
     }
     
     return FALSE;
+}
+
+-(BOOL)readNextBool
+{
+    NSString* string = [self readNextElement];
+    if ([NSString isNilOrEmpty:string])
+    {
+        return 0;
+    }
+    
+    return [self.converter stringToBool:string];    
 }
 
 -(BOOL)readBoolElement:(NSString *)name
