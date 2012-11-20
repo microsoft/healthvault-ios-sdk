@@ -29,6 +29,9 @@ NSString* const c_mgDLUnitsCode = @"mg-per-dl";
 
 @implementation HVConcentrationValue
 
+@synthesize value = m_mmolPerl;
+@synthesize display = m_display;
+
 -(double)mmolPerLiter
 {
     return m_mmolPerl ? m_mmolPerl.value : NAN;
