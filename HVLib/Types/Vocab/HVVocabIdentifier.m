@@ -81,6 +81,31 @@ LError:
     return nil;
 }
 
+-(HVCodedValue *)codedValueForCode:(NSString *)code
+{
+    HVCHECK_STRING(code);
+    
+    return [[[HVCodedValue alloc] initWithCode:code vocab:m_name vocabFamily:m_family vocabVersion:m_version] autorelease];
+LError:
+    return nil;
+}
+
+-(HVCodableValue *)codableValueForText:(NSString *)text andCode:(NSString *)code
+{
+    HVCodableValue* codable = [HVCodableValue fromText:text];
+    HVCHECK_NOTNULL(codable);
+    
+    HVCodedValue* codedValue = [self codedValueForCode:code];
+    HVCHECK_NOTNULL(codedValue);
+    
+    [codable addCode:codedValue];
+    
+    return codable;
+    
+LError:
+    return nil;
+}
+
 -(NSString *)toKeyString
 {
     if (m_keyString)

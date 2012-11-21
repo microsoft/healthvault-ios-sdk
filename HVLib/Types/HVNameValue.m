@@ -27,6 +27,17 @@ static NSString* const c_element_value = @"value";
 @synthesize name = m_name;
 @synthesize value = m_value;
 
+-(double)measurementValue
+{
+    return (m_value) ? m_value.value : NAN;
+}
+
+-(void)setMeasurementValue:(double)measurementValue
+{
+    HVENSURE(m_value, HVMeasurement);
+    m_value.value = measurementValue;
+}
+
 -(id)initWithName:(HVCodedValue *)name andValue:(HVMeasurement *)value
 {
     HVCHECK_NOTNULL(name);
@@ -50,6 +61,11 @@ LError:
     [m_value release];
     
     [super dealloc];
+}
+
++(HVNameValue *)fromName:(HVCodedValue *)name andValue:(HVMeasurement *)value
+{
+    return [[[HVNameValue alloc] initWithName:name andValue:value] autorelease];
 }
 
 -(HVClientResult *)validate

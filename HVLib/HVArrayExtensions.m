@@ -35,6 +35,22 @@
     return (array == nil || array.count == 0);
 }
 
+-(NSUInteger)indexOfMatchingObject:(HVFilter)filter
+{
+    if (filter)
+    {
+        for (NSUInteger i = 0, count = self.count; i < count; ++i)
+        {
+            id obj = [self objectAtIndex:i];
+            if (filter(obj))
+            {
+                return i;
+            }
+        }
+    }
+    
+    return NSNotFound;
+}
 
 @end
 

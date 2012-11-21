@@ -104,7 +104,32 @@
 -(HVNameValue *) getDetailWithNameCode:(NSString *) name;
 -(BOOL) addOrUpdateDetailWithNameCode:(NSString *) name andValue:(HVMeasurement *) value;
 
+//-------------------------
+//
+// Exercise Details (self.details)
+//
+//-------------------------
 +(HVNameValue *) createDetailWithNameCode:(NSString *) name andValue:(HVMeasurement *) value;
+
++(BOOL) isDetailForCaloriesBurned:(HVNameValue *) nv;
++(BOOL) isDetailForNumberOfSteps:(HVNameValue *) nv;
+
+//
+// Uses VOCABULARIES
+//  - exercise-details-names for the detail Name
+//  - exercise-units for measurement units
+//
++(HVCodableValue *) codeFromUnitsText:(NSString *) unitsText andUnitsCode:(NSString *) unitsCode;
++(HVCodableValue *) unitsCodeForCount;
++(HVCodableValue *) unitsCodeForCalories;
+
++(HVMeasurement *) measurementFor:(double) value unitsText:(NSString *) unitsText unitsCode:(NSString *) unitsCode;
++(HVMeasurement *) measurementForCount:(double) value;
++(HVMeasurement *) measurementForCalories:(double) value;
+
++(HVCodedValue *) detailNameWithCode:(NSString *) code;
++(HVCodedValue *) detailNameForSteps;
++(HVCodedValue *) detailNameForCaloriesBurned;
 
 //-------------------------
 //

@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import "HVType.h"
-#import "HVCodedValue.h"
+#import "HVCodableValue.h"
 
 NSString* const c_rxNormFamily;
 NSString* const c_snomedFamily;
@@ -81,6 +81,8 @@ NSString* const c_usdaFamily;
 // Create a codedValue for the vocabItem
 //
 -(HVCodedValue *) codedValueForItem:(HVVocabItem *) vocabItem;
+-(HVCodedValue *) codedValueForCode:(NSString *) code;
+-(HVCodableValue *) codableValueForText:(NSString *) text andCode:(NSString *) code;
 //
 // Generate a single string representing this vocab identifier
 //

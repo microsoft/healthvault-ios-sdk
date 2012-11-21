@@ -17,12 +17,14 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import "HVBlock.h"
 
 @interface NSArray (HVArrayExtensions)
 
 -(NSRange) range;
 
-- (NSUInteger) binarySearch:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp; 
+-(NSUInteger) binarySearch:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp;
+-(NSUInteger) indexOfMatchingObject:(HVFilter) filter;
 
 +(BOOL) isNilOrEmpty:(NSArray *) array;
 

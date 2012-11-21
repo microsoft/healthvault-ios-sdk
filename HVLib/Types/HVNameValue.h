@@ -37,8 +37,16 @@
 // Data
 //
 //-------------------------
+//
+// REQUIRED
+//
 @property (readwrite, nonatomic, retain) HVCodedValue* name;
 @property (readwrite, nonatomic, retain) HVMeasurement* value;
+
+//
+// Convenience
+//
+@property(readwrite, nonatomic, assign) double measurementValue;
 
 //-------------------------
 //
@@ -46,6 +54,8 @@
 //
 //-------------------------
 -(id) initWithName:(HVCodedValue *) name andValue:(HVMeasurement *) value;
+
++(HVNameValue *) fromName:(HVCodedValue *) name andValue:(HVMeasurement *) value;
 
 @end
 
@@ -66,6 +76,6 @@
 -(HVNameValue *) getItemWithNameCode:(NSString *) nameCode;
 
 -(void) addOrUpdate:(HVNameValue *) value;
-
+ 
 
 @end

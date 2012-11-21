@@ -33,7 +33,10 @@ static NSString* const c_element_segment = @"segment";
 static NSString* const c_vocabName_Activities = @"exercise-activities";
 static NSString* const c_vocabName_Details = @"exercise-detail-names";
 static NSString* const c_vocabName_Units = @"exercise-units";
-    
+
+static NSString* const c_code_stepCount = @"Steps_count";
+static NSString* const c_code_caloriesBurned = @"CaloriesBurned_calories";
+
 @interface HVExercise (HVPrivate)
 
 +(HVCodableValue *) newActivity:(NSString *) activity;
@@ -169,6 +172,86 @@ LError:
     return [[HVExercise newDetailWithNameCode:name andValue:value] autorelease];
 }
 
++(BOOL)isDetailForCaloriesBurned:(HVNameValue *)nv
+{
+    HVCHECK_NOTNULL(nv);
+    
+    HVCodedValue* name = nv.name;
+    return (
+            [name isEqualToCode:c_code_caloriesBurned fromVocab:c_vocabName_Details] ||
+            [name isEqualToCode:@"Calories burned" fromVocab:c_vocabName_Details] // Fitbug bug
+            );
+
+LError:
+     return FALSE;
+}
+
++(BOOL)isDetailForNumberOfSteps:(HVNameValue *)nv
+{
+    HVCHECK_NOTNULL(nv);
+    
+    HVCodedValue* name = nv.name;
+    return (
+            [name isEqualToCode:c_code_stepCount fromVocab:c_vocabName_Details] ||
+            [name isEqualToCode:@"Number of steps" fromVocab:c_vocabName_Details] // Fitbit bug
+            );
+    
+LError:
+    return FALSE;
+    
+}
+
++(HVCodableValue *)codeFromUnitsText:(NSString *)unitsText andUnitsCode:(NSString *)unitsCode
+{
+    return [[HVExercise vocabForUnits] codableValueForText:unitsText andCode:unitsCode];
+}
+
++(HVCodableValue *)unitsCodeForCount
+{
+    return [HVExercise codeFromUnitsText:@"Count" andUnitsCode:@"Count"];
+}
+
++(HVCodableValue *)unitsCodeForCalories
+{
+    return [HVExercise codeFromUnitsText:@"Calories" andUnitsCode:@"Calories"];    
+}
+
++(HVMeasurement *)measurementFor:(double)value unitsText:(NSString *)unitsText unitsCode:(NSString *)unitsCode
+{
+    HVCodableValue* codedUnits = [HVExercise codeFromUnitsText:unitsText andUnitsCode:unitsCode];
+    HVCHECK_NOTNULL(codedUnits);
+    
+    return [HVMeasurement fromValue:value andUnits:codedUnits];
+
+LError:
+    return nil;
+}
+
++(HVMeasurement *)measurementForCount:(double)value
+{
+    return [HVMeasurement fromValue:value andUnits:[HVExercise unitsCodeForCount]];
+}
+
++(HVMeasurement *)measurementForCalories:(double)value
+{
+    return [HVMeasurement fromValue:value andUnits:[HVExercise unitsCodeForCalories]];
+}
+
++(HVCodedValue *)detailNameWithCode:(NSString *)code
+{
+    return [[HVExercise vocabForDetails] codedValueForCode:code];
+}
+
++(HVCodedValue *)detailNameForSteps
+{
+    return [HVExercise detailNameWithCode:c_code_stepCount];
+}
+
++(HVCodedValue *)detailNameForCaloriesBurned
+{
+    return [HVExercise detailNameWithCode:c_code_caloriesBurned];
+}
+
 +(HVVocabIdentifier *)vocabForActivities
 {
     return s_vocabIDActivities;
@@ -256,11 +339,13 @@ LError:
 
 +(HVNameValue *) newDetailWithNameCode:(NSString *)name andValue:(HVMeasurement *)value
 {
-    HVCodedValue* codedValue = [[HVCodedValue alloc] initWithCode:name andVocab:c_vocabName_Details];
-    HVNameValue* nv = [[HVNameValue alloc] initWithName:codedValue andValue:value];
-    [codedValue release];
+    HVCodedValue* codedValue = [[HVExercise vocabForDetails] codedValueForCode:name];
+    HVCHECK_NOTNULL(codedValue);
     
-    return nv;
+    return [[HVNameValue alloc] initWithName:codedValue andValue:value];
+
+LError:
+    return nil;
 }
 
 @end
