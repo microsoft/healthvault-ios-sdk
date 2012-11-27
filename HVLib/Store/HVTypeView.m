@@ -223,7 +223,14 @@ LError:
     
     if (index != NSNotFound && index == m_items.count)
     {
-        index = m_items.count - 1;
+        if (m_items.count == 0)
+        {
+            index = NSNotFound;
+        }
+        else
+        {
+            index = m_items.count - 1;
+        }
     }
     
     return index;
