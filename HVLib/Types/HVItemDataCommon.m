@@ -46,6 +46,12 @@ static NSString* const c_element_clientID = @"client-thing-id";
     [super dealloc];
 }
 
+-(HVRelatedItem *)addRelation:(NSString *)name toItem:(HVItem *)item
+{
+    HVENSURE(m_relatedItems, HVRelatedItemCollection);
+    return [m_relatedItems addRelation:name toItem:item];
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN;

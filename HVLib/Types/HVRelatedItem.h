@@ -53,6 +53,5 @@
 
 -(NSUInteger) indexOfRelation:(NSString *) name;
 -(HVRelatedItem *) addRelation:(NSString *) name toItem:(HVItem *) item;
--(BOOL) ensureRelation:(NSString *) name toItem:(HVItem *) item;
 
 @end

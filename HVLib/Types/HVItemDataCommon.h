@@ -70,4 +70,11 @@
 //
 @property (readwrite, nonatomic, retain) HVString255* clientID;
 
+//----------------------
+//
+// Methods
+//
+//----------------------
+-(HVRelatedItem *)addRelation:(NSString *)name toItem:(HVItem *)item;
+
 @end

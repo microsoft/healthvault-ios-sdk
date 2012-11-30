@@ -165,15 +165,4 @@ LError:
     return nil;
 }
 
--(BOOL)ensureRelation:(NSString *)name toItem:(HVItem *)item
-{
-    NSUInteger index = [self indexOfRelation:name];
-    if (index != NSNotFound)
-    {
-        return TRUE;
-    }
-    
-    return ([self addRelation:name toItem:item] != nil);
-}
-
 @end

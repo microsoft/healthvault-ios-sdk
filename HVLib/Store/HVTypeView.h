@@ -125,8 +125,10 @@
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
 //
 // Returns the FIRST item that has the closest (or equal) date to the one supplied
-//
+// 
 -(NSUInteger) indexOfItemWithClosestDate:(NSDate *) date;
+-(NSUInteger) indexOfItemWithClosestDate:(NSDate *)date firstEqual:(BOOL) firstEqual;
+
 -(BOOL) containsItemID:(NSString *) itemID;
 -(HVTypeViewItem *) itemForItemID:(NSString *) itemID;
 //

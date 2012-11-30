@@ -202,7 +202,21 @@ LError:
 
 -(NSUInteger)indexOfItemWithClosestDate:(NSDate *)date
 {
-    NSBinarySearchingOptions searchOptions = NSBinarySearchingInsertionIndex | NSBinarySearchingFirstEqual;
+    return [self indexOfItemWithClosestDate:date firstEqual:TRUE];
+}
+
+-(NSUInteger)indexOfItemWithClosestDate:(NSDate *)date firstEqual:(BOOL)firstEqual
+{
+    NSBinarySearchingOptions searchOptions = NSBinarySearchingInsertionIndex;
+    if (firstEqual)
+    {
+        searchOptions |= NSBinarySearchingFirstEqual;
+    }
+    else
+    {
+        searchOptions |= NSBinarySearchingLastEqual;
+    }
+    
     NSUInteger index = [m_items searchForItem:date options:searchOptions usingComparator:^(id o1, id o2) {
         
         HVTypeViewItem* item;
