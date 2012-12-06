@@ -46,6 +46,12 @@ NSString* pickRandomDrug(void);
 +(HVOrganization *) createRandom;
 @end
 
+@interface HVWeightMeasurement (HVTestExtensions)
+
++(HVWeightMeasurement *) createRandomGramsMin:(NSUInteger) min max:(NSUInteger) max;
+
+@end
+
 @interface HVItem (HVTestExtensions)
 +(HVItem *) createRandomOfClass:(NSString *) className;
 @end
@@ -59,9 +65,7 @@ NSString* pickRandomDrug(void);
 @end
 
 @interface HVBloodGlucose (HVTestExtensions)
-
 +(HVItem *) createRandom;
-
 @end
 
 @interface HVCholesterol (HVTestExtensions)
@@ -85,6 +89,7 @@ NSString* pickRandomDrug(void);
 @interface HVDietaryIntake (HVTestExtensions)
 
 +(HVItem *) createRandom;
++(HVItem *) createRandomValuesForFood:(HVCodableValue *) food meal:(HVCodableValue *) meal onDate:(HVDateTime *) date;
 
 @end
 

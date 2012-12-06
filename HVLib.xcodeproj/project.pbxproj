@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5D07A9571534B1780013DC2A /* HVProcedure.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D07A9551534B1780013DC2A /* HVProcedure.h */; };
 		5D07A9581534B1780013DC2A /* HVProcedure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D07A9561534B1780013DC2A /* HVProcedure.m */; };
+		5D09127A166EB7A60031F5F9 /* HVRemoveRecordAuthTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D091278166EB7A60031F5F9 /* HVRemoveRecordAuthTask.h */; };
+		5D09127B166EB7A60031F5F9 /* HVRemoveRecordAuthTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D091279166EB7A60031F5F9 /* HVRemoveRecordAuthTask.m */; };
 		5D0B4BE1151A7D50000849D0 /* HVCondition.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0B4BDF151A7D50000849D0 /* HVCondition.h */; };
 		5D0B4BE2151A7D50000849D0 /* HVCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0B4BE0151A7D50000849D0 /* HVCondition.m */; };
 		5D0B4BE6151A80A4000849D0 /* HVApproxDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0B4BE4151A80A4000849D0 /* HVApproxDateTime.h */; };
@@ -425,6 +427,8 @@
 /* Begin PBXFileReference section */
 		5D07A9551534B1780013DC2A /* HVProcedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVProcedure.h; sourceTree = "<group>"; };
 		5D07A9561534B1780013DC2A /* HVProcedure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVProcedure.m; sourceTree = "<group>"; };
+		5D091278166EB7A60031F5F9 /* HVRemoveRecordAuthTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRemoveRecordAuthTask.h; sourceTree = "<group>"; };
+		5D091279166EB7A60031F5F9 /* HVRemoveRecordAuthTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVRemoveRecordAuthTask.m; sourceTree = "<group>"; };
 		5D0B4BDF151A7D50000849D0 /* HVCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCondition.h; sourceTree = "<group>"; };
 		5D0B4BE0151A7D50000849D0 /* HVCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCondition.m; sourceTree = "<group>"; };
 		5D0B4BE4151A80A4000849D0 /* HVApproxDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVApproxDateTime.h; sourceTree = "<group>"; };
@@ -1402,6 +1406,8 @@
 				5D1BE47C156B483900718832 /* HVBlobUploadTask.m */,
 				5DB4206B156C959200E1A473 /* HVItemBlobUploadTask.h */,
 				5DB4206C156C959200E1A473 /* HVItemBlobUploadTask.m */,
+				5D091278166EB7A60031F5F9 /* HVRemoveRecordAuthTask.h */,
+				5D091279166EB7A60031F5F9 /* HVRemoveRecordAuthTask.m */,
 			);
 			path = Methods;
 			sourceTree = "<group>";
@@ -1680,6 +1686,7 @@
 				5D7D05C51639E83800D32AD5 /* HVDownloadItemsTask.h in Headers */,
 				5DDB6D511653FE59001BCB16 /* HVConcentrationValue.h in Headers */,
 				5DDB6D5616540B50001BCB16 /* HVCholesterolV2.h in Headers */,
+				5D09127A166EB7A60031F5F9 /* HVRemoveRecordAuthTask.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1935,6 +1942,7 @@
 				5D7D05C61639E83800D32AD5 /* HVDownloadItemsTask.m in Sources */,
 				5DDB6D521653FE59001BCB16 /* HVConcentrationValue.m in Sources */,
 				5DDB6D5716540B50001BCB16 /* HVCholesterolV2.m in Sources */,
+				5D09127B166EB7A60031F5F9 /* HVRemoveRecordAuthTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

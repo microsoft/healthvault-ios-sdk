@@ -139,6 +139,12 @@
 +(HVVocabIdentifier *) vocabForFood;
 +(HVVocabIdentifier *) vocabForMeals;
 
+//--------------------
+//
+// TypeInfo
+//
+//--------------------
+
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 

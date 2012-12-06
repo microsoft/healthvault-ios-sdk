@@ -23,6 +23,7 @@
 #import "HVClient.h"
 #import "HVAsyncTask.h"
 #import "HVAppProvisionController.h"
+#import "HVRemoveRecordAuthTask.h"
 
 static NSString* const c_element_name = @"name";
 static NSString* const c_element_recordarray = @"records";
@@ -184,6 +185,27 @@ LError:
     [controller release];
 
     return authTask;
+    
+LError:
+    return nil;
+}
+
+-(HVTask *)removeAuthForRecord:(HVRecord *)record withCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(record);
+    
+    HVRemoveRecordAuthTask* removeAuthTask = [[[HVRemoveRecordAuthTask alloc] initWithRecord:record andCallback:^(HVTask *task) {
+        [task checkSuccess];
+        
+        HVGetAuthorizedPeopleTask* refreshTask = [self createGetPeopleTask];
+        [task setNextTask:refreshTask];
+        
+    }]autorelease];
+    HVCHECK_NOTNULL(removeAuthTask);
+    
+    [removeAuthTask start];
+    
+    return removeAuthTask;
     
 LError:
     return nil;

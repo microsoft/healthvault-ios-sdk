@@ -123,6 +123,21 @@ NSString* pickRandomDrug(void)
 
 @end
 
+@implementation HVWeightMeasurement (HVTestExtensions)
+
++(HVWeightMeasurement *)createRandomGramsMin:(NSUInteger)min max:(NSUInteger)max
+{
+    int value = [HVRandom randomIntInRangeMin:min max:max];
+    if (value <= 0)
+    {
+        return nil;
+    }
+    
+    return [HVWeightMeasurement fromGrams:value];
+}
+
+@end
+
 @implementation HVItem (HVTestExtensions)
 
 +(HVItem *)createRandomOfClass:(NSString *)className
@@ -638,33 +653,40 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
+    HVCodableValue* meal = [HVCodableValue fromText:pickRandomString(2, @"Lunch", @"Dinner")];
+    HVCodableValue* food = [HVCodableValue fromText:[meal.text stringByAppendingString:@"_Meal"]];
+    return [HVDietaryIntake createRandomValuesForFood:food meal:meal onDate:[HVDateTime now]];
+}
+
++(HVItem *)createRandomValuesForFood:(HVCodableValue *)food meal:(HVCodableValue *)meal onDate:(HVDateTime *)date
+{
     HVItem* item = [[HVDietaryIntake newItem] autorelease];
     HVDietaryIntake* diet = (HVDietaryIntake *) item.data.typed;
     
-    diet.foodItem = [HVCodableValue fromText:@"Mystery food"];
-    diet.meal = [HVCodableValue fromText:pickRandomString(2, @"Lunch", @"Dinner")];
-    diet.servingsConsumed = [[[HVNonNegativeDouble alloc] initWith:[HVRandom randomIntInRangeMin:1 max:4]] autorelease];
-    diet.when = [HVDateTime now];
+    diet.foodItem = food;
+    diet.meal = meal;
+    diet.servingsConsumed = [[[HVNonNegativeDouble alloc] initWith:1] autorelease];
+    diet.when = date;
     
     diet.calories = [HVFoodEnergyValue fromCalories:[HVRandom randomIntInRangeMin:100 max:500]];
-    diet.caloriesFromFat = [HVFoodEnergyValue fromCalories:(int) (diet.calories.caloriesValue / 2)];
     diet.carbs = [HVWeightMeasurement fromGrams:[HVRandom randomIntInRangeMin:200 max:300]];
     
-    int value = [HVRandom randomIntInRangeMin:1 max:50];
-    diet.totalFat = [HVWeightMeasurement fromGrams:value];
-    diet.transFat = [HVWeightMeasurement fromGrams:[HVRandom randomIntInRangeMin:0 max:15]]; 
-    diet.saturatedFat = [HVWeightMeasurement fromGrams:[HVRandom randomIntInRangeMin:0 max:25]]; 
-    diet.monounsaturatedFat = [HVWeightMeasurement fromGrams:2];
-    diet.polyunsaturatedFat = [HVWeightMeasurement fromGrams:3];
+    diet.totalFat = [HVWeightMeasurement createRandomGramsMin:20 max:50];
+    diet.transFat = [HVWeightMeasurement createRandomGramsMin:0 max:10];
+    diet.saturatedFat = [HVWeightMeasurement createRandomGramsMin:0 max:10];
+    diet.monounsaturatedFat = [HVWeightMeasurement createRandomGramsMin:0 max:5];
+    diet.polyunsaturatedFat = [HVWeightMeasurement createRandomGramsMin:0 max:3];
     
-    diet.protein = [HVWeightMeasurement fromGrams:[HVRandom randomIntInRangeMin:1 max:50]];
-    diet.dietaryFiber = [HVWeightMeasurement fromGrams:[HVRandom randomIntInRangeMin:1 max:50]];
-    diet.sugar = [HVWeightMeasurement fromGrams:[HVRandom randomIntInRangeMin:1 max:50]];
-    diet.sodium = [HVWeightMeasurement fromMillgrams:[HVRandom randomIntInRangeMin:1 max:50]];    
-    diet.cholesterol = [HVWeightMeasurement fromMillgrams:[HVRandom randomIntInRangeMin:1 max:50]];    
-    
+    diet.protein = [HVWeightMeasurement createRandomGramsMin:0 max:25];
+    diet.dietaryFiber = [HVWeightMeasurement createRandomGramsMin:0 max:20];
+    diet.sugar = [HVWeightMeasurement createRandomGramsMin:0 max:50];
+    diet.sodium = [HVWeightMeasurement fromMillgrams:[HVRandom randomIntInRangeMin:1 max:50]];
+    diet.cholesterol = [HVWeightMeasurement fromMillgrams:[HVRandom randomIntInRangeMin:1 max:50]];
+        
     return item;
     
+LError:
+    return nil;
 }
 
 @end

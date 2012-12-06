@@ -73,10 +73,15 @@
 //
 -(HVTask *) authorizeAdditionalRecords:(UIViewController *) parentController andCallback:(HVTaskCompletion) callback;
 //
+// Remove authorization for the given record
+//
+-(HVTask *) removeAuthForRecord:(HVRecord *) record withCallback:(HVTaskCompletion) callback;
+//
 // Refresh personal images for each record
 // Automatically store the downloaded image in local storage
 //
 -(HVTask *) downloadRecordImageFor:(HVRecord *) record withCallback:(HVTaskCompletion) callback;
+
 
 -(void) clear;
 

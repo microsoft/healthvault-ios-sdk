@@ -30,3 +30,4 @@
 #import "HVBeginBlobPutTask.h"
 #import "HVBlobUploadTask.h"
 #import "HVItemBlobUploadTask.h"
+#import "HVRemoveRecordAuthTask.h"
