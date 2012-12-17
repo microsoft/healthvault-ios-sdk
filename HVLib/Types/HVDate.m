@@ -19,9 +19,9 @@
 #import "HVCommon.h"
 #import "HVDate.h"
 
-static NSString* const c_element_year  = @"y";
-static NSString* const c_element_month = @"m";
-static NSString* const c_element_day   = @"d";
+static const xmlChar* x_element_year  = XMLSTRINGCONST("y");
+static const xmlChar* x_element_month = XMLSTRINGCONST("m");
+static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
 
 @implementation HVDate
 
@@ -231,18 +231,35 @@ LError:
 
 -(NSDate *) toDate
 {
-    NSDateComponents *components = [NSCalendar newComponents];
+    NSCalendar* calendar = [NSCalendar newGregorian];
+    HVCHECK_NOTNULL(calendar);
+    
+    NSDate *date = [self toDateForCalendar:calendar];
+    [calendar release];
+    
+    return date;
+    
+LError:
+    return nil;
+}
+
+-(NSDate *)toDateForCalendar:(NSCalendar *)calendar
+{
+    HVCHECK_NOTNULL(calendar);
+    
+    NSDateComponents *components = [[NSDateComponents alloc] init];
     HVCHECK_NOTNULL(components);
     
-    HVCHECK_SUCCESS([self getComponents:components]);  
+    HVCHECK_SUCCESS([self getComponents:components]);
     
-    NSDate *date = [components date];
-    [components release]; 
+    NSDate *date = [calendar dateFromComponents:components];
+    [components release];
+    
     return date;
     
 LError:
     [components release];
-    return nil;
+    return nil;    
 }
 
 -(NSString *)description
@@ -276,17 +293,17 @@ LError:
 }
 
 -(void) serialize:(XWriter *) writer
-{   
-    HVSERIALIZE(m_year, c_element_year);
-    HVSERIALIZE(m_month, c_element_month);
-    HVSERIALIZE(m_day, c_element_day);
+{
+    HVSERIALIZE_X(m_year, x_element_year);
+    HVSERIALIZE_X(m_month, x_element_month);
+    HVSERIALIZE_X(m_day, x_element_day);
 }
 
 -(void) deserialize:(XReader *)reader
-{    
-    HVDESERIALIZE(m_year, c_element_year, HVYear); 
-    HVDESERIALIZE(m_month, c_element_month, HVMonth); 
-    HVDESERIALIZE(m_day, c_element_day, HVDay); 
+{
+    HVDESERIALIZE_X(m_year, x_element_year, HVYear);
+    HVDESERIALIZE_X(m_month, x_element_month, HVMonth);
+    HVDESERIALIZE_X(m_day, x_element_day, HVDay);
 }
 
 @end

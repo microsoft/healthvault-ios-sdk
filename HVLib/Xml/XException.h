@@ -32,6 +32,7 @@ NSString* const XExceptionRequiredDataMissing;
 
 +(void) throwException:(NSString*) exceptionName reason:(NSString *) reason;
 +(void) throwException:(NSString*) exceptionName reason:(NSString *) reason fromReader:(xmlTextReader *) reader;
++(void) throwException:(NSString*) exceptionName xmlReason:(const xmlChar *) reason fromReader:(xmlTextReader *) reader;
 +(void) throwException:(NSString*) exceptionName fromReader:(xmlTextReader *) reader;
 +(void) throwException:(NSString*) exceptionName lineNumber:(int) line columnNumber:(int) col;
 

@@ -55,6 +55,11 @@ static NSString* const c_element_facility = @"facility";
     return [m_when toDate];
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

@@ -19,9 +19,9 @@
 #import "HVCommon.h"
 #import "HVDateTime.h"
 
-static NSString* const c_element_date = @"date";
-static NSString* const c_element_time = @"time";
-static NSString* const c_element_timeZone = @"tz";
+static const xmlChar* x_element_date = XMLSTRINGCONST("date");
+static const xmlChar* x_element_time = XMLSTRINGCONST("time");
+static const xmlChar* x_element_timeZone = XMLSTRINGCONST("tz");
 
 @implementation HVDateTime
 
@@ -169,20 +169,37 @@ LError:
     return FALSE;
 }
 
--(NSDate *) toDate
+-(NSDate *)toDate
 {
-    NSDateComponents *components = [NSCalendar newComponents];
+    NSCalendar* calendar = [NSCalendar newGregorian];
+    HVCHECK_NOTNULL(calendar);
+    
+    NSDate *date = [self toDateForCalendar:calendar];
+    [calendar release];
+    
+    return date;
+    
+LError:
+    return nil;
+}
+
+-(NSDate *)toDateForCalendar:(NSCalendar *)calendar
+{
+    HVCHECK_NOTNULL(calendar);
+    
+    NSDateComponents *components = [[NSDateComponents alloc] init];
     HVCHECK_NOTNULL(components);
     
     HVCHECK_SUCCESS([self getComponents:components]);
     
-    NSDate* newDate = [components date];
+    NSDate *date = [calendar dateFromComponents:components];
     [components release];
-    return newDate;
-
+    
+    return date;
+    
 LError:
     [components release];
-    return nil;
+    return nil;    
 }
 
 -(HVClientResult *) validate
@@ -200,16 +217,16 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_date, c_element_date);
-    HVSERIALIZE(m_time, c_element_time);
-    HVSERIALIZE(m_timeZone, c_element_timeZone);
+    HVSERIALIZE_X(m_date, x_element_date);
+    HVSERIALIZE_X(m_time, x_element_time);
+    HVSERIALIZE_X(m_timeZone, x_element_timeZone);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_date, c_element_date, HVDate);
-    HVDESERIALIZE(m_time, c_element_time, HVTime);
-    HVDESERIALIZE(m_timeZone, c_element_timeZone, HVCodableValue);
+    HVDESERIALIZE_X(m_date, x_element_date, HVDate);
+    HVDESERIALIZE_X(m_time, x_element_time, HVTime);
+    HVDESERIALIZE_X(m_timeZone, x_element_timeZone, HVCodableValue);
 }
 
 @end

@@ -47,6 +47,11 @@
     return nil;
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [self getDate];
+}
+
 +(NSString *) typeID
 {
     return c_emptyString;    

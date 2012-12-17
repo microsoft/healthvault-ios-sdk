@@ -70,37 +70,50 @@ xmlTextWriterPtr XAllocFileWriter(NSString* filePath)
     return m_converter;
 }
 
--(id) initWithWriter:(xmlTextWriterPtr)writer buffer:(xmlBufferPtr)buffer
+-(id)initWithWriter:(xmlTextWriterPtr)writer buffer:(xmlBufferPtr)buffer andConverter:(XConverter *)converter
 {
     HVCHECK_NOTNULL(writer);
-     
+    
     self = [super init];
     HVCHECK_SELF;
-   
-    m_converter = [[XConverter alloc] init];
-    HVCHECK_NOTNULL(m_converter);
+    
+    if (converter)
+    {
+        HVRETAIN(m_converter, converter);
+    }
+    else
+    {
+        m_converter = [[XConverter alloc] init];
+        HVCHECK_NOTNULL(m_converter);
+    }
     
     m_writer = writer;
     m_buffer = buffer;
-   
+    
     return self;
- 
+    
 LError:
     HVALLOC_FAIL;
+    
 }
 
--(id) initWithBufferSize:(size_t)size
+-(id) initWithWriter:(xmlTextWriterPtr)writer buffer:(xmlBufferPtr)buffer
+{
+    return [self initWithWriter:writer buffer:buffer andConverter:nil];
+}
+
+-(id)initWithBufferSize:(size_t)size andConverter:(XConverter *)converter
 {
     xmlBufferPtr buffer = NULL;
     xmlTextWriterPtr writer = NULL;
     
     buffer = XAllocBuffer(size);
     HVCHECK_NOTNULL(buffer);
-
+    
     writer = XAllocTextWriter(buffer);
     HVCHECK_NOTNULL(writer);
     
-    self = [self initWithWriter:writer buffer:buffer];
+    self = [self initWithWriter:writer buffer:buffer andConverter:converter];
     HVCHECK_SELF;
     
     return self;
@@ -115,15 +128,20 @@ LError:
         xmlBufferFree(buffer);
     }
     
-    HVALLOC_FAIL;
+    HVALLOC_FAIL;    
 }
 
--(id)initFromFile:(NSString *)filePath
+-(id) initWithBufferSize:(size_t)size
+{
+    return [self initWithBufferSize:size andConverter:nil];
+}
+
+-(id)initFromFile:(NSString *)filePath andConverter:(XConverter *)converter
 {
     xmlTextWriterPtr writer = XAllocFileWriter(filePath);
     HVCHECK_NOTNULL(writer);
     
-    self = [self initWithWriter:writer buffer:NULL];
+    self = [self initWithWriter:writer buffer:NULL andConverter:converter];
     HVCHECK_SELF;
     
     return self;
@@ -134,6 +152,12 @@ LError:
         xmlFreeTextWriter(writer);
     }
     HVALLOC_FAIL;
+    
+}
+
+-(id)initFromFile:(NSString *)filePath
+{
+    return [self initFromFile:filePath andConverter:nil];
 }
 
 -(id) init
@@ -210,6 +234,18 @@ LError:
     return FALSE;
 }
 
+-(BOOL)writeAttributeXmlName:(const xmlChar *)xmlName value:(NSString *)value
+{
+    xmlChar* xmlValue = [value toXmlString];
+    return [self isSuccess:xmlTextWriterWriteAttribute(m_writer, xmlName, xmlValue)];
+}
+
+-(BOOL)writeAttributeXmlName:(const xmlChar *)xmlName prefix:(const xmlChar *)xmlPrefix NS:(const xmlChar *)xmlNs value:(NSString *)value
+{
+    xmlChar* xmlValue = [value toXmlString];
+    return [self isSuccess:xmlTextWriterWriteAttributeNS(m_writer, xmlPrefix, xmlName, xmlNs, xmlValue)];
+}
+
 -(BOOL) writeStartElement:(NSString *)name
 {
     HVASSERT_STRING(name);
@@ -241,6 +277,16 @@ LError:
 
 LError:
     return FALSE;
+}
+
+-(BOOL)writeStartElementXmlName:(const xmlChar *)xmlName
+{
+    return [self isSuccess:xmlTextWriterStartElement(m_writer, xmlName)];
+}
+
+-(BOOL)writeStartElementXmlName:(const xmlChar *)xmlName prefix:(const xmlChar *)xmlPrefix NS:(const xmlChar *)xmlNs
+{
+    return [self isSuccess:xmlTextWriterStartElementNS(m_writer, xmlPrefix, xmlName, xmlNs)];
 }
 
 -(BOOL) writeEndElement

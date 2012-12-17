@@ -22,6 +22,9 @@
 NSString* const c_element_mmolPL = @"mmolPerL";
 NSString* const c_element_display = @"display";
 
+const xmlChar* x_element_mmolPL = XMLSTRINGCONST("mmolPerL");
+const xmlChar* x_element_display = XMLSTRINGCONST("display");
+
 NSString* const c_mmolPlUnits = @"mmol/L";
 NSString* const c_mmolUnitsCode = @"mmol-per-l";
 NSString* const c_mgDLUnits = @"mg/dL";
@@ -144,14 +147,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_mmolPerl, c_element_mmolPL);
-    HVSERIALIZE(m_display, c_element_display);
+    HVSERIALIZE_X(m_mmolPerl, x_element_mmolPL);
+    HVSERIALIZE_X(m_display, x_element_display);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_mmolPerl, c_element_mmolPL, HVNonNegativeDouble);
-    HVDESERIALIZE(m_display, c_element_display, HVDisplayValue);
+    HVDESERIALIZE_X(m_mmolPerl, x_element_mmolPL, HVNonNegativeDouble);
+    HVDESERIALIZE_X(m_display, x_element_display, HVDisplayValue);
 }
 
 @end

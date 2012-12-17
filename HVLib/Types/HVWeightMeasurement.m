@@ -27,6 +27,9 @@ static NSString* const c_PoundUnits = @"pounds";
 static NSString* const c_element_kg = @"kg";
 static NSString* const c_element_display = @"display";
 
+static const xmlChar* x_element_kg = XMLSTRINGCONST("kg");
+static const xmlChar* x_element_display = XMLSTRINGCONST("display");
+
 @implementation HVWeightMeasurement
 
 @synthesize value = m_kg;
@@ -242,8 +245,8 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_kg, c_element_kg, HVPositiveDouble);
-    HVDESERIALIZE(m_display, c_element_display, HVDisplayValue);
+    HVDESERIALIZE_X(m_kg, x_element_kg, HVPositiveDouble);
+    HVDESERIALIZE_X(m_display, x_element_display, HVDisplayValue);
 }
 
 +(double) kgToPounds:(double)kg

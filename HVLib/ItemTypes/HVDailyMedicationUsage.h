@@ -79,6 +79,7 @@
 //
 //-------------------------
 -(id) initWithDoses:(int) doses forDrug:(HVCodableValue *) drug onDay:(NSDate *) day;
+-(id) initWithDoses:(int)doses forDrug:(HVCodableValue *)drug onDate:(HVDate *)date;
 
 +(HVItem *) newItem;
 

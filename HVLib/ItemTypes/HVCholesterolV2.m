@@ -21,11 +21,11 @@
 static NSString* const c_typeid = @"98f76958-e34f-459b-a760-83c1699add38";
 static NSString* const c_typename = @"cholesterol-profile";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_ldl = @"ldl";
-static NSString* const c_element_hdl = @"hdl";
-static NSString* const c_element_total = @"total-cholesterol";
-static NSString* const c_element_triglycerides = @"triglyceride";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_ldl = XMLSTRINGCONST("ldl");
+static const xmlChar* x_element_hdl = XMLSTRINGCONST("hdl");
+static const xmlChar* x_element_total = XMLSTRINGCONST("total-cholesterol");
+static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 @implementation HVCholesterolV2
 
@@ -38,6 +38,11 @@ static NSString* const c_element_triglycerides = @"triglyceride";
 -(NSDate *)getDate
 {
     return [m_when toDate];
+}
+
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
 }
 
 -(double)ldlValue
@@ -106,12 +111,12 @@ static NSString* const c_element_triglycerides = @"triglyceride";
     [m_hdl setMgPerDL:hdlValueMgDL gramsPerMole:c_cholesterolMolarMass];
 }
 
--(double)triglyceridesMgDl
+-(double)triglyceridesValueMgDl
 {
     return (m_triglycerides) ? [m_triglycerides mgPerDL:c_triglyceridesMolarMass] : NAN;
 }
 
--(void)setTriglyceridesMgDl:(double)triglyceridesMgDl
+-(void)setTriglyceridesValueMgDl:(double)triglyceridesMgDl
 {
     HVENSURE(m_triglycerides, HVConcentrationValue);
     [m_triglycerides setMgPerDL:triglyceridesMgDl gramsPerMole:c_triglyceridesMolarMass];
@@ -157,20 +162,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_ldl, c_element_ldl);
-    HVSERIALIZE(m_hdl, c_element_hdl);
-    HVSERIALIZE(m_total, c_element_total);
-    HVSERIALIZE(m_triglycerides, c_element_triglycerides);
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_ldl, x_element_ldl);
+    HVSERIALIZE_X(m_hdl, x_element_hdl);
+    HVSERIALIZE_X(m_total, x_element_total);
+    HVSERIALIZE_X(m_triglycerides, x_element_triglycerides);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE(m_ldl, c_element_ldl, HVConcentrationValue);
-    HVDESERIALIZE(m_hdl, c_element_hdl, HVConcentrationValue);
-    HVDESERIALIZE(m_total, c_element_total, HVConcentrationValue);
-    HVDESERIALIZE(m_triglycerides, c_element_triglycerides, HVConcentrationValue);
+    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
+    HVDESERIALIZE_X(m_ldl, x_element_ldl, HVConcentrationValue);
+    HVDESERIALIZE_X(m_hdl, x_element_hdl, HVConcentrationValue);
+    HVDESERIALIZE_X(m_total, x_element_total, HVConcentrationValue);
+    HVDESERIALIZE_X(m_triglycerides, x_element_triglycerides, HVConcentrationValue);
 }
 
 +(NSString *)typeID

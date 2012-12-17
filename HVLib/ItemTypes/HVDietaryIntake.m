@@ -22,48 +22,46 @@
 static NSString* const c_typeid = @"089646a6-7e25-4495-ad15-3e28d4c1a71d";
 static NSString* const c_typename = @"dietary-intake";
 
-static NSString* const c_element_foodItem = @"food-item";
-static NSString* const c_element_servingSize = @"serving-size";
-static NSString* const c_element_servingsConsumed = @"servings-consumed";
-static NSString* const c_element_meal = @"meal";
-static NSString* const c_element_when = @"when";
-
-static NSString* const c_element_calories = @"energy";
-
-static NSString* const c_element_energyFat = @"energy-from-fat";
-static NSString* const c_element_totalFat = @"total-fat";
-static NSString* const c_element_saturatedFat = @"saturated-fat";
-static NSString* const c_element_transFat = @"trans-fat";
-static NSString* const c_element_monounsaturatedFat = @"monounsaturated-fat";
-static NSString* const c_element_polyunsaturatedFat = @"polyunsaturated-fat";
-
-static NSString* const c_element_protein = @"protein";
-static NSString* const c_element_carbs = @"carbohydrates";
-static NSString* const c_element_fiber = @"dietary-fiber";
-static NSString* const c_element_sugars = @"sugars";
-static NSString* const c_element_sodium = @"sodium";
-static NSString* const c_element_cholesterol = @"cholesterol";
-
-static NSString* const c_element_calcium = @"calcium";
-static NSString* const c_element_iron = @"iron";
-static NSString* const c_element_magnesium = @"magnesium";
-static NSString* const c_element_phosphorus = @"phosphorus";
-static NSString* const c_element_potassium = @"potassium";
-static NSString* const c_element_zinc = @"zinc";
-
-static NSString* const c_element_vitaminA = @"vitamin-A-RAE";
-static NSString* const c_element_vitaminE = @"vitamin-E";
-static NSString* const c_element_vitaminD = @"vitamin-D";
-static NSString* const c_element_vitaminC = @"vitamin-C";
-static NSString* const c_element_thiamin = @"thiamin";
-static NSString* const c_element_riboflavin = @"riboflavin";
-static NSString* const c_element_niacin = @"niacin";
-static NSString* const c_element_vitaminB6 = @"vitamin-B-6";
-static NSString* const c_element_folate = @"folate-DFE";
-static NSString* const c_element_vitaminB12 = @"vitamin-B-12";
-static NSString* const c_element_vitaminK = @"vitamin-K";
-
 static NSString* const c_element_additionalFacts = @"additional-nutrition-facts";
+
+static const xmlChar* x_element_foodItem = XMLSTRINGCONST("food-item");
+static const xmlChar* x_element_servingSize = XMLSTRINGCONST("serving-size");
+static const xmlChar* x_element_servingsConsumed = XMLSTRINGCONST("servings-consumed");
+static const xmlChar* x_element_meal = XMLSTRINGCONST("meal");
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_calories = XMLSTRINGCONST("energy");
+static const xmlChar* x_element_energyFat = XMLSTRINGCONST("energy-from-fat");
+static const xmlChar* x_element_totalFat = XMLSTRINGCONST("total-fat");
+static const xmlChar* x_element_saturatedFat = XMLSTRINGCONST("saturated-fat");
+static const xmlChar* x_element_transFat = XMLSTRINGCONST("trans-fat");
+static const xmlChar* x_element_monounsaturatedFat = XMLSTRINGCONST("monounsaturated-fat");
+static const xmlChar* x_element_polyunsaturatedFat = XMLSTRINGCONST("polyunsaturated-fat");
+
+static const xmlChar* x_element_protein = XMLSTRINGCONST("protein");
+static const xmlChar* x_element_carbs = XMLSTRINGCONST("carbohydrates");
+static const xmlChar* x_element_fiber = XMLSTRINGCONST("dietary-fiber");
+static const xmlChar* x_element_sugars = XMLSTRINGCONST("sugars");
+static const xmlChar* x_element_sodium = XMLSTRINGCONST("sodium");
+static const xmlChar* x_element_cholesterol = XMLSTRINGCONST("cholesterol");
+
+static const xmlChar* x_element_calcium = XMLSTRINGCONST("calcium");
+static const xmlChar* x_element_iron = XMLSTRINGCONST("iron");
+static const xmlChar* x_element_magnesium = XMLSTRINGCONST("magnesium");
+static const xmlChar* x_element_phosphorus = XMLSTRINGCONST("phosphorus");
+static const xmlChar* x_element_potassium = XMLSTRINGCONST("potassium");
+static const xmlChar* x_element_zinc = XMLSTRINGCONST("zinc");
+
+static const xmlChar* x_element_vitaminA = XMLSTRINGCONST("vitamin-A-RAE");
+static const xmlChar* x_element_vitaminE = XMLSTRINGCONST("vitamin-E");
+static const xmlChar* x_element_vitaminD = XMLSTRINGCONST("vitamin-D");
+static const xmlChar* x_element_vitaminC = XMLSTRINGCONST("vitamin-C");
+static const xmlChar* x_element_thiamin = XMLSTRINGCONST("thiamin");
+static const xmlChar* x_element_riboflavin = XMLSTRINGCONST("riboflavin");
+static const xmlChar* x_element_niacin = XMLSTRINGCONST("niacin");
+static const xmlChar* x_element_vitaminB6 = XMLSTRINGCONST("vitamin-B-6");
+static const xmlChar* x_element_folate = XMLSTRINGCONST("folate-DFE");
+static const xmlChar* x_element_vitaminB12 = XMLSTRINGCONST("vitamin-B-12");
+static const xmlChar* x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
 
 @implementation HVDietaryIntake
 
@@ -161,6 +159,11 @@ static NSString* const c_element_additionalFacts = @"additional-nutrition-facts"
     return (m_when) ? [m_when toDate] : nil;
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return (m_when) ? [m_when toDateForCalendar:calendar] : nil;
+}
+
 +(HVVocabIdentifier *)vocabForFood
 {
     return [[[HVVocabIdentifier alloc] initWithFamily:c_usdaFamily andName:@"food-description"] autorelease];    
@@ -169,6 +172,26 @@ static NSString* const c_element_additionalFacts = @"additional-nutrition-facts"
 +(HVVocabIdentifier *)vocabForMeals
 {
     return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"dietary-intake-meals"] autorelease];    
+}
+
++(HVCodableValue *)mealCodeForBreakfast
+{
+    return [[HVDietaryIntake vocabForMeals] codableValueForText:@"Breakfast" andCode:@"B"];
+}
+
++(HVCodableValue *)mealCodeForLunch
+{
+    return [[HVDietaryIntake vocabForMeals] codableValueForText:@"Lunch" andCode:@"L"];    
+}
+
++(HVCodableValue *)mealCodeForDinner
+{
+    return [[HVDietaryIntake vocabForMeals] codableValueForText:@"Dinner" andCode:@"D"];    
+}
+
++(HVCodableValue *)mealCodeForSnack
+{
+    return [[HVDietaryIntake vocabForMeals] codableValueForText:@"Snack" andCode:@"S"];    
 }
 
 -(HVClientResult *)validate
@@ -225,92 +248,92 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_foodItem, c_element_foodItem, HVCodableValue);
-    HVDESERIALIZE(m_servingSize, c_element_servingSize, HVCodableValue);
-    HVDESERIALIZE(m_servingsConsumed, c_element_servingsConsumed, HVNonNegativeDouble);
-    HVDESERIALIZE(m_meal, c_element_meal, HVCodableValue);
+    HVDESERIALIZE_X(m_foodItem, x_element_foodItem, HVCodableValue);
+    HVDESERIALIZE_X(m_servingSize, x_element_servingSize, HVCodableValue);
+    HVDESERIALIZE_X(m_servingsConsumed, x_element_servingsConsumed, HVNonNegativeDouble);
+    HVDESERIALIZE_X(m_meal, x_element_meal, HVCodableValue);
     
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
+    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
     
-    HVDESERIALIZE(m_calories, c_element_calories, HVFoodEnergyValue);
-    HVDESERIALIZE(m_caloriesFromFat, c_element_energyFat, HVFoodEnergyValue);
-    HVDESERIALIZE(m_totalFat, c_element_totalFat, HVWeightMeasurement);
-    HVDESERIALIZE(m_saturatedFat, c_element_saturatedFat, HVWeightMeasurement);
-    HVDESERIALIZE(m_transFat, c_element_transFat, HVWeightMeasurement);
-    HVDESERIALIZE(m_monoUnsaturatedFat, c_element_monounsaturatedFat, HVWeightMeasurement);
-    HVDESERIALIZE(m_polyUnsaturatedFat, c_element_polyunsaturatedFat, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_calories, x_element_calories, HVFoodEnergyValue);
+    HVDESERIALIZE_X(m_caloriesFromFat, x_element_energyFat, HVFoodEnergyValue);
+    HVDESERIALIZE_X(m_totalFat, x_element_totalFat, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_saturatedFat, x_element_saturatedFat, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_transFat, x_element_transFat, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_monoUnsaturatedFat, x_element_monounsaturatedFat, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_polyUnsaturatedFat, x_element_polyunsaturatedFat, HVWeightMeasurement);
     
-    HVDESERIALIZE(m_protein, c_element_protein, HVWeightMeasurement);
-    HVDESERIALIZE(m_carbs, c_element_carbs, HVWeightMeasurement);
-    HVDESERIALIZE(m_fiber, c_element_fiber, HVWeightMeasurement);
-    HVDESERIALIZE(m_sugar, c_element_sugars, HVWeightMeasurement);
-    HVDESERIALIZE(m_sodium, c_element_sodium, HVWeightMeasurement);
-    HVDESERIALIZE(m_cholesterol, c_element_cholesterol, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_protein, x_element_protein, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_carbs, x_element_carbs, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_fiber, x_element_fiber, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_sugar, x_element_sugars, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_sodium, x_element_sodium, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_cholesterol, x_element_cholesterol, HVWeightMeasurement);
     
-    HVDESERIALIZE(m_calcium, c_element_calcium, HVWeightMeasurement);
-    HVDESERIALIZE(m_iron, c_element_iron, HVWeightMeasurement);
-    HVDESERIALIZE(m_magnesium, c_element_magnesium, HVWeightMeasurement);
-    HVDESERIALIZE(m_phosphorus, c_element_phosphorus, HVWeightMeasurement);
-    HVDESERIALIZE(m_potassium, c_element_potassium, HVWeightMeasurement);
-    HVDESERIALIZE(m_zinc, c_element_zinc, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_calcium, x_element_calcium, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_iron, x_element_iron, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_magnesium, x_element_magnesium, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_phosphorus, x_element_phosphorus, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_potassium, x_element_potassium, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_zinc, x_element_zinc, HVWeightMeasurement);
     
-    HVDESERIALIZE(m_vitaminA, c_element_vitaminA, HVWeightMeasurement);
-    HVDESERIALIZE(m_vitaminE, c_element_vitaminE, HVWeightMeasurement);
-    HVDESERIALIZE(m_vitaminD, c_element_vitaminD, HVWeightMeasurement);
-    HVDESERIALIZE(m_vitaminC, c_element_vitaminC, HVWeightMeasurement);
-    HVDESERIALIZE(m_thiamin, c_element_thiamin, HVWeightMeasurement);
-    HVDESERIALIZE(m_riboflavin, c_element_riboflavin, HVWeightMeasurement);
-    HVDESERIALIZE(m_niacin, c_element_niacin, HVWeightMeasurement);
-    HVDESERIALIZE(m_vitaminB6, c_element_vitaminB6, HVWeightMeasurement);
-    HVDESERIALIZE(m_folate, c_element_folate, HVWeightMeasurement);
-    HVDESERIALIZE(m_vitaminB12, c_element_vitaminB12, HVWeightMeasurement);
-    HVDESERIALIZE(m_vitaminK, c_element_vitaminK, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_vitaminA, x_element_vitaminA, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_vitaminE, x_element_vitaminE, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_vitaminD, x_element_vitaminD, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_vitaminC, x_element_vitaminC, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_thiamin, x_element_thiamin, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_riboflavin, x_element_riboflavin, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_niacin, x_element_niacin, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_vitaminB6, x_element_vitaminB6, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_folate, x_element_folate, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_vitaminB12, x_element_vitaminB12, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_vitaminK, x_element_vitaminK, HVWeightMeasurement);
     
     HVDESERIALIZE(m_additionalFacts, c_element_additionalFacts, HVAdditionalNutritionFacts);
 }
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_foodItem, c_element_foodItem);
-    HVSERIALIZE(m_servingSize, c_element_servingSize);
-    HVSERIALIZE(m_servingsConsumed, c_element_servingsConsumed);
-    HVSERIALIZE(m_meal, c_element_meal);
+    HVSERIALIZE_X(m_foodItem, x_element_foodItem);
+    HVSERIALIZE_X(m_servingSize, x_element_servingSize);
+    HVSERIALIZE_X(m_servingsConsumed, x_element_servingsConsumed);
+    HVSERIALIZE_X(m_meal, x_element_meal);
     
-    HVSERIALIZE(m_when, c_element_when);
+    HVSERIALIZE_X(m_when, x_element_when);
     
-    HVSERIALIZE(m_calories, c_element_calories);
-    HVSERIALIZE(m_caloriesFromFat, c_element_energyFat);
-    HVSERIALIZE(m_totalFat, c_element_totalFat);
-    HVSERIALIZE(m_saturatedFat, c_element_saturatedFat);
-    HVSERIALIZE(m_transFat, c_element_transFat);
-    HVSERIALIZE(m_monoUnsaturatedFat, c_element_monounsaturatedFat);
-    HVSERIALIZE(m_polyUnsaturatedFat, c_element_polyunsaturatedFat);
+    HVSERIALIZE_X(m_calories, x_element_calories);
+    HVSERIALIZE_X(m_caloriesFromFat, x_element_energyFat);
+    HVSERIALIZE_X(m_totalFat, x_element_totalFat);
+    HVSERIALIZE_X(m_saturatedFat, x_element_saturatedFat);
+    HVSERIALIZE_X(m_transFat, x_element_transFat);
+    HVSERIALIZE_X(m_monoUnsaturatedFat, x_element_monounsaturatedFat);
+    HVSERIALIZE_X(m_polyUnsaturatedFat, x_element_polyunsaturatedFat);
     
-    HVSERIALIZE(m_protein, c_element_protein);
-    HVSERIALIZE(m_carbs, c_element_carbs);
-    HVSERIALIZE(m_fiber, c_element_fiber);
-    HVSERIALIZE(m_sugar, c_element_sugars);
-    HVSERIALIZE(m_sodium, c_element_sodium);
-    HVSERIALIZE(m_cholesterol, c_element_cholesterol);
+    HVSERIALIZE_X(m_protein, x_element_protein);
+    HVSERIALIZE_X(m_carbs, x_element_carbs);
+    HVSERIALIZE_X(m_fiber, x_element_fiber);
+    HVSERIALIZE_X(m_sugar, x_element_sugars);
+    HVSERIALIZE_X(m_sodium, x_element_sodium);
+    HVSERIALIZE_X(m_cholesterol, x_element_cholesterol);
     
-    HVSERIALIZE(m_calcium, c_element_calcium);
-    HVSERIALIZE(m_iron, c_element_iron);
-    HVSERIALIZE(m_magnesium, c_element_magnesium);
-    HVSERIALIZE(m_phosphorus, c_element_phosphorus);
-    HVSERIALIZE(m_potassium, c_element_potassium);
-    HVSERIALIZE(m_zinc, c_element_zinc);
+    HVSERIALIZE_X(m_calcium, x_element_calcium);
+    HVSERIALIZE_X(m_iron, x_element_iron);
+    HVSERIALIZE_X(m_magnesium, x_element_magnesium);
+    HVSERIALIZE_X(m_phosphorus, x_element_phosphorus);
+    HVSERIALIZE_X(m_potassium, x_element_potassium);
+    HVSERIALIZE_X(m_zinc, x_element_zinc);
     
-    HVSERIALIZE(m_vitaminA, c_element_vitaminA);
-    HVSERIALIZE(m_vitaminE, c_element_vitaminE);
-    HVSERIALIZE(m_vitaminD, c_element_vitaminD);
-    HVSERIALIZE(m_vitaminC, c_element_vitaminC);
-    HVSERIALIZE(m_thiamin, c_element_thiamin);
-    HVSERIALIZE(m_riboflavin, c_element_riboflavin);
-    HVSERIALIZE(m_niacin, c_element_niacin);
-    HVSERIALIZE(m_vitaminB6, c_element_vitaminB6);
-    HVSERIALIZE(m_folate, c_element_folate);
-    HVSERIALIZE(m_vitaminB12, c_element_vitaminB12);
-    HVSERIALIZE(m_vitaminK, c_element_vitaminK);
+    HVSERIALIZE_X(m_vitaminA, x_element_vitaminA);
+    HVSERIALIZE_X(m_vitaminE, x_element_vitaminE);
+    HVSERIALIZE_X(m_vitaminD, x_element_vitaminD);
+    HVSERIALIZE_X(m_vitaminC, x_element_vitaminC);
+    HVSERIALIZE_X(m_thiamin, x_element_thiamin);
+    HVSERIALIZE_X(m_riboflavin, x_element_riboflavin);
+    HVSERIALIZE_X(m_niacin, x_element_niacin);
+    HVSERIALIZE_X(m_vitaminB6, x_element_vitaminB6);
+    HVSERIALIZE_X(m_folate, x_element_folate);
+    HVSERIALIZE_X(m_vitaminB12, x_element_vitaminB12);
+    HVSERIALIZE_X(m_vitaminK, x_element_vitaminK);
     
     HVSERIALIZE(m_additionalFacts, c_element_additionalFacts);
 }

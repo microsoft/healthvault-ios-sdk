@@ -21,15 +21,15 @@
 #import "HVClient.h"
 #import "HVItemBlobUploadTask.h"
 
-static NSString* const c_element_key = @"thing-id";
-static NSString* const c_element_type = @"type-id";
+static const xmlChar* x_element_key = XMLSTRINGCONST("thing-id");
+static const xmlChar* x_element_type = XMLSTRINGCONST("type-id");
 static NSString* const c_element_state = @"thing-state";
-static NSString* const c_element_flags = @"flags";
-static NSString* const c_element_effectiveDate = @"eff-date";
-static NSString* const c_element_created = @"created";
-static NSString* const c_element_updated = @"updated";
-static NSString* const c_element_data = @"data-xml";
-static NSString* const c_element_blobs = @"blob-payload";  
+static const xmlChar* x_element_flags = XMLSTRINGCONST("flags");
+static const xmlChar* x_element_effectiveDate = XMLSTRINGCONST("eff-date");
+static const xmlChar* x_element_created = XMLSTRINGCONST("created");
+static const xmlChar* x_element_updated = XMLSTRINGCONST("updated");
+static const xmlChar* x_element_data = XMLSTRINGCONST("data-xml");
+static const xmlChar* x_element_blobs = XMLSTRINGCONST("blob-payload");  
 
 @implementation HVItem
 
@@ -355,28 +355,28 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_key, c_element_key);
-    HVSERIALIZE(m_type, c_element_type);
+    HVSERIALIZE_X(m_key, x_element_key);
+    HVSERIALIZE_X(m_type, x_element_type);
     HVSERIALIZE_ENUM(m_state, c_element_state, HVItemStateToString);
-    HVSERIALIZE_INT(m_flags, c_element_flags);
-    HVSERIALIZE_DATE(m_effectiveDate, c_element_effectiveDate);
-    HVSERIALIZE(m_created, c_element_created);
-    HVSERIALIZE(m_updated, c_element_updated);
-    HVSERIALIZE(m_data, c_element_data);
-    HVSERIALIZE(m_blobs, c_element_blobs);
+    HVSERIALIZE_INT_X(m_flags, x_element_flags);
+    HVSERIALIZE_DATE_X(m_effectiveDate, x_element_effectiveDate);
+    HVSERIALIZE_X(m_created, x_element_created);
+    HVSERIALIZE_X(m_updated, x_element_updated);
+    HVSERIALIZE_X(m_data, x_element_data);
+    HVSERIALIZE_X(m_blobs, x_element_blobs);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_key, c_element_key, HVItemKey);
-    HVDESERIALIZE(m_type, c_element_type, HVItemType);
+    HVDESERIALIZE_X(m_key, x_element_key, HVItemKey);
+    HVDESERIALIZE_X(m_type, x_element_type, HVItemType);
     HVDESERIALIZE_ENUM(m_state, c_element_state, HVItemStateFromString);
-    HVDESERIALIZE_INT(m_flags, c_element_flags);
-    HVDESERIALIZE_DATE(m_effectiveDate, c_element_effectiveDate);
-    HVDESERIALIZE(m_created, c_element_created, HVAudit);
-    HVDESERIALIZE(m_updated, c_element_updated, HVAudit);
-    HVDESERIALIZE(m_data, c_element_data, HVItemData);
-    HVDESERIALIZE(m_blobs, c_element_blobs, HVBlobPayload);
+    HVDESERIALIZE_INT_X(m_flags, x_element_flags);
+    HVDESERIALIZE_DATE_X(m_effectiveDate, x_element_effectiveDate);
+    HVDESERIALIZE_X(m_created, x_element_created, HVAudit);
+    HVDESERIALIZE_X(m_updated, x_element_updated, HVAudit);
+    HVDESERIALIZE_X(m_data, x_element_data, HVItemData);
+    HVDESERIALIZE_X(m_blobs, x_element_blobs, HVBlobPayload);
 }
 
 -(NSString *)toXmlString

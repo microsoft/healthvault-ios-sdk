@@ -19,8 +19,9 @@
 #import "HVCommon.h"
 #import "HVCodableValue.h"
 
-static NSString* const c_element_text = @"text";
+static const xmlChar* x_element_text = XMLSTRINGCONST("text");
 static NSString* const c_element_code = @"code";
+static const xmlChar* x_element_code = XMLSTRINGCONST("code");
 
 @implementation HVCodableValue
 
@@ -204,14 +205,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_text, c_element_text);
+    HVSERIALIZE_STRING_X(m_text, x_element_text);
     HVSERIALIZE_ARRAY(m_codes, c_element_code);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_text, c_element_text);
-    HVDESERIALIZE_TYPEDARRAY(m_codes, c_element_code, HVCodedValue, HVCodedValueCollection);
+    HVDESERIALIZE_STRING_X(m_text, x_element_text);
+    HVDESERIALIZE_TYPEDARRAY_X(m_codes, x_element_code, HVCodedValue, HVCodedValueCollection);
 }
 
 @end

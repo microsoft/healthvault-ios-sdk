@@ -60,7 +60,7 @@
 @property (readwrite, nonatomic) double ldlValueMgDL;
 @property (readwrite, nonatomic) double hdlValueMgDL;
 @property (readwrite, nonatomic) double totalValueMgDL;
-@property (readwrite, nonatomic) double triglyceridesMgDl;
+@property (readwrite, nonatomic) double triglyceridesValueMgDl;
 
 //-------------------------
 //

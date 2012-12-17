@@ -101,4 +101,10 @@
 -(NSString *) stringInFeetAndInches:(NSString *) format;
 -(NSString *) stringInMiles:(NSString *) format;
 
++(HVLengthMeasurement *) fromMiles:(double) value;
++(HVLengthMeasurement *) fromInches:(double) value;
++(HVLengthMeasurement *) fromKilometers:(double) value;
++(HVLengthMeasurement *) fromMeters:(double) value;
++(HVLengthMeasurement *) fromCentimeters:(double) value;
+
 @end

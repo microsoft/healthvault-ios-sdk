@@ -23,15 +23,15 @@
 static NSString* const c_typeid = @"a9a76456-0357-493e-b840-598bbb9483fd";
 static NSString* const c_typename = @"daily-medication-usage";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_drugName = @"drug-name";
-static NSString* const c_element_dosesConsumed = @"number-doses-consumed-in-day";
-static NSString* const c_element_purpose = @"purpose-of-use";
-static NSString* const c_element_dosesIntended = @"number-doses-intended-in-day";
-static NSString* const c_element_usageSchedule = @"medication-usage-schedule";
-static NSString* const c_element_drugForm = @"drug-form";
-static NSString* const c_element_prescriptionType = @"prescription-type";
-static NSString* const c_element_singleDoseDescr = @"single-dose-description";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_drugName = XMLSTRINGCONST("drug-name");
+static const xmlChar* x_element_dosesConsumed = XMLSTRINGCONST("number-doses-consumed-in-day");
+static const xmlChar* x_element_purpose = XMLSTRINGCONST("purpose-of-use");
+static const xmlChar* x_element_dosesIntended = XMLSTRINGCONST("number-doses-intended-in-day");
+static const xmlChar* x_element_usageSchedule = XMLSTRINGCONST("medication-usage-schedule");
+static const xmlChar* x_element_drugForm = XMLSTRINGCONST("drug-form");
+static const xmlChar* x_element_prescriptionType = XMLSTRINGCONST("prescription-type");
+static const xmlChar* x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-description");
 
 @implementation HVDailyMedicationUsage
 
@@ -69,14 +69,28 @@ static NSString* const c_element_singleDoseDescr = @"single-dose-description";
 
 -(id)initWithDoses:(int)doses forDrug:(HVCodableValue *)drug onDay:(NSDate *)day
 {
-    HVCHECK_NOTNULL(drug);
     HVCHECK_NOTNULL(day);
+    
+    HVDate* date =  [[HVDate alloc] initWithDate:day];
+    [self initWithDoses:doses forDrug:drug onDate:date];
+    [date release];
+    HVCHECK_SELF;
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initWithDoses:(int)doses forDrug:(HVCodableValue *)drug onDate:(HVDate *)date
+{
+    HVCHECK_NOTNULL(drug);
+    HVCHECK_NOTNULL(date);
     
     self = [super init];
     HVCHECK_SELF;
     
-    m_when = [[HVDate alloc] initWithDate:day];
-    HVCHECK_NOTNULL(m_when);
+    HVRETAIN(m_when, date);
     
     self.drugName = drug;
     
@@ -86,7 +100,7 @@ static NSString* const c_element_singleDoseDescr = @"single-dose-description";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    HVALLOC_FAIL;    
 }
 
 -(void)dealloc
@@ -107,6 +121,11 @@ LError:
 -(NSDate *)getDate
 {
     return [m_when toDate];
+}
+
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
 }
 
 -(NSString *)description
@@ -142,28 +161,28 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_drugName, c_element_drugName);
-    HVSERIALIZE(m_dosesConsumed, c_element_dosesConsumed);
-    HVSERIALIZE(m_purpose, c_element_purpose);
-    HVSERIALIZE(m_dosesIntended, c_element_dosesIntended);
-    HVSERIALIZE(m_usageSchedule, c_element_usageSchedule);
-    HVSERIALIZE(m_drugForm, c_element_drugForm);
-    HVSERIALIZE(m_prescriptionType, c_element_prescriptionType);
-    HVSERIALIZE(m_singleDoseDescription, c_element_singleDoseDescr);
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_drugName, x_element_drugName);
+    HVSERIALIZE_X(m_dosesConsumed, x_element_dosesConsumed);
+    HVSERIALIZE_X(m_purpose, x_element_purpose);
+    HVSERIALIZE_X(m_dosesIntended, x_element_dosesIntended);
+    HVSERIALIZE_X(m_usageSchedule, x_element_usageSchedule);
+    HVSERIALIZE_X(m_drugForm, x_element_drugForm);
+    HVSERIALIZE_X(m_prescriptionType, x_element_prescriptionType);
+    HVSERIALIZE_X(m_singleDoseDescription, x_element_singleDoseDescr);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDate);
-    HVDESERIALIZE(m_drugName, c_element_drugName, HVCodableValue);
-    HVDESERIALIZE(m_dosesConsumed, c_element_dosesConsumed, HVInt);
-    HVDESERIALIZE(m_purpose, c_element_purpose, HVCodableValue);
-    HVDESERIALIZE(m_dosesIntended, c_element_dosesIntended, HVInt);
-    HVDESERIALIZE(m_usageSchedule, c_element_usageSchedule, HVCodableValue);
-    HVDESERIALIZE(m_drugForm, c_element_drugForm, HVCodableValue);
-    HVDESERIALIZE(m_prescriptionType, c_element_prescriptionType, HVCodableValue);
-    HVDESERIALIZE(m_singleDoseDescription, c_element_singleDoseDescr, HVCodableValue);
+    HVDESERIALIZE_X(m_when, x_element_when, HVDate);
+    HVDESERIALIZE_X(m_drugName, x_element_drugName, HVCodableValue);
+    HVDESERIALIZE_X(m_dosesConsumed, x_element_dosesConsumed, HVInt);
+    HVDESERIALIZE_X(m_purpose, x_element_purpose, HVCodableValue);
+    HVDESERIALIZE_X(m_dosesIntended, x_element_dosesIntended, HVInt);
+    HVDESERIALIZE_X(m_usageSchedule, x_element_usageSchedule, HVCodableValue);
+    HVDESERIALIZE_X(m_drugForm, x_element_drugForm, HVCodableValue);
+    HVDESERIALIZE_X(m_prescriptionType, x_element_prescriptionType, HVCodableValue);
+    HVDESERIALIZE_X(m_singleDoseDescription, x_element_singleDoseDescr, HVCodableValue);
 }
 
 +(NSString *)typeID

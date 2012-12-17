@@ -188,6 +188,12 @@ LError:
 // HVDirectory
 //
 //---------------------------
+@interface HVDirectory (HVPrivate)
+
+-(XConverter *) getConverter;
+
+@end
+
 @implementation HVDirectory
 
 @synthesize url = m_path;
@@ -419,8 +425,9 @@ LError:
             return nil;
         }
         
+        XConverter* converter = [self getConverter];
         //return [NSObject newFromFilePath:filePath withRoot:name asClass:cls];
-        return [NSObject newFromSecureFilePath:filePath withRoot:name asClass:cls];
+        return [NSObject newFromSecureFilePath:filePath withRoot:name asClass:cls withConverter:converter];
     }
 }
 
@@ -436,7 +443,8 @@ LError:
         @try 
         {
             //return [XSerializer serialize:obj withRoot:name toFilePath:[self makeChildPath:key]];
-            return [XSerializer secureSerialize:obj withRoot:name toFilePath:[self makeChildPath:key]];
+            XConverter* converter = [self getConverter];
+            return [XSerializer secureSerialize:obj withRoot:name toFilePath:[self makeChildPath:key] withConverter:converter];
         }
         @catch (id exception) 
         {
@@ -530,8 +538,19 @@ LError:
 {
     [m_path release];
     [m_stringPath release];
+    [m_converter release];
     
     [super dealloc];
+}
+
+@end
+
+@implementation HVDirectory (HVPrivate)
+
+-(XConverter *)getConverter
+{
+    HVENSURE(m_converter, XConverter);
+    return m_converter;
 }
 
 @end

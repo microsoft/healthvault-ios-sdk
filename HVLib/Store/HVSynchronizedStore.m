@@ -216,7 +216,7 @@ LError:
 
 -(HVDownloadItemsTask *)downloadItemsInRecord:(HVRecordReference *)record forKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forKeys:keys callback:callback]; // do not autorelease
+    HVDownloadItemsTask* task = [[self newDownloadItemsInRecord:record forKeys:keys callback:callback] autorelease];
     HVCHECK_NOTNULL(task);
     
     [task start];
@@ -229,7 +229,7 @@ LError:
 
 -(HVDownloadItemsTask *)downloadItemsInRecord:(HVRecordReference *) record query :(HVItemQuery *)query callback:(HVTaskCompletion)callback
 {
-    HVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forQuery:query callback:callback]; // do not autorelease
+    HVDownloadItemsTask* task = [[self newDownloadItemsInRecord:record forQuery:query callback:callback] autorelease];
     HVCHECK_NOTNULL(task);
     
     [task start];
@@ -242,7 +242,7 @@ LError:
 
 -(HVDownloadItemsTask *)newDownloadItemsInRecord:(HVRecordReference *)record forKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVItemQuery* query = [self newQueryFromKeys:keys];
+    HVItemQuery* query = [[self newQueryFromKeys:keys] autorelease];
     HVCHECK_NOTNULL(query);
     
     return [self newDownloadItemsInRecord:record forQuery:query callback:callback];
@@ -258,7 +258,7 @@ LError:
     HVCHECK_NOTNULL(record); 
     HVCHECK_NOTNULL(query);
         
-    downloadTask = [[HVDownloadItemsTask alloc] initWithCallback:callback];
+    downloadTask = [[HVDownloadItemsTask alloc] initWithCallback:callback]; // do not auto release
     HVCHECK_NOTNULL(downloadTask);
     downloadTask.taskName = @"downloadItems";
         

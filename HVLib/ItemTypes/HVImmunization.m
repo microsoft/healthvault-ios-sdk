@@ -87,6 +87,11 @@ LError:
     return (m_administeredDate) ? [m_administeredDate toDate] : nil;
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return (m_administeredDate) ? [m_administeredDate toDateForCalendar:calendar] : nil;
+}
+
 -(NSString *)description
 {
     return [self toString];

@@ -63,6 +63,7 @@ LError:
     [m_parser release];
     [m_formatter release];
     [m_stringBuffer release];
+
     [super dealloc];
 }
 
@@ -70,11 +71,8 @@ LError:
 {
     HVCHECK_STRING(source);
     HVCHECK_NOTNULL(result);
-        
-    HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
-    //[m_stringBuffer trim];  // parseInt skips whitespace by default
-    
-    return [m_stringBuffer parseInt: result];
+ 
+    return [source parseInt:result];
     
 LError:
     return FALSE;
@@ -120,22 +118,22 @@ LError:
     HVCHECK_STRING(source);
     HVCHECK_NOTNULL(result);
     
-    HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
-    [m_stringBuffer trim];
+    if ([source parseFloat: result])
+    {
+        return TRUE;
+    }
     
-    if ([m_stringBuffer isEqualToString:c_NEGATIVEINF])
+    if ([source isEqualToString:c_NEGATIVEINF])
     {
         *result = -INFINITY;
         return TRUE;
     }
-    if ([m_stringBuffer isEqualToString:c_POSITIVEINF])
+    if ([source isEqualToString:c_POSITIVEINF])
     {
         *result = INFINITY;
         return TRUE;
     }
-    
-    return [m_stringBuffer parseFloat: result];
-    
+        
 LError:
     return FALSE;
 }
@@ -192,26 +190,23 @@ LError:
 {
     HVCHECK_STRING(source);
     HVCHECK_NOTNULL(result);
-    
-    HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
-    //[m_stringBuffer trim];  // parseInt skips whitespace by default
-    
-    if ([m_stringBuffer parseDouble: result])
+
+    if ([source parseDouble:result])
     {
         return TRUE;
     }
- 
-    if ([m_stringBuffer isEqualToString:c_NEGATIVEINF])
+    
+    if ([source isEqualToString:c_NEGATIVEINF])
     {
         *result = -INFINITY;
         return TRUE;
     }
-    if ([m_stringBuffer isEqualToString:c_POSITIVEINF])
+    if ([source isEqualToString:c_POSITIVEINF])
     {
         *result = INFINITY;
         return TRUE;
     }
-
+    
 LError:
     return FALSE;
 }
@@ -242,7 +237,6 @@ LError:
         return TRUE;
     }
     
-    //*result = [NSString stringWithFormat:@"%f", source];
     [self tryDoubleRoundtrip:source toString:result];
     HVCHECK_STRING(*result);
     

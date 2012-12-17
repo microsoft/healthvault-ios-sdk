@@ -21,7 +21,7 @@
 #import "HVValidator.h"
 #import "HVGuid.h"
 
-static NSString* const c_attribute_version = @"version-stamp";
+static const xmlChar* x_attribute_version = XMLSTRINGCONST("version-stamp");
 
 @implementation HVItemKey
 
@@ -105,8 +105,9 @@ LError:
 
 -(void) serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE(m_version, c_attribute_version);
+    HVSERIALIZE_ATTRIBUTE_X(m_version, x_attribute_version);
 }
+
 -(void) serialize:(XWriter *)writer
 {
     HVSERIALIZE_TEXT(m_id);
@@ -114,7 +115,7 @@ LError:
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE(m_version, c_attribute_version);
+    HVDESERIALIZE_ATTRIBUTE_X(m_version, x_attribute_version);
 }
 
 -(void) deserialize:(XReader *)reader

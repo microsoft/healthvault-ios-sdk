@@ -22,13 +22,13 @@
 static NSString* const c_typeid = @"879e7c04-4e8a-4707-9ad3-b054df467ce4";
 static NSString* const c_typename = @"blood-glucose";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_value = @"value";
-static NSString* const c_element_type = @"glucose-measurement-type";
-static NSString* const c_element_operatingTemp = @"outside-operating-temp";
-static NSString* const c_element_controlTest = @"is-control-test";
-static NSString* const c_element_normalcy = @"normalcy";
-static NSString* const c_element_context = @"measurement-context";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_value = XMLSTRINGCONST("value");
+static const xmlChar* x_element_type = XMLSTRINGCONST("glucose-measurement-type");
+static const xmlChar* x_element_operatingTemp = XMLSTRINGCONST("outside-operating-temp");
+static const xmlChar* x_element_controlTest = XMLSTRINGCONST("is-control-test");
+static const xmlChar* x_element_normalcy = XMLSTRINGCONST("normalcy");
+static const xmlChar* x_element_context = XMLSTRINGCONST("measurement-context");
 
 static NSString* const c_vocab_measurement = @"glucose-measurement-type";
 
@@ -51,6 +51,11 @@ static NSString* const c_vocab_measurement = @"glucose-measurement-type";
 -(NSDate *)getDate
 {
     return [m_when toDate];
+}
+
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
 }
 
 -(double)inMgPerDL
@@ -190,24 +195,24 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_value, c_element_value);
-    HVSERIALIZE(m_measurementType, c_element_type);
-    HVSERIALIZE(m_outsideOperatingTemp, c_element_operatingTemp);
-    HVSERIALIZE(m_controlTest, c_element_controlTest);
-    HVSERIALIZE(m_normalcy, c_element_normalcy);
-    HVSERIALIZE(m_context, c_element_context);
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_value, x_element_value);
+    HVSERIALIZE_X(m_measurementType, x_element_type);
+    HVSERIALIZE_X(m_outsideOperatingTemp, x_element_operatingTemp);
+    HVSERIALIZE_X(m_controlTest, x_element_controlTest);
+    HVSERIALIZE_X(m_normalcy, x_element_normalcy);
+    HVSERIALIZE_X(m_context, x_element_context);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE(m_value, c_element_value, HVBloodGlucoseMeasurement);
-    HVDESERIALIZE(m_measurementType, c_element_type, HVCodableValue);
-    HVDESERIALIZE(m_outsideOperatingTemp, c_element_operatingTemp, HVBool);
-    HVDESERIALIZE(m_controlTest, c_element_controlTest, HVBool);
-    HVDESERIALIZE(m_normalcy, c_element_normalcy, HVOneToFive);
-    HVDESERIALIZE(m_context, c_element_context, HVCodableValue);    
+    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
+    HVDESERIALIZE_X(m_value, x_element_value, HVBloodGlucoseMeasurement);
+    HVDESERIALIZE_X(m_measurementType, x_element_type, HVCodableValue);
+    HVDESERIALIZE_X(m_outsideOperatingTemp, x_element_operatingTemp, HVBool);
+    HVDESERIALIZE_X(m_controlTest, x_element_controlTest, HVBool);
+    HVDESERIALIZE_X(m_normalcy, x_element_normalcy, HVOneToFive);
+    HVDESERIALIZE_X(m_context, x_element_context, HVCodableValue);
 }
 
 +(NSString *)typeID

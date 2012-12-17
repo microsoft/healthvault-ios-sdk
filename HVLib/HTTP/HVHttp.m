@@ -109,6 +109,7 @@ static NSString* const c_header_contentRange = @"Content-Range";
 
 -(void) clear;
 -(BOOL) retry;
+-(void) startImpl;
 
 @end
 
@@ -164,16 +165,19 @@ LError:
 
 -(void)start
 {
-    if (!m_connection)
+    if ([NSThread isMainThread])
     {
-        m_connection = [[NSURLConnection alloc] initWithRequest:m_request delegate:self];
+        [self startImpl];
     }
-    if (!self.operation)
+    else
     {
-        self.operation = m_connection;
+        //
+        // NSURLConnection needs to be created on a thread with a guaranteed RunLoop in default mode
+        // Only way to truly guarantee this is to default to the main thread
+        //
+        [self invokeOnMainThread:@selector(startImpl)];
     }
-    
-    m_currentAttempt++;
+
     [super start];
 }
 
@@ -208,6 +212,21 @@ LError:
 @end
 
 @implementation HVHttp (HVPrivate)
+
+-(void)startImpl
+{
+    if (!m_connection)
+    {
+        m_connection = [[NSURLConnection alloc] initWithRequest:m_request delegate:self];
+    }
+    
+    if (!self.operation)
+    {
+        self.operation = m_connection;
+    }
+    
+    m_currentAttempt++;    
+}
 
 -(void)clear
 {

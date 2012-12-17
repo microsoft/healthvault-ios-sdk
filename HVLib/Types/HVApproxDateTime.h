@@ -75,6 +75,7 @@
 //
 //-------------------------
 -(NSDate *) toDate;
+-(NSDate *) toDateForCalendar:(NSCalendar *) calendar;
 
 //-------------------------
 //

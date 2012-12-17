@@ -20,8 +20,8 @@
 #import "HVCommon.h"
 #import "HVLengthMeasurement.h"
 
-static NSString* const c_element_meters = @"m";
-static NSString* const c_element_display = @"display";
+static const xmlChar* x_element_meters = XMLSTRINGCONST("m");
+static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 @implementation HVLengthMeasurement
 
@@ -139,7 +139,11 @@ LError:
 {
     HVDisplayValue *newValue = [[HVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
     HVCHECK_NOTNULL(newValue);
-    
+    if (code)
+    {
+        newValue.unitsCode = code;
+    }
+
     HVASSIGN(m_display, newValue);
     
     return TRUE;
@@ -192,6 +196,41 @@ LError:
     return [NSString localizedStringWithFormat:format, self.inMiles];        
 }
 
++(HVLengthMeasurement *)fromMiles:(double)value
+{
+    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    length.inMiles = value;
+    return length;
+}
+
++(HVLengthMeasurement *)fromInches:(double)value
+{
+    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    length.inInches = value;
+    return length;    
+}
+
++(HVLengthMeasurement *)fromKilometers:(double)value
+{
+    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    length.inKilometers = value;
+    return length;    
+}
+
++(HVLengthMeasurement *)fromMeters:(double)value
+{
+    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    length.inMeters = value;
+    return length;    
+}
+
++(HVLengthMeasurement *)fromCentimeters:(double)value
+{
+    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    length.inCentimeters = value;
+    return length;    
+}
+
 -(HVClientResult *) validate
 {
     HVVALIDATE_BEGIN;
@@ -207,14 +246,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_meters, c_element_meters);
-    HVSERIALIZE(m_display, c_element_display);
+    HVSERIALIZE_X(m_meters, x_element_meters);
+    HVSERIALIZE_X(m_display, x_element_display);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_meters, c_element_meters, HVPositiveDouble);
-    HVDESERIALIZE(m_display, c_element_display, HVDisplayValue);
+    HVDESERIALIZE_X(m_meters, x_element_meters, HVPositiveDouble);
+    HVDESERIALIZE_X(m_display, x_element_display, HVDisplayValue);
 }
 
 +(double)centimetersToInches:(double)cm

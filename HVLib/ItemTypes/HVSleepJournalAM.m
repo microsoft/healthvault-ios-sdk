@@ -22,14 +22,14 @@
 static NSString* const c_typeid = @"11c52484-7f1a-11db-aeac-87d355d89593";
 static NSString* const c_typename = @"sleep-am";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_bedtime = @"bed-time";
-static NSString* const c_element_waketime = @"wake-time";
-static NSString* const c_element_sleepMins = @"sleep-minutes";
-static NSString* const c_element_settlingMins = @"settling-minutes";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_bedtime = XMLSTRINGCONST("bed-time");
+static const xmlChar* x_element_waketime = XMLSTRINGCONST("wake-time");
+static const xmlChar* x_element_sleepMins = XMLSTRINGCONST("sleep-minutes");
+static const xmlChar* x_element_settlingMins = XMLSTRINGCONST("settling-minutes");
 static NSString* const c_element_awakening = @"awakening";
-static NSString* const c_element_medications = @"medications";
-static NSString* const c_element_state = @"wake-state";
+static const xmlChar* x_element_medications = XMLSTRINGCONST("medications");
+static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
 
 @implementation HVSleepJournalAM
 
@@ -143,6 +143,11 @@ LError:
     return [m_when toDate];
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN
@@ -164,26 +169,26 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_bedTime, c_element_bedtime);
-    HVSERIALIZE(m_wakeTime, c_element_waketime);
-    HVSERIALIZE(m_sleepMinutes, c_element_sleepMins);
-    HVSERIALIZE(m_settlingMinutes, c_element_settlingMins);  
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_bedTime, x_element_bedtime);
+    HVSERIALIZE_X(m_wakeTime, x_element_waketime);
+    HVSERIALIZE_X(m_sleepMinutes, x_element_sleepMins);
+    HVSERIALIZE_X(m_settlingMinutes, x_element_settlingMins);
     HVSERIALIZE_ARRAY(m_awakenings, c_element_awakening);
-    HVSERIALIZE(m_medications, c_element_medications);
-    HVSERIALIZE(m_wakeState, c_element_state);
+    HVSERIALIZE_X(m_medications, x_element_medications);
+    HVSERIALIZE_X(m_wakeState, x_element_state);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE(m_bedTime, c_element_bedtime, HVTime);
-    HVDESERIALIZE(m_wakeTime, c_element_waketime, HVTime);
-    HVDESERIALIZE(m_sleepMinutes, c_element_sleepMins, HVNonNegativeInt);
-    HVDESERIALIZE(m_settlingMinutes, c_element_settlingMins, HVNonNegativeInt);  
+    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
+    HVDESERIALIZE_X(m_bedTime, x_element_bedtime, HVTime);
+    HVDESERIALIZE_X(m_wakeTime, x_element_waketime, HVTime);
+    HVDESERIALIZE_X(m_sleepMinutes, x_element_sleepMins, HVNonNegativeInt);
+    HVDESERIALIZE_X(m_settlingMinutes, x_element_settlingMins, HVNonNegativeInt);
     HVDESERIALIZE_TYPEDARRAY(m_awakenings, c_element_awakening, HVOccurence, HVOccurenceCollection);
-    HVDESERIALIZE(m_medications, c_element_medications, HVCodableValue);
-    HVDESERIALIZE(m_wakeState, c_element_state, HVPositiveInt);    
+    HVDESERIALIZE_X(m_medications, x_element_medications, HVCodableValue);
+    HVDESERIALIZE_X(m_wakeState, x_element_state, HVPositiveInt);
 }
 
 +(NSString *)typeID

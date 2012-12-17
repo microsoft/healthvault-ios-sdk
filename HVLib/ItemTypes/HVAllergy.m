@@ -76,6 +76,11 @@ LError:
     return (m_firstObserved) ? [m_firstObserved toDate] : nil;
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return (m_firstObserved) ? [m_firstObserved toDateForCalendar:calendar] : nil;
+}
+
 -(NSString *)description
 {
     return [self toString];

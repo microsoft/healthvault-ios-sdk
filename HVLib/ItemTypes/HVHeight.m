@@ -23,8 +23,8 @@
 static NSString* const c_typeid = @"40750a6a-89b2-455c-bd8d-b420a4cb500b";
 static NSString* const c_typename = @"height";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_value = @"value";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 @implementation HVHeight
 
@@ -34,6 +34,11 @@ static NSString* const c_element_value = @"value";
 -(NSDate *)getDate
 {
     return [m_when toDate];
+}
+
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
 }
 
 -(double)inMeters
@@ -139,14 +144,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_height, c_element_value);
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_height, x_element_value);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE(m_height, c_element_value, HVLengthMeasurement);
+    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
+    HVDESERIALIZE_X(m_height, x_element_value, HVLengthMeasurement);
 }
 
 +(NSString *)typeID

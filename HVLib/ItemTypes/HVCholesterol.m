@@ -50,6 +50,11 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
     return [m_date toDate];
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_date toDateForCalendar:calendar];
+}
+
 -(int)ldlValue
 {
     return (m_ldl) ? m_ldl.value : -1;

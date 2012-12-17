@@ -71,6 +71,7 @@
 -(NSDateComponents *) toComponents;
 -(BOOL) getComponents:(NSDateComponents *) components;
 -(NSDate *) toDate;
+-(NSDate *) toDateForCalendar:(NSCalendar *) calendar;
 
 -(BOOL) setWithDate:(NSDate *) dateValue;
 -(BOOL) setWithComponents:(NSDateComponents *) components;

@@ -22,11 +22,11 @@
 static NSString* const c_typeid = @"85a21ddb-db20-4c65-8d30-33c899ccf612";
 static NSString* const c_typename = @"exercise";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_activity = @"activity";
-static NSString* const c_element_title = @"title";
-static NSString* const c_element_distance = @"distance";
-static NSString* const c_element_duration = @"duration";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_activity = XMLSTRINGCONST("activity");
+static const xmlChar* x_element_title = XMLSTRINGCONST("title");
+static const xmlChar* x_element_distance = XMLSTRINGCONST("distance");
+static const xmlChar* x_element_duration = XMLSTRINGCONST("duration");
 static NSString* const c_element_detail = @"detail";
 static NSString* const c_element_segment = @"segment";
 
@@ -60,6 +60,11 @@ static HVVocabIdentifier* s_vocabIDUnits;
 -(NSDate *)getDate
 {
     return [m_when toDate];
+}
+
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
 }
 
 -(BOOL)hasDetails
@@ -179,7 +184,7 @@ LError:
     HVCodedValue* name = nv.name;
     return (
             [name isEqualToCode:c_code_caloriesBurned fromVocab:c_vocabName_Details] ||
-            [name isEqualToCode:@"Calories burned" fromVocab:c_vocabName_Details] // Fitbug bug
+            [name.code isEqualToString:@"Calories burned"] // Fitbug bug
             );
 
 LError:
@@ -193,7 +198,7 @@ LError:
     HVCodedValue* name = nv.name;
     return (
             [name isEqualToCode:c_code_stepCount fromVocab:c_vocabName_Details] ||
-            [name isEqualToCode:@"Number of steps" fromVocab:c_vocabName_Details] // Fitbit bug
+            [name.code isEqualToString:@"Number of steps"] // Fitbit bug
             );
     
 LError:
@@ -286,11 +291,11 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_activity, c_element_activity);
-    HVSERIALIZE_STRING(m_title, c_element_title);
-    HVSERIALIZE(m_distance, c_element_distance);
-    HVSERIALIZE(m_duration, c_element_duration);
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_activity, x_element_activity);
+    HVSERIALIZE_STRING_X(m_title, x_element_title);
+    HVSERIALIZE_X(m_distance, x_element_distance);
+    HVSERIALIZE_X(m_duration, x_element_duration);
     HVSERIALIZE_ARRAY(m_details, c_element_detail);
     
     HVSERIALIZE_RAWARRAY(m_segmentsXml, c_element_segment);
@@ -298,11 +303,11 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVApproxDateTime);
-    HVDESERIALIZE(m_activity, c_element_activity, HVCodableValue);
-    HVDESERIALIZE_STRING(m_title, c_element_title);
-    HVDESERIALIZE(m_distance, c_element_distance, HVLengthMeasurement);
-    HVDESERIALIZE(m_duration, c_element_duration, HVPositiveDouble);
+    HVDESERIALIZE_X(m_when, x_element_when, HVApproxDateTime);
+    HVDESERIALIZE_X(m_activity, x_element_activity, HVCodableValue);
+    HVDESERIALIZE_STRING_X(m_title, x_element_title);
+    HVDESERIALIZE_X(m_distance, x_element_distance, HVLengthMeasurement);
+    HVDESERIALIZE_X(m_duration, x_element_duration, HVPositiveDouble);
     HVDESERIALIZE_TYPEDARRAY(m_details, c_element_detail, HVNameValue, HVNameValueCollection);
     
     HVDESERIALIZE_RAWARRAY(m_segmentsXml, c_element_segment); 

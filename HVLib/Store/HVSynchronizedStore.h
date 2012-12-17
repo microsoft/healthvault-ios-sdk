@@ -81,6 +81,7 @@
 // Future versions may include a reliable async upload queue for offline behavior
 //
 -(BOOL) putItem:(HVItem *) item;
+
 //
 // In the callback, use [task checkForSuccess] to confirm that the operation succeeded
 // task.result will contain updated keys - in case the items 

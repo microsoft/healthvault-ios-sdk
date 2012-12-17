@@ -44,6 +44,7 @@
 @property (readonly, nonatomic) BOOL isSingleton;
 
 -(NSDate *) getDate;
+-(NSDate *) getDateForCalendar:(NSCalendar *) calendar;
 
 +(NSString *) typeID;
 +(NSString *) XRootElement;

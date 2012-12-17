@@ -157,6 +157,16 @@ LError:
     return nil;
 }
 
+-(NSDate *)toDateForCalendar:(NSCalendar *)calendar
+{
+    if (m_dateTime)
+    {
+        return [m_dateTime toDateForCalendar:calendar];
+    }
+    
+    return nil;    
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

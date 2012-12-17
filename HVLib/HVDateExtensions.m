@@ -125,6 +125,25 @@ LError:
     return nil;
 }
 
+-(NSDate *)toEndOfDay
+{
+    NSCalendar* calendar = [NSCalendar newGregorian];
+    HVCHECK_NOTNULL(calendar);
+    
+    NSDateComponents* dateComponents = [calendar getComponentsFor:self];
+    dateComponents.hour = 23;
+    dateComponents.minute = 59;
+    dateComponents.second = 59;
+    
+    NSDate* day = [calendar dateFromComponents:dateComponents];
+    [calendar release];
+    
+    return day;
+    
+LError:
+    return nil;    
+}
+
 +(NSDate *)yesterday
 {
     //

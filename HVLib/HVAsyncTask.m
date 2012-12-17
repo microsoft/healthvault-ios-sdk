@@ -321,7 +321,10 @@ LError:
             
             if (!m_cancelled)
             {
-                nextOp = [m_operation retain];
+                if (m_operation)
+                {
+                    nextOp = [m_operation retain];
+                }
                 if (nextOp)
                 {
                     self.operation = nil;
@@ -367,6 +370,7 @@ LError:
     @try 
     {
         self.method = nil;
+        self.operation = nil;
         if (method)
         {
             method(self);
@@ -382,7 +386,6 @@ LError:
     }
     @finally 
     {
-        self.operation = nil;
         [method release];
     }
     

@@ -29,6 +29,9 @@ NSString* const c_mmolUnitsCode;
 NSString* const c_mgDLUnits;
 NSString* const c_mgDLUnitsCode;
 
+const xmlChar* x_element_mmolPL;
+const xmlChar* x_element_display;
+
 //
 // Concentration values, stored in mmol/Liter
 // Most commonly used to store Cholesterol Measurements

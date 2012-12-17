@@ -78,6 +78,11 @@ LError:
     return (m_when) ? [m_when toDate] : nil;
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return (m_when) ? [m_when toDateForCalendar:calendar] : nil;
+}
+
 -(HVClientResult *)validate
 {
     HVVALIDATE_BEGIN

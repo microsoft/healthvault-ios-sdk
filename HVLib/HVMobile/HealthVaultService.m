@@ -215,10 +215,20 @@ LError:
     if (_requestDelay > 0)
     {
         [self sendRequest:request withDelay:_requestDelay];
+        return;
     }
-    else 
+
+    if ([NSThread isMainThread])
     {
         [self sendRequestImpl:request];
+    }
+    else
+    {
+        //
+        // NSURLConnection needs to be created on a thread with a guaranteed RunLoop in default mode
+        // Only way to truly guarantee this is to default to the main thread
+        //
+        [self invokeOnMainThread:@selector(sendRequestImpl:) withObject:request]; 
     }
 }
 

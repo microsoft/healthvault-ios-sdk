@@ -19,8 +19,8 @@
 #import "HVCommon.h"
 #import "HVMeasurement.h"
 
-static NSString* const c_element_value = @"value";
-static NSString* const c_element_units = @"units";
+static const xmlChar* x_element_value = XMLSTRINGCONST("value");
+static const xmlChar* x_element_units = XMLSTRINGCONST("units");
 
 @implementation HVMeasurement
 
@@ -123,14 +123,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_DOUBLE(m_value, c_element_value);
-    HVSERIALIZE(m_units, c_element_units);
+    HVSERIALIZE_DOUBLE_X(m_value, x_element_value);
+    HVSERIALIZE_X(m_units, x_element_units);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_DOUBLE(m_value, c_element_value);
-    HVDESERIALIZE(m_units, c_element_units, HVCodableValue);
+    HVDESERIALIZE_DOUBLE_X(m_value, x_element_value);
+    HVDESERIALIZE_X(m_units, x_element_units, HVCodableValue);
 }
 
 @end

@@ -59,6 +59,7 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
 @interface XReader (XPrivate)
 
 -(id) initWithCreatedReader:(xmlTextReader *) reader;
+-(id) initWithCreatedReader:(xmlTextReader *) reader withConverter:(XConverter *) converter;
 -(void) ensureStartElement;
 -(void) moveToContentType:(enum XNodeType) type;
 -(void) verifyNodeType:(enum XNodeType) type;
@@ -204,40 +205,65 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
     return xmlTextReaderAttributeCount(m_reader);
 }
 
-//
-// Selectors
-//
-
 -(id) initWithReader:(xmlTextReader *)reader
 {
-    HVCHECK_NOTNULL(reader); 
+    return [self initWithReader:reader andConverter:nil];
+}
+
+-(id)initWithReader:(xmlTextReader *)reader andConverter:(XConverter *)converter
+{
+    HVCHECK_NOTNULL(reader);
     
     self = [super init];
     HVCHECK_SELF;
-   
-    m_converter = [[XConverter alloc] init];
-    HVCHECK_NOTNULL(m_converter);
     
-    m_reader = reader;
+    if (converter)
+    {
+        HVRETAIN(m_converter, converter);
+    }
+    else
+    {
+        m_converter = [[XConverter alloc] init];
+        HVCHECK_NOTNULL(m_converter);        
+    }
+    
+    m_reader = reader;  // C pointer. Weak ref
+    
     return self;
-
+    
 LError:
     HVALLOC_FAIL;
+    
 }
 
 -(id) initFromMemory:(NSData *)buffer
 {
-    return [self initWithCreatedReader:XAllocBufferReader(buffer)];
+    return [self initFromMemory:buffer withConverter:nil];
+}
+
+-(id)initFromMemory:(NSData *)buffer withConverter:(XConverter *)converter
+{
+    return [self initWithCreatedReader:XAllocBufferReader(buffer) withConverter:converter];
 }
 
 -(id) initFromString:(NSString *)string
 {
-    return [self initWithCreatedReader:XAllocStringReader(string)];
+    return [self initFromString:string withConverter:nil];
+}
+
+-(id)initFromString:(NSString *)string withConverter:(XConverter *)converter
+{
+    return [self initWithCreatedReader:XAllocStringReader(string) withConverter:converter];
 }
 
 -(id) initFromFile:(NSString *)fileName
 {
-    return [self initWithCreatedReader:XAllocFileReader(fileName)];
+    return [self initFromFile:fileName withConverter:nil];
+}
+
+-(id)initFromFile:(NSString *)fileName withConverter:(XConverter *)converter
+{
+    return [self initWithCreatedReader:XAllocFileReader(fileName) withConverter:converter];
 }
 
 -(id) init
@@ -322,6 +348,12 @@ LError:
     return FALSE;
 }
 
+-(BOOL)moveToAttributeWithXmlName:(const xmlChar *)xmlName
+{
+    [self clear];
+    return [self isSuccess:xmlTextReaderMoveToAttribute(m_reader, xmlName)];
+}
+
 -(BOOL) moveToAttribute:(NSString *)name NS:(NSString *)ns
 {
     HVCHECK_STRING(name);
@@ -340,6 +372,12 @@ LError:
 
 LError:
     return FALSE;
+}
+
+-(BOOL)moveToAttributeWithXmlName:(const xmlChar *)xmlName andXmlNs:(const xmlChar *)xmlNs
+{
+    [self clear];
+    return [self isSuccess:xmlTextReaderMoveToAttributeNs(m_reader, xmlName, xmlNs)];
 }
 
 -(BOOL) moveToFirstAttribute
@@ -385,6 +423,23 @@ LError:
     }
     
     return (([name isEqualToString:self.localName]) && [ns isEqualToString:self.namespaceUri]);
+
+LError:
+    return FALSE;
+}
+
+-(BOOL)isStartElementWithXmlName:(const xmlChar *)name
+{
+    HVCHECK_NOTNULL(name);
+    
+    if (![self isStartElement])
+    {
+        return FALSE;
+    }
+
+    const xmlChar* rawName = self.localNameRaw;
+    
+    return (rawName && xmlStrEqual(rawName, name));
 
 LError:
     return FALSE;
@@ -496,6 +551,29 @@ LError:
     return FALSE;
 }
 
+-(BOOL)readStartElementWithXmlName:(const xmlChar *)xName
+{
+    HVCHECK_NOTNULL(xName);
+    
+    [self ensureStartElement];
+ 
+    const xmlChar* rawName = self.localNameRaw;
+    if (!rawName || !xmlStrEqual(rawName, xName))
+    {
+        goto LError;
+    }
+    
+    BOOL hasEndTag = ![self isEmptyElement];
+    
+    [self read];
+    
+    return hasEndTag;
+    
+LError:
+    [XException throwException:XExceptionElementMismatch xmlReason:xName fromReader:m_reader];
+    return FALSE;    
+}
+
 -(void) readEndElement
 {
     [self moveToContentType:XEndElement];
@@ -563,9 +641,14 @@ LError:
 
 -(id) initWithCreatedReader:(xmlTextReader *)reader
 {
-    self = [self initWithReader:reader];
+    return [self initWithCreatedReader:reader withConverter:nil];
+}
+
+-(id)initWithCreatedReader:(xmlTextReader *)reader withConverter:(XConverter *)converter
+{
+    self = [self initWithReader:reader andConverter:converter];
     HVCHECK_SELF;
- 
+    
     return self;
     
 LError:
@@ -573,7 +656,7 @@ LError:
     {
         xmlFreeTextReader(reader);
     }
-    HVALLOC_FAIL;
+    HVALLOC_FAIL;    
 }
 
 -(void) ensureStartElement

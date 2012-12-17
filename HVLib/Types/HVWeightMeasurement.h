@@ -97,7 +97,6 @@
 +(HVWeightMeasurement *) fromGrams:(double) grams;
 +(HVWeightMeasurement *) fromMillgrams:(double) grams;
 
-
 +(HVWeightMeasurement *) fromPounds:(double) pounds;
 +(HVWeightMeasurement *) fromOunces:(double) ounces;
 

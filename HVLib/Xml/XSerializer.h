@@ -41,6 +41,7 @@ NSString* const XExceptionNotSerializable;
 +(BOOL) serialize:(id) obj withRoot:(NSString *) root toWriter:(XWriter *) writer;
 +(BOOL) serialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *) filePath;
 +(BOOL) secureSerialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *) filePath;
++(BOOL) secureSerialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *) filePath withConverter:(XConverter *) converter;
 
 +(BOOL) deserialize:(XReader *) reader withRoot:(NSString *) root into:(id) obj;
 
@@ -54,6 +55,8 @@ NSString* const XExceptionNotSerializable;
 +(id) newFromReader:(XReader *) reader withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromFilePath:(NSString*) filePath withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromSecureFilePath:(NSString*) filePath withRoot:(NSString *) root asClass:(Class) classObj;
++(id) newFromSecureFilePath:(NSString*) filePath withRoot:(NSString *) root asClass:(Class) classObj withConverter:(XConverter *) converter;
+
 +(id) newFromFileUrl:(NSURL*) url withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromResource:(NSString*) name withRoot:(NSString *) root asClass:(Class) classObj;
 
@@ -93,6 +96,8 @@ NSString* const XExceptionNotSerializable;
 -(BOOL) readBoolElement:(NSString*) name;
 -(BOOL) readBoolElement:(NSString *) name into:(BOOL *) value;
 
+-(void) readElementContentIntoObject:(id<XSerializable>) content;
+
 -(id) readElementRequired:(NSString *) name asClass:(Class) classObj;
 -(void) readElementRequired:(NSString *) name intoObject:(id<XSerializable>) content;
 
@@ -101,9 +106,7 @@ NSString* const XExceptionNotSerializable;
 -(NSString *) readElementRaw:(NSString *) name;
 
 -(NSMutableArray *) readElementArray:(NSString *) name asClass:(Class) classObj;
-
 -(NSMutableArray *) readElementArray:(NSString *) name asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
-
 -(NSMutableArray *) readElementArray:(NSString *) name itemName:(NSString*) itemName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
 
 -(HVStringCollection *) readStringElementArray:(NSString *) name;
@@ -120,6 +123,26 @@ NSString* const XExceptionNotSerializable;
 -(BOOL) skipElement:(NSString *) name;
 -(BOOL) skipSingleElement:(NSString *) name;
 -(BOOL) skipToElement:(NSString *) name;
+
+-(id) readElementRequiredWithXmlName:(const xmlChar *) xName asClass:(Class) classObj;
+-(void) readElementRequiredWithXmlName:(const xmlChar *) xName intoObject:(id<XSerializable>) content;
+-(id) readElementWithXmlName:(const xmlChar *) xmlName asClass:(Class) classObj;
+-(NSString *) readStringElementWithXmlName:(const xmlChar *)xmlName;
+
+-(NSDate *) readDateElementXmlName:(const xmlChar *) xmlName;
+-(double) readDoubleElementXmlName:(const xmlChar *) xmlName;
+-(BOOL) readDoubleElementXmlName:(const xmlChar *) xmlName into:(double *) value;
+-(int) readIntElementXmlName:(const xmlChar *) xmlName;
+-(BOOL) readIntElementXmlName:(const xmlChar *) xmlName into:(int *) value;
+-(BOOL) readBoolElementXmlName:(const xmlChar*) xmlName;
+-(BOOL) readBoolElementXmlName:(const xmlChar *) xmlName into:(BOOL *) value;
+
+-(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName asClass:(Class) classObj;
+-(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
+-(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName itemName:(const xmlChar *) itemName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
+
+
+-(NSString *) readAttributeWithXmlName:(const xmlChar *) xmlName;
 
 @end
 
@@ -159,6 +182,13 @@ NSString* const XExceptionNotSerializable;
 
 -(void) writeAttribute:(NSString *) name intValue:(int) value;
 -(void) writeText:(NSString *) value;
+
+-(void) writeElementXmlName:(const xmlChar *) xmlName content:(id<XSerializable>) content;
+-(void) writeElementXmlName:(const xmlChar *)xmlName value:(NSString *) value;
+-(void) writeElementXmlName:(const xmlChar *) xmlName intValue:(int) value;
+-(void) writeElementXmlName:(const xmlChar *) xmlName doubleValue:(double) value;
+-(void) writeElementXmlName:(const xmlChar *) xmlName dateValue:(NSDate*) value;
+-(void) writeElementXmlName:(const xmlChar *) xmlName boolValue:(BOOL) value;
 
 @end
 
@@ -213,6 +243,16 @@ void throwWriterError(void);
 #define HVDESERIALIZE_DOUBLEATTRIBUTE(var, name) [reader readDoubleAttribute:name doubleValue:&var]
 #define HVDESERIALIZE_FLOATATTRIBUTE(var, name) [reader readFloatAttribute:name floatValue:&var]
 
+#define HVDESERIALIZE_X(var, xname, className) HVSETIF(var, [reader readElementWithXmlName:xname asClass:[className class]])
+#define HVDESERIALIZE_STRING_X(var, xname) HVSETIF(var, [reader readStringElementWithXmlName:xname])
+#define HVDESERIALIZE_DATE_X(var, name) HVSETIF(var, [reader readDateElementXmlName:name])
+#define HVDESERIALIZE_INT_X(var, name) [reader readIntElementXmlName:name into:&var]
+#define HVDESERIALIZE_DOUBLE_X(var, name) [reader readDoubleElementXmlName:name into:&var]
+#define HVDESERIALIZE_BOOL_X(var, name) [reader readBoolElementXmlName:name into:&var]
+#define HVDESERIALIZE_ATTRIBUTE_X(var, xname) HVSETIF(var, [reader readAttributeWithXmlName:xname])
+
+#define HVDESERIALIZE_TYPEDARRAY_X(var, name, className, arrayClass) HVSETIF(var, [reader readElementArrayWithXmlName:name asClass:[className class] andArrayClass:[arrayClass class]])
+
 //---------------------------------------
 //
 // Xml Serialization Macros
@@ -246,6 +286,13 @@ void throwWriterError(void);
 #define HVSERIALIZE_TEXT(var) [writer writeText:var]
 
 #define HVSERIALIZE_RAW(var) if (var) {[writer writeRaw:var];}
-
 #define HVSERIALIZE_RAWARRAY(var, name) if (var) {[writer writeRawElementArray:name elements:var];}
+
+#define HVSERIALIZE_X(var, xmlName) [writer writeElementXmlName:xmlName content:var]
+#define HVSERIALIZE_STRING_X(var, name) [writer writeElementXmlName:name value:var]
+#define HVSERIALIZE_INT_X(var, name) [writer writeElementXmlName:name intValue:var]
+#define HVSERIALIZE_DOUBLE_X(var, name) [writer writeElementXmlName:name doubleValue:var]
+#define HVSERIALIZE_DATE_X(var, name) [writer writeElementXmlName:name dateValue:var]
+#define HVSERIALIZE_BOOL_X(var, name) [writer writeElementXmlName:name boolValue:var]
+#define HVSERIALIZE_ATTRIBUTE_X(var, xmlName) if (var) { [writer writeAttributeXmlName:xmlName value:var];}
 

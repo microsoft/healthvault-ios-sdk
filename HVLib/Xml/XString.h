@@ -35,3 +35,5 @@
 
 
 @end
+
+#define XMLSTRINGCONST(sz) (const xmlChar *) sz

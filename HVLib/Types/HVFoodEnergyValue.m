@@ -20,8 +20,8 @@
 #import "HVCommon.h"
 #import "HVFoodEnergyValue.h"
 
-static NSString* const c_element_calories = @"calories";
-static NSString* const c_element_displayValue = @"display";
+static const xmlChar* x_element_calories = XMLSTRINGCONST("calories");
+static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
 
 @implementation HVFoodEnergyValue
 
@@ -123,14 +123,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_calories, c_element_calories);
-    HVSERIALIZE(m_display, c_element_displayValue);
+    HVSERIALIZE_X(m_calories, x_element_calories);
+    HVSERIALIZE_X(m_display, x_element_displayValue);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_calories, c_element_calories, HVNonNegativeDouble);
-    HVDESERIALIZE(m_display, c_element_displayValue, HVDisplayValue);
+    HVDESERIALIZE_X(m_calories, x_element_calories, HVNonNegativeDouble);
+    HVDESERIALIZE_X(m_display, x_element_displayValue, HVDisplayValue);
 }
 
 +(HVFoodEnergyValue *)fromCalories:(double)value

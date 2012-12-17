@@ -139,6 +139,16 @@
 +(HVVocabIdentifier *) vocabForFood;
 +(HVVocabIdentifier *) vocabForMeals;
 
+//---------------------
+//
+// Some standard codes
+//
+//---------------------
++(HVCodableValue *) mealCodeForBreakfast;
++(HVCodableValue *) mealCodeForLunch;
++(HVCodableValue *) mealCodeForDinner;
++(HVCodableValue *) mealCodeForSnack;
+
 //--------------------
 //
 // TypeInfo

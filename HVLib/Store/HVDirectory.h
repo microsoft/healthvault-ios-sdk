@@ -18,6 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVObjectStore.h"
+#import "XConverter.h"
 
 @interface NSFileManager (HVExtensions) 
 
@@ -48,6 +49,7 @@
 @private
     NSURL *m_path;
     NSString *m_stringPath;
+    XConverter* m_converter;  // Cached, to speed up deserialization/serialization
 }
 
 @property (readonly, nonatomic) NSURL* url;

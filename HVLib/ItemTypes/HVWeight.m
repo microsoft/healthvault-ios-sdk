@@ -102,6 +102,11 @@ LError:
     return [m_when toDate];
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
+}
+
 -(NSString *)stringInPounds
 {
     return [self stringInPoundsWithFormat:@"%.2f"];

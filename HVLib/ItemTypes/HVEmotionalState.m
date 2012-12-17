@@ -75,10 +75,10 @@ NSString* stringFromWellBeing(enum HVWellBeing wellBeing)
 static NSString* const c_typeid = @"4b7971d6-e427-427d-bf2c-2fbcf76606b3";
 static NSString* const c_typename = @"emotion";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_mood = @"mood";
-static NSString* const c_element_stress = @"stress";
-static NSString* const c_element_wellbeing = @"wellbeing";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_mood = XMLSTRINGCONST("mood");
+static const xmlChar* x_element_stress = XMLSTRINGCONST("stress");
+static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
 
 @implementation HVEmotionalState
 
@@ -87,6 +87,11 @@ static NSString* const c_element_wellbeing = @"wellbeing";
 -(NSDate *)getDate
 {
     return [m_when toDate];
+}
+
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
 }
 
 -(enum HVMood)mood
@@ -200,18 +205,18 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_mood, c_element_mood);
-    HVSERIALIZE(m_stress, c_element_stress);
-    HVSERIALIZE(m_wellbeing, c_element_wellbeing);
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_mood, x_element_mood);
+    HVSERIALIZE_X(m_stress, x_element_stress);
+    HVSERIALIZE_X(m_wellbeing, x_element_wellbeing);
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE(m_mood, c_element_mood, HVOneToFive);
-    HVDESERIALIZE(m_stress, c_element_stress, HVOneToFive);
-    HVDESERIALIZE(m_wellbeing, c_element_wellbeing, HVOneToFive);    
+    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
+    HVDESERIALIZE_X(m_mood, x_element_mood, HVOneToFive);
+    HVDESERIALIZE_X(m_stress, x_element_stress, HVOneToFive);
+    HVDESERIALIZE_X(m_wellbeing, x_element_wellbeing, HVOneToFive);
 }
 
 

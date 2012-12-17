@@ -62,6 +62,7 @@
 -(NSDateComponents *) toComponentsForCalendar:(NSCalendar *) calendar;
 -(BOOL) getComponents:(NSDateComponents *) components;
 -(NSDate *) toDate;
+-(NSDate *) toDateForCalendar:(NSCalendar *) calendar;
 
 -(BOOL) setWithDate:(NSDate *) date;
 -(BOOL) setWithComponents:(NSDateComponents *) components;

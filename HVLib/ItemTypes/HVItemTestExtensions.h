@@ -53,24 +53,42 @@ NSString* pickRandomDrug(void);
 @end
 
 @interface HVItem (HVTestExtensions)
+
 +(HVItem *) createRandomOfClass:(NSString *) className;
+
 @end
 
 @interface HVWeight (HVTestExtensions)
+
 +(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVDateTime *) dateTime;
+
 @end
 
 @interface HVBloodPressure (HVTestExtensions)
+
 +(HVItem *) createRandom;
++(HVItem*) createRandomForDate:(HVDateTime *) dateTime withPulse:(BOOL) pulse;
+
 @end
 
 @interface HVBloodGlucose (HVTestExtensions)
+
 +(HVItem *) createRandom;
++(HVItem*) createRandomForDate:(HVDateTime *) dateTime;
+
 @end
 
 @interface HVCholesterol (HVTestExtensions)
 
 +(HVItem *) createRandom;
+
+@end
+
+@interface HVCholesterolV2 (HVTestExtensions)
+
++(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVDateTime *) dateTime;
 
 @end
 
@@ -96,6 +114,7 @@ NSString* pickRandomDrug(void);
 @interface HVExercise (HVTestExtensions)
 
 +(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVApproxDateTime *) date;
 
 @end
 
@@ -174,6 +193,7 @@ NSString* pickRandomDrug(void);
 @interface HVSleepJournalAM (HVTestExtensions)
 
 +(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVDateTime *) date withAwakenings:(BOOL) doAwakenings;
 
 @end
 
@@ -186,13 +206,15 @@ NSString* pickRandomDrug(void);
 @interface HVEmotionalState (HVTestExtensions)
 
 +(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVDateTime *) date;
 
 @end
 
 @interface HVDailyMedicationUsage (HVTestExtensions)
 
 +(HVItem *) createRandom;
-
++(HVItem *) createRandomForDate:(HVDate *) date;
++(HVItem *) createRandomForDate:(HVDate *) date forDrug:(NSString *) drug;
 @end
 
 @interface HVTestSynchronizedStore : HVSynchronizedStore

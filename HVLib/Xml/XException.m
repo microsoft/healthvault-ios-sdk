@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "XException.h"
+#import "XString.h"
 
 NSString* const XExceptionInvalidNodeType = @"X_InvalidNodeType";
 NSString* const XExceptionNotElement = @"X_NotElement";
@@ -60,6 +61,11 @@ NSString* const XExceptionRequiredDataMissing = @"X_RequiredDataMissing";
         message = [NSString stringWithFormat:@"%@ line=%d, col=%d", reason, line, col];       
     }
     @throw [[[XException alloc] initWithName:exceptionName reason:message userInfo:nil] autorelease];
+}
+
++(void)throwException:(NSString *)exceptionName xmlReason:(const xmlChar *)reason fromReader:(xmlTextReader *)reader
+{
+    return [XException throwException:exceptionName reason:[NSString fromConstXmlString:reason] fromReader:reader];
 }
 
 +(void) throwException:(NSString *)exceptionName fromReader:(xmlTextReader *)reader

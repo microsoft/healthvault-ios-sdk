@@ -19,8 +19,7 @@
 #import "HVCommon.h"
 #import "HVTypeViewItem.h"
 
-static NSString* const c_element_date = @"date";
-static NSString* const c_element_dateShort = @"dt";
+static const xmlChar* x_element_dateShort = XMLSTRINGCONST("dt");
 
 @interface HVTypeViewItem (HVPrivate)
 
@@ -161,9 +160,7 @@ LError:
     if (m_date)
     {
         double timespan = (double) [m_date timeIntervalSinceReferenceDate];
-        HVSERIALIZE_DOUBLE(timespan, c_element_dateShort);
-        
-        //HVSERIALIZE_DATE(m_date, c_element_date);
+        HVSERIALIZE_DOUBLE_X(timespan, x_element_dateShort);
     }
 }
 

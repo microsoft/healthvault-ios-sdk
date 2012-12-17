@@ -20,10 +20,10 @@
 #import "HVCodedValue.h"
 
 
-static NSString* const c_element_value = @"value";
-static NSString* const c_element_family = @"family";
-static NSString* const c_element_type = @"type";
-static NSString* const c_element_version = @"version";
+static const xmlChar* x_element_value = XMLSTRINGCONST("value");
+static const xmlChar* x_element_family = XMLSTRINGCONST("family");
+static const xmlChar* x_element_type = XMLSTRINGCONST("type");
+static const xmlChar* x_element_version = XMLSTRINGCONST("version");
 
 @implementation HVCodedValue
 
@@ -143,18 +143,18 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_code, c_element_value);
-    HVSERIALIZE_STRING(m_family, c_element_family);
-    HVSERIALIZE_STRING(m_vocab, c_element_type);
-    HVSERIALIZE_STRING(m_version, c_element_version);
+    HVSERIALIZE_STRING_X(m_code, x_element_value);
+    HVSERIALIZE_STRING_X(m_family, x_element_family);
+    HVSERIALIZE_STRING_X(m_vocab, x_element_type);
+    HVSERIALIZE_STRING_X(m_version, x_element_version);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_code, c_element_value);
-    HVDESERIALIZE_STRING(m_family, c_element_family);
-    HVDESERIALIZE_STRING(m_vocab, c_element_type);
-    HVDESERIALIZE_STRING(m_version, c_element_version);
+    HVDESERIALIZE_STRING_X(m_code, x_element_value);
+    HVDESERIALIZE_STRING_X(m_family, x_element_family);
+    HVDESERIALIZE_STRING_X(m_vocab, x_element_type);
+    HVDESERIALIZE_STRING_X(m_version, x_element_version);
 }
 
 @end

@@ -105,31 +105,36 @@ LError:
 
 +(BOOL)secureSerialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *)filePath
 {
-    XWriter* writer = [[XWriter alloc] initWithBufferSize:2048];   
+    return [XSerializer secureSerialize:obj withRoot:root toFilePath:filePath withConverter:nil];
+}
+
++(BOOL)secureSerialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *)filePath withConverter:(XConverter *)converter
+{
+    XWriter* writer = [[XWriter alloc] initWithBufferSize:2048 andConverter:converter];
     HVCHECK_NOTNULL(writer);
     
     NSData* rawData = nil;
-    @try 
+    @try
     {
         HVCHECK_SUCCESS([XSerializer serialize:obj withRoot:root toWriter:writer]);
         
         rawData = [[NSData alloc] initWithBytesNoCopy:[writer getXml] length:[writer getLength] freeWhenDone:FALSE];
         HVCHECK_NOTNULL(rawData);
         
-        return [rawData writeToFile:filePath 
-                options:NSDataWritingAtomic | NSDataWritingFileProtectionComplete 
-                error:nil];
+        return [rawData writeToFile:filePath
+                            options:NSDataWritingAtomic | NSDataWritingFileProtectionComplete
+                              error:nil];
     }
-    @catch (id exception) 
+    @catch (id exception)
     {
         [exception log];
     }
-    @finally 
+    @finally
     {
         [rawData release];
         [writer release];
     }
-
+    
 LError:
     return FALSE;
 }
@@ -259,11 +264,16 @@ LError:
 
 +(id)newFromSecureFilePath:(NSString *)filePath withRoot:(NSString *)root asClass:(Class)classObj
 {
+    return [NSObject newFromSecureFilePath:filePath withRoot:root asClass:classObj withConverter:nil];
+}
+
++(id)newFromSecureFilePath:(NSString *)filePath withRoot:(NSString *)root asClass:(Class)classObj withConverter:(XConverter *)converter
+{
     HVCHECK_STRING(filePath);
     
     XReader* reader = nil;
     NSData* fileData = nil;
-    @try 
+    @try
     {
         fileData = [[NSData alloc] initWithContentsOfFile:filePath];
         if (!fileData)
@@ -271,23 +281,23 @@ LError:
             return nil;
         }
         
-        reader = [[XReader alloc] initFromMemory:fileData];
+        reader = [[XReader alloc] initFromMemory:fileData withConverter:converter];
         HVCHECK_NOTNULL(reader);
         
         return [NSObject newFromReader:reader withRoot:root asClass:classObj];
     }
-    @catch (id ex) 
+    @catch (id ex)
     {
         [ex log];
     }
-    @finally 
+    @finally
     {
         [fileData release];
         [reader release];
     }
     
 LError:
-    return nil;
+    return nil;    
 }
 
 +(id) newFromFileUrl:(NSURL *)url withRoot:(NSString *)root asClass:(Class)classObj
@@ -410,7 +420,6 @@ LError:
 {
     if ([self isStartElementWithName:name])
     {
-        //return [self readStringElementRequired:name];
         return [self readNextElement];
     }
     
@@ -538,35 +547,11 @@ LError:
     return FALSE;
 }
 
--(id) readElementRequired:(NSString *)name asClass:(Class)classObj
-{
-    id obj = [[[classObj alloc] init] autorelease];
-    HVCHECK_OOM(obj);
-    
-    [self readElementRequired:name intoObject:obj];
-    return obj;
-}
-
--(id) readElement:(NSString *)name asClass:(Class)classObj
-{
-    if ([self isStartElementWithName:name])
-    {
-        return [self readElementRequired:name asClass:classObj];
-    }
-    
-    return nil;
-}
-
--(void) readElementRequired:(NSString *)name intoObject:(id<XSerializable>)content
+-(void)readElementContentIntoObject:(id<XSerializable>)content
 {
     if (content == nil)
     {
         [NSException throwInvalidArg];
-    }
-    
-    if (![self isStartElementWithName:name])
-    {
-        [XException throwException:XExceptionElementMismatch reason:name fromReader:m_reader];
     }
     //
     // Deserialize any attributes
@@ -576,7 +561,7 @@ LError:
     // Now read the element contents, if any
     //
     int currentDepth = self.depth;
-    if ([self readStartElement])  
+    if ([self readStartElement])
     {
         //
         // Has content and a distrinct end tag
@@ -591,7 +576,40 @@ LError:
         // Read last element
         //
         [self readEndElement];
+    }    
+}
+
+-(id) readElementRequired:(NSString *)name asClass:(Class)classObj
+{
+    id obj = [[[classObj alloc] init] autorelease];
+    HVCHECK_OOM(obj);
+    
+    [self readElementRequired:name intoObject:obj];
+    return obj;
+}
+
+-(void) readElementRequired:(NSString *)name intoObject:(id<XSerializable>)content
+{
+    if (![self isStartElementWithName:name])
+    {
+        [XException throwException:XExceptionElementMismatch reason:name fromReader:m_reader];
     }
+    return [self readElementContentIntoObject:content];
+}
+
+-(id) readElement:(NSString *)name asClass:(Class)classObj
+{
+    if ([self isStartElementWithName:name])
+    {
+        id obj = [[[classObj alloc] init] autorelease];
+        HVCHECK_OOM(obj);
+        
+        [self readElementContentIntoObject:obj];
+        
+        return obj;
+    }
+    
+    return nil;
 }
 
 -(NSString *)readElementRaw:(NSString *)name
@@ -615,6 +633,7 @@ LError:
 
 -(NSMutableArray *) readElementArray:(NSString *)name asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
 {
+    /*
     NSMutableArray *elements = nil;
     while ([self isStartElementWithName:name])
     {
@@ -628,6 +647,12 @@ LError:
     }
     
     return elements;
+    */
+    
+    const xmlChar* xName = [name toXmlString];
+    HVCHECK_OOM(xName);
+    
+    return [self readElementArrayWithXmlName:xName asClass:classObj andArrayClass:arrayClassObj];
 }
 
 -(NSMutableArray *) readElementArray:(NSString *)name itemName:(NSString *)itemName asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
@@ -826,6 +851,176 @@ LError:
     }
     
     return FALSE;
+}
+
+-(id)readElementRequiredWithXmlName:(const xmlChar *)xName asClass:(Class)classObj
+{
+    id obj = [[[classObj alloc] init] autorelease];
+    HVCHECK_OOM(obj);
+    
+    [self readElementRequiredWithXmlName:xName intoObject:obj];
+    return obj;
+}
+
+-(void)readElementRequiredWithXmlName:(const xmlChar *)xName intoObject:(id<XSerializable>)content
+{
+    if (![self isStartElementWithXmlName:xName])
+    {
+        [XException throwException:XExceptionElementMismatch xmlReason:xName fromReader:m_reader];
+    }
+    
+    return [self readElementContentIntoObject:content];
+    
+}
+
+-(id)readElementWithXmlName:(const xmlChar *)xmlName asClass:(Class)classObj
+{
+    if ([self isStartElementWithXmlName:xmlName])
+    {
+        id obj = [[[classObj alloc] init] autorelease];
+        HVCHECK_OOM(obj);
+        
+        [self readElementContentIntoObject:obj];
+        
+        return obj;
+    }
+    
+    return nil;
+}
+
+-(NSString *)readStringElementWithXmlName:(const xmlChar *)xmlName
+{
+    if ([self isStartElementWithXmlName:xmlName])
+    {
+        return [self readNextElement];
+    }
+    
+    return nil;    
+}
+
+-(NSDate *)readDateElementXmlName:(const xmlChar *)xmlName
+{
+    NSString* string = [self readStringElementWithXmlName:xmlName];
+    if ([NSString isNilOrEmpty:string])
+    {
+        return nil;
+    }
+    
+    return [self.converter stringToDate:string];
+}
+
+-(int) readIntElementXmlName:(const xmlChar *)xmlName
+{
+    NSString* string = [self readStringElementWithXmlName:xmlName];
+    if ([NSString isNilOrEmpty:string])
+    {
+        return 0;
+    }
+    
+    return [self.converter stringToInt:string];
+}
+
+-(BOOL) readIntElementXmlName:(const xmlChar *)xmlName into:(int *)value
+{
+    if ([self isStartElementWithXmlName:xmlName])
+    {
+        *value = [self readIntElementXmlName:xmlName];
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+-(double) readDoubleElementXmlName:(const xmlChar *)xmlName
+{
+    NSString* string = [self readStringElementWithXmlName:xmlName];
+    if ([NSString isNilOrEmpty:string])
+    {
+        return 0.0;
+    }
+    
+    return [self.converter stringToDouble:string];
+}
+
+-(BOOL)readDoubleElementXmlName:(const xmlChar *)xmlName into:(double *)value
+{
+    if ([self isStartElementWithXmlName:xmlName])
+    {
+        *value = [self readDoubleElementXmlName:xmlName];
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+-(BOOL)readBoolElementXmlName:(const xmlChar *)xmlName
+{
+    NSString* string = [self readStringElementWithXmlName:xmlName];
+    if ([NSString isNilOrEmpty:string])
+    {
+        return 0;
+    }
+    
+    return [self.converter stringToBool:string];
+}
+
+-(BOOL) readBoolElementXmlName:(const xmlChar *)xmlName into:(BOOL *)value
+{
+    if ([self isStartElementWithXmlName:xmlName])
+    {
+        *value = [self readBoolElementXmlName:xmlName];
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+-(NSString *)readAttributeWithXmlName:(const xmlChar *)xmlName
+{
+    if (![self moveToAttributeWithXmlName:xmlName])
+    {
+        return nil;
+    }
+    
+    NSString* value = self.value;
+    
+    [self moveToElement];
+    
+    return value;
+}
+
+-(NSMutableArray *)readElementArrayWithXmlName:(const xmlChar *)xName asClass:(Class)classObj
+{
+    return [self readElementArrayWithXmlName:xName asClass:classObj andArrayClass:[NSMutableArray class]];
+}
+
+-(NSMutableArray *)readElementArrayWithXmlName:(const xmlChar *)xName asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
+{
+    NSMutableArray *elements = nil;
+    while ([self isStartElementWithXmlName:xName])
+    {
+        if (elements == nil)
+        {
+            elements = [[[arrayClassObj alloc] init] autorelease];
+            HVCHECK_OOM(elements);
+        }
+        
+        [elements addObject:[self readElementRequiredWithXmlName:xName asClass:classObj]];
+    }
+    
+    return elements;
+}
+
+-(NSMutableArray *)readElementArrayWithXmlName:(const xmlChar *)xName itemName:(const xmlChar *)itemName asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
+{
+    NSMutableArray* array = nil;
+    if ([self readStartElementWithXmlName:xName])
+    {
+        array = [self readElementArrayWithXmlName:itemName asClass:classObj andArrayClass:arrayClassObj];
+        [self readEndElement];
+    }
+    return array;
+    
 }
 
 @end
@@ -1044,6 +1239,77 @@ void throwWriterError(void)
     }
     
     HVCHECK_XWRITE([self writeString:value]);
+}
+
+-(void)writeElementXmlName:(const xmlChar *)xmlName content:(id<XSerializable>)content
+{
+    if (content == nil)
+    {
+        return;
+    }
+    
+    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    {
+        [content serializeAttributes:self];
+        [content serialize:self];
+    }
+    HVCHECK_XWRITE([self writeEndElement]);
+    
+}
+
+-(void) writeElementXmlName:(const xmlChar *)xmlName value:(NSString *)value
+{
+    if (!value)
+    {
+        return;
+    }
+    
+    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    {
+        [self writeText:value];
+    }
+    HVCHECK_XWRITE([self writeEndElement]);
+}
+
+-(void)writeElementXmlName:(const xmlChar *)xmlName doubleValue:(double)value
+{
+    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    {
+        [self writeDouble:value];
+    }
+    HVCHECK_XWRITE([self writeEndElement]);    
+}
+
+-(void)writeElementXmlName:(const xmlChar *)xmlName dateValue:(NSDate *)value
+{
+    if (!value)
+    {
+        return;
+    }
+    
+    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    {
+        [self writeDate:value];
+    }
+    HVCHECK_XWRITE([self writeEndElement]);    
+}
+
+-(void)writeElementXmlName:(const xmlChar *)xmlName intValue:(int)value
+{
+    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    {
+        [self writeInt:value];
+    }
+    HVCHECK_XWRITE([self writeEndElement]);    
+}
+
+-(void)writeElementXmlName:(const xmlChar *)xmlName boolValue:(BOOL)value
+{
+    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    {
+        [self writeBool:value];
+    }
+    HVCHECK_XWRITE([self writeEndElement]);    
 }
 
 @end

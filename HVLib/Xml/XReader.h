@@ -27,7 +27,7 @@
 
 @interface XReader : NSObject
 {
-    xmlTextReader *m_reader;
+    xmlTextReader *m_reader;    // C Pointer. Weak ref
     enum XNodeType m_nodeType;
     NSString *m_localName;
     NSString *m_ns;
@@ -65,10 +65,14 @@
 @property (readonly, nonatomic) int attributeCount;
 
 // Designated
--(id) initWithReader:(xmlTextReader *) reader; 
+-(id) initWithReader:(xmlTextReader *)reader andConverter:(XConverter *) converter;
+-(id) initWithReader:(xmlTextReader *) reader;
 -(id) initFromFile:(NSString *) fileName;
+-(id) initFromFile:(NSString *) fileName withConverter:(XConverter *) converter;
 -(id) initFromMemory:(NSData*) buffer;
+-(id) initFromMemory:(NSData*) buffer withConverter:(XConverter *) converter;
 -(id) initFromString:(NSString *) string;
+-(id) initFromString:(NSString *) string withConverter:(XConverter *) converter;
 
 -(void) clear;
 
@@ -81,9 +85,13 @@
 -(BOOL) moveToFirstAttribute;
 -(BOOL) moveToNextAttribute;
 
+-(BOOL) moveToAttributeWithXmlName:(const xmlChar *) xmlName;
+-(BOOL) moveToAttributeWithXmlName:(const xmlChar *)xmlName andXmlNs:(const xmlChar *) xmlNs;
+
 -(BOOL) isStartElement;
 -(BOOL) isStartElementWithName:(NSString *) name;
 -(BOOL) isStartElementWithName:(NSString *) name NS: (NSString *) ns;
+-(BOOL) isStartElementWithXmlName:(const xmlChar *) name;
 
 -(enum XNodeType) moveToContent;
 -(BOOL) moveToElement;
@@ -93,6 +101,7 @@
 -(BOOL) readStartElement;
 -(BOOL) readStartElementWithName:(NSString *) name;
 -(BOOL) readStartElementWithName:(NSString *) name NS: (NSString *) ns;
+-(BOOL) readStartElementWithXmlName:(const xmlChar *) xName;
 
 
 -(void) readEndElement;

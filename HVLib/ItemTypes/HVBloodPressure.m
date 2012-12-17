@@ -22,11 +22,11 @@
 static NSString* const c_typeID = @"ca3c57f4-f4c1-4e15-be67-0a3caf5414ed";
 static NSString* const c_typeName = @"blood-pressure";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_systolic = @"systolic";
-static NSString* const c_element_diastolic = @"diastolic";
-static NSString* const c_element_pulse = @"pulse";
-static NSString* const c_element_heartbeat = @"irregular-heartbeat";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_systolic = XMLSTRINGCONST("systolic");
+static const xmlChar* x_element_diastolic = XMLSTRINGCONST("diastolic");
+static const xmlChar* x_element_pulse = XMLSTRINGCONST("pulse");
+static const xmlChar* x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat");
 
 
 @implementation HVBloodPressure
@@ -119,6 +119,11 @@ LError:
     return [m_when toDate];
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
+}
+
 -(void) dealloc
 {
     [m_when release];
@@ -159,24 +164,23 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_systolic, x_element_systolic);
+    HVSERIALIZE_X(m_diastolic, x_element_diastolic);
     
-    HVSERIALIZE(m_systolic, c_element_systolic);
-    HVSERIALIZE(m_diastolic, c_element_diastolic);
-    
-    HVSERIALIZE(m_pulse, c_element_pulse);
-    HVSERIALIZE(m_heartbeat, c_element_heartbeat);
+    HVSERIALIZE_X(m_pulse, x_element_pulse);
+    HVSERIALIZE_X(m_heartbeat, x_element_heartbeat);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
+    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
     
-    HVDESERIALIZE(m_systolic, c_element_systolic, HVNonNegativeInt);
-    HVDESERIALIZE(m_diastolic, c_element_diastolic, HVNonNegativeInt);
+    HVDESERIALIZE_X(m_systolic, x_element_systolic, HVNonNegativeInt);
+    HVDESERIALIZE_X(m_diastolic, x_element_diastolic, HVNonNegativeInt);
     
-    HVDESERIALIZE(m_pulse, c_element_pulse, HVNonNegativeInt);
-    HVDESERIALIZE(m_heartbeat, c_element_heartbeat, HVBool);
+    HVDESERIALIZE_X(m_pulse, x_element_pulse, HVNonNegativeInt);
+    HVDESERIALIZE_X(m_heartbeat, x_element_heartbeat, HVBool);
 }
 
 +(NSString *) typeID

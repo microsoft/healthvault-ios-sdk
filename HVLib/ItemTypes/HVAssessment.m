@@ -59,6 +59,11 @@ static NSString* const c_element_result = @"result";
     return [m_when toDate];
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
+}
+
 -(NSString *)description
 {
     return [self toString];

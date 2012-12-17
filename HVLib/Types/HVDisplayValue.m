@@ -17,11 +17,12 @@
 // limitations under the License.
 
 #import "HVCommon.h"
+#import "XLib.h"
 #import "HVDisplayValue.h"
 
-static NSString* const c_attribute_units = @"units";
-static NSString* const c_attribute_code = @"units-code";
-static NSString* const c_attribute_text = @"text";
+static const xmlChar* x_attribute_units = XMLSTRINGCONST("units");
+static const xmlChar* x_attribute_code = XMLSTRINGCONST("units-code");
+static const xmlChar* x_attribute_text = XMLSTRINGCONST("text");
 
 @implementation HVDisplayValue
 
@@ -72,9 +73,9 @@ LError:
 
 -(void)serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE(m_text, c_attribute_text);
-    HVSERIALIZE_ATTRIBUTE(m_units, c_attribute_units);
-    HVSERIALIZE_ATTRIBUTE(m_unitsCode, c_attribute_code);
+    HVSERIALIZE_ATTRIBUTE_X(m_text, x_attribute_text);
+    HVSERIALIZE_ATTRIBUTE_X(m_units, x_attribute_units);
+    HVSERIALIZE_ATTRIBUTE_X(m_unitsCode, x_attribute_code);
 }
 
 -(void) serialize:(XWriter *)writer
@@ -84,9 +85,9 @@ LError:
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE(m_text, c_attribute_text);
-    HVDESERIALIZE_ATTRIBUTE(m_units, c_attribute_units);
-    HVDESERIALIZE_ATTRIBUTE(m_unitsCode, c_attribute_code);
+    HVDESERIALIZE_ATTRIBUTE_X(m_text, x_attribute_text);
+    HVDESERIALIZE_ATTRIBUTE_X(m_units, x_attribute_units);
+    HVDESERIALIZE_ATTRIBUTE_X(m_unitsCode, x_attribute_code);
 }
 
 -(void) deserialize:(XReader *)reader

@@ -19,10 +19,10 @@
 #import "HVCommon.h"
 #import "HVTime.h"
 
-static NSString* const c_element_hour = @"h";
-static NSString* const c_element_minute = @"m";
-static NSString* const c_element_second = @"s";
-static NSString* const c_element_millis = @"f";
+static const xmlChar* x_element_hour = XMLSTRINGCONST("h");
+static const xmlChar* x_element_minute = XMLSTRINGCONST("m");
+static const xmlChar* x_element_second = XMLSTRINGCONST("s");
+static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
 
 @implementation HVTime
 
@@ -107,6 +107,10 @@ static NSString* const c_element_millis = @"f";
     {
         HVCLEAR(m_milliseconds);
     }
+}
+
++(void)initialize
+{
 }
 
 -(id)initWithHour:(int)hour minute:(int)minute
@@ -287,18 +291,18 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_hours, c_element_hour);
-    HVSERIALIZE(m_minutes, c_element_minute);
-    HVSERIALIZE(m_seconds, c_element_second);
-    HVSERIALIZE(m_milliseconds, c_element_millis);
+    HVSERIALIZE_X(m_hours, x_element_hour);
+    HVSERIALIZE_X(m_minutes, x_element_minute);
+    HVSERIALIZE_X(m_seconds, x_element_second);
+    HVSERIALIZE_X(m_milliseconds, x_element_millis);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_hours, c_element_hour, HVHour);
-    HVDESERIALIZE(m_minutes, c_element_minute, HVMinute);
-    HVDESERIALIZE(m_seconds, c_element_second, HVSecond);
-    HVDESERIALIZE(m_milliseconds, c_element_millis, HVMillisecond);
+    HVDESERIALIZE_X(m_hours, x_element_hour, HVHour);
+    HVDESERIALIZE_X(m_minutes, x_element_minute, HVMinute);
+    HVDESERIALIZE_X(m_seconds, x_element_second, HVSecond);
+    HVDESERIALIZE_X(m_milliseconds, x_element_millis, HVMillisecond);
 }
 
 @end

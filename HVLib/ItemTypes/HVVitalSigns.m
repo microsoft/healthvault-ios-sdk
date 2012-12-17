@@ -60,6 +60,11 @@ static NSString* const c_element_position = @"position";
     return [m_when toDate];
 }
 
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
+}
+
 -(id)initWithDate:(NSDate *)date
 {
     return [self initWithResult:nil onDate:date];

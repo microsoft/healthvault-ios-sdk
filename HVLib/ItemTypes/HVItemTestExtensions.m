@@ -164,10 +164,17 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
+    return [HVWeight createRandomForDate:createRandomHVDateTime()];
+}
+
++(HVItem *)createRandomForDate:(HVDateTime *)dateTime
+{
     HVItem *item = [[HVWeight newItem] autorelease];
+    item.weight.when = dateTime;
     
-    item.weight.inPounds = [HVRandom randomDoubleInRangeMin:120 max:145];
-    item.weight.when = createRandomHVDateTime();
+    double pounds = [HVRandom randomDoubleInRangeMin:120 max:145];
+    pounds = roundToPrecision(pounds, 1);
+    item.weight.inPounds = pounds;
     
     return item;    
 }
@@ -178,17 +185,27 @@ NSString* pickRandomDrug(void)
     
 +(HVItem *)createRandom
 {
+    return [HVBloodPressure createRandomForDate:createRandomHVDateTime() withPulse:FALSE];
+}
+
++(HVItem *)createRandomForDate:(HVDateTime *)dateTime withPulse:(BOOL)pulse
+{
     HVItem *item = [[HVBloodPressure newItem] autorelease];
     HVBloodPressure *bp = item.bloodPressure;
-
-    bp.when = createRandomHVDateTime();
-
+    
+    bp.when = dateTime;
+    
     int s = [HVRandom randomIntInRangeMin:120 max:150];
     int d = s - [HVRandom randomIntInRangeMin:25 max:40];
     
     bp.systolicValue = s;
     bp.diastolicValue = d;
-        
+    
+    if (pulse)
+    {
+        bp.pulseValue = [HVRandom randomIntInRangeMin:60 max:100];
+    }
+    
     return item;
 }
 
@@ -198,17 +215,21 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
+    return [HVBloodGlucose createRandomForDate:createRandomHVDateTime()];
+}
+
++(HVItem *)createRandomForDate:(HVDateTime *)dateTime
+{
     HVItem* item = [[HVBloodGlucose newItem] autorelease];
-    
     HVBloodGlucose* glucose = item.bloodGlucose;
-    glucose.when = createRandomHVDateTime();
+    glucose.when = dateTime;
     
-    glucose.inMgPerDL = [HVRandom randomDoubleInRangeMin:70 max:120];
+    glucose.inMgPerDL = [HVRandom randomIntInRangeMin:75 max:110];
     glucose.measurementType = [HVBloodGlucose createWholeBloodMeasurementType];
     
     glucose.isOutsideOperatingTemp = FALSE;
     
-    return item;
+    return item;    
 }
 
 @end
@@ -223,10 +244,33 @@ NSString* pickRandomDrug(void)
     cholesterol.when = createRandomHVDate();
     cholesterol.ldlValue = [HVRandom randomIntInRangeMin:80 max:130];
     cholesterol.hdlValue = [HVRandom randomIntInRangeMin:30 max:60];
-    cholesterol.totalValue = cholesterol.ldlValue + cholesterol.hdlValue + [HVRandom randomIntInRangeMin:20 max:50];
     cholesterol.triglyceridesValue = [HVRandom randomIntInRangeMin:150 max:250];
+    cholesterol.totalValue = cholesterol.ldlValue + cholesterol.hdlValue + (cholesterol.triglyceridesValue / 5);
     
     return item;
+}
+
+@end
+
+@implementation HVCholesterolV2 (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    return [HVCholesterolV2 createRandomForDate:createRandomHVDateTime()];
+}
+
++(HVItem *)createRandomForDate:(HVDateTime *)dateTime
+{
+    HVItem* item = [[HVCholesterolV2 newItem] autorelease];
+    HVCholesterolV2* cholesterol = item.cholesterolV2;
+    
+    cholesterol.when = dateTime;
+    cholesterol.ldlValueMgDL = [HVRandom randomIntInRangeMin:80 max:130];
+    cholesterol.hdlValueMgDL = [HVRandom randomIntInRangeMin:30 max:60];
+    cholesterol.triglyceridesValueMgDl = [HVRandom randomIntInRangeMin:150 max:250];
+    cholesterol.totalValueMgDL = cholesterol.ldlValueMgDL + cholesterol.hdlValueMgDL + (int)(cholesterol.triglyceridesValueMgDl / 5);
+    
+    return item;    
 }
 
 @end
@@ -272,31 +316,86 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
+    return [HVExercise createRandomForDate:createRandomApproxHVDate()];
+}
+
++(HVItem *)createRandomForDate:(HVApproxDateTime *) date
+{
     HVItem* item = [[HVExercise newItem] autorelease];
     HVExercise* exercise = item.exercise;
     
-    exercise.when = createRandomApproxHVDate();
+    exercise.when = date;
     
     NSString* activity = pickRandomString(3, @"Aerobics", @"Walking", @"Running");
     [exercise setStandardActivity:activity];
     
-    exercise.durationMinutesValue = [HVRandom randomDoubleInRangeMin:15 max:45];
+    exercise.durationMinutesValue = [HVRandom randomIntInRangeMin:15 max:45];
     
-    NSString* detailCode;
-    HVMeasurement* measurement;
+    double distance = 0;
+    double stepCount = 0;
+    double caloriesBurned = 0;
     if (activity == @"Walking") 
     {
-        detailCode = @"Steps_count"; // see exercise-detail-names vocabulary
-        measurement = [HVMeasurement fromValue:exercise.durationMinutesValue * 100 andUnitsString:@"steps"];
+        stepCount = exercise.durationMinutesValue * 100;  // 100 steps per minute
+        caloriesBurned = exercise.durationMinutesValue * 5; // 5 calories per minute
+        distance = exercise.durationMinutesValue / 15; // 15 minute miles
     }
-    else 
+    else if (activity == @"Running")
     {
-        detailCode = @"CaloriesBurned_calories";
-        measurement = [HVMeasurement fromValue:exercise.durationMinutesValue * 5 andUnitsString:@"calories"];
+        stepCount = exercise.durationMinutesValue * 200;  // 300 steps per minute
+        caloriesBurned = exercise.durationMinutesValue * 10; // 10 calories per minute
+        distance = exercise.durationMinutesValue / 7.5; // 7.5 minute miles
     }
-    
-    [exercise addOrUpdateDetailWithNameCode:detailCode andValue:measurement];
-    [exercise addOrUpdateDetailWithNameCode:detailCode andValue:measurement];  
+    else
+    {
+        stepCount = exercise.durationMinutesValue * 50;  // 50 steps per minute
+        caloriesBurned = exercise.durationMinutesValue * 10; // 10 calories per minute
+    }
+
+    HVCodedValue* detailCode;
+    HVMeasurement* measurement;
+    if (distance > 0)
+    {
+        distance = roundToPrecision(distance, 1);
+        exercise.distance = [HVLengthMeasurement fromMiles:distance]; 
+    }
+    if (stepCount > 0)
+    {
+        measurement = [HVExercise measurementForCount:stepCount]; 
+        //
+        // Simulate Fitbit bug occasionally
+        //
+        if ([HVRandom randomDouble] <= 0.2)
+        {
+            detailCode = [HVExercise detailNameWithCode:@"Number of steps"];
+        }
+        else
+        {
+            detailCode = [HVExercise detailNameForSteps];
+        }
+
+        HVNameValue* details = [HVNameValue fromName:detailCode andValue:measurement];
+        [exercise.details addOrUpdate:details];
+    }
+
+    if (caloriesBurned > 0)
+    {
+         measurement = [HVExercise measurementForCalories:caloriesBurned];
+        //
+        // Simulate Fitbit bug occasionally
+        //
+        if ([HVRandom randomDouble] <= 0.2)
+        {
+            detailCode = [HVExercise detailNameWithCode:@"Calories burned"];
+        }
+        else
+        {
+            detailCode = [HVExercise detailNameForCaloriesBurned];
+        }
+
+        HVNameValue* details = [HVNameValue fromName:detailCode andValue:measurement];
+        [exercise.details addOrUpdate:details];
+    }
     
     return item;
 }
@@ -569,31 +668,39 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *) createRandom
 {
+    return [HVSleepJournalAM createRandomForDate:createRandomHVDateTime() withAwakenings:TRUE];
+}
+
++(HVItem *)createRandomForDate:(HVDateTime *)date withAwakenings:(BOOL)doAwakenings
+{
     HVItem* item = [[HVSleepJournalAM newItem] autorelease];
     HVSleepJournalAM* journal = item.sleepJournalAM;
     
-    journal.when = createRandomHVDateTime();
+    date.time = nil; // Don't bother noting down the time. Date is enough 
+    journal.when = date;
     
-    HVTime* bedtime = [HVTime fromHour:[HVRandom randomIntInRangeMin:11 max:12] andMinute:[HVRandom randomIntInRangeMin:1 max:59]];
+    HVTime* bedtime = [HVTime fromHour:[HVRandom randomIntInRangeMin:22 max:23] andMinute:[HVRandom randomIntInRangeMin:1 max:59]];
     
     journal.bedTime = bedtime;
     journal.settlingMinutesValue = [HVRandom randomIntInRangeMin:5 max:30];
     journal.sleepMinutesValue = [HVRandom randomIntInRangeMin:180 max:360];
     
     int awakeMinutes =  [HVRandom randomIntInRangeMin:0 max:55];
-    if (awakeMinutes > 0)
+    if (awakeMinutes > 0 && doAwakenings)
     {
-        HVOccurence* awakening = [HVOccurence forDuration:awakeMinutes atHour:(bedtime.hour) + 2 andMinute:bedtime.minute];
+        HVOccurence* awakening = [HVOccurence forDuration:awakeMinutes atHour:((bedtime.hour) + 2) % 24 andMinute:bedtime.minute];
         [journal.awakenings addObject:awakening];
     }
     int bedMinutes = journal.settlingMinutesValue + journal.sleepMinutesValue + [HVRandom randomIntInRangeMin:5 max:55];
-    HVTime* wakeTime = [HVTime fromHour:journal.bedTime.hour + (bedMinutes / 60) andMinute:bedMinutes % 60];
+    
+    int wakeupHour = (journal.bedTime.hour + (bedMinutes / 60)) % 24;
+    HVTime* wakeTime = [HVTime fromHour:wakeupHour andMinute:bedMinutes % 60];
     
     journal.wakeTime = wakeTime;
     
     journal.wakeState = (enum HVWakeState) [HVRandom randomIntInRangeMin:1 max:3];
     
-    return item;
+    return item;    
 }
 
 @end
@@ -623,14 +730,33 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
+    return [HVEmotionalState createRandomForDate:createRandomHVDateTime()];
+}
+
++(HVItem *)createRandomForDate:(HVDateTime *)date
+{
     HVItem* item = [[HVEmotionalState newItem] autorelease];
     HVEmotionalState* es = item.emotionalState;
     
-    es.when = createRandomHVDateTime();
-    es.stress = (enum HVRelativeRating) [HVRandom randomIntInRangeMin:1 max:5];
-    es.mood = (enum HVMood) [HVRandom randomIntInRangeMin:1 max:5];
-    es.wellbeing = (enum HVWellBeing) [HVRandom randomIntInRangeMin:1 max:5];
-
+    es.when = date;
+    
+    int randInt;
+    randInt = [HVRandom randomIntInRangeMin:0 max:5];
+    if (randInt > 0)
+    {
+        es.stress = (enum HVRelativeRating) randInt;
+    }
+    randInt = [HVRandom randomIntInRangeMin:0 max:5];
+    if (randInt > 0)
+    {
+        es.mood = (enum HVMood) randInt;
+    }
+    randInt = [HVRandom randomIntInRangeMin:0 max:5];
+    if (randInt > 0)
+    {
+        es.wellbeing = (enum HVWellBeing) randInt;
+    }
+    
     return item;
 }
 
@@ -640,11 +766,24 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVDailyMedicationUsage* usage = [[HVDailyMedicationUsage alloc] 
-                                    initWithDoses:[HVRandom randomDoubleInRangeMin:0 max:5]
-                                     forDrug:[HVCodableValue fromText:pickRandomDrug()] 
-                                     onDay:createRandomDate()];    
-    return [[[HVItem alloc] initWithTypedData:[usage autorelease]] autorelease];
+    NSDate* date = createRandomDate();
+    return [HVDailyMedicationUsage createRandomForDate:[HVDate fromDate:date]];
+}
+
++(HVItem *)createRandomForDate:(HVDate *)date
+{
+    NSString* drugName = pickRandomDrug();
+    return [HVDailyMedicationUsage createRandomForDate:date forDrug:drugName];
+}
+
++(HVItem *)createRandomForDate:(HVDate *)date forDrug:(NSString *)drug
+{
+    HVDailyMedicationUsage* usage = [[HVDailyMedicationUsage alloc]
+                                     initWithDoses:[HVRandom randomDoubleInRangeMin:0 max:5]
+                                     forDrug:[HVCodableValue fromText:drug]
+                                     onDate:date];
+    
+    return [[[HVItem alloc] initWithTypedData:[usage autorelease]] autorelease];    
 }
 
 @end
