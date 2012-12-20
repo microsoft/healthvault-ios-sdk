@@ -111,6 +111,28 @@ LError:
     }
 }
 
+-(void)deleteKeyFromCache:(NSString *)itemID
+{
+    @synchronized(m_objectStore)
+    {
+        if ([m_objectStore respondsToSelector:@selector(deleteKeyFromCache:)])
+        {
+            [m_objectStore performSelector:@selector(deleteKeyFromCache:) withObject:itemID];
+        }
+    }    
+}
+
+-(void)setCacheLimitCount:(NSInteger)cacheSize
+{
+    @synchronized(m_objectStore)
+    {
+        if ([m_objectStore respondsToSelector:@selector(setCacheLimitCount:)])
+        {
+            [m_objectStore performSelector:@selector(setCacheLimitCount:) withObject:[NSNumber numberWithInt:cacheSize]];
+        }
+    }    
+}
+
 @end
 
 @implementation HVLocalItemStore (HVPrivate)

@@ -27,7 +27,7 @@
 -(BOOL) keyExists:(NSString *) key;
 -(BOOL) deleteKey:(NSString *) key;
 
--(id) getObjectWithKey:(NSString *) key name:(NSString *) name andClass:(Class) cls; 
+-(id) getObjectWithKey:(NSString *) key name:(NSString *) name andClass:(Class) cls;
 -(BOOL) putObject:(id) obj withKey:(NSString *) key andName:(NSString *) name;
 
 -(NSData *) getBlob:(NSString *) key;

@@ -187,6 +187,19 @@ LError:
     }
 }
 
+-(void)setCacheLimitCount:(NSNumber *)count
+{
+    if (!count)
+    {
+        return;
+    }
+    
+    @synchronized(self)
+    {
+        [m_cache setCountLimit:count.integerValue];
+    }    
+}
+
 -(void)cache:(NSCache *)cache willEvictObject:(id)obj
 {
     NSLog(@"Evicting %@", obj);

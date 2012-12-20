@@ -179,6 +179,18 @@ NSString* pickRandomDrug(void)
     return item;    
 }
 
++(HVItem *)createRandomMetricForDate:(HVDateTime *)dateTime
+{
+    HVItem *item = [[HVWeight newItem] autorelease];
+    item.weight.when = dateTime;
+    
+    double kg = [HVRandom randomDoubleInRangeMin:50 max:75];
+    kg = roundToPrecision(kg, 1);
+    item.weight.inKg = kg;
+    
+    return item;
+}
+
 @end
 
 @implementation HVBloodPressure (HVTestExtensions)
@@ -220,16 +232,37 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVDateTime *)dateTime
 {
+    return [HVBloodGlucose createRandomForDate:dateTime metric:FALSE];
+}
+
++(HVItem *)createRandomMetricForDate:(HVDateTime *)dateTime
+{
+    return [HVBloodGlucose createRandomForDate:dateTime metric:TRUE];
+}
+
++(HVItem *)createRandomForDate:(HVDateTime *)dateTime metric:(BOOL)metric
+{
     HVItem* item = [[HVBloodGlucose newItem] autorelease];
     HVBloodGlucose* glucose = item.bloodGlucose;
     glucose.when = dateTime;
     
-    glucose.inMgPerDL = [HVRandom randomIntInRangeMin:75 max:110];
+    if (metric)
+    {
+        double mmol = [HVRandom randomDoubleInRangeMin:3 max:6];
+        mmol = roundToPrecision(mmol, 1);
+        glucose.inMmolPerLiter = mmol;
+    }
+    else
+    {
+        glucose.inMgPerDL = [HVRandom randomIntInRangeMin:75 max:110];        
+    }
+    
     glucose.measurementType = [HVBloodGlucose createWholeBloodMeasurementType];
     
     glucose.isOutsideOperatingTemp = FALSE;
     
-    return item;    
+    return item;
+    
 }
 
 @end
@@ -261,14 +294,36 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVDateTime *)dateTime
 {
+    return [HVCholesterolV2 createRandomForDate:dateTime metric:FALSE];
+}
+
++(HVItem *)createRandomMetricForDate:(HVDateTime *)dateTime
+{
+    return [HVCholesterolV2 createRandomForDate:dateTime metric:TRUE];
+}
+
++(HVItem *)createRandomForDate:(HVDateTime *)dateTime metric:(BOOL)metric
+{
     HVItem* item = [[HVCholesterolV2 newItem] autorelease];
     HVCholesterolV2* cholesterol = item.cholesterolV2;
     
     cholesterol.when = dateTime;
-    cholesterol.ldlValueMgDL = [HVRandom randomIntInRangeMin:80 max:130];
-    cholesterol.hdlValueMgDL = [HVRandom randomIntInRangeMin:30 max:60];
-    cholesterol.triglyceridesValueMgDl = [HVRandom randomIntInRangeMin:150 max:250];
-    cholesterol.totalValueMgDL = cholesterol.ldlValueMgDL + cholesterol.hdlValueMgDL + (int)(cholesterol.triglyceridesValueMgDl / 5);
+    if (metric)
+    {
+        cholesterol.ldlValue = roundToPrecision([HVRandom randomDoubleInRangeMin:3 max:5], 2);
+        cholesterol.hdlValue = roundToPrecision([HVRandom randomDoubleInRangeMin:1 max:2.5], 2);
+        cholesterol.triglyceridesValue = roundToPrecision([HVRandom randomDoubleInRangeMin:2 max:3], 2);
+        cholesterol.totalValue = roundToPrecision(cholesterol.ldlValue + cholesterol.hdlValue + cholesterol.triglyceridesValue / 5, 2);
+    }
+    else
+    {
+        cholesterol.ldlValueMgDL = [HVRandom randomIntInRangeMin:80 max:130];
+        cholesterol.hdlValueMgDL = [HVRandom randomIntInRangeMin:30 max:60];
+        cholesterol.triglyceridesValueMgDl = [HVRandom randomIntInRangeMin:150 max:250];
+        cholesterol.totalValueMgDL = cholesterol.ldlValueMgDL +
+                                    cholesterol.hdlValueMgDL +
+                                    (int)(cholesterol.triglyceridesValueMgDl / 5);
+    }
     
     return item;    
 }

@@ -32,8 +32,12 @@
 
 -(id)initWithObjectStore:(id<HVObjectStore>) store;
 
+//
+// Cache specific methods
+//
 -(void) deleteKeyFromCache:(NSString *) key;
 -(void) clear;  // OBSOLETE. Use clearCache instead
 -(void) clearCache;
+-(void) setCacheLimitCount:(NSNumber *) count;
 
 @end

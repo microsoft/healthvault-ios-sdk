@@ -62,6 +62,7 @@ NSString* pickRandomDrug(void);
 
 +(HVItem *) createRandom;
 +(HVItem *) createRandomForDate:(HVDateTime *) dateTime;
++(HVItem *) createRandomMetricForDate:(HVDateTime *) dateTime;
 
 @end
 
@@ -76,6 +77,8 @@ NSString* pickRandomDrug(void);
 
 +(HVItem *) createRandom;
 +(HVItem*) createRandomForDate:(HVDateTime *) dateTime;
++(HVItem *) createRandomMetricForDate:(HVDateTime *) dateTime;
++(HVItem*) createRandomForDate:(HVDateTime *) dateTime metric:(BOOL) metric;
 
 @end
 
@@ -89,6 +92,8 @@ NSString* pickRandomDrug(void);
 
 +(HVItem *) createRandom;
 +(HVItem *) createRandomForDate:(HVDateTime *) dateTime;
++(HVItem *) createRandomMetricForDate:(HVDateTime *) dateTime;
++(HVItem *) createRandomForDate:(HVDateTime *) dateTime metric:(BOOL)metric;
 
 @end
 
