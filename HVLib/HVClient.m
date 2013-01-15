@@ -33,7 +33,7 @@ static HVClient* s_app;
 -(void) setUser:(HVUser *) user;
 -(BOOL) saveUser;
 -(void) deleteUser;
--(void) applyUserEnvironment;
+-(BOOL) applyUserEnvironment;
 
 //
 // Callbacks from HealthVaultService
@@ -211,7 +211,10 @@ LError:
         HVCLEAR(m_user);
         self.user = [self loadUser]; // ok if this is null
         
-        [self applyUserEnvironment];
+        if (![self applyUserEnvironment])
+        {
+            self.user = nil; // Can no longer guarantee this user's settings
+        }
         
         return TRUE;
         
@@ -234,6 +237,11 @@ LError:
     @synchronized(self)
     {
         [self deleteUser];
+        if (m_service)
+        {
+            [m_service reset];
+            [m_service saveSettings];
+        }
         return TRUE;
     }
 }
@@ -398,24 +406,28 @@ LError:
     }
 }
 
--(void)applyUserEnvironment
+-(BOOL)applyUserEnvironment
 {
     if (!self.hasUser)
     {
-        return;
+        return TRUE;
     }
     
     NSString* userEnvironment = self.user.environment;
     if ([NSString isNilOrEmpty:userEnvironment])
     {
-        return;
+        return TRUE;
     }
     
     HVEnvironmentSettings* environment = [m_settings environmentWithName:userEnvironment];
     if (environment)
     {
         [m_service applyEnvironmentSettings:environment];
-    }    
+        return TRUE;
+    }
+    
+    // User's current environment not found
+    return FALSE;
 }
 
 -(HealthVaultService *)newService

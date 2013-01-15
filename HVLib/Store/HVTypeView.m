@@ -156,6 +156,10 @@ const int c_defaultReadAheadChunkSize = 25;
     {
         HVRETAIN(m_items, items);
     }
+    else
+    {
+        m_items = [[HVTypeViewItems alloc] init];
+    }
     
     return self;
     

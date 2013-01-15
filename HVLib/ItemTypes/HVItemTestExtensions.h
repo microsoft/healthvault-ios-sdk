@@ -120,6 +120,7 @@ NSString* pickRandomDrug(void);
 
 +(HVItem *) createRandom;
 +(HVItem *) createRandomForDate:(HVApproxDateTime *) date;
++(HVItem *) createRandomForDate:(HVApproxDateTime *) date metric:(BOOL)metric;
 
 @end
 

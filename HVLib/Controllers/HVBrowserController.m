@@ -28,6 +28,7 @@
 @interface HVBrowserController (HVPrivate)
 
 -(BOOL) createBrowser;
+-(void) releaseBrowser;
 -(BOOL) addBackButton;
 -(void) backButtonClicked:(id) sender;
 -(void) showActivitySpinner;
@@ -43,7 +44,7 @@
 -(void)dealloc
 {
     [m_target release];
-    [m_webView release];
+    [self releaseBrowser];
     [m_activityView release];
     
     [super dealloc];
@@ -63,7 +64,10 @@
 
 -(BOOL)stop
 {
-    [m_webView stopLoading];
+    if (m_webView)
+    {
+        [m_webView stopLoading];
+    }
     return TRUE;
 }
 
@@ -146,7 +150,13 @@ LError:
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    self.webView = nil;
+    [self releaseBrowser];
+}
+
+-(void)didReceiveMemoryWarning
+{
+    [self releaseBrowser];
+    [super didReceiveMemoryWarning];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -170,6 +180,8 @@ LError:
 
 -(BOOL)createBrowser
 {
+    [self releaseBrowser];
+    
     UIView* superView = super.view;
     CGRect frame = superView.frame;
     frame.origin.x = 0;
@@ -187,6 +199,23 @@ LError:
     
 LError:
     return FALSE;
+}
+
+-(void)releaseBrowser
+{
+    if (m_webView)
+    {
+        [self stop];
+        if (m_activityView)
+        {
+            [m_activityView removeFromSuperview];
+        }
+        m_webView.delegate = nil;
+        [m_webView removeFromSuperview];
+    }
+    HVCLEAR(m_webView);
+
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
 -(BOOL)addBackButton

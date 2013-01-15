@@ -286,7 +286,7 @@ LError:
 
 - (BOOL)getIsApplicationCreated {
 	
-	return self.authorizationSessionToken != nil;
+	return (![NSString isNilOrEmpty:self.authorizationSessionToken] && ![NSString isNilOrEmpty:self.sharedSecret]);
 }
 
 
@@ -404,7 +404,7 @@ LError:
 
 	NSData *keyData = [Base64 decodeBase64WithString: self.sharedSecret];
 	NSString *keyString = [[NSString alloc] initWithData: keyData
-												encoding: NSUTF8StringEncoding];
+												encoding: NSASCIIStringEncoding];
 	NSString *hmac = [MobilePlatform computeSha256Hmac: keyData
 													  : stringToSign];
 	[keyString release];
@@ -492,6 +492,8 @@ LError:
     self.applicationCreationToken = nil;
     self.records = nil;
     self.currentRecord = nil;
+
+    _records = [NSMutableArray new];
 }
 
 -(void)applyEnvironmentSettings:(HVEnvironmentSettings *)settings

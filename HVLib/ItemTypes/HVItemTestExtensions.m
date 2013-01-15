@@ -374,7 +374,12 @@ NSString* pickRandomDrug(void)
     return [HVExercise createRandomForDate:createRandomApproxHVDate()];
 }
 
-+(HVItem *)createRandomForDate:(HVApproxDateTime *) date
++(HVItem *)createRandomForDate:(HVApproxDateTime *)date
+{
+    return [HVExercise createRandomForDate:date metric:FALSE];
+}
+
++(HVItem *)createRandomForDate:(HVApproxDateTime *) date metric:(BOOL)metric
 {
     HVItem* item = [[HVExercise newItem] autorelease];
     HVExercise* exercise = item.exercise;
@@ -393,13 +398,27 @@ NSString* pickRandomDrug(void)
     {
         stepCount = exercise.durationMinutesValue * 100;  // 100 steps per minute
         caloriesBurned = exercise.durationMinutesValue * 5; // 5 calories per minute
-        distance = exercise.durationMinutesValue / 15; // 15 minute miles
+        if (metric)
+        {
+            distance = exercise.durationMinutesValue / 10; // 10 minutes per KM
+        }
+        else
+        {
+            distance = exercise.durationMinutesValue / 15; // 15 minute miles
+        }
     }
     else if (activity == @"Running")
     {
         stepCount = exercise.durationMinutesValue * 200;  // 300 steps per minute
         caloriesBurned = exercise.durationMinutesValue * 10; // 10 calories per minute
-        distance = exercise.durationMinutesValue / 7.5; // 7.5 minute miles
+        if (metric)
+        {
+            distance = exercise.durationMinutesValue / 5; // 5 min KMs
+        }
+        else
+        {
+            distance = exercise.durationMinutesValue / 7.5; // 7.5 minute miles
+        }
     }
     else
     {
@@ -412,7 +431,14 @@ NSString* pickRandomDrug(void)
     if (distance > 0)
     {
         distance = roundToPrecision(distance, 1);
-        exercise.distance = [HVLengthMeasurement fromMiles:distance]; 
+        if (metric)
+        {
+            exercise.distance = [HVLengthMeasurement fromKilometers:distance];
+        }
+        else
+        {
+            exercise.distance = [HVLengthMeasurement fromMiles:distance];
+        }
     }
     if (stepCount > 0)
     {

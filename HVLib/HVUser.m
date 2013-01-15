@@ -194,15 +194,21 @@ LError:
 {
     HVCHECK_NOTNULL(record);
     
-    HVRemoveRecordAuthTask* removeAuthTask = [[[HVRemoveRecordAuthTask alloc] initWithRecord:record andCallback:^(HVTask *task) {
+    HVTask* removeAuthTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVCHECK_NOTNULL(removeAuthTask);
+    
+    HVRemoveRecordAuthTask* removeRecordAuthTask = [[HVRemoveRecordAuthTask alloc] initWithRecord:record andCallback:^(HVTask *task) {
+        
         [task checkSuccess];
         
         HVGetAuthorizedPeopleTask* refreshTask = [self createGetPeopleTask];
-        [task setNextTask:refreshTask];
+        [task.parent setNextTask:refreshTask];
+        [refreshTask release];
         
-    }]autorelease];
-    HVCHECK_NOTNULL(removeAuthTask);
+    }];
+    HVCHECK_NOTNULL(removeRecordAuthTask);
     
+    [removeAuthTask setNextTask:removeRecordAuthTask];
     [removeAuthTask start];
     
     return removeAuthTask;
