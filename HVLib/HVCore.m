@@ -31,7 +31,26 @@ NSRange HVEmptyRange(void)
 
 double roundToPrecision(double value, NSInteger precision)
 {
-    double places = pow(10, precision);
+    double places;
+    
+    // Optimize the common case
+    switch (precision) {
+        case 0:
+            places = 1;
+            break;
+        case 1:
+            places = 10;
+            break;
+        case 2:
+            places = 100;
+            break;
+        case 3:
+            places = 1000;
+            break;
+        default:
+            places = pow(10, precision);
+            break;
+    }
     return round(value * places) / places;
 }
 
