@@ -69,6 +69,8 @@ const NSUInteger NSAllCalendarUnits;
 -(NSString *) dateTimeToString:(NSDate*) date withStyle:(NSDateFormatterStyle) style;
 -(NSString *) dateTimeToString:(NSDate *)date;
 
++(NSLocale *) newCultureNeutralLocale;
+
 @end
 
 @interface NSDateComponents (HVExtensions)

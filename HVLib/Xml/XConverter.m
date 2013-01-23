@@ -39,6 +39,7 @@ static NSString* const c_FALSE = @"false";
 
 -(NSDateFormatter *) ensureDateFormatter;
 -(NSDateFormatter *) ensureDateParser;
+-(NSLocale *) ensureLocale; 
 
 @end
 
@@ -62,6 +63,7 @@ LError:
 {
     [m_parser release];
     [m_formatter release];
+    [m_dateLocale release];
     [m_stringBuffer release];
 
     [super dealloc];
@@ -462,6 +464,7 @@ LError:
     {
         m_formatter = [NSDateFormatter newZuluFormatter]; // always emit Zulu form
         HVCHECK_OOM(m_formatter);
+        [m_formatter setLocale:[self ensureLocale]];
     }
     
     return m_formatter;    
@@ -473,9 +476,21 @@ LError:
     {
         m_parser = [[NSDateFormatter alloc] init];
         HVCHECK_OOM(m_parser);
+        [m_parser setLocale:[self ensureLocale]];
     }
     
     return m_parser;    
+}
+
+-(NSLocale *)ensureLocale
+{
+    if (!m_dateLocale)
+    {
+        m_dateLocale = [NSDateFormatter newCultureNeutralLocale];
+        HVCHECK_OOM(m_dateLocale);
+    }
+    
+    return m_dateLocale;
 }
 
 @end

@@ -342,6 +342,12 @@ LError:
     return [self dateToString:date withFormat:@"MM/dd/yy hh:mm aaa"];
 }
 
++(NSLocale *)newCultureNeutralLocale
+{
+    NSLocale* locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    return locale;
+}
+
 @end
 
 @implementation NSDateComponents (HVExtensions)

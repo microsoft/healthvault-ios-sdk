@@ -24,6 +24,7 @@
 {
     NSDateFormatter *m_parser;
     NSDateFormatter *m_formatter;
+    NSLocale* m_dateLocale;
     NSMutableString *m_stringBuffer;
 }
 

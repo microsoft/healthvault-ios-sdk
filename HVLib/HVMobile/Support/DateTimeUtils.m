@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "DateTimeUtils.h"
+#import "HVDateExtensions.h"
 
 
 @implementation DateTimeUtils
@@ -24,14 +25,19 @@
 + (NSString *)dateToUtcString: (NSDate *)date {
 
 	NSDateFormatter *formatter = [NSDateFormatter new];
+    NSLocale* locale = [NSDateFormatter newCultureNeutralLocale];
+    [formatter setLocale:locale];
+    
 	[formatter setDateFormat: @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
 	[formatter setTimeZone: [NSTimeZone timeZoneWithAbbreviation: @"UTC"]];
 	NSString *utcDateString = [formatter stringFromDate: date];
+    
 	[formatter release];
-
+    [locale release];
+    
 	return utcDateString;
 }
-
+/*
 + (NSDate *)UtcStringToDate: (NSString *)string {
 	
 	NSDateFormatter *formatter = [NSDateFormatter new];
@@ -50,5 +56,6 @@
 	
 	return utcDate;
 }
+*/
 
 @end

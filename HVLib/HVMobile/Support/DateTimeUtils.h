@@ -29,6 +29,6 @@
 /// Converts string with date in UTC format to date object.
 /// @param string - string to be converted.
 /// @returns date in UTC format.
-+ (NSDate *)UtcStringToDate: (NSString *)string;
+//+ (NSDate *)UtcStringToDate: (NSString *)string;
 
 @end
