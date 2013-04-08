@@ -55,7 +55,7 @@
 	return [xml autorelease];
 }
 
-+ (NSString *)computeSha256Hmac: (NSData *)key: (NSString *)data {
++ (NSString *)computeSha256Hmac: (NSData *)key data:(NSString *)data {
 
 	NSUInteger len = [key length];
 	char *cKey = (char *)[key bytes];
@@ -74,10 +74,10 @@
 	return base64String;
 }
 
-+ (NSString *)computeSha256HmacAndWrap: (NSData *)key: (NSString *)data {
++ (NSString *)computeSha256HmacAndWrap: (NSData *)key data:(NSString *)data {
 
 	NSMutableString *xml = [NSMutableString new];
-	[xml appendFormat: @"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [self computeSha256Hmac: key : data]];
+	[xml appendFormat: @"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [self computeSha256Hmac:key data:data]];
 	return [xml autorelease];
 }
 

@@ -405,8 +405,7 @@ LError:
 	NSData *keyData = [Base64 decodeBase64WithString: self.sharedSecret];
 	NSString *keyString = [[NSString alloc] initWithData: keyData
 												encoding: NSASCIIStringEncoding];
-	NSString *hmac = [MobilePlatform computeSha256Hmac: keyData
-													  : stringToSign];
+	NSString *hmac = [MobilePlatform computeSha256Hmac: keyData data: stringToSign];
 	[keyString release];
 
 	NSMutableString *xml = [NSMutableString new];

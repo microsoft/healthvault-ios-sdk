@@ -394,7 +394,7 @@ NSString* pickRandomDrug(void)
     double distance = 0;
     double stepCount = 0;
     double caloriesBurned = 0;
-    if (activity == @"Walking") 
+    if ([activity isEqualToString:@"Walking"])
     {
         stepCount = exercise.durationMinutesValue * 100;  // 100 steps per minute
         caloriesBurned = exercise.durationMinutesValue * 5; // 5 calories per minute
@@ -407,7 +407,7 @@ NSString* pickRandomDrug(void)
             distance = exercise.durationMinutesValue / 15; // 15 minute miles
         }
     }
-    else if (activity == @"Running")
+    else if ([activity isEqualToString:@"Running"])
     {
         stepCount = exercise.durationMinutesValue * 200;  // 300 steps per minute
         caloriesBurned = exercise.durationMinutesValue * 10; // 10 calories per minute
@@ -495,12 +495,12 @@ NSString* pickRandomDrug(void)
     
     allergy.name = [HVCodableValue fromText:[NSString stringWithFormat:@"Allergy to %@", allergen]];
     allergy.firstObserved = [HVApproxDateTime fromDescription:onset];
-    if (allergen == @"Pollen")
+    if ([allergen isEqualToString:@"Pollen"])
     {
         allergy.allergenType = [HVCodableValue fromText:@"environmental"];
         allergy.reaction = [HVCodableValue fromText:@"sneezing"];
     }
-    else if (allergen == @"Peanuts")
+    else if ([allergen isEqualToString:@"Peanuts"])
     {
         allergy.allergenType = [HVCodableValue fromText:@"food"];
         allergy.reaction = [HVCodableValue fromText:@"anaphylactic shock"];

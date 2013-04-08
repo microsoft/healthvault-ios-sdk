@@ -168,7 +168,7 @@
 	if (self.sessionSharedSecret && !isCreateAuthSessionTokenMethod) {
 		NSData *decodedKey = [Base64 decodeBase64WithString: self.sessionSharedSecret];
 
-		[xml appendFormat: @"<auth>%@</auth>", [MobilePlatform computeSha256HmacAndWrap: decodedKey : header]];
+		[xml appendFormat: @"<auth>%@</auth>", [MobilePlatform computeSha256HmacAndWrap:decodedKey data:header]];
 	}
 
 	[xml appendString: header];

@@ -43,12 +43,12 @@
 /// @param key - the key to use.</param>
 /// @param data - the input data.</param>
 /// @returns a base-64 encoded HMAC.</returns>
-+ (NSString *)computeSha256Hmac:(NSData *)key: (NSString *)data;
++ (NSString *)computeSha256Hmac:(NSData *)key data:(NSString *)data;
 
 /// Computes a SHA 256 HMAC and wraps the result in XML.
 /// @param key - the key to use.</param>
 /// @param data - the input data.</param>
 /// @returns the wrapped result.</returns>
-+ (NSString *)computeSha256HmacAndWrap: (NSData *)key: (NSString *)data;
++ (NSString *)computeSha256HmacAndWrap:(NSData *)key data:(NSString *)data;
 
 @end
