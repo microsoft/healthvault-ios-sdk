@@ -18,10 +18,13 @@
 //
 
 #import "HVMoreFeatures.h"
+#import "HVTypeListViewController.h"
 
 @implementation HVMoreFeatures
 
-+(void)disconnectApp:(UIViewController *)parentController
+@synthesize controller = m_controller;  // Weak ref
+
+-(void)disconnectApp
 {
     [HVUIAlert showYesNoWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the next time you run it." callback:^(id sender) {
         
@@ -30,24 +33,36 @@
         {
             return;
         }
-
+        
+        [m_controller.statusLabel showBusy];
+        //
+        // REMOVE RECORD AUTHORIZATION.
+        //
         [[HVClient current].user removeAuthForRecord:[HVClient current].currentRecord withCallback:^(HVTask *task) {
             
             [[HVClient current] resetProvisioning];  // Removes local state
             
-            [parentController.navigationController popViewControllerAnimated:TRUE];
+            [m_controller.navigationController popViewControllerAnimated:TRUE];
         }];
     }];
 }
 
-+(void)getServiceDefinition
+-(void)getServiceDefinition
 {
+    [m_controller.statusLabel showBusy];
+    //
+    // LAUNCH the GetServiceDefinition task
+    //
     [[[[HVGetServiceDefinitionTask alloc] initWithCallback:^(HVTask *task) {
-        
-        [task checkSuccess];
-        HVServiceDefinition* serviceDef = ((HVGetServiceDefinitionTask *) task).serviceDef;
         //
-        // Show some sample information
+        // Verify success. This will throw if there was a failure
+        // You can also detect failure by checking task.hasError
+        //
+        [task checkSuccess];  
+        
+        HVServiceDefinition* serviceDef = ((HVGetServiceDefinitionTask *) task).serviceDef;
+        // 
+        // Show some sample information to the user
         //
         HVConfigurationEntry* configEntry = [serviceDef.platform.config objectAtIndex:0];
         HVConfigurationEntry* configEntry2 = [serviceDef.platform.config objectAtIndex:1];
@@ -64,7 +79,9 @@
         
         [HVUIAlert showInformationalMessage:output];
         
-    }] autorelease] start];
+        [m_controller.statusLabel clearStatus];
+        
+    }] autorelease] start];  // NOTE: Make sure you always call start
 }
 
 @end

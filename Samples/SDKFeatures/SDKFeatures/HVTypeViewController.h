@@ -19,13 +19,14 @@
 #import <UIKit/UIKit.h>
 #import "HVLib.h"
 #import "HVItemDataTypedFactory.h"
+#import "HVStatusLabel.h"
 
 @interface HVTypeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
     Class m_typeClass;
     HVItemCollection* m_items;
     
-    UILabel* m_statusLabel;
+    HVStatusLabel* m_statusLabel;
     UITableView* m_itemTable;
     
     BOOL m_useMetric;
@@ -33,7 +34,7 @@
     BOOL m_createMultiple;                // Whether to create one or multiple random items when the user clicks Add. (False)
 }
 
-@property (readwrite, nonatomic, retain) IBOutlet UILabel* statusLabel;
+@property (readwrite, nonatomic, retain) IBOutlet HVStatusLabel* statusLabel;
 @property (readwrite, nonatomic, retain) IBOutlet UITableView *itemTable;
 
 -(id) initWithTypeClass:(Class) typeClass useMetric:(BOOL) metric;

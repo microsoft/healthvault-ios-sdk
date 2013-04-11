@@ -1,5 +1,5 @@
 //
-//  HVMoreFeatures.h
+//  HVStatusLabel.h
 //  SDKFeatures
 //
 //  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
@@ -17,27 +17,19 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "HVLib.h"
-#import "HVStatusLabel.h"
+#import <UIKit/UIKit.h>
 
-@class HVTypeListViewController;
-
-@interface HVMoreFeatures : NSObject
+@interface HVStatusLabel : UILabel
 {
 @private
-    HVTypeListViewController* m_controller; // Weak ref
+    UIActivityIndicatorView* m_activity;
 }
 
-@property (readwrite, nonatomic, assign) HVTypeListViewController* controller; // Weak ref
+-(void) showStatus:(NSString *) format, ...;
+-(void) clearStatus;
+-(void) showActivity;
+-(void) hideActivity;
 
-//
-// How to disconnect an app
-//
--(void) disconnectApp;
-//
-// Get service definition
-//
--(void) getServiceDefinition;
+-(void) showBusy;
 
 @end

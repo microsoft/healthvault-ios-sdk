@@ -20,19 +20,23 @@
 #import "HVTypeViewController.h"
 #import "HVMoreFeatures.h"
 #import "HVFeatureActions.h"
+#import "HVStatusLabel.h"
 
 @interface HVTypeListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
 @private
     UITableView* m_tableView;
     UIBarButtonItem* m_moreButton;
+    HVStatusLabel* m_statusLabel;
     
     NSArray* m_classesForTypes;
     HVFeatureActions* m_actions;
+    HVMoreFeatures* m_features;
 }
 
 @property (retain, nonatomic) IBOutlet UITableView* tableView;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem* moreButton;
+@property (retain, nonatomic) IBOutlet HVStatusLabel* statusLabel;
 
 - (IBAction)moreFeatures:(id)sender;
 

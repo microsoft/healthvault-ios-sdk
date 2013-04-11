@@ -35,12 +35,6 @@
 -(BOOL) putItemsCompleted:(HVTask *) task forDate:(NSDate *) date;
 -(BOOL) removeItemCompleted:(HVTask *) task;
 
-//
-// Update status bar
-//
--(void) clearStatus;
--(void) showStatus:(NSString *) format, ...;
-
 -(NSDate *) getNextDayAfter:(NSDate *) current endDate:(NSDate *) end;
 
 @end
@@ -183,7 +177,7 @@ LError:
 
 -(void)getItemsFromHealthVault
 {
-    [self showStatus:@"Getting items from HealthVault"];
+    [m_statusLabel showBusy];
     
     [[HVClient current].currentRecord getItemsForClass:m_typeClass callback:^(HVTask *task) {
         
@@ -272,7 +266,7 @@ LError:
          }
          else
          {
-             [self showStatus:@"Done!"];
+             [m_statusLabel showStatus:@"Done"];
          }
      }];
 }
@@ -283,7 +277,7 @@ LError:
     {
         HVRETAIN(m_items, ((HVGetItemsTask *) task).itemsRetrieved);
         
-        [self showStatus:@"Got %d items", m_items.count];
+        [m_statusLabel showStatus:@"%d items", m_items.count];
         
         [m_itemTable reloadData];
         
@@ -292,7 +286,7 @@ LError:
     @catch (NSException *exception)
     {
         [HVUIAlert showInformationalMessage:exception.description];
-        [self showStatus:@"Failed"];
+        [m_statusLabel showStatus:@"Failed"];
     }
     
     return FALSE;
@@ -303,7 +297,7 @@ LError:
     @try
     {
         [task checkSuccess];
-        [self showStatus:@"%@ added", [date toString]];
+        [m_statusLabel showStatus:@"%@ added", [date toString]];
         [self refreshView];
         
         return TRUE;
@@ -321,7 +315,7 @@ LError:
     @try
     {
         [task checkSuccess];
-        [self showStatus:@"Done"];
+        [m_statusLabel showStatus:@"Done"];
         [self refreshView];
         
         return TRUE;
@@ -329,30 +323,10 @@ LError:
     @catch (NSException *exception)
     {
         [HVUIAlert showInformationalMessage:exception.description];
-        [self showStatus:@"Failed"];
+        [m_statusLabel showStatus:@"Failed"];
     }
     
     return FALSE;
-}
-
--(void)clearStatus
-{
-    m_statusLabel.text = nil;
-}
-
--(void)showStatus:(NSString *)format, ...
-{
-    va_list args;
-    va_start(args, format);
-    
-    NSLogv(format, args);
-    NSString* message = [[NSString alloc] initWithFormat:format arguments:args];
-    
-    va_end(args);
-    
-    m_statusLabel.text = message;
-    [message release];
-    
 }
 
 -(NSDate *)getNextDayAfter:(NSDate *)current endDate:(NSDate *)end

@@ -34,6 +34,7 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 @synthesize tableView = m_tableView;
 @synthesize moreButton = m_moreButton;
+@synthesize statusLabel = m_statusLabel;
 
 -(void)dealloc
 {
@@ -44,6 +45,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     [m_moreButton release];
     [m_classesForTypes release];
     [m_actions release];
+    [m_features release];
     
     [super dealloc];
 }
@@ -161,16 +163,27 @@ LError:
     return [m_classesForTypes objectAtIndex:selectedRow.row];
 }
 
--(void) addStandardFeatures
+-(BOOL) addStandardFeatures
 {
+    m_features = [[HVMoreFeatures alloc] init];
+    HVCHECK_NOTNULL(m_features);
+    m_features.controller = self;
+    
     m_actions = [[HVFeatureActions alloc] init];
-
+    HVCHECK_NOTNULL(m_actions);
+    
     [m_actions addFeature:@"Disconnect app" andAction:^{
-        [HVMoreFeatures disconnectApp:self];
+        [m_features disconnectApp];
     }];
+    
     [m_actions addFeature:@"GetServiceDefintion" andAction:^{
-        [HVMoreFeatures getServiceDefinition];
+        [m_features getServiceDefinition];
     }];
+
+    return TRUE;
+    
+LError:
+    return FALSE;
 }
 
 @end
