@@ -1,8 +1,8 @@
 //
-//  HVRemoveRecordAuthTask.h
+//  HVServiceDef.h
 //  HVLib
 //
-// Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,12 +17,6 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "HVMethodCallTask.h"
-#import "HVRecordReference.h"
-
-@interface HVRemoveRecordAuthTask : HVMethodCallTask
-
--(id) initWithRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
-
-@end
+#import "HVServiceDefinition.h"
+#import "HVConfigurationEntry.h"
+#import "HVShellInfo.h"

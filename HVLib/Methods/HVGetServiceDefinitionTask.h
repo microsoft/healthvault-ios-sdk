@@ -1,8 +1,8 @@
 //
-//  HVRemoveRecordAuthTask.h
+//  HVGetServiceDefinitionTask.h
 //  HVLib
 //
-// Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2013 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,10 +19,21 @@
 
 #import <Foundation/Foundation.h>
 #import "HVMethodCallTask.h"
-#import "HVRecordReference.h"
+#import "HVServiceDef.h"
 
-@interface HVRemoveRecordAuthTask : HVMethodCallTask
+//
+// Gets the HealthVault Service definition
+// When the task completes successfully, it returns a HVServiceDefinition object
+//
+@interface HVGetServiceDefinitionTask : HVMethodCallTask
 
--(id) initWithRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+//
+// Request - no parameters yet
+//
+
+//
+// Response - service definition
+//
+@property (readonly, nonatomic) HVServiceDefinition* serviceDef;
 
 @end

@@ -243,6 +243,10 @@ void throwWriterError(void);
 #define HVDESERIALIZE_DOUBLEATTRIBUTE(var, name) [reader readDoubleAttribute:name doubleValue:&var]
 #define HVDESERIALIZE_FLOATATTRIBUTE(var, name) [reader readFloatAttribute:name floatValue:&var]
 
+//
+// These macros use C strings to reduce allocs/release and speed up serialization
+//
+
 #define HVDESERIALIZE_X(var, xname, className) HVSETIF(var, [reader readElementWithXmlName:xname asClass:[className class]])
 #define HVDESERIALIZE_STRING_X(var, xname) HVSETIF(var, [reader readStringElementWithXmlName:xname])
 #define HVDESERIALIZE_DATE_X(var, name) HVSETIF(var, [reader readDateElementXmlName:name])
@@ -288,6 +292,9 @@ void throwWriterError(void);
 #define HVSERIALIZE_RAW(var) if (var) {[writer writeRaw:var];}
 #define HVSERIALIZE_RAWARRAY(var, name) if (var) {[writer writeRawElementArray:name elements:var];}
 
+//
+// These macros use C strings to reduce allocs/release and speed up serialization
+//
 #define HVSERIALIZE_X(var, xmlName) [writer writeElementXmlName:xmlName content:var]
 #define HVSERIALIZE_STRING_X(var, name) [writer writeElementXmlName:name value:var]
 #define HVSERIALIZE_INT_X(var, name) [writer writeElementXmlName:name intValue:var]

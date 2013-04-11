@@ -33,6 +33,7 @@ static const NSInteger c_numSecondsInDay = 86400;
 @implementation HVTypeListViewController
 
 @synthesize tableView = m_tableView;
+@synthesize moreButton = m_moreButton;
 
 -(void)dealloc
 {
@@ -40,7 +41,10 @@ static const NSInteger c_numSecondsInDay = 86400;
     m_tableView.delegate = nil;
     
     [m_tableView release];
+    [m_moreButton release];
     [m_classesForTypes release];
+    [m_actions release];
+    
     [super dealloc];
 }
 
@@ -53,6 +57,8 @@ static const NSInteger c_numSecondsInDay = 86400;
     m_classesForTypes = [[HVTypeListViewController classesForTypesToDemo] retain];
     m_tableView.dataSource = self;
     m_tableView.delegate = self;
+    
+    [self addStandardFeatures];
 }
 
 //-------------------------------------
@@ -111,16 +117,9 @@ LError:
 //
 //-------------------------------------
 
-- (IBAction)resetApp:(id)sender
+- (IBAction)moreFeatures:(id)sender
 {
-    [HVUIAlert showYesNoWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the next time you run it." callback:^(id sender) {
-        
-        HVUIAlert* alert = (HVUIAlert *) sender;
-        if (alert.result == HVUIAlertOK)
-        {
-            [self disconnectApp];
-        }
-    }];
+    [m_actions showFrom:m_moreButton];
 }
 
 //-------------------------------------
@@ -158,11 +157,15 @@ LError:
     return [m_classesForTypes objectAtIndex:selectedRow.row];
 }
 
--(void)disconnectApp
+-(void) addStandardFeatures
 {
-    [[HVClient current].user removeAuthForRecord:[HVClient current].currentRecord withCallback:^(HVTask *task) {
-        [[HVClient current] resetProvisioning];  // Removes local state
-        [self.navigationController popViewControllerAnimated:TRUE];
+    m_actions = [[HVFeatureActions alloc] init];
+
+    [m_actions addFeature:@"Disconnect app" andAction:^{
+        [HVMoreFeatures disconnectApp:self];
+    }];
+    [m_actions addFeature:@"GetServiceDefintion" andAction:^{
+        [HVMoreFeatures getServiceDefinition];
     }];
 }
 

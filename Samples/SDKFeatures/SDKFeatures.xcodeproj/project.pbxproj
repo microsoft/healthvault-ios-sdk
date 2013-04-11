@@ -30,6 +30,8 @@
 		5D78987C17149A500015D375 /* HVTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78987A17149A500015D375 /* HVTypeViewController.m */; };
 		5D78987D17149A500015D375 /* HVTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D78987B17149A500015D375 /* HVTypeViewController.xib */; };
 		5D7898811714A4C90015D375 /* HVItemDataTypedFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7898801714A4C90015D375 /* HVItemDataTypedFactory.m */; };
+		5D789913171618540015D375 /* HVFeatureActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789912171618540015D375 /* HVFeatureActions.m */; };
+		5D789916171626F60015D375 /* HVMoreFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789915171626F60015D375 /* HVMoreFeatures.m */; };
 		5DAFC630166FC5AC00363FA2 /* HVDietaryIntakeFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */; };
 		5DD6C1EB1676C2F900A658D8 /* HVEmotionalStateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */; };
 		5DD6C23F1677D2C600A658D8 /* HVExerciseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */; };
@@ -73,6 +75,10 @@
 		5D78987B17149A500015D375 /* HVTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HVTypeViewController.xib; sourceTree = "<group>"; };
 		5D78987F1714A4C90015D375 /* HVItemDataTypedFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemDataTypedFactory.h; sourceTree = "<group>"; };
 		5D7898801714A4C90015D375 /* HVItemDataTypedFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemDataTypedFactory.m; sourceTree = "<group>"; };
+		5D789911171618530015D375 /* HVFeatureActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFeatureActions.h; sourceTree = "<group>"; };
+		5D789912171618540015D375 /* HVFeatureActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFeatureActions.m; sourceTree = "<group>"; };
+		5D789914171626F60015D375 /* HVMoreFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMoreFeatures.h; sourceTree = "<group>"; };
+		5D789915171626F60015D375 /* HVMoreFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMoreFeatures.m; sourceTree = "<group>"; };
 		5DAFC62E166FC5AC00363FA2 /* HVDietaryIntakeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDietaryIntakeFactory.h; sourceTree = "<group>"; };
 		5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDietaryIntakeFactory.m; sourceTree = "<group>"; };
 		5DD6C1E91676C2F800A658D8 /* HVEmotionalStateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEmotionalStateFactory.h; sourceTree = "<group>"; };
@@ -149,6 +155,10 @@
 				5D78987917149A500015D375 /* HVTypeViewController.h */,
 				5D78987A17149A500015D375 /* HVTypeViewController.m */,
 				5D78987B17149A500015D375 /* HVTypeViewController.xib */,
+				5D789911171618530015D375 /* HVFeatureActions.h */,
+				5D789912171618540015D375 /* HVFeatureActions.m */,
+				5D789914171626F60015D375 /* HVMoreFeatures.h */,
+				5D789915171626F60015D375 /* HVMoreFeatures.m */,
 				5D78987F1714A4C90015D375 /* HVItemDataTypedFactory.h */,
 				5D7898801714A4C90015D375 /* HVItemDataTypedFactory.m */,
 				5DD6C2BE1679121300A658D8 /* HVBloodGlucoseFactory.h */,
@@ -273,6 +283,8 @@
 				5D3EBB0D16794B1C00BDE25E /* HVWeightFactory.m in Sources */,
 				5D78987C17149A500015D375 /* HVTypeViewController.m in Sources */,
 				5D7898811714A4C90015D375 /* HVItemDataTypedFactory.m in Sources */,
+				5D789913171618540015D375 /* HVFeatureActions.m in Sources */,
+				5D789916171626F60015D375 /* HVMoreFeatures.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,8 +1,8 @@
 //
-//  HVRemoveRecordAuthTask.h
+//  HVShellInfo.h
 //  HVLib
 //
-// Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,13 +16,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+//
 
-#import <Foundation/Foundation.h>
-#import "HVMethodCallTask.h"
-#import "HVRecordReference.h"
+#import "HVType.h"
 
-@interface HVRemoveRecordAuthTask : HVMethodCallTask
+@interface HVShellInfo : HVType
+{
+@private
+    NSString* m_url;
+    NSString* m_redirectUrl;
+}
 
--(id) initWithRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+@property (readwrite, nonatomic, retain) NSString* url;
+@property (readwrite, nonatomic, retain) NSString* redirectUrl;
 
 @end

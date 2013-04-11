@@ -1,8 +1,8 @@
 //
-//  HVRemoveRecordAuthTask.h
-//  HVLib
+//  HVFeatureActions.h
+//  SDKFeatures
 //
-// Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,12 +17,20 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "HVMethodCallTask.h"
-#import "HVRecordReference.h"
+#import <UIKit/UIKit.h>
+#import "HVLib.h"
 
-@interface HVRemoveRecordAuthTask : HVMethodCallTask
+@interface HVFeatureActions : NSObject<UIActionSheetDelegate>
+{
+@private
+    UIActionSheet* m_actionSheet;
+    NSMutableArray* m_actions;
+}
 
--(id) initWithRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(id) init;
+
+-(BOOL) addFeature:(NSString *) title andAction:(HVAction) action;
+
+-(void) showFrom:(UIBarButtonItem *) button;
 
 @end

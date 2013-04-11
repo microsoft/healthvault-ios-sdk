@@ -1,8 +1,8 @@
 //
-//  HVRemoveRecordAuthTask.h
-//  HVLib
+//  HVMoreFeatures.h
+//  SDKFeatures
 //
-// Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,11 +18,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HVMethodCallTask.h"
-#import "HVRecordReference.h"
+#import "HVLib.h"
 
-@interface HVRemoveRecordAuthTask : HVMethodCallTask
+@interface HVMoreFeatures : NSObject
 
--(id) initWithRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+//
+// How to disconnect an app
+//
++(void) disconnectApp:(UIViewController *) parentController;
+//
+// Get service definition
+//
++(void) getServiceDefinition;
 
 @end

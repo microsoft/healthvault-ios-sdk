@@ -31,3 +31,4 @@
 #import "HVBlobUploadTask.h"
 #import "HVItemBlobUploadTask.h"
 #import "HVRemoveRecordAuthTask.h"
+#import "HVGetServiceDefinitionTask.h"
