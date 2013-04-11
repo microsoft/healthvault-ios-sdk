@@ -139,18 +139,21 @@ NSString* pickRandomDrug(void);
 @interface HVMedication (HVTestExtensions)
 
 +(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVApproxDateTime *) date;
 
 @end
 
 @interface HVImmunization (HVTestExtensions)
 
 +(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVApproxDateTime *) date;
 
 @end
 
 @interface HVProcedure (HVTestExtensions)
 
 +(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVApproxDateTime *) date;
 
 @end
 

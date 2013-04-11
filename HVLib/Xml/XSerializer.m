@@ -633,22 +633,6 @@ LError:
 
 -(NSMutableArray *) readElementArray:(NSString *)name asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
 {
-    /*
-    NSMutableArray *elements = nil;
-    while ([self isStartElementWithName:name])
-    {
-        if (elements == nil)
-        {
-            elements = [[[arrayClassObj alloc] init] autorelease];
-            HVCHECK_OOM(elements);
-        }
-
-        [elements addObject:[self readElementRequired:name asClass:classObj]];
-    }
-    
-    return elements;
-    */
-    
     const xmlChar* xName = [name toXmlString];
     HVCHECK_OOM(xName);
     

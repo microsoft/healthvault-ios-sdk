@@ -1,5 +1,5 @@
 //
-//  HVCholesterolFactory.h
+//  HVConditionFactory.m
 //  SDKFeatures
 //
 //  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
@@ -16,20 +16,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "HVLib.h"
-#import "HVItemTestExtensions.h"
+#import "HVConditionFactory.h"
 
-@interface HVCholesterolV2 (HVFactoryMethods)
+@implementation HVCondition (HVFactoryMethods)
 
-+(HVItemCollection *) createRandomForDay:(NSDate *) date;
-+(HVItemCollection *) createRandomMetricForDay:(NSDate *) date;
-+(HVItemCollection *) createRandomForDay:(NSDate *) date metric:(BOOL) metric;
++(HVItemCollection *) createRandomForDay:(NSDate *) date
+{
+    HVItem* item = [HVCondition createRandom];
+    return [[[HVItemCollection alloc] initwithItem:item] autorelease];
+}
 
-@end
-
-@interface HVCholesterolV2 (HVDisplay)
-
--(NSString *) detailsString;
--(NSString *) detailsStringMetric;
++(HVItemCollection *) createRandomMetricForDay:(NSDate *) date
+{
+    return [HVCondition createRandomForDay:date];
+}
 
 @end

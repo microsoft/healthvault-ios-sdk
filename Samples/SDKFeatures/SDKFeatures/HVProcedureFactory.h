@@ -1,5 +1,5 @@
 //
-//  HVCholesterolFactory.h
+//  HVProcedureFactory.m
 //  SDKFeatures
 //
 //  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
@@ -19,17 +19,6 @@
 #import "HVLib.h"
 #import "HVItemTestExtensions.h"
 
-@interface HVCholesterolV2 (HVFactoryMethods)
-
-+(HVItemCollection *) createRandomForDay:(NSDate *) date;
-+(HVItemCollection *) createRandomMetricForDay:(NSDate *) date;
-+(HVItemCollection *) createRandomForDay:(NSDate *) date metric:(BOOL) metric;
-
-@end
-
-@interface HVCholesterolV2 (HVDisplay)
-
--(NSString *) detailsString;
--(NSString *) detailsStringMetric;
+@interface HVProcedure (HVFactoryMethods)
 
 @end

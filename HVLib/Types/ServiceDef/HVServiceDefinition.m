@@ -23,16 +23,20 @@
 
 static const xmlChar* x_element_platform = XMLSTRINGCONST("platform");
 static const xmlChar* x_element_shell = XMLSTRINGCONST("shell");
+static const xmlChar* x_element_instance = XMLSTRINGCONST("instances");
 
 @implementation HVServiceDefinition
 
 @synthesize platform = m_platform;
 @synthesize shell = m_shell;
+@synthesize systemInstances = m_instances;
 
 -(void)dealloc
 {
     [m_platform release];
     [m_shell release];
+    [m_instances release];
+    
     [super dealloc];
 }
 
@@ -42,12 +46,14 @@ static const xmlChar* x_element_shell = XMLSTRINGCONST("shell");
     HVDESERIALIZE_X(m_shell, x_element_shell, HVShellInfo);
     HVDESERIALIZE_IGNORE(@"xml-method");
     HVDESERIALIZE_IGNORE(@"common-schema");
+    HVDESERIALIZE_X(m_instances, x_element_instance, HVSystemInstances);
 }
 
 -(void)serialize:(XWriter *)writer
 {
     HVSERIALIZE_X(m_platform, x_element_platform);
     HVSERIALIZE_X(m_shell, x_element_shell);
+    HVSERIALIZE_X(m_instances, x_element_instance);
 }
 
 @end

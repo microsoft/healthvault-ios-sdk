@@ -134,11 +134,15 @@ LError:
     
     [typeList addObject:[HVBloodGlucose class]];
     [typeList addObject:[HVBloodPressure class]];
+    [typeList addObject:[HVCondition class]];
     [typeList addObject:[HVCholesterolV2 class]];
     [typeList addObject:[HVDietaryIntake class]];
     [typeList addObject:[HVDailyMedicationUsage class]];
+    [typeList addObject:[HVImmunization class]];
     [typeList addObject:[HVEmotionalState class]];
     [typeList addObject:[HVExercise class]];
+    [typeList addObject:[HVMedication class]];
+    [typeList addObject:[HVProcedure class]];
     [typeList addObject:[HVSleepJournalAM class]];
     [typeList addObject:[HVWeight class]];
     

@@ -275,6 +275,10 @@
 		5D7899031715E37E0015D375 /* HVServiceDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7899011715E37E0015D375 /* HVServiceDefinition.m */; };
 		5D78990617160DFF0015D375 /* HVGetServiceDefinitionTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D78990417160DFF0015D375 /* HVGetServiceDefinitionTask.h */; };
 		5D78990717160DFF0015D375 /* HVGetServiceDefinitionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78990517160DFF0015D375 /* HVGetServiceDefinitionTask.m */; };
+		5D78992D1717273A0015D375 /* HVInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D78992B171727390015D375 /* HVInstance.h */; };
+		5D78992E1717273A0015D375 /* HVInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78992C171727390015D375 /* HVInstance.m */; };
+		5D78993217172B970015D375 /* HVSystemInstances.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D78993017172B960015D375 /* HVSystemInstances.h */; };
+		5D78993317172B970015D375 /* HVSystemInstances.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78993117172B960015D375 /* HVSystemInstances.m */; };
 		5D7D05C51639E83800D32AD5 /* HVDownloadItemsTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D7D05C31639E83800D32AD5 /* HVDownloadItemsTask.h */; };
 		5D7D05C61639E83800D32AD5 /* HVDownloadItemsTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7D05C41639E83800D32AD5 /* HVDownloadItemsTask.m */; };
 		5D88C5DB161F4E5700F74D54 /* HVDailyDietaryIntake.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D88C5D9161F4E5700F74D54 /* HVDailyDietaryIntake.h */; };
@@ -710,6 +714,10 @@
 		5D7899011715E37E0015D375 /* HVServiceDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVServiceDefinition.m; sourceTree = "<group>"; };
 		5D78990417160DFF0015D375 /* HVGetServiceDefinitionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVGetServiceDefinitionTask.h; sourceTree = "<group>"; };
 		5D78990517160DFF0015D375 /* HVGetServiceDefinitionTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVGetServiceDefinitionTask.m; sourceTree = "<group>"; };
+		5D78992B171727390015D375 /* HVInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVInstance.h; sourceTree = "<group>"; };
+		5D78992C171727390015D375 /* HVInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVInstance.m; sourceTree = "<group>"; };
+		5D78993017172B960015D375 /* HVSystemInstances.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSystemInstances.h; sourceTree = "<group>"; };
+		5D78993117172B960015D375 /* HVSystemInstances.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSystemInstances.m; sourceTree = "<group>"; };
 		5D7D05C31639E83800D32AD5 /* HVDownloadItemsTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDownloadItemsTask.h; sourceTree = "<group>"; };
 		5D7D05C41639E83800D32AD5 /* HVDownloadItemsTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDownloadItemsTask.m; sourceTree = "<group>"; };
 		5D88C5D9161F4E5700F74D54 /* HVDailyDietaryIntake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDailyDietaryIntake.h; sourceTree = "<group>"; };
@@ -1165,6 +1173,10 @@
 				5D7898F81715DD3A0015D375 /* HVShellInfo.m */,
 				5D7899001715E37E0015D375 /* HVServiceDefinition.h */,
 				5D7899011715E37E0015D375 /* HVServiceDefinition.m */,
+				5D78992B171727390015D375 /* HVInstance.h */,
+				5D78992C171727390015D375 /* HVInstance.m */,
+				5D78993017172B960015D375 /* HVSystemInstances.h */,
+				5D78993117172B960015D375 /* HVSystemInstances.m */,
 			);
 			path = ServiceDef;
 			sourceTree = "<group>";
@@ -1732,6 +1744,8 @@
 				5D7898F91715DD3A0015D375 /* HVShellInfo.h in Headers */,
 				5D7899021715E37E0015D375 /* HVServiceDefinition.h in Headers */,
 				5D78990617160DFF0015D375 /* HVGetServiceDefinitionTask.h in Headers */,
+				5D78992D1717273A0015D375 /* HVInstance.h in Headers */,
+				5D78993217172B970015D375 /* HVSystemInstances.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1993,6 +2007,8 @@
 				5D7898FA1715DD3A0015D375 /* HVShellInfo.m in Sources */,
 				5D7899031715E37E0015D375 /* HVServiceDefinition.m in Sources */,
 				5D78990717160DFF0015D375 /* HVGetServiceDefinitionTask.m in Sources */,
+				5D78992E1717273A0015D375 /* HVInstance.m in Sources */,
+				5D78993317172B970015D375 /* HVSystemInstances.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

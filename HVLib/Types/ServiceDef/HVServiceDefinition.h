@@ -21,15 +21,19 @@
 #import "HVType.h"
 #import "HVPlatformInfo.h"
 #import "HVShellInfo.h"
+#import "HVInstance.h"
+#import "HVSystemInstances.h"
 
 @interface HVServiceDefinition : HVType
 {
 @private
     HVPlatformInfo* m_platform;
     HVShellInfo* m_shell;
+    HVSystemInstances* m_instances;
 }
 
 @property (readwrite, nonatomic, retain) HVPlatformInfo* platform;
 @property (readwrite, nonatomic, retain) HVShellInfo* shell;
+@property (readwrite, nonatomic, retain) HVSystemInstances* systemInstances;
 
 @end

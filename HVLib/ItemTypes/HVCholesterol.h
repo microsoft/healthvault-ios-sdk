@@ -23,7 +23,9 @@ double const c_cholesterolMolarMass;
 double const c_triglyceridesMolarMass;
 
 //
-// DEPRECATED. NEW APPS SHOULD SWITCH TO HVCholesterolV2.
+// DEPRECATED DEPRECATED DEPRECATED
+//
+// APPS SHOULD SWITCH TO HVCholesterolV2, which correctly handles international units
 //
 // Cholesterol (Lipid) profile
 // Measures Cholesterol #s in mg/DL

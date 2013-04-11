@@ -32,6 +32,10 @@
 		5D7898811714A4C90015D375 /* HVItemDataTypedFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7898801714A4C90015D375 /* HVItemDataTypedFactory.m */; };
 		5D789913171618540015D375 /* HVFeatureActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789912171618540015D375 /* HVFeatureActions.m */; };
 		5D789916171626F60015D375 /* HVMoreFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789915171626F60015D375 /* HVMoreFeatures.m */; };
+		5D789936171736050015D375 /* HVMedicationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789935171736050015D375 /* HVMedicationFactory.m */; };
+		5D78993A171739FB0015D375 /* HVConditionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789939171739FB0015D375 /* HVConditionFactory.m */; };
+		5D78993D17173B520015D375 /* HVImmunizationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78993C17173B520015D375 /* HVImmunizationFactory.m */; };
+		5D78994017173D2A0015D375 /* HVProcedureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78993F17173D290015D375 /* HVProcedureFactory.m */; };
 		5DAFC630166FC5AC00363FA2 /* HVDietaryIntakeFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */; };
 		5DD6C1EB1676C2F900A658D8 /* HVEmotionalStateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */; };
 		5DD6C23F1677D2C600A658D8 /* HVExerciseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */; };
@@ -79,6 +83,14 @@
 		5D789912171618540015D375 /* HVFeatureActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFeatureActions.m; sourceTree = "<group>"; };
 		5D789914171626F60015D375 /* HVMoreFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMoreFeatures.h; sourceTree = "<group>"; };
 		5D789915171626F60015D375 /* HVMoreFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMoreFeatures.m; sourceTree = "<group>"; };
+		5D789934171736050015D375 /* HVMedicationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMedicationFactory.h; sourceTree = "<group>"; };
+		5D789935171736050015D375 /* HVMedicationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMedicationFactory.m; sourceTree = "<group>"; };
+		5D789938171739FA0015D375 /* HVConditionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConditionFactory.h; sourceTree = "<group>"; };
+		5D789939171739FB0015D375 /* HVConditionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVConditionFactory.m; sourceTree = "<group>"; };
+		5D78993B17173B510015D375 /* HVImmunizationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVImmunizationFactory.h; sourceTree = "<group>"; };
+		5D78993C17173B520015D375 /* HVImmunizationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVImmunizationFactory.m; sourceTree = "<group>"; };
+		5D78993E17173D270015D375 /* HVProcedureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVProcedureFactory.h; sourceTree = "<group>"; };
+		5D78993F17173D290015D375 /* HVProcedureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVProcedureFactory.m; sourceTree = "<group>"; };
 		5DAFC62E166FC5AC00363FA2 /* HVDietaryIntakeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDietaryIntakeFactory.h; sourceTree = "<group>"; };
 		5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDietaryIntakeFactory.m; sourceTree = "<group>"; };
 		5DD6C1E91676C2F800A658D8 /* HVEmotionalStateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEmotionalStateFactory.h; sourceTree = "<group>"; };
@@ -167,14 +179,22 @@
 				5D3EBAB11679268E00BDE25E /* HVBloodPressureFactory.m */,
 				5D3EBACB16793D9200BDE25E /* HVCholesterolFactory.h */,
 				5D3EBACC16793D9200BDE25E /* HVCholesterolFactory.m */,
+				5D789938171739FA0015D375 /* HVConditionFactory.h */,
+				5D789939171739FB0015D375 /* HVConditionFactory.m */,
 				5DAFC62E166FC5AC00363FA2 /* HVDietaryIntakeFactory.h */,
 				5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */,
 				5DD6C1E91676C2F800A658D8 /* HVEmotionalStateFactory.h */,
 				5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */,
 				5DD6C23D1677D2C600A658D8 /* HVExerciseFactory.h */,
 				5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */,
+				5D78993B17173B510015D375 /* HVImmunizationFactory.h */,
+				5D78993C17173B520015D375 /* HVImmunizationFactory.m */,
+				5D789934171736050015D375 /* HVMedicationFactory.h */,
+				5D789935171736050015D375 /* HVMedicationFactory.m */,
 				5DD6C27A16780C1000A658D8 /* HVMedicationUsageFactory.h */,
 				5DD6C27B16780C1000A658D8 /* HVMedicationUsageFactory.m */,
+				5D78993E17173D270015D375 /* HVProcedureFactory.h */,
+				5D78993F17173D290015D375 /* HVProcedureFactory.m */,
 				5DD6C2DE16791ACD00A658D8 /* HVSleepJournalAMFactory.h */,
 				5DD6C2DF16791ACD00A658D8 /* HVSleepJournalAMFactory.m */,
 				5D3EBB0B16794B1C00BDE25E /* HVWeightFactory.h */,
@@ -285,6 +305,10 @@
 				5D7898811714A4C90015D375 /* HVItemDataTypedFactory.m in Sources */,
 				5D789913171618540015D375 /* HVFeatureActions.m in Sources */,
 				5D789916171626F60015D375 /* HVMoreFeatures.m in Sources */,
+				5D789936171736050015D375 /* HVMedicationFactory.m in Sources */,
+				5D78993A171739FB0015D375 /* HVConditionFactory.m in Sources */,
+				5D78993D17173B520015D375 /* HVImmunizationFactory.m in Sources */,
+				5D78994017173D2A0015D375 /* HVProcedureFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

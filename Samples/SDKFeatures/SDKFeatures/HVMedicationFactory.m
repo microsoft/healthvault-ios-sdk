@@ -1,5 +1,5 @@
 //
-//  HVItemDataTypedExtensions.m
+//  HVMedicationFactory.m
 //  SDKFeatures
 //
 //  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
@@ -16,34 +16,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-//
-#import "HVItemDataTypedFactory.h"
-//
-// Default implementation of HVFactoryMethods category
-// Does nothing
-//
-@implementation HVItemDataTyped (HVFactoryMethods)
 
-+(HVItemCollection *) createRandomForDay:(NSDate *) date
+#import "HVMedicationFactory.h"
+
+@implementation HVMedication (HVFactoryMethods)
+
++(HVItemCollection *)createRandomForDay:(NSDate *)date
 {
-    return nil;
+    HVItem* item = [HVMedication createRandomForDate:[HVApproxDateTime fromDate:date]];
+    return [[[HVItemCollection alloc] initwithItem:item] autorelease];
 }
 
-+(HVItemCollection *) createRandomMetricForDay:(NSDate *) date
++(HVItemCollection *)createRandomMetricForDay:(NSDate *)date
 {
-    return nil;
+    return [HVMedication createRandomForDay:date];
 }
 
 @end
 
-@implementation HVItemDataTyped (HVDisplay)
+@implementation HVMedication (HVDisplay)
 
--(NSString *)detailsString
+-(NSString *) detailsString
 {
-    return self.description;
+    return [NSString stringWithFormat:@"%@ [Dose: %@]", self.name.description, self.dose ? self.dose.description : c_emptyString];
 }
 
--(NSString *)detailsStringMetric
+-(NSString *) detailsStringMetric
 {
     return [self detailsString];
 }

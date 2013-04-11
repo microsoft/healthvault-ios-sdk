@@ -545,6 +545,11 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
+    return [HVMedication createRandomForDate:createRandomApproxHVDate()];
+}
+
++(HVItem *)createRandomForDate:(HVApproxDateTime *)date
+{
     HVItem* item = [[HVMedication newItem] autorelease];
     HVMedication* medication = item.medication;
     
@@ -553,13 +558,13 @@ NSString* pickRandomDrug(void)
     medication.name = [HVCodableValue fromText:medicationName];
     medication.dose = [HVApproxMeasurement fromValue:[HVRandom randomIntInRangeMin:1 max:4]
                                            unitsText:@"Tablets" unitsCode:@"Tablets" unitsVocab:@"medication-dose-units"];
-    medication.strength = [HVApproxMeasurement fromValue:[HVRandom randomIntInRangeMin:100 max:1000] 
+    medication.strength = [HVApproxMeasurement fromValue:[HVRandom randomIntInRangeMin:100 max:1000]
                                                unitsText:@"Milligrams" unitsCode:@"mg" unitsVocab:@"medication-strength-unit"];
     medication.frequency = [HVApproxMeasurement fromDisplayText:pickRandomString(3, @"Once a day", @"Twice a day", @"As needed")];
     
-    medication.startDate = createRandomApproxHVDate();
+    medication.startDate = date;
     
-    return item;
+    return item;    
 }
 
 @end
@@ -568,40 +573,49 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
+    HVApproxDateTime* date = nil;
+    if ([HVRandom randomDouble] > 0.5)
+    {
+        date = [HVApproxDateTime fromDescription:@"As an adult"];
+    }
+    else
+    {
+        date = createRandomApproxHVDate();
+    }
+    
+    return [HVImmunization createRandomForDate:date];
+}
+
++(HVItem *)createRandomForDate:(HVApproxDateTime *)date
+{
     HVItem* item = [[HVImmunization newItem] autorelease];
     HVImmunization* immunization = item.immunization;
     
+    immunization.administeredDate = date;
+
     if ([HVRandom randomDouble] > 0.5)
     {
         immunization.name = [HVCodableValue fromText:@"hepatitis A and hepatitis B vaccine" code:@"104" andVocab:@"vaccines-cvx"];
     }
-    else 
+    else
     {
         immunization.name = [HVCodableValue fromText:@"influenza virus vaccine, whole virus" code:@"16" andVocab:@"vaccines-cvx"];
     }
     immunization.name.codes.firstCode.vocabularyFamily = @"HL7";
     immunization.name.codes.firstCode.vocabularyVersion = @"2.3 09_2008";
-    
+        
     if ([HVRandom randomDouble] > 0.5)
     {
-        immunization.administeredDate = [HVApproxDateTime fromDescription:@"As an adult"];
+        immunization.manufacturer = [HVCodableValue fromText:@"Merck & Co., Inc." code:@"MSD" andVocab:@"vaccine-manufacturers-mvx"];
     }
     else
     {
-        immunization.administeredDate = createRandomApproxHVDate();
-    }
-    if ([HVRandom randomDouble] > 0.5)
-    {
-        immunization.manufacturer = [HVCodableValue fromText:@"Merck & Co., Inc." code:@"MSD" andVocab:@"vaccine-manufacturers-mvx"];       
-    }
-    else 
-    {
-        immunization.manufacturer = [HVCodableValue fromText:@"GlaxoSmithKline" code:@"SKB" andVocab:@"vaccine-manufacturers-mvx"];       
+        immunization.manufacturer = [HVCodableValue fromText:@"GlaxoSmithKline" code:@"SKB" andVocab:@"vaccine-manufacturers-mvx"];
     }
     
     immunization.lot = [NSString stringWithFormat:@"%d", [HVRandom randomIntInRangeMin:5000 max:20000]];
     immunization.route = [HVCodableValue fromText:@"Injected"];
-            
+    
     immunization.anatomicSurface = [HVCodableValue fromText:@"Right arm"];
     
     return item;
@@ -613,16 +627,20 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
+    return [HVProcedure createRandomForDate:createRandomApproxHVDate()];;
+}
+
++(HVItem *)createRandomForDate:(HVApproxDateTime *) date
+{
     HVItem* item = [[HVProcedure newItem] autorelease];
     HVProcedure* procedure = item.procedure;
     
     procedure.name = [HVCodableValue fromText:pickRandomString(3, @"eye surgery", @"root canal", @"colonoscopy")];
-    procedure.when = createRandomApproxHVDate();
+    procedure.when = date;
     procedure.primaryProvider = [HVPerson createRandom];
     
     return item;
 }
-
 @end
 
 @implementation HVVitalSigns (HVTestExtensions)
