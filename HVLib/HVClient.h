@@ -25,6 +25,7 @@
 #import "HVRecord.h"
 #import "HVLocalVault.h"
 #import "HVUser.h"
+#import "HVServiceDef.h"
 
 enum HVAppProvisionStatus 
 {
@@ -40,14 +41,22 @@ enum HVAppProvisionStatus
 // HealthVault Client
 // Use the "current" singleton. It represents the client application.
 //
+// *IMPORTANT*
+// HVClient tries to loads configuration settings from a resource file
+// named ClientSettings.xml
+// You MUST have a ClientSettings.xml in your app
+//
 //-------------------------
 @interface HVClient : NSObject
 {
+@private
     NSOperationQueue *m_queue;
     
     HVClientSettings *m_settings;
     HVDirectory *m_rootDirectory;
     id<HealthVaultService> m_service;
+    HVServiceDefinition* m_serviceDef;
+    HVEnvironmentSettings* m_environment;
     //
     // Provisioning
     //
@@ -68,13 +77,16 @@ enum HVAppProvisionStatus
 //-------------------------
 +(HVClient *) current;
 
-
 @property (readonly, nonatomic) HVClientSettings* settings;
 @property (readonly, nonatomic) HVLocalVault *localVault;
 @property (readonly, nonatomic) HVDirectory* rootDirectory;
+@property (readonly, nonatomic) HVEnvironmentSettings* environment;
 
 @property (readonly, nonatomic) enum HVAppProvisionStatus provisionStatus;
 @property (readonly, nonatomic) BOOL isProvisioned;
+//
+// Is the app created in HealthVault
+//
 @property (readonly, nonatomic) BOOL isAppCreated;
 
 @property (readonly, nonatomic) id<HealthVaultService> service;

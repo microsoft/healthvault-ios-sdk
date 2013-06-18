@@ -90,3 +90,5 @@ NSString* const c_emptyString;
 -(NSUInteger) replaceOccurrencesOfString:(NSString *)target withString:(NSString *)replacement;
 
 @end
+
+CFStringRef HVUrlEncode(CFStringRef source);

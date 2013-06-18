@@ -32,6 +32,7 @@
     HVRecordCollection *m_records;
     NSInteger m_currentIndex;
     NSString* m_environment;
+    NSString* m_instanceID;
 }
 
 //
@@ -54,6 +55,11 @@
 // Which service environment this user set up their app to work with
 //
 @property (readwrite, nonatomic, retain) NSString* environment;
+
+@property (readwrite, nonatomic, retain) NSString* instanceID;
+
+@property (readonly, nonatomic) BOOL hasEnvironment;
+@property (readonly, nonatomic) BOOL hasInstanceID;
 
 //-------------------------
 //

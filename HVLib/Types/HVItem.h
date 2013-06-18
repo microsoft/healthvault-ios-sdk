@@ -26,6 +26,7 @@
 #import "HVBlobPayload.h"
 #import "HVBlobSource.h"
 #import "HVAsyncTask.h"
+#import "HVApproxDateTime.h"
 
 @class HVRecordReference;
 @class HVItemBlobUploadTask;
@@ -35,7 +36,8 @@ enum HVItemFlags
     HVItemFlagNone = 0x00,
     HVItemFlagPersonal = 0x01,      // Item is only accessible to custodians
     HVItemFlagDownVersioned = 0x02, // Item converted from a newer format to an older format [cannot update]
-    HVItemFlagUpVersioned = 0x04    // Item converted from an older format to a new format [can update]
+    HVItemFlagUpVersioned = 0x04,   // Item converted from an older format to a new format [can update]
+    HVItemFlagImmutable = 0x10      // Item is locked and cannot be modified, except for updated-end-date
 };
 
 //-------------------------
@@ -63,6 +65,7 @@ enum HVItemFlags
     HVAudit* m_updated;    
     HVItemData* m_data;
     HVBlobPayload* m_blobs;
+    HVConstrainedXmlDate* m_updatedEndDate;
 }
 
 //-------------------------
@@ -104,6 +107,19 @@ enum HVItemFlags
 //
 @property (readwrite, nonatomic, retain) HVBlobPayload* blobs;
 
+// (Optional) RAW Xml - see HealthVault Thing schema
+@property (readwrite, nonatomic, retain) NSString* effectivePermissionsXml;
+
+// (Optional) Tags associated with this item
+@property (readwrite, nonatomic, retain) HVStringZ512* tags;
+
+// (Optional) Signature. Raw Xml
+@property (readwrite, nonatomic, retain) NSString* signatureInfoXml;
+
+// (Optional) Some items are immutable (locked). Users an still update the "effective"
+// end date of some item - such as the date they stopped taking a medication
+@property (readwrite, nonatomic, retain) HVConstrainedXmlDate* updatedEndDate;
+
 //-----------------------
 //
 // Convenience Properties
@@ -126,6 +142,8 @@ enum HVItemFlags
 @property (readonly, nonatomic) BOOL hasTypedData;
 @property (readonly, nonatomic) BOOL hasCommonData;
 @property (readonly, nonatomic) BOOL hasBlobData;
+@property (readonly, nonatomic) BOOL isReadOnly;
+@property (readonly, nonatomic) BOOL hasUpdatedEndDate;
 
 //-------------------------
 //
@@ -167,6 +185,10 @@ enum HVItemFlags
 
 -(BOOL) setKeyToNew;
 -(BOOL) ensureKey;
+
+-(BOOL) removeEndDate;
+-(BOOL) updateEndDate:(NSDate *) date;
+-(BOOL) updateEndDateWithApproxDate:(HVApproxDateTime *) date;
 
 -(NSDate *) getDate;
 

@@ -44,6 +44,7 @@
 @property (readonly) BOOL isAppCreated;
 
 - (NSString *)getApplicationCreationUrl;
+- (NSString *)getApplicationCreationUrlGA; // HealthVault global architecture aware
 - (NSString *)getUserAuthorizationUrl;
 
 - (void)sendRequest:(HealthVaultRequest *)request;

@@ -76,6 +76,7 @@ NSString* const XExceptionNotSerializable;
 -(double) readDouble;
 -(float) readFloat;
 -(BOOL) readBool;
+-(NSDate *) readDate;
 
 -(NSString *) readNextElement;
 -(NSString *) readStringElementRequired:(NSString *) name;
@@ -121,9 +122,14 @@ NSString* const XExceptionNotSerializable;
 
 -(BOOL) readUntilNodeType:(enum XNodeType) type;
 -(BOOL) skipElement:(NSString *) name;
+-(BOOL) skipSingleElement;
 -(BOOL) skipSingleElement:(NSString *) name;
 -(BOOL) skipToElement:(NSString *) name;
 
+//
+// These are noticeably faster for lots of items in a lop, as they do fewer string allocations
+// There are now xmlChar* equivalents of most useful methods from above
+//
 -(id) readElementRequiredWithXmlName:(const xmlChar *) xName asClass:(Class) classObj;
 -(void) readElementRequiredWithXmlName:(const xmlChar *) xName intoObject:(id<XSerializable>) content;
 -(id) readElementWithXmlName:(const xmlChar *) xmlName asClass:(Class) classObj;
@@ -141,8 +147,11 @@ NSString* const XExceptionNotSerializable;
 -(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
 -(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName itemName:(const xmlChar *) itemName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
 
-
 -(NSString *) readAttributeWithXmlName:(const xmlChar *) xmlName;
+-(NSString *) readElementRawWithXmlName:(const xmlChar *) xmlName;
+
+-(BOOL) skipElementWithXmlName:(const xmlChar *) xmlName;
+-(BOOL) skipSingleElementWithXmlName:(const xmlChar *) xmlName;
 
 @end
 
@@ -256,6 +265,9 @@ void throwWriterError(void);
 #define HVDESERIALIZE_ATTRIBUTE_X(var, xname) HVSETIF(var, [reader readAttributeWithXmlName:xname])
 
 #define HVDESERIALIZE_TYPEDARRAY_X(var, name, className, arrayClass) HVSETIF(var, [reader readElementArrayWithXmlName:name asClass:[className class] andArrayClass:[arrayClass class]])
+
+#define HVDESERIALIZE_RAW_X(var, name) HVSETIF(var, [reader readElementRawWithXmlName:name])
+#define HVDESERIALIZE_IGNORE_X(name) [reader skipElementWithXmlName:name]
 
 //---------------------------------------
 //

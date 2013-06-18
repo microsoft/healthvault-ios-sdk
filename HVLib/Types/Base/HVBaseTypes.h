@@ -38,3 +38,4 @@
 #import "HVStringZ512.h"
 #import "HVString1024.h"
 #import "HVEmailAddress.h"
+#import "HVConstrainedXmlDate.h"

@@ -40,6 +40,7 @@
 
 @synthesize status = m_status;
 @synthesize record = m_record;
+@synthesize useMasterAppID = m_useMasterAppID;
 
 -(NSString *)name
 {
@@ -66,6 +67,8 @@
     
     m_status = [[HVServerResponseStatus alloc] init];
     HVCHECK_NOTNULL(m_status);
+    
+    m_useMasterAppID = FALSE;
     
     return self;
     
@@ -183,7 +186,12 @@ LError:
             request.personId = m_record.personID;
         }
         
-        [[HVClient current].service sendRequest:request];   
+        if (m_useMasterAppID)
+        {
+            request.appIdInstance = [HVClient current].settings.masterAppID;
+        }
+        
+        [[HVClient current].service sendRequest:request];
     }
     @finally 
     {

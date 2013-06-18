@@ -16,6 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "HVCommon.h"
 #import "HVDictionaryExtensions.h"
 
 @implementation NSDictionary (HVDictionaryExtensions)
@@ -23,6 +24,50 @@
 +(BOOL)isNilOrEmpty:(NSDictionary *)dictionary
 {
     return (dictionary == nil || dictionary.count == 0);
+}
+
++(NSMutableDictionary *)fromArgumentString:(NSString *)args
+{
+    if ([NSString isNilOrEmpty:args])
+    {
+        return nil;
+    }
+    
+    NSArray* parts = [args componentsSeparatedByString:@"&"];
+    if ([NSArray isNilOrEmpty:parts])
+    {
+        return nil;
+    }
+    
+    NSMutableDictionary* nvPairs = [NSMutableDictionary dictionary];
+    HVCHECK_NOTNULL(nvPairs);
+    
+    for (NSUInteger i = 0, count = parts.count; i < count; ++i)
+    {
+        NSString* part = [parts objectAtIndex:i];
+        if ([NSString isNilOrEmpty:part])
+        {
+            continue;
+        }
+
+        NSString* key = part;
+        NSString* value = c_emptyString;
+
+        NSUInteger nvSepPos = [part indexOfFirstChar:'='];
+        if (nvSepPos != NSNotFound)
+        {
+            key = [part substringToIndex:nvSepPos];
+            value = [part substringFromIndex:nvSepPos + 1]; // Handles the case where = is at the end of the string
+        }
+
+        [nvPairs setValue:value forKey:key];
+
+    }
+
+    return nvPairs;
+    
+LError:
+    return nil;    
 }
 
 @end

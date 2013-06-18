@@ -31,7 +31,7 @@ static const xmlChar* x_element_shell = XMLSTRINGCONST("shell-url");
 
 @synthesize instanceID = m_id;
 @synthesize name = m_name;
-@synthesize description = m_description;
+@synthesize instanceDescription = m_description;
 @synthesize platformUrl = m_platformUrl;
 @synthesize shellUrl = m_shellUrl;
 

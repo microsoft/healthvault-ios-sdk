@@ -93,9 +93,18 @@ LError:
     }
 
     m_itemTable.dataSource = self;
-
-    m_maxDaysOffsetRandomData = 0;
-    m_createMultiple = FALSE;
+    
+    //
+    // When you click add, we add new items with random, but plausible data
+    //
+    // Data is created in the time range [TODAY, (Today - m_maxDaysOffsetRandoData)]
+    // If m_createMultiple is TRUE, adds random data for EACH day in the range
+    // Else only adds random data for the LAST day in the range.
+    //
+    // If m_maxDaysOffsetRandomData is 0, creates random data for TODAY
+    //
+    m_maxDaysOffsetRandomData = 0; // 90;
+    m_createMultiple = FALSE;  
     
     self.navigationItem.title = [m_typeClass XRootElement]; // Every HVItemDataTyped implements this..
     

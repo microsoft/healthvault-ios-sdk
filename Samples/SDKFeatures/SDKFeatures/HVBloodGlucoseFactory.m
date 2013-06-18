@@ -42,6 +42,7 @@
     
     HVItem* item = [HVBloodGlucose createRandomForDate:dateTime metric:metric];
     item.bloodGlucose.context = [[HVBloodGlucose vocabForContext] codableValueForText:@"After breakfast" andCode:@"AfterBreakfast"];
+    
     [items addObject:item];
     
     dateTime = [HVDateTime fromDate:date];

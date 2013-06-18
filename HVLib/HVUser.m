@@ -30,6 +30,7 @@ static NSString* const c_element_recordarray = @"records";
 static NSString* const c_element_record = @"record";
 static NSString* const c_element_current = @"current";
 static NSString* const c_element_environment = @"environment";
+static NSString* const c_element_instanceID = @"instanceID";
 
 @interface HVUser (HVPrivate)
 
@@ -53,6 +54,7 @@ static NSString* const c_element_environment = @"environment";
 @synthesize records = m_records;
 @synthesize currentRecordIndex = m_currentIndex;
 @synthesize environment = m_environment;
+@synthesize instanceID = m_instanceID;
 
 -(BOOL)hasRecords
 {
@@ -80,6 +82,16 @@ static NSString* const c_element_environment = @"environment";
     return [m_records objectAtIndex:m_currentIndex];
 }
 
+-(BOOL)hasEnvironment
+{
+    return ![NSString isNilOrEmpty:m_environment];
+}
+
+-(BOOL)hasInstanceID
+{
+    return ![NSString isNilOrEmpty:m_instanceID];
+}
+
 -(id)initFromLegacyRecords:(NSArray *)recordArray
 {
     HVCHECK_NOTNULL(recordArray);
@@ -100,6 +112,8 @@ LError:
     [m_name release];
     [m_records release];
     [m_environment release];
+    [m_instanceID release];
+    
     [super dealloc];
 }
 
@@ -267,6 +281,7 @@ LError:
     HVSERIALIZE_ARRAYNESTED(m_records, c_element_recordarray, c_element_record);
     HVSERIALIZE_INT(m_currentIndex, c_element_current);
     HVSERIALIZE_STRING(m_environment, c_element_environment);
+    HVSERIALIZE_STRING(m_instanceID, c_element_instanceID);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -279,6 +294,7 @@ LError:
     self.currentRecordIndex = index;  // to make sure the index is valid
     
     HVDESERIALIZE_STRING(m_environment, c_element_environment);
+    HVDESERIALIZE_STRING(m_instanceID, c_element_instanceID);
 }
 
 @end
@@ -330,7 +346,7 @@ LError:
             }
         }
         [self updateLegacyRecords];
-   }
+    }
     else 
     {
         [self clearLegacyRecords];

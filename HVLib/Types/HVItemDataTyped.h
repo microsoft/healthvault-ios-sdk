@@ -24,7 +24,7 @@
 //-------------------------
 //
 // All Objective C equivalents of HealthVault types inherit
-// from HVITemDataTyped
+// from HVItemDataTyped
 //
 //-------------------------
 @interface HVItemDataTyped : HVType

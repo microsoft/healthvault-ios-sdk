@@ -419,6 +419,8 @@
 		5DE3831514E4447800DFA11D /* XString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3830B14E4447800DFA11D /* XString.m */; };
 		5DE57A1B1510F75400829CC2 /* HVUIAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE57A191510F75300829CC2 /* HVUIAlert.h */; };
 		5DE57A1C1510F75400829CC2 /* HVUIAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE57A1A1510F75300829CC2 /* HVUIAlert.m */; };
+		5DE74306174D31BC005F2D09 /* HVConstrainedXmlDate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE74304174D31BC005F2D09 /* HVConstrainedXmlDate.h */; };
+		5DE74307174D31BC005F2D09 /* HVConstrainedXmlDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE74305174D31BC005F2D09 /* HVConstrainedXmlDate.m */; };
 		5DEF154A14E985C5009D05D5 /* HVType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF154814E985C5009D05D5 /* HVType.h */; };
 		5DEF154B14E985C5009D05D5 /* HVType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF154914E985C5009D05D5 /* HVType.m */; };
 		5DEF154F14E98DCB009D05D5 /* HVTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DEF154D14E98DCA009D05D5 /* HVTime.h */; };
@@ -860,6 +862,8 @@
 		5DE57A191510F75300829CC2 /* HVUIAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVUIAlert.h; sourceTree = "<group>"; };
 		5DE57A1A1510F75300829CC2 /* HVUIAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVUIAlert.m; sourceTree = "<group>"; };
 		5DE57A251511573500829CC2 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5DE74304174D31BC005F2D09 /* HVConstrainedXmlDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConstrainedXmlDate.h; sourceTree = "<group>"; };
+		5DE74305174D31BC005F2D09 /* HVConstrainedXmlDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVConstrainedXmlDate.m; sourceTree = "<group>"; };
 		5DEF154814E985C5009D05D5 /* HVType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVType.h; sourceTree = "<group>"; };
 		5DEF154914E985C5009D05D5 /* HVType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVType.m; sourceTree = "<group>"; };
 		5DEF154D14E98DCA009D05D5 /* HVTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTime.h; sourceTree = "<group>"; };
@@ -1347,6 +1351,8 @@
 				5D195D7115228C0200E109AD /* HVVocabSearchText.m */,
 				5DC799621534C97200193A3B /* HVOneToFive.h */,
 				5DC799631534C97200193A3B /* HVOneToFive.m */,
+				5DE74304174D31BC005F2D09 /* HVConstrainedXmlDate.h */,
+				5DE74305174D31BC005F2D09 /* HVConstrainedXmlDate.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1746,6 +1752,7 @@
 				5D78990617160DFF0015D375 /* HVGetServiceDefinitionTask.h in Headers */,
 				5D78992D1717273A0015D375 /* HVInstance.h in Headers */,
 				5D78993217172B970015D375 /* HVSystemInstances.h in Headers */,
+				5DE74306174D31BC005F2D09 /* HVConstrainedXmlDate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2009,6 +2016,7 @@
 				5D78990717160DFF0015D375 /* HVGetServiceDefinitionTask.m in Sources */,
 				5D78992E1717273A0015D375 /* HVInstance.m in Sources */,
 				5D78993317172B970015D375 /* HVSystemInstances.m in Sources */,
+				5DE74307174D31BC005F2D09 /* HVConstrainedXmlDate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

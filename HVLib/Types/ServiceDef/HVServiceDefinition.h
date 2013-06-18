@@ -37,3 +37,15 @@
 @property (readwrite, nonatomic, retain) HVSystemInstances* systemInstances;
 
 @end
+
+@interface HVServiceDefinitionParams : HVType
+{
+@private
+    NSDate* m_updatedSince;
+    HVStringCollection* m_sections;
+}
+
+@property (readwrite, nonatomic, retain) NSDate* updatedSince;
+@property (readwrite, nonatomic, retain) HVStringCollection* sections;
+
+@end

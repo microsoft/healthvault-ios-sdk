@@ -32,7 +32,7 @@
 
 @property (readwrite, nonatomic, retain) NSString* instanceID;
 @property (readwrite, nonatomic, retain) NSString* name;
-@property (readwrite, nonatomic, retain) NSString* description;
+@property (readwrite, nonatomic, retain) NSString* instanceDescription;
 @property (readwrite, nonatomic, retain) NSString* platformUrl;
 @property (readwrite, nonatomic, retain) NSString* shellUrl;
 

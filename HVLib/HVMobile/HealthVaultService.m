@@ -51,6 +51,8 @@
 - (void)performAppCallBack: (HealthVaultRequest *)request
 				  response: (HealthVaultResponse *)response;
 
+-(NSString *) getApplicationCreationUrl:(BOOL) isGlobal;
+
 @end
 
 
@@ -149,54 +151,21 @@ LError:
 
 #pragma mark Url Generating Logic
 
-- (NSString *)getApplicationCreationUrl 
+- (NSString *)getApplicationCreationUrl
 {
-    if (self.applicationCreationToken == nil || self.applicationCreationToken.length == 0)
-    {
-        return nil;
-    }
-    
-	CFStringRef tokenEncoded = CFURLCreateStringByAddingPercentEscapes(NULL,
-			(CFStringRef)self.applicationCreationToken,
-			NULL,
-			(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-			kCFStringEncodingUTF8);
-	
-    NSString *dName = (self.deviceName) ? self.deviceName : [MobilePlatform deviceName];
-	CFStringRef deviceNameEncoded = CFURLCreateStringByAddingPercentEscapes(NULL,
-			(CFStringRef)dName,
-			NULL,
-			(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-			kCFStringEncodingUTF8);
+    return [self getApplicationCreationUrl:FALSE];
+}
 
-	NSString *queryString = [NSString stringWithFormat:@"?appid=%@&appCreationToken=%@&instanceName=%@&ismra=true",
-			self.masterAppId, tokenEncoded, deviceNameEncoded];
-
-	CFStringRef queryStringEncoded = CFURLCreateStringByAddingPercentEscapes(NULL,
-			(CFStringRef)queryString,
-			NULL,
-			(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-			kCFStringEncodingUTF8);
-
-	NSString *appCreationUrl = [NSString stringWithFormat: @"%@/redirect.aspx?target=CREATEAPPLICATION&targetqs=%@",
-			self.shellUrl, (NSString *)queryStringEncoded];
-
-	CFRelease(tokenEncoded);
-	CFRelease(deviceNameEncoded);
-	CFRelease(queryStringEncoded);
-
-	return appCreationUrl;
+-(NSString *)getApplicationCreationUrlGA
+{
+    return [self getApplicationCreationUrl:TRUE];
 }
 
 - (NSString *)getUserAuthorizationUrl {
 
 	NSString *queryString = [NSString stringWithFormat: @"?appid=%@&ismra=true", self.appIdInstance];
 
-	CFStringRef queryStringEncoded = CFURLCreateStringByAddingPercentEscapes(NULL,
-			(CFStringRef)queryString,
-			NULL,
-			(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-			kCFStringEncodingUTF8);
+	CFStringRef queryStringEncoded = HVUrlEncode((CFStringRef)queryString);
 
 	NSString *userAuthUrl = [NSString stringWithFormat: @"%@/redirect.aspx?target=APPAUTH&targetqs=%@",
 			self.shellUrl, (NSString *)queryStringEncoded];
@@ -292,15 +261,18 @@ LError:
 
 - (void)sendRequestImpl: (HealthVaultRequest *)request 
 {    
-	request.msgTime = [NSDate date];	
-	if (self.appIdInstance && self.appIdInstance.length > 0) 
+	request.msgTime = [NSDate date];
+    if (!request.appIdInstance)
     {
-		request.appIdInstance = self.appIdInstance;
-	}
-	else 
-    {
-		request.appIdInstance = self.masterAppId;
-	}
+        if (self.appIdInstance && self.appIdInstance.length > 0)
+        {
+            request.appIdInstance = self.appIdInstance;
+        }
+        else 
+        {
+            request.appIdInstance = self.masterAppId;
+        }
+    }
     
 	request.authorizationSessionToken = self.authorizationSessionToken;
 	request.sessionSharedSecret = self.sessionSharedSecret;
@@ -511,6 +483,37 @@ LError:
 		[request.target performSelector: request.callBack
 							 withObject: response];
 	}
+}
+
+- (NSString *)getApplicationCreationUrl:(BOOL)isGlobal
+{
+    if (self.applicationCreationToken == nil || self.applicationCreationToken.length == 0)
+    {
+        return nil;
+    }
+    
+	CFStringRef tokenEncoded = HVUrlEncode((CFStringRef)self.applicationCreationToken);
+	
+    NSString *dName = (self.deviceName) ? self.deviceName : [MobilePlatform deviceName];
+	CFStringRef deviceNameEncoded = HVUrlEncode((CFStringRef)dName);
+    
+	NSString *queryString = [NSString stringWithFormat:@"?appid=%@&appCreationToken=%@&instanceName=%@&ismra=true",
+                             self.masterAppId, tokenEncoded, deviceNameEncoded];
+    if (isGlobal)
+    {
+        queryString = [queryString stringByAppendingString:@"&aib=true"];
+    }
+    
+	CFStringRef queryStringEncoded = HVUrlEncode((CFStringRef)queryString);
+    
+	NSString *appCreationUrl = [NSString stringWithFormat: @"%@/redirect.aspx?target=CREATEAPPLICATION&targetqs=%@",
+                                self.shellUrl, (NSString *)queryStringEncoded];
+    
+	CFRelease(tokenEncoded);
+	CFRelease(deviceNameEncoded);
+	CFRelease(queryStringEncoded);
+    
+	return appCreationUrl;
 }
 
 @end

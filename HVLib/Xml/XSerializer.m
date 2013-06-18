@@ -382,6 +382,11 @@ LError:
     return [self.converter stringToBool:[self readValueEnsure]];
 }
 
+-(NSDate *)readDate
+{
+    return [self.converter stringToDate:[self readValueEnsure]];
+}
+
 -(NSString *)readNextElement
 {
     NSString *value = nil;
@@ -778,21 +783,27 @@ LError:
 {    
     while ([self isStartElementWithName:name])
     {
-        int currentDepth = [self depth];
-        
-        if ([self readStartElement])
-        {  
-            // A non-empty element
-            while (self.depth > currentDepth)
+        [self skipSingleElement];
+    }
+    
+    return TRUE;
+}
+
+-(BOOL)skipSingleElement
+{
+    int currentDepth = [self depth];
+    if ([self readStartElement])
+    {
+        // A non-empty element
+        while (self.depth > currentDepth)
+        {
+            if (![self read])
             {
-                if (![self read])
-                {
-                    return FALSE;
-                }
+                return FALSE;
             }
-            [self readEndElement];
-         }
-      }
+        }
+        [self readEndElement];
+    }
     
     return TRUE;
 }
@@ -801,19 +812,7 @@ LError:
 {
     if ([self isStartElementWithName:name])
     {
-        int currentDepth = [self depth];
-        if ([self readStartElement])
-        {  
-            // A non-empty element
-            while (self.depth > currentDepth)
-            {
-                if (![self read])
-                {
-                    return FALSE;
-                }
-            }
-            [self readEndElement];
-        }
+        return [self skipSingleElement];
     }
     
     return TRUE;    
@@ -973,6 +972,20 @@ LError:
     return value;
 }
 
+-(NSString *)readElementRawWithXmlName:(const xmlChar *)xmlName
+{
+    if ([self isStartElementWithXmlName:xmlName])
+    {
+        NSString* xml = [self readOuterXml];
+        
+        [self skipSingleElementWithXmlName:xmlName];
+        
+        return xml;
+    }
+    
+    return nil;
+}
+
 -(NSMutableArray *)readElementArrayWithXmlName:(const xmlChar *)xName asClass:(Class)classObj
 {
     return [self readElementArrayWithXmlName:xName asClass:classObj andArrayClass:[NSMutableArray class]];
@@ -1005,6 +1018,26 @@ LError:
     }
     return array;
     
+}
+
+-(BOOL)skipElementWithXmlName:(const xmlChar *)xmlName
+{
+    while ([self isStartElementWithXmlName:xmlName])
+    {
+        [self skipSingleElement];
+    }
+    
+    return TRUE;
+}
+
+-(BOOL)skipSingleElementWithXmlName:(const xmlChar *)xmlName
+{
+    if ([self isStartElementWithXmlName:xmlName])
+    {
+        return [self skipSingleElement];
+    }
+    
+    return TRUE;    
 }
 
 @end

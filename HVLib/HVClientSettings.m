@@ -38,6 +38,8 @@ static NSString* const c_element_httpTimeout = @"httpTimeout";
 static NSString* const c_element_maxAttemptsPerRequest = @"maxAttemptsPerRequest";
 static NSString* const c_element_useCachingInStore = @"useCachingInStore";
 static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
+static NSString* const c_element_multiInstance = @"isMultiInstanceAware";
+static NSString* const c_element_instanceID = @"instanceID";
 
 @implementation HVEnvironmentSettings
 
@@ -85,7 +87,28 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     return m_shellUrl;
 }
 
+@synthesize instanceID = m_instanceID;
+-(NSString *)instanceID
+{
+    if ([NSString isNilOrEmpty:m_instanceID])
+    {
+        return @"1";
+    }
+    
+    return m_instanceID;
+}
+
 @synthesize appDataXml = m_appData;
+
+-(BOOL)hasName
+{
+    return !([NSString isNilOrEmpty:m_name]);
+}
+
+-(BOOL)hasInstanceID
+{
+    return !([NSString isNilOrEmpty:m_instanceID]);
+}
 
 -(void)dealloc
 {
@@ -93,6 +116,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     [m_friendlyName release];
     [m_serviceUrl release];
     [m_shellUrl release];
+    [m_instanceID release];
     [m_appData release];
     
     [super dealloc];
@@ -104,6 +128,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     HVSERIALIZE_STRING(m_friendlyName, c_element_friendlyName);
     HVSERIALIZE_URL(m_serviceUrl, c_element_serviceUrl);
     HVSERIALIZE_URL(m_shellUrl, c_element_shellUrl);
+    HVSERIALIZE_STRING(m_instanceID, c_element_instanceID);
     HVSERIALIZE_RAW(m_appData);
 }
 
@@ -113,7 +138,27 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     HVDESERIALIZE_STRING(m_friendlyName, c_element_friendlyName);
     HVDESERIALIZE_URL(m_serviceUrl, c_element_serviceUrl);
     HVDESERIALIZE_URL(m_shellUrl, c_element_shellUrl);
+    HVDESERIALIZE_STRING(m_instanceID, c_element_instanceID);
     HVDESERIALIZE_RAW(m_appData, c_element_appData);
+}
+
++(HVEnvironmentSettings *)fromInstance:(HVInstance *)instance
+{
+    HVCHECK_NOTNULL(instance);
+    
+    HVEnvironmentSettings* settings = [[[HVEnvironmentSettings alloc] init] autorelease];
+    HVCHECK_NOTNULL(settings);
+    
+    settings.name = instance.name;
+    settings.friendlyName = instance.name;
+    settings.serviceUrl = [NSURL URLWithString:instance.platformUrl];
+    settings.shellUrl = [NSURL URLWithString:instance.shellUrl];
+    settings.instanceID = instance.instanceID;
+    
+    return settings;
+    
+LError:
+    return nil;
 }
 
 @end
@@ -123,6 +168,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
 @synthesize debug = m_debug;
 @synthesize masterAppID = m_appID;
 @synthesize appName = m_appName;
+@synthesize isMultiInstanceAware = m_isMultiInstanceAware;
 @synthesize environments = m_environments;
 @synthesize deviceName = m_deviceName;
 @synthesize country = m_country;
@@ -139,7 +185,11 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
 {
     if ([NSArray isNilOrEmpty:m_environments])
     {
+        HVCLEAR(m_environments);
+        
         NSMutableArray* defaultEnvironments = [[NSMutableArray alloc] init];
+        m_environments = defaultEnvironments;
+
         HVEnvironmentSettings* defaultEnvironment = [[HVEnvironmentSettings alloc] init];
         [defaultEnvironments addObject:defaultEnvironment];
         [defaultEnvironment release];
@@ -209,6 +259,7 @@ static NSString* const c_element_autoRequestDelay = @"autoRequestDelay";
     HVCHECK_SELF;
     
     m_debug = FALSE;
+    m_isMultiInstanceAware = FALSE;
     m_httpTimeout = 60;             // Default timeout in seconds
     m_maxAttemptsPerRequest = 3;    // Retry thrice...
     
@@ -234,11 +285,20 @@ LError:
     [super dealloc];
 }
 
+-(void)validateSettings
+{
+    if ([NSString isNilOrEmpty:m_appID])
+    {
+        [HVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientEror_InvalidMasterAppID)];
+    }
+}
+
 -(void) serialize:(XWriter *)writer
 {
     HVSERIALIZE_BOOL(m_debug, c_element_debug);
     HVSERIALIZE_STRING(m_appID, c_element_appID);
     HVSERIALIZE_STRING(m_appName, c_element_appName);
+    HVSERIALIZE_BOOL(m_isMultiInstanceAware, c_element_multiInstance);
     HVSERIALIZE_ARRAY(m_environments, c_element_environment);
     HVSERIALIZE_STRING(m_deviceName, c_element_deviceName);
     HVSERIALIZE_STRING(m_country, c_element_language);
@@ -258,6 +318,7 @@ LError:
     HVDESERIALIZE_BOOL(m_debug, c_element_debug);
     HVDESERIALIZE_STRING(m_appID, c_element_appID);
     HVDESERIALIZE_STRING(m_appName, c_element_appName);
+    HVDESERIALIZE_BOOL(m_isMultiInstanceAware, c_element_multiInstance);
     
     NSMutableArray* environs = nil;
     HVDESERIALIZE_ARRAY(environs, c_element_environment, HVEnvironmentSettings);
@@ -284,7 +345,7 @@ LError:
     for (NSUInteger i = 0, count = environments.count; i < count; ++i)
     {
         HVEnvironmentSettings* environment = [environments objectAtIndex:i];
-        if ([environment.name isEqualToStringCaseInsensitive:name])
+        if (environment.hasName && [environment.name isEqualToStringCaseInsensitive:name])
         {
             return environment;
         }
@@ -297,6 +358,21 @@ LError:
 -(HVEnvironmentSettings *)environmentAtIndex:(NSUInteger)index
 {
     return [m_environments objectAtIndex:index];
+}
+
+-(HVEnvironmentSettings *)environmentWithInstanceID:(NSString *)instanceID
+{
+    NSArray* environments = self.environments;
+    for (NSUInteger i = 0, count = environments.count; i < count; ++i)
+    {
+        HVEnvironmentSettings* environment = [environments objectAtIndex:i];
+        if (environment.hasInstanceID && [environment.instanceID isEqualToStringCaseInsensitive:instanceID])
+        {
+            return environment;
+        }
+    }
+    
+    return nil;
 }
 
 +(HVClientSettings *)newSettingsFromResource

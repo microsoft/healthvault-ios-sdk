@@ -30,6 +30,10 @@ static const xmlChar* x_element_created = XMLSTRINGCONST("created");
 static const xmlChar* x_element_updated = XMLSTRINGCONST("updated");
 static const xmlChar* x_element_data = XMLSTRINGCONST("data-xml");
 static const xmlChar* x_element_blobs = XMLSTRINGCONST("blob-payload");  
+static const xmlChar* x_element_permissions = XMLSTRINGCONST("eff-permissions");
+static const xmlChar* x_element_tags = XMLSTRINGCONST("tags");
+static const xmlChar* x_element_signatures = XMLSTRINGCONST("signature-info");
+static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-date");
 
 @implementation HVItem
 
@@ -80,6 +84,8 @@ static const xmlChar* x_element_blobs = XMLSTRINGCONST("blob-payload");
     HVRETAIN(m_blobs, blobs);
 }
 
+@synthesize updatedEndDate = m_updatedEndDate;
+
 -(BOOL) hasTypedData
 {
     return (self.hasData && self.data.hasTyped);
@@ -93,6 +99,16 @@ static const xmlChar* x_element_blobs = XMLSTRINGCONST("blob-payload");
 -(BOOL)hasBlobData
 {
     return (m_blobs && m_blobs.hasItems);
+}
+
+-(BOOL)isReadOnly
+{
+    return ((m_flags & HVItemFlagImmutable) != 0);
+}
+
+-(BOOL)hasUpdatedEndDate
+{
+    return (self.updatedEndDate && !self.updatedEndDate.isNull);
 }
 
 -(NSString *)note
@@ -183,6 +199,8 @@ LError:
     [m_data release];
     [m_blobs release];
     
+    [m_updatedEndDate release];
+    
     [super dealloc];
 }
 
@@ -208,6 +226,47 @@ LError:
     }
     
     return TRUE;
+}
+
+-(BOOL)removeEndDate
+{
+    HVRETAIN(m_updatedEndDate, [HVConstrainedXmlDate nullDate]);
+    HVCHECK_NOTNULL(m_updatedEndDate);
+
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
+-(BOOL)updateEndDate:(NSDate *)date
+{
+    HVCHECK_NOTNULL(date);
+    
+    HVRETAIN(m_updatedEndDate, [HVConstrainedXmlDate fromDate:date]);
+    HVCHECK_NOTNULL(m_updatedEndDate);
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
+-(BOOL)updateEndDateWithApproxDate:(HVApproxDateTime *)date
+{
+    HVCHECK_NOTNULL(date);
+    
+    if (date.isStructured)
+    {
+        HVRETAIN(m_updatedEndDate, [HVConstrainedXmlDate fromDate:[date toDate]]);
+        HVCHECK_NOTNULL(m_updatedEndDate);
+        return TRUE;
+    }
+
+    return [self removeEndDate];
+    
+LError:
+    return FALSE;
 }
 
 -(NSDate *)getDate
@@ -329,6 +388,7 @@ LError:
     {
         item.blobs = self.blobs;
     }
+    item.updatedEndDate = self.updatedEndDate;
     return item;
 }
 
@@ -336,6 +396,10 @@ LError:
 {
     self.effectiveDate = nil;
     self.updated = nil;
+    if (self.isReadOnly)
+    {
+        self.data = nil; // Can't update read only dataXml
+    }
 }
 
 -(HVClientResult *) validate
@@ -364,6 +428,7 @@ LError:
     HVSERIALIZE_X(m_updated, x_element_updated);
     HVSERIALIZE_X(m_data, x_element_data);
     HVSERIALIZE_X(m_blobs, x_element_blobs);
+    HVSERIALIZE_X(m_updatedEndDate, x_element_updatedEndDate);
 }
 
 -(void) deserialize:(XReader *)reader
@@ -377,6 +442,14 @@ LError:
     HVDESERIALIZE_X(m_updated, x_element_updated, HVAudit);
     HVDESERIALIZE_X(m_data, x_element_data, HVItemData);
     HVDESERIALIZE_X(m_blobs, x_element_blobs, HVBlobPayload);
+    HVDESERIALIZE_IGNORE_X(x_element_permissions);
+    HVDESERIALIZE_IGNORE_X(x_element_tags);
+    HVDESERIALIZE_IGNORE_X(x_element_signatures);
+    HVDESERIALIZE_X(m_updatedEndDate, x_element_updatedEndDate, HVConstrainedXmlDate);
+    if (m_updatedEndDate && m_updatedEndDate.isNull)
+    {
+        HVCLEAR(m_updatedEndDate);
+    }
 }
 
 -(NSString *)toXmlString

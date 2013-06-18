@@ -21,14 +21,27 @@
 #import "HVClient.h"
 #import "HVUIAlert.h"
 
+@interface HVAppProvisionController (HVPrivate)
+
+-(BOOL) queryStringHasAppAuthSuccess:(NSString *) qs;
+-(NSString *) instanceIDFromQs:(NSString *) qs;
+
+@end
+
 @implementation HVAppProvisionController
 
 @synthesize status = m_status;
 @synthesize error = m_error;
+@synthesize hvInstanceID = m_hvInstanceID;
 
 -(BOOL)isSuccess
 {
     return (m_status == HVAppProvisionSuccess);
+}
+
+-(BOOL)hasInstanceID
+{
+    return ![NSString isNilOrEmpty:m_hvInstanceID];
 }
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -67,6 +80,7 @@ LError:
 {
     [m_error release];
     [m_callback release];
+    [m_hvInstanceID release];
     
     [super dealloc];
 }
@@ -77,17 +91,16 @@ LError:
     safeInvokeNotify(m_callback, self);
 }
 
--(BOOL)webView: (UIWebView *)webView shouldStartLoadWithRequest: (NSURLRequest *)request
-navigationType: (UIWebViewNavigationType)navigationType 
+-(BOOL)webView: (UIWebView *)webView shouldStartLoadWithRequest: (NSURLRequest *)request navigationType: (UIWebViewNavigationType)navigationType 
 {
     [super webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
-
-    NSString* queryString = [[request URL] query];
-    NSRange authSuccess = [queryString rangeOfString:@"target=AppAuthSuccess"];
     
-    if (authSuccess.length > 0)
+    NSLog(@"App Provisioning Current Url %@", [[request URL] absoluteString]);
+    NSString* queryString = [[request URL] query];
+    if ([self queryStringHasAppAuthSuccess:queryString])
     {
         m_status = HVAppProvisionSuccess;
+        HVRETAIN(m_hvInstanceID, [self instanceIDFromQs:queryString]);
         [self abort];
     }    
 
@@ -127,5 +140,25 @@ navigationType: (UIWebViewNavigationType)navigationType
     
  }
 
+@end
+
+@implementation HVAppProvisionController (HVPrivate)
+
+-(BOOL)queryStringHasAppAuthSuccess:(NSString *)qs
+{
+    NSRange authSuccess = [qs rangeOfString:@"target=AppAuthSuccess" options:NSCaseInsensitiveSearch];
+    return (authSuccess.length > 0);
+}
+
+-(NSString *)instanceIDFromQs:(NSString *)qs
+{
+    NSDictionary* args = [NSDictionary fromArgumentString:qs];
+    if ([NSDictionary isNilOrEmpty:args])
+    {
+        return nil;
+    }
+    
+    return [args objectForKey:@"instanceid"];
+}
 
 @end

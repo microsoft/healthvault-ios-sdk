@@ -23,6 +23,7 @@
 +(HVItemCollection *) createRandomForDay:(NSDate *) date
 {
     HVItem* item = [HVCondition createRandom];
+   
     return [[[HVItemCollection alloc] initwithItem:item] autorelease];
 }
 

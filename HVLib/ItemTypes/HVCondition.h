@@ -46,7 +46,7 @@
 @property (readwrite, nonatomic, retain) HVApproxDateTime* onsetDate;
 //
 // Optional: 'acute', 'chronic' etc
-// Vocabulary: condition-occurence
+// Vocabulary: condition-occurrence
 //
 @property (readwrite, nonatomic, retain) HVCodableValue* status;
 //

@@ -40,6 +40,8 @@ enum HVClientResultCode
     //
     HVClientError_Unknown,
     HVClientError_Web,
+    HVClientEror_InvalidMasterAppID,
+    HVClientError_UnknownServiceInstance,
     //
     // Base types
     //

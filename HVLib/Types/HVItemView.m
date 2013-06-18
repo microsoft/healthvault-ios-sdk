@@ -154,6 +154,7 @@ LError:
     {
         [array addObject:HVItemSectionToString(HVItemSection_Signatures)];
     }
+    
     return array;
 }
 

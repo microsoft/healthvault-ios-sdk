@@ -57,3 +57,37 @@ static const xmlChar* x_element_instance = XMLSTRINGCONST("instances");
 }
 
 @end
+
+static NSString* const c_element_updated = @"updated-date";
+static NSString* const c_element_sections = @"response-sections";
+static NSString* const c_element_section = @"section";
+
+@implementation HVServiceDefinitionParams
+
+@synthesize updatedSince = m_updatedSince;
+
+-(HVStringCollection *)sections
+{
+    HVENSURE(m_sections, HVStringCollection);
+    return m_sections;
+}
+
+-(void)setSections:(HVStringCollection *)sections
+{
+    HVRETAIN(m_sections, sections);
+}
+
+-(void)dealloc
+{
+    [m_updatedSince release];
+    [m_sections release];
+    [super dealloc];
+}
+
+-(void)serialize:(XWriter *)writer
+{
+    HVSERIALIZE_DATE(m_updatedSince, c_element_updated);
+    HVSERIALIZE_ARRAYNESTED(m_sections, c_element_sections, c_element_section);
+}
+
+@end

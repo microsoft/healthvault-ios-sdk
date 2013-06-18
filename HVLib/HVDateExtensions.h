@@ -32,6 +32,7 @@ const NSUInteger NSAllCalendarUnits;
 
 +(NSDate *) fromHour:(int) hour;
 +(NSDate *) fromHour:(int)hour andMinute:(int) minute;
++(NSDate *) fromYear:(int)year month:(int) month andDay:(int)day;
 
 -(NSTimeInterval) offsetFromNow;
 -(NSDate *) toStartOfDay;

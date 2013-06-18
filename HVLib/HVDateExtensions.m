@@ -110,6 +110,25 @@ LError:
     return nil;
 }
 
++(NSDate *)fromYear:(int)year month:(int)month andDay:(int)day
+{
+    NSDateComponents *components = [NSCalendar newComponents];
+    HVCHECK_NOTNULL(components);
+    
+    components.year = year;
+    components.month = month;
+    components.day = day;
+    
+    NSDate* newDate = [components date];
+    [components release];
+    
+    return newDate;
+    
+LError:
+    [components release];
+    return nil;    
+}
+
 -(NSDate *)toStartOfDay
 {
     NSCalendar* calendar = [NSCalendar newGregorian];

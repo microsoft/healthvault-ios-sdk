@@ -27,7 +27,7 @@
 
 + (NSString *)platformAbbreviationAndVersion {
 
-	return @"iOS V1.0";
+	return @"HV-iOS/2.1";
 }
 
 + (NSString *)deviceName {

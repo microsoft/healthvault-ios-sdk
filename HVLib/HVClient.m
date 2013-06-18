@@ -20,6 +20,8 @@
 #import "HVClient.h"
 #import "HealthVaultResponse.h"
 #import "HVAppProvisionController.h"
+#import "HVServiceDef.h"
+#import "HVMethods.h"
 
 static HVClient* s_app;
 
@@ -35,13 +37,23 @@ static HVClient* s_app;
 -(void) deleteUser;
 -(BOOL) applyUserEnvironment;
 
+-(void) loadSavedEnvironment;
+-(void) setEnvironment:(HVInstance *) instance;
+-(BOOL) saveEnvironment;
+-(void) deleteSavedEnvironment;
+
 //
-// Callbacks from HealthVaultService
+// Callbacks from HealthVaultService object
 //
+-(void) shellAuthRequired: (HealthVaultResponse *)response;
+-(void) authenticationCompleted: (HealthVaultResponse *)response;
+//
+// Auth state machine
+//
+-(void) beginGetTopology;
 -(void) beginAuth;
--(void)shellAuthRequired: (HealthVaultResponse *)response;
 -(void) beginShellAuth;
--(void)authenticationCompleted: (HealthVaultResponse *)response;
+-(void) setupInstanceInfo:(NSString *) instanceID;
 -(void) notifyOfProvisionStatus;
 
 @end
@@ -55,6 +67,7 @@ static HVClient* s_app;
 @synthesize provisionStatus = m_provisionStatus;
 @synthesize service = m_service;
 @synthesize user = m_user;
+@synthesize environment = m_environment;
 
 +(void)initialize
 {
@@ -124,7 +137,10 @@ static HVClient* s_app;
     HVCHECK_NOTNULL(m_queue);
     
     m_settings = [HVClientSettings newSettingsFromResource];
-    HVCHECK_NOTNULL(m_settings);
+    if (!m_settings)
+    {
+        m_settings = [[HVClientSettings alloc] init]; // Default settings
+    }
     
     HVCHECK_SUCCESS([self ensureLocalVault]);
     
@@ -151,6 +167,8 @@ LError:
     [m_settings release];
     [m_rootDirectory release];
     [m_service release];
+    [m_environment release];
+    [m_serviceDef release];
     
     [m_parentController release];
     [m_provisionCallback release];
@@ -184,6 +202,9 @@ LError:
         else
         {
              // Gonna have to provision this application - perhaps authorize some records
+            [self deleteState];
+            [m_service applyEnvironmentSettings:[m_settings firstEnvironment]];
+
             [self beginAuth];
         }
         
@@ -228,6 +249,7 @@ LError:
     @synchronized(self)
     {
         [m_service saveSettings];
+        [self saveEnvironment];
         return [self saveUser];
     }
 }
@@ -236,6 +258,7 @@ LError:
 {
     @synchronized(self)
     {
+        [self deleteSavedEnvironment];
         [self deleteUser];
         if (m_service)
         {
@@ -251,16 +274,10 @@ LError:
     @synchronized(self)
     {
         self.provisionStatus = HVAppProvisionCancelled;
-        
-        if (m_service)
-        {
-            [m_service reset];
-            [m_service saveSettings];
-        }
         //
         // Delete local state
         //
-        [self deleteUser];
+        [self deleteState];
         //
         // And local storage
         //
@@ -320,6 +337,7 @@ LError:
 @end
 
 static NSString* const c_userfileName = @"user.xml";
+static NSString* const c_environmentFileName = @"environment.xml";
 
 @implementation HVClient (HVPrivate)
 
@@ -357,7 +375,11 @@ LError:
         else
         {
             m_user = [[HVUser alloc] initFromLegacyRecords:m_service.records];
-        }    
+            if (m_environment)
+            {
+                m_user.instanceID = m_environment.instanceID;
+            }
+        }
     }
 }
 
@@ -430,9 +452,67 @@ LError:
     return FALSE;
 }
 
+-(void)loadSavedEnvironment
+{
+    @synchronized(self)
+    {
+        HVCLEAR(m_environment);
+        
+        HVEnvironmentSettings* env = (HVEnvironmentSettings *)[m_localVault.root getObjectWithKey:c_environmentFileName name:@"environment" andClass:[HVEnvironmentSettings class]];
+        
+        HVRETAIN(m_environment, env);
+    }
+}
+
+-(BOOL)saveEnvironment
+{
+    @synchronized(self)
+    {
+        if (!m_environment)
+        {
+            return TRUE;
+        }
+        
+        return [m_localVault.root putObject:m_environment withKey:c_environmentFileName andName:@"environment"];
+    }
+}
+
+-(void)setEnvironment:(HVInstance *)instance
+{
+    @synchronized(self)
+    {
+        HVCLEAR(m_environment);
+        if (instance)
+        {
+            HVRETAIN(m_environment, [HVEnvironmentSettings fromInstance:instance]);
+        }
+        [m_service applyEnvironmentSettings:m_environment];
+    }
+}
+
+-(void)deleteSavedEnvironment
+{
+    @synchronized(self)
+    {
+        HVCLEAR(m_environment);
+        [m_localVault.root deleteKey:c_environmentFileName];
+    }
+}
+
 -(HealthVaultService *)newService
 {
-    HVEnvironmentSettings* environment = [m_settings firstEnvironment];
+    HVEnvironmentSettings* environment = nil;
+
+    [self loadSavedEnvironment];
+    if (m_environment)
+    {
+        environment = m_environment;
+    }
+    else
+    {
+        environment = [m_settings firstEnvironment];
+    }
+    
     HealthVaultService* service = [[HealthVaultService alloc] 
                                    initForAppID:m_settings.masterAppID 
                                    andEnvironment:environment];
@@ -455,7 +535,14 @@ LError:
 
 -(void)shellAuthRequired:(HealthVaultResponse *)response
 {
-    [self invokeOnMainThread:@selector(beginShellAuth)];
+    if(m_settings.isMultiInstanceAware)
+    {
+        [self invokeOnMainThread:@selector(beginGetTopology)];
+    }
+    else
+    {
+        [self invokeOnMainThread:@selector(beginShellAuth)];        
+    }
 }
 
 -(void)beginAuth
@@ -468,14 +555,27 @@ LError:
     [self saveState];
     
     self.provisionStatus = HVAppProvisionCancelled;
-
-    NSURL* creationUrl = [NSURL URLWithString:[m_service getApplicationCreationUrl]];
+        
+    NSURL* creationUrl;
+    if (m_settings.isMultiInstanceAware)
+    {
+        creationUrl = [NSURL URLWithString:[m_service getApplicationCreationUrlGA]];
+    }
+    else
+    {
+        creationUrl = [NSURL URLWithString:[m_service getApplicationCreationUrl]];
+    }
     HVCHECK_NOTNULL(creationUrl);
     
-   HVAppProvisionController * shellController = [[HVAppProvisionController alloc] initWithAppCreateUrl:creationUrl andCallback:^(HVAppProvisionController *controller) {
+    HVAppProvisionController * shellController = [[HVAppProvisionController alloc] initWithAppCreateUrl:creationUrl andCallback:^(HVAppProvisionController *controller) {
         
         if (controller.status == HVAppProvisionSuccess)
         {
+            if (m_settings.isMultiInstanceAware && controller.hasInstanceID)
+            {
+                [self setupInstanceInfo:controller.hvInstanceID];
+            }
+            
             [self invokeOnMainThread:@selector(beginAuth)];
         }
         else
@@ -490,6 +590,23 @@ LError:
     
     return;
 
+LError:
+    safeInvokeNotify(m_provisionCallback, self);
+}
+
+-(void)beginGetTopology
+{    
+    HVGetServiceDefinitionTask* getTask = [HVGetServiceDefinitionTask getTopology:^(HVTask *task) {
+        
+        HVServiceDefinition* serviceDef = (((HVGetServiceDefinitionTask *) task).serviceDef);
+        HVRETAIN(m_serviceDef, serviceDef);
+        
+        [self invokeOnMainThread:@selector(beginShellAuth)];
+    }];
+    HVCHECK_NOTNULL(getTask);
+    
+    return;
+    
 LError:
     safeInvokeNotify(m_provisionCallback, self);
 }
@@ -516,6 +633,27 @@ LError:
     HVCLEAR(m_parentController);
     
     [self invokeOnMainThread:@selector(notifyOfProvisionStatus)]; 
+}
+
+-(void)setupInstanceInfo:(NSString *)instanceID
+{
+    NSUInteger index = NSNotFound;
+    
+    if (m_serviceDef)
+    {
+        index = [m_serviceDef.systemInstances.instances indexOfInstanceWithID:instanceID];
+    }
+    if (index == NSNotFound)
+    {
+        [HVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_UnknownServiceInstance)];
+    }
+    
+    HVInstance* instance = (HVInstance *)[m_serviceDef.systemInstances.instances objectAtIndex:index];
+    
+    [self setEnvironment:instance];
+    [self saveState];
+    
+    HVCLEAR(m_serviceDef);
 }
 
 -(void)notifyOfProvisionStatus

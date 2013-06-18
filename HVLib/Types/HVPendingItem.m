@@ -19,21 +19,21 @@
 #import "HVCommon.h"
 #import "HVPendingItem.h"
 
-static NSString* const c_element_id = @"thing-id";
-static NSString* const c_element_type = @"type-id";
-static NSString* const c_element_edate = @"eff-date";
+static const xmlChar* x_element_id = XMLSTRINGCONST("thing-id");
+static const xmlChar* x_element_type = XMLSTRINGCONST("type-id");
+static const xmlChar* x_element_edate = XMLSTRINGCONST("eff-date");
 
 @implementation HVPendingItem
 
 @synthesize key = m_id;
 @synthesize type = m_type;
-@synthesize effectiveDate = m_eDate;
+@synthesize effectiveDate = m_effectiveDate;
 
 -(void) dealloc
 {
     [m_id release];
     [m_type release];
-    [m_eDate release];
+    [m_effectiveDate release];
     
     [super dealloc];
 }
@@ -53,16 +53,16 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_id, c_element_id);
-    HVSERIALIZE(m_type, c_element_type);
-    HVSERIALIZE_DATE(m_eDate, c_element_edate);
+    HVSERIALIZE_X(m_id, x_element_id);
+    HVSERIALIZE_X(m_type, x_element_type);
+    HVSERIALIZE_DATE_X(m_effectiveDate, x_element_edate);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_id, c_element_id, HVItemKey);
-    HVDESERIALIZE(m_type, c_element_type, HVItemType);
-    HVDESERIALIZE_DATE(m_eDate, c_element_edate);
+    HVDESERIALIZE_X(m_id, x_element_id, HVItemKey);
+    HVDESERIALIZE_X(m_type, x_element_type, HVItemType);
+    HVDESERIALIZE_DATE_X(m_effectiveDate, x_element_edate);
 }
 
 @end

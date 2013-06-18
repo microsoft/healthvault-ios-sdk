@@ -261,6 +261,8 @@ NSString* pickRandomDrug(void)
     
     glucose.isOutsideOperatingTemp = FALSE;
     
+    [item updateEndDate:[dateTime toDate]];
+    
     return item;
     
 }

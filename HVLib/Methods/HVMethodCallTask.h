@@ -33,12 +33,14 @@
     HVRecordReference* m_record;
     
     NSInteger m_attempt;
+    BOOL m_useMasterAppID;
 }
 
 @property (readonly, nonatomic) NSString* name;
 @property (readonly, nonatomic) float version;
 @property (readonly, nonatomic) HVServerResponseStatus* status; 
 @property (readwrite, nonatomic, retain) HVRecordReference* record;
+@property (readwrite, nonatomic) BOOL useMasterAppID;
 
 -(id) initWithCallback:(HVTaskCompletion) callback;
 

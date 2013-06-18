@@ -24,6 +24,7 @@
 +(HVItemCollection *)createRandomForDay:(NSDate *)date
 {
     HVItem* item = [HVMedication createRandomForDate:[HVApproxDateTime fromDate:date]];
+
     return [[[HVItemCollection alloc] initwithItem:item] autorelease];
 }
 

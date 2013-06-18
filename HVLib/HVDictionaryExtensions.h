@@ -22,4 +22,7 @@
 
 +(BOOL) isNilOrEmpty:(NSDictionary *) dictionary;
 
+// Argument string separated by '&'
++(NSMutableDictionary *) fromArgumentString:(NSString *) qs;
+
 @end

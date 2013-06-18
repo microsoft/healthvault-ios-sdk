@@ -87,6 +87,10 @@
 //
 // If you wish to manage this information yourself, you should call putItem/putItems directly
 //
+// Since updateItem alters the item object you supplied, you should call getItem again.
+// This will give you the latest updated Xml from HV. Alternatively, you can call [item shallowClone] and
+// pass that to updateItem
+//
 -(HVPutItemsTask *) updateItem:(HVItem *) item callback:(HVTaskCompletion) callback;
 -(HVPutItemsTask *) updateItems:(HVItemCollection *) items callback:(HVTaskCompletion)callback;
 

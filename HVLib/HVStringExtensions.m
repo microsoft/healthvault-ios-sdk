@@ -386,4 +386,13 @@ LError:
     return [self replaceOccurrencesOfString:@":" withString:c_emptyString options:0 range:range];
 }
 
+
 @end
+
+CFStringRef HVUrlEncode(CFStringRef source)
+{
+    return CFURLCreateStringByAddingPercentEscapes(NULL, source,
+                                            NULL,
+                                            (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                            kCFStringEncodingUTF8);
+}

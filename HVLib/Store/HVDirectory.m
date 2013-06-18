@@ -418,7 +418,6 @@ LError:
 {
     @synchronized(self)
     {
-        //NSString *filePath = [self makeFilePathIfExists:key];
         NSString* filePath = [self makeChildPath:key];
         if (!filePath)
         {
@@ -426,7 +425,6 @@ LError:
         }
         
         XConverter* converter = [self getConverter];
-        //return [NSObject newFromFilePath:filePath withRoot:name asClass:cls];
         return [NSObject newFromSecureFilePath:filePath withRoot:name asClass:cls withConverter:converter];
     }
 }
