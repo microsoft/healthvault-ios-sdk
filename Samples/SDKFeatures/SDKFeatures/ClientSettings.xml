@@ -9,8 +9,8 @@
     <environment>
         <name>US PPE</name>
         <friendlyName>PPE - US Residents</friendlyName>
-        <serviceUrl>https://platform.healthvault.com/platform/wildcat.ashx</serviceUrl>
-        <shellUrl>https://account.healthvault.com</shellUrl>
+        <serviceUrl>https://platform.healthvault-ppe.com/platform/wildcat.ashx</serviceUrl>
+        <shellUrl>https://account.healthvault-ppe.com</shellUrl>
     </environment>
     <!--
     <environment>
