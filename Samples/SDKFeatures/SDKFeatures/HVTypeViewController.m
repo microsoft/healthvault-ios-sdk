@@ -43,8 +43,10 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 @implementation HVTypeViewController
 
+@synthesize items = m_items;
 @synthesize itemTable = m_itemTable;
 @synthesize statusLabel = m_statusLabel;
+@synthesize moreActions = m_moreActions;
 
 -(id)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric
 {
@@ -53,7 +55,11 @@ static const NSInteger c_numSecondsInDay = 86400;
     
     m_typeClass = typeClass;
     m_useMetric = metric;
-    
+    HVRETAIN(m_moreFeatures, [typeClass moreFeatures]);
+    if (m_moreFeatures)
+    {
+        m_moreFeatures.controller = self;
+    }
     return self;
     
 LError:
@@ -66,7 +72,9 @@ LError:
     
     [m_itemTable release];
     [m_statusLabel release];
+    [m_moreActions release];
     [m_items release];
+    [m_moreFeatures release];
     
     [super dealloc];
 }
@@ -80,6 +88,14 @@ LError:
 - (IBAction)removeItem:(id)sender
 {
     [self removeCurrentItem];
+}
+
+- (IBAction)moreClicked:(id)sender
+{
+    if (m_moreFeatures)
+    {
+        [m_moreFeatures showFrom:m_moreActions];
+    }
 }
 
 - (void)viewDidLoad
@@ -107,6 +123,10 @@ LError:
     m_createMultiple = FALSE;  
     
     self.navigationItem.title = [m_typeClass XRootElement]; // Every HVItemDataTyped implements this..
+    if (!m_moreFeatures)
+    {
+        [m_moreActions setEnabled:FALSE];
+    }
     
     [self getItemsFromHealthVault];
 }
@@ -229,6 +249,17 @@ LError:
             [self removeItemCompleted:task];
         }];
     }];
+}
+
+-(void)showActivityAndStatus:(NSString *)status
+{
+    [m_statusLabel showActivity];
+    m_statusLabel.text = status;
+}
+
+-(void)clearStatus
+{
+    [m_statusLabel clearStatus];
 }
 
 @end

@@ -43,6 +43,9 @@
 		5DD6C27C16780C1000A658D8 /* HVMedicationUsageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C27B16780C1000A658D8 /* HVMedicationUsageFactory.m */; };
 		5DD6C2C01679121300A658D8 /* HVBloodGlucoseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C2BF1679121300A658D8 /* HVBloodGlucoseFactory.m */; };
 		5DD6C2E016791ACD00A658D8 /* HVSleepJournalAMFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C2DF16791ACD00A658D8 /* HVSleepJournalAMFactory.m */; };
+		5DEC254C178B573A00FE971B /* HVFileFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC254B178B573A00FE971B /* HVFileFeatures.m */; };
+		5DEC255A178B5A7F00FE971B /* HVItemDataTypedFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC2559178B5A7F00FE971B /* HVItemDataTypedFeatures.m */; };
+		5DEC255D178B680400FE971B /* HVFileFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC255C178B680400FE971B /* HVFileFactory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +109,12 @@
 		5DD6C2BF1679121300A658D8 /* HVBloodGlucoseFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBloodGlucoseFactory.m; sourceTree = "<group>"; };
 		5DD6C2DE16791ACD00A658D8 /* HVSleepJournalAMFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSleepJournalAMFactory.h; sourceTree = "<group>"; };
 		5DD6C2DF16791ACD00A658D8 /* HVSleepJournalAMFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSleepJournalAMFactory.m; sourceTree = "<group>"; };
+		5DEC254A178B573900FE971B /* HVFileFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFileFeatures.h; sourceTree = "<group>"; };
+		5DEC254B178B573A00FE971B /* HVFileFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFileFeatures.m; sourceTree = "<group>"; };
+		5DEC2558178B5A7F00FE971B /* HVItemDataTypedFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemDataTypedFeatures.h; sourceTree = "<group>"; };
+		5DEC2559178B5A7F00FE971B /* HVItemDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemDataTypedFeatures.m; sourceTree = "<group>"; };
+		5DEC255B178B680400FE971B /* HVFileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFileFactory.h; sourceTree = "<group>"; };
+		5DEC255C178B680400FE971B /* HVFileFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFileFactory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +199,8 @@
 				5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */,
 				5DD6C23D1677D2C600A658D8 /* HVExerciseFactory.h */,
 				5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */,
+				5DEC255B178B680400FE971B /* HVFileFactory.h */,
+				5DEC255C178B680400FE971B /* HVFileFactory.m */,
 				5D78993B17173B510015D375 /* HVImmunizationFactory.h */,
 				5D78993C17173B520015D375 /* HVImmunizationFactory.m */,
 				5D789934171736050015D375 /* HVMedicationFactory.h */,
@@ -204,6 +215,10 @@
 				5D3EBB0C16794B1C00BDE25E /* HVWeightFactory.m */,
 				5D789955171758E90015D375 /* HVStatusLabel.h */,
 				5D789956171758E90015D375 /* HVStatusLabel.m */,
+				5DEC2558178B5A7F00FE971B /* HVItemDataTypedFeatures.h */,
+				5DEC2559178B5A7F00FE971B /* HVItemDataTypedFeatures.m */,
+				5DEC254A178B573900FE971B /* HVFileFeatures.h */,
+				5DEC254B178B573A00FE971B /* HVFileFeatures.m */,
 				5D09134B166ED1980031F5F9 /* Supporting Files */,
 			);
 			path = SDKFeatures;
@@ -315,6 +330,9 @@
 				5D78993D17173B520015D375 /* HVImmunizationFactory.m in Sources */,
 				5D78994017173D2A0015D375 /* HVProcedureFactory.m in Sources */,
 				5D789957171758E90015D375 /* HVStatusLabel.m in Sources */,
+				5DEC254C178B573A00FE971B /* HVFileFeatures.m in Sources */,
+				5DEC255A178B5A7F00FE971B /* HVItemDataTypedFeatures.m in Sources */,
+				5DEC255D178B680400FE971B /* HVFileFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

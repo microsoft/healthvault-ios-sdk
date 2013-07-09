@@ -20,28 +20,38 @@
 #import "HVLib.h"
 #import "HVItemDataTypedFactory.h"
 #import "HVStatusLabel.h"
+#import "HVItemDataTypedFeatures.h"
 
 @interface HVTypeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
     Class m_typeClass;
     HVItemCollection* m_items;
+    HVItemDataTypedFeatures* m_moreFeatures;
     
     HVStatusLabel* m_statusLabel;
     UITableView* m_itemTable;
+    UIBarButtonItem* m_moreActions;
     
     BOOL m_useMetric;
     NSInteger m_maxDaysOffsetRandomData;  // Create new data for a day with max this offset from today. (1)
     BOOL m_createMultiple;                // Whether to create one or multiple random items when the user clicks Add. (False)
 }
 
+@property (readonly, nonatomic) HVItemCollection* items;
+
 @property (readwrite, nonatomic, retain) IBOutlet HVStatusLabel* statusLabel;
 @property (readwrite, nonatomic, retain) IBOutlet UITableView *itemTable;
+@property (retain, nonatomic) IBOutlet UIBarButtonItem *moreActions;
 
 -(id) initWithTypeClass:(Class) typeClass useMetric:(BOOL) metric;
 
 - (IBAction)addItem:(id)sender;
 - (IBAction)removeItem:(id)sender;
+- (IBAction)moreClicked:(id)sender;
 
+//
+// Returns the item in the table that is currently selected
+//
 -(HVItem *) getSelectedItem;
 
 //
@@ -54,5 +64,7 @@
 
 -(void) refreshView;
 -(void) getItemsFromHealthVault;
+-(void) showActivityAndStatus:(NSString *) status;
+-(void) clearStatus;
 
 @end

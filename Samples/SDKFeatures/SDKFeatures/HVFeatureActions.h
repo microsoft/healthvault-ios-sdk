@@ -27,7 +27,7 @@
     NSMutableArray* m_actions;
 }
 
--(id) init;
+-(id) initWithTitle:(NSString *) title;
 
 -(BOOL) addFeature:(NSString *) title andAction:(HVAction) action;
 

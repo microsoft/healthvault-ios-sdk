@@ -19,6 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HVLib.h"
+#import "HVItemDataTypedFeatures.h"
 
 //
 // Category for generating random, but correct, typed HealthVault data
@@ -27,6 +28,8 @@
 
 +(HVItemCollection *) createRandomForDay:(NSDate *) date;
 +(HVItemCollection *) createRandomMetricForDay:(NSDate *) date;
+
++(HVItemDataTypedFeatures *) moreFeatures;
 
 @end
 

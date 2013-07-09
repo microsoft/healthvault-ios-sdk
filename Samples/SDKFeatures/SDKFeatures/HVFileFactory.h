@@ -1,7 +1,6 @@
 //
-//  HVItemDataTypedExtensions.m
+//  HVFileFactory.h
 //  SDKFeatures
-//
 //  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,40 +16,9 @@
 // limitations under the License.
 //
 //
+
 #import "HVItemDataTypedFactory.h"
-//
-// Default implementation of HVFactoryMethods category
-// Does nothing
-//
-@implementation HVItemDataTyped (HVFactoryMethods)
 
-+(HVItemCollection *) createRandomForDay:(NSDate *) date
-{
-    return nil;
-}
-
-+(HVItemCollection *) createRandomMetricForDay:(NSDate *) date
-{
-    return nil;
-}
-
-+(HVItemDataTypedFeatures *)moreFeatures
-{
-    return nil;
-}
-
-@end
-
-@implementation HVItemDataTyped (HVDisplay)
-
--(NSString *)detailsString
-{
-    return self.description;
-}
-
--(NSString *)detailsStringMetric
-{
-    return [self detailsString];
-}
+@interface HVFile (HVFactoryMethods)
 
 @end

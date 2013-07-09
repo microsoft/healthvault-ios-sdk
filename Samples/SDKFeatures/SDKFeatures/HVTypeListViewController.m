@@ -147,6 +147,13 @@ LError:
     [typeList addObject:[HVProcedure class]];
     [typeList addObject:[HVSleepJournalAM class]];
     [typeList addObject:[HVWeight class]];
+    [typeList addObject:[HVFile class]];
+    
+    [typeList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        HVItemDataTyped* t1 = (HVItemDataTyped *) obj1;
+        HVItemDataTyped* t2 = (HVItemDataTyped *) obj2;
+        return [[[t1 class] XRootElement] compare:[[t2 class] XRootElement]];
+    }];
     
     return typeList;
 }

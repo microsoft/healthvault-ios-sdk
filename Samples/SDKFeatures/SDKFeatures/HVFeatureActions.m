@@ -13,10 +13,19 @@
 
 -(id)init
 {
+    return [self initWithTitle:nil];
+}
+
+-(id)initWithTitle:(NSString *)title
+{
     self = [super init];
     HVCHECK_SELF;
     
-    m_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Try MORE Features"
+    if (!title)
+    {
+        title = @"Try MORE Features";
+    }
+    m_actionSheet = [[UIActionSheet alloc] initWithTitle:title
                                         delegate:self
                                         cancelButtonTitle:@"Cancel"
                                         destructiveButtonTitle:nil

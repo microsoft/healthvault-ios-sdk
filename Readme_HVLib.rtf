@@ -1,8 +1,8 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf470
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
 {\fonttbl\f0\fnil\fcharset0 Tahoma;\f1\fnil\fcharset0 LucidaGrande;\f2\fnil\fcharset0 Menlo-Regular;
 \f3\fnil\fcharset0 Menlo-Bold;\f4\fnil\fcharset0 Consolas;}
-{\colortbl;\red255\green255\blue255;\red255\green39\blue18;\red217\green11\blue0;\red0\green116\blue0;
-\red100\green56\blue32;\red196\green26\blue22;\red170\green13\blue145;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red100\green56\blue32;\red196\green26\blue22;
+\red170\green13\blue145;}
 {\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
 {\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
 {\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid201\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
@@ -13,9 +13,7 @@
 \margl1440\margr1440\vieww19980\viewh15180\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 
-\f0\b\fs36 \cf2 [Status: Pre-Draft]\
-\cf0 \
-Assumptions\
+\f0\b\fs36 \cf0 Assumptions\
 
 \fs28 \
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural
@@ -50,11 +48,7 @@ Assumptions\
 \b0\fs28 \cf0 \
 HVLib is an iOS library you use to build applications for 
 \b Microsoft HealthVault
-\b0 .   \
-\
-HVLib is in \cf3 early 
-\b pre-release
-\b0  status\cf0 , with rapid incremental updates, improvements and bug fixes to come. \
+\b0 .  HVLib was originally developed for and is actively used by the Microsoft HealthVault for iPhone app.\
 \
 HVLib is a 
 \b static library
@@ -112,11 +106,11 @@ You should link HVLib as a static library into your project.\
 \b \cf0 Header Files\
 \pard\tx640\pardeftab640\pardirnatural
 
-\f2\b0\fs26 \cf4 \CocoaLigature0 //\cf0 \
-\cf4 // Include HealthVault Library\cf0 \
-\cf4 //\cf0 \
+\f2\b0\fs26 \cf2 \CocoaLigature0 //\cf0 \
+\cf2 // Include HealthVault Library\cf0 \
+\cf2 //\cf0 \
 
-\f3\b \cf5 #import \cf6 "HVLib.h"
+\f3\b \cf3 #import \cf4 "HVLib.h"
 \f2\b0 \
 \
 
@@ -215,24 +209,24 @@ Make the following changes to your project Target:\
 \fs28 \
 \pard\tx640\pardeftab640\pardirnatural
 
-\f4 \cf7 \CocoaLigature0 <?xml version=\cf6 "1.0"\cf7  encoding=\cf6 "utf-8"\cf7  ?>\cf0 \
-\cf7 <clientSettings>\cf0 \
-    \cf4 <!--\
+\f4 \cf5 \CocoaLigature0 <?xml version=\cf4 "1.0"\cf5  encoding=\cf4 "utf-8"\cf5  ?>\cf0 \
+\cf5 <clientSettings>\cf0 \
+    \cf2 <!--\
         HealthVault Application ID\
      This is the app ID for the default sample Hello World application. \
      Create your own application athttp://config.healthvault-ppe.com\
      -->\cf0 \
-	\cf7 <masterAppID>\cf0 cf36aef7-5d87-4688-88b2-f9b57c086d7d\cf7 </masterAppID>\cf0 \
-    \cf4 <!--Application name -->\cf0 \
-    \cf7 <appName>\cf0 Hello Healthvault\cf7 </appName>\cf0 \
-    \cf4 <!--\
+	\cf5 <masterAppID>\cf0 cf36aef7-5d87-4688-88b2-f9b57c086d7d\cf5 </masterAppID>\cf0 \
+    \cf2 <!--Application name -->\cf0 \
+    \cf5 <appName>\cf0 Hello Healthvault\cf5 </appName>\cf0 \
+    \cf2 <!--\
         Url for HealthVault service calls - set up for Pre-Production below\
      -->\cf0 \
-	\cf7 <serviceUrl>\cf0 https://platform.healthvault-ppe.com/platform/wildcat.ashx\cf7 </serviceUrl>\cf0 \
-    \cf4 <!--\
+	\cf5 <serviceUrl>\cf0 https://platform.healthvault-ppe.com/platform/wildcat.ashx\cf5 </serviceUrl>\cf0 \
+    \cf2 <!--\
         HealthVault Shell - used during app provisioning on the device\
      -->\cf0 \
-	\cf7 <shellUrl>\cf0 https://account.healthvault-ppe.com\cf7 </shellUrl>\cf0 \
-\cf7 </clientSettings>\cf0 \
+	\cf5 <shellUrl>\cf0 https://account.healthvault-ppe.com\cf5 </shellUrl>\cf0 \
+\cf5 </clientSettings>\cf0 \
 \
 }

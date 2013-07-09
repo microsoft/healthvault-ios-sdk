@@ -1,5 +1,5 @@
 //
-//  HVItemDataTypedExtensions.m
+//  HVFileFeatures.h
 //  SDKFeatures
 //
 //  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
@@ -16,41 +16,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-//
-#import "HVItemDataTypedFactory.h"
-//
-// Default implementation of HVFactoryMethods category
-// Does nothing
-//
-@implementation HVItemDataTyped (HVFactoryMethods)
 
-+(HVItemCollection *) createRandomForDay:(NSDate *) date
+#import "HVItemDataTypedFeatures.h"
+
+@interface HVFileFeatures : HVItemDataTypedFeatures<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
-    return nil;
+@private
+    NSData* m_fileData;
+    NSString* m_fileMediaType;
 }
 
-+(HVItemCollection *) createRandomMetricForDay:(NSDate *) date
-{
-    return nil;
-}
+-(void) viewFileInBrowser;
+-(void) downloadFile;
 
-+(HVItemDataTypedFeatures *)moreFeatures
-{
-    return nil;
-}
+-(void) processSelectedFile:(HVHandler) action;
+-(void) downloadFileToFile:(NSFileHandle *) file;
+-(void) uploadFileWithName:(NSString *) name data:(NSData *) data andMediaType:(NSString *) mediaType;
 
-@end
-
-@implementation HVItemDataTyped (HVDisplay)
-
--(NSString *)detailsString
-{
-    return self.description;
-}
-
--(NSString *)detailsStringMetric
-{
-    return [self detailsString];
-}
+-(void) pickImageForUpload;
 
 @end
