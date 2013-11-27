@@ -22,6 +22,7 @@
 #import "HVCholesterolV2.h"
 #import "HVBloodGlucose.h"
 #import "HVCholesterolV2.h"
+#import "HVHeartRate.h"
 #import "HVHeight.h"
 #import "HVExercise.h"
 #import "HVDailyMedicationUsage.h"
@@ -64,6 +65,7 @@
 -(HVCholesterolV2 *) cholesterolV2;
 -(HVBloodGlucose *) bloodGlucose;
 -(HVHeight *) height;
+-(HVHeartRate *) heartRate;
 -(HVExercise *) exercise;
 -(HVDailyMedicationUsage *) medicationUsage;
 -(HVEmotionalState *) emotionalState;

@@ -1,5 +1,5 @@
 //
-//  HVItemDataTypedExtensions.h
+//  HVHeartRateFactory.h
 //  SDKFeatures
 //
 //  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
@@ -19,24 +19,17 @@
 
 #import <Foundation/Foundation.h>
 #import "HVLib.h"
-#import "HVItemDataTypedFeatures.h"
+#import "HVItemTestExtensions.h"
 
-//
-// Category for generating random, but correct, typed HealthVault data
-//
-@interface HVItemDataTyped (HVFactoryMethods)
+@interface HVHeartRate (HVFactoryMethods)
 
 +(HVItemCollection *) createRandomForDay:(NSDate *) date;
-+(HVItemCollection *) createRandomMetricForDay:(NSDate *) date;
-
-+(HVItemDataTypedFeatures *) moreFeatures;
 
 @end
 
-@interface HVItemDataTyped (HVDisplay)
+@interface HVHeartRate (HVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;
--(NSString *) dateString;
 
 @end

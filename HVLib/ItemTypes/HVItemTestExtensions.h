@@ -97,6 +97,13 @@ NSString* pickRandomDrug(void);
 
 @end
 
+@interface HVHeartRate (HVTestExtensions)
+
++(HVItem *) createRandom;
++(HVItem *) createRandomForDate:(HVDateTime *) dateTime;
+
+@end
+
 @interface HVHeight (HVTestExtensions)
 
 +(HVItem *) createRandom;

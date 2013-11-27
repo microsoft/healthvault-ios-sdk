@@ -4,3 +4,5 @@ xcuserdata/
 *.xcuserstate
 
 Samples/Demos/Health2.0/HelloHealthVault/HelloHealthVault/Code.txt
+
+*.xccheckout

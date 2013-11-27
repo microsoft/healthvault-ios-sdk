@@ -122,7 +122,7 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
                                         HVCHECK_RESULT([obj validate]);\
                                     }
 
-#define HVVALIDATE_STRING(string, error)   if ([NSString isNilOrEmpty:string]) \
+#define HVVALIDATE_STRING(string, error)   if (!string) \
                                             { \
                                                 hr = HVMAKE_ERROR(error); \
                                                 goto LError; \

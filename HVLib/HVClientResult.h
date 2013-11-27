@@ -127,6 +127,7 @@ enum HVClientResultCode
     HVClientError_InvalidCCD,
     HVClientError_InvalidCCR,
     HVClientError_InvalidInsurance,
+    HVClientError_InvalidHeartRate,
     //
     // Store
     //

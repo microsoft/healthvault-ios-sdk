@@ -332,6 +332,26 @@ NSString* pickRandomDrug(void)
 
 @end
 
+@implementation HVHeartRate (HVTestExtensions)
+
++(HVItem *)createRandom
+{
+    return [HVHeartRate createRandomForDate:createRandomHVDateTime()];
+}
+
++(HVItem *) createRandomForDate:(HVDateTime *) dateTime;
+{
+    HVItem* item = [[HVHeartRate newItem] autorelease];
+    HVHeartRate* heartRate = item.heartRate;
+    
+    heartRate.when = dateTime;
+    heartRate.bpmValue = [HVRandom randomIntInRangeMin:60 max:140];
+    
+    return item;
+    
+}
+@end
+
 @implementation HVHeight (HVTestExtensions)
 
 +(HVItem *)createRandom

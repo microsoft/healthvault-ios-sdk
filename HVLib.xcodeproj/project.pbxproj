@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0645B4184545D500D306CC /* HVHeartRate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0645B2184545D500D306CC /* HVHeartRate.h */; };
+		5D0645B5184545D500D306CC /* HVHeartRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0645B3184545D500D306CC /* HVHeartRate.m */; };
 		5D07A9571534B1780013DC2A /* HVProcedure.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D07A9551534B1780013DC2A /* HVProcedure.h */; };
 		5D07A9581534B1780013DC2A /* HVProcedure.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D07A9561534B1780013DC2A /* HVProcedure.m */; };
 		5D09127A166EB7A60031F5F9 /* HVRemoveRecordAuthTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D091278166EB7A60031F5F9 /* HVRemoveRecordAuthTask.h */; };
@@ -441,6 +443,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0645B2184545D500D306CC /* HVHeartRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVHeartRate.h; sourceTree = "<group>"; };
+		5D0645B3184545D500D306CC /* HVHeartRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVHeartRate.m; sourceTree = "<group>"; };
 		5D07A9551534B1780013DC2A /* HVProcedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVProcedure.h; sourceTree = "<group>"; };
 		5D07A9561534B1780013DC2A /* HVProcedure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVProcedure.m; sourceTree = "<group>"; };
 		5D091278166EB7A60031F5F9 /* HVRemoveRecordAuthTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVRemoveRecordAuthTask.h; sourceTree = "<group>"; };
@@ -1372,6 +1376,8 @@
 				5D8E5A9D152FA913002BC6E2 /* HVCholesterol.m */,
 				5DDB6D5416540B4E001BCB16 /* HVCholesterolV2.h */,
 				5DDB6D5516540B4F001BCB16 /* HVCholesterolV2.m */,
+				5D0645B2184545D500D306CC /* HVHeartRate.h */,
+				5D0645B3184545D500D306CC /* HVHeartRate.m */,
 				5DC7997A1534F3A200193A3B /* HVHeight.h */,
 				5DC7997B1534F3A200193A3B /* HVHeight.m */,
 				5DC7997E1534FCCF00193A3B /* HVExercise.h */,
@@ -1681,6 +1687,7 @@
 				5DC799801534FCD100193A3B /* HVExercise.h in Headers */,
 				5DC799921535FEE300193A3B /* HVGetAuthorizedPeopleTask.h in Headers */,
 				5DC799961535FF4200193A3B /* HVMethods.h in Headers */,
+				5D0645B4184545D500D306CC /* HVHeartRate.h in Headers */,
 				5DC3C43715360123008BBDBF /* HVGetAuthorizedPeopleResult.h in Headers */,
 				5D561B0515365F74003D68D2 /* HVEmergencyOrProviderContact.h in Headers */,
 				5D227B8D153766E500E12075 /* HVVocabIdentifier.h in Headers */,
@@ -1924,6 +1931,7 @@
 				5D195D20151BF54300E109AD /* HVEmail.m in Sources */,
 				5D195D24151BF61000E109AD /* HVContact.m in Sources */,
 				5D195D28151BF9F400E109AD /* HVPerson.m in Sources */,
+				5D0645B5184545D500D306CC /* HVHeartRate.m in Sources */,
 				5D195D2C151BFA5300E109AD /* HVName.m in Sources */,
 				5D195D4B15222B8A00E109AD /* HVVector.cpp in Sources */,
 				5D195D4F1522527100E109AD /* HVPutItemsTask.m in Sources */,

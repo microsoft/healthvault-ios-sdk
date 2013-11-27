@@ -54,6 +54,7 @@ static const NSInteger c_numSecondsInDay = 86400;
 {
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setTranslucent:FALSE];
     self.navigationItem.title = [HVClient current].currentRecord.name;
 
     m_classesForTypes = [[HVTypeListViewController classesForTypesToDemo] retain];
@@ -84,7 +85,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     
     NSString* typeName = [[m_classesForTypes objectAtIndex:indexPath.row] XRootElement];
     cell.textLabel.text = typeName;
-    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     
     return cell;
@@ -148,6 +149,7 @@ LError:
     [typeList addObject:[HVSleepJournalAM class]];
     [typeList addObject:[HVWeight class]];
     [typeList addObject:[HVFile class]];
+    [typeList addObject:[HVHeartRate class]];
     
     [typeList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         HVItemDataTyped* t1 = (HVItemDataTyped *) obj1;

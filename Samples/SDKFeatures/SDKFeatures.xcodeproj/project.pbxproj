@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0645B818454D7000D306CC /* HVHeartRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0645B718454D7000D306CC /* HVHeartRateFactory.m */; };
 		5D091345166ED1980031F5F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091344166ED1980031F5F9 /* UIKit.framework */; };
 		5D091347166ED1980031F5F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091346166ED1980031F5F9 /* Foundation.framework */; };
 		5D091349166ED1980031F5F9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091348166ED1980031F5F9 /* CoreGraphics.framework */; };
@@ -49,6 +50,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0645B618454D7000D306CC /* HVHeartRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVHeartRateFactory.h; sourceTree = "<group>"; };
+		5D0645B718454D7000D306CC /* HVHeartRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVHeartRateFactory.m; sourceTree = "<group>"; };
 		5D091340166ED1980031F5F9 /* SDKFeatures.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKFeatures.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D091344166ED1980031F5F9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5D091346166ED1980031F5F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -201,6 +204,8 @@
 				5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */,
 				5DEC255B178B680400FE971B /* HVFileFactory.h */,
 				5DEC255C178B680400FE971B /* HVFileFactory.m */,
+				5D0645B618454D7000D306CC /* HVHeartRateFactory.h */,
+				5D0645B718454D7000D306CC /* HVHeartRateFactory.m */,
 				5D78993B17173B510015D375 /* HVImmunizationFactory.h */,
 				5D78993C17173B520015D375 /* HVImmunizationFactory.m */,
 				5D789934171736050015D375 /* HVMedicationFactory.h */,
@@ -331,6 +336,7 @@
 				5D78994017173D2A0015D375 /* HVProcedureFactory.m in Sources */,
 				5D789957171758E90015D375 /* HVStatusLabel.m in Sources */,
 				5DEC254C178B573A00FE971B /* HVFileFeatures.m in Sources */,
+				5D0645B818454D7000D306CC /* HVHeartRateFactory.m in Sources */,
 				5DEC255A178B5A7F00FE971B /* HVItemDataTypedFeatures.m in Sources */,
 				5DEC255D178B680400FE971B /* HVFileFactory.m in Sources */,
 			);

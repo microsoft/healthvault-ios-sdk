@@ -58,6 +58,8 @@ HVDECLARE_GETTOR(HVCholesterolV2, cholesterolV2);
 
 HVDECLARE_GETTOR(HVBloodGlucose, bloodGlucose);
 
+HVDECLARE_GETTOR(HVHeartRate, heartRate);
+
 HVDECLARE_GETTOR(HVHeight, height);
 
 HVDECLARE_GETTOR(HVExercise, exercise);

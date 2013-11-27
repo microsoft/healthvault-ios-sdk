@@ -156,7 +156,12 @@ LError:
     }
     
     HVItem* item = [m_items itemAtIndex:indexPath.row];
-    cell.textLabel.text = [item.effectiveDate toStringWithStyle:NSDateFormatterShortStyle];
+    NSString* whenString = [item.data.typed dateString];
+    if ([NSString isNilOrEmpty:whenString])
+    {
+        whenString = [item.effectiveDate toStringWithStyle:NSDateFormatterShortStyle];
+    }
+    cell.textLabel.text = whenString;
     
     NSString* details;
     if (m_useMetric)
@@ -259,7 +264,7 @@ LError:
 
 -(void)clearStatus
 {
-    [m_statusLabel clearStatus];
+    //[m_statusLabel clearStatus];
 }
 
 @end

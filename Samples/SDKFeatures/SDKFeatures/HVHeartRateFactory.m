@@ -1,8 +1,6 @@
 //
-//  HVItemDataTypedExtensions.m
+//  HVHeartRateFactory.m
 //  SDKFeatures
-//
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,36 +14,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-//
-#import "HVItemDataTypedFactory.h"
-//
-// Default implementation of HVFactoryMethods category
-// Does nothing
-//
-@implementation HVItemDataTyped (HVFactoryMethods)
+
+#import "HVHeartRateFactory.h"
+
+@implementation HVHeartRate (HVFactoryMethods)
 
 +(HVItemCollection *) createRandomForDay:(NSDate *) date
 {
-    return nil;
-}
-
-+(HVItemCollection *) createRandomMetricForDay:(NSDate *) date
-{
-    return nil;
-}
-
-+(HVItemDataTypedFeatures *)moreFeatures
-{
-    return nil;
+    HVItemCollection* items = [[[HVItemCollection alloc] init] autorelease];
+    
+    // Typically 1 a day
+    HVDateTime* dateTime = [HVDateTime fromDate:date];
+    
+    [items addObject:[HVHeartRate createRandomForDate:dateTime]];
+    
+    return items;
 }
 
 @end
 
-@implementation HVItemDataTyped (HVDisplay)
+@implementation HVHeartRate (HVDisplay)
 
 -(NSString *)detailsString
 {
-    return self.description;
+    return [self toString];
 }
 
 -(NSString *)detailsStringMetric
@@ -55,7 +47,9 @@
 
 -(NSString *)dateString
 {
-    return nil;
+    return [self.when toString];
+    
 }
 
 @end
+
