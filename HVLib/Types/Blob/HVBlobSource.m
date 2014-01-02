@@ -38,6 +38,11 @@
     [super dealloc];
 }
 
+-(id)init
+{
+    return [self initWithData:nil];
+}
+
 -(id)initWithData:(NSData *)data
 {
     HVCHECK_NOTNULL(data);
@@ -73,8 +78,15 @@ LError:
     return m_size;
 }
 
+-(id)init
+{
+    return [self initWithFilePath:nil];
+}
+
 -(id)initWithFilePath:(NSString *)filePath
 {
+    HVCHECK_NOTNULL(filePath);
+    
     self = [super init];
     HVCHECK_SELF;
     

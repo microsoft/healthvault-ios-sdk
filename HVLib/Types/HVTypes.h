@@ -48,6 +48,8 @@
 
 #import "HVFoodEnergyValue.h"
 #import "HVNutritionFact.h"
+#import "HVVolumeValue.h"
+#import "HVFlowValue.h"
 
 #import "HVAddress.h"
 #import "HVPhone.h"

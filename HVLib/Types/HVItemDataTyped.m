@@ -90,6 +90,8 @@ static HVTypeSystem* s_typeRegistry;
     [s_typeRegistry addClass:[HVBloodGlucose class] forTypeID:[HVBloodGlucose typeID]];
     [s_typeRegistry addClass:[HVHeartRate class] forTypeID:[HVHeartRate typeID]];
     [s_typeRegistry addClass:[HVHeight class] forTypeID:[HVHeight typeID]];
+    [s_typeRegistry addClass:[HVPeakFlow class] forTypeID:[HVPeakFlow typeID]];
+    
     [s_typeRegistry addClass:[HVExercise class] forTypeID:[HVExercise typeID]];
     [s_typeRegistry addClass:[HVDailyMedicationUsage class] forTypeID:[HVDailyMedicationUsage typeID]];
     [s_typeRegistry addClass:[HVEmotionalState class] forTypeID:[HVEmotionalState typeID]];

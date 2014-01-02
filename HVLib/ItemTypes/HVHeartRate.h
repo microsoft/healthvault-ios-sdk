@@ -60,6 +60,14 @@
 
 //-------------------------
 //
+// Methods
+//
+//-------------------------
++(HVVocabIdentifier *) vocabForMeasurementMethod;
++(HVVocabIdentifier *) vocabForMeasurementConditions;
+
+//-------------------------
+//
 // Text
 //
 //-------------------------

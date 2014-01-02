@@ -60,6 +60,8 @@ HVDECLARE_GETTOR(HVBloodGlucose, bloodGlucose);
 
 HVDECLARE_GETTOR(HVHeartRate, heartRate);
 
+HVDECLARE_GETTOR(HVPeakFlow, peakFlow);
+
 HVDECLARE_GETTOR(HVHeight, height);
 
 HVDECLARE_GETTOR(HVExercise, exercise);

@@ -74,6 +74,16 @@ LError:
     [super dealloc];
 }
 
++(HVVocabIdentifier *)vocabForMeasurementMethod
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-method"] autorelease];
+}
+
++(HVVocabIdentifier *)vocabForMeasurementConditions
+{
+    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-conditions"] autorelease];
+}
+
 -(NSString *) toString
 {
     return [self toStringWithFormat:@"%d bpm"];

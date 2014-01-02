@@ -49,6 +49,11 @@ static NSString* const c_mimeTypeOctet = @"application/octet-stream";
     return (NSString *) self.result;
 }
 
+-(id)init
+{
+    return [self initWithSource:nil record:nil andCallback:nil];
+}
+
 -(id)initWithData:(NSData *)data record:(HVRecordReference *) record andCallback:(HVTaskCompletion)callback
 {
     HVBlobMemorySource* blobSource = [[HVBlobMemorySource alloc] initWithData:data];
@@ -182,7 +187,10 @@ LError:
     HVHttpRequestResponse* putTask = (HVHttpRequestResponse *) task;
     [putTask checkSuccess];
     
-    m_byteCountUploaded += putTask.requestBody.length;
+    int chunkLength = putTask.requestBody.length;
+    [self totalBytesWritten:chunkLength];  // Notify delegates that we've completed writing these many bytes
+    
+    m_byteCountUploaded += chunkLength;
     if (m_byteCountUploaded < m_source.length)
     {
         [self postNextChunk];
