@@ -56,6 +56,12 @@ LError:
     return ([m_store objectForKey:key] != nil);
 }
 
+-(NSDate *)createDateForKey:(NSString *)key
+{
+    // Not exactly accurate, but this is a test store..
+    return [m_metadata objectForKey:key];
+}
+
 -(NSDate *)updateDateForKey:(NSString *)key
 {
     return [m_metadata objectForKey:key];
@@ -129,6 +135,20 @@ LError:
 -(void)deleteChildStore:(NSString *)name
 {
     // Not supported
+    NSLog(@"Not supported");
+}
+
+-(BOOL)childStoreExists:(NSString *)name
+{
+    // Not supported
+    NSLog(@"Not supported");
+    return FALSE;
+}
+
+-(NSEnumerator *)allChildStoreNames
+{
+    // Not supported yet
+    return nil;
 }
 
 -(id)refreshAndGetObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls

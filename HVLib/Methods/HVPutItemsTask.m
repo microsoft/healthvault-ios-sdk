@@ -61,10 +61,15 @@
 
 -(id)initWithItem:(HVItem *)item andCallback:(HVTaskCompletion)callback
 {
+    HVCHECK_NOTNULL(item);
+    
     HVItemCollection* items = [[HVItemCollection alloc]initwithItem:item];
     self = [self initWithItems:items andCallback:callback];
     [items release];
     return self;
+    
+LError:
+    HVALLOC_FAIL;
 }
 
 -(id)initWithItems:(HVItemCollection *)items andCallback:(HVTaskCompletion)callback
@@ -106,6 +111,36 @@ LError:
 -(id)deserializeResponseBodyFromReader:(XReader *)reader
 {
     return [super deserializeResponseBodyFromReader:reader asClass:[HVItemKeyCollection class]];
+}
+
++(HVPutItemsTask *)newForRecord:(HVRecordReference *)record item:(HVItem *)item andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(record);
+    
+    HVPutItemsTask* task = [[HVPutItemsTask alloc] initWithItem:item andCallback:callback];
+    HVCHECK_NOTNULL(task);
+    
+    task.record = record;
+    
+    return task;
+    
+LError:
+    return nil;
+}
+
++(HVPutItemsTask *) newForRecord:(HVRecordReference *) record items:(HVItemCollection *)items andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(record);
+    
+    HVPutItemsTask* task = [[HVPutItemsTask alloc] initWithItems:items andCallback:callback];
+    HVCHECK_NOTNULL(task);
+    
+    task.record = record;
+    
+    return task;
+    
+LError:
+    return nil;
 }
 
 @end

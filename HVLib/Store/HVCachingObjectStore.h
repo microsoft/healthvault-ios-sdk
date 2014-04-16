@@ -36,7 +36,7 @@
 // Cache specific methods
 //
 -(void) deleteKeyFromCache:(NSString *) key;
--(void) clear;  // OBSOLETE. Use clearCache instead
+-(void) clear __deprecated;  // OBSOLETE. Use clearCache instead
 -(void) clearCache;
 -(void) setCacheLimitCount:(NSNumber *) count;
 

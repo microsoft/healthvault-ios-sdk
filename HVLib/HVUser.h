@@ -94,8 +94,10 @@
 -(HVClientResult *) validate;
 
 //
-// For internal use only. Do not call
+// For internal use only. 
 //
 -(BOOL) updateWithLegacyRecords:(NSArray *) records;
+-(void) configureCurrentRecordForService:(HealthVaultService *) service;
+-(void) clearRecordsForService:(HealthVaultService *) service;
 
 @end

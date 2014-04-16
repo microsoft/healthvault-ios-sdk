@@ -54,7 +54,10 @@
 //-------------------------
 -(id) initWithKg:(double) kg andDate:(NSDate*) date;
 -(id) initWithPounds:(double) pounds andDate:(NSDate *) date;
+
 +(HVItem *) newItem;
++(HVItem *) newItemWithKg:(double) kg andDate:(NSDate*) date;
++(HVItem *) newItemWithPounds:(double) pounds andDate:(NSDate *) date;
 
 //-------------------------
 //

@@ -64,17 +64,22 @@ static NSString* const c_element_contentType = @"content-type";
 
 -(NSString *)sizeAsString
 {
-    if (m_size < 1024)
+    return [HVFile sizeAsString:m_size];
+}
+
++(NSString *)sizeAsString:(long)size
+{
+    if (size < 1024)
     {
-        return [NSString localizedStringWithFormat:@"%d %@", m_size, NSLocalizedString(@"bytes", @"Size in bytes")];
+        return [NSString localizedStringWithFormat:@"%d %@", (int)size, NSLocalizedString(@"bytes", @"Size in bytes")];
     }
     
-    if (m_size < (1024 * 1024))
+    if (size < (1024 * 1024))
     {
-        return [NSString localizedStringWithFormat:@"%.1f %@", ((double) m_size)/ 1024, NSLocalizedString(@"KB", @"Size in KB")];        
+        return [NSString localizedStringWithFormat:@"%.1f %@", ((double) size)/ 1024, NSLocalizedString(@"KB", @"Size in KB")];
     }
     
-    return [NSString localizedStringWithFormat:@"%.1f %@", ((double) m_size)/ (1024 * 1024), NSLocalizedString(@"MB", @"Size in MB")];
+    return [NSString localizedStringWithFormat:@"%.1f %@", ((double) size)/ (1024 * 1024), NSLocalizedString(@"MB", @"Size in MB")];
 }
 
 -(HVClientResult *)validate

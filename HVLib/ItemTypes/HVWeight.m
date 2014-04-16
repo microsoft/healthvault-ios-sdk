@@ -22,8 +22,8 @@
 static NSString* const c_typeid = @"3d34d87e-7fc1-4153-800f-f56592cb0d17";
 static NSString* const c_typename = @"weight";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_value = @"value";
+static const xmlChar* x_element_when = XMLSTRINGCONST("when");
+static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 @implementation HVWeight
 
@@ -152,14 +152,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_value, c_element_value);
+    HVSERIALIZE_X(m_when, x_element_when);
+    HVSERIALIZE_X(m_value, x_element_value);
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE(m_value, c_element_value, HVWeightMeasurement);
+    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
+    HVDESERIALIZE_X(m_value, x_element_value, HVWeightMeasurement);
 }
 
 +(NSString *)typeID
@@ -175,6 +175,34 @@ LError:
 +(HVItem *) newItem
 {
     return [[HVItem alloc] initWithType:[HVWeight typeID]];
+}
+
++(HVItem *)newItemWithKg:(double)kg andDate:(NSDate *)date
+{
+    HVWeight* weight = [[HVWeight alloc] initWithKg:kg andDate:date];
+    HVCHECK_NOTNULL(weight);
+    
+    HVItem* item = [[HVItem alloc] initWithTypedData:weight];
+    [weight release];
+    
+    return item;
+    
+LError:
+    return nil;
+}
+
++(HVItem *)newItemWithPounds:(double)pounds andDate:(NSDate *)date
+{
+    HVWeight* weight = [[HVWeight alloc] initWithPounds:pounds andDate:date];
+    HVCHECK_NOTNULL(weight);
+    
+    HVItem* item = [[HVItem alloc] initWithTypedData:weight];
+    [weight release];
+    
+    return item;
+    
+LError:
+    return nil;
 }
 
 -(NSString *)typeName

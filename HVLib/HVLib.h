@@ -27,3 +27,6 @@
 #import "HVBlob.h"
 #import "HVVocab.h"
 #import "HVMethods.h"
+#import "HVStore.h"
+#import "HVNetworkReachability.h"
+#import "HVLibUI.h"

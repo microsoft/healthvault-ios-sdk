@@ -67,9 +67,9 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 #define HVASSERT_NOTNULL(obj) HVASSERT(obj != nil)
 #define HVASSERT_STRING(string) HVASSERT(!([NSString isNilOrEmpty:string]))
 
-#define HVCHECK_TRUE(condition) HVASSERT(condition); \
-                                if (!(condition)) \
+#define HVCHECK_TRUE(condition) if (!(condition)) \
                                 { \
+                                    HVASSERT_MESSAGE(@#condition); \
                                     goto LError; \
                                 }
 #define HVCHECK_FALSE(condition) HVCHECK_TRUE(!(condition))

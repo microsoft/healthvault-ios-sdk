@@ -47,6 +47,8 @@ NSString* const c_emptyString;
 -(NSUInteger) indexOfLastCharInSet:(NSCharacterSet *) charSet;
 -(NSUInteger) indexOfLastCharNotInSet:(NSCharacterSet *) charSet;
 
+-(BOOL) contains:(NSString *) other;
+
 -(BOOL) parseDouble:(double*) pValue;
 -(BOOL) parseFloat:(float*) pValue;
 -(BOOL) parseInt:(int*) pValue;

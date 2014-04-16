@@ -47,6 +47,19 @@
     return 1;
 }
 
+-(id)initWithKey:(HVItemKey *)key andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(key);
+    
+    HVItemKeyCollection* keys = [[HVItemKeyCollection alloc] initWithKey:key];
+    self = [self initWithKeys:keys andCallback:callback];
+    [keys release];
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(id)initWithKeys:(HVItemKeyCollection *)keys andCallback:(HVTaskCompletion)callback
 {
     HVCHECK_TRUE((![NSArray isNilOrEmpty:keys]));
@@ -82,6 +95,36 @@ LError:
         [self validateObject:key];
         [XSerializer serialize:key withRoot:@"thing-id" toWriter:writer];
     }
+}
+
++(HVRemoveItemsTask *)newForRecord:(HVRecordReference *)record key:(HVItemKey *)key callback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(record);
+    
+    HVRemoveItemsTask* task = [[HVRemoveItemsTask alloc] initWithKey:key andCallback:callback];
+    HVCHECK_NOTNULL(task);
+    
+    task.record = record;
+    
+    return task;
+    
+LError:
+    return nil;
+}
+
++(HVRemoveItemsTask *)newForRecord:(HVRecordReference *)record keys:(HVItemKeyCollection *)keys andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(record);
+    
+    HVRemoveItemsTask* task = [[HVRemoveItemsTask alloc] initWithKeys:keys andCallback:callback];
+    HVCHECK_NOTNULL(task);
+    
+    task.record = record;
+    
+    return task;
+    
+LError:
+    return nil;
 }
 
 @end

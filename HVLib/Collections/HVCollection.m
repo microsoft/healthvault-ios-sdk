@@ -41,7 +41,7 @@ LError:
 {
     self = [super init];
     HVCHECK_SELF;
-    
+
     m_inner = [[NSMutableArray alloc] initWithCapacity:numItems];
     HVCHECK_NOTNULL(m_inner);
     
@@ -142,6 +142,16 @@ LError:
 -(NSString *)description
 {
     return [self toString];
+}
+
+-(id)mutableCopy
+{
+    HVCollection* copy = [[[self class] alloc] init];
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        [copy addObject:[self objectAtIndex:i]];
+    }
+    return copy;
 }
 
 @end

@@ -51,6 +51,7 @@
 #import "HVAssessment.h"
 #import "HVQuestionAnswer.h"
 #import "HVFile.h"
+#import "HVMessage.h"
 #import "HVItemRaw.h"
 
 @interface HVItem (HVTypedExtensions)
@@ -89,6 +90,7 @@
 -(HVCCD *) ccd;
 -(HVCCR *) ccr;
 -(HVInsurance *) insurance;
+-(HVMessage *) message;
 
 -(HVEmergencyOrProviderContact *) emergencyOrProviderContact;
 -(HVPersonalContactInfo *) personalContact;

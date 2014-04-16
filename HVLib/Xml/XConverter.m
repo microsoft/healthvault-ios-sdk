@@ -22,8 +22,8 @@
 static int const c_xDateFormatCount = 6;
 static NSString* s_xDateFormats[c_xDateFormatCount] = 
 {
-    @"yyyy'-'MM'-'dd'T'HHmmss.SSS'Z'",      // Zulu form
     @"yyyy'-'MM'-'dd'T'HHmmss'Z'",          // Zulu form
+    @"yyyy'-'MM'-'dd'T'HHmmss.SSS'Z'",      // Zulu form
     @"yyyy'-'MM'-'dd'T'HHmmss.SSSZZZZ",     // Time zone form
     @"yyyy'-'MM'-'dd'T'HHmmssZZZZ",          // Time zone form,
     @"yyyy'-'MM'-'dd",
@@ -39,7 +39,11 @@ static NSString* const c_FALSE = @"false";
 
 -(NSDateFormatter *) ensureDateFormatter;
 -(NSDateFormatter *) ensureDateParser;
+-(NSDateFormatter *) ensureUtcDateParser;
+-(NSCalendar *) ensureGregorianCalendar;
 -(NSLocale *) ensureLocale; 
+
+-(NSDate *) stringToDateWithWithDaylightSavings:(NSString *)source inTimeZone:(NSTimeZone *) tz;
 
 @end
 
@@ -62,7 +66,9 @@ LError:
 -(void) dealloc
 {
     [m_parser release];
+    [m_utcParser release];
     [m_formatter release];
+    [m_calendar release];
     [m_dateLocale release];
     [m_stringBuffer release];
 
@@ -347,7 +353,6 @@ LError:
     // 
     // Use a mutable string, so we don't have to keep allocating new strings
     //
-    
     HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
     [m_stringBuffer replaceOccurrencesOfString:@":" withString:@""];
     
@@ -363,7 +368,17 @@ LError:
             return TRUE;
         }
     }
-
+    
+    NSTimeZone* tz = parser.timeZone;
+    if (tz.isDaylightSavingTime)
+    {
+        *result = [self stringToDateWithWithDaylightSavings:m_stringBuffer inTimeZone:tz];
+        if (*result)
+        {
+            return TRUE;
+        }
+    }
+    
 LError:
     return FALSE;
 }
@@ -482,6 +497,28 @@ LError:
     return m_parser;    
 }
 
+-(NSDateFormatter *)ensureUtcDateParser
+{
+    if (!m_utcParser)
+    {
+        m_utcParser = [NSDateFormatter newUtcFormatter];
+        HVCHECK_OOM(m_utcParser);
+        [m_utcParser setLocale:[self ensureLocale]];
+    }
+    
+    return m_utcParser;
+}
+
+-(NSCalendar *)ensureGregorianCalendar
+{
+    if (!m_calendar)
+    {
+        m_calendar = [NSCalendar newGregorian];
+        HVCHECK_OOM(m_calendar);
+    }
+    return m_calendar;
+}
+
 -(NSLocale *)ensureLocale
 {
     if (!m_dateLocale)
@@ -491,6 +528,46 @@ LError:
     }
     
     return m_dateLocale;
+}
+
+//
+// HealthVault dates can be time zone agnostic. This is because historical data from 3rd parties may never have captured the original time zone.
+// Dates are always interpreted as 'local' - in whatever time zone the user is currently in.
+//
+// This means that you can end up with dates that never "existed" in some time zones because of Daylight
+// Savings Time
+//    E.g. the local time 2014:03-09'T'02:30:00 is legal in India.
+//    But that particular time never existed in USA local time.
+//    Daylight savings went from 1.00 AM to 3.00 AM, skipping 2.00 am entirely.
+//
+// DateTimeFormatter, when running with local time zone, helpfully decides that since such dates do not exist, it must not return them.
+// So we have to do this workaround
+//
+-(NSDate *)stringToDateWithWithDaylightSavings:(NSString *)source inTimeZone:(NSTimeZone *)tz
+{
+    NSDateFormatter* parser = [self ensureUtcDateParser];
+    NSCalendar* calendar = [self ensureGregorianCalendar];
+    for (int i = 0; i < c_xDateFormatCount; ++i)
+    {
+        NSString *format = s_xDateFormats[i];
+        [parser setDateFormat:format];
+        
+        NSDate* utcDate = [parser dateFromString:source];
+        if (utcDate)
+        {
+            NSTimeInterval daylightSavingsOffset = [tz daylightSavingTimeOffset];
+            utcDate = [utcDate dateByAddingTimeInterval:daylightSavingsOffset];
+            
+            NSDateComponents* components = [NSCalendar utcComponentsFromDate:utcDate];
+            [components setCalendar:calendar];
+            [components setTimeZone:tz];
+            
+            NSDate* localDate = [components date];
+            return localDate;
+        }
+    }
+    
+    return nil;
 }
 
 @end

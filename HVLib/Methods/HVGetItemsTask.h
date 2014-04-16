@@ -27,6 +27,7 @@
 }
 
 -(id) initWithQuery:(HVItemQuery *) query andCallback:(HVTaskCompletion) callback;
+-(id) initWithQueries:(HVItemQueryCollection *) queries andCallback:(HVTaskCompletion) callback;
 
 //
 // You can send multiple queries to HealthVault in a single HVGetItemsTask
@@ -56,5 +57,7 @@
 //
 @property (readonly, nonatomic) HVItem* firstItemRetrieved;
 
++(HVGetItemsTask *) newForRecord:(HVRecordReference *) record query:(HVItemQuery *)query andCallback:(HVTaskCompletion)callback;
++(HVGetItemsTask *) newForRecord:(HVRecordReference *) record queries:(HVItemQueryCollection *)queries andCallback:(HVTaskCompletion)callback;
 
 @end

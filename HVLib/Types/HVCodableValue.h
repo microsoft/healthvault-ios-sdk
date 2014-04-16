@@ -96,6 +96,7 @@
 
 @interface HVCodableValueCollection : HVCollection
 
+-(void) addItem:(HVCodableValue *) value;
 -(HVCodableValue *) itemAtIndex:(NSUInteger) index;
 
 @end

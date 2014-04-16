@@ -36,12 +36,20 @@
 -(id) initWithKey:(HVItemKey *) key;
 
 -(BOOL) isVersion:(NSString *) version;
+-(BOOL) isLocal;
+
+-(BOOL) isEqualToKey:(HVItemKey *) key;
+
++(HVItemKey *) local;
++(HVItemKey *) newLocal;
 
 @end
 
 @interface HVItemKeyCollection : HVCollection <XSerializable>
 
 -(id) initWithKey:(HVItemKey *) key;
+
+-(void) addItem:(HVItemKey *) key;
 
 -(HVItemKey *) firstKey;
 -(HVItemKey *) itemAtIndex:(NSUInteger) index;

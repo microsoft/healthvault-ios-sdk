@@ -18,21 +18,31 @@
 
 #import <Foundation/Foundation.h>
 #import "HVAsyncTask.h"
+#import "HVObjectStore.h"
 #import "HVItemStore.h"
-#import "HVTypeView.h"
 #import "HVDownloadItemsTask.h"
+
+@class HVTypeView;
+@class HVSynchronizationManager;
 
 @interface HVSynchronizedStore : NSObject
 {
     enum HVItemSection m_sections;
     id<HVItemStore> m_localStore;
+    
+    HVSynchronizationManager* m_syncMgr;
 }
 
 @property (readonly, nonatomic) id<HVItemStore> localStore;
 @property (readwrite, nonatomic) enum HVItemSection defaultSections;
 
+// Weak ref back to the owning sync manager, if any
+@property (readwrite, nonatomic, assign) HVSynchronizationManager* syncMgr;
+
 -(id) initOverStore:(id<HVObjectStore>) store;
 -(id) initOverItemStore:(id<HVItemStore>) store;
+
+-(void) clearCache;
 
 //---------------------------------
 //
@@ -51,7 +61,6 @@
 
 -(HVItem *) getlocalItemWithID:(NSString *) itemID;
 -(BOOL) putLocalItem:(HVItem *) item;
--(BOOL) updateItemsInLocalStore:(HVItemCollection *)items;
 -(void) removeLocalItemWithKey:(HVItemKey *) key;
 
 //---------------------------------
@@ -76,11 +85,9 @@
 //
 -(HVTask *) getItemsInRecord:(HVRecordReference *) record withKeys:(NSArray *) keys callback:(HVTaskCompletion) callback;
 -(HVTask *) getItemsInRecord:(HVRecordReference *) record forQuery:(HVItemQuery *) query callback:(HVTaskCompletion) callback;
-//
-// Currently, puts the given item in the local store
-// Future versions may include a reliable async upload queue for offline behavior
-//
--(BOOL) putItem:(HVItem *) item;
+
+// Deprecated. Use HVSynchronizationMgr & HVSynchronizedType
+-(BOOL) putItem:(HVItem *) item __deprecated;
 
 //
 // In the callback, use [task checkForSuccess] to confirm that the operation succeeded

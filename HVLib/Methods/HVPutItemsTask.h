@@ -38,4 +38,7 @@
 -(id) initWithItem:(HVItem *) item andCallback:(HVTaskCompletion) callback;
 -(id) initWithItems:(HVItemCollection *) items andCallback:(HVTaskCompletion) callback;
 
++(HVPutItemsTask *) newForRecord:(HVRecordReference *) record item:(HVItem *) item andCallback:(HVTaskCompletion)callback;
++(HVPutItemsTask *) newForRecord:(HVRecordReference *) record items:(HVItemCollection *)items andCallback:(HVTaskCompletion)callback;
+
 @end

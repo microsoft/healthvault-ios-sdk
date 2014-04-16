@@ -19,10 +19,11 @@
 #import "HVCommon.h"
 #import "HVGetPersonalImageTask.h"
 #import "HVPersonalImage.h"
+#import "HVClient.h"
 
 @interface HVGetPersonalImageTask (HVPrivate)
 
--(HVGetItemsTask *) newGetItemsTask;
+-(HVGetItemsTask *) newGetItemsTask:(HVRecordReference *) record;
 -(void) getItemComplete:(HVTask *) task;
 
 @end
@@ -44,10 +45,8 @@
     
     HVRETAIN(m_record, record);
     
-    HVGetItemsTask* getItemsTask = [self newGetItemsTask];
+    HVGetItemsTask* getItemsTask = [self newGetItemsTask:record];
     HVCHECK_NOTNULL(getItemsTask);
-    
-    getItemsTask.record = record;
     
     [self setNextTask:getItemsTask];
     [getItemsTask release];
@@ -68,18 +67,16 @@ LError:
 
 @implementation HVGetPersonalImageTask (HVPrivate)
 
--(HVGetItemsTask *) newGetItemsTask
+-(HVGetItemsTask *) newGetItemsTask:(HVRecordReference *)record
 {
     HVItemQuery *query = [[HVItemQuery alloc] initWithTypeID:HVPersonalImage.typeID];
     HVCHECK_NOTNULL(query);
     
     query.view.sections = HVItemSection_Blobs;
     
-    HVGetItemsTask* getItemsTask = [[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
-        
+    HVGetItemsTask* getItemsTask = [[HVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(HVTask *task) {
         [self getItemComplete:task];
-        
-    } ];
+    }];
     
     [query release];
     

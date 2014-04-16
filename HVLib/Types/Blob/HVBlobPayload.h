@@ -31,6 +31,7 @@
 
 -(HVBlobPayloadItem *) getDefaultBlob;
 -(HVBlobPayloadItem *) getBlobNamed:(NSString *) name;
+-(NSURL *) getUrlForBlobNamed:(NSString *) name;
 
 -(BOOL) addOrUpdateBlob:(HVBlobPayloadItem *) blob;
 

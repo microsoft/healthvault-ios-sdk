@@ -39,7 +39,12 @@
 {
 }
 
--(id) deepCopy
+-(id)deepCopy
+{
+    return [self newDeepClone];
+}
+
+-(id) newDeepClone
 {
     NSString* xml = [self toXmlStringWithRoot:@"clone"];
     HVCHECK_NOTNULL(xml);

@@ -75,6 +75,14 @@
 
 +(HVEnvironmentSettings *) fromInstance:(HVInstance *) instance;
 
+//-------------------------
+//
+// Network reachability
+//
+//-------------------------
+-(BOOL) isServiceNetworkReachable;
+-(BOOL) isShellNetworkReachable;
+
 @end
 
 //-----------------
@@ -108,13 +116,14 @@
     NSTimeInterval m_autoRequestDelay;
     
     NSString* m_appData;
+    NSURL* m_rootDirectoryPath;
 }
 
+// Begin PERSISTED PROPERTIES
 //
-// In Xml, properties are in precisely this SEQUENCE
+// ClientSettings.xml contains properties in precisely this SEQUENCE
 // The element name for each property is listed below
 //
-
 //
 // <debug>
 // Run in debug mode. Useful if you want to look at wire Xml in the debugger
@@ -174,6 +183,10 @@
 // Default is 3
 //
 @property (readwrite, nonatomic) NSInteger maxAttemptsPerRequest;
+//
+// <useCachingInStore>
+// Used for HVTypeViews. If true, uses NSCache to cache HVItem* objects in memory
+//
 @property (readwrite, nonatomic) BOOL useCachingInStore;
 //
 // <autoRequestDelay>
@@ -186,15 +199,22 @@
 // <appData> contain arbitray Xml that you can use as you see fit
 //
 @property (readwrite, nonatomic, retain) NSString* appDataXml;
+//
+// End PERSISTED PROPERTIES
 
 @property (readonly, nonatomic) HVEnvironmentSettings* firstEnvironment;
+
+@property (readwrite, nonatomic, retain) NSURL* rootDirectoryPath;
 
 -(void) validateSettings;
 
 -(HVEnvironmentSettings *) environmentWithName:(NSString *) name;
 -(HVEnvironmentSettings *) environmentAtIndex:(NSUInteger) index;
 -(HVEnvironmentSettings *) environmentWithInstanceID:(NSString *) instanceID;
-
+//
+// Load client settings from a resource file named ClientSettings.xml
+//
 +(HVClientSettings *) newSettingsFromResource;
++(HVClientSettings *) newDefault;
 
 @end

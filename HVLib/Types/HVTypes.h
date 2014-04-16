@@ -60,6 +60,8 @@
 #import "HVOrganization.h"
 #import "HVRelative.h"
 #import "HVPrescription.h"
+#import "HVMessageHeaderItem.h"
+#import "HVMessageAttachment.h"
 
 #import "HVItemSection.h"
 #import "HVItemState.h"

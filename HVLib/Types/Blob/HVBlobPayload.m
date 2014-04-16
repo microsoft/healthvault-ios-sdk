@@ -55,6 +55,17 @@ static NSString* const c_element_blob = @"blob";
     return [m_blobItems getBlobNamed:name];
 }
 
+-(NSURL *)getUrlForBlobNamed:(NSString *)name
+{
+    HVBlobPayloadItem* blob = [self getBlobNamed:name];
+    if (!blob)
+    {
+        return nil;
+    }
+    
+    return [NSURL URLWithString:blob.blobUrl];
+}
+
 -(BOOL)addOrUpdateBlob:(HVBlobPayloadItem *)blob
 {
     HVCHECK_NOTNULL(blob);

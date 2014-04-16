@@ -18,6 +18,7 @@
 //
 #import "HVCommon.h"
 #import "HVStoredQuery.h"
+#import "HVClient.h"
 
 static NSString* const c_element_query = @"query";
 static NSString* const c_element_result = @"result";
@@ -89,14 +90,12 @@ LError:
     
     HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
     HVCHECK_NOTNULL(task);
-        
-    HVGetItemsTask* getItemsTask = [[HVGetItemsTask alloc] initWithQuery:m_query andCallback:^(HVTask *task) {
-        
-        [self getItemsComplete:task forRecord:record];
 
-    } ];
+    HVGetItemsTask* getItemsTask = [[[HVClient current].methodFactory newGetItemsForRecord:record query:m_query andCallback:^(HVTask *task) {
+        [self getItemsComplete:task forRecord:record];
+    }] autorelease];
+    HVCHECK_NOTNULL(getItemsTask);
     
-    getItemsTask.record = record;
     [task setNextTask:getItemsTask];
     [task start];
     

@@ -71,5 +71,6 @@
 - (IBAction)addButtonClicked:(id)sender;
 - (IBAction)deleteButtonClicked:(id)sender;
 - (IBAction)updateButtonClicked:(id)sender;
+- (IBAction)disconnectClicked:(id)sender;
 
 @end

@@ -62,7 +62,8 @@
     //
     // Update the UI to show the record owner's display name
     //
-    self.navigationItem.title = [HVClient current].currentRecord.name;
+    NSString* displayName = [HVClient current].currentRecord.displayName;
+    self.navigationItem.title = [NSString stringWithFormat:@"%@'s Weight", displayName];
     //
     // Fetch list of weights from HealthVault
     //
@@ -94,6 +95,7 @@
             //
             // Save the collection of items retrieved
             //
+            HVCLEAR(m_items);
             m_items = [((HVGetItemsTask *) task).itemsRetrieved retain];
             //
             // Refresh UI
@@ -152,8 +154,9 @@
 {
     HVItem* item = [HVWeight newItem];
  
-    item.weight.inPounds = [HVRandom randomDoubleInRangeMin:130 max:150];
-    item.weight.when = [[HVDateTime alloc] initNow];  
+    double pounds = roundToPrecision([HVRandom randomDoubleInRangeMin:130 max:150], 2);
+    item.weight.inPounds = pounds;
+    item.weight.when = [[[HVDateTime alloc] initNow] autorelease];
     
     return item;
 }
@@ -184,6 +187,7 @@
             //
             // Save the collection of items retrieved
             //
+            HVCLEAR(m_items);
             m_items = [((HVGetItemsTask *) task).itemsRetrieved retain];
             //
             // Refresh UI
@@ -251,7 +255,7 @@
     //
     // Display the weight in pounds
     //
-    cell.detailTextLabel.text = [weight stringInPounds];
+    cell.detailTextLabel.text = [weight stringInPoundsWithFormat:@"%.2f lb"];
 
 }
 
@@ -284,7 +288,7 @@
 //
 - (IBAction)addButtonClicked:(id)sender 
 {
-    HVItem* item = [self newWeight];
+    HVItem* item = [[self newWeight] autorelease];
     [self putWeightInHealthVault:item];
 }
 
@@ -320,6 +324,34 @@
     [self changeWeight:item];
     
     [self putWeightInHealthVault:item];
+}
+
+//
+// User may want to disconnect their account
+//
+- (IBAction)disconnectClicked:(id)sender
+{
+    [HVUIAlert showYesNoWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the app." callback:^(id sender) {
+        
+        HVUIAlert* alert = (HVUIAlert *) sender;
+        if (alert.result != HVUIAlertOK)
+        {
+            return;
+        }
+        HVCLEAR(m_items);
+        [self refreshView];
+        //
+        // REMOVE RECORD AUTHORIZATION.
+        //
+        [[HVClient current].user removeAuthForRecord:[HVClient current].currentRecord withCallback:^(HVTask *task) {
+            
+            [[HVClient current] resetProvisioning];  // Removes local state
+            //
+            // Restart app auth
+            //
+            [self startApp];
+        }];
+    }];
 }
 
 //-------------------------------------------

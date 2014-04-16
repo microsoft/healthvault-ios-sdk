@@ -34,12 +34,27 @@ static NSString* const c_element_clientID = @"client-thing-id";
 @synthesize extensions = m_extensions;
 @synthesize relatedItems = m_relatedItems;
 @synthesize clientID = m_clientID;
+-(NSString *)clientIDValue
+{
+    return m_clientID ? m_clientID.value : nil;
+}
+-(void)setClientIDValue:(NSString *)clientIDValue
+{
+    HVCLEAR(m_clientID);
+    if (![NSString isNilOrEmpty:clientIDValue])
+    {
+        HVString255* clientID = [[HVString255 alloc] initWith:clientIDValue];
+        HVRETAIN(m_clientID, clientID);
+        [clientID release];
+    }
+}
 
 -(void) dealloc
 {
     [m_source release];
     [m_note release];
     [m_tags release];
+    [m_extensions release];
     [m_relatedItems release];
     [m_clientID release];
     

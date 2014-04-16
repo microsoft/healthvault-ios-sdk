@@ -22,6 +22,7 @@
 #import "HVGuid.h"
 
 static const xmlChar* x_attribute_version = XMLSTRINGCONST("version-stamp");
+static NSString* const c_localIDPrefix = @"L";
 
 @implementation HVItemKey
 
@@ -72,9 +73,49 @@ LError:
     return [self initWithID:guidString()];
 }
 
+-(void) dealloc
+{
+    [m_id release];
+    [m_version release];
+    
+    [super dealloc];
+}
+
++(HVItemKey *)newLocal
+{
+    NSString* itemID =  [c_localIDPrefix stringByAppendingString:guidString()];
+    NSString* version = guidString();
+    
+    return [[HVItemKey alloc] initWithID:itemID andVersion:version];
+}
+
++(HVItemKey *)local
+{
+    return [[HVItemKey newLocal] autorelease];
+}
+
 -(BOOL)isVersion:(NSString *)version
 {
     return [self.version isEqualToString:version];
+}
+
+-(BOOL)isLocal
+{
+    return [m_id hasPrefix:c_localIDPrefix];
+}
+
+-(BOOL)isEqualToKey:(HVItemKey *)key
+{
+    if (!key)
+    {
+        return FALSE;
+    }
+    
+    
+    return ([m_id isEqualToString:key.itemID] &&
+            (m_version && key.version) &&
+            [m_version isEqualToString:key.version]
+            );
 }
 
 -(HVClientResult *) validate
@@ -88,14 +129,6 @@ LError:
     
 LError:
     HVVALIDATE_FAIL
-}
-
--(void) dealloc
-{
-    [m_id release];
-    [m_version release];
-    
-    [super dealloc];
 }
 
 -(NSString *)description
@@ -149,6 +182,11 @@ static NSString* const c_element_key = @"thing-id";
     
 LError:
     HVALLOC_FAIL;
+}
+
+-(void)addItem:(HVItemKey *)key
+{
+    [super addObject:key];
 }
 
 -(HVItemKey *)firstKey

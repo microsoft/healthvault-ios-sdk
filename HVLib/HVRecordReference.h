@@ -76,6 +76,9 @@
 // Each of these work with a HVPutItemsTask
 //
 //-------------------------
+-(HVPutItemsTask *) newItem:(HVItem *) item callback:(HVTaskCompletion) callback;
+-(HVPutItemsTask *) newItems:(HVItemCollection *) items callback:(HVTaskCompletion)callback;
+
 -(HVPutItemsTask *) putItem:(HVItem *) item callback:(HVTaskCompletion) callback;
 -(HVPutItemsTask *) putItems:(HVItemCollection *) items callback:(HVTaskCompletion)callback;
 

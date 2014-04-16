@@ -206,7 +206,7 @@ LError:
 
 -(BOOL)setKeyToNew
 {
-    HVItemKey* newKey = [[HVItemKey alloc] initNew];
+    HVItemKey* newKey = [HVItemKey newLocal];
     HVCHECK_NOTNULL(newKey);
     
     self.key = newKey;
@@ -226,6 +226,21 @@ LError:
     }
     
     return TRUE;
+}
+
+-(BOOL)ensureEffectiveDate
+{
+    if (!m_effectiveDate)
+    {
+        NSDate* newDate = [m_data.typed getDate];
+        if (!newDate)
+        {
+            newDate = [NSDate date];
+        }
+        HVRETAIN(m_effectiveDate, newDate);
+    }
+    
+    return (m_effectiveDate != nil);
 }
 
 -(BOOL)removeEndDate
@@ -324,16 +339,14 @@ LError:
     HVItemQuery *query = [[[HVItemQuery alloc] initWithItemKey:m_key] autorelease];
     HVCHECK_NOTNULL(query);
     query.view.sections = HVItemSection_Blobs;  // Blob data only
-        
-    HVGetItemsTask* getItemsTask = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
-        
+    
+    HVGetItemsTask* getItemsTask = [[[HVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(HVTask *task) {
+
         HVItem* blobItem = ((HVGetItemsTask *) task).firstItemRetrieved;
         HVRETAIN(m_blobs, blobItem.blobs);
-        
-    } ] autorelease];
     
+    }]autorelease];
     HVCHECK_NOTNULL(getItemsTask);
-    getItemsTask.record = record;
 
     HVTask* getBlobTask = [[[HVTask alloc] initWithCallback:callback andChildTask:getItemsTask] autorelease];
     HVCHECK_NOTNULL(getBlobTask);
@@ -400,6 +413,14 @@ LError:
     {
         self.data = nil; // Can't update read only dataXml
     }
+}
+
+-(void)prepareForNew
+{
+    self.effectiveDate = nil;
+    self.updated = nil;
+    self.created = nil;
+    self.key = nil;
 }
 
 -(HVClientResult *) validate
@@ -501,6 +522,11 @@ LError:
     return self;
 LError:
     HVALLOC_FAIL;
+}
+
+-(void)addItem:(HVItem *)item
+{
+    return [super addObject:item];
 }
 
 -(HVItem *)itemAtIndex:(NSUInteger)index
@@ -637,6 +663,14 @@ LError:
     {
         [[self itemAtIndex:i] prepareForUpdate];
     }    
+}
+
+-(void)prepareForNew
+{
+    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    {
+        [[self itemAtIndex:i] prepareForNew];
+    }
 }
 
 -(void)serializeAttributes:(XWriter *)writer

@@ -181,10 +181,15 @@ enum HVItemFlags
 //
 // NOTE: if you call HVRecordReference::update, this method will get called automatically
 //
--(void) prepareForUpdate; 
+-(void) prepareForUpdate;
+//
+// After this call, if you put the item into HealthVault, you will add a new item
+//
+-(void) prepareForNew;
 
 -(BOOL) setKeyToNew;
 -(BOOL) ensureKey;
+-(BOOL) ensureEffectiveDate;
 
 -(BOOL) removeEndDate;
 -(BOOL) updateEndDate:(NSDate *) date;
@@ -224,6 +229,7 @@ enum HVItemFlags
 -(id) initwithItem:(HVItem *) item;
 -(id) initWithItems:(NSArray *) items;
 
+-(void) addItem:(HVItem *) item;
 -(HVItem *) itemAtIndex:(NSUInteger) index;
 
 -(BOOL) containsItemID:(NSString *) itemID;
@@ -238,7 +244,9 @@ enum HVItemFlags
 +(HVStringCollection *) idsFromItems:(NSArray *) items;
 
 -(HVClientResult *) validate;
+
 -(BOOL) shallowCloneItems;
 -(void) prepareForUpdate;
+-(void) prepareForNew;
 
 @end

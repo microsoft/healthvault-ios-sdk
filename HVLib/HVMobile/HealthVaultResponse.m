@@ -137,7 +137,7 @@
 - (NSString *)getInfoFromXml: (NSString *)xml {
 
 	NSRange startInfoTagPosition = [xml rangeOfString: @"<wc:info"];
-	NSRange endInfoTagPosition = [xml rangeOfString: @"</wc:info>"];
+	NSRange endInfoTagPosition = [xml rangeOfString: @"</wc:info>" options:NSBackwardsSearch];
 	
 	if (startInfoTagPosition.location == NSNotFound || endInfoTagPosition.location == NSNotFound) {
 		return nil;

@@ -64,11 +64,15 @@
 -(id) initWithItemIDs:(NSArray *) ids;
 -(id) initwithItemID:(NSString *) itemID;
 -(id) initWithPendingItems:(NSArray *) pendingItems;
+-(id) initWithItemKey:(HVItemKey *) key andType:(NSString *) typeID;
+-(id) initWithItemID:(NSString *) itemID andType:(NSString *) typeID;;
+-(id) initWithClientID:(NSString *) clientID andType:(NSString *) typeID;
 
 @end
 
 @interface HVItemQueryCollection : HVCollection 
 
+-(void) addItem:(HVItemQuery *) query;
 -(HVItemQuery *) itemAtIndex:(NSUInteger) index;
 
 @end

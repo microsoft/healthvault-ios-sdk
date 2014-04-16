@@ -37,6 +37,11 @@ static NSString* const c_element_currentEncoding = @"current-content-encoding";
     return (m_blobInfo) ? m_blobInfo.name : c_emptyString;
 }
 
+-(NSString *)contentType
+{
+    return (m_blobInfo) ? m_blobInfo.contentType : c_emptyString;
+}
+
 -(id)init
 {
     self = [super init];

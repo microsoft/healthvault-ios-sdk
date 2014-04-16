@@ -19,6 +19,8 @@
 #import "HVCommon.h"
 #import "HVDirectory.h"
 #import "XLib.h"
+#import <MobileCoreServices/UTType.h>
+#import <MobileCoreServices/UTCoreTypes.h>
 
 //---------------------------
 //
@@ -52,6 +54,28 @@
 -(long)sizeOfFileAtPath:(NSString *)path
 {
     return [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil].fileSize;
+}
+
++(NSString *)mimeTypeForFile:(NSString *)filePath
+{
+    NSString* ext = [filePath pathExtension];
+    return [NSFileManager mimeTypeForFileExtension:ext];
+}
+
++(NSString *)mimeTypeForFileExtension:(NSString *)ext
+{
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef) ext, NULL);
+    NSString* mimeType = (NSString *) UTTypeCopyPreferredTagWithClass (uti, kUTTagClassMIMEType);
+    CFRelease(uti);
+    return [mimeType autorelease];
+}
+
++(NSString *)fileExtForMimeType:(NSString *)mimeType
+{
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (CFStringRef) mimeType, NULL);
+    CFRelease(uti);
+    NSString* ext = (NSString *)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
+    return [ext autorelease];
 }
 
 @end
@@ -134,57 +158,6 @@
 
 //---------------------------
 //
-// FileEnumerator
-//
-//---------------------------
-@interface HVFileNameEnumerator : NSEnumerator 
-{
-    NSEnumerator* m_fileNames;
-}
-
--(id) initWithFileNames:(NSEnumerator *) fileNames;
-
-@end
-
-//---------------------------
-//
-// FileNameEnumerator
-//
-//---------------------------
-@implementation HVFileNameEnumerator
-
--(id)initWithFileNames:(NSEnumerator *)fileNames
-{
-    HVCHECK_NOTNULL(fileNames);
-    
-    HVRETAIN(m_fileNames, fileNames);
-    
-    return self;
-    
-LError:
-    HVALLOC_FAIL;
-}
-
--(void)dealloc
-{
-    [m_fileNames release];
-    [super dealloc];
-}
-
--(id)nextObject
-{
-    NSString* nextPath = [m_fileNames nextObject];
-    if (nextPath)
-    {
-        return [nextPath lastPathComponent];
-    }
-    
-    return nil;
-}
-@end
-
-//---------------------------
-//
 // HVDirectory
 //
 //---------------------------
@@ -198,6 +171,11 @@ LError:
 
 @synthesize url = m_path;
 @synthesize stringPath = m_stringPath;
+
+-(id)init
+{
+    return [self initWithPath:nil];
+}
 
 -(id)initWithPath:(NSURL *)path
 {
@@ -267,7 +245,12 @@ LError:
 
 -(NSEnumerator *)getFileNames
 {
-    return [[NSFileManager defaultManager] enumeratorAtPath:m_stringPath];
+    return [[[HVDirectoryNameEnumerator alloc] initWithPath:m_path inFileMode:TRUE] autorelease];
+}
+
+-(NSEnumerator *)getDirectoryNames
+{
+    return [[[HVDirectoryNameEnumerator alloc] initWithPath:m_path inFileMode:FALSE] autorelease];
 }
 
 -(HVDirectory *)newChildNamed:(NSString *)name
@@ -380,7 +363,13 @@ LError:
 //---------------------
 -(NSEnumerator *)allKeys
 {
-    return [[[HVFileNameEnumerator alloc] initWithFileNames:[self getFileNames]] autorelease];
+    return [self getFileNames];
+}
+
+-(NSDate *)createDateForKey:(NSString *)key
+{
+    NSDictionary* fileProperties = [self getFileProperties:key];
+    return fileProperties ? fileProperties.fileCreationDate : nil;
 }
 
 -(NSDate *)updateDateForKey:(NSString *)key
@@ -440,7 +429,6 @@ LError:
     {
         @try 
         {
-            //return [XSerializer serialize:obj withRoot:name toFilePath:[self makeChildPath:key]];
             XConverter* converter = [self getConverter];
             return [XSerializer secureSerialize:obj withRoot:name toFilePath:[self makeChildPath:key] withConverter:converter];
         }
@@ -513,13 +501,35 @@ LError:
 
 -(id<HVObjectStore>)newChildStore:(NSString *)name
 {
-    return [self newChildNamed:name];
+    @synchronized(self)
+    {
+        return [self newChildNamed:name];
+    }
 }
 
 -(void)deleteChildStore:(NSString *)name
 {
-    NSURL *path = [self makeChildUrl:name];
-    [HVDirectory deleteUrl:path];
+    @synchronized(self)
+    {
+        NSURL *path = [self makeChildUrl:name];
+        [HVDirectory deleteUrl:path];
+    }
+}
+
+-(BOOL)childStoreExists:(NSString *)name
+{
+    @synchronized(self)
+    {
+        NSString *childPath = [self makeChildPath:name];
+        BOOL isDirectory = FALSE;
+        BOOL childExists = [[NSFileManager defaultManager] fileExistsAtPath:childPath isDirectory:&isDirectory];
+        return (childExists && isDirectory);
+    }
+}
+
+-(NSEnumerator *)allChildStoreNames
+{
+    return [self getDirectoryNames];
 }
 
 -(NSData *)refreshAndGetBlob:(NSString *)key

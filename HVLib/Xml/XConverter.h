@@ -23,7 +23,9 @@
 @interface XConverter : NSObject
 {
     NSDateFormatter *m_parser;
+    NSDateFormatter *m_utcParser;
     NSDateFormatter *m_formatter;
+    NSCalendar* m_calendar;
     NSLocale* m_dateLocale;
     NSMutableString *m_stringBuffer;
 }

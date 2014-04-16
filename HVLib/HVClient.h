@@ -26,6 +26,8 @@
 #import "HVLocalVault.h"
 #import "HVUser.h"
 #import "HVServiceDef.h"
+#import "HVMethodFactory.h"
+#import "HVNetworkReachability.h"
 
 enum HVAppProvisionStatus 
 {
@@ -39,12 +41,12 @@ enum HVAppProvisionStatus
 //-------------------------
 //
 // HealthVault Client
-// Use the "current" singleton. It represents the client application.
+// You always work with the .current singleton.
+// The singleton represents your client application.
 //
 // *IMPORTANT*
-// HVClient tries to loads configuration settings from a resource file
+// HVClient will automatically loads configuration settings from a resource file
 // named ClientSettings.xml
-// You MUST have a ClientSettings.xml in your app
 //
 //-------------------------
 @interface HVClient : NSObject
@@ -68,14 +70,22 @@ enum HVAppProvisionStatus
     //
     HVLocalVault *m_localVault;
     HVUser *m_user;
+    
+    HVMethodFactory* m_methodFactory;
 }
 
 //-------------------------
 //
-// Singelton you should work with
+// THE Singleton you always work with
+// The SDK will automatically create and manage the singleton for you.
+// It will read your application's configuration from the ClientSettings.xml file.
+//
+// You can also chose to initialize the client manually.
+// If so, you must do so as part of your application's startup code
 //
 //-------------------------
 +(HVClient *) current;
++(BOOL) initializeClientUsingSettings:(HVClientSettings *) settings;
 
 @property (readonly, nonatomic) HVClientSettings* settings;
 @property (readonly, nonatomic) HVLocalVault *localVault;
@@ -96,6 +106,8 @@ enum HVAppProvisionStatus
 @property (readonly, nonatomic) HVRecord* currentRecord;
 @property (readonly, nonatomic) BOOL hasAuthorizedRecords;
 
+@property (readwrite, nonatomic, retain) HVMethodFactory* methodFactory;
+
 //-------------------------
 //
 // Startup and provisioning
@@ -103,7 +115,10 @@ enum HVAppProvisionStatus
 // It will ensure that your application is provisioned and has access
 // to at least one user record
 //
-//-------------------------
+// Note: Your UIViewController MUST have a navigation controller
+// The method may push a new viewcontroller that will take your app through HealthVault authorization
+//
+//-------------------------  
 -(BOOL) startWithParentController:(UIViewController *) controller andStartedCallback:(HVNotify) callback;
 
 //
@@ -143,5 +158,7 @@ enum HVAppProvisionStatus
 //
 //-------------------------
 -(HVLocalRecordStore *) getCurrentRecordStore;
+-(void) didReceiveMemoryWarning;
+
 
 @end

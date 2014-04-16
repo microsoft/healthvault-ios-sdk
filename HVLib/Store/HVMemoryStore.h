@@ -19,6 +19,9 @@
 #import <Foundation/Foundation.h>
 #import "HVObjectStore.h"
 
+//
+// Used ONLY for testing and samples. Not supported for other uses
+//
 @interface HVMemoryStore : NSObject <HVObjectStore>
 {
 @private

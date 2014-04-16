@@ -95,6 +95,8 @@ enum HVClientResultCode
     HVClientError_InvalidRelative,
     HVClientError_InvalidFlow,
     HVClientError_InvalidVolume,
+    HVClientError_InvalidMessageHeader,
+    HVClientError_InvalidMessageAttachment,
     //
     // Blobs
     //
@@ -131,6 +133,7 @@ enum HVClientResultCode
     HVClientError_InvalidInsurance,
     HVClientError_InvalidHeartRate,
     HVClientError_InvalidPeakFlow,
+    HVClientError_InvalidMessage,
     //
     // Store
     //

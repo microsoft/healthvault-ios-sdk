@@ -65,6 +65,11 @@ LError:
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [m_file writeData:data];
+    m_totalBytesWritten += data.length;
+    if (m_delegate)
+    {
+        [m_delegate totalBytesWritten:m_totalBytesWritten];
+    }
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection

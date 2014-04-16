@@ -25,6 +25,8 @@
 #import "WebResponse.h"
 #import "WebTransport.h"
 #import "HVClientSettings.h"
+#import "HVHttpTransport.h"
+#import "Provisioner.h"
 
 @protocol HealthVaultService <NSObject>
 
@@ -80,6 +82,11 @@
     
     NSTimeInterval _requestDelay;
     NSString* _settingsFileName;
+    //
+    // Providers
+    //
+    id<HVHttpTransport> m_transport;
+    Provisioner* m_provisioner;
 }
 
 /// Gets or sets the URL that is used to talk to the HealthVault Web Service.
@@ -131,6 +138,20 @@
 @property (readwrite, nonatomic) NSTimeInterval requestSendDelay;
 @property (readwrite, nonatomic, retain) NSString* settingsFileName;
 
+//--------------------------------------------
+//
+// Providers
+//
+//--------------------------------------------
+@property (readwrite, nonatomic, retain) id<HVHttpTransport> transport;
+@property (readwrite, nonatomic, retain) Provisioner* provisioner;
+
+//--------------------------------------------
+//
+// Methods
+//
+//--------------------------------------------
+
 /// Initializes a new instance of the HealthVaultService class 
 /// using default platform and shell URLs.
 /// The master application id must come from the HealthVault Application Configuration
@@ -158,7 +179,8 @@
 /// Returns the URL string to use to authorize additional records.
 - (NSString *)getUserAuthorizationUrl;
 
-/// Returns info section for Cast call request.
+/// Generates the info section for the cast call.
+/// @returns the generate info section.
 - (NSString *)getCastCallInfoSection;
 
 /// Saves the results of a cast call into the session.

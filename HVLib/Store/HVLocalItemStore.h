@@ -22,6 +22,7 @@
 
 @interface HVLocalItemStore : NSObject <HVItemStore>
 {
+@private
     id<HVObjectStore> m_objectStore;
 }
 

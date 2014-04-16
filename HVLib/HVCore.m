@@ -200,3 +200,35 @@ void HVReleaseRef(CFTypeRef cf)
 }
 
 @end
+
+@implementation NSNotificationCenter (HVExtensions)
+
+-(void)addObserver:(id)observer selector:(SEL)selector name:(NSString *)name
+{
+    // Listen to broadcasts
+    [self addObserver:observer selector:selector name:name object:nil];
+}
+
+-(void) postNotificationName:(NSString *)notification sender:(id)sender argName:(NSString *)name argValue:(id)value
+{
+    NSMutableDictionary* args = [[NSMutableDictionary alloc] initWithCapacity:1];
+    [args setObject:value forKey:name];
+    
+    [self postNotificationName:notification object:sender userInfo:args];
+    
+    [args release];
+}
+
+-(void)postNotificationName:(NSString *)notification sender:(id)sender argName:(NSString *)n1 argValue:(id)v1 argName:(NSString *)n2 argValue:(id)v2
+{
+    NSMutableDictionary* args = [[NSMutableDictionary alloc] initWithCapacity:1];
+    [args setObject:v1 forKey:n1];
+    [args setObject:v2 forKey:n2];
+    
+    [self postNotificationName:notification object:sender userInfo:args];
+    
+    [args release];
+    
+}
+
+@end

@@ -22,8 +22,6 @@
 #import "HVHttpRequestResponse.h"
 #import "HVDirectory.h"
 
-static NSString* const c_mimeTypeOctet = @"application/octet-stream";
-
 //------------------------------
 //
 // HVBlobUpload

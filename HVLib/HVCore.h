@@ -43,6 +43,7 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight);
 #define HVSET(var, value) HVSetVar(&var, value)
 #define HVSETIF(var, value) HVSetVarIfNotNil(&var, value)
 
+
 id HVClear(id obj);
 id HVAssign(id original, id newObj);
 void HVSetVar(id* var, id value);
@@ -70,3 +71,19 @@ void HVReleaseRef(CFTypeRef cf);
 
 @end
 
+//------------------------------------
+//
+// Notifications
+//
+//------------------------------------
+#define HVDECLARE_NOTIFICATION(var) extern NSString* const var;
+#define HVDEFINE_NOTIFICATION(var) NSString* const var = @#var;
+
+@interface NSNotificationCenter (HVExtensions)
+
+- (void)addObserver:(id)observer selector:(SEL)selector name:(NSString *)name;
+
+-(void)postNotificationName:(NSString *)notification sender:(id) sender argName:(NSString *) name argValue:(id) value;
+-(void)postNotificationName:(NSString *)notification sender:(id) sender argName:(NSString *) n1 argValue:(id) v1 argName:(NSString *) n2 argValue:(id) v2;
+
+@end

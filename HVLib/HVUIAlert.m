@@ -223,7 +223,6 @@ LError:
 // UIAlertViewDelegate
 //
 //------------------------------------
-static const NSInteger c_cancelButtonIndex = 0;
 static const NSInteger c_okButtonIndex = 1;
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex   

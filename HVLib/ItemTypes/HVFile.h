@@ -67,6 +67,7 @@
 // Automatically convers to the right uint - bytes, KB or MB
 //
 -(NSString *) sizeAsString;
++(NSString *) sizeAsString:(long) size;
 
 //-------------------------
 //

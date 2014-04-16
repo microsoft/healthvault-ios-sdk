@@ -187,4 +187,14 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(void)addItem:(HVItemFilter *)filter
+{
+    [super addObject:filter];
+}
+
+-(HVItemFilter *)itemAtIndex:(NSUInteger)index
+{
+    return [self objectAtIndex:index];
+}
+
 @end

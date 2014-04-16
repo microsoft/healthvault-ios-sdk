@@ -2,7 +2,7 @@
 //  HealthVaultService.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2011, 2014 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,13 +31,11 @@
 #import "HVCommon.h"
 #import "HVClient.h"
 
-@interface HealthVaultService (Private)
+@interface HealthVaultService (HVPrivate)
+
+-(BOOL) initDefaultProviders;
 
 - (void)sendRequestImpl: (HealthVaultRequest *)request;
-
-/// Generates the info section for the cast call.
-/// @returns the generate info section.
-- (NSString *)getCastCallInfoSection;
 
 /// Refreshes the session token.
 /// Makes a CAST call to get a new session token, 
@@ -84,6 +82,31 @@
     HVRETAIN(_settingsFileName, settingsFileName);
 }
 
+-(id<HVHttpTransport>)transport
+{
+    return m_transport;
+}
+-(void)setTransport:(id<HVHttpTransport>)transport
+{
+    if (transport)
+    {
+        HVRETAIN(m_transport, transport);
+    }
+}
+
+-(Provisioner *)provisioner
+{
+    return m_provisioner;
+}
+
+-(void)setProvisioner:(Provisioner *)provisioner
+{
+    if (provisioner)
+    {
+        HVRETAIN(m_provisioner, provisioner);
+    }
+}
+
 - (id)init {
 
 	return [self initWithUrl: nil
@@ -106,19 +129,26 @@ LError:
 		 shellUrl: (NSString *)shellUrl
 	  masterAppId: (NSString *)masterAppId {
 
-	if (self = [super init]) {
-        
-        self.settingsFileName = masterAppId;
-		self.healthServiceUrl = healthServiceUrl;
-		self.shellUrl = shellUrl;
-		self.masterAppId = masterAppId;
+    self = [super init];
+    HVCHECK_SELF;
+    
+    self.settingsFileName = masterAppId;
+    self.healthServiceUrl = healthServiceUrl;
+    self.shellUrl = shellUrl;
+    self.masterAppId = masterAppId;
 
-		self.language = DEFAULT_LANGUAGE;
-		self.country = DEFAULT_COUNTRY;
+    self.language = DEFAULT_LANGUAGE;
+    self.country = DEFAULT_COUNTRY;
 
-		_records = [NSMutableArray new];
-	}
-	return self;
+    _records = [NSMutableArray new];
+    HVCHECK_NOTNULL(_records);
+    
+    HVCHECK_SUCCESS([self initDefaultProviders]);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
 }
 
 -(id)initForAppID:(NSString *)appID andEnvironment:(HVEnvironmentSettings *)environment
@@ -146,10 +176,11 @@ LError:
     
     [_settingsFileName release];
     
+    [m_transport release];
+    [m_provisioner release];
+    
 	[super dealloc];
 }
-
-#pragma mark Url Generating Logic
 
 - (NSString *)getApplicationCreationUrl
 {
@@ -174,10 +205,6 @@ LError:
 
 	return userAuthUrl;
 }
-
-#pragma mark Url Generating Logic End
-
-#pragma mark Send Request Logic
 
 - (void)sendRequest: (HealthVaultRequest *)request 
 {
@@ -224,15 +251,11 @@ LError:
 					response: healthVaultResponse];
 }
 
-#pragma mark Send Request Logic End
-
-#pragma mark Auth Logic
-
 - (void)performAuthenticationCheck: (NSObject *)target
 	authenticationCompleted: (SEL)authCompleted
 		  shellAuthRequired: (SEL)shellAuthRequired {
 
-	[Provisioner performAuthenticationCheck: self
+	[m_provisioner performAuthenticationCheck: self
 									 target: target
 					authenticationCompleted: authCompleted
 						  shellAuthRequired: shellAuthRequired];
@@ -242,7 +265,7 @@ LError:
  authenticationCompleted: (SEL)authCompleted
 	   shellAuthRequired: (SEL)shellAuthRequired {
 
-	[Provisioner authorizeRecords: self
+	[m_provisioner authorizeRecords: self
 						   target: target
 		  authenticationCompleted: authCompleted
 				shellAuthRequired: shellAuthRequired];
@@ -256,60 +279,6 @@ LError:
 - (BOOL)getIsApplicationCreated {
 	
 	return (![NSString isNilOrEmpty:self.authorizationSessionToken] && ![NSString isNilOrEmpty:self.sharedSecret]);
-}
-
-
-- (void)sendRequestImpl: (HealthVaultRequest *)request 
-{    
-	request.msgTime = [NSDate date];
-    if (!request.appIdInstance)
-    {
-        if (self.appIdInstance && self.appIdInstance.length > 0)
-        {
-            request.appIdInstance = self.appIdInstance;
-        }
-        else 
-        {
-            request.appIdInstance = self.masterAppId;
-        }
-    }
-    
-	request.authorizationSessionToken = self.authorizationSessionToken;
-	request.sessionSharedSecret = self.sessionSharedSecret;
-    
-	NSString *requestXml = [request toXml];
-    
-	request.connection = [WebTransport sendRequestForURL: self.healthServiceUrl
-                                                withData: requestXml
-                                                 context: request
-                                                  target: self
-                                                callBack: @selector(sendRequestCallback: context:)];
-}
-
-#pragma mark Auth Logic End
-
-#pragma mark Token Refreshing Logic
-
-- (void)refreshSessionToken: (HealthVaultRequest *)request {
-
-	self.authorizationSessionToken = nil;
-	NSString *infoSection = [self getCastCallInfoSection];
-
-	HealthVaultRequest *refreshTokenRequest =
-			[[HealthVaultRequest alloc] initWithMethodName: @"CreateAuthenticatedSessionToken"
-											 methodVersion: 2
-											   infoSection: infoSection
-													target: self
-												  callBack: @selector(refreshSessionTokenCompleted:)];
-
-	// Saves source response to userState property, it will be resent
-	// after token updating.
-	refreshTokenRequest.userState = request;
-    refreshTokenRequest.personId = request.personId;
-    refreshTokenRequest.recordId = request.recordId;
-
-	[self sendRequest: refreshTokenRequest];
-	[refreshTokenRequest release];
 }
 
 - (void)refreshSessionTokenCompleted: (HealthVaultResponse *)response {
@@ -338,9 +307,39 @@ LError:
 	[self sendRequest: originalRequest];
 }
 
-#pragma mark Token Refreshing Logic End
-
-#pragma mark Cast Call Logic
+- (NSString *)getCastCallInfoSection {
+    
+	NSString *msgTimeString = [DateTimeUtils dateToUtcString: [NSDate date]];
+    
+	NSMutableString *stringToSign = [NSMutableString new];
+	[stringToSign appendString: @"<content>"];
+	[stringToSign appendFormat: @"<app-id>%@</app-id>", self.appIdInstance];
+	[stringToSign appendString: @"<hmac>HMACSHA256</hmac>"];
+	[stringToSign appendFormat: @"<signing-time>%@</signing-time>", msgTimeString];
+	[stringToSign appendString: @"</content>"];
+    
+	NSData *keyData = [Base64 decodeBase64WithString: self.sharedSecret];
+	NSString *keyString = [[NSString alloc] initWithData: keyData
+												encoding: NSASCIIStringEncoding];
+	NSString *hmac = [MobilePlatform computeSha256Hmac: keyData data: stringToSign];
+	[keyString release];
+    
+	NSMutableString *xml = [NSMutableString new];
+	[xml appendString: @"<info>"];
+	[xml appendString: @"<auth-info>"];
+	[xml appendFormat: @"<app-id>%@</app-id>", self.appIdInstance];
+	[xml appendString: @"<credential>"];
+	[xml appendString: @"<appserver2>"];
+	[xml appendFormat: @"<hmacSig algName=\"HMACSHA256\">%@</hmacSig>", hmac];
+	[xml appendString: stringToSign];
+	[stringToSign release];
+	[xml appendString: @"</appserver2>"];
+	[xml appendString: @"</credential>"];
+	[xml appendString: @"</auth-info>"];
+	[xml appendString: @"</info>"];
+    
+	return [xml autorelease];
+}
 
 - (void)saveCastCallResults: (NSString *)responseXml {
 
@@ -359,47 +358,7 @@ LError:
     {
         [pool release];
     }
-
-
 }
-
-- (NSString *)getCastCallInfoSection {
-
-	NSString *msgTimeString = [DateTimeUtils dateToUtcString: [NSDate date]];
-
-	NSMutableString *stringToSign = [NSMutableString new];
-	[stringToSign appendString: @"<content>"];
-	[stringToSign appendFormat: @"<app-id>%@</app-id>", self.appIdInstance];
-	[stringToSign appendString: @"<hmac>HMACSHA256</hmac>"];
-	[stringToSign appendFormat: @"<signing-time>%@</signing-time>", msgTimeString];
-	[stringToSign appendString: @"</content>"];
-
-	NSData *keyData = [Base64 decodeBase64WithString: self.sharedSecret];
-	NSString *keyString = [[NSString alloc] initWithData: keyData
-												encoding: NSASCIIStringEncoding];
-	NSString *hmac = [MobilePlatform computeSha256Hmac: keyData data: stringToSign];
-	[keyString release];
-
-	NSMutableString *xml = [NSMutableString new];
-	[xml appendString: @"<info>"];
-	[xml appendString: @"<auth-info>"];
-	[xml appendFormat: @"<app-id>%@</app-id>", self.appIdInstance];
-	[xml appendString: @"<credential>"];
-	[xml appendString: @"<appserver2>"];
-	[xml appendFormat: @"<hmacSig algName=\"HMACSHA256\">%@</hmacSig>", hmac];
-	[xml appendString: stringToSign];
-	[stringToSign release];
-	[xml appendString: @"</appserver2>"];
-	[xml appendString: @"</credential>"];
-	[xml appendString: @"</auth-info>"];
-	[xml appendString: @"</info>"];
-
-	return [xml autorelease];
-}
-
-#pragma mark Cast Call Logic End
-
-#pragma mark Settings Logic
 
 - (void)saveSettings
 {
@@ -473,13 +432,78 @@ LError:
     self.shellUrl = settings.shellUrl.absoluteString;
 }
 
-#pragma mark Settings Logic End
+@end
+
+@implementation HealthVaultService (HVPrivate)
+
+-(BOOL)initDefaultProviders
+{
+    m_provisioner = [[Provisioner alloc] init];
+    HVCHECK_NOTNULL(m_provisioner);
+    
+    m_transport = [[HVHttpTransport alloc] init];
+    HVCHECK_NOTNULL(m_transport);
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
+- (void)sendRequestImpl: (HealthVaultRequest *)request
+{
+	request.msgTime = [NSDate date];
+    if (!request.appIdInstance)
+    {
+        if (self.appIdInstance && self.appIdInstance.length > 0)
+        {
+            request.appIdInstance = self.appIdInstance;
+        }
+        else
+        {
+            request.appIdInstance = self.masterAppId;
+        }
+    }
+    
+	request.authorizationSessionToken = self.authorizationSessionToken;
+	request.sessionSharedSecret = self.sessionSharedSecret;
+    
+	NSString *requestXml = [request toXml];
+    
+	request.connection = [m_transport sendRequestForURL: self.healthServiceUrl
+                                                withData: requestXml
+                                                 context: request
+                                                  target: self
+                                                callBack: @selector(sendRequestCallback: context:)];
+}
+
+- (void)refreshSessionToken: (HealthVaultRequest *)request {
+    
+	self.authorizationSessionToken = nil;
+	NSString *infoSection = [self getCastCallInfoSection];
+    
+	HealthVaultRequest *refreshTokenRequest =
+    [[HealthVaultRequest alloc] initWithMethodName: @"CreateAuthenticatedSessionToken"
+                                     methodVersion: 2
+                                       infoSection: infoSection
+                                            target: self
+                                          callBack: @selector(refreshSessionTokenCompleted:)];
+    
+	// Saves source response to userState property, it will be resent
+	// after token updating.
+	refreshTokenRequest.userState = request;
+    refreshTokenRequest.personId = request.personId;
+    refreshTokenRequest.recordId = request.recordId;
+    
+	[self sendRequest: refreshTokenRequest];
+	[refreshTokenRequest release];
+}
 
 - (void)performAppCallBack: (HealthVaultRequest *)request
 				  response: (HealthVaultResponse *)response {
-
+    
 	if (request && request.target && [request.target respondsToSelector:request.callBack]) {
-
+        
 		[request.target performSelector: request.callBack
 							 withObject: response];
 	}

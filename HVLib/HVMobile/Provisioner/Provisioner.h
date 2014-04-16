@@ -28,7 +28,7 @@
 /// @param target - callback method owner.
 /// @param authCompleted - method that is called when the authentication process is complete.
 /// @param shellAuthRequired - method that is called when the application needs to perform authorization.
-+ (void)authorizeRecords: (HealthVaultService *)service
+-(void)authorizeRecords: (HealthVaultService *)service
                   target: (NSObject *)target
  authenticationCompleted: (SEL)authCompleted
        shellAuthRequired: (SEL)shellAuthRequired;
@@ -38,7 +38,7 @@
 /// @param target - callback method owner.
 /// @param authCompleted - method that is called when the authentication process is complete.
 /// @param shellAuthRequired - method that is called when the application needs to perform authorization.
-+ (void)performAuthenticationCheck: (HealthVaultService *)service
+-(void)performAuthenticationCheck: (HealthVaultService *)service
                             target: (NSObject *)target
            authenticationCompleted: (SEL)authCompleted
                  shellAuthRequired: (SEL)shellAuthRequired;

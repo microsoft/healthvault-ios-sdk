@@ -68,6 +68,14 @@
 //
 // For memory management
 //
+-(void) didReceiveMemoryWarning;
 -(void) clearCache;
+
+//
+// If you are using Offline changes, call this to commit all pending changes to HealthVault
+// This will iterate over all local record stores and commit their changes one by one
+//
+-(HVTask *) commitOfflineChangesWithCallback:(HVTaskCompletion) callback;
+-(HVTask *) commitOfflineChangesForRecords:(NSArray *) records withCallback:(HVTaskCompletion)callback;
 
 @end

@@ -18,19 +18,17 @@
 
 #import <Foundation/Foundation.h>
 #import "HVObjectStore.h"
-#import "HVLocalItemStore.h"
+#import "HVSynchronizationManager.h"
 
-@class HVTypeView;
-@class HVSynchronizedStore;
 @class HVStoredQuery;
 
-@interface HVLocalRecordStore : NSObject 
+@interface HVLocalRecordStore : NSObject
 {
 @private
     HVRecordReference* m_record;
     id<HVObjectStore> m_root;
     id<HVObjectStore> m_metadata;
-    HVSynchronizedStore* m_data;  
+    HVSynchronizationManager* m_dataMgr;
     BOOL m_cache;
 }
 
@@ -53,10 +51,13 @@
 //
 @property (readonly, nonatomic) id<HVObjectStore> metadata;
 //
-// Item Data stored here (Xml)
-// Child of root
+// All Item Data (Xml) is stored here
 //
 @property (readonly, nonatomic) HVSynchronizedStore* data;
+//
+// Synchronization manager
+//
+@property (readonly, nonatomic) HVSynchronizationManager* dataMgr;
 
 //-------------------------
 //
@@ -86,15 +87,23 @@
 -(BOOL) putStoredQuery:(HVStoredQuery *) query withName:(NSString *) name;
 -(void) deleteStoredQuery:(NSString *) name;
 
+-(HVSynchronizedType *) getSynchronizedTypeForTypeID:(NSString *) typeID;
+
 +(NSString *) metadataStoreKey;
-+(NSString *) dataStoreKey;
 
 -(BOOL) resetMetadata;
 -(BOOL) resetData;
 
-//
-// Clears any in-memory caches. Does NOT wipe disk storage
-//
 -(void) clearCache;
+//
+// If you are using Offline changes, call this to commit all pending changes to HealthVault
+//
+-(HVTask *) commitOfflineChangesWithCallback:(HVTaskCompletion) callback;
+
+//
+// Must be called to close references
+//
+-(void) close;
 
 @end
+

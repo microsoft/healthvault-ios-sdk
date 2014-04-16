@@ -74,6 +74,16 @@ LError:
     [super dealloc];
 }
 
+-(NSDate *)getDate
+{
+    return [m_when toDate];
+}
+
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
+}
+
 +(HVVocabIdentifier *)vocabForMeasurementMethod
 {
     return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-method"] autorelease];
@@ -92,6 +102,11 @@ LError:
 -(NSString *)toStringWithFormat:(NSString *)format
 {
     return [NSString localizedStringWithFormat:format, self.bpmValue];
+}
+
+-(NSString *)description
+{
+    return [self toString];
 }
 
 -(HVClientResult *)validate

@@ -20,6 +20,11 @@
 #import "HVAsyncTask.h"
 #import "HVClient.h"
 
+//-----------------------------------------------
+//
+// HVTask
+//
+//-----------------------------------------------
 @interface HVTask (HVPrivate)
 
 -(void) setException:(NSException *) error;
@@ -47,6 +52,7 @@
 
 @synthesize operation = m_operation;
 @synthesize parent = m_parent;
+@synthesize shouldCompleteInMainThread = m_completeInMainThread;
 
 -(BOOL)hasError
 {
@@ -154,19 +160,34 @@ LError:
     [super dealloc];
 }
 
--(void) start
+-(void)start
+{
+    [self start:^{
+        [self nextStep];
+    }];
+}
+
+-(void)start:(HVAction)startAction
 {
     @synchronized(self)
     {
+        if (self.isDone)
+        {
+            return;
+        }
+        
         [self retain]; // We'll free ourselves when we are done (see complete method)
-        @try 
+        @try
         {
             m_cancelled = FALSE;
             m_started = TRUE;
-           
-            [self nextStep];
+            m_completeInMainThread = [NSThread isMainThread];
+            if (startAction)
+            {
+                startAction();
+            }
         }
-        @catch (id exception) 
+        @catch (id exception)
         {
             [self handleError:exception];
             [self release];
@@ -204,6 +225,12 @@ LError:
 
 -(void) complete
 {
+    if (m_completeInMainThread && ![NSThread isMainThread])
+    {
+        [self invokeOnMainThread:@selector(complete)];
+        return;
+    }
+
     @synchronized(self)
     {
         self.operation = nil;
@@ -228,7 +255,7 @@ LError:
         }
         @catch (id exception) 
         {
-            [exception log];
+            [self handleError:exception];
         }
  
         [self release];
@@ -238,6 +265,12 @@ LError:
 -(void) handleError:(id)error
 {
     self.exception = error;
+    [error log];
+}
+
+-(void)clearError
+{
+    self.exception = nil;
 }
 
 -(void)checkSuccess
@@ -271,18 +304,27 @@ LError:
             return FALSE;
         }
         
-        self.operation = nextTask;
-        //
-        // Make this task the completion handler, so we can intercept callbacks and handle exceptions right
-        //
-        HVTaskCompletion childCallback = [nextTask.callback retain];     
-        nextTask.parent = self;
-        nextTask.callback = ^(HVTask *task) 
+        if (nextTask.isComplete)
         {
-            [task.parent childCompleted:task childCallback:childCallback];
-        };       
-        [childCallback release];
+            // Completed synchronously perhaps
+            self.exception = nextTask.exception;
+            return TRUE;
+        }
         
+        self.operation = nextTask;
+        if (nextTask)
+        {
+            //
+            // Make this task the completion handler, so we can intercept callbacks and handle exceptions right
+            //
+            HVTaskCompletion childCallback = [nextTask.callback retain];     
+            nextTask.parent = self;
+            nextTask.callback = ^(HVTask *task) 
+            {
+                [task.parent childCompleted:task childCallback:childCallback];
+            };       
+            [childCallback release];
+        }
         return TRUE;
     }    
 }
@@ -356,7 +398,9 @@ LError:
 
 -(void ) queueMethod
 {
-    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void) { [self executeMethod];}];
+    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void) {
+        [self executeMethod];
+    }];
     HVCHECK_OOM(op);
     
     self.operation = op;
@@ -402,6 +446,7 @@ LError:
             callback(child);
         }
         
+        [self scheduleNextChildStep];
         [self nextStep];
         
         return;
@@ -417,5 +462,190 @@ LError:
     
     [self complete];
 } 
+
+-(void) scheduleNextChildStep
+{
+    
+}
+
+@end
+
+//-----------------------------------------------
+//
+// HVTaskSequenceRunner
+//
+//-----------------------------------------------
+@interface HVTaskSequenceRunner : HVTask
+{
+@protected
+    HVTaskSequence* m_sequence;
+}
+
+-(id) initWithSequence:(HVTaskSequence *) sequence;
+
+-(BOOL) moveToNextTask;
+-(void) notifyAborted;
+
+@end
+
+
+//-----------------------------------------------
+//
+// HVTaskSequence
+//
+//-----------------------------------------------
+@implementation HVTaskSequence
+
+@synthesize name = m_name;
+
+-(void)dealloc
+{
+    [m_name release];
+    [super dealloc];
+}
+
+-(id)nextObject
+{
+    return [self nextTask];
+}
+
+-(HVTask *)nextTask
+{
+    return nil;
+}
+
+-(void)onAborted
+{
+    
+}
+
++(HVTask *)run:(HVTaskSequence *)sequence callback:(HVTaskCompletion)callback
+{
+    HVTask* task = [[HVTaskSequence newRunTaskFor:sequence callback:callback] autorelease];
+    [task start];
+    
+    return task;
+}
+
++(HVTask *)newRunTaskFor:(HVTaskSequence *)sequence callback:(HVTaskCompletion)callback
+{
+    HVTask* task = [[HVTask alloc] initWithCallback:callback];
+    HVCHECK_NOTNULL(task);
+
+    HVTaskSequenceRunner* runner = [[HVTaskSequenceRunner alloc] initWithSequence:sequence];
+    HVCHECK_NOTNULL(runner);
+    
+    [task setNextTask:runner];
+    [runner release];
+    
+    return task;
+    
+LError:
+    return nil;
+}
+
+@end
+
+@implementation HVTaskStateMachine
+
+@synthesize stateID = m_stateID;
+
+@end
+
+//-----------------------------------------------
+//
+// HVTaskSequenceRunner
+//
+//-----------------------------------------------
+
+@implementation HVTaskSequenceRunner
+
+-(id)initWithSequence:(HVTaskSequence *)sequence
+{
+    HVCHECK_NOTNULL(sequence);
+    
+    self = [super initWithCallback:^(HVTask *task) {
+        
+        [task checkSuccess];
+        
+    }];
+    HVCHECK_SELF;
+    
+    HVRETAIN(m_sequence, sequence);
+    self.taskName = sequence.name;
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(void)dealloc
+{
+    [m_sequence release];
+    [super dealloc];
+}
+
+-(void)start
+{
+    [HVTaskSequenceRunner setNextTaskInSequence:self];
+    [super start];
+}
+
+-(void) scheduleNextChildStep
+{
+    [HVTaskSequenceRunner setNextTaskInSequence:self];
+}
+
++(void) setNextTaskInSequence:(HVTask *) task
+{
+    HVTaskSequenceRunner* runner = (HVTaskSequenceRunner *) task;
+    BOOL isCancelled = TRUE;
+    @try
+    {
+        isCancelled = [runner moveToNextTask];
+    }
+    @finally
+    {
+        if (isCancelled)
+        {
+            [runner notifyAborted];
+        }
+    }
+}
+
+// Return false if aborted -- i.e. cancelled
+-(BOOL) moveToNextTask
+{
+    while (!self.isCancelled)
+    {
+        HVTask* nextTask = [m_sequence nextTask];
+        if (!nextTask)
+        {
+            self.operation = nil;
+            return FALSE;
+        }
+        
+        if (![self setNextTask:nextTask] ||
+            !nextTask.isComplete ||
+            nextTask.hasError
+            )
+        {
+            return FALSE;
+        }
+        //
+        // Move on to the next state
+        //
+    }
+    
+    return TRUE; // aborted
+}
+
+-(void)notifyAborted
+{
+    safeInvokeAction(^{
+        [m_sequence onAborted];
+    });
+}
 
 @end

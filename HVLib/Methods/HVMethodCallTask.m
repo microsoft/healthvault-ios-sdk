@@ -83,6 +83,12 @@ LError:
     [super dealloc];
 }
 
+-(void)clearError
+{
+    [super clearError];
+    [m_status clear];
+}
+
 -(void)checkSuccess
 {
     if (m_status.hasError)
@@ -92,20 +98,12 @@ LError:
     [super checkSuccess];
 }
 
--(void )start
+-(void)start
 {
     [self prepare];
-    [self retain];
-    @try 
-    {
+    [super start:^{
         [self sendRequest];
-    }
-    @catch (id ex) 
-    {
-        [self release];
-        [self handleError:ex];
-        @throw;
-    }
+    }];
 }
 
 -(void) validateObject:(id)obj
@@ -135,7 +133,6 @@ LError:
     //
     if (!m_record)
     {
-        //self.record = [HVClient current].currentRecord;
         [HVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_InvalidRecordReference)];
     }
 }
@@ -218,6 +215,7 @@ LError:
             m_status.statusCode = response.statusCode;
             m_status.errorText = response.errorText;
             m_status.errorDetailsXml = response.errorContextXml;    
+            m_status.webStatusCode = response.webStatusCode;
             
             if (m_status.hasError)
             {

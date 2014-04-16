@@ -43,22 +43,58 @@ LError:
 
 -(void) subscribe:(id)delegate
 {
-    [m_delegates addObject:delegate];
+    if (!delegate)
+    {
+        return;
+    }
+    @synchronized(m_delegates)
+    {
+        [m_delegates addObject:[NSValue valueWithNonretainedObject:delegate]];
+    }
 }
 
 -(void) unsubscribe:(id)delegate
 {
-    [m_delegates removeObject:delegate];
+    @synchronized(m_delegates)
+    {
+        for (int i = 0, count = m_delegates.count; i < count; ++i)
+        {
+            id d = ((NSValue *)[m_delegates objectAtIndex:i]).nonretainedObjectValue;
+            if (delegate == d)
+            {
+                [m_delegates removeObjectAtIndex:i];
+                return;
+            }
+        }
+    }
 }
 
 -(void) invoke:(SEL)sel withParam:(id)param
 {
-    for (int i = 0, count = m_delegates.count; i < count; ++i)
+    @synchronized(m_delegates)
     {
-        id delegate = [m_delegates objectAtIndex:i];
-        if ([delegate respondsToSelector:sel])
+        for (int i = 0, count = m_delegates.count; i < count; ++i)
         {
-            [delegate performSelector:sel withObject:param];
+            id delegate = ((NSValue *)[m_delegates objectAtIndex:i]).nonretainedObjectValue;
+            if ([delegate respondsToSelector:sel])
+            {
+                [delegate performSelector:sel withObject:param];
+            }
+        }
+    }
+}
+
+-(void)invoke:(SEL)sel withParam:(id)param withParam:(id)param2
+{
+    @synchronized(m_delegates)
+    {
+        for (int i = 0, count = m_delegates.count; i < count; ++i)
+        {
+            id delegate = ((NSValue *)[m_delegates objectAtIndex:i]).nonretainedObjectValue;
+            if ([delegate respondsToSelector:sel])
+            {
+                [delegate performSelector:sel withObject:param withObject:param];
+            }
         }
     }
 }

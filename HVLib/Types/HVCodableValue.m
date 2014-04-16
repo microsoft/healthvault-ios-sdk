@@ -232,6 +232,11 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(void) addItem:(HVCodableValue *)value
+{
+    [super addObject:value];
+}
+
 -(HVCodableValue *)itemAtIndex:(NSUInteger)index
 {
     return [self objectAtIndex:index];

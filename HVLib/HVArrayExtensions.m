@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "HVArrayExtensions.h"
+#import "HVRandom.h"
 
 @implementation NSArray (HVArrayExtensions)
 
@@ -64,6 +65,22 @@
     }
     
     return *pArray;
+}
+
++(NSMutableArray *)fromEnumerator:(NSEnumerator *)enumerator
+{
+    NSMutableArray* array = [NSMutableArray array];
+    [array addFromEnumerator:enumerator];
+    return array;
+}
+
+-(void)addFromEnumerator:(NSEnumerator *)enumerator
+{
+    id obj;
+    while ((obj = enumerator.nextObject) != nil)
+    {
+        [self addObject:obj];
+    }
 }
 
 -(BOOL)isEmpty

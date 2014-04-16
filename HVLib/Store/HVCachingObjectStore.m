@@ -31,6 +31,7 @@
 {
     [m_cache release];
     [m_inner release];
+    
     [super dealloc];
 }
 
@@ -40,8 +41,6 @@
     
     m_cache = [[NSCache alloc] init];
     HVCHECK_NOTNULL(m_cache);
-    
-    //m_cache.delegate = self;
     
     HVRETAIN(m_inner, store);
     
@@ -53,6 +52,11 @@ LError:
 -(NSEnumerator *)allKeys
 {
     return [m_inner allKeys];
+}
+
+-(NSDate *) createDateForKey:(NSString *) key
+{
+    return [m_inner createDateForKey:key];
 }
 
 -(NSDate *) updateDateForKey:(NSString *) key
@@ -152,6 +156,16 @@ LError:
 {
     // Child store is NOT caching. 
     return [m_inner deleteChildStore:name];
+}
+
+-(BOOL)childStoreExists:(NSString *)name
+{
+    return [m_inner childStoreExists:name];
+}
+
+-(NSEnumerator *)allChildStoreNames
+{
+    return [m_inner allChildStoreNames];
 }
 
 -(id)refreshAndGetObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls

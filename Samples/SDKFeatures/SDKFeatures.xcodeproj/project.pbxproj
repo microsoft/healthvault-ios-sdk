@@ -39,6 +39,8 @@
 		5D78994017173D2A0015D375 /* HVProcedureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78993F17173D290015D375 /* HVProcedureFactory.m */; };
 		5D789957171758E90015D375 /* HVStatusLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789956171758E90015D375 /* HVStatusLabel.m */; };
 		5DAFC630166FC5AC00363FA2 /* HVDietaryIntakeFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */; };
+		5DB083DD18F3233200702B79 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB083DC18F3233200702B79 /* SystemConfiguration.framework */; };
+		5DB2E6E418D381CF0030972D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB2E6E318D381CF0030972D /* MobileCoreServices.framework */; };
 		5DD6C1EB1676C2F900A658D8 /* HVEmotionalStateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */; };
 		5DD6C23F1677D2C600A658D8 /* HVExerciseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */; };
 		5DD6C27C16780C1000A658D8 /* HVMedicationUsageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C27B16780C1000A658D8 /* HVMedicationUsageFactory.m */; };
@@ -102,6 +104,8 @@
 		5D789956171758E90015D375 /* HVStatusLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVStatusLabel.m; sourceTree = "<group>"; };
 		5DAFC62E166FC5AC00363FA2 /* HVDietaryIntakeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDietaryIntakeFactory.h; sourceTree = "<group>"; };
 		5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDietaryIntakeFactory.m; sourceTree = "<group>"; };
+		5DB083DC18F3233200702B79 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5DB2E6E318D381CF0030972D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		5DD6C1E91676C2F800A658D8 /* HVEmotionalStateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEmotionalStateFactory.h; sourceTree = "<group>"; };
 		5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVEmotionalStateFactory.m; sourceTree = "<group>"; };
 		5DD6C23D1677D2C600A658D8 /* HVExerciseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVExerciseFactory.h; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DB083DD18F3233200702B79 /* SystemConfiguration.framework in Frameworks */,
+				5DB2E6E418D381CF0030972D /* MobileCoreServices.framework in Frameworks */,
 				5D091378166ED2C50031F5F9 /* libxml2.2.dylib in Frameworks */,
 				5D091376166ED2AF0031F5F9 /* Security.framework in Frameworks */,
 				5D091374166ED1F20031F5F9 /* libHVLib.a in Frameworks */,
@@ -161,6 +167,8 @@
 		5D091343166ED1980031F5F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DB083DC18F3233200702B79 /* SystemConfiguration.framework */,
+				5DB2E6E318D381CF0030972D /* MobileCoreServices.framework */,
 				5D091344166ED1980031F5F9 /* UIKit.framework */,
 				5D091346166ED1980031F5F9 /* Foundation.framework */,
 				5D091348166ED1980031F5F9 /* CoreGraphics.framework */,
@@ -415,6 +423,7 @@
 		5D091365166ED1980031F5F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SDKFeatures/SDKFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
@@ -429,6 +438,7 @@
 		5D091366166ED1980031F5F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SDKFeatures/SDKFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";

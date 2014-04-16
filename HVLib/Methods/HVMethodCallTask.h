@@ -38,7 +38,7 @@
 
 @property (readonly, nonatomic) NSString* name;
 @property (readonly, nonatomic) float version;
-@property (readonly, nonatomic) HVServerResponseStatus* status; 
+@property (readwrite, nonatomic, retain) HVServerResponseStatus* status;
 @property (readwrite, nonatomic, retain) HVRecordReference* record;
 @property (readwrite, nonatomic) BOOL useMasterAppID;
 

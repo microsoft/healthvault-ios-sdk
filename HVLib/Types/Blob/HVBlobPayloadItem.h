@@ -58,6 +58,7 @@
 // Convenience properties
 //
 @property (readonly, nonatomic) NSString* name;
+@property (readonly, nonatomic) NSString* contentType;
 
 //-------------------------
 //

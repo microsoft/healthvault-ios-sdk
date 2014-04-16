@@ -25,6 +25,7 @@
 @protected
     NSURLResponse* m_response;
     NSFileHandle* m_file;
+    int m_totalBytesWritten;
 }
 
 //-------------------------

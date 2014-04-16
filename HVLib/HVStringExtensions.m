@@ -131,6 +131,12 @@ NSString* const c_emptyString = @"";
     return NSNotFound;
 }
 
+-(BOOL)contains:(NSString *)other
+{
+    NSRange range = [self rangeOfString:other];
+    return (range.location != NSNotFound);
+}
+
 -(BOOL)isEqualToStringCaseInsensitive:(NSString *)aString
 {
     return ([self caseInsensitiveCompare:aString] == NSOrderedSame);

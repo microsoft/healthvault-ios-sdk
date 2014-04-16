@@ -18,8 +18,11 @@
 
 #import "HVCommon.h"
 #import "HVTypeViewItem.h"
+#import "HVTypeView.h"
 #import "HVSynchronizedStore.h"
 #import "HVLocalItemStore.h"
+#import "HVSynchronizationManager.h"
+#import "HVClient.h"
 
 @interface HVSynchronizedStore (HVPrivate) 
 
@@ -34,6 +37,9 @@
 -(void) completedDownloadKeys:(NSArray *) keys inView:(HVTypeView *) view task:(HVTask *) task;
 -(HVItemQuery *) newQueryFromKeys:(NSArray *) keys;
 
+-(BOOL) updateItemsInLocalStore:(HVItemCollection *)items;
+-(BOOL) replaceLocalItemWithDownloaded:(HVItem *) item;
+
 -(void) notifyView:(HVTypeView *) view ofItems:(HVItemCollection *) items requestedKeys:(NSArray *) requestedKeys;
 -(void) notifyView:(HVTypeView *)view ofError:(id) error retrievingKeys:(NSArray *) keys;
 
@@ -43,6 +49,12 @@
 
 @synthesize defaultSections = m_sections;
 @synthesize localStore = m_localStore;
+@synthesize syncMgr = m_syncMgr;
+
+-(id)init
+{
+    return [self initOverStore:nil];
+}
 
 -(id)initOverStore:(id)store
 {
@@ -53,6 +65,7 @@
     
     self = [self initOverItemStore:localStore];
     [localStore release];
+    
     return self;
     
 LError:
@@ -65,7 +78,7 @@ LError:
     
     self = [super init];
     HVCHECK_SELF;
-    
+        
     self.localStore = store;
     m_sections = HVItemSection_Standard;
      
@@ -77,8 +90,13 @@ LError:
 
 -(void) dealloc
 {
-    [m_localStore release];
+    [m_localStore release];    
     [super dealloc];
+}
+
+-(void)clearCache
+{
+    [m_localStore clearCache];
 }
 
 -(HVItem *)getlocalItemWithID:(NSString *)itemID
@@ -121,26 +139,11 @@ LError:
     return [m_localStore putItem:item];
 }
 
--(BOOL)updateItemsInLocalStore:(HVItemCollection *)items
-{
-    HVCHECK_NOTNULL(items);
-    
-    for (NSInteger i = 0, count = items.count; i < count; ++i) 
-    {
-        HVCHECK_SUCCESS([m_localStore putItem:[items objectAtIndex:i]]);
-    }
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
-}
-
 -(void) removeLocalItemWithKey:(HVItemKey *)key
 {
     return [m_localStore removeItem:key.itemID];
 }
-      
+
 -(HVTask *)downloadItemsWithKeys:(NSArray *)keys inView:(HVTypeView *)view
 {
     return [self downloadItemsWithKeys:keys typeID:nil inView:view];
@@ -209,6 +212,7 @@ LError:
     return nil;
 }
 
+// Deprecated
 -(BOOL)putItem:(HVItem *)item
 {
     return [self putLocalItem:item];
@@ -261,15 +265,12 @@ LError:
     downloadTask = [[HVDownloadItemsTask alloc] initWithCallback:callback]; // do not auto release
     HVCHECK_NOTNULL(downloadTask);
     downloadTask.taskName = @"downloadItems";
-        
-    HVGetItemsTask* getItemsTask = [[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
-        
+ 
+    HVGetItemsTask* getItemsTask = [[[HVClient current] methodFactory] newGetItemsForRecord:record query:query andCallback:^(HVTask *task) {
         [self completedGetItemsTask:task];
     }];
-    
     HVCHECK_NOTNULL(getItemsTask);
     getItemsTask.taskName = @"getItemsTask";
-    getItemsTask.record = record;
     
     [downloadTask setNextTask:getItemsTask];
     [getItemsTask release];
@@ -376,12 +377,11 @@ LError:
         return;
     }
     pendingQuery.view = getItems.firstQuery.view;
-    HVGetItemsTask* getPendingTask = [[HVGetItemsTask alloc] initWithQuery:pendingQuery andCallback:^(HVTask *task) {
+    HVGetItemsTask* getPendingTask = [[HVClient current].methodFactory newGetItemsForRecord:getItems.record query:pendingQuery andCallback:^(HVTask *task) {
         
         [self completedGetItemsTask:task];
-    
+        
     }];
-    
     getPendingTask.record = getItems.record;
     
     [task.parent setNextTask:getPendingTask];
@@ -402,6 +402,39 @@ LError:
     }
 }
 
+-(BOOL)updateItemsInLocalStore:(HVItemCollection *)items
+{
+    HVCHECK_NOTNULL(items);
+    
+    for (NSInteger i = 0, count = items.count; i < count; ++i)
+    {
+        HVItem* item = [items objectAtIndex:i];
+        HVCHECK_SUCCESS([self replaceLocalItemWithDownloaded:item]);
+    }
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
+}
+
+-(BOOL)replaceLocalItemWithDownloaded:(HVItem *)item
+{
+    if (m_syncMgr)
+    {
+        @try
+        {
+            return [m_syncMgr replaceLocalWithDownloaded:item];
+        }
+        @catch (id ex)
+        {
+        }
+        return FALSE;
+    }
+    
+    return [m_localStore putItem:item];
+}
+
 -(void)notifyView:(HVTypeView *)view ofItems:(HVItemCollection *)items requestedKeys:(NSArray *)requestedKeys
 {
     [view itemsRetrieved:items forKeys:requestedKeys];
@@ -413,3 +446,4 @@ LError:
 }
 
 @end
+

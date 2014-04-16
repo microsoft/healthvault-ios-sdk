@@ -2,7 +2,7 @@
 //  HVConstrainedString.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2012, 2014 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,24 +19,13 @@
 #import "HVCommon.h"
 #import "HVConstrainedString.h"
 
-
-@implementation HVConstrainedString
+@implementation HVString
 
 @synthesize value = m_value;
 
 -(NSUInteger) length
 {
     return (m_value != nil) ? m_value.length : 0;
-}
-
--(NSUInteger) minLength
-{
-    return 1;
-}
-
--(NSUInteger) maxLength
-{
-    return INT32_MAX;
 }
 
 -(id) initWith:(NSString *)value
@@ -58,22 +47,6 @@ LError:
     [super dealloc];
 }
 
--(HVClientResult *) validate
-{
-    HVCHECK_SUCCESS([self validateValue:m_value]);
-    
-    HVVALIDATE_SUCCESS;
-    
-LError:
-    return HVMAKE_ERROR(HVClientError_ValueOutOfRange);
-}
-
--(BOOL) validateValue:(NSString *)value
-{
-    int length = (value != nil) ? value.length : 0;
-    return (self.minLength <= length && length <= self.maxLength);
-}
-
 -(NSString *) description
 {
     return m_value;
@@ -89,5 +62,35 @@ LError:
     HVDESERIALIZE_TEXT(m_value);
 }
 
+@end
+
+
+@implementation HVConstrainedString
+
+-(NSUInteger) minLength
+{
+    return 1;
+}
+
+-(NSUInteger) maxLength
+{
+    return INT32_MAX;
+}
+
+-(HVClientResult *) validate
+{
+    HVCHECK_SUCCESS([self validateValue:m_value]);
+    
+    HVVALIDATE_SUCCESS;
+    
+LError:
+    return HVMAKE_ERROR(HVClientError_ValueOutOfRange);
+}
+
+-(BOOL) validateValue:(NSString *)value
+{
+    int length = (value != nil) ? value.length : 0;
+    return (self.minLength <= length && length <= self.maxLength);
+}
 
 @end

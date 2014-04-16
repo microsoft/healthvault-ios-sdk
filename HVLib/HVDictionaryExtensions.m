@@ -70,4 +70,26 @@ LError:
     return nil;    
 }
 
+-(BOOL)hasKey:(id)key
+{
+    return ([self objectForKey:key] != nil);
+}
+
+-(BOOL)boolValueForKey:(id)key
+{
+    NSNumber* value = [self objectForKey:key];
+    return value.boolValue;
+}
+
+@end
+
+@implementation NSMutableDictionary (HVDictionaryExtensions)
+
+-(void)setBoolValue:(BOOL)value forKey:(id<NSCopying>)key
+{
+    NSNumber* boolValue = [[NSNumber alloc] initWithBool:value];
+    [self setObject:boolValue forKey:key];
+    [boolValue release];
+}
+
 @end

@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "HVType.h"
 
-@interface HVConstrainedString : HVType
+@interface HVString : HVType
 {
 @protected
     NSString* m_value;
@@ -27,10 +27,16 @@
 
 @property (readwrite, nonatomic, retain) NSString* value;
 @property (readonly, nonatomic) NSUInteger length;
+
+-(id) initWith:(NSString*) value;
+
+@end
+
+@interface HVConstrainedString : HVString
+
 @property (readonly, nonatomic) NSUInteger minLength;
 @property (readonly, nonatomic) NSUInteger maxLength;
 
--(id) initWith:(NSString*) value;
 -(BOOL) validateValue:(NSString *) value;
 
 @end

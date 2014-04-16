@@ -74,4 +74,9 @@
 @end
 
 @interface HVItemFilterCollection : HVCollection
+
+-(void) addItem:(HVItemFilter *) filter;
+
+-(HVItemFilter *) itemAtIndex:(NSUInteger) index;
+
 @end

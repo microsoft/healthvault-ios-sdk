@@ -149,11 +149,14 @@
 	[header appendFormat: @"<msg-ttl>%d</msg-ttl>", self.msgTTL];
 	[header appendFormat: @"<version>%@</version>", [MobilePlatform platformAbbreviationAndVersion]];
 
-	NSMutableString *infoString = [NSMutableString new];
-	if (self.infoXml) {
-		[infoString appendFormat: @"%@", self.infoXml];
-	} else {
-		[infoString appendFormat: @"<info />"];
+    NSString* infoString;
+	if (self.infoXml)
+    {
+        infoString = self.infoXml;
+	}
+    else
+    {
+        infoString = @"<info />";
 	}
 	
 	BOOL isCreateAuthSessionTokenMethod = [@"CreateAuthenticatedSessionToken" compare: self.methodName] == NSOrderedSame;
@@ -172,12 +175,12 @@
 	}
 
 	[xml appendString: header];
-	[xml appendFormat: @"%@", infoString];
+    [xml appendString:infoString];
 
 	[xml appendString: @"</wc-request:request>"];
 
 	[header release];
-	[infoString release];
+
 	return xml;
 }
 

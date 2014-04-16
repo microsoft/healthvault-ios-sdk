@@ -35,7 +35,7 @@ static NSString* const c_element_instanceID = @"instanceID";
 @interface HVUser (HVPrivate)
 
 -(void) getPeopleComplete:(HVTask *) task;
--(HVGetAuthorizedPeopleTask *) createGetPeopleTask;
+-(HVGetAuthorizedPeopleTask *) newGetPeopleTask;
 
 -(BOOL) updateWithPerson:(HVPersonInfo *) person;
 
@@ -150,12 +150,32 @@ LError:
     return FALSE;    
 }
 
+-(void) configureCurrentRecordForService:(HealthVaultService *)service
+{
+    HVRecord* currentRecord = self.currentRecord;
+    if (currentRecord == nil)
+    {
+        service.currentRecord = nil;
+        return;
+    }
+    
+    HealthVaultRecord* legacyRecord = [self newLegacyRecord:currentRecord];
+    service.currentRecord = legacyRecord;
+    [legacyRecord release];
+}
+
+-(void)clearRecordsForService:(HealthVaultService *)service
+{
+    [service.records removeAllObjects];
+    service.currentRecord = nil;
+}
+
 -(HVTask *)refreshAuthorizedRecords:(HVTaskCompletion)callback
 {
     HVTask* refreshTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
     HVCHECK_NOTNULL(refreshTask);
     
-    HVGetAuthorizedPeopleTask* getRecordsTask = [self createGetPeopleTask];    
+    HVGetAuthorizedPeopleTask* getRecordsTask = [self newGetPeopleTask];
     HVCHECK_NOTNULL(getRecordsTask);
     
     [refreshTask setNextTask:getRecordsTask];
@@ -190,7 +210,7 @@ LError:
             return;
         }
         
-        HVGetAuthorizedPeopleTask* refreshTask = [self createGetPeopleTask];
+        HVGetAuthorizedPeopleTask* refreshTask = [self newGetPeopleTask];
         [authTask setNextTask:refreshTask];
         [authTask start];
     }];
@@ -215,7 +235,7 @@ LError:
         
         [task checkSuccess];
         
-        HVGetAuthorizedPeopleTask* refreshTask = [self createGetPeopleTask];
+        HVGetAuthorizedPeopleTask* refreshTask = [self newGetPeopleTask];
         [task.parent setNextTask:refreshTask];
         [refreshTask release];
         
@@ -291,7 +311,7 @@ LError:
     
     int index = 0;
     HVDESERIALIZE_INT(index, c_element_current);
-    self.currentRecordIndex = index;  // to make sure the index is valid
+    m_currentIndex = index;
     
     HVDESERIALIZE_STRING(m_environment, c_element_environment);
     HVDESERIALIZE_STRING(m_instanceID, c_element_instanceID);
@@ -317,7 +337,7 @@ LError:
     [self updateWithPerson:person];
 }
 
--(HVGetAuthorizedPeopleTask *)createGetPeopleTask
+-(HVGetAuthorizedPeopleTask *)newGetPeopleTask
 {
     return [[HVGetAuthorizedPeopleTask alloc] initWithCallback:^(HVTask *task) {
         [self getPeopleComplete:task];        
@@ -380,16 +400,7 @@ LError:
 
 -(void)updateLegacyCurrentRecord
 {
-    HVRecord* currentRecord = self.currentRecord;
-    if (currentRecord == nil)
-    {
-        [HVClient current].service.currentRecord = nil;
-        return;
-    }
-    
-    HealthVaultRecord* legacyRecord = [self newLegacyRecord:currentRecord];
-    [HVClient current].service.currentRecord = legacyRecord;
-    [legacyRecord release];
+    [self configureCurrentRecordForService:[HVClient current].service];
 }
 
 -(HealthVaultRecord *)newLegacyRecord:(HVRecord *)record
@@ -405,8 +416,7 @@ LError:
 
 -(void)clearLegacyRecords
 {
-    [[HVClient current].service.records removeAllObjects];
-    [HVClient current].service.currentRecord = nil;
+    [self clearRecordsForService:[HVClient current].service];
 }
 
 @end

@@ -27,8 +27,10 @@ static NSString* const c_element_typeID = @"typeID";
 static NSString* const c_element_filter = @"filter";
 static NSString* const c_element_updateDate = @"updateDate";
 static NSString* const c_element_items = @"items";
+static NSString* const c_element_chunkSize = @"chunkSize";
+static NSString* const c_element_maxItems = @"maxItems";
 
-const int c_defaultReadAheadChunkSize = 25;
+const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
 @interface HVTypeView (HVPrivate)
 
@@ -39,7 +41,6 @@ const int c_defaultReadAheadChunkSize = 25;
 -(NSRange) getChunkForIndex:(NSUInteger) index chunkSize:(NSUInteger) chunkSize;
 -(NSRange) getReadAheadRangeForIndex:(NSUInteger) index readAheadCount:(NSUInteger) readAheadCount;
 -(HVItemCollection *) getLocalItemsInRange:(NSRange) range andPendingList:(NSMutableArray **) pending nullForNotFound:(BOOL)includeNull;
--(NSMutableArray *) getPendingKeysInRange:(NSRange) range;
 -(HVTask *) downloadItemsWithKeys:(NSMutableArray *) keys;
 
 -(BOOL) updateItemsInView:(HVItemCollection *) items;
@@ -49,6 +50,8 @@ const int c_defaultReadAheadChunkSize = 25;
 -(void) setDownloadStatus:(BOOL) status forKeys:(NSArray *) keys;
 -(void) setDownloadStatus:(BOOL)status forItems:(NSArray *) items;
 
+-(HVItemQuery *) newRefreshQuery;
+-(HVGetItemsTask *) newRefreshTask;
 -(void) synchronizeViewCompleted:(HVTask *) task;
 -(void) stampUpdated;
 
@@ -80,7 +83,40 @@ const int c_defaultReadAheadChunkSize = 25;
 @synthesize store = m_store;
 @synthesize delegate = m_delegate;
 @synthesize tag = m_tag;
-@synthesize readAheadModeChunky = m_readAheadModeChunky;
+-(BOOL)readAheadModeChunky
+{
+    return (m_readAheadMode == HVTypeViewReadAheadModePage);
+}
+-(void)setReadAheadModeChunky:(BOOL)readAheadModeChunky
+{
+    if (readAheadModeChunky)
+    {
+        m_readAheadMode = HVTypeViewReadAheadModePage;
+    }
+    else
+    {
+        m_readAheadMode = HVTypeViewReadAheadModeSequential;
+    }
+}
+
+@synthesize readAheadMode = m_readAheadMode;
+
+-(NSInteger)readAheadChunkSize
+{
+    return m_readAheadChunkSize;
+}
+-(void)setReadAheadChunkSize:(NSInteger)readAheadChunkSize
+{
+    if (readAheadChunkSize > 0)
+    {
+        m_readAheadChunkSize = readAheadChunkSize;
+    }
+    else
+    {
+        m_readAheadChunkSize = c_hvTypeViewDefaultReadAheadChunkSize;
+    }
+}
+
 @synthesize enforceTypeCheck = m_enforceTypeCheck;
 
 -(HVRecordReference *)record
@@ -109,11 +145,6 @@ const int c_defaultReadAheadChunkSize = 25;
     HVRETAIN(m_store, store);
 }
 
--(void)setDelegate:(id<HVTypeViewDelegate>)delegate
-{
-    HVRETAIN(m_delegate, delegate);
-}
-
 -(NSUInteger)count
 {
     return m_items.count;
@@ -127,6 +158,12 @@ const int c_defaultReadAheadChunkSize = 25;
 -(NSDate *)maxDate
 {
     return m_items.maxDate;
+}
+
+// We need a default vanilla constructor for Xml serialization
+-(id) init
+{
+    return [super init];
 }
 
 -(id)initForTypeID:(NSString *)typeID overStore:(HVLocalRecordStore *)store
@@ -150,7 +187,8 @@ const int c_defaultReadAheadChunkSize = 25;
     self.typeID = typeID;
     self.filter = filter;
     self.store = store;
-    self.readAheadModeChunky = FALSE;
+    m_readAheadMode = HVTypeViewReadAheadModePage;
+    m_readAheadChunkSize = c_hvTypeViewDefaultReadAheadChunkSize;
     self.enforceTypeCheck = FALSE;
     if (items)
     {
@@ -174,7 +212,7 @@ LError:
     self = [self initForTypeID:typeView.typeID filter:typeView.filter items:items overStore:typeView.store];
     HVCHECK_SELF;
     
-    self.readAheadModeChunky = typeView.readAheadModeChunky;
+    m_readAheadMode = typeView.readAheadMode;
     
     return self;
     
@@ -189,7 +227,6 @@ LError:
     [m_lastUpdateDate release];
     [m_items release];
     [m_store release];
-    [m_delegate release];
     
     [super dealloc];
 }
@@ -202,6 +239,21 @@ LError:
 -(NSUInteger)indexOfItemID:(NSString *)itemID
 {
     return [m_items indexOfItemID:itemID];
+}
+
+-(void) removeKeyAtIndex:(NSUInteger)index
+{
+    [m_items removeItemAtIndex:index];
+}
+
+-(NSUInteger)insertKeyForItem:(HVItem *)item
+{
+    return [m_items insertHVItemInOrder:item];
+}
+
+-(BOOL)updateKeyForItem:(HVItem *)item
+{
+    return [m_items updateHVItem:item];
 }
 
 -(NSUInteger)indexOfItemWithClosestDate:(NSDate *)date
@@ -334,19 +386,38 @@ LError:
 
 -(void)removeAllLocalItems
 {
-    for (NSUInteger i = 0, count = m_items.count; i < count; ++i)
+    @autoreleasepool
     {
-        [self removeLocalItemAtIndex:i];
+        for (NSUInteger i = 0, count = m_items.count; i < count; ++i)
+        {
+            [self removeLocalItemAtIndex:i];
+        }
     }
 }
 
 -(HVItem *)getItemAtIndex:(NSUInteger)index
 {
-    return [self getItemAtIndex:index readAheadCount:c_defaultReadAheadChunkSize];
+    return [self getItemAtIndex:index readAheadCount:m_readAheadChunkSize];
+}
+
+-(HVItem *)getItemByID:(NSString *)itemID
+{
+    NSUInteger index = [self indexOfItemID:itemID];
+    if (index == NSNotFound)
+    {
+        return nil;
+    }
+    
+    return [self getItemAtIndex:index];
 }
 
 -(HVItem *)getItemAtIndex:(NSUInteger)index readAheadCount:(NSUInteger)readAheadCount
 {
+    if (readAheadCount == 0)
+    {
+        readAheadCount = c_hvTypeViewDefaultReadAheadChunkSize;
+    }
+    
     HVTypeViewItem* key = [m_items objectAtIndex:index];
     HVCHECK_NOTNULL(key);
     
@@ -366,7 +437,7 @@ LError:
     // Find the items we don't already have cached, and start loading them
     //
     NSRange range;
-    if (m_readAheadModeChunky)
+    if (m_readAheadMode == HVTypeViewReadAheadModePage)
     {
         range = [self getChunkForIndex:index chunkSize:readAheadCount];
     }
@@ -435,12 +506,57 @@ LError:
     return items;    
 }
 
+-(NSArray *)keysOfItemsNeedingDownloadInRange:(NSRange)range
+{
+    NSMutableArray* pendingKeys = nil;
+    for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
+    {
+        HVItem* item = [self getLocalItemAtIndex:i];
+        if (!item)
+        {
+            if (!pendingKeys)
+            {
+                pendingKeys = [[[NSMutableArray alloc]init] autorelease];
+                HVCHECK_NOTNULL(pendingKeys);
+            }
+            HVTypeViewItem* key = [m_items objectAtIndex:i];
+            [pendingKeys addObject:key];
+        }
+    }
+    
+    return pendingKeys;
+    
+LError:
+    return nil;
+    
+}
+
+-(HVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(HVTaskCompletion)callback
+{
+    NSArray* pendingKeys = [self keysOfItemsNeedingDownloadInRange:range];
+    if ([NSArray isNilOrEmpty:pendingKeys])
+    {
+        return nil;
+    }
+    
+    HVTask* task = [[m_store.data newDownloadItemsInRecord:m_store.record forKeys:pendingKeys callback:callback] autorelease];
+    HVCHECK_NOTNULL(task);
+    
+    task.shouldCompleteInMainThread = TRUE;
+    [task start];
+    
+    return task;
+    
+LError:
+    return task;
+}
+
 -(NSUInteger)putItem:(HVItem *)item
 {
     //
     // First, place in the persistent store
     //
-    HVCHECK_SUCCESS([m_store.data putItem:item]);
+    HVCHECK_SUCCESS([m_store.data putLocalItem:item]);
     
     NSUInteger index = [m_items insertHVItemInOrder:item];
     
@@ -497,6 +613,11 @@ LError:
     return newIndex;
 }
 
+-(NSUInteger)updateItemInView:(HVItem *)item
+{
+    return [self updateItemInView:item prevIndex:nil];
+}
+
 -(BOOL)removeItemFromViewByID:(NSString *)itemID
 {
     if ([m_items removeItemByID:itemID] == NSNotFound)
@@ -545,39 +666,56 @@ LError:
 
 -(HVTask *)synchronize
 {
-    HVItemQuery* query = [[HVItemQuery alloc] initWithTypeID:m_typeID];
-    HVCHECK_NOTNULL(query);
+    return [self refresh];
+}
+
+-(HVTask *)refresh
+{
+    HVGetItemsTask* getItems = [[self newRefreshTask] autorelease];
+    HVCHECK_NOTNULL(getItems);
     
-    query.view.sections = HVItemSection_Core;
-    if (m_filter)
-    {
-        [query.filters addObject:m_filter];
-    }
-    if (m_maxItems > 0)
-    {
-        query.maxResults = m_maxItems;
-    }
-    query.maxFullResults = 0;
-    
-    HVGetItemsTask* getItems = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:^(HVTask *task) {
-        //
-        // Always invoke the completion on the main UI thread. 
-        // The contract of HVTypeView is that all changes to the object happen in the main UI thread - which lets
-        // us serialize operations
-        //
-        [self invokeOnMainThread:@selector(synchronizeViewCompleted:) withObject:task];
-        
-    }] autorelease];  
-    
-    [query release];
-    
-    getItems.record = self.record;
     [getItems start];
     
     return getItems;
 
 LError:
     return nil;
+}
+
+-(HVTask *)refreshWithCallback:(HVTaskCompletion)callback
+{
+    HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVCHECK_NOTNULL(task);
+    
+    HVGetItemsTask* syncTask = [self newRefreshTask];
+    HVCHECK_NOTNULL(syncTask);
+    
+    [task setNextTask:syncTask];
+    [syncTask release];
+    
+    [task start];
+    return task;
+    
+LError:
+    return nil;
+}
+
+-(HVItemQuery *)createRefreshQuery
+{
+    return [[self newRefreshQuery] autorelease];
+}
+
+-(BOOL)replaceKeys:(HVTypeViewItems *)items
+{
+    HVCHECK_NOTNULL(items);
+    
+    [self updateViewWith:items];
+    [self notifySynchronized];
+    
+    return TRUE;
+    
+LError:
+    return FALSE;
 }
 
 -(HVTask *)synchronizeData
@@ -615,16 +753,21 @@ LError:
 +(HVTypeView *)getViewForTypeID:(NSString *)typeID inRecord:(HVRecordReference *)record
 {
     HVLocalRecordStore* recordStore = [[HVClient current].localVault getRecordStore:record];
-    HVCHECK_NOTNULL(recordStore);
+    return [HVTypeView getViewForTypeID:typeID andRecordStore:recordStore];
+}
+
++(HVTypeView *)getViewForTypeID:(NSString *)typeID andRecordStore:(HVLocalRecordStore *)store
+{
+    HVCHECK_NOTNULL(store);
     
-    HVTypeView *view = [HVTypeView loadViewNamed:typeID fromStore:recordStore];
+    HVTypeView *view = [HVTypeView loadViewNamed:typeID fromStore:store];
     if (!view)
     {
-        view = [[[HVTypeView alloc] initForTypeID:typeID overStore:recordStore] autorelease];
+        view = [[[HVTypeView alloc] initForTypeID:typeID overStore:store] autorelease];
     }
     
-    return view; 
-
+    return view;
+    
 LError:
     return nil;
 }
@@ -640,7 +783,7 @@ LError:
 //
 // Called by SynchronizedStore.
 // These can come in on any thread. We can do local computation, but
-// we must push all changes we need to make to TypeView - to the UI thread
+// we must push all changes we need to make to TypeView - to the Main thread
 //
 //------------------------
 -(void)keysNotRetrieved:(NSArray *)keys withError:(id)error
@@ -670,6 +813,8 @@ LError:
     HVSERIALIZE(m_filter, c_element_filter);
     HVSERIALIZE_DATE(m_lastUpdateDate, c_element_updateDate);
     HVSERIALIZE(m_items, c_element_items);
+    HVSERIALIZE_INT(m_readAheadChunkSize, c_element_chunkSize);
+    HVSERIALIZE_INT(m_maxItems, c_element_maxItems);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -678,6 +823,12 @@ LError:
     HVDESERIALIZE(m_filter, c_element_filter, HVItemFilter);
     HVDESERIALIZE_DATE(m_lastUpdateDate, c_element_updateDate);
     HVDESERIALIZE(m_items, c_element_items, HVTypeViewItems);
+    HVDESERIALIZE_INT(m_readAheadChunkSize, c_element_chunkSize);
+    if (m_readAheadChunkSize <= 0)
+    {
+        m_readAheadChunkSize = c_hvTypeViewDefaultReadAheadChunkSize;
+    }
+    HVDESERIALIZE_INT(m_maxItems, c_element_maxItems);
 }
 
 -(HVTypeView *)subviewForRange:(NSRange)range
@@ -718,6 +869,53 @@ LError:
 -(void)setItems:(HVTypeViewItems *)items
 {
     HVRETAIN(m_items, items);
+}
+
+-(HVItemQuery *)newRefreshQuery
+{
+    HVItemQuery* query = [[HVItemQuery alloc] initWithTypeID:m_typeID];
+    HVCHECK_NOTNULL(query);
+    
+    query.view.sections = HVItemSection_Core;
+    if (m_filter)
+    {
+        [query.filters addObject:m_filter];
+    }
+    if (m_maxItems > 0)
+    {
+        query.maxResults = m_maxItems;
+    }
+    query.maxFullResults = 0;
+    return query;
+    
+LError:
+    return nil;
+}
+
+-(HVGetItemsTask *)newRefreshTask
+{
+    HVItemQuery* query = [self newRefreshQuery];
+    HVCHECK_NOTNULL(query);
+    
+    HVGetItemsTask* getItems = [[HVClient current].methodFactory newGetItemsForRecord:self.record query:query andCallback:^(HVTask *task) {
+        
+        if (![NSThread isMainThread])
+        {
+            [self invokeOnMainThread:@selector(synchronizeViewCompleted:) withObject:task];
+        }
+        else
+        {
+            [self synchronizeViewCompleted:task];
+        }
+        
+    }];
+    getItems.shouldCompleteInMainThread = TRUE;
+    [query release];
+    
+    return getItems;
+
+LError:
+    return nil;
 }
 
 //
@@ -803,31 +1001,6 @@ LError:
     
 LError:
     return nil;
-}
-
--(NSMutableArray *)getPendingKeysInRange:(NSRange)range
-{
-    NSMutableArray* pendingKeys = nil;
-    for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
-    {
-        HVTypeViewItem* key = [m_items objectAtIndex:i];
-        HVItem* item = [self getLocalItemWithKey:key];
-        if (!item)
-        {
-            if (!pendingKeys)
-            {
-                pendingKeys = [[[NSMutableArray alloc]init] autorelease];
-                HVCHECK_NOTNULL(pendingKeys);
-            }
-            [pendingKeys addObject:key];
-        }
-    }
-    
-    return pendingKeys;
-    
-LError:
-    return nil;
-    
 }
 
 -(HVTask *) downloadItemsWithKeys:(NSMutableArray *)keys

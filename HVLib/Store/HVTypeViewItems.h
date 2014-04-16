@@ -43,8 +43,6 @@
 @property (readonly, nonatomic) HVTypeViewItem* firstItem;
 @property (readonly, nonatomic) HVTypeViewItem* lastItem;
 
--(id) init;
-
 -(HVTypeViewItem *) objectAtIndex:(NSUInteger) index;
 -(HVTypeViewItem *) objectForItemID:(NSString *) itemID;
 
@@ -81,6 +79,11 @@
 // 
 -(NSUInteger) insertHVItemInOrder:(HVItem *) item;
 //
+// Returns true if an update to the collection was necessary, and made.
+// If item not found, or no change made, returns false If the item does not exist, will add it
+//
+-(BOOL) updateHVItem:(HVItem *) item;
+//
 // Adds an item into the collection using information taken from HVPendingItem
 // Returns true if collection updated
 //
@@ -91,11 +94,5 @@
 // Returns true if collection updated
 //
 -(BOOL) addQueryResult:(HVItemQueryResult *) result;
-//
-// Returns true if an update to the collection was necessary, and made.
-// If item not found, or no change made, returns false If the item does not exist, will add it
-//
--(BOOL) updateHVItem:(HVItem *) item;
-
 
 @end

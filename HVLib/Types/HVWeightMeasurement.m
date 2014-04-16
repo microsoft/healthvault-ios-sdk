@@ -22,11 +22,6 @@
 static double const c_PoundsPerKg = 2.20462262185;
 static double const c_KgPerPound = 0.45359237;
 
-static NSString* const c_PoundUnits = @"pounds";
-
-static NSString* const c_element_kg = @"kg";
-static NSString* const c_element_display = @"display";
-
 static const xmlChar* x_element_kg = XMLSTRINGCONST("kg");
 static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
@@ -239,8 +234,8 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_kg, c_element_kg);
-    HVSERIALIZE(m_display, c_element_display);
+    HVSERIALIZE_X(m_kg, x_element_kg);
+    HVSERIALIZE_X(m_display, x_element_display);
 }
 
 -(void) deserialize:(XReader *)reader

@@ -215,6 +215,61 @@ LError:
     HVALLOC_FAIL;
 }
 
+-(id)initWithItemKey:(HVItemKey *)key andType:(NSString *)typeID
+{
+    self = [self init];
+    HVCHECK_SELF;
+    
+    [m_keys addObject:key];   
+    if (![NSString isNilOrEmpty:typeID])
+    {
+        [self.view.typeVersions addObject:typeID];
+    }
+
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initWithItemID:(NSString *)itemID andType:(NSString *)typeID
+{
+    HVCHECK_STRING(itemID);
+    
+    self = [self init];
+    HVCHECK_SELF;
+    
+    [m_itemIDs addObject:itemID];
+    if (![NSString isNilOrEmpty:typeID])
+    {
+        [self.view.typeVersions addObject:typeID];
+    }
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initWithClientID:(NSString *)clientID andType:(NSString *)typeID
+{
+    HVCHECK_STRING(clientID);
+    
+    self = [self init];
+    HVCHECK_SELF;
+    
+    [m_clientIDs addObject:clientID];
+    if (![NSString isNilOrEmpty:typeID])
+    {
+        [self.view.typeVersions addObject:typeID];
+    }
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
 -(void) dealloc
 {
     [m_name release];
@@ -322,6 +377,11 @@ LError:
     
 LError:
     HVALLOC_FAIL;
+}
+
+-(void)addItem:(HVItemQuery *)query
+{
+    return [super addObject:query];
 }
 
 -(HVItemQuery *)itemAtIndex:(NSUInteger)index

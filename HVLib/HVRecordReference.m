@@ -18,6 +18,7 @@
 
 #import "HVCommon.h"
 #import "HVRecordReference.h"
+#import "HVClient.h"
 
 static NSString* const c_attribute_id = @"id";
 static NSString* const c_attribute_personID = @"person-id";
@@ -115,13 +116,8 @@ LError:
 
 -(HVGetItemsTask *)getItemWithKey:(HVItemKey *)key ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
 {
-    HVItemQuery *query = [[[HVItemQuery alloc] initWithItemKey:key] autorelease];
+    HVItemQuery *query = [[[HVItemQuery alloc] initWithItemKey:key andType:typeID] autorelease];
     HVCHECK_NOTNULL(query);
- 
-    if (![NSString isNilOrEmpty:typeID])
-    {
-        [query.view.typeVersions addObject:typeID];
-    }
 
     return [self getItems:query callback:callback];
     
@@ -136,13 +132,8 @@ LError:
 
 -(HVGetItemsTask *)getItemWithID:(NSString *)itemID ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
 {
-    HVItemQuery *query = [[[HVItemQuery alloc] initwithItemID:itemID] autorelease];
+    HVItemQuery *query = [[[HVItemQuery alloc] initWithItemID:itemID andType:typeID] autorelease];
     HVCHECK_NOTNULL(query);
-    
-    if (![NSString isNilOrEmpty:typeID])
-    {
-        [query.view.typeVersions addObject:typeID];
-    }
     
     return [self getItems:query callback:callback];
     
@@ -152,12 +143,48 @@ LError:
 
 -(HVGetItemsTask *)getItems:(HVItemQuery *)query callback:(HVTaskCompletion)callback
 {
-    HVGetItemsTask* task = [[[HVGetItemsTask alloc] initWithQuery:query andCallback:callback] autorelease]; 
+    HVGetItemsTask* task = [[[HVClient current].methodFactory newGetItemsForRecord:self query:query andCallback:callback] autorelease];
     HVCHECK_NOTNULL(task);
     
-    task.record = self;
-    
     [task start];
+    return task;
+    
+LError:
+    return nil;
+}
+
+-(HVPutItemsTask *)newItem:(HVItem *)item callback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(item);
+    
+    [item prepareForNew];
+    
+    return [self putItem:item callback:callback];
+    
+LError:
+    return nil;
+}
+
+-(HVPutItemsTask *)newItems:(HVItemCollection *)items callback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(items);
+    
+    [items prepareForNew];
+    return [self putItems:items callback:callback];
+
+LError:
+    return nil;
+}
+
+-(HVPutItemsTask *)putItem:(HVItem *)item callback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(item);
+    
+    HVItemCollection* items = [[HVItemCollection alloc] initwithItem:item];
+    HVCHECK_NOTNULL(items);
+    
+    HVPutItemsTask* task = [self putItems:items callback:callback];
+    [items release];
     
     return task;
     
@@ -165,25 +192,12 @@ LError:
     return nil;
 }
 
--(HVPutItemsTask *)putItem:(HVItem *)item callback:(HVTaskCompletion)callback
-{
-    HVItemCollection* items = [[[HVItemCollection alloc]initwithItem:item] autorelease];
-    HVCHECK_NOTNULL(items);
-    
-    return [self putItems:items callback:callback];
-    
-LError:
-    return nil;
-}
-
 -(HVPutItemsTask *)putItems:(HVItemCollection *)items callback:(HVTaskCompletion)callback
 {
-    HVPutItemsTask* task = [[[HVPutItemsTask alloc] initWithItems:items andCallback:callback] autorelease];
+    HVPutItemsTask* task = [[[HVClient current].methodFactory newPutItemsForRecord:self items:items andCallback:callback] autorelease];
     HVCHECK_NOTNULL(task);
     
-    task.record = self;
     [task start];
-    
     return task;
 
 LError:
@@ -215,12 +229,10 @@ LError:
 
 -(HVRemoveItemsTask *)removeItemsWithKeys:(HVItemKeyCollection *)keys callback:(HVTaskCompletion)callback
 {
-    HVRemoveItemsTask* task = [[[HVRemoveItemsTask alloc] initWithKeys:keys andCallback:callback] autorelease];
+    HVRemoveItemsTask* task = [[[HVClient current].methodFactory newRemoveItemsForRecord:self keys:keys andCallback:callback] autorelease];
     HVCHECK_NOTNULL(task);
-    
-    task.record = self;
+
     [task start];
-    
     return task;
     
 LError:

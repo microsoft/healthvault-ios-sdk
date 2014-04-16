@@ -72,14 +72,28 @@
 
 -(id)initWithQuery:(HVItemQuery *)query andCallback:(HVTaskCompletion)callback
 {
+    HVCHECK_NOTNULL(query);
+    
     self = [super initWithCallback:callback];
     HVCHECK_SELF;
     
-    if (query)
-    {
-        [self.queries addObject:query];
-        HVCHECK_NOTNULL(m_queries);
-    }
+    [self.queries addObject:query];
+    HVCHECK_NOTNULL(m_queries);
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(id)initWithQueries:(HVItemQueryCollection *)queries andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_TRUE(![NSArray isNilOrEmpty:queries]);
+    
+    self = [super initWithCallback:callback];
+    HVCHECK_SELF;
+    
+    HVRETAIN(m_queries, queries);
     
     return self;
     
@@ -111,6 +125,36 @@ LError:
 -(id)deserializeResponseBodyFromReader:(XReader *)reader
 {
     return [super deserializeResponseBodyFromReader:reader asClass:[HVItemQueryResults class]];
+}
+
++(HVGetItemsTask *) newForRecord:(HVRecordReference *) record query:(HVItemQuery *)query andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(record);
+    
+    HVGetItemsTask* task = [[HVGetItemsTask alloc] initWithQuery:query andCallback:callback];
+    HVCHECK_NOTNULL(task);
+    
+    task.record = record;
+
+    return task;
+    
+LError:
+    return nil;
+}
+
++(HVGetItemsTask *) newForRecord:(HVRecordReference *)record queries:(HVItemQueryCollection *)queries andCallback:(HVTaskCompletion)callback
+{
+    HVCHECK_NOTNULL(record);
+    
+    HVGetItemsTask* task = [[HVGetItemsTask alloc] initWithQueries:queries andCallback:callback];
+    HVCHECK_NOTNULL(task);
+    
+    task.record = record;
+    
+    return task;
+    
+LError:
+    return nil;
 }
 
 @end

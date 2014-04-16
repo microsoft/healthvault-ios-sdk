@@ -29,6 +29,7 @@
 
 @property (readonly, nonatomic) BOOL didKeysDownload;
 @property (readonly, nonatomic) NSMutableArray* downloadedKeys;
+@property (readonly, nonatomic) HVItemKey* firstKey;
 
 -(void) recordItemsAsDownloaded:(HVItemCollection *) items;
 

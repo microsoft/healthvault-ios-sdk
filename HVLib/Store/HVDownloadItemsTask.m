@@ -37,6 +37,11 @@
     return m_downloadedKeys;
 }
 
+-(HVItemKey *)firstKey
+{
+    return (self.didKeysDownload) ? [m_downloadedKeys objectAtIndex:0] : nil;
+}
+
 -(void)dealloc
 {
     [m_downloadedKeys release];

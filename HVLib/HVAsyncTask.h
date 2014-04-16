@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import "HVBlock.h"
 
 @class  HVTask;
 
@@ -32,6 +33,7 @@ typedef void (^HVTaskCompletion) (HVTask* task);
 //-----------------------
 @interface HVTask : NSObject
 {
+@protected
     NSString* m_taskName;  // Mainly for Debugging and Logging
     
     BOOL m_cancelled;
@@ -46,7 +48,9 @@ typedef void (^HVTaskCompletion) (HVTask* task);
     HVTaskCompletion m_callback;
     
     id m_operation;
-    HVTask *m_parent; 
+    HVTask *m_parent;
+    
+    BOOL m_completeInMainThread;
 }
 
 @property (readonly, nonatomic) BOOL hasError;
@@ -91,6 +95,7 @@ typedef void (^HVTaskCompletion) (HVTask* task);
 // Either can throw, so make sure you have an exception handler around it
 //
 @property (readwrite, nonatomic, copy) HVTaskCompletion callback;
+@property (readwrite, nonatomic) BOOL shouldCompleteInMainThread;
 
 -(id) initWith:(HVTaskMethod) current;
 -(id) initWithCallback:(HVTaskCompletion) callback;
@@ -103,9 +108,11 @@ typedef void (^HVTaskCompletion) (HVTask* task);
 -(void) startChild:(HVTask *) childTask;
 
 -(void) start;
+-(void) start:(HVAction) startAction;
 -(void) cancel;
 -(void) complete;
 -(void) handleError:(id) error;
+-(void) clearError;
 
 //
 // Tasks run asnchronously. They capture any exceptions in self.exception, then invoke
@@ -115,3 +122,43 @@ typedef void (^HVTaskCompletion) (HVTask* task);
 -(void) checkSuccess;
 
 @end
+
+//
+// A sequence of tasks
+//
+@interface HVTaskSequence : NSEnumerator
+{
+@protected
+    NSString* m_name;
+}
+
+@property (readwrite, nonatomic, retain) NSString* name;
+
+-(HVTask *) nextTask;
+//
+// You can override this in your implementation
+//
+-(void) onAborted;
+
+//
+// Use to run the task sequence
+//
++(HVTask *) run:(HVTaskSequence *)sequence callback:(HVTaskCompletion) callback;
++(HVTask *) newRunTaskFor:(HVTaskSequence *)sequence callback:(HVTaskCompletion) callback;
+
+@end
+//
+// Returns an enumeration of tasks
+// The task must NOT be started
+//
+@interface HVTaskStateMachine : HVTaskSequence
+{
+@protected
+    int m_stateID;
+}
+
+@property (readwrite, nonatomic) int stateID;
+
+@end
+
+

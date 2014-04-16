@@ -19,6 +19,7 @@
 #import <UIKit/UIKit.h>
 #import "HVCommon.h"
 #import "HVClientSettings.h"
+#import "HVNetworkReachability.h"
 
 static NSString* const c_element_debug = @"debug";
 static NSString* const c_element_appID = @"masterAppID";
@@ -161,6 +162,17 @@ LError:
     return nil;
 }
 
+
+-(BOOL)isServiceNetworkReachable
+{
+    return HVIsHostNetworkReachable(self.serviceUrl.host);
+}
+
+-(BOOL)isShellNetworkReachable
+{
+    return HVIsHostNetworkReachable(self.shellUrl.host);
+}
+
 @end
 
 @implementation HVClientSettings
@@ -202,7 +214,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_deviceName])
     {
-        m_deviceName = [[UIDevice currentDevice] name];
+        m_deviceName = [[[UIDevice currentDevice] name] retain];
     }
     
     return m_deviceName;
@@ -212,7 +224,7 @@ LError:
 {
    if ([NSString isNilOrEmpty:m_country])
    {
-       m_country = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
+       m_country = [[[NSLocale currentLocale] objectForKey: NSLocaleCountryCode] retain];
    }
     
     return m_country;
@@ -222,7 +234,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_language])
     {
-        m_language = [[NSLocale currentLocale] objectForKey: NSLocaleLanguageCode];
+        m_language = [[[NSLocale currentLocale] objectForKey: NSLocaleLanguageCode] retain];
     }
     
     return m_language;
@@ -232,7 +244,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_signInTitle])
     {
-        m_signInTitle = NSLocalizedString(@"HealthVault", @"Sign in to HealthVault");
+        m_signInTitle = [NSLocalizedString(@"HealthVault", @"Sign in to HealthVault") retain];
     }
     
     return m_signInTitle;
@@ -242,7 +254,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_signInRetryMessage])
     {
-        m_signInRetryMessage = NSLocalizedString(@"Could not sign into HealthVault. Try again?", @"Retry signin message");
+        m_signInRetryMessage = [NSLocalizedString(@"Could not sign into HealthVault. Try again?", @"Retry signin message") retain];
     }
     
     return m_signInRetryMessage;
@@ -252,6 +264,8 @@ LError:
 {
     return [self.environments objectAtIndex:0];
 }
+
+@synthesize rootDirectoryPath = m_rootDirectoryPath;
 
 -(id)init
 {
@@ -273,6 +287,7 @@ LError:
 {
     [m_appID release];
     [m_appName release];
+    [m_environments release];
     [m_deviceName release];
     [m_country release];
     [m_language release];
@@ -281,6 +296,7 @@ LError:
     [m_signInRetryMessage release];
     
     [m_appData release];
+    [m_rootDirectoryPath release];
     
     [super dealloc];
 }
@@ -384,6 +400,16 @@ LError:
         settings = [[HVClientSettings alloc] init];
     }
     
+    return settings;
+}
+
++(HVClientSettings *)newDefault
+{
+    HVClientSettings* settings = [HVClientSettings newSettingsFromResource];
+    if (!settings)
+    {
+        settings = [[HVClientSettings alloc] init]; // Default settings
+    }
     return settings;
 }
 

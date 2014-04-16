@@ -19,6 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "HVObjectStore.h"
 #import "XConverter.h"
+#import "HVDirectoryNameEnumerator.h"
 
 @interface NSFileManager (HVExtensions) 
 
@@ -27,6 +28,10 @@
 -(NSURL *) cacheDirectoryPath;
 
 -(long) sizeOfFileAtPath:(NSString *) path;
+
++(NSString *) mimeTypeForFile:(NSString *) filePath;
++(NSString *) mimeTypeForFileExtension:(NSString *) ext;
++(NSString *) fileExtForMimeType:(NSString *) mimeType;
 
 @end
 
@@ -42,7 +47,8 @@
 @end
 
 //
-// HVDirect implements all methods in HVObjectStore
+// HVDirectory implements all methods in HVObjectStore
+// ALL serializable objects must inherit from XSerializableType
 //
 @interface HVDirectory : NSObject <HVObjectStore>
 {
@@ -64,6 +70,7 @@
 -(HVDirectory *) newChildNamed:(NSString *) name;
 
 -(NSEnumerator *) getFileNames;
+-(NSEnumerator *) getDirectoryNames;
 
 -(BOOL) fileExists:(NSString *) fileName;
 -(NSString *) makeFilePathIfExists:(NSString *) fileName;

@@ -16,38 +16,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "HVCommon.h"
 #import "Provisioner.h"
 #import "HealthVaultService.h"
 #import "AuthenticationCheckState.h"
 #import "XmlTextReader.h"
 
-
-@interface Provisioner (Private)
+@interface Provisioner (HVPrivate)
 
 /// Checks that the application is authenticated.
 /// @param state - the state information.
-+ (void)performAuthenticationCheck: (AuthenticationCheckState *)state;
+-(void)performAuthenticationCheck: (AuthenticationCheckState *)state;
 
 /// Makes the CreateAuthenticatedSessionToken call.
 /// @param state - the state information.
-+ (void)castCall: (AuthenticationCheckState *)state;
+-(void)castCall: (AuthenticationCheckState *)state;
 
 /// Gets the list of authorized people.
 /// @param state - the state information.
-+ (void)getAuthorizedPeople: (AuthenticationCheckState *)state;
+-(void)getAuthorizedPeople: (AuthenticationCheckState *)state;
 
 /// Gets the new application info from the HealthVault platform.
 /// @param state - the state information.
-+ (void)startNewApplicationCreationInfo: (AuthenticationCheckState *)state;
+-(void)startNewApplicationCreationInfo: (AuthenticationCheckState *)state;
 
 @end
 
 
 @implementation Provisioner
 
-#pragma mark Auth Logic
 
-+ (void)authorizeRecords: (HealthVaultService *)service
+-(void)authorizeRecords: (HealthVaultService *)service
                   target: (NSObject *)target
  authenticationCompleted: (SEL)authCompleted
        shellAuthRequired: (SEL)shellAuthRequired {
@@ -60,7 +59,7 @@
     [state release];
 }
 
-+ (void)performAuthenticationCheck: (HealthVaultService *)service
+-(void)performAuthenticationCheck: (HealthVaultService *)service
                             target: (NSObject *)target
            authenticationCompleted: (SEL)authCompleted
                  shellAuthRequired: (SEL)shellAuthRequired {
@@ -69,37 +68,37 @@
 																				 target: target
 																  authCompletedCallBack: authCompleted
 															  shellAuthRequiredCallBack: shellAuthRequired];
-    [Provisioner performAuthenticationCheck: state];
+    [self performAuthenticationCheck: state];
     [state release];
 }
 
-#pragma mark Auth Logic End
+@end
 
-+ (void)performAuthenticationCheck: (AuthenticationCheckState *)state {
+@implementation Provisioner (HVPrivate)
+
+-(void)performAuthenticationCheck: (AuthenticationCheckState *)state {
 
     if (state.service.authorizationSessionToken && state.service.sharedSecret) {
 
         // We have a session token for the app, but we don't know who authorized the app.
         // We'll call GetAuthorizedPeople.
-        [Provisioner getAuthorizedPeople: state];
+        [self getAuthorizedPeople: state];
     }
     else if (state.service.sharedSecret) {
 
         // We have a shared secret, but not a session token. We will try a CAST call,
         // which will work if the app.
         // is auth'd; if it fails, we'll need to ask the application to do the auth.
-        [Provisioner castCall: state];
+        [self castCall: state];
     }
     else {
 
         // We're just starting. Call newApplicationCreationInfo.
-        [Provisioner startNewApplicationCreationInfo: state];
+        [self startNewApplicationCreationInfo: state];
     }
 }
 
-#pragma mark CastCall Logic
-
-+ (void)castCall: (AuthenticationCheckState *)state {
+-(void)castCall: (AuthenticationCheckState *)state {
 
     NSString *infoSection = [state.service getCastCallInfoSection];
 
@@ -113,7 +112,7 @@
     [request release];
 }
 
-+ (void)castCallCompleted: (HealthVaultResponse *)response {
+-(void)castCallCompleted: (HealthVaultResponse *)response {
 
     AuthenticationCheckState *state = (AuthenticationCheckState *)response.request.userState;
 
@@ -134,14 +133,10 @@
         [state.service saveCastCallResults: response.infoXml];
     }
 
-    [Provisioner performAuthenticationCheck: state];
+    [self performAuthenticationCheck: state];
 }
 
-#pragma mark CastCall Logic End
-
-#pragma mark Authorized People Logic
-
-+ (void)getAuthorizedPeople: (AuthenticationCheckState *)state {
+-(void)getAuthorizedPeople: (AuthenticationCheckState *)state {
 
     NSString *infoSection = @"<info><parameters></parameters></info>";
 
@@ -155,7 +150,7 @@
     [request release];
 }
 
-+ (void)getAuthorizedPeopleCompleted: (HealthVaultResponse *)response {
+-(void)getAuthorizedPeopleCompleted: (HealthVaultResponse *)response {
 
     AuthenticationCheckState *state = (AuthenticationCheckState *)response.request.userState;
 
@@ -239,11 +234,7 @@
     }
 }
 
-#pragma mark Authorized People Logic End
-
-#pragma mark NewApplicationCreationInfo Logic
-
-+ (void)startNewApplicationCreationInfo: (AuthenticationCheckState *)state {
+-(void)startNewApplicationCreationInfo: (AuthenticationCheckState *)state {
 
 	// Need to reset all parameters to make a correct request.
 	state.service.appIdInstance = nil;
@@ -261,7 +252,7 @@
     [request release];
 }
 
-+ (void)newApplicationCreationInfoCompleted: (HealthVaultResponse *)response {
+-(void)newApplicationCreationInfoCompleted: (HealthVaultResponse *)response {
 
     AuthenticationCheckState *state = (AuthenticationCheckState *)response.request.userState;
 
@@ -287,7 +278,5 @@
     [state.target performSelector: state.shellAuthRequiredCallBack
 					   withObject: response];
 }
-
-#pragma mark NewApplicationCreationInfo Logic End
 
 @end

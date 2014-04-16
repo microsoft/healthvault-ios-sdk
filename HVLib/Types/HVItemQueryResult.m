@@ -51,6 +51,21 @@ static NSString* const c_attribute_name = @"name";
     return !([NSArray isNilOrEmpty:m_pendingItems]);
 }
 
+-(NSUInteger)itemCount
+{
+    return (m_items ? m_items.count : 0);
+}
+
+-(NSUInteger)pendingCount
+{
+    return (m_pendingItems ? m_pendingItems.count : 0);
+}
+
+-(NSUInteger)resultCount
+{
+    return (self.itemCount + self.pendingCount);
+}
+
 -(void) dealloc
 {
     [m_items release];
@@ -134,12 +149,11 @@ LError:
     {
         pendingQuery.view = view;
     }
-    HVGetItemsTask* getPendingTask = [[HVGetItemsTask alloc] initWithQuery:pendingQuery andCallback:^(HVTask *task) {
+    HVGetItemsTask* getPendingTask = [[HVClient current].methodFactory newGetItemsForRecord:record query:pendingQuery andCallback:^(HVTask *task){
         
         [self getItemsComplete:task forRecord:record itemView:view];
     
     }];
-    getPendingTask.record = record;
     
     [pendingQuery release];
     return getPendingTask;
@@ -210,6 +224,11 @@ LError:
     
 LError:
     HVALLOC_FAIL;
+}
+
+-(HVItemQueryResult *)itemAtIndex:(NSUInteger)index
+{
+    return [self objectAtIndex:index];
 }
 
 @end

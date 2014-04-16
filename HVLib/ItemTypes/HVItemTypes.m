@@ -104,6 +104,8 @@ HVDECLARE_GETTOR(HVCCR, ccr);
 
 HVDECLARE_GETTOR(HVInsurance, insurance);
 
+HVDECLARE_GETTOR(HVMessage, message);
+
 HVDECLARE_GETTOR(HVEmergencyOrProviderContact, emergencyOrProviderContact);
 
 HVDECLARE_GETTOR(HVPersonalContactInfo, personalContact);

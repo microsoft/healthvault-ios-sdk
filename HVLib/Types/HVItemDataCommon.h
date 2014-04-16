@@ -69,6 +69,10 @@
 // (Optional) Application injected ID
 //
 @property (readwrite, nonatomic, retain) HVString255* clientID;
+//
+// Convenience properties
+//
+@property (readwrite, nonatomic, retain) NSString* clientIDValue;
 
 //----------------------
 //

@@ -80,12 +80,27 @@ LError:
     [super dealloc];
 }
 
+-(NSDate *)getDate
+{
+    return [m_when toDate];
+}
+
+-(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+{
+    return [m_when toDateForCalendar:calendar];
+}
+
 -(NSString *) toString
 {
     return [NSString localizedStringWithFormat:@"pef: %@, fev1: %@",
             m_pef ? [m_pef toString] : c_emptyString,
             m_fev1 ? [m_fev1 toString] : c_emptyString
             ];
+}
+
+-(NSString *)description
+{
+    return [self toString];
 }
 
 -(HVClientResult *)validate

@@ -23,10 +23,13 @@
 #import "HVServiceDef.h"
 #import "HVMethods.h"
 
-static HVClient* s_app;
+static HVClient* s_client;
 
 @interface HVClient (HVPrivate)
 
+-(id) initWithSettings:(HVClientSettings *) settings;
+
+-(void) initializeState;
 -(BOOL) ensureLocalVault;
 
 -(HealthVaultService *) newService;
@@ -56,6 +59,9 @@ static HVClient* s_app;
 -(void) setupInstanceInfo:(NSString *) instanceID;
 -(void) notifyOfProvisionStatus;
 
+-(void) subscribeAppEvents;
+-(void) unsubscribeAppEvents;
+
 @end
 
 
@@ -71,15 +77,30 @@ static HVClient* s_app;
 
 +(void)initialize
 {
-    if (!s_app)
-    {
-        s_app = [[HVClient alloc] init];
-    }
+    static dispatch_once_t s_clientToken = 0;
+    dispatch_once(&s_clientToken, ^{
+        s_client = nil;
+        HVClientSettings* settings = [HVClientSettings newDefault];
+        s_client = [[HVClient alloc] initWithSettings:settings];
+        [settings release];
+    });
 }
 
 +(HVClient *)current
 {
-    return s_app;
+    return s_client;
+}
+
++(BOOL)initializeClientUsingSettings:(HVClientSettings *)settings
+{
+    HVCHECK_NOTNULL(settings);
+    HVCLEAR(s_client);
+ 
+    s_client = [[HVClient alloc] initWithSettings:settings];
+    return (s_client != nil);
+    
+LError:
+    return FALSE;
 }
 
 -(enum HVAppProvisionStatus)provisionStatus
@@ -128,41 +149,27 @@ static HVClient* s_app;
     return ![NSArray isNilOrEmpty:self.records];
 }
 
+-(HVMethodFactory *)methodFactory
+{
+    return m_methodFactory;
+}
+-(void)setMethodFactory:(HVMethodFactory *)methodFactory
+{
+    if (methodFactory)
+    {
+        HVRETAIN(m_methodFactory, methodFactory);
+    }
+}
+
 -(id) init
 {
-    self = [super init];
-    HVCHECK_SELF;
-    
-    m_queue = [[NSOperationQueue alloc] init];
-    HVCHECK_NOTNULL(m_queue);
-    
-    m_settings = [HVClientSettings newSettingsFromResource];
-    if (!m_settings)
-    {
-        m_settings = [[HVClientSettings alloc] init]; // Default settings
-    }
-    
-    HVCHECK_SUCCESS([self ensureLocalVault]);
-    
-    // Set up the HealthVault Service
-    m_service = [self newService];
-    HVCHECK_NOTNULL(m_service);
-    
-    [self loadState];
-    
-    if (self.hasAuthorizedRecords)
-    {
-        m_provisionStatus = HVAppProvisionSuccess;
-    }
-    
-    return self;
-    
-LError:
-    HVALLOC_FAIL;
+    return [self initWithSettings:nil];
 }
 
 -(void) dealloc
 {
+    [self unsubscribeAppEvents];
+    
     [m_queue release];
     [m_settings release];
     [m_rootDirectory release];
@@ -176,6 +183,8 @@ LError:
     [m_localVault release];
     [m_user release];
     
+    [m_methodFactory release];
+
     [super dealloc];
 }
 
@@ -185,6 +194,7 @@ LError:
     {
         HVCHECK_NOTNULL(controller);
         HVCHECK_NOTNULL(callback);
+        HVCHECK_NOTNULL(controller.navigationController); 
         
         HVRETAIN(m_parentController, controller);
         HVCLEAR(m_provisionCallback);
@@ -236,7 +246,7 @@ LError:
         {
             self.user = nil; // Can no longer guarantee this user's settings
         }
-        
+ 
         return TRUE;
         
     LError:
@@ -334,6 +344,14 @@ LError:
     return [m_localVault getRecordStore:self.currentRecord];
 }
 
+-(void)didReceiveMemoryWarning
+{
+    if (m_localVault)
+    {
+        [m_localVault didReceiveMemoryWarning];
+    }
+}
+
 @end
 
 static NSString* const c_userfileName = @"user.xml";
@@ -341,11 +359,55 @@ static NSString* const c_environmentFileName = @"environment.xml";
 
 @implementation HVClient (HVPrivate)
 
+-(id) initWithSettings:(HVClientSettings *)settings
+{
+    HVCHECK_NOTNULL(settings);
+    
+    self = [super init];
+    HVCHECK_SELF;
+    
+    m_queue = [[NSOperationQueue alloc] init];
+    HVCHECK_NOTNULL(m_queue);
+    
+    HVRETAIN(m_settings, settings);
+    HVCHECK_SUCCESS([self ensureLocalVault]);
+    
+    // Set up the HealthVault Service
+    m_service = [self newService];
+    HVCHECK_NOTNULL(m_service);
+    
+    m_methodFactory = [[HVMethodFactory alloc] init];
+    
+    [self initializeState];
+    [self subscribeAppEvents];
+    
+    return self;
+    
+LError:
+    HVALLOC_FAIL;
+}
+
+-(void)initializeState
+{
+    [self loadState];
+    if (self.hasAuthorizedRecords)
+    {
+        m_provisionStatus = HVAppProvisionSuccess;
+    }
+}
+
 -(BOOL)ensureLocalVault
 {
     if (!m_rootDirectory)
     {
-        m_rootDirectory = [[HVDirectory alloc] initWithRelativePath:@"HealthVault"];
+        if (m_settings.rootDirectoryPath)
+        {
+            m_rootDirectory = [[HVDirectory alloc] initWithPath:m_settings.rootDirectoryPath];
+        }
+        else
+        {
+            m_rootDirectory = [[HVDirectory alloc] initWithRelativePath:@"HealthVault"];
+        }
         HVCHECK_NOTNULL(m_rootDirectory);
     }
     
@@ -392,6 +454,10 @@ LError:
         {
             [self deleteUser];
             user = nil;
+        }
+        if (user)
+        {
+            [user configureCurrentRecordForService:m_service];
         }
         
         return user;
@@ -659,6 +725,25 @@ LError:
 -(void)notifyOfProvisionStatus
 {
     safeInvokeNotify(m_provisionCallback, self);
+}
+
+-(void)subscribeAppEvents
+{
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(didReceiveMemoryWarning)
+        name:UIApplicationDidReceiveMemoryWarningNotification
+        object:[UIApplication sharedApplication]
+     ];
+}
+
+-(void)unsubscribeAppEvents
+{
+    [[NSNotificationCenter defaultCenter]
+        removeObserver:self
+        name:UIApplicationDidReceiveMemoryWarningNotification
+        object:[UIApplication sharedApplication]
+    ];
 }
 
 @end

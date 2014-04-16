@@ -51,6 +51,9 @@
 //
 @property (readonly, nonatomic) BOOL hasItems;
 @property (readonly, nonatomic) BOOL hasPendingItems;
+@property (readonly, nonatomic) NSUInteger itemCount;
+@property (readonly, nonatomic) NSUInteger pendingCount;
+@property (readonly, nonatomic) NSUInteger resultCount;
 
 //
 // If the query result has pending items, get them and ADD them to the items collection
@@ -64,4 +67,7 @@
 @end
 
 @interface HVItemQueryResultCollection : HVCollection
+
+-(HVItemQueryResult *) itemAtIndex:(NSUInteger) index;
+
 @end

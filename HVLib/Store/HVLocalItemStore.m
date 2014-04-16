@@ -31,6 +31,11 @@ static NSString* const c_root = @"thing";
 
 @synthesize objectStore = m_objectStore;
 
+-(id) init
+{
+    return [self initWithObjectStore:nil];
+}
+
 -(id)initWithObjectStore:(id<HVObjectStore>)store
 {
     HVCHECK_NOTNULL(store);
