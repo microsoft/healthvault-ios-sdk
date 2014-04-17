@@ -84,26 +84,38 @@
 
 -(id<HVHttpTransport>)transport
 {
-    return m_transport;
+    return _transport;
 }
 -(void)setTransport:(id<HVHttpTransport>)transport
 {
     if (transport)
     {
-        HVRETAIN(m_transport, transport);
+        HVRETAIN(_transport, transport);
     }
 }
 
 -(Provisioner *)provisioner
 {
-    return m_provisioner;
+    return _provisioner;
 }
 
 -(void)setProvisioner:(Provisioner *)provisioner
 {
     if (provisioner)
     {
-        HVRETAIN(m_provisioner, provisioner);
+        HVRETAIN(_provisioner, provisioner);
+    }
+}
+
+-(id<HVCryptographer>)cryptographer
+{
+    return _cryptographer;
+}
+-(void)setCryptographer:(id<HVCryptographer>)cryptographer
+{
+    if (cryptographer)
+    {
+        HVRETAIN(_cryptographer, cryptographer);
     }
 }
 
@@ -176,8 +188,9 @@ LError:
     
     [_settingsFileName release];
     
-    [m_transport release];
-    [m_provisioner release];
+    [_transport release];
+    [_cryptographer release];
+    [_provisioner release];
     
 	[super dealloc];
 }
@@ -255,7 +268,7 @@ LError:
 	authenticationCompleted: (SEL)authCompleted
 		  shellAuthRequired: (SEL)shellAuthRequired {
 
-	[m_provisioner performAuthenticationCheck: self
+	[_provisioner performAuthenticationCheck: self
 									 target: target
 					authenticationCompleted: authCompleted
 						  shellAuthRequired: shellAuthRequired];
@@ -265,7 +278,7 @@ LError:
  authenticationCompleted: (SEL)authCompleted
 	   shellAuthRequired: (SEL)shellAuthRequired {
 
-	[m_provisioner authorizeRecords: self
+	[_provisioner authorizeRecords: self
 						   target: target
 		  authenticationCompleted: authCompleted
 				shellAuthRequired: shellAuthRequired];
@@ -438,11 +451,14 @@ LError:
 
 -(BOOL)initDefaultProviders
 {
-    m_provisioner = [[Provisioner alloc] init];
-    HVCHECK_NOTNULL(m_provisioner);
+    _transport = [[HVHttpTransport alloc] init];
+    HVCHECK_NOTNULL(_transport);
     
-    m_transport = [[HVHttpTransport alloc] init];
-    HVCHECK_NOTNULL(m_transport);
+    _provisioner = [[Provisioner alloc] init];
+    HVCHECK_NOTNULL(_provisioner);
+    
+    _cryptographer = [[HVCryptographer alloc] init];
+    HVCHECK_NOTNULL(_cryptographer);
     
     return TRUE;
     
@@ -468,9 +484,9 @@ LError:
 	request.authorizationSessionToken = self.authorizationSessionToken;
 	request.sessionSharedSecret = self.sessionSharedSecret;
     
-	NSString *requestXml = [request toXml];
+	NSString *requestXml = [request toXml:self];
     
-	request.connection = [m_transport sendRequestForURL: self.healthServiceUrl
+	request.connection = [_transport sendRequestForURL: self.healthServiceUrl
                                                 withData: requestXml
                                                  context: request
                                                   target: self

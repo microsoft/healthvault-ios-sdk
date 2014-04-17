@@ -17,50 +17,12 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-
+#import "HVService.h"
 #import "HealthVaultRequest.h"
 #import "HealthVaultResponse.h"
-#import "HealthVaultRecord.h"
 #import "MobilePlatform.h"
 #import "WebResponse.h"
 #import "WebTransport.h"
-#import "HVClientSettings.h"
-#import "HVHttpTransport.h"
-#import "Provisioner.h"
-
-@protocol HealthVaultService <NSObject>
-
-@property (retain) NSString *healthServiceUrl;
-@property (retain) NSString *shellUrl;
-@property (retain) NSString *authorizationSessionToken;
-@property (retain) NSString *sharedSecret;
-@property (retain) NSString *sessionSharedSecret;
-@property (retain) NSString *masterAppId;
-@property (retain) NSString *language;
-@property (retain) NSString *country;
-@property (retain) NSString* deviceName;
-@property (retain) NSString *appIdInstance;
-@property (retain) NSString *applicationCreationToken;
-@property (retain) NSMutableArray *records;
-@property (retain) HealthVaultRecord *currentRecord;
-@property (readonly) BOOL isAppCreated;
-
-- (NSString *)getApplicationCreationUrl;
-- (NSString *)getApplicationCreationUrlGA; // HealthVault global architecture aware
-- (NSString *)getUserAuthorizationUrl;
-
-- (void)sendRequest:(HealthVaultRequest *)request;
-- (void)authorizeRecords: (NSObject *)target authenticationCompleted: (SEL)authCompleted shellAuthRequired: (SEL)shellAuthRequired;
-
-- (void)performAuthenticationCheck: (NSObject *)target authenticationCompleted: (SEL)authCompleted shellAuthRequired: (SEL)shellAuthRequired;
-
-- (void)saveSettings;
-- (void)loadSettings;
-
--(void) reset;
--(void) applyEnvironmentSettings:(HVEnvironmentSettings *) settings;
-
-@end
 
 /// A class used to communicate with the HealthVault web service.
 @interface HealthVaultService : NSObject<HealthVaultService>
@@ -85,8 +47,10 @@
     //
     // Providers
     //
-    id<HVHttpTransport> m_transport;
-    Provisioner* m_provisioner;
+    id<HVHttpTransport> _transport;
+    id<HVCryptographer> _cryptographer;
+    Provisioner* _provisioner;
+    
 }
 
 /// Gets or sets the URL that is used to talk to the HealthVault Web Service.
@@ -143,8 +107,9 @@
 // Providers
 //
 //--------------------------------------------
-@property (readwrite, nonatomic, retain) id<HVHttpTransport> transport;
-@property (readwrite, nonatomic, retain) Provisioner* provisioner;
+@property (retain) id<HVHttpTransport> transport;
+@property (retain) id<HVCryptographer> cryptographer;
+@property (retain) Provisioner* provisioner;
 
 //--------------------------------------------
 //

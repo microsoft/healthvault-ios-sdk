@@ -31,6 +31,7 @@
 @synthesize personId = _personId;
 
 @synthesize authorizationSessionToken = _authorizationSessionToken;
+@synthesize userAuthToken = _userAuthToken;
 @synthesize appIdInstance = _appIdInstance;
 @synthesize sessionSharedSecret = _sessionSharedSecret;
 
@@ -42,6 +43,22 @@
 
 @synthesize target = _target;
 @synthesize callBack = _callBack;
+@synthesize isAnonymous = _isAnonymous;
+
+-(BOOL)hasSessionToken
+{
+    return ![NSString isNilOrEmpty:_authorizationSessionToken];
+}
+
+-(BOOL)hasUserAuthToken
+{
+    return ![NSString isNilOrEmpty:_userAuthToken];
+}
+
+-(BOOL)hasCredentials
+{
+    return (self.hasSessionToken);
+}
 
 -(NSURLConnection *)connection
 {
@@ -77,6 +94,8 @@
 		self.language = @"en";
 		self.country = @"US";
 		self.msgTTL = 1800;
+        
+        _isAnonymous = [@"CreateAuthenticatedSessionToken" isEqualToString:self.methodName];
 	}
 
 	return self;
@@ -90,6 +109,7 @@
 	self.personId = nil;
 
 	self.authorizationSessionToken = nil;
+    self.userAuthToken = nil;
 	self.appIdInstance = nil;
 	self.sessionSharedSecret = nil;
 
@@ -105,82 +125,43 @@
 	[super dealloc];
 }
 
-- (NSString *)toXml {
+-(NSString *)toXml
+{
+    return [self toXml:nil];
+}
 
+- (NSString *)toXml:(id<HealthVaultService>)service
+{
+    _service = service; // Weak ref
 	NSMutableString *xml = [[NSMutableString new] autorelease];
 
 	[xml appendString:@"<wc-request:request xmlns:wc-request=\"urn:com.microsoft.wc.request\">"];
-
-	NSMutableString *header = [NSMutableString new];
-
-	[header appendString: @"<header>"];
-
-	[header appendFormat: @"<method>%@</method>", self.methodName];
-	[header appendFormat: @"<method-version>%.0f</method-version>", self.methodVersion];
-
-	if (self.recordId) {
-		[header appendFormat: @"<record-id>%@</record-id>", self.recordId];
-	}
-
-	if (self.authorizationSessionToken && self.authorizationSessionToken.length > 0) {
-
-		[header appendString: @"<auth-session>"];
-		[header appendFormat: @"<auth-token>%@</auth-token>", self.authorizationSessionToken];
-
-		if (self.personId) {
-
-			[header appendString: @"<offline-person-info>"];
-			[header appendFormat: @"<offline-person-id>%@</offline-person-id>", self.personId];
-			[header appendString: @"</offline-person-info>"];
-		}
-
-		[header appendString: @"</auth-session>"];
-	}
-	else {
-
-		[header appendFormat: @"<app-id>%@</app-id>", self.appIdInstance];
-	}
-
-	[header appendFormat: @"<language>%@</language>", self.language];
-	[header appendFormat: @"<country>%@</country>", self.country];
-
-
-	[header appendFormat: @"<msg-time>%@</msg-time>", [DateTimeUtils dateToUtcString:self.msgTime]];
-	[header appendFormat: @"<msg-ttl>%d</msg-ttl>", self.msgTTL];
-	[header appendFormat: @"<version>%@</version>", [MobilePlatform platformAbbreviationAndVersion]];
-
-    NSString* infoString;
-	if (self.infoXml)
     {
-        infoString = self.infoXml;
-	}
-    else
-    {
-        infoString = @"<info />";
-	}
+        NSString* infoString;
+        if (self.infoXml)
+        {
+            infoString = self.infoXml;
+        }
+        else
+        {
+            infoString = @"<info />";
+        }
 	
-	BOOL isCreateAuthSessionTokenMethod = [@"CreateAuthenticatedSessionToken" compare: self.methodName] == NSOrderedSame;
+        NSMutableString *header = [[NSMutableString alloc] init];
+        
+        [self writeHeader:header forBody:infoString];
+ 
+        [self writeAuth:xml forHeader:header];
+        [xml appendString: header];
+        
+        [header release];
 
-	if (!isCreateAuthSessionTokenMethod) {
-		
-		[header appendFormat: @"<info-hash>%@</info-hash>", [MobilePlatform computeSha256HashAndWrap:infoString]];
-	}
-
-	[header appendString: @"</header>"];
-
-	if (self.sessionSharedSecret && !isCreateAuthSessionTokenMethod) {
-		NSData *decodedKey = [Base64 decodeBase64WithString: self.sessionSharedSecret];
-
-		[xml appendFormat: @"<auth>%@</auth>", [MobilePlatform computeSha256HmacAndWrap:decodedKey data:header]];
-	}
-
-	[xml appendString: header];
-    [xml appendString:infoString];
-
+        [xml appendString:infoString];
+    }
 	[xml appendString: @"</wc-request:request>"];
-
-	[header release];
-
+    
+    _service = nil;
+    
 	return xml;
 }
 
@@ -193,6 +174,120 @@
             [_connection cancel];
         }
         HVCLEAR(_connection);
+    }
+}
+
+-(void)writeHeader:(NSMutableString *)header forBody:(NSString *)body
+{
+    [header appendXmlElementStart:@"header"];
+    {
+        [self writeMethodHeaders:header];
+        [self writeRecordHeaders:header];
+        [self writeAuthSessionHeader:header];
+        [self writeStandardHeaders:header];
+        [self writeHashHeader:header forBody:body];
+    }
+    
+	[header appendXmlElementEnd:@"header"];
+}
+
+-(void)writeMethodHeaders:(NSMutableString *)header
+{
+    [header appendXmlElement:@"method" text:self.methodName];
+    [header appendXmlElementStart:@"method-version"];
+    {
+        [header appendFormat: @"%.0f", self.methodVersion];
+    }
+    [header appendXmlElementEnd:@"method-version"];
+}
+
+-(void)writeRecordHeaders:(NSMutableString *)header
+{
+    if (self.recordId)
+    {
+        [header appendXmlElement:@"record-id" text:self.recordId];
+    }
+}
+
+-(void)writeStandardHeaders:(NSMutableString *)header
+{
+    [header appendXmlElement:@"language" text:self.language];
+    [header appendXmlElement:@"country" text:self.country];
+    [header appendXmlElement:@"msg-time" text:[DateTimeUtils dateToUtcString:self.msgTime]];
+    [header appendXmlElementStart:@"msg-ttl"];
+    {
+        [header appendFormat: @"%d", self.msgTTL];
+    }
+    [header appendXmlElementEnd:@"msg-ttl"];
+    [header appendXmlElement:@"version" text:[MobilePlatform platformAbbreviationAndVersion]];
+}
+
+-(void)writeAuthSessionHeader:(NSMutableString *)header
+{
+    if (!self.hasCredentials)
+    {
+        [header appendXmlElement:@"app-id" text:self.appIdInstance];
+        return;
+    }
+    
+    [header appendXmlElementStart:@"auth-session"];
+    [header appendXmlElement:@"auth-token" text:self.authorizationSessionToken];
+    if (self.hasUserAuthToken)
+    {
+        [header appendXmlElement:@"user-auth-token" text:self.userAuthToken];
+    }
+    else if (self.personId)
+    {
+        [header appendXmlElementStart: @"offline-person-info"];
+        [header appendXmlElement: @"offline-person-id" text:self.personId];
+        [header appendXmlElementEnd: @"offline-person-info"];
+    }
+    [header appendXmlElementEnd:@"auth-session"];
+}
+
+-(void)writeHashHeader:(NSMutableString *)header forBody:(NSString *)body
+{
+    if (_isAnonymous)
+    {
+        return;
+    }
+    
+    [header appendXmlElementStart:@"info-hash"];
+    {
+        NSString* hash;
+        if (_service)
+        {
+            hash = [[_service cryptographer] computeSha256Hash:body];
+        }
+        else
+        {
+            hash = [MobilePlatform computeSha256Hash:body];
+        }
+        [header appendFormat: @"<hash-data algName=\"SHA256\">%@</hash-data>", hash];
+    }
+    [header appendXmlElementEnd:@"info-hash"];
+}
+
+-(void)writeAuth:(NSMutableString *)xml forHeader:(NSString *)header
+{
+    if (self.sessionSharedSecret && !_isAnonymous)
+    {
+        NSData *decodedKey = [Base64 decodeBase64WithString: self.sessionSharedSecret];
+        
+        NSString* hmac;
+        if (_service)
+        {
+            hmac = [[_service cryptographer] computeSha256Hmac:decodedKey data:header];
+        }
+        else
+        {
+            hmac = [MobilePlatform computeSha256Hmac:decodedKey data:header];
+        }
+        [xml appendXmlElementStart:@"auth"];
+        {
+            [xml appendFormat: @"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", hmac];
+        }
+        [xml appendXmlElementEnd:@"auth"];
     }
 }
 

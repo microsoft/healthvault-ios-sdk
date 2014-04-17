@@ -27,7 +27,7 @@
 
 + (NSString *)platformAbbreviationAndVersion {
 
-	return @"HV-iOS/2.1";
+	return @"HV-iOS/2.2";
 }
 
 + (NSString *)deviceName {
@@ -48,13 +48,6 @@
 	return base64String;
 }
 
-+ (NSString *)computeSha256HashAndWrap: (NSString *)data {
-
-	NSMutableString *xml = [NSMutableString new];
-	[xml appendFormat: @"<hash-data algName=\"SHA256\">%@</hash-data>", [self computeSha256Hash: data]];
-	return [xml autorelease];
-}
-
 + (NSString *)computeSha256Hmac: (NSData *)key data:(NSString *)data {
 
 	NSUInteger len = [key length];
@@ -72,13 +65,6 @@
 
 	[hmac release];
 	return base64String;
-}
-
-+ (NSString *)computeSha256HmacAndWrap: (NSData *)key data:(NSString *)data {
-
-	NSMutableString *xml = [NSMutableString new];
-	[xml appendFormat: @"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [self computeSha256Hmac:key data:data]];
-	return [xml autorelease];
 }
 
 @end

@@ -48,6 +48,7 @@
 @synthesize sessionSharedSecret = _sessionSharedSecret;
 @synthesize personId = _personId;
 @synthesize recordId = _recordId;
+@synthesize userAuthToken = _userAuthToken;
 
 - (id)initWithName: (NSString *)name {
 
@@ -73,7 +74,8 @@
 	self.sessionSharedSecret = nil;
 	self.personId = nil;
 	self.recordId = nil;
-
+    self.userAuthToken = nil;
+    
 	[super dealloc];
 }
 
@@ -93,6 +95,9 @@
     
 	[perfs setObject: self.authorizationSessionToken
 			  forKey: [NSString stringWithFormat: @"%@authorizationSessionToken", prefix]];
+    
+    [perfs setObject: self.userAuthToken
+			  forKey: [NSString stringWithFormat: @"%@userAuthToken", prefix]];
     
     [HVKeyChain setPassword:self.sharedSecret forName:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
     [HVKeyChain setPassword:self.sessionSharedSecret forName:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
@@ -125,7 +130,8 @@
 
 	settings.applicationCreationToken = [perfs objectForKey: [NSString stringWithFormat: @"%@applicationCreationToken", prefix]];
     settings.authorizationSessionToken = [perfs objectForKey: [NSString stringWithFormat: @"%@authorizationSessionToken", prefix]];
- 
+    settings.userAuthToken = [perfs objectForKey: [NSString stringWithFormat: @"%@userAuthToken", prefix]];
+
     NSString* sessionToken = settings.authorizationSessionToken;
     if ([NSString isNilOrEmpty:sessionToken])
     {
@@ -146,6 +152,7 @@
 	settings.personId = [perfs objectForKey: [NSString stringWithFormat: @"%@personId", prefix]];
 	
 	settings.recordId = [perfs objectForKey: [NSString stringWithFormat: @"%@recordId", prefix]];
+
 
 	return [settings autorelease];
 }

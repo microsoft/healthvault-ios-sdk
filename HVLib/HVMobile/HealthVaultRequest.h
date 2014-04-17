@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import "HVService.h"
 
 /// This class encapsulates the data that is contained in a request.
 @interface HealthVaultRequest : NSObject {
@@ -28,6 +29,7 @@
 	NSString *_personId;
 
 	NSString *_authorizationSessionToken;
+    NSString *_userAuthToken;
 	NSString *_appIdInstance;
 	NSString *_sessionSharedSecret;
 
@@ -42,6 +44,9 @@
 	SEL _callBack;
     
     NSURLConnection* _connection;
+    
+    BOOL _isAnonymous;
+    id<HealthVaultService> _service; // Weak reference
 }
 
 /// Gets or sets the name of the method to be called.
@@ -68,6 +73,8 @@
 /// Gets or sets the authorization token that is required to talk to the HealthVault 
 /// web service.
 @property (retain) NSString *authorizationSessionToken;
+
+@property (retain) NSString *userAuthToken;
 
 /// Gets or sets the application instance id.
 @property (retain) NSString *appIdInstance;
@@ -99,6 +106,11 @@
 
 @property (retain) NSURLConnection* connection;
 
+@property (readwrite) BOOL isAnonymous;
+@property (readonly) BOOL hasSessionToken;
+@property (readonly) BOOL hasUserAuthToken;
+@property (readonly) BOOL hasCredentials;
+
 /// Initializes a new instance of the HealthVaultRequest class.
 /// @param name - the name of the method.
 /// @param methodVersion - the version of the method.
@@ -117,8 +129,18 @@
 
 /// Converts the request to xml representation ready to be submitted to HealthVault service.
 /// @returns xml representation of the request.
-- (NSString *)toXml;
+- (NSString *)toXml __deprecated_msg("Use toXml:");
+- (NSString *)toXml:(id<HealthVaultService>) service;
 
 -(void) cancel;
+
+-(void) writeHeader:(NSMutableString *) header forBody:(NSString *) body;
+-(void) writeMethodHeaders:(NSMutableString *) header;
+-(void) writeRecordHeaders:(NSMutableString *) header;
+-(void) writeStandardHeaders:(NSMutableString *) header;
+-(void) writeAuthSessionHeader:(NSMutableString *) header;
+-(void) writeHashHeader:(NSMutableString *) header forBody:(NSString *) body;
+
+-(void) writeAuth:(NSMutableString *) xml forHeader:(NSString *) header;
 
 @end

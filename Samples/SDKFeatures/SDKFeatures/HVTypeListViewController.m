@@ -28,7 +28,6 @@
 #import "HVCholesterolFactory.h"
 #import "HVWeightFactory.h"
 
-static const NSInteger c_numSecondsInDay = 86400;
 
 @implementation HVTypeListViewController
 

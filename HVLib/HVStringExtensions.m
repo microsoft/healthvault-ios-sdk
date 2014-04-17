@@ -392,6 +392,26 @@ LError:
     return [self replaceOccurrencesOfString:@":" withString:c_emptyString options:0 range:range];
 }
 
+-(void)appendXmlElementStart:(NSString *)tag
+{
+    [self appendString:@"<"];
+    [self appendString:tag];
+    [self appendString:@">"];
+}
+
+-(void)appendXmlElementEnd:(NSString *)tag
+{
+    [self appendString:@"</"];
+    [self appendString:tag];
+    [self appendString:@">"];
+}
+
+-(void)appendXmlElement:(NSString *)tag text:(NSString *)text
+{
+    [self appendXmlElementStart:tag];
+    [self appendString:text];
+    [self appendXmlElementEnd:tag];
+}
 
 @end
 

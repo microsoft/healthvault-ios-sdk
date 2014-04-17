@@ -32,6 +32,7 @@
 	NSString *_personId;
 	NSString *_recordId;
 	NSString *_name;
+    NSString *_userAuthToken;
 }
 
 /// Gets or sets the settings name.
@@ -66,6 +67,9 @@
 
 /// Gets or sets record Id.
 @property (retain) NSString *recordId;
+
+// Gets or sets the user-auth-token, if any
+@property (retain) NSString* userAuthToken;
 
 /// Initializes settings with specific name.
 /// @param name - settings file name.

@@ -487,6 +487,8 @@
 		5DF90BBC18FC5719009ABAAB /* HVTypeViewRefresher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BBA18FC5719009ABAAB /* HVTypeViewRefresher.m */; };
 		5DF90BBF18FC80A5009ABAAB /* HVBatchItemDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BBD18FC80A5009ABAAB /* HVBatchItemDownloader.h */; };
 		5DF90BC018FC80A5009ABAAB /* HVBatchItemDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BBE18FC80A5009ABAAB /* HVBatchItemDownloader.m */; };
+		5DF90BCF19005044009ABAAB /* HVCryptographer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BCD19005044009ABAAB /* HVCryptographer.h */; };
+		5DF90BD019005044009ABAAB /* HVCryptographer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BCE19005044009ABAAB /* HVCryptographer.m */; };
 		5DF91081158D09930027E0A8 /* HVNonNegativeDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */; };
 		5DF91082158D09930027E0A8 /* HVNonNegativeDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */; };
 /* End PBXBuildFile section */
@@ -977,6 +979,9 @@
 		5DF90BBA18FC5719009ABAAB /* HVTypeViewRefresher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTypeViewRefresher.m; sourceTree = "<group>"; };
 		5DF90BBD18FC80A5009ABAAB /* HVBatchItemDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBatchItemDownloader.h; sourceTree = "<group>"; };
 		5DF90BBE18FC80A5009ABAAB /* HVBatchItemDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBatchItemDownloader.m; sourceTree = "<group>"; };
+		5DF90BCD19005044009ABAAB /* HVCryptographer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCryptographer.h; sourceTree = "<group>"; };
+		5DF90BCE19005044009ABAAB /* HVCryptographer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCryptographer.m; sourceTree = "<group>"; };
+		5DF90BD219005347009ABAAB /* HVService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVService.h; sourceTree = "<group>"; };
 		5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVNonNegativeDouble.h; sourceTree = "<group>"; };
 		5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVNonNegativeDouble.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1179,8 +1184,11 @@
 				5D5F313F150FAA2800ED11E7 /* HealthVaultRequest.m */,
 				5D5F3140150FAA2800ED11E7 /* HealthVaultResponse.h */,
 				5D5F3141150FAA2800ED11E7 /* HealthVaultResponse.m */,
+				5DF90BD219005347009ABAAB /* HVService.h */,
 				5D5F3142150FAA2800ED11E7 /* HealthVaultService.h */,
 				5D5F3143150FAA2800ED11E7 /* HealthVaultService.m */,
+				5DF90BCD19005044009ABAAB /* HVCryptographer.h */,
+				5DF90BCE19005044009ABAAB /* HVCryptographer.m */,
 				5D5F3144150FAA2800ED11E7 /* MobilePlatform.h */,
 				5D5F3145150FAA2800ED11E7 /* MobilePlatform.m */,
 				5D5F3146150FAA2800ED11E7 /* Provisioner */,
@@ -1794,6 +1802,7 @@
 				5D5F3178150FAA2800ED11E7 /* WebTransport.h in Headers */,
 				5D5F317A150FAA2800ED11E7 /* XmlElement.h in Headers */,
 				5DF90BB718F86CD6009ABAAB /* HVLibUI.h in Headers */,
+				5DF90BCF19005044009ABAAB /* HVCryptographer.h in Headers */,
 				5D5F317C150FAA2800ED11E7 /* XmlTextReader.h in Headers */,
 				5D119DA018F46771005117E0 /* HVTypeViewDataSource.h in Headers */,
 				5D5F3184150FAE5300ED11E7 /* HVAppProvisionController.h in Headers */,
@@ -2113,6 +2122,7 @@
 				5D0645B5184545D500D306CC /* HVHeartRate.m in Sources */,
 				5D195D2C151BFA5300E109AD /* HVName.m in Sources */,
 				5D195D4F1522527100E109AD /* HVPutItemsTask.m in Sources */,
+				5DF90BD019005044009ABAAB /* HVCryptographer.m in Sources */,
 				5D195D671522780800E109AD /* HVRemoveItemsTask.m in Sources */,
 				5D8183FE1875F9480073F8E6 /* HVVolumeValue.m in Sources */,
 				5D195D7315228C0200E109AD /* HVVocabSearchText.m in Sources */,

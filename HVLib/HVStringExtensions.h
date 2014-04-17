@@ -91,6 +91,10 @@ NSString* const c_emptyString;
 
 -(NSUInteger) replaceOccurrencesOfString:(NSString *)target withString:(NSString *)replacement;
 
+-(void) appendXmlElementStart:(NSString *) tag;
+-(void) appendXmlElementEnd:(NSString *) tag;
+-(void) appendXmlElement:(NSString *) tag text:(NSString *) text;
+
 @end
 
 CFStringRef HVUrlEncode(CFStringRef source);
