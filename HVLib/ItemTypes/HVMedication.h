@@ -105,13 +105,14 @@
 //-------------------------
 -(id) initWithName:(NSString *) name;
 
++(HVItem *) newItem;
+
 //-------------------------
 //
 // Text
 //
 //-------------------------
 -(NSString *) toString;
-+(HVItem *) newItem;
 
 //-------------------------
 //

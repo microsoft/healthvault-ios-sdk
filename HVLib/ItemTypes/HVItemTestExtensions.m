@@ -269,24 +269,6 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation HVCholesterol (HVTestExtensions)
-
-+(HVItem *)createRandom
-{
-    HVItem* item = [[HVCholesterol newItem] autorelease];
-    HVCholesterol* cholesterol = item.cholesterol;
-    
-    cholesterol.when = createRandomHVDate();
-    cholesterol.ldlValue = [HVRandom randomIntInRangeMin:80 max:130];
-    cholesterol.hdlValue = [HVRandom randomIntInRangeMin:30 max:60];
-    cholesterol.triglyceridesValue = [HVRandom randomIntInRangeMin:150 max:250];
-    cholesterol.totalValue = cholesterol.ldlValue + cholesterol.hdlValue + (cholesterol.triglyceridesValue / 5);
-    
-    return item;
-}
-
-@end
-
 @implementation HVCholesterolV2 (HVTestExtensions)
 
 +(HVItem *)createRandom

@@ -112,6 +112,7 @@ static HVTypeSystem* s_typeRegistry;
     [s_typeRegistry addClass:[HVCCR class] forTypeID:[HVCCR typeID]];
     [s_typeRegistry addClass:[HVInsurance class] forTypeID:[HVInsurance typeID]];
     [s_typeRegistry addClass:[HVMessage class] forTypeID:[HVMessage typeID]];
+    [s_typeRegistry addClass:[HVLabTestResults class] forTypeID:[HVLabTestResults typeID]];
 
     [s_typeRegistry addClass:[HVEmergencyOrProviderContact class] forTypeID:[HVEmergencyOrProviderContact typeID]];
     [s_typeRegistry addClass:[HVPersonalContactInfo class] forTypeID:[HVPersonalContactInfo typeID]];

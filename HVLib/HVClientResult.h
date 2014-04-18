@@ -97,6 +97,10 @@ enum HVClientResultCode
     HVClientError_InvalidVolume,
     HVClientError_InvalidMessageHeader,
     HVClientError_InvalidMessageAttachment,
+    HVClientError_InvalidTestResultRange,
+    HVClientError_InvalidLabTestResultValue,
+    HVClientError_InvalidLabTestResultDetails,
+    HVClientError_InvalidLabTestResultsGroup,
     //
     // Blobs
     //
@@ -134,6 +138,7 @@ enum HVClientResultCode
     HVClientError_InvalidHeartRate,
     HVClientError_InvalidPeakFlow,
     HVClientError_InvalidMessage,
+    HVclientError_InvalidLabTestResults,
     //
     // Store
     //

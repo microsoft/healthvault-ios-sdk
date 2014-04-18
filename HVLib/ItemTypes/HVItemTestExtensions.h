@@ -82,12 +82,6 @@ NSString* pickRandomDrug(void);
 
 @end
 
-@interface HVCholesterol (HVTestExtensions)
-
-+(HVItem *) createRandom;
-
-@end
-
 @interface HVCholesterolV2 (HVTestExtensions)
 
 +(HVItem *) createRandom;

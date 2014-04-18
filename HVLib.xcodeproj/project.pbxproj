@@ -489,6 +489,18 @@
 		5DF90BC018FC80A5009ABAAB /* HVBatchItemDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BBE18FC80A5009ABAAB /* HVBatchItemDownloader.m */; };
 		5DF90BCF19005044009ABAAB /* HVCryptographer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BCD19005044009ABAAB /* HVCryptographer.h */; };
 		5DF90BD019005044009ABAAB /* HVCryptographer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BCE19005044009ABAAB /* HVCryptographer.m */; };
+		5DF90BD519005CA5009ABAAB /* HVLabTestResultsDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BD319005CA5009ABAAB /* HVLabTestResultsDetails.h */; };
+		5DF90BD619005CA5009ABAAB /* HVLabTestResultsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BD419005CA5009ABAAB /* HVLabTestResultsDetails.m */; };
+		5DF90BD919005D5D009ABAAB /* HVTestResultRangeValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BD719005D5D009ABAAB /* HVTestResultRangeValue.h */; };
+		5DF90BDA19005D5D009ABAAB /* HVTestResultRangeValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BD819005D5D009ABAAB /* HVTestResultRangeValue.m */; };
+		5DF90BDD19005FF0009ABAAB /* HVTestResultRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BDB19005FF0009ABAAB /* HVTestResultRange.h */; };
+		5DF90BDE19005FF0009ABAAB /* HVTestResultRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BDC19005FF0009ABAAB /* HVTestResultRange.m */; };
+		5DF90BE119006203009ABAAB /* HVLabTestResultValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BDF19006203009ABAAB /* HVLabTestResultValue.h */; };
+		5DF90BE219006203009ABAAB /* HVLabTestResultValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BE019006203009ABAAB /* HVLabTestResultValue.m */; };
+		5DF90BE519008C62009ABAAB /* HVLabTestResultsGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BE319008C62009ABAAB /* HVLabTestResultsGroup.h */; };
+		5DF90BE619008C62009ABAAB /* HVLabTestResultsGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BE419008C62009ABAAB /* HVLabTestResultsGroup.m */; };
+		5DF90BE919009587009ABAAB /* HVLabTestResults.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BE719009587009ABAAB /* HVLabTestResults.h */; };
+		5DF90BEA19009587009ABAAB /* HVLabTestResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BE819009587009ABAAB /* HVLabTestResults.m */; };
 		5DF91081158D09930027E0A8 /* HVNonNegativeDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */; };
 		5DF91082158D09930027E0A8 /* HVNonNegativeDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */; };
 /* End PBXBuildFile section */
@@ -982,6 +994,18 @@
 		5DF90BCD19005044009ABAAB /* HVCryptographer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCryptographer.h; sourceTree = "<group>"; };
 		5DF90BCE19005044009ABAAB /* HVCryptographer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCryptographer.m; sourceTree = "<group>"; };
 		5DF90BD219005347009ABAAB /* HVService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVService.h; sourceTree = "<group>"; };
+		5DF90BD319005CA5009ABAAB /* HVLabTestResultsDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLabTestResultsDetails.h; sourceTree = "<group>"; };
+		5DF90BD419005CA5009ABAAB /* HVLabTestResultsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLabTestResultsDetails.m; sourceTree = "<group>"; };
+		5DF90BD719005D5D009ABAAB /* HVTestResultRangeValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTestResultRangeValue.h; sourceTree = "<group>"; };
+		5DF90BD819005D5D009ABAAB /* HVTestResultRangeValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTestResultRangeValue.m; sourceTree = "<group>"; };
+		5DF90BDB19005FF0009ABAAB /* HVTestResultRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTestResultRange.h; sourceTree = "<group>"; };
+		5DF90BDC19005FF0009ABAAB /* HVTestResultRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTestResultRange.m; sourceTree = "<group>"; };
+		5DF90BDF19006203009ABAAB /* HVLabTestResultValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLabTestResultValue.h; sourceTree = "<group>"; };
+		5DF90BE019006203009ABAAB /* HVLabTestResultValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLabTestResultValue.m; sourceTree = "<group>"; };
+		5DF90BE319008C62009ABAAB /* HVLabTestResultsGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLabTestResultsGroup.h; sourceTree = "<group>"; };
+		5DF90BE419008C62009ABAAB /* HVLabTestResultsGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLabTestResultsGroup.m; sourceTree = "<group>"; };
+		5DF90BE719009587009ABAAB /* HVLabTestResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLabTestResults.h; sourceTree = "<group>"; };
+		5DF90BE819009587009ABAAB /* HVLabTestResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLabTestResults.m; sourceTree = "<group>"; };
 		5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVNonNegativeDouble.h; sourceTree = "<group>"; };
 		5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVNonNegativeDouble.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1413,6 +1437,16 @@
 				5D8183FC1875F9480073F8E6 /* HVVolumeValue.m */,
 				5D20D2E014EDD6C000160611 /* HVWeightMeasurement.h */,
 				5D20D2E114EDD6C000160611 /* HVWeightMeasurement.m */,
+				5DF90BD719005D5D009ABAAB /* HVTestResultRangeValue.h */,
+				5DF90BD819005D5D009ABAAB /* HVTestResultRangeValue.m */,
+				5DF90BDB19005FF0009ABAAB /* HVTestResultRange.h */,
+				5DF90BDC19005FF0009ABAAB /* HVTestResultRange.m */,
+				5DF90BDF19006203009ABAAB /* HVLabTestResultValue.h */,
+				5DF90BE019006203009ABAAB /* HVLabTestResultValue.m */,
+				5DF90BD319005CA5009ABAAB /* HVLabTestResultsDetails.h */,
+				5DF90BD419005CA5009ABAAB /* HVLabTestResultsDetails.m */,
+				5DF90BE319008C62009ABAAB /* HVLabTestResultsGroup.h */,
+				5DF90BE419008C62009ABAAB /* HVLabTestResultsGroup.m */,
 				5D7898CA1714E9400015D375 /* ServiceDef */,
 				5D227B84153766E500E12075 /* Vocab */,
 			);
@@ -1532,6 +1566,8 @@
 				5DC50C23150019650078D85F /* HVItemTestExtensions.m */,
 				5D983BDE14E5F7A300C287B7 /* HVItemTypes.h */,
 				5D775C731538A118000F01AE /* HVItemTypes.m */,
+				5DF90BE719009587009ABAAB /* HVLabTestResults.h */,
+				5DF90BE819009587009ABAAB /* HVLabTestResults.m */,
 				5D195D05151BCAB400E109AD /* HVMedication.h */,
 				5D195D06151BCAB400E109AD /* HVMedication.m */,
 				5D25D67618AC574300B29B6D /* HVMessage.h */,
@@ -1709,6 +1745,7 @@
 				5D983BD514E5E87000C287B7 /* HVTypes.h in Headers */,
 				5D983BD814E5F4BD00C287B7 /* HVItemDataTyped.h in Headers */,
 				5D983BDC14E5F50600C287B7 /* HVWeight.h in Headers */,
+				5DF90BE519008C62009ABAAB /* HVLabTestResultsGroup.h in Headers */,
 				5D983BDF14E5F7A300C287B7 /* HVItemTypes.h in Headers */,
 				5D983BE214E5FE2B00C287B7 /* HVClientException.h in Headers */,
 				5D983BE614E6006400C287B7 /* HVConstrainedInt.h in Headers */,
@@ -1761,6 +1798,7 @@
 				5D20D33B14F43A9C00160611 /* HVStringZ512.h in Headers */,
 				5D20D33F14F4467C00160611 /* HVItemRaw.h in Headers */,
 				5D20D34314F44EF200160611 /* HVAudit.h in Headers */,
+				5DF90BE119006203009ABAAB /* HVLabTestResultValue.h in Headers */,
 				5D20D34714F4804F00160611 /* HVRecord.h in Headers */,
 				5D20D34B14F4808400160611 /* HVPersonInfo.h in Headers */,
 				5D20D34F14F487C100160611 /* HVItemQueryResults.h in Headers */,
@@ -1773,6 +1811,7 @@
 				5DC50C3115003C3D0078D85F /* HVTypeViewItems.h in Headers */,
 				5DC50C3915004E040078D85F /* HVItemStore.h in Headers */,
 				5DC50C40150051DD0078D85F /* HVMemoryStore.h in Headers */,
+				5DF90BDD19005FF0009ABAAB /* HVTestResultRange.h in Headers */,
 				5DC50C4415015EE60078D85F /* HVTypeView.h in Headers */,
 				5DC50C48150160CE0078D85F /* HVSynchronizedStore.h in Headers */,
 				5DC50C4C150172610078D85F /* HVMulticastDelegate.h in Headers */,
@@ -1840,6 +1879,8 @@
 				5D57A8B6152F8A0C00A80C4A /* HVPositiveInt.h in Headers */,
 				5D8E5A9E152FA913002BC6E2 /* HVCholesterol.h in Headers */,
 				5D8E5AA7152FBBA4002BC6E2 /* HVAllergy.h in Headers */,
+				5DF90BD919005D5D009ABAAB /* HVTestResultRangeValue.h in Headers */,
+				5DF90BE919009587009ABAAB /* HVLabTestResults.h in Headers */,
 				5D8E5AB1152FC460002BC6E2 /* HVImmunization.h in Headers */,
 				5D8E5AB5152FC552002BC6E2 /* HVApproxDate.h in Headers */,
 				5D07A9571534B1780013DC2A /* HVProcedure.h in Headers */,
@@ -1916,6 +1957,7 @@
 				5D74847E157A7C5E001A7713 /* HVStoredQuery.h in Headers */,
 				5DF91081158D09930027E0A8 /* HVNonNegativeDouble.h in Headers */,
 				5D1D460D1596301B00383979 /* HVKeyChain.h in Headers */,
+				5DF90BD519005CA5009ABAAB /* HVLabTestResultsDetails.h in Headers */,
 				5D88C5DB161F4E5700F74D54 /* HVDailyDietaryIntake.h in Headers */,
 				5D88C5E0161F4EDF00F74D54 /* HVFoodEnergyValue.h in Headers */,
 				5D88C5E4161F4F1700F74D54 /* HVNutritionFact.h in Headers */,
@@ -2050,6 +2092,7 @@
 				5D20D32814F424F000160611 /* HVItemType.m in Sources */,
 				5D119E3118F49098005117E0 /* HVSynchronizedTypeDataSource.m in Sources */,
 				5D20D32C14F42E1300160611 /* HVItemData.m in Sources */,
+				5DF90BEA19009587009ABAAB /* HVLabTestResults.m in Sources */,
 				5D20D33014F4352A00160611 /* HVItemDataCommon.m in Sources */,
 				5D20D33414F4366200160611 /* HVConstrainedString.m in Sources */,
 				5D20D33814F43A1400160611 /* HVString255.m in Sources */,
@@ -2059,6 +2102,7 @@
 				5D20D34814F4804F00160611 /* HVRecord.m in Sources */,
 				5D20D34C14F4808400160611 /* HVPersonInfo.m in Sources */,
 				5D20D35014F487C100160611 /* HVItemQueryResults.m in Sources */,
+				5DF90BDE19005FF0009ABAAB /* HVTestResultRange.m in Sources */,
 				5D20D35414F487F100160611 /* HVPendingItem.m in Sources */,
 				5D20D35814F4883700160611 /* HVItemQueryResult.m in Sources */,
 				5DD0B80B14F81DDE00AAD54F /* XSerializableType.m in Sources */,
@@ -2119,6 +2163,7 @@
 				5D195D20151BF54300E109AD /* HVEmail.m in Sources */,
 				5D195D24151BF61000E109AD /* HVContact.m in Sources */,
 				5D195D28151BF9F400E109AD /* HVPerson.m in Sources */,
+				5DF90BE219006203009ABAAB /* HVLabTestResultValue.m in Sources */,
 				5D0645B5184545D500D306CC /* HVHeartRate.m in Sources */,
 				5D195D2C151BFA5300E109AD /* HVName.m in Sources */,
 				5D195D4F1522527100E109AD /* HVPutItemsTask.m in Sources */,
@@ -2150,12 +2195,14 @@
 				5D561B0615365F74003D68D2 /* HVEmergencyOrProviderContact.m in Sources */,
 				5D227B8E153766E500E12075 /* HVVocabIdentifier.m in Sources */,
 				5D227B90153766E500E12075 /* HVVocabItem.m in Sources */,
+				5DF90BE619008C62009ABAAB /* HVLabTestResultsGroup.m in Sources */,
 				5D227B92153766E500E12075 /* HVVocabSearchParams.m in Sources */,
 				5D227B94153766E500E12075 /* HVVocabCodeSet.m in Sources */,
 				5D925DD815376F21006BAAA8 /* HVGetVocabTask.m in Sources */,
 				5D925DE115377348006BAAA8 /* HVVocabParams.m in Sources */,
 				5D775C7215389BD7000F01AE /* HVBasicDemographics.m in Sources */,
 				5D775C741538A118000F01AE /* HVItemTypes.m in Sources */,
+				5DF90BDA19005D5D009ABAAB /* HVTestResultRangeValue.m in Sources */,
 				5D775C781538C2BA000F01AE /* HVPersonalDemographics.m in Sources */,
 				5D775C7C1538D050000F01AE /* HVPersonalContactInfo.m in Sources */,
 				5D775C801538D2F9000F01AE /* HVDailyMedicationUsage.m in Sources */,
@@ -2182,6 +2229,7 @@
 				5D1139BC15461F740008C362 /* HVDataExtensions.m in Sources */,
 				5D1139C0154620E80008C362 /* HVHttpRequestResponse.m in Sources */,
 				5D6EDDA31546233F00420262 /* HVHttpDownload.m in Sources */,
+				5DF90BD619005CA5009ABAAB /* HVLabTestResultsDetails.m in Sources */,
 				5DB2E72118D3CBCF0030972D /* HVPartitionedStore.m in Sources */,
 				5D6EDDA91546306200420262 /* HVBlobInfo.m in Sources */,
 				5D6EDDAD154631B700420262 /* HVBlobPayloadItem.m in Sources */,

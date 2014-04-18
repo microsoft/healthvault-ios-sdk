@@ -63,6 +63,12 @@
 #import "HVMessageHeaderItem.h"
 #import "HVMessageAttachment.h"
 
+#import "HVTestResultRangeValue.h"
+#import "HVTestResultRange.h"
+#import "HVLabTestResultValue.h"
+#import "HVLabTestResultsDetails.h"
+#import "HVLabTestResultsGroup.h"
+
 #import "HVItemSection.h"
 #import "HVItemState.h"
 #import "HVItemKey.h"

@@ -69,7 +69,7 @@
     self.table = table;
     
     m_rowAnimation = UITableViewRowAnimationAutomatic;
-    m_cellStyle = UITableViewCellStyleDefault;
+    m_cellStyle = UITableViewCellStyleValue1;
     
     return self;
     
