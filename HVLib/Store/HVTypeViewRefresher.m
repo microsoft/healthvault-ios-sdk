@@ -158,7 +158,7 @@ LError:
             HVCHECK_NOTNULL(queries);
         }
         
-        HVItemQuery* refreshQuery = [view createRefreshQuery];
+        HVItemQuery* refreshQuery = [view getQuery];
         HVCHECK_NOTNULL(refreshQuery);
         
         refreshQuery.name = viewName;

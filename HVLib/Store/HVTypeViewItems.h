@@ -29,6 +29,8 @@
 //
 // Matches the default sort order of HealthVault query results
 //
+// Also maintains a reverse index of ItemID --> the item's position.
+//
 //-----------------------------------
 @interface HVTypeViewItems : XSerializableType
 {

@@ -22,16 +22,84 @@
 #import "HVTypeView.h"
 #import "HVMulticastDelegate.h"
 
+//-------------------------------------------------------------------------------------------
+//
+// HVSynchronizedTypes provides simple 2-way read-write synchronization and offline work model for
+// HealthVault types.
+//
+// Each HealthVault Item Type (Weight, Blood Pressure, Medication etc.) has an equivalent
+// SynchronizedType.
+//
+// Each SynchronizedType is a HVTypeView (see HVTypeView.h).
+// Please read notes in HVTypeView.h and HVSyncView.h first.
+//
+// SynchronizedTypes store HVItems on the local device--in the application's LocalVault.
+// Items are downloaded and updated as necessary.
+//
+// You can add, edit or remove item data to/from a SynchronizedType entirely OFFLINE.
+// SynchronizedTypes track changes to items.
+// They background commit/synchronize those changes with the HealthVault cloud store.
+//
+// Tracking of changes and commits is PERSISTENT--i.e. it survives application restarts,
+// network connectivity issues and the like.
+// A change queue that is interrupted because the application is closed or network lost will
+// resume where it left off the next time the application triggers a commit of pending changes.
+//
+// To support 2-way synchronization the application must:
+//  - Periodically trigger a commit of pending changes back to HealthVault.
+//  - Optionally periodically refresh the type
+//
+// The two are independant operations. The application decides the frequency at which they
+// should occur.
+// Doing both is straightforward and the **SynchronizedType SAMPLE** demonstrates the methods
+// and helper classes that do the needful.
+//
+// *COMMITTING CHANGES*
+// The application periodically triggers a commit of pending changes to HealthVault.
+// The application decides the frequency at which changes are background committed.
+
+// The typical application commits changes by using the *HVItemCommitScheduler* class.
+// Advanced applications may use lower level methods to customize the behavior.
+//
+// The application can:
+//     - Commit ALL pending changes for all SynchronizedTypes in all records
+//     in the LocalVault (HVLocalVault commitOfflineChangesWithCallback) at one go
+//     - Commit changes for a specific record (HVLocalRecodeStore commitOfflineChangesWithCallback)
+//
+// *REFRESHING*
+// Refreshing a SynchronizedType is identical to refreshing a HVTypeView.
+// Refresh allows the SynchronizedType to discover new items, updates and removes made by
+// OTHER applications to the user's HealthVault record. Refresh is the *read" part of 2-way
+// synchronization.
+//  - The application determines if a SynchronizedType is stale--last updated more than some time
+//    interval earlier. It then calls refresh.
+//  - The application calls refresh in response to user or other action
+//  - The application can refresh mutliple SynchronizedTypes with minimal
+//    roundtrips by using the HVMultipleTypeViewRefresher class
+// A SynchronizedType will not refresh if there are pending changes that must be comitted to
+// HealthVault first.
+//
+// An application that never refreshes a SynchronizedType will continue to function correctly.
+// However, it will never discover changes made by other applications. It will however
+// operate correctly with items it added/updated/removed.
+//
+//-----------------------------------------------------------------------
+
 @class HVSynchronizedType;
 @class HVSynchronizationManager;
 
+//-----------------------------------------------------------------
+//
+// *NOTIFICATIONS*
 //
 // HVSynchronizedType fires notifications in 2 ways:
-
+//
 //  - Singlecast to HVSynchronizedTypeDelegate delegate
 //  - Broadcast to [NSNotificationCenter defaultCenter]
 //
-// Broadcast event names:
+//-----------------------------------------------------------------
+//
+// BROADCAST EVENT NAMES
 //
 HVDECLARE_NOTIFICATION(HVSynchronizedTypeItemsAvailableNotification);
 HVDECLARE_NOTIFICATION(HVSynchronizedTypeKeysNotAvailableNotification);
@@ -58,6 +126,13 @@ HVDECLARE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
 
 @end
 
+//-----------------------------------------------------------------
+//
+// Object that makes it simple to:
+//  - Safely edit a locally stored item
+//  - Track changes in the commit queue
+//
+//-----------------------------------------------------------------
 @interface HVItemEditOperation : NSObject
 {
 @private
@@ -67,19 +142,31 @@ HVDECLARE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
 }
 
 //
-// A deep clone of the original item, so you can safely edit/alter its properties in memory without any impact elsewhere
+// A deep clone of the original item, so you can safely edit/alter its
+// properties in memory without any impact elsewhere
 //
 @property (readonly, nonatomic) HVItem* item;
 
+//
+// Call commit if you want the changes to be:
+//   - written to the LocalVault
+//   - added to the change queue for later background commit
+//
+// You MUST call commit if you want to save your changes.
+//By default, all edit operations are treated as Cancel
+//
 -(BOOL) commit;
+//
+// Default.. abandon this edit operation
+//
 -(void) cancel;
 
 @end
 
 //----------------------------------------------
 //
-// See documentation on HVTypeView
-// Same threading rules apply here
+// See documentation at the top of this file
+// See HVTypeView for additional docs.
 //
 //----------------------------------------------
 @interface HVSynchronizedType : NSObject<HVTypeView, HVTypeViewDelegate, NSDiscardableContent>
@@ -132,13 +219,21 @@ HVDECLARE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
 -(BOOL) removeItemWithKey:(HVItemKey *) key;
 -(BOOL) removeItemAtIndex:(NSUInteger) index;
 //
+// Will return null if there are pending changes not yet committed
+//
+-(HVTask *) refresh;
+//
 // Save this type to disk
 //
 -(BOOL) save;
 -(BOOL) removeAllLocalItems;
 
+//---------------------------------------------
+//
+// Internal methods used by the SDK
+//
+//---------------------------------------------
 -(BOOL) applyChangeCommitSuccess:(HVItemChange *) change itemLock:(HVAutoLock *) lock;
-
 +(NSString *) makeViewNameForTypeID:(NSString *) typeID;
 
 -(BOOL) isContentDiscardable;

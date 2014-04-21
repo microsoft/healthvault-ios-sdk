@@ -231,6 +231,11 @@ LError:
     [super dealloc];
 }
 
+-(HVItemKey *)keyAtIndex:(NSUInteger)index
+{
+    return [self itemKeyAtIndex:index];
+}
+
 -(HVTypeViewItem *)itemKeyAtIndex:(NSUInteger)index
 {
     return [m_items objectAtIndex:index];
@@ -700,7 +705,7 @@ LError:
     return nil;
 }
 
--(HVItemQuery *)createRefreshQuery
+-(HVItemQuery *)getQuery
 {
     return [[self newRefreshQuery] autorelease];
 }

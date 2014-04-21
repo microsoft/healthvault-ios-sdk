@@ -501,6 +501,7 @@
 		5DF90BE619008C62009ABAAB /* HVLabTestResultsGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BE419008C62009ABAAB /* HVLabTestResultsGroup.m */; };
 		5DF90BE919009587009ABAAB /* HVLabTestResults.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BE719009587009ABAAB /* HVLabTestResults.h */; };
 		5DF90BEA19009587009ABAAB /* HVLabTestResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF90BE819009587009ABAAB /* HVLabTestResults.m */; };
+		5DF90BEF19059AA9009ABAAB /* HVSyncView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BED19059AA9009ABAAB /* HVSyncView.h */; };
 		5DF91081158D09930027E0A8 /* HVNonNegativeDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */; };
 		5DF91082158D09930027E0A8 /* HVNonNegativeDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */; };
 /* End PBXBuildFile section */
@@ -1006,6 +1007,7 @@
 		5DF90BE419008C62009ABAAB /* HVLabTestResultsGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLabTestResultsGroup.m; sourceTree = "<group>"; };
 		5DF90BE719009587009ABAAB /* HVLabTestResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLabTestResults.h; sourceTree = "<group>"; };
 		5DF90BE819009587009ABAAB /* HVLabTestResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLabTestResults.m; sourceTree = "<group>"; };
+		5DF90BED19059AA9009ABAAB /* HVSyncView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSyncView.h; sourceTree = "<group>"; };
 		5DF9107F158D09930027E0A8 /* HVNonNegativeDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVNonNegativeDouble.h; sourceTree = "<group>"; };
 		5DF91080158D09930027E0A8 /* HVNonNegativeDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVNonNegativeDouble.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1646,6 +1648,7 @@
 				5DC50C2C15003C2A0078D85F /* HVTypeViewItem.m */,
 				5DC50C2F15003C3D0078D85F /* HVTypeViewItems.h */,
 				5DC50C3015003C3D0078D85F /* HVTypeViewItems.m */,
+				5DF90BED19059AA9009ABAAB /* HVSyncView.h */,
 				5DC50C4215015EE60078D85F /* HVTypeView.h */,
 				5DC50C4315015EE60078D85F /* HVTypeView.m */,
 				5DC50C3815004E040078D85F /* HVItemStore.h */,
@@ -1922,6 +1925,7 @@
 				5DE34C8E15394314003C24E8 /* HVOrganization.h in Headers */,
 				5DB2E6F718D38CF90030972D /* HVStore.h in Headers */,
 				5DE34C94153951FD003C24E8 /* HVOccurence.h in Headers */,
+				5DF90BEF19059AA9009ABAAB /* HVSyncView.h in Headers */,
 				5DE34C98153957AC003C24E8 /* HVSleepJournalAM.h in Headers */,
 				5D1F13241539DD5200524425 /* HVSleepJournalPM.h in Headers */,
 				5D1F13291539E9E000524425 /* HVRelative.h in Headers */,

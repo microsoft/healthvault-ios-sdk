@@ -231,6 +231,11 @@ LError:
     }
 }
 
+-(HVItemKey *)keyAtIndex:(NSUInteger)index
+{
+    return [self itemKeyAtIndex:index];
+}
+
 -(HVTypeViewItem *)itemKeyAtIndex:(NSUInteger)index
 {
     @synchronized(self)
@@ -361,12 +366,12 @@ LError:
     }
 }
 
--(HVItemQuery *)createRefreshQuery
+-(HVItemQuery *)getQuery
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view createRefreshQuery];
+        return [view getQuery];
         ENDVIEWOP
     }
 }

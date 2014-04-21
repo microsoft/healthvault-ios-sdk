@@ -17,12 +17,20 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "XLib.h"
-#import "HVAsyncTask.h"
-#import "HVTypeViewItems.h"
-#import "HVLocalVault.h"
-#import "HVItemFilter.h"
-#import "HVBlock.h"
+#import "HVSyncView.h"
+
+//---------------------------------------------------------------------------------
+//
+// *REQUIRED*
+// Pleaes read notes on HVSyncView (HVSyncView.h) first
+//
+// HVTypeView is a SPECIALIZED SyncView
+//
+//  - It is scoped to exactly ONE HealthVault Item Type
+//  - It *does not* let you customize the query associated with the view
+//  - It *does* let you customize the ItemFilter for the view
+//
+//---------------------------------------------------------------------------------
 
 @class HVSynchronizedStore;
 @class HVTypeView;
@@ -35,9 +43,66 @@ enum HVTypeViewReadAheadMode
 
 extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 
+//---------------------------------------------------------------------------
 //
-// See notes on HVTypeView interface before you read this
+// Protocol adopted by type views...
 //
+// *REQUIRED*
+// Please read about HVSyncView first. (HVSyncView.h)
+//
+// TypeViews are COLLECTIONS of HVTypeViewItems. HVTypeViewItem inherits from HVItemKey
+// See HVTypeViewItems.h
+//
+// HVTypeViews are SORTED by EffectiveDate - the same sort order in which
+// the HealthVault platform returns items, and the order in in which the HealthVault
+// Shell displays items. The sort order is:
+//  - EffectiveDate [descending]
+//  - itemID [ascending]
+//
+//---------------------------------------------------------------------------
+@protocol HVTypeView <HVSyncView>
+//
+// The typeID of the HealthVault Type for which this is a view
+//
+@property (readonly, nonatomic) NSString* typeID;
+//
+// The maximum number of items for this view. Useful for large views
+// This lets you work with the most RECENT maxItems
+//
+@property (readwrite, nonatomic) NSInteger maxItems;
+
+//----------------------------------------------------------
+//
+// Lookup methods
+// More methods in HVSyncView
+//
+//----------------------------------------------------------
+-(HVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
+//
+// Reverse lookup.. find the location of the given itemID in the collection
+//
+-(NSUInteger) indexOfItemID:(NSString *)itemID;
+//
+// Returns null if not found
+//
+-(HVItem *) getItemByID:(NSString *) itemID;
+-(HVItem *) getLocalItemWithKey:(HVItemKey *) key;
+//
+// Used if you want to fetch/sync/refresh items using your own logic
+//
+-(NSArray *) keysOfItemsNeedingDownloadInRange:(NSRange) range;
+-(HVTask *) ensureItemsDownloadedInRange:(NSRange)range withCallback:(HVTaskCompletion)callback;
+-(BOOL) replaceKeys:(HVTypeViewItems *) items;
+
+@end
+
+//-----------------------------------------------------------
+//
+// Delegate for HVTypeView objects
+// HVTypeView automatically downloads items from HealthVault as needed... in the background
+// You are notified when these downloads complete
+//
+//-----------------------------------------------------------
 @protocol HVTypeViewDelegate <NSObject>
 //
 // Called when asynchronously retrieved items become available locally
@@ -47,8 +112,8 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 -(void) itemsAvailable:(HVItemCollection *)items inView:(HVTypeView *)view viewChanged:(BOOL) viewChanged;
 //
-// Keys for items no longer available in HealthVault. They have been REMOVED from the view. 
-// You should now refresh your UI etc. 
+// Keys for items no longer available in HealthVault. They have been REMOVED from the view.
+// You should now refresh your UI etc.
 //
 -(void) keysNotAvailable:(NSArray *) keys inView:(HVTypeView *) view;
 //
@@ -62,61 +127,22 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 
 @end
 
-@protocol HVTypeView <NSObject>
-
-@property (readonly, nonatomic) NSString* typeID;
-@property (readonly, nonatomic) HVRecordReference* record;
-@property (readwrite, nonatomic, retain) NSDate* lastUpdateDate;
-@property (readonly, nonatomic) NSUInteger count;
-@property (readwrite, nonatomic) NSInteger maxItems;
-
--(HVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
--(NSUInteger)indexOfItemID:(NSString *)itemID;
-
--(HVItem *) getItemAtIndex:(NSUInteger) index;
--(HVItem *) getItemByID:(NSString *) itemID;
-
--(HVItemCollection *) getItemsInRange:(NSRange) range;
-
--(HVItem *) getLocalItemAtIndex:(NSUInteger) index;
--(HVItem *) getLocalItemWithKey:(HVItemKey *) key;
--(NSArray *) keysOfItemsNeedingDownloadInRange:(NSRange) range;
-
--(HVTask *) ensureItemsDownloadedInRange:(NSRange)range withCallback:(HVTaskCompletion)callback;
-
--(BOOL) isStale:(NSTimeInterval) maxAge;
+//---------------------------------------------------------
 //
-// If there are pending changes, refresh will return nil... 
-//
--(HVTask *) refresh;
--(HVTask *) refreshWithCallback:(HVTaskCompletion) callback;
-//
-// Returns the query used to refresh this view
-//
--(HVItemQuery *) createRefreshQuery;
--(BOOL) replaceKeys:(HVTypeViewItems *) items;
-
-@end
-
-//----------------------------------------------
-//
-// HVTypeView makes it easy to write asynchronous UITableView displays of HealthVault data.
-// It leverages offline local data storage/replication/background synchronization.
-//
-// Items are automatically fetched down the LocalRecordStore as needed.
-// All data download is transparent, as needed, in the background.
-// New items are re-fetched when needed.
+// *REQUIRED*
+// Please read notes on HVTypeView and HVSyncView protocols.
 //
 // HVTypeView adopts the HVTypeView protocol.
-//
-// HVTypeViews are persistable - i.e. they can be saved and loaded from disk. 
-//
+// HVTypeView also makes it easy to write asynchronous UITableView displays of HealthVault data.
 // You always use HVTypeView from the main thread.
 //
-// HVTypeView uses HVTypeViewDelegate to notify you of changes.
+// HVTypeViews are persistable AND xml serializable - i.e. they can be saved and loaded from disk.
+//
+// HVTypeView uses HVTypeViewDelegate to notify you of changes and updates to
+// the iview.
+//
 // The object guarantees that all background CHANGES are also made in THE MAIN (UI) THREAD.
 // All notifications are also delivered in the Main UI thread.
-
 // This considerably simplifies the burden of displaying data. All changes are always
 // serialized through the main thread--whether the changes are made by the user (UI) OR whether
 // the changes are made due to background work. Your UI doesn't have to worry about the type view
@@ -186,12 +212,9 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //------------------------------------
 //
 // Methods
-// Also look at the HVTypeView protocol
+// Also look at the HVTypeView protocol above
 //
 //------------------------------------
-
--(HVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
--(NSUInteger) indexOfItemID:(NSString *) itemID;
 //
 // Returns the FIRST item that has the closest (or equal) date to the one supplied
 // 
@@ -211,8 +234,14 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 -(BOOL) isStale:(NSTimeInterval) maxAge;
 //
+// Same as synchronize
+// You are notified of refresh status via calls to delegates
+//
+-(HVTask *) refresh;
+//
 // Synchronize view but not data.
 // Calls delegate when complete
+// DEPRECATED METHOD. Use refresh instead
 //
 -(HVTask *) synchronize;
 //
@@ -223,17 +252,14 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 
 //---------------------------
 //
-// Synchronized get/put Methods
-// These methods return locally cached items immediately.
-// If no local item is immediately available, they return nil.
+// See HVSyncView and HVTypeView protocols for a list
+// of base methods to fetch items with
 //
 // PENDING items are fetched in the background.
 // When they become available, self.delegate is notified
 //
 //------------------------------
--(HVItem *) getItemAtIndex:(NSUInteger) index;
 -(HVItem *) getItemAtIndex:(NSUInteger) index readAheadCount:(NSUInteger) readAheadCount;
--(HVItem *) getItemByID:(NSString *) itemID;
 //
 // Returns what items it has, and triggers an async pull of the remaining
 //  HVItemCollection.count == range.length
@@ -248,16 +274,6 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 -(HVItemCollection *) getItemsInRange:(NSRange) range nullIfNotFound:(BOOL) includeNull;
 -(HVItemCollection *) getItemsInRange:(NSRange) range nullIfNotFound:(BOOL) includeNull downloadTask:(HVTask **) task;
-//
-// Return a list of keys for whom we do not already have data available locally
-//
--(NSArray *) keysOfItemsNeedingDownloadInRange:(NSRange) range;
-//
-// Returns a nil task if all items are already available
-// Otherwise returns a task object and tries to fetch unavailable items from HealthVault
-// Completeions will be delivered in the main thread
-//
--(HVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(HVTaskCompletion)callback;
 
 //------------------
 //
@@ -277,16 +293,6 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 -(NSUInteger) putItem:(HVItem *) item;
 -(BOOL) putItems:(HVItemCollection *) items;
-
-//------------------
-//
-// Operations that go directly against the local store
-// They do NOT alter the view
-//
-//------------------
-
--(HVItem *) getLocalItemAtIndex:(NSUInteger) index;
--(HVItem *) getLocalItemWithKey:(HVItemKey *) key;
 
 -(void) removeLocalItemAtIndex:(NSUInteger) index;
 -(void) removeAllLocalItems;
