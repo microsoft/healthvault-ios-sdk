@@ -126,10 +126,9 @@ LError:
 
 -(void)putItemInHV
 {
-    HVPutItemsTask* putTask = [[[HVPutItemsTask alloc] initWithItem:m_item andCallback:^(HVTask *task) {
+    HVPutItemsTask* putTask = [[[HVClient current].methodFactory newPutItemForRecord:m_record item:m_item andCallback:^(HVTask *task) {
         
         [task checkSuccess];
-        
         self.result = ((HVPutItemsTask *) task).firstKey;
         
     } ] autorelease];

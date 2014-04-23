@@ -167,7 +167,7 @@ LError:
             [postRequest.request setContentRangeStart:m_byteCountUploaded end:(m_byteCountUploaded + nextChunkSize - 1)];
         }
         
-        if (nextChunkSize < m_putParams.chunkSize)
+        if (nextChunkSize <= m_putParams.chunkSize)
         {
             [HVBlobUploadTask addIsFinalUploadChunkHeaderTo:postRequest.request];
         }

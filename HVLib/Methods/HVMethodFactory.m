@@ -66,4 +66,18 @@ LError:
     return nil;
 }
 
+-(HVPutItemsTask *)newPutItemForRecord:(HVRecordReference *)record item:(HVItem *)item andCallback:(HVTaskCompletion)callback
+{
+    HVItemCollection* items = [[HVItemCollection alloc] initwithItem:item];
+    HVCHECK_NOTNULL(items);
+    
+    HVPutItemsTask* putItems = [self newPutItemsForRecord:record items:items andCallback:callback];
+    [items release];
+    
+    return putItems;
+    
+LError:
+    return nil;
+}
+
 @end

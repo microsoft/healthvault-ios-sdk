@@ -37,5 +37,6 @@
 @interface HVMethodFactory (HVMethodFactoryExtensions)
 
 -(HVGetItemsTask *) newGetItemsForRecord:(HVRecordReference *) record query:(HVItemQuery *)query andCallback:(HVTaskCompletion)callback;
+-(HVPutItemsTask *) newPutItemForRecord:(HVRecordReference *) record item:(HVItem *) item andCallback:(HVTaskCompletion) callback;
 
 @end
