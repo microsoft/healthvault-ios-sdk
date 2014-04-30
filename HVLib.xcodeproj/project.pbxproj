@@ -61,6 +61,12 @@
 		5D195D7315228C0200E109AD /* HVVocabSearchText.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D7115228C0200E109AD /* HVVocabSearchText.m */; };
 		5D195D821522973500E109AD /* HVVocabSearchTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D801522973300E109AD /* HVVocabSearchTask.h */; };
 		5D195D831522973500E109AD /* HVVocabSearchTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D811522973400E109AD /* HVVocabSearchTask.m */; };
+		5D1ACC7D19103C73000689FD /* HVResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1ACC7B19103C73000689FD /* HVResponse.h */; };
+		5D1ACC7E19103C73000689FD /* HVResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ACC7C19103C73000689FD /* HVResponse.m */; };
+		5D1ACC8119104056000689FD /* HVResponseStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1ACC7F19104056000689FD /* HVResponseStatus.h */; };
+		5D1ACC8219104056000689FD /* HVResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ACC8019104056000689FD /* HVResponseStatus.m */; };
+		5D1ACC8919104559000689FD /* HVServerError.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1ACC8719104559000689FD /* HVServerError.h */; };
+		5D1ACC8A19104559000689FD /* HVServerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ACC8819104559000689FD /* HVServerError.m */; };
 		5D1B7BEF154642F600854881 /* HVBlobHashInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1B7BED154642F600854881 /* HVBlobHashInfo.h */; };
 		5D1B7BF0154642F600854881 /* HVBlobHashInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B7BEE154642F600854881 /* HVBlobHashInfo.m */; };
 		5D1BE475156B427F00718832 /* HVBlobPutParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1BE473156B427F00718832 /* HVBlobPutParameters.h */; };
@@ -561,6 +567,12 @@
 		5D195D7115228C0200E109AD /* HVVocabSearchText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabSearchText.m; sourceTree = "<group>"; };
 		5D195D801522973300E109AD /* HVVocabSearchTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVVocabSearchTask.h; sourceTree = "<group>"; };
 		5D195D811522973400E109AD /* HVVocabSearchTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVVocabSearchTask.m; sourceTree = "<group>"; };
+		5D1ACC7B19103C73000689FD /* HVResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVResponse.h; sourceTree = "<group>"; };
+		5D1ACC7C19103C73000689FD /* HVResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVResponse.m; sourceTree = "<group>"; };
+		5D1ACC7F19104056000689FD /* HVResponseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVResponseStatus.h; sourceTree = "<group>"; };
+		5D1ACC8019104056000689FD /* HVResponseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVResponseStatus.m; sourceTree = "<group>"; };
+		5D1ACC8719104559000689FD /* HVServerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVServerError.h; sourceTree = "<group>"; };
+		5D1ACC8819104559000689FD /* HVServerError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVServerError.m; sourceTree = "<group>"; };
 		5D1B7BED154642F600854881 /* HVBlobHashInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlobHashInfo.h; sourceTree = "<group>"; };
 		5D1B7BEE154642F600854881 /* HVBlobHashInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBlobHashInfo.m; sourceTree = "<group>"; };
 		5D1BE473156B427F00718832 /* HVBlobPutParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBlobPutParameters.h; sourceTree = "<group>"; };
@@ -1449,6 +1461,12 @@
 				5DF90BD419005CA5009ABAAB /* HVLabTestResultsDetails.m */,
 				5DF90BE319008C62009ABAAB /* HVLabTestResultsGroup.h */,
 				5DF90BE419008C62009ABAAB /* HVLabTestResultsGroup.m */,
+				5D1ACC8719104559000689FD /* HVServerError.h */,
+				5D1ACC8819104559000689FD /* HVServerError.m */,
+				5D1ACC7F19104056000689FD /* HVResponseStatus.h */,
+				5D1ACC8019104056000689FD /* HVResponseStatus.m */,
+				5D1ACC7B19103C73000689FD /* HVResponse.h */,
+				5D1ACC7C19103C73000689FD /* HVResponse.m */,
 				5D7898CA1714E9400015D375 /* ServiceDef */,
 				5D227B84153766E500E12075 /* Vocab */,
 			);
@@ -1750,6 +1768,7 @@
 				5D983BDC14E5F50600C287B7 /* HVWeight.h in Headers */,
 				5DF90BE519008C62009ABAAB /* HVLabTestResultsGroup.h in Headers */,
 				5D983BDF14E5F7A300C287B7 /* HVItemTypes.h in Headers */,
+				5D1ACC8119104056000689FD /* HVResponseStatus.h in Headers */,
 				5D983BE214E5FE2B00C287B7 /* HVClientException.h in Headers */,
 				5D983BE614E6006400C287B7 /* HVConstrainedInt.h in Headers */,
 				5D983BEA14E6035900C287B7 /* HVDay.h in Headers */,
@@ -1760,6 +1779,7 @@
 				5D983BFC14E984B600C287B7 /* HVHour.h in Headers */,
 				5D983C0014E984CE00C287B7 /* HVMinute.h in Headers */,
 				5D983C0414E984EE00C287B7 /* HVSecond.h in Headers */,
+				5D1ACC7D19103C73000689FD /* HVResponse.h in Headers */,
 				5D983C0814E9850500C287B7 /* HVMillisecond.h in Headers */,
 				5DEF154A14E985C5009D05D5 /* HVType.h in Headers */,
 				5DEF154F14E98DCB009D05D5 /* HVTime.h in Headers */,
@@ -1923,6 +1943,7 @@
 				5DE34C8615393B88003C24E8 /* HVEncounter.h in Headers */,
 				5DE34C8A15393C62003C24E8 /* HVDuration.h in Headers */,
 				5DE34C8E15394314003C24E8 /* HVOrganization.h in Headers */,
+				5D1ACC8919104559000689FD /* HVServerError.h in Headers */,
 				5DB2E6F718D38CF90030972D /* HVStore.h in Headers */,
 				5DE34C94153951FD003C24E8 /* HVOccurence.h in Headers */,
 				5DF90BEF19059AA9009ABAAB /* HVSyncView.h in Headers */,
@@ -2037,6 +2058,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D76B9D414DCC84C00BA865F /* HVValidator.m in Sources */,
+				5D1ACC8A19104559000689FD /* HVServerError.m in Sources */,
 				5D76B9DA14DCC85B00BA865F /* HVStringExtensions.m in Sources */,
 				5D76B9DC14DCC85B00BA865F /* HVExceptionExtensions.m in Sources */,
 				5DB083E718F325FD00702B79 /* HVNetworkReachability.m in Sources */,
@@ -2087,6 +2109,7 @@
 				5D20D2FF14EF3DC300160611 /* HVItemQuery.m in Sources */,
 				5D20D30414EF414500160611 /* HVCollection.m in Sources */,
 				5D20D30814F2E21400160611 /* HVItemKey.m in Sources */,
+				5D1ACC7E19103C73000689FD /* HVResponse.m in Sources */,
 				5D20D30C14F2E22C00160611 /* HVItemFilter.m in Sources */,
 				5D20D31014F2E26900160611 /* HVItemView.m in Sources */,
 				5D20D31414F2F4F400160611 /* HVItem.m in Sources */,
@@ -2233,6 +2256,7 @@
 				5D1139BC15461F740008C362 /* HVDataExtensions.m in Sources */,
 				5D1139C0154620E80008C362 /* HVHttpRequestResponse.m in Sources */,
 				5D6EDDA31546233F00420262 /* HVHttpDownload.m in Sources */,
+				5D1ACC8219104056000689FD /* HVResponseStatus.m in Sources */,
 				5DF90BD619005CA5009ABAAB /* HVLabTestResultsDetails.m in Sources */,
 				5DB2E72118D3CBCF0030972D /* HVPartitionedStore.m in Sources */,
 				5D6EDDA91546306200420262 /* HVBlobInfo.m in Sources */,

@@ -369,7 +369,6 @@ LError:
                 }
                 if (nextOp)
                 {
-                    self.operation = nil;
                     if ([nextOp respondsToSelector:@selector(start)])
                     {
                         [nextOp performSelector:@selector(start)];
@@ -441,6 +440,7 @@ LError:
 {
     @try 
     {
+        self.operation = nil;
         if (callback)
         {
             callback(child);
@@ -590,6 +590,12 @@ LError:
 {
     [HVTaskSequenceRunner setNextTaskInSequence:self];
     [super start];
+}
+
+-(void)cancel
+{
+    [super cancel];
+    [self notifyAborted];
 }
 
 -(void) scheduleNextChildStep

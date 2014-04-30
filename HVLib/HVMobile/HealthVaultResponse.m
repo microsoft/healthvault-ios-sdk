@@ -16,16 +16,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
+#import "HVCommon.h"
 #import "HealthVaultResponse.h"
 #import "XmlTextReader.h"
 #import "XmlElement.h"
+#import "HVResponse.h"
 
 @interface HealthVaultResponse (Private)
 
+-(BOOL) deserializeXml:(NSString *) xml;
+
 /// Initializes the fields using xml string provided.
 /// @param xml - response xml representation.
-- (BOOL)parseFromXml: (NSString *)xml;
+- (BOOL)parseFromXml: (NSString *)xml __deprecated; // Use deserializeXml instead
 
 /// Retrieves info section from xml.
 /// Info section is represented by <wc:info> xml element.
@@ -62,8 +65,8 @@
 			self.errorText = webResponse.errorText;
 		}
 		else {
-			
-			BOOL xmlReaderesult = [self parseFromXml: xml];
+			//BOOL xmlReaderesult = [self parseFromXml: xml]; // Old mechanism.. replaced by much faster new serializer
+            BOOL xmlReaderesult = [self deserializeXml:xml];
 
 			if (!xmlReaderesult) {
 				self.errorText = [NSString stringWithFormat: NSLocalizedString(@"Response was not a valid HealthVault response key",
@@ -92,6 +95,50 @@
 	return self.errorText != nil;
 }
 
+-(BOOL)deserializeXml:(NSString *)xml
+{
+    HVResponse* response = nil;
+	@try
+    {
+        response = (HVResponse *)[NSObject newFromString:xml withRoot:@"response" asClass:[HVResponse class]];
+		if (!response)
+        {
+			return FALSE;
+		}
+        
+        HVResponseStatus* status = response.status;
+        if (status)
+        {
+            self.statusCode = status.code;
+            HVServerError* error = status.error;
+            if (status.error)
+            {
+                self.errorText = error.message;
+                self.errorContextXml = error.context;
+                self.errorInfo = error.errorInfo;
+            }
+        }
+        
+		self.infoXml = response.body;
+        
+        return TRUE;
+	}
+	@catch (id ex)
+    {
+        [ex log];
+	}
+	@finally {
+        
+		[response release];
+	}
+    
+	return FALSE;
+    
+}
+
+//
+// DEPRECATED
+//
 - (BOOL)parseFromXml: (NSString *)xml {
 
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
