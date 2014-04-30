@@ -22,6 +22,7 @@
 @implementation HVWorkerStatus
 
 @synthesize isEnabled = m_isEnabled;
+@synthesize isBusy = m_isBusy;
 
 -(id)init
 {
