@@ -57,6 +57,11 @@ static const xmlChar* x_element_orderedBy = XMLSTRINGCONST("ordered-by");
     HVLabTestResultsGroupCollection* allGroups = [[[HVLabTestResultsGroupCollection alloc] init] autorelease];
     HVCHECK_NOTNULL(allGroups);
     
+    if (m_labGroup)
+    {
+        [m_labGroup addItemsToCollection:allGroups];
+    }
+    
     return allGroups;
     
 LError:

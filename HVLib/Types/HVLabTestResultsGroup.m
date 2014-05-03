@@ -59,7 +59,7 @@ static const xmlChar* x_element_results = XMLSTRINGCONST("results");
     {
         for (NSUInteger i = 0, count = m_subGroups.count; i < count; ++i)
         {
-            [[m_subGroups itemAtIndex:0] addToCollection:groups];
+            [[m_subGroups itemAtIndex:i] addToCollection:groups];
         }
     }
 }
