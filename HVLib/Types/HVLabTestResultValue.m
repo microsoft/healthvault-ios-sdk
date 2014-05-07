@@ -30,6 +30,10 @@ static const xmlChar* x_element_flag = XMLSTRINGCONST("flag");
 @synthesize measurement = m_measurement;
 @synthesize ranges = m_ranges;
 @synthesize flag = m_flag;
+-(BOOL)hasRanges
+{
+    return ![NSArray isNilOrEmpty:m_ranges];
+}
 
 -(void)dealloc
 {
