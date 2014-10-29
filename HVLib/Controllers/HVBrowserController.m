@@ -144,7 +144,7 @@ LError:
 - (void)viewWillDisappear: (BOOL)animated 
 {
     [self stop];
-	[super viewDidDisappear:animated];
+	[super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload
