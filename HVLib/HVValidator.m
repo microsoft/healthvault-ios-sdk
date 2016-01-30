@@ -53,10 +53,10 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
     //
     NSString* fileNameString = [NSString stringWithUTF8String:fileName];
     fileNameString = [fileNameString lastPathComponent];
-    NSString* logLine = [NSString stringWithFormat:@"%@ file:%@ line:%d", 
+    NSString* logLine = [NSString stringWithFormat:@"%@ file:%@ line:%lu", 
                                                 message, 
                                                 fileNameString, 
-                                                line];
+                                                (unsigned long)line];
     HVLogEvent(logLine);
 }
 

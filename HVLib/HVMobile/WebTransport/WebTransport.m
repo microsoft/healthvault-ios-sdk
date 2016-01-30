@@ -141,7 +141,7 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
         NSData *xmlData = [data dataUsingEncoding: NSUTF8StringEncoding];
 
         [request setHTTPMethod: DEFAULT_HTTP_METHOD];
-        [request addValue: [NSString stringWithFormat: @"%d", xmlData.length] forHTTPHeaderField: @"Content-Length"];
+        [request addValue: [NSString stringWithFormat: @"%lu", (unsigned long)xmlData.length] forHTTPHeaderField: @"Content-Length"];
         [request setHTTPBody: xmlData];
     }
 
@@ -176,7 +176,7 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
     NSString* responseString = nil;
     @try 
     {
-        response.webStatusCode = [((NSHTTPURLResponse *)_response) statusCode];
+        response.webStatusCode = (int)[((NSHTTPURLResponse *)_response) statusCode];
         if (response.webStatusCode >= 400)
         {       
             response.errorText = [NSHTTPURLResponse localizedStringForStatusCode:response.webStatusCode];
@@ -214,7 +214,7 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
         response.errorText = errorString;
         if (_response)
         {
-            response.webStatusCode = [((NSHTTPURLResponse *)_response) statusCode];
+            response.webStatusCode = (int)[((NSHTTPURLResponse *)_response) statusCode];
         }
         [self performCallBack: response];
     }

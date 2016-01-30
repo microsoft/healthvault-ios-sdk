@@ -53,7 +53,7 @@
 
 -(long)sizeOfFileAtPath:(NSString *)path
 {
-    return [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil].fileSize;
+    return (long)[[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil].fileSize;
 }
 
 +(NSString *)mimeTypeForFile:(NSString *)filePath

@@ -129,7 +129,7 @@ LError:
     for (NSUInteger i = 0, count = views.count; i < count; ++i)
     {
         id<HVTypeView> view = [views objectAtIndex:i];
-        NSString* viewName = [NSString stringWithFormat:@"View_%d", i];
+        NSString* viewName = [NSString stringWithFormat:@"View_%lu", (unsigned long)i];
         HVCHECK_NOTNULL(viewName);
         
         [m_views setObject:view forKey:viewName];

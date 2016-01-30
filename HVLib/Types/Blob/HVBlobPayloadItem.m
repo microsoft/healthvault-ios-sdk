@@ -144,7 +144,7 @@ LError:
 -(void)serialize:(XWriter *)writer
 {
     HVSERIALIZE(m_blobInfo, c_element_blobInfo);
-    HVSERIALIZE_INT(m_length, c_element_length);
+    HVSERIALIZE_INT((int)m_length, c_element_length);
     HVSERIALIZE_STRING(m_blobUrl, c_element_blobUrl);
     HVSERIALIZE_STRING(m_legacyEncoding, c_element_legacyEncoding);
     HVSERIALIZE_STRING(m_encoding, c_element_currentEncoding);

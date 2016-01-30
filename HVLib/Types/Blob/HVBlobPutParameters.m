@@ -27,7 +27,7 @@ static NSString* const c_element_blockSize = @"block-size";
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_INT(m_blockSize, c_element_blockSize);
+    HVSERIALIZE_INT((int)m_blockSize, c_element_blockSize);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -63,8 +63,8 @@ static NSString* const c_element_hashParams = @"blob-hash-parameters";
 -(void)serialize:(XWriter *)writer
 {
     HVSERIALIZE_STRING(m_url, c_element_url);
-    HVSERIALIZE_INT(m_chunkSize, c_element_chunkSize);
-    HVSERIALIZE_INT(m_maxSize, c_element_maxSize);
+    HVSERIALIZE_INT((int)m_chunkSize, c_element_chunkSize);
+    HVSERIALIZE_INT((int)m_maxSize, c_element_maxSize);
     HVSERIALIZE_STRING(m_hashAlgorithm, c_element_hashAlg);
     HVSERIALIZE(m_hashParams, c_element_hashParams);
 }

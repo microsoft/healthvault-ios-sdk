@@ -97,7 +97,7 @@ LError:
 -(void)serialize:(XWriter *)writer
 {
     HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE_INT(m_size, c_element_size);
+    HVSERIALIZE_INT((int)m_size, c_element_size);
     HVSERIALIZE(m_contentType, c_element_contentType);
 }
 

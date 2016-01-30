@@ -299,7 +299,7 @@ LError:
 {
     HVSERIALIZE_STRING(m_name, c_element_name);
     HVSERIALIZE_ARRAYNESTED(m_records, c_element_recordarray, c_element_record);
-    HVSERIALIZE_INT(m_currentIndex, c_element_current);
+    HVSERIALIZE_INT((int)m_currentIndex, c_element_current);
     HVSERIALIZE_STRING(m_environment, c_element_environment);
     HVSERIALIZE_STRING(m_instanceID, c_element_instanceID);
 }
@@ -309,7 +309,7 @@ LError:
     HVDESERIALIZE_STRING(m_name, c_element_name);
     HVDESERIALIZE_TYPEDARRAYNESTED(m_records, c_element_recordarray, c_element_record, HVRecord, HVRecordCollection);
     
-    int index = 0;
+    NSInteger index = 0;
     HVDESERIALIZE_INT(index, c_element_current);
     m_currentIndex = index;
     

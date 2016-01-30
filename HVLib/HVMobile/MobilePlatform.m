@@ -41,7 +41,7 @@
 	NSData *keyData = [NSData dataWithBytes: chars length: strlen(chars)];
 
 	uint8_t digest[CC_SHA256_DIGEST_LENGTH] = {0};
-	CC_SHA256(keyData.bytes, keyData.length, digest);
+	CC_SHA256(keyData.bytes, (uint)keyData.length, digest);
 
 	NSString *base64String = [Base64 encodeBase64WithData: [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH]];
 

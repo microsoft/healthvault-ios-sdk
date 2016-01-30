@@ -7,9 +7,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,7 +54,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
     if (minutes >= 0)
     {
         HVENSURE(m_minutes, HVMinute);
-        m_minutes.value = minutes;        
+        m_minutes.value = minutes;
     }
     else
     {
@@ -77,7 +77,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
     if (seconds >= 0)
     {
         HVENSURE(m_seconds, HVSecond);
-        m_seconds.value = seconds;       
+        m_seconds.value = seconds;
     }
     else
     {
@@ -118,31 +118,31 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
     return [self initWithHour:hour minute:minute second:-1];
 }
 
--(id) initWithHour:(int)hour minute:(int)minute second:(int)second
+-(id) initWithHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second
 {
     self = [super init];
     HVCHECK_SELF;
     
     if (hour != NSUndefinedDateComponent)
     {
-        m_hours = [[HVHour alloc] initWith:hour];
+        m_hours = [[HVHour alloc] initWith:(int)hour];
     }
     HVCHECK_NOTNULL(m_hours);
     
     if (minute != NSUndefinedDateComponent)
     {
-        m_minutes = [[HVMinute alloc] initWith:minute];
+        m_minutes = [[HVMinute alloc] initWith:(int)minute];
     }
     HVCHECK_NOTNULL(m_minutes);
     
     if (second >= 0 && second != NSUndefinedDateComponent)
     {
-        m_seconds = [[HVSecond alloc] initWith:second];
+        m_seconds = [[HVSecond alloc] initWith:(int)second];
         HVCHECK_NOTNULL(m_seconds);
     }
-        
+    
     return self;
-
+    
 LError:
     HVALLOC_FAIL;
 }
@@ -152,17 +152,17 @@ LError:
     HVCHECK_NOTNULL(components);
     
     return [self initWithHour:[components hour] minute:[components minute] second:[components second]];
-     
+    
 LError:
-    HVALLOC_FAIL;    
+    HVALLOC_FAIL;
 }
 
 -(id) initWithDate:(NSDate *)date
 {
     HVCHECK_NOTNULL(date);
     
-    return [self initwithComponents:[NSCalendar componentsFromDate:date]]; 
-      
+    return [self initwithComponents:[NSCalendar componentsFromDate:date]];
+    
 LError:
     HVALLOC_FAIL;
 }
@@ -185,8 +185,8 @@ LError:
 {
     NSDateComponents *components = [[NSCalendar newComponents] autorelease];
     HVCHECK_NOTNULL(components);
- 
-    HVCHECK_SUCCESS([self getComponents:components]);     
+    
+    HVCHECK_SUCCESS([self getComponents:components]);
     
     return components;
     
@@ -197,14 +197,14 @@ LError:
 -(BOOL) getComponents:(NSDateComponents *)components
 {
     HVCHECK_NOTNULL(components);
-  
+    
     if (m_hours)
     {
         [components setHour:self.hour];
     }
     if (m_minutes)
     {
-        [components setMinute:self.minute];        
+        [components setMinute:self.minute];
     }
     if (m_seconds)
     {
@@ -234,16 +234,16 @@ LError:
     return nil;
 }
 
--(BOOL)setWithComponents:(NSDateComponents *)components 
+-(BOOL)setWithComponents:(NSDateComponents *)components
 {
     HVCHECK_NOTNULL(components);
     
-    self.hour = [components hour];
-    self.minute = [components minute];
-    self.second = [components second];
+    self.hour = (int)[components hour];
+    self.minute = (int)[components minute];
+    self.second = (int)[components second];
     
     return TRUE;
-
+    
 LError:
     return FALSE;
 }
@@ -252,7 +252,7 @@ LError:
 {
     HVCHECK_NOTNULL(date);
     
-    return [self setWithComponents:[NSCalendar componentsFromDate:date]]; 
+    return [self setWithComponents:[NSCalendar componentsFromDate:date]];
     
 LError:
     return FALSE;

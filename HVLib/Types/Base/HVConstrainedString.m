@@ -89,7 +89,7 @@ LError:
 
 -(BOOL) validateValue:(NSString *)value
 {
-    int length = (value != nil) ? value.length : 0;
+    int length = (value != nil) ? (int)value.length : 0;
     return (self.minLength <= length && length <= self.maxLength);
 }
 

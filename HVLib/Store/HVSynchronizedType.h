@@ -185,7 +185,7 @@ HVDECLARE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
 
 @property (readwrite, nonatomic, retain) HVSynchronizationManager* syncMgr;
 @property (readwrite, nonatomic, assign) id<HVSynchronizedTypeDelegate> delegate;  // weak ref
-@property (readwrite, nonatomic) int readAheadChunkSize;
+@property (readwrite, nonatomic) NSInteger readAheadChunkSize;
 @property (readonly, nonatomic) BOOL isLoaded;
 @property (readwrite, nonatomic) BOOL broadcastNotifications;
 

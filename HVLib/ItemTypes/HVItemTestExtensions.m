@@ -127,7 +127,7 @@ NSString* pickRandomDrug(void)
 
 +(HVWeightMeasurement *)createRandomGramsMin:(NSUInteger)min max:(NSUInteger)max
 {
-    int value = [HVRandom randomIntInRangeMin:min max:max];
+    int value = [HVRandom randomIntInRangeMin:(int)min max:(int)max];
     if (value <= 0)
     {
         return nil;

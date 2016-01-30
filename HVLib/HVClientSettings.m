@@ -322,7 +322,7 @@ LError:
     HVSERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
     HVSERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
     HVSERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
-    HVSERIALIZE_INT(m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
+    HVSERIALIZE_INT((int)m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
     HVSERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
     HVSERIALIZE_DOUBLE(m_autoRequestDelay, c_element_autoRequestDelay);
     

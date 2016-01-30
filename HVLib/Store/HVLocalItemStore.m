@@ -133,7 +133,7 @@ LError:
     {
         if ([m_objectStore respondsToSelector:@selector(setCacheLimitCount:)])
         {
-            [m_objectStore performSelector:@selector(setCacheLimitCount:) withObject:[NSNumber numberWithInt:cacheSize]];
+            [m_objectStore performSelector:@selector(setCacheLimitCount:) withObject:[NSNumber numberWithInteger:cacheSize]];
         }
     }    
 }

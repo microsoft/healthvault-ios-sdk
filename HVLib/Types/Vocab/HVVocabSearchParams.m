@@ -68,7 +68,7 @@ LError:
     HVSERIALIZE(m_text, c_element_text);
     if (m_maxResults > 0)
     {
-        HVSERIALIZE_INT(m_maxResults, c_element_max);
+        HVSERIALIZE_INT((int)m_maxResults, c_element_max);
     }
 }
 

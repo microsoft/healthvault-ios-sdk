@@ -886,7 +886,7 @@ LError:
     return TRUE;
     
 LError:
-    return nil;
+    return FALSE;
 }
 
 -(void)notifyStarting

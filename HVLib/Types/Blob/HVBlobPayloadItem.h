@@ -28,7 +28,7 @@
 {
 @private
     HVBlobInfo* m_blobInfo;
-    int m_length;
+    NSInteger m_length;
     NSString* m_blobUrl;
     NSString* m_legacyEncoding;
     NSString* m_encoding;
@@ -46,7 +46,7 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic) int length;
+@property (readwrite, nonatomic) NSInteger length;
 //
 // You use THIS URL TO DOWNLOAD THE BLOB
 // The download is just plain vanilla HTTP (you can use the wrappers below)

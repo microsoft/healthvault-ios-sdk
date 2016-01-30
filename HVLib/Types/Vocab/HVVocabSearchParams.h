@@ -23,11 +23,11 @@
 {
 @private
     HVVocabSearchText* m_text;
-    int m_maxResults;
+    NSInteger m_maxResults;
 }
 
 @property (readwrite, nonatomic, retain) HVVocabSearchText* text;
-@property (readwrite, nonatomic) int maxResults;
+@property (readwrite, nonatomic) NSInteger maxResults;
 
 -(id) initWithText:(NSString*) text;
 

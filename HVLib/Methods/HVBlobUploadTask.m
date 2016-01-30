@@ -161,7 +161,7 @@ LError:
         NSUInteger nextChunkSize = MIN(m_putParams.chunkSize, (m_source.length - m_byteCountUploaded));
         if (nextChunkSize > 0)
         {
-            NSData* nextChunk = [m_source readStartAt:m_byteCountUploaded chunkSize:nextChunkSize];
+            NSData* nextChunk = [m_source readStartAt:m_byteCountUploaded chunkSize:(int)nextChunkSize];
             postRequest.requestBody = nextChunk;
             
             [postRequest.request setContentRangeStart:m_byteCountUploaded end:(m_byteCountUploaded + nextChunkSize - 1)];
@@ -185,7 +185,7 @@ LError:
     HVHttpRequestResponse* putTask = (HVHttpRequestResponse *) task;
     [putTask checkSuccess];
     
-    int chunkLength = putTask.requestBody.length;
+    int chunkLength = (int)putTask.requestBody.length;
     [self totalBytesWritten:chunkLength];  // Notify delegates that we've completed writing these many bytes
     
     m_byteCountUploaded += chunkLength;

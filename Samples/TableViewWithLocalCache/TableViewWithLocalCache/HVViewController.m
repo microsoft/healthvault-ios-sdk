@@ -25,7 +25,7 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%d items", self.typeView.count];
+    return [NSString stringWithFormat:@"%lu items", (unsigned long)self.typeView.count];
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section

@@ -56,7 +56,7 @@
 //
 //-------------------------
 -(id) initWithHour:(int) hour minute:(int) minute;
--(id) initWithHour:(int) hour minute:(int) minute second:(int) second;
+-(id) initWithHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
 -(id) initWithDate:(NSDate *) date;
 -(id) initwithComponents:(NSDateComponents *) components;
 

@@ -87,7 +87,7 @@ NSString* const XExceptionNotSerializable;
 
 -(int) readNextInt;
 -(int) readIntElement:(NSString *) name;
--(BOOL) readIntElement:(NSString *) name into:(int *) value;
+-(BOOL) readIntElement:(NSString *) name into:(NSInteger *) value;
 
 -(double) readNextDouble;
 -(double) readDoubleElement:(NSString *) name;

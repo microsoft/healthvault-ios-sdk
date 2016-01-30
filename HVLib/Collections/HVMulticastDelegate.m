@@ -57,7 +57,7 @@ LError:
 {
     @synchronized(m_delegates)
     {
-        for (int i = 0, count = m_delegates.count; i < count; ++i)
+        for (NSUInteger i = 0, count = m_delegates.count; i < count; ++i)
         {
             id d = ((NSValue *)[m_delegates objectAtIndex:i]).nonretainedObjectValue;
             if (delegate == d)
@@ -73,7 +73,7 @@ LError:
 {
     @synchronized(m_delegates)
     {
-        for (int i = 0, count = m_delegates.count; i < count; ++i)
+        for (NSUInteger i = 0, count = m_delegates.count; i < count; ++i)
         {
             id delegate = ((NSValue *)[m_delegates objectAtIndex:i]).nonretainedObjectValue;
             if ([delegate respondsToSelector:sel])
@@ -88,7 +88,7 @@ LError:
 {
     @synchronized(m_delegates)
     {
-        for (int i = 0, count = m_delegates.count; i < count; ++i)
+        for (NSUInteger i = 0, count = m_delegates.count; i < count; ++i)
         {
             id delegate = ((NSValue *)[m_delegates objectAtIndex:i]).nonretainedObjectValue;
             if ([delegate respondsToSelector:sel])

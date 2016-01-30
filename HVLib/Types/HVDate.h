@@ -44,7 +44,7 @@
 // Initializers
 //
 //-------------------------
--(id) initWithYear:(int) year month:(int) monthValue day:(int) dayValue;
+-(id) initWithYear:(NSInteger)yearValue month:(NSInteger)monthValue day:(NSInteger)dayValue;
 -(id) initNow;
 -(id) initWithDate:(NSDate *) date;
 -(id) initWithComponents:(NSDateComponents *) components;

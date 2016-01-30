@@ -31,7 +31,7 @@ static const char _encodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn
 		return nil;
 	}
 	
-	int lenght = [dataToEncode length];
+	int lenght = (int)[dataToEncode length];
 	
 	// initializing output buffer
 	const unsigned char * input = [dataToEncode bytes];

@@ -59,7 +59,7 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    int statusCode = [((NSHTTPURLResponse *)m_response) statusCode];
+    int statusCode = (int)[((NSHTTPURLResponse *)m_response) statusCode];
     if (statusCode != 200)
     {       
         HVHttpException* ex = [[HVHttpException alloc] initWithStatusCode:statusCode];

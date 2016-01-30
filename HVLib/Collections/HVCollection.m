@@ -216,7 +216,7 @@ LError:
 -(HVStringCollection *)selectStringsFoundInSet:(NSArray *)testSet
 {
     HVStringCollection* matches = nil;
-    for (int i = 0, count = testSet.count; i < count; ++i)
+    for (int i = 0, count = (int)testSet.count; i < count; ++i)
     {
         NSString* testString = [testSet objectAtIndex:i];
         if ([self containsString:testString]) 
@@ -235,7 +235,7 @@ LError:
 -(HVStringCollection *)selectStringsNotFoundInSet:(NSArray *)testSet
 {
     HVStringCollection* matches = nil;
-    for (int i = 0, count = testSet.count; i < count; ++i)
+    for (int i = 0, count = (int)testSet.count; i < count; ++i)
     {
         NSString* testString = [testSet objectAtIndex:i];
         if (![self containsString:testString]) 

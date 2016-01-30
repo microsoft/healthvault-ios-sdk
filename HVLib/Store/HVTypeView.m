@@ -818,8 +818,8 @@ LError:
     HVSERIALIZE(m_filter, c_element_filter);
     HVSERIALIZE_DATE(m_lastUpdateDate, c_element_updateDate);
     HVSERIALIZE(m_items, c_element_items);
-    HVSERIALIZE_INT(m_readAheadChunkSize, c_element_chunkSize);
-    HVSERIALIZE_INT(m_maxItems, c_element_maxItems);
+    HVSERIALIZE_INT((int)m_readAheadChunkSize, c_element_chunkSize);
+    HVSERIALIZE_INT((int)m_maxItems, c_element_maxItems);
 }
 
 -(void)deserialize:(XReader *)reader
@@ -888,7 +888,7 @@ LError:
     }
     if (m_maxItems > 0)
     {
-        query.maxResults = m_maxItems;
+        query.maxResults = (int)m_maxItems;
     }
     query.maxFullResults = 0;
     return query;

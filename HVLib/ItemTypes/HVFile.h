@@ -25,7 +25,7 @@
 {
 @private
     HVString255* m_name;
-    int m_size;
+    NSInteger m_size;
     HVCodableValue* m_contentType;
 }
 
@@ -41,7 +41,7 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic) int size;
+@property (readwrite, nonatomic) NSInteger size;
 // 
 // (Optional)
 //

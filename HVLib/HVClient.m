@@ -153,6 +153,7 @@ LError:
 {
     return m_methodFactory;
 }
+
 -(void)setMethodFactory:(HVMethodFactory *)methodFactory
 {
     if (methodFactory)
@@ -161,7 +162,12 @@ LError:
     }
 }
 
--(id) init
+- (id)init
+{
+    return [self instanceWithNilSettings];
+}
+
+- (id)instanceWithNilSettings
 {
     return [self initWithSettings:nil];
 }

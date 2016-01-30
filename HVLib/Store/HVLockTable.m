@@ -106,9 +106,14 @@ LError:
 @synthesize lockID = m_lockID;
 @synthesize key  = m_key;
 
--(id)init
+- (id)init
 {
-    return [self initWithLockTable:nil key:nil andLockID:0];
+    return [self initializeWithDefaultValues];
+}
+
+- (id)initializeWithDefaultValues
+{
+    return [self initWithLockTable:nil key:nil andLockID:0];    
 }
 
 -(void)dealloc

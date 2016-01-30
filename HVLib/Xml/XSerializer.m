@@ -475,7 +475,7 @@ LError:
     return [self.converter stringToInt:string];
 }
 
--(BOOL) readIntElement:(NSString *)name into:(int *)value
+-(BOOL) readIntElement:(NSString *)name into:(NSInteger *)value
 {
     if ([self isStartElementWithName:name])
     {

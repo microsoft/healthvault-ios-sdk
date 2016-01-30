@@ -295,7 +295,7 @@ LError:
 {
     [self ensureOrdered];
     
-    int max = range.location + range.length;
+    int max = (int)range.location + (int)range.length;
     if (max > m_items.count)
     {
         range = NSMakeRange(range.location, m_items.count - range.location);

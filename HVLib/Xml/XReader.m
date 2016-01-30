@@ -30,7 +30,7 @@ xmlTextReader* XAllocBufferReader(NSData *buffer)
     {
         return nil;
     }
-    return xmlReaderForMemory([buffer bytes], [buffer length], nil, nil, 0);
+    return xmlReaderForMemory([buffer bytes], (int)[buffer length], nil, nil, 0);
 }
 
 xmlTextReader* XAllocStringReader(NSString *string)

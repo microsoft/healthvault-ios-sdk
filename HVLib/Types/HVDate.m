@@ -7,9 +7,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -88,7 +88,7 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
 {
     HVCHECK_NOTNULL(date);
     
-    [self initWithComponents:[NSCalendar componentsFromDate:date]]; 
+    [self initWithComponents:[NSCalendar componentsFromDate:date]];
     
     return self;
     
@@ -106,28 +106,29 @@ LError:
     HVALLOC_FAIL;
 }
 
--(id) initWithYear:(int) yearValue month:(int) monthValue day:(int) dayValue
+-(id) initWithYear:(NSInteger)yearValue month:(NSInteger)monthValue day:(NSInteger)dayValue
 {
     self = [super init];
+    
     HVCHECK_SELF;
     
-    if (yearValue != NSUndefinedDateComponent)
+    if (yearValue != NSDateComponentUndefined)
     {
-        m_year = [[HVYear alloc] initWith:yearValue];
+        m_year = [[HVYear alloc] initWith:(int)yearValue];
     }
-    if (monthValue != NSUndefinedDateComponent)
+    if (monthValue != NSDateComponentUndefined)
     {
-        m_month = [[HVMonth alloc] initWith:monthValue];
+        m_month = [[HVMonth alloc] initWith:(int)monthValue];
     }
-    if (dayValue != NSUndefinedDateComponent)
+    if (dayValue != NSDateComponentUndefined)
     {
-        m_day = [[HVDay alloc] initWith:dayValue];
+        m_day = [[HVDay alloc] initWith:(int)dayValue];
     }
     
     HVCHECK_TRUE(m_year && m_month && m_day);
-  
+    
     return self;
-
+    
 LError:
     HVALLOC_FAIL;
 }
@@ -153,10 +154,10 @@ LError:
     HVCLEAR(m_month);
     HVCLEAR(m_day);
     
-    m_year = [[HVYear alloc] initWith:components.year];
-    m_month = [[HVMonth alloc] initWith:components.month];
-    m_day = [[HVDay alloc] initWith:components.day];
-
+    m_year = [[HVYear alloc] initWith:(int)components.year];
+    m_month = [[HVMonth alloc] initWith:(int)components.month];
+    m_day = [[HVDay alloc] initWith:(int)components.day];
+    
     HVCHECK_TRUE(m_year && m_month && m_day);
     
     return TRUE;
@@ -203,7 +204,7 @@ LError:
     return components;
     
 LError:
-    return nil;    
+    return nil;
 }
 
 -(BOOL) getComponents:(NSDateComponents *)components
@@ -222,9 +223,9 @@ LError:
     {
         [components setDay:self.day];
     }
-     
+    
     return TRUE;
-
+    
 LError:
     return FALSE;
 }
@@ -245,21 +246,24 @@ LError:
 
 -(NSDate *)toDateForCalendar:(NSCalendar *)calendar
 {
-    HVCHECK_NOTNULL(calendar);
+    if (calendar)
+    {
+        NSDateComponents *components = [NSDateComponents new];
+        HVCHECK_NOTNULL(components);
+        
+        HVCHECK_SUCCESS([self getComponents:components]);
+        
+        NSDate *date = [calendar dateFromComponents:components];
+        [components release];
+        
+        return date;
+        
+    LError:
+        [components release];
+        return nil;
+    }
     
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    HVCHECK_NOTNULL(components);
-    
-    HVCHECK_SUCCESS([self getComponents:components]);
-    
-    NSDate *date = [calendar dateFromComponents:components];
-    [components release];
-    
-    return date;
-    
-LError:
-    [components release];
-    return nil;    
+    return nil;
 }
 
 -(NSString *)description
@@ -269,7 +273,7 @@ LError:
 
 -(NSString *) toString
 {
-    return [self toStringWithFormat:@"MM/dd/yy"];   
+    return [self toStringWithFormat:@"MM/dd/yy"];
 }
 
 -(NSString *)toStringWithFormat:(NSString *)format
@@ -285,9 +289,9 @@ LError:
     HVVALIDATE(m_year, HVClientError_InvalidDate);
     HVVALIDATE(m_month, HVClientError_InvalidDate);
     HVVALIDATE(m_day, HVClientError_InvalidDate);
-      
+    
     HVVALIDATE_SUCCESS;
-
+    
 LError:
     HVVALIDATE_FAIL;
 }

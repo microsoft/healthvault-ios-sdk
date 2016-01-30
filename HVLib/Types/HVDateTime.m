@@ -185,20 +185,23 @@ LError:
 
 -(NSDate *)toDateForCalendar:(NSCalendar *)calendar
 {
-    HVCHECK_NOTNULL(calendar);
+    if (calendar)
+    {
+        NSDateComponents *components = [[NSDateComponents alloc] init];
+        HVCHECK_NOTNULL(components);
+        
+        HVCHECK_SUCCESS([self getComponents:components]);
+        
+        NSDate *date = [calendar dateFromComponents:components];
+        [components release];
+        
+        return date;
+        
+    LError:
+        return nil;
+        
+    }
     
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    HVCHECK_NOTNULL(components);
-    
-    HVCHECK_SUCCESS([self getComponents:components]);
-    
-    NSDate *date = [calendar dateFromComponents:components];
-    [components release];
-    
-    return date;
-    
-LError:
-    [components release];
     return nil;    
 }
 
