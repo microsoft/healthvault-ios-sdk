@@ -19,7 +19,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HVHttpTransport.h"
 #import "HVCryptographer.h"
 #import "Provisioner.h"
 #import "HealthVaultRecord.h"
@@ -44,7 +43,6 @@
 @property (retain) HealthVaultRecord *currentRecord;
 @property (readonly) BOOL isAppCreated;
 
-@property (retain) id<HVHttpTransport> transport;
 @property (retain) id<HVCryptographer> cryptographer;
 @property (retain) Provisioner* provisioner;
 

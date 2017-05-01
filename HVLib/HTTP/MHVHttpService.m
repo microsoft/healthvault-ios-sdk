@@ -2,12 +2,24 @@
 // MHVHttpService.m
 // HVLib
 //
-// Created by Michael Burford on 4/28/17.
-// Copyright © 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 //
 
 #import "MHVHttpService.h"
 #import "MHVHttpResponse.h"
+#import "Logger.h"
 
 @interface MHVHttpService () <NSURLSessionDelegate>
 
@@ -43,10 +55,16 @@
                completion:(void (^)(MHVHttpResponse *_Nullable response, NSError *_Nullable error))completion
 {
     NSURLRequest *request = [self requestWithUrl:url data:dataString];
-    
+
+    [Logger write:[NSString stringWithFormat:@"Begin request %li", (long)dataString.hash]];
+
     [[self.urlSession dataTaskWithRequest:(NSURLRequest *)request
                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
       {
+          NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
+          
+          [Logger write:[NSString stringWithFormat:@"Response for %li has status code: %li", (long)dataString.hash, (long)statusCode]];
+          
           if (error)
           {
               completion(nil, error);
@@ -54,7 +72,7 @@
           }
           
           MHVHttpResponse *mhvResponse = [[MHVHttpResponse alloc] initWithResponseData:data
-                                                                            statusCode:((NSHTTPURLResponse *)response).statusCode];
+                                                                            statusCode:statusCode];
           
           completion(mhvResponse, nil);
       }] resume];

@@ -235,10 +235,6 @@
 		5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3152150FAA2800ED11E7 /* DateTimeUtils.m */; };
 		5D5F3174150FAA2800ED11E7 /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3153150FAA2800ED11E7 /* Logger.h */; };
 		5D5F3175150FAA2800ED11E7 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3154150FAA2800ED11E7 /* Logger.m */; };
-		5D5F3176150FAA2800ED11E7 /* WebResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3156150FAA2800ED11E7 /* WebResponse.h */; };
-		5D5F3177150FAA2800ED11E7 /* WebResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3157150FAA2800ED11E7 /* WebResponse.m */; };
-		5D5F3178150FAA2800ED11E7 /* WebTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3158150FAA2800ED11E7 /* WebTransport.h */; };
-		5D5F3179150FAA2800ED11E7 /* WebTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3159150FAA2800ED11E7 /* WebTransport.m */; };
 		5D5F317A150FAA2800ED11E7 /* XmlElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F315B150FAA2800ED11E7 /* XmlElement.h */; };
 		5D5F317B150FAA2800ED11E7 /* XmlElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F315C150FAA2800ED11E7 /* XmlElement.m */; };
 		5D5F317C150FAA2800ED11E7 /* XmlTextReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F315D150FAA2800ED11E7 /* XmlTextReader.h */; };
@@ -363,8 +359,6 @@
 		5DAED4AE18E4BC970048ECBD /* HVMethodFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAED4AC18E4BC960048ECBD /* HVMethodFactory.m */; };
 		5DB083E618F325FD00702B79 /* HVNetworkReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB083E418F325FD00702B79 /* HVNetworkReachability.h */; };
 		5DB083E718F325FD00702B79 /* HVNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB083E518F325FD00702B79 /* HVNetworkReachability.m */; };
-		5DB2E61018D223120030972D /* HVHttpTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB2E60E18D223120030972D /* HVHttpTransport.h */; };
-		5DB2E61118D223120030972D /* HVHttpTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB2E60F18D223120030972D /* HVHttpTransport.m */; };
 		5DB2E61418D22EA90030972D /* HVLockTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB2E61218D22EA90030972D /* HVLockTable.h */; };
 		5DB2E61518D22EA90030972D /* HVLockTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB2E61318D22EA90030972D /* HVLockTable.m */; };
 		5DB2E69418D2553B0030972D /* HVItemChange.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB2E69218D2553B0030972D /* HVItemChange.h */; };
@@ -747,10 +741,6 @@
 		5D5F3152150FAA2800ED11E7 /* DateTimeUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimeUtils.m; sourceTree = "<group>"; };
 		5D5F3153150FAA2800ED11E7 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		5D5F3154150FAA2800ED11E7 /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
-		5D5F3156150FAA2800ED11E7 /* WebResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebResponse.h; sourceTree = "<group>"; };
-		5D5F3157150FAA2800ED11E7 /* WebResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebResponse.m; sourceTree = "<group>"; };
-		5D5F3158150FAA2800ED11E7 /* WebTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebTransport.h; sourceTree = "<group>"; };
-		5D5F3159150FAA2800ED11E7 /* WebTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebTransport.m; sourceTree = "<group>"; };
 		5D5F315B150FAA2800ED11E7 /* XmlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlElement.h; sourceTree = "<group>"; };
 		5D5F315C150FAA2800ED11E7 /* XmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XmlElement.m; sourceTree = "<group>"; };
 		5D5F315D150FAA2800ED11E7 /* XmlTextReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlTextReader.h; sourceTree = "<group>"; };
@@ -876,8 +866,6 @@
 		5DAED4AC18E4BC960048ECBD /* HVMethodFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMethodFactory.m; sourceTree = "<group>"; };
 		5DB083E418F325FD00702B79 /* HVNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVNetworkReachability.h; sourceTree = "<group>"; };
 		5DB083E518F325FD00702B79 /* HVNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVNetworkReachability.m; sourceTree = "<group>"; };
-		5DB2E60E18D223120030972D /* HVHttpTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVHttpTransport.h; sourceTree = "<group>"; };
-		5DB2E60F18D223120030972D /* HVHttpTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVHttpTransport.m; sourceTree = "<group>"; };
 		5DB2E61218D22EA90030972D /* HVLockTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVLockTable.h; sourceTree = "<group>"; };
 		5DB2E61318D22EA90030972D /* HVLockTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVLockTable.m; sourceTree = "<group>"; };
 		5DB2E69218D2553B0030972D /* HVItemChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemChange.h; sourceTree = "<group>"; };
@@ -1242,7 +1230,6 @@
 				5D5F3146150FAA2800ED11E7 /* Provisioner */,
 				5D5F314B150FAA2800ED11E7 /* Settings */,
 				5D5F314E150FAA2800ED11E7 /* Support */,
-				5D5F3155150FAA2800ED11E7 /* WebTransport */,
 				5D5F315A150FAA2800ED11E7 /* Xml */,
 			);
 			path = HVMobile;
@@ -1279,19 +1266,6 @@
 				5D5F3154150FAA2800ED11E7 /* Logger.m */,
 			);
 			path = Support;
-			sourceTree = "<group>";
-		};
-		5D5F3155150FAA2800ED11E7 /* WebTransport */ = {
-			isa = PBXGroup;
-			children = (
-				5DB2E60E18D223120030972D /* HVHttpTransport.h */,
-				5DB2E60F18D223120030972D /* HVHttpTransport.m */,
-				5D5F3156150FAA2800ED11E7 /* WebResponse.h */,
-				5D5F3157150FAA2800ED11E7 /* WebResponse.m */,
-				5D5F3158150FAA2800ED11E7 /* WebTransport.h */,
-				5D5F3159150FAA2800ED11E7 /* WebTransport.m */,
-			);
-			path = WebTransport;
 			sourceTree = "<group>";
 		};
 		5D5F315A150FAA2800ED11E7 /* Xml */ = {
@@ -1870,8 +1844,6 @@
 				5D5F3170150FAA2800ED11E7 /* Base64.h in Headers */,
 				5D5F3172150FAA2800ED11E7 /* DateTimeUtils.h in Headers */,
 				5D5F3174150FAA2800ED11E7 /* Logger.h in Headers */,
-				5D5F3176150FAA2800ED11E7 /* WebResponse.h in Headers */,
-				5D5F3178150FAA2800ED11E7 /* WebTransport.h in Headers */,
 				5D5F317A150FAA2800ED11E7 /* XmlElement.h in Headers */,
 				5DF90BB718F86CD6009ABAAB /* HVLibUI.h in Headers */,
 				5DF90BCF19005044009ABAAB /* HVCryptographer.h in Headers */,
@@ -1964,7 +1936,6 @@
 				5D1F13291539E9E000524425 /* HVRelative.h in Headers */,
 				5D1F132D1539EDF100524425 /* HVFamilyHistory.h in Headers */,
 				5D1F13311539EF0600524425 /* HVConditionEntry.h in Headers */,
-				5DB2E61018D223120030972D /* HVHttpTransport.h in Headers */,
 				5D1F13381539FF6300524425 /* HVDietaryIntake.h in Headers */,
 				5D1139B715461F430008C362 /* HVHttp.h in Headers */,
 				5D1139BB15461F740008C362 /* HVDataExtensions.h in Headers */,
@@ -2095,7 +2066,6 @@
 				5D983BF314E6039C00C287B7 /* HVYear.m in Sources */,
 				5D983BF714E6070600C287B7 /* HVDate.m in Sources */,
 				5D983BFD14E984B600C287B7 /* HVHour.m in Sources */,
-				5DB2E61118D223120030972D /* HVHttpTransport.m in Sources */,
 				5D983C0114E984CE00C287B7 /* HVMinute.m in Sources */,
 				5D983C0514E984EE00C287B7 /* HVSecond.m in Sources */,
 				5D983C0914E9850500C287B7 /* HVMillisecond.m in Sources */,
@@ -2174,8 +2144,6 @@
 				5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */,
 				5D25D67918AC574300B29B6D /* HVMessage.m in Sources */,
 				5D5F3175150FAA2800ED11E7 /* Logger.m in Sources */,
-				5D5F3177150FAA2800ED11E7 /* WebResponse.m in Sources */,
-				5D5F3179150FAA2800ED11E7 /* WebTransport.m in Sources */,
 				5D5F317B150FAA2800ED11E7 /* XmlElement.m in Sources */,
 				5D5F317D150FAA2800ED11E7 /* XmlTextReader.m in Sources */,
 				5D5F3185150FAE5300ED11E7 /* HVAppProvisionController.m in Sources */,

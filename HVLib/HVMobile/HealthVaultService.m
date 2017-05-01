@@ -18,8 +18,6 @@
 
 #import "HealthVaultService.h"
 #import "MobilePlatform.h"
-#import "WebTransport.h"
-#import "WebResponse.h"
 #import "HealthVaultRequest.h"
 #import "HealthVaultResponse.h"
 #import "Base64.h"
@@ -37,7 +35,7 @@
 
 @property (nonatomic, strong) MHVHttpService *httpService;
 
-- (BOOL)initDefaultProviders;
+- (BOOL)setupDefaultProviders;
 
 - (void)sendRequestImpl:(HealthVaultRequest *)request;
 
@@ -84,19 +82,6 @@
 - (void)setSettingsFileName:(NSString *)settingsFileName
 {
     HVRETAIN(_settingsFileName, settingsFileName);
-}
-
-- (id<HVHttpTransport>)transport
-{
-    return _transport;
-}
-
-- (void)setTransport:(id<HVHttpTransport>)transport
-{
-    if (transport)
-    {
-        HVRETAIN(_transport, transport);
-    }
 }
 
 - (Provisioner *)provisioner
@@ -162,7 +147,7 @@ LError:
     _records = [NSMutableArray new];
     HVCHECK_NOTNULL(_records);
     
-    HVCHECK_SUCCESS([self initDefaultProviders]);
+    HVCHECK_SUCCESS([self setupDefaultProviders]);
     
     return self;
     
@@ -195,7 +180,6 @@ LError:
     
     [_settingsFileName release];
     
-    [_transport release];
     [_cryptographer release];
     [_provisioner release];
     
@@ -461,11 +445,8 @@ LError:
 
 @implementation HealthVaultService (HVPrivate)
 
-- (BOOL)initDefaultProviders
+- (BOOL)setupDefaultProviders
 {
-    _transport = [[HVHttpTransport alloc] init];
-    HVCHECK_NOTNULL(_transport);
-    
     _provisioner = [[Provisioner alloc] init];
     HVCHECK_NOTNULL(_provisioner);
     
@@ -473,6 +454,7 @@ LError:
     HVCHECK_NOTNULL(_cryptographer);
     
     _httpService = [[MHVHttpService alloc] initWithURLSessionConfiguration:nil];
+    HVCHECK_NOTNULL(_httpService);
     
     return TRUE;
     
