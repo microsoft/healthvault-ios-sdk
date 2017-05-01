@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C6140361EB3FFDC0060002E /* MHVHttpResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6140321EB3FFDC0060002E /* MHVHttpResponse.h */; };
+		4C6140371EB3FFDC0060002E /* MHVHttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6140331EB3FFDC0060002E /* MHVHttpResponse.m */; };
+		4C6140381EB3FFDC0060002E /* MHVHttpService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6140341EB3FFDC0060002E /* MHVHttpService.h */; };
+		4C6140391EB3FFDC0060002E /* MHVHttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6140351EB3FFDC0060002E /* MHVHttpService.m */; };
 		5D0645B4184545D500D306CC /* HVHeartRate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0645B2184545D500D306CC /* HVHeartRate.h */; };
 		5D0645B5184545D500D306CC /* HVHeartRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0645B3184545D500D306CC /* HVHeartRate.m */; };
 		5D07A9571534B1780013DC2A /* HVProcedure.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D07A9551534B1780013DC2A /* HVProcedure.h */; };
@@ -513,6 +517,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C6140321EB3FFDC0060002E /* MHVHttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpResponse.h; sourceTree = "<group>"; };
+		4C6140331EB3FFDC0060002E /* MHVHttpResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHttpResponse.m; sourceTree = "<group>"; };
+		4C6140341EB3FFDC0060002E /* MHVHttpService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpService.h; sourceTree = "<group>"; };
+		4C6140351EB3FFDC0060002E /* MHVHttpService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHttpService.m; sourceTree = "<group>"; };
 		5D0645B2184545D500D306CC /* HVHeartRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVHeartRate.h; sourceTree = "<group>"; };
 		5D0645B3184545D500D306CC /* HVHeartRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVHeartRate.m; sourceTree = "<group>"; };
 		5D07A9551534B1780013DC2A /* HVProcedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVProcedure.h; sourceTree = "<group>"; };
@@ -1050,6 +1058,10 @@
 				5D6EDDA11546233F00420262 /* HVHttpDownload.m */,
 				5DB083E418F325FD00702B79 /* HVNetworkReachability.h */,
 				5DB083E518F325FD00702B79 /* HVNetworkReachability.m */,
+				4C6140321EB3FFDC0060002E /* MHVHttpResponse.h */,
+				4C6140331EB3FFDC0060002E /* MHVHttpResponse.m */,
+				4C6140341EB3FFDC0060002E /* MHVHttpService.h */,
+				4C6140351EB3FFDC0060002E /* MHVHttpService.m */,
 			);
 			path = HTTP;
 			sourceTree = "<group>";
@@ -1874,6 +1886,7 @@
 				5D39F9271513A63500208A7B /* HVMethodCallTask.h in Headers */,
 				5D39F92B1513AA6000208A7B /* HVServerResponseStatus.h in Headers */,
 				5D39F92F1513E41200208A7B /* HVGetItemsTask.h in Headers */,
+				4C6140361EB3FFDC0060002E /* MHVHttpResponse.h in Headers */,
 				5D39F937151A3AA200208A7B /* HVLocalItemStore.h in Headers */,
 				5D39F93B151A718C00208A7B /* HVLocalRecordStore.h in Headers */,
 				5D0B4BE1151A7D50000849D0 /* HVCondition.h in Headers */,
@@ -1893,6 +1906,7 @@
 				5D195D4E1522527100E109AD /* HVPutItemsTask.h in Headers */,
 				5D195D661522780800E109AD /* HVRemoveItemsTask.h in Headers */,
 				5D195D7215228C0200E109AD /* HVVocabSearchText.h in Headers */,
+				4C6140381EB3FFDC0060002E /* MHVHttpService.h in Headers */,
 				5D195D821522973500E109AD /* HVVocabSearchTask.h in Headers */,
 				5D25D67218AC567800B29B6D /* HVMessageAttachment.h in Headers */,
 				5D362B55152F8541006CC30C /* HVPrescription.h in Headers */,
@@ -2225,6 +2239,7 @@
 				5D227B94153766E500E12075 /* HVVocabCodeSet.m in Sources */,
 				5D925DD815376F21006BAAA8 /* HVGetVocabTask.m in Sources */,
 				5D925DE115377348006BAAA8 /* HVVocabParams.m in Sources */,
+				4C6140371EB3FFDC0060002E /* MHVHttpResponse.m in Sources */,
 				5D775C7215389BD7000F01AE /* HVBasicDemographics.m in Sources */,
 				5D775C741538A118000F01AE /* HVItemTypes.m in Sources */,
 				5DF90BDA19005D5D009ABAAB /* HVTestResultRangeValue.m in Sources */,
@@ -2259,6 +2274,7 @@
 				5DB2E72118D3CBCF0030972D /* HVPartitionedStore.m in Sources */,
 				5D6EDDA91546306200420262 /* HVBlobInfo.m in Sources */,
 				5D6EDDAD154631B700420262 /* HVBlobPayloadItem.m in Sources */,
+				4C6140391EB3FFDC0060002E /* MHVHttpService.m in Sources */,
 				5D6EDDB115463DB700420262 /* HVString1024.m in Sources */,
 				5D1B7BF0154642F600854881 /* HVBlobHashInfo.m in Sources */,
 				5D591CFD15464FD800EAC934 /* HVBlobPayload.m in Sources */,
@@ -2319,16 +2335,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-                CLANG_WARN_BOOL_CONVERSION = YES;
-                CLANG_WARN_CONSTANT_CONVERSION = YES;
-                CLANG_WARN_EMPTY_BODY = YES;
-                CLANG_WARN_ENUM_CONVERSION = YES;
-                CLANG_WARN_INT_CONVERSION = YES;
-                CLANG_WARN_UNREACHABLE_CODE = YES;
-                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-                ENABLE_STRICT_OBJC_MSGSEND = YES;
-                ENABLE_TESTABILITY = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import <libxml/XmlReader.h>
+#import <libxml/xmlreader.h>
 
 NSString* const XExceptionInvalidNodeType;
 NSString* const XExceptionNotElement;

@@ -1,15 +1,15 @@
 //
-//  HealthVaultResponse.h
-//  HealthVault Mobile Library for iOS
+// HealthVaultResponse.h
+// HealthVault Mobile Library for iOS
 //
 // Copyright 2011 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "WebResponse.h"
+#import "MHVHttpResponse.h"
 #import "HealthVaultRequest.h"
 
 /// OK status
@@ -29,22 +29,11 @@
 /// Represents security problem for current app.
 #define RESPONSE_ACCESS_DENIED 8
 
-/// Represents that current token has been expired and should be updated. 
+/// Represents that current token has been expired and should be updated.
 #define RESPONSE_AUTH_SESSION_TOKEN_EXPIRED 65
 
 /// Implements HealthVault response.
-@interface HealthVaultResponse : NSObject {
-
-	int _statusCode;
-    int _webStatusCode;
-	NSString *_infoXml;
-	NSString *_responseXml;
-	NSString *_errorText;
-	NSString *_errorContextXml;
-	NSString *_errorInfo;
-
-	HealthVaultRequest *_request;
-}
+@interface HealthVaultResponse : NSObject
 
 /// Gets or sets numeric status code of the operation.
 @property (assign) int statusCode;
@@ -73,12 +62,12 @@
 @property (retain) HealthVaultRequest *request;
 
 /// Indicates whether the operation has failed.
-@property (readonly, getter=getHasError) BOOL hasError;
+@property (readonly, getter = getHasError) BOOL hasError;
 
 /// Initializes a new instance of the HealthVaultResponse class.
 /// @param webResponse - the web response from server side.
 /// @request - the original request.
-- (id)initWithWebResponse: (WebResponse *)webResponse
-				  request: (HealthVaultRequest *)request;
+- (instancetype)initWithResponse:(MHVHttpResponse *)webResponse
+                         request:(HealthVaultRequest *)request;
 
 @end
