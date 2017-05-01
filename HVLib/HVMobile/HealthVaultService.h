@@ -21,8 +21,6 @@
 #import "HealthVaultRequest.h"
 #import "HealthVaultResponse.h"
 #import "MobilePlatform.h"
-#import "WebResponse.h"
-#import "WebTransport.h"
 
 /// A class used to communicate with the HealthVault web service.
 @interface HealthVaultService : NSObject<HealthVaultService>
@@ -47,7 +45,6 @@
     //
     // Providers
     //
-    id<HVHttpTransport> _transport;
     id<HVCryptographer> _cryptographer;
     Provisioner* _provisioner;
     
@@ -107,7 +104,6 @@
 // Providers
 //
 //--------------------------------------------
-@property (retain) id<HVHttpTransport> transport;
 @property (retain) id<HVCryptographer> cryptographer;
 @property (retain) Provisioner* provisioner;
 
