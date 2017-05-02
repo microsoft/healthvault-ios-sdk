@@ -88,22 +88,22 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_onsetDate, c_element_onsetDate);
-    HVSERIALIZE(m_resolutionDate, c_element_resolutionDate);
-    HVSERIALIZE_STRING(m_resolution, c_element_resolution);
-    HVSERIALIZE(m_occurrence, c_element_occurrence);
-    HVSERIALIZE(m_severity, c_element_severity);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_onsetDate content:m_onsetDate];
+    [writer writeElement:c_element_resolutionDate content:m_resolutionDate];
+    [writer writeElement:c_element_resolution value:m_resolution];
+    [writer writeElement:c_element_occurrence content:m_occurrence];
+    [writer writeElement:c_element_severity content:m_severity];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVCodableValue);
-    HVDESERIALIZE(m_onsetDate, c_element_onsetDate, HVApproxDate);
-    HVDESERIALIZE(m_resolutionDate, c_element_resolutionDate, HVApproxDate);
-    HVDESERIALIZE_STRING(m_resolution, c_element_resolution);
-    HVDESERIALIZE(m_occurrence, c_element_occurrence, HVCodableValue);
-    HVDESERIALIZE(m_severity, c_element_severity, HVCodableValue);    
+    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
+    m_onsetDate = [[reader readElement:c_element_onsetDate asClass:[HVApproxDate class]] retain];
+    m_resolutionDate = [[reader readElement:c_element_resolutionDate asClass:[HVApproxDate class]] retain];
+    m_resolution = [[reader readStringElement:c_element_resolution] retain];
+    m_occurrence = [[reader readElement:c_element_occurrence asClass:[HVCodableValue class]] retain];
+    m_severity = [[reader readElement:c_element_severity asClass:[HVCodableValue class]] retain];    
 }
 
 @end

@@ -104,26 +104,26 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING_X(m_changeID, x_element_changeID);
-    HVSERIALIZE_DOUBLE_X(m_timestamp, x_element_timestamp);
-    HVSERIALIZE_INT_X(m_changeType, x_element_type);
-    HVSERIALIZE_STRING_X(m_typeID, x_element_typeID);
-    HVSERIALIZE_X(m_key, x_element_key);
-    HVSERIALIZE_INT_X(m_attempt, x_element_attempt);
+    [writer writeElementXmlName:x_element_changeID value:m_changeID];
+    [writer writeElementXmlName:x_element_timestamp doubleValue:m_timestamp];
+    [writer writeElementXmlName:x_element_type intValue:m_changeType];
+    [writer writeElementXmlName:x_element_typeID value:m_typeID];
+    [writer writeElementXmlName:x_element_key content:m_key];
+    [writer writeElementXmlName:x_element_attempt intValue:m_attempt];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_changeID, x_element_changeID);
-    HVDESERIALIZE_DOUBLE_X(m_timestamp, x_element_timestamp);
+    m_changeID = [[reader readStringElementWithXmlName:x_element_changeID] retain];
+    m_timestamp = [reader readDoubleElementXmlName:x_element_timestamp];
     
     int changeType;
-    HVDESERIALIZE_INT_X(changeType, x_element_type);
+    changeType = [reader readIntElementXmlName:x_element_type];
     m_changeType = (enum HVItemChangeType) changeType;
     
-    HVDESERIALIZE_STRING_X(m_typeID, x_element_typeID);
-    HVDESERIALIZE_X(m_key, x_element_key, HVItemKey);
-    HVDESERIALIZE_INT_X(m_attempt, x_element_attempt);
+    m_typeID = [[reader readStringElementWithXmlName:x_element_typeID] retain];
+    m_key = [[reader readElementWithXmlName:x_element_key asClass:[HVItemKey class]] retain];
+    m_attempt = [reader readIntElementXmlName:x_element_attempt];
 }
 
 +(BOOL)updateChange:(HVItemChange *)change withTypeID:(NSString *)typeID key:(HVItemKey *)key changeType:(enum HVItemChangeType)changeType

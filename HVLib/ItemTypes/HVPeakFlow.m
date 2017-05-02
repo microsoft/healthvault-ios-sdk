@@ -121,20 +121,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_pef, x_element_pef);
-    HVSERIALIZE_X(m_fev1, x_element_fev1);
-    HVSERIALIZE_X(m_fev6, x_element_fev6);
-    HVSERIALIZE_X(m_flags, x_element_flags);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_pef content:m_pef];
+    [writer writeElementXmlName:x_element_fev1 content:m_fev1];
+    [writer writeElementXmlName:x_element_fev6 content:m_fev6];
+    [writer writeElementXmlName:x_element_flags content:m_flags];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVApproxDateTime);
-    HVDESERIALIZE_X(m_pef, x_element_pef, HVFlowValue);
-    HVDESERIALIZE_X(m_fev1, x_element_fev1, HVVolumeValue);
-    HVDESERIALIZE_X(m_fev6, x_element_fev6, HVVolumeValue);
-    HVDESERIALIZE_X(m_flags, x_element_flags, HVCodableValue);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]] retain];
+    m_pef = [[reader readElementWithXmlName:x_element_pef asClass:[HVFlowValue class]] retain];
+    m_fev1 = [[reader readElementWithXmlName:x_element_fev1 asClass:[HVVolumeValue class]] retain];
+    m_fev6 = [[reader readElementWithXmlName:x_element_fev6 asClass:[HVVolumeValue class]] retain];
+    m_flags = [[reader readElementWithXmlName:x_element_flags asClass:[HVCodableValue class]] retain];
 }
 
 +(NSString *) typeID

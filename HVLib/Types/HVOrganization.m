@@ -68,18 +68,18 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_name, c_element_name);
-    HVSERIALIZE(m_contact, c_element_contact);
-    HVSERIALIZE(m_type, c_element_type);
-    HVSERIALIZE_STRING(m_webSite, c_element_site);
+    [writer writeElement:c_element_name value:m_name];
+    [writer writeElement:c_element_contact content:m_contact];
+    [writer writeElement:c_element_type content:m_type];
+    [writer writeElement:c_element_site value:m_webSite];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_name, c_element_name);
-    HVDESERIALIZE(m_contact, c_element_contact, HVContact);
-    HVDESERIALIZE(m_type, c_element_type, HVCodableValue);
-    HVDESERIALIZE_STRING(m_webSite, c_element_site);  
+    m_name = [[reader readStringElement:c_element_name] retain];
+    m_contact = [[reader readElement:c_element_contact asClass:[HVContact class]] retain];
+    m_type = [[reader readElement:c_element_type asClass:[HVCodableValue class]] retain];
+    m_webSite = [[reader readStringElement:c_element_site] retain];  
 }
 
 @end

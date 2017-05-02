@@ -60,14 +60,14 @@ static NSString* const c_attribute_matchType = @"search-mode";
 {
     NSString* matchType = HVVocabMatchTypeToString(m_type);
     
-    HVSERIALIZE_ATTRIBUTE(matchType, c_attribute_matchType);
+    [writer writeAttribute:c_attribute_matchType value:matchType];
 }
 
 -(void)deserializeAttributes:(XReader *)reader
 {
     NSString* mode = nil;
 
-    HVDESERIALIZE_ATTRIBUTE(mode, c_attribute_matchType);
+    mode = [[reader readAttribute:c_attribute_matchType] retain];
     if (![NSString isNilOrEmpty:mode])
     {
         m_type = HVVocabMatchTypeFromString(mode);

@@ -72,26 +72,26 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_STRING_X(m_name, x_element_name);
-    HVSERIALIZE_X(m_substance, x_element_substance);
-    HVSERIALIZE_X(m_collectionMethod, x_element_method);
-    HVSERIALIZE_X(m_clinicalCode, x_element_clinicalCode);
-    HVSERIALIZE_X(m_value, x_element_value);
-    HVSERIALIZE_X(m_status, x_element_status);
-    HVSERIALIZE_STRING_X(m_note, x_element_note);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_name value:m_name];
+    [writer writeElementXmlName:x_element_substance content:m_substance];
+    [writer writeElementXmlName:x_element_method content:m_collectionMethod];
+    [writer writeElementXmlName:x_element_clinicalCode content:m_clinicalCode];
+    [writer writeElementXmlName:x_element_value content:m_value];
+    [writer writeElementXmlName:x_element_status content:m_status];
+    [writer writeElementXmlName:x_element_note value:m_note];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVApproxDateTime);
-    HVDESERIALIZE_STRING_X(m_name, x_element_name);
-    HVDESERIALIZE_X(m_substance, x_element_substance, HVCodableValue);
-    HVDESERIALIZE_X(m_collectionMethod, x_element_method, HVCodableValue);
-    HVDESERIALIZE_X(m_clinicalCode, x_element_clinicalCode, HVCodableValue);
-    HVDESERIALIZE_X(m_value, x_element_value, HVLabTestResultValue);
-    HVDESERIALIZE_X(m_status, x_element_status, HVCodableValue);
-    HVDESERIALIZE_STRING_X(m_note, x_element_note);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]] retain];
+    m_name = [[reader readStringElementWithXmlName:x_element_name] retain];
+    m_substance = [[reader readElementWithXmlName:x_element_substance asClass:[HVCodableValue class]] retain];
+    m_collectionMethod = [[reader readElementWithXmlName:x_element_method asClass:[HVCodableValue class]] retain];
+    m_clinicalCode = [[reader readElementWithXmlName:x_element_clinicalCode asClass:[HVCodableValue class]] retain];
+    m_value = [[reader readElementWithXmlName:x_element_value asClass:[HVLabTestResultValue class]] retain];
+    m_status = [[reader readElementWithXmlName:x_element_status asClass:[HVCodableValue class]] retain];
+    m_note = [[reader readStringElementWithXmlName:x_element_note] retain];
 }
 
 @end

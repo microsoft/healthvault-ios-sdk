@@ -56,16 +56,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_type, x_element_type);
-    HVSERIALIZE_X(m_text, x_element_text);
-    HVSERIALIZE_X(m_value, x_element_value);
+    [writer writeElementXmlName:x_element_type content:m_type];
+    [writer writeElementXmlName:x_element_text content:m_text];
+    [writer writeElementXmlName:x_element_value content:m_value];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_type, x_element_type, HVCodableValue);
-    HVDESERIALIZE_X(m_text, x_element_text, HVCodableValue);
-    HVDESERIALIZE_X(m_value, x_element_value, HVTestResultRangeValue);
+    m_type = [[reader readElementWithXmlName:x_element_type asClass:[HVCodableValue class]] retain];
+    m_text = [[reader readElementWithXmlName:x_element_text asClass:[HVCodableValue class]] retain];
+    m_value = [[reader readElementWithXmlName:x_element_value asClass:[HVTestResultRangeValue class]] retain];
 }
 
 @end

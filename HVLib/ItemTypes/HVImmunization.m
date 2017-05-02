@@ -151,32 +151,32 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_administeredDate, c_element_administeredDate);
-    HVSERIALIZE(m_administrator, c_element_administrator);
-    HVSERIALIZE(m_manufacturer, c_element_manufacturer);
-    HVSERIALIZE_STRING(m_lot, c_element_lot);
-    HVSERIALIZE(m_route, c_element_route);
-    HVSERIALIZE(m_expiration, c_element_expiration);
-    HVSERIALIZE_STRING(m_sequence, c_element_sequence);
-    HVSERIALIZE(m_anatomicSurface, c_element_surface);
-    HVSERIALIZE_STRING(m_adverseEvent, c_element_adverseEvent);
-    HVSERIALIZE_STRING(m_consent, c_element_consent);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_administeredDate content:m_administeredDate];
+    [writer writeElement:c_element_administrator content:m_administrator];
+    [writer writeElement:c_element_manufacturer content:m_manufacturer];
+    [writer writeElement:c_element_lot value:m_lot];
+    [writer writeElement:c_element_route content:m_route];
+    [writer writeElement:c_element_expiration content:m_expiration];
+    [writer writeElement:c_element_sequence value:m_sequence];
+    [writer writeElement:c_element_surface content:m_anatomicSurface];
+    [writer writeElement:c_element_adverseEvent value:m_adverseEvent];
+    [writer writeElement:c_element_consent value:m_consent];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVCodableValue);
-    HVDESERIALIZE(m_administeredDate, c_element_administeredDate, HVApproxDateTime);
-    HVDESERIALIZE(m_administrator, c_element_administrator, HVPerson);
-    HVDESERIALIZE(m_manufacturer, c_element_manufacturer, HVCodableValue);
-    HVDESERIALIZE_STRING(m_lot, c_element_lot);
-    HVDESERIALIZE(m_route, c_element_route, HVCodableValue);
-    HVDESERIALIZE(m_expiration, c_element_expiration, HVApproxDate);
-    HVDESERIALIZE_STRING(m_sequence, c_element_sequence);
-    HVDESERIALIZE(m_anatomicSurface, c_element_surface, HVCodableValue);
-    HVDESERIALIZE_STRING(m_adverseEvent, c_element_adverseEvent);
-    HVDESERIALIZE_STRING(m_consent, c_element_consent);
+    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
+    m_administeredDate = [[reader readElement:c_element_administeredDate asClass:[HVApproxDateTime class]] retain];
+    m_administrator = [[reader readElement:c_element_administrator asClass:[HVPerson class]] retain];
+    m_manufacturer = [[reader readElement:c_element_manufacturer asClass:[HVCodableValue class]] retain];
+    m_lot = [[reader readStringElement:c_element_lot] retain];
+    m_route = [[reader readElement:c_element_route asClass:[HVCodableValue class]] retain];
+    m_expiration = [[reader readElement:c_element_expiration asClass:[HVApproxDate class]] retain];
+    m_sequence = [[reader readStringElement:c_element_sequence] retain];
+    m_anatomicSurface = [[reader readElement:c_element_surface asClass:[HVCodableValue class]] retain];
+    m_adverseEvent = [[reader readStringElement:c_element_adverseEvent] retain];
+    m_consent = [[reader readStringElement:c_element_consent] retain];
 }
 
 +(NSString *)typeID

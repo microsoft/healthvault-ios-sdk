@@ -38,14 +38,14 @@ static const xmlChar* x_element_redirect = XMLSTRINGCONST("redirect-url");
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_url, x_element_url);
-    HVDESERIALIZE_STRING_X(m_redirectUrl, x_element_redirect);
+    m_url = [[reader readStringElementWithXmlName:x_element_url] retain];
+    m_redirectUrl = [[reader readStringElementWithXmlName:x_element_redirect] retain];
 }
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING_X(m_url, x_element_url);
-    HVSERIALIZE_STRING_X(m_redirectUrl, x_element_redirect);
+    [writer writeElementXmlName:x_element_url value:m_url];
+    [writer writeElementXmlName:x_element_redirect value:m_redirectUrl];
 }
 
 @end

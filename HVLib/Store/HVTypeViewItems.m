@@ -436,12 +436,12 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_items, c_element_item);
+    [writer writeElementArray:c_element_item elements:m_items];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_items, c_element_item, HVTypeViewItem, NSMutableArray);
+    m_items = [[reader readElementArray:c_element_item asClass:[HVTypeViewItem class] andArrayClass:[NSMutableArray class]] retain];
     //
     // Index array
     //

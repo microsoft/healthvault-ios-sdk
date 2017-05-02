@@ -121,14 +121,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_conditions, c_element_condition);
-    HVSERIALIZE(m_relative, c_element_relative);
+    [writer writeElementArray:c_element_condition elements:m_conditions];
+    [writer writeElement:c_element_relative content:m_relative];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_conditions, c_element_condition, HVConditionEntry, HVConditionEntryCollection);
-    HVDESERIALIZE(m_relative, c_element_relative, HVRelative);
+    m_conditions = (HVConditionEntryCollection *)[[reader readElementArray:c_element_condition asClass:[HVConditionEntry class] andArrayClass:[HVConditionEntryCollection class]] retain];
+    m_relative = [[reader readElement:c_element_relative asClass:[HVRelative class]] retain];
 }
 
 +(NSString *)typeID

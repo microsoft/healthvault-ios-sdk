@@ -138,22 +138,22 @@ LError:
 
 -(void) serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE_X(m_version, x_attribute_version);
+    [writer writeAttributeXmlName:x_attribute_version value:m_version];
 }
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_TEXT(m_id);
+    [writer writeText:m_id];
 }
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE_X(m_version, x_attribute_version);
+    m_version = [[reader readAttributeWithXmlName:x_attribute_version] retain];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TEXT(m_id);
+    m_id = [[reader readValue] retain];
 }
 
 @end
@@ -222,12 +222,12 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_inner, c_element_key);
+    [writer writeElementArray:c_element_key elements:m_inner];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_ARRAY(m_inner, c_element_key, HVItemKey);
+    m_inner = [[reader readElementArray:c_element_key asClass:[HVItemKey class]] retain];
 }
 
 @end

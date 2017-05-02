@@ -147,14 +147,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_mmolPerl, x_element_mmolPL);
-    HVSERIALIZE_X(m_display, x_element_display);
+    [writer writeElementXmlName:x_element_mmolPL content:m_mmolPerl];
+    [writer writeElementXmlName:x_element_display content:m_display];
 }
 
 -(void)deserialize:(XReader *)reader
 {    
-    HVDESERIALIZE_X(m_mmolPerl, x_element_mmolPL, HVPositiveDouble);
-    HVDESERIALIZE_X(m_display, x_element_display, HVDisplayValue);
+    m_mmolPerl = [[reader readElementWithXmlName:x_element_mmolPL asClass:[HVPositiveDouble class]] retain];
+    m_display = [[reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]] retain];
 }
 
 @end

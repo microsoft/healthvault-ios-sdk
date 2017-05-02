@@ -220,16 +220,16 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_date, x_element_date);
-    HVSERIALIZE_X(m_time, x_element_time);
-    HVSERIALIZE_X(m_timeZone, x_element_timeZone);
+    [writer writeElementXmlName:x_element_date content:m_date];
+    [writer writeElementXmlName:x_element_time content:m_time];
+    [writer writeElementXmlName:x_element_timeZone content:m_timeZone];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_date, x_element_date, HVDate);
-    HVDESERIALIZE_X(m_time, x_element_time, HVTime);
-    HVDESERIALIZE_X(m_timeZone, x_element_timeZone, HVCodableValue);
+    m_date = [[reader readElementWithXmlName:x_element_date asClass:[HVDate class]] retain];
+    m_time = [[reader readElementWithXmlName:x_element_time asClass:[HVTime class]] retain];
+    m_timeZone = [[reader readElementWithXmlName:x_element_timeZone asClass:[HVCodableValue class]] retain];
 }
 
 @end

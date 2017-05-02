@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import <libxml/xmlwriter.h>
-#import <libxml/XmlReader.h>
+#import <libxml/xmlreader.h>
 #import "XNodeType.h"
 #import "XString.h"
 #import "XConverter.h"

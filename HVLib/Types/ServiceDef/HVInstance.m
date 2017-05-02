@@ -48,21 +48,21 @@ static const xmlChar* x_element_shell = XMLSTRINGCONST("shell-url");
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_id, x_element_id);
-    HVDESERIALIZE_STRING_X(m_name, x_element_name);
-    HVDESERIALIZE_STRING_X(m_description, x_element_description);
-    HVDESERIALIZE_STRING_X(m_platformUrl, x_element_platform);
-    HVDESERIALIZE_STRING_X(m_shellUrl, x_element_shell);
+    m_id = [[reader readStringElementWithXmlName:x_element_id] retain];
+    m_name = [[reader readStringElementWithXmlName:x_element_name] retain];
+    m_description = [[reader readStringElementWithXmlName:x_element_description] retain];
+    m_platformUrl = [[reader readStringElementWithXmlName:x_element_platform] retain];
+    m_shellUrl = [[reader readStringElementWithXmlName:x_element_shell] retain];
 }
 
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING_X(m_id, x_element_id);
-    HVSERIALIZE_STRING_X(m_name, x_element_name);
-    HVSERIALIZE_STRING_X(m_description, x_element_description);
-    HVSERIALIZE_STRING_X(m_platformUrl, x_element_platform);
-    HVSERIALIZE_STRING_X(m_shellUrl, x_element_shell);
+    [writer writeElementXmlName:x_element_id value:m_id];
+    [writer writeElementXmlName:x_element_name value:m_name];
+    [writer writeElementXmlName:x_element_description value:m_description];
+    [writer writeElementXmlName:x_element_platform value:m_platformUrl];
+    [writer writeElementXmlName:x_element_shell value:m_shellUrl];
 }
 
 @end

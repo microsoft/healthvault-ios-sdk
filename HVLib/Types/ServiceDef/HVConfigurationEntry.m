@@ -36,22 +36,22 @@ static const xmlChar* x_attribute_key = XMLSTRINGCONST("key");
 
 -(void)deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE_X(m_key, x_attribute_key);
+    m_key = [[reader readAttributeWithXmlName:x_attribute_key] retain];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TEXT(m_value);
+    m_value = [[reader readValue] retain];
 }
 
 -(void)serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE_X(m_key, x_attribute_key);
+    [writer writeAttributeXmlName:x_attribute_key value:m_key];
 }
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_TEXT(m_value);
+    [writer writeText:m_value];
 }
 
 @end

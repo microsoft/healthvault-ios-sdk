@@ -27,12 +27,12 @@ static NSString* const c_element_blockSize = @"block-size";
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_INT((int)m_blockSize, c_element_blockSize);
+    [writer writeElement:c_element_blockSize intValue:(int)m_blockSize];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_INT(m_blockSize, c_element_blockSize);
+    m_blockSize = [reader readIntElement:c_element_blockSize];
 }
 
 @end
@@ -62,20 +62,20 @@ static NSString* const c_element_hashParams = @"blob-hash-parameters";
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_url, c_element_url);
-    HVSERIALIZE_INT((int)m_chunkSize, c_element_chunkSize);
-    HVSERIALIZE_INT((int)m_maxSize, c_element_maxSize);
-    HVSERIALIZE_STRING(m_hashAlgorithm, c_element_hashAlg);
-    HVSERIALIZE(m_hashParams, c_element_hashParams);
+    [writer writeElement:c_element_url value:m_url];
+    [writer writeElement:c_element_chunkSize intValue:(int)m_chunkSize];
+    [writer writeElement:c_element_maxSize intValue:(int)m_maxSize];
+    [writer writeElement:c_element_hashAlg value:m_hashAlgorithm];
+    [writer writeElement:c_element_hashParams content:m_hashParams];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_url, c_element_url);
-    HVDESERIALIZE_INT(m_chunkSize, c_element_chunkSize);
-    HVDESERIALIZE_INT(m_maxSize, c_element_maxSize);
-    HVDESERIALIZE_STRING(m_hashAlgorithm, c_element_hashAlg);
-    HVDESERIALIZE(m_hashParams, c_element_hashParams, HVBlobHashAlgorithmParameters);    
+    m_url = [[reader readStringElement:c_element_url] retain];
+    m_chunkSize = [reader readIntElement:c_element_chunkSize];
+    m_maxSize = [reader readIntElement:c_element_maxSize];
+    m_hashAlgorithm = [[reader readStringElement:c_element_hashAlg] retain];
+    m_hashParams = [[reader readElement:c_element_hashParams asClass:[HVBlobHashAlgorithmParameters class]] retain];    
 }
 
 @end

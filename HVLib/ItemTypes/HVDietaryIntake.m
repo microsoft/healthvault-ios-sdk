@@ -248,94 +248,94 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_foodItem, x_element_foodItem, HVCodableValue);
-    HVDESERIALIZE_X(m_servingSize, x_element_servingSize, HVCodableValue);
-    HVDESERIALIZE_X(m_servingsConsumed, x_element_servingsConsumed, HVNonNegativeDouble);
-    HVDESERIALIZE_X(m_meal, x_element_meal, HVCodableValue);
+    m_foodItem = [[reader readElementWithXmlName:x_element_foodItem asClass:[HVCodableValue class]] retain];
+    m_servingSize = [[reader readElementWithXmlName:x_element_servingSize asClass:[HVCodableValue class]] retain];
+    m_servingsConsumed = [[reader readElementWithXmlName:x_element_servingsConsumed asClass:[HVNonNegativeDouble class]] retain];
+    m_meal = [[reader readElementWithXmlName:x_element_meal asClass:[HVCodableValue class]] retain];
     
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
     
-    HVDESERIALIZE_X(m_calories, x_element_calories, HVFoodEnergyValue);
-    HVDESERIALIZE_X(m_caloriesFromFat, x_element_energyFat, HVFoodEnergyValue);
-    HVDESERIALIZE_X(m_totalFat, x_element_totalFat, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_saturatedFat, x_element_saturatedFat, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_transFat, x_element_transFat, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_monoUnsaturatedFat, x_element_monounsaturatedFat, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_polyUnsaturatedFat, x_element_polyunsaturatedFat, HVWeightMeasurement);
+    m_calories = [[reader readElementWithXmlName:x_element_calories asClass:[HVFoodEnergyValue class]] retain];
+    m_caloriesFromFat = [[reader readElementWithXmlName:x_element_energyFat asClass:[HVFoodEnergyValue class]] retain];
+    m_totalFat = [[reader readElementWithXmlName:x_element_totalFat asClass:[HVWeightMeasurement class]] retain];
+    m_saturatedFat = [[reader readElementWithXmlName:x_element_saturatedFat asClass:[HVWeightMeasurement class]] retain];
+    m_transFat = [[reader readElementWithXmlName:x_element_transFat asClass:[HVWeightMeasurement class]] retain];
+    m_monoUnsaturatedFat = [[reader readElementWithXmlName:x_element_monounsaturatedFat asClass:[HVWeightMeasurement class]] retain];
+    m_polyUnsaturatedFat = [[reader readElementWithXmlName:x_element_polyunsaturatedFat asClass:[HVWeightMeasurement class]] retain];
     
-    HVDESERIALIZE_X(m_protein, x_element_protein, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_carbs, x_element_carbs, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_fiber, x_element_fiber, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_sugar, x_element_sugars, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_sodium, x_element_sodium, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_cholesterol, x_element_cholesterol, HVWeightMeasurement);
+    m_protein = [[reader readElementWithXmlName:x_element_protein asClass:[HVWeightMeasurement class]] retain];
+    m_carbs = [[reader readElementWithXmlName:x_element_carbs asClass:[HVWeightMeasurement class]] retain];
+    m_fiber = [[reader readElementWithXmlName:x_element_fiber asClass:[HVWeightMeasurement class]] retain];
+    m_sugar = [[reader readElementWithXmlName:x_element_sugars asClass:[HVWeightMeasurement class]] retain];
+    m_sodium = [[reader readElementWithXmlName:x_element_sodium asClass:[HVWeightMeasurement class]] retain];
+    m_cholesterol = [[reader readElementWithXmlName:x_element_cholesterol asClass:[HVWeightMeasurement class]] retain];
     
-    HVDESERIALIZE_X(m_calcium, x_element_calcium, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_iron, x_element_iron, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_magnesium, x_element_magnesium, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_phosphorus, x_element_phosphorus, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_potassium, x_element_potassium, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_zinc, x_element_zinc, HVWeightMeasurement);
+    m_calcium = [[reader readElementWithXmlName:x_element_calcium asClass:[HVWeightMeasurement class]] retain];
+    m_iron = [[reader readElementWithXmlName:x_element_iron asClass:[HVWeightMeasurement class]] retain];
+    m_magnesium = [[reader readElementWithXmlName:x_element_magnesium asClass:[HVWeightMeasurement class]] retain];
+    m_phosphorus = [[reader readElementWithXmlName:x_element_phosphorus asClass:[HVWeightMeasurement class]] retain];
+    m_potassium = [[reader readElementWithXmlName:x_element_potassium asClass:[HVWeightMeasurement class]] retain];
+    m_zinc = [[reader readElementWithXmlName:x_element_zinc asClass:[HVWeightMeasurement class]] retain];
     
-    HVDESERIALIZE_X(m_vitaminA, x_element_vitaminA, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_vitaminE, x_element_vitaminE, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_vitaminD, x_element_vitaminD, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_vitaminC, x_element_vitaminC, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_thiamin, x_element_thiamin, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_riboflavin, x_element_riboflavin, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_niacin, x_element_niacin, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_vitaminB6, x_element_vitaminB6, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_folate, x_element_folate, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_vitaminB12, x_element_vitaminB12, HVWeightMeasurement);
-    HVDESERIALIZE_X(m_vitaminK, x_element_vitaminK, HVWeightMeasurement);
+    m_vitaminA = [[reader readElementWithXmlName:x_element_vitaminA asClass:[HVWeightMeasurement class]] retain];
+    m_vitaminE = [[reader readElementWithXmlName:x_element_vitaminE asClass:[HVWeightMeasurement class]] retain];
+    m_vitaminD = [[reader readElementWithXmlName:x_element_vitaminD asClass:[HVWeightMeasurement class]] retain];
+    m_vitaminC = [[reader readElementWithXmlName:x_element_vitaminC asClass:[HVWeightMeasurement class]] retain];
+    m_thiamin = [[reader readElementWithXmlName:x_element_thiamin asClass:[HVWeightMeasurement class]] retain];
+    m_riboflavin = [[reader readElementWithXmlName:x_element_riboflavin asClass:[HVWeightMeasurement class]] retain];
+    m_niacin = [[reader readElementWithXmlName:x_element_niacin asClass:[HVWeightMeasurement class]] retain];
+    m_vitaminB6 = [[reader readElementWithXmlName:x_element_vitaminB6 asClass:[HVWeightMeasurement class]] retain];
+    m_folate = [[reader readElementWithXmlName:x_element_folate asClass:[HVWeightMeasurement class]] retain];
+    m_vitaminB12 = [[reader readElementWithXmlName:x_element_vitaminB12 asClass:[HVWeightMeasurement class]] retain];
+    m_vitaminK = [[reader readElementWithXmlName:x_element_vitaminK asClass:[HVWeightMeasurement class]] retain];
     
-    HVDESERIALIZE(m_additionalFacts, c_element_additionalFacts, HVAdditionalNutritionFacts);
+    m_additionalFacts = [[reader readElement:c_element_additionalFacts asClass:[HVAdditionalNutritionFacts class]] retain];
 }
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_foodItem, x_element_foodItem);
-    HVSERIALIZE_X(m_servingSize, x_element_servingSize);
-    HVSERIALIZE_X(m_servingsConsumed, x_element_servingsConsumed);
-    HVSERIALIZE_X(m_meal, x_element_meal);
+    [writer writeElementXmlName:x_element_foodItem content:m_foodItem];
+    [writer writeElementXmlName:x_element_servingSize content:m_servingSize];
+    [writer writeElementXmlName:x_element_servingsConsumed content:m_servingsConsumed];
+    [writer writeElementXmlName:x_element_meal content:m_meal];
     
-    HVSERIALIZE_X(m_when, x_element_when);
+    [writer writeElementXmlName:x_element_when content:m_when];
     
-    HVSERIALIZE_X(m_calories, x_element_calories);
-    HVSERIALIZE_X(m_caloriesFromFat, x_element_energyFat);
-    HVSERIALIZE_X(m_totalFat, x_element_totalFat);
-    HVSERIALIZE_X(m_saturatedFat, x_element_saturatedFat);
-    HVSERIALIZE_X(m_transFat, x_element_transFat);
-    HVSERIALIZE_X(m_monoUnsaturatedFat, x_element_monounsaturatedFat);
-    HVSERIALIZE_X(m_polyUnsaturatedFat, x_element_polyunsaturatedFat);
+    [writer writeElementXmlName:x_element_calories content:m_calories];
+    [writer writeElementXmlName:x_element_energyFat content:m_caloriesFromFat];
+    [writer writeElementXmlName:x_element_totalFat content:m_totalFat];
+    [writer writeElementXmlName:x_element_saturatedFat content:m_saturatedFat];
+    [writer writeElementXmlName:x_element_transFat content:m_transFat];
+    [writer writeElementXmlName:x_element_monounsaturatedFat content:m_monoUnsaturatedFat];
+    [writer writeElementXmlName:x_element_polyunsaturatedFat content:m_polyUnsaturatedFat];
     
-    HVSERIALIZE_X(m_protein, x_element_protein);
-    HVSERIALIZE_X(m_carbs, x_element_carbs);
-    HVSERIALIZE_X(m_fiber, x_element_fiber);
-    HVSERIALIZE_X(m_sugar, x_element_sugars);
-    HVSERIALIZE_X(m_sodium, x_element_sodium);
-    HVSERIALIZE_X(m_cholesterol, x_element_cholesterol);
+    [writer writeElementXmlName:x_element_protein content:m_protein];
+    [writer writeElementXmlName:x_element_carbs content:m_carbs];
+    [writer writeElementXmlName:x_element_fiber content:m_fiber];
+    [writer writeElementXmlName:x_element_sugars content:m_sugar];
+    [writer writeElementXmlName:x_element_sodium content:m_sodium];
+    [writer writeElementXmlName:x_element_cholesterol content:m_cholesterol];
     
-    HVSERIALIZE_X(m_calcium, x_element_calcium);
-    HVSERIALIZE_X(m_iron, x_element_iron);
-    HVSERIALIZE_X(m_magnesium, x_element_magnesium);
-    HVSERIALIZE_X(m_phosphorus, x_element_phosphorus);
-    HVSERIALIZE_X(m_potassium, x_element_potassium);
-    HVSERIALIZE_X(m_zinc, x_element_zinc);
+    [writer writeElementXmlName:x_element_calcium content:m_calcium];
+    [writer writeElementXmlName:x_element_iron content:m_iron];
+    [writer writeElementXmlName:x_element_magnesium content:m_magnesium];
+    [writer writeElementXmlName:x_element_phosphorus content:m_phosphorus];
+    [writer writeElementXmlName:x_element_potassium content:m_potassium];
+    [writer writeElementXmlName:x_element_zinc content:m_zinc];
     
-    HVSERIALIZE_X(m_vitaminA, x_element_vitaminA);
-    HVSERIALIZE_X(m_vitaminE, x_element_vitaminE);
-    HVSERIALIZE_X(m_vitaminD, x_element_vitaminD);
-    HVSERIALIZE_X(m_vitaminC, x_element_vitaminC);
-    HVSERIALIZE_X(m_thiamin, x_element_thiamin);
-    HVSERIALIZE_X(m_riboflavin, x_element_riboflavin);
-    HVSERIALIZE_X(m_niacin, x_element_niacin);
-    HVSERIALIZE_X(m_vitaminB6, x_element_vitaminB6);
-    HVSERIALIZE_X(m_folate, x_element_folate);
-    HVSERIALIZE_X(m_vitaminB12, x_element_vitaminB12);
-    HVSERIALIZE_X(m_vitaminK, x_element_vitaminK);
+    [writer writeElementXmlName:x_element_vitaminA content:m_vitaminA];
+    [writer writeElementXmlName:x_element_vitaminE content:m_vitaminE];
+    [writer writeElementXmlName:x_element_vitaminD content:m_vitaminD];
+    [writer writeElementXmlName:x_element_vitaminC content:m_vitaminC];
+    [writer writeElementXmlName:x_element_thiamin content:m_thiamin];
+    [writer writeElementXmlName:x_element_riboflavin content:m_riboflavin];
+    [writer writeElementXmlName:x_element_niacin content:m_niacin];
+    [writer writeElementXmlName:x_element_vitaminB6 content:m_vitaminB6];
+    [writer writeElementXmlName:x_element_folate content:m_folate];
+    [writer writeElementXmlName:x_element_vitaminB12 content:m_vitaminB12];
+    [writer writeElementXmlName:x_element_vitaminK content:m_vitaminK];
     
-    HVSERIALIZE(m_additionalFacts, c_element_additionalFacts);
+    [writer writeElement:c_element_additionalFacts content:m_additionalFacts];
 }
 
 +(NSString *)typeID

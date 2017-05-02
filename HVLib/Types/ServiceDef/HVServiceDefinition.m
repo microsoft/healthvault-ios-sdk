@@ -42,18 +42,18 @@ static const xmlChar* x_element_instance = XMLSTRINGCONST("instances");
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_platform, x_element_platform, HVPlatformInfo);
-    HVDESERIALIZE_X(m_shell, x_element_shell, HVShellInfo);
-    HVDESERIALIZE_IGNORE(@"xml-method");
-    HVDESERIALIZE_IGNORE(@"common-schema");
-    HVDESERIALIZE_X(m_instances, x_element_instance, HVSystemInstances);
+    m_platform = [[reader readElementWithXmlName:x_element_platform asClass:[HVPlatformInfo class]] retain];
+    m_shell = [[reader readElementWithXmlName:x_element_shell asClass:[HVShellInfo class]] retain];
+    [reader skipElement:@"xml-method"];
+    [reader skipElement:@"common-schema"];
+    m_instances = [[reader readElementWithXmlName:x_element_instance asClass:[HVSystemInstances class]] retain];
 }
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_platform, x_element_platform);
-    HVSERIALIZE_X(m_shell, x_element_shell);
-    HVSERIALIZE_X(m_instances, x_element_instance);
+    [writer writeElementXmlName:x_element_platform content:m_platform];
+    [writer writeElementXmlName:x_element_shell content:m_shell];
+    [writer writeElementXmlName:x_element_instance content:m_instances];
 }
 
 @end
@@ -86,8 +86,8 @@ static NSString* const c_element_section = @"section";
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_DATE(m_updatedSince, c_element_updated);
-    HVSERIALIZE_ARRAYNESTED(m_sections, c_element_sections, c_element_section);
+    [writer writeElement:c_element_updated dateValue:m_updatedSince];
+    [writer writeElementArray:c_element_sections itemName:c_element_section elements:m_sections];
 }
 
 @end

@@ -125,22 +125,33 @@ static NSString* const c_element_instanceID = @"instanceID";
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_name, c_element_name);
-    HVSERIALIZE_STRING(m_friendlyName, c_element_friendlyName);
-    HVSERIALIZE_URL(m_serviceUrl, c_element_serviceUrl);
-    HVSERIALIZE_URL(m_shellUrl, c_element_shellUrl);
-    HVSERIALIZE_STRING(m_instanceID, c_element_instanceID);
-    HVSERIALIZE_RAW(m_appData);
+    [writer writeElement:c_element_name value:m_name];
+    [writer writeElement:c_element_friendlyName value:m_friendlyName];
+    [writer writeElement:c_element_serviceUrl value:m_serviceUrl.absoluteString];
+    [writer writeElement:c_element_shellUrl value:m_shellUrl.absoluteString];
+    [writer writeElement:c_element_instanceID value:m_instanceID];
+    [writer writeRaw:m_appData];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_name, c_element_name);
-    HVDESERIALIZE_STRING(m_friendlyName, c_element_friendlyName);
-    HVDESERIALIZE_URL(m_serviceUrl, c_element_serviceUrl);
-    HVDESERIALIZE_URL(m_shellUrl, c_element_shellUrl);
-    HVDESERIALIZE_STRING(m_instanceID, c_element_instanceID);
-    HVDESERIALIZE_RAW(m_appData, c_element_appData);
+    m_name = [[reader readStringElement:c_element_name] retain];
+    m_friendlyName = [[reader readStringElement:c_element_friendlyName] retain];
+    
+    NSString* serviceUrlString = [reader readStringElement:c_element_serviceUrl];
+    if (serviceUrlString)
+    {
+        m_serviceUrl = [[NSURL alloc] initWithString:serviceUrlString];
+    }
+    
+    NSString* shellUrlString = [reader readStringElement:c_element_shellUrl];
+    if (shellUrlString)
+    {
+        m_shellUrl = [[NSURL alloc] initWithString:shellUrlString];
+    }
+    
+    m_instanceID = [[reader readStringElement:c_element_instanceID] retain];
+    m_appData = [[reader readElementRaw:c_element_appData] retain];
 }
 
 +(HVEnvironmentSettings *)fromInstance:(HVInstance *)instance
@@ -311,46 +322,46 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_BOOL(m_debug, c_element_debug);
-    HVSERIALIZE_STRING(m_appID, c_element_appID);
-    HVSERIALIZE_STRING(m_appName, c_element_appName);
-    HVSERIALIZE_BOOL(m_isMultiInstanceAware, c_element_multiInstance);
-    HVSERIALIZE_ARRAY(m_environments, c_element_environment);
-    HVSERIALIZE_STRING(m_deviceName, c_element_deviceName);
-    HVSERIALIZE_STRING(m_country, c_element_language);
-    HVSERIALIZE_STRING(m_language, c_element_language);
-    HVSERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
-    HVSERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
-    HVSERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
-    HVSERIALIZE_INT((int)m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
-    HVSERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
-    HVSERIALIZE_DOUBLE(m_autoRequestDelay, c_element_autoRequestDelay);
+    [writer writeElement:c_element_debug boolValue:m_debug];
+    [writer writeElement:c_element_appID value:m_appID];
+    [writer writeElement:c_element_appName value:m_appName];
+    [writer writeElement:c_element_multiInstance boolValue:m_isMultiInstanceAware];
+    [writer writeElementArray:c_element_environment elements:m_environments];
+    [writer writeElement:c_element_deviceName value:m_deviceName];
+    [writer writeElement:c_element_language value:m_country];
+    [writer writeElement:c_element_language value:m_language];
+    [writer writeElement:c_element_signinTitle value:m_signInTitle];
+    [writer writeElement:c_element_signinRetryMessage value:m_signInRetryMessage];
+    [writer writeElement:c_element_httpTimeout doubleValue:m_httpTimeout];
+    [writer writeElement:c_element_maxAttemptsPerRequest intValue:(int)m_maxAttemptsPerRequest];
+    [writer writeElement:c_element_useCachingInStore boolValue:m_useCachingInStore];
+    [writer writeElement:c_element_autoRequestDelay doubleValue:m_autoRequestDelay];
     
-    HVSERIALIZE_RAW(m_appData);
+    [writer writeRaw:m_appData];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_BOOL(m_debug, c_element_debug);
-    HVDESERIALIZE_STRING(m_appID, c_element_appID);
-    HVDESERIALIZE_STRING(m_appName, c_element_appName);
-    HVDESERIALIZE_BOOL(m_isMultiInstanceAware, c_element_multiInstance);
+    m_debug = [reader readBoolElement:c_element_debug];
+    m_appID = [[reader readStringElement:c_element_appID] retain];
+    m_appName = [[reader readStringElement:c_element_appName] retain];
+    m_isMultiInstanceAware = [reader readBoolElement:c_element_multiInstance];
     
     NSMutableArray* environs = nil;
-    HVDESERIALIZE_ARRAY(environs, c_element_environment, HVEnvironmentSettings);
+    environs = [[reader readElementArray:c_element_environment asClass:[HVEnvironmentSettings class]] retain];
     self.environments = environs;
     
-    HVDESERIALIZE_STRING(m_deviceName, c_element_deviceName);
-    HVDESERIALIZE_STRING(m_country, c_element_country);
-    HVDESERIALIZE_STRING(m_language, c_element_language);
-    HVDESERIALIZE_STRING(m_signInTitle, c_element_signinTitle);
-    HVDESERIALIZE_STRING(m_signInRetryMessage, c_element_signinRetryMessage);
-    HVDESERIALIZE_DOUBLE(m_httpTimeout, c_element_httpTimeout);
-    HVDESERIALIZE_INT(m_maxAttemptsPerRequest, c_element_maxAttemptsPerRequest);
-    HVDESERIALIZE_BOOL(m_useCachingInStore, c_element_useCachingInStore);
-    HVDESERIALIZE_DOUBLE(m_autoRequestDelay, c_element_autoRequestDelay);
+    m_deviceName = [[reader readStringElement:c_element_deviceName] retain];
+    m_country = [[reader readStringElement:c_element_country] retain];
+    m_language = [[reader readStringElement:c_element_language] retain];
+    m_signInTitle = [[reader readStringElement:c_element_signinTitle] retain];
+    m_signInRetryMessage = [[reader readStringElement:c_element_signinRetryMessage] retain];
+    m_httpTimeout = [reader readDoubleElement:c_element_httpTimeout];
+    m_maxAttemptsPerRequest = [reader readIntElement:c_element_maxAttemptsPerRequest];
+    m_useCachingInStore = [reader readBoolElement:c_element_useCachingInStore];
+    m_autoRequestDelay = [reader readDoubleElement:c_element_autoRequestDelay];
     
-    HVDESERIALIZE_RAW(m_appData, c_element_appData);
+    m_appData = [[reader readElementRaw:c_element_appData] retain];
 }
 
 -(HVEnvironmentSettings *)environmentWithName:(NSString *)name

@@ -234,14 +234,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_kg, x_element_kg);
-    HVSERIALIZE_X(m_display, x_element_display);
+    [writer writeElementXmlName:x_element_kg content:m_kg];
+    [writer writeElementXmlName:x_element_display content:m_display];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_kg, x_element_kg, HVPositiveDouble);
-    HVDESERIALIZE_X(m_display, x_element_display, HVDisplayValue);
+    m_kg = [[reader readElementWithXmlName:x_element_kg asClass:[HVPositiveDouble class]] retain];
+    m_display = [[reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]] retain];
 }
 
 +(double) kgToPounds:(double)kg

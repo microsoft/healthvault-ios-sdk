@@ -61,7 +61,7 @@ LError:
 
 -(id)deserializeResponseBodyFromReader:(XReader *)reader
 {
-    return [reader readInnerXml];
+    return [[reader readInnerXml] retain];
 }
 
 @end

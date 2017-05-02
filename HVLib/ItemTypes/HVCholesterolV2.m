@@ -162,20 +162,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_ldl, x_element_ldl);
-    HVSERIALIZE_X(m_hdl, x_element_hdl);
-    HVSERIALIZE_X(m_total, x_element_total);
-    HVSERIALIZE_X(m_triglycerides, x_element_triglycerides);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_ldl content:m_ldl];
+    [writer writeElementXmlName:x_element_hdl content:m_hdl];
+    [writer writeElementXmlName:x_element_total content:m_total];
+    [writer writeElementXmlName:x_element_triglycerides content:m_triglycerides];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
-    HVDESERIALIZE_X(m_ldl, x_element_ldl, HVConcentrationValue);
-    HVDESERIALIZE_X(m_hdl, x_element_hdl, HVConcentrationValue);
-    HVDESERIALIZE_X(m_total, x_element_total, HVConcentrationValue);
-    HVDESERIALIZE_X(m_triglycerides, x_element_triglycerides, HVConcentrationValue);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_ldl = [[reader readElementWithXmlName:x_element_ldl asClass:[HVConcentrationValue class]] retain];
+    m_hdl = [[reader readElementWithXmlName:x_element_hdl asClass:[HVConcentrationValue class]] retain];
+    m_total = [[reader readElementWithXmlName:x_element_total asClass:[HVConcentrationValue class]] retain];
+    m_triglycerides = [[reader readElementWithXmlName:x_element_triglycerides asClass:[HVConcentrationValue class]] retain];
 }
 
 +(NSString *)typeID

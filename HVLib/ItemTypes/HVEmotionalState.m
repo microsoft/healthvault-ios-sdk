@@ -205,18 +205,18 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_mood, x_element_mood);
-    HVSERIALIZE_X(m_stress, x_element_stress);
-    HVSERIALIZE_X(m_wellbeing, x_element_wellbeing);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_mood content:m_mood];
+    [writer writeElementXmlName:x_element_stress content:m_stress];
+    [writer writeElementXmlName:x_element_wellbeing content:m_wellbeing];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
-    HVDESERIALIZE_X(m_mood, x_element_mood, HVOneToFive);
-    HVDESERIALIZE_X(m_stress, x_element_stress, HVOneToFive);
-    HVDESERIALIZE_X(m_wellbeing, x_element_wellbeing, HVOneToFive);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_mood = [[reader readElementWithXmlName:x_element_mood asClass:[HVOneToFive class]] retain];
+    m_stress = [[reader readElementWithXmlName:x_element_stress asClass:[HVOneToFive class]] retain];
+    m_wellbeing = [[reader readElementWithXmlName:x_element_wellbeing asClass:[HVOneToFive class]] retain];
 }
 
 

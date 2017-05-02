@@ -82,14 +82,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_vocabIDs, c_element_vocabkey);
-    HVSERIALIZE_BOOL(m_fixedCulture, c_element_culture);
+    [writer writeElementArray:c_element_vocabkey elements:m_vocabIDs];
+    [writer writeElement:c_element_culture boolValue:m_fixedCulture];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_vocabIDs, c_element_vocabkey, HVVocabIdentifier, HVVocabIdentifierCollection);
-    HVDESERIALIZE_BOOL(m_fixedCulture, c_element_culture);
+    m_vocabIDs = (HVVocabIdentifierCollection *)[[reader readElementArray:c_element_vocabkey asClass:[HVVocabIdentifier class] andArrayClass:[HVVocabIdentifierCollection class]] retain];
+    m_fixedCulture = [reader readBoolElement:c_element_culture];
 }
 
 @end

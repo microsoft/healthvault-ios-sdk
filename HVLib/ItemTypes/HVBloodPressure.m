@@ -164,23 +164,23 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_systolic, x_element_systolic);
-    HVSERIALIZE_X(m_diastolic, x_element_diastolic);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_systolic content:m_systolic];
+    [writer writeElementXmlName:x_element_diastolic content:m_diastolic];
     
-    HVSERIALIZE_X(m_pulse, x_element_pulse);
-    HVSERIALIZE_X(m_heartbeat, x_element_heartbeat);
+    [writer writeElementXmlName:x_element_pulse content:m_pulse];
+    [writer writeElementXmlName:x_element_heartbeat content:m_heartbeat];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
     
-    HVDESERIALIZE_X(m_systolic, x_element_systolic, HVNonNegativeInt);
-    HVDESERIALIZE_X(m_diastolic, x_element_diastolic, HVNonNegativeInt);
+    m_systolic = [[reader readElementWithXmlName:x_element_systolic asClass:[HVNonNegativeInt class]] retain];
+    m_diastolic = [[reader readElementWithXmlName:x_element_diastolic asClass:[HVNonNegativeInt class]] retain];
     
-    HVDESERIALIZE_X(m_pulse, x_element_pulse, HVNonNegativeInt);
-    HVDESERIALIZE_X(m_heartbeat, x_element_heartbeat, HVBool);
+    m_pulse = [[reader readElementWithXmlName:x_element_pulse asClass:[HVNonNegativeInt class]] retain];
+    m_heartbeat = [[reader readElementWithXmlName:x_element_heartbeat asClass:[HVBool class]] retain];
 }
 
 +(NSString *) typeID

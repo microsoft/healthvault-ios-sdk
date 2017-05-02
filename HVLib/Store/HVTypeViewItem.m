@@ -160,7 +160,7 @@ LError:
     if (m_date)
     {
         double timespan = (double) [m_date timeIntervalSinceReferenceDate];
-        HVSERIALIZE_DOUBLE_X(timespan, x_element_dateShort);
+        [writer writeElementXmlName:x_element_dateShort doubleValue:timespan];
     }
 }
 

@@ -38,12 +38,12 @@ static NSString* const c_element_vocab = @"vocabulary";
 
 -(void)serialize:(XWriter *)writer  
 {
-    HVSERIALIZE_ARRAY(m_vocabs, c_element_vocab);
+    [writer writeElementArray:c_element_vocab elements:m_vocabs];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_vocabs, c_element_vocab, HVVocabCodeSet, HVVocabSetCollection);
+    m_vocabs = (HVVocabSetCollection *)[[reader readElementArray:c_element_vocab asClass:[HVVocabCodeSet class] andArrayClass:[HVVocabSetCollection class]] retain];
 }
 
 @end

@@ -68,22 +68,22 @@ LError:
 
 -(void) serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE(m_name, c_attribute_name);
+    [writer writeAttribute:c_attribute_name value:m_name];
 }
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_TEXT(m_typeID);
+    [writer writeText:m_typeID];
 }
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE(m_name, c_attribute_name);
+    m_name = [[reader readAttribute:c_attribute_name] retain];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TEXT(m_typeID);
+    m_typeID = [[reader readValue] retain];
     reader.context = self;
 }
 

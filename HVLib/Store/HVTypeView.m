@@ -814,26 +814,26 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_typeID, c_element_typeID);
-    HVSERIALIZE(m_filter, c_element_filter);
-    HVSERIALIZE_DATE(m_lastUpdateDate, c_element_updateDate);
-    HVSERIALIZE(m_items, c_element_items);
-    HVSERIALIZE_INT((int)m_readAheadChunkSize, c_element_chunkSize);
-    HVSERIALIZE_INT((int)m_maxItems, c_element_maxItems);
+    [writer writeElement:c_element_typeID value:m_typeID];
+    [writer writeElement:c_element_filter content:m_filter];
+    [writer writeElement:c_element_updateDate dateValue:m_lastUpdateDate];
+    [writer writeElement:c_element_items content:m_items];
+    [writer writeElement:c_element_chunkSize intValue:(int)m_readAheadChunkSize];
+    [writer writeElement:c_element_maxItems intValue:(int)m_maxItems];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_typeID, c_element_typeID);
-    HVDESERIALIZE(m_filter, c_element_filter, HVItemFilter);
-    HVDESERIALIZE_DATE(m_lastUpdateDate, c_element_updateDate);
-    HVDESERIALIZE(m_items, c_element_items, HVTypeViewItems);
-    HVDESERIALIZE_INT(m_readAheadChunkSize, c_element_chunkSize);
+    m_typeID = [[reader readStringElement:c_element_typeID] retain];
+    m_filter = [[reader readElement:c_element_filter asClass:[HVItemFilter class]] retain];
+    m_lastUpdateDate = [[reader readDateElement:c_element_updateDate] retain];
+    m_items = [[reader readElement:c_element_items asClass:[HVTypeViewItems class]] retain];
+    m_readAheadChunkSize = [reader readIntElement:c_element_chunkSize];
     if (m_readAheadChunkSize <= 0)
     {
         m_readAheadChunkSize = c_hvTypeViewDefaultReadAheadChunkSize;
     }
-    HVDESERIALIZE_INT(m_maxItems, c_element_maxItems);
+    m_maxItems = [reader readIntElement:c_element_maxItems];
 }
 
 -(HVTypeView *)subviewForRange:(NSRange)range

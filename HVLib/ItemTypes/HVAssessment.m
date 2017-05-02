@@ -91,18 +91,18 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE_STRING(m_name, c_element_name);
-    HVSERIALIZE(m_category, c_element_category);
-    HVSERIALIZE_ARRAY(m_results, c_element_result);
+    [writer writeElement:c_element_when content:m_when];
+    [writer writeElement:c_element_name value:m_name];
+    [writer writeElement:c_element_category content:m_category];
+    [writer writeElementArray:c_element_result elements:m_results];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE_STRING(m_name, c_element_name);
-    HVDESERIALIZE(m_category, c_element_category, HVCodableValue);
-    HVDESERIALIZE_TYPEDARRAY(m_results, c_element_result, HVAssessmentField, HVAssessmentFieldCollection);
+    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
+    m_name = [[reader readStringElement:c_element_name] retain];
+    m_category = [[reader readElement:c_element_category asClass:[HVCodableValue class]] retain];
+    m_results = (HVAssessmentFieldCollection *)[[reader readElementArray:c_element_result asClass:[HVAssessmentField class] andArrayClass:[HVAssessmentFieldCollection class]] retain];
 }
 
 +(NSString *)typeID

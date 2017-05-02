@@ -184,14 +184,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_descriptive, c_element_descriptive);
-    HVSERIALIZE(m_dateTime, c_element_structured);
+    [writer writeElement:c_element_descriptive value:m_descriptive];
+    [writer writeElement:c_element_structured content:m_dateTime];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_descriptive, c_element_descriptive);
-    HVDESERIALIZE(m_dateTime, c_element_structured, HVDateTime);
+    m_descriptive = [[reader readStringElement:c_element_descriptive] retain];
+    m_dateTime = [[reader readElement:c_element_structured asClass:[HVDateTime class]] retain];
 }
 
 @end

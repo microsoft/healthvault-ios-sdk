@@ -291,18 +291,18 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_hours, x_element_hour);
-    HVSERIALIZE_X(m_minutes, x_element_minute);
-    HVSERIALIZE_X(m_seconds, x_element_second);
-    HVSERIALIZE_X(m_milliseconds, x_element_millis);
+    [writer writeElementXmlName:x_element_hour content:m_hours];
+    [writer writeElementXmlName:x_element_minute content:m_minutes];
+    [writer writeElementXmlName:x_element_second content:m_seconds];
+    [writer writeElementXmlName:x_element_millis content:m_milliseconds];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_hours, x_element_hour, HVHour);
-    HVDESERIALIZE_X(m_minutes, x_element_minute, HVMinute);
-    HVDESERIALIZE_X(m_seconds, x_element_second, HVSecond);
-    HVDESERIALIZE_X(m_milliseconds, x_element_millis, HVMillisecond);
+    m_hours = [[reader readElementWithXmlName:x_element_hour asClass:[HVHour class]] retain];
+    m_minutes = [[reader readElementWithXmlName:x_element_minute asClass:[HVMinute class]] retain];
+    m_seconds = [[reader readElementWithXmlName:x_element_second asClass:[HVSecond class]] retain];
+    m_milliseconds = [[reader readElementWithXmlName:x_element_millis asClass:[HVMillisecond class]] retain];
 }
 
 @end

@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import <libxml/tree.h>
-#import <libxml/XmlReader.h>
+#import <libxml/xmlreader.h>
 #import "HVStringExtensions.h"
 #import "XNodeType.h"
 #import "XString.h"

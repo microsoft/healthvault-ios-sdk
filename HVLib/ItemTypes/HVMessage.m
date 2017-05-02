@@ -140,24 +140,24 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_ARRAY(m_headers, c_element_headers);
-    HVSERIALIZE_X(m_size, x_element_size);
-    HVSERIALIZE_STRING_X(m_summary, x_element_summary);
-    HVSERIALIZE_STRING_X(m_htmlBlobName, x_element_htmlBlob);
-    HVSERIALIZE_STRING_X(m_textBlobName, x_element_textBlob);
-    HVSERIALIZE_ARRAY(m_attachments, c_element_attachments);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementArray:c_element_headers elements:m_headers];
+    [writer writeElementXmlName:x_element_size content:m_size];
+    [writer writeElementXmlName:x_element_summary value:m_summary];
+    [writer writeElementXmlName:x_element_htmlBlob value:m_htmlBlobName];
+    [writer writeElementXmlName:x_element_textBlob value:m_textBlobName];
+    [writer writeElementArray:c_element_attachments elements:m_attachments];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
-    HVDESERIALIZE_TYPEDARRAY(m_headers, c_element_headers, HVMessageHeaderItem, HVMessageHeaderItemCollection);
-    HVDESERIALIZE_X(m_size, x_element_size, HVPositiveInt);
-    HVDESERIALIZE_STRING_X(m_summary, x_element_summary);
-    HVDESERIALIZE_STRING_X(m_htmlBlobName, x_element_htmlBlob);
-    HVDESERIALIZE_STRING_X(m_textBlobName, x_element_textBlob);
-    HVDESERIALIZE_TYPEDARRAY(m_attachments, c_element_attachments, HVMessageAttachment, HVMessageAttachmentCollection);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_headers = (HVMessageHeaderItemCollection *)[[reader readElementArray:c_element_headers asClass:[HVMessageHeaderItem class] andArrayClass:[HVMessageHeaderItemCollection class]] retain];
+    m_size = [[reader readElementWithXmlName:x_element_size asClass:[HVPositiveInt class]] retain];
+    m_summary = [[reader readStringElementWithXmlName:x_element_summary] retain];
+    m_htmlBlobName = [[reader readStringElementWithXmlName:x_element_htmlBlob] retain];
+    m_textBlobName = [[reader readStringElementWithXmlName:x_element_textBlob] retain];
+    m_attachments = (HVMessageAttachmentCollection *)[[reader readElementArray:c_element_attachments asClass:[HVMessageAttachment class] andArrayClass:[HVMessageAttachmentCollection class]] retain];
 }
 
 +(NSString *)typeID

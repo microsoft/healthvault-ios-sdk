@@ -38,14 +38,14 @@ static NSString* const c_element_fact = @"fact";
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_fact, c_element_fact);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_fact content:m_fact];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVCodableValue);
-    HVDESERIALIZE(m_fact, c_element_fact, HVMeasurement);
+    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
+    m_fact = [[reader readElement:c_element_fact asClass:[HVMeasurement class]] retain];
 }
 
 @end
@@ -93,12 +93,12 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_facts, c_element_nutritionFact);
+    [writer writeElementArray:c_element_nutritionFact elements:m_facts];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_facts, c_element_nutritionFact, HVNutritionFact, HVNutritionFactCollection);
+    m_facts = (HVNutritionFactCollection *)[[reader readElementArray:c_element_nutritionFact asClass:[HVNutritionFact class] andArrayClass:[HVNutritionFactCollection class]] retain];
 }
 
 @end

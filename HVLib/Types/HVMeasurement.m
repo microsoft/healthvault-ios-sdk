@@ -123,14 +123,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_DOUBLE_X(m_value, x_element_value);
-    HVSERIALIZE_X(m_units, x_element_units);
+    [writer writeElementXmlName:x_element_value doubleValue:m_value];
+    [writer writeElementXmlName:x_element_units content:m_units];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_DOUBLE_X(m_value, x_element_value);
-    HVDESERIALIZE_X(m_units, x_element_units, HVCodableValue);
+    m_value = [reader readDoubleElementXmlName:x_element_value];
+    m_units = [[reader readElementWithXmlName:x_element_units asClass:[HVCodableValue class]] retain];
 }
 
 @end
