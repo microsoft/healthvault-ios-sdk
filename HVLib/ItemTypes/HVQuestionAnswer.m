@@ -40,7 +40,7 @@ static NSString* const c_element_answer = @"answer";
 
 -(void)setAnswerChoices:(HVCodableValueCollection *)answerChoices
 {
-    HVRETAIN(m_answerChoices, answerChoices);
+    m_answerChoices = [answerChoices retain];
 }
 
 -(HVCodableValueCollection *)answers
@@ -51,7 +51,7 @@ static NSString* const c_element_answer = @"answer";
 
 -(void)setAnswers:(HVCodableValueCollection *)answers
 {
-    HVRETAIN(m_answers, answers);
+    m_answers = [answers retain];
 }
 
 -(HVCodableValue *)firstAnswer
@@ -147,9 +147,6 @@ LError:
     HVVALIDATE_ARRAYOPTIONAL(m_answers, HVClientError_InvalidQuestionAnswer);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

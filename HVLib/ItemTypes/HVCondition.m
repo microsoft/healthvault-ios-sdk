@@ -91,9 +91,6 @@ LError:
     HVVALIDATE_STRINGOPTIONAL(m_stopReason, HVClientError_InvalidCondition);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

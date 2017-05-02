@@ -37,7 +37,7 @@ static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
 {
     if (isnan(caloriesValue))
     {
-        HVCLEAR(m_calories);
+        m_calories = nil;
     }
     else 
     {
@@ -71,7 +71,7 @@ LError:
 
 -(BOOL) updateDisplayText
 {
-    HVCLEAR(m_display);
+    m_display = nil;
     if (!m_calories)
     {
         return FALSE;
@@ -116,9 +116,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_display);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

@@ -42,7 +42,7 @@
     m_partitions = [[NSMutableDictionary alloc] init];
     HVCHECK_NOTNULL(m_partitions);
     
-    HVRETAIN(m_rootStore, root);
+    m_rootStore = [root retain];
     
     return self;
     

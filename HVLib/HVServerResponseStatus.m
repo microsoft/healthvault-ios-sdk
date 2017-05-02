@@ -169,8 +169,8 @@ LError:
 -(void)clear
 {
     m_statusCode = HVServerStatusCodeOK;
-    HVCLEAR(m_errorText);
-    HVCLEAR(m_errorDetails);
+    m_errorText = nil;
+    m_errorDetails = nil;
     m_webStatusCode = 0;
 }
 

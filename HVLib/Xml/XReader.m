@@ -219,7 +219,7 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
     
     if (converter)
     {
-        HVRETAIN(m_converter, converter);
+        m_converter = [converter retain];
     }
     else
     {
@@ -449,29 +449,33 @@ LError:
 {
     enum XNodeType type;
     
-LNext:
-    type = self.nodeType;
-    switch(type)
+    BOOL loop = YES;
+    while (loop)
     {
-        case XElement:
-        case XText:
-        case XCDATA:
-        case XEntityRef:
-        case XEntityDeclaration:
-        case XEndElement:
-        case XEndEntity:
-            break;
-        
-        case XAttribute:
-            [self moveToElement];
-            break;
-            
-        default:
-            if ([self read])
-            {
-                goto LNext;
-            }
-            break;
+        loop = NO;
+        type = self.nodeType;
+        switch(type)
+        {
+            case XElement:
+            case XText:
+            case XCDATA:
+            case XEntityRef:
+            case XEntityDeclaration:
+            case XEndElement:
+            case XEndEntity:
+                break;
+                
+            case XAttribute:
+                [self moveToElement];
+                break;
+                
+            default:
+                if ([self read])
+                {
+                    loop = YES;
+                }
+                break;
+        }
     }
     
     return type;
@@ -501,13 +505,18 @@ LNext:
 
 -(BOOL) readStartElementWithName:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    if ([NSString isNilOrEmpty:name])
+    {
+        [XException throwException:XExceptionElementMismatch reason:name fromReader:m_reader];
+        return FALSE;
+    }
     
     [self ensureStartElement];
      
     if (!self.localName || ![name isEqualToString:self.localName])
     {
-        goto LError;
+        [XException throwException:XExceptionElementMismatch reason:name fromReader:m_reader];
+        return FALSE;
     }
     
     BOOL hasEndTag = ![self isEmptyElement];
@@ -515,27 +524,35 @@ LNext:
     [self read];
     
     return hasEndTag;
-
-LError:
-    [XException throwException:XExceptionElementMismatch reason:name fromReader:m_reader];
-    return FALSE;
 }
 
 -(BOOL) readStartElementWithName:(NSString *)name NS:(NSString *)ns
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(ns);
+    if ([NSString isNilOrEmpty:name] ||
+        [NSString isNilOrEmpty:ns])
+    {
+        [XException throwException:XExceptionElementMismatch
+                            reason:[NSString stringWithFormat:@"%@ %@", name, ns]
+                        fromReader:m_reader];
+        return FALSE;
+    }
     
     [self ensureStartElement];
  
     if (!self.localName || ![name isEqualToString:self.localName])
     {
-        goto LError;
+        [XException throwException:XExceptionElementMismatch
+                            reason:[NSString stringWithFormat:@"%@ %@", name, ns]
+                        fromReader:m_reader];
+        return FALSE;
     }
 
     if (!self.namespaceUri || ![ns isEqualToString:self.namespaceUri])
     {
-        goto LError;
+        [XException throwException:XExceptionElementMismatch
+                            reason:[NSString stringWithFormat:@"%@ %@", name, ns]
+                        fromReader:m_reader];
+        return FALSE;
     }
     
     BOOL hasEndTag = ![self isEmptyElement];
@@ -543,24 +560,23 @@ LError:
     [self read];
     
     return hasEndTag;
-    
-LError:
-    [XException throwException:XExceptionElementMismatch 
-                        reason:[NSString stringWithFormat:@"%@ %@", name, ns] 
-                    fromReader:m_reader];
-    return FALSE;
 }
 
 -(BOOL)readStartElementWithXmlName:(const xmlChar *)xName
 {
-    HVCHECK_NOTNULL(xName);
+    if (!xName)
+    {
+        [XException throwException:XExceptionElementMismatch xmlReason:xName fromReader:m_reader];
+        return NO;
+    }
     
     [self ensureStartElement];
  
     const xmlChar* rawName = self.localNameRaw;
     if (!rawName || !xmlStrEqual(rawName, xName))
     {
-        goto LError;
+        [XException throwException:XExceptionElementMismatch xmlReason:xName fromReader:m_reader];
+        return NO;
     }
     
     BOOL hasEndTag = ![self isEmptyElement];
@@ -568,10 +584,6 @@ LError:
     [self read];
     
     return hasEndTag;
-    
-LError:
-    [XException throwException:XExceptionElementMismatch xmlReason:xName fromReader:m_reader];
-    return FALSE;    
 }
 
 -(void) readEndElement
@@ -647,16 +659,16 @@ LError:
 -(id)initWithCreatedReader:(xmlTextReader *)reader withConverter:(XConverter *)converter
 {
     self = [self initWithReader:reader andConverter:converter];
-    HVCHECK_SELF;
+    if (!self)
+    {
+        if (reader)
+        {
+            xmlFreeTextReader(reader);
+        }
+        return nil;
+    }
     
     return self;
-    
-LError:
-    if (reader)
-    {
-        xmlFreeTextReader(reader);
-    }
-    HVALLOC_FAIL;    
 }
 
 -(void) ensureStartElement

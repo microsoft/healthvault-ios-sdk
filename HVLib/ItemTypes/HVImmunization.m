@@ -144,9 +144,6 @@ LError:
     HVVALIDATE_STRINGOPTIONAL(m_consent, HVClientError_InvalidImmunization);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

@@ -61,9 +61,6 @@ static NSString* const c_element_site = @"website";
     HVVALIDATE_STRINGOPTIONAL(m_webSite, HVClientError_InvalidOrganization);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

@@ -95,8 +95,8 @@
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_mgr, mgr);
-    HVRETAIN(m_queue, queue);
+    m_mgr = [mgr retain];
+    m_queue = [queue retain];
     
     self.name = @"HVItemChangeQueueProcess";
     self.stateID = HVItemChangeQueueProcessStateStart;
@@ -205,7 +205,7 @@ LError:
                 }
                 ++m_committedCount;
                 
-                HVRETAIN(m_current, change);
+                m_current = [change retain];
                 if ((commitTask = [self commitChange]) != nil)
                 {
                     return commitTask;
@@ -240,7 +240,7 @@ LError:
 
 -(HVTask *)commitChange
 {
-    HVCLEAR(m_commit);
+    m_commit = nil;
     
     m_commit = [[HVItemChangeCommit alloc] initWithChangeManager:m_mgr andChange:m_current];
     HVCHECK_NOTNULL(m_commit);
@@ -282,14 +282,14 @@ LError:
 
 -(BOOL)acquireLockForChange:(HVItemChange *)change
 {
-    HVCLEAR(m_lock);
+    m_lock = nil;
     m_lock = [m_mgr.locks newAutoLockForKey:change.itemID];
     return (m_lock != nil);
 }
 
 -(void)releaseLockForChange:(HVItemChange *)change
 {
-    HVCLEAR(m_lock);
+    m_lock = nil;
 }
 
 -(BOOL)handleException:(id)ex shouldDequeue:(BOOL *)dequeue
@@ -318,9 +318,9 @@ LError:
 
 -(void)clear
 {
-    HVCLEAR(m_lock);
-    HVCLEAR(m_current);
-    HVCLEAR(m_commit);
+    m_lock = nil;
+    m_current = nil;
+    m_commit = nil;
 }
 
 @end
@@ -351,9 +351,9 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_mgr, mgr);
-    HVRETAIN(m_change, change);
-    HVRETAIN(m_methodFactory, [HVClient current].methodFactory);
+    m_mgr = [mgr retain];
+    m_change = [change retain];
+    m_methodFactory = [[HVClient current].methodFactory retain];
     
     self.name = @"HVItemChangeCommit";
     self.stateID = HVItemChangeCommitStateStart;
@@ -528,7 +528,7 @@ LError:
 
 -(HVTask *)state_new
 {
-    HVItemCollection* items = [[[HVItemCollection alloc] initwithItem:m_change.localItem] autorelease];
+    HVItemCollection* items = [[[HVItemCollection alloc] initWithItem:m_change.localItem] autorelease];
     HVCHECK_NOTNULL(items);
    
     [items prepareForNew];
@@ -593,7 +593,7 @@ LError:
 
 -(HVTask *)state_put
 {
-    HVItemCollection* items = [[[HVItemCollection alloc] initwithItem:m_change.localItem] autorelease];
+    HVItemCollection* items = [[[HVItemCollection alloc] initWithItem:m_change.localItem] autorelease];
     HVCHECK_NOTNULL(items);
     
     HVMethodFactory* methods = [HVClient current].methodFactory;
@@ -681,7 +681,7 @@ HVDEFINE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
 {
     if (errorHandler)
     {
-        HVRETAIN(m_errorHandler, errorHandler);
+        m_errorHandler = [errorHandler retain];
     }
 }
 
@@ -715,8 +715,8 @@ HVDEFINE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_record, record);
-    HVRETAIN(m_data, data);
+    m_record = [record retain];
+    m_data = [data retain];
 
     HVCHECK_SUCCESS([self ensureChangeTable:store]);
     
@@ -825,18 +825,22 @@ LError:
     HVItemChangeQueue* queue = [m_changeTable getQueue];
     
     HVItemChangeQueueProcess* queueProcessor = [[[HVItemChangeQueueProcess alloc] initWithChangeManager:self andQueue:queue] autorelease];
-    HVCHECK_NOTNULL(queueProcessor);
+    if (!queueProcessor)
+    {
+        [m_status completeWork];
+        return nil;
+    }
     
     HVTask* task = [HVTaskStateMachine newRunTaskFor:queueProcessor callback:callback];
     task.taskName = @"QueueProcessorStateMachine";
     
-    HVCHECK_NOTNULL(task);
+    if (!task)
+    {
+        [m_status completeWork];
+        return nil;
+    }
     
     return task;
-    
-LError:
-    [m_status completeWork];
-    return nil;
 }
 
 -(HVAutoLock *)newAutoLockForItemKey:(HVItemKey *)key

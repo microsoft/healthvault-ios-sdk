@@ -73,9 +73,6 @@ static NSString* const c_element_uiculture = @"preferred-uiculture";
     HVVALIDATE_ARRAY(m_records, HVClientError_InvalidPersonInfo);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

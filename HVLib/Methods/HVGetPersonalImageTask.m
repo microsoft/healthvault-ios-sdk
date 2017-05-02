@@ -43,7 +43,7 @@
     self = [super initWithCallback:callback];
     HVCHECK_SELF;
     
-    HVRETAIN(m_record, record);
+    m_record = [record retain];
     
     HVGetItemsTask* getItemsTask = [self newGetItemsTask:record];
     HVCHECK_NOTNULL(getItemsTask);

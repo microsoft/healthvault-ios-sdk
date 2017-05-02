@@ -144,7 +144,7 @@ LError:
 
 -(void)setObjectStore:(id<HVObjectStore>)store
 {
-    HVRETAIN(m_objectStore, store);
+    m_objectStore = [store retain];
 }
 
 @end

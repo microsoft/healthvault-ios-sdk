@@ -89,7 +89,7 @@ static NSString* const c_vocab_measurement = @"glucose-measurement-type";
 {
     if (normalcy == HVRelativeRating_None)
     {
-        HVCLEAR(m_normalcy);
+        m_normalcy = nil;
     }
     else 
     {
@@ -188,9 +188,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_context);
 
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

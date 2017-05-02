@@ -123,7 +123,7 @@ LError:
         keyString = [NSString stringWithFormat:@"%@_%@", m_name, m_family];
     }
     
-    HVRETAIN(m_keyString, keyString);
+    m_keyString = [keyString retain];
     return m_keyString;
 }
 
@@ -134,9 +134,6 @@ LError:
     HVVALIDATE_STRING(m_name, HVClientError_InvalidVocabIdentifier);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serializeAttributes:(XWriter *)writer

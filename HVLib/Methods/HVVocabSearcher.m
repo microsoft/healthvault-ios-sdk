@@ -50,7 +50,7 @@
     }
     else 
     {
-        HVRETAIN(m_cache, cache);
+        m_cache = [cache retain];
     }
     
     HVCHECK_NOTNULL(m_cache);
@@ -165,11 +165,11 @@ LError:
 {
     if (cache)
     {
-        HVRETAIN(m_cache, cache);
+        m_cache = [cache retain];
     }
     else 
     {
-        HVCLEAR(m_cache);
+        m_cache = nil;
         HVENSURE(m_cache, HVVocabSearchCache);
     }
 }
@@ -183,7 +183,7 @@ LError:
 {
     HVCHECK_NOTNULL(vocab);
     
-    HVRETAIN(m_vocab, vocab);
+    m_vocab = [vocab retain];
     m_maxResults = max;
     
     return self;

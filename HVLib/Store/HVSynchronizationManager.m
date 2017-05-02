@@ -47,7 +47,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_store, store);
+    m_store = [store retain];
     
     HVCHECK_SUCCESS([self setupDataStoreWithCache:cache]);
     
@@ -287,8 +287,8 @@ LError:
     m_changeManager.syncMgr = nil;
     m_data.syncMgr = nil;
     
-    HVCLEAR(m_syncTypes);
-    HVCLEAR(m_store);
+    m_syncTypes = nil;
+    m_store = nil;
 }
 
 

@@ -193,7 +193,7 @@ LError:
     {
         // No more pending items!
         // We can clear the pending items in this query
-        HVCLEAR(m_pendingItems);
+        m_pendingItems = nil;
         return;
     }
     //

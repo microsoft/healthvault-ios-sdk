@@ -175,9 +175,6 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
     HVVALIDATE_OPTIONAL(m_triglycerides);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

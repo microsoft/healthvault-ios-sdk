@@ -70,7 +70,7 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 #define HVCHECK_TRUE(condition) if (!(condition)) \
                                 { \
                                     HVASSERT_MESSAGE(@#condition); \
-                                    goto LError; \
+                                    return 0; \
                                 }
 #define HVCHECK_FALSE(condition) HVCHECK_TRUE(!(condition))
 
@@ -85,13 +85,13 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 
 #define HVCHECK_SUCCESS(methodCall) if (!methodCall) { \
                                 HVASSERT_MESSAGE(@#methodCall); \
-                                goto LError; \
+                                return 0; \
                             }
 
 #define HVCHECK_PTR(ptr) HVASSERT_C(ptr); \
                          if (!ptr) \
                          {         \
-                            goto LError; \
+                            return 0; \
                          }
 
 //-----------------------
@@ -100,20 +100,19 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 //
 //-----------------------
 #define HVVALIDATE_BEGIN        HVClientResult *hr = HVERROR_UNKNOWN; 
-#define HVVALIDATE_FAIL         return hr;
 #define HVVALIDATE_SUCCESS      return HVRESULT_SUCCESS;
 
 #define HVCHECK_RESULT(method)  hr = method; \
                                 if (hr.isError) \
                                 { \
                                     HVASSERT_MESSAGE(@"Validation Failed"); \
-                                    goto LError; \
+                                    return hr; \
                                 }
 
 #define HVVALIDATE(obj, error)      if (!obj) \
                                     { \
                                         hr = HVMAKE_ERROR(error); \
-                                        goto LError; \
+                                        return hr; \
                                     } \
                                     HVCHECK_RESULT([obj validate])
 
@@ -125,14 +124,14 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 #define HVVALIDATE_STRING(string, error)   if (!string) \
                                             { \
                                                 hr = HVMAKE_ERROR(error); \
-                                                goto LError; \
+                                                return hr; \
                                             }
 
 
 #define HVVALIDATE_PTR(ptr, error)     if (!ptr) \
                                         { \
                                             hr = HVMAKE_ERROR(error); \
-                                            goto LError; \
+                                            return hr; \
                                         } \
 
 #define HVVALIDATE_STRINGOPTIONAL(string, error)
@@ -143,7 +142,7 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 #define HVVALIDATE_TRUE(condition, error)   if (!condition) \
                                             { \
                                                 hr = HVMAKE_ERROR(error); \
-                                                goto LError; \
+                                                return hr; \
                                             } \
 
 HVClientResult* HVValidateArray(NSArray* array, enum HVClientResultCode error);

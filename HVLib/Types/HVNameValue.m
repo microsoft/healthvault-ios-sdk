@@ -76,9 +76,6 @@ LError:
     HVVALIDATE(m_value, HVClientError_InvalidNameValue);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;      
 }
 
 -(void)serialize:(XWriter *)writer

@@ -41,7 +41,7 @@ static NSString* const c_element_email = @"email";
 
 -(void)setAddress:(HVAddressCollection *)address
 {
-    HVRETAIN(m_address, address);
+    m_address = [address retain];
 }
 
 -(BOOL)hasPhone
@@ -57,7 +57,7 @@ static NSString* const c_element_email = @"email";
 
 -(void)setPhone:(HVPhoneCollection *)phone
 {
-    HVRETAIN(m_phone, phone);
+    m_phone = [phone retain];
 }
 
 -(BOOL)hasEmail
@@ -73,7 +73,7 @@ static NSString* const c_element_email = @"email";
 
 -(void)setEmail:(HVEmailCollection *)email
 {
-    HVRETAIN(m_email, email);
+    m_email = [email retain];
 }
 
 -(HVAddress *)firstAddress
@@ -151,9 +151,6 @@ LError:
     HVVALIDATE_ARRAYOPTIONAL(m_email, HVClientError_InvalidContact);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

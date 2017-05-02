@@ -61,7 +61,7 @@
 //
 //-------------------------
 -(id) initWithKg:(double) value;
--(id) initwithPounds:(double) value;
+-(id) initWithPounds:(double) value;
 
 //-------------------------
 //

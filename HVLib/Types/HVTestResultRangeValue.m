@@ -36,7 +36,7 @@ static const xmlChar* x_element_maxRange = XMLSTRINGCONST("maximum-range");
 {
     if (isnan(minRangeValue))
     {
-        HVCLEAR(m_minRange);
+        m_minRange = nil;
     }
     else
     {
@@ -54,7 +54,7 @@ static const xmlChar* x_element_maxRange = XMLSTRINGCONST("maximum-range");
 {
     if (isnan(maxRangeValue))
     {
-        HVCLEAR(m_maxRange);
+        m_maxRange = nil;
     }
     else
     {

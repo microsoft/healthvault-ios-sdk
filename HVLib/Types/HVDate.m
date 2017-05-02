@@ -39,7 +39,7 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
     }
     else
     {
-        HVCLEAR(m_year);
+        m_year = nil;
     }
 }
 
@@ -57,7 +57,7 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
     }
     else
     {
-        HVCLEAR(m_month);
+        m_month = nil;
     }
 }
 
@@ -75,7 +75,7 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
     }
     else
     {
-        HVCLEAR(m_day);
+        m_day = nil;
     }
 }
 
@@ -150,9 +150,9 @@ LError:
 {
     HVCHECK_NOTNULL(components);
     
-    HVCLEAR(m_year);
-    HVCLEAR(m_month);
-    HVCLEAR(m_day);
+    m_year = nil;
+    m_month = nil;
+    m_day = nil;
     
     m_year = [[HVYear alloc] initWith:(int)components.year];
     m_month = [[HVMonth alloc] initWith:(int)components.month];
@@ -257,10 +257,6 @@ LError:
         [components release];
         
         return date;
-        
-    LError:
-        [components release];
-        return nil;
     }
     
     return nil;
@@ -291,9 +287,6 @@ LError:
     HVVALIDATE(m_day, HVClientError_InvalidDate);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *) writer

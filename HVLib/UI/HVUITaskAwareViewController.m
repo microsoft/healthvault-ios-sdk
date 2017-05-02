@@ -30,7 +30,7 @@
 -(void)setActiveTask:(HVTask *)activeTask
 {
     [self cancelActiveTask];
-    HVRETAIN(m_activeTask, activeTask);
+    m_activeTask = [activeTask retain];
 }
 
 -(BOOL)hasActiveTask
@@ -49,7 +49,7 @@
     if (m_activeTask)
     {
         [m_activeTask cancel];
-        HVCLEAR(m_activeTask);
+        m_activeTask = nil;
     }
 }
 

@@ -37,7 +37,7 @@ static NSString* const c_element_relative = @"relative";
 
 -(void)setConditions:(HVConditionEntryCollection *)conditions
 {
-    HVRETAIN(m_conditions, conditions);
+    m_conditions = [conditions retain];
 }
 
 -(BOOL)hasConditions
@@ -114,9 +114,6 @@ LError:
     HVVALIDATE_ARRAYOPTIONAL(m_conditions, HVClientError_InvalidFamilyHistory);
 
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

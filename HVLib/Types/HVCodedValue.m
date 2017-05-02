@@ -136,9 +136,6 @@ LError:
     HVVALIDATE_STRINGOPTIONAL(m_version, HVClientError_InvalidCodedValue);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL; 
 }
 
 -(void) serialize:(XWriter *)writer

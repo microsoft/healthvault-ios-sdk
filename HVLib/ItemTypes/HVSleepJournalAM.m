@@ -49,7 +49,7 @@ static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
 {
     if (wakeState == HVWakeState_Unknown)
     {
-        HVCLEAR(m_wakeState);
+        m_wakeState = nil;
     }
     else
     {
@@ -66,7 +66,7 @@ static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
 
 -(void)setAwakenings:(HVOccurenceCollection *)awakenings
 {
-    HVRETAIN(m_awakenings, awakenings);
+    m_awakenings = [awakenings retain];
 }
 
 -(BOOL)hasAwakenings
@@ -162,9 +162,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_medications);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

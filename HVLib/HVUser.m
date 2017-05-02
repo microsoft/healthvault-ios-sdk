@@ -130,7 +130,7 @@ LError:
     {
         if (!m_name)
         {
-            HVRETAIN(m_name, record.personName);
+            m_name = [record.personName retain];
         }
         
         HVRecord* hvRecord = [[HVRecord alloc] initWithRecord:record];
@@ -272,8 +272,8 @@ LError:
 
 -(void)clear
 {
-    HVCLEAR(m_name);
-    HVCLEAR(m_records);
+    m_name = nil;
+    m_records = nil;
     m_currentIndex = 0;    
 }
 
@@ -290,9 +290,6 @@ LError:
     }
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL 
 }
 
 -(void)serialize:(XWriter *)writer

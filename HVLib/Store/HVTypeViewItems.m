@@ -331,15 +331,15 @@ LError:
 -(NSUInteger)insertHVItemInOrder:(HVItem *)item
 {
     HVTypeViewItem* dateKey = [[HVTypeViewItem alloc] initWithHVItem:item];
-    HVCHECK_NOTNULL(dateKey);
+    if (!dateKey)
+    {
+        return NSNotFound;
+    }
     
     NSUInteger index = [self insertItemInOrder:dateKey];
     [dateKey release];
     
     return index;
-    
-LError:
-    return NSNotFound;    
 }
 
 -(BOOL)addPendingItem:(HVPendingItem *)item

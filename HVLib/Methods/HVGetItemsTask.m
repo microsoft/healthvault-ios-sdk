@@ -93,7 +93,7 @@ LError:
     self = [super initWithCallback:callback];
     HVCHECK_SELF;
     
-    HVRETAIN(m_queries, queries);
+    m_queries = [queries retain];
     
     return self;
     

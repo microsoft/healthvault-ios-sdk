@@ -37,12 +37,6 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight);
 
 #define HVENSURE(var, className)    if (!var) { var = [[className alloc] init];  } 
                                     
-#define HVASSIGN(var, newVar)   var = HVAssign(var, newVar)
-#define HVRETAIN(var, newVar)   HVSetVar(&var, newVar)
-#define HVCLEAR(var) var = HVClear(var)
-#define HVSET(var, value) HVSetVar(&var, value)
-#define HVSETIF(var, value) HVSetVarIfNotNil(&var, value)
-
 
 id HVClear(id obj);
 id HVAssign(id original, id newObj);

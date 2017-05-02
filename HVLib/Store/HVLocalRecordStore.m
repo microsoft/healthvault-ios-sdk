@@ -68,7 +68,7 @@ static NSString* const c_storedQuery = @"storedQuery";
     m_root = [root newChildStore:record.ID];
     HVCHECK_NOTNULL(m_root);
     
-    HVRETAIN(m_record, record);
+    m_record = [record retain];
     
     HVCHECK_SUCCESS([self ensureMetadataStore]);    
     HVCHECK_SUCCESS([self ensureDataStore]);
@@ -160,7 +160,7 @@ LError:
         return FALSE;
     }
 
-    HVCLEAR(m_metadata);
+    m_metadata = nil;
     [m_root deleteChildStore:[HVLocalRecordStore metadataStoreKey]];
     
     return [self ensureMetadataStore];
@@ -239,7 +239,7 @@ LError:
     {
         [m_dataMgr close];
     }
-    HVCLEAR(m_dataMgr);
+    m_dataMgr = nil;
 }
 
 -(NSString *)makeViewKey:(NSString *)name

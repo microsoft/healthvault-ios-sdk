@@ -126,9 +126,6 @@ LError:
     HVVALIDATE_STRING(m_version, HVClientError_InvalidItemKey);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(NSString *)description
@@ -206,9 +203,6 @@ LError:
     HVVALIDATE_ARRAY(m_inner, HVClientError_InvalidItemList);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serializeAttributes:(XWriter *)writer

@@ -68,7 +68,7 @@ LError:
 
 -(HVPutItemsTask *)newPutItemForRecord:(HVRecordReference *)record item:(HVItem *)item andCallback:(HVTaskCompletion)callback
 {
-    HVItemCollection* items = [[HVItemCollection alloc] initwithItem:item];
+    HVItemCollection* items = [[HVItemCollection alloc] initWithItem:item];
     HVCHECK_NOTNULL(items);
     
     HVPutItemsTask* putItems = [self newPutItemsForRecord:record items:items andCallback:callback];

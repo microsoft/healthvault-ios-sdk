@@ -58,7 +58,7 @@
 -(id) initWithHour:(int) hour minute:(int) minute;
 -(id) initWithHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second;
 -(id) initWithDate:(NSDate *) date;
--(id) initwithComponents:(NSDateComponents *) components;
+-(id) initWithComponents:(NSDateComponents *) components;
 
 +(HVTime *) fromHour:(int) hour andMinute:(int)minute;
 

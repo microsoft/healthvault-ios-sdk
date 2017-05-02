@@ -50,7 +50,7 @@ static NSString* const c_element_instructions = @"instructions";
     }
     else
     {
-        HVCLEAR(m_refills);
+        m_refills = nil;
     }
 }
 
@@ -68,7 +68,7 @@ static NSString* const c_element_instructions = @"instructions";
     }
     else
     {
-        HVCLEAR(m_daysSupply);
+        m_daysSupply = nil;
     }
 }
 
@@ -99,9 +99,6 @@ static NSString* const c_element_instructions = @"instructions";
     HVVALIDATE_OPTIONAL(m_instructions);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

@@ -226,7 +226,7 @@ enum HVItemFlags
 //-------------------------
 @interface HVItemCollection : HVCollection <XSerializable>
 
--(id) initwithItem:(HVItem *) item;
+-(id) initWithItem:(HVItem *) item;
 -(id) initWithItems:(NSArray *) items;
 
 -(void) addItem:(HVItem *) item;

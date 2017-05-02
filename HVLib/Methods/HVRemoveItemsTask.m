@@ -34,7 +34,7 @@
 
 -(void)setKeys:(HVItemKeyCollection *)keys
 {
-    HVRETAIN(m_keys, keys);
+    m_keys = [keys retain];
 }
 
 -(NSString *)name

@@ -62,7 +62,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)setCaffeineIntakeTimes:(HVTimeCollection *)caffeineIntakeTimes
 {
-    HVRETAIN(m_caffeine, caffeineIntakeTimes);
+    m_caffeine = [caffeineIntakeTimes retain];
 }
 
 -(BOOL)hasCaffeineIntakeTimes
@@ -78,7 +78,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)setAlcoholIntakeTimes:(HVTimeCollection *)alcoholIntakeTimes
 {
-    HVRETAIN(m_alcohol, alcoholIntakeTimes);
+    m_alcohol = [alcoholIntakeTimes retain];
 }
 
 -(BOOL)hasAlcoholIntakeTimes
@@ -94,7 +94,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)setNaps:(HVOccurenceCollection *)naps
 {
-    HVRETAIN(m_naps, naps);
+    m_naps = [naps retain];
 }
 
 -(BOOL)hasNaps
@@ -110,7 +110,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)setExercise:(HVOccurenceCollection *)exercise
 {
-    HVRETAIN(m_exercise, exercise);
+    m_exercise = [exercise retain];
 }
 
 -(BOOL)hasExercise
@@ -127,7 +127,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 {
     if (sleepiness == HVSleepiness_Unknown)
     {
-        HVCLEAR(m_sleepiness);
+        m_sleepiness = nil;
     }
     else 
     {
@@ -174,9 +174,6 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
     HVVALIDATE_ARRAYOPTIONAL(m_naps, HVClientError_InvalidSleepJournal);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL 
 }
 
 -(void)serialize:(XWriter *)writer

@@ -44,7 +44,7 @@ static NSString* const c_element_view = @"format";
     HVASSERT(view != nil);
     if (view)
     {
-        HVRETAIN(m_view, view);
+        m_view = [view retain];
     }
 }
 
@@ -62,7 +62,7 @@ static NSString* const c_element_view = @"format";
     }
     else
     {
-        HVCLEAR(m_max);
+        m_max = nil;
     }
 }
 
@@ -80,7 +80,7 @@ static NSString* const c_element_view = @"format";
     }
     else
     {
-        HVCLEAR(m_maxFull);
+        m_maxFull = nil;
     }
 }
 
@@ -137,7 +137,7 @@ LError:
     HVALLOC_FAIL;
 }
 
--(id)initwithItemID:(NSString *)itemID
+-(id)initWithItemID:(NSString *)itemID
 {
     HVCHECK_STRING(itemID);
 
@@ -298,9 +298,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_maxFull);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serializeAttributes:(XWriter *)writer

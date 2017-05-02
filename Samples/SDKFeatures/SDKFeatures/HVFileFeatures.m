@@ -184,8 +184,8 @@ LError:
 
 -(void)pickImageForUpload
 {
-    HVCLEAR(m_fileMediaType);
-    HVCLEAR(m_fileData);
+    m_fileMediaType = nil;
+    m_fileData = nil;
     
     UIImagePickerController* picker = [[[UIImagePickerController alloc] init] autorelease];
     picker.sourceType = (UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeSavedPhotosAlbum);
@@ -200,9 +200,9 @@ LError:
     //
     // Save selected image data
     //
-    HVRETAIN(m_fileMediaType, [info objectForKey: UIImagePickerControllerMediaType]);
+    m_fileMediaType = [[info objectForKey: UIImagePickerControllerMediaType] retain];
     UIImage* image = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
-    HVRETAIN(m_fileData, UIImageJPEGRepresentation(image, 0.8));
+    m_fileData = [UIImageJPEGRepresentation(image, 0.8) retain];
     //
     // Close the picker and upload the file
     //

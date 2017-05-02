@@ -137,9 +137,6 @@ LError:
     HVVALIDATE(m_height, HVClientError_InvalidWeight);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;   
 }
 
 -(void) serialize:(XWriter *)writer

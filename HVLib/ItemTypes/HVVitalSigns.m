@@ -47,7 +47,7 @@ static NSString* const c_element_position = @"position";
 
 -(void)setResults:(HVVitalSignResultCollection *)results
 {
-    HVRETAIN(m_results, results);
+    m_results = [results retain];
 }
 
 -(HVVitalSignResult *)firstResult
@@ -112,9 +112,6 @@ LError:
     HVVALIDATE_STRINGOPTIONAL(m_position, HVClientError_InvalidVitalSigns);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

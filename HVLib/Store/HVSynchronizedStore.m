@@ -276,10 +276,6 @@ LError:
     [getItemsTask release];
     
     return downloadTask;
-    
-LError:
-    [downloadTask release];
-    return nil;
 }
 
 @end
@@ -337,7 +333,7 @@ LError:
 
 -(void)setLocalStore:(id<HVItemStore>)store
 {
-    HVRETAIN(m_localStore, store);
+    m_localStore = [store retain];
 }
 
 -(void)completedGetItemsTask:(HVTask *)task

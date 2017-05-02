@@ -104,10 +104,6 @@ LError:
     [components release];
     
     return newDate;
-    
-LError:
-    [components release];
-    return nil;
 }
 
 +(NSDate *)fromYear:(int)year month:(int)month andDay:(int)day
@@ -123,10 +119,6 @@ LError:
     [components release];
     
     return newDate;
-    
-LError:
-    [components release];
-    return nil;    
 }
 
 -(NSDate *)toStartOfDay
@@ -234,10 +226,6 @@ LError:
     [calendar release];
     
     return components;
-    
-LError:
-    [calendar release];
-    return nil;
 }
 
 +(NSDateComponents *) newUtcComponents
@@ -252,10 +240,6 @@ LError:
     [calendar release];
     
     return components;
-
-LError:
-    [calendar release];
-    return nil;
 }
 
 +(NSDateComponents *) utcComponentsFromDate:(NSDate *)date

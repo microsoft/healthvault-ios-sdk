@@ -93,13 +93,13 @@
 		5D789914171626F60015D375 /* HVMoreFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMoreFeatures.h; sourceTree = "<group>"; };
 		5D789915171626F60015D375 /* HVMoreFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMoreFeatures.m; sourceTree = "<group>"; };
 		5D789934171736050015D375 /* HVMedicationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMedicationFactory.h; sourceTree = "<group>"; };
-		5D789935171736050015D375 /* HVMedicationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMedicationFactory.m; sourceTree = "<group>"; };
+		5D789935171736050015D375 /* HVMedicationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVMedicationFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D789938171739FA0015D375 /* HVConditionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConditionFactory.h; sourceTree = "<group>"; };
-		5D789939171739FB0015D375 /* HVConditionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVConditionFactory.m; sourceTree = "<group>"; };
+		5D789939171739FB0015D375 /* HVConditionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVConditionFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D78993B17173B510015D375 /* HVImmunizationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVImmunizationFactory.h; sourceTree = "<group>"; };
-		5D78993C17173B520015D375 /* HVImmunizationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVImmunizationFactory.m; sourceTree = "<group>"; };
+		5D78993C17173B520015D375 /* HVImmunizationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVImmunizationFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D78993E17173D270015D375 /* HVProcedureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVProcedureFactory.h; sourceTree = "<group>"; };
-		5D78993F17173D290015D375 /* HVProcedureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVProcedureFactory.m; sourceTree = "<group>"; };
+		5D78993F17173D290015D375 /* HVProcedureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVProcedureFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D789955171758E90015D375 /* HVStatusLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVStatusLabel.h; sourceTree = "<group>"; };
 		5D789956171758E90015D375 /* HVStatusLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVStatusLabel.m; sourceTree = "<group>"; };
 		5DAFC62E166FC5AC00363FA2 /* HVDietaryIntakeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDietaryIntakeFactory.h; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		5DD6C2DE16791ACD00A658D8 /* HVSleepJournalAMFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSleepJournalAMFactory.h; sourceTree = "<group>"; };
 		5DD6C2DF16791ACD00A658D8 /* HVSleepJournalAMFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSleepJournalAMFactory.m; sourceTree = "<group>"; };
 		5DEC254A178B573900FE971B /* HVFileFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFileFeatures.h; sourceTree = "<group>"; };
-		5DEC254B178B573A00FE971B /* HVFileFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFileFeatures.m; sourceTree = "<group>"; };
+		5DEC254B178B573A00FE971B /* HVFileFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVFileFeatures.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5DEC2558178B5A7F00FE971B /* HVItemDataTypedFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemDataTypedFeatures.h; sourceTree = "<group>"; };
 		5DEC2559178B5A7F00FE971B /* HVItemDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemDataTypedFeatures.m; sourceTree = "<group>"; };
 		5DEC255B178B680400FE971B /* HVFileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFileFactory.h; sourceTree = "<group>"; };

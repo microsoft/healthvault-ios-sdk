@@ -42,7 +42,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_objectStore, store);
+    m_objectStore = [store retain];
     
     return self;
 

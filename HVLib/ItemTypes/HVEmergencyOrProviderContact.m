@@ -54,9 +54,6 @@ LError:
     HVVALIDATE(m_person, HVClientError_InvalidEmergencyContact);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer
@@ -72,7 +69,7 @@ LError:
     HVPerson* person = [[HVPerson alloc] init];
     
     HVCHECK_OOM(person);
-    HVASSIGN(m_person, person);
+    m_person = person;
    
     [person deserialize:reader];
 }

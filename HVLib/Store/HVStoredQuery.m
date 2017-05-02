@@ -41,7 +41,7 @@ static NSString* const c_element_timestamp = @"timestamp";
 
 -(void)setResult:(HVItemQueryResult *)result
 {
-    HVRETAIN(m_result, result);
+    m_result = [result retain];
     self.timestamp = [NSDate date];
 }
 

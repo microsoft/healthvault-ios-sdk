@@ -40,7 +40,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
     }
     else
     {
-        HVCLEAR(m_hours);
+        m_hours = nil;
     }
 }
 
@@ -58,7 +58,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
     }
     else
     {
-        HVCLEAR(m_minutes);
+        m_minutes = nil;
     }
 }
 
@@ -81,7 +81,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
     }
     else
     {
-        HVCLEAR(m_seconds);
+        m_seconds = nil;
     }
 }
 
@@ -105,7 +105,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
     }
     else
     {
-        HVCLEAR(m_milliseconds);
+        m_milliseconds = nil;
     }
 }
 
@@ -147,7 +147,7 @@ LError:
     HVALLOC_FAIL;
 }
 
--(id) initwithComponents:(NSDateComponents *)components
+-(id) initWithComponents:(NSDateComponents *)components
 {
     HVCHECK_NOTNULL(components);
     
@@ -161,7 +161,7 @@ LError:
 {
     HVCHECK_NOTNULL(date);
     
-    return [self initwithComponents:[NSCalendar componentsFromDate:date]];
+    return [self initWithComponents:[NSCalendar componentsFromDate:date]];
     
 LError:
     HVALLOC_FAIL;
@@ -228,10 +228,6 @@ LError:
     [components release];
     
     return newDate;
-    
-LError:
-    [components release];
-    return nil;
 }
 
 -(BOOL)setWithComponents:(NSDateComponents *)components
@@ -284,9 +280,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_milliseconds);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

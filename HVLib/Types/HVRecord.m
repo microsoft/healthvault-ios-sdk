@@ -79,10 +79,6 @@ LError:
     HVVALIDATE_STRING(m_name, HVClientError_InvalidRecord);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
-   
 }
 
 -(void) serializeAttributes:(XWriter *)writer

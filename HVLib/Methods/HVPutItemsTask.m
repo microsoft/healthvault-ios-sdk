@@ -35,7 +35,7 @@
 
 -(void)setItems:(HVItemCollection *)items
 {
-    HVRETAIN(m_items, items);
+    m_items = [items retain];
 }
 
 -(HVItemKeyCollection *) putResults
@@ -63,7 +63,7 @@
 {
     HVCHECK_NOTNULL(item);
     
-    HVItemCollection* items = [[HVItemCollection alloc]initwithItem:item];
+    HVItemCollection* items = [[HVItemCollection alloc]initWithItem:item];
     self = [self initWithItems:items andCallback:callback];
     [items release];
     return self;

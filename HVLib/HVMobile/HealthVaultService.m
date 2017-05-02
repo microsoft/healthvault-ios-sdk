@@ -79,7 +79,7 @@
 
 -(void)setSettingsFileName:(NSString *)settingsFileName
 {
-    HVRETAIN(_settingsFileName, settingsFileName);
+    _settingsFileName = [settingsFileName retain];
 }
 
 -(id<HVHttpTransport>)transport
@@ -90,7 +90,7 @@
 {
     if (transport)
     {
-        HVRETAIN(_transport, transport);
+        _transport = [transport retain];
     }
 }
 
@@ -103,7 +103,7 @@
 {
     if (provisioner)
     {
-        HVRETAIN(_provisioner, provisioner);
+        _provisioner = [provisioner retain];
     }
 }
 
@@ -115,7 +115,7 @@
 {
     if (cryptographer)
     {
-        HVRETAIN(_cryptographer, cryptographer);
+        _cryptographer = [cryptographer retain];
     }
 }
 
@@ -209,10 +209,10 @@ LError:
 
 	NSString *queryString = [NSString stringWithFormat: @"?appid=%@&ismra=true", self.appIdInstance];
 
-	CFStringRef queryStringEncoded = HVUrlEncode((CFStringRef)queryString);
+	CFStringRef queryStringEncoded = HVUrlEncode((__bridge CFStringRef)queryString);
 
 	NSString *userAuthUrl = [NSString stringWithFormat: @"%@/redirect.aspx?target=APPAUTH&targetqs=%@",
-			self.shellUrl, (NSString *)queryStringEncoded];
+			self.shellUrl, (__bridge NSString *)queryStringEncoded];
 
 	CFRelease(queryStringEncoded);
 
@@ -356,20 +356,21 @@ LError:
 
 - (void)saveCastCallResults: (NSString *)responseXml {
 
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-    @try 
+    @autoreleasepool
     {
-        XmlTextReader *xmlReader = [XmlTextReader new];
-        XmlElement *responseRootNode = [xmlReader read: responseXml];
-        
-        self.authorizationSessionToken = [responseRootNode selectSingleNode: @"token"].text;
-        self.sessionSharedSecret = [responseRootNode selectSingleNode: @"shared-secret"].text;
-
-    	[xmlReader release];
-    }
-    @finally 
-    {
-        [pool release];
+        @try
+        {
+            XmlTextReader *xmlReader = [XmlTextReader new];
+            XmlElement *responseRootNode = [xmlReader read: responseXml];
+            
+            self.authorizationSessionToken = [responseRootNode selectSingleNode: @"token"].text;
+            self.sessionSharedSecret = [responseRootNode selectSingleNode: @"shared-secret"].text;
+            
+            [xmlReader release];
+        }
+        @catch (id exception)
+        {
+        }
     }
 }
 
@@ -397,32 +398,34 @@ LError:
 
 - (void)loadSettings
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-    @try 
+    @autoreleasepool
     {
-        HealthVaultSettings *settings = [HealthVaultSettings loadWithName: self.settingsFileName];
-        
-        self.appIdInstance = settings.applicationId;
-        self.authorizationSessionToken = settings.authorizationSessionToken;
-        self.sharedSecret = settings.sharedSecret;
-        self.country = settings.country;
-        self.language = settings.language;
-        self.sessionSharedSecret = settings.sessionSharedSecret;
-        
-        if (settings.personId && settings.recordId) {
+        @try
+        {
+            HealthVaultSettings *settings = [HealthVaultSettings loadWithName: self.settingsFileName];
             
-            HealthVaultRecord *record = [HealthVaultRecord new];
-            record.personId = settings.personId;
-            record.recordId = settings.recordId;
-            self.currentRecord = record;
-            [record release];
-        } else {
+            self.appIdInstance = settings.applicationId;
+            self.authorizationSessionToken = settings.authorizationSessionToken;
+            self.sharedSecret = settings.sharedSecret;
+            self.country = settings.country;
+            self.language = settings.language;
+            self.sessionSharedSecret = settings.sessionSharedSecret;
             
-            self.currentRecord = nil;
+            if (settings.personId && settings.recordId) {
+                
+                HealthVaultRecord *record = [HealthVaultRecord new];
+                record.personId = settings.personId;
+                record.recordId = settings.recordId;
+                self.currentRecord = record;
+                [record release];
+            } else {
+                
+                self.currentRecord = nil;
+            }
         }
-    }
-    @finally {
-        [pool release];
+        @catch (id exception)
+        {
+        }
     }
 }
 
@@ -535,7 +538,7 @@ LError:
 	CFStringRef tokenEncoded = HVUrlEncode((CFStringRef)self.applicationCreationToken);
 	
     NSString *dName = (self.deviceName) ? self.deviceName : [MobilePlatform deviceName];
-	CFStringRef deviceNameEncoded = HVUrlEncode((CFStringRef)dName);
+	CFStringRef deviceNameEncoded = HVUrlEncode((__bridge CFStringRef)dName);
     
 	NSString *queryString = [NSString stringWithFormat:@"?appid=%@&appCreationToken=%@&instanceName=%@&ismra=true",
                              self.masterAppId, tokenEncoded, deviceNameEncoded];
@@ -544,10 +547,10 @@ LError:
         queryString = [queryString stringByAppendingString:@"&aib=true"];
     }
     
-	CFStringRef queryStringEncoded = HVUrlEncode((CFStringRef)queryString);
+	CFStringRef queryStringEncoded = HVUrlEncode((__bridge CFStringRef)queryString);
     
 	NSString *appCreationUrl = [NSString stringWithFormat: @"%@/redirect.aspx?target=CREATEAPPLICATION&targetqs=%@",
-                                self.shellUrl, (NSString *)queryStringEncoded];
+                                self.shellUrl, (__bridge NSString *)queryStringEncoded];
     
 	CFRelease(tokenEncoded);
 	CFRelease(deviceNameEncoded);

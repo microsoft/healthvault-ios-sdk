@@ -64,9 +64,6 @@ LError:
     HVVALIDATE(m_endDate, HVClientError_InvalidDuration);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

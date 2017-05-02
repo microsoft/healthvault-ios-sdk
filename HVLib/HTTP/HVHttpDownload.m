@@ -37,7 +37,7 @@
     self = [super initWithUrl:url andCallback:callback];
     HVCHECK_SELF;
     
-    HVRETAIN(m_file, file);
+    m_file = [file retain];
     
     return self;
     
@@ -54,7 +54,7 @@ LError:
 
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    HVRETAIN(m_response, response);
+    m_response = [response retain];
 
     if (m_file)
     {

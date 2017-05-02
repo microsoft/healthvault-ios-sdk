@@ -49,7 +49,7 @@
     HVCHECK_SELF;
     
     HVCHECK_SUCCESS([self initViewList:views]);
-    HVRETAIN(m_record, record);
+    m_record = [record retain];
     m_maxAge = age;
     
     return self;

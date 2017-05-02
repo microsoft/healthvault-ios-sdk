@@ -36,7 +36,7 @@ static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
 {
     if (isnan(litersValue))
     {
-        HVCLEAR(m_liters);
+        m_liters = nil;
     }
     else
     {
@@ -69,7 +69,7 @@ LError:
 
 -(BOOL) updateDisplayText
 {
-    HVCLEAR(m_display);
+    m_display = nil;
     if (!m_liters)
     {
         return FALSE;
@@ -108,9 +108,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_display);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

@@ -213,7 +213,7 @@ LError:
         m_webView.delegate = nil;
         [m_webView removeFromSuperview];
     }
-    HVCLEAR(m_webView);
+    m_webView = nil;
 
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
@@ -249,7 +249,7 @@ LError:
         }
         else 
         {
-            HVCLEAR(m_activityView);
+            m_activityView = nil;
             // < iOS5... use older style. The large indication won't be visible on HV pages
             m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         }

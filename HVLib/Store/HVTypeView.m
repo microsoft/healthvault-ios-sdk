@@ -136,13 +136,13 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
 -(void)setLastUpdateDate:(NSDate *)lastUpdateDate
 {
-    HVRETAIN(m_lastUpdateDate, lastUpdateDate);
+    m_lastUpdateDate = [lastUpdateDate retain];
 }
 
 -(void)setStore:(HVLocalRecordStore *)store
 {
     HVASSERT(store);
-    HVRETAIN(m_store, store);
+    m_store = [store retain];
 }
 
 -(NSUInteger)count
@@ -192,7 +192,7 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
     self.enforceTypeCheck = FALSE;
     if (items)
     {
-        HVRETAIN(m_items, items);
+        m_items = [items retain];
     }
     else
     {
@@ -545,14 +545,14 @@ LError:
     }
     
     HVTask* task = [[m_store.data newDownloadItemsInRecord:m_store.record forKeys:pendingKeys callback:callback] autorelease];
-    HVCHECK_NOTNULL(task);
+    if (!task)
+    {
+        return nil;
+    }
     
     task.shouldCompleteInMainThread = TRUE;
     [task start];
     
-    return task;
-    
-LError:
     return task;
 }
 
@@ -561,16 +561,16 @@ LError:
     //
     // First, place in the persistent store
     //
-    HVCHECK_SUCCESS([m_store.data putLocalItem:item]);
+    if (![m_store.data putLocalItem:item])
+    {
+        return NSNotFound;
+    }
     
     NSUInteger index = [m_items insertHVItemInOrder:item];
     
     [self stampUpdated];
     
     return index;   
-
-LError:
-    return NSNotFound;
 }
 
 -(BOOL)putItems:(HVItemCollection *)items
@@ -779,8 +779,8 @@ LError:
 
 -(void)updateViewWith:(HVTypeViewItems *)items
 {
-    HVCLEAR(m_items);
-    HVRETAIN(m_items, items);
+    m_items = nil;
+    m_items = [items retain];
     [self stampUpdated];
 }
 
@@ -863,17 +863,17 @@ LError:
 
 -(void)setTypeID:(NSString *)typeID
 {
-    HVRETAIN(m_typeID, typeID);
+    m_typeID = [typeID retain];
 }
 
 -(void)setFilter:(HVTypeFilter *)filter
 {
-    HVRETAIN(m_filter, filter);
+    m_filter = [filter retain];
 }
 
 -(void)setItems:(HVTypeViewItems *)items
 {
-    HVRETAIN(m_items, items);
+    m_items = [items retain];
 }
 
 -(HVItemQuery *)newRefreshQuery

@@ -41,7 +41,7 @@ static NSString* const c_element_result = @"result";
 
 -(void)setResults:(HVAssessmentFieldCollection *)results
 {
-    HVRETAIN(m_results, results);
+    m_results = [results retain];
 }
 
 -(void)dealloc
@@ -84,9 +84,6 @@ static NSString* const c_element_result = @"result";
     HVVALIDATE_ARRAY(m_results, HVClientError_InvalidAssessment);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

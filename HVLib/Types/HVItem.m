@@ -70,7 +70,7 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
 
 -(void) setData:(HVItemData *)data
 {
-    HVRETAIN(m_data, data);
+    m_data = [data retain];
 }
 
 -(HVBlobPayload *)blobs
@@ -81,7 +81,7 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
 
 -(void)setBlobs:(HVBlobPayload *)blobs
 {
-    HVRETAIN(m_blobs, blobs);
+    m_blobs = [blobs retain];
 }
 
 @synthesize updatedEndDate = m_updatedEndDate;
@@ -237,7 +237,7 @@ LError:
         {
             newDate = [NSDate date];
         }
-        HVRETAIN(m_effectiveDate, newDate);
+        m_effectiveDate = [newDate retain];
     }
     
     return (m_effectiveDate != nil);
@@ -245,7 +245,7 @@ LError:
 
 -(BOOL)removeEndDate
 {
-    HVRETAIN(m_updatedEndDate, [HVConstrainedXmlDate nullDate]);
+    m_updatedEndDate = [[HVConstrainedXmlDate nullDate] retain];
     HVCHECK_NOTNULL(m_updatedEndDate);
 
     return TRUE;
@@ -258,7 +258,7 @@ LError:
 {
     HVCHECK_NOTNULL(date);
     
-    HVRETAIN(m_updatedEndDate, [HVConstrainedXmlDate fromDate:date]);
+    m_updatedEndDate = [[HVConstrainedXmlDate fromDate:date] retain];
     HVCHECK_NOTNULL(m_updatedEndDate);
     
     return TRUE;
@@ -273,7 +273,7 @@ LError:
     
     if (date.isStructured)
     {
-        HVRETAIN(m_updatedEndDate, [HVConstrainedXmlDate fromDate:[date toDate]]);
+        m_updatedEndDate = [[HVConstrainedXmlDate fromDate:[date toDate]] retain];
         HVCHECK_NOTNULL(m_updatedEndDate);
         return TRUE;
     }
@@ -343,7 +343,7 @@ LError:
     HVGetItemsTask* getItemsTask = [[[HVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(HVTask *task) {
 
         HVItem* blobItem = ((HVGetItemsTask *) task).firstItemRetrieved;
-        HVRETAIN(m_blobs, blobItem.blobs);
+        m_blobs = [blobItem.blobs retain];
     
     }]autorelease];
     HVCHECK_NOTNULL(getItemsTask);
@@ -433,9 +433,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_blobs);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -475,7 +472,7 @@ LError:
     m_updatedEndDate = [[reader readElementWithXmlName:x_element_updatedEndDate asClass:[HVConstrainedXmlDate class]] retain];
     if (m_updatedEndDate && m_updatedEndDate.isNull)
     {
-        HVCLEAR(m_updatedEndDate);
+        m_updatedEndDate = nil;
     }
 }
 
@@ -497,10 +494,10 @@ static NSString* const c_element_item = @"thing";
 
 -(id) init
 {
-    return [self initwithItem:nil];
+    return [self initWithItem:nil];
 }
 
--(id)initwithItem:(HVItem *)item
+-(id)initWithItem:(HVItem *)item
 {
     self = [super init];
     HVCHECK_SELF;
@@ -642,9 +639,6 @@ LError:
     HVVALIDATE_ARRAY(m_inner, HVClientError_InvalidItemList);
 
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(BOOL)shallowCloneItems

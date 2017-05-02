@@ -48,7 +48,7 @@
 
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    HVRETAIN(m_response, response);
+    m_response = [response retain];
     [m_responseBody setLength:0];    
 }
 

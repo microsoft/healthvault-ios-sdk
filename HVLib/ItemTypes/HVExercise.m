@@ -80,7 +80,7 @@ static HVVocabIdentifier* s_vocabIDUnits;
 
 -(void)setDetails:(HVNameValueCollection *)details
 {
-    HVRETAIN(m_details, details);
+    m_details = [details retain];
 }
 
 -(double)durationMinutesValue
@@ -137,7 +137,7 @@ LError:
 
 -(BOOL)setStandardActivity:(NSString *)activity
 {
-    HVCLEAR(m_activity);
+    m_activity = nil;
     m_activity = [HVExercise newActivity:activity];
     return (m_activity != nil);
 }
@@ -284,9 +284,6 @@ LError:
     HVVALIDATE_ARRAYOPTIONAL(m_details, HVClientError_InvalidExercise);
 
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;   
 }
 
 -(void)serialize:(XWriter *)writer

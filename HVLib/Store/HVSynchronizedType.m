@@ -75,11 +75,11 @@ HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
         [self releaseView];
         if (syncMgr)
         {
-            HVRETAIN(m_syncMgr, syncMgr);
+            m_syncMgr = [syncMgr retain];
         }
         else
         {
-            HVCLEAR(m_syncMgr);
+            m_syncMgr = nil;
         }
     }
 }
@@ -197,8 +197,8 @@ HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_typeID, typeID);
-    HVRETAIN(m_viewName, [HVSynchronizedType makeViewNameForTypeID:typeID]);
+    m_typeID = [typeID retain];
+    m_viewName = [[HVSynchronizedType makeViewNameForTypeID:typeID] retain];
     
     self.syncMgr = syncMgr;
     
@@ -767,7 +767,7 @@ LError:
 {
     if (!m_view)
     {
-        HVRETAIN(m_view, [self loadView]);
+        m_view = [[self loadView] retain];
         if (!m_view)
         {
             m_view = [[HVTypeView alloc] initForTypeID:m_typeID overStore:m_syncMgr.store];
@@ -807,7 +807,7 @@ LError:
     if (m_view)
     {
         m_view.delegate = nil;
-        HVCLEAR(m_view);
+        m_view = nil;
     }
 }
 
@@ -870,8 +870,8 @@ LError:
     m_item = [item newDeepClone];
     HVCHECK_NOTNULL(m_item);
     
-    HVRETAIN(m_type, type);
-    HVRETAIN(m_lock, lock);
+    m_type = [type retain];
+    m_lock = [lock retain];
     
     return self;
 LError:
@@ -890,13 +890,13 @@ LError:
 -(BOOL)commit
 {
     BOOL result = [m_type putItem:m_item editLock:m_lock];
-    HVCLEAR(m_lock);
+    m_lock = nil;
     return result;
 }
 
 -(void)cancel
 {
-    HVCLEAR(m_lock);
+    m_lock = nil;
 }
 
 @end

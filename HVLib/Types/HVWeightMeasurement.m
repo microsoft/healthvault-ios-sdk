@@ -110,7 +110,7 @@ LError:
     HVALLOC_FAIL;
 }
 
--(id) initwithPounds:(double)value
+-(id) initWithPounds:(double)value
 {
     self = [super init];
     HVCHECK_SELF;
@@ -140,7 +140,7 @@ LError:
         newValue.unitsCode = code;
     }
     
-    HVASSIGN(m_display, newValue);
+    m_display = newValue;
     
     return TRUE;
 
@@ -195,7 +195,7 @@ LError:
 
 +(HVWeightMeasurement *)fromPounds:(double)pounds
 {
-    return [[[HVWeightMeasurement alloc] initwithPounds:pounds] autorelease];    
+    return [[[HVWeightMeasurement alloc] initWithPounds:pounds] autorelease];    
 }
 
 +(HVWeightMeasurement *)fromGrams:(double)grams
@@ -227,9 +227,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_display);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

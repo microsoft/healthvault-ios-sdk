@@ -30,7 +30,7 @@
     self = [super initWithName:@"HVHttpException" reason:@"Http Error" userInfo:nil];
     HVCHECK_SELF;
     
-    HVRETAIN(m_error, error);
+    m_error = [error retain];
     
     return self;
     
@@ -232,7 +232,7 @@ LError:
 -(void)clear
 {
     self.operation = nil;
-    HVCLEAR(m_connection);
+    m_connection = nil;
 }
 
 -(BOOL) retry

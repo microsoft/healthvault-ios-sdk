@@ -85,7 +85,4 @@ HVClientResult* HVValidateArray(NSArray* array, enum HVClientResultCode error)
     }
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }

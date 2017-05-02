@@ -170,7 +170,7 @@ LError:
     
     double timespan = [reader readNextDouble];
 
-    HVCLEAR(m_date);
+    m_date = nil;
     m_date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:(NSTimeInterval) timespan];
     HVCHECK_OOM(m_date);
 }
@@ -181,7 +181,7 @@ LError:
 
 -(void)setDate:(NSDate *)date
 {
-    HVRETAIN(m_date, date);
+    m_date = [date retain];
 }
 
 @end

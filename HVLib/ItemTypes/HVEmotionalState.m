@@ -103,7 +103,7 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
 {
     if (mood == HVMoodUnknown)
     {
-        HVCLEAR(m_mood);
+        m_mood = nil;
     }
     else
     {
@@ -122,7 +122,7 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
 {
     if (stress == HVRelativeRating_None)
     {
-        HVCLEAR(m_stress);
+        m_stress = nil;
     }
     else
     {
@@ -140,7 +140,7 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
 {
     if (wellbeing == HVWellBeingUnknown)
     {
-        HVCLEAR(m_wellbeing);
+        m_wellbeing = nil;
     }
     else
     {
@@ -198,9 +198,6 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
     HVVALIDATE_OPTIONAL(m_wellbeing);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

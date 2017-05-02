@@ -100,7 +100,7 @@ LError:
     if ([self queryStringHasAppAuthSuccess:queryString])
     {
         m_status = HVAppProvisionSuccess;
-        HVRETAIN(m_hvInstanceID, [self instanceIDFromQs:queryString]);
+        m_hvInstanceID = [[self instanceIDFromQs:queryString] retain];
         [self abort];
     }    
 
@@ -132,7 +132,7 @@ LError:
         {
             m_status = HVAppProvisionFailed;
 
-            HVRETAIN(m_error, error);
+            m_error = [error retain];
             
             [self abort];
         }

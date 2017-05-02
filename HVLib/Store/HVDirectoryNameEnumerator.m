@@ -41,7 +41,7 @@
                                     errorHandler:nil];
 
     HVCHECK_NOTNULL(inner);
-    HVRETAIN(m_inner, inner);
+    m_inner = [inner retain];
     
     m_listFilesMode = filesOnly;
     

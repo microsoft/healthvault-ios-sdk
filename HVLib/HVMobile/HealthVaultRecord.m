@@ -91,29 +91,26 @@
 
 - (BOOL)parseFromXml: (NSString *)xml {
 
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-
-	@try {
-
-		XmlTextReader *xmlReader = [[XmlTextReader new] autorelease];
-		XmlElement *root = [xmlReader read: xml];
-
-		if (!root) {
-			return NO;
-		}
-
-		self.recordId = [root attrValue: @"id"];
-		self.recordName = [root text];
-		self.authStatus = [root attrValue: @"app-record-auth-action"];
-
-	}
-	@catch (id exc) {
-
-		return NO;
-	}
-	@finally {
-
-		[pool release];
+    @autoreleasepool
+    {
+        @try {
+            
+            XmlTextReader *xmlReader = [[XmlTextReader new] autorelease];
+            XmlElement *root = [xmlReader read: xml];
+            
+            if (!root) {
+                return NO;
+            }
+            
+            self.recordId = [root attrValue: @"id"];
+            self.recordName = [root text];
+            self.authStatus = [root attrValue: @"app-record-auth-action"];
+            
+        }
+        @catch (id exc) {
+            
+            return NO;
+        }
 	}
 
 	return YES;

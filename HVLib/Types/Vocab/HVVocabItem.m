@@ -62,9 +62,6 @@ static NSString* const c_element_data = @"info-xml";
     HVVALIDATE_STRING(m_code, HVClientError_InvalidVocabIdentifier);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;    
 }
 
 -(void)serialize:(XWriter *)writer

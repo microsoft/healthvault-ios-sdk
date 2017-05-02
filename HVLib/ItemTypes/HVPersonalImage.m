@@ -91,10 +91,6 @@ static NSString* const c_typename = @"personal-image";
     [uploadImageTask start];
     
     return uploadImageTask;
-    
-LError:
-    [uploadImageTask release];
-    return nil;
 }
 
 @end

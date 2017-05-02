@@ -81,9 +81,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_severity);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

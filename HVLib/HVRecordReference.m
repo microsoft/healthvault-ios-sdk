@@ -42,9 +42,6 @@ static NSString* const c_attribute_personID = @"person-id";
     HVVALIDATE_STRING(m_id, HVClientError_InvalidRecordReference);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serializeAttributes:(XWriter *)writer
@@ -180,7 +177,7 @@ LError:
 {
     HVCHECK_NOTNULL(item);
     
-    HVItemCollection* items = [[HVItemCollection alloc] initwithItem:item];
+    HVItemCollection* items = [[HVItemCollection alloc] initWithItem:item];
     HVCHECK_NOTNULL(items);
     
     HVPutItemsTask* task = [self putItems:items callback:callback];

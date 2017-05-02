@@ -51,7 +51,7 @@
 
 -(void) deserialize:(XReader *)reader
 {
-    HVRETAIN(m_root, reader.localName);
+    m_root = [reader.localName retain];
     m_xml = [[reader readElementRaw:m_root] retain];
 }
 

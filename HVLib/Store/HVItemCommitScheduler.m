@@ -86,7 +86,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_localVault, vault);
+    m_localVault = [vault retain];
     
     m_status = [[HVWorkerStatus alloc] init];
     HVCHECK_NOTNULL(m_status);
@@ -152,7 +152,7 @@ LError:
         {
             [m_activeCommitTask cancel];
         }
-        HVCLEAR(m_activeCommitTask);
+        m_activeCommitTask = nil;
     }
     [m_status completeWork];
 }
@@ -170,7 +170,7 @@ LError:
 {
     @synchronized(self)
     {
-        HVRETAIN(m_activeCommitTask, task);
+        m_activeCommitTask = [task retain];
     }
 }
 
@@ -212,11 +212,11 @@ LError:
             // We'll let the timer run without break...
             // If there are intermittent failures, we are ensured that eventually the timer will force us to retry
             //
-            HVRETAIN(m_timer, [NSTimer scheduledTimerWithTimeInterval:m_commitFrequency
+            m_timer = [[NSTimer scheduledTimerWithTimeInterval:m_commitFrequency
                                     target:self
                                     selector:@selector(timerTick)
                                     userInfo:nil
-                                    repeats:TRUE]);
+                                    repeats:TRUE] retain];
             
             HVCHECK_NOTNULL(m_timer);
         }
@@ -236,7 +236,7 @@ LError:
         {
             [m_timer invalidate];
         }
-        HVCLEAR(m_timer);
+        m_timer = nil;
     }
 }
 

@@ -51,13 +51,13 @@ static const xmlChar* x_element_timeZone = XMLSTRINGCONST("tz");
     NSDateComponents *components = [NSCalendar componentsFromDate:dateValue];
     HVCHECK_NOTNULL(components);
     
-    return [self initwithComponents:components];
+    return [self initWithComponents:components];
     
 LError:
     HVALLOC_FAIL;
 }
 
--(id) initwithComponents:(NSDateComponents *)components
+-(id) initWithComponents:(NSDateComponents *)components
 {
     HVCHECK_NOTNULL(components);
     
@@ -65,7 +65,7 @@ LError:
     HVCHECK_SELF;
     
     m_date = [[HVDate alloc] initWithComponents:components];
-    m_time = [[HVTime alloc] initwithComponents:components];
+    m_time = [[HVTime alloc] initWithComponents:components];
     
     HVCHECK_TRUE(m_date && m_time);
     
@@ -102,11 +102,11 @@ LError:
 {
     HVCHECK_NOTNULL(components);
     
-    HVCLEAR(m_date);
-    HVCLEAR(m_time);
+    m_date = nil;
+    m_time = nil;
     
     m_date = [[HVDate alloc] initWithComponents:components];
-    m_time = [[HVTime alloc] initwithComponents:components];
+    m_time = [[HVTime alloc] initWithComponents:components];
     
     HVCHECK_TRUE(m_date && m_time);
     
@@ -146,10 +146,6 @@ LError:
     HVCHECK_SUCCESS([self getComponents:components]);
     
     return [components autorelease];
-    
-LError:
-    [components release];
-    return nil;
 }
 
 -(BOOL) getComponents:(NSDateComponents *)components
@@ -213,9 +209,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_time);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer
