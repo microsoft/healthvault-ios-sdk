@@ -117,24 +117,24 @@ LError:
 
 -(void) serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE(m_name, c_attribute_name);
+    [writer writeAttribute:c_attribute_name value:m_name];
 }
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_items, c_element_item);
-    HVSERIALIZE_ARRAY(m_pendingItems, c_element_pending);
+    [writer writeElementArray:c_element_item elements:m_items];
+    [writer writeElementArray:c_element_pending elements:m_pendingItems];
 }
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE(m_name, c_attribute_name);
+    m_name = [[reader readAttribute:c_attribute_name] retain];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_items, c_element_item, HVItem, HVItemCollection);
-    HVDESERIALIZE_TYPEDARRAY(m_pendingItems, c_element_pending, HVPendingItem, HVPendingItemCollection);
+    m_items = (HVItemCollection *)[[reader readElementArray:c_element_item asClass:[HVItem class] andArrayClass:[HVItemCollection class]] retain];
+    m_pendingItems = (HVPendingItemCollection *)[[reader readElementArray:c_element_pending asClass:[HVPendingItem class] andArrayClass:[HVPendingItemCollection class]] retain];
 }
 
 @end

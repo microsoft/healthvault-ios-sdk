@@ -297,24 +297,24 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_name, c_element_name);
-    HVSERIALIZE_ARRAYNESTED(m_records, c_element_recordarray, c_element_record);
-    HVSERIALIZE_INT((int)m_currentIndex, c_element_current);
-    HVSERIALIZE_STRING(m_environment, c_element_environment);
-    HVSERIALIZE_STRING(m_instanceID, c_element_instanceID);
+    [writer writeElement:c_element_name value:m_name];
+    [writer writeElementArray:c_element_recordarray itemName:c_element_record elements:m_records];
+    [writer writeElement:c_element_current intValue:(int)m_currentIndex];
+    [writer writeElement:c_element_environment value:m_environment];
+    [writer writeElement:c_element_instanceID value:m_instanceID];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_name, c_element_name);
-    HVDESERIALIZE_TYPEDARRAYNESTED(m_records, c_element_recordarray, c_element_record, HVRecord, HVRecordCollection);
+    m_name = [[reader readStringElement:c_element_name] retain];
+    m_records = (HVRecordCollection *)[[reader readElementArray:c_element_recordarray itemName:c_element_record asClass:[HVRecord class] andArrayClass:[HVRecordCollection class]] retain];
     
     NSInteger index = 0;
-    HVDESERIALIZE_INT(index, c_element_current);
+    index = [reader readIntElement:c_element_current];
     m_currentIndex = index;
     
-    HVDESERIALIZE_STRING(m_environment, c_element_environment);
-    HVDESERIALIZE_STRING(m_instanceID, c_element_instanceID);
+    m_environment = [[reader readStringElement:c_element_environment] retain];
+    m_instanceID = [[reader readStringElement:c_element_instanceID] retain];
 }
 
 @end

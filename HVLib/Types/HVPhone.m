@@ -83,16 +83,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_type, c_element_description);
-    HVSERIALIZE(m_isprimary, c_element_isPrimary);
-    HVSERIALIZE_STRING(m_number, c_element_number);
+    [writer writeElement:c_element_description value:m_type];
+    [writer writeElement:c_element_isPrimary content:m_isprimary];
+    [writer writeElement:c_element_number value:m_number];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_type, c_element_description);
-    HVDESERIALIZE(m_isprimary, c_element_isPrimary, HVBool);
-    HVDESERIALIZE_STRING(m_number, c_element_number);
+    m_type = [[reader readStringElement:c_element_description] retain];
+    m_isprimary = [[reader readElement:c_element_isPrimary asClass:[HVBool class]] retain];
+    m_number = [[reader readStringElement:c_element_number] retain];
 }
 
 @end

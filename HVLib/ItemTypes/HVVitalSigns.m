@@ -119,18 +119,18 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE_ARRAY(m_results, c_element_results);
-    HVSERIALIZE_STRING(m_site, c_element_site);
-    HVSERIALIZE_STRING(m_position, c_element_position);
+    [writer writeElement:c_element_when content:m_when];
+    [writer writeElementArray:c_element_results elements:m_results];
+    [writer writeElement:c_element_site value:m_site];
+    [writer writeElement:c_element_position value:m_position];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE_TYPEDARRAY(m_results, c_element_results, HVVitalSignResult, HVVitalSignResultCollection);
-    HVDESERIALIZE_STRING(m_site, c_element_site);
-    HVDESERIALIZE_STRING(m_position, c_element_position);
+    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
+    m_results = (HVVitalSignResultCollection *)[[reader readElementArray:c_element_results asClass:[HVVitalSignResult class] andArrayClass:[HVVitalSignResultCollection class]] retain];
+    m_site = [[reader readStringElement:c_element_site] retain];
+    m_position = [[reader readStringElement:c_element_position] retain];
 }
 
 +(NSString *)typeID

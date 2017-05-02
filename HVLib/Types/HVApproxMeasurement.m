@@ -134,14 +134,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_display, c_element_display);
-    HVSERIALIZE(m_measurement, c_element_structured);
+    [writer writeElement:c_element_display value:m_display];
+    [writer writeElement:c_element_structured content:m_measurement];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_display, c_element_display);
-    HVDESERIALIZE(m_measurement, c_element_structured, HVMeasurement);
+    m_display = [[reader readStringElement:c_element_display] retain];
+    m_measurement = [[reader readElement:c_element_structured asClass:[HVMeasurement class]] retain];
 }
 
 @end

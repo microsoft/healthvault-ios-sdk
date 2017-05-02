@@ -79,22 +79,22 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_type, c_element_type);
-    HVSERIALIZE_STRING(m_reason, c_element_reason);
-    HVSERIALIZE(m_duration, c_element_duration);
-    HVSERIALIZE(m_constentGranted, c_element_consent);
-    HVSERIALIZE(m_facility, c_element_facility);
+    [writer writeElement:c_element_when content:m_when];
+    [writer writeElement:c_element_type content:m_type];
+    [writer writeElement:c_element_reason value:m_reason];
+    [writer writeElement:c_element_duration content:m_duration];
+    [writer writeElement:c_element_consent content:m_constentGranted];
+    [writer writeElement:c_element_facility content:m_facility];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE(m_type, c_element_type, HVCodableValue);
-    HVDESERIALIZE_STRING(m_reason, c_element_reason);
-    HVDESERIALIZE(m_duration, c_element_duration, HVDuration);
-    HVDESERIALIZE(m_constentGranted, c_element_consent, HVBool);
-    HVDESERIALIZE(m_facility, c_element_facility, HVOrganization);
+    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
+    m_type = [[reader readElement:c_element_type asClass:[HVCodableValue class]] retain];
+    m_reason = [[reader readStringElement:c_element_reason] retain];
+    m_duration = [[reader readElement:c_element_duration asClass:[HVDuration class]] retain];
+    m_constentGranted = [[reader readElement:c_element_consent asClass:[HVBool class]] retain];
+    m_facility = [[reader readElement:c_element_facility asClass:[HVOrganization class]] retain];
 }
 
 +(NSString *)typeID

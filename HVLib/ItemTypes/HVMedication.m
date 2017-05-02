@@ -142,32 +142,32 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_genericName, c_element_genericName);
-    HVSERIALIZE(m_dose, c_element_dose);
-    HVSERIALIZE(m_strength, c_element_strength);
-    HVSERIALIZE(m_freq, c_element_frequency);
-    HVSERIALIZE(m_route, c_element_route);
-    HVSERIALIZE(m_indication, c_element_indication);
-    HVSERIALIZE(m_startDate, c_element_startDate);
-    HVSERIALIZE(m_stopDate, c_element_stopDate);
-    HVSERIALIZE(m_prescribed, c_element_prescribed);
-    HVSERIALIZE(m_prescription, c_element_prescription);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_genericName content:m_genericName];
+    [writer writeElement:c_element_dose content:m_dose];
+    [writer writeElement:c_element_strength content:m_strength];
+    [writer writeElement:c_element_frequency content:m_freq];
+    [writer writeElement:c_element_route content:m_route];
+    [writer writeElement:c_element_indication content:m_indication];
+    [writer writeElement:c_element_startDate content:m_startDate];
+    [writer writeElement:c_element_stopDate content:m_stopDate];
+    [writer writeElement:c_element_prescribed content:m_prescribed];
+    [writer writeElement:c_element_prescription content:m_prescription];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVCodableValue);
-    HVDESERIALIZE(m_genericName, c_element_genericName, HVCodableValue);
-    HVDESERIALIZE(m_dose, c_element_dose, HVApproxMeasurement);
-    HVDESERIALIZE(m_strength, c_element_strength, HVApproxMeasurement);
-    HVDESERIALIZE(m_freq, c_element_frequency, HVApproxMeasurement);
-    HVDESERIALIZE(m_route, c_element_route, HVCodableValue);
-    HVDESERIALIZE(m_indication, c_element_indication, HVCodableValue);
-    HVDESERIALIZE(m_startDate, c_element_startDate, HVApproxDateTime);
-    HVDESERIALIZE(m_stopDate, c_element_stopDate, HVApproxDateTime);
-    HVDESERIALIZE(m_prescribed, c_element_prescribed, HVCodableValue);
-    HVDESERIALIZE(m_prescription, c_element_prescription, HVPrescription);
+    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
+    m_genericName = [[reader readElement:c_element_genericName asClass:[HVCodableValue class]] retain];
+    m_dose = [[reader readElement:c_element_dose asClass:[HVApproxMeasurement class]] retain];
+    m_strength = [[reader readElement:c_element_strength asClass:[HVApproxMeasurement class]] retain];
+    m_freq = [[reader readElement:c_element_frequency asClass:[HVApproxMeasurement class]] retain];
+    m_route = [[reader readElement:c_element_route asClass:[HVCodableValue class]] retain];
+    m_indication = [[reader readElement:c_element_indication asClass:[HVCodableValue class]] retain];
+    m_startDate = [[reader readElement:c_element_startDate asClass:[HVApproxDateTime class]] retain];
+    m_stopDate = [[reader readElement:c_element_stopDate asClass:[HVApproxDateTime class]] retain];
+    m_prescribed = [[reader readElement:c_element_prescribed asClass:[HVCodableValue class]] retain];
+    m_prescription = [[reader readElement:c_element_prescription asClass:[HVPrescription class]] retain];
 }
 
 +(NSString *)typeID

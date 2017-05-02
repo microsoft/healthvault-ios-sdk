@@ -96,16 +96,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE_INT((int)m_size, c_element_size);
-    HVSERIALIZE(m_contentType, c_element_contentType);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_size intValue:(int)m_size];
+    [writer writeElement:c_element_contentType content:m_contentType];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVString255);
-    HVDESERIALIZE_INT(m_size, c_element_size);
-    HVDESERIALIZE(m_contentType, c_element_contentType, HVCodableValue);   
+    m_name = [[reader readElement:c_element_name asClass:[HVString255 class]] retain];
+    m_size = [reader readIntElement:c_element_size];
+    m_contentType = [[reader readElement:c_element_contentType asClass:[HVCodableValue class]] retain];   
 }
 
 +(NSString *)typeID

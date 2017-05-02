@@ -80,28 +80,28 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_id, c_element_id);
-    HVSERIALIZE_STRING(m_name, c_element_name);
-    HVSERIALIZE_RAW(m_appSettingsXml);
-    HVSERIALIZE_STRING(m_selectedRecordID, c_element_selectedID);
-    HVSERIALIZE(m_moreRecords, c_element_more);
-    HVSERIALIZE_ARRAY(m_records, c_element_record);
-    HVSERIALIZE_RAW(m_groupsXml);
-    HVSERIALIZE_RAW(m_preferredCultureXml);
-    HVSERIALIZE_RAW(m_preferredUICultureXml);
+    [writer writeElement:c_element_id value:m_id];
+    [writer writeElement:c_element_name value:m_name];
+    [writer writeRaw:m_appSettingsXml];
+    [writer writeElement:c_element_selectedID value:m_selectedRecordID];
+    [writer writeElement:c_element_more content:m_moreRecords];
+    [writer writeElementArray:c_element_record elements:m_records];
+    [writer writeRaw:m_groupsXml];
+    [writer writeRaw:m_preferredCultureXml];
+    [writer writeRaw:m_preferredUICultureXml];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_id, c_element_id);
-    HVDESERIALIZE_STRING(m_name, c_element_name);
-    HVDESERIALIZE_RAW(m_appSettingsXml, c_element_settings);
-    HVDESERIALIZE_STRING(m_selectedRecordID, c_element_selectedID);
-    HVDESERIALIZE(m_moreRecords, c_element_more, HVBool);
-    HVDESERIALIZE_TYPEDARRAY(m_records, c_element_record, HVRecord, HVRecordCollection); 
-    HVDESERIALIZE_RAW(m_groupsXml, c_element_groups);
-    HVDESERIALIZE_RAW(m_preferredCultureXml, c_element_culture);
-    HVDESERIALIZE_RAW(m_preferredUICultureXml, c_element_uiculture);
+    m_id = [[reader readStringElement:c_element_id] retain];
+    m_name = [[reader readStringElement:c_element_name] retain];
+    m_appSettingsXml = [[reader readElementRaw:c_element_settings] retain];
+    m_selectedRecordID = [[reader readStringElement:c_element_selectedID] retain];
+    m_moreRecords = [[reader readElement:c_element_more asClass:[HVBool class]] retain];
+    m_records = (HVRecordCollection *)[[reader readElementArray:c_element_record asClass:[HVRecord class] andArrayClass:[HVRecordCollection class]] retain];
+    m_groupsXml = [[reader readElementRaw:c_element_groups] retain];
+    m_preferredCultureXml = [[reader readElementRaw:c_element_culture] retain];
+    m_preferredUICultureXml = [[reader readElementRaw:c_element_uiculture] retain];
     //
     // Fix up records with personIDs
     //

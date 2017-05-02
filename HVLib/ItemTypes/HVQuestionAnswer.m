@@ -154,18 +154,18 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_question, c_element_question);
-    HVSERIALIZE_ARRAY(m_answerChoices, c_element_choice);
-    HVSERIALIZE_ARRAY(m_answers, c_element_answer);
+    [writer writeElement:c_element_when content:m_when];
+    [writer writeElement:c_element_question content:m_question];
+    [writer writeElementArray:c_element_choice elements:m_answerChoices];
+    [writer writeElementArray:c_element_answer elements:m_answers];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE(m_question, c_element_question, HVCodableValue);
-    HVDESERIALIZE_TYPEDARRAY(m_answerChoices, c_element_choice, HVCodableValue, HVCodableValueCollection);
-    HVDESERIALIZE_TYPEDARRAY(m_answers, c_element_answer, HVCodableValue, HVCodableValueCollection);
+    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
+    m_question = [[reader readElement:c_element_question asClass:[HVCodableValue class]] retain];
+    m_answerChoices = (HVCodableValueCollection *)[[reader readElementArray:c_element_choice asClass:[HVCodableValue class] andArrayClass:[HVCodableValueCollection class]] retain];
+    m_answers = (HVCodableValueCollection *)[[reader readElementArray:c_element_answer asClass:[HVCodableValue class] andArrayClass:[HVCodableValueCollection class]] retain];
 }
 
 +(NSString *)typeID

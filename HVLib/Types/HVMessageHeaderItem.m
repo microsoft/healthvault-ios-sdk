@@ -66,14 +66,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING_X(m_name, x_element_name);
-    HVSERIALIZE_STRING_X(m_value, x_element_value);
+    [writer writeElementXmlName:x_element_name value:m_name];
+    [writer writeElementXmlName:x_element_value value:m_value];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_name, x_element_name);
-    HVDESERIALIZE_STRING_X(m_value, x_element_value);
+    m_name = [[reader readStringElementWithXmlName:x_element_name] retain];
+    m_value = [[reader readStringElementWithXmlName:x_element_value] retain];
 }
 
 @end

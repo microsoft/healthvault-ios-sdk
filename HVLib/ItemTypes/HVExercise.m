@@ -291,26 +291,26 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_activity, x_element_activity);
-    HVSERIALIZE_STRING_X(m_title, x_element_title);
-    HVSERIALIZE_X(m_distance, x_element_distance);
-    HVSERIALIZE_X(m_duration, x_element_duration);
-    HVSERIALIZE_ARRAY(m_details, c_element_detail);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_activity content:m_activity];
+    [writer writeElementXmlName:x_element_title value:m_title];
+    [writer writeElementXmlName:x_element_distance content:m_distance];
+    [writer writeElementXmlName:x_element_duration content:m_duration];
+    [writer writeElementArray:c_element_detail elements:m_details];
     
-    HVSERIALIZE_RAWARRAY(m_segmentsXml, c_element_segment);
+    [writer writeRawElementArray:c_element_segment elements:m_segmentsXml];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVApproxDateTime);
-    HVDESERIALIZE_X(m_activity, x_element_activity, HVCodableValue);
-    HVDESERIALIZE_STRING_X(m_title, x_element_title);
-    HVDESERIALIZE_X(m_distance, x_element_distance, HVLengthMeasurement);
-    HVDESERIALIZE_X(m_duration, x_element_duration, HVPositiveDouble);
-    HVDESERIALIZE_TYPEDARRAY(m_details, c_element_detail, HVNameValue, HVNameValueCollection);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]] retain];
+    m_activity = [[reader readElementWithXmlName:x_element_activity asClass:[HVCodableValue class]] retain];
+    m_title = [[reader readStringElementWithXmlName:x_element_title] retain];
+    m_distance = [[reader readElementWithXmlName:x_element_distance asClass:[HVLengthMeasurement class]] retain];
+    m_duration = [[reader readElementWithXmlName:x_element_duration asClass:[HVPositiveDouble class]] retain];
+    m_details = (HVNameValueCollection *)[[reader readElementArray:c_element_detail asClass:[HVNameValue class] andArrayClass:[HVNameValueCollection class]] retain];
     
-    HVDESERIALIZE_RAWARRAY(m_segmentsXml, c_element_segment); 
+    m_segmentsXml = [[reader readRawElementArray:c_element_segment] retain]; 
 }
 
 +(NSString *)typeID

@@ -83,14 +83,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_value, c_element_value);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_value content:m_value];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVCodedValue);
-    HVDESERIALIZE(m_value, c_element_value, HVMeasurement);
+    m_name = [[reader readElement:c_element_name asClass:[HVCodedValue class]] retain];
+    m_value = [[reader readElement:c_element_value asClass:[HVMeasurement class]] retain];
 }
 
 @end

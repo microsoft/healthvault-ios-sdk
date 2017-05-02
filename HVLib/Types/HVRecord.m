@@ -89,26 +89,26 @@ LError:
 {
     [super serializeAttributes:writer];
     
-    HVSERIALIZE_ATTRIBUTE(m_displayName, c_element_displayname);
-    HVSERIALIZE_ATTRIBUTE(m_relationship, c_element_relationship);
+    [writer writeAttribute:c_element_displayname value:m_displayName];
+    [writer writeAttribute:c_element_relationship value:m_relationship];
 }
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_TEXT(m_name);
+    [writer writeText:m_name];
 }
 
 -(void) deserializeAttributes:(XReader *)reader
 {
     [super deserializeAttributes:reader];
     
-    HVDESERIALIZE_ATTRIBUTE(m_displayName, c_element_displayname);
-    HVDESERIALIZE_ATTRIBUTE(m_relationship, c_element_relationship);
+    m_displayName = [[reader readAttribute:c_element_displayname] retain];
+    m_relationship = [[reader readAttribute:c_element_relationship] retain];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TEXT(m_name);
+    m_name = [[reader readValue] retain];
 }
 
 @end

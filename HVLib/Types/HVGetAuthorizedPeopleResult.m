@@ -39,8 +39,8 @@ static NSString* const c_element_more = @"more-results";
 {
     [writer writeStartElement:c_element_results];
     
-    HVSERIALIZE_ARRAYNESTED(m_persons, c_element_results, c_element_person);
-    HVSERIALIZE(m_moreResults, c_element_more);
+    [writer writeElementArray:c_element_results itemName:c_element_person elements:m_persons];
+    [writer writeElement:c_element_more content:m_moreResults];
     
     [writer writeEndElement];
 }
@@ -49,8 +49,8 @@ static NSString* const c_element_more = @"more-results";
 {
     [reader  readStartElementWithName:c_element_results];
     
-    HVDESERIALIZE_ARRAY(m_persons, c_element_person, HVPersonInfo);
-    HVDESERIALIZE(m_moreResults, c_element_more, HVBool);
+    m_persons = [[reader readElementArray:c_element_person asClass:[HVPersonInfo class]] retain];
+    m_moreResults = [[reader readElement:c_element_more asClass:[HVBool class]] retain];
     
     [reader readEndElement];
 }

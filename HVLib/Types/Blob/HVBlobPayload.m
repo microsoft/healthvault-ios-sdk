@@ -104,12 +104,12 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_blobItems, c_element_blob);
+    [writer writeElementArray:c_element_blob elements:m_blobItems];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_blobItems, c_element_blob, HVBlobPayloadItem, HVBlobPayloadItemCollection);
+    m_blobItems = (HVBlobPayloadItemCollection *)[[reader readElementArray:c_element_blob asClass:[HVBlobPayloadItem class] andArrayClass:[HVBlobPayloadItemCollection class]] retain];
 }
 
 @end

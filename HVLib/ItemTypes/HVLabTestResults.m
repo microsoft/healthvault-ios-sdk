@@ -84,16 +84,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_ARRAY(m_labGroup, c_element_labGroup);
-    HVSERIALIZE_X(m_orderedBy, x_element_orderedBy);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementArray:c_element_labGroup elements:m_labGroup];
+    [writer writeElementXmlName:x_element_orderedBy content:m_orderedBy];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVApproxDateTime);
-    HVDESERIALIZE_TYPEDARRAY_X(m_labGroup, x_element_labGroup, HVLabTestResultsGroup, HVLabTestResultsGroupCollection);
-    HVDESERIALIZE_X(m_orderedBy, x_element_orderedBy, HVOrganization);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]] retain];
+    m_labGroup = (HVLabTestResultsGroupCollection *)[[reader readElementArrayWithXmlName:x_element_labGroup asClass:[HVLabTestResultsGroup class] andArrayClass:[HVLabTestResultsGroupCollection class]] retain];
+    m_orderedBy = [[reader readElementWithXmlName:x_element_orderedBy asClass:[HVOrganization class]] retain];
 }
 
 -(NSString *)toString

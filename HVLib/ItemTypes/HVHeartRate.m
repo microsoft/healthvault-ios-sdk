@@ -127,20 +127,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_bpm, x_element_value);
-    HVSERIALIZE_X(m_measurementMethod, x_element_method);
-    HVSERIALIZE_X(m_measurementConditions, x_element_conditions);
-    HVSERIALIZE_X(m_measurementFlags, x_element_flags);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_value content:m_bpm];
+    [writer writeElementXmlName:x_element_method content:m_measurementMethod];
+    [writer writeElementXmlName:x_element_conditions content:m_measurementConditions];
+    [writer writeElementXmlName:x_element_flags content:m_measurementFlags];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
-    HVDESERIALIZE_X(m_bpm, x_element_value, HVNonNegativeInt);
-    HVDESERIALIZE_X(m_measurementMethod, x_element_method, HVCodableValue);
-    HVDESERIALIZE_X(m_measurementConditions, x_element_conditions, HVCodableValue);
-    HVDESERIALIZE_X(m_measurementFlags, x_element_flags, HVCodableValue);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_bpm = [[reader readElementWithXmlName:x_element_value asClass:[HVNonNegativeInt class]] retain];
+    m_measurementMethod = [[reader readElementWithXmlName:x_element_method asClass:[HVCodableValue class]] retain];
+    m_measurementConditions = [[reader readElementWithXmlName:x_element_conditions asClass:[HVCodableValue class]] retain];
+    m_measurementFlags = [[reader readElementWithXmlName:x_element_flags asClass:[HVCodableValue class]] retain];
 }
 
 +(NSString *) typeID

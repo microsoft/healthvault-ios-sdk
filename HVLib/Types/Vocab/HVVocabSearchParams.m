@@ -65,17 +65,17 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_text, c_element_text);
+    [writer writeElement:c_element_text content:m_text];
     if (m_maxResults > 0)
     {
-        HVSERIALIZE_INT((int)m_maxResults, c_element_max);
+        [writer writeElement:c_element_max intValue:(int)m_maxResults];
     }
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_text, c_element_text, HVVocabSearchText);
-    HVDESERIALIZE_INT(m_maxResults, c_element_max);
+    m_text = [[reader readElement:c_element_text asClass:[HVVocabSearchText class]] retain];
+    m_maxResults = [reader readIntElement:c_element_max];
 }
 
 @end

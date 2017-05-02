@@ -73,9 +73,9 @@ LError:
 
 -(void)serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE_X(m_text, x_attribute_text);
-    HVSERIALIZE_ATTRIBUTE_X(m_units, x_attribute_units);
-    HVSERIALIZE_ATTRIBUTE_X(m_unitsCode, x_attribute_code);
+    [writer writeAttributeXmlName:x_attribute_text value:m_text];
+    [writer writeAttributeXmlName:x_attribute_units value:m_units];
+    [writer writeAttributeXmlName:x_attribute_code value:m_unitsCode];
 }
 
 -(void) serialize:(XWriter *)writer
@@ -85,9 +85,9 @@ LError:
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE_X(m_text, x_attribute_text);
-    HVDESERIALIZE_ATTRIBUTE_X(m_units, x_attribute_units);
-    HVDESERIALIZE_ATTRIBUTE_X(m_unitsCode, x_attribute_code);
+    m_text = [[reader readAttributeWithXmlName:x_attribute_text] retain];
+    m_units = [[reader readAttributeWithXmlName:x_attribute_units] retain];
+    m_unitsCode = [[reader readAttributeWithXmlName:x_attribute_code] retain];
 }
 
 -(void) deserialize:(XReader *)reader

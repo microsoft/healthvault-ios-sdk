@@ -181,22 +181,22 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE_ARRAY(m_caffeine, c_element_caffeine);
-    HVSERIALIZE_ARRAY(m_alcohol, c_element_alcohol);
-    HVSERIALIZE_ARRAY(m_naps, c_element_nap);
-    HVSERIALIZE_ARRAY(m_exercise, c_element_exercise);
-    HVSERIALIZE(m_sleepiness, c_element_sleepiness);
+    [writer writeElement:c_element_when content:m_when];
+    [writer writeElementArray:c_element_caffeine elements:m_caffeine];
+    [writer writeElementArray:c_element_alcohol elements:m_alcohol];
+    [writer writeElementArray:c_element_nap elements:m_naps];
+    [writer writeElementArray:c_element_exercise elements:m_exercise];
+    [writer writeElement:c_element_sleepiness content:m_sleepiness];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDateTime);
-    HVDESERIALIZE_TYPEDARRAY(m_caffeine, c_element_caffeine, HVTime, HVTimeCollection);
-    HVDESERIALIZE_TYPEDARRAY(m_alcohol, c_element_alcohol, HVTime, HVTimeCollection);
-    HVDESERIALIZE_TYPEDARRAY(m_naps, c_element_nap, HVOccurence, HVOccurenceCollection);
-    HVDESERIALIZE_TYPEDARRAY(m_exercise, c_element_exercise, HVOccurence, HVOccurenceCollection);
-    HVDESERIALIZE(m_sleepiness, c_element_sleepiness, HVPositiveInt);
+    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
+    m_caffeine = (HVTimeCollection *)[[reader readElementArray:c_element_caffeine asClass:[HVTime class] andArrayClass:[HVTimeCollection class]] retain];
+    m_alcohol = (HVTimeCollection *)[[reader readElementArray:c_element_alcohol asClass:[HVTime class] andArrayClass:[HVTimeCollection class]] retain];
+    m_naps = (HVOccurenceCollection *)[[reader readElementArray:c_element_nap asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]] retain];
+    m_exercise = (HVOccurenceCollection *)[[reader readElementArray:c_element_exercise asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]] retain];
+    m_sleepiness = [[reader readElement:c_element_sleepiness asClass:[HVPositiveInt class]] retain];
 }
 
 +(NSString *)typeID

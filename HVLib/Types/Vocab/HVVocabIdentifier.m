@@ -141,28 +141,28 @@ LError:
 
 -(void)serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE(m_lang, c_element_lang);
+    [writer writeAttribute:c_element_lang value:m_lang];
 }
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_name, c_element_name);
-    HVSERIALIZE_STRING(m_family, c_element_family);
-    HVSERIALIZE_STRING(m_version, c_element_version);
-    HVSERIALIZE_STRING(m_codeValue, c_element_code);
+    [writer writeElement:c_element_name value:m_name];
+    [writer writeElement:c_element_family value:m_family];
+    [writer writeElement:c_element_version value:m_version];
+    [writer writeElement:c_element_code value:m_codeValue];
 }
 
 -(void)deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE(m_lang, c_element_lang);
+    m_lang = [[reader readAttribute:c_element_lang] retain];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_name, c_element_name);
-    HVDESERIALIZE_STRING(m_family, c_element_family);
-    HVDESERIALIZE_STRING(m_version, c_element_version);
-    HVDESERIALIZE_STRING(m_codeValue, c_element_code);
+    m_name = [[reader readStringElement:c_element_name] retain];
+    m_family = [[reader readStringElement:c_element_family] retain];
+    m_version = [[reader readStringElement:c_element_version] retain];
+    m_codeValue = [[reader readStringElement:c_element_code] retain];
 }
 
 @end

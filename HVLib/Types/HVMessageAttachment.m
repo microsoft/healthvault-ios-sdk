@@ -74,18 +74,18 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING_X(m_name, x_element_name);
-    HVSERIALIZE_STRING_X(m_blobName, x_element_blob);
-    HVSERIALIZE_BOOL_X(m_isInline, x_element_inline);
-    HVSERIALIZE_STRING_X(m_contentID, x_element_contentid);
+    [writer writeElementXmlName:x_element_name value:m_name];
+    [writer writeElementXmlName:x_element_blob value:m_blobName];
+    [writer writeElementXmlName:x_element_inline boolValue:m_isInline];
+    [writer writeElementXmlName:x_element_contentid value:m_contentID];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_name, x_element_name);
-    HVDESERIALIZE_STRING_X(m_blobName, x_element_blob);
-    HVDESERIALIZE_BOOL_X(m_isInline, x_element_inline);
-    HVDESERIALIZE_STRING_X(m_contentID, x_element_contentid);
+    m_name = [[reader readStringElementWithXmlName:x_element_name] retain];
+    m_blobName = [[reader readStringElementWithXmlName:x_element_blob] retain];
+    m_isInline = [reader readBoolElementXmlName:x_element_inline];
+    m_contentID = [[reader readStringElementWithXmlName:x_element_contentid] retain];
 }
 
 @end

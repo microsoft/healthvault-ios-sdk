@@ -94,7 +94,7 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    NSString* text = [reader readString];
+    NSString* text = [[reader readString] retain];
     
     if ([NSString isNilOrEmpty:text] || [text hasPrefix:c_maxDatePrefix])
     {

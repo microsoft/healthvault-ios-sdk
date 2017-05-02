@@ -70,37 +70,41 @@ static NSString* const c_element_xpath = @"xpath";
 {
     if (m_state != HVItemStateNone)
     {
-        HVSERIALIZE_ENUM(m_state, c_element_state, HVItemStateToString);
+        [writer writeElement:c_element_state value:HVItemStateToString(m_state)];
     }
     
-    HVSERIALIZE_DATE(m_eDateMin, c_element_edateMin);
-    HVSERIALIZE_DATE(m_eDateMax, c_element_edateMax);
-    HVSERIALIZE_STRING(m_cAppID, c_element_cappID);
-    HVSERIALIZE_STRING(m_cPersonID, c_element_cpersonID);
-    HVSERIALIZE_STRING(m_uAppID, c_element_uappID);
-    HVSERIALIZE_STRING(m_uPersonID, c_element_upersonID);
-    HVSERIALIZE_DATE(m_cDateMin, c_element_cdateMin);
-    HVSERIALIZE_DATE(m_cDateMax, c_element_cdateMax);
-    HVSERIALIZE_DATE(m_uDateMin, c_element_udateMin);
-    HVSERIALIZE_DATE(m_udateMax, c_element_udateMax);
-    HVSERIALIZE_STRING(m_xpath, c_element_xpath);
+    [writer writeElement:c_element_edateMin dateValue:m_eDateMin];
+    [writer writeElement:c_element_edateMax dateValue:m_eDateMax];
+    [writer writeElement:c_element_cappID value:m_cAppID];
+    [writer writeElement:c_element_cpersonID value:m_cPersonID];
+    [writer writeElement:c_element_uappID value:m_uAppID];
+    [writer writeElement:c_element_upersonID value:m_uPersonID];
+    [writer writeElement:c_element_cdateMin dateValue:m_cDateMin];
+    [writer writeElement:c_element_cdateMax dateValue:m_cDateMax];
+    [writer writeElement:c_element_udateMin dateValue:m_uDateMin];
+    [writer writeElement:c_element_udateMax dateValue:m_udateMax];
+    [writer writeElement:c_element_xpath value:m_xpath];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_ENUM(m_state, c_element_state, HVItemStateFromString);
-    
-    HVDESERIALIZE_DATE(m_eDateMin, c_element_edateMin);
-    HVDESERIALIZE_DATE(m_eDateMax, c_element_edateMax);
-    HVDESERIALIZE_STRING(m_cAppID, c_element_cappID);
-    HVDESERIALIZE_STRING(m_cPersonID, c_element_cpersonID);
-    HVDESERIALIZE_STRING(m_uAppID, c_element_uappID);
-    HVDESERIALIZE_STRING(m_uPersonID, c_element_upersonID);
-    HVDESERIALIZE_DATE(m_cDateMin, c_element_cdateMin);
-    HVDESERIALIZE_DATE(m_cDateMax, c_element_cdateMax);
-    HVDESERIALIZE_DATE(m_uDateMin, c_element_udateMin);
-    HVDESERIALIZE_DATE(m_udateMax, c_element_udateMax);
-    HVDESERIALIZE_STRING(m_xpath, c_element_xpath);
+    NSString* state = [[reader readStringElement:c_element_state] retain];
+    if (state)
+    {
+        m_state = HVItemStateFromString(state);
+    }
+
+    m_eDateMin = [[reader readDateElement:c_element_edateMin] retain];
+    m_eDateMax = [[reader readDateElement:c_element_edateMax] retain];
+    m_cAppID = [[reader readStringElement:c_element_cappID] retain];
+    m_cPersonID = [[reader readStringElement:c_element_cpersonID] retain];
+    m_uAppID = [[reader readStringElement:c_element_uappID] retain];
+    m_uPersonID = [[reader readStringElement:c_element_upersonID] retain];
+    m_cDateMin = [[reader readDateElement:c_element_cdateMin] retain];
+    m_cDateMax = [[reader readDateElement:c_element_cdateMax] retain];
+    m_uDateMin = [[reader readDateElement:c_element_udateMin] retain];
+    m_udateMax = [[reader readDateElement:c_element_udateMax] retain];
+    m_xpath = [[reader readStringElement:c_element_xpath] retain];
 }
 
 @end
@@ -161,13 +165,13 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_typeIDs, c_element_typeID);
+    [writer writeElementArray:c_element_typeID elements:m_typeIDs];
     [super serialize:writer];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRINGCOLLECTION(m_typeIDs, c_element_typeID);
+    m_typeIDs = [[reader readStringElementArray:c_element_typeID] retain];
     [super deserialize:reader];
 }
 

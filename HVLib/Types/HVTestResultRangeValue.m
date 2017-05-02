@@ -73,14 +73,14 @@ static const xmlChar* x_element_maxRange = XMLSTRINGCONST("maximum-range");
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_minRange, x_element_minRange);
-    HVSERIALIZE_X(m_maxRange, x_element_maxRange);
+    [writer writeElementXmlName:x_element_minRange content:m_minRange];
+    [writer writeElementXmlName:x_element_maxRange content:m_maxRange];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_minRange, x_element_minRange, HVDouble);
-    HVDESERIALIZE_X(m_maxRange, x_element_maxRange, HVDouble);
+    m_minRange = [[reader readElementWithXmlName:x_element_minRange asClass:[HVDouble class]] retain];
+    m_maxRange = [[reader readElementWithXmlName:x_element_maxRange asClass:[HVDouble class]] retain];
 }
 
 @end

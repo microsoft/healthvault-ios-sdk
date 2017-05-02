@@ -87,16 +87,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_value, c_element_value);
-    HVSERIALIZE(m_group, c_element_group);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_value content:m_value];
+    [writer writeElement:c_element_group content:m_group];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVCodableValue);
-    HVDESERIALIZE(m_value, c_element_value, HVCodableValue);
-    HVDESERIALIZE(m_group, c_element_group, HVCodableValue);    
+    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
+    m_value = [[reader readElement:c_element_value asClass:[HVCodableValue class]] retain];
+    m_group = [[reader readElement:c_element_group asClass:[HVCodableValue class]] retain];    
 }
 
 @end

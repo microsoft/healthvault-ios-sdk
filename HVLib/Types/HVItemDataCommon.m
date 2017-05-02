@@ -83,22 +83,22 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_source, c_element_source);
-    HVSERIALIZE_STRING(m_note, c_element_note);
-    HVSERIALIZE(m_tags, c_element_tags);
-    HVSERIALIZE_RAWARRAY(m_extensions, c_element_extension);
-    HVSERIALIZE_ARRAY(m_relatedItems, c_element_related);
-    HVSERIALIZE(m_clientID, c_element_clientID);
+    [writer writeElement:c_element_source value:m_source];
+    [writer writeElement:c_element_note value:m_note];
+    [writer writeElement:c_element_tags content:m_tags];
+    [writer writeRawElementArray:c_element_extension elements:m_extensions];
+    [writer writeElementArray:c_element_related elements:m_relatedItems];
+    [writer writeElement:c_element_clientID content:m_clientID];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_source, c_element_source);
-    HVDESERIALIZE_STRING(m_note, c_element_note);
-    HVDESERIALIZE(m_tags, c_element_tags, HVStringZ512);
-    HVDESERIALIZE_RAWARRAY(m_extensions, c_element_extension);
-    HVDESERIALIZE_TYPEDARRAY(m_relatedItems, c_element_related, HVRelatedItem, HVRelatedItemCollection);
-    HVDESERIALIZE(m_clientID, c_element_clientID, HVString255);
+    m_source = [[reader readStringElement:c_element_source] retain];
+    m_note = [[reader readStringElement:c_element_note] retain];
+    m_tags = [[reader readElement:c_element_tags asClass:[HVStringZ512 class]] retain];
+    m_extensions = [[reader readRawElementArray:c_element_extension] retain];
+    m_relatedItems = (HVRelatedItemCollection *)[[reader readElementArray:c_element_related asClass:[HVRelatedItem class] andArrayClass:[HVRelatedItemCollection class]] retain];
+    m_clientID = [[reader readElement:c_element_clientID asClass:[HVString255 class]] retain];
 }
 
 @end

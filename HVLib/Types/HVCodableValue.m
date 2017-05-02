@@ -205,14 +205,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING_X(m_text, x_element_text);
-    HVSERIALIZE_ARRAY(m_codes, c_element_code);
+    [writer writeElementXmlName:x_element_text value:m_text];
+    [writer writeElementArray:c_element_code elements:m_codes];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_text, x_element_text);
-    HVDESERIALIZE_TYPEDARRAY_X(m_codes, x_element_code, HVCodedValue, HVCodedValueCollection);
+    m_text = [[reader readStringElementWithXmlName:x_element_text] retain];
+    m_codes = (HVCodedValueCollection *)[[reader readElementArrayWithXmlName:x_element_code asClass:[HVCodedValue class] andArrayClass:[HVCodedValueCollection class]] retain];
 }
 
 @end

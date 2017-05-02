@@ -115,14 +115,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_litersPerSecond, x_element_litersPerSecond);
-    HVSERIALIZE_X(m_display, x_element_displayValue);
+    [writer writeElementXmlName:x_element_litersPerSecond content:m_litersPerSecond];
+    [writer writeElementXmlName:x_element_displayValue content:m_display];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_litersPerSecond, x_element_litersPerSecond, HVPositiveDouble);
-    HVDESERIALIZE_X(m_display, x_element_displayValue, HVDisplayValue);
+    m_litersPerSecond = [[reader readElementWithXmlName:x_element_litersPerSecond asClass:[HVPositiveDouble class]] retain];
+    m_display = [[reader readElementWithXmlName:x_element_displayValue asClass:[HVDisplayValue class]] retain];
 }
 
 +(NSString *)flowUnits

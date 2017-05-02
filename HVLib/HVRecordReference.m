@@ -49,14 +49,14 @@ LError:
 
 -(void) serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE(m_id, c_attribute_id);
-    HVSERIALIZE_ATTRIBUTE(m_personID, c_attribute_personID);
+    [writer writeAttribute:c_attribute_id value:m_id];
+    [writer writeAttribute:c_attribute_personID value:m_personID];
 }
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE(m_id, c_attribute_id);
-    HVDESERIALIZE_ATTRIBUTE(m_personID, c_attribute_personID);
+    m_id = [[reader readAttribute:c_attribute_id] retain];
+    m_personID = [[reader readAttribute:c_attribute_personID] retain];
 }
 
 @end

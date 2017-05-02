@@ -152,22 +152,22 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_full, c_element_fullName);
-    HVSERIALIZE(m_title, c_element_title);
-    HVSERIALIZE_STRING(m_first, c_element_first);
-    HVSERIALIZE_STRING(m_middle, c_element_middle);
-    HVSERIALIZE_STRING(m_last, c_element_last);
-    HVSERIALIZE(m_suffix, c_element_suffix);
+    [writer writeElement:c_element_fullName value:m_full];
+    [writer writeElement:c_element_title content:m_title];
+    [writer writeElement:c_element_first value:m_first];
+    [writer writeElement:c_element_middle value:m_middle];
+    [writer writeElement:c_element_last value:m_last];
+    [writer writeElement:c_element_suffix content:m_suffix];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_full, c_element_fullName);
-    HVDESERIALIZE(m_title, c_element_title, HVCodableValue);
-    HVDESERIALIZE_STRING(m_first, c_element_first);
-    HVDESERIALIZE_STRING(m_middle, c_element_middle);
-    HVDESERIALIZE_STRING(m_last, c_element_last);
-    HVDESERIALIZE(m_suffix, c_element_suffix, HVCodableValue);
+    m_full = [[reader readStringElement:c_element_fullName] retain];
+    m_title = [[reader readElement:c_element_title asClass:[HVCodableValue class]] retain];
+    m_first = [[reader readStringElement:c_element_first] retain];
+    m_middle = [[reader readStringElement:c_element_middle] retain];
+    m_last = [[reader readStringElement:c_element_last] retain];
+    m_suffix = [[reader readElement:c_element_suffix asClass:[HVCodableValue class]] retain];
 }
 
 @end

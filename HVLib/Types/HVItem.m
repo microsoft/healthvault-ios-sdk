@@ -440,33 +440,39 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_key, x_element_key);
-    HVSERIALIZE_X(m_type, x_element_type);
-    HVSERIALIZE_ENUM(m_state, c_element_state, HVItemStateToString);
-    HVSERIALIZE_INT_X(m_flags, x_element_flags);
-    HVSERIALIZE_DATE_X(m_effectiveDate, x_element_effectiveDate);
-    HVSERIALIZE_X(m_created, x_element_created);
-    HVSERIALIZE_X(m_updated, x_element_updated);
-    HVSERIALIZE_X(m_data, x_element_data);
-    HVSERIALIZE_X(m_blobs, x_element_blobs);
-    HVSERIALIZE_X(m_updatedEndDate, x_element_updatedEndDate);
+    [writer writeElementXmlName:x_element_key content:m_key];
+    [writer writeElementXmlName:x_element_type content:m_type];
+    [writer writeElement:c_element_state value:HVItemStateToString(m_state)];
+    [writer writeElementXmlName:x_element_flags intValue:m_flags];
+    [writer writeElementXmlName:x_element_effectiveDate dateValue:m_effectiveDate];
+    [writer writeElementXmlName:x_element_created content:m_created];
+    [writer writeElementXmlName:x_element_updated content:m_updated];
+    [writer writeElementXmlName:x_element_data content:m_data];
+    [writer writeElementXmlName:x_element_blobs content:m_blobs];
+    [writer writeElementXmlName:x_element_updatedEndDate content:m_updatedEndDate];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_key, x_element_key, HVItemKey);
-    HVDESERIALIZE_X(m_type, x_element_type, HVItemType);
-    HVDESERIALIZE_ENUM(m_state, c_element_state, HVItemStateFromString);
-    HVDESERIALIZE_INT_X(m_flags, x_element_flags);
-    HVDESERIALIZE_DATE_X(m_effectiveDate, x_element_effectiveDate);
-    HVDESERIALIZE_X(m_created, x_element_created, HVAudit);
-    HVDESERIALIZE_X(m_updated, x_element_updated, HVAudit);
-    HVDESERIALIZE_X(m_data, x_element_data, HVItemData);
-    HVDESERIALIZE_X(m_blobs, x_element_blobs, HVBlobPayload);
-    HVDESERIALIZE_IGNORE_X(x_element_permissions);
-    HVDESERIALIZE_IGNORE_X(x_element_tags);
-    HVDESERIALIZE_IGNORE_X(x_element_signatures);
-    HVDESERIALIZE_X(m_updatedEndDate, x_element_updatedEndDate, HVConstrainedXmlDate);
+    m_key = [[reader readElementWithXmlName:x_element_key asClass:[HVItemKey class]] retain];
+    m_type = [[reader readElementWithXmlName:x_element_type asClass:[HVItemType class]] retain];
+    
+    NSString* state = [[reader readStringElement:c_element_state] retain];
+    if (state)
+    {
+        m_state = HVItemStateFromString(state);
+    }
+
+    m_flags = [reader readIntElementXmlName:x_element_flags];
+    m_effectiveDate = [[reader readDateElementXmlName:x_element_effectiveDate] retain];
+    m_created = [[reader readElementWithXmlName:x_element_created asClass:[HVAudit class]] retain];
+    m_updated = [[reader readElementWithXmlName:x_element_updated asClass:[HVAudit class]] retain];
+    m_data = [[reader readElementWithXmlName:x_element_data asClass:[HVItemData class]] retain];
+    m_blobs = [[reader readElementWithXmlName:x_element_blobs asClass:[HVBlobPayload class]] retain];
+    [reader skipElementWithXmlName:x_element_permissions];
+    [reader skipElementWithXmlName:x_element_tags];
+    [reader skipElementWithXmlName:x_element_signatures];
+    m_updatedEndDate = [[reader readElementWithXmlName:x_element_updatedEndDate asClass:[HVConstrainedXmlDate class]] retain];
     if (m_updatedEndDate && m_updatedEndDate.isNull)
     {
         HVCLEAR(m_updatedEndDate);
@@ -684,12 +690,12 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_inner, c_element_item);
+    [writer writeElementArray:c_element_item elements:m_inner];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_ARRAY(m_inner, c_element_item, HVItem);
+    m_inner = [[reader readElementArray:c_element_item asClass:[HVItem class]] retain];
 }
 
 @end

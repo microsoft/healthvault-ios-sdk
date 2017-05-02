@@ -41,9 +41,9 @@ static const xmlChar* x_element_errorInfo = XMLSTRINGCONST("error-info");
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_message, x_element_message);
-    HVDESERIALIZE_RAW_X(m_context, x_element_context);
-    HVDESERIALIZE_STRING_X(m_errorInfo, x_element_errorInfo);
+    m_message = [[reader readStringElementWithXmlName:x_element_message] retain];
+    m_context = [[reader readElementRawWithXmlName:x_element_context] retain];
+    m_errorInfo = [[reader readStringElementWithXmlName:x_element_errorInfo] retain];
 }
 
 @end

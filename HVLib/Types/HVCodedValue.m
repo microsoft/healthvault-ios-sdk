@@ -143,18 +143,18 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING_X(m_code, x_element_value);
-    HVSERIALIZE_STRING_X(m_family, x_element_family);
-    HVSERIALIZE_STRING_X(m_vocab, x_element_type);
-    HVSERIALIZE_STRING_X(m_version, x_element_version);
+    [writer writeElementXmlName:x_element_value value:m_code];
+    [writer writeElementXmlName:x_element_family value:m_family];
+    [writer writeElementXmlName:x_element_type value:m_vocab];
+    [writer writeElementXmlName:x_element_version value:m_version];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_code, x_element_value);
-    HVDESERIALIZE_STRING_X(m_family, x_element_family);
-    HVDESERIALIZE_STRING_X(m_vocab, x_element_type);
-    HVDESERIALIZE_STRING_X(m_version, x_element_version);
+    m_code = [[reader readStringElementWithXmlName:x_element_value] retain];
+    m_family = [[reader readStringElementWithXmlName:x_element_family] retain];
+    m_vocab = [[reader readStringElementWithXmlName:x_element_type] retain];
+    m_version = [[reader readStringElementWithXmlName:x_element_version] retain];
 }
 
 @end
