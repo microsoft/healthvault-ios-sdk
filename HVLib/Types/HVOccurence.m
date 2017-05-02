@@ -86,14 +86,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_minutes, c_element_minutes);
+    [writer writeElement:c_element_when content:m_when];
+    [writer writeElement:c_element_minutes content:m_minutes];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVTime);
-    HVDESERIALIZE(m_minutes, c_element_minutes, HVNonNegativeInt);    
+    m_when = [[reader readElement:c_element_when asClass:[HVTime class]] retain];
+    m_minutes = [[reader readElement:c_element_minutes asClass:[HVNonNegativeInt class]] retain];    
 }
 
 @end

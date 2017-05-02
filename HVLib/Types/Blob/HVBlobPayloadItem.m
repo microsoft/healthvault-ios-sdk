@@ -143,20 +143,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_blobInfo, c_element_blobInfo);
-    HVSERIALIZE_INT((int)m_length, c_element_length);
-    HVSERIALIZE_STRING(m_blobUrl, c_element_blobUrl);
-    HVSERIALIZE_STRING(m_legacyEncoding, c_element_legacyEncoding);
-    HVSERIALIZE_STRING(m_encoding, c_element_currentEncoding);
+    [writer writeElement:c_element_blobInfo content:m_blobInfo];
+    [writer writeElement:c_element_length intValue:(int)m_length];
+    [writer writeElement:c_element_blobUrl value:m_blobUrl];
+    [writer writeElement:c_element_legacyEncoding value:m_legacyEncoding];
+    [writer writeElement:c_element_currentEncoding value:m_encoding];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_blobInfo, c_element_blobInfo, HVBlobInfo);
-    HVDESERIALIZE_INT(m_length, c_element_length);
-    HVDESERIALIZE_STRING(m_blobUrl, c_element_blobUrl);
-    HVDESERIALIZE_STRING(m_legacyEncoding, c_element_legacyEncoding);
-    HVDESERIALIZE_STRING(m_encoding, c_element_currentEncoding);
+    m_blobInfo = [[reader readElement:c_element_blobInfo asClass:[HVBlobInfo class]] retain];
+    m_length = [reader readIntElement:c_element_length];
+    m_blobUrl = [[reader readStringElement:c_element_blobUrl] retain];
+    m_legacyEncoding = [[reader readStringElement:c_element_legacyEncoding] retain];
+    m_encoding = [[reader readStringElement:c_element_currentEncoding] retain];
 }
 
 @end

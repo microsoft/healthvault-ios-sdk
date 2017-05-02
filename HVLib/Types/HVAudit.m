@@ -41,16 +41,16 @@ static NSString* const c_element_action = @"audit-action";
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_DATE(m_when, c_element_when);
-    HVSERIALIZE_STRING(m_appID, c_element_appID);
-    HVSERIALIZE_STRING(m_action, c_element_action);
+    [writer writeElement:c_element_when dateValue:m_when];
+    [writer writeElement:c_element_appID value:m_appID];
+    [writer writeElement:c_element_action value:m_action];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_DATE(m_when, c_element_when);
-    HVDESERIALIZE_STRING(m_appID, c_element_appID);
-    HVDESERIALIZE_STRING(m_action, c_element_action);    
+    m_when = [[reader readDateElement:c_element_when] retain];
+    m_appID = [[reader readStringElement:c_element_appID] retain];
+    m_action = [[reader readStringElement:c_element_action] retain];    
 }
 
 @end

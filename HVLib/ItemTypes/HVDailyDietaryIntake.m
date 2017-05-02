@@ -210,32 +210,32 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_calories, c_element_calories);
-    HVSERIALIZE(m_totalFat, c_element_totalFat);
-    HVSERIALIZE(m_saturatedFat, c_element_saturatedFat);
-    HVSERIALIZE(m_transFat, c_element_transFat);
-    HVSERIALIZE(m_protein, c_element_protein);
-    HVSERIALIZE(m_carbs, c_element_carbs);
-    HVSERIALIZE(m_fiber, c_element_fiber);
-    HVSERIALIZE(m_sugar, c_element_sugar);
-    HVSERIALIZE(m_sodium, c_element_sodium);
-    HVSERIALIZE(m_cholesterol, c_element_cholesterol);
+    [writer writeElement:c_element_when content:m_when];
+    [writer writeElement:c_element_calories content:m_calories];
+    [writer writeElement:c_element_totalFat content:m_totalFat];
+    [writer writeElement:c_element_saturatedFat content:m_saturatedFat];
+    [writer writeElement:c_element_transFat content:m_transFat];
+    [writer writeElement:c_element_protein content:m_protein];
+    [writer writeElement:c_element_carbs content:m_carbs];
+    [writer writeElement:c_element_fiber content:m_fiber];
+    [writer writeElement:c_element_sugar content:m_sugar];
+    [writer writeElement:c_element_sodium content:m_sodium];
+    [writer writeElement:c_element_cholesterol content:m_cholesterol];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVDate);
-    HVDESERIALIZE(m_calories, c_element_calories, HVPositiveInt);
-    HVDESERIALIZE(m_totalFat, c_element_totalFat, HVWeightMeasurement);
-    HVDESERIALIZE(m_saturatedFat, c_element_saturatedFat, HVWeightMeasurement);
-    HVDESERIALIZE(m_transFat, c_element_transFat, HVWeightMeasurement);
-    HVDESERIALIZE(m_protein, c_element_protein, HVWeightMeasurement);
-    HVDESERIALIZE(m_carbs, c_element_carbs, HVWeightMeasurement);
-    HVDESERIALIZE(m_fiber, c_element_fiber, HVWeightMeasurement);
-    HVDESERIALIZE(m_sugar, c_element_sugar, HVWeightMeasurement);
-    HVDESERIALIZE(m_sodium, c_element_sodium, HVWeightMeasurement);
-    HVDESERIALIZE(m_cholesterol, c_element_cholesterol, HVWeightMeasurement);    
+    m_when = [[reader readElement:c_element_when asClass:[HVDate class]] retain];
+    m_calories = [[reader readElement:c_element_calories asClass:[HVPositiveInt class]] retain];
+    m_totalFat = [[reader readElement:c_element_totalFat asClass:[HVWeightMeasurement class]] retain];
+    m_saturatedFat = [[reader readElement:c_element_saturatedFat asClass:[HVWeightMeasurement class]] retain];
+    m_transFat = [[reader readElement:c_element_transFat asClass:[HVWeightMeasurement class]] retain];
+    m_protein = [[reader readElement:c_element_protein asClass:[HVWeightMeasurement class]] retain];
+    m_carbs = [[reader readElement:c_element_carbs asClass:[HVWeightMeasurement class]] retain];
+    m_fiber = [[reader readElement:c_element_fiber asClass:[HVWeightMeasurement class]] retain];
+    m_sugar = [[reader readElement:c_element_sugar asClass:[HVWeightMeasurement class]] retain];
+    m_sodium = [[reader readElement:c_element_sodium asClass:[HVWeightMeasurement class]] retain];
+    m_cholesterol = [[reader readElement:c_element_cholesterol asClass:[HVWeightMeasurement class]] retain];    
 }
 
 +(NSString *)typeID

@@ -117,26 +117,31 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ENUM(m_gender, c_element_gender, stringFromGender);
-    HVSERIALIZE(m_birthYear, c_element_birthyear);
-    HVSERIALIZE(m_country, c_element_country);
-    HVSERIALIZE_STRING(m_postalCode, c_element_postcode);
-    HVSERIALIZE_STRING(m_city, c_element_city);
-    HVSERIALIZE(m_state, c_element_state);
-    HVSERIALIZE(m_firstDOW, c_element_dow);
-    HVSERIALIZE_RAW(m_languageXml);
+    [writer writeElement:c_element_gender value:stringFromGender(m_gender)];
+    [writer writeElement:c_element_birthyear content:m_birthYear];
+    [writer writeElement:c_element_country content:m_country];
+    [writer writeElement:c_element_postcode value:m_postalCode];
+    [writer writeElement:c_element_city value:m_city];
+    [writer writeElement:c_element_state content:m_state];
+    [writer writeElement:c_element_dow content:m_firstDOW];
+    [writer writeRaw:m_languageXml];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_ENUM(m_gender, c_element_gender, stringToGender);
-    HVDESERIALIZE(m_birthYear, c_element_birthyear, HVYear);
-    HVDESERIALIZE(m_country, c_element_country, HVCodableValue);
-    HVDESERIALIZE_STRING(m_postalCode, c_element_postcode);
-    HVDESERIALIZE_STRING(m_city, c_element_city);
-    HVDESERIALIZE(m_state, c_element_state, HVCodableValue);
-    HVDESERIALIZE(m_firstDOW, c_element_dow, HVInt);
-    HVDESERIALIZE_RAW(m_languageXml, c_element_lang);
+    NSString* gender = [[reader readStringElement:c_element_gender] retain];
+    if (gender)
+    {
+        m_gender = stringToGender(gender);
+    }
+    
+    m_birthYear = [[reader readElement:c_element_birthyear asClass:[HVYear class]] retain];
+    m_country = [[reader readElement:c_element_country asClass:[HVCodableValue class]] retain];
+    m_postalCode = [[reader readStringElement:c_element_postcode] retain];
+    m_city = [[reader readStringElement:c_element_city] retain];
+    m_state = [[reader readElement:c_element_state asClass:[HVCodableValue class]] retain];
+    m_firstDOW = [[reader readElement:c_element_dow asClass:[HVInt class]] retain];
+    m_languageXml = [[reader readElementRaw:c_element_lang] retain];
 }
 
 +(NSString *)typeID

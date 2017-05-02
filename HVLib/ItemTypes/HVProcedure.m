@@ -101,20 +101,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_when, c_element_when);
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_anatomicLocation, c_element_location);
-    HVSERIALIZE(m_primaryProvider, c_element_primaryprovider);
-    HVSERIALIZE(m_secondaryProvider, c_element_secondaryprovider);
+    [writer writeElement:c_element_when content:m_when];
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_location content:m_anatomicLocation];
+    [writer writeElement:c_element_primaryprovider content:m_primaryProvider];
+    [writer writeElement:c_element_secondaryprovider content:m_secondaryProvider];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_when, c_element_when, HVApproxDateTime);
-    HVDESERIALIZE(m_name, c_element_name, HVCodableValue);
-    HVDESERIALIZE(m_anatomicLocation, c_element_location, HVCodableValue);
-    HVDESERIALIZE(m_primaryProvider, c_element_primaryprovider, HVPerson);
-    HVDESERIALIZE(m_secondaryProvider, c_element_secondaryprovider, HVPerson);
+    m_when = [[reader readElement:c_element_when asClass:[HVApproxDateTime class]] retain];
+    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
+    m_anatomicLocation = [[reader readElement:c_element_location asClass:[HVCodableValue class]] retain];
+    m_primaryProvider = [[reader readElement:c_element_primaryprovider asClass:[HVPerson class]] retain];
+    m_secondaryProvider = [[reader readElement:c_element_secondaryprovider asClass:[HVPerson class]] retain];
 }
 
 +(NSString *)typeID

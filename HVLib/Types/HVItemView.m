@@ -88,13 +88,13 @@ LError:
     @try
     {
         sections = [self createStringsFromSections];
-        HVSERIALIZE_STRINGCOLLECTION(sections, c_element_section);
+        [writer writeElementArray:c_element_section elements:sections];
         if (m_sections & HVItemSection_Data)
         {
             [writer writeEmptyElement:c_element_xml];
         }
-        HVSERIALIZE_STRINGCOLLECTION(m_transforms, c_element_xml);
-        HVSERIALIZE_STRINGCOLLECTION(m_typeVersions, c_element_versions);
+        [writer writeElementArray:c_element_xml elements:m_transforms];
+        [writer writeElementArray:c_element_versions elements:m_typeVersions];
     }
     @finally {
         [sections release];
@@ -106,9 +106,9 @@ LError:
     HVStringCollection* sections = nil;
     @try {
         
-        HVDESERIALIZE_STRINGCOLLECTION(sections, c_element_section);
-        HVDESERIALIZE_STRINGCOLLECTION(m_transforms, c_element_xml);
-        HVDESERIALIZE_STRINGCOLLECTION(m_typeVersions, c_element_versions);
+        sections = [[reader readStringElementArray:c_element_section] retain];
+        m_transforms = [[reader readStringElementArray:c_element_xml] retain];
+        m_typeVersions = [[reader readStringElementArray:c_element_versions] retain];
         
         m_sections = [self stringsToSections:sections];
         if ([m_transforms containsString:c_emptyString])

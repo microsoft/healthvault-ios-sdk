@@ -53,16 +53,16 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_id, x_element_id);
-    HVSERIALIZE_X(m_type, x_element_type);
-    HVSERIALIZE_DATE_X(m_effectiveDate, x_element_edate);
+    [writer writeElementXmlName:x_element_id content:m_id];
+    [writer writeElementXmlName:x_element_type content:m_type];
+    [writer writeElementXmlName:x_element_edate dateValue:m_effectiveDate];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_id, x_element_id, HVItemKey);
-    HVDESERIALIZE_X(m_type, x_element_type, HVItemType);
-    HVDESERIALIZE_DATE_X(m_effectiveDate, x_element_edate);
+    m_id = [[reader readElementWithXmlName:x_element_id asClass:[HVItemKey class]] retain];
+    m_type = [[reader readElementWithXmlName:x_element_type asClass:[HVItemType class]] retain];
+    m_effectiveDate = [[reader readDateElementXmlName:x_element_edate] retain];
 }
 
 @end

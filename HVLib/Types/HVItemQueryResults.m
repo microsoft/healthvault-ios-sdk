@@ -43,12 +43,12 @@ static NSString* const c_element_result = @"group";
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_results, c_element_result);
+    [writer writeElementArray:c_element_result elements:m_results];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-     HVDESERIALIZE_TYPEDARRAY(m_results, c_element_result, HVItemQueryResult, HVItemQueryResultCollection);
+     m_results = (HVItemQueryResultCollection *)[[reader readElementArray:c_element_result asClass:[HVItemQueryResult class] andArrayClass:[HVItemQueryResultCollection class]] retain];
 }
 
 @end

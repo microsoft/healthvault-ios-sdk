@@ -41,14 +41,14 @@ static const xmlChar* x_element_error = XMLSTRINGCONST("error");
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_INT_X(m_code, x_element_code);
-    HVSERIALIZE_X(m_error, x_element_error);
+    [writer writeElementXmlName:x_element_code intValue:m_code];
+    [writer writeElementXmlName:x_element_error content:m_error];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_INT_X(m_code, x_element_code);
-    HVDESERIALIZE_X(m_error, x_element_error, HVServerError);
+    m_code = [reader readIntElementXmlName:x_element_code];
+    m_error = [[reader readElementWithXmlName:x_element_error asClass:[HVServerError class]] retain];
 }
 
 @end

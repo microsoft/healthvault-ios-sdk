@@ -108,34 +108,34 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_planName, c_element_planName);
-    HVSERIALIZE(m_coverageType, c_element_coverage);
-    HVSERIALIZE_STRING(m_carrierID, c_element_carrierID);
-    HVSERIALIZE_STRING(m_groupNum, c_element_groupNum);
-    HVSERIALIZE_STRING(m_planCode, c_element_planCode);
-    HVSERIALIZE_STRING(m_subscriberID, c_element_subscriberID);
-    HVSERIALIZE_STRING(m_personCode, c_element_personCode);
-    HVSERIALIZE_STRING(m_subscriberName, c_element_subscriberName);
-    HVSERIALIZE(m_subsriberDOB, c_element_subsriberDOB);
-    HVSERIALIZE(m_isPrimary, c_element_isPrimary);
-    HVSERIALIZE(m_expirationDate, c_element_expirationDate);
-    HVSERIALIZE(m_contact, c_element_contact);
+    [writer writeElement:c_element_planName value:m_planName];
+    [writer writeElement:c_element_coverage content:m_coverageType];
+    [writer writeElement:c_element_carrierID value:m_carrierID];
+    [writer writeElement:c_element_groupNum value:m_groupNum];
+    [writer writeElement:c_element_planCode value:m_planCode];
+    [writer writeElement:c_element_subscriberID value:m_subscriberID];
+    [writer writeElement:c_element_personCode value:m_personCode];
+    [writer writeElement:c_element_subscriberName value:m_subscriberName];
+    [writer writeElement:c_element_subsriberDOB content:m_subsriberDOB];
+    [writer writeElement:c_element_isPrimary content:m_isPrimary];
+    [writer writeElement:c_element_expirationDate content:m_expirationDate];
+    [writer writeElement:c_element_contact content:m_contact];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_planName, c_element_planName);
-    HVDESERIALIZE(m_coverageType, c_element_coverage, HVCodableValue);
-    HVDESERIALIZE_STRING(m_carrierID, c_element_carrierID);
-    HVDESERIALIZE_STRING(m_groupNum, c_element_groupNum);
-    HVDESERIALIZE_STRING(m_planCode, c_element_planCode);
-    HVDESERIALIZE_STRING(m_subscriberID, c_element_subscriberID);
-    HVDESERIALIZE_STRING(m_personCode, c_element_personCode);
-    HVDESERIALIZE_STRING(m_subscriberName, c_element_subscriberName);
-    HVDESERIALIZE(m_subsriberDOB, c_element_subsriberDOB, HVDateTime);
-    HVDESERIALIZE(m_isPrimary, c_element_isPrimary, HVBool);
-    HVDESERIALIZE(m_expirationDate, c_element_expirationDate, HVDateTime);
-    HVDESERIALIZE(m_contact, c_element_contact, HVContact);
+    m_planName = [[reader readStringElement:c_element_planName] retain];
+    m_coverageType = [[reader readElement:c_element_coverage asClass:[HVCodableValue class]] retain];
+    m_carrierID = [[reader readStringElement:c_element_carrierID] retain];
+    m_groupNum = [[reader readStringElement:c_element_groupNum] retain];
+    m_planCode = [[reader readStringElement:c_element_planCode] retain];
+    m_subscriberID = [[reader readStringElement:c_element_subscriberID] retain];
+    m_personCode = [[reader readStringElement:c_element_personCode] retain];
+    m_subscriberName = [[reader readStringElement:c_element_subscriberName] retain];
+    m_subsriberDOB = [[reader readElement:c_element_subsriberDOB asClass:[HVDateTime class]] retain];
+    m_isPrimary = [[reader readElement:c_element_isPrimary asClass:[HVBool class]] retain];
+    m_expirationDate = [[reader readElement:c_element_expirationDate asClass:[HVDateTime class]] retain];
+    m_contact = [[reader readElement:c_element_contact asClass:[HVContact class]] retain];
 }
 
 +(NSString *)typeID

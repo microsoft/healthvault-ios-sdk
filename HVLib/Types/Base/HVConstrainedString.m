@@ -54,12 +54,12 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_TEXT(m_value);
+    [writer writeText:m_value];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TEXT(m_value);
+    m_value = [[reader readValue] retain];
 }
 
 @end

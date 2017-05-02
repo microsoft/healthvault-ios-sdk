@@ -131,22 +131,22 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE_STRING(m_organization, c_element_organization);
-    HVSERIALIZE_STRING(m_training, c_element_training);
-    HVSERIALIZE_STRING(m_id, c_element_idNumber);
-    HVSERIALIZE(m_contact, c_element_contact);
-    HVSERIALIZE(m_type, c_element_type);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_organization value:m_organization];
+    [writer writeElement:c_element_training value:m_training];
+    [writer writeElement:c_element_idNumber value:m_id];
+    [writer writeElement:c_element_contact content:m_contact];
+    [writer writeElement:c_element_type content:m_type];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVName);
-    HVDESERIALIZE_STRING(m_organization, c_element_organization);
-    HVDESERIALIZE_STRING(m_training, c_element_training);
-    HVDESERIALIZE_STRING(m_id, c_element_idNumber);
-    HVDESERIALIZE(m_contact, c_element_contact, HVContact);
-    HVDESERIALIZE(m_type, c_element_type, HVCodableValue);
+    m_name = [[reader readElement:c_element_name asClass:[HVName class]] retain];
+    m_organization = [[reader readStringElement:c_element_organization] retain];
+    m_training = [[reader readStringElement:c_element_training] retain];
+    m_id = [[reader readStringElement:c_element_idNumber] retain];
+    m_contact = [[reader readElement:c_element_contact asClass:[HVContact class]] retain];
+    m_type = [[reader readElement:c_element_type asClass:[HVCodableValue class]] retain];
 }
 
 @end

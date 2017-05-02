@@ -41,7 +41,7 @@ static const xmlChar* x_element_status = XMLSTRINGCONST("status");
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_status, x_element_status, HVResponseStatus);
+    m_status = [[reader readElementWithXmlName:x_element_status asClass:[HVResponseStatus class]] retain];
     if (reader.isStartElement)
     {
         HVRETAIN(m_body, [reader readOuterXml]);

@@ -44,12 +44,12 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_blockSize, c_element_blockSize);
+    [writer writeElement:c_element_blockSize content:m_blockSize];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_blockSize, c_element_blockSize, HVPositiveInt);
+    m_blockSize = [[reader readElement:c_element_blockSize asClass:[HVPositiveInt class]] retain];
 }
 
 @end
@@ -109,16 +109,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_algorithm, c_element_algorithm);
-    HVSERIALIZE(m_params, c_element_params);
-    HVSERIALIZE(m_hash, c_element_hash);
+    [writer writeElement:c_element_algorithm content:m_algorithm];
+    [writer writeElement:c_element_params content:m_params];
+    [writer writeElement:c_element_hash content:m_hash];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_algorithm, c_element_algorithm, HVStringZ255);
-    HVDESERIALIZE(m_params, c_element_params, HVBlobHashAlgorithmParams);
-    HVDESERIALIZE(m_hash, c_element_hash, HVStringNZ512);
+    m_algorithm = [[reader readElement:c_element_algorithm asClass:[HVStringZ255 class]] retain];
+    m_params = [[reader readElement:c_element_params asClass:[HVBlobHashAlgorithmParams class]] retain];
+    m_hash = [[reader readElement:c_element_hash asClass:[HVStringNZ512 class]] retain];
 }
 
 @end

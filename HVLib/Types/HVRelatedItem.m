@@ -97,18 +97,18 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_itemID, c_element_thingID);
-    HVSERIALIZE_STRING(m_version, c_element_version);
-    HVSERIALIZE(m_clientID, c_element_clientID);
-    HVSERIALIZE_STRING(m_relationship, c_element_relationship);
+    [writer writeElement:c_element_thingID value:m_itemID];
+    [writer writeElement:c_element_version value:m_version];
+    [writer writeElement:c_element_clientID content:m_clientID];
+    [writer writeElement:c_element_relationship value:m_relationship];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_itemID, c_element_thingID);
-    HVDESERIALIZE_STRING(m_version, c_element_version);
-    HVDESERIALIZE(m_clientID, c_element_clientID, HVString255);
-    HVDESERIALIZE_STRING(m_relationship, c_element_relationship);
+    m_itemID = [[reader readStringElement:c_element_thingID] retain];
+    m_version = [[reader readStringElement:c_element_version] retain];
+    m_clientID = [[reader readElement:c_element_clientID asClass:[HVString255 class]] retain];
+    m_relationship = [[reader readStringElement:c_element_relationship] retain];
 }
 
 +(HVRelatedItem *)relationNamed:(NSString *)name toItem:(HVItem *)item

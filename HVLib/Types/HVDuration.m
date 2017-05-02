@@ -71,14 +71,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_startDate, c_element_start);
-    HVSERIALIZE(m_endDate, c_element_end);
+    [writer writeElement:c_element_start content:m_startDate];
+    [writer writeElement:c_element_end content:m_endDate];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_startDate, c_element_start, HVApproxDateTime);    
-    HVDESERIALIZE(m_endDate, c_element_end, HVApproxDateTime);    
+    m_startDate = [[reader readElement:c_element_start asClass:[HVApproxDateTime class]] retain];    
+    m_endDate = [[reader readElement:c_element_end asClass:[HVApproxDateTime class]] retain];    
 }
 
 @end

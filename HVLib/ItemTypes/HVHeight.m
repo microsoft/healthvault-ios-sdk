@@ -144,14 +144,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_height, x_element_value);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_value content:m_height];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
-    HVDESERIALIZE_X(m_height, x_element_value, HVLengthMeasurement);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_height = [[reader readElementWithXmlName:x_element_value asClass:[HVLengthMeasurement class]] retain];
 }
 
 +(NSString *)typeID

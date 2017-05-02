@@ -169,26 +169,26 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_bedTime, x_element_bedtime);
-    HVSERIALIZE_X(m_wakeTime, x_element_waketime);
-    HVSERIALIZE_X(m_sleepMinutes, x_element_sleepMins);
-    HVSERIALIZE_X(m_settlingMinutes, x_element_settlingMins);
-    HVSERIALIZE_ARRAY(m_awakenings, c_element_awakening);
-    HVSERIALIZE_X(m_medications, x_element_medications);
-    HVSERIALIZE_X(m_wakeState, x_element_state);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_bedtime content:m_bedTime];
+    [writer writeElementXmlName:x_element_waketime content:m_wakeTime];
+    [writer writeElementXmlName:x_element_sleepMins content:m_sleepMinutes];
+    [writer writeElementXmlName:x_element_settlingMins content:m_settlingMinutes];
+    [writer writeElementArray:c_element_awakening elements:m_awakenings];
+    [writer writeElementXmlName:x_element_medications content:m_medications];
+    [writer writeElementXmlName:x_element_state content:m_wakeState];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
-    HVDESERIALIZE_X(m_bedTime, x_element_bedtime, HVTime);
-    HVDESERIALIZE_X(m_wakeTime, x_element_waketime, HVTime);
-    HVDESERIALIZE_X(m_sleepMinutes, x_element_sleepMins, HVNonNegativeInt);
-    HVDESERIALIZE_X(m_settlingMinutes, x_element_settlingMins, HVNonNegativeInt);
-    HVDESERIALIZE_TYPEDARRAY(m_awakenings, c_element_awakening, HVOccurence, HVOccurenceCollection);
-    HVDESERIALIZE_X(m_medications, x_element_medications, HVCodableValue);
-    HVDESERIALIZE_X(m_wakeState, x_element_state, HVPositiveInt);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_bedTime = [[reader readElementWithXmlName:x_element_bedtime asClass:[HVTime class]] retain];
+    m_wakeTime = [[reader readElementWithXmlName:x_element_waketime asClass:[HVTime class]] retain];
+    m_sleepMinutes = [[reader readElementWithXmlName:x_element_sleepMins asClass:[HVNonNegativeInt class]] retain];
+    m_settlingMinutes = [[reader readElementWithXmlName:x_element_settlingMins asClass:[HVNonNegativeInt class]] retain];
+    m_awakenings = (HVOccurenceCollection *)[[reader readElementArray:c_element_awakening asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]] retain];
+    m_medications = [[reader readElementWithXmlName:x_element_medications asClass:[HVCodableValue class]] retain];
+    m_wakeState = [[reader readElementWithXmlName:x_element_state asClass:[HVPositiveInt class]] retain];
 }
 
 +(NSString *)typeID

@@ -236,6 +236,10 @@ LError:
 
 -(BOOL)writeAttributeXmlName:(const xmlChar *)xmlName value:(NSString *)value
 {
+    if (!value)
+    {
+        return NO;
+    }
     xmlChar* xmlValue = [value toXmlString];
     return [self isSuccess:xmlTextWriterWriteAttribute(m_writer, xmlName, xmlValue)];
 }

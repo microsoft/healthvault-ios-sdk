@@ -107,16 +107,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_DATE(m_timestamp, c_element_timestamp);
-    HVSERIALIZE(m_query, c_element_query);
-    HVSERIALIZE(m_result, c_element_result);
+    [writer writeElement:c_element_timestamp dateValue:m_timestamp];
+    [writer writeElement:c_element_query content:m_query];
+    [writer writeElement:c_element_result content:m_result];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_DATE(m_timestamp, c_element_timestamp);
-    HVDESERIALIZE(m_query, c_element_query, HVItemQuery);
-    HVDESERIALIZE(m_result, c_element_result, HVItemQueryResult);    
+    m_timestamp = [[reader readDateElement:c_element_timestamp] retain];
+    m_query = [[reader readElement:c_element_query asClass:[HVItemQuery class]] retain];
+    m_result = [[reader readElement:c_element_result asClass:[HVItemQueryResult class]] retain];    
 }
 
 @end

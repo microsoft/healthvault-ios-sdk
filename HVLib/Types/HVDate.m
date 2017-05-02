@@ -298,16 +298,16 @@ LError:
 
 -(void) serialize:(XWriter *) writer
 {
-    HVSERIALIZE_X(m_year, x_element_year);
-    HVSERIALIZE_X(m_month, x_element_month);
-    HVSERIALIZE_X(m_day, x_element_day);
+    [writer writeElementXmlName:x_element_year content:m_year];
+    [writer writeElementXmlName:x_element_month content:m_month];
+    [writer writeElementXmlName:x_element_day content:m_day];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_year, x_element_year, HVYear);
-    HVDESERIALIZE_X(m_month, x_element_month, HVMonth);
-    HVDESERIALIZE_X(m_day, x_element_day, HVDay);
+    m_year = [[reader readElementWithXmlName:x_element_year asClass:[HVYear class]] retain];
+    m_month = [[reader readElementWithXmlName:x_element_month asClass:[HVMonth class]] retain];
+    m_day = [[reader readElementWithXmlName:x_element_day asClass:[HVDay class]] retain];
 }
 
 @end

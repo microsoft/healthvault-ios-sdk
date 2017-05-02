@@ -121,26 +121,26 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_type, c_element_description);
-    HVSERIALIZE(m_isprimary, c_element_isPrimary);
-    HVSERIALIZE_STRINGCOLLECTION(m_street, c_element_street);
-    HVSERIALIZE_STRING(m_city, c_element_city);
-    HVSERIALIZE_STRING(m_state, c_element_state);
-    HVSERIALIZE_STRING(m_postalCode, c_element_postalCode);
-    HVSERIALIZE_STRING(m_country, c_element_country);
-    HVSERIALIZE_STRING(m_county, c_element_county);
+    [writer writeElement:c_element_description value:m_type];
+    [writer writeElement:c_element_isPrimary content:m_isprimary];
+    [writer writeElementArray:c_element_street elements:m_street];
+    [writer writeElement:c_element_city value:m_city];
+    [writer writeElement:c_element_state value:m_state];
+    [writer writeElement:c_element_postalCode value:m_postalCode];
+    [writer writeElement:c_element_country value:m_country];
+    [writer writeElement:c_element_county value:m_county];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_type, c_element_description);
-    HVDESERIALIZE(m_isprimary, c_element_isPrimary, HVBool);
-    HVDESERIALIZE_STRINGCOLLECTION(m_street, c_element_street);
-    HVDESERIALIZE_STRING(m_city, c_element_city);
-    HVDESERIALIZE_STRING(m_state, c_element_state);
-    HVDESERIALIZE_STRING(m_postalCode, c_element_postalCode);
-    HVDESERIALIZE_STRING(m_country, c_element_country);
-    HVDESERIALIZE_STRING(m_county, c_element_county);    
+    m_type = [[reader readStringElement:c_element_description] retain];
+    m_isprimary = [[reader readElement:c_element_isPrimary asClass:[HVBool class]] retain];
+    m_street = [[reader readStringElementArray:c_element_street] retain];
+    m_city = [[reader readStringElement:c_element_city] retain];
+    m_state = [[reader readStringElement:c_element_state] retain];
+    m_postalCode = [[reader readStringElement:c_element_postalCode] retain];
+    m_country = [[reader readStringElement:c_element_country] retain];
+    m_county = [[reader readStringElement:c_element_county] retain];    
 }
 
 @end

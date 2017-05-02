@@ -305,7 +305,7 @@ LError:
 
 -(void) serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE(m_name, c_attribute_name);
+    [writer writeAttribute:c_attribute_name value:m_name];
     if (m_max)
     {
         [writer writeAttribute:c_attribute_max intValue:m_max.value];
@@ -323,24 +323,24 @@ LError:
     //
     if (![NSArray isNilOrEmpty:m_itemIDs])
     {
-        HVSERIALIZE_STRINGCOLLECTION(m_itemIDs, c_element_id);        
+        [writer writeElementArray:c_element_id elements:m_itemIDs];        
     }
     else if (![NSArray isNilOrEmpty:m_keys])
     {
-        HVSERIALIZE_ARRAY(m_keys, c_element_key);        
+        [writer writeElementArray:c_element_key elements:m_keys];        
     }
     else if (![NSArray isNilOrEmpty:m_clientIDs])
     {
-        HVSERIALIZE_STRINGCOLLECTION(m_clientIDs, c_element_clientID); 
+        [writer writeElementArray:c_element_clientID elements:m_clientIDs]; 
     }
     
-    HVSERIALIZE_ARRAY(m_filters, c_element_filter);
-    HVSERIALIZE(m_view, c_element_view);
+    [writer writeElementArray:c_element_filter elements:m_filters];
+    [writer writeElement:c_element_view content:m_view];
 }
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE(m_name, c_attribute_name);
+    m_name = [[reader readAttribute:c_attribute_name] retain];
     
     int intValue;
     if ([reader readIntAttribute:c_attribute_max intValue:&intValue])
@@ -355,11 +355,11 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRINGCOLLECTION(m_itemIDs, c_element_id);
-    HVDESERIALIZE_TYPEDARRAY(m_keys, c_element_key, HVItemKey, HVItemKeyCollection);
-    HVDESERIALIZE_STRINGCOLLECTION(m_clientIDs, c_element_clientID);
-    HVDESERIALIZE_TYPEDARRAY(m_filters, c_element_filter, HVItemFilter, HVItemFilterCollection);
-    HVDESERIALIZE(m_view, c_element_view, HVItemView);
+    m_itemIDs = [[reader readStringElementArray:c_element_id] retain];
+    m_keys = (HVItemKeyCollection *)[[reader readElementArray:c_element_key asClass:[HVItemKey class] andArrayClass:[HVItemKeyCollection class]] retain];
+    m_clientIDs = [[reader readStringElementArray:c_element_clientID] retain];
+    m_filters = (HVItemFilterCollection *)[[reader readElementArray:c_element_filter asClass:[HVItemFilter class] andArrayClass:[HVItemFilterCollection class]] retain];
+    m_view = [[reader readElement:c_element_view asClass:[HVItemView class]] retain];
 }
 
 @end

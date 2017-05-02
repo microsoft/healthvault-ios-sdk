@@ -98,20 +98,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_onsetDate, c_element_onset);
-    HVSERIALIZE(m_status, c_element_status);
-    HVSERIALIZE(m_stopDate, c_element_stop);
-    HVSERIALIZE_STRING(m_stopReason, c_element_reason);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_onset content:m_onsetDate];
+    [writer writeElement:c_element_status content:m_status];
+    [writer writeElement:c_element_stop content:m_stopDate];
+    [writer writeElement:c_element_reason value:m_stopReason];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVCodableValue);
-    HVDESERIALIZE(m_onsetDate, c_element_onset, HVApproxDateTime);
-    HVDESERIALIZE(m_status, c_element_status, HVCodableValue);
-    HVDESERIALIZE(m_stopDate, c_element_stop, HVApproxDateTime);
-    HVDESERIALIZE_STRING(m_stopReason, c_element_reason);
+    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
+    m_onsetDate = [[reader readElement:c_element_onset asClass:[HVApproxDateTime class]] retain];
+    m_status = [[reader readElement:c_element_status asClass:[HVCodableValue class]] retain];
+    m_stopDate = [[reader readElement:c_element_stop asClass:[HVApproxDateTime class]] retain];
+    m_stopReason = [[reader readStringElement:c_element_reason] retain];
 }
 
 +(NSString *)typeID

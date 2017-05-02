@@ -113,24 +113,24 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_title, c_element_title);
-    HVSERIALIZE(m_value, c_element_value);
-    HVSERIALIZE(m_unit, c_element_unit);
-    HVSERIALIZE(m_referenceMin, c_element_refMin);
-    HVSERIALIZE(m_referenceMax, c_element_refMax);
-    HVSERIALIZE_STRING(m_textValue, c_element_textValue);
-    HVSERIALIZE(m_flag, c_element_flag);
+    [writer writeElement:c_element_title content:m_title];
+    [writer writeElement:c_element_value content:m_value];
+    [writer writeElement:c_element_unit content:m_unit];
+    [writer writeElement:c_element_refMin content:m_referenceMin];
+    [writer writeElement:c_element_refMax content:m_referenceMax];
+    [writer writeElement:c_element_textValue value:m_textValue];
+    [writer writeElement:c_element_flag content:m_flag];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_title, c_element_title, HVCodableValue);
-    HVDESERIALIZE(m_value, c_element_value, HVDouble);
-    HVDESERIALIZE(m_unit, c_element_unit, HVCodableValue);
-    HVDESERIALIZE(m_referenceMin, c_element_refMin, HVDouble);
-    HVDESERIALIZE(m_referenceMax, c_element_refMax, HVDouble);
-    HVDESERIALIZE_STRING(m_textValue, c_element_textValue);
-    HVDESERIALIZE(m_flag, c_element_flag, HVCodableValue);   
+    m_title = [[reader readElement:c_element_title asClass:[HVCodableValue class]] retain];
+    m_value = [[reader readElement:c_element_value asClass:[HVDouble class]] retain];
+    m_unit = [[reader readElement:c_element_unit asClass:[HVCodableValue class]] retain];
+    m_referenceMin = [[reader readElement:c_element_refMin asClass:[HVDouble class]] retain];
+    m_referenceMax = [[reader readElement:c_element_refMax asClass:[HVDouble class]] retain];
+    m_textValue = [[reader readStringElement:c_element_textValue] retain];
+    m_flag = [[reader readElement:c_element_flag asClass:[HVCodableValue class]] retain];   
 }
 
 @end

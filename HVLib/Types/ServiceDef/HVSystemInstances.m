@@ -38,22 +38,22 @@ static NSString* const c_element_instance = @"instance";
 
 -(void)deserializeAttributes:(XReader *)reader
 {
-    HVDESERIALIZE_ATTRIBUTE_X(m_currentInstanceID, x_attribute_currentinstance);
+    m_currentInstanceID = [[reader readAttributeWithXmlName:x_attribute_currentinstance] retain];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_instances, c_element_instance, HVInstance, HVInstanceCollection);
+    m_instances = (HVInstanceCollection *)[[reader readElementArray:c_element_instance asClass:[HVInstance class] andArrayClass:[HVInstanceCollection class]] retain];
 }
 
 -(void)serializeAttributes:(XWriter *)writer
 {
-    HVSERIALIZE_ATTRIBUTE_X(m_currentInstanceID, x_attribute_currentinstance);    
+    [writer writeAttributeXmlName:x_attribute_currentinstance value:m_currentInstanceID];    
 }
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_instances, c_element_instance);
+    [writer writeElementArray:c_element_instance elements:m_instances];
 }
 
 @end

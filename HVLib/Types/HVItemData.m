@@ -91,10 +91,10 @@ LError:
 {
     if (m_typed)
     {
-        HVSERIALIZE(m_typed, m_typed.rootElement);
+        [writer writeElement:m_typed.rootElement content:m_typed];
     }
     
-    HVSERIALIZE(m_common, c_element_common);
+    [writer writeElement:c_element_common content:m_common];
 }
 
 -(void) deserialize:(XReader *)reader
@@ -114,7 +114,7 @@ LError:
     
     if ([reader isStartElementWithName:c_element_common])
     {
-        HVDESERIALIZE(m_common, c_element_common, HVItemDataCommon);
+        m_common = [[reader readElement:c_element_common asClass:[HVItemDataCommon class]] retain];
     }
 }
 
@@ -136,7 +136,7 @@ LError:
         }
         else 
         {
-            [reader readElementRequired:reader.localName intoObject:typedItem];          
+            [reader readElementRequired:reader.localName intoObject:typedItem];
         }
     }
     

@@ -60,16 +60,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_measurement, x_element_measurement);
-    HVSERIALIZE_ARRAY(m_ranges, c_element_ranges);
-    HVSERIALIZE_X(m_flag, x_element_flag);
+    [writer writeElementXmlName:x_element_measurement content:m_measurement];
+    [writer writeElementArray:c_element_ranges elements:m_ranges];
+    [writer writeElementXmlName:x_element_flag content:m_flag];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_measurement, x_element_measurement, HVApproxMeasurement);
-    HVDESERIALIZE_TYPEDARRAY_X(m_ranges, x_element_ranges, HVTestResultRange, HVTestResultRangeCollection);
-    HVDESERIALIZE_X(m_flag, x_element_flag, HVCodableValue);
+    m_measurement = [[reader readElementWithXmlName:x_element_measurement asClass:[HVApproxMeasurement class]] retain];
+    m_ranges = (HVTestResultRangeCollection *)[[reader readElementArrayWithXmlName:x_element_ranges asClass:[HVTestResultRange class] andArrayClass:[HVTestResultRangeCollection class]] retain];
+    m_flag = [[reader readElementWithXmlName:x_element_flag asClass:[HVCodableValue class]] retain];
 }
 
 @end

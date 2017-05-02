@@ -86,14 +86,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_contentType, c_element_contentType);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_contentType content:m_contentType];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVStringZ255);
-    HVDESERIALIZE(m_contentType, c_element_contentType, HVStringZ1024);
+    m_name = [[reader readElement:c_element_name asClass:[HVStringZ255 class]] retain];
+    m_contentType = [[reader readElement:c_element_contentType asClass:[HVStringZ1024 class]] retain];
 }
 
 

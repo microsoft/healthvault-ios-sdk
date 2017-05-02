@@ -81,16 +81,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_type, c_element_description);
-    HVSERIALIZE(m_isprimary, c_element_isPrimary);
-    HVSERIALIZE(m_address, c_element_address);
+    [writer writeElement:c_element_description value:m_type];
+    [writer writeElement:c_element_isPrimary content:m_isprimary];
+    [writer writeElement:c_element_address content:m_address];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_type, c_element_description);
-    HVDESERIALIZE(m_isprimary, c_element_isPrimary, HVBool);
-    HVDESERIALIZE(m_address, c_element_address, HVEmailAddress);
+    m_type = [[reader readStringElement:c_element_description] retain];
+    m_isprimary = [[reader readElement:c_element_isPrimary asClass:[HVBool class]] retain];
+    m_address = [[reader readElement:c_element_address asClass:[HVEmailAddress class]] retain];
 }
 
 @end

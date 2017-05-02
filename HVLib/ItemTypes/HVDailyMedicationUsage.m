@@ -161,28 +161,28 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_drugName, x_element_drugName);
-    HVSERIALIZE_X(m_dosesConsumed, x_element_dosesConsumed);
-    HVSERIALIZE_X(m_purpose, x_element_purpose);
-    HVSERIALIZE_X(m_dosesIntended, x_element_dosesIntended);
-    HVSERIALIZE_X(m_usageSchedule, x_element_usageSchedule);
-    HVSERIALIZE_X(m_drugForm, x_element_drugForm);
-    HVSERIALIZE_X(m_prescriptionType, x_element_prescriptionType);
-    HVSERIALIZE_X(m_singleDoseDescription, x_element_singleDoseDescr);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_drugName content:m_drugName];
+    [writer writeElementXmlName:x_element_dosesConsumed content:m_dosesConsumed];
+    [writer writeElementXmlName:x_element_purpose content:m_purpose];
+    [writer writeElementXmlName:x_element_dosesIntended content:m_dosesIntended];
+    [writer writeElementXmlName:x_element_usageSchedule content:m_usageSchedule];
+    [writer writeElementXmlName:x_element_drugForm content:m_drugForm];
+    [writer writeElementXmlName:x_element_prescriptionType content:m_prescriptionType];
+    [writer writeElementXmlName:x_element_singleDoseDescr content:m_singleDoseDescription];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDate);
-    HVDESERIALIZE_X(m_drugName, x_element_drugName, HVCodableValue);
-    HVDESERIALIZE_X(m_dosesConsumed, x_element_dosesConsumed, HVInt);
-    HVDESERIALIZE_X(m_purpose, x_element_purpose, HVCodableValue);
-    HVDESERIALIZE_X(m_dosesIntended, x_element_dosesIntended, HVInt);
-    HVDESERIALIZE_X(m_usageSchedule, x_element_usageSchedule, HVCodableValue);
-    HVDESERIALIZE_X(m_drugForm, x_element_drugForm, HVCodableValue);
-    HVDESERIALIZE_X(m_prescriptionType, x_element_prescriptionType, HVCodableValue);
-    HVDESERIALIZE_X(m_singleDoseDescription, x_element_singleDoseDescr, HVCodableValue);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDate class]] retain];
+    m_drugName = [[reader readElementWithXmlName:x_element_drugName asClass:[HVCodableValue class]] retain];
+    m_dosesConsumed = [[reader readElementWithXmlName:x_element_dosesConsumed asClass:[HVInt class]] retain];
+    m_purpose = [[reader readElementWithXmlName:x_element_purpose asClass:[HVCodableValue class]] retain];
+    m_dosesIntended = [[reader readElementWithXmlName:x_element_dosesIntended asClass:[HVInt class]] retain];
+    m_usageSchedule = [[reader readElementWithXmlName:x_element_usageSchedule asClass:[HVCodableValue class]] retain];
+    m_drugForm = [[reader readElementWithXmlName:x_element_drugForm asClass:[HVCodableValue class]] retain];
+    m_prescriptionType = [[reader readElementWithXmlName:x_element_prescriptionType asClass:[HVCodableValue class]] retain];
+    m_singleDoseDescription = [[reader readElementWithXmlName:x_element_singleDoseDescr asClass:[HVCodableValue class]] retain];
 }
 
 +(NSString *)typeID

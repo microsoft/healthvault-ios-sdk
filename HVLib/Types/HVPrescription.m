@@ -106,26 +106,26 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_prescriber, c_element_prescribedBy);
-    HVSERIALIZE(m_datePrescribed, c_element_datePrescribed);
-    HVSERIALIZE(m_amount, c_element_amount);
-    HVSERIALIZE(m_substitution, c_element_substitution);
-    HVSERIALIZE(m_refills, c_element_refills);
-    HVSERIALIZE(m_daysSupply, c_element_supply);
-    HVSERIALIZE(m_expiration, c_element_expiration);
-    HVSERIALIZE(m_instructions, c_element_instructions);
+    [writer writeElement:c_element_prescribedBy content:m_prescriber];
+    [writer writeElement:c_element_datePrescribed content:m_datePrescribed];
+    [writer writeElement:c_element_amount content:m_amount];
+    [writer writeElement:c_element_substitution content:m_substitution];
+    [writer writeElement:c_element_refills content:m_refills];
+    [writer writeElement:c_element_supply content:m_daysSupply];
+    [writer writeElement:c_element_expiration content:m_expiration];
+    [writer writeElement:c_element_instructions content:m_instructions];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_prescriber, c_element_prescribedBy, HVPerson);
-    HVDESERIALIZE(m_datePrescribed, c_element_datePrescribed, HVApproxDateTime);
-    HVDESERIALIZE(m_amount, c_element_amount, HVApproxMeasurement);
-    HVDESERIALIZE(m_substitution, c_element_substitution, HVCodableValue);
-    HVDESERIALIZE(m_refills, c_element_refills, HVNonNegativeInt);
-    HVDESERIALIZE(m_daysSupply, c_element_supply, HVPositiveInt);
-    HVDESERIALIZE(m_expiration, c_element_expiration, HVDate);
-    HVDESERIALIZE(m_instructions, c_element_instructions, HVCodableValue);
+    m_prescriber = [[reader readElement:c_element_prescribedBy asClass:[HVPerson class]] retain];
+    m_datePrescribed = [[reader readElement:c_element_datePrescribed asClass:[HVApproxDateTime class]] retain];
+    m_amount = [[reader readElement:c_element_amount asClass:[HVApproxMeasurement class]] retain];
+    m_substitution = [[reader readElement:c_element_substitution asClass:[HVCodableValue class]] retain];
+    m_refills = [[reader readElement:c_element_refills asClass:[HVNonNegativeInt class]] retain];
+    m_daysSupply = [[reader readElement:c_element_supply asClass:[HVPositiveInt class]] retain];
+    m_expiration = [[reader readElement:c_element_expiration asClass:[HVDate class]] retain];
+    m_instructions = [[reader readElement:c_element_instructions asClass:[HVCodableValue class]] retain];
 }
 
 @end

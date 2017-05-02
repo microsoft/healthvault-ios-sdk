@@ -82,20 +82,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_groupName, x_element_groupName);
-    HVSERIALIZE_X(m_laboratory, x_element_laboratory);
-    HVSERIALIZE_X(m_status, x_element_status);
-    HVSERIALIZE_ARRAY(m_subGroups, c_element_subGroups);
-    HVSERIALIZE_ARRAY(m_results, c_element_results);
+    [writer writeElementXmlName:x_element_groupName content:m_groupName];
+    [writer writeElementXmlName:x_element_laboratory content:m_laboratory];
+    [writer writeElementXmlName:x_element_status content:m_status];
+    [writer writeElementArray:c_element_subGroups elements:m_subGroups];
+    [writer writeElementArray:c_element_results elements:m_results];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_groupName, x_element_groupName, HVCodableValue);
-    HVDESERIALIZE_X(m_laboratory, x_element_laboratory, HVOrganization);
-    HVDESERIALIZE_X(m_status, x_element_status, HVCodableValue);
-    HVDESERIALIZE_TYPEDARRAY_X(m_subGroups, x_element_subGroups, HVLabTestResultsGroup, HVLabTestResultsGroupCollection);
-    HVDESERIALIZE_TYPEDARRAY_X(m_results, x_element_results, HVLabTestResultsDetails, HVLabTestResultsDetailsCollection);
+    m_groupName = [[reader readElementWithXmlName:x_element_groupName asClass:[HVCodableValue class]] retain];
+    m_laboratory = [[reader readElementWithXmlName:x_element_laboratory asClass:[HVOrganization class]] retain];
+    m_status = [[reader readElementWithXmlName:x_element_status asClass:[HVCodableValue class]] retain];
+    m_subGroups = (HVLabTestResultsGroupCollection *)[[reader readElementArrayWithXmlName:x_element_subGroups asClass:[HVLabTestResultsGroup class] andArrayClass:[HVLabTestResultsGroupCollection class]] retain];
+    m_results = (HVLabTestResultsDetailsCollection *)[[reader readElementArrayWithXmlName:x_element_results asClass:[HVLabTestResultsDetails class] andArrayClass:[HVLabTestResultsDetailsCollection class]] retain];
 }
 
 @end

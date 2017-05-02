@@ -123,14 +123,14 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_calories, x_element_calories);
-    HVSERIALIZE_X(m_display, x_element_displayValue);
+    [writer writeElementXmlName:x_element_calories content:m_calories];
+    [writer writeElementXmlName:x_element_displayValue content:m_display];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_calories, x_element_calories, HVNonNegativeDouble);
-    HVDESERIALIZE_X(m_display, x_element_displayValue, HVDisplayValue);
+    m_calories = [[reader readElementWithXmlName:x_element_calories asClass:[HVNonNegativeDouble class]] retain];
+    m_display = [[reader readElementWithXmlName:x_element_displayValue asClass:[HVDisplayValue class]] retain];
 }
 
 +(HVFoodEnergyValue *)fromCalories:(double)value

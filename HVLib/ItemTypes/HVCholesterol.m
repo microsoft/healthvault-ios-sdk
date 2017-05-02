@@ -182,20 +182,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_date, c_element_when);
-    HVSERIALIZE(m_ldl, c_element_ldl);
-    HVSERIALIZE(m_hdl, c_element_hdl);
-    HVSERIALIZE(m_total, c_element_total);
-    HVSERIALIZE(m_triglycerides, c_element_triglycerides);
+    [writer writeElement:c_element_when content:m_date];
+    [writer writeElement:c_element_ldl content:m_ldl];
+    [writer writeElement:c_element_hdl content:m_hdl];
+    [writer writeElement:c_element_total content:m_total];
+    [writer writeElement:c_element_triglycerides content:m_triglycerides];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_date, c_element_when, HVDate);
-    HVDESERIALIZE(m_ldl, c_element_ldl, HVPositiveInt);
-    HVDESERIALIZE(m_hdl, c_element_hdl, HVPositiveInt);
-    HVDESERIALIZE(m_total, c_element_total, HVPositiveInt);
-    HVDESERIALIZE(m_triglycerides, c_element_triglycerides, HVPositiveInt);    
+    m_date = [[reader readElement:c_element_when asClass:[HVDate class]] retain];
+    m_ldl = [[reader readElement:c_element_ldl asClass:[HVPositiveInt class]] retain];
+    m_hdl = [[reader readElement:c_element_hdl asClass:[HVPositiveInt class]] retain];
+    m_total = [[reader readElement:c_element_total asClass:[HVPositiveInt class]] retain];
+    m_triglycerides = [[reader readElement:c_element_triglycerides asClass:[HVPositiveInt class]] retain];    
 }
 
 +(NSString *)typeID

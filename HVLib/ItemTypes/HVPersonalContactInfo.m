@@ -65,12 +65,12 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_contact, c_element_contact);
+    [writer writeElement:c_element_contact content:m_contact];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_contact, c_element_contact, HVContact);
+    m_contact = [[reader readElement:c_element_contact asClass:[HVContact class]] retain];
 }
 
 +(NSString *)typeID

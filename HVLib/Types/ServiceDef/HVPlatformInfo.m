@@ -41,16 +41,16 @@ static NSString* c_element_config = @"configuration";
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING_X(m_url, x_element_url);
-    HVSERIALIZE_STRING_X(m_version, x_element_version);
-    HVSERIALIZE_ARRAY(m_config, c_element_config);
+    [writer writeElementXmlName:x_element_url value:m_url];
+    [writer writeElementXmlName:x_element_version value:m_version];
+    [writer writeElementArray:c_element_config elements:m_config];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING_X(m_url, x_element_url);
-    HVDESERIALIZE_STRING_X(m_version, x_element_version);
-    HVDESERIALIZE_TYPEDARRAY(m_config, c_element_config, HVConfigurationEntry, HVConfigurationEntryCollection);
+    m_url = [[reader readStringElementWithXmlName:x_element_url] retain];
+    m_version = [[reader readStringElementWithXmlName:x_element_version] retain];
+    m_config = (HVConfigurationEntryCollection *)[[reader readElementArray:c_element_config asClass:[HVConfigurationEntry class] andArrayClass:[HVConfigurationEntryCollection class]] retain];
 }
 
 @end

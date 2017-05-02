@@ -246,14 +246,14 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_meters, x_element_meters);
-    HVSERIALIZE_X(m_display, x_element_display);
+    [writer writeElementXmlName:x_element_meters content:m_meters];
+    [writer writeElementXmlName:x_element_display content:m_display];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_meters, x_element_meters, HVPositiveDouble);
-    HVDESERIALIZE_X(m_display, x_element_display, HVDisplayValue);
+    m_meters = [[reader readElementWithXmlName:x_element_meters asClass:[HVPositiveDouble class]] retain];
+    m_display = [[reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]] retain];
 }
 
 +(double)centimetersToInches:(double)cm

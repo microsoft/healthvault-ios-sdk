@@ -113,20 +113,20 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_relationship, c_element_relationship);
-    HVSERIALIZE(m_person, c_element_name);
-    HVSERIALIZE(m_dateOfBirth, c_element_dateOfBirth);
-    HVSERIALIZE(m_dateOfDeath, c_element_dateOfDeath);
-    HVSERIALIZE(m_regionOfOrigin, c_element_region);
+    [writer writeElement:c_element_relationship content:m_relationship];
+    [writer writeElement:c_element_name content:m_person];
+    [writer writeElement:c_element_dateOfBirth content:m_dateOfBirth];
+    [writer writeElement:c_element_dateOfDeath content:m_dateOfDeath];
+    [writer writeElement:c_element_region content:m_regionOfOrigin];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_relationship, c_element_relationship, HVCodableValue);
-    HVDESERIALIZE(m_person, c_element_name, HVPerson);
-    HVDESERIALIZE(m_dateOfBirth, c_element_dateOfBirth, HVApproxDate);
-    HVDESERIALIZE(m_dateOfDeath, c_element_dateOfDeath, HVApproxDate);
-    HVDESERIALIZE(m_regionOfOrigin, c_element_region, HVCodableValue);    
+    m_relationship = [[reader readElement:c_element_relationship asClass:[HVCodableValue class]] retain];
+    m_person = [[reader readElement:c_element_name asClass:[HVPerson class]] retain];
+    m_dateOfBirth = [[reader readElement:c_element_dateOfBirth asClass:[HVApproxDate class]] retain];
+    m_dateOfDeath = [[reader readElement:c_element_dateOfDeath asClass:[HVApproxDate class]] retain];
+    m_regionOfOrigin = [[reader readElement:c_element_region asClass:[HVCodableValue class]] retain];    
 }
 
 @end

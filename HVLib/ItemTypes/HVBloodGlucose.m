@@ -195,24 +195,24 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_X(m_when, x_element_when);
-    HVSERIALIZE_X(m_value, x_element_value);
-    HVSERIALIZE_X(m_measurementType, x_element_type);
-    HVSERIALIZE_X(m_outsideOperatingTemp, x_element_operatingTemp);
-    HVSERIALIZE_X(m_controlTest, x_element_controlTest);
-    HVSERIALIZE_X(m_normalcy, x_element_normalcy);
-    HVSERIALIZE_X(m_context, x_element_context);
+    [writer writeElementXmlName:x_element_when content:m_when];
+    [writer writeElementXmlName:x_element_value content:m_value];
+    [writer writeElementXmlName:x_element_type content:m_measurementType];
+    [writer writeElementXmlName:x_element_operatingTemp content:m_outsideOperatingTemp];
+    [writer writeElementXmlName:x_element_controlTest content:m_controlTest];
+    [writer writeElementXmlName:x_element_normalcy content:m_normalcy];
+    [writer writeElementXmlName:x_element_context content:m_context];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_X(m_when, x_element_when, HVDateTime);
-    HVDESERIALIZE_X(m_value, x_element_value, HVBloodGlucoseMeasurement);
-    HVDESERIALIZE_X(m_measurementType, x_element_type, HVCodableValue);
-    HVDESERIALIZE_X(m_outsideOperatingTemp, x_element_operatingTemp, HVBool);
-    HVDESERIALIZE_X(m_controlTest, x_element_controlTest, HVBool);
-    HVDESERIALIZE_X(m_normalcy, x_element_normalcy, HVOneToFive);
-    HVDESERIALIZE_X(m_context, x_element_context, HVCodableValue);
+    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_value = [[reader readElementWithXmlName:x_element_value asClass:[HVBloodGlucoseMeasurement class]] retain];
+    m_measurementType = [[reader readElementWithXmlName:x_element_type asClass:[HVCodableValue class]] retain];
+    m_outsideOperatingTemp = [[reader readElementWithXmlName:x_element_operatingTemp asClass:[HVBool class]] retain];
+    m_controlTest = [[reader readElementWithXmlName:x_element_controlTest asClass:[HVBool class]] retain];
+    m_normalcy = [[reader readElementWithXmlName:x_element_normalcy asClass:[HVOneToFive class]] retain];
+    m_context = [[reader readElementWithXmlName:x_element_context asClass:[HVCodableValue class]] retain];
 }
 
 +(NSString *)typeID

@@ -77,20 +77,20 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
 }
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_STRING(m_name, c_element_name);
-    HVSERIALIZE_STRING(m_family, c_element_family);
-    HVSERIALIZE_STRING(m_version, c_element_version);
-    HVSERIALIZE_ARRAY(m_items, c_element_item);
-    HVSERIALIZE(m_isTruncated, c_element_truncated);
+    [writer writeElement:c_element_name value:m_name];
+    [writer writeElement:c_element_family value:m_family];
+    [writer writeElement:c_element_version value:m_version];
+    [writer writeElementArray:c_element_item elements:m_items];
+    [writer writeElement:c_element_truncated content:m_isTruncated];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_STRING(m_name, c_element_name);
-    HVDESERIALIZE_STRING(m_family, c_element_family);
-    HVDESERIALIZE_STRING(m_version, c_element_version);
-    HVDESERIALIZE_TYPEDARRAY(m_items, c_element_item, HVVocabItem, HVVocabItemCollection);
-    HVDESERIALIZE(m_isTruncated, c_element_truncated, HVBool);
+    m_name = [[reader readStringElement:c_element_name] retain];
+    m_family = [[reader readStringElement:c_element_family] retain];
+    m_version = [[reader readStringElement:c_element_version] retain];
+    m_items = (HVVocabItemCollection *)[[reader readElementArray:c_element_item asClass:[HVVocabItem class] andArrayClass:[HVVocabItemCollection class]] retain];
+    m_isTruncated = [[reader readElement:c_element_truncated asClass:[HVBool class]] retain];
 }
 
 @end
@@ -136,12 +136,12 @@ static NSString* const c_element_codeset = @"code-set-result";
 
 -(void)serialize:(XWriter *)writer  
 {
-    HVSERIALIZE(m_match, c_element_codeset);
+    [writer writeElement:c_element_codeset content:m_match];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_match, c_element_codeset, HVVocabCodeSet);
+    m_match = [[reader readElement:c_element_codeset asClass:[HVVocabCodeSet class]] retain];
 }
 
 @end

@@ -158,16 +158,16 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE_ARRAY(m_address, c_element_address);
-    HVSERIALIZE_ARRAY(m_phone, c_element_phone);
-    HVSERIALIZE_ARRAY(m_email, c_element_email);
+    [writer writeElementArray:c_element_address elements:m_address];
+    [writer writeElementArray:c_element_phone elements:m_phone];
+    [writer writeElementArray:c_element_email elements:m_email];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE_TYPEDARRAY(m_address, c_element_address, HVAddress, HVAddressCollection);
-    HVDESERIALIZE_TYPEDARRAY(m_phone, c_element_phone, HVPhone, HVPhoneCollection);
-    HVDESERIALIZE_TYPEDARRAY(m_email, c_element_email, HVEmail, HVEmailCollection);    
+    m_address = (HVAddressCollection *)[[reader readElementArray:c_element_address asClass:[HVAddress class] andArrayClass:[HVAddressCollection class]] retain];
+    m_phone = (HVPhoneCollection *)[[reader readElementArray:c_element_phone asClass:[HVPhone class] andArrayClass:[HVPhoneCollection class]] retain];
+    m_email = (HVEmailCollection *)[[reader readElementArray:c_element_email asClass:[HVEmail class] andArrayClass:[HVEmailCollection class]] retain];
 }
 
 @end

@@ -125,38 +125,38 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    HVSERIALIZE(m_name, c_element_name);
-    HVSERIALIZE(m_birthdate, c_element_birthdate);
-    HVSERIALIZE(m_bloodType, c_element_bloodType);
-    HVSERIALIZE(m_ethnicity, c_element_ethnicity);
-    HVSERIALIZE_STRING(m_ssn, c_element_ssn);
-    HVSERIALIZE(m_maritalStatus, c_element_marital);
-    HVSERIALIZE_STRING(m_employmentStatus, c_element_employment);
-    HVSERIALIZE(m_isDeceased, c_element_deceased);
-    HVSERIALIZE(m_dateOfDeath, c_element_dateOfDeath);
-    HVSERIALIZE(m_religion, c_element_religion);
-    HVSERIALIZE(m_veteran, c_element_veteran);
-    HVSERIALIZE(m_education, c_element_education);
-    HVSERIALIZE(m_disabled, c_element_disabled);
-    HVSERIALIZE_STRING(m_donor, c_element_donor);
+    [writer writeElement:c_element_name content:m_name];
+    [writer writeElement:c_element_birthdate content:m_birthdate];
+    [writer writeElement:c_element_bloodType content:m_bloodType];
+    [writer writeElement:c_element_ethnicity content:m_ethnicity];
+    [writer writeElement:c_element_ssn value:m_ssn];
+    [writer writeElement:c_element_marital content:m_maritalStatus];
+    [writer writeElement:c_element_employment value:m_employmentStatus];
+    [writer writeElement:c_element_deceased content:m_isDeceased];
+    [writer writeElement:c_element_dateOfDeath content:m_dateOfDeath];
+    [writer writeElement:c_element_religion content:m_religion];
+    [writer writeElement:c_element_veteran content:m_veteran];
+    [writer writeElement:c_element_education content:m_education];
+    [writer writeElement:c_element_disabled content:m_disabled];
+    [writer writeElement:c_element_donor value:m_donor];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    HVDESERIALIZE(m_name, c_element_name, HVName);
-    HVDESERIALIZE(m_birthdate, c_element_birthdate, HVDateTime);
-    HVDESERIALIZE(m_bloodType, c_element_bloodType, HVCodableValue);
-    HVDESERIALIZE(m_ethnicity, c_element_ethnicity, HVCodableValue);
-    HVDESERIALIZE_STRING(m_ssn, c_element_ssn);
-    HVDESERIALIZE(m_maritalStatus, c_element_marital, HVCodableValue);
-    HVDESERIALIZE_STRING(m_employmentStatus, c_element_employment);
-    HVDESERIALIZE(m_isDeceased, c_element_deceased, HVBool);
-    HVDESERIALIZE(m_dateOfDeath, c_element_dateOfDeath, HVApproxDateTime);
-    HVDESERIALIZE(m_religion, c_element_religion, HVCodableValue);
-    HVDESERIALIZE(m_veteran, c_element_veteran, HVBool);
-    HVDESERIALIZE(m_education, c_element_education, HVCodableValue);
-    HVDESERIALIZE(m_disabled, c_element_disabled, HVBool);
-    HVDESERIALIZE_STRING(m_donor, c_element_donor);
+    m_name = [[reader readElement:c_element_name asClass:[HVName class]] retain];
+    m_birthdate = [[reader readElement:c_element_birthdate asClass:[HVDateTime class]] retain];
+    m_bloodType = [[reader readElement:c_element_bloodType asClass:[HVCodableValue class]] retain];
+    m_ethnicity = [[reader readElement:c_element_ethnicity asClass:[HVCodableValue class]] retain];
+    m_ssn = [[reader readStringElement:c_element_ssn] retain];
+    m_maritalStatus = [[reader readElement:c_element_marital asClass:[HVCodableValue class]] retain];
+    m_employmentStatus = [[reader readStringElement:c_element_employment] retain];
+    m_isDeceased = [[reader readElement:c_element_deceased asClass:[HVBool class]] retain];
+    m_dateOfDeath = [[reader readElement:c_element_dateOfDeath asClass:[HVApproxDateTime class]] retain];
+    m_religion = [[reader readElement:c_element_religion asClass:[HVCodableValue class]] retain];
+    m_veteran = [[reader readElement:c_element_veteran asClass:[HVBool class]] retain];
+    m_education = [[reader readElement:c_element_education asClass:[HVCodableValue class]] retain];
+    m_disabled = [[reader readElement:c_element_disabled asClass:[HVBool class]] retain];
+    m_donor = [[reader readStringElement:c_element_donor] retain];
 }
 
 +(NSString *)typeID
