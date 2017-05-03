@@ -185,7 +185,7 @@ LError:
 
 	NSString *queryString = [NSString stringWithFormat: @"?appid=%@&ismra=true", self.appIdInstance];
 
-	CFStringRef queryStringEncoded = HVUrlEncode((__bridge CFStringRef)queryString);
+	CFStringRef queryStringEncoded = CreateHVUrlEncode((__bridge CFStringRef)queryString);
 
 	NSString *userAuthUrl = [NSString stringWithFormat: @"%@/redirect.aspx?target=APPAUTH&targetqs=%@",
 			self.shellUrl, (__bridge NSString *)queryStringEncoded];
@@ -506,10 +506,10 @@ LError:
         return nil;
     }
     
-	CFStringRef tokenEncoded = HVUrlEncode((__bridge CFStringRef)self.applicationCreationToken);
+	CFStringRef tokenEncoded = CreateHVUrlEncode((__bridge CFStringRef)self.applicationCreationToken);
 	
     NSString *dName = (self.deviceName) ? self.deviceName : [MobilePlatform deviceName];
-	CFStringRef deviceNameEncoded = HVUrlEncode((__bridge CFStringRef)dName);
+	CFStringRef deviceNameEncoded = CreateHVUrlEncode((__bridge CFStringRef)dName);
     
 	NSString *queryString = [NSString stringWithFormat:@"?appid=%@&appCreationToken=%@&instanceName=%@&ismra=true",
                              self.masterAppId, tokenEncoded, deviceNameEncoded];
@@ -518,7 +518,7 @@ LError:
         queryString = [queryString stringByAppendingString:@"&aib=true"];
     }
     
-	CFStringRef queryStringEncoded = HVUrlEncode((__bridge CFStringRef)queryString);
+	CFStringRef queryStringEncoded = CreateHVUrlEncode((__bridge CFStringRef)queryString);
     
 	NSString *appCreationUrl = [NSString stringWithFormat: @"%@/redirect.aspx?target=CREATEAPPLICATION&targetqs=%@",
                                 self.shellUrl, (__bridge NSString *)queryStringEncoded];

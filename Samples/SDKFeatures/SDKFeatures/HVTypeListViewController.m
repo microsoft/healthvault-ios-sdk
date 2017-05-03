@@ -73,7 +73,6 @@
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HVCell"];
-        HVCHECK_NOTNULL(cell);
     }
     
     NSString* typeName = [[m_classesForTypes objectAtIndex:indexPath.row] XRootElement];
@@ -82,9 +81,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     
     return cell;
-    
-LError:
-    return nil;
 }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath

@@ -412,10 +412,10 @@ LError:
 
 @end
 
-CFStringRef HVUrlEncode(CFStringRef source)
+CFStringRef CreateHVUrlEncode(CFStringRef source)
 {
     return CFURLCreateStringByAddingPercentEscapes(NULL, source,
-                                            NULL,
-                                            (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                            kCFStringEncodingUTF8);
+                                                   NULL,
+                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                   kCFStringEncodingUTF8);
 }

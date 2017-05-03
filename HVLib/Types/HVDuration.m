@@ -31,6 +31,8 @@ static NSString* const c_element_end = @"end-date";
 {
     HVCHECK_NOTNULL(start);
     HVCHECK_NOTNULL(end);
+    
+    self = [super init];
         
     m_startDate = [[HVApproxDateTime alloc] initWithDate:start];
     HVCHECK_NOTNULL(m_startDate);
@@ -39,9 +41,6 @@ static NSString* const c_element_end = @"end-date";
     HVCHECK_NOTNULL(m_endDate);
     
     return self;
-    
-LError:
-    HVALLOC_FAIL;
 }
 
 -(id)initWithDate:(NSDate *)start andDurationInSeconds:(double)duration

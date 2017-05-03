@@ -73,8 +73,8 @@
 +(NSString *)fileExtForMimeType:(NSString *)mimeType
 {
     CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef) mimeType, NULL);
-    CFRelease(uti);
     NSString* ext = (NSString *)CFBridgingRelease(UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension));
+    CFRelease(uti);
     return ext;
 }
 

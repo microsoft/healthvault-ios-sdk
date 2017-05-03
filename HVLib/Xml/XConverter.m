@@ -58,9 +58,6 @@ static NSString* const c_FALSE = @"false";
     HVCHECK_NOTNULL(m_stringBuffer);
     
     return self;
-
-LError:
-    HVALLOC_FAIL;
 }
 
 
@@ -70,9 +67,6 @@ LError:
     HVCHECK_NOTNULL(result);
  
     return [source parseInt:result];
-    
-LError:
-    return FALSE;
 }
 
 -(int) stringToInt:(NSString *)source
@@ -94,9 +88,6 @@ LError:
     HVCHECK_STRING(*result);
     
     return TRUE;
-    
-LError:
-    return FALSE;
 }
 
 -(NSString *) intToString:(int)source
@@ -131,7 +122,6 @@ LError:
         return TRUE;
     }
         
-LError:
     return FALSE;
 }
 
@@ -144,7 +134,6 @@ LError:
     }
     
     return value;
-    
 }
 
 -(BOOL) tryFloat:(float) source toString:(NSString **) result
@@ -166,10 +155,6 @@ LError:
     HVCHECK_STRING(*result);
     
     return TRUE;
-    
-LError:
-    return FALSE;
-    
 }
 
 -(NSString *) floatToString:(float) source
@@ -204,7 +189,6 @@ LError:
         return TRUE;
     }
     
-LError:
     return FALSE;
 }
 
@@ -238,9 +222,6 @@ LError:
     HVCHECK_STRING(*result);
     
     return TRUE;
-   
-LError:
-    return FALSE;
 }
 
 //
@@ -263,9 +244,6 @@ LError:
     }
     
     return (*result != nil);
-    
-LError:
-    return FALSE;
 }
 
 -(NSString *) doubleToString:(double)source
@@ -365,7 +343,6 @@ LError:
         }
     }
     
-LError:
     return FALSE;
 }
 
@@ -390,9 +367,6 @@ LError:
     HVCHECK_STRING(*result);
     
     return TRUE;
-
-LError:
-    return FALSE;
 }
 
 -(NSString *) dateToString:(NSDate *)source
@@ -406,53 +380,20 @@ LError:
     return string;
 }
 
--(BOOL) tryString:(NSString *)source toGuid:(CFUUIDRef *)result
+-(NSUUID *) stringToUuid:(NSString *)source
 {
-    HVCHECK_STRING(source);
-    HVCHECK_NOTNULL(result);
-    
-    *result = CFUUIDCreateFromString(nil, (CFStringRef) source);
-    HVCHECK_NOTNULL(*result);
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
-}
-
--(CFUUIDRef) stringToGuid:(NSString *)source
-{
-    CFUUIDRef guid;
-    if (![self tryString:source toGuid:&guid])
+    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:source];
+    if (!uuid)
     {
-        [XException throwException:XExceptionTypeConversion reason:@"stringToGuid"]; 
+        [XException throwException:XExceptionTypeConversion reason:@"stringToUuid"]; 
     }
     
-    return guid;
+    return uuid;
 }
 
--(BOOL) tryGuid:(CFUUIDRef)guid toString:(NSString **)result
+-(NSString *) uuidToString:(NSUUID *)uuid
 {
-    HVCHECK_NOTNULL(guid);
-    HVCHECK_NOTNULL(result);
-    
-    *result = ((NSString *) CFBridgingRelease(CFUUIDCreateString(nil, guid)));
-    HVCHECK_STRING(*result);
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
-}
-
--(NSString *) guidToString:(CFUUIDRef)guid
-{
-    NSString *string;
-    if (![self tryGuid:guid toString:&string])
-    {
-        [XException throwException:XExceptionTypeConversion reason:@"guidToString"]; 
-    }
-    return string;
+    return [uuid UUIDString];
 }
 
 @end

@@ -32,14 +32,14 @@
 {
     HVCHECK_NOTNULL(store);
     
+    self = [super init];
+
     m_cache = [[NSCache alloc] init];
     HVCHECK_NOTNULL(m_cache);
     
     m_inner = store;
     
     return self;
-LError:
-    HVALLOC_FAIL;
 }
 
 -(NSEnumerator *)allKeys
