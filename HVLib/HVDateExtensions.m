@@ -2,7 +2,7 @@
 //  HVDateExtensions.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@
     HVCHECK_NOTNULL(formatter);
     
     NSString* string = [formatter dateToString:self withFormat:format];
-    [formatter release];
     
     return string;
     
@@ -49,7 +48,6 @@ LError:
     
     NSString* string = [formatter dateTimeToString:self];
     
-    [formatter release];
     
     return string;
 
@@ -63,7 +61,6 @@ LError:
     HVCHECK_NOTNULL(formatter);
     
     NSString* string = [formatter dateToString:self withStyle:style];
-    [formatter release];
     
     return string;
     
@@ -101,7 +98,6 @@ LError:
     components.minute = minute;
     
     NSDate* newDate = [components date];
-    [components release];
     
     return newDate;
 }
@@ -116,7 +112,6 @@ LError:
     components.day = day;
     
     NSDate* newDate = [components date];
-    [components release];
     
     return newDate;
 }
@@ -128,7 +123,6 @@ LError:
     
     NSDate* day = [[calendar yearMonthDayFrom:self] date];
     
-    [calendar release];
     
     return day;
     
@@ -147,7 +141,6 @@ LError:
     dateComponents.second = 59;
     
     NSDate* day = [calendar dateFromComponents:dateComponents];
-    [calendar release];
     
     return day;
     
@@ -167,18 +160,18 @@ LError:
 @end
 
 
-const NSUInteger NSAllCalendarUnits =   NSDayCalendarUnit       | 
-                                        NSMonthCalendarUnit     | 
-                                        NSYearCalendarUnit      | 
-                                        NSHourCalendarUnit      | 
-                                        NSMinuteCalendarUnit    | 
-                                        NSSecondCalendarUnit;
+const NSUInteger NSAllCalendarUnits =   NSCalendarUnitDay       |
+                                        NSCalendarUnitMonth     |
+                                        NSCalendarUnitYear      |
+                                        NSCalendarUnitHour      |
+                                        NSCalendarUnitMinute    |
+                                        NSCalendarUnitSecond;
 
 @implementation NSCalendar (HVExtensions)
 
 -(NSDateComponents *)componentsForCalendar
 {
-    NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
+    NSDateComponents* components = [[NSDateComponents alloc] init];
     [components setCalendar:self];
     
     return components;
@@ -191,7 +184,7 @@ const NSUInteger NSAllCalendarUnits =   NSDayCalendarUnit       |
 
 -(NSDateComponents *)yearMonthDayFrom:(NSDate *)date
 {
-    NSDateComponents* components =  [self components: NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
+    NSDateComponents* components =  [self components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
     [components setCalendar:self];
     
     return components;
@@ -205,7 +198,6 @@ const NSUInteger NSAllCalendarUnits =   NSDayCalendarUnit       |
     HVCHECK_NOTNULL(calendar);
     
     NSDateComponents* components = [calendar getComponentsFor:date];
-    [calendar release];
     
     return components;
     
@@ -223,7 +215,6 @@ LError:
     HVCHECK_NOTNULL(components);
     
     [components setCalendar:calendar];
-    [calendar release];
     
     return components;
 }
@@ -237,7 +228,6 @@ LError:
     HVCHECK_NOTNULL(components);
     
     [components setCalendar:calendar];
-    [calendar release];
     
     return components;
 }
@@ -250,7 +240,6 @@ LError:
     HVCHECK_NOTNULL(calendar);
     
     NSDateComponents* components = [calendar getComponentsFor:date];
-    [calendar release];
     
     return components;
 
@@ -260,7 +249,7 @@ LError:
 
 +(NSCalendar *) newGregorian
 {
-    return [[NSCalendar alloc] initWithCalendarIdentifier: NSGregorianCalendar];
+    return [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
 }
 
 +(NSCalendar *) newGregorianUtc

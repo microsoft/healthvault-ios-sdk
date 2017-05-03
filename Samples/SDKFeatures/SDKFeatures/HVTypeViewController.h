@@ -2,7 +2,7 @@
 //  HVTypeViewController.h
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,11 +37,11 @@
     BOOL m_createMultiple;                // Whether to create one or multiple random items when the user clicks Add. (False)
 }
 
-@property (readonly, nonatomic) HVItemCollection* items;
+@property (readonly, nonatomic, strong) HVItemCollection* items;
 
-@property (readwrite, nonatomic, retain) IBOutlet HVStatusLabel* statusLabel;
-@property (readwrite, nonatomic, retain) IBOutlet UITableView *itemTable;
-@property (retain, nonatomic) IBOutlet UIBarButtonItem *moreActions;
+@property (readwrite, nonatomic, strong) IBOutlet HVStatusLabel* statusLabel;
+@property (readwrite, nonatomic, strong) IBOutlet UITableView *itemTable;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreActions;
 
 -(id) initWithTypeClass:(Class) typeClass useMetric:(BOOL) metric;
 

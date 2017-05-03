@@ -2,7 +2,7 @@
 //  HVItemDataStandard.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,32 +47,32 @@
 //
 // (Optional) The source of the HVItem
 //
-@property (readwrite, nonatomic, retain) NSString* source;
+@property (readwrite, nonatomic, strong) NSString* source;
 //
 // (Optional) Arbitrary notes associated with the HVItem
 //
-@property (readwrite, nonatomic, retain) NSString* note;
+@property (readwrite, nonatomic, strong) NSString* note;
 //
 // (Optional) One or more string tags
 //
-@property (readwrite, nonatomic, retain) HVStringZ512* tags;
+@property (readwrite, nonatomic, strong) HVStringZ512* tags;
 //
 // (Optional) Additional application specific "Extension" data injected
 // into the HVItem. Can be ANY well-formed Xml node
 //
-@property (readwrite, nonatomic, retain) NSMutableArray* extensions;
+@property (readwrite, nonatomic, strong) NSMutableArray* extensions;
 //
 // (Optional) Items related to the HVItem
 //
-@property (readwrite, nonatomic, retain) HVRelatedItemCollection* relatedItems;
+@property (readwrite, nonatomic, strong) HVRelatedItemCollection* relatedItems;
 //
 // (Optional) Application injected ID
 //
-@property (readwrite, nonatomic, retain) HVString255* clientID;
+@property (readwrite, nonatomic, strong) HVString255* clientID;
 //
 // Convenience properties
 //
-@property (readwrite, nonatomic, retain) NSString* clientIDValue;
+@property (readwrite, nonatomic, strong) NSString* clientIDValue;
 
 //----------------------
 //

@@ -2,7 +2,7 @@
 //  HVItemKey.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,13 +73,6 @@ LError:
     return [self initWithID:guidString()];
 }
 
--(void) dealloc
-{
-    [m_id release];
-    [m_version release];
-    
-    [super dealloc];
-}
 
 +(HVItemKey *)newLocal
 {
@@ -91,7 +84,7 @@ LError:
 
 +(HVItemKey *)local
 {
-    return [[HVItemKey newLocal] autorelease];
+    return [HVItemKey newLocal];
 }
 
 -(BOOL)isVersion:(NSString *)version
@@ -145,12 +138,12 @@ LError:
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    m_version = [[reader readAttributeWithXmlName:x_attribute_version] retain];
+    m_version = [reader readAttributeWithXmlName:x_attribute_version];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    m_id = [[reader readValue] retain];
+    m_id = [reader readValue];
 }
 
 @end
@@ -221,7 +214,7 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_inner = [[reader readElementArray:c_element_key asClass:[HVItemKey class]] retain];
+    m_inner = [reader readElementArray:c_element_key asClass:[HVItemKey class]];
 }
 
 @end

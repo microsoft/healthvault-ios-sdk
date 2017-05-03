@@ -2,7 +2,7 @@
 //  HVEmotionalState.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ NSString* stringFromWellBeing(enum HVWellBeing wellBeing);
 //
 // (Optional) Emotional state this THIS time
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Optional) Mood rating - happy, depressed, sad..
 //

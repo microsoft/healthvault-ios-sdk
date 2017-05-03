@@ -2,7 +2,7 @@
 //  HVHeight.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,12 +33,12 @@
 //
 // (Required) When the measurement was taken
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Required) Length measurement (meters)
 // You can also use the convenience inMeters/inInches properties
 //
-@property (readwrite, nonatomic, retain) HVLengthMeasurement* value;
+@property (readwrite, nonatomic, strong) HVLengthMeasurement* value;
 //
 // Convenience properties
 //

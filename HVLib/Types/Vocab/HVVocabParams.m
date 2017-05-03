@@ -2,7 +2,7 @@
 //  HVVocabParams.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    m_vocabIDs = [vocabIDs retain];
+    m_vocabIDs = vocabIDs;
     
     return self;
     
@@ -62,11 +62,6 @@ LError:
     HVALLOC_FAIL;    
 }
 
--(void)dealloc
-{
-    [m_vocabIDs release];
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -85,7 +80,7 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_vocabIDs = (HVVocabIdentifierCollection *)[[reader readElementArray:c_element_vocabkey asClass:[HVVocabIdentifier class] andArrayClass:[HVVocabIdentifierCollection class]] retain];
+    m_vocabIDs = (HVVocabIdentifierCollection *)[reader readElementArray:c_element_vocabkey asClass:[HVVocabIdentifier class] andArrayClass:[HVVocabIdentifierCollection class]];
     m_fixedCulture = [reader readBoolElement:c_element_culture];
 }
 

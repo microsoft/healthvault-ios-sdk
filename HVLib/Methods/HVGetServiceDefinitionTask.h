@@ -2,7 +2,7 @@
 //  HVGetServiceDefinitionTask.h
 //  HVLib
 //
-// Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,12 +33,12 @@
 //
 // Request - optional parameters
 //
-@property (readwrite, nonatomic, retain) HVServiceDefinitionParams* params;
+@property (readwrite, nonatomic, strong) HVServiceDefinitionParams* params;
 
 //
 // Response - service definition
 //
-@property (readonly, nonatomic) HVServiceDefinition* serviceDef;
+@property (readonly, nonatomic, strong) HVServiceDefinition* serviceDef;
 
 +(HVGetServiceDefinitionTask *) getTopology:(HVTaskCompletion) callback;
 

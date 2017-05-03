@@ -2,7 +2,7 @@
 //  HVMorningSleepJournal.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
 
 -(void)setAwakenings:(HVOccurenceCollection *)awakenings
 {
-    m_awakenings = [awakenings retain];
+    m_awakenings = awakenings;
 }
 
 -(BOOL)hasAwakenings
@@ -96,19 +96,6 @@ static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
     m_settlingMinutes.value = settlingMinutesValue;
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_bedTime release];
-    [m_wakeTime release];
-    [m_sleepMinutes release];
-    [m_settlingMinutes release];
-    [m_awakenings release];
-    [m_medications release];
-    [m_wakeState release];
-
-    [super dealloc];
-}
 
 -(id)initWithBedtime:(NSDate *)bedtime onDate:(NSDate *)date settlingMinutes:(int)settlingMinutes sleepingMinutes:(int)sleepingMinutes wokeupAt:(NSDate *)wakeTime
 {
@@ -178,14 +165,14 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
-    m_bedTime = [[reader readElementWithXmlName:x_element_bedtime asClass:[HVTime class]] retain];
-    m_wakeTime = [[reader readElementWithXmlName:x_element_waketime asClass:[HVTime class]] retain];
-    m_sleepMinutes = [[reader readElementWithXmlName:x_element_sleepMins asClass:[HVNonNegativeInt class]] retain];
-    m_settlingMinutes = [[reader readElementWithXmlName:x_element_settlingMins asClass:[HVNonNegativeInt class]] retain];
-    m_awakenings = (HVOccurenceCollection *)[[reader readElementArray:c_element_awakening asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]] retain];
-    m_medications = [[reader readElementWithXmlName:x_element_medications asClass:[HVCodableValue class]] retain];
-    m_wakeState = [[reader readElementWithXmlName:x_element_state asClass:[HVPositiveInt class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
+    m_bedTime = [reader readElementWithXmlName:x_element_bedtime asClass:[HVTime class]];
+    m_wakeTime = [reader readElementWithXmlName:x_element_waketime asClass:[HVTime class]];
+    m_sleepMinutes = [reader readElementWithXmlName:x_element_sleepMins asClass:[HVNonNegativeInt class]];
+    m_settlingMinutes = [reader readElementWithXmlName:x_element_settlingMins asClass:[HVNonNegativeInt class]];
+    m_awakenings = (HVOccurenceCollection *)[reader readElementArray:c_element_awakening asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]];
+    m_medications = [reader readElementWithXmlName:x_element_medications asClass:[HVCodableValue class]];
+    m_wakeState = [reader readElementWithXmlName:x_element_state asClass:[HVPositiveInt class]];
 }
 
 +(NSString *)typeID

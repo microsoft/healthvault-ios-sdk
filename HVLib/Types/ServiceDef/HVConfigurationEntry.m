@@ -2,7 +2,7 @@
 //  HVConfigurationEntry.m
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,21 +27,15 @@ static const xmlChar* x_attribute_key = XMLSTRINGCONST("key");
 @synthesize key = m_key;
 @synthesize value = m_value;
 
--(void)dealloc
-{
-    [m_key release];
-    [m_value release];
-    [super dealloc];
-}
 
 -(void)deserializeAttributes:(XReader *)reader
 {
-    m_key = [[reader readAttributeWithXmlName:x_attribute_key] retain];
+    m_key = [reader readAttributeWithXmlName:x_attribute_key];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    m_value = [[reader readValue] retain];
+    m_value = [reader readValue];
 }
 
 -(void)serializeAttributes:(XWriter *)writer

@@ -33,7 +33,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    m_value = [value retain];
+    m_value = value;
     
     return self;
     
@@ -41,11 +41,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_value release];
-    [super dealloc];
-}
 
 -(NSString *) description
 {
@@ -59,7 +54,7 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_value = [[reader readValue] retain];
+    m_value = [reader readValue];
 }
 
 @end

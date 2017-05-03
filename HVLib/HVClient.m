@@ -2,7 +2,7 @@
 //  HVClient.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -82,7 +82,6 @@ static HVClient* s_client;
         s_client = nil;
         HVClientSettings* settings = [HVClientSettings newDefault];
         s_client = [[HVClient alloc] initWithSettings:settings];
-        [settings release];
     });
 }
 
@@ -158,7 +157,7 @@ LError:
 {
     if (methodFactory)
     {
-        m_methodFactory = [methodFactory retain];
+        m_methodFactory = methodFactory;
     }
 }
 
@@ -176,22 +175,10 @@ LError:
 {
     [self unsubscribeAppEvents];
     
-    [m_queue release];
-    [m_settings release];
-    [m_rootDirectory release];
-    [m_service release];
-    [m_environment release];
-    [m_serviceDef release];
     
-    [m_parentController release];
-    [m_provisionCallback release];
     
-    [m_localVault release];
-    [m_user release];
     
-    [m_methodFactory release];
 
-    [super dealloc];
 }
 
 -(BOOL)startWithParentController:(UIViewController *)controller andStartedCallback:(HVNotify)callback
@@ -202,7 +189,7 @@ LError:
         HVCHECK_NOTNULL(callback);
         HVCHECK_NOTNULL(controller.navigationController); 
         
-        m_parentController = [controller retain];
+        m_parentController = controller;
         m_provisionCallback = nil;
         
         m_provisionCallback = [callback copy];
@@ -375,7 +362,7 @@ static NSString* const c_environmentFileName = @"environment.xml";
     m_queue = [[NSOperationQueue alloc] init];
     HVCHECK_NOTNULL(m_queue);
     
-    m_settings = [settings retain];
+    m_settings = settings;
     HVCHECK_SUCCESS([self ensureLocalVault]);
     
     // Set up the HealthVault Service
@@ -474,7 +461,7 @@ LError:
 {
     @synchronized(self)
     {
-        m_user = [user retain];
+        m_user = user;
     }
 }
 
@@ -532,7 +519,7 @@ LError:
         
         HVEnvironmentSettings* env = (HVEnvironmentSettings *)[m_localVault.root getObjectWithKey:c_environmentFileName name:@"environment" andClass:[HVEnvironmentSettings class]];
         
-        m_environment = [env retain];
+        m_environment = env;
     }
 }
 
@@ -556,7 +543,7 @@ LError:
         m_environment = nil;
         if (instance)
         {
-            m_environment = [[HVEnvironmentSettings fromInstance:instance] retain];
+            m_environment = [HVEnvironmentSettings fromInstance:instance];
         }
         [m_service applyEnvironmentSettings:m_environment];
     }
@@ -667,7 +654,6 @@ LError:
     }
     
     [m_parentController.navigationController pushViewController:shellController animated:TRUE];
-    [shellController release];
     
     return;
 }
@@ -677,7 +663,7 @@ LError:
     HVGetServiceDefinitionTask* getTask = [HVGetServiceDefinitionTask getTopology:^(HVTask *task) {
         
         HVServiceDefinition* serviceDef = (((HVGetServiceDefinitionTask *) task).serviceDef);
-        m_serviceDef = [serviceDef retain];
+        m_serviceDef = serviceDef;
         
         [self invokeOnMainThread:@selector(beginShellAuth)];
     }];

@@ -2,7 +2,7 @@
 //  HVRelative.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,23 +42,23 @@
 // (Required) - Mom, Dad, uncle etc
 // Vocabulary: personal-relationship
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* relationship;
+@property (readwrite, nonatomic, strong) HVCodableValue* relationship;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVPerson* person;
+@property (readwrite, nonatomic, strong) HVPerson* person;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVApproxDate* dateOfBirth;
+@property (readwrite, nonatomic, strong) HVApproxDate* dateOfBirth;
 // 
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVApproxDate* dateOfDeath;
+@property (readwrite, nonatomic, strong) HVApproxDate* dateOfDeath;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* regionOfOrigin;
+@property (readwrite, nonatomic, strong) HVCodableValue* regionOfOrigin;
 
 //-------------------------
 //

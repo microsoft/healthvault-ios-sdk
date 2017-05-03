@@ -2,7 +2,7 @@
 //  HVBlobHashInfo.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,11 +24,6 @@ static NSString* const c_element_blockSize = @"block-size";
 
 @synthesize blockSize = m_blockSize;
 
--(void)dealloc
-{
-    [m_blockSize release];
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -46,7 +41,7 @@ static NSString* const c_element_blockSize = @"block-size";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_blockSize = [[reader readElement:c_element_blockSize asClass:[HVPositiveInt class]] retain];
+    m_blockSize = [reader readElement:c_element_blockSize asClass:[HVPositiveInt class]];
 }
 
 @end
@@ -81,14 +76,6 @@ static NSString* const c_element_hash = @"hash";
     m_hash.value = hash;
 }
 
--(void)dealloc  
-{
-    [m_algorithm release];
-    [m_params release];
-    [m_hash release];
-
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -110,9 +97,9 @@ static NSString* const c_element_hash = @"hash";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_algorithm = [[reader readElement:c_element_algorithm asClass:[HVStringZ255 class]] retain];
-    m_params = [[reader readElement:c_element_params asClass:[HVBlobHashAlgorithmParams class]] retain];
-    m_hash = [[reader readElement:c_element_hash asClass:[HVStringNZ512 class]] retain];
+    m_algorithm = [reader readElement:c_element_algorithm asClass:[HVStringZ255 class]];
+    m_params = [reader readElement:c_element_params asClass:[HVBlobHashAlgorithmParams class]];
+    m_hash = [reader readElement:c_element_hash asClass:[HVStringNZ512 class]];
 }
 
 @end

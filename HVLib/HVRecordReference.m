@@ -2,7 +2,7 @@
 //  HVRecordReference.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,12 +28,6 @@ static NSString* const c_attribute_personID = @"person-id";
 @synthesize ID = m_id;
 @synthesize personID = m_personID;
 
--(void) dealloc
-{
-    [m_id release];
-    [m_personID release];
-    [super dealloc];
-}
 
 -(HVClientResult *) validate
 {
@@ -52,8 +46,8 @@ static NSString* const c_attribute_personID = @"person-id";
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    m_id = [[reader readAttribute:c_attribute_id] retain];
-    m_personID = [[reader readAttribute:c_attribute_personID] retain];
+    m_id = [reader readAttribute:c_attribute_id];
+    m_personID = [reader readAttribute:c_attribute_personID];
 }
 
 @end
@@ -77,7 +71,6 @@ static NSString* const c_attribute_personID = @"person-id";
     HVCHECK_NOTNULL(query);
     
     HVGetItemsTask* task = [self getItems:query callback:callback];
-    [query release];
     
     return task;
     
@@ -92,7 +85,7 @@ LError:
 
 -(HVGetItemsTask *)getPendingItems:(HVPendingItemCollection *)items ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
 {
-    HVItemQuery *query = [[[HVItemQuery alloc] initWithPendingItems:items] autorelease];
+    HVItemQuery *query = [[HVItemQuery alloc] initWithPendingItems:items];
     HVCHECK_NOTNULL(query);
 
     if (![NSString isNilOrEmpty:typeID])
@@ -113,7 +106,7 @@ LError:
 
 -(HVGetItemsTask *)getItemWithKey:(HVItemKey *)key ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
 {
-    HVItemQuery *query = [[[HVItemQuery alloc] initWithItemKey:key andType:typeID] autorelease];
+    HVItemQuery *query = [[HVItemQuery alloc] initWithItemKey:key andType:typeID];
     HVCHECK_NOTNULL(query);
 
     return [self getItems:query callback:callback];
@@ -129,7 +122,7 @@ LError:
 
 -(HVGetItemsTask *)getItemWithID:(NSString *)itemID ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
 {
-    HVItemQuery *query = [[[HVItemQuery alloc] initWithItemID:itemID andType:typeID] autorelease];
+    HVItemQuery *query = [[HVItemQuery alloc] initWithItemID:itemID andType:typeID];
     HVCHECK_NOTNULL(query);
     
     return [self getItems:query callback:callback];
@@ -140,7 +133,7 @@ LError:
 
 -(HVGetItemsTask *)getItems:(HVItemQuery *)query callback:(HVTaskCompletion)callback
 {
-    HVGetItemsTask* task = [[[HVClient current].methodFactory newGetItemsForRecord:self query:query andCallback:callback] autorelease];
+    HVGetItemsTask* task = [[HVClient current].methodFactory newGetItemsForRecord:self query:query andCallback:callback];
     HVCHECK_NOTNULL(task);
     
     [task start];
@@ -181,7 +174,6 @@ LError:
     HVCHECK_NOTNULL(items);
     
     HVPutItemsTask* task = [self putItems:items callback:callback];
-    [items release];
     
     return task;
     
@@ -191,7 +183,7 @@ LError:
 
 -(HVPutItemsTask *)putItems:(HVItemCollection *)items callback:(HVTaskCompletion)callback
 {
-    HVPutItemsTask* task = [[[HVClient current].methodFactory newPutItemsForRecord:self items:items andCallback:callback] autorelease];
+    HVPutItemsTask* task = [[HVClient current].methodFactory newPutItemsForRecord:self items:items andCallback:callback];
     HVCHECK_NOTNULL(task);
     
     [task start];
@@ -215,7 +207,7 @@ LError:
 
 -(HVRemoveItemsTask *)removeItemWithKey:(HVItemKey *)key callback:(HVTaskCompletion)callback
 {
-    HVItemKeyCollection* keys = [[[HVItemKeyCollection alloc] initWithKey:key] autorelease];
+    HVItemKeyCollection* keys = [[HVItemKeyCollection alloc] initWithKey:key];
     HVCHECK_NOTNULL(keys);
     
     return [self removeItemsWithKeys:keys callback:callback];
@@ -226,7 +218,7 @@ LError:
 
 -(HVRemoveItemsTask *)removeItemsWithKeys:(HVItemKeyCollection *)keys callback:(HVTaskCompletion)callback
 {
-    HVRemoveItemsTask* task = [[[HVClient current].methodFactory newRemoveItemsForRecord:self keys:keys andCallback:callback] autorelease];
+    HVRemoveItemsTask* task = [[HVClient current].methodFactory newRemoveItemsForRecord:self keys:keys andCallback:callback];
     HVCHECK_NOTNULL(task);
 
     [task start];

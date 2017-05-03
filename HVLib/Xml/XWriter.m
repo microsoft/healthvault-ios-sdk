@@ -2,7 +2,7 @@
 //  XWriter.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ xmlTextWriterPtr XAllocFileWriter(NSString* filePath)
     
     if (converter)
     {
-        m_converter = [converter retain];
+        m_converter = converter;
     }
     else
     {
@@ -174,7 +174,6 @@ LError:
 
 -(void) dealloc
 {
-    [m_converter release];
     if (m_writer)
     {
         xmlFreeTextWriter(m_writer);
@@ -183,7 +182,6 @@ LError:
     {
         xmlBufferFree(m_buffer);
     }
-    [super dealloc];
 }
 
 -(BOOL) flush

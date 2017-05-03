@@ -2,7 +2,7 @@
 //  HVServerError.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@
     NSString* m_errorInfo;
 }
 
-@property (readwrite, nonatomic, retain) NSString* message;
-@property (readwrite, nonatomic, retain) NSString* context;
-@property (readwrite, nonatomic, retain) NSString* errorInfo;
+@property (readwrite, nonatomic, strong) NSString* message;
+@property (readwrite, nonatomic, strong) NSString* context;
+@property (readwrite, nonatomic, strong) NSString* errorInfo;
 
 @end

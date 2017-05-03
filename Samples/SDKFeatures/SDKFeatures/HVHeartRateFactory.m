@@ -21,7 +21,7 @@
 
 +(HVItemCollection *) createRandomForDay:(NSDate *) date
 {
-    HVItemCollection* items = [[[HVItemCollection alloc] init] autorelease];
+    HVItemCollection* items = [[HVItemCollection alloc] init];
     
     // Typically 1 a day
     HVDateTime* dateTime = [HVDateTime fromDate:date];

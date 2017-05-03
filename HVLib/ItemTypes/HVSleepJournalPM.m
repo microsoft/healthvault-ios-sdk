@@ -62,7 +62,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)setCaffeineIntakeTimes:(HVTimeCollection *)caffeineIntakeTimes
 {
-    m_caffeine = [caffeineIntakeTimes retain];
+    m_caffeine = caffeineIntakeTimes;
 }
 
 -(BOOL)hasCaffeineIntakeTimes
@@ -78,7 +78,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)setAlcoholIntakeTimes:(HVTimeCollection *)alcoholIntakeTimes
 {
-    m_alcohol = [alcoholIntakeTimes retain];
+    m_alcohol = alcoholIntakeTimes;
 }
 
 -(BOOL)hasAlcoholIntakeTimes
@@ -94,7 +94,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)setNaps:(HVOccurenceCollection *)naps
 {
-    m_naps = [naps retain];
+    m_naps = naps;
 }
 
 -(BOOL)hasNaps
@@ -110,7 +110,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)setExercise:(HVOccurenceCollection *)exercise
 {
-    m_exercise = [exercise retain];
+    m_exercise = exercise;
 }
 
 -(BOOL)hasExercise
@@ -141,16 +141,6 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
     return stringFromSleepiness(self.sleepiness);
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_caffeine release];
-    [m_alcohol release];
-    [m_naps release];
-    [m_exercise release];
-    [m_sleepiness release];
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -188,12 +178,12 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
-    m_caffeine = (HVTimeCollection *)[[reader readElementArray:c_element_caffeine asClass:[HVTime class] andArrayClass:[HVTimeCollection class]] retain];
-    m_alcohol = (HVTimeCollection *)[[reader readElementArray:c_element_alcohol asClass:[HVTime class] andArrayClass:[HVTimeCollection class]] retain];
-    m_naps = (HVOccurenceCollection *)[[reader readElementArray:c_element_nap asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]] retain];
-    m_exercise = (HVOccurenceCollection *)[[reader readElementArray:c_element_exercise asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]] retain];
-    m_sleepiness = [[reader readElement:c_element_sleepiness asClass:[HVPositiveInt class]] retain];
+    m_when = [reader readElement:c_element_when asClass:[HVDateTime class]];
+    m_caffeine = (HVTimeCollection *)[reader readElementArray:c_element_caffeine asClass:[HVTime class] andArrayClass:[HVTimeCollection class]];
+    m_alcohol = (HVTimeCollection *)[reader readElementArray:c_element_alcohol asClass:[HVTime class] andArrayClass:[HVTimeCollection class]];
+    m_naps = (HVOccurenceCollection *)[reader readElementArray:c_element_nap asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]];
+    m_exercise = (HVOccurenceCollection *)[reader readElementArray:c_element_exercise asClass:[HVOccurence class] andArrayClass:[HVOccurenceCollection class]];
+    m_sleepiness = [reader readElement:c_element_sleepiness asClass:[HVPositiveInt class]];
 }
 
 +(NSString *)typeID

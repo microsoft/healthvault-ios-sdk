@@ -2,7 +2,7 @@
 //  HealthVaultSettings.h
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,40 +36,40 @@
 }
 
 /// Gets or sets the settings name.
-@property (retain) NSString *name;
+@property (strong) NSString *name;
 
 /// Gets or sets application version.
-@property (retain) NSString *version;
+@property (strong) NSString *version;
 
 /// Gets or sets the application Id. 
-@property (retain) NSString *applicationId;
+@property (strong) NSString *applicationId;
 
 /// Gets or sets the application creation token.
-@property (retain) NSString *applicationCreationToken;
+@property (strong) NSString *applicationCreationToken;
 
 /// Gets or sets the authorization session token.
-@property (retain) NSString *authorizationSessionToken;
+@property (strong) NSString *authorizationSessionToken;
 
 /// Gets or sets the shared secret.
-@property (retain) NSString *sharedSecret;
+@property (strong) NSString *sharedSecret;
 
 /// Gets or sets country.
-@property (retain) NSString *country;
+@property (strong) NSString *country;
 
 /// Gets or sets language.
-@property (retain) NSString *language;
+@property (strong) NSString *language;
 
 /// Gets or sets session shared secret.
-@property (retain) NSString *sessionSharedSecret;
+@property (strong) NSString *sessionSharedSecret;
 
 /// Gets or sets person Id.
-@property (retain) NSString *personId;
+@property (strong) NSString *personId;
 
 /// Gets or sets record Id.
-@property (retain) NSString *recordId;
+@property (strong) NSString *recordId;
 
 // Gets or sets the user-auth-token, if any
-@property (retain) NSString* userAuthToken;
+@property (strong) NSString* userAuthToken;
 
 /// Initializes settings with specific name.
 /// @param name - settings file name.

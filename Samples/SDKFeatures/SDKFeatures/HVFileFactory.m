@@ -1,7 +1,7 @@
 //
 //  HVFileFactory.m
 //  SDKFeatures
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@
 
 +(HVItemDataTypedFeatures *)moreFeatures
 {
-    return [[[HVFileFeatures alloc] init] autorelease];
+    return [[HVFileFeatures alloc] init];
 }
 
 @end

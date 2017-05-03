@@ -2,7 +2,7 @@
 //  HVBloodPressure.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -124,16 +124,6 @@ LError:
     return [m_when toDateForCalendar:calendar];
 }
 
--(void) dealloc
-{
-    [m_when release];
-    [m_systolic release];
-    [m_diastolic release];
-    [m_pulse release];
-    [m_heartbeat release];
-    
-    [super dealloc];
-}
 
 -(NSString *) toString
 {
@@ -171,13 +161,13 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
     
-    m_systolic = [[reader readElementWithXmlName:x_element_systolic asClass:[HVNonNegativeInt class]] retain];
-    m_diastolic = [[reader readElementWithXmlName:x_element_diastolic asClass:[HVNonNegativeInt class]] retain];
+    m_systolic = [reader readElementWithXmlName:x_element_systolic asClass:[HVNonNegativeInt class]];
+    m_diastolic = [reader readElementWithXmlName:x_element_diastolic asClass:[HVNonNegativeInt class]];
     
-    m_pulse = [[reader readElementWithXmlName:x_element_pulse asClass:[HVNonNegativeInt class]] retain];
-    m_heartbeat = [[reader readElementWithXmlName:x_element_heartbeat asClass:[HVBool class]] retain];
+    m_pulse = [reader readElementWithXmlName:x_element_pulse asClass:[HVNonNegativeInt class]];
+    m_heartbeat = [reader readElementWithXmlName:x_element_heartbeat asClass:[HVBool class]];
 }
 
 +(NSString *) typeID

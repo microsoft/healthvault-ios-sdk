@@ -2,7 +2,7 @@
 //  HVClientSettings.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -111,17 +111,6 @@ static NSString* const c_element_instanceID = @"instanceID";
     return !([NSString isNilOrEmpty:m_instanceID]);
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_friendlyName release];
-    [m_serviceUrl release];
-    [m_shellUrl release];
-    [m_instanceID release];
-    [m_appData release];
-    
-    [super dealloc];
-}
 
 -(void) serialize:(XWriter *)writer
 {
@@ -135,8 +124,8 @@ static NSString* const c_element_instanceID = @"instanceID";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readStringElement:c_element_name] retain];
-    m_friendlyName = [[reader readStringElement:c_element_friendlyName] retain];
+    m_name = [reader readStringElement:c_element_name];
+    m_friendlyName = [reader readStringElement:c_element_friendlyName];
     
     NSString* serviceUrlString = [reader readStringElement:c_element_serviceUrl];
     if (serviceUrlString)
@@ -150,15 +139,15 @@ static NSString* const c_element_instanceID = @"instanceID";
         m_shellUrl = [[NSURL alloc] initWithString:shellUrlString];
     }
     
-    m_instanceID = [[reader readStringElement:c_element_instanceID] retain];
-    m_appData = [[reader readElementRaw:c_element_appData] retain];
+    m_instanceID = [reader readStringElement:c_element_instanceID];
+    m_appData = [reader readElementRaw:c_element_appData];
 }
 
 +(HVEnvironmentSettings *)fromInstance:(HVInstance *)instance
 {
     HVCHECK_NOTNULL(instance);
     
-    HVEnvironmentSettings* settings = [[[HVEnvironmentSettings alloc] init] autorelease];
+    HVEnvironmentSettings* settings = [[HVEnvironmentSettings alloc] init];
     HVCHECK_NOTNULL(settings);
     
     settings.name = instance.name;
@@ -215,7 +204,6 @@ LError:
 
         HVEnvironmentSettings* defaultEnvironment = [[HVEnvironmentSettings alloc] init];
         [defaultEnvironments addObject:defaultEnvironment];
-        [defaultEnvironment release];
     }
     
     return m_environments;
@@ -225,7 +213,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_deviceName])
     {
-        m_deviceName = [[[UIDevice currentDevice] name] retain];
+        m_deviceName = [[UIDevice currentDevice] name];
     }
     
     return m_deviceName;
@@ -235,7 +223,7 @@ LError:
 {
    if ([NSString isNilOrEmpty:m_country])
    {
-       m_country = [[[NSLocale currentLocale] objectForKey: NSLocaleCountryCode] retain];
+       m_country = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
    }
     
     return m_country;
@@ -245,7 +233,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_language])
     {
-        m_language = [[[NSLocale currentLocale] objectForKey: NSLocaleLanguageCode] retain];
+        m_language = [[NSLocale currentLocale] objectForKey: NSLocaleLanguageCode];
     }
     
     return m_language;
@@ -255,7 +243,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_signInTitle])
     {
-        m_signInTitle = [NSLocalizedString(@"HealthVault", @"Sign in to HealthVault") retain];
+        m_signInTitle = NSLocalizedString(@"HealthVault", @"Sign in to HealthVault");
     }
     
     return m_signInTitle;
@@ -265,7 +253,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_signInRetryMessage])
     {
-        m_signInRetryMessage = [NSLocalizedString(@"Could not sign into HealthVault. Try again?", @"Retry signin message") retain];
+        m_signInRetryMessage = NSLocalizedString(@"Could not sign into HealthVault. Try again?", @"Retry signin message");
     }
     
     return m_signInRetryMessage;
@@ -294,23 +282,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_appID release];
-    [m_appName release];
-    [m_environments release];
-    [m_deviceName release];
-    [m_country release];
-    [m_language release];
-    
-    [m_signInTitle release];
-    [m_signInRetryMessage release];
-    
-    [m_appData release];
-    [m_rootDirectoryPath release];
-    
-    [super dealloc];
-}
 
 -(void)validateSettings
 {
@@ -343,25 +314,25 @@ LError:
 -(void)deserialize:(XReader *)reader
 {
     m_debug = [reader readBoolElement:c_element_debug];
-    m_appID = [[reader readStringElement:c_element_appID] retain];
-    m_appName = [[reader readStringElement:c_element_appName] retain];
+    m_appID = [reader readStringElement:c_element_appID];
+    m_appName = [reader readStringElement:c_element_appName];
     m_isMultiInstanceAware = [reader readBoolElement:c_element_multiInstance];
     
     NSMutableArray* environs = nil;
-    environs = [[reader readElementArray:c_element_environment asClass:[HVEnvironmentSettings class]] retain];
+    environs = [reader readElementArray:c_element_environment asClass:[HVEnvironmentSettings class]];
     self.environments = environs;
     
-    m_deviceName = [[reader readStringElement:c_element_deviceName] retain];
-    m_country = [[reader readStringElement:c_element_country] retain];
-    m_language = [[reader readStringElement:c_element_language] retain];
-    m_signInTitle = [[reader readStringElement:c_element_signinTitle] retain];
-    m_signInRetryMessage = [[reader readStringElement:c_element_signinRetryMessage] retain];
+    m_deviceName = [reader readStringElement:c_element_deviceName];
+    m_country = [reader readStringElement:c_element_country];
+    m_language = [reader readStringElement:c_element_language];
+    m_signInTitle = [reader readStringElement:c_element_signinTitle];
+    m_signInRetryMessage = [reader readStringElement:c_element_signinRetryMessage];
     m_httpTimeout = [reader readDoubleElement:c_element_httpTimeout];
     m_maxAttemptsPerRequest = [reader readIntElement:c_element_maxAttemptsPerRequest];
     m_useCachingInStore = [reader readBoolElement:c_element_useCachingInStore];
     m_autoRequestDelay = [reader readDoubleElement:c_element_autoRequestDelay];
     
-    m_appData = [[reader readElementRaw:c_element_appData] retain];
+    m_appData = [reader readElementRaw:c_element_appData];
 }
 
 -(HVEnvironmentSettings *)environmentWithName:(NSString *)name

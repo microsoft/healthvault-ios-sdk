@@ -2,7 +2,7 @@
 //  Base64.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -91,9 +91,12 @@ static const char _encodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn
 }
 
 + (NSData *)decodeBase64WithString:(NSString *)stringToDecode {
-	NSMutableData* data = [[[NSMutableData alloc] init] autorelease];
-	data = [[[NSPropertyListSerialization dataFromPropertyList: data
-														format: NSPropertyListXMLFormat_v1_0 errorDescription: nil] mutableCopy] autorelease];
+	NSMutableData* data = [[NSMutableData alloc] init];
+    data = [[NSPropertyListSerialization dataWithPropertyList:data
+                                                       format:NSPropertyListXMLFormat_v1_0
+                                                      options:0
+                                                        error:nil] mutableCopy];
+    
 	char endByte = 0;
 	[data appendBytes: &endByte length: 1];
 	NSMutableString* plist = [NSMutableString stringWithUTF8String: ([data bytes])];
@@ -101,12 +104,11 @@ static const char _encodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn
 						   withString: [@"<data>" stringByAppendingString: stringToDecode]
 							  options: 0
 								range: NSMakeRange(0, [plist length])];
-	
-	data = [[[NSPropertyListSerialization propertyListFromData: [NSData dataWithBytes: [plist UTF8String]
-																			   length: [plist length]]
-											  mutabilityOption: NSPropertyListImmutable
-														format: nil
-											  errorDescription: nil] mutableCopy] autorelease];
+    
+    data = [[NSPropertyListSerialization propertyListWithData:[NSData dataWithBytes: [plist UTF8String]
+                                                                             length: [plist length]]
+                                                      options:NSPropertyListImmutable
+                                                       format:nil error:nil] mutableCopy];
 	return data;
 }
 

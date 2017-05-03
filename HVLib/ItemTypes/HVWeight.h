@@ -2,7 +2,7 @@
 //  Weight.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,12 +34,12 @@
 //
 // (Required) When the measurement was made
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Required) The weight measurement
 // You can also use the inPounds and inKg properties to set the weight value
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* value;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* value;
 
 //
 // Helper properties for manipulating weight

@@ -2,7 +2,7 @@
 //  HVTypeViewController.m
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     
     m_typeClass = typeClass;
     m_useMetric = metric;
-    m_moreFeatures = [[typeClass moreFeatures] retain];
+    m_moreFeatures = [typeClass moreFeatures];
     if (m_moreFeatures)
     {
         m_moreFeatures.controller = self;
@@ -70,13 +70,7 @@ LError:
 {
     m_itemTable.dataSource = nil;
     
-    [m_itemTable release];
-    [m_statusLabel release];
-    [m_moreActions release];
-    [m_items release];
-    [m_moreFeatures release];
     
-    [super dealloc];
 }
 
 
@@ -151,7 +145,7 @@ LError:
     UITableViewCell* cell = [m_itemTable dequeueReusableCellWithIdentifier:@"HVItem"];
     if (!cell)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"HVItem"] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"HVItem"];
         HVCHECK_NOTNULL(cell);
     }
     
@@ -320,9 +314,9 @@ LError:
 {
     @try
     {
-        m_items = [((HVGetItemsTask *) task).itemsRetrieved retain];
+        m_items = ((HVGetItemsTask *) task).itemsRetrieved;
         
-        [m_statusLabel showStatus:@"%d items", m_items.count];
+        [m_statusLabel showStatus:[NSString stringWithFormat:@"%li items", (long)m_items.count]];
         
         [m_itemTable reloadData];
         

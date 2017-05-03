@@ -2,7 +2,7 @@
 //  HVPeakFlow.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,23 +33,23 @@
 //
 // Required
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* when;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* when;
 //
 // (Optional) liters/second
 //
-@property (readwrite, nonatomic, retain) HVFlowValue* peakExpiratoryFlow;
+@property (readwrite, nonatomic, strong) HVFlowValue* peakExpiratoryFlow;
 //
 // (Optiona) Volume in 1 second
 //
-@property (readwrite, nonatomic, retain) HVVolumeValue* forcedExpiratoryVolume1;
+@property (readwrite, nonatomic, strong) HVVolumeValue* forcedExpiratoryVolume1;
 //
 // (Optional) Volume in 6 seconds
 //
-@property (readwrite, nonatomic, retain) HVVolumeValue* forcedExpiratoryVolume6;
+@property (readwrite, nonatomic, strong) HVVolumeValue* forcedExpiratoryVolume6;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* flags;
+@property (readwrite, nonatomic, strong) HVCodableValue* flags;
 
 //
 // Convenience

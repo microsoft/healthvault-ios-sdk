@@ -2,7 +2,7 @@
 //  HVBloodGlucoseMeasurement.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,11 +32,11 @@
 //
 // Required
 //
-@property (readwrite, nonatomic, retain) HVPositiveDouble* value;
+@property (readwrite, nonatomic, strong) HVPositiveDouble* value;
 //
 // Optional
 //
-@property (readwrite, nonatomic, retain) HVDisplayValue *display;
+@property (readwrite, nonatomic, strong) HVDisplayValue *display;
 
 @property (readwrite, nonatomic) double mmolPerLiter;
 @property (readwrite, nonatomic) double mgPerDL;

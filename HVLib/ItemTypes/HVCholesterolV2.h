@@ -2,7 +2,7 @@
 //  HVCholesterolV2.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,23 +33,23 @@
 //
 // (Required) When the measurement was taken
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Optional) LDL value in mg/DL
 //
-@property (readwrite, nonatomic, retain) HVConcentrationValue* ldl;
+@property (readwrite, nonatomic, strong) HVConcentrationValue* ldl;
 //
 // (Optional) HDL value in mg/DL
 //
-@property (readwrite, nonatomic, retain) HVConcentrationValue* hdl;
+@property (readwrite, nonatomic, strong) HVConcentrationValue* hdl;
 //
 // (Optional) Total cholesterol in mg/DL
 //
-@property (readwrite, nonatomic, retain) HVConcentrationValue* total;
+@property (readwrite, nonatomic, strong) HVConcentrationValue* total;
 //
 // (Optional) Triglycerides in mg/DL
 //
-@property (readwrite, nonatomic, retain) HVConcentrationValue* triglycerides;
+@property (readwrite, nonatomic, strong) HVConcentrationValue* triglycerides;
 //
 // Convenience properties
 //

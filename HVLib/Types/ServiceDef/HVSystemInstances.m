@@ -2,7 +2,7 @@
 //  HVSystemInstances.m
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,21 +29,15 @@ static NSString* const c_element_instance = @"instance";
 @synthesize currentInstanceID = m_currentInstanceID;
 @synthesize instances = m_instances;
 
--(void)dealloc
-{
-    [m_currentInstanceID release];
-    [m_instances release];
-    [super dealloc];
-}
 
 -(void)deserializeAttributes:(XReader *)reader
 {
-    m_currentInstanceID = [[reader readAttributeWithXmlName:x_attribute_currentinstance] retain];
+    m_currentInstanceID = [reader readAttributeWithXmlName:x_attribute_currentinstance];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    m_instances = (HVInstanceCollection *)[[reader readElementArray:c_element_instance asClass:[HVInstance class] andArrayClass:[HVInstanceCollection class]] retain];
+    m_instances = (HVInstanceCollection *)[reader readElementArray:c_element_instance asClass:[HVInstance class] andArrayClass:[HVInstanceCollection class]];
 }
 
 -(void)serializeAttributes:(XWriter *)writer

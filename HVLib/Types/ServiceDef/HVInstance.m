@@ -2,7 +2,7 @@
 //  HVInstance.m
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,24 +35,14 @@ static const xmlChar* x_element_shell = XMLSTRINGCONST("shell-url");
 @synthesize platformUrl = m_platformUrl;
 @synthesize shellUrl = m_shellUrl;
 
--(void)dealloc
-{
-    [m_id release];
-    [m_name release];
-    [m_description release];
-    [m_platformUrl release];
-    [m_shellUrl release];
-    
-    [super dealloc];
-}
 
 -(void)deserialize:(XReader *)reader
 {
-    m_id = [[reader readStringElementWithXmlName:x_element_id] retain];
-    m_name = [[reader readStringElementWithXmlName:x_element_name] retain];
-    m_description = [[reader readStringElementWithXmlName:x_element_description] retain];
-    m_platformUrl = [[reader readStringElementWithXmlName:x_element_platform] retain];
-    m_shellUrl = [[reader readStringElementWithXmlName:x_element_shell] retain];
+    m_id = [reader readStringElementWithXmlName:x_element_id];
+    m_name = [reader readStringElementWithXmlName:x_element_name];
+    m_description = [reader readStringElementWithXmlName:x_element_description];
+    m_platformUrl = [reader readStringElementWithXmlName:x_element_platform];
+    m_shellUrl = [reader readStringElementWithXmlName:x_element_shell];
 }
 
 

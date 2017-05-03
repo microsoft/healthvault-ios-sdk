@@ -2,7 +2,7 @@
 //  HealthVaultSettings.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,24 +60,6 @@
 	return self;
 }
 
-- (void)dealloc {
-
-	self.name = nil;
-	self.version = nil;
-	self.applicationId = nil;
-	self.applicationCreationToken = nil;
-	self.authorizationSessionToken = nil;
-	self.sharedSecret = nil;
-	self.applicationCreationToken = nil;
-	self.country = nil;
-	self.language = nil;
-	self.sessionSharedSecret = nil;
-	self.personId = nil;
-	self.recordId = nil;
-    self.userAuthToken = nil;
-    
-	[super dealloc];
-}
 
 - (void)save {
 
@@ -154,7 +136,7 @@
 	settings.recordId = [perfs objectForKey: [NSString stringWithFormat: @"%@recordId", prefix]];
 
 
-	return [settings autorelease];
+	return settings;
 }
 
 + (NSString *)makePrefixForName: (NSString *)name {

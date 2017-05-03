@@ -2,7 +2,7 @@
 //  HVDisplayValue.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,14 +47,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_text release];
-    [m_units release];
-    [m_unitsCode release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *) validate
 {
@@ -82,9 +74,9 @@ LError:
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    m_text = [[reader readAttributeWithXmlName:x_attribute_text] retain];
-    m_units = [[reader readAttributeWithXmlName:x_attribute_units] retain];
-    m_unitsCode = [[reader readAttributeWithXmlName:x_attribute_code] retain];
+    m_text = [reader readAttributeWithXmlName:x_attribute_text];
+    m_units = [reader readAttributeWithXmlName:x_attribute_units];
+    m_unitsCode = [reader readAttributeWithXmlName:x_attribute_code];
 }
 
 -(void) deserialize:(XReader *)reader

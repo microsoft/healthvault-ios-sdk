@@ -2,7 +2,7 @@
 //  HVRelatedItem.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -71,15 +71,6 @@ LError:
     
 }
 
--(void)dealloc
-{
-    [m_itemID release];
-    [m_version release];
-    [m_clientID release];
-    [m_relationship release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -102,10 +93,10 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_itemID = [[reader readStringElement:c_element_thingID] retain];
-    m_version = [[reader readStringElement:c_element_version] retain];
-    m_clientID = [[reader readElement:c_element_clientID asClass:[HVString255 class]] retain];
-    m_relationship = [[reader readStringElement:c_element_relationship] retain];
+    m_itemID = [reader readStringElement:c_element_thingID];
+    m_version = [reader readStringElement:c_element_version];
+    m_clientID = [reader readElement:c_element_clientID asClass:[HVString255 class]];
+    m_relationship = [reader readStringElement:c_element_relationship];
 }
 
 +(HVRelatedItem *)relationNamed:(NSString *)name toItem:(HVItem *)item
@@ -115,7 +106,7 @@ LError:
 
 +(HVRelatedItem *)relationNamed:(NSString *)name toItemKey:(HVItemKey *)key
 {
-    return [[[HVRelatedItem alloc] initRelationship:name toItemWithKey:key] autorelease];
+    return [[HVRelatedItem alloc] initRelationship:name toItemWithKey:key];
 }
 
 @end

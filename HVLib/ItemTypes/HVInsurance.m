@@ -2,7 +2,7 @@
 //  HVInsurance.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,23 +50,6 @@ static NSString* const c_element_contact = @"contact";
 @synthesize expirationDate = m_expirationDate;
 @synthesize contact = m_contact;
 
--(void)dealloc
-{
-    [m_planName release];
-    [m_coverageType release];
-    [m_carrierID release];
-    [m_groupNum release];
-    [m_planCode release];
-    [m_subscriberID release];
-    [m_personCode release];
-    [m_subscriberName release];
-    [m_subsriberDOB release];
-    [m_isPrimary release];
-    [m_expirationDate release];
-    [m_contact release];
-
-    [super dealloc];
-}
 
 -(NSString *)toString
 {
@@ -80,7 +63,7 @@ static NSString* const c_element_contact = @"contact";
 
 +(HVVocabIdentifier *)vocabForCoverage
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"coverage-types"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"coverage-types"];
 }
 
 -(HVClientResult *)validate
@@ -121,18 +104,18 @@ static NSString* const c_element_contact = @"contact";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_planName = [[reader readStringElement:c_element_planName] retain];
-    m_coverageType = [[reader readElement:c_element_coverage asClass:[HVCodableValue class]] retain];
-    m_carrierID = [[reader readStringElement:c_element_carrierID] retain];
-    m_groupNum = [[reader readStringElement:c_element_groupNum] retain];
-    m_planCode = [[reader readStringElement:c_element_planCode] retain];
-    m_subscriberID = [[reader readStringElement:c_element_subscriberID] retain];
-    m_personCode = [[reader readStringElement:c_element_personCode] retain];
-    m_subscriberName = [[reader readStringElement:c_element_subscriberName] retain];
-    m_subsriberDOB = [[reader readElement:c_element_subsriberDOB asClass:[HVDateTime class]] retain];
-    m_isPrimary = [[reader readElement:c_element_isPrimary asClass:[HVBool class]] retain];
-    m_expirationDate = [[reader readElement:c_element_expirationDate asClass:[HVDateTime class]] retain];
-    m_contact = [[reader readElement:c_element_contact asClass:[HVContact class]] retain];
+    m_planName = [reader readStringElement:c_element_planName];
+    m_coverageType = [reader readElement:c_element_coverage asClass:[HVCodableValue class]];
+    m_carrierID = [reader readStringElement:c_element_carrierID];
+    m_groupNum = [reader readStringElement:c_element_groupNum];
+    m_planCode = [reader readStringElement:c_element_planCode];
+    m_subscriberID = [reader readStringElement:c_element_subscriberID];
+    m_personCode = [reader readStringElement:c_element_personCode];
+    m_subscriberName = [reader readStringElement:c_element_subscriberName];
+    m_subsriberDOB = [reader readElement:c_element_subsriberDOB asClass:[HVDateTime class]];
+    m_isPrimary = [reader readElement:c_element_isPrimary asClass:[HVBool class]];
+    m_expirationDate = [reader readElement:c_element_expirationDate asClass:[HVDateTime class]];
+    m_contact = [reader readElement:c_element_contact asClass:[HVContact class]];
 }
 
 +(NSString *)typeID

@@ -2,7 +2,7 @@
 //  HealthVaultResponse.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -78,17 +78,6 @@
 	return self;
 }
 
-- (void)dealloc {
-
-	self.errorText = nil;
-	self.errorContextXml = nil;
-	self.errorInfo = nil;
-	self.request = nil;
-	self.infoXml = nil;
-	self.responseXml = nil;
-
-	[super dealloc];
-}
 
 - (BOOL)getHasError {
 
@@ -129,7 +118,7 @@
 	}
 	@finally {
         
-		[response release];
+		response = nil;
 	}
     
 	return FALSE;
@@ -145,7 +134,7 @@
     {
         @try {
             
-            XmlTextReader *xmlReader = [[XmlTextReader new] autorelease];
+            XmlTextReader *xmlReader = [XmlTextReader new];
             XmlElement *root = [xmlReader read: xml];
             
             if (!root) {

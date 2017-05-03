@@ -2,7 +2,7 @@
 //  HVApproxMeasurement.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,11 +40,11 @@
 //
 // (Required) - You must supply at least a descriptive display text
 //
-@property (readwrite, nonatomic, retain) NSString* displayText;
+@property (readwrite, nonatomic, strong) NSString* displayText;
 //
 // (Optional) - A coded measurement value
 //
-@property (readwrite, nonatomic, retain) HVMeasurement* measurement;
+@property (readwrite, nonatomic, strong) HVMeasurement* measurement;
 
 //
 // Convenience

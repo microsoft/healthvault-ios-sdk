@@ -2,7 +2,7 @@
 //  HVServerError.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,20 +30,12 @@ static const xmlChar* x_element_errorInfo = XMLSTRINGCONST("error-info");
 @synthesize context = m_context;
 @synthesize errorInfo = m_errorInfo;
 
--(void)dealloc
-{
-    [m_message release];
-    [m_context release];
-    [m_errorInfo release];
-    
-    [super dealloc];
-}
 
 -(void)deserialize:(XReader *)reader
 {
-    m_message = [[reader readStringElementWithXmlName:x_element_message] retain];
-    m_context = [[reader readElementRawWithXmlName:x_element_context] retain];
-    m_errorInfo = [[reader readStringElementWithXmlName:x_element_errorInfo] retain];
+    m_message = [reader readStringElementWithXmlName:x_element_message];
+    m_context = [reader readElementRawWithXmlName:x_element_context];
+    m_errorInfo = [reader readStringElementWithXmlName:x_element_errorInfo];
 }
 
 @end

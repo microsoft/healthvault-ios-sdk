@@ -2,7 +2,7 @@
 //  HVImmunization.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,51 +45,51 @@
 // (Required) immunization name
 // Vocabularies: vaccines-cvx (HL7), immunizations, immunizations-common
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* name;
+@property (readwrite, nonatomic, strong) HVCodableValue* name;
 //
 // (Optional) when the immunization was given
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* administeredDate;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* administeredDate;
 //
 // (Optional) who gave it
 //
-@property (readwrite, nonatomic, retain) HVPerson* administrator;
+@property (readwrite, nonatomic, strong) HVPerson* administrator;
 //
 // (Optional) Immunization made by
 // Vocabularies: vaccine-manufacturers-mvx (HL7)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* manufacturer;
+@property (readwrite, nonatomic, strong) HVCodableValue* manufacturer;
 //
 // (Optional) Lot #
 //
-@property (readwrite, nonatomic, retain) NSString* lot;
+@property (readwrite, nonatomic, strong) NSString* lot;
 //
 // (Optional) how the immunization was given
 // Vocabulary: immunization-routes
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* route;
+@property (readwrite, nonatomic, strong) HVCodableValue* route;
 //
 // (Optional) Expiration date
 //
-@property (readwrite, nonatomic, retain) HVApproxDate* expiration;
+@property (readwrite, nonatomic, strong) HVApproxDate* expiration;
 //
 // (Optional) Sequence #
 //
-@property (readwrite, nonatomic, retain) NSString* sequence;
+@property (readwrite, nonatomic, strong) NSString* sequence;
 //
 // (Optional) Where on the body the immunzation was given
 // Vocabulary: immunization-anatomic-surface
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* anatomicSurface;
+@property (readwrite, nonatomic, strong) HVCodableValue* anatomicSurface;
 //
 // (Optional) Any adverse reaction to the immunization
 // Vocabulary: immunization-adverse-effect
 //
-@property (readwrite, nonatomic, retain) NSString* adverseEvent;
+@property (readwrite, nonatomic, strong) NSString* adverseEvent;
 //
 // (Optional): Consent description
 //
-@property (readwrite, nonatomic, retain) NSString* consent;
+@property (readwrite, nonatomic, strong) NSString* consent;
 
 //-------------------------
 //

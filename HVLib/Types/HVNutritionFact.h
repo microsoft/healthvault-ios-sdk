@@ -2,7 +2,7 @@
 //  HVNutritionFact.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@
     HVMeasurement* m_fact;
 }
 
-@property (readwrite, nonatomic, retain) HVCodableValue* name;
-@property (readwrite, nonatomic, retain) HVMeasurement* fact;
+@property (readwrite, nonatomic, strong) HVCodableValue* name;
+@property (readwrite, nonatomic, strong) HVMeasurement* fact;
 
 @end
 
@@ -46,6 +46,6 @@
 //
 // Required
 //
-@property (readwrite, nonatomic, retain) HVNutritionFactCollection* facts;
+@property (readwrite, nonatomic, strong) HVNutritionFactCollection* facts;
 
 @end

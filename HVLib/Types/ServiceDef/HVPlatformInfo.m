@@ -2,7 +2,7 @@
 //  HVPlatformInfo.m
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,14 +30,6 @@ static NSString* c_element_config = @"configuration";
 @synthesize version = m_version;
 @synthesize config = m_config;
 
--(void)dealloc
-{
-    [m_url release];
-    [m_version release];
-    [m_config release];
-    
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer
 {
@@ -48,9 +40,9 @@ static NSString* c_element_config = @"configuration";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_url = [[reader readStringElementWithXmlName:x_element_url] retain];
-    m_version = [[reader readStringElementWithXmlName:x_element_version] retain];
-    m_config = (HVConfigurationEntryCollection *)[[reader readElementArray:c_element_config asClass:[HVConfigurationEntry class] andArrayClass:[HVConfigurationEntryCollection class]] retain];
+    m_url = [reader readStringElementWithXmlName:x_element_url];
+    m_version = [reader readStringElementWithXmlName:x_element_version];
+    m_config = (HVConfigurationEntryCollection *)[reader readElementArray:c_element_config asClass:[HVConfigurationEntry class] andArrayClass:[HVConfigurationEntryCollection class]];
 }
 
 @end

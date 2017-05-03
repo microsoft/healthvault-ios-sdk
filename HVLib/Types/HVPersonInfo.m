@@ -2,7 +2,7 @@
 //  HVPersonInfo.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,20 +50,6 @@ static NSString* const c_element_uiculture = @"preferred-uiculture";
     return !([NSArray isNilOrEmpty:m_records]);
 }
 
--(void) dealloc
-{
-    [m_id release];
-    [m_name release];
-    [m_appSettingsXml release];
-    [m_selectedRecordID release];
-    [m_moreRecords release];
-    [m_records release];
-    [m_groupsXml release];
-    [m_preferredCultureXml release];
-    [m_preferredUICultureXml release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *) validate
 {
@@ -90,15 +76,15 @@ static NSString* const c_element_uiculture = @"preferred-uiculture";
 
 -(void) deserialize:(XReader *)reader
 {
-    m_id = [[reader readStringElement:c_element_id] retain];
-    m_name = [[reader readStringElement:c_element_name] retain];
-    m_appSettingsXml = [[reader readElementRaw:c_element_settings] retain];
-    m_selectedRecordID = [[reader readStringElement:c_element_selectedID] retain];
-    m_moreRecords = [[reader readElement:c_element_more asClass:[HVBool class]] retain];
-    m_records = (HVRecordCollection *)[[reader readElementArray:c_element_record asClass:[HVRecord class] andArrayClass:[HVRecordCollection class]] retain];
-    m_groupsXml = [[reader readElementRaw:c_element_groups] retain];
-    m_preferredCultureXml = [[reader readElementRaw:c_element_culture] retain];
-    m_preferredUICultureXml = [[reader readElementRaw:c_element_uiculture] retain];
+    m_id = [reader readStringElement:c_element_id];
+    m_name = [reader readStringElement:c_element_name];
+    m_appSettingsXml = [reader readElementRaw:c_element_settings];
+    m_selectedRecordID = [reader readStringElement:c_element_selectedID];
+    m_moreRecords = [reader readElement:c_element_more asClass:[HVBool class]];
+    m_records = (HVRecordCollection *)[reader readElementArray:c_element_record asClass:[HVRecord class] andArrayClass:[HVRecordCollection class]];
+    m_groupsXml = [reader readElementRaw:c_element_groups];
+    m_preferredCultureXml = [reader readElementRaw:c_element_culture];
+    m_preferredUICultureXml = [reader readElementRaw:c_element_uiculture];
     //
     // Fix up records with personIDs
     //

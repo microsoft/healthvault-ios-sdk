@@ -2,7 +2,7 @@
 //  HVItemType.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,13 +41,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_typeID release];
-    [m_name release];
-    
-    [super dealloc];
-}
 
 -(BOOL)isType:(NSString *)typeID
 {
@@ -75,12 +68,12 @@ LError:
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    m_name = [[reader readAttribute:c_attribute_name] retain];
+    m_name = [reader readAttribute:c_attribute_name];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    m_typeID = [[reader readValue] retain];
+    m_typeID = [reader readValue];
     reader.context = self;
 }
 

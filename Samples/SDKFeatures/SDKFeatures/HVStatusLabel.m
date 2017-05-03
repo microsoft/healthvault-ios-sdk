@@ -2,7 +2,7 @@
 //  HVStatusLabel.m
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,11 +27,6 @@
 
 @implementation HVStatusLabel
 
--(void)dealloc
-{
-    [m_activity release];
-    [super dealloc];
-}
 
 -(void)showStatus:(NSString *)format, ...
 {
@@ -44,7 +39,6 @@
     va_end(args);
     
     self.text = message;
-    [message release];
     
     [self hideActivity];
 }

@@ -2,7 +2,7 @@
 //  HVSynchronizedTypeDataSource.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
     HVSynchronizedType* m_type;
 }
 
-@property (readonly, nonatomic) HVSynchronizedType* type;
+@property (readonly, nonatomic, strong) HVSynchronizedType* type;
 
 -(id) initForTable:(UITableView *) table withType:(HVSynchronizedType *) type;
 

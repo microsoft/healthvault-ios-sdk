@@ -2,7 +2,7 @@
 //  HVRemoveItemsTask.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@
 
 -(void)setKeys:(HVItemKeyCollection *)keys
 {
-    m_keys = [keys retain];
+    m_keys = keys;
 }
 
 -(NSString *)name
@@ -53,7 +53,6 @@
     
     HVItemKeyCollection* keys = [[HVItemKeyCollection alloc] initWithKey:key];
     self = [self initWithKeys:keys andCallback:callback];
-    [keys release];
     return self;
     
 LError:
@@ -76,11 +75,6 @@ LError:
    
 }
 
--(void)dealloc
-{
-    [m_keys release];
-    [super dealloc];
-}
 
 -(void)prepare
 {

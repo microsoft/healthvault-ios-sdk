@@ -2,7 +2,7 @@
 //  HVLocalRecordStore.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ static NSString* const c_storedQuery = @"storedQuery";
     m_root = [root newChildStore:record.ID];
     HVCHECK_NOTNULL(m_root);
     
-    m_record = [record retain];
+    m_record = record;
     
     HVCHECK_SUCCESS([self ensureMetadataStore]);    
     HVCHECK_SUCCESS([self ensureDataStore]);
@@ -79,15 +79,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_record release];
-    [m_root release];
-    [m_metadata release];
-    [m_dataMgr release];
-   
-    [super dealloc];
-}
 
 -(HVTypeView *)getView:(NSString *)name
 {

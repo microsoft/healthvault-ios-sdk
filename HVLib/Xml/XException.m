@@ -2,7 +2,7 @@
 //  XException.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,13 +32,13 @@ NSString* const XExceptionRequiredDataMissing = @"X_RequiredDataMissing";
 
 +(void) throwException:(NSString*) exceptionName reason:(NSString *) reason
 {
-    @throw [[[XException alloc] initWithName:exceptionName reason:reason userInfo:nil] autorelease];  
+    @throw [[XException alloc] initWithName:exceptionName reason:reason userInfo:nil];  
 }
 
 +(void) throwException:(NSString *)exceptionName lineNumber:(int)line columnNumber:(int)col
 {
     NSString *reason = [NSString stringWithFormat:@"line=%d, col=%d", line, col];
-    @throw [[[XException alloc] initWithName:exceptionName reason:reason userInfo:nil] autorelease];
+    @throw [[XException alloc] initWithName:exceptionName reason:reason userInfo:nil];
 }
 
 +(void) throwException:(NSString *)exceptionName reason:(NSString *) reason fromReader:(xmlTextReader *)reader
@@ -60,7 +60,7 @@ NSString* const XExceptionRequiredDataMissing = @"X_RequiredDataMissing";
     {
         message = [NSString stringWithFormat:@"%@ line=%d, col=%d", reason, line, col];       
     }
-    @throw [[[XException alloc] initWithName:exceptionName reason:message userInfo:nil] autorelease];
+    @throw [[XException alloc] initWithName:exceptionName reason:message userInfo:nil];
 }
 
 +(void)throwException:(NSString *)exceptionName xmlReason:(const xmlChar *)reason fromReader:(xmlTextReader *)reader

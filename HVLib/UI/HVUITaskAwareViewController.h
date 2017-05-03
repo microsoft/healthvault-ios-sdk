@@ -2,7 +2,7 @@
 //  HVUITaskAwareViewController.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
 }
 
 @property (readonly, nonatomic) BOOL hasActiveTask;
-@property (readwrite, nonatomic, retain) HVTask* activeTask;
+@property (readwrite, nonatomic, strong) HVTask* activeTask;
 
 -(void) cancelActiveTask;
 //

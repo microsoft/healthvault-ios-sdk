@@ -2,7 +2,7 @@
 //  HVSystemInstances.h
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@
     HVInstanceCollection* m_instances;
 }
 
-@property (readwrite, nonatomic, retain) NSString* currentInstanceID;
-@property (readwrite, nonatomic, retain) HVInstanceCollection* instances;
+@property (readwrite, nonatomic, strong) NSString* currentInstanceID;
+@property (readwrite, nonatomic, strong) HVInstanceCollection* instances;
 
 @end

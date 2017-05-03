@@ -2,7 +2,7 @@
 //  HVBlobPayloadItem.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVBlobInfo* blobInfo;
+@property (readwrite, nonatomic, strong) HVBlobInfo* blobInfo;
 //
 // (Required)
 //
@@ -52,13 +52,13 @@
 // The download is just plain vanilla HTTP (you can use the wrappers below)
 // The Url is valid for a SHORT period of time. See HealthVault service documentation for duration
 //
-@property (readwrite, nonatomic, retain) NSString* blobUrl;
+@property (readwrite, nonatomic, strong) NSString* blobUrl;
 
 //
 // Convenience properties
 //
-@property (readonly, nonatomic) NSString* name;
-@property (readonly, nonatomic) NSString* contentType;
+@property (strong, readonly, nonatomic) NSString* name;
+@property (strong, readonly, nonatomic) NSString* contentType;
 
 //-------------------------
 //

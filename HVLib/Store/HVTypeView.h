@@ -2,7 +2,7 @@
 //  HVTypeView.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -163,7 +163,6 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
     HVTypeViewItems* m_items;
     HVLocalRecordStore* m_store;
     
-    id<HVTypeViewDelegate> m_delegate;
     enum HVTypeViewReadAheadMode m_readAheadMode;
     NSInteger m_readAheadChunkSize;
     BOOL m_enforceTypeCheck;
@@ -171,16 +170,16 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
     NSInteger m_tag;
 }
 
-@property (readonly, nonatomic) HVRecordReference* record;
-@property (readonly, nonatomic) HVSynchronizedStore* data;
-@property (readwrite, nonatomic, retain) HVLocalRecordStore* store;
-@property (readwrite, nonatomic, assign) id<HVTypeViewDelegate> delegate;
+@property (readonly, nonatomic, strong) HVRecordReference* record;
+@property (readonly, nonatomic, strong) HVSynchronizedStore* data;
+@property (readwrite, nonatomic, strong) HVLocalRecordStore* store;
+@property (readwrite, nonatomic, weak) id<HVTypeViewDelegate> delegate;
 //
 // These properties are persisted when you store a type view to disk
 //
-@property (readonly, nonatomic) NSString* typeID;
-@property (readonly, nonatomic) HVTypeFilter* filter;
-@property (readwrite, nonatomic, retain) NSDate* lastUpdateDate;
+@property (readonly, nonatomic, strong) NSString* typeID;
+@property (readonly, nonatomic, strong) HVTypeFilter* filter;
+@property (readwrite, nonatomic, strong) NSDate* lastUpdateDate;
 @property (readonly, nonatomic) NSUInteger count;
 @property (readwrite, nonatomic) NSInteger maxItems;
 @property (readwrite, nonatomic) NSInteger readAheadChunkSize;
@@ -196,8 +195,8 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 // These are determined dynamically
 //
-@property (readonly, nonatomic) NSDate* minDate;
-@property (readonly, nonatomic) NSDate* maxDate;
+@property (readonly, nonatomic, strong) NSDate* minDate;
+@property (readonly, nonatomic, strong) NSDate* maxDate;
 
 //------------------
 //

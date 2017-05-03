@@ -2,7 +2,7 @@
 //  HVAsyncTask.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,7 +51,6 @@
 @synthesize callback = m_callback;
 
 @synthesize operation = m_operation;
-@synthesize parent = m_parent;
 @synthesize shouldCompleteInMainThread = m_completeInMainThread;
 
 -(BOOL)hasError
@@ -128,21 +127,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_taskName release];
-    
-    [m_exception release];
-    [m_result release];
-    
-    [m_taskMethod release];
-    [m_callback release];
-    
-    [m_operation release];
-    [m_parent release];
-    
-    [super dealloc];
-}
 
 -(void)start
 {
@@ -160,7 +144,7 @@ LError:
             return;
         }
         
-        [self retain]; // We'll free ourselves when we are done (see complete method)
+         // We'll free ourselves when we are done (see complete method)
         @try
         {
             m_cancelled = FALSE;
@@ -174,7 +158,6 @@ LError:
         @catch (id exception)
         {
             [self handleError:exception];
-            [self release];
             @throw;
         }
     }
@@ -203,7 +186,6 @@ LError:
             // Eat cancellation exceptions, since they are harmless
         }
         
-        [self release];
     }
 }
 
@@ -242,7 +224,6 @@ LError:
             [self handleError:exception];
         }
  
-        [self release];
     }    
 }
 
@@ -301,13 +282,12 @@ LError:
             //
             // Make this task the completion handler, so we can intercept callbacks and handle exceptions right
             //
-            HVTaskCompletion childCallback = [nextTask.callback retain];     
+            HVTaskCompletion childCallback = nextTask.callback;     
             nextTask.parent = self;
             nextTask.callback = ^(HVTask *task) 
             {
                 [task.parent childCompleted:task childCallback:childCallback];
             };       
-            [childCallback release];
         }
         return TRUE;
     }    
@@ -325,12 +305,12 @@ LError:
 
 -(void)setException:(id)error
 {
-    m_exception = [error retain];
+    m_exception = error;
 }
 
 -(void)setParent:(HVTask *)task
 {
-    m_parent = [task retain];
+    _parent = task;
 }
 
 -(void) nextStep
@@ -349,7 +329,7 @@ LError:
             {
                 if (m_operation)
                 {
-                    nextOp = [m_operation retain];
+                    nextOp = m_operation;
                 }
                 if (nextOp)
                 {
@@ -372,7 +352,7 @@ LError:
         }
         @finally 
         {
-            [nextOp release];
+            nextOp = nil;
         }
        
         [self complete];
@@ -393,7 +373,7 @@ LError:
 
 -(void)executeMethod
 {
-    HVTaskMethod method = [m_taskMethod retain];
+    HVTaskMethod method = m_taskMethod;
     @try 
     {
         self.method = nil;
@@ -413,7 +393,7 @@ LError:
     }
     @finally 
     {
-        [method release];
+        method = nil;
     }
     
     [self complete];
@@ -482,11 +462,6 @@ LError:
 
 @synthesize name = m_name;
 
--(void)dealloc
-{
-    [m_name release];
-    [super dealloc];
-}
 
 -(id)nextObject
 {
@@ -505,7 +480,7 @@ LError:
 
 +(HVTask *)run:(HVTaskSequence *)sequence callback:(HVTaskCompletion)callback
 {
-    HVTask* task = [[HVTaskSequence newRunTaskFor:sequence callback:callback] autorelease];
+    HVTask* task = [HVTaskSequence newRunTaskFor:sequence callback:callback];
     [task start];
     
     return task;
@@ -520,7 +495,6 @@ LError:
     HVCHECK_NOTNULL(runner);
     
     [task setNextTask:runner];
-    [runner release];
     
     return task;
     
@@ -555,7 +529,7 @@ LError:
     }];
     HVCHECK_SELF;
     
-    m_sequence = [sequence retain];
+    m_sequence = sequence;
     self.taskName = sequence.name;
     
     return self;
@@ -564,11 +538,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_sequence release];
-    [super dealloc];
-}
 
 -(void)start
 {

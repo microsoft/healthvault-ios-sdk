@@ -2,7 +2,7 @@
 //  HealthVaultRecord.h
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,26 +35,26 @@
 }
 
 /// Gets or sets the full XML description of this record...
-@property (retain) NSString *xml;
+@property (strong) NSString *xml;
 
 /// Gets or sets the person id of the person who has access to this record.
-@property (retain) NSString *personId;
+@property (strong) NSString *personId;
 
 /// Gets or sets the name of the person who has access to this record.
-@property (retain) NSString *personName;
+@property (strong) NSString *personName;
 
 /// Gets or sets the record id of this record.
-@property (retain) NSString *recordId;
+@property (strong) NSString *recordId;
 
 /// Gets or sets the name of this record.
-@property (retain) NSString *recordName;
+@property (strong) NSString *recordName;
 
-@property (retain) NSString *relationship;
+@property (strong) NSString *relationship;
 
-@property (retain) NSString *displayName;
+@property (strong) NSString *displayName;
 
 /// Gets or sets the authorization status.
-@property (retain) NSString *authStatus;
+@property (strong) NSString *authStatus;
 
 /// Gets whether or not record is valid.
 /// Record could be invalid according to some parameters, 

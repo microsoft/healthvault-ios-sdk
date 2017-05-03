@@ -2,7 +2,7 @@
 //  HVNutritionFact.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,13 +28,6 @@ static NSString* const c_element_fact = @"fact";
 @synthesize name = m_name;
 @synthesize fact = m_fact;
 
--(void)dealloc
-{
-    [m_name release];
-    [m_fact release];
-    
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer
 {
@@ -44,8 +37,8 @@ static NSString* const c_element_fact = @"fact";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
-    m_fact = [[reader readElement:c_element_fact asClass:[HVMeasurement class]] retain];
+    m_name = [reader readElement:c_element_name asClass:[HVCodableValue class]];
+    m_fact = [reader readElement:c_element_fact asClass:[HVMeasurement class]];
 }
 
 @end
@@ -73,11 +66,6 @@ static NSString* const c_element_nutritionFact = @"nutrition-fact";
 
 @synthesize facts = m_facts;
 
--(void)dealloc
-{
-    [m_facts release];
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -95,7 +83,7 @@ static NSString* const c_element_nutritionFact = @"nutrition-fact";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_facts = (HVNutritionFactCollection *)[[reader readElementArray:c_element_nutritionFact asClass:[HVNutritionFact class] andArrayClass:[HVNutritionFactCollection class]] retain];
+    m_facts = (HVNutritionFactCollection *)[reader readElementArray:c_element_nutritionFact asClass:[HVNutritionFact class] andArrayClass:[HVNutritionFactCollection class]];
 }
 
 @end

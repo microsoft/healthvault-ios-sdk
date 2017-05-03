@@ -2,7 +2,7 @@
 //  XmlElement.h
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,15 +28,6 @@
 
 @synthesize children = _children;
 
-- (void)dealloc {
-
-	self.name = nil;
-	self.text = nil;	
-	self.children = nil;	
-	self.attributes = nil;
-
-	[super dealloc];
-}
 
 - (NSArray *)selectNodes: (NSString *)elementname {
 

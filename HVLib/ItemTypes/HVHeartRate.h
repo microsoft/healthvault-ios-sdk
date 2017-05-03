@@ -2,7 +2,7 @@
 //  HVBloodPressure.h
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,15 +32,15 @@
 //
 // (Required) - When the measurement was made
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Required) - Heart rate in beats per minute
 //
-@property (readwrite, nonatomic, retain) HVNonNegativeInt* bpm;
+@property (readwrite, nonatomic, strong) HVNonNegativeInt* bpm;
 
-@property (readwrite, nonatomic, retain) HVCodableValue* measurementMethod;
-@property (readwrite, nonatomic, retain) HVCodableValue* measurementConditions;
-@property (readwrite, nonatomic, retain) HVCodableValue* measurementFlags;
+@property (readwrite, nonatomic, strong) HVCodableValue* measurementMethod;
+@property (readwrite, nonatomic, strong) HVCodableValue* measurementConditions;
+@property (readwrite, nonatomic, strong) HVCodableValue* measurementFlags;
 
 //
 // Convenience properties

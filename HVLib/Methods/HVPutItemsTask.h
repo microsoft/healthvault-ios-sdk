@@ -2,7 +2,7 @@
 //  HVPutItemsTask.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,11 +29,11 @@
     HVItemCollection* m_items;
 }
 
-@property (readwrite, nonatomic, retain) HVItemCollection* items;
+@property (readwrite, nonatomic, strong) HVItemCollection* items;
 @property (readonly, nonatomic) BOOL hasItems;
 
-@property (readonly, nonatomic) HVItemKeyCollection* putResults;
-@property (readonly, nonatomic) HVItemKey* firstKey;
+@property (readonly, nonatomic, strong) HVItemKeyCollection* putResults;
+@property (readonly, nonatomic, strong) HVItemKey* firstKey;
 
 -(id) initWithItem:(HVItem *) item andCallback:(HVTaskCompletion) callback;
 -(id) initWithItems:(HVItemCollection *) items andCallback:(HVTaskCompletion) callback;

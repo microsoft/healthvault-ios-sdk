@@ -2,7 +2,7 @@
 //  HVShellInfo.h
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
     NSString* m_redirectUrl;
 }
 
-@property (readwrite, nonatomic, retain) NSString* url;
-@property (readwrite, nonatomic, retain) NSString* redirectUrl;
+@property (readwrite, nonatomic, strong) NSString* url;
+@property (readwrite, nonatomic, strong) NSString* redirectUrl;
 
 @end

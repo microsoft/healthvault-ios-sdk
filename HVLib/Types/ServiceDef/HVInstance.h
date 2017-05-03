@@ -2,7 +2,7 @@
 //  HVInstance.h
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,11 +30,11 @@
     NSString* m_shellUrl;
 }
 
-@property (readwrite, nonatomic, retain) NSString* instanceID;
-@property (readwrite, nonatomic, retain) NSString* name;
-@property (readwrite, nonatomic, retain) NSString* instanceDescription;
-@property (readwrite, nonatomic, retain) NSString* platformUrl;
-@property (readwrite, nonatomic, retain) NSString* shellUrl;
+@property (readwrite, nonatomic, strong) NSString* instanceID;
+@property (readwrite, nonatomic, strong) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* instanceDescription;
+@property (readwrite, nonatomic, strong) NSString* platformUrl;
+@property (readwrite, nonatomic, strong) NSString* shellUrl;
 
 @end
 

@@ -2,7 +2,7 @@
 //  HVSynchronizationManager.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    m_store = [store retain];
+    m_store = store;
     
     HVCHECK_SUCCESS([self setupDataStoreWithCache:cache]);
     
@@ -68,12 +68,7 @@ LError:
 {
     [self releaseReferences];
 
-    [m_store release];
-    [m_data release];
-    [m_changeManager release];
-    [m_syncTypes release];
     
-    [super dealloc];
 }
 
 -(void)close
@@ -131,7 +126,7 @@ LError:
 
 -(HVItem *)getLocalItemForEditWithKey:(HVItemKey *)key
 {
-    return [[[m_data getLocalItemWithKey:key] newDeepClone] autorelease];
+    return [[m_data getLocalItemWithKey:key] newDeepClone];
 }
 
 -(HVDownloadItemsTask *)downloadItemWithKey:(HVItemKey *)key withCallback:(HVTaskCompletion)callback
@@ -158,7 +153,6 @@ LError:
     if (lock)
     {
         [self putItem:item itemLock:lock];
-        [lock release];
     }
     
     return TRUE;
@@ -225,7 +219,7 @@ LError:
         }
         @finally
         {
-            [lock release];
+            lock = nil;
         }
     }
     return result;
@@ -300,14 +294,12 @@ LError:
     if (useCache)
     {
         id<HVObjectStore> cachingDataStore = [[HVCachingObjectStore alloc] initWithObjectStore:dataStore];
-        [dataStore release];
         HVCHECK_NOTNULL(cachingDataStore);
         
         dataStore = cachingDataStore;
     }
     
     m_data = [[HVSynchronizedStore alloc] initOverStore:dataStore];
-    [dataStore release];
     
     HVCHECK_NOTNULL(m_data);
     m_data.syncMgr = self;
@@ -335,7 +327,6 @@ LError:
             
             [m_syncTypes setObject:type forKey:typeID];
             [type endContentAccess];  // To ensure that the cache can remove this object's content
-            [type release];
         }
         
         return type;

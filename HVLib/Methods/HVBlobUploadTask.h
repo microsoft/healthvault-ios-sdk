@@ -2,7 +2,7 @@
 //  HVBlobUploadTask.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,18 +44,17 @@
     NSURL* m_blobUrl;
     int m_byteCountUploaded;
     
-    id<HVHttpDelegate> m_delegate;
     HVRecordReference* m_record; // Target record
 }
 
-@property (readonly, nonatomic) id<HVBlobSource> source;
-@property (readwrite, nonatomic, assign) id<HVHttpDelegate> delegate;
-@property (readonly, nonatomic) HVRecordReference* record;
+@property (strong, readonly, nonatomic) id<HVBlobSource> source;
+@property (readwrite, nonatomic, weak) id<HVHttpDelegate> delegate;
+@property (strong, readonly, nonatomic) HVRecordReference* record;
 
 //
 // The result of the task, if successful, is the Url of the blob uploaded
 //
-@property (readonly, nonatomic) NSString* blobUrl;
+@property (strong, readonly, nonatomic) NSString* blobUrl;
 
 -(id) initWithData:(NSData *) data record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 -(id) initWithFilePath:(NSString *) filePath record:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;

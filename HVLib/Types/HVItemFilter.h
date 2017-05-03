@@ -2,7 +2,7 @@
 //  HVItemFilter.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,22 +41,22 @@
 
 @property (readwrite, nonatomic) enum HVItemState state;
 
-@property (readwrite, nonatomic, retain) NSDate* effectiveDateMin;
-@property (readwrite, nonatomic, retain) NSDate* effectiveDateMax;
+@property (readwrite, nonatomic, strong) NSDate* effectiveDateMin;
+@property (readwrite, nonatomic, strong) NSDate* effectiveDateMax;
 
-@property (readwrite, nonatomic, retain) NSString* createdByAppID;
-@property (readwrite, nonatomic, retain) NSString* createdByPersonID;
+@property (readwrite, nonatomic, strong) NSString* createdByAppID;
+@property (readwrite, nonatomic, strong) NSString* createdByPersonID;
 
-@property (readwrite, nonatomic, retain) NSString* updatedByAppID;
-@property (readwrite, nonatomic, retain) NSString* updatedByPersonID;
+@property (readwrite, nonatomic, strong) NSString* updatedByAppID;
+@property (readwrite, nonatomic, strong) NSString* updatedByPersonID;
 
-@property (readwrite, nonatomic, retain) NSDate* createDateMin;
-@property (readwrite, nonatomic, retain) NSDate* createDateMax;
+@property (readwrite, nonatomic, strong) NSDate* createDateMin;
+@property (readwrite, nonatomic, strong) NSDate* createDateMax;
 
-@property (readwrite, nonatomic, retain) NSDate* updateDateMin;
-@property (readwrite, nonatomic, retain) NSDate* updateDateMax;
+@property (readwrite, nonatomic, strong) NSDate* updateDateMin;
+@property (readwrite, nonatomic, strong) NSDate* updateDateMax;
 
-@property (readwrite, nonatomic, retain) NSString* xpath;
+@property (readwrite, nonatomic, strong) NSString* xpath;
 
 @end
 
@@ -66,7 +66,7 @@
     HVStringCollection* m_typeIDs;
 }
 
-@property (readonly, nonatomic)  HVStringCollection* typeIDs;
+@property (readonly, nonatomic, strong)  HVStringCollection* typeIDs;
 
 -(id) initWithTypeID:(NSString *) typeID;
 -(id) initWithTypeClass:(Class) typeClass;

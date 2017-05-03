@@ -79,7 +79,7 @@
 
 -(void)setSettingsFileName:(NSString *)settingsFileName
 {
-    _settingsFileName = [settingsFileName retain];
+    _settingsFileName = settingsFileName;
 }
 
 -(id<HVHttpTransport>)transport
@@ -90,7 +90,7 @@
 {
     if (transport)
     {
-        _transport = [transport retain];
+        _transport = transport;
     }
 }
 
@@ -103,7 +103,7 @@
 {
     if (provisioner)
     {
-        _provisioner = [provisioner retain];
+        _provisioner = provisioner;
     }
 }
 
@@ -115,7 +115,7 @@
 {
     if (cryptographer)
     {
-        _cryptographer = [cryptographer retain];
+        _cryptographer = cryptographer;
     }
 }
 
@@ -170,30 +170,6 @@ LError:
 				 masterAppId: appID];    
 }
 
-- (void)dealloc {
-
-	self.healthServiceUrl = nil;
-	self.shellUrl = nil;
-	self.authorizationSessionToken = nil;
-	self.sharedSecret = nil;
-	self.sessionSharedSecret = nil;
-	self.masterAppId = nil;
-	self.language = nil;
-	self.country = nil;
-    self.deviceName = nil;
-	self.appIdInstance = nil;
-	self.applicationCreationToken = nil;
-	self.records = nil;
-	self.currentRecord = nil;
-    
-    [_settingsFileName release];
-    
-    [_transport release];
-    [_cryptographer release];
-    [_provisioner release];
-    
-	[super dealloc];
-}
 
 - (NSString *)getApplicationCreationUrl
 {
@@ -249,8 +225,8 @@ LError:
 - (void)sendRequestCallback: (WebResponse *)response
 					context: (HealthVaultRequest *)healthVaultRequest {
 
-	HealthVaultResponse *healthVaultResponse = [[[HealthVaultResponse alloc] initWithWebResponse: response
-																						 request: healthVaultRequest] autorelease];
+	HealthVaultResponse *healthVaultResponse = [[HealthVaultResponse alloc] initWithWebResponse: response
+																						 request: healthVaultRequest];
     
 	// The token that is returned from GetAuthenticatedSessionToken has a limited lifetime. When it expires,
 	// we will get an error here. We detect that situation, get a new token, and then re-issue the call.
@@ -332,10 +308,7 @@ LError:
 	[stringToSign appendString: @"</content>"];
     
 	NSData *keyData = [Base64 decodeBase64WithString: self.sharedSecret];
-	NSString *keyString = [[NSString alloc] initWithData: keyData
-												encoding: NSASCIIStringEncoding];
 	NSString *hmac = [MobilePlatform computeSha256Hmac: keyData data: stringToSign];
-	[keyString release];
     
 	NSMutableString *xml = [NSMutableString new];
 	[xml appendString: @"<info>"];
@@ -345,13 +318,12 @@ LError:
 	[xml appendString: @"<appserver2>"];
 	[xml appendFormat: @"<hmacSig algName=\"HMACSHA256\">%@</hmacSig>", hmac];
 	[xml appendString: stringToSign];
-	[stringToSign release];
 	[xml appendString: @"</appserver2>"];
 	[xml appendString: @"</credential>"];
 	[xml appendString: @"</auth-info>"];
 	[xml appendString: @"</info>"];
     
-	return [xml autorelease];
+	return xml;
 }
 
 - (void)saveCastCallResults: (NSString *)responseXml {
@@ -366,7 +338,6 @@ LError:
             self.authorizationSessionToken = [responseRootNode selectSingleNode: @"token"].text;
             self.sessionSharedSecret = [responseRootNode selectSingleNode: @"shared-secret"].text;
             
-            [xmlReader release];
         }
         @catch (id exception)
         {
@@ -393,7 +364,6 @@ LError:
 	}
 
 	[settings save];
-	[settings release];
 }
 
 - (void)loadSettings
@@ -417,7 +387,6 @@ LError:
                 record.personId = settings.personId;
                 record.recordId = settings.recordId;
                 self.currentRecord = record;
-                [record release];
             } else {
                 
                 self.currentRecord = nil;
@@ -515,7 +484,6 @@ LError:
     refreshTokenRequest.recordId = request.recordId;
     
 	[self sendRequest: refreshTokenRequest];
-	[refreshTokenRequest release];
 }
 
 - (void)performAppCallBack: (HealthVaultRequest *)request
@@ -523,8 +491,11 @@ LError:
     
 	if (request && request.target && [request.target respondsToSelector:request.callBack]) {
         
-		[request.target performSelector: request.callBack
-							 withObject: response];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [request.target performSelector: request.callBack
+                             withObject: response];
+#pragma clang diagnostic pop
 	}
 }
 
@@ -535,7 +506,7 @@ LError:
         return nil;
     }
     
-	CFStringRef tokenEncoded = HVUrlEncode((CFStringRef)self.applicationCreationToken);
+	CFStringRef tokenEncoded = HVUrlEncode((__bridge CFStringRef)self.applicationCreationToken);
 	
     NSString *dName = (self.deviceName) ? self.deviceName : [MobilePlatform deviceName];
 	CFStringRef deviceNameEncoded = HVUrlEncode((__bridge CFStringRef)dName);

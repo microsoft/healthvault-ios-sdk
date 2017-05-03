@@ -2,7 +2,7 @@
 //  HVCodableValue.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ static const xmlChar* x_element_code = XMLSTRINGCONST("code");
 
 -(void)setCodes:(HVCodedValueCollection *)codes
 {
-    m_codes = [codes retain];
+    m_codes = codes;
 }
 
 -(HVCodedValue *)firstCode
@@ -80,7 +80,6 @@ LError:
     HVCHECK_NOTNULL(codedValue);
     
     self = [self initWithText:textValue andCode:codedValue];
-    [codedValue release];
     
     return self;
 
@@ -90,25 +89,19 @@ LError:
 
 +(HVCodableValue *)fromText:(NSString *)textValue
 {
-    return [[[HVCodableValue alloc] initWithText:textValue] autorelease];
+    return [[HVCodableValue alloc] initWithText:textValue];
 }
 
 +(HVCodableValue *)fromText:(NSString *)textValue andCode:(HVCodedValue *)code
 {
-    return [[[HVCodableValue alloc] initWithText:textValue andCode:code] autorelease];
+    return [[HVCodableValue alloc] initWithText:textValue andCode:code];
 }
 
 +(HVCodableValue *)fromText:(NSString *)textValue code:(NSString *)code andVocab:(NSString *)vocab
 {
-    return [[[HVCodableValue alloc] initWithText:textValue code:code andVocab:vocab] autorelease];
+    return [[HVCodableValue alloc] initWithText:textValue code:code andVocab:vocab];
 }
 
--(void) dealloc
-{
-    [m_text release];
-    [m_codes release];
-    [super dealloc];
-}
 
 -(BOOL)matchesDisplayText:(NSString *)text
 {
@@ -148,7 +141,7 @@ LError:
 
 -(HVCodableValue *)clone
 {
-    HVCodableValue* cloned = [[[HVCodableValue alloc] initWithText:m_text] autorelease];
+    HVCodableValue* cloned = [[HVCodableValue alloc] initWithText:m_text];
     HVCHECK_NOTNULL(cloned);
     
     if (self.hasCodes)
@@ -208,8 +201,8 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_text = [[reader readStringElementWithXmlName:x_element_text] retain];
-    m_codes = (HVCodedValueCollection *)[[reader readElementArrayWithXmlName:x_element_code asClass:[HVCodedValue class] andArrayClass:[HVCodedValueCollection class]] retain];
+    m_text = [reader readStringElementWithXmlName:x_element_text];
+    m_codes = (HVCodedValueCollection *)[reader readElementArrayWithXmlName:x_element_code asClass:[HVCodedValue class] andArrayClass:[HVCodedValueCollection class]];
 }
 
 @end

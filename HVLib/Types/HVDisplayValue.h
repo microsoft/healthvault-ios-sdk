@@ -2,7 +2,7 @@
 //  HVDisplayValue.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,15 +44,15 @@
 //
 // (Optional) - units for the data
 //
-@property (readwrite, nonatomic, retain) NSString* units;
+@property (readwrite, nonatomic, strong) NSString* units;
 //
 // (Optional) - a vocabulary code for the units
 //
-@property (readwrite, nonatomic, retain) NSString* unitsCode;
+@property (readwrite, nonatomic, strong) NSString* unitsCode;
 //
 // (Optional) - text value for the above
 //
-@property (readwrite, nonatomic, retain) NSString* text;
+@property (readwrite, nonatomic, strong) NSString* text;
 
 -(id) initWithValue:(double) doubleValue andUnits:(NSString *) unitValue;
 

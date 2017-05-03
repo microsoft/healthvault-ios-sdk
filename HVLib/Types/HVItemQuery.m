@@ -2,7 +2,7 @@
 //  HVItemQuery.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ static NSString* const c_element_view = @"format";
     HVASSERT(view != nil);
     if (view)
     {
-        m_view = [view retain];
+        m_view = view;
     }
 }
 
@@ -109,7 +109,6 @@ LError:
     
     HVItemFilter* filter = [[HVItemFilter alloc] initWithTypeID:typeID];
     self = [self initWithFilter:filter];
-    [filter release];
     
     return self;
     
@@ -270,19 +269,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_name release];
-    [m_itemIDs release];
-    [m_keys release];
-    [m_clientIDs release];
-    [m_filters release];
-    [m_view release];
-    [m_max release];
-    [m_maxFull release];   
-    
-    [super dealloc];
-}
 
 -(HVClientResult *) validate
 {
@@ -337,7 +323,7 @@ LError:
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    m_name = [[reader readAttribute:c_attribute_name] retain];
+    m_name = [reader readAttribute:c_attribute_name];
     
     int intValue;
     if ([reader readIntAttribute:c_attribute_max intValue:&intValue])
@@ -352,11 +338,11 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_itemIDs = [[reader readStringElementArray:c_element_id] retain];
-    m_keys = (HVItemKeyCollection *)[[reader readElementArray:c_element_key asClass:[HVItemKey class] andArrayClass:[HVItemKeyCollection class]] retain];
-    m_clientIDs = [[reader readStringElementArray:c_element_clientID] retain];
-    m_filters = (HVItemFilterCollection *)[[reader readElementArray:c_element_filter asClass:[HVItemFilter class] andArrayClass:[HVItemFilterCollection class]] retain];
-    m_view = [[reader readElement:c_element_view asClass:[HVItemView class]] retain];
+    m_itemIDs = [reader readStringElementArray:c_element_id];
+    m_keys = (HVItemKeyCollection *)[reader readElementArray:c_element_key asClass:[HVItemKey class] andArrayClass:[HVItemKeyCollection class]];
+    m_clientIDs = [reader readStringElementArray:c_element_clientID];
+    m_filters = (HVItemFilterCollection *)[reader readElementArray:c_element_filter asClass:[HVItemFilter class] andArrayClass:[HVItemFilterCollection class]];
+    m_view = [reader readElement:c_element_view asClass:[HVItemView class]];
 }
 
 @end

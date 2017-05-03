@@ -2,7 +2,7 @@
 //  GetItems.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@
 // Use them to reduce the number of round trips you need to make
 // For most typical tasks though, you will issue a single query at a time
 //
-@property (readonly, nonatomic) HVItemQueryCollection* queries;
-@property (readonly, nonatomic) HVItemQuery* firstQuery;
+@property (readonly, nonatomic, strong) HVItemQueryCollection* queries;
+@property (readonly, nonatomic, strong) HVItemQuery* firstQuery;
 //
 // When the task completes, retrieve results from this property
 // If there was an error - such as network, or error code returned by HealthVault - this
@@ -43,19 +43,19 @@
 // 
 // If you issue just a single query, then you can also use the convenience queryResult property
 //
-@property (readonly, nonatomic) HVItemQueryResults* queryResults;
+@property (readonly, nonatomic, strong) HVItemQueryResults* queryResults;
 //
 // Returns the results of the FIRST query in the list of queries you issued
 //
-@property (readonly, nonatomic) HVItemQueryResult* queryResult;
+@property (readonly, nonatomic, strong) HVItemQueryResult* queryResult;
 //
 // Returns items retrieved by the FIRST query in the list of queries you issued
 //
-@property (readonly, nonatomic) HVItemCollection* itemsRetrieved;
+@property (readonly, nonatomic, strong) HVItemCollection* itemsRetrieved;
 //
 // Returns the first item retrieved by the FIRST query in the list of issued queries
 //
-@property (readonly, nonatomic) HVItem* firstItemRetrieved;
+@property (readonly, nonatomic, strong) HVItem* firstItemRetrieved;
 
 +(HVGetItemsTask *) newForRecord:(HVRecordReference *) record query:(HVItemQuery *)query andCallback:(HVTaskCompletion)callback;
 +(HVGetItemsTask *) newForRecord:(HVRecordReference *) record queries:(HVItemQueryCollection *)queries andCallback:(HVTaskCompletion)callback;

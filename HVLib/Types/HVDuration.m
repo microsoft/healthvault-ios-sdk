@@ -2,7 +2,7 @@
 //  HVDuration.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,12 +49,6 @@ LError:
     return [self initWithStartDate:start endDate:[start dateByAddingTimeInterval:duration]];
 }
 
--(void)dealloc
-{
-    [m_startDate release];
-    [m_endDate release];
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -74,8 +68,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_startDate = [[reader readElement:c_element_start asClass:[HVApproxDateTime class]] retain];    
-    m_endDate = [[reader readElement:c_element_end asClass:[HVApproxDateTime class]] retain];    
+    m_startDate = [reader readElement:c_element_start asClass:[HVApproxDateTime class]];    
+    m_endDate = [reader readElement:c_element_end asClass:[HVApproxDateTime class]];    
 }
 
 @end

@@ -2,7 +2,7 @@
 //  HVAsyncTask.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,7 +48,6 @@ typedef void (^HVTaskCompletion) (HVTask* task);
     HVTaskCompletion m_callback;
     
     id m_operation;
-    HVTask *m_parent;
     
     BOOL m_completeInMainThread;
 }
@@ -61,28 +60,28 @@ typedef void (^HVTaskCompletion) (HVTask* task);
 //
 // Task name - optional. Good for debugging
 //
-@property (readwrite, nonatomic, retain) NSString* taskName;
+@property (readwrite, nonatomic, strong) NSString* taskName;
 //
 // The RESULT of the Async task. Can be null if the task returns nothing.
 // The gettor automatically calls [self checkSuccess], which can throw if there was an
 // error while executing the asynchronous task
 //
-@property (readwrite, nonatomic, retain) id result;
+@property (readwrite, nonatomic, strong) id result;
 //
 // Any exception that the may have been thrown when the task ran, possibly in another thread
 //
-@property (readonly, nonatomic, retain) id exception;
+@property (readonly, nonatomic, strong) id exception;
 //
 // The actual operation being run by this task. Can include a system operation (NSUrlRequest) or (NSBlockOperation),
 // OR another task.
 //
 // We keep a reference in this property and use it to issue nested cancellations
 //
-@property (readwrite, nonatomic, retain) id operation;
+@property (readwrite, nonatomic, strong) id operation;
 //
 // This task's parent task
 //
-@property (readonly, nonatomic) HVTask* parent;
+@property (readonly, nonatomic, weak) HVTask* parent;
 //
 // This task executes this method asynchronously by queuing an NSBlockOperation
 //
@@ -132,7 +131,7 @@ typedef void (^HVTaskCompletion) (HVTask* task);
     NSString* m_name;
 }
 
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 
 -(HVTask *) nextTask;
 //

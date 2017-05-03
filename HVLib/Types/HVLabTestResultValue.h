@@ -2,7 +2,7 @@
 //  HVLabTestResultValue.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,9 +30,9 @@
     HVCodableValue* m_flag;
 }
 
-@property (readwrite, nonatomic, retain) HVApproxMeasurement* measurement;
-@property (readwrite, nonatomic, retain) HVTestResultRangeCollection* ranges;
-@property (readwrite, nonatomic, retain) HVCodableValue* flag;
+@property (readwrite, nonatomic, strong) HVApproxMeasurement* measurement;
+@property (readwrite, nonatomic, strong) HVTestResultRangeCollection* ranges;
+@property (readwrite, nonatomic, strong) HVCodableValue* flag;
 
 @property (readonly, nonatomic) BOOL hasRanges;
 

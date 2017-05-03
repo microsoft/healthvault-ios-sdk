@@ -2,7 +2,7 @@
 //  HVBasicDemographics.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,12 +60,12 @@ enum HVGender stringToGender(NSString* genderString);
 // ALL fields are optional
 //
 @property (readwrite, nonatomic) enum HVGender gender;
-@property (readwrite, nonatomic, retain) HVYear* birthYear;
-@property (readwrite, nonatomic, retain) HVCodableValue* country;
-@property (readwrite, nonatomic, retain) NSString* postalCode;
-@property (readwrite, nonatomic, retain) NSString* city;
-@property (readwrite, nonatomic, retain) HVCodableValue* state;
-@property (readwrite, nonatomic, retain) NSString* languageXml;
+@property (readwrite, nonatomic, strong) HVYear* birthYear;
+@property (readwrite, nonatomic, strong) HVCodableValue* country;
+@property (readwrite, nonatomic, strong) NSString* postalCode;
+@property (readwrite, nonatomic, strong) NSString* city;
+@property (readwrite, nonatomic, strong) HVCodableValue* state;
+@property (readwrite, nonatomic, strong) NSString* languageXml;
 
 //-------------------------
 //

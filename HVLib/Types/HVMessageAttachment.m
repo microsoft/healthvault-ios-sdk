@@ -2,7 +2,7 @@
 //  HVMessageAttachment.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,8 +39,8 @@ static const xmlChar* x_element_contentid = XMLSTRINGCONST("content-id");
     self = [super init];
     HVCHECK_SELF;
     
-    m_name = [name retain];
-    m_blobName = [blobName retain];
+    m_name = name;
+    m_blobName = blobName;
     m_isInline = FALSE;
     m_contentID = nil;
     
@@ -50,13 +50,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_blobName release];
-    [m_contentID release];
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -78,10 +71,10 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readStringElementWithXmlName:x_element_name] retain];
-    m_blobName = [[reader readStringElementWithXmlName:x_element_blob] retain];
+    m_name = [reader readStringElementWithXmlName:x_element_name];
+    m_blobName = [reader readStringElementWithXmlName:x_element_blob];
     m_isInline = [reader readBoolElementXmlName:x_element_inline];
-    m_contentID = [[reader readStringElementWithXmlName:x_element_contentid] retain];
+    m_contentID = [reader readStringElementWithXmlName:x_element_contentid];
 }
 
 @end

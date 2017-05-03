@@ -2,7 +2,7 @@
 //  HVInsurance.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,44 +45,44 @@
 //
 // (Optional) - Display Name for the plan
 //
-@property (readwrite, nonatomic, retain) NSString* planName;
+@property (readwrite, nonatomic, strong) NSString* planName;
 //
 // (Optional) - type of coverage E.g. 'Medical'
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* coverageType;
+@property (readwrite, nonatomic, strong) HVCodableValue* coverageType;
 //
 // (Optional)- carrier id
 //
-@property (readwrite, nonatomic, retain) NSString* carrierID;
+@property (readwrite, nonatomic, strong) NSString* carrierID;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* groupNum;
+@property (readwrite, nonatomic, strong) NSString* groupNum;
 //
 // (Optional) Plan code or prefix, such as MSJ
 //
-@property (readwrite, nonatomic, retain) NSString* planCode;
+@property (readwrite, nonatomic, strong) NSString* planCode;
 //
 // (Optional) 
 //
-@property (readwrite, nonatomic, retain) NSString* subscriberID;
+@property (readwrite, nonatomic, strong) NSString* subscriberID;
 //
 // (Optional) Person code OR SUFFIX. E.g. 01 = Subscriber
 //
-@property (readwrite, nonatomic, retain) NSString* personCode;
-@property (readwrite, nonatomic, retain) NSString* subscriberName;
+@property (readwrite, nonatomic, strong) NSString* personCode;
+@property (readwrite, nonatomic, strong) NSString* subscriberName;
 //
 // 
-@property (readwrite, nonatomic, retain) HVDateTime* subscriberDOB;
-@property (readwrite, nonatomic, retain) HVBool* isPrimary;
+@property (readwrite, nonatomic, strong) HVDateTime* subscriberDOB;
+@property (readwrite, nonatomic, strong) HVBool* isPrimary;
 //
 // (Optional) - When coverage expires
 //
-@property (readwrite, nonatomic, retain) HVDateTime* expirationDate;
+@property (readwrite, nonatomic, strong) HVDateTime* expirationDate;
 //
 // (Optional) - Contact info
 //
-@property (readwrite, nonatomic, retain) HVContact* contact;
+@property (readwrite, nonatomic, strong) HVContact* contact;
 
 //-------------------------
 //

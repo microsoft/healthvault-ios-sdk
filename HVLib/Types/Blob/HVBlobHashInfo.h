@@ -2,7 +2,7 @@
 //  HVBlobHashInfo.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVPositiveInt* blockSize;
+@property (readwrite, nonatomic, strong) HVPositiveInt* blockSize;
 
 @end
 
@@ -41,8 +41,8 @@
     HVStringNZ512* m_hash;
 }
 
-@property (readwrite, nonatomic, retain) NSString* algorithm;
-@property (readwrite, nonatomic, retain) HVBlobHashAlgorithmParams* params;
-@property (readwrite, nonatomic, retain) NSString* hash;
+@property (readwrite, nonatomic, strong) NSString* algorithm;
+@property (readwrite, nonatomic, strong) HVBlobHashAlgorithmParams* params;
+@property (readwrite, nonatomic, strong) NSString* hash;
 
 @end

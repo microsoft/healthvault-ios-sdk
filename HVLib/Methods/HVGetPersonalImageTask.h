@@ -2,7 +2,7 @@
 //  HVGetPersonalImageTask.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
     HVRecordReference* m_record;
 }
 
-@property (readonly, nonatomic) NSData* imageData;
+@property (readonly, nonatomic, strong) NSData* imageData;
 
 -(id) initWithRecord:(HVRecordReference *) record andCallback:(HVTaskCompletion) callback;
 

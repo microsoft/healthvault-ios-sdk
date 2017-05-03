@@ -2,7 +2,7 @@
 //  HealthVaultRecord.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,7 +47,6 @@
 															  personId: personId
 															personName: personName];
 	if (!record.isValid) {
-		[record release];
 		return nil;
 	}
 
@@ -75,19 +74,6 @@
 	return self;
 }
 
-- (void)dealloc {
-
-	self.xml = nil;
-	self.personId = nil;
-	self.personName = nil;
-	self.recordId = nil;
-	self.recordName = nil;
-    self.relationship = nil;
-    self.displayName = nil;
-	self.authStatus = nil;
-
-	[super dealloc];
-}
 
 - (BOOL)parseFromXml: (NSString *)xml {
 
@@ -95,7 +81,7 @@
     {
         @try {
             
-            XmlTextReader *xmlReader = [[XmlTextReader new] autorelease];
+            XmlTextReader *xmlReader = [XmlTextReader new];
             XmlElement *root = [xmlReader read: xml];
             
             if (!root) {

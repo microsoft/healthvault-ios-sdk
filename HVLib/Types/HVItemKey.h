@@ -2,7 +2,7 @@
 //  HVItemKey.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@
     NSString* m_version;
 }
 
-@property (readwrite, nonatomic, retain) NSString* itemID;
-@property (readwrite, nonatomic, retain) NSString* version;
+@property (readwrite, nonatomic, strong) NSString* itemID;
+@property (readwrite, nonatomic, strong) NSString* version;
 @property (readonly, nonatomic) BOOL hasVersion;
 
 -(id) initNew;

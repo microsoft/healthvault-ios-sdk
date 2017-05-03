@@ -2,7 +2,7 @@
 //  HVURLRequestExtensions.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,13 +28,6 @@
     return (NSMutableData *) self.result;
 }
 
--(void)dealloc
-{
-    [m_response release];
-    [m_responseBody release];
-    
-    [super dealloc];
-}
 
 -(void)start
 {
@@ -48,7 +41,7 @@
 
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    m_response = [response retain];
+    m_response = response;
     [m_responseBody setLength:0];    
 }
 
@@ -64,7 +57,6 @@
     {       
         HVHttpException* ex = [[HVHttpException alloc] initWithStatusCode:statusCode];
         [super handleError:ex];
-        [ex release];
     }
     
     [self complete];
@@ -76,11 +68,6 @@
 
 @synthesize requestBody = m_requestBody;
 
--(void)dealloc
-{
-    [m_requestBody release];
-    [super dealloc];
-}
 
 -(void)start
 {

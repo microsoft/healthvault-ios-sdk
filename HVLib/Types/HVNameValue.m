@@ -2,7 +2,7 @@
 //  HVNameValue.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,17 +55,10 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_value release];
-    
-    [super dealloc];
-}
 
 +(HVNameValue *)fromName:(HVCodedValue *)name andValue:(HVMeasurement *)value
 {
-    return [[[HVNameValue alloc] initWithName:name andValue:value] autorelease];
+    return [[HVNameValue alloc] initWithName:name andValue:value];
 }
 
 -(HVClientResult *)validate
@@ -86,8 +79,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVCodedValue class]] retain];
-    m_value = [[reader readElement:c_element_value asClass:[HVMeasurement class]] retain];
+    m_name = [reader readElement:c_element_name asClass:[HVCodedValue class]];
+    m_value = [reader readElement:c_element_value asClass:[HVMeasurement class]];
 }
 
 @end

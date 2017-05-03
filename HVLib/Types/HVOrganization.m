@@ -2,7 +2,7 @@
 //  HVOrganization.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,15 +31,6 @@ static NSString* const c_element_site = @"website";
 @synthesize type = m_type;
 @synthesize website = m_webSite;
 
--(void)dealloc
-{
-    [m_name release];
-    [m_contact release];
-    [m_type release];
-    [m_webSite release];
-
-    [super dealloc];
-}
 
 -(NSString *)toString
 {
@@ -73,10 +64,10 @@ static NSString* const c_element_site = @"website";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readStringElement:c_element_name] retain];
-    m_contact = [[reader readElement:c_element_contact asClass:[HVContact class]] retain];
-    m_type = [[reader readElement:c_element_type asClass:[HVCodableValue class]] retain];
-    m_webSite = [[reader readStringElement:c_element_site] retain];  
+    m_name = [reader readStringElement:c_element_name];
+    m_contact = [reader readElement:c_element_contact asClass:[HVContact class]];
+    m_type = [reader readElement:c_element_type asClass:[HVCodableValue class]];
+    m_webSite = [reader readStringElement:c_element_site];  
 }
 
 @end

@@ -2,7 +2,7 @@
 //  HVCholesterol.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,23 +49,23 @@ double const c_triglyceridesMolarMass;
 //
 // (Required) When the measurement was taken
 //
-@property (readwrite, nonatomic, retain) HVDate* when;
+@property (readwrite, nonatomic, strong) HVDate* when;
 //
 // (Optional) LDL value in mg/DL
 // 
-@property (readwrite, nonatomic, retain) HVPositiveInt* ldl;
+@property (readwrite, nonatomic, strong) HVPositiveInt* ldl;
 //
 // (Optional) HDL value in mg/DL
 //
-@property (readwrite, nonatomic, retain) HVPositiveInt* hdl;
+@property (readwrite, nonatomic, strong) HVPositiveInt* hdl;
 //
 // (Optional) Total cholesterol in mg/DL
 //
-@property (readwrite, nonatomic, retain) HVPositiveInt* total;
+@property (readwrite, nonatomic, strong) HVPositiveInt* total;
 //
 // (Optional) Triglycerides in mg/DL
 //
-@property (readwrite, nonatomic, retain) HVPositiveInt* triglycerides;
+@property (readwrite, nonatomic, strong) HVPositiveInt* triglycerides;
 //
 // Convenience properties
 //

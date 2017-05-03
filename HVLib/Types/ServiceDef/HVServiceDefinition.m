@@ -2,7 +2,7 @@
 //  HVServiceDefinition.m
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,22 +31,14 @@ static const xmlChar* x_element_instance = XMLSTRINGCONST("instances");
 @synthesize shell = m_shell;
 @synthesize systemInstances = m_instances;
 
--(void)dealloc
-{
-    [m_platform release];
-    [m_shell release];
-    [m_instances release];
-    
-    [super dealloc];
-}
 
 -(void)deserialize:(XReader *)reader
 {
-    m_platform = [[reader readElementWithXmlName:x_element_platform asClass:[HVPlatformInfo class]] retain];
-    m_shell = [[reader readElementWithXmlName:x_element_shell asClass:[HVShellInfo class]] retain];
+    m_platform = [reader readElementWithXmlName:x_element_platform asClass:[HVPlatformInfo class]];
+    m_shell = [reader readElementWithXmlName:x_element_shell asClass:[HVShellInfo class]];
     [reader skipElement:@"xml-method"];
     [reader skipElement:@"common-schema"];
-    m_instances = [[reader readElementWithXmlName:x_element_instance asClass:[HVSystemInstances class]] retain];
+    m_instances = [reader readElementWithXmlName:x_element_instance asClass:[HVSystemInstances class]];
 }
 
 -(void)serialize:(XWriter *)writer
@@ -74,15 +66,9 @@ static NSString* const c_element_section = @"section";
 
 -(void)setSections:(HVStringCollection *)sections
 {
-    m_sections = [sections retain];
+    m_sections = sections;
 }
 
--(void)dealloc
-{
-    [m_updatedSince release];
-    [m_sections release];
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer
 {

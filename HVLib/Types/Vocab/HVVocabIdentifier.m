@@ -2,7 +2,7 @@
 //  HVVocabIdentifier.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,24 +58,12 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_family release];
-    [m_version release];
-    [m_lang release];
-    [m_codeValue release];
-    
-    [m_keyString release];
-    
-    [super dealloc];
-}
 
 -(HVCodedValue *)codedValueForItem:(HVVocabItem *)vocabItem
 {
     HVCHECK_NOTNULL(vocabItem);
     
-    return [[[HVCodedValue alloc] initWithCode:vocabItem.code vocab:m_name vocabFamily:m_family vocabVersion:m_version] autorelease];
+    return [[HVCodedValue alloc] initWithCode:vocabItem.code vocab:m_name vocabFamily:m_family vocabVersion:m_version];
     
 LError:
     return nil;
@@ -85,7 +73,7 @@ LError:
 {
     HVCHECK_STRING(code);
     
-    return [[[HVCodedValue alloc] initWithCode:code vocab:m_name vocabFamily:m_family vocabVersion:m_version] autorelease];
+    return [[HVCodedValue alloc] initWithCode:code vocab:m_name vocabFamily:m_family vocabVersion:m_version];
 LError:
     return nil;
 }
@@ -123,7 +111,7 @@ LError:
         keyString = [NSString stringWithFormat:@"%@_%@", m_name, m_family];
     }
     
-    m_keyString = [keyString retain];
+    m_keyString = keyString;
     return m_keyString;
 }
 
@@ -151,15 +139,15 @@ LError:
 
 -(void)deserializeAttributes:(XReader *)reader
 {
-    m_lang = [[reader readAttribute:c_element_lang] retain];
+    m_lang = [reader readAttribute:c_element_lang];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readStringElement:c_element_name] retain];
-    m_family = [[reader readStringElement:c_element_family] retain];
-    m_version = [[reader readStringElement:c_element_version] retain];
-    m_codeValue = [[reader readStringElement:c_element_code] retain];
+    m_name = [reader readStringElement:c_element_name];
+    m_family = [reader readStringElement:c_element_family];
+    m_version = [reader readStringElement:c_element_version];
+    m_codeValue = [reader readStringElement:c_element_code];
 }
 
 @end

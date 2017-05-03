@@ -2,7 +2,7 @@
 //  HVVocabCodeSet.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,11 +30,11 @@
     HVBool* m_isTruncated;
 }
 
-@property (readwrite, nonatomic, retain) NSString* name;
-@property (readwrite, nonatomic, retain) NSString* family;
-@property (readwrite, nonatomic, retain) NSString* version;
-@property (readwrite, nonatomic, retain) HVVocabItemCollection* items;
-@property (readwrite, nonatomic, retain) HVBool* isTruncated;
+@property (readwrite, nonatomic, strong) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* family;
+@property (readwrite, nonatomic, strong) NSString* version;
+@property (readwrite, nonatomic, strong) HVVocabItemCollection* items;
+@property (readwrite, nonatomic, strong) HVBool* isTruncated;
 
 @property (readonly, nonatomic) BOOL hasItems;
 
@@ -57,7 +57,7 @@
     HVVocabCodeSet* m_match;
 }
 
-@property (readwrite, nonatomic, retain) HVVocabCodeSet* match;
+@property (readwrite, nonatomic, strong) HVVocabCodeSet* match;
 @property (readonly, nonatomic) BOOL hasMatches;
 
 @end

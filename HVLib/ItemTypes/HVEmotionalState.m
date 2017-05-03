@@ -2,7 +2,7 @@
 //  HVEmotionalState.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -149,14 +149,6 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
     }    
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_mood release];
-    [m_stress release];
-    [m_wellbeing release];
-    [super dealloc];
-}
 
 -(NSString *)moodAsString
 {
@@ -210,10 +202,10 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
-    m_mood = [[reader readElementWithXmlName:x_element_mood asClass:[HVOneToFive class]] retain];
-    m_stress = [[reader readElementWithXmlName:x_element_stress asClass:[HVOneToFive class]] retain];
-    m_wellbeing = [[reader readElementWithXmlName:x_element_wellbeing asClass:[HVOneToFive class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
+    m_mood = [reader readElementWithXmlName:x_element_mood asClass:[HVOneToFive class]];
+    m_stress = [reader readElementWithXmlName:x_element_stress asClass:[HVOneToFive class]];
+    m_wellbeing = [reader readElementWithXmlName:x_element_wellbeing asClass:[HVOneToFive class]];
 }
 
 

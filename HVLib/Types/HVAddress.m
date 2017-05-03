@@ -2,7 +2,7 @@
 //  HVAddress.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,26 +51,13 @@ static NSString* const c_element_county = @"county";
 
 -(void)setStreet:(HVStringCollection *)street
 {
-    m_street = [street retain];
+    m_street = street;
 }
 
--(void)dealloc
-{
-    [m_type release];
-    [m_isprimary release];
-    [m_street release];
-    [m_city release];
-    [m_state release];
-    [m_postalCode release];
-    [m_country release];
-    [m_county release];
-
-    [super dealloc];
-}
 
 -(NSString *)toString
 {
-    NSMutableString* text = [[[NSMutableString alloc] init] autorelease];
+    NSMutableString* text = [[NSMutableString alloc] init];
     
     [text appendOptionalWords:[m_street toString]];
     
@@ -91,17 +78,17 @@ static NSString* const c_element_county = @"county";
 
 +(HVVocabIdentifier *)vocabForCountries
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_isoFamily andName:@"iso3166"] autorelease];        
+    return [[HVVocabIdentifier alloc] initWithFamily:c_isoFamily andName:@"iso3166"];        
 }
 
 +(HVVocabIdentifier *)vocabForUSStates
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"states"] autorelease];        
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"states"];        
 }
 
 +(HVVocabIdentifier *)vocabForCanadianProvinces
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"provinces"] autorelease];        
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"provinces"];        
 }
 
 -(HVClientResult *)validate
@@ -130,14 +117,14 @@ static NSString* const c_element_county = @"county";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_type = [[reader readStringElement:c_element_description] retain];
-    m_isprimary = [[reader readElement:c_element_isPrimary asClass:[HVBool class]] retain];
-    m_street = [[reader readStringElementArray:c_element_street] retain];
-    m_city = [[reader readStringElement:c_element_city] retain];
-    m_state = [[reader readStringElement:c_element_state] retain];
-    m_postalCode = [[reader readStringElement:c_element_postalCode] retain];
-    m_country = [[reader readStringElement:c_element_country] retain];
-    m_county = [[reader readStringElement:c_element_county] retain];    
+    m_type = [reader readStringElement:c_element_description];
+    m_isprimary = [reader readElement:c_element_isPrimary asClass:[HVBool class]];
+    m_street = [reader readStringElementArray:c_element_street];
+    m_city = [reader readStringElement:c_element_city];
+    m_state = [reader readStringElement:c_element_state];
+    m_postalCode = [reader readStringElement:c_element_postalCode];
+    m_country = [reader readStringElement:c_element_country];
+    m_county = [reader readStringElement:c_element_county];    
 }
 
 @end

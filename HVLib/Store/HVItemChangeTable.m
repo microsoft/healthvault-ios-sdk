@@ -2,7 +2,7 @@
 //  HVItemChangeTable.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,12 +59,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_store release];
-    
-    [super dealloc];
-}
 
 -(BOOL)hasChangesForTypeID:(NSString *)typeID itemID:(NSString *)itemID
 {
@@ -112,13 +106,13 @@ LError:
         }
         else
         {
-            change = [[[HVItemChange alloc] initWithTypeID:typeID key:key changeType:changeType] autorelease];
+            change = [[HVItemChange alloc] initWithTypeID:typeID key:key changeType:changeType];
             HVCHECK_NOTNULL(change);
         }
  
         HVCHECK_SUCCESS([self put:change]);
         
-        return [[change.changeID retain] autorelease];
+        return change.changeID;
     }
     
 LError:
@@ -132,7 +126,7 @@ LError:
         NSMutableArray* changedTypes = [self getAllTypesWithChanges];
         HVCHECK_NOTNULL(changedTypes);
         
-        return [[[HVItemChangeQueue alloc] initWithChangeTable:self andChangedTypes:changedTypes] autorelease];
+        return [[HVItemChangeQueue alloc] initWithChangeTable:self andChangedTypes:changedTypes];
         
     LError:
         return nil;
@@ -146,7 +140,7 @@ LError:
         NSMutableArray* changedTypes = [NSMutableArray arrayWithObject:typeID];
         HVCHECK_NOTNULL(changedTypes);
         
-        return [[[HVItemChangeQueue alloc] initWithChangeTable:self andChangedTypes:changedTypes] autorelease];
+        return [[HVItemChangeQueue alloc] initWithChangeTable:self andChangedTypes:changedTypes];
         
     LError:
         return nil;
@@ -158,7 +152,7 @@ LError:
 {
     @synchronized(m_store)
     {
-        NSMutableArray* changes = [[[NSMutableArray alloc] init] autorelease];
+        NSMutableArray* changes = [[NSMutableArray alloc] init];
         HVCHECK_NOTNULL(changes);
         @autoreleasepool
         {
@@ -176,7 +170,7 @@ LError:
 {
     @synchronized(m_store)
     {
-        NSMutableArray* typeList = [[[NSMutableArray alloc] init] autorelease];
+        NSMutableArray* typeList = [[NSMutableArray alloc] init];
         HVCHECK_NOTNULL(typeList);
         @autoreleasepool
         {
@@ -290,7 +284,7 @@ LError:
     {
         HVCHECK_STRING(typeID);
         
-        NSMutableArray* changes = [[[NSMutableArray alloc] init] autorelease];
+        NSMutableArray* changes = [[NSMutableArray alloc] init];
         HVCHECK_NOTNULL(changes);
         
         @autoreleasepool
@@ -346,8 +340,8 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    m_changeTable = [changeTable retain];
-    m_types = [types retain];
+    m_changeTable = changeTable;
+    m_types = types;
     
     return self;
     
@@ -355,15 +349,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_changeTable release];
-    [m_types release];
-    [m_currentType release];
-    [m_currentQueue release];
-    
-    [super dealloc];
-}
 
 -(id)nextObject
 {
@@ -399,12 +384,12 @@ LError:
     {
         [self clear];
         
-        m_currentType = [[m_types dequeueObject] retain];
+        m_currentType = [m_types dequeueObject];
         if (!m_currentType)
         {
             break;
         }
-        m_currentQueue = [[m_changeTable getChangeIDsForTypeID:m_currentType] retain];
+        m_currentQueue = [m_changeTable getChangeIDsForTypeID:m_currentType];
         if (m_currentQueue)
         {
             return TRUE;

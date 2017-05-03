@@ -2,7 +2,7 @@
 //  HVExercise.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ static HVVocabIdentifier* s_vocabIDUnits;
 
 -(void)setDetails:(HVNameValueCollection *)details
 {
-    m_details = [details retain];
+    m_details = details;
 }
 
 -(double)durationMinutesValue
@@ -101,18 +101,6 @@ static HVVocabIdentifier* s_vocabIDUnits;
     s_vocabIDUnits = [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Units];
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_activity release];
-    [m_title release];
-    [m_distance release];
-    [m_duration release];
-    [m_details release];   
-    [m_segmentsXml release];
-    
-    [super dealloc];
-}
 
 -(id)initWithDate:(NSDate *)date
 {
@@ -132,7 +120,7 @@ LError:
 
 +(HVCodableValue *)createActivity:(NSString *)activity
 {
-    return [[HVExercise newActivity:activity] autorelease];
+    return [HVExercise newActivity:activity];
 }
 
 -(BOOL)setStandardActivity:(NSString *)activity
@@ -164,7 +152,6 @@ LError:
     HVCHECK_NOTNULL(detail);
     
     [self.details addOrUpdate:detail];
-    [detail release];
     
     return TRUE;
     
@@ -174,7 +161,7 @@ LError:
 
 +(HVNameValue *)createDetailWithNameCode:(NSString *)name andValue:(HVMeasurement *)value
 {
-    return [[HVExercise newDetailWithNameCode:name andValue:value] autorelease];
+    return [HVExercise newDetailWithNameCode:name andValue:value];
 }
 
 +(BOOL)isDetailForCaloriesBurned:(HVNameValue *)nv
@@ -300,14 +287,14 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]] retain];
-    m_activity = [[reader readElementWithXmlName:x_element_activity asClass:[HVCodableValue class]] retain];
-    m_title = [[reader readStringElementWithXmlName:x_element_title] retain];
-    m_distance = [[reader readElementWithXmlName:x_element_distance asClass:[HVLengthMeasurement class]] retain];
-    m_duration = [[reader readElementWithXmlName:x_element_duration asClass:[HVPositiveDouble class]] retain];
-    m_details = (HVNameValueCollection *)[[reader readElementArray:c_element_detail asClass:[HVNameValue class] andArrayClass:[HVNameValueCollection class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]];
+    m_activity = [reader readElementWithXmlName:x_element_activity asClass:[HVCodableValue class]];
+    m_title = [reader readStringElementWithXmlName:x_element_title];
+    m_distance = [reader readElementWithXmlName:x_element_distance asClass:[HVLengthMeasurement class]];
+    m_duration = [reader readElementWithXmlName:x_element_duration asClass:[HVPositiveDouble class]];
+    m_details = (HVNameValueCollection *)[reader readElementArray:c_element_detail asClass:[HVNameValue class] andArrayClass:[HVNameValueCollection class]];
     
-    m_segmentsXml = [[reader readRawElementArray:c_element_segment] retain]; 
+    m_segmentsXml = [reader readRawElementArray:c_element_segment]; 
 }
 
 +(NSString *)typeID

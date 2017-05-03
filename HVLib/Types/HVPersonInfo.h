@@ -2,7 +2,7 @@
 //  HVPersonInfo.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,15 +35,15 @@
     NSString* m_preferredUICultureXml;
 }
 
-@property (readwrite, nonatomic, retain) NSString* ID;
-@property (readwrite, nonatomic, retain) NSString* name;
-@property (readwrite, nonatomic, retain) NSString* appSettingsXml;
-@property (readwrite, nonatomic, retain) NSString* selectedRecordID;
-@property (readwrite, nonatomic, retain) HVBool* moreRecords;
-@property (readwrite, nonatomic, retain) HVRecordCollection* records;
-@property (readwrite, nonatomic, retain) NSString* groupsXml;
-@property (readwrite, nonatomic, retain) NSString* preferredCultureXml;
-@property (readwrite, nonatomic, retain) NSString* preferredUICultureXml;
+@property (readwrite, nonatomic, strong) NSString* ID;
+@property (readwrite, nonatomic, strong) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* appSettingsXml;
+@property (readwrite, nonatomic, strong) NSString* selectedRecordID;
+@property (readwrite, nonatomic, strong) HVBool* moreRecords;
+@property (readwrite, nonatomic, strong) HVRecordCollection* records;
+@property (readwrite, nonatomic, strong) NSString* groupsXml;
+@property (readwrite, nonatomic, strong) NSString* preferredCultureXml;
+@property (readwrite, nonatomic, strong) NSString* preferredUICultureXml;
 
 @property (readonly, nonatomic) BOOL hasRecords;
 

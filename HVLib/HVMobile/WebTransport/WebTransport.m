@@ -2,7 +2,7 @@
 //  WebTransport.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,16 +59,6 @@
 /// Represents logging status (enabled/disabled).
 static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 
-- (void)dealloc {
-
-    [_response release];
-    [_responseBody release];
-    [_context release];
-    [_target release];
-    [_connection release];
-    
-    [super dealloc];
-}
 
 #pragma mark Static Messages
 
@@ -103,7 +93,7 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
                    target: (NSObject *)target
                  callBack: (SEL)callBack {
 
-    WebTransport *transport = [[WebTransport new] autorelease];
+    WebTransport *transport = [WebTransport new];
     return [transport sendRequestForURL: url
             withData: data
             context: context
@@ -117,10 +107,10 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
                    target: (NSObject *)target
                  callBack: (SEL)callBack {
 
-    _target = [target retain];
+    _target = target;
     _callBack = callBack;
-    _context = [context retain];
-    _responseBody = [[NSMutableData data] retain];
+    _context = context;
+    _responseBody = [NSMutableData data];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString: url]];
     [request setGzipCompression];
@@ -155,8 +145,7 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 
 - (void)connection: (NSURLConnection *)connection didReceiveResponse: (NSURLResponse *)response {
 
-    [_response release];
-    _response = [response retain];
+    _response = response;
     
     if (_responseBody) {
         [_responseBody setLength: 0];
@@ -195,8 +184,6 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
     {
     }
     
-    [response release];
-    [responseString release];
 }
 
 - (void)connection: (NSURLConnection *)conn didFailWithError: (NSError *)error {
@@ -222,7 +209,6 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
     {
     }
     
-    [response release];
 }
 
 #pragma mark Connection Events End
@@ -231,7 +217,10 @@ static BOOL _isRequestResponseLogEnabled = HEALTH_VAULT_TRACE_ENABLED;
 
     if (_target && [_target respondsToSelector: _callBack]) {
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [_target performSelector: _callBack withObject: response withObject: _context];
+#pragma clang diagnostic pop
     }
 }
 

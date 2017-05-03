@@ -2,7 +2,7 @@
 //  HVItemCommitScheduler.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    m_localVault = [vault retain];
+    m_localVault = vault;
     
     m_status = [[HVWorkerStatus alloc] init];
     HVCHECK_NOTNULL(m_status);
@@ -101,15 +101,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_localVault release];
-    [m_status release];
-    [m_timer release];
-    [m_activeCommitTask release];
-    
-    [super dealloc];
-}
 
 -(void)commitChanges
 {
@@ -170,7 +161,7 @@ LError:
 {
     @synchronized(self)
     {
-        m_activeCommitTask = [task retain];
+        m_activeCommitTask = task;
     }
 }
 
@@ -212,11 +203,11 @@ LError:
             // We'll let the timer run without break...
             // If there are intermittent failures, we are ensured that eventually the timer will force us to retry
             //
-            m_timer = [[NSTimer scheduledTimerWithTimeInterval:m_commitFrequency
+            m_timer = [NSTimer scheduledTimerWithTimeInterval:m_commitFrequency
                                     target:self
                                     selector:@selector(timerTick)
                                     userInfo:nil
-                                    repeats:TRUE] retain];
+                                    repeats:TRUE];
             
             HVCHECK_NOTNULL(m_timer);
         }

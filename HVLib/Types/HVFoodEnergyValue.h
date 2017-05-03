@@ -2,7 +2,7 @@
 //  HVFoodEnergyValue.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,11 +34,11 @@
 // The amount of energy needed to raise the temperature of 1Kg of water by 1 degree Celsius
 // Or approx 4.2 kilojoules
 //
-@property (readwrite, nonatomic, retain) HVNonNegativeDouble* calories;
+@property (readwrite, nonatomic, strong) HVNonNegativeDouble* calories;
 //
 // Optional
 //
-@property (readwrite, nonatomic, retain) HVDisplayValue* displayValue;
+@property (readwrite, nonatomic, strong) HVDisplayValue* displayValue;
 
 @property (readwrite, nonatomic) double caloriesValue;
 

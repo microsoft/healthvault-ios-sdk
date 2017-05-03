@@ -2,7 +2,7 @@
 //  HVCholesterol.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -154,15 +154,6 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
     return [NSString localizedStringWithFormat:format, self.ldlValue, self.hdlValue];
 }
 
--(void)dealloc
-{
-    [m_date release];
-    [m_ldl release];
-    [m_hdl release];
-    [m_total release];
-    [m_triglycerides release];
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -188,11 +179,11 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
 
 -(void)deserialize:(XReader *)reader
 {
-    m_date = [[reader readElement:c_element_when asClass:[HVDate class]] retain];
-    m_ldl = [[reader readElement:c_element_ldl asClass:[HVPositiveInt class]] retain];
-    m_hdl = [[reader readElement:c_element_hdl asClass:[HVPositiveInt class]] retain];
-    m_total = [[reader readElement:c_element_total asClass:[HVPositiveInt class]] retain];
-    m_triglycerides = [[reader readElement:c_element_triglycerides asClass:[HVPositiveInt class]] retain];    
+    m_date = [reader readElement:c_element_when asClass:[HVDate class]];
+    m_ldl = [reader readElement:c_element_ldl asClass:[HVPositiveInt class]];
+    m_hdl = [reader readElement:c_element_hdl asClass:[HVPositiveInt class]];
+    m_total = [reader readElement:c_element_total asClass:[HVPositiveInt class]];
+    m_triglycerides = [reader readElement:c_element_triglycerides asClass:[HVPositiveInt class]];    
 }
 
 +(NSString *)typeID

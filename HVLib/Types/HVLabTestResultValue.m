@@ -2,7 +2,7 @@
 //  HVLabTestResultValue.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,14 +35,6 @@ static const xmlChar* x_element_flag = XMLSTRINGCONST("flag");
     return ![NSArray isNilOrEmpty:m_ranges];
 }
 
--(void)dealloc
-{
-    [m_measurement release];
-    [m_ranges release];
-    [m_flag release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -64,9 +56,9 @@ static const xmlChar* x_element_flag = XMLSTRINGCONST("flag");
 
 -(void)deserialize:(XReader *)reader
 {
-    m_measurement = [[reader readElementWithXmlName:x_element_measurement asClass:[HVApproxMeasurement class]] retain];
-    m_ranges = (HVTestResultRangeCollection *)[[reader readElementArrayWithXmlName:x_element_ranges asClass:[HVTestResultRange class] andArrayClass:[HVTestResultRangeCollection class]] retain];
-    m_flag = [[reader readElementWithXmlName:x_element_flag asClass:[HVCodableValue class]] retain];
+    m_measurement = [reader readElementWithXmlName:x_element_measurement asClass:[HVApproxMeasurement class]];
+    m_ranges = (HVTestResultRangeCollection *)[reader readElementArrayWithXmlName:x_element_ranges asClass:[HVTestResultRange class] andArrayClass:[HVTestResultRangeCollection class]];
+    m_flag = [reader readElementWithXmlName:x_element_flag asClass:[HVCodableValue class]];
 }
 
 @end

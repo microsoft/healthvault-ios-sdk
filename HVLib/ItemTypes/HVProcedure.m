@@ -2,7 +2,7 @@
 //  HVProcedure.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -52,16 +52,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_name release];
-    [m_anatomicLocation release];
-    [m_primaryProvider release];
-    [m_secondaryProvider release];
-    
-    [super dealloc];
-}
 
 -(NSString *)description
 {
@@ -107,11 +97,11 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElement:c_element_when asClass:[HVApproxDateTime class]] retain];
-    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
-    m_anatomicLocation = [[reader readElement:c_element_location asClass:[HVCodableValue class]] retain];
-    m_primaryProvider = [[reader readElement:c_element_primaryprovider asClass:[HVPerson class]] retain];
-    m_secondaryProvider = [[reader readElement:c_element_secondaryprovider asClass:[HVPerson class]] retain];
+    m_when = [reader readElement:c_element_when asClass:[HVApproxDateTime class]];
+    m_name = [reader readElement:c_element_name asClass:[HVCodableValue class]];
+    m_anatomicLocation = [reader readElement:c_element_location asClass:[HVCodableValue class]];
+    m_primaryProvider = [reader readElement:c_element_primaryprovider asClass:[HVPerson class]];
+    m_secondaryProvider = [reader readElement:c_element_secondaryprovider asClass:[HVPerson class]];
 }
 
 +(NSString *)typeID

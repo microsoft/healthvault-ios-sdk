@@ -2,7 +2,7 @@
 //  HVVitalSigns.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ static NSString* const c_element_position = @"position";
 
 -(void)setResults:(HVVitalSignResultCollection *)results
 {
-    m_results = [results retain];
+    m_results = results;
 }
 
 -(HVVitalSignResult *)firstResult
@@ -92,15 +92,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_results release];
-    [m_site release];
-    [m_position release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -124,10 +115,10 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
-    m_results = (HVVitalSignResultCollection *)[[reader readElementArray:c_element_results asClass:[HVVitalSignResult class] andArrayClass:[HVVitalSignResultCollection class]] retain];
-    m_site = [[reader readStringElement:c_element_site] retain];
-    m_position = [[reader readStringElement:c_element_position] retain];
+    m_when = [reader readElement:c_element_when asClass:[HVDateTime class]];
+    m_results = (HVVitalSignResultCollection *)[reader readElementArray:c_element_results asClass:[HVVitalSignResult class] andArrayClass:[HVVitalSignResultCollection class]];
+    m_site = [reader readStringElement:c_element_site];
+    m_position = [reader readStringElement:c_element_position];
 }
 
 +(NSString *)typeID

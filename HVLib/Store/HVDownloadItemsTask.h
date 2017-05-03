@@ -2,7 +2,7 @@
 //  HVDownloadItemsTask.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@
 }
 
 @property (readonly, nonatomic) BOOL didKeysDownload;
-@property (readonly, nonatomic) NSMutableArray* downloadedKeys;
-@property (readonly, nonatomic) HVItemKey* firstKey;
+@property (readonly, nonatomic, strong) NSMutableArray* downloadedKeys;
+@property (readonly, nonatomic, strong) HVItemKey* firstKey;
 
 -(void) recordItemsAsDownloaded:(HVItemCollection *) items;
 

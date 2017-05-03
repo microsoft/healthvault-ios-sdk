@@ -2,7 +2,7 @@
 //  HVItemDataTypedFeatures.h
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,15 +32,17 @@
 {
     self = [super initWithTitle:@"File features"];
     HVCHECK_SELF;
+    
+    __weak __typeof__(self) weakSelf = self;
 
     [self addFeature:@"View file" andAction:^{
-        [self viewFileInBrowser];
+        [weakSelf viewFileInBrowser];
     }];
     [self addFeature:@"Upload image" andAction:^{
-        [self pickImageForUpload];
+        [weakSelf pickImageForUpload];
     }];
     [self addFeature:@"Download file" andAction:^{
-        [self downloadFile];
+        [weakSelf downloadFile];
     }];
     return self;
     
@@ -48,13 +50,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_fileData release];
-    [m_fileMediaType release];
-    
-    [super dealloc];
-}
 
 //
 // Files are stored in HealthVault Blobs (note: Any HealthVault type can have multiple associated NAMED blob streams of arbitrary size).
@@ -162,7 +157,7 @@ LError:
     //
     // Set up the data source so we can push the file to HealthVault
     //
-    id<HVBlobSource> blobSource = [[[HVBlobMemorySource alloc] initWithData:data] autorelease];
+    id<HVBlobSource> blobSource = [[HVBlobMemorySource alloc] initWithData:data];
     //
     // This will first commit the blob and if that is successful, also PUT the associated file item
     //
@@ -187,7 +182,7 @@ LError:
     m_fileMediaType = nil;
     m_fileData = nil;
     
-    UIImagePickerController* picker = [[[UIImagePickerController alloc] init] autorelease];
+    UIImagePickerController* picker = [[UIImagePickerController alloc] init];
     picker.sourceType = (UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeSavedPhotosAlbum);
     picker.delegate = self;
     
@@ -200,9 +195,9 @@ LError:
     //
     // Save selected image data
     //
-    m_fileMediaType = [[info objectForKey: UIImagePickerControllerMediaType] retain];
+    m_fileMediaType = [info objectForKey: UIImagePickerControllerMediaType];
     UIImage* image = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
-    m_fileData = [UIImageJPEGRepresentation(image, 0.8) retain];
+    m_fileData = UIImageJPEGRepresentation(image, 0.8);
     //
     // Close the picker and upload the file
     //

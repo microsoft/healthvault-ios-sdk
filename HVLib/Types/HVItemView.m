@@ -2,7 +2,7 @@
 //  HVItemView.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -62,13 +62,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_transforms release];
-    [m_typeVersions release];
-
-    [super dealloc];
-}
 
 -(HVClientResult *) validate
 {
@@ -94,7 +87,7 @@ LError:
         [writer writeElementArray:c_element_versions elements:m_typeVersions];
     }
     @finally {
-        [sections release];
+        sections = nil;
     }    
 }
 
@@ -103,9 +96,9 @@ LError:
     HVStringCollection* sections = nil;
     @try {
         
-        sections = [[reader readStringElementArray:c_element_section] retain];
-        m_transforms = [[reader readStringElementArray:c_element_xml] retain];
-        m_typeVersions = [[reader readStringElementArray:c_element_versions] retain];
+        sections = [reader readStringElementArray:c_element_section];
+        m_transforms = [reader readStringElementArray:c_element_xml];
+        m_typeVersions = [reader readStringElementArray:c_element_versions];
         
         m_sections = [self stringsToSections:sections];
         if ([m_transforms containsString:c_emptyString])
@@ -116,7 +109,7 @@ LError:
      }
 
     @finally {
-        [sections release];
+        sections = nil;
     }
 }
 

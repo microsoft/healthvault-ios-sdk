@@ -2,7 +2,7 @@
 //  HVVitalSigns.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,19 +36,19 @@
 //
 // (Required) When the vital sign was taken
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVVitalSignResultCollection* results;
+@property (readwrite, nonatomic, strong) HVVitalSignResultCollection* results;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* site;
-@property (readwrite, nonatomic, retain) NSString* position;
+@property (readwrite, nonatomic, strong) NSString* site;
+@property (readwrite, nonatomic, strong) NSString* position;
 
 @property (readonly, nonatomic) BOOL hasResults;
-@property (readonly, nonatomic) HVVitalSignResult* firstResult;
+@property (readonly, nonatomic, strong) HVVitalSignResult* firstResult;
 
 //-------------------------
 //

@@ -2,7 +2,7 @@
 //  MobilePlatform.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -63,7 +63,6 @@
 
 	NSString *base64String = [Base64 encodeBase64WithData: hmac];
 
-	[hmac release];
 	return base64String;
 }
 

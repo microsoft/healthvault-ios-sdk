@@ -2,7 +2,7 @@
 //  HVBlobPutParameters.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,14 +51,6 @@ static NSString* const c_element_hashParams = @"blob-hash-parameters";
 @synthesize hashAlgorithm = m_hashAlgorithm;
 @synthesize hashParams = m_hashParams;
 
--(void)dealloc
-{
-    [m_url release];
-    [m_hashAlgorithm release];
-    [m_hashParams release];
-    
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer
 {
@@ -71,11 +63,11 @@ static NSString* const c_element_hashParams = @"blob-hash-parameters";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_url = [[reader readStringElement:c_element_url] retain];
+    m_url = [reader readStringElement:c_element_url];
     m_chunkSize = [reader readIntElement:c_element_chunkSize];
     m_maxSize = [reader readIntElement:c_element_maxSize];
-    m_hashAlgorithm = [[reader readStringElement:c_element_hashAlg] retain];
-    m_hashParams = [[reader readElement:c_element_hashParams asClass:[HVBlobHashAlgorithmParameters class]] retain];    
+    m_hashAlgorithm = [reader readStringElement:c_element_hashAlg];
+    m_hashParams = [reader readElement:c_element_hashParams asClass:[HVBlobHashAlgorithmParameters class]];    
 }
 
 @end

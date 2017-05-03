@@ -2,7 +2,7 @@
 //  HVLocalRecordStore.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@
 //
 // Record for which this is a store
 //
-@property (readonly, nonatomic) HVRecordReference* record;
+@property (strong, readonly, nonatomic) HVRecordReference* record;
 //
 // Root store for this record
 //
@@ -49,15 +49,15 @@
 // Metadata, such as view definitions, etc..
 // Child of root
 //
-@property (readonly, nonatomic) id<HVObjectStore> metadata;
+@property (strong, readonly, nonatomic) id<HVObjectStore> metadata;
 //
 // All Item Data (Xml) is stored here
 //
-@property (readonly, nonatomic) HVSynchronizedStore* data;
+@property (strong, readonly, nonatomic) HVSynchronizedStore* data;
 //
 // Synchronization manager
 //
-@property (readonly, nonatomic) HVSynchronizationManager* dataMgr;
+@property (strong, readonly, nonatomic) HVSynchronizationManager* dataMgr;
 
 //-------------------------
 //

@@ -2,7 +2,7 @@
 //  HVItemData.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@
 // Data
 //
 //-------------------------
-@property (readwrite, nonatomic, retain) HVItemDataCommon* common;
-@property (readwrite, nonatomic, retain) HVItemDataTyped* typed;
+@property (readwrite, nonatomic, strong) HVItemDataCommon* common;
+@property (readwrite, nonatomic, strong) HVItemDataTyped* typed;
 
 @property (readonly, nonatomic) BOOL hasCommon;
 @property (readonly, nonatomic) BOOL hasTyped;

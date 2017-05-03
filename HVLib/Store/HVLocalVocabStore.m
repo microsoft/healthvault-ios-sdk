@@ -2,7 +2,7 @@
 //  HVLocalVocabStore.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    m_objectStore = [store retain];
+    m_objectStore = store;
     
     return self;
 
@@ -50,11 +50,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_objectStore release];
-    [super dealloc];
-}
 
 -(BOOL)containsVocabWithID:(HVVocabIdentifier *)vocabID
 {
@@ -85,8 +80,7 @@ LError:
     HVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocab:vocab];    
     HVCHECK_NOTNULL(getVocab);
     
-    HVTask* downloadTask = [[[HVTask alloc] initWithCallback:callback andChildTask:getVocab] autorelease];
-    [getVocab release];
+    HVTask* downloadTask = [[HVTask alloc] initWithCallback:callback andChildTask:getVocab];
     
     HVCHECK_NOTNULL(downloadTask);
     
@@ -105,8 +99,7 @@ LError:
     HVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocabs:vocabIDs];    
     HVCHECK_NOTNULL(getVocab);
     
-    HVTask* downloadTask = [[[HVTask alloc] initWithCallback:callback andChildTask:getVocab] autorelease];
-    [getVocab release];
+    HVTask* downloadTask = [[HVTask alloc] initWithCallback:callback andChildTask:getVocab];
     
     HVCHECK_NOTNULL(downloadTask);
     
@@ -127,7 +120,7 @@ LError:
 {
     if ([self isStaleVocabWithID:vocab maxAge:ageInSeconds])
     {
-        HVGetVocabTask* task = [[self newDownloadVocabTaskForVocab:vocab] autorelease];        
+        HVGetVocabTask* task = [self newDownloadVocabTaskForVocab:vocab];        
         [task start];
     }
 }
@@ -150,8 +143,7 @@ LError:
  
     if (![NSArray isNilOrEmpty:vocabsToDownload])
     {
-        HVGetVocabTask* task = [[self newDownloadVocabTaskForVocabs:vocabsToDownload] autorelease];
-        [vocabsToDownload release];
+        HVGetVocabTask* task = [self newDownloadVocabTaskForVocabs:vocabsToDownload];
         
         HVCHECK_NOTNULL(task);
         
@@ -234,7 +226,6 @@ LError:
     
     HVVocabParams* params = [[HVVocabParams alloc] initWithVocabIDs:vocabIDs];
     task.params = params;
-    [params release];
     
     return task;
 }

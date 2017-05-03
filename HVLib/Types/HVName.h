@@ -2,7 +2,7 @@
 //  HVName.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,28 +39,28 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) NSString* fullName;
+@property (readwrite, nonatomic, strong) NSString* fullName;
 //
 // (Optional)
 // Vocabulary: name-prefixes
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* title;
+@property (readwrite, nonatomic, strong) HVCodableValue* title;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* first;
+@property (readwrite, nonatomic, strong) NSString* first;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* middle;
+@property (readwrite, nonatomic, strong) NSString* middle;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* last;
+@property (readwrite, nonatomic, strong) NSString* last;
 //
 // (Optional)
 // Vocabulary: name-suffixes
-@property (readwrite, nonatomic, retain) HVCodableValue* suffix;
+@property (readwrite, nonatomic, strong) HVCodableValue* suffix;
 
 //-------------------------
 //

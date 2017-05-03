@@ -2,7 +2,7 @@
 //  HVLengthMeasurement.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -100,12 +100,6 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
     [self updateDisplayValue:inMiles units:@"miles" andUnitsCode:@"mi"];        
 }
 
--(void)dealloc
-{
-    [m_meters release];
-    [m_display release];
-    [super dealloc];
-}
 
 -(id)initWithInches:(double)inches
 {
@@ -198,35 +192,35 @@ LError:
 
 +(HVLengthMeasurement *)fromMiles:(double)value
 {
-    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    HVLengthMeasurement* length = [[HVLengthMeasurement alloc] init];
     length.inMiles = value;
     return length;
 }
 
 +(HVLengthMeasurement *)fromInches:(double)value
 {
-    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    HVLengthMeasurement* length = [[HVLengthMeasurement alloc] init];
     length.inInches = value;
     return length;    
 }
 
 +(HVLengthMeasurement *)fromKilometers:(double)value
 {
-    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    HVLengthMeasurement* length = [[HVLengthMeasurement alloc] init];
     length.inKilometers = value;
     return length;    
 }
 
 +(HVLengthMeasurement *)fromMeters:(double)value
 {
-    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    HVLengthMeasurement* length = [[HVLengthMeasurement alloc] init];
     length.inMeters = value;
     return length;    
 }
 
 +(HVLengthMeasurement *)fromCentimeters:(double)value
 {
-    HVLengthMeasurement* length = [[[HVLengthMeasurement alloc] init] autorelease];
+    HVLengthMeasurement* length = [[HVLengthMeasurement alloc] init];
     length.inCentimeters = value;
     return length;    
 }
@@ -249,8 +243,8 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_meters = [[reader readElementWithXmlName:x_element_meters asClass:[HVPositiveDouble class]] retain];
-    m_display = [[reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]] retain];
+    m_meters = [reader readElementWithXmlName:x_element_meters asClass:[HVPositiveDouble class]];
+    m_display = [reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]];
 }
 
 +(double)centimetersToInches:(double)cm

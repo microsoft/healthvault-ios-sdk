@@ -2,7 +2,7 @@
 //  HVCondition.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -64,20 +64,10 @@ LError:
     return (m_name) ? [m_name toString] : c_emptyString;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_onsetDate release];
-    [m_status release];
-    [m_stopDate release];
-    [m_stopReason release];
-    
-    [super dealloc];
-}
 
 +(HVVocabIdentifier *)vocabForStatus
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"condition-occurrence"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"condition-occurrence"];    
 }
 
 -(HVClientResult *)validate
@@ -104,11 +94,11 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
-    m_onsetDate = [[reader readElement:c_element_onset asClass:[HVApproxDateTime class]] retain];
-    m_status = [[reader readElement:c_element_status asClass:[HVCodableValue class]] retain];
-    m_stopDate = [[reader readElement:c_element_stop asClass:[HVApproxDateTime class]] retain];
-    m_stopReason = [[reader readStringElement:c_element_reason] retain];
+    m_name = [reader readElement:c_element_name asClass:[HVCodableValue class]];
+    m_onsetDate = [reader readElement:c_element_onset asClass:[HVApproxDateTime class]];
+    m_status = [reader readElement:c_element_status asClass:[HVCodableValue class]];
+    m_stopDate = [reader readElement:c_element_stop asClass:[HVApproxDateTime class]];
+    m_stopReason = [reader readStringElement:c_element_reason];
 }
 
 +(NSString *)typeID

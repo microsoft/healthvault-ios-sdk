@@ -2,7 +2,7 @@
 //  HVHttp.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
 -(id) initWithError:(NSError *) error;
 -(id) initWithStatusCode:(int) statusCode;
 
-@property (readonly, nonatomic) NSError* error;
+@property (readonly, nonatomic, strong) NSError* error;
 @property (readonly, nonatomic) int statusCode;
 
 
@@ -63,17 +63,15 @@
     NSURLConnection* m_connection;
     NSInteger m_maxAttempts;
     NSInteger m_currentAttempt;
-    
-    id<HVHttpDelegate> m_delegate; // Loose reference
 }
 
-@property (readonly, nonatomic) NSMutableURLRequest* request;
-@property (readonly, nonatomic) NSURLConnection* connection;
+@property (strong, readonly, nonatomic) NSMutableURLRequest* request;
+@property (strong, readonly, nonatomic) NSURLConnection* connection;
 
 @property (readwrite, nonatomic) NSInteger maxAttempts;
 @property (readonly, nonatomic) NSInteger currentAttempt;
 
-@property (readwrite, nonatomic, assign) id<HVHttpDelegate> delegate;
+@property (readwrite, nonatomic, weak) id<HVHttpDelegate> delegate;
 
 -(id) initWithUrl:(NSURL *) url andCallback:(HVTaskCompletion) callback;
 -(id) initWithVerb:(NSString *) verb url:(NSURL *) url andCallback:(HVTaskCompletion) callback;

@@ -2,7 +2,7 @@
 //  HVCodableValue.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,16 +41,16 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) NSString* text;
+@property (readwrite, nonatomic, strong) NSString* text;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodedValueCollection* codes;
+@property (readwrite, nonatomic, strong) HVCodedValueCollection* codes;
 //
 // Convenience properties
 //
 @property (readonly, nonatomic) BOOL hasCodes;
-@property (readonly, nonatomic) HVCodedValue* firstCode;
+@property (readonly, nonatomic, strong) HVCodedValue* firstCode;
 
 //-------------------------
 //

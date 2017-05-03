@@ -2,7 +2,7 @@
 //  HVCodedValue.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,19 +45,19 @@
 //
 // (Required) Vocabulary Code
 //
-@property (readwrite, nonatomic, retain) NSString* code;
+@property (readwrite, nonatomic, strong) NSString* code;
 //
 // (Required)The vocabulary code is from E.g. "Rx Norm Active Medications"
 //
-@property (readwrite, nonatomic, retain) NSString* vocabularyName;
+@property (readwrite, nonatomic, strong) NSString* vocabularyName;
 //
 // (Optional) Vocabulary Family. E.g. "RxNorm"
 //
-@property (readwrite, nonatomic, retain) NSString* vocabularyFamily;
+@property (readwrite, nonatomic, strong) NSString* vocabularyFamily;
 //
 // (Optional) Vocabulary Version
 //
-@property (readwrite, nonatomic, retain) NSString* vocabularyVersion;
+@property (readwrite, nonatomic, strong) NSString* vocabularyVersion;
 
 //-------------------------
 //

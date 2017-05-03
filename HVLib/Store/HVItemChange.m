@@ -2,7 +2,7 @@
 //  HVItemChange.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ static const xmlChar* x_element_attempt = XMLSTRINGCONST("attempt");
     self = [super init];
     HVCHECK_SELF;
     
-    m_typeID = [typeID retain];
+    m_typeID = typeID;
     [self updateWithKey:key andChangeType:changeType];
     
     return self;
@@ -73,22 +73,11 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_changeID release];
-    [m_typeID release];
-    [m_key release];
-    [m_updatedKey release];
-    [m_localItem release];
-    [m_updatedItem release];
-    
-    [super dealloc];
-}
 
 -(void)assignNewChangeID
 {
     NSString* uniqueId = [@"iOS_" stringByAppendingString:guidString()];
-    m_changeID = [uniqueId retain];
+    m_changeID = uniqueId;
 }
 
 -(void)assignNewTimestamp
@@ -114,15 +103,15 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_changeID = [[reader readStringElementWithXmlName:x_element_changeID] retain];
+    m_changeID = [reader readStringElementWithXmlName:x_element_changeID];
     m_timestamp = [reader readDoubleElementXmlName:x_element_timestamp];
     
     int changeType;
     changeType = [reader readIntElementXmlName:x_element_type];
     m_changeType = (enum HVItemChangeType) changeType;
     
-    m_typeID = [[reader readStringElementWithXmlName:x_element_typeID] retain];
-    m_key = [[reader readElementWithXmlName:x_element_key asClass:[HVItemKey class]] retain];
+    m_typeID = [reader readStringElementWithXmlName:x_element_typeID];
+    m_key = [reader readElementWithXmlName:x_element_key asClass:[HVItemKey class]];
     m_attempt = [reader readIntElementXmlName:x_element_attempt];
 }
 
@@ -167,7 +156,7 @@ LError:
 
 -(void)updateWithKey:(HVItemKey *)key andChangeType:(enum HVItemChangeType)type
 {
-    m_key = [key retain];
+    m_key = key;
     m_changeType = type;
     [self assignNewChangeID];
     [self assignNewTimestamp];

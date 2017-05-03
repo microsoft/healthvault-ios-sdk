@@ -2,7 +2,7 @@
 //  HealthVaultService.h
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,62 +54,62 @@
 }
 
 /// Gets or sets the URL that is used to talk to the HealthVault Web Service.
-@property (retain) NSString *healthServiceUrl;
+@property (strong) NSString *healthServiceUrl;
 
 /// Gets or sets the URL that is used to talk to the HealthVault Shell.
-@property (retain) NSString *shellUrl;
+@property (strong) NSString *shellUrl;
 
 /// Gets or sets the authorization token that is required to talk to the HealthVault
-@property (retain) NSString *authorizationSessionToken;
+@property (strong) NSString *authorizationSessionToken;
 
 /// Gets or sets the application shared secret.
-@property (retain) NSString *sharedSecret;
+@property (strong) NSString *sharedSecret;
 
 /// Gets or sets the session shared secret.
-@property (retain) NSString *sessionSharedSecret;
+@property (strong) NSString *sessionSharedSecret;
 
 /// Gets or sets the master app id.
 /// The master application is predefined by the developer using the Application Configuration Center tool. 
-@property (retain) NSString *masterAppId;
+@property (strong) NSString *masterAppId;
 
 /// Gets or sets the language that is used for responses.
-@property (retain) NSString *language;
+@property (strong) NSString *language;
 
 /// Gets or sets the country that is used for responses.
-@property (retain) NSString *country;
+@property (strong) NSString *country;
 
-@property (retain) NSString* deviceName;
+@property (strong) NSString* deviceName;
 
 /// Gets or sets the application instance id.
-@property (retain) NSString *appIdInstance;
+@property (strong) NSString *appIdInstance;
 
 /// Gets or sets the application creation token.
 /// The application token is returned from the CreateApplicationRequest method, and is
 /// only useful for passing to the HealthVault Shell to start the authorization and application
 /// creation process. 
-@property (retain) NSString *applicationCreationToken;
+@property (strong) NSString *applicationCreationToken;
 
 /// Gets the list of records that this application is authorized to use.
-@property (retain) NSMutableArray *records;
+@property (strong) NSMutableArray *records;
 
 /// Gets or sets the person and record that will be used.
-@property (retain) HealthVaultRecord *currentRecord;
+@property (strong) HealthVaultRecord *currentRecord;
 @property (readonly) BOOL isAppCreated;
 
 /// Is YES if current application instance has already been created, otherwise FALSE.
 @property (readonly, getter = getIsApplicationCreated) BOOL isApplicationCreated;
 
 @property (readwrite, nonatomic) NSTimeInterval requestSendDelay;
-@property (readwrite, nonatomic, retain) NSString* settingsFileName;
+@property (readwrite, nonatomic, strong) NSString* settingsFileName;
 
 //--------------------------------------------
 //
 // Providers
 //
 //--------------------------------------------
-@property (retain) id<HVHttpTransport> transport;
-@property (retain) id<HVCryptographer> cryptographer;
-@property (retain) Provisioner* provisioner;
+@property (strong) id<HVHttpTransport> transport;
+@property (strong) id<HVCryptographer> cryptographer;
+@property (strong) Provisioner* provisioner;
 
 //--------------------------------------------
 //

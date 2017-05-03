@@ -2,7 +2,7 @@
 //  WebResponse.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,13 +25,6 @@
 @synthesize errorText = _errorText;
 @synthesize webStatusCode = _webStatusCode;
 
-- (void)dealloc {
-
-	self.responseData = nil;
-	self.errorText = nil;
-
-	[super dealloc];
-}
 
 - (BOOL)getHasError {
 

@@ -2,7 +2,7 @@
 //  HVFamilyHistory.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ static NSString* const c_element_relative = @"relative";
 
 -(void)setConditions:(HVConditionEntryCollection *)conditions
 {
-    m_conditions = [conditions retain];
+    m_conditions = conditions;
 }
 
 -(BOOL)hasConditions
@@ -62,7 +62,7 @@ static NSString* const c_element_relative = @"relative";
         return [[m_conditions objectAtIndex:0] toString];
     }
     
-    NSMutableString* output = [[[NSMutableString alloc] init] autorelease];
+    NSMutableString* output = [[NSMutableString alloc] init];
     for (NSUInteger i = 0, count = m_conditions.count; i < count; ++i)
     {
         if (i > 0)
@@ -80,12 +80,6 @@ static NSString* const c_element_relative = @"relative";
     return [self toString];
 }
 
--(void)dealloc
-{
-    [m_relative release];
-    [m_conditions release];
-    [super dealloc];
-}
 
 -(id)initWithRelative:(HVRelative *)relative andCondition:(HVConditionEntry *)condition
 {
@@ -124,8 +118,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_conditions = (HVConditionEntryCollection *)[[reader readElementArray:c_element_condition asClass:[HVConditionEntry class] andArrayClass:[HVConditionEntryCollection class]] retain];
-    m_relative = [[reader readElement:c_element_relative asClass:[HVRelative class]] retain];
+    m_conditions = (HVConditionEntryCollection *)[reader readElementArray:c_element_condition asClass:[HVConditionEntry class] andArrayClass:[HVConditionEntryCollection class]];
+    m_relative = [reader readElement:c_element_relative asClass:[HVRelative class]];
 }
 
 +(NSString *)typeID

@@ -1,7 +1,7 @@
 //
 //  HVCholesterolV2.m
 //  HVLib
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -133,16 +133,6 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
     [m_total setMgPerDL:totalValueMgDL gramsPerMole:c_cholesterolMolarMass];
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_ldl release];
-    [m_hdl release];
-    [m_triglycerides release];
-    [m_total release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -168,11 +158,11 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
-    m_ldl = [[reader readElementWithXmlName:x_element_ldl asClass:[HVConcentrationValue class]] retain];
-    m_hdl = [[reader readElementWithXmlName:x_element_hdl asClass:[HVConcentrationValue class]] retain];
-    m_total = [[reader readElementWithXmlName:x_element_total asClass:[HVConcentrationValue class]] retain];
-    m_triglycerides = [[reader readElementWithXmlName:x_element_triglycerides asClass:[HVConcentrationValue class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
+    m_ldl = [reader readElementWithXmlName:x_element_ldl asClass:[HVConcentrationValue class]];
+    m_hdl = [reader readElementWithXmlName:x_element_hdl asClass:[HVConcentrationValue class]];
+    m_total = [reader readElementWithXmlName:x_element_total asClass:[HVConcentrationValue class]];
+    m_triglycerides = [reader readElementWithXmlName:x_element_triglycerides asClass:[HVConcentrationValue class]];
 }
 
 +(NSString *)typeID

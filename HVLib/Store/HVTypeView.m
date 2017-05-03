@@ -2,7 +2,7 @@
 //  HVTypeView.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -81,7 +81,6 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 @synthesize lastUpdateDate = m_lastUpdateDate;
 @synthesize maxItems = m_maxItems;
 @synthesize store = m_store;
-@synthesize delegate = m_delegate;
 @synthesize tag = m_tag;
 -(BOOL)readAheadModeChunky
 {
@@ -136,13 +135,13 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
 -(void)setLastUpdateDate:(NSDate *)lastUpdateDate
 {
-    m_lastUpdateDate = [lastUpdateDate retain];
+    m_lastUpdateDate = lastUpdateDate;
 }
 
 -(void)setStore:(HVLocalRecordStore *)store
 {
     HVASSERT(store);
-    m_store = [store retain];
+    m_store = store;
 }
 
 -(NSUInteger)count
@@ -192,7 +191,7 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
     self.enforceTypeCheck = FALSE;
     if (items)
     {
-        m_items = [items retain];
+        m_items = items;
     }
     else
     {
@@ -220,16 +219,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_typeID release];
-    [m_filter release];
-    [m_lastUpdateDate release];
-    [m_items release];
-    [m_store release];
-    
-    [super dealloc];
-}
 
 -(HVItemKey *)keyAtIndex:(NSUInteger)index
 {
@@ -327,7 +316,7 @@ LError:
 {
     NSUInteger index = baseIndex;
     
-    NSCalendar* calendar = [[NSCalendar newGregorian] autorelease];
+    NSCalendar* calendar = [NSCalendar newGregorian];
     NSDateComponents* baseComponents = [calendar getComponentsFor:date];
     
     for (; index > 0; --index)
@@ -521,7 +510,7 @@ LError:
         {
             if (!pendingKeys)
             {
-                pendingKeys = [[[NSMutableArray alloc]init] autorelease];
+                pendingKeys = [[NSMutableArray alloc]init];
                 HVCHECK_NOTNULL(pendingKeys);
             }
             HVTypeViewItem* key = [m_items objectAtIndex:i];
@@ -544,7 +533,7 @@ LError:
         return nil;
     }
     
-    HVTask* task = [[m_store.data newDownloadItemsInRecord:m_store.record forKeys:pendingKeys callback:callback] autorelease];
+    HVTask* task = [m_store.data newDownloadItemsInRecord:m_store.record forKeys:pendingKeys callback:callback];
     if (!task)
     {
         return nil;
@@ -676,7 +665,7 @@ LError:
 
 -(HVTask *)refresh
 {
-    HVGetItemsTask* getItems = [[self newRefreshTask] autorelease];
+    HVGetItemsTask* getItems = [self newRefreshTask];
     HVCHECK_NOTNULL(getItems);
     
     [getItems start];
@@ -689,14 +678,13 @@ LError:
 
 -(HVTask *)refreshWithCallback:(HVTaskCompletion)callback
 {
-    HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* task = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(task);
     
     HVGetItemsTask* syncTask = [self newRefreshTask];
     HVCHECK_NOTNULL(syncTask);
     
     [task setNextTask:syncTask];
-    [syncTask release];
     
     [task start];
     return task;
@@ -707,7 +695,7 @@ LError:
 
 -(HVItemQuery *)getQuery
 {
-    return [[self newRefreshQuery] autorelease];
+    return [self newRefreshQuery];
 }
 
 -(BOOL)replaceKeys:(HVTypeViewItems *)items
@@ -768,7 +756,7 @@ LError:
     HVTypeView *view = [HVTypeView loadViewNamed:typeID fromStore:store];
     if (!view)
     {
-        view = [[[HVTypeView alloc] initForTypeID:typeID overStore:store] autorelease];
+        view = [[HVTypeView alloc] initForTypeID:typeID overStore:store];
     }
     
     return view;
@@ -780,7 +768,7 @@ LError:
 -(void)updateViewWith:(HVTypeViewItems *)items
 {
     m_items = nil;
-    m_items = [items retain];
+    m_items = items;
     [self stampUpdated];
 }
 
@@ -798,7 +786,6 @@ LError:
     [params addObject:error];
     
     [self invokeOnMainThread:@selector(keysFailed:) withObject:params];
-    [params release];
 }
 
 -(void)itemsRetrieved:(HVItemCollection *)items forKeys:(NSArray *)keys
@@ -808,7 +795,6 @@ LError:
     [params addObject:keys];
     
     [self invokeOnMainThread:@selector(processItemsRetrieved:) withObject:params];
-    [params release];
 }
 
 
@@ -824,10 +810,10 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_typeID = [[reader readStringElement:c_element_typeID] retain];
-    m_filter = [[reader readElement:c_element_filter asClass:[HVItemFilter class]] retain];
-    m_lastUpdateDate = [[reader readDateElement:c_element_updateDate] retain];
-    m_items = [[reader readElement:c_element_items asClass:[HVTypeViewItems class]] retain];
+    m_typeID = [reader readStringElement:c_element_typeID];
+    m_filter = [reader readElement:c_element_filter asClass:[HVItemFilter class]];
+    m_lastUpdateDate = [reader readDateElement:c_element_updateDate];
+    m_items = [reader readElement:c_element_items asClass:[HVTypeViewItems class]];
     m_readAheadChunkSize = [reader readIntElement:c_element_chunkSize];
     if (m_readAheadChunkSize <= 0)
     {
@@ -838,7 +824,7 @@ LError:
 
 -(HVTypeView *)subviewForRange:(NSRange)range
 {
-    HVTypeViewItems* subItems = [[[HVTypeViewItems alloc] init] autorelease];
+    HVTypeViewItems* subItems = [[HVTypeViewItems alloc] init];
     
     if (m_items)
     {
@@ -849,7 +835,7 @@ LError:
         }
     }
     
-    return [[[HVTypeView alloc] initFromTypeView:self andItems:subItems] autorelease];
+    return [[HVTypeView alloc] initFromTypeView:self andItems:subItems];
 }
 
 @end
@@ -863,17 +849,17 @@ LError:
 
 -(void)setTypeID:(NSString *)typeID
 {
-    m_typeID = [typeID retain];
+    m_typeID = typeID;
 }
 
 -(void)setFilter:(HVTypeFilter *)filter
 {
-    m_filter = [filter retain];
+    m_filter = filter;
 }
 
 -(void)setItems:(HVTypeViewItems *)items
 {
-    m_items = [items retain];
+    m_items = items;
 }
 
 -(HVItemQuery *)newRefreshQuery
@@ -915,7 +901,6 @@ LError:
         
     }];
     getItems.shouldCompleteInMainThread = TRUE;
-    [query release];
     
     return getItems;
 
@@ -954,7 +939,7 @@ LError:
     }
     @finally 
     {
-        [newViewItems release];
+        newViewItems = nil;
     }
 }
 
@@ -976,7 +961,7 @@ LError:
     *pending = nil;
     
     NSMutableArray* pendingKeys = nil;
-    HVItemCollection* items = [[[HVItemCollection alloc] initWithCapacity:range.length] autorelease];
+    HVItemCollection* items = [[HVItemCollection alloc] initWithCapacity:range.length];
     for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
     {
         HVTypeViewItem* key = [m_items objectAtIndex:i];
@@ -989,7 +974,7 @@ LError:
         {
             if (!pendingKeys)
             {
-                pendingKeys = [[[NSMutableArray alloc]init] autorelease];
+                pendingKeys = [[NSMutableArray alloc]init];
                 HVCHECK_NOTNULL(pendingKeys);
             }
             [pendingKeys addObject:key];
@@ -1150,7 +1135,7 @@ LError:
         return nil;
     }
     
-    NSMutableArray* keysNotFound = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* keysNotFound = [[NSMutableArray alloc] init];
     for (HVItemKey* key in keys)
     {
         if (![itemsByID objectForKey:key.itemID])
@@ -1159,7 +1144,6 @@ LError:
         }
     }
     
-    [itemsByID release];
     return  keysNotFound;
 }
 
@@ -1238,9 +1222,9 @@ LError:
 -(void)notifyItemsAvailable:(HVItemCollection *)items viewChanged:(BOOL)viewChanged
 {
     safeInvokeAction(^{
-        if (m_delegate)
+        if (self.delegate)
         {
-            [m_delegate itemsAvailable:items inView:self viewChanged:viewChanged];
+            [self.delegate itemsAvailable:items inView:self viewChanged:viewChanged];
         }
     });
 }
@@ -1248,9 +1232,9 @@ LError:
 -(void)notifyKeysNotAvailable:(NSArray *)keys
 {
     safeInvokeAction(^{
-        if (m_delegate)
+        if (self.delegate)
         {
-            [m_delegate keysNotAvailable:keys inView:self];
+            [self.delegate keysNotAvailable:keys inView:self];
         }
     });
 }
@@ -1258,9 +1242,9 @@ LError:
 -(void)notifySynchronized
 {
     safeInvokeAction(^{
-        if (m_delegate)
+        if (self.delegate)
         {
-            [m_delegate synchronizationCompletedInView:self];
+            [self.delegate synchronizationCompletedInView:self];
         }
     });
 }
@@ -1268,9 +1252,9 @@ LError:
 -(void)notifySyncFailed:(id)error
 {
     safeInvokeActionEx(^{
-        if (m_delegate)
+        if (self.delegate)
         {
-            [m_delegate synchronizationFailedInView:self withError:error];
+            [self.delegate synchronizationFailedInView:self withError:error];
         }
     }, TRUE);  // Ensures that delegate is called in UI thread
 }

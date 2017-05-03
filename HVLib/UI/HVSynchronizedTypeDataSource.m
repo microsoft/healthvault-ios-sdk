@@ -2,7 +2,7 @@
 //  HVSynchronizedTypeDataSource.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@
     self = [super initForTable:table andView:type];
     HVCHECK_SELF;
     
-    m_type = [type retain];
+    m_type = type;
     
     [self subscribe];
     
@@ -68,8 +68,6 @@ LError:
 {
     [self unsubscribe];
     
-    [m_type release];
-    [super dealloc];
 }
 
 //------------------------------

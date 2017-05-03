@@ -2,7 +2,7 @@
 //  HVOccurence.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,12 +27,6 @@ static NSString* const c_element_minutes = @"minutes";
 @synthesize when = m_when;
 @synthesize durationMinutes = m_minutes;
 
--(void)dealloc
-{
-    [m_when release];
-    [m_minutes release];
-    [super dealloc];
-}
 
 -(id)initForDuration:(int)minutes startingAt:(HVTime *)time
 {
@@ -58,7 +52,6 @@ LError:
     HVCHECK_NOTNULL(time);
     
     self = [self initForDuration:minutes startingAt:time];
-    [time release];
     
     return self;
     
@@ -68,7 +61,7 @@ LError:
 
 +(HVOccurence *)forDuration:(int)minutes atHour:(int)hour andMinute:(int)minute
 {
-    return [[[HVOccurence alloc] initForDuration:minutes startingAtHour:hour andMinute:minute] autorelease];
+    return [[HVOccurence alloc] initForDuration:minutes startingAtHour:hour andMinute:minute];
 }
 
 -(HVClientResult *)validate
@@ -89,8 +82,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElement:c_element_when asClass:[HVTime class]] retain];
-    m_minutes = [[reader readElement:c_element_minutes asClass:[HVNonNegativeInt class]] retain];    
+    m_when = [reader readElement:c_element_when asClass:[HVTime class]];
+    m_minutes = [reader readElement:c_element_minutes asClass:[HVNonNegativeInt class]];    
 }
 
 @end

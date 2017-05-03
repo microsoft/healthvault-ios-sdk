@@ -2,7 +2,7 @@
 //  HealthVaultRequest.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@
 {
     @synchronized(self)
     {
-        _connection = [connection retain];
+        _connection = connection;
     }    
 }
 
@@ -101,29 +101,6 @@
 	return self;
 }
 
-- (void)dealloc {
-
-	self.methodName = nil;
-	self.infoXml = nil;
-	self.recordId = nil;
-	self.personId = nil;
-
-	self.authorizationSessionToken = nil;
-    self.userAuthToken = nil;
-	self.appIdInstance = nil;
-	self.sessionSharedSecret = nil;
-
-	self.language = nil;
-	self.country = nil;
-	self.msgTime = nil;
-	self.userState = nil;
-
-	self.target = nil;
-    
-    [_connection release];
-
-	[super dealloc];
-}
 
 -(NSString *)toXml
 {
@@ -133,7 +110,7 @@
 - (NSString *)toXml:(id<HealthVaultService>)service
 {
     _service = service; // Weak ref
-	NSMutableString *xml = [[NSMutableString new] autorelease];
+	NSMutableString *xml = [NSMutableString new];
 
 	[xml appendString:@"<wc-request:request xmlns:wc-request=\"urn:com.microsoft.wc.request\">"];
     {
@@ -154,7 +131,6 @@
         [self writeAuth:xml forHeader:header];
         [xml appendString: header];
         
-        [header release];
 
         [xml appendString:infoString];
     }

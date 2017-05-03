@@ -2,7 +2,7 @@
 //  HVPerson.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,28 +40,28 @@
 //
 // (Required) Person's name
 //
-@property (readwrite, nonatomic, retain) HVName* name;
+@property (readwrite, nonatomic, strong) HVName* name;
 //
 // (Optional) 
 //
-@property (readwrite, nonatomic, retain) NSString* organization;
+@property (readwrite, nonatomic, strong) NSString* organization;
 //
 // (Optional) 
 //
-@property (readwrite, nonatomic, retain) NSString* training;
+@property (readwrite, nonatomic, strong) NSString* training;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* idNumber;
+@property (readwrite, nonatomic, strong) NSString* idNumber;
 //
 // (Optional) Contact information
 //
-@property (readwrite, nonatomic, retain) HVContact* contact;
+@property (readwrite, nonatomic, strong) HVContact* contact;
 //
 // (Optional) 
 // Vocabulary: person-types
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* type;
+@property (readwrite, nonatomic, strong) HVCodableValue* type;
 
 //-------------------------
 //

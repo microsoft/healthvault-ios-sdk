@@ -2,7 +2,7 @@
 //  XmlElement.h
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,16 +35,16 @@
 }
 
 /// Gets or sets element name.
-@property (retain) NSString *name;
+@property (strong) NSString *name;
 
 /// Gets or sets element inner text.
-@property (retain) NSMutableString *text;
+@property (strong) NSMutableString *text;
 
 /// Gets or sets element attributes.
-@property (retain) NSMutableDictionary *attributes;
+@property (strong) NSMutableDictionary *attributes;
 
 /// Gets or sets elements children.
-@property (retain) NSMutableDictionary *children;
+@property (strong) NSMutableDictionary *children;
 
 /// Returns an array of children matching the given element name.
 /// @param name - children name.

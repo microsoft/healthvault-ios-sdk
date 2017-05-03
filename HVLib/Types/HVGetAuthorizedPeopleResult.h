@@ -2,7 +2,7 @@
 //  HVGetAuthorizedPeopleResults.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
     HVBool* m_moreResults;
 }
 
-@property (readwrite, nonatomic, retain) NSMutableArray* persons;
-@property (readwrite, nonatomic, retain) HVBool* moreResults;
+@property (readwrite, nonatomic, strong) NSMutableArray* persons;
+@property (readwrite, nonatomic, strong) HVBool* moreResults;
 
 @end

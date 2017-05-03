@@ -2,7 +2,7 @@
 //  HealthVaultResponse.h
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,24 +53,24 @@
 @property (assign) int webStatusCode;
 
 /// Gets or sets the informational part of the response.
-@property (retain) NSString *infoXml;
+@property (strong) NSString *infoXml;
 
 /// Gets or sets the raw xml that was returned from the request.
-@property (retain) NSString *responseXml;
+@property (strong) NSString *responseXml;
 
 /// Gets or sets the text of the error that occurred.
 /// If the error was returned from the HealthVault service,
 /// additional error information may be found in the ResponseXml.
-@property (retain) NSString *errorText;
+@property (strong) NSString *errorText;
 
 /// Gets or sets a contextual xml description of the the error.
-@property (retain) NSString *errorContextXml;
+@property (strong) NSString *errorContextXml;
 
 /// Gets or sets the informational part of the response.
-@property (retain) NSString *errorInfo;
+@property (strong) NSString *errorInfo;
 
 /// Gets or sets the request that was sent.
-@property (retain) HealthVaultRequest *request;
+@property (strong) HealthVaultRequest *request;
 
 /// Indicates whether the operation has failed.
 @property (readonly, getter=getHasError) BOOL hasError;

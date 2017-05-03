@@ -2,7 +2,7 @@
 //  HVName.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -76,21 +76,10 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_full release];
-    [m_title release];
-    [m_first release];
-    [m_middle release];
-    [m_last release];
-    [m_suffix release];
-    
-    [super dealloc];
-}
 
 -(BOOL)buildFullName
 {
-    NSMutableString* fullName = [[[NSMutableString alloc] init] autorelease];
+    NSMutableString* fullName = [[NSMutableString alloc] init];
     HVCHECK_NOTNULL(fullName);
     
     if (m_title)
@@ -130,12 +119,12 @@ LError:
 
 +(HVVocabIdentifier *)vocabForTitle
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-prefixes"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-prefixes"];    
 }
 
 +(HVVocabIdentifier *)vocabForSuffix
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-suffixes"] autorelease];        
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-suffixes"];        
 }
 
 -(HVClientResult *)validate
@@ -159,12 +148,12 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_full = [[reader readStringElement:c_element_fullName] retain];
-    m_title = [[reader readElement:c_element_title asClass:[HVCodableValue class]] retain];
-    m_first = [[reader readStringElement:c_element_first] retain];
-    m_middle = [[reader readStringElement:c_element_middle] retain];
-    m_last = [[reader readStringElement:c_element_last] retain];
-    m_suffix = [[reader readElement:c_element_suffix asClass:[HVCodableValue class]] retain];
+    m_full = [reader readStringElement:c_element_fullName];
+    m_title = [reader readElement:c_element_title asClass:[HVCodableValue class]];
+    m_first = [reader readStringElement:c_element_first];
+    m_middle = [reader readStringElement:c_element_middle];
+    m_last = [reader readStringElement:c_element_last];
+    m_suffix = [reader readElement:c_element_suffix asClass:[HVCodableValue class]];
 }
 
 @end

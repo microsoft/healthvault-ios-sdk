@@ -2,7 +2,7 @@
 //  HVPendingItem.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,14 +29,6 @@ static const xmlChar* x_element_edate = XMLSTRINGCONST("eff-date");
 @synthesize type = m_type;
 @synthesize effectiveDate = m_effectiveDate;
 
--(void) dealloc
-{
-    [m_id release];
-    [m_type release];
-    [m_effectiveDate release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *) validate
 {
@@ -57,9 +49,9 @@ static const xmlChar* x_element_edate = XMLSTRINGCONST("eff-date");
 
 -(void) deserialize:(XReader *)reader
 {
-    m_id = [[reader readElementWithXmlName:x_element_id asClass:[HVItemKey class]] retain];
-    m_type = [[reader readElementWithXmlName:x_element_type asClass:[HVItemType class]] retain];
-    m_effectiveDate = [[reader readDateElementXmlName:x_element_edate] retain];
+    m_id = [reader readElementWithXmlName:x_element_id asClass:[HVItemKey class]];
+    m_type = [reader readElementWithXmlName:x_element_type asClass:[HVItemType class]];
+    m_effectiveDate = [reader readDateElementXmlName:x_element_edate];
 }
 
 @end

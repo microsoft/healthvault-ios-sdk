@@ -2,7 +2,7 @@
 //  ItemDataTyped.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@
 // Data
 //
 //-------------------------
-@property (readonly, nonatomic) NSString* rootElement;
-@property (readonly, nonatomic) NSString* type;
+@property (readonly, nonatomic, strong) NSString* rootElement;
+@property (readonly, nonatomic, strong) NSString* type;
 //
 // Some types may contain RAW xml that requires further parsing
 // e.g. CCR & CCD

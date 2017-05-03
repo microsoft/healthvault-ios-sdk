@@ -2,7 +2,7 @@
 //  HVServerResponseStatus.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -70,8 +70,8 @@ enum HVServerStatusCode
 //
 @property (readonly, nonatomic) BOOL isHVError;
 @property (readwrite, nonatomic) int statusCode;
-@property (readwrite, nonatomic, retain) NSString* errorText;
-@property (readwrite, nonatomic, retain) NSString* errorDetailsXml;
+@property (readwrite, nonatomic, strong) NSString* errorText;
+@property (readwrite, nonatomic, strong) NSString* errorDetailsXml;
 //
 // Web result code, if any
 //
@@ -95,7 +95,7 @@ enum HVServerStatusCode
     HVServerResponseStatus* m_status;
 }
 
-@property (readwrite, nonatomic, retain) HVServerResponseStatus* status;
+@property (readwrite, nonatomic, strong) HVServerResponseStatus* status;
 
 -(id) initWithStatus:(HVServerResponseStatus *) status;
 

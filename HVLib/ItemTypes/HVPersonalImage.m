@@ -2,7 +2,7 @@
 //  HVPersonalImage.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ static NSString* const c_typename = @"personal-image";
     HVCHECK_STRING(contentType);
     HVCHECK_NOTNULL(record);
     
-    uploadImageTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    uploadImageTask = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(uploadImageTask);
 
     HVGetItemsTask* getExistingTask = [record getItemsForType:[HVPersonalImage typeID] callback:^(HVTask *task) {
@@ -64,7 +64,7 @@ static NSString* const c_typename = @"personal-image";
         
         if (!item)
         {
-            item = [[HVPersonalImage newItem] autorelease];
+            item = [HVPersonalImage newItem];
             HVCHECK_OOM(item);
         }
         
@@ -75,18 +75,15 @@ static NSString* const c_typename = @"personal-image";
             
             [task checkSuccess];
         }];
-        [blobSource release];
         HVCHECK_OOM(blobUploadTask);
         
         [task.parent setNextTask:blobUploadTask];
-        [blobUploadTask release];
         
     } ];
     
     HVCHECK_NOTNULL(getExistingTask);
     
     [uploadImageTask setNextTask:getExistingTask];
-    [getExistingTask release];
             
     [uploadImageTask start];
     

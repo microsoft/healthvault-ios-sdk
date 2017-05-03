@@ -2,7 +2,7 @@
 //  HVTypeViewDataSource.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@
     UITableViewRowAnimation m_rowAnimation;
 }
 
-@property (readwrite, nonatomic, assign) UITableView* table; // Nil this out when you are done with it
+@property (readwrite, nonatomic, weak) UITableView* table; // Nil this out when you are done with it
 @property (readwrite, nonatomic) UITableViewCellStyle cellStyle;
 @property (readwrite, nonatomic) UITableViewRowAnimation rowAnimation;
 
@@ -72,7 +72,7 @@
     HVTypeView* m_typeView;
 }
 
-@property (readonly, nonatomic) HVTypeView* typeView;
+@property (readonly, nonatomic, strong) HVTypeView* typeView;
 
 -(id) initForTable:(UITableView *) table withRecord:(HVRecordReference *) record andTypeID:(NSString *) typeID;
 -(id) initForTable:(UITableView *) table withTypeView:(HVTypeView *) typeView;

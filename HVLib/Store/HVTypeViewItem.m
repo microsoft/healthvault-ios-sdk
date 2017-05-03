@@ -2,7 +2,7 @@
 //  HVItemDateAndKey.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -92,11 +92,6 @@ LError:
     HVALLOC_FAIL;      
 }
 
--(void) dealloc
-{
-    [m_date release];
-    [super dealloc];
-}
 
 -(NSComparisonResult) compareToItem:(HVTypeViewItem *)other
 {
@@ -181,7 +176,7 @@ LError:
 
 -(void)setDate:(NSDate *)date
 {
-    m_date = [date retain];
+    m_date = date;
 }
 
 @end

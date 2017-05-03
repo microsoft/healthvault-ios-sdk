@@ -2,7 +2,7 @@
 //  HVVocabSearchText.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ static NSString* const c_attribute_matchType = @"search-mode";
 {
     NSString* mode = nil;
 
-    mode = [[reader readAttribute:c_attribute_matchType] retain];
+    mode = [reader readAttribute:c_attribute_matchType];
     if (![NSString isNilOrEmpty:mode])
     {
         m_type = HVVocabMatchTypeFromString(mode);

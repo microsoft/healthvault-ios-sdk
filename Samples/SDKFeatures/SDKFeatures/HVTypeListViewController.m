@@ -2,7 +2,7 @@
 //  HVTypeListViewController.m
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,13 +40,7 @@
     m_tableView.dataSource = nil;
     m_tableView.delegate = nil;
     
-    [m_tableView release];
-    [m_moreButton release];
-    [m_classesForTypes release];
-    [m_actions release];
-    [m_features release];
     
-    [super dealloc];
 }
 
 -(void)viewDidLoad
@@ -56,7 +50,7 @@
     [self.navigationController.navigationBar setTranslucent:FALSE];
     self.navigationItem.title = [HVClient current].currentRecord.name;
 
-    m_classesForTypes = [[HVTypeListViewController classesForTypesToDemo] retain];
+    m_classesForTypes = [HVTypeListViewController classesForTypesToDemo];
     m_tableView.dataSource = self;
     m_tableView.delegate = self;
     
@@ -78,7 +72,7 @@
     UITableViewCell* cell = [m_tableView dequeueReusableCellWithIdentifier:@"HVCell"];
     if (!cell)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HVCell"] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HVCell"];
         HVCHECK_NOTNULL(cell);
     }
     
@@ -102,7 +96,7 @@ LError:
 {
     Class selectedCls = [m_classesForTypes objectAtIndex:indexPath.row];
     
-    HVTypeViewController* typeView = [[[HVTypeViewController alloc] initWithTypeClass:selectedCls useMetric:FALSE] autorelease];
+    HVTypeViewController* typeView = [[HVTypeViewController alloc] initWithTypeClass:selectedCls useMetric:FALSE];
     if (!typeView)
     {
         [HVUIAlert showInformationalMessage:@"Could not create HVTypeViewController"];
@@ -133,7 +127,7 @@ LError:
 
 +(NSArray *)classesForTypesToDemo
 {
-    NSMutableArray* typeList = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* typeList = [[NSMutableArray alloc] init];
     
     [typeList addObject:[HVBloodGlucose class]];
     [typeList addObject:[HVBloodPressure class]];
@@ -178,15 +172,17 @@ LError:
     HVCHECK_NOTNULL(m_features);
     m_features.controller = self;
     
+    __weak __typeof__(m_features) weakFeatures = m_features;
+    
     m_actions = [[HVFeatureActions alloc] init];
     HVCHECK_NOTNULL(m_actions);
     
     [m_actions addFeature:@"Disconnect app" andAction:^{
-        [m_features disconnectApp];
+        [weakFeatures disconnectApp];
     }];
     
     [m_actions addFeature:@"GetServiceDefintion" andAction:^{
-        [m_features getServiceDefinition];
+        [weakFeatures getServiceDefinition];
     }];
 
     return TRUE;

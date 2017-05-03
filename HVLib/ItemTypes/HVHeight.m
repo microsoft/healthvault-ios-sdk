@@ -2,7 +2,7 @@
 //  HVHeight.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -63,12 +63,6 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
     m_height.inInches = inInches;
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_height release];
-    [super dealloc];
-}
 
 -(id)initWithMeters:(double)meters andDate:(NSDate *)date
 {
@@ -147,8 +141,8 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
-    m_height = [[reader readElementWithXmlName:x_element_value asClass:[HVLengthMeasurement class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
+    m_height = [reader readElementWithXmlName:x_element_value asClass:[HVLengthMeasurement class]];
 }
 
 +(NSString *)typeID

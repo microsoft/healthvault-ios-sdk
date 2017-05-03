@@ -2,7 +2,7 @@
 //  HVFeatureActions.m
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -56,10 +56,7 @@ LError:
 -(void)dealloc
 {
     m_actionSheet.delegate = nil;
-    [m_actionSheet release];
-    [m_actions release];
     
-    [super dealloc];
 }
 
 -(BOOL) addFeature:(NSString *)title andAction:(HVAction)action
@@ -67,7 +64,7 @@ LError:
     HVCHECK_NOTNULL(action);
     
     [m_actionSheet addButtonWithTitle:title];
-    [m_actions addObject:[action copy]]; // Action is a block, so we need to copy it
+    [m_actions addObject:action]; 
     
     return TRUE;
     

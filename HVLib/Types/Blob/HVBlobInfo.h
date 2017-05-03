@@ -2,7 +2,7 @@
 //  HVBlobInfo.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,11 +36,11 @@
 // (Optional). Most blobs are named (like named streams). 
 // However, you can have a 'default' blob with no name (empty string)
 //
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 //
 // (Optional) MIME type for this blob
 //
-@property (readwrite, nonatomic, retain) NSString* contentType;
+@property (readwrite, nonatomic, strong) NSString* contentType;
 
 //-------------------------
 //

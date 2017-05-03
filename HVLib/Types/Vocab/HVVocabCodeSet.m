@@ -2,7 +2,7 @@
 //  HVVocabSearchResult.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
 
 -(void)setItems:(HVVocabItemCollection *)items
 {
-    m_items = [items retain];
+    m_items = items;
 }
 
 -(NSArray *)displayStrings
@@ -61,19 +61,10 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
     }
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_family release];
-    [m_version release];
-    [m_items release];
-    [m_isTruncated release];
-    [super dealloc];
-}
 
 -(HVVocabIdentifier *)getVocabID
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:m_family andName:m_name] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:m_family andName:m_name];
 }
 -(void)serialize:(XWriter *)writer
 {
@@ -86,11 +77,11 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readStringElement:c_element_name] retain];
-    m_family = [[reader readStringElement:c_element_family] retain];
-    m_version = [[reader readStringElement:c_element_version] retain];
-    m_items = (HVVocabItemCollection *)[[reader readElementArray:c_element_item asClass:[HVVocabItem class] andArrayClass:[HVVocabItemCollection class]] retain];
-    m_isTruncated = [[reader readElement:c_element_truncated asClass:[HVBool class]] retain];
+    m_name = [reader readStringElement:c_element_name];
+    m_family = [reader readStringElement:c_element_family];
+    m_version = [reader readStringElement:c_element_version];
+    m_items = (HVVocabItemCollection *)[reader readElementArray:c_element_item asClass:[HVVocabItem class] andArrayClass:[HVVocabItemCollection class]];
+    m_isTruncated = [reader readElement:c_element_truncated asClass:[HVBool class]];
 }
 
 @end
@@ -128,11 +119,6 @@ static NSString* const c_element_codeset = @"code-set-result";
     return (m_match != nil);
 }
 
--(void)dealloc
-{
-    [m_match release];
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer  
 {
@@ -141,7 +127,7 @@ static NSString* const c_element_codeset = @"code-set-result";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_match = [[reader readElement:c_element_codeset asClass:[HVVocabCodeSet class]] retain];
+    m_match = [reader readElement:c_element_codeset asClass:[HVVocabCodeSet class]];
 }
 
 @end

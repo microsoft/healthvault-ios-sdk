@@ -2,7 +2,7 @@
 //  HVPhone.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,15 +39,15 @@
 // Note: the SDK does not validate if the phone number is in valid
 // phone number format. 
 //
-@property (readwrite, nonatomic, retain) NSString* number;
+@property (readwrite, nonatomic, strong) NSString* number;
 //
 // (Optional) A description of this number (Cell, Home, Work)
 //
-@property (readwrite, nonatomic, retain) NSString* type;
+@property (readwrite, nonatomic, strong) NSString* type;
 //
 // (Optional) 
 //
-@property (readwrite, nonatomic, retain) HVBool* isPrimary;
+@property (readwrite, nonatomic, strong) HVBool* isPrimary;
 
 //-------------------------
 //

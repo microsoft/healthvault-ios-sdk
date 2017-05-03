@@ -2,7 +2,7 @@
 //  HVMedication.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -67,22 +67,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_genericName release];
-    [m_dose release];
-    [m_strength release];
-    [m_freq release];
-    [m_route release];
-    [m_indication release];
-    [m_startDate release];
-    [m_stopDate release];
-    [m_prescribed release];
-    [m_prescription release];
-    
-    [super dealloc];
-}
 
 -(NSString *)description
 {
@@ -96,27 +80,27 @@ LError:
 
 +(HVVocabIdentifier *) vocabForName
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_rxNormFamily andName:@"RxNorm Active Medicines"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_rxNormFamily andName:@"RxNorm Active Medicines"];
 }
 
 +(HVVocabIdentifier *) vocabForDoseUnits
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-dose-units"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-dose-units"];
 }
 
 +(HVVocabIdentifier *)vocabForStrengthUnits
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-strength-unit"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-strength-unit"];    
 }
 
 +(HVVocabIdentifier *)vocabForRoute
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-routes"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-routes"];
 }
 
 +(HVVocabIdentifier *)vocabForIsPrescribed
 {    
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-prescribed"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-prescribed"];
 }
 
 -(HVClientResult *)validate
@@ -155,17 +139,17 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
-    m_genericName = [[reader readElement:c_element_genericName asClass:[HVCodableValue class]] retain];
-    m_dose = [[reader readElement:c_element_dose asClass:[HVApproxMeasurement class]] retain];
-    m_strength = [[reader readElement:c_element_strength asClass:[HVApproxMeasurement class]] retain];
-    m_freq = [[reader readElement:c_element_frequency asClass:[HVApproxMeasurement class]] retain];
-    m_route = [[reader readElement:c_element_route asClass:[HVCodableValue class]] retain];
-    m_indication = [[reader readElement:c_element_indication asClass:[HVCodableValue class]] retain];
-    m_startDate = [[reader readElement:c_element_startDate asClass:[HVApproxDateTime class]] retain];
-    m_stopDate = [[reader readElement:c_element_stopDate asClass:[HVApproxDateTime class]] retain];
-    m_prescribed = [[reader readElement:c_element_prescribed asClass:[HVCodableValue class]] retain];
-    m_prescription = [[reader readElement:c_element_prescription asClass:[HVPrescription class]] retain];
+    m_name = [reader readElement:c_element_name asClass:[HVCodableValue class]];
+    m_genericName = [reader readElement:c_element_genericName asClass:[HVCodableValue class]];
+    m_dose = [reader readElement:c_element_dose asClass:[HVApproxMeasurement class]];
+    m_strength = [reader readElement:c_element_strength asClass:[HVApproxMeasurement class]];
+    m_freq = [reader readElement:c_element_frequency asClass:[HVApproxMeasurement class]];
+    m_route = [reader readElement:c_element_route asClass:[HVCodableValue class]];
+    m_indication = [reader readElement:c_element_indication asClass:[HVCodableValue class]];
+    m_startDate = [reader readElement:c_element_startDate asClass:[HVApproxDateTime class]];
+    m_stopDate = [reader readElement:c_element_stopDate asClass:[HVApproxDateTime class]];
+    m_prescribed = [reader readElement:c_element_prescribed asClass:[HVCodableValue class]];
+    m_prescription = [reader readElement:c_element_prescription asClass:[HVPrescription class]];
 }
 
 +(NSString *)typeID

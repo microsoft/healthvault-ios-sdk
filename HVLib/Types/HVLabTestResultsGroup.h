@@ -2,7 +2,7 @@
 //  HVLabTestResultsGroup.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,11 +34,11 @@
     HVLabTestResultsDetailsCollection* m_results;
 }
 
-@property (readwrite, nonatomic, retain) HVCodableValue* groupName;
-@property (readwrite, nonatomic, retain) HVOrganization* laboratory;
-@property (readwrite, nonatomic, retain) HVCodableValue* status;
-@property (readwrite, nonatomic, retain) HVLabTestResultsGroupCollection* subGroups;
-@property (readwrite, nonatomic, retain) HVLabTestResultsDetailsCollection* results;
+@property (readwrite, nonatomic, strong) HVCodableValue* groupName;
+@property (readwrite, nonatomic, strong) HVOrganization* laboratory;
+@property (readwrite, nonatomic, strong) HVCodableValue* status;
+@property (readwrite, nonatomic, strong) HVLabTestResultsGroupCollection* subGroups;
+@property (readwrite, nonatomic, strong) HVLabTestResultsDetailsCollection* results;
 
 @property (readonly, nonatomic) BOOL hasSubGroups;
 

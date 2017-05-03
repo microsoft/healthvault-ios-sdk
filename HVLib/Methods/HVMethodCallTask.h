@@ -2,7 +2,7 @@
 //  HVMethodCall.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,10 +36,10 @@
     BOOL m_useMasterAppID;
 }
 
-@property (readonly, nonatomic) NSString* name;
+@property (readonly, nonatomic, strong) NSString* name;
 @property (readonly, nonatomic) float version;
-@property (readwrite, nonatomic, retain) HVServerResponseStatus* status;
-@property (readwrite, nonatomic, retain) HVRecordReference* record;
+@property (readwrite, nonatomic, strong) HVServerResponseStatus* status;
+@property (readwrite, nonatomic, strong) HVRecordReference* record;
 @property (readwrite, nonatomic) BOOL useMasterAppID;
 
 -(id) initWithCallback:(HVTaskCompletion) callback;

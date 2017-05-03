@@ -2,7 +2,7 @@
 //  HVBlobPayload.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,11 +34,6 @@ static NSString* const c_element_blob = @"blob";
     return ![NSArray isNilOrEmpty:m_blobItems];
 }
 
--(void)dealloc
-{
-    [m_blobItems release];
-    [super dealloc];
-}
 
 -(HVBlobPayloadItem *)getDefaultBlob
 {
@@ -106,7 +101,7 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_blobItems = (HVBlobPayloadItemCollection *)[[reader readElementArray:c_element_blob asClass:[HVBlobPayloadItem class] andArrayClass:[HVBlobPayloadItemCollection class]] retain];
+    m_blobItems = (HVBlobPayloadItemCollection *)[reader readElementArray:c_element_blob asClass:[HVBlobPayloadItem class] andArrayClass:[HVBlobPayloadItemCollection class]];
 }
 
 @end

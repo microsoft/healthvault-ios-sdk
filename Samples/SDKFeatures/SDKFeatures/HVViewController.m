@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@
     //
     // Navigate to the type list
     //
-    HVTypeListViewController* typeListController = [[[HVTypeListViewController alloc] init] autorelease];
+    HVTypeListViewController* typeListController = [[HVTypeListViewController alloc] init];
     [self.navigationController pushViewController:typeListController animated:TRUE];
 }
 

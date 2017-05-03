@@ -2,7 +2,7 @@
 //  HVRecord.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,14 +49,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_name release];
-    [m_displayName release];
-    [m_relationship release];
-    
-    [super dealloc];
-}
 
 -(HVGetPersonalImageTask *)downloadPersonalImageWithCallback:(HVTaskCompletion)callback
 {
@@ -98,13 +90,13 @@ LError:
 {
     [super deserializeAttributes:reader];
     
-    m_displayName = [[reader readAttribute:c_element_displayname] retain];
-    m_relationship = [[reader readAttribute:c_element_relationship] retain];
+    m_displayName = [reader readAttribute:c_element_displayname];
+    m_relationship = [reader readAttribute:c_element_relationship];
 }
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readValue] retain];
+    m_name = [reader readValue];
 }
 
 @end
@@ -129,7 +121,6 @@ LError:
         {
             HVRecord *hvRecord = [[HVRecord alloc] initWithRecord:record];
             [self addObject:hvRecord];
-            [hvRecord release];
         }
     }
     

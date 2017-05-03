@@ -2,7 +2,7 @@
 //  HVCore.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,16 +73,11 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight)
 
 id HVClear(id obj)
 {
-    if (obj)
-    {
-        [obj release];
-    }
     return nil;
 }
 
 id HVAssign(id original, id newObj)
 {
-    [original release];
     return newObj;
 }
 
@@ -90,10 +85,9 @@ void HVSetVar(id* var, id value)
 {
     if (*var)
     {
-        [(*var) release];
         *var = nil;
     }
-    *var = [value retain];
+    *var = value;
 }
 
 void HVSetVarIfNotNil(id *var, id value)
@@ -136,7 +130,10 @@ void HVReleaseRef(CFTypeRef cf)
     {
         @try 
         {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             [self performSelector:sel];
+#pragma clang diagnostic pop
         }
         @catch (id ex) 
         {
@@ -152,7 +149,10 @@ void HVReleaseRef(CFTypeRef cf)
     {
         @try 
         {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
             [self performSelector:sel withObject:param];
+#pragma clang diagnostic pop
         }
         @catch (id ex) 
         {
@@ -216,7 +216,6 @@ void HVReleaseRef(CFTypeRef cf)
     
     [self postNotificationName:notification object:sender userInfo:args];
     
-    [args release];
 }
 
 -(void)postNotificationName:(NSString *)notification sender:(id)sender argName:(NSString *)n1 argValue:(id)v1 argName:(NSString *)n2 argValue:(id)v2
@@ -227,7 +226,6 @@ void HVReleaseRef(CFTypeRef cf)
     
     [self postNotificationName:notification object:sender userInfo:args];
     
-    [args release];
     
 }
 

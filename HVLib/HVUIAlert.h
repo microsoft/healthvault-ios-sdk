@@ -2,7 +2,7 @@
 //  HVUIAlert.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ enum HVUIAlertResult
 //-------------------------
 @property (readonly, nonatomic) UIAlertView* view;
 @property (readonly, nonatomic) enum HVUIAlertResult result;
-@property (readonly, nonatomic) NSString* inputText;
+@property (readonly, nonatomic, strong) NSString* inputText;
 
 //-------------------------
 //

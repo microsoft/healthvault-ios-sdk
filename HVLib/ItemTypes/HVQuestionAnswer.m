@@ -2,7 +2,7 @@
 //  HVQuestionAnswer.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ static NSString* const c_element_answer = @"answer";
 
 -(void)setAnswerChoices:(HVCodableValueCollection *)answerChoices
 {
-    m_answerChoices = [answerChoices retain];
+    m_answerChoices = answerChoices;
 }
 
 -(HVCodableValueCollection *)answers
@@ -51,7 +51,7 @@ static NSString* const c_element_answer = @"answer";
 
 -(void)setAnswers:(HVCodableValueCollection *)answers
 {
-    m_answers = [answers retain];
+    m_answers = answers;
 }
 
 -(HVCodableValue *)firstAnswer
@@ -69,15 +69,6 @@ static NSString* const c_element_answer = @"answer";
     return ![NSArray isNilOrEmpty:m_answers];
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_question release];
-    [m_answerChoices release];
-    [m_answers release];
-    
-    [super dealloc];
-}
 
 -(id)initWithQuestion:(NSString *)question andDate:(NSDate *)date
 {
@@ -159,10 +150,10 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
-    m_question = [[reader readElement:c_element_question asClass:[HVCodableValue class]] retain];
-    m_answerChoices = (HVCodableValueCollection *)[[reader readElementArray:c_element_choice asClass:[HVCodableValue class] andArrayClass:[HVCodableValueCollection class]] retain];
-    m_answers = (HVCodableValueCollection *)[[reader readElementArray:c_element_answer asClass:[HVCodableValue class] andArrayClass:[HVCodableValueCollection class]] retain];
+    m_when = [reader readElement:c_element_when asClass:[HVDateTime class]];
+    m_question = [reader readElement:c_element_question asClass:[HVCodableValue class]];
+    m_answerChoices = (HVCodableValueCollection *)[reader readElementArray:c_element_choice asClass:[HVCodableValue class] andArrayClass:[HVCodableValueCollection class]];
+    m_answers = (HVCodableValueCollection *)[reader readElementArray:c_element_answer asClass:[HVCodableValue class] andArrayClass:[HVCodableValueCollection class]];
 }
 
 +(NSString *)typeID

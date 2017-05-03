@@ -2,7 +2,7 @@
 //  HVClient.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -87,10 +87,10 @@ enum HVAppProvisionStatus
 +(HVClient *) current;
 +(BOOL) initializeClientUsingSettings:(HVClientSettings *) settings;
 
-@property (readonly, nonatomic) HVClientSettings* settings;
-@property (readonly, nonatomic) HVLocalVault *localVault;
-@property (readonly, nonatomic) HVDirectory* rootDirectory;
-@property (readonly, nonatomic) HVEnvironmentSettings* environment;
+@property (strong, readonly, nonatomic) HVClientSettings* settings;
+@property (strong, readonly, nonatomic) HVLocalVault *localVault;
+@property (strong, readonly, nonatomic) HVDirectory* rootDirectory;
+@property (strong, readonly, nonatomic) HVEnvironmentSettings* environment;
 
 @property (readonly, nonatomic) enum HVAppProvisionStatus provisionStatus;
 @property (readonly, nonatomic) BOOL isProvisioned;
@@ -100,13 +100,13 @@ enum HVAppProvisionStatus
 @property (readonly, nonatomic) BOOL isAppCreated;
 
 @property (readonly, nonatomic) id<HealthVaultService> service;
-@property (readonly, nonatomic) HVUser* user;
+@property (strong, readonly, nonatomic) HVUser* user;
 @property (readonly, nonatomic) BOOL hasUser;
-@property (readonly, nonatomic) HVRecordCollection* records;
-@property (readonly, nonatomic) HVRecord* currentRecord;
+@property (strong, readonly, nonatomic) HVRecordCollection* records;
+@property (strong, readonly, nonatomic) HVRecord* currentRecord;
 @property (readonly, nonatomic) BOOL hasAuthorizedRecords;
 
-@property (readwrite, nonatomic, retain) HVMethodFactory* methodFactory;
+@property (readwrite, nonatomic, strong) HVMethodFactory* methodFactory;
 
 //-------------------------
 //
