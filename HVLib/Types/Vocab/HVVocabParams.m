@@ -54,7 +54,7 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_vocabIDs, vocabIDs);
+    m_vocabIDs = [vocabIDs retain];
     
     return self;
     
@@ -75,9 +75,6 @@ LError:
     HVVALIDATE_ARRAY(m_vocabIDs, HVClientError_InvalidVocabIdentifier);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

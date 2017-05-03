@@ -32,18 +32,18 @@ static NSString* const c_element_structured = @"structured";
 {
     if (![NSString isNilOrEmpty:descriptive])
     {
-        HVCLEAR(m_dateTime);    
+        m_dateTime = nil;    
     }
-    HVRETAIN(m_descriptive, descriptive);
+    m_descriptive = [descriptive retain];
 }
 
 -(void)setDateTime:(HVDateTime *)dateTime
 {
     if (dateTime)
     {
-        HVCLEAR(m_descriptive);
+        m_descriptive = nil;
     }
-    HVRETAIN(m_dateTime, dateTime);
+    m_dateTime = [dateTime retain];
 }
 
 -(BOOL)isStructured
@@ -177,9 +177,6 @@ LError:
     HVVALIDATE_TRUE((!(m_dateTime && m_descriptive)), HVClientError_InvalidApproxDateTime);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

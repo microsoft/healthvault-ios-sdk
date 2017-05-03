@@ -208,7 +208,7 @@ LError:
 {
     if ([NSArray isNilOrEmpty:m_environments])
     {
-        HVCLEAR(m_environments);
+        m_environments = nil;
         
         NSMutableArray* defaultEnvironments = [[NSMutableArray alloc] init];
         m_environments = defaultEnvironments;

@@ -77,9 +77,6 @@ LError:
     HVVALIDATE_ARRAYOPTIONAL(m_typeVersions, HVClientError_InvalidItemView);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

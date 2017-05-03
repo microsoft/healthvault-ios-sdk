@@ -90,8 +90,6 @@ static NSString* const c_element_contentType = @"content-type";
     HVVALIDATE(m_contentType, HVClientError_InvalidFile);
     
     HVVALIDATE_SUCCESS
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer
@@ -126,15 +124,15 @@ LError:
 +(HVItem *)newItemWithName:(NSString *)name andContentType:(NSString *)contentType
 {
     HVItem* item = [self newItem];
-    HVCHECK_NOTNULL(item);
+    if (!item)
+    {
+        return nil;
+    }
     
     HVFile* file = (HVFile *) item.data.typed;
     file.name = name;
     file.contentType = [HVCodableValue fromText:contentType];
         
-    return item;
-    
-LError:
     return item;
 }
 

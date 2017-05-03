@@ -53,9 +53,6 @@ static const xmlChar* x_element_flag = XMLSTRINGCONST("flag");
     HVVALIDATE_OPTIONAL(m_flag);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer

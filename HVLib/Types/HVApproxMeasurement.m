@@ -127,9 +127,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_measurement);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

@@ -42,7 +42,7 @@
     m_cache = [[NSCache alloc] init];
     HVCHECK_NOTNULL(m_cache);
     
-    HVRETAIN(m_inner, store);
+    m_inner = [store retain];
     
     return self;
 LError:

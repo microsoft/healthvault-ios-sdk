@@ -30,9 +30,6 @@
     HVVALIDATE_OPTIONAL(m_day);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 @end

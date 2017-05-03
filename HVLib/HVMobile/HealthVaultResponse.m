@@ -141,41 +141,38 @@
 //
 - (BOOL)parseFromXml: (NSString *)xml {
 
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-
-	@try {
-
-		XmlTextReader *xmlReader = [[XmlTextReader new] autorelease];
-		XmlElement *root = [xmlReader read: xml];
-
-		if (!root) {
-			return NO;
-		}
-
-		// Parse status
-		XmlElement *statusNode = [root selectSingleNode: @"status"];
-		if (statusNode) {
-			self.statusCode = [[statusNode selectSingleNode: @"code"].text intValue];
-		}
-
-		// Parse message
-		XmlElement *errorNode = [statusNode selectSingleNode: @"error"];
-		if (errorNode) {
-
-			self.errorText = [errorNode selectSingleNode: @"message"].text;
-			self.errorContextXml = [errorNode selectSingleNode: @"context"].text;
-			self.errorInfo = [errorNode selectSingleNode: @"error-info"].text;
-		}
-
-		self.infoXml = [self getInfoFromXml: xml];
-	}
-	@catch (id exc) {
-
-		return NO;
-	}
-	@finally {
-
-		[pool release];
+    @autoreleasepool
+    {
+        @try {
+            
+            XmlTextReader *xmlReader = [[XmlTextReader new] autorelease];
+            XmlElement *root = [xmlReader read: xml];
+            
+            if (!root) {
+                return NO;
+            }
+            
+            // Parse status
+            XmlElement *statusNode = [root selectSingleNode: @"status"];
+            if (statusNode) {
+                self.statusCode = [[statusNode selectSingleNode: @"code"].text intValue];
+            }
+            
+            // Parse message
+            XmlElement *errorNode = [statusNode selectSingleNode: @"error"];
+            if (errorNode) {
+                
+                self.errorText = [errorNode selectSingleNode: @"message"].text;
+                self.errorContextXml = [errorNode selectSingleNode: @"context"].text;
+                self.errorInfo = [errorNode selectSingleNode: @"error-info"].text;
+            }
+            
+            self.infoXml = [self getInfoFromXml: xml];
+        }
+        @catch (id exc) {
+            
+            return NO;
+        }
 	}
 
 	return YES;

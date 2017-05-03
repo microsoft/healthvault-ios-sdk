@@ -57,7 +57,7 @@
 //
 //-------------------------
 -(id) initWithDate:(NSDate *) dateValue;
--(id) initwithComponents:(NSDateComponents *) components;
+-(id) initWithComponents:(NSDateComponents *) components;
 -(id) initNow;
 
 +(HVDateTime *) now;

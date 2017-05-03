@@ -46,9 +46,6 @@ static const xmlChar* x_element_edate = XMLSTRINGCONST("eff-date");
     HVVALIDATE_OPTIONAL(m_type);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

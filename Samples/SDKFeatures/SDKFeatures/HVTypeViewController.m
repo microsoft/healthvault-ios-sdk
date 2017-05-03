@@ -55,7 +55,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     
     m_typeClass = typeClass;
     m_useMetric = metric;
-    HVRETAIN(m_moreFeatures, [typeClass moreFeatures]);
+    m_moreFeatures = [[typeClass moreFeatures] retain];
     if (m_moreFeatures)
     {
         m_moreFeatures.controller = self;
@@ -320,7 +320,7 @@ LError:
 {
     @try
     {
-        HVRETAIN(m_items, ((HVGetItemsTask *) task).itemsRetrieved);
+        m_items = [((HVGetItemsTask *) task).itemsRetrieved retain];
         
         [m_statusLabel showStatus:@"%d items", m_items.count];
         

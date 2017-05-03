@@ -64,7 +64,7 @@ static const xmlChar* x_element_attempt = XMLSTRINGCONST("attempt");
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_typeID, typeID);
+    m_typeID = [typeID retain];
     [self updateWithKey:key andChangeType:changeType];
     
     return self;
@@ -88,7 +88,7 @@ LError:
 -(void)assignNewChangeID
 {
     NSString* uniqueId = [@"iOS_" stringByAppendingString:guidString()];
-    HVRETAIN(m_changeID, uniqueId);
+    m_changeID = [uniqueId retain];
 }
 
 -(void)assignNewTimestamp
@@ -167,7 +167,7 @@ LError:
 
 -(void)updateWithKey:(HVItemKey *)key andChangeType:(enum HVItemChangeType)type
 {
-    HVRETAIN(m_key, key);
+    m_key = [key retain];
     m_changeType = type;
     [self assignNewChangeID];
     [self assignNewTimestamp];

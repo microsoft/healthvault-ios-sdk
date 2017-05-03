@@ -48,9 +48,9 @@
     self = [super initWithCallback:callback];
     HVCHECK_SELF;
     
-    HVRETAIN(m_blobInfo, blobInfo);
-    HVRETAIN(m_item, item);
-    HVRETAIN(m_record, record);
+    m_blobInfo = [blobInfo retain];
+    m_item = [item retain];
+    m_record = [record retain];
     //
     // Step 1 - upload the blob to HealthVault
     // If that succeeds, then update the item

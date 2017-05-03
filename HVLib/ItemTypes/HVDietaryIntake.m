@@ -241,9 +241,6 @@ static const xmlChar* x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
     HVVALIDATE_OPTIONAL(m_additionalFacts);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)deserialize:(XReader *)reader

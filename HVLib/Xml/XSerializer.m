@@ -57,28 +57,24 @@ LError:
     // So we release the pool ourselves in the finally block
     // DO NOT replace with @autoreleasepool
     //
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; 
-    HVCHECK_NOTNULL(pool);
-    id savedEx = nil;
-    
-    @try 
+    @autoreleasepool
     {
-        [writer writeElementRequired:root content:(id<XSerializable>) obj];
-        return TRUE;
-    }
-    @catch (id ex) 
-    {
-        savedEx = [ex retain];
-        [ex log];
-
-        @throw;
-    }
-    @finally 
-    {
-        [pool release];
-        [savedEx autorelease]; // Transfer the exception to the next autorelease pool
-    }
+        id savedEx = nil;
         
+        @try
+        {
+            [writer writeElementRequired:root content:(id<XSerializable>) obj];
+            return TRUE;
+        }
+        @catch (id ex)
+        {
+            savedEx = [ex retain];
+            [ex log];
+            
+            @throw;
+        }
+    }
+    
 LError:
     return FALSE;
 }
@@ -145,26 +141,22 @@ LError:
     HVCHECK_STRING(root);
     HVCHECK_NOTNULL(obj);
     
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    HVCHECK_NOTNULL(pool);
-    id savedEx = nil;
-    
-    @try 
+    @autoreleasepool
     {
-        [reader readElementRequired:root intoObject:obj];
-        return TRUE;
-    }
-    @catch (id ex) 
-    {
-        savedEx = [ex retain];
-        [ex log];
+        id savedEx = nil;
         
-        @throw;
-    }
-    @finally 
-    {
-        [pool release];
-        [savedEx autorelease];
+        @try
+        {
+            [reader readElementRequired:root intoObject:obj];
+            return TRUE;
+        }
+        @catch (id ex)
+        {
+            savedEx = [ex retain];
+            [ex log];
+            
+            @throw;
+        }
     }
 
 LError:

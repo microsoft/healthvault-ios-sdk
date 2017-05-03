@@ -65,9 +65,6 @@ static const xmlChar* x_element_note = XMLSTRINGCONST("note");
     HVVALIDATE_OPTIONAL(m_status);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer

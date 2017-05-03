@@ -110,9 +110,6 @@ static NSString* const c_element_lang = @"language";
     HVVALIDATE_OPTIONAL(m_country);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

@@ -60,7 +60,7 @@ static const NSUInteger c_defaultBatchSize = 250;
     m_keyBatch = [[NSMutableArray alloc] init];
     HVCHECK_NOTNULL(m_keyBatch);
     
-    HVRETAIN(m_store, store);
+    m_store = [store retain];
     
     m_batchSize = c_defaultBatchSize;
     

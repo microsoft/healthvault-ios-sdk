@@ -109,7 +109,7 @@ LError:
         newValue.unitsCode = code;
     }
     
-    HVASSIGN(m_display, newValue);
+    m_display = newValue;
     
     return TRUE;
     
@@ -140,9 +140,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_display);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer

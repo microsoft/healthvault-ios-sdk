@@ -58,9 +58,6 @@ LError:
     HVVALIDATE(m_text, HVClientError_InvalidVocabSearch);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

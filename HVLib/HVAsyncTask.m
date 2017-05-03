@@ -128,22 +128,6 @@ LError:
     HVALLOC_FAIL;
 }
 
-//
-// Override - useful for debugging memory leaks
-//
-- (oneway void)release
-{
-    [super release];
-}
-
-//
-// Override - useful for debugging memory leaks
-//
--(id) retain
-{
-    return [super retain];
-}
-
 -(void) dealloc
 {
     [m_taskName release];
@@ -341,12 +325,12 @@ LError:
 
 -(void)setException:(id)error
 {
-    HVRETAIN(m_exception, error);
+    m_exception = [error retain];
 }
 
 -(void)setParent:(HVTask *)task
 {
-    HVRETAIN(m_parent, task);
+    m_parent = [task retain];
 }
 
 -(void) nextStep
@@ -571,7 +555,7 @@ LError:
     }];
     HVCHECK_SELF;
     
-    HVRETAIN(m_sequence, sequence);
+    m_sequence = [sequence retain];
     self.taskName = sequence.name;
     
     return self;

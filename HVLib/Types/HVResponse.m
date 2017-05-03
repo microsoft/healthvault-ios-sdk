@@ -44,7 +44,7 @@ static const xmlChar* x_element_status = XMLSTRINGCONST("status");
     m_status = [[reader readElementWithXmlName:x_element_status asClass:[HVResponseStatus class]] retain];
     if (reader.isStartElement)
     {
-        HVRETAIN(m_body, [reader readOuterXml]);
+        m_body = [[reader readOuterXml] retain];
     }
 }
 

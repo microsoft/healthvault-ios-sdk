@@ -119,7 +119,7 @@ static NSString* const c_element_xpath = @"xpath";
 
 -(void)setTypeIDs:(HVStringCollection *)typeIDs
 {
-    HVRETAIN(m_typeIDs, typeIDs);
+    m_typeIDs = [typeIDs retain];
 }
 
 -(id) init

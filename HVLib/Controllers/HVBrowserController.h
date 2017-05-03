@@ -28,7 +28,7 @@
 
 @property (readwrite, nonatomic, retain) NSURL* target;
 
-@property (unsafe_unretained, nonatomic) IBOutlet UIWebView *webView;
+@property (retain, nonatomic) IBOutlet UIWebView *webView;
 
 -(BOOL) navigateTo:(NSURL *) url;
 -(BOOL) start;

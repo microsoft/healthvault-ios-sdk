@@ -155,9 +155,6 @@ LError:
     HVVALIDATE_PTR(m_guid, HVClientError_InvalidGuid);
     
     HVVALIDATE_SUCCESS;
-
-LError:
-    HVVALIDATE_FAIL;
 }
 
 @end

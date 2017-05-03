@@ -58,9 +58,6 @@ LError:
     HVVALIDATE(m_contact, HVClientError_InvalidPersonalContactInfo);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

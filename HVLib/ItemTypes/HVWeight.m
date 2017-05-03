@@ -85,7 +85,7 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    m_value = [[HVWeightMeasurement alloc] initwithPounds:pounds];
+    m_value = [[HVWeightMeasurement alloc] initWithPounds:pounds];
     HVCHECK_NOTNULL(m_value);
     
     m_when = [[HVDateTime alloc] initWithDate:date];
@@ -145,9 +145,6 @@ LError:
     HVVALIDATE(m_value, HVClientError_InvalidWeight);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

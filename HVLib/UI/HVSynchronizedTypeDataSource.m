@@ -54,7 +54,7 @@
     self = [super initForTable:table andView:type];
     HVCHECK_SELF;
     
-    HVRETAIN(m_type, type);
+    m_type = [type retain];
     
     [self subscribe];
     

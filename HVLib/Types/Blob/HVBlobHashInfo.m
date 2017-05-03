@@ -37,9 +37,6 @@ static NSString* const c_element_blockSize = @"block-size";
     HVVALIDATE_OPTIONAL(m_blockSize);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer
@@ -102,9 +99,6 @@ static NSString* const c_element_hash = @"hash";
     HVVALIDATE(m_hash, HVClientError_InvalidBlobInfo);
     
     HVVALIDATE_SUCCESS
-
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

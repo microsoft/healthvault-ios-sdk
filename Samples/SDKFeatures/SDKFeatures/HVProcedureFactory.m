@@ -23,7 +23,7 @@
 +(HVItemCollection *)createRandomForDay:(NSDate *)date
 {
     HVItem* item = [HVProcedure createRandomForDate:[HVApproxDateTime fromDate:date]];
-    return [[[HVItemCollection alloc] initwithItem:item] autorelease];
+    return [[[HVItemCollection alloc] initWithItem:item] autorelease];
 }
 
 +(HVItemCollection *)createRandomMetricForDay:(NSDate *)date

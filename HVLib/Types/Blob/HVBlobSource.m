@@ -50,7 +50,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_source, data);
+    m_source = [data retain];
     
     return self;
     
@@ -90,7 +90,7 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_file, [NSFileHandle fileHandleForReadingAtPath:filePath]);
+    m_file = [[NSFileHandle fileHandleForReadingAtPath:filePath] retain];
     HVCHECK_NOTNULL(m_file);
     
     m_size = [[NSFileManager defaultManager] sizeOfFileAtPath:filePath];

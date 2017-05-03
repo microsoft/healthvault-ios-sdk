@@ -65,7 +65,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_view, view);
+    m_view = [view retain];
     self.table = table;
     
     m_rowAnimation = UITableViewRowAnimationAutomatic;
@@ -285,7 +285,7 @@ LError:
     self = [super initForTable:table andView:typeView];
     HVCHECK_SELF;
     
-    HVRETAIN(m_typeView, typeView);
+    m_typeView = [typeView retain];
     m_typeView.delegate = self;
     
     return self;

@@ -37,12 +37,14 @@
 
 -(HVClientResult *) validate
 {
-    HVCHECK_SUCCESS([self validateValue:m_value]);
-    
-    HVVALIDATE_SUCCESS;
-
-LError:
-    return HVMAKE_ERROR(HVClientError_ValueOutOfRange);
+    if ([self validateValue:m_value])
+    {
+        return HVRESULT_SUCCESS;
+    }
+    else
+    {
+        return HVMAKE_ERROR(HVClientError_ValueOutOfRange);
+    }
 }
 
 -(BOOL) validateValue:(int)value

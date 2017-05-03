@@ -35,8 +35,8 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_name, name);
-    HVRETAIN(m_value, value);
+    m_name = [name retain];
+    m_value = [value retain];
     
     return self;
     
@@ -59,9 +59,6 @@ LError:
     HVVALIDATE_STRING(m_value, HVClientError_InvalidMessageHeader);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

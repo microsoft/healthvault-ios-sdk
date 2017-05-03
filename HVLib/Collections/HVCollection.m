@@ -182,7 +182,10 @@ LError:
 
 -(NSUInteger) indexOfString:(NSString *)value startingAt:(NSUInteger)index
 {
-    HVCHECK_NOTNULL(value);
+    if (!value)
+    {
+        return NSNotFound;
+    }
     
     for (NSUInteger i = index, count = m_inner.count; i < count; ++i)
     {
@@ -191,9 +194,8 @@ LError:
             return i;
         }
     }
-    
-LError:
-    return NSNotFound;    
+
+    return NSNotFound;
 }
 
 -(BOOL) removeString:(NSString *)value
@@ -203,7 +205,7 @@ LError:
     NSUInteger index = [self indexOfString:value];
     if (index == NSNotFound)
     {
-        goto LError;
+        return NO;
     }
     
     [self removeObjectAtIndex:index];

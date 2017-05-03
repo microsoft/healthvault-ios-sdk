@@ -79,7 +79,7 @@ xmlTextWriterPtr XAllocFileWriter(NSString* filePath)
     
     if (converter)
     {
-        HVRETAIN(m_converter, converter);
+        m_converter = [converter retain];
     }
     else
     {
@@ -108,27 +108,32 @@ LError:
     xmlTextWriterPtr writer = NULL;
     
     buffer = XAllocBuffer(size);
-    HVCHECK_NOTNULL(buffer);
+    if (!buffer)
+    {
+        return nil;
+    }
     
     writer = XAllocTextWriter(buffer);
-    HVCHECK_NOTNULL(writer);
+    if (!writer)
+    {
+        return nil;
+    }
     
     self = [self initWithWriter:writer buffer:buffer andConverter:converter];
-    HVCHECK_SELF;
+    if (!self)
+    {
+        if (writer)
+        {
+            xmlFreeTextWriter(writer);
+        }
+        if (buffer)
+        {
+            xmlBufferFree(buffer);
+        }
+        return nil;
+    }
     
     return self;
-    
-LError:
-    if (writer)
-    {
-        xmlFreeTextWriter(writer);
-    }
-    if (buffer)
-    {
-        xmlBufferFree(buffer);
-    }
-    
-    HVALLOC_FAIL;    
 }
 
 -(id) initWithBufferSize:(size_t)size
@@ -139,20 +144,22 @@ LError:
 -(id)initFromFile:(NSString *)filePath andConverter:(XConverter *)converter
 {
     xmlTextWriterPtr writer = XAllocFileWriter(filePath);
-    HVCHECK_NOTNULL(writer);
+    if (!writer)
+    {
+        return nil;
+    }
     
     self = [self initWithWriter:writer buffer:NULL andConverter:converter];
-    HVCHECK_SELF;
+    if (!self)
+    {
+        if (writer)
+        {
+            xmlFreeTextWriter(writer);
+        }
+        return nil;
+    }
     
     return self;
-    
-LError:
-    if (writer)
-    {
-        xmlFreeTextWriter(writer);
-    }
-    HVALLOC_FAIL;
-    
 }
 
 -(id)initFromFile:(NSString *)filePath

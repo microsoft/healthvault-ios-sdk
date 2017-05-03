@@ -103,14 +103,15 @@ LError:
     Class selectedCls = [m_classesForTypes objectAtIndex:indexPath.row];
     
     HVTypeViewController* typeView = [[[HVTypeViewController alloc] initWithTypeClass:selectedCls useMetric:FALSE] autorelease];
-    HVCHECK_NOTNULL(typeView);
+    if (!typeView)
+    {
+        [HVUIAlert showInformationalMessage:@"Could not create HVTypeViewController"];
+        return;
+    }
     
     [self.navigationController pushViewController:typeView animated:TRUE];
     
     return;
-    
-LError:
-    [HVUIAlert showInformationalMessage:@"Could not create HVTypeViewController"];
 }
 
 //-------------------------------------

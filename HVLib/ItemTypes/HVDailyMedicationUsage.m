@@ -90,7 +90,7 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_when, date);
+    m_when = [date retain];
     
     self.drugName = drug;
     
@@ -154,9 +154,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_singleDoseDescription);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

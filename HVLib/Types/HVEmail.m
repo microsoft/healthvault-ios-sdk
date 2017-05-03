@@ -74,9 +74,6 @@ LError:
     HVVALIDATE(m_address, HVClientError_InvalidEmail);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

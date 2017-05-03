@@ -136,8 +136,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_prescription);
     
     HVVALIDATE_SUCCESS
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

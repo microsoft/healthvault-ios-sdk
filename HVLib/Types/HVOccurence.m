@@ -79,9 +79,6 @@ LError:
     HVVALIDATE(m_minutes, HVClientError_InvalidOccurrence);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

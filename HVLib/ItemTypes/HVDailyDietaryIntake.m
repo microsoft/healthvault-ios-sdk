@@ -201,11 +201,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
     HVVALIDATE_OPTIONAL(m_sodium);
     HVVALIDATE_OPTIONAL(m_cholesterol);
     
-    
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

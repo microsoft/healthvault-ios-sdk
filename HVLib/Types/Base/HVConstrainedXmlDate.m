@@ -44,7 +44,7 @@ static NSString* const c_maxDatePrefix = @"9999";
     
     if (value)
     {
-        HVRETAIN(m_value, value);
+        m_value = [value retain];
     }
     
     return self;
@@ -98,14 +98,14 @@ LError:
     
     if ([NSString isNilOrEmpty:text] || [text hasPrefix:c_maxDatePrefix])
     {
-        HVCLEAR(m_value);
+        m_value = nil;
         return;
     }
 
     NSDate* date = nil;
     if ([reader.converter tryString:text toDate:&date] && date)
     {
-        HVRETAIN(m_value, date);
+        m_value = [date retain];
     }
 }
 

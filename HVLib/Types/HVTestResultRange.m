@@ -49,9 +49,6 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
     HVVALIDATE_OPTIONAL(m_value);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer

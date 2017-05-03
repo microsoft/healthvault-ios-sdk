@@ -97,9 +97,6 @@ LError:
     HVVALIDATE_ARRAY(m_blobItems, HVClientError_InvalidBlobInfo);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

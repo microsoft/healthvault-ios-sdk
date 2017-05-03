@@ -152,8 +152,8 @@ LError:
     HVCHECK_SELF;
     
     m_lockID = lockID;
-    HVRETAIN(m_key, key);
-    HVRETAIN(m_lockTable, lockTable);
+    m_key = [key retain];
+    m_lockTable = [lockTable retain];
     
     return self;
     
@@ -230,23 +230,27 @@ LError:
 {
     @synchronized(m_locks)
     {
-        HVCHECK_STRING(key);
+        if ([NSString isNilOrEmpty:key])
+        {
+            return c_lockNotAcquired;
+        }
         
         if ([self lockForKey:key] == nil)
         {
             long lockId = [self nextLockID];
             HVLock* lock = [[HVLock alloc] initWithID:lockId];
-            HVCHECK_NOTNULL(lock);
+            if (!lock)
+            {
+                return c_lockNotAcquired;
+            }
             
             [self setLock:lock forKey:key];
             [lock release];
             
             return lockId;
         }
-        
-    LError:
-        return c_lockNotAcquired;
     }
+    return c_lockNotAcquired;
 }
 
 -(BOOL) releaseLock:(long)lockID forKey:(NSString *)key
@@ -273,13 +277,12 @@ LError:
     }
     
     HVAutoLock* lock = [[HVAutoLock alloc] initWithLockTable:self key:key andLockID:lockID];
-    HVCHECK_NOTNULL(lock);
+    if (!lock)
+    {
+        [self releaseLock:lockID forKey:key];
+    }
     
     return lock;
-    
-LError:
-    [self releaseLock:lockID forKey:key];
-    return nil;
 }
 
 -(BOOL)validateLock:(HVAutoLock *)lock

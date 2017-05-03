@@ -24,7 +24,7 @@
 {
     HVItem* item = [HVCondition createRandom];
    
-    return [[[HVItemCollection alloc] initwithItem:item] autorelease];
+    return [[[HVItemCollection alloc] initWithItem:item] autorelease];
 }
 
 +(HVItemCollection *) createRandomMetricForDay:(NSDate *) date

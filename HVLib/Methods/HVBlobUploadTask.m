@@ -77,8 +77,8 @@
     self = [super initWithCallback:callback];
     HVCHECK_SELF;
     
-    HVRETAIN(m_source, source);
-    HVRETAIN(m_record, record);
+    m_source = [source retain];
+    m_record = [record retain];
     //
     // First, we'll issue an operation to retrieve a Blob Url.
     // This is the  blobUrl to which we'll push the blob
@@ -136,9 +136,9 @@ LError:
 -(void)beginPutBlobComplete:(HVTask *)task
 {
     HVBeginBlobPutTask* blobTask = (HVBeginBlobPutTask *) task;
-    HVRETAIN(m_putParams, blobTask.putParams);
+    m_putParams = [blobTask.putParams retain];
 
-    HVRETAIN(m_blobUrl, [NSURL URLWithString:m_putParams.url]);
+    m_blobUrl = [[NSURL URLWithString:m_putParams.url] retain];
     HVCHECK_OOM(m_blobUrl);
     //
     // Now that we know where to write the blob to, and in what chunks, we can begin

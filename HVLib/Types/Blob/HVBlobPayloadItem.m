@@ -67,7 +67,7 @@ LError:
     
     m_length = length;
    
-    HVRETAIN(m_blobUrl, blobUrl);
+    m_blobUrl = [blobUrl retain];
     
     return self;
     
@@ -135,10 +135,7 @@ LError:
     HVVALIDATE(m_blobInfo, HVClientError_InvalidBlobInfo);
     HVVALIDATE_STRING(m_blobUrl, HVClientError_InvalidBlobInfo);
     
-    HVVALIDATE_FAIL
-
-LError:
-    HVVALIDATE_FAIL
+    HVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

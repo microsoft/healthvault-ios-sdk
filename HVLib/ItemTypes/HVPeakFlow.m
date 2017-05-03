@@ -47,7 +47,7 @@ static const xmlChar* x_element_flags = XMLSTRINGCONST("measurement-flags");
 {
     if (isnan(pefValue))
     {
-        HVCLEAR(m_pef);
+        m_pef = nil;
     }
     else
     {
@@ -114,9 +114,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_flags);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer

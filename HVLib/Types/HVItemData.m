@@ -48,7 +48,7 @@ static NSString* const c_element_common = @"common";
 
 -(void) setTyped:(HVItemDataTyped *)typed
 {
-    HVRETAIN(m_typed, typed);
+    m_typed = [typed retain];
 }
 
 -(BOOL) hasCommon
@@ -64,7 +64,7 @@ static NSString* const c_element_common = @"common";
 
 -(void) setCommon:(HVItemDataCommon *)common
 {
-    HVRETAIN(m_common, common);
+    m_common = [common retain];
 }
 
 -(void) dealloc
@@ -82,9 +82,6 @@ static NSString* const c_element_common = @"common";
     HVVALIDATE_OPTIONAL(m_typed);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void) serialize:(XWriter *)writer

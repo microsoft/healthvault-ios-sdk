@@ -74,7 +74,7 @@ static NSString* const c_element_section = @"section";
 
 -(void)setSections:(HVStringCollection *)sections
 {
-    HVRETAIN(m_sections, sections);
+    m_sections = [sections retain];
 }
 
 -(void)dealloc

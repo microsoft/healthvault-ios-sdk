@@ -94,7 +94,7 @@ static HVClient* s_client;
 +(BOOL)initializeClientUsingSettings:(HVClientSettings *)settings
 {
     HVCHECK_NOTNULL(settings);
-    HVCLEAR(s_client);
+    s_client = nil;
  
     s_client = [[HVClient alloc] initWithSettings:settings];
     return (s_client != nil);
@@ -158,7 +158,7 @@ LError:
 {
     if (methodFactory)
     {
-        HVRETAIN(m_methodFactory, methodFactory);
+        m_methodFactory = [methodFactory retain];
     }
 }
 
@@ -202,8 +202,8 @@ LError:
         HVCHECK_NOTNULL(callback);
         HVCHECK_NOTNULL(controller.navigationController); 
         
-        HVRETAIN(m_parentController, controller);
-        HVCLEAR(m_provisionCallback);
+        m_parentController = [controller retain];
+        m_provisionCallback = nil;
         
         m_provisionCallback = [callback copy];
         
@@ -245,7 +245,7 @@ LError:
             [m_service loadSettings];
         }
         
-        HVCLEAR(m_user);
+        m_user = nil;
         self.user = [self loadUser]; // ok if this is null
         
         if (![self applyUserEnvironment])
@@ -323,8 +323,8 @@ LError:
         NSURL* storeUrl = m_rootDirectory.url;
         [HVDirectory deleteUrl:storeUrl];
         
-        HVCLEAR(m_rootDirectory);
-        HVCLEAR(m_localVault);
+        m_rootDirectory = nil;
+        m_localVault = nil;
         
         HVCHECK_SUCCESS([self ensureLocalVault]); // So the HVClient object remains in valid state
         
@@ -375,7 +375,7 @@ static NSString* const c_environmentFileName = @"environment.xml";
     m_queue = [[NSOperationQueue alloc] init];
     HVCHECK_NOTNULL(m_queue);
     
-    HVRETAIN(m_settings, settings);
+    m_settings = [settings retain];
     HVCHECK_SUCCESS([self ensureLocalVault]);
     
     // Set up the HealthVault Service
@@ -474,7 +474,7 @@ LError:
 {
     @synchronized(self)
     {
-        HVRETAIN(m_user, user);
+        m_user = [user retain];
     }
 }
 
@@ -528,11 +528,11 @@ LError:
 {
     @synchronized(self)
     {
-        HVCLEAR(m_environment);
+        m_environment = nil;
         
         HVEnvironmentSettings* env = (HVEnvironmentSettings *)[m_localVault.root getObjectWithKey:c_environmentFileName name:@"environment" andClass:[HVEnvironmentSettings class]];
         
-        HVRETAIN(m_environment, env);
+        m_environment = [env retain];
     }
 }
 
@@ -553,10 +553,10 @@ LError:
 {
     @synchronized(self)
     {
-        HVCLEAR(m_environment);
+        m_environment = nil;
         if (instance)
         {
-            HVRETAIN(m_environment, [HVEnvironmentSettings fromInstance:instance]);
+            m_environment = [[HVEnvironmentSettings fromInstance:instance] retain];
         }
         [m_service applyEnvironmentSettings:m_environment];
     }
@@ -566,7 +566,7 @@ LError:
 {
     @synchronized(self)
     {
-        HVCLEAR(m_environment);
+        m_environment = nil;
         [m_localVault.root deleteKey:c_environmentFileName];
     }
 }
@@ -637,7 +637,11 @@ LError:
     {
         creationUrl = [NSURL URLWithString:[m_service getApplicationCreationUrl]];
     }
-    HVCHECK_NOTNULL(creationUrl);
+    if (!creationUrl)
+    {
+        safeInvokeNotify(m_provisionCallback, self);
+        return;
+    }
     
     HVAppProvisionController * shellController = [[HVAppProvisionController alloc] initWithAppCreateUrl:creationUrl andCallback:^(HVAppProvisionController *controller) {
         
@@ -656,14 +660,16 @@ LError:
         }
      }];
     
-    HVCHECK_NOTNULL(shellController);
+    if (!shellController)
+    {
+        safeInvokeNotify(m_provisionCallback, self);
+        return;
+    }
+    
     [m_parentController.navigationController pushViewController:shellController animated:TRUE];
     [shellController release];
     
     return;
-
-LError:
-    safeInvokeNotify(m_provisionCallback, self);
 }
 
 -(void)beginGetTopology
@@ -671,16 +677,17 @@ LError:
     HVGetServiceDefinitionTask* getTask = [HVGetServiceDefinitionTask getTopology:^(HVTask *task) {
         
         HVServiceDefinition* serviceDef = (((HVGetServiceDefinitionTask *) task).serviceDef);
-        HVRETAIN(m_serviceDef, serviceDef);
+        m_serviceDef = [serviceDef retain];
         
         [self invokeOnMainThread:@selector(beginShellAuth)];
     }];
-    HVCHECK_NOTNULL(getTask);
-    
+    if (!getTask)
+    {
+        safeInvokeNotify(m_provisionCallback, self);
+        return;
+    }
+
     return;
-    
-LError:
-    safeInvokeNotify(m_provisionCallback, self);
 }
 
 -(void)authenticationCompleted: (HealthVaultResponse *)response
@@ -702,7 +709,7 @@ LError:
     }
    
     [self saveState];
-    HVCLEAR(m_parentController);
+    m_parentController = nil;
     
     [self invokeOnMainThread:@selector(notifyOfProvisionStatus)]; 
 }
@@ -725,7 +732,7 @@ LError:
     [self setEnvironment:instance];
     [self saveState];
     
-    HVCLEAR(m_serviceDef);
+    m_serviceDef = nil;
 }
 
 -(void)notifyOfProvisionStatus

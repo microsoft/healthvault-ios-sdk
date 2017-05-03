@@ -72,9 +72,6 @@ static NSString* const c_element_facility = @"facility";
     HVVALIDATE_OPTIONAL(m_facility);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

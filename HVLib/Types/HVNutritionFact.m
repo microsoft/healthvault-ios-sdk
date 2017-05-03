@@ -86,9 +86,6 @@ static NSString* const c_element_nutritionFact = @"nutrition-fact";
     HVVALIDATE_ARRAY(m_facts, HVClientError_InvalidDietaryIntake);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

@@ -116,9 +116,6 @@ LError:
     HVVALIDATE(m_units, HVClientError_InvalidMeasurement);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

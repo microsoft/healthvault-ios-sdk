@@ -77,9 +77,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_orderedBy);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer

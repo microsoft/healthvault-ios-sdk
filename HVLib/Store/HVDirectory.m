@@ -64,7 +64,7 @@
 
 +(NSString *)mimeTypeForFileExtension:(NSString *)ext
 {
-    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (CFStringRef) ext, NULL);
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef) ext, NULL);
     NSString* mimeType = (NSString *) UTTypeCopyPreferredTagWithClass (uti, kUTTagClassMIMEType);
     CFRelease(uti);
     return [mimeType autorelease];
@@ -72,7 +72,7 @@
 
 +(NSString *)fileExtForMimeType:(NSString *)mimeType
 {
-    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (CFStringRef) mimeType, NULL);
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef) mimeType, NULL);
     CFRelease(uti);
     NSString* ext = (NSString *)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
     return [ext autorelease];
@@ -185,8 +185,8 @@
     HVCHECK_SELF;
     
     NSFileManager *fm = [NSFileManager defaultManager];
-    HVRETAIN(m_path, path);
-    HVRETAIN(m_stringPath, m_path.path);
+    m_path = [path retain];
+    m_stringPath = [m_path.path retain];
     
     HVCHECK_SUCCESS([fm createDirectoryAtPath:m_stringPath withIntermediateDirectories:TRUE attributes:nil error:nil]);
     

@@ -66,9 +66,6 @@ LError:
     HVVALIDATE_STRINGOPTIONAL(m_text, HVClientError_InvalidDisplayValue)
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serializeAttributes:(XWriter *)writer

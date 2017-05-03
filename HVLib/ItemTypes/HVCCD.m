@@ -31,9 +31,6 @@ static NSString* const c_typename = @"ClinicalDocument";
     HVVALIDATE_STRING(m_xml, HVClientError_InvalidCCD);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 +(NSString *)typeID

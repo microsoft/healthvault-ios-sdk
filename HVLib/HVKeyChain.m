@@ -59,10 +59,10 @@ LError:
     [query setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];
     [query setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnData];
     
-    NSData* data = nil;
-    if (SecItemCopyMatching((CFDictionaryRef) query, (CFTypeRef *)&data) == errSecSuccess)
+    CFTypeRef result = nil;
+    if (SecItemCopyMatching((CFDictionaryRef) query, &result) == errSecSuccess)
     {
-        return data;
+        return (__bridge NSData *)result;
     }
     
 LError:

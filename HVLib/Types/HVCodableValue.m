@@ -40,7 +40,7 @@ static const xmlChar* x_element_code = XMLSTRINGCONST("code");
 
 -(void)setCodes:(HVCodedValueCollection *)codes
 {
-    HVRETAIN(m_codes, codes);
+    m_codes = [codes retain];
 }
 
 -(HVCodedValue *)firstCode
@@ -198,9 +198,6 @@ LError:
     }
     
     HVVALIDATE_SUCCESS;
-
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

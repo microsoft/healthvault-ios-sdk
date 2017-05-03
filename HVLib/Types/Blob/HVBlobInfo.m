@@ -78,10 +78,7 @@ LError:
     HVVALIDATE_OPTIONAL(m_name);
     HVVALIDATE_OPTIONAL(m_contentType);
     
-    HVVALIDATE_FAIL
-    
-LError:
-    HVVALIDATE_FAIL
+    HVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

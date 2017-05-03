@@ -346,8 +346,8 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_changeTable, changeTable);
-    HVRETAIN(m_types, types);
+    m_changeTable = [changeTable retain];
+    m_types = [types retain];
     
     return self;
     
@@ -399,12 +399,12 @@ LError:
     {
         [self clear];
         
-        HVRETAIN(m_currentType, [m_types dequeueObject]);
+        m_currentType = [[m_types dequeueObject] retain];
         if (!m_currentType)
         {
             break;
         }
-        HVRETAIN(m_currentQueue, [m_changeTable getChangeIDsForTypeID:m_currentType]);
+        m_currentQueue = [[m_changeTable getChangeIDsForTypeID:m_currentType] retain];
         if (m_currentQueue)
         {
             return TRUE;
@@ -416,8 +416,8 @@ LError:
 
 -(void)clear
 {
-    HVCLEAR(m_currentType);
-    HVCLEAR(m_currentQueue);
+    m_currentType = nil;
+    m_currentQueue = nil;
 }
 
 @end

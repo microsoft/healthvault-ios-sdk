@@ -61,9 +61,6 @@ LError:
     HVVALIDATE_STRING(m_typeID, HVClientError_InvalidItemType);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serializeAttributes:(XWriter *)writer

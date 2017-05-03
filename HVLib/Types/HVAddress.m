@@ -51,7 +51,7 @@ static NSString* const c_element_county = @"county";
 
 -(void)setStreet:(HVStringCollection *)street
 {
-    HVRETAIN(m_street, street);
+    m_street = [street retain];
 }
 
 -(void)dealloc
@@ -114,9 +114,6 @@ static NSString* const c_element_county = @"county";
     HVVALIDATE_STRING(m_country, HVClientError_InvalidAddress);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

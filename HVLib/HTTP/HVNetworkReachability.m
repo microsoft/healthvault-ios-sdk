@@ -51,7 +51,7 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     {
         if (info)
         {
-            HVHostReachability* host = (HVHostReachability *) info;
+            HVHostReachability* host = (__bridge HVHostReachability *) info;
             [host broadcastStatusChange:flags];
         }
     }
@@ -92,7 +92,7 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_hostName, hostName);
+    m_hostName = [hostName retain];
 
     const char* szHostName = [hostName cStringUsingEncoding:NSUTF8StringEncoding]; // buffer is owned by NSString
     HVCHECK_NOTNULL(szHostName);

@@ -75,10 +75,6 @@ LError:
     HVVALIDATE_STRING(m_number, HVClientError_InvalidPhone);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
-    
 }
 
 -(void)serialize:(XWriter *)writer

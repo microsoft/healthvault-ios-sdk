@@ -75,9 +75,6 @@ static const xmlChar* x_element_results = XMLSTRINGCONST("results");
     HVVALIDATE_ARRAYOPTIONAL(m_results, HVClientError_InvalidLabTestResultsGroup);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer

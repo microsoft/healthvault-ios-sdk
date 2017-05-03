@@ -145,9 +145,6 @@ LError:
     HVVALIDATE_STRING(m_full, HVClientError_InvalidName);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

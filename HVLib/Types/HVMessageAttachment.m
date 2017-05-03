@@ -39,8 +39,8 @@ static const xmlChar* x_element_contentid = XMLSTRINGCONST("content-id");
     self = [super init];
     HVCHECK_SELF;
     
-    HVRETAIN(m_name, name);
-    HVRETAIN(m_blobName, blobName);
+    m_name = [name retain];
+    m_blobName = [blobName retain];
     m_isInline = FALSE;
     m_contentID = nil;
     
@@ -66,10 +66,6 @@ LError:
     HVVALIDATE_STRING(m_blobName, HVClientError_InvalidMessageAttachment);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
-    
 }
 
 -(void)serialize:(XWriter *)writer

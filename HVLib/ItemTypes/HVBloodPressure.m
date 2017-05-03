@@ -157,9 +157,6 @@ LError:
     HVVALIDATE_OPTIONAL(m_heartbeat);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

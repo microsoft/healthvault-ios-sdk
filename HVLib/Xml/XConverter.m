@@ -315,13 +315,10 @@ LError:
     }
     else
     {
-        goto LError;
+        return NO;
     }
     
     return TRUE;
-    
-LError:
-    return FALSE;    
 }
 
 -(BOOL) stringToBool:(NSString *)source

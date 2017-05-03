@@ -45,7 +45,7 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
 
 -(void)setItems:(HVVocabItemCollection *)items
 {
-    HVRETAIN(m_items, items);
+    m_items = [items retain];
 }
 
 -(NSArray *)displayStrings

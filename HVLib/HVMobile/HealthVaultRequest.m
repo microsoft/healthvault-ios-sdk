@@ -72,7 +72,7 @@
 {
     @synchronized(self)
     {
-        HVRETAIN(_connection, connection);
+        _connection = [connection retain];
     }    
 }
 
@@ -173,7 +173,7 @@
         {
             [_connection cancel];
         }
-        HVCLEAR(_connection);
+        _connection = nil;
     }
 }
 

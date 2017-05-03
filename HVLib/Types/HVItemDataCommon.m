@@ -40,11 +40,11 @@ static NSString* const c_element_clientID = @"client-thing-id";
 }
 -(void)setClientIDValue:(NSString *)clientIDValue
 {
-    HVCLEAR(m_clientID);
+    m_clientID = nil;
     if (![NSString isNilOrEmpty:clientIDValue])
     {
         HVString255* clientID = [[HVString255 alloc] initWith:clientIDValue];
-        HVRETAIN(m_clientID, clientID);
+        m_clientID = [clientID retain];
         [clientID release];
     }
 }
@@ -76,9 +76,6 @@ static NSString* const c_element_clientID = @"client-thing-id";
     HVVALIDATE_OPTIONAL(m_clientID);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void) serialize:(XWriter *)writer

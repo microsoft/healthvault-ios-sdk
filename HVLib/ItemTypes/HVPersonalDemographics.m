@@ -118,9 +118,6 @@ static NSString* const c_element_donor = @"organ-donor";
     HVVALIDATE_STRINGOPTIONAL(m_donor, HVClientError_InvalidPersonalDemographics);
 
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL
 }
 
 -(void)serialize:(XWriter *)writer

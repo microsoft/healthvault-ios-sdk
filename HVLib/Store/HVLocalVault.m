@@ -200,7 +200,7 @@ LError:
 @implementation HVLocalVault (HVPrivate)
 -(void)setRoot:(HVDirectory *)root
 {
-    HVRETAIN(m_root, root);
+    m_root = [root retain];
 }
 
 -(BOOL)ensureRecordStores
@@ -286,7 +286,7 @@ LError:
         [m_records addObject:recordRef];
     }
     
-    HVRETAIN(m_localVault, vault);
+    m_localVault = [vault retain];
     
     return self;
     

@@ -101,9 +101,6 @@ static NSString* const c_element_contact = @"contact";
     HVVALIDATE_OPTIONAL(m_contact);
     
     HVVALIDATE_SUCCESS
-    
-LError:
-    HVVALIDATE_FAIL 
 }
 
 -(void)serialize:(XWriter *)writer

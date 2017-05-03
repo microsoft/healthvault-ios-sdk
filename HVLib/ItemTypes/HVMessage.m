@@ -133,9 +133,6 @@ static NSString* const c_element_attachments = @"attachments";
     HVVALIDATE_ARRAYOPTIONAL(m_attachments, HVClientError_InvalidMessage);
     
     HVVALIDATE_SUCCESS;
-    
-LError:
-    HVVALIDATE_FAIL;
 }
 
 -(void)serialize:(XWriter *)writer
