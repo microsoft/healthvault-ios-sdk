@@ -76,7 +76,7 @@ LError:
 
 -(void)assignNewChangeID
 {
-    NSString* uniqueId = [@"iOS_" stringByAppendingString:guidString()];
+    NSString* uniqueId = [@"iOS_" stringByAppendingString:[[NSUUID UUID] UUIDString]];
     m_changeID = uniqueId;
 }
 

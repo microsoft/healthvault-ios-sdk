@@ -146,7 +146,6 @@ LError:
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"HVItem"];
-        HVCHECK_NOTNULL(cell);
     }
     
     HVItem* item = [m_items itemAtIndex:indexPath.row];
@@ -169,9 +168,6 @@ LError:
     cell.detailTextLabel.text = details;
     
     return cell;
-    
-LError:
-    return nil;
 }
 
 -(void)refreshView

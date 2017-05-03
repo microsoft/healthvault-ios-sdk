@@ -71,7 +71,7 @@ NSString* const XExceptionNotSerializable;
 -(NSString *) readValue;
 -(NSString *) readValueEnsure;
 
--(CFUUIDRef) readGuid;
+-(NSUUID *) readUuid;
 -(int) readInt;
 -(double) readDouble;
 -(float) readFloat;
@@ -160,7 +160,7 @@ NSString* const XExceptionNotSerializable;
 // 
 @interface XWriter (XSerializer) 
 
--(void) writeGuid:(CFUUIDRef) guid;
+-(void) writeUuid:(NSUUID *) uuid;
 -(void) writeInt:(int) value;
 -(void) writeDouble:(double) value;
 -(void) writeFloat:(float) value;

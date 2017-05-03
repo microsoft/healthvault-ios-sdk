@@ -62,7 +62,7 @@ LError:
     CFTypeRef result = nil;
     if (SecItemCopyMatching((CFDictionaryRef) query, &result) == errSecSuccess)
     {
-        return (__bridge NSData *)result;
+        return (NSData *)CFBridgingRelease(result);
     }
     
 LError:

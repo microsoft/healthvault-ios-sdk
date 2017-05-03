@@ -60,9 +60,7 @@
 -(BOOL) tryDate:(NSDate *) source toString:(NSString **) result;
 -(NSString*) dateToString:(NSDate *) source;
 
--(BOOL) tryString:(NSString *) source toGuid:(CFUUIDRef *) result;
--(CFUUIDRef) stringToGuid:(NSString *) source;
--(BOOL) tryGuid:(CFUUIDRef)guid toString:(NSString **) result;
--(NSString *) guidToString:(CFUUIDRef) guid;
+-(NSUUID *) stringToUuid:(NSString *) source;
+-(NSString *) uuidToString:(NSUUID *) guid;
 
 @end

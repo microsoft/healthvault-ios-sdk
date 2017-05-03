@@ -70,14 +70,14 @@ LError:
 
 -(id) initNew
 {
-    return [self initWithID:guidString()];
+    return [self initWithID:[[NSUUID UUID] UUIDString]];
 }
 
 
 +(HVItemKey *)newLocal
 {
-    NSString* itemID =  [c_localIDPrefix stringByAppendingString:guidString()];
-    NSString* version = guidString();
+    NSString* itemID =  [c_localIDPrefix stringByAppendingString:[[NSUUID UUID] UUIDString]];
+    NSString* version = [[NSUUID UUID] UUIDString];
     
     return [[HVItemKey alloc] initWithID:itemID andVersion:version];
 }

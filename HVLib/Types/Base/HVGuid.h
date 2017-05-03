@@ -1,15 +1,15 @@
 //
-//  HVGuid.h
-//  HVLib
+// HVGuid.h
+// HVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,21 +21,12 @@
 #import "HVType.h"
 
 @interface HVGuid : HVType
-{
-@private
-    CFUUIDRef m_guid;
-}
 
-@property (readwrite, nonatomic) CFUUIDRef value;
+@property (readwrite, nonatomic, strong) NSUUID *value;
 @property (readonly, nonatomic) BOOL hasValue;
 
--(id) initWithNewGuid;
--(id) initWithGuid:(CFUUIDRef) guid;
--(id) initFromString:(NSString *) string;
+- (instancetype)initWithNewUuid;
+- (instancetype)initWithUuid:(NSUUID *)uuid;
+- (instancetype)initFromString:(NSString *)string;
 
 @end
-
-CFUUIDRef newGuidCreate(void);
-NSString* guidString(void);
-CFUUIDRef parseGuid(NSString *string);
-NSString* guidToString(CFUUIDRef guid);

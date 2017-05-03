@@ -97,4 +97,4 @@ NSString* const c_emptyString;
 
 @end
 
-CFStringRef HVUrlEncode(CFStringRef source);
+CFStringRef CreateHVUrlEncode(CFStringRef source);

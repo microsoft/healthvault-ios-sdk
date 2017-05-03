@@ -349,9 +349,9 @@ LError:
     return value;
 }
 
--(CFUUIDRef) readGuid
+-(NSUUID *) readUuid
 {
-    return [self.converter stringToGuid:[self readValueEnsure]];
+    return [self.converter stringToUuid:[self readValueEnsure]];
 }
 
 -(int) readInt
@@ -1042,9 +1042,9 @@ void throwWriterError(void)
 
 @implementation XWriter (XSerializer)
 
--(void) writeGuid:(CFUUIDRef)guid
+-(void) writeUuid:(NSUUID *) uuid;
 {
-    [self writeText:[self.converter guidToString:guid]];
+    [self writeText:[self.converter uuidToString:uuid]];
 }
 
 -(void) writeInt:(int)value

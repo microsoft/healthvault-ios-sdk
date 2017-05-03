@@ -20,7 +20,6 @@
 
 #import <Foundation/Foundation.h>
 #import "HVTypeView.h"
-#import "HVMulticastDelegate.h"
 
 //-------------------------------------------------------------------------------------------
 //
