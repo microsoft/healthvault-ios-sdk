@@ -108,7 +108,6 @@
     id popped = [self peek];
     if (popped)
     {
-        popped = popped;
         [self removeLastObject];
     }
     
