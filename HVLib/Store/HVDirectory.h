@@ -2,7 +2,7 @@
 //  HVDirectory.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,8 +58,8 @@
     XConverter* m_converter;  // Cached, to speed up deserialization/serialization
 }
 
-@property (readonly, nonatomic) NSURL* url;
-@property (readonly, nonatomic) NSString* stringPath;
+@property (readonly, nonatomic, strong) NSURL* url;
+@property (readonly, nonatomic, strong) NSString* stringPath;
 
 -(id) initWithPath:(NSURL *) path;
 -(id) initWithRelativePath:(NSString *) path;

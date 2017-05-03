@@ -2,7 +2,7 @@
 //  HVVitalSignResult.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,25 +42,25 @@
 // (Required)
 // Vocabulary: vital-statistics
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* title;
+@property (readwrite, nonatomic, strong) HVCodableValue* title;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVDouble* value;
+@property (readwrite, nonatomic, strong) HVDouble* value;
 //
 // (Optional)
 // Vocabulary: lab-results-units
-@property (readwrite, nonatomic, retain) HVCodableValue* unit;
+@property (readwrite, nonatomic, strong) HVCodableValue* unit;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVDouble* referenceMin;
+@property (readwrite, nonatomic, strong) HVDouble* referenceMin;
 // 
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVDouble* referenceMax;
-@property (readwrite, nonatomic, retain) NSString* textValue;
-@property (readwrite, nonatomic, retain) HVCodableValue* flag;
+@property (readwrite, nonatomic, strong) HVDouble* referenceMax;
+@property (readwrite, nonatomic, strong) NSString* textValue;
+@property (readwrite, nonatomic, strong) HVCodableValue* flag;
 
 //-------------------------
 //

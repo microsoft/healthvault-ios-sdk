@@ -2,7 +2,7 @@
 //  Weight.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -52,12 +52,6 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
     return (m_value) ? m_value.inKg : NAN;
 }
 
--(void) dealloc
-{
-    [m_when release];
-    [m_value release];
-    [super dealloc];
-}
 
 -(id) initWithKg:(double)kg andDate:(NSDate *)date
 {
@@ -155,8 +149,8 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
-    m_value = [[reader readElementWithXmlName:x_element_value asClass:[HVWeightMeasurement class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
+    m_value = [reader readElementWithXmlName:x_element_value asClass:[HVWeightMeasurement class]];
 }
 
 +(NSString *)typeID
@@ -180,7 +174,6 @@ LError:
     HVCHECK_NOTNULL(weight);
     
     HVItem* item = [[HVItem alloc] initWithTypedData:weight];
-    [weight release];
     
     return item;
     
@@ -194,7 +187,6 @@ LError:
     HVCHECK_NOTNULL(weight);
     
     HVItem* item = [[HVItem alloc] initWithTypedData:weight];
-    [weight release];
     
     return item;
     

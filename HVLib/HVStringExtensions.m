@@ -2,7 +2,7 @@
 //  NSString+StringExtensions.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -160,7 +160,6 @@ NSString* const c_emptyString = @"";
     HVCHECK_NOTNULL(scanner);
     
     BOOL result = [scanner scanFloat:pValue];
-    [scanner release];
     
     return result;
     
@@ -176,7 +175,6 @@ LError:
     HVCHECK_NOTNULL(scanner);
  
     BOOL result = [scanner scanDouble:pValue];
-    [scanner release];
     
     return result;
 
@@ -192,7 +190,6 @@ LError:
     HVCHECK_NOTNULL(scanner);
    
     BOOL result = [scanner scanInt:pValue];
-    [scanner release];
     return result;   
 
 LError:

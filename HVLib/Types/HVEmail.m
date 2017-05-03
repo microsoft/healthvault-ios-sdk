@@ -2,7 +2,7 @@
 //  HVEmail.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,14 +43,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_address release];
-    [m_type release];
-    [m_isprimary release];
-    
-    [super dealloc];
-}
 
 -(NSString *)description
 {
@@ -64,7 +56,7 @@ LError:
 
 +(HVVocabIdentifier *)vocabForType
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"email-types"] autorelease];        
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"email-types"];        
 }
 
 -(HVClientResult *)validate
@@ -85,9 +77,9 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_type = [[reader readStringElement:c_element_description] retain];
-    m_isprimary = [[reader readElement:c_element_isPrimary asClass:[HVBool class]] retain];
-    m_address = [[reader readElement:c_element_address asClass:[HVEmailAddress class]] retain];
+    m_type = [reader readStringElement:c_element_description];
+    m_isprimary = [reader readElement:c_element_isPrimary asClass:[HVBool class]];
+    m_address = [reader readElement:c_element_address asClass:[HVEmailAddress class]];
 }
 
 @end

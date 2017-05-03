@@ -2,7 +2,7 @@
 //  Logger.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -71,7 +71,6 @@
 	NSDateFormatter *formatter = [NSDateFormatter new];
 	[formatter setDateFormat: @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"];
 	NSString *strDate = [formatter stringFromDate: date];
-	[formatter release];
 	
 	return [NSString stringWithFormat: @"%@/appLog_%@ %@.txt", documentsDirectory, name, strDate];
 }

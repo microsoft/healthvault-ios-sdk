@@ -2,7 +2,7 @@
 //  HVCodedValue.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -61,23 +61,15 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_code release];
-    [m_vocab release];
-    [m_family release];
-    [m_version release];
-    [super dealloc];
- }
 
 +(HVCodedValue *)fromCode:(NSString *)code andVocab:(NSString *)vocab
 {
-    return [[[HVCodedValue alloc] initWithCode:code andVocab:vocab] autorelease];
+    return [[HVCodedValue alloc] initWithCode:code andVocab:vocab];
 }
 
 +(HVCodedValue *)fromCode:(NSString *)code vocab:(NSString *)vocab vocabFamily:(NSString *)family vocabVersion:(NSString *)version
 {
-    return [[[HVCodedValue alloc] initWithCode:code vocab:vocab vocabFamily:family vocabVersion:version] autorelease];
+    return [[HVCodedValue alloc] initWithCode:code vocab:vocab vocabFamily:family vocabVersion:version];
 }
 
 -(BOOL)isEqualToCodedValue:(HVCodedValue *)value
@@ -112,7 +104,7 @@ LError:
 
 -(HVCodedValue *)clone
 {
-    HVCodedValue* cloned = [[[HVCodedValue alloc] init] autorelease];
+    HVCodedValue* cloned = [[HVCodedValue alloc] init];
     HVCHECK_NOTNULL(cloned);
     
     cloned.code = m_code;
@@ -148,10 +140,10 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_code = [[reader readStringElementWithXmlName:x_element_value] retain];
-    m_family = [[reader readStringElementWithXmlName:x_element_family] retain];
-    m_vocab = [[reader readStringElementWithXmlName:x_element_type] retain];
-    m_version = [[reader readStringElementWithXmlName:x_element_version] retain];
+    m_code = [reader readStringElementWithXmlName:x_element_value];
+    m_family = [reader readStringElementWithXmlName:x_element_family];
+    m_vocab = [reader readStringElementWithXmlName:x_element_type];
+    m_version = [reader readStringElementWithXmlName:x_element_version];
 }
 
 @end

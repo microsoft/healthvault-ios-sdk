@@ -2,7 +2,7 @@
 //  HVDietaryIntake.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -70,23 +70,23 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* foodItem;
+@property (readwrite, nonatomic, strong) HVCodableValue* foodItem;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* servingSize;
+@property (readwrite, nonatomic, strong) HVCodableValue* servingSize;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVNonNegativeDouble* servingsConsumed;
+@property (readwrite, nonatomic, strong) HVNonNegativeDouble* servingsConsumed;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* meal;
+@property (readwrite, nonatomic, strong) HVCodableValue* meal;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 
 //--------------------
 //
@@ -94,42 +94,42 @@
 //
 //--------------------
 
-@property (readwrite, nonatomic, retain) HVFoodEnergyValue* calories;           // Cal
-@property (readwrite, nonatomic, retain) HVFoodEnergyValue* caloriesFromFat;    // Cal
+@property (readwrite, nonatomic, strong) HVFoodEnergyValue* calories;           // Cal
+@property (readwrite, nonatomic, strong) HVFoodEnergyValue* caloriesFromFat;    // Cal
 
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* totalFat;         // g
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* saturatedFat;     // g
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* transFat;         // g
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* monounsaturatedFat; //g
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* polyunsaturatedFat; //g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* totalFat;         // g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* saturatedFat;     // g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* transFat;         // g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* monounsaturatedFat; //g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* polyunsaturatedFat; //g
 
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* protein;      // g
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* carbs;        // g
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* dietaryFiber; // g
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* sugar;        // g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* protein;      // g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* carbs;        // g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* dietaryFiber; // g
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* sugar;        // g
 
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* sodium;       // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* cholesterol;  // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* calcium;      // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* iron;         // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* magnesium;    // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* phosphorus;   // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* potassium;    // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* zinc;         // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* sodium;       // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* cholesterol;  // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* calcium;      // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* iron;         // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* magnesium;    // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* phosphorus;   // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* potassium;    // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* zinc;         // mg
 
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* vitaminA;     // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* vitaminE;     // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* vitaminD;     // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* vitaminC;     // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* thiamin;      // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* riboflavin;   // mg
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* niacin;
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* vitaminB6;
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* folate;
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* vitaminB12;
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* vitaminK;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* vitaminA;     // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* vitaminE;     // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* vitaminD;     // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* vitaminC;     // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* thiamin;      // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* riboflavin;   // mg
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* niacin;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* vitaminB6;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* folate;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* vitaminB12;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* vitaminK;
 
-@property (readwrite, nonatomic, retain) HVAdditionalNutritionFacts* additionalFacts;
+@property (readwrite, nonatomic, strong) HVAdditionalNutritionFacts* additionalFacts;
 
 //---------------------
 //

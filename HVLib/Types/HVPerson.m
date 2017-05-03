@@ -2,7 +2,7 @@
 //  HVPerson.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -89,17 +89,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_organization release];
-    [m_training release];
-    [m_id release];
-    [m_contact release];
-    [m_type release];   
-     
-    [super dealloc];
-}
 
 -(NSString *)description
 {
@@ -113,7 +102,7 @@ LError:
 
 +(HVVocabIdentifier *)vocabForPersonType
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"person-types"] autorelease];                
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"person-types"];                
 }
 
 -(HVClientResult *)validate
@@ -138,12 +127,12 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVName class]] retain];
-    m_organization = [[reader readStringElement:c_element_organization] retain];
-    m_training = [[reader readStringElement:c_element_training] retain];
-    m_id = [[reader readStringElement:c_element_idNumber] retain];
-    m_contact = [[reader readElement:c_element_contact asClass:[HVContact class]] retain];
-    m_type = [[reader readElement:c_element_type asClass:[HVCodableValue class]] retain];
+    m_name = [reader readElement:c_element_name asClass:[HVName class]];
+    m_organization = [reader readStringElement:c_element_organization];
+    m_training = [reader readStringElement:c_element_training];
+    m_id = [reader readStringElement:c_element_idNumber];
+    m_contact = [reader readElement:c_element_contact asClass:[HVContact class]];
+    m_type = [reader readElement:c_element_type asClass:[HVCodableValue class]];
 }
 
 @end

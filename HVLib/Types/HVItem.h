@@ -2,7 +2,7 @@
 //  HVItem.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -79,9 +79,9 @@ enum HVItemFlags
 // All existing items that have been successfully committed to HealthVault
 // will always have a key. 
 //
-@property (readwrite, nonatomic, retain) HVItemKey* key;
+@property (readwrite, nonatomic, strong) HVItemKey* key;
 
-@property (readwrite, nonatomic, retain) HVItemType* type;
+@property (readwrite, nonatomic, strong) HVItemType* type;
 
 @property (readwrite, nonatomic) enum HVItemState state;
 //
@@ -92,46 +92,46 @@ enum HVItemFlags
 // 
 // The effective date impacts the default sort order of returned results
 //
-@property (readwrite, nonatomic, retain) NSDate* effectiveDate;
+@property (readwrite, nonatomic, strong) NSDate* effectiveDate;
 
-@property (readwrite, nonatomic, retain) HVAudit* created;
-@property (readwrite, nonatomic, retain) HVAudit* updated;
+@property (readwrite, nonatomic, strong) HVAudit* created;
+@property (readwrite, nonatomic, strong) HVAudit* updated;
 //
 // (Optional) Structured data for this item. May be null if you did not 
 // ask for Core data (see enum HVItemSection) when you issued a query for items
 //
-@property (readwrite, nonatomic, retain) HVItemData* data;
+@property (readwrite, nonatomic, strong) HVItemData* data;
 //
 // (Optional) Information about unstructured blob streams associated with this item
 // May be null if you did not ask for Blob information (see enum HVItemSectionBlob)
 //
-@property (readwrite, nonatomic, retain) HVBlobPayload* blobs;
+@property (readwrite, nonatomic, strong) HVBlobPayload* blobs;
 
 // (Optional) RAW Xml - see HealthVault Thing schema
-@property (readwrite, nonatomic, retain) NSString* effectivePermissionsXml;
+@property (readwrite, nonatomic, strong) NSString* effectivePermissionsXml;
 
 // (Optional) Tags associated with this item
-@property (readwrite, nonatomic, retain) HVStringZ512* tags;
+@property (readwrite, nonatomic, strong) HVStringZ512* tags;
 
 // (Optional) Signature. Raw Xml
-@property (readwrite, nonatomic, retain) NSString* signatureInfoXml;
+@property (readwrite, nonatomic, strong) NSString* signatureInfoXml;
 
 // (Optional) Some items are immutable (locked). Users an still update the "effective"
 // end date of some item - such as the date they stopped taking a medication
-@property (readwrite, nonatomic, retain) HVConstrainedXmlDate* updatedEndDate;
+@property (readwrite, nonatomic, strong) HVConstrainedXmlDate* updatedEndDate;
 
 //-----------------------
 //
 // Convenience Properties
 //
 //------------------------
-@property (readonly, nonatomic) NSString* itemID;
-@property (readonly, nonatomic) NSString* typeID;
+@property (readonly, nonatomic, strong) NSString* itemID;
+@property (readonly, nonatomic, strong) NSString* typeID;
 //
 // (Optional) All items can have arbitrary notes...
 // References data.common.note 
 //
-@property (readwrite, nonatomic, retain) NSString* note;
+@property (readwrite, nonatomic, strong) NSString* note;
 
 //
 // Convenience

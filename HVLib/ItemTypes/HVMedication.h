@@ -2,7 +2,7 @@
 //  HVMedication.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,57 +46,57 @@
 // (Required) Medication Name
 // Vocabularies: RxNorm, NDC
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* name;
+@property (readwrite, nonatomic, strong) HVCodableValue* name;
 //
 // (Optional)
 // Vocabularies: RxNorm, NDC
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* genericName;
+@property (readwrite, nonatomic, strong) HVCodableValue* genericName;
 // 
 // (Optional)
 // Vocabulary for Units: medication-dose-units
 //
-@property (readwrite, nonatomic, retain) HVApproxMeasurement* dose;
+@property (readwrite, nonatomic, strong) HVApproxMeasurement* dose;
 // 
 // (Optional)
 // Vocabulary for Units: medication-strength-unit
 //
-@property (readwrite, nonatomic, retain) HVApproxMeasurement* strength;
+@property (readwrite, nonatomic, strong) HVApproxMeasurement* strength;
 // 
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVApproxMeasurement* frequency;
+@property (readwrite, nonatomic, strong) HVApproxMeasurement* frequency;
 // 
 // (Optional)
 // Vocabulary for Units: medication-route
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* route;
+@property (readwrite, nonatomic, strong) HVCodableValue* route;
 // 
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* indication;
+@property (readwrite, nonatomic, strong) HVCodableValue* indication;
 // 
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* startDate;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* startDate;
 // 
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* stopDate;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* stopDate;
 // 
 // (Optional) Was the medication prescribed? 
 // Vocabulary: medication-prescribed
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* prescribed;
+@property (readwrite, nonatomic, strong) HVCodableValue* prescribed;
 // 
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVPrescription* prescription;
+@property (readwrite, nonatomic, strong) HVPrescription* prescription;
 
 //
 // Convenience Properties
 //
-@property (readonly, nonatomic) HVPerson* prescriber;
+@property (readonly, nonatomic, strong) HVPerson* prescriber;
 
 //-------------------------
 //

@@ -2,7 +2,7 @@
 //  HVShellInfo.m
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,17 +29,11 @@ static const xmlChar* x_element_redirect = XMLSTRINGCONST("redirect-url");
 @synthesize url = m_url;
 @synthesize redirectUrl = m_redirectUrl;
 
--(void)dealloc
-{
-    [m_url release];
-    [m_redirectUrl release];
-    [super dealloc];
-}
 
 -(void)deserialize:(XReader *)reader
 {
-    m_url = [[reader readStringElementWithXmlName:x_element_url] retain];
-    m_redirectUrl = [[reader readStringElementWithXmlName:x_element_redirect] retain];
+    m_url = [reader readStringElementWithXmlName:x_element_url];
+    m_redirectUrl = [reader readStringElementWithXmlName:x_element_redirect];
 }
 
 -(void)serialize:(XWriter *)writer

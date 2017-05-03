@@ -2,7 +2,7 @@
 //  HVDietaryIntake.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,47 +51,47 @@
 //
 // (Required) - the day for this intake
 //
-@property (readwrite, nonatomic, retain) HVDate* when;
+@property (readwrite, nonatomic, strong) HVDate* when;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVPositiveInt* calories;
+@property (readwrite, nonatomic, strong) HVPositiveInt* calories;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* totalFat;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* totalFat;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* saturatedFat;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* saturatedFat;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* transFat;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* transFat;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* protein;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* protein;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* totalCarbs;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* totalCarbs;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* sugar;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* sugar;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* dietaryFiber;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* dietaryFiber;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* sodium;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* sodium;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVWeightMeasurement* cholesterol;
+@property (readwrite, nonatomic, strong) HVWeightMeasurement* cholesterol;
 
 //
 // Convenience properties

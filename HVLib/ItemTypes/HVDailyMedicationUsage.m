@@ -2,7 +2,7 @@
 //  HVDailyMedicationUsage.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -72,8 +72,7 @@ static const xmlChar* x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
     HVCHECK_NOTNULL(day);
     
     HVDate* date =  [[HVDate alloc] initWithDate:day];
-    [self initWithDoses:doses forDrug:drug onDate:date];
-    [date release];
+    if (!(self = [self initWithDoses:doses forDrug:drug onDate:date])) return nil;
     HVCHECK_SELF;
     
     return self;
@@ -90,7 +89,7 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    m_when = [date retain];
+    m_when = date;
     
     self.drugName = drug;
     
@@ -103,20 +102,6 @@ LError:
     HVALLOC_FAIL;    
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_drugName release];
-    [m_dosesConsumed release];
-    [m_purpose release];
-    [m_dosesIntended release];
-    [m_usageSchedule release];
-    [m_drugForm release];
-    [m_prescriptionType release];
-    [m_singleDoseDescription release];
-    
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -171,15 +156,15 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDate class]] retain];
-    m_drugName = [[reader readElementWithXmlName:x_element_drugName asClass:[HVCodableValue class]] retain];
-    m_dosesConsumed = [[reader readElementWithXmlName:x_element_dosesConsumed asClass:[HVInt class]] retain];
-    m_purpose = [[reader readElementWithXmlName:x_element_purpose asClass:[HVCodableValue class]] retain];
-    m_dosesIntended = [[reader readElementWithXmlName:x_element_dosesIntended asClass:[HVInt class]] retain];
-    m_usageSchedule = [[reader readElementWithXmlName:x_element_usageSchedule asClass:[HVCodableValue class]] retain];
-    m_drugForm = [[reader readElementWithXmlName:x_element_drugForm asClass:[HVCodableValue class]] retain];
-    m_prescriptionType = [[reader readElementWithXmlName:x_element_prescriptionType asClass:[HVCodableValue class]] retain];
-    m_singleDoseDescription = [[reader readElementWithXmlName:x_element_singleDoseDescr asClass:[HVCodableValue class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDate class]];
+    m_drugName = [reader readElementWithXmlName:x_element_drugName asClass:[HVCodableValue class]];
+    m_dosesConsumed = [reader readElementWithXmlName:x_element_dosesConsumed asClass:[HVInt class]];
+    m_purpose = [reader readElementWithXmlName:x_element_purpose asClass:[HVCodableValue class]];
+    m_dosesIntended = [reader readElementWithXmlName:x_element_dosesIntended asClass:[HVInt class]];
+    m_usageSchedule = [reader readElementWithXmlName:x_element_usageSchedule asClass:[HVCodableValue class]];
+    m_drugForm = [reader readElementWithXmlName:x_element_drugForm asClass:[HVCodableValue class]];
+    m_prescriptionType = [reader readElementWithXmlName:x_element_prescriptionType asClass:[HVCodableValue class]];
+    m_singleDoseDescription = [reader readElementWithXmlName:x_element_singleDoseDescr asClass:[HVCodableValue class]];
 }
 
 +(NSString *)typeID

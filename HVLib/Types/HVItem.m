@@ -2,7 +2,7 @@
 //  HVItem.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
 
 -(void) setData:(HVItemData *)data
 {
-    m_data = [data retain];
+    m_data = data;
 }
 
 -(HVBlobPayload *)blobs
@@ -81,7 +81,7 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
 
 -(void)setBlobs:(HVBlobPayload *)blobs
 {
-    m_blobs = [blobs retain];
+    m_blobs = blobs;
 }
 
 @synthesize updatedEndDate = m_updatedEndDate;
@@ -142,7 +142,6 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
     HVCHECK_NOTNULL(data);
     
     self = [self initWithTypedData:data];
-    [data release];
     
     return self;
     
@@ -187,22 +186,6 @@ LError:
     return [self initWithTypedDataClassName:NSStringFromClass(cls)];
 }
 
--(void) dealloc
-{
-    [m_key  release];
-    [m_type release];
-    [m_effectiveDate release];
-    
-    [m_created release];
-    [m_updated release];
-    
-    [m_data release];
-    [m_blobs release];
-    
-    [m_updatedEndDate release];
-    
-    [super dealloc];
-}
 
 -(BOOL)setKeyToNew
 {
@@ -210,7 +193,6 @@ LError:
     HVCHECK_NOTNULL(newKey);
     
     self.key = newKey;
-    [newKey release];
     
     return TRUE;
     
@@ -237,7 +219,7 @@ LError:
         {
             newDate = [NSDate date];
         }
-        m_effectiveDate = [newDate retain];
+        m_effectiveDate = newDate;
     }
     
     return (m_effectiveDate != nil);
@@ -245,7 +227,7 @@ LError:
 
 -(BOOL)removeEndDate
 {
-    m_updatedEndDate = [[HVConstrainedXmlDate nullDate] retain];
+    m_updatedEndDate = [HVConstrainedXmlDate nullDate];
     HVCHECK_NOTNULL(m_updatedEndDate);
 
     return TRUE;
@@ -258,7 +240,7 @@ LError:
 {
     HVCHECK_NOTNULL(date);
     
-    m_updatedEndDate = [[HVConstrainedXmlDate fromDate:date] retain];
+    m_updatedEndDate = [HVConstrainedXmlDate fromDate:date];
     HVCHECK_NOTNULL(m_updatedEndDate);
     
     return TRUE;
@@ -273,7 +255,7 @@ LError:
     
     if (date.isStructured)
     {
-        m_updatedEndDate = [[HVConstrainedXmlDate fromDate:[date toDate]] retain];
+        m_updatedEndDate = [HVConstrainedXmlDate fromDate:[date toDate]];
         HVCHECK_NOTNULL(m_updatedEndDate);
         return TRUE;
     }
@@ -336,19 +318,19 @@ LError:
     //
     // We'll query for the latest blob information for this item
     //
-    HVItemQuery *query = [[[HVItemQuery alloc] initWithItemKey:m_key] autorelease];
+    HVItemQuery *query = [[HVItemQuery alloc] initWithItemKey:m_key];
     HVCHECK_NOTNULL(query);
     query.view.sections = HVItemSection_Blobs;  // Blob data only
     
-    HVGetItemsTask* getItemsTask = [[[HVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(HVTask *task) {
+    HVGetItemsTask* getItemsTask = [[HVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(HVTask *task) {
 
         HVItem* blobItem = ((HVGetItemsTask *) task).firstItemRetrieved;
-        m_blobs = [blobItem.blobs retain];
+        m_blobs = blobItem.blobs;
     
-    }]autorelease];
+    }];
     HVCHECK_NOTNULL(getItemsTask);
 
-    HVTask* getBlobTask = [[[HVTask alloc] initWithCallback:callback andChildTask:getItemsTask] autorelease];
+    HVTask* getBlobTask = [[HVTask alloc] initWithCallback:callback andChildTask:getItemsTask];
     HVCHECK_NOTNULL(getBlobTask);
 
     [getBlobTask start];
@@ -366,7 +348,7 @@ LError:
 
 -(HVItemBlobUploadTask *)uploadBlob:(id<HVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(HVRecordReference *) record andCallback:(HVTaskCompletion)callback
 {
-    HVItemBlobUploadTask* task = [[self newUploadBlobTask:data forBlobName:name contentType:contentType record:record andCallback:callback] autorelease];
+    HVItemBlobUploadTask* task = [self newUploadBlobTask:data forBlobName:name contentType:contentType record:record andCallback:callback];
     
     [task start];
     
@@ -378,14 +360,13 @@ LError:
     HVBlobInfo* blobInfo = [[HVBlobInfo alloc] initWithName:name andContentType:contentType];
     
     HVItemBlobUploadTask* task = [[HVItemBlobUploadTask alloc] initWithSource:data blobInfo:blobInfo forItem:self record:record andCallback:callback];
-    [blobInfo release];
     
     return task;
 }
 
 -(HVItem *)shallowClone
 {
-    HVItem* item = [[[HVItem alloc] init] autorelease];
+    HVItem* item = [[HVItem alloc] init];
     item.key = self.key;
     item.type = self.type;
     item.state = self.state;
@@ -451,25 +432,25 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_key = [[reader readElementWithXmlName:x_element_key asClass:[HVItemKey class]] retain];
-    m_type = [[reader readElementWithXmlName:x_element_type asClass:[HVItemType class]] retain];
+    m_key = [reader readElementWithXmlName:x_element_key asClass:[HVItemKey class]];
+    m_type = [reader readElementWithXmlName:x_element_type asClass:[HVItemType class]];
     
-    NSString* state = [[reader readStringElement:c_element_state] retain];
+    NSString* state = [reader readStringElement:c_element_state];
     if (state)
     {
         m_state = HVItemStateFromString(state);
     }
 
     m_flags = [reader readIntElementXmlName:x_element_flags];
-    m_effectiveDate = [[reader readDateElementXmlName:x_element_effectiveDate] retain];
-    m_created = [[reader readElementWithXmlName:x_element_created asClass:[HVAudit class]] retain];
-    m_updated = [[reader readElementWithXmlName:x_element_updated asClass:[HVAudit class]] retain];
-    m_data = [[reader readElementWithXmlName:x_element_data asClass:[HVItemData class]] retain];
-    m_blobs = [[reader readElementWithXmlName:x_element_blobs asClass:[HVBlobPayload class]] retain];
+    m_effectiveDate = [reader readDateElementXmlName:x_element_effectiveDate];
+    m_created = [reader readElementWithXmlName:x_element_created asClass:[HVAudit class]];
+    m_updated = [reader readElementWithXmlName:x_element_updated asClass:[HVAudit class]];
+    m_data = [reader readElementWithXmlName:x_element_data asClass:[HVItemData class]];
+    m_blobs = [reader readElementWithXmlName:x_element_blobs asClass:[HVBlobPayload class]];
     [reader skipElementWithXmlName:x_element_permissions];
     [reader skipElementWithXmlName:x_element_tags];
     [reader skipElementWithXmlName:x_element_signatures];
-    m_updatedEndDate = [[reader readElementWithXmlName:x_element_updatedEndDate asClass:[HVConstrainedXmlDate class]] retain];
+    m_updatedEndDate = [reader readElementWithXmlName:x_element_updatedEndDate asClass:[HVConstrainedXmlDate class]];
     if (m_updatedEndDate && m_updatedEndDate.isNull)
     {
         m_updatedEndDate = nil;
@@ -582,7 +563,7 @@ LError:
 
 -(NSMutableDictionary *)getItemsIndexedByID
 {
-    return [[self newIndexByID] autorelease];
+    return [self newIndexByID];
 }
 
 -(NSUInteger)indexOfTypeID:(NSString *)typeID
@@ -623,7 +604,7 @@ LError:
         return nil;
     }
     
-    HVStringCollection* copy =[[[HVStringCollection alloc] init] autorelease];
+    HVStringCollection* copy =[[HVStringCollection alloc] init];
     for (HVItem* item in items)
     {
         [copy addObject:item.itemID];
@@ -689,7 +670,7 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_inner = [[reader readElementArray:c_element_item asClass:[HVItem class]] retain];
+    m_inner = [reader readElementArray:c_element_item asClass:[HVItem class]];
 }
 
 @end

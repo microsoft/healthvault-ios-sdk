@@ -2,7 +2,7 @@
 //  HVLockTable.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ static const long c_lockNotAcquired = 0;
 
 @property (readonly, nonatomic) long lockID;
 #ifdef DEBUG
-@property (readonly, nonatomic) NSDate* timestamp;
+@property (readonly, nonatomic, strong) NSDate* timestamp;
 #endif
 
 -(id) initWithID:(long) lockID;
@@ -62,7 +62,7 @@ static const long c_lockNotAcquired = 0;
     
     m_lockID = lockID;
 #ifdef DEBUG
-    m_timestamp = [[NSDate date] retain];
+    m_timestamp = [NSDate date];
 #endif
     return self;
     
@@ -70,13 +70,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-#ifdef DEBUG
-    [m_timestamp release];
-#endif
-    [super dealloc];
-}
 
 -(BOOL) isLock:(long)lockID
 {
@@ -85,7 +78,7 @@ LError:
 
 -(NSString *)description
 {
-    NSMutableString* string = [[[NSMutableString alloc] init] autorelease];
+    NSMutableString* string = [[NSMutableString alloc] init];
     [string appendFormat:@"LockID=%ld", m_lockID];
 #ifdef DEBUG
     [string appendFormat:@", Timestamp=%@", m_timestamp];
@@ -119,10 +112,7 @@ LError:
 -(void)dealloc
 {
     [self releaseLock];
-    [m_key release];
-    [m_lockTable release];
     
-    [super dealloc];
 }
 
 -(void)releaseLock
@@ -152,8 +142,8 @@ LError:
     HVCHECK_SELF;
     
     m_lockID = lockID;
-    m_key = [key retain];
-    m_lockTable = [lockTable retain];
+    m_key = key;
+    m_lockTable = lockTable;
     
     return self;
     
@@ -191,11 +181,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_locks release];
-    [super dealloc];
-}
 
 -(NSArray *)allLockedKeys
 {
@@ -245,7 +230,6 @@ LError:
             }
             
             [self setLock:lock forKey:key];
-            [lock release];
             
             return lockId;
         }

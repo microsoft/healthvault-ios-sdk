@@ -2,7 +2,7 @@
 //  HVBloodGlucose.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,26 +39,26 @@
 //
 // (Required) when this measurement was taken
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Required) Blood glucose value). 
 // You can also use the convenience inMmolPerLiter and inMgPerDL properties
 //
-@property (readwrite, nonatomic, retain) HVBloodGlucoseMeasurement* value;
+@property (readwrite, nonatomic, strong) HVBloodGlucoseMeasurement* value;
 //
 // (Required) What type of measurement (plasma, whole blood)
 //  Preferred Vocabulary: glucose-measurement-type
 //  You can use the createPlasmaMeasurementCode & createWholeBloodMeasurentCode methods
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* measurementType;
+@property (readwrite, nonatomic, strong) HVCodableValue* measurementType;
 //
 // (Optional) Is the reading outside operating tempature of the measuring device
 //
-@property (readwrite, nonatomic, retain) HVBool* isOutsideOperatingTemp;
+@property (readwrite, nonatomic, strong) HVBool* isOutsideOperatingTemp;
 //
 // (Optional) Was this reading the result of a control test? 
 //
-@property (readwrite, nonatomic, retain) HVBool* isControlTest;
+@property (readwrite, nonatomic, strong) HVBool* isControlTest;
 //
 // (Optional) How did this reading rate, relative to normal? 
 //
@@ -67,7 +67,7 @@
 // (Optional) measurement context
 // Preferred Vocab: glucose-measurement-context
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* context;
+@property (readwrite, nonatomic, strong) HVCodableValue* context;
 
 //
 // Convenience properties

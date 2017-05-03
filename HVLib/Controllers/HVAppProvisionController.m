@@ -2,7 +2,7 @@
 //  HVAppProvisionController.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -76,14 +76,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_error release];
-    [m_callback release];
-    [m_hvInstanceID release];
-    
-    [super dealloc];
-}
 
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -100,7 +92,7 @@ LError:
     if ([self queryStringHasAppAuthSuccess:queryString])
     {
         m_status = HVAppProvisionSuccess;
-        m_hvInstanceID = [[self instanceIDFromQs:queryString] retain];
+        m_hvInstanceID = [self instanceIDFromQs:queryString];
         [self abort];
     }    
 
@@ -132,7 +124,7 @@ LError:
         {
             m_status = HVAppProvisionFailed;
 
-            m_error = [error retain];
+            m_error = error;
             
             [self abort];
         }

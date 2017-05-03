@@ -2,7 +2,7 @@
 //  HVTestResultRange.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@
     HVTestResultRangeValue* m_value;
 }
 
-@property (readwrite, nonatomic, retain) HVCodableValue* type;
-@property (readwrite, nonatomic, retain) HVCodableValue* text;
-@property (readwrite, nonatomic, retain) HVTestResultRangeValue* value;
+@property (readwrite, nonatomic, strong) HVCodableValue* type;
+@property (readwrite, nonatomic, strong) HVCodableValue* text;
+@property (readwrite, nonatomic, strong) HVTestResultRangeValue* value;
 
 @end
 

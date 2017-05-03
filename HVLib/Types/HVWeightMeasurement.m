@@ -2,7 +2,7 @@
 //  HVWeightMeasurement.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -123,13 +123,6 @@ LError:
     HVALLOC_FAIL;    
 }
 
--(void) dealloc
-{
-    [m_kg release];
-    [m_display release];
-    
-    [super dealloc];
-}
 
 -(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
@@ -190,31 +183,31 @@ LError:
 
 +(HVWeightMeasurement *)fromKg:(double)kg
 {
-    return [[[HVWeightMeasurement alloc] initWithKg:kg] autorelease];
+    return [[HVWeightMeasurement alloc] initWithKg:kg];
 }
 
 +(HVWeightMeasurement *)fromPounds:(double)pounds
 {
-    return [[[HVWeightMeasurement alloc] initWithPounds:pounds] autorelease];    
+    return [[HVWeightMeasurement alloc] initWithPounds:pounds];    
 }
 
 +(HVWeightMeasurement *)fromGrams:(double)grams
 {
-    HVWeightMeasurement* weight = [[[HVWeightMeasurement alloc] init] autorelease];
+    HVWeightMeasurement* weight = [[HVWeightMeasurement alloc] init];
     weight.inGrams = grams;
     return weight;
 }
 
 +(HVWeightMeasurement *)fromMillgrams:(double)mg
 {
-    HVWeightMeasurement* weight = [[[HVWeightMeasurement alloc] init] autorelease];
+    HVWeightMeasurement* weight = [[HVWeightMeasurement alloc] init];
     weight.inMilligrams = mg;
     return weight;
 }
 
 +(HVWeightMeasurement *)fromOunces:(double)ounces
 {
-    HVWeightMeasurement* weight = [[[HVWeightMeasurement alloc] init] autorelease];
+    HVWeightMeasurement* weight = [[HVWeightMeasurement alloc] init];
     weight.inOunces = ounces;
     return weight;    
 }
@@ -237,8 +230,8 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_kg = [[reader readElementWithXmlName:x_element_kg asClass:[HVPositiveDouble class]] retain];
-    m_display = [[reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]] retain];
+    m_kg = [reader readElementWithXmlName:x_element_kg asClass:[HVPositiveDouble class]];
+    m_display = [reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]];
 }
 
 +(double) kgToPounds:(double)kg

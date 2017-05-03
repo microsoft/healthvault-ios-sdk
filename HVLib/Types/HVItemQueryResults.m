@@ -2,7 +2,7 @@
 //  HVItemQueryResults.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,11 +35,6 @@ static NSString* const c_element_result = @"group";
     return (self.hasResults) ? [m_results objectAtIndex:0] : nil;
 }
 
--(void) dealloc
-{
-    [m_results release];
-    [super dealloc];
-}
 
 -(void) serialize:(XWriter *)writer
 {
@@ -48,7 +43,7 @@ static NSString* const c_element_result = @"group";
 
 -(void) deserialize:(XReader *)reader
 {
-     m_results = (HVItemQueryResultCollection *)[[reader readElementArray:c_element_result asClass:[HVItemQueryResult class] andArrayClass:[HVItemQueryResultCollection class]] retain];
+     m_results = (HVItemQueryResultCollection *)[reader readElementArray:c_element_result asClass:[HVItemQueryResult class] andArrayClass:[HVItemQueryResultCollection class]];
 }
 
 @end

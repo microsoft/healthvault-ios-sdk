@@ -2,7 +2,7 @@
 //  XSerializer.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,12 +32,12 @@ NSString* const XExceptionNotSerializable = @"X_NotSerializable";
     {
         if ([XSerializer serialize:obj withRoot:root toWriter:writer])
         {
-            return [[writer newXmlString] autorelease];
+            return [writer newXmlString];
         }
     }
     @finally 
     {
-        [writer release];
+        writer = nil;
     }
 
 LError:
@@ -68,7 +68,7 @@ LError:
         }
         @catch (id ex)
         {
-            savedEx = [ex retain];
+            savedEx = ex;
             [ex log];
             
             @throw;
@@ -92,7 +92,7 @@ LError:
     }
     @finally 
     {
-        [writer release];
+        writer = nil;
     }
     
 LError:
@@ -127,8 +127,8 @@ LError:
     }
     @finally
     {
-        [rawData release];
-        [writer release];
+        rawData = nil;
+        writer = nil;
     }
     
 LError:
@@ -152,7 +152,7 @@ LError:
         }
         @catch (id ex)
         {
-            savedEx = [ex retain];
+            savedEx = ex;
             [ex log];
             
             @throw;
@@ -189,7 +189,7 @@ LError:
     }
     @finally    
     {
-        [reader release];
+        reader = nil;
     }
     
 LError: 
@@ -211,16 +211,16 @@ LError:
     {
         if ([XSerializer deserialize:reader withRoot:root into:obj])
         {
-            return [obj retain];
+            return obj;
         }
     }
     @finally 
     {
-        [obj release];
+        obj = nil;
     }
     
 LError:
-    [obj release];
+    ;
     return nil;
 }
 
@@ -247,7 +247,7 @@ LError:
     }
     @finally    
     {
-        [reader release];
+        reader = nil;
     }
     
 LError:
@@ -284,8 +284,8 @@ LError:
     }
     @finally
     {
-        [fileData release];
-        [reader release];
+        fileData = nil;
+        reader = nil;
     }
     
 LError:
@@ -578,7 +578,7 @@ LError:
 
 -(id) readElementRequired:(NSString *)name asClass:(Class)classObj
 {
-    id obj = [[[classObj alloc] init] autorelease];
+    id obj = [[classObj alloc] init];
     HVCHECK_OOM(obj);
     
     [self readElementRequired:name intoObject:obj];
@@ -598,7 +598,7 @@ LError:
 {
     if ([self isStartElementWithName:name])
     {
-        id obj = [[[classObj alloc] init] autorelease];
+        id obj = [[classObj alloc] init];
         HVCHECK_OOM(obj);
         
         [self readElementContentIntoObject:obj];
@@ -654,7 +654,7 @@ LError:
     {
         if (elements == nil)
         {
-            elements = [[[HVStringCollection alloc] init] autorelease];
+            elements = [[HVStringCollection alloc] init];
             HVCHECK_OOM(elements);
         }
 
@@ -675,7 +675,7 @@ LError:
         {
             if (!elements)
             {
-                elements = [[[NSMutableArray alloc] init] autorelease];
+                elements = [[NSMutableArray alloc] init];
             }
             [elements addObject:xml];
         }
@@ -830,7 +830,7 @@ LError:
 
 -(id)readElementRequiredWithXmlName:(const xmlChar *)xName asClass:(Class)classObj
 {
-    id obj = [[[classObj alloc] init] autorelease];
+    id obj = [[classObj alloc] init];
     HVCHECK_OOM(obj);
     
     [self readElementRequiredWithXmlName:xName intoObject:obj];
@@ -852,7 +852,7 @@ LError:
 {
     if ([self isStartElementWithXmlName:xmlName])
     {
-        id obj = [[[classObj alloc] init] autorelease];
+        id obj = [[classObj alloc] init];
         HVCHECK_OOM(obj);
         
         [self readElementContentIntoObject:obj];
@@ -990,7 +990,7 @@ LError:
     {
         if (elements == nil)
         {
-            elements = [[[arrayClassObj alloc] init] autorelease];
+            elements = [[arrayClassObj alloc] init];
             HVCHECK_OOM(elements);
         }
         

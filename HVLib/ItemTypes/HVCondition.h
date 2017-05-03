@@ -2,7 +2,7 @@
 //  HVCondition.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,24 +39,24 @@
 // (Required) This condition's name
 // Vocabularies: icd9cm, Snomed etc
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* name;
+@property (readwrite, nonatomic, strong) HVCodableValue* name;
 //
 // Optional: 
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* onsetDate;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* onsetDate;
 //
 // Optional: 'acute', 'chronic' etc
 // Vocabulary: condition-occurrence
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* status;
+@property (readwrite, nonatomic, strong) HVCodableValue* status;
 //
 // Optional: Has the condition stoped? 
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* stopDate;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* stopDate;
 //
 // Optional
 //
-@property (readwrite, nonatomic, retain) NSString* stopReason;
+@property (readwrite, nonatomic, strong) NSString* stopReason;
 
 //-------------------------
 //

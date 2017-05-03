@@ -2,7 +2,7 @@
 //  HVSleepJournal.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,23 +54,23 @@ enum HVWakeState
 //
 // (Required) - Journal Entry is for this date/time
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Required) - time you went to bed
 //
-@property (readwrite, nonatomic, retain) HVTime* bedTime;
+@property (readwrite, nonatomic, strong) HVTime* bedTime;
 //
 // (Required) - time you finally woke up and got out of bed
 //
-@property (readwrite, nonatomic, retain) HVTime* wakeTime;
+@property (readwrite, nonatomic, strong) HVTime* wakeTime;
 //
 // (Required) - how long you slept for
 //
-@property (readwrite, nonatomic, retain) HVNonNegativeInt* sleepMinutes;
+@property (readwrite, nonatomic, strong) HVNonNegativeInt* sleepMinutes;
 //
 // (Required) - how long it took you to fall asleep
 //
-@property (readwrite, nonatomic, retain) HVNonNegativeInt* settlingMinutes;
+@property (readwrite, nonatomic, strong) HVNonNegativeInt* settlingMinutes;
 //
 // (Required) - how you felt when you woke up
 //
@@ -78,11 +78,11 @@ enum HVWakeState
 //
 // (Optional) - how many times you woke up or had your sleep interrupted
 //
-@property (readwrite, nonatomic, retain) HVOccurenceCollection* awakenings;
+@property (readwrite, nonatomic, strong) HVOccurenceCollection* awakenings;
 //
 // (Optional) - medications you took before going to bed
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* medicationsBeforeBed;
+@property (readwrite, nonatomic, strong) HVCodableValue* medicationsBeforeBed;
 
 //
 // Convenience

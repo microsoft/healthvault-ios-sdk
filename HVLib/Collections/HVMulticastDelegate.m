@@ -2,7 +2,7 @@
 //  HVMulticastDelegate.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,11 +35,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_delegates release];
-    [super dealloc];
-}
 
 -(void) subscribe:(id)delegate
 {
@@ -78,7 +73,10 @@ LError:
             id delegate = ((NSValue *)[m_delegates objectAtIndex:i]).nonretainedObjectValue;
             if ([delegate respondsToSelector:sel])
             {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                 [delegate performSelector:sel withObject:param];
+#pragma clang diagnostic pop
             }
         }
     }
@@ -93,7 +91,10 @@ LError:
             id delegate = ((NSValue *)[m_delegates objectAtIndex:i]).nonretainedObjectValue;
             if ([delegate respondsToSelector:sel])
             {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                 [delegate performSelector:sel withObject:param withObject:param];
+#pragma clang diagnostic pop
             }
         }
     }

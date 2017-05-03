@@ -2,7 +2,7 @@
 //  HVApproxDateTime.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ static NSString* const c_element_structured = @"structured";
     {
         m_dateTime = nil;    
     }
-    m_descriptive = [descriptive retain];
+    m_descriptive = descriptive;
 }
 
 -(void)setDateTime:(HVDateTime *)dateTime
@@ -43,7 +43,7 @@ static NSString* const c_element_structured = @"structured";
     {
         m_descriptive = nil;
     }
-    m_dateTime = [dateTime retain];
+    m_dateTime = dateTime;
 }
 
 -(BOOL)isStructured
@@ -72,7 +72,6 @@ LError:
     HVCHECK_NOTNULL(dateTime);
     
     self = [self initWithDateTime:dateTime];
-    [dateTime release];
     
     return self;
 
@@ -100,26 +99,20 @@ LError:
     return [self initWithDate:[NSDate date]];
 }
 
--(void)dealloc
-{
-    [m_descriptive release];
-    [m_dateTime release];
-    [super dealloc];
-}
 
 +(HVApproxDateTime *)fromDate:(NSDate *)date
 {
-    return [[[HVApproxDateTime alloc] initWithDate:date] autorelease];
+    return [[HVApproxDateTime alloc] initWithDate:date];
 }
 
 +(HVApproxDateTime *)fromDescription:(NSString *)descr
 {
-    return [[[HVApproxDateTime alloc] initWithDescription:descr] autorelease];
+    return [[HVApproxDateTime alloc] initWithDescription:descr];
 }
 
 +(HVApproxDateTime *)now
 {
-    return [[[HVApproxDateTime alloc] initNow] autorelease];
+    return [[HVApproxDateTime alloc] initNow];
 }
 
 -(NSString *)description
@@ -187,8 +180,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_descriptive = [[reader readStringElement:c_element_descriptive] retain];
-    m_dateTime = [[reader readElement:c_element_structured asClass:[HVDateTime class]] retain];
+    m_descriptive = [reader readStringElement:c_element_descriptive];
+    m_dateTime = [reader readElement:c_element_structured asClass:[HVDateTime class]];
 }
 
 @end

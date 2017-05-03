@@ -2,7 +2,7 @@
 //  HVRemoveItemsTask.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@
     HVItemKeyCollection* m_keys;
 }
 
-@property (readwrite, nonatomic, retain) HVItemKeyCollection* keys;
+@property (readwrite, nonatomic, strong) HVItemKeyCollection* keys;
 @property (readonly, nonatomic) BOOL hasKeys;
 
 -(id) initWithKey:(HVItemKey *) key andCallback:(HVTaskCompletion) callback;

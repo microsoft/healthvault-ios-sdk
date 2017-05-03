@@ -2,7 +2,7 @@
 //  HVNetworkReachability.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -92,7 +92,7 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     self = [super init];
     HVCHECK_SELF;
     
-    m_hostName = [hostName retain];
+    m_hostName = hostName;
 
     const char* szHostName = [hostName cStringUsingEncoding:NSUTF8StringEncoding]; // buffer is owned by NSString
     HVCHECK_NOTNULL(szHostName);
@@ -112,13 +112,11 @@ LError:
 {
     [self stopMonitoring];
     
-    [m_hostName release];
     if (m_hostRef)
     {
         CFRelease(m_hostRef);
     }
     
-    [super dealloc];
 }
 
 -(BOOL)refreshStatus
@@ -210,7 +208,7 @@ LError:
 
 -(BOOL)enableCallback:(BOOL)enable
 {
-    SCNetworkReachabilityContext context = {0, (void *)(self), NULL, NULL, NULL};
+    SCNetworkReachabilityContext context = {0, (__bridge void *)(self), NULL, NULL, NULL};
     return (SCNetworkReachabilitySetCallback(m_hostRef, (enable) ? HostReachabilityStatusChanged : NULL, &context));
 }
 

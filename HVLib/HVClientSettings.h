@@ -2,7 +2,7 @@
 //  HVClientSettings.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,33 +42,33 @@
 // <name>
 // Optional Environment name
 //
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 //
 // <friendlyName>
 // Optional. Friendly name for the environment.
 //
-@property (readwrite, nonatomic, retain) NSString* friendlyName;
+@property (readwrite, nonatomic, strong) NSString* friendlyName;
 //
 // <serviceUrl>
 // Optional. Url for HealthVault platform
 //
-@property (readwrite, nonatomic, retain) NSURL* serviceUrl;
+@property (readwrite, nonatomic, strong) NSURL* serviceUrl;
 //
 // <shellUrl>
 // Optional. Url for HealthVault Shell
 //
-@property (readwrite, nonatomic, retain) NSURL* shellUrl;
+@property (readwrite, nonatomic, strong) NSURL* shellUrl;
 //
 // <instanceID>
 // Optional. Instance ID of the targeted HealthVault environment
 //
-@property (readwrite, nonatomic, retain) NSString* instanceID;
+@property (readwrite, nonatomic, strong) NSString* instanceID;
 //
 // <appData>
 //  Optional. Can contain arbitrary Xml that you can use as you see fit
 //  This property gets/set the OUTER Xml for the <appData> element
 //
-@property (readwrite, nonatomic, retain) NSString* appDataXml;
+@property (readwrite, nonatomic, strong) NSString* appDataXml;
 
 @property (readonly, nonatomic) BOOL hasName;
 @property (readonly, nonatomic) BOOL hasInstanceID;
@@ -134,11 +134,11 @@
 // <masterAppID>
 // Required. Master SODA appID
 //
-@property (readwrite, nonatomic, retain) NSString* masterAppID;
+@property (readwrite, nonatomic, strong) NSString* masterAppID;
 //
 // <appName>
 // Optional
-@property (readwrite, nonatomic, retain) NSString* appName;
+@property (readwrite, nonatomic, strong) NSString* appName;
 //
 // <isMultiInstanceAware>
 // Is this application globally available?. Default is false
@@ -150,28 +150,28 @@
 // To create multiple environments, add multiple <enviromnent> elements in the Xml file
 // Each <environment> element is of type HVEnvironmentSettings (see above).
 //
-@property (readwrite, nonatomic, retain) NSArray* environments;
+@property (readwrite, nonatomic, strong) NSArray* environments;
 //
 // The name of this device...
 // <deviceName>
 // Default - uses the [[UIDevice device] name]
 //
-@property (readwrite, nonatomic, retain) NSString* deviceName;
+@property (readwrite, nonatomic, strong) NSString* deviceName;
 //
 // <country>
 // If not specified, uses the current system configured country
 //
-@property (readwrite, nonatomic, retain) NSString* country;
+@property (readwrite, nonatomic, strong) NSString* country;
 //
 // <language>
 // If not specified, uses the current system configured language
 //
-@property (readwrite, nonatomic, retain) NSString* language;
+@property (readwrite, nonatomic, strong) NSString* language;
 //
 // <signInTitle>
 //
-@property (readwrite, nonatomic, retain) NSString* signInControllerTitle;
-@property (readwrite, nonatomic, retain) NSString* signinRetryMessage;
+@property (readwrite, nonatomic, strong) NSString* signInControllerTitle;
+@property (readwrite, nonatomic, strong) NSString* signinRetryMessage;
 //
 // <httpTimeout>
 // Timeout for Http requests in seconds. Default is 60 seconds.
@@ -198,13 +198,13 @@
 // Get/Set the outXml for an <appData> element
 // <appData> contain arbitray Xml that you can use as you see fit
 //
-@property (readwrite, nonatomic, retain) NSString* appDataXml;
+@property (readwrite, nonatomic, strong) NSString* appDataXml;
 //
 // End PERSISTED PROPERTIES
 
-@property (readonly, nonatomic) HVEnvironmentSettings* firstEnvironment;
+@property (strong, readonly, nonatomic) HVEnvironmentSettings* firstEnvironment;
 
-@property (readwrite, nonatomic, retain) NSURL* rootDirectoryPath;
+@property (readwrite, nonatomic, strong) NSURL* rootDirectoryPath;
 
 -(void) validateSettings;
 

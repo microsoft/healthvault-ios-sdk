@@ -2,7 +2,7 @@
 //  HVVitalSignResult.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -67,18 +67,6 @@ LError:
     return [self initWithTitle:title value:value andUnit:(celsius) ? @"celsius" : @"fahrenheit"];
 }
 
--(void)dealloc
-{
-    [m_title release];
-    [m_value release];
-    [m_unit release];
-    [m_referenceMin release];
-    [m_referenceMax release];
-    [m_textValue release];
-    [m_flag release];
-    
-    [super dealloc];
-}
 
 -(NSString *)description
 {
@@ -121,13 +109,13 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_title = [[reader readElement:c_element_title asClass:[HVCodableValue class]] retain];
-    m_value = [[reader readElement:c_element_value asClass:[HVDouble class]] retain];
-    m_unit = [[reader readElement:c_element_unit asClass:[HVCodableValue class]] retain];
-    m_referenceMin = [[reader readElement:c_element_refMin asClass:[HVDouble class]] retain];
-    m_referenceMax = [[reader readElement:c_element_refMax asClass:[HVDouble class]] retain];
-    m_textValue = [[reader readStringElement:c_element_textValue] retain];
-    m_flag = [[reader readElement:c_element_flag asClass:[HVCodableValue class]] retain];   
+    m_title = [reader readElement:c_element_title asClass:[HVCodableValue class]];
+    m_value = [reader readElement:c_element_value asClass:[HVDouble class]];
+    m_unit = [reader readElement:c_element_unit asClass:[HVCodableValue class]];
+    m_referenceMin = [reader readElement:c_element_refMin asClass:[HVDouble class]];
+    m_referenceMax = [reader readElement:c_element_refMax asClass:[HVDouble class]];
+    m_textValue = [reader readStringElement:c_element_textValue];
+    m_flag = [reader readElement:c_element_flag asClass:[HVCodableValue class]];   
 }
 
 @end

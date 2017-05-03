@@ -2,7 +2,7 @@
 //  HVDietaryIntake.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -158,22 +158,6 @@ static NSString* const c_element_cholesterol = @"cholesterol";
     m_cholesterol.inMilligrams = cholesterolMilligrams;          
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_calories release];
-    [m_totalFat release];
-    [m_saturatedFat release];
-    [m_transFat release];
-    [m_protein release];
-    [m_carbs release];
-    [m_fiber release];
-    [m_sugar release];
-    [m_sodium release];
-    [m_cholesterol release];
-    
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -221,17 +205,17 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElement:c_element_when asClass:[HVDate class]] retain];
-    m_calories = [[reader readElement:c_element_calories asClass:[HVPositiveInt class]] retain];
-    m_totalFat = [[reader readElement:c_element_totalFat asClass:[HVWeightMeasurement class]] retain];
-    m_saturatedFat = [[reader readElement:c_element_saturatedFat asClass:[HVWeightMeasurement class]] retain];
-    m_transFat = [[reader readElement:c_element_transFat asClass:[HVWeightMeasurement class]] retain];
-    m_protein = [[reader readElement:c_element_protein asClass:[HVWeightMeasurement class]] retain];
-    m_carbs = [[reader readElement:c_element_carbs asClass:[HVWeightMeasurement class]] retain];
-    m_fiber = [[reader readElement:c_element_fiber asClass:[HVWeightMeasurement class]] retain];
-    m_sugar = [[reader readElement:c_element_sugar asClass:[HVWeightMeasurement class]] retain];
-    m_sodium = [[reader readElement:c_element_sodium asClass:[HVWeightMeasurement class]] retain];
-    m_cholesterol = [[reader readElement:c_element_cholesterol asClass:[HVWeightMeasurement class]] retain];    
+    m_when = [reader readElement:c_element_when asClass:[HVDate class]];
+    m_calories = [reader readElement:c_element_calories asClass:[HVPositiveInt class]];
+    m_totalFat = [reader readElement:c_element_totalFat asClass:[HVWeightMeasurement class]];
+    m_saturatedFat = [reader readElement:c_element_saturatedFat asClass:[HVWeightMeasurement class]];
+    m_transFat = [reader readElement:c_element_transFat asClass:[HVWeightMeasurement class]];
+    m_protein = [reader readElement:c_element_protein asClass:[HVWeightMeasurement class]];
+    m_carbs = [reader readElement:c_element_carbs asClass:[HVWeightMeasurement class]];
+    m_fiber = [reader readElement:c_element_fiber asClass:[HVWeightMeasurement class]];
+    m_sugar = [reader readElement:c_element_sugar asClass:[HVWeightMeasurement class]];
+    m_sodium = [reader readElement:c_element_sodium asClass:[HVWeightMeasurement class]];
+    m_cholesterol = [reader readElement:c_element_cholesterol asClass:[HVWeightMeasurement class]];    
 }
 
 +(NSString *)typeID

@@ -2,7 +2,7 @@
 //  BasicDemographics.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,17 +80,6 @@ static NSString* const c_element_lang = @"language";
 @synthesize state = m_state;
 @synthesize languageXml = m_languageXml;
 
--(void)dealloc
-{
-    [m_birthYear release];
-    [m_country release];
-    [m_postalCode release];
-    [m_city release];
-    [m_state release];
-    [m_firstDOW release];
-    [m_languageXml release];
-    [super dealloc];
-}
 
 -(NSString *)genderAsString
 {
@@ -99,7 +88,7 @@ static NSString* const c_element_lang = @"language";
 
 +(HVVocabIdentifier *)vocabForGender
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"gender-types"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"gender-types"];
 }
 
 -(HVClientResult *)validate
@@ -126,19 +115,19 @@ static NSString* const c_element_lang = @"language";
 
 -(void)deserialize:(XReader *)reader
 {
-    NSString* gender = [[reader readStringElement:c_element_gender] retain];
+    NSString* gender = [reader readStringElement:c_element_gender];
     if (gender)
     {
         m_gender = stringToGender(gender);
     }
     
-    m_birthYear = [[reader readElement:c_element_birthyear asClass:[HVYear class]] retain];
-    m_country = [[reader readElement:c_element_country asClass:[HVCodableValue class]] retain];
-    m_postalCode = [[reader readStringElement:c_element_postcode] retain];
-    m_city = [[reader readStringElement:c_element_city] retain];
-    m_state = [[reader readElement:c_element_state asClass:[HVCodableValue class]] retain];
-    m_firstDOW = [[reader readElement:c_element_dow asClass:[HVInt class]] retain];
-    m_languageXml = [[reader readElementRaw:c_element_lang] retain];
+    m_birthYear = [reader readElement:c_element_birthyear asClass:[HVYear class]];
+    m_country = [reader readElement:c_element_country asClass:[HVCodableValue class]];
+    m_postalCode = [reader readStringElement:c_element_postcode];
+    m_city = [reader readStringElement:c_element_city];
+    m_state = [reader readElement:c_element_state asClass:[HVCodableValue class]];
+    m_firstDOW = [reader readElement:c_element_dow asClass:[HVInt class]];
+    m_languageXml = [reader readElementRaw:c_element_lang];
 }
 
 +(NSString *)typeID

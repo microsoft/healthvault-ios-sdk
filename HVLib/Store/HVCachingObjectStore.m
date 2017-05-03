@@ -2,7 +2,7 @@
 //  HVCachingObjectStore.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,13 +27,6 @@
 
 @implementation HVCachingObjectStore
 
--(void)dealloc
-{
-    [m_cache release];
-    [m_inner release];
-    
-    [super dealloc];
-}
 
 -(id)initWithObjectStore:(id<HVObjectStore>)store
 {
@@ -42,7 +35,7 @@
     m_cache = [[NSCache alloc] init];
     HVCHECK_NOTNULL(m_cache);
     
-    m_inner = [store retain];
+    m_inner = store;
     
     return self;
 LError:

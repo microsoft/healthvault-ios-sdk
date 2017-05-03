@@ -2,7 +2,7 @@
 //  HVGetVocab.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@
     HVVocabSetCollection* m_vocabs;
 }
 
-@property (readwrite, nonatomic, retain) HVVocabSetCollection* vocabs;
-@property (readonly, nonatomic) HVVocabCodeSet* firstVocab;
+@property (readwrite, nonatomic, strong) HVVocabSetCollection* vocabs;
+@property (readonly, nonatomic, strong) HVVocabCodeSet* firstVocab;
 
 @end
 
@@ -49,15 +49,15 @@
 //
 // (Required) - Request - which vocabularies to get
 //
-@property (readwrite, nonatomic, retain) HVVocabParams* params;
+@property (readwrite, nonatomic, strong) HVVocabParams* params;
 //
 // Response - retrieved vocabulary data
 //
-@property (readonly, nonatomic) HVVocabGetResults* vocabResults;
+@property (readonly, nonatomic, strong) HVVocabGetResults* vocabResults;
 //
 // Convenience property to get the vocabulary from vocabResults
 //
-@property (readonly, nonatomic) HVVocabCodeSet* vocabulary;
+@property (readonly, nonatomic, strong) HVVocabCodeSet* vocabulary;
 
 //-------------------------
 //

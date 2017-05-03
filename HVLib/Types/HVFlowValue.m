@@ -2,7 +2,7 @@
 //  HVFlowValue.m
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,12 +60,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_litersPerSecond release];
-    [m_display release];
-    [super dealloc];
-}
 
 -(BOOL) updateDisplayText
 {
@@ -118,8 +112,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_litersPerSecond = [[reader readElementWithXmlName:x_element_litersPerSecond asClass:[HVPositiveDouble class]] retain];
-    m_display = [[reader readElementWithXmlName:x_element_displayValue asClass:[HVDisplayValue class]] retain];
+    m_litersPerSecond = [reader readElementWithXmlName:x_element_litersPerSecond asClass:[HVPositiveDouble class]];
+    m_display = [reader readElementWithXmlName:x_element_displayValue asClass:[HVDisplayValue class]];
 }
 
 +(NSString *)flowUnits

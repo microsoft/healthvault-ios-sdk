@@ -2,7 +2,7 @@
 //  HVEncounter.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,17 +38,6 @@ static NSString* const c_element_facility = @"facility";
 @synthesize consent = m_constentGranted;
 @synthesize facility = m_facility;
 
--(void)dealloc
-{
-    [m_when release];
-    [m_type release];
-    [m_reason release];
-    [m_duration release];
-    [m_constentGranted release];
-    [m_facility release];
-    
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -86,12 +75,12 @@ static NSString* const c_element_facility = @"facility";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
-    m_type = [[reader readElement:c_element_type asClass:[HVCodableValue class]] retain];
-    m_reason = [[reader readStringElement:c_element_reason] retain];
-    m_duration = [[reader readElement:c_element_duration asClass:[HVDuration class]] retain];
-    m_constentGranted = [[reader readElement:c_element_consent asClass:[HVBool class]] retain];
-    m_facility = [[reader readElement:c_element_facility asClass:[HVOrganization class]] retain];
+    m_when = [reader readElement:c_element_when asClass:[HVDateTime class]];
+    m_type = [reader readElement:c_element_type asClass:[HVCodableValue class]];
+    m_reason = [reader readStringElement:c_element_reason];
+    m_duration = [reader readElement:c_element_duration asClass:[HVDuration class]];
+    m_constentGranted = [reader readElement:c_element_consent asClass:[HVBool class]];
+    m_facility = [reader readElement:c_element_facility asClass:[HVOrganization class]];
 }
 
 +(NSString *)typeID

@@ -2,7 +2,7 @@
 //  HVBlobUploadTask.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,7 +39,6 @@
 @implementation HVBlobUploadTask
 
 @synthesize source = m_source;
-@synthesize delegate = m_delegate;
 @synthesize record = m_record;
 
 -(NSString *)blobUrl
@@ -56,7 +55,6 @@
 {
     HVBlobMemorySource* blobSource = [[HVBlobMemorySource alloc] initWithData:data];
     self = [self initWithSource:blobSource record:record andCallback:callback];
-    [blobSource release];
     
     return self;
 }
@@ -65,7 +63,6 @@
 {
     HVBlobFileHandleSource* blobSource = [[HVBlobFileHandleSource alloc] initWithFilePath:filePath];
     self = [self initWithSource:blobSource record:record andCallback:callback];
-    [blobSource release];
     
     return self;    
 }
@@ -77,8 +74,8 @@
     self = [super initWithCallback:callback];
     HVCHECK_SELF;
     
-    m_source = [source retain];
-    m_record = [record retain];
+    m_source = source;
+    m_record = record;
     //
     // First, we'll issue an operation to retrieve a Blob Url.
     // This is the  blobUrl to which we'll push the blob
@@ -91,28 +88,18 @@
     beginPutTask.record = m_record;
     
     [self setNextTask:beginPutTask];
-    [beginPutTask release];
     
     return self;
 LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_putParams release];
-    [m_source release];
-    [m_blobUrl release];
-    [m_record release];
-    
-    [super dealloc];
-}
 
 -(void)totalBytesWritten:(NSInteger)byteCount
 {
-    if (m_delegate)
+    if (self.delegate)
     {
-        [m_delegate totalBytesWritten:m_byteCountUploaded + byteCount];
+        [self.delegate totalBytesWritten:m_byteCountUploaded + byteCount];
     }
 }
 
@@ -136,9 +123,9 @@ LError:
 -(void)beginPutBlobComplete:(HVTask *)task
 {
     HVBeginBlobPutTask* blobTask = (HVBeginBlobPutTask *) task;
-    m_putParams = [blobTask.putParams retain];
+    m_putParams = blobTask.putParams;
 
-    m_blobUrl = [[NSURL URLWithString:m_putParams.url] retain];
+    m_blobUrl = [NSURL URLWithString:m_putParams.url];
     HVCHECK_OOM(m_blobUrl);
     //
     // Now that we know where to write the blob to, and in what chunks, we can begin
@@ -154,7 +141,7 @@ LError:
     }];
     HVCHECK_OOM(postRequest);
     
-    postRequest.delegate = m_delegate;
+    postRequest.delegate = self.delegate;
     
     @try 
     {
@@ -176,7 +163,7 @@ LError:
     }
     @finally 
     {
-        [postRequest release];
+        postRequest = nil;
     }    
 }
 

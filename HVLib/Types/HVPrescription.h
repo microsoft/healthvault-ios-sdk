@@ -38,17 +38,17 @@
 //
 // Required
 //
-@property (readwrite, nonatomic, retain) HVPerson* prescriber;
+@property (readwrite, nonatomic, strong) HVPerson* prescriber;
 //
 // Optional
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* datePrescribed;
-@property (readwrite, nonatomic, retain) HVApproxMeasurement* amount;
-@property (readwrite, nonatomic, retain) HVCodableValue* substitution;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* datePrescribed;
+@property (readwrite, nonatomic, strong) HVApproxMeasurement* amount;
+@property (readwrite, nonatomic, strong) HVCodableValue* substitution;
 @property (readwrite, nonatomic) int refills;
 @property (readwrite, nonatomic) int daysSupply;
-@property (readwrite, nonatomic, retain) HVDate* expirationDate;
-@property (readwrite, nonatomic, retain) HVCodableValue* instructions;
+@property (readwrite, nonatomic, strong) HVDate* expirationDate;
+@property (readwrite, nonatomic, strong) HVCodableValue* instructions;
 
 
 @end

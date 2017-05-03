@@ -2,7 +2,7 @@
 //  HVMethodFactory.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,7 +58,6 @@
     [queries addObject:query];
     
     HVGetItemsTask* task = [self newGetItemsForRecord:record queries:queries andCallback:callback];
-    [queries release];
     
     return task;
     
@@ -72,7 +71,6 @@ LError:
     HVCHECK_NOTNULL(items);
     
     HVPutItemsTask* putItems = [self newPutItemsForRecord:record items:items andCallback:callback];
-    [items release];
     
     return putItems;
     

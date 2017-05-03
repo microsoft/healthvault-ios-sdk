@@ -2,7 +2,7 @@
 //  HVCollection.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,12 +51,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_inner release];
-    [m_type release];
-    [super dealloc];
-}
 
 -(NSUInteger) count
 {
@@ -118,7 +112,7 @@ LError:
         return c_emptyString;
     }
     
-    NSMutableString* text = [[[NSMutableString alloc] init] autorelease];
+    NSMutableString* text = [[NSMutableString alloc] init];
     
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
@@ -225,7 +219,7 @@ LError:
         {
             if (!matches)
             {
-                matches = [[[HVStringCollection alloc] init] autorelease];
+                matches = [[HVStringCollection alloc] init];
             }
             [matches addObject:testString];
         }
@@ -244,7 +238,7 @@ LError:
         {
             if (!matches)
             {
-                matches = [[[HVStringCollection alloc] init] autorelease];
+                matches = [[HVStringCollection alloc] init];
             }
             [matches addObject:testString];
         }

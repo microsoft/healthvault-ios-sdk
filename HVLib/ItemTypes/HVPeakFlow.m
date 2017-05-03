@@ -2,7 +2,7 @@
 //  HVPeakFlow.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -69,16 +69,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_pef release];
-    [m_fev1 release];
-    [m_fev6 release];
-    [m_flags release];
-    
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -127,11 +117,11 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]] retain];
-    m_pef = [[reader readElementWithXmlName:x_element_pef asClass:[HVFlowValue class]] retain];
-    m_fev1 = [[reader readElementWithXmlName:x_element_fev1 asClass:[HVVolumeValue class]] retain];
-    m_fev6 = [[reader readElementWithXmlName:x_element_fev6 asClass:[HVVolumeValue class]] retain];
-    m_flags = [[reader readElementWithXmlName:x_element_flags asClass:[HVCodableValue class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]];
+    m_pef = [reader readElementWithXmlName:x_element_pef asClass:[HVFlowValue class]];
+    m_fev1 = [reader readElementWithXmlName:x_element_fev1 asClass:[HVVolumeValue class]];
+    m_fev6 = [reader readElementWithXmlName:x_element_fev6 asClass:[HVVolumeValue class]];
+    m_flags = [reader readElementWithXmlName:x_element_flags asClass:[HVCodableValue class]];
 }
 
 +(NSString *) typeID

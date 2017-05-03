@@ -2,7 +2,7 @@
 //  HVLabTestResults.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,13 +28,13 @@
     HVOrganization* m_orderedBy;
 }
 
-@property (readwrite, nonatomic, retain) HVApproxDateTime* when;
-@property (readwrite, nonatomic, retain) HVLabTestResultsGroupCollection* labGroup;
-@property (readwrite, nonatomic, retain) HVOrganization* orderedBy;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* when;
+@property (readwrite, nonatomic, strong) HVLabTestResultsGroupCollection* labGroup;
+@property (readwrite, nonatomic, strong) HVOrganization* orderedBy;
 //
 // Convenience properties
 //
-@property (readonly, nonatomic) HVLabTestResultsGroup* firstGroup;
+@property (readonly, nonatomic, strong) HVLabTestResultsGroup* firstGroup;
 //
 // Lab groups can be nested.
 // This returns all of them in a single collection

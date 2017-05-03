@@ -2,7 +2,7 @@
 //  HVHttpDownload.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@
     self = [super initWithUrl:url andCallback:callback];
     HVCHECK_SELF;
     
-    m_file = [file retain];
+    m_file = file;
     
     return self;
     
@@ -45,16 +45,10 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_file release];
-    [m_response release];
-    [super dealloc];
-}
 
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    m_response = [response retain];
+    m_response = response;
 
     if (m_file)
     {
@@ -66,9 +60,9 @@ LError:
 {
     [m_file writeData:data];
     m_totalBytesWritten += data.length;
-    if (m_delegate)
+    if (self.delegate)
     {
-        [m_delegate totalBytesWritten:m_totalBytesWritten];
+        [self.delegate totalBytesWritten:m_totalBytesWritten];
     }
 }
 
@@ -79,7 +73,6 @@ LError:
     {       
         HVHttpException* ex = [[HVHttpException alloc] initWithStatusCode:statusCode];
         [super handleError:ex];
-        [ex release];
     }
 
     [self complete];

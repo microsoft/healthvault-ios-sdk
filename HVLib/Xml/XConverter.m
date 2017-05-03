@@ -2,7 +2,7 @@
 //  XConvert.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -63,17 +63,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_parser release];
-    [m_utcParser release];
-    [m_formatter release];
-    [m_calendar release];
-    [m_dateLocale release];
-    [m_stringBuffer release];
-
-    [super dealloc];
-}
 
 -(BOOL) tryString:(NSString *)source toInt:(int *)result
 {
@@ -447,7 +436,7 @@ LError:
     HVCHECK_NOTNULL(guid);
     HVCHECK_NOTNULL(result);
     
-    *result = [((NSString *) CFUUIDCreateString(nil, guid)) autorelease];
+    *result = ((NSString *) CFBridgingRelease(CFUUIDCreateString(nil, guid)));
     HVCHECK_STRING(*result);
     
     return TRUE;

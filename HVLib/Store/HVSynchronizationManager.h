@@ -2,7 +2,7 @@
 //  HVSynchronizationManager.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,15 +26,15 @@
 @interface HVSynchronizationManager : NSObject
 {
 @private
-    HVLocalRecordStore* m_store;  
+    HVLocalRecordStore* m_store;
     HVSynchronizedStore* m_data;
     HVItemChangeManager* m_changeManager;
     NSMutableDictionary* m_syncTypes;
 }
 
-@property (readonly, nonatomic) HVLocalRecordStore* store;
-@property (readonly, nonatomic) HVRecordReference* record;
-@property (readonly, nonatomic) HVSynchronizedStore* data;
+@property (strong, readonly, nonatomic) HVLocalRecordStore* store;
+@property (strong, readonly, nonatomic) HVRecordReference* record;
+@property (strong, readonly, nonatomic) HVSynchronizedStore* data;
 @property (readonly, nonatomic) HVItemChangeManager* changeManager;
 
 -(id) initForRecordStore:(HVLocalRecordStore *) store withCache:(BOOL) cache;

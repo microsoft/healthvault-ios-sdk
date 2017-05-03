@@ -2,7 +2,7 @@
 //  HVBloodPressure.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,26 +37,26 @@
 //
 // (Required) When the blood pressure was taken
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Required) Systolic value. 
 //  You can also use the convenience systolicValue property 
 //
-@property (readwrite, nonatomic, retain) HVNonNegativeInt* systolic;
+@property (readwrite, nonatomic, strong) HVNonNegativeInt* systolic;
 //
 // (Required) Diastolic value
 // You can also use the convenience diastolicValue property
 //
-@property (readwrite, nonatomic, retain) HVNonNegativeInt* diastolic;
+@property (readwrite, nonatomic, strong) HVNonNegativeInt* diastolic;
 //
 // (Optional) Pulse
 // You can also use the convenience pulseValue property
 // 
-@property (readwrite, nonatomic, retain) HVNonNegativeInt* pulse;
+@property (readwrite, nonatomic, strong) HVNonNegativeInt* pulse;
 //
 // (Optional) True if irregular heartbeat
 //
-@property (readwrite, nonatomic, retain) HVBool *irregularHeartbeat;
+@property (readwrite, nonatomic, strong) HVBool *irregularHeartbeat;
 
 
 //

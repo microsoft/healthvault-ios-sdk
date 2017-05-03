@@ -2,7 +2,7 @@
 //  HVConstrainedXmlDate.m
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ static NSString* const c_maxDatePrefix = @"9999";
     
     if (value)
     {
-        m_value = [value retain];
+        m_value = value;
     }
     
     return self;
@@ -53,11 +53,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_value release];
-    [super dealloc];
-}
 
 -(NSString *) description
 {
@@ -94,7 +89,7 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    NSString* text = [[reader readString] retain];
+    NSString* text = [reader readString];
     
     if ([NSString isNilOrEmpty:text] || [text hasPrefix:c_maxDatePrefix])
     {
@@ -105,17 +100,17 @@ LError:
     NSDate* date = nil;
     if ([reader.converter tryString:text toDate:&date] && date)
     {
-        m_value = [date retain];
+        m_value = date;
     }
 }
 
 +(HVConstrainedXmlDate *)fromDate:(NSDate *)date
 {
-    return [[[HVConstrainedXmlDate alloc] initWith:date] autorelease];
+    return [[HVConstrainedXmlDate alloc] initWith:date];
 }
 
 +(HVConstrainedXmlDate *)nullDate
 {
-    return [[[HVConstrainedXmlDate alloc] init] autorelease];
+    return [[HVConstrainedXmlDate alloc] init];
 }
 @end

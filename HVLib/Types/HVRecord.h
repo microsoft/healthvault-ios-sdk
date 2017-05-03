@@ -2,7 +2,7 @@
 //  HVRecord.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,15 +46,15 @@
 //
 // (Required) Record name
 //
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 //
 // (Optional) Display name of the person whose record this is
 //
-@property (readwrite, nonatomic, retain) NSString* displayName;
+@property (readwrite, nonatomic, strong) NSString* displayName;
 //
 // (Optional) Such as mother, father, etc...
 //
-@property (readwrite, nonatomic, retain) NSString* relationship;
+@property (readwrite, nonatomic, strong) NSString* relationship;
 
 //-------------------------
 //

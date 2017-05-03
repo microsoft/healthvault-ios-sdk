@@ -2,7 +2,7 @@
 //  HVDailyMedicationUsage.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,31 +41,31 @@
 //
 // (Required) The day when the medication was consumed
 //
-@property (readwrite, nonatomic, retain) HVDate* when;
+@property (readwrite, nonatomic, strong) HVDate* when;
 //
 // (Required) The drug/substance/supplement used
 // Vocabulary: RxNorm
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* drugName;
+@property (readwrite, nonatomic, strong) HVCodableValue* drugName;
 //
 // (Required) number of doses. 
 // 
-@property (readwrite, nonatomic, retain) HVInt* dosesConsumed;
+@property (readwrite, nonatomic, strong) HVInt* dosesConsumed;
 //
 // (Optional) why the medication was taken
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* purpose;
+@property (readwrite, nonatomic, strong) HVCodableValue* purpose;
 //
 // (Optional) How many doses were meant to be taken 
 //
-@property (readwrite, nonatomic, retain) HVInt* dosesIntended;
+@property (readwrite, nonatomic, strong) HVInt* dosesIntended;
 //
 // All Optional
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* usageSchedule;
-@property (readwrite, nonatomic, retain) HVCodableValue* drugForm;
-@property (readwrite, nonatomic, retain) HVCodableValue* prescriptionType;
-@property (readwrite, nonatomic, retain) HVCodableValue* singleDoseDescription;
+@property (readwrite, nonatomic, strong) HVCodableValue* usageSchedule;
+@property (readwrite, nonatomic, strong) HVCodableValue* drugForm;
+@property (readwrite, nonatomic, strong) HVCodableValue* prescriptionType;
+@property (readwrite, nonatomic, strong) HVCodableValue* singleDoseDescription;
 
 //
 // Convenience

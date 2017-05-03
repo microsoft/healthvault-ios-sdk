@@ -2,7 +2,7 @@
 //  HVSynchronizedType.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
         [self releaseView];
         if (syncMgr)
         {
-            m_syncMgr = [syncMgr retain];
+            m_syncMgr = syncMgr;
         }
         else
         {
@@ -83,8 +83,6 @@ HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
         }
     }
 }
-
-@synthesize delegate = m_delegate;
 
 -(BOOL)isLoaded
 {
@@ -197,8 +195,8 @@ HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
     self = [super init];
     HVCHECK_SELF;
     
-    m_typeID = [typeID retain];
-    m_viewName = [[HVSynchronizedType makeViewNameForTypeID:typeID] retain];
+    m_typeID = typeID;
+    m_viewName = [HVSynchronizedType makeViewNameForTypeID:typeID];
     
     self.syncMgr = syncMgr;
     
@@ -214,13 +212,9 @@ LError:
 
 -(void)dealloc
 {
-    [m_typeID release];
-    [m_viewName release];
-    [m_syncMgr release];
     
     [self releaseView];
     
-    [super dealloc];
 }
 
 -(BOOL)hasPendingChanges
@@ -447,7 +441,7 @@ LError:
             }
             @finally
             {
-                [lock release];
+                lock = nil;
             }
         }
         
@@ -484,18 +478,14 @@ LError:
                 HVItem* localItem = [[self beginViewOp] getLocalItemWithKey:key];
                 if (localItem)
                 {
-                    op = [[[HVItemEditOperation alloc] initForType:self item:localItem andLock:lock] autorelease];
-                    if (op)
-                    {
-                        [lock release];
-                    }
+                    op = [[HVItemEditOperation alloc] initForType:self item:localItem andLock:lock];
                 }
             }
             @finally
             {
                 if (op == nil)
                 {
-                    [lock release];
+                    lock = nil;
                 }
                 [self endViewOp];
             }
@@ -601,9 +591,9 @@ LError:
 -(void) itemsAvailable:(HVItemCollection *)items inView:(HVTypeView *)view viewChanged:(BOOL) viewChanged
 {
     safeInvokeAction(^{
-        if (m_delegate)
+        if (self.delegate)
         {
-            [m_delegate synchronizedType:self itemsAvailable:items typeChanged:viewChanged];
+            [self.delegate synchronizedType:self itemsAvailable:items typeChanged:viewChanged];
         }
         
         if (m_broadcastNotifications)
@@ -618,16 +608,15 @@ LError:
                 userInfo:args
             ];
             
-            [args release];
         }
     });
 }
 -(void) keysNotAvailable:(NSArray *) keys inView:(HVTypeView *) view
 {
     safeInvokeAction(^{
-        if (m_delegate)
+        if (self.delegate)
         {
-            [m_delegate synchronizedType:self keysNotAvailable:keys];
+            [self.delegate synchronizedType:self keysNotAvailable:keys];
         }
         
         if (m_broadcastNotifications)
@@ -641,7 +630,6 @@ LError:
                 userInfo:args
              ];
             
-            [args release];
         }
 });
 }
@@ -650,9 +638,9 @@ LError:
     [self saveView];
     
     safeInvokeAction(^{
-        if (m_delegate)
+        if (self.delegate)
         {
-            [m_delegate synchronizedTypeSyncCompleted:self];
+            [self.delegate synchronizedTypeSyncCompleted:self];
         }
       
         if (m_broadcastNotifications)
@@ -667,9 +655,9 @@ LError:
 -(void) synchronizationFailedInView:(HVTypeView *) view withError:(id) ex
 {
     safeInvokeAction(^{
-        if (m_delegate)
+        if (self.delegate)
         {
-            [m_delegate synchronizedType:self syncFailedWithError:ex];
+            [self.delegate synchronizedType:self syncFailedWithError:ex];
         }
         if (m_broadcastNotifications)
         {
@@ -767,7 +755,7 @@ LError:
 {
     if (!m_view)
     {
-        m_view = [[self loadView] retain];
+        m_view = [self loadView];
         if (!m_view)
         {
             m_view = [[HVTypeView alloc] initForTypeID:m_typeID overStore:m_syncMgr.store];
@@ -870,22 +858,14 @@ LError:
     m_item = [item newDeepClone];
     HVCHECK_NOTNULL(m_item);
     
-    m_type = [type retain];
-    m_lock = [lock retain];
+    m_type = type;
+    m_lock = lock;
     
     return self;
 LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_item release];
-    [m_type release];
-    [m_lock release];
-    
-    [super dealloc];
-}
 
 -(BOOL)commit
 {

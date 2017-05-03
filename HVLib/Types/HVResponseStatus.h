@@ -2,7 +2,7 @@
 //  HVResponseStatus.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
 }
 
 @property (readwrite, nonatomic) int code;
-@property (readwrite, nonatomic, retain) HVServerError* error;
+@property (readwrite, nonatomic, strong) HVServerError* error;
 @property (readonly, nonatomic) BOOL hasError;
 
 

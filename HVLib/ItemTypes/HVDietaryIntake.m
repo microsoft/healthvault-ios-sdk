@@ -2,7 +2,7 @@
 //  HVDietaryIntake.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -107,52 +107,6 @@ static const xmlChar* x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
 
 @synthesize additionalFacts = m_additionalFacts;
 
--(void)dealloc
-{
-    [m_foodItem release];
-    [m_servingSize release];
-    [m_servingsConsumed release];
-    [m_meal release];
-    [m_when release];
-    
-    [m_calories release];
-    [m_caloriesFromFat release];
-    [m_totalFat release];
-    [m_saturatedFat release];
-    [m_transFat release];
-    [m_monoUnsaturatedFat release];
-    [m_polyUnsaturatedFat release];
-    
-    [m_protein release];
-    [m_carbs release];
-    [m_fiber release];
-    [m_sugar release];
-    [m_sodium release];
-    [m_cholesterol release];
-    
-    [m_calcium release];
-    [m_iron release];
-    [m_magnesium release];
-    [m_phosphorus release];
-    [m_potassium release];
-    [m_zinc release];
-    
-    [m_vitaminA release];
-    [m_vitaminE release];
-    [m_vitaminD release];
-    [m_vitaminC release];
-    [m_thiamin release];
-    [m_riboflavin release];
-    [m_niacin release];
-    [m_vitaminB6 release];
-    [m_folate release];
-    [m_vitaminB12 release];
-    [m_vitaminK release];
-    
-    [m_additionalFacts release];
-    
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -166,12 +120,12 @@ static const xmlChar* x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
 
 +(HVVocabIdentifier *)vocabForFood
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_usdaFamily andName:@"food-description"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_usdaFamily andName:@"food-description"];    
 }
 
 +(HVVocabIdentifier *)vocabForMeals
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"dietary-intake-meals"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"dietary-intake-meals"];    
 }
 
 +(HVCodableValue *)mealCodeForBreakfast
@@ -245,48 +199,48 @@ static const xmlChar* x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
 
 -(void)deserialize:(XReader *)reader
 {
-    m_foodItem = [[reader readElementWithXmlName:x_element_foodItem asClass:[HVCodableValue class]] retain];
-    m_servingSize = [[reader readElementWithXmlName:x_element_servingSize asClass:[HVCodableValue class]] retain];
-    m_servingsConsumed = [[reader readElementWithXmlName:x_element_servingsConsumed asClass:[HVNonNegativeDouble class]] retain];
-    m_meal = [[reader readElementWithXmlName:x_element_meal asClass:[HVCodableValue class]] retain];
+    m_foodItem = [reader readElementWithXmlName:x_element_foodItem asClass:[HVCodableValue class]];
+    m_servingSize = [reader readElementWithXmlName:x_element_servingSize asClass:[HVCodableValue class]];
+    m_servingsConsumed = [reader readElementWithXmlName:x_element_servingsConsumed asClass:[HVNonNegativeDouble class]];
+    m_meal = [reader readElementWithXmlName:x_element_meal asClass:[HVCodableValue class]];
     
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
     
-    m_calories = [[reader readElementWithXmlName:x_element_calories asClass:[HVFoodEnergyValue class]] retain];
-    m_caloriesFromFat = [[reader readElementWithXmlName:x_element_energyFat asClass:[HVFoodEnergyValue class]] retain];
-    m_totalFat = [[reader readElementWithXmlName:x_element_totalFat asClass:[HVWeightMeasurement class]] retain];
-    m_saturatedFat = [[reader readElementWithXmlName:x_element_saturatedFat asClass:[HVWeightMeasurement class]] retain];
-    m_transFat = [[reader readElementWithXmlName:x_element_transFat asClass:[HVWeightMeasurement class]] retain];
-    m_monoUnsaturatedFat = [[reader readElementWithXmlName:x_element_monounsaturatedFat asClass:[HVWeightMeasurement class]] retain];
-    m_polyUnsaturatedFat = [[reader readElementWithXmlName:x_element_polyunsaturatedFat asClass:[HVWeightMeasurement class]] retain];
+    m_calories = [reader readElementWithXmlName:x_element_calories asClass:[HVFoodEnergyValue class]];
+    m_caloriesFromFat = [reader readElementWithXmlName:x_element_energyFat asClass:[HVFoodEnergyValue class]];
+    m_totalFat = [reader readElementWithXmlName:x_element_totalFat asClass:[HVWeightMeasurement class]];
+    m_saturatedFat = [reader readElementWithXmlName:x_element_saturatedFat asClass:[HVWeightMeasurement class]];
+    m_transFat = [reader readElementWithXmlName:x_element_transFat asClass:[HVWeightMeasurement class]];
+    m_monoUnsaturatedFat = [reader readElementWithXmlName:x_element_monounsaturatedFat asClass:[HVWeightMeasurement class]];
+    m_polyUnsaturatedFat = [reader readElementWithXmlName:x_element_polyunsaturatedFat asClass:[HVWeightMeasurement class]];
     
-    m_protein = [[reader readElementWithXmlName:x_element_protein asClass:[HVWeightMeasurement class]] retain];
-    m_carbs = [[reader readElementWithXmlName:x_element_carbs asClass:[HVWeightMeasurement class]] retain];
-    m_fiber = [[reader readElementWithXmlName:x_element_fiber asClass:[HVWeightMeasurement class]] retain];
-    m_sugar = [[reader readElementWithXmlName:x_element_sugars asClass:[HVWeightMeasurement class]] retain];
-    m_sodium = [[reader readElementWithXmlName:x_element_sodium asClass:[HVWeightMeasurement class]] retain];
-    m_cholesterol = [[reader readElementWithXmlName:x_element_cholesterol asClass:[HVWeightMeasurement class]] retain];
+    m_protein = [reader readElementWithXmlName:x_element_protein asClass:[HVWeightMeasurement class]];
+    m_carbs = [reader readElementWithXmlName:x_element_carbs asClass:[HVWeightMeasurement class]];
+    m_fiber = [reader readElementWithXmlName:x_element_fiber asClass:[HVWeightMeasurement class]];
+    m_sugar = [reader readElementWithXmlName:x_element_sugars asClass:[HVWeightMeasurement class]];
+    m_sodium = [reader readElementWithXmlName:x_element_sodium asClass:[HVWeightMeasurement class]];
+    m_cholesterol = [reader readElementWithXmlName:x_element_cholesterol asClass:[HVWeightMeasurement class]];
     
-    m_calcium = [[reader readElementWithXmlName:x_element_calcium asClass:[HVWeightMeasurement class]] retain];
-    m_iron = [[reader readElementWithXmlName:x_element_iron asClass:[HVWeightMeasurement class]] retain];
-    m_magnesium = [[reader readElementWithXmlName:x_element_magnesium asClass:[HVWeightMeasurement class]] retain];
-    m_phosphorus = [[reader readElementWithXmlName:x_element_phosphorus asClass:[HVWeightMeasurement class]] retain];
-    m_potassium = [[reader readElementWithXmlName:x_element_potassium asClass:[HVWeightMeasurement class]] retain];
-    m_zinc = [[reader readElementWithXmlName:x_element_zinc asClass:[HVWeightMeasurement class]] retain];
+    m_calcium = [reader readElementWithXmlName:x_element_calcium asClass:[HVWeightMeasurement class]];
+    m_iron = [reader readElementWithXmlName:x_element_iron asClass:[HVWeightMeasurement class]];
+    m_magnesium = [reader readElementWithXmlName:x_element_magnesium asClass:[HVWeightMeasurement class]];
+    m_phosphorus = [reader readElementWithXmlName:x_element_phosphorus asClass:[HVWeightMeasurement class]];
+    m_potassium = [reader readElementWithXmlName:x_element_potassium asClass:[HVWeightMeasurement class]];
+    m_zinc = [reader readElementWithXmlName:x_element_zinc asClass:[HVWeightMeasurement class]];
     
-    m_vitaminA = [[reader readElementWithXmlName:x_element_vitaminA asClass:[HVWeightMeasurement class]] retain];
-    m_vitaminE = [[reader readElementWithXmlName:x_element_vitaminE asClass:[HVWeightMeasurement class]] retain];
-    m_vitaminD = [[reader readElementWithXmlName:x_element_vitaminD asClass:[HVWeightMeasurement class]] retain];
-    m_vitaminC = [[reader readElementWithXmlName:x_element_vitaminC asClass:[HVWeightMeasurement class]] retain];
-    m_thiamin = [[reader readElementWithXmlName:x_element_thiamin asClass:[HVWeightMeasurement class]] retain];
-    m_riboflavin = [[reader readElementWithXmlName:x_element_riboflavin asClass:[HVWeightMeasurement class]] retain];
-    m_niacin = [[reader readElementWithXmlName:x_element_niacin asClass:[HVWeightMeasurement class]] retain];
-    m_vitaminB6 = [[reader readElementWithXmlName:x_element_vitaminB6 asClass:[HVWeightMeasurement class]] retain];
-    m_folate = [[reader readElementWithXmlName:x_element_folate asClass:[HVWeightMeasurement class]] retain];
-    m_vitaminB12 = [[reader readElementWithXmlName:x_element_vitaminB12 asClass:[HVWeightMeasurement class]] retain];
-    m_vitaminK = [[reader readElementWithXmlName:x_element_vitaminK asClass:[HVWeightMeasurement class]] retain];
+    m_vitaminA = [reader readElementWithXmlName:x_element_vitaminA asClass:[HVWeightMeasurement class]];
+    m_vitaminE = [reader readElementWithXmlName:x_element_vitaminE asClass:[HVWeightMeasurement class]];
+    m_vitaminD = [reader readElementWithXmlName:x_element_vitaminD asClass:[HVWeightMeasurement class]];
+    m_vitaminC = [reader readElementWithXmlName:x_element_vitaminC asClass:[HVWeightMeasurement class]];
+    m_thiamin = [reader readElementWithXmlName:x_element_thiamin asClass:[HVWeightMeasurement class]];
+    m_riboflavin = [reader readElementWithXmlName:x_element_riboflavin asClass:[HVWeightMeasurement class]];
+    m_niacin = [reader readElementWithXmlName:x_element_niacin asClass:[HVWeightMeasurement class]];
+    m_vitaminB6 = [reader readElementWithXmlName:x_element_vitaminB6 asClass:[HVWeightMeasurement class]];
+    m_folate = [reader readElementWithXmlName:x_element_folate asClass:[HVWeightMeasurement class]];
+    m_vitaminB12 = [reader readElementWithXmlName:x_element_vitaminB12 asClass:[HVWeightMeasurement class]];
+    m_vitaminK = [reader readElementWithXmlName:x_element_vitaminK asClass:[HVWeightMeasurement class]];
     
-    m_additionalFacts = [[reader readElement:c_element_additionalFacts asClass:[HVAdditionalNutritionFacts class]] retain];
+    m_additionalFacts = [reader readElement:c_element_additionalFacts asClass:[HVAdditionalNutritionFacts class]];
 }
 
 -(void)serialize:(XWriter *)writer

@@ -2,7 +2,7 @@
 //  HVPendingItem.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,9 +29,9 @@
     NSDate* m_effectiveDate;
 }
 
-@property (readwrite, nonatomic, retain) HVItemKey* key;
-@property (readwrite, nonatomic, retain) HVItemType* type;
-@property (readwrite, nonatomic, retain) NSDate* effectiveDate;
+@property (readwrite, nonatomic, strong) HVItemKey* key;
+@property (readwrite, nonatomic, strong) HVItemType* type;
+@property (readwrite, nonatomic, strong) NSDate* effectiveDate;
 
 @end
 

@@ -2,7 +2,7 @@
 //  HVSearchVocabTask.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,15 +43,15 @@
 //
 // (Required) - vocabulary being searched
 //
-@property (readwrite, nonatomic, retain) HVVocabIdentifier* vocabID;
+@property (readwrite, nonatomic, strong) HVVocabIdentifier* vocabID;
 //
 // (Required) - search parameters
 //
-@property (readwrite, nonatomic, retain) HVVocabSearchParams* params;
+@property (readwrite, nonatomic, strong) HVVocabSearchParams* params;
 //
 // RESULT - use this property to retrieve results when the task completes
 //
-@property (readonly, nonatomic) HVVocabCodeSet* searchResult;
+@property (readonly, nonatomic, strong) HVVocabCodeSet* searchResult;
 
 //-------------------------
 //

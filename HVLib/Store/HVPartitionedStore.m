@@ -2,7 +2,7 @@
 //  HVPartitionedStore.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@
     m_partitions = [[NSMutableDictionary alloc] init];
     HVCHECK_NOTNULL(m_partitions);
     
-    m_rootStore = [root retain];
+    m_rootStore = root;
     
     return self;
     
@@ -50,13 +50,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_rootStore release];
-    [m_partitions release];
-    
-    [super dealloc];
-}
 
 -(BOOL)partition:(NSString *)partitionKey keyExists:(NSString *)key
 {
@@ -213,7 +206,6 @@ LError:
             }
             store = [m_rootStore newChildStore:partitionKey];
             [m_partitions setObject:store forKey:partitionKey];
-            [store release];
         }
         
         return store;

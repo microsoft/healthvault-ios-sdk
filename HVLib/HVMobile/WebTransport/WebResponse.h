@@ -2,7 +2,7 @@
 //  WebResponse.h
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,10 +29,10 @@
 }
 
 /// Gets or sets the response data.
-@property (retain) NSString *responseData;
+@property (strong) NSString *responseData;
 
 /// Gets or sets the error text.
-@property (retain) NSString *errorText;
+@property (strong) NSString *errorText;
 
 /// Gets error status for response. Returns YES if request has been failed.
 @property (readonly, getter = getHasError) BOOL hasError;

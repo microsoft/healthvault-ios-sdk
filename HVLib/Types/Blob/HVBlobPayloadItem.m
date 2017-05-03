@@ -2,7 +2,7 @@
 //  HVBlobPayloadItem.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ LError:
     
     m_length = length;
    
-    m_blobUrl = [blobUrl retain];
+    m_blobUrl = blobUrl;
     
     return self;
     
@@ -75,22 +75,13 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_blobInfo release];
-    [m_blobUrl release];
-    [m_legacyEncoding release];
-    [m_encoding release];
-    
-    [super dealloc];
-}
 
 -(HVHttpResponse *)createDownloadTaskWithCallback:(HVTaskCompletion)callback
 {
     NSURL* url = [NSURL URLWithString:m_blobUrl];
     HVCHECK_NOTNULL(url);
     
-    return [[[HVHttpResponse alloc] initWithUrl:url andCallback:callback] autorelease];
+    return [[HVHttpResponse alloc] initWithUrl:url andCallback:callback];
 
 LError:
     return nil;
@@ -119,7 +110,7 @@ LError:
     NSURL* url = [NSURL URLWithString:m_blobUrl];
     HVCHECK_NOTNULL(url);
     
-    HVHttpDownload* response = [[[HVHttpDownload alloc] initWithUrl:url fileHandle:file andCallback:callback] autorelease];
+    HVHttpDownload* response = [[HVHttpDownload alloc] initWithUrl:url fileHandle:file andCallback:callback];
     [response start];
     
     return response;
@@ -149,11 +140,11 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_blobInfo = [[reader readElement:c_element_blobInfo asClass:[HVBlobInfo class]] retain];
+    m_blobInfo = [reader readElement:c_element_blobInfo asClass:[HVBlobInfo class]];
     m_length = [reader readIntElement:c_element_length];
-    m_blobUrl = [[reader readStringElement:c_element_blobUrl] retain];
-    m_legacyEncoding = [[reader readStringElement:c_element_legacyEncoding] retain];
-    m_encoding = [[reader readStringElement:c_element_currentEncoding] retain];
+    m_blobUrl = [reader readStringElement:c_element_blobUrl];
+    m_legacyEncoding = [reader readStringElement:c_element_legacyEncoding];
+    m_encoding = [reader readStringElement:c_element_currentEncoding];
 }
 
 @end

@@ -2,7 +2,7 @@
 //  HVTypeViewDataSource.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    m_view = [view retain];
+    m_view = view;
     self.table = table;
     
     m_rowAnimation = UITableViewRowAnimationAutomatic;
@@ -77,13 +77,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_view release];
-    // m_table is a weak ref
-    
-    [super dealloc];
-}
 
 -(void)reloadAllItems
 {
@@ -115,7 +108,6 @@ LError:
         [m_table reloadRowsAtIndexPaths:tableRowsToReload withRowAnimation:m_rowAnimation];
     }
     
-    [tableRowsToReload release];
 }
 
 -(void)reloadItem:(HVItem *)item
@@ -221,7 +213,7 @@ LError:
     UITableViewCell* cell = [table dequeueReusableCellWithIdentifier:@"Cell"];
     if (!cell)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:m_cellStyle reuseIdentifier:@"Cell"] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:m_cellStyle reuseIdentifier:@"Cell"];
     }
     return cell;
 }
@@ -242,7 +234,7 @@ LError:
 
 -(NSMutableArray *)indexPathArrayForRow:(NSUInteger)row
 {
-    NSMutableArray* array = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
+    NSMutableArray* array = [[NSMutableArray alloc] initWithCapacity:1];
     HVCHECK_NOTNULL(array);
     
     NSIndexPath* pathForRow = [NSIndexPath indexPathForRow:row inSection:0];
@@ -285,7 +277,7 @@ LError:
     self = [super initForTable:table andView:typeView];
     HVCHECK_SELF;
     
-    m_typeView = [typeView retain];
+    m_typeView = typeView;
     m_typeView.delegate = self;
     
     return self;
@@ -297,9 +289,7 @@ LError:
 -(void)dealloc
 {
     m_typeView.delegate = nil;
-    [m_typeView release];
     
-    [super dealloc];
 }
 
 -(void)saveTypeView

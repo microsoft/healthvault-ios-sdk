@@ -2,7 +2,7 @@
 //  HVSynchronizedType.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -176,15 +176,14 @@ HVDECLARE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
     NSString* m_viewName;
     HVSynchronizationManager* m_syncMgr;
     HVTypeView* m_view;
-    id<HVSynchronizedTypeDelegate> m_delegate;
     NSInteger m_readAheadChunkSize;
     BOOL m_broadcastNotifications;
 
     int m_accessCount;
 }
 
-@property (readwrite, nonatomic, retain) HVSynchronizationManager* syncMgr;
-@property (readwrite, nonatomic, assign) id<HVSynchronizedTypeDelegate> delegate;  // weak ref
+@property (readwrite, nonatomic, strong) HVSynchronizationManager* syncMgr;
+@property (readwrite, nonatomic, weak) id<HVSynchronizedTypeDelegate> delegate;  // weak ref
 @property (readwrite, nonatomic) NSInteger readAheadChunkSize;
 @property (readonly, nonatomic) BOOL isLoaded;
 @property (readwrite, nonatomic) BOOL broadcastNotifications;

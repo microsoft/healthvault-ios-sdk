@@ -2,7 +2,7 @@
 //  HVLabTestResultsGroup.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,16 +41,6 @@ static const xmlChar* x_element_results = XMLSTRINGCONST("results");
     return ![NSArray isNilOrEmpty:m_subGroups];
 }
 
--(void)dealloc
-{
-    [m_groupName release];
-    [m_laboratory release];
-    [m_status release];
-    [m_subGroups release];
-    [m_results release];
-    
-    [super dealloc];
-}
 
 -(void)addToCollection:(HVLabTestResultsGroupCollection *)groups
 {
@@ -88,11 +78,11 @@ static const xmlChar* x_element_results = XMLSTRINGCONST("results");
 
 -(void)deserialize:(XReader *)reader
 {
-    m_groupName = [[reader readElementWithXmlName:x_element_groupName asClass:[HVCodableValue class]] retain];
-    m_laboratory = [[reader readElementWithXmlName:x_element_laboratory asClass:[HVOrganization class]] retain];
-    m_status = [[reader readElementWithXmlName:x_element_status asClass:[HVCodableValue class]] retain];
-    m_subGroups = (HVLabTestResultsGroupCollection *)[[reader readElementArrayWithXmlName:x_element_subGroups asClass:[HVLabTestResultsGroup class] andArrayClass:[HVLabTestResultsGroupCollection class]] retain];
-    m_results = (HVLabTestResultsDetailsCollection *)[[reader readElementArrayWithXmlName:x_element_results asClass:[HVLabTestResultsDetails class] andArrayClass:[HVLabTestResultsDetailsCollection class]] retain];
+    m_groupName = [reader readElementWithXmlName:x_element_groupName asClass:[HVCodableValue class]];
+    m_laboratory = [reader readElementWithXmlName:x_element_laboratory asClass:[HVOrganization class]];
+    m_status = [reader readElementWithXmlName:x_element_status asClass:[HVCodableValue class]];
+    m_subGroups = (HVLabTestResultsGroupCollection *)[reader readElementArrayWithXmlName:x_element_subGroups asClass:[HVLabTestResultsGroup class] andArrayClass:[HVLabTestResultsGroupCollection class]];
+    m_results = (HVLabTestResultsDetailsCollection *)[reader readElementArrayWithXmlName:x_element_results asClass:[HVLabTestResultsDetails class] andArrayClass:[HVLabTestResultsDetailsCollection class]];
 }
 
 @end

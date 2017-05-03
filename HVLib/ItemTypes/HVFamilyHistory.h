@@ -2,7 +2,7 @@
 //  HVFamilyHistory.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,16 +35,16 @@
 //
 // (Optional) Relative 
 //
-@property (readwrite, nonatomic, retain) HVRelative* relative;
+@property (readwrite, nonatomic, strong) HVRelative* relative;
 //
 // (Optional) Any conditions this relative had
 //
-@property (readwrite, nonatomic, retain) HVConditionEntryCollection* conditions;
+@property (readwrite, nonatomic, strong) HVConditionEntryCollection* conditions;
 //
 // Convenience 
 //
 @property (readonly, nonatomic) BOOL hasConditions;
-@property (readonly, nonatomic) HVConditionEntry* firstCondition;
+@property (readonly, nonatomic, strong) HVConditionEntry* firstCondition;
 
 //-------------------------
 //

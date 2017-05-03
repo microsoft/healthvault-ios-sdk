@@ -2,7 +2,7 @@
 //  HVAssessment.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,19 +36,19 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 // 
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* category;
+@property (readwrite, nonatomic, strong) HVCodableValue* category;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVAssessmentFieldCollection* results;
+@property (readwrite, nonatomic, strong) HVAssessmentFieldCollection* results;
 
 //-------------------------
 //

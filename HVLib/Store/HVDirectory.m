@@ -2,7 +2,7 @@
 //  HVDirectory.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -65,17 +65,17 @@
 +(NSString *)mimeTypeForFileExtension:(NSString *)ext
 {
     CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef) ext, NULL);
-    NSString* mimeType = (NSString *) UTTypeCopyPreferredTagWithClass (uti, kUTTagClassMIMEType);
+    NSString* mimeType = (NSString *) CFBridgingRelease(UTTypeCopyPreferredTagWithClass (uti, kUTTagClassMIMEType));
     CFRelease(uti);
-    return [mimeType autorelease];
+    return mimeType;
 }
 
 +(NSString *)fileExtForMimeType:(NSString *)mimeType
 {
     CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef) mimeType, NULL);
     CFRelease(uti);
-    NSString* ext = (NSString *)UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
-    return [ext autorelease];
+    NSString* ext = (NSString *)CFBridgingRelease(UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension));
+    return ext;
 }
 
 @end
@@ -143,7 +143,7 @@
             return nil;
         }
         
-        return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+        return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     }
     @catch(id exception)
     {
@@ -185,8 +185,8 @@
     HVCHECK_SELF;
     
     NSFileManager *fm = [NSFileManager defaultManager];
-    m_path = [path retain];
-    m_stringPath = [m_path.path retain];
+    m_path = path;
+    m_stringPath = m_path.path;
     
     HVCHECK_SUCCESS([fm createDirectoryAtPath:m_stringPath withIntermediateDirectories:TRUE attributes:nil error:nil]);
     
@@ -245,12 +245,12 @@ LError:
 
 -(NSEnumerator *)getFileNames
 {
-    return [[[HVDirectoryNameEnumerator alloc] initWithPath:m_path inFileMode:TRUE] autorelease];
+    return [[HVDirectoryNameEnumerator alloc] initWithPath:m_path inFileMode:TRUE];
 }
 
 -(NSEnumerator *)getDirectoryNames
 {
-    return [[[HVDirectoryNameEnumerator alloc] initWithPath:m_path inFileMode:FALSE] autorelease];
+    return [[HVDirectoryNameEnumerator alloc] initWithPath:m_path inFileMode:FALSE];
 }
 
 -(HVDirectory *)newChildNamed:(NSString *)name
@@ -420,7 +420,7 @@ LError:
 
 -(id)getObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls
 {
-    return [[self newObjectWithKey:key name:name andClass:cls] autorelease];
+    return [self newObjectWithKey:key name:name andClass:cls];
 }
 
 -(BOOL) putObject:(id)obj withKey:(NSString *)key andName:(NSString *)name
@@ -542,14 +542,6 @@ LError:
     return [self getObjectWithKey:key name:name andClass:cls];
 }
 
--(void)dealloc
-{
-    [m_path release];
-    [m_stringPath release];
-    [m_converter release];
-    
-    [super dealloc];
-}
 
 @end
 

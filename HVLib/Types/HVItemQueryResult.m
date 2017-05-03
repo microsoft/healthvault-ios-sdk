@@ -2,7 +2,7 @@
 //  HVItemQueryResult.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -66,13 +66,6 @@ static NSString* const c_attribute_name = @"name";
     return (self.itemCount + self.pendingCount);
 }
 
--(void) dealloc
-{
-    [m_items release];
-    [m_pendingItems release];
-    [m_name release];
-    [super dealloc];
-}
 
 -(HVTask *)getPendingItemsForRecord:(HVRecordReference *)record withCallback:(HVTaskCompletion)callback
 {
@@ -103,7 +96,7 @@ static NSString* const c_attribute_name = @"name";
         return nil;
     }
     
-    HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* task = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(task);
     
     HVCHECK_SUCCESS([self nextGetPendingItems:self.pendingItems forRecord:record itemView:view andParentTask:task]);
@@ -128,13 +121,13 @@ LError:
 
 -(void) deserializeAttributes:(XReader *)reader
 {
-    m_name = [[reader readAttribute:c_attribute_name] retain];
+    m_name = [reader readAttribute:c_attribute_name];
 }
 
 -(void) deserialize:(XReader *)reader
 {
-    m_items = (HVItemCollection *)[[reader readElementArray:c_element_item asClass:[HVItem class] andArrayClass:[HVItemCollection class]] retain];
-    m_pendingItems = (HVPendingItemCollection *)[[reader readElementArray:c_element_pending asClass:[HVPendingItem class] andArrayClass:[HVPendingItemCollection class]] retain];
+    m_items = (HVItemCollection *)[reader readElementArray:c_element_item asClass:[HVItem class] andArrayClass:[HVItemCollection class]];
+    m_pendingItems = (HVPendingItemCollection *)[reader readElementArray:c_element_pending asClass:[HVPendingItem class] andArrayClass:[HVPendingItemCollection class]];
 }
 
 @end
@@ -155,7 +148,6 @@ LError:
     
     }];
     
-    [pendingQuery release];
     return getPendingTask;
 
 LError:
@@ -168,7 +160,6 @@ LError:
     HVCHECK_NOTNULL(getPendingTask);
     
     [parentTask setNextTask:getPendingTask];    
-    [getPendingTask release];
     
     return TRUE;
     

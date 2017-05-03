@@ -2,7 +2,7 @@
 //  HVAssessmentField.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,15 +36,15 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* name;
+@property (readwrite, nonatomic, strong) HVCodableValue* name;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* value;
+@property (readwrite, nonatomic, strong) HVCodableValue* value;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* fieldGroup;
+@property (readwrite, nonatomic, strong) HVCodableValue* fieldGroup;
 
 //-------------------------
 //

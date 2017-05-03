@@ -2,7 +2,7 @@
 //  HVMessage.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,18 +60,6 @@ static NSString* const c_element_attachments = @"attachments";
     return !([NSString isNilOrEmpty:m_textBlobName]);
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_headers release];
-    [m_size release];
-    [m_summary release];
-    [m_htmlBlobName release];
-    [m_textBlobName release];
-    [m_attachments release];
-    
-    [super dealloc];
-}
 
 -(NSString *)getFrom
 {
@@ -148,13 +136,13 @@ static NSString* const c_element_attachments = @"attachments";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
-    m_headers = (HVMessageHeaderItemCollection *)[[reader readElementArray:c_element_headers asClass:[HVMessageHeaderItem class] andArrayClass:[HVMessageHeaderItemCollection class]] retain];
-    m_size = [[reader readElementWithXmlName:x_element_size asClass:[HVPositiveInt class]] retain];
-    m_summary = [[reader readStringElementWithXmlName:x_element_summary] retain];
-    m_htmlBlobName = [[reader readStringElementWithXmlName:x_element_htmlBlob] retain];
-    m_textBlobName = [[reader readStringElementWithXmlName:x_element_textBlob] retain];
-    m_attachments = (HVMessageAttachmentCollection *)[[reader readElementArray:c_element_attachments asClass:[HVMessageAttachment class] andArrayClass:[HVMessageAttachmentCollection class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
+    m_headers = (HVMessageHeaderItemCollection *)[reader readElementArray:c_element_headers asClass:[HVMessageHeaderItem class] andArrayClass:[HVMessageHeaderItemCollection class]];
+    m_size = [reader readElementWithXmlName:x_element_size asClass:[HVPositiveInt class]];
+    m_summary = [reader readStringElementWithXmlName:x_element_summary];
+    m_htmlBlobName = [reader readStringElementWithXmlName:x_element_htmlBlob];
+    m_textBlobName = [reader readStringElementWithXmlName:x_element_textBlob];
+    m_attachments = (HVMessageAttachmentCollection *)[reader readElementArray:c_element_attachments asClass:[HVMessageAttachment class] andArrayClass:[HVMessageAttachmentCollection class]];
 }
 
 +(NSString *)typeID

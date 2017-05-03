@@ -57,19 +57,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_reaction release];
-    [m_firstObserved release];
-    [m_allergenType release];
-    [m_allergenCode release];
-    [m_treatmentProvider release];
-    [m_treatment release];
-    [m_isNegated release];
-    
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -93,12 +80,12 @@ LError:
 
 +(HVVocabIdentifier *)vocabForType
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"allergen-type"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"allergen-type"];    
 }
 
 +(HVVocabIdentifier *)vocabForReaction
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"reactions"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"reactions"];    
 }
 
 -(HVClientResult *)validate
@@ -131,14 +118,14 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
-    m_reaction = [[reader readElement:c_element_reaction asClass:[HVCodableValue class]] retain];
-    m_firstObserved = [[reader readElement:c_element_first asClass:[HVApproxDateTime class]] retain];
-    m_allergenType = [[reader readElement:c_element_allergenType asClass:[HVCodableValue class]] retain];
-    m_allergenCode = [[reader readElement:c_element_allergenCode asClass:[HVCodableValue class]] retain];
-    m_treatmentProvider = [[reader readElement:c_element_treatmentProvider asClass:[HVPerson class]] retain];
-    m_treatment = [[reader readElement:c_element_treatment asClass:[HVCodableValue class]] retain];
-    m_isNegated = [[reader readElement:c_element_negated asClass:[HVBool class]] retain];
+    m_name = [reader readElement:c_element_name asClass:[HVCodableValue class]];
+    m_reaction = [reader readElement:c_element_reaction asClass:[HVCodableValue class]];
+    m_firstObserved = [reader readElement:c_element_first asClass:[HVApproxDateTime class]];
+    m_allergenType = [reader readElement:c_element_allergenType asClass:[HVCodableValue class]];
+    m_allergenCode = [reader readElement:c_element_allergenCode asClass:[HVCodableValue class]];
+    m_treatmentProvider = [reader readElement:c_element_treatmentProvider asClass:[HVPerson class]];
+    m_treatment = [reader readElement:c_element_treatment asClass:[HVCodableValue class]];
+    m_isNegated = [reader readElement:c_element_negated asClass:[HVBool class]];
 }
 
 +(NSString *)typeID

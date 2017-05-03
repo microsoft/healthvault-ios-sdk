@@ -2,7 +2,7 @@
 //  HVMeasurement.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,7 +49,6 @@ LError:
     HVCHECK_NOTNULL(unitsValue);
     
     self = [self initWithValue:value andUnits:unitsValue];
-    [unitsValue release];
     
     HVCHECK_SELF;
     
@@ -59,20 +58,15 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_units release];
-    [super dealloc];
-}
 
 +(HVMeasurement *)fromValue:(double)value andUnits:(HVCodableValue *)units
 {
-    return [[[HVMeasurement alloc] initWithValue:value andUnits:units] autorelease];
+    return [[HVMeasurement alloc] initWithValue:value andUnits:units];
 }
 
 +(HVMeasurement *)fromValue:(double)value andUnitsString:(NSString *)units
 {
-    return [[[HVMeasurement alloc] initWithValue:value andUnitsString:units] autorelease];
+    return [[HVMeasurement alloc] initWithValue:value andUnitsString:units];
 }
 
 +(HVMeasurement *)fromValue:(double)value unitsDisplayText:(NSString *)unitsText unitsCode:(NSString *)code unitsVocab:(NSString *)vocab
@@ -81,7 +75,6 @@ LError:
     HVCHECK_NOTNULL(unitCode);
     
     HVMeasurement* measurement = [[HVMeasurement alloc] initWithValue:value andUnits:unitCode];
-    [unitCode release];
     
     return measurement;
     
@@ -127,7 +120,7 @@ LError:
 -(void)deserialize:(XReader *)reader
 {
     m_value = [reader readDoubleElementXmlName:x_element_value];
-    m_units = [[reader readElementWithXmlName:x_element_units asClass:[HVCodableValue class]] retain];
+    m_units = [reader readElementWithXmlName:x_element_units asClass:[HVCodableValue class]];
 }
 
 @end

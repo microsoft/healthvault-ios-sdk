@@ -2,7 +2,7 @@
 //  HVOrganization.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,19 +38,19 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVContact* contact;
+@property (readwrite, nonatomic, strong) HVContact* contact;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* type;
+@property (readwrite, nonatomic, strong) HVCodableValue* type;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* website;
+@property (readwrite, nonatomic, strong) NSString* website;
 
 -(NSString *) toString;
 

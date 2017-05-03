@@ -2,7 +2,7 @@
 //  HVRelatedItem.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,11 +35,11 @@
 //
 // You can have either a key OR a clientID
 //
-@property (readwrite, nonatomic, retain) NSString* itemID;
-@property (readwrite, nonatomic, retain) NSString* version;
-@property (readwrite, nonatomic, retain) HVString255* clientID;
+@property (readwrite, nonatomic, strong) NSString* itemID;
+@property (readwrite, nonatomic, strong) NSString* version;
+@property (readwrite, nonatomic, strong) HVString255* clientID;
 
-@property (readwrite, nonatomic, retain) NSString* relationship;
+@property (readwrite, nonatomic, strong) NSString* relationship;
 
 -(id) initRelationship:(NSString *) relationship toItemWithKey:(HVItemKey *) key;
 -(id) initRelationship:(NSString *)relationship toItemWithClientID:(NSString *) clientID;

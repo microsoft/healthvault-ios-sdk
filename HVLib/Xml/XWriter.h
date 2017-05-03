@@ -2,7 +2,7 @@
 //  XWriter.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@
 }
 
 @property (readonly, nonatomic) xmlTextWriterPtr writer;
-@property (readonly, nonatomic) XConverter *converter;
-@property (readwrite, nonatomic, retain) id context;
+@property (readonly, nonatomic, strong) XConverter *converter;
+@property (readwrite, nonatomic, strong) id context;
 
 //
 // Designated constructor

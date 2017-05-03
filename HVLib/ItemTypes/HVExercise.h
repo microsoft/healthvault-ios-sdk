@@ -2,7 +2,7 @@
 //  HVExercise.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,24 +39,24 @@
 //
 // (Required) When did you do this exercise
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* when;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* when;
 //
 // (Required) What activity did you perform?
 // Preferred Vocabulary: exercise-activities
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* activity;
+@property (readwrite, nonatomic, strong) HVCodableValue* activity;
 //
 // Optional (a label)
 //
-@property (readwrite, nonatomic, retain) NSString* title;
+@property (readwrite, nonatomic, strong) NSString* title;
 //
 // (Optional): Distance covered, if any
 //
-@property (readwrite, nonatomic, retain) HVLengthMeasurement* distance;
+@property (readwrite, nonatomic, strong) HVLengthMeasurement* distance;
 //
 // (Optional): Duration, if any
 //
-@property (readwrite, nonatomic, retain) HVPositiveDouble* durationMinutes;
+@property (readwrite, nonatomic, strong) HVPositiveDouble* durationMinutes;
 //
 // (Optional): Additional details about the exercise
 // E.g number of steps, calories burned...
@@ -64,11 +64,11 @@
 // This collection of Name Value Pairs uses standardized names
 // Standardized names should be taken from the vocabulary: exercise-detail-names
 //
-@property (readwrite, nonatomic, retain) HVNameValueCollection* details;
+@property (readwrite, nonatomic, strong) HVNameValueCollection* details;
 //
 // (Optional): Information about exercise segments
 //
-@property (readwrite, nonatomic, retain) NSMutableArray* segmentsXml;
+@property (readwrite, nonatomic, strong) NSMutableArray* segmentsXml;
 
 //-----------------------------
 //

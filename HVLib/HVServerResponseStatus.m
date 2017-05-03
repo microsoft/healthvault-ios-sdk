@@ -2,7 +2,7 @@
 //  HVServerResult.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -144,12 +144,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_errorText release];
-    [m_errorDetails release];
-    [super dealloc];
-}
 
 -(BOOL)isStatusCode:(enum HVServerStatusCode)code
 {
@@ -200,15 +194,10 @@ LError:
     return m_status.description;
 }
                                 
--(void)dealloc
-{
-    [m_status release];
-    [super dealloc];
-}
 
 +(void)throwExceptionWithStatus:(HVServerResponseStatus *)status
 {
-    @throw [[[HVServerException alloc] initWithStatus:status] autorelease];
+    @throw [[HVServerException alloc] initWithStatus:status];
 }
 
 @end

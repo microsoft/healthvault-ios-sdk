@@ -2,7 +2,7 @@
 //  HVItemFilter.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,23 +49,6 @@ static NSString* const c_element_xpath = @"xpath";
 @synthesize updateDateMax = m_udateMax;
 @synthesize xpath = m_xpath;
 
--(void) dealloc
-{
-    [m_eDateMin release];
-    [m_eDateMax release];
-    [m_cAppID release];
-    [m_cPersonID release];
-    [m_uAppID release];
-    [m_uPersonID release];
-    [m_cDateMin release];
-    [m_cDateMax release];
-    [m_uDateMin release];
-    [m_udateMax release];
-    [m_xpath release];
-    
-    [super dealloc];
-    
-}
 -(void) serialize:(XWriter *)writer
 {
     if (m_state != HVItemStateNone)
@@ -88,23 +71,23 @@ static NSString* const c_element_xpath = @"xpath";
 
 -(void) deserialize:(XReader *)reader
 {
-    NSString* state = [[reader readStringElement:c_element_state] retain];
+    NSString* state = [reader readStringElement:c_element_state];
     if (state)
     {
         m_state = HVItemStateFromString(state);
     }
 
-    m_eDateMin = [[reader readDateElement:c_element_edateMin] retain];
-    m_eDateMax = [[reader readDateElement:c_element_edateMax] retain];
-    m_cAppID = [[reader readStringElement:c_element_cappID] retain];
-    m_cPersonID = [[reader readStringElement:c_element_cpersonID] retain];
-    m_uAppID = [[reader readStringElement:c_element_uappID] retain];
-    m_uPersonID = [[reader readStringElement:c_element_upersonID] retain];
-    m_cDateMin = [[reader readDateElement:c_element_cdateMin] retain];
-    m_cDateMax = [[reader readDateElement:c_element_cdateMax] retain];
-    m_uDateMin = [[reader readDateElement:c_element_udateMin] retain];
-    m_udateMax = [[reader readDateElement:c_element_udateMax] retain];
-    m_xpath = [[reader readStringElement:c_element_xpath] retain];
+    m_eDateMin = [reader readDateElement:c_element_edateMin];
+    m_eDateMax = [reader readDateElement:c_element_edateMax];
+    m_cAppID = [reader readStringElement:c_element_cappID];
+    m_cPersonID = [reader readStringElement:c_element_cpersonID];
+    m_uAppID = [reader readStringElement:c_element_uappID];
+    m_uPersonID = [reader readStringElement:c_element_upersonID];
+    m_cDateMin = [reader readDateElement:c_element_cdateMin];
+    m_cDateMax = [reader readDateElement:c_element_cdateMax];
+    m_uDateMin = [reader readDateElement:c_element_udateMin];
+    m_udateMax = [reader readDateElement:c_element_udateMax];
+    m_xpath = [reader readStringElement:c_element_xpath];
 }
 
 @end
@@ -119,7 +102,7 @@ static NSString* const c_element_xpath = @"xpath";
 
 -(void)setTypeIDs:(HVStringCollection *)typeIDs
 {
-    m_typeIDs = [typeIDs retain];
+    m_typeIDs = typeIDs;
 }
 
 -(id) init
@@ -157,11 +140,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_typeIDs release];    
-    [super dealloc];
-}
 
 -(void) serialize:(XWriter *)writer
 {
@@ -171,7 +149,7 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_typeIDs = [[reader readStringElementArray:c_element_typeID] retain];
+    m_typeIDs = [reader readStringElementArray:c_element_typeID];
     [super deserialize:reader];
 }
 

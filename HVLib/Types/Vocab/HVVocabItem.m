@@ -2,7 +2,7 @@
 //  HVVocabItem.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,14 +31,6 @@ static NSString* const c_element_data = @"info-xml";
 @synthesize abbreviation = m_abbrv;
 @synthesize dataXml = m_data;
 
--(void)dealloc
-{
-    [m_code release];
-    [m_displayText release];
-    [m_abbrv release];
-    [m_data release];
-    [super dealloc];
-}
 
 -(NSString *)toString
 {
@@ -74,10 +66,10 @@ static NSString* const c_element_data = @"info-xml";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_code = [[reader readStringElementWithXmlName:x_element_code] retain];
-    m_displayText = [[reader readStringElementWithXmlName:x_element_displaytext] retain];
-    m_abbrv = [[reader readStringElementWithXmlName:x_element_abbrv] retain];
-    m_data = [[reader readElementRaw:c_element_data] retain];    
+    m_code = [reader readStringElementWithXmlName:x_element_code];
+    m_displayText = [reader readStringElementWithXmlName:x_element_displaytext];
+    m_abbrv = [reader readStringElementWithXmlName:x_element_abbrv];
+    m_data = [reader readElementRaw:c_element_data];    
 }
 
 @end
@@ -163,7 +155,7 @@ LError:
 
 -(NSArray *)displayStrings
 {
-    NSMutableArray* strings = [[[NSMutableArray alloc]initWithCapacity:self.count] autorelease];
+    NSMutableArray* strings = [[NSMutableArray alloc]initWithCapacity:self.count];
     [self addDisplayStringsTo:strings];
     return strings;
 }

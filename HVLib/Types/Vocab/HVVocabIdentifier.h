@@ -2,7 +2,7 @@
 //  HVVocabIdentifier.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,23 +47,23 @@ NSString* const c_usdaFamily;
 //
 // (Required) - the vocabulary name. E.g Rx Norm Active Medications
 //
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 //
 // (Optional) - e.g. RxNorm...
 //
-@property (readwrite, nonatomic, retain) NSString* family;
+@property (readwrite, nonatomic, strong) NSString* family;
 //
 // (Optional) Vocabulary version
 //
-@property (readwrite, nonatomic, retain) NSString* version;
+@property (readwrite, nonatomic, strong) NSString* version;
 //
 // (Optional) Language, in ISO code. E.g. 'en'. 
 //
-@property (readwrite, nonatomic, retain) NSString* language;
+@property (readwrite, nonatomic, strong) NSString* language;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* codeValue;
+@property (readwrite, nonatomic, strong) NSString* codeValue;
 
 //-------------------------
 //

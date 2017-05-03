@@ -2,7 +2,7 @@
 //  HVLocalVault.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -83,11 +83,7 @@ LError:
 {
     [self close];
     
-    [m_root release];
-    [m_recordStores release];
-    [m_vocabs release];
     
-    [super dealloc];
 }
 
 -(HVLocalRecordStore *)getRecordStore:(HVRecordReference *)record
@@ -101,7 +97,6 @@ LError:
         {
             recordStore = [[HVLocalRecordStore alloc] initForRecord:record overRoot:m_root withCache:m_cache];
             [m_recordStores setObject:recordStore forKey:record.ID];
-            [recordStore release];
         }
         
         return recordStore;
@@ -186,7 +181,7 @@ LError:
 
 -(HVTask *)commitOfflineChangesForRecords:(NSArray *)records withCallback:(HVTaskCompletion)callback
 {
-    HVLocalVaultOfflineChangesCommitter* committer = [[[HVLocalVaultOfflineChangesCommitter alloc] initWithLocalVault:self andRecordReferences:records] autorelease];
+    HVLocalVaultOfflineChangesCommitter* committer = [[HVLocalVaultOfflineChangesCommitter alloc] initWithLocalVault:self andRecordReferences:records];
     HVCHECK_NOTNULL(committer);
     
     return [HVTaskSequence run:committer callback:callback];
@@ -200,7 +195,7 @@ LError:
 @implementation HVLocalVault (HVPrivate)
 -(void)setRoot:(HVDirectory *)root
 {
-    m_root = [root retain];
+    m_root = root;
 }
 
 -(BOOL)ensureRecordStores
@@ -232,14 +227,12 @@ LError:
     if (m_cache)
     {
         id<HVObjectStore> cachingDataStore = [[HVCachingObjectStore alloc] initWithObjectStore:vocabObjectStore];
-        [vocabObjectStore release];
         HVCHECK_NOTNULL(cachingDataStore);
         
         vocabObjectStore = cachingDataStore;
     }
     
     m_vocabs = [[HVLocalVocabStore alloc] initWithObjectStore:vocabObjectStore];
-    [vocabObjectStore release];
     HVCHECK_NOTNULL(m_vocabs);
     
     return TRUE;
@@ -286,7 +279,7 @@ LError:
         [m_records addObject:recordRef];
     }
     
-    m_localVault = [vault retain];
+    m_localVault = vault;
     
     return self;
     
@@ -294,13 +287,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_localVault release];
-    [m_records release];
-    
-    [super dealloc];
-}
 
 -(HVTask *)nextTask
 {
@@ -315,11 +301,11 @@ LError:
         HVLocalRecordStore* recordStore = [m_localVault getRecordStore:nextRecord];
         if (recordStore)
         {
-            HVTask* task = [[recordStore.dataMgr.changeManager newCommitChangesTaskWithCallback:^(HVTask *task) {
+            HVTask* task = [recordStore.dataMgr.changeManager newCommitChangesTaskWithCallback:^(HVTask *task) {
                 
                 [task checkSuccess];
                 
-            }] autorelease];
+            }];
             
             if (task)
             {

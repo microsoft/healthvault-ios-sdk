@@ -2,7 +2,7 @@
 //  HVTypeViewItems.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,10 +40,10 @@
 }
 
 @property (readonly, nonatomic) NSUInteger count;
-@property (readonly, nonatomic) NSDate* maxDate;
-@property (readonly, nonatomic) NSDate* minDate;
-@property (readonly, nonatomic) HVTypeViewItem* firstItem;
-@property (readonly, nonatomic) HVTypeViewItem* lastItem;
+@property (readonly, nonatomic, strong) NSDate* maxDate;
+@property (readonly, nonatomic, strong) NSDate* minDate;
+@property (readonly, nonatomic, strong) HVTypeViewItem* firstItem;
+@property (readonly, nonatomic, strong) HVTypeViewItem* lastItem;
 
 -(HVTypeViewItem *) objectAtIndex:(NSUInteger) index;
 -(HVTypeViewItem *) objectForItemID:(NSString *) itemID;

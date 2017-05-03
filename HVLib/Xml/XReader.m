@@ -2,7 +2,7 @@
 //  XmlReader.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -219,7 +219,7 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
     
     if (converter)
     {
-        m_converter = [converter retain];
+        m_converter = converter;
     }
     else
     {
@@ -276,7 +276,6 @@ LError:
 {
     [self close];
     
-    [super dealloc];
 }
 
 -(void) clear
@@ -712,8 +711,6 @@ LError:
         xmlFreeTextReader(m_reader);
         m_reader = nil;
     }
-    [m_converter release];
-    [m_context release];
 }
 
 -(BOOL) isSuccess:(int) result

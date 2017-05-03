@@ -2,7 +2,7 @@
 //  HVPlatformInfo.h
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,8 +29,8 @@
     HVConfigurationEntryCollection* m_config;
 }
 
-@property (readwrite, nonatomic, retain) NSString* url;
-@property (readwrite, nonatomic, retain) NSString* version;
-@property (readwrite, nonatomic, retain) HVConfigurationEntryCollection* config;
+@property (readwrite, nonatomic, strong) NSString* url;
+@property (readwrite, nonatomic, strong) NSString* version;
+@property (readwrite, nonatomic, strong) HVConfigurationEntryCollection* config;
 
 @end

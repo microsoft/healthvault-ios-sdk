@@ -2,7 +2,7 @@
 //  HVConcentrationValue.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,12 +73,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_mmolPerl release];
-    [m_display release];
-    [super dealloc];
-}
 
 -(double)mgPerDL:(double)gramsPerMole
 {
@@ -150,8 +144,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_mmolPerl = [[reader readElementWithXmlName:x_element_mmolPL asClass:[HVNonNegativeDouble class]] retain];
-    m_display = [[reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]] retain];
+    m_mmolPerl = [reader readElementWithXmlName:x_element_mmolPL asClass:[HVNonNegativeDouble class]];
+    m_display = [reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]];
 }
 
 @end

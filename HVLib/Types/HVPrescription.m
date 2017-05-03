@@ -72,18 +72,6 @@ static NSString* const c_element_instructions = @"instructions";
     }
 }
 
--(void)dealloc
-{
-    [m_prescriber release];
-    [m_datePrescribed release];
-    [m_amount release];
-    [m_substitution release];
-    [m_refills release];
-    [m_daysSupply release];
-    [m_expiration release];
-    [m_instructions release];
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -115,14 +103,14 @@ static NSString* const c_element_instructions = @"instructions";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_prescriber = [[reader readElement:c_element_prescribedBy asClass:[HVPerson class]] retain];
-    m_datePrescribed = [[reader readElement:c_element_datePrescribed asClass:[HVApproxDateTime class]] retain];
-    m_amount = [[reader readElement:c_element_amount asClass:[HVApproxMeasurement class]] retain];
-    m_substitution = [[reader readElement:c_element_substitution asClass:[HVCodableValue class]] retain];
-    m_refills = [[reader readElement:c_element_refills asClass:[HVNonNegativeInt class]] retain];
-    m_daysSupply = [[reader readElement:c_element_supply asClass:[HVPositiveInt class]] retain];
-    m_expiration = [[reader readElement:c_element_expiration asClass:[HVDate class]] retain];
-    m_instructions = [[reader readElement:c_element_instructions asClass:[HVCodableValue class]] retain];
+    m_prescriber = [reader readElement:c_element_prescribedBy asClass:[HVPerson class]];
+    m_datePrescribed = [reader readElement:c_element_datePrescribed asClass:[HVApproxDateTime class]];
+    m_amount = [reader readElement:c_element_amount asClass:[HVApproxMeasurement class]];
+    m_substitution = [reader readElement:c_element_substitution asClass:[HVCodableValue class]];
+    m_refills = [reader readElement:c_element_refills asClass:[HVNonNegativeInt class]];
+    m_daysSupply = [reader readElement:c_element_supply asClass:[HVPositiveInt class]];
+    m_expiration = [reader readElement:c_element_expiration asClass:[HVDate class]];
+    m_instructions = [reader readElement:c_element_instructions asClass:[HVCodableValue class]];
 }
 
 @end

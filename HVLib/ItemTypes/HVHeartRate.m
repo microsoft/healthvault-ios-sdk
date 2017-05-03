@@ -2,7 +2,7 @@
 //  HVHeartRate.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -63,16 +63,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_bpm release];
-    [m_measurementMethod release];
-    [m_measurementConditions release];
-    [m_measurementFlags release];
-    
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -86,12 +76,12 @@ LError:
 
 +(HVVocabIdentifier *)vocabForMeasurementMethod
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-method"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-method"];
 }
 
 +(HVVocabIdentifier *)vocabForMeasurementConditions
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-conditions"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-conditions"];
 }
 
 -(NSString *) toString
@@ -133,11 +123,11 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
-    m_bpm = [[reader readElementWithXmlName:x_element_value asClass:[HVNonNegativeInt class]] retain];
-    m_measurementMethod = [[reader readElementWithXmlName:x_element_method asClass:[HVCodableValue class]] retain];
-    m_measurementConditions = [[reader readElementWithXmlName:x_element_conditions asClass:[HVCodableValue class]] retain];
-    m_measurementFlags = [[reader readElementWithXmlName:x_element_flags asClass:[HVCodableValue class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
+    m_bpm = [reader readElementWithXmlName:x_element_value asClass:[HVNonNegativeInt class]];
+    m_measurementMethod = [reader readElementWithXmlName:x_element_method asClass:[HVCodableValue class]];
+    m_measurementConditions = [reader readElementWithXmlName:x_element_conditions asClass:[HVCodableValue class]];
+    m_measurementFlags = [reader readElementWithXmlName:x_element_flags asClass:[HVCodableValue class]];
 }
 
 +(NSString *) typeID

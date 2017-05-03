@@ -39,38 +39,38 @@
 //
 // (Required) E.g. Allergy to Pollen
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* name;
+@property (readwrite, nonatomic, strong) HVCodableValue* name;
 //
 // (Optional) Reaction to the allergy
 // Preferred Vocab: icd9cm
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* reaction;
+@property (readwrite, nonatomic, strong) HVCodableValue* reaction;
 //
 // (Optional) Approximately when first observed
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* firstObserved;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* firstObserved;
 //
 // (Optional) E.g. Pollen
 // Preferred Vocab: allergen-type
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* allergenType;
+@property (readwrite, nonatomic, strong) HVCodableValue* allergenType;
 //
 // (Optional) Clinical allergen code
 // Preferred Vocab: icd9cm
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* allergenCode;
+@property (readwrite, nonatomic, strong) HVCodableValue* allergenCode;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVPerson* treatmentProvider;
+@property (readwrite, nonatomic, strong) HVPerson* treatmentProvider;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* treatment;
+@property (readwrite, nonatomic, strong) HVCodableValue* treatment;
 //
 // (Optional) - Does treatment negate the effects of the allergy? 
 //
-@property (readwrite, nonatomic, retain) HVBool* isNegated;
+@property (readwrite, nonatomic, strong) HVBool* isNegated;
 
 //-------------------------
 //

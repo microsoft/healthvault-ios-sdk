@@ -2,7 +2,7 @@
 //  HVBlobUploadTask.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@
 
 @synthesize blobInfo = m_blobInfo;
 @synthesize item = m_item;
-@synthesize delegate = m_delegate; // Weak ref
 @synthesize record = m_record;
 
 -(HVItemKey *)itemKey
@@ -48,9 +47,9 @@
     self = [super initWithCallback:callback];
     HVCHECK_SELF;
     
-    m_blobInfo = [blobInfo retain];
-    m_item = [item retain];
-    m_record = [record retain];
+    m_blobInfo = blobInfo;
+    m_item = item;
+    m_record = record;
     //
     // Step 1 - upload the blob to HealthVault
     // If that succeeds, then update the item
@@ -65,7 +64,6 @@
     uploadTask.delegate = self;
     
     [self setNextTask:uploadTask];
-    [uploadTask release];
     
     return self;
     
@@ -73,19 +71,12 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_blobInfo release];
-    [m_item release];
-    [m_record release];
-    [super dealloc];
-}
 
 -(void)totalBytesWritten:(NSInteger)byteCount
 {
-    if (m_delegate)
+    if (self.delegate)
     {
-        [m_delegate totalBytesWritten:byteCount];
+        [self.delegate totalBytesWritten:byteCount];
     }
 }
 
@@ -121,17 +112,16 @@ LError:
     blobItem.blobUrl = url;
     
     [m_item.blobs addOrUpdateBlob:blobItem];
-    [blobItem release];   
 }
 
 -(void)putItemInHV
 {
-    HVPutItemsTask* putTask = [[[HVClient current].methodFactory newPutItemForRecord:m_record item:m_item andCallback:^(HVTask *task) {
+    HVPutItemsTask* putTask = [[HVClient current].methodFactory newPutItemForRecord:m_record item:m_item andCallback:^(HVTask *task) {
         
         [task checkSuccess];
         self.result = ((HVPutItemsTask *) task).firstKey;
         
-    } ] autorelease];
+    } ];
     
     putTask.record = m_record;
     [self setNextTask:putTask];    

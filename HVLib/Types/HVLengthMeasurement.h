@@ -2,7 +2,7 @@
 //  HVLengthMeasurement.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,11 +41,11 @@
 //
 // (Required) length value, in meters
 //
-@property (readwrite, nonatomic, retain) HVPositiveDouble* value;
+@property (readwrite, nonatomic, strong) HVPositiveDouble* value;
 //
 // (Optional) Length data - exactly as entered by the user - before converting to standard units
 //
-@property (readwrite, nonatomic, retain) HVDisplayValue* display;
+@property (readwrite, nonatomic, strong) HVDisplayValue* display;
 
 //
 // Convenience properties

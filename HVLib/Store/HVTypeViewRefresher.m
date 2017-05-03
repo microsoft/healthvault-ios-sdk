@@ -2,7 +2,7 @@
 //  HVTypeViewRefresher.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@
     HVCHECK_SELF;
     
     HVCHECK_SUCCESS([self initViewList:views]);
-    m_record = [record retain];
+    m_record = record;
     m_maxAge = age;
     
     return self;
@@ -63,7 +63,7 @@ LError:
     HVCHECK_NOTNULL(store);
     HVCHECK_NOTNULL(typeIDs);
     
-    NSMutableArray* views = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* views = [[NSMutableArray alloc] init];
     HVCHECK_NOTNULL(views);
     
     for (NSString* typeID in typeIDs)
@@ -80,13 +80,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_record release];
-    [m_views release];
-    
-    [super dealloc];
-}
 
 -(HVTask *)refreshWithCallback:(HVTaskCompletion)callback
 {
@@ -97,7 +90,7 @@ LError:
         return nil;
     }
     
-    HVTask* refreshTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* refreshTask = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(refreshTask);
     
     HVGetItemsTask* getItems = [[[HVClient current] methodFactory] newGetItemsForRecord:m_record queries:queries andCallback:^(HVTask *task)
@@ -107,7 +100,6 @@ LError:
     
     HVCHECK_NOTNULL(getItems);
     [refreshTask setNextTask:getItems];
-    [getItems release];
     
     [refreshTask start];
     
@@ -154,7 +146,7 @@ LError:
         
         if (!queries)
         {
-            queries = [[[HVItemQueryCollection alloc] init] autorelease];
+            queries = [[HVItemQueryCollection alloc] init];
             HVCHECK_NOTNULL(queries);
         }
         
@@ -203,7 +195,6 @@ LError:
             [view replaceKeys:viewKeys];
         }
         
-        [viewKeys release];
     }
 }
 

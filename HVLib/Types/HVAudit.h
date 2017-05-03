@@ -2,7 +2,7 @@
 //  HVAudit.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@
     NSString* m_action;    
 }
 
-@property (readwrite, nonatomic, retain) NSDate* when;
-@property (readwrite, nonatomic, retain) NSString* appID;
-@property (readwrite, nonatomic, retain) NSString* action;
+@property (readwrite, nonatomic, strong) NSDate* when;
+@property (readwrite, nonatomic, strong) NSString* appID;
+@property (readwrite, nonatomic, strong) NSString* action;
 
 @end

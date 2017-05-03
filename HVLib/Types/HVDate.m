@@ -2,7 +2,7 @@
 //  HVDate.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
 {
     HVCHECK_NOTNULL(date);
     
-    [self initWithComponents:[NSCalendar componentsFromDate:date]];
+    if (!(self = [self initWithComponents:[NSCalendar componentsFromDate:date]])) return nil;
     
     return self;
     
@@ -133,13 +133,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_year release];
-    [m_month release];
-    [m_day release];
-    [super dealloc];
-}
 
 -(BOOL)setWithDate:(NSDate *)date
 {
@@ -168,22 +161,22 @@ LError:
 
 +(HVDate *)fromDate:(NSDate *)date
 {
-    return [[[HVDate alloc] initWithDate:date] autorelease];
+    return [[HVDate alloc] initWithDate:date];
 }
 
 +(HVDate *)fromYear:(int)year month:(int)month day:(int)day
 {
-    return [[[HVDate alloc] initWithYear:year month:month day:day] autorelease];
+    return [[HVDate alloc] initWithYear:year month:month day:day];
 }
 
 +(HVDate *)now
 {
-    return [[[HVDate alloc] initNow] autorelease];
+    return [[HVDate alloc] initNow];
 }
 
 -(NSDateComponents *) toComponents
 {
-    NSDateComponents *components = [[NSCalendar newComponents] autorelease];
+    NSDateComponents *components = [NSCalendar newComponents];
     HVCHECK_NOTNULL(components);
     
     HVCHECK_SUCCESS([self getComponents:components]);
@@ -236,7 +229,6 @@ LError:
     HVCHECK_NOTNULL(calendar);
     
     NSDate *date = [self toDateForCalendar:calendar];
-    [calendar release];
     
     return date;
     
@@ -254,7 +246,6 @@ LError:
         HVCHECK_SUCCESS([self getComponents:components]);
         
         NSDate *date = [calendar dateFromComponents:components];
-        [components release];
         
         return date;
     }
@@ -298,9 +289,9 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_year = [[reader readElementWithXmlName:x_element_year asClass:[HVYear class]] retain];
-    m_month = [[reader readElementWithXmlName:x_element_month asClass:[HVMonth class]] retain];
-    m_day = [[reader readElementWithXmlName:x_element_day asClass:[HVDay class]] retain];
+    m_year = [reader readElementWithXmlName:x_element_year asClass:[HVYear class]];
+    m_month = [reader readElementWithXmlName:x_element_month asClass:[HVMonth class]];
+    m_day = [reader readElementWithXmlName:x_element_day asClass:[HVDay class]];
 }
 
 @end

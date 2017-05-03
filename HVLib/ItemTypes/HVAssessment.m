@@ -2,7 +2,7 @@
 //  HVAssessment.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,18 +41,9 @@ static NSString* const c_element_result = @"result";
 
 -(void)setResults:(HVAssessmentFieldCollection *)results
 {
-    m_results = [results retain];
+    m_results = results;
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_name release];
-    [m_category release];
-    [m_results release];
-    
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -96,10 +87,10 @@ static NSString* const c_element_result = @"result";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElement:c_element_when asClass:[HVDateTime class]] retain];
-    m_name = [[reader readStringElement:c_element_name] retain];
-    m_category = [[reader readElement:c_element_category asClass:[HVCodableValue class]] retain];
-    m_results = (HVAssessmentFieldCollection *)[[reader readElementArray:c_element_result asClass:[HVAssessmentField class] andArrayClass:[HVAssessmentFieldCollection class]] retain];
+    m_when = [reader readElement:c_element_when asClass:[HVDateTime class]];
+    m_name = [reader readStringElement:c_element_name];
+    m_category = [reader readElement:c_element_category asClass:[HVCodableValue class]];
+    m_results = (HVAssessmentFieldCollection *)[reader readElementArray:c_element_result asClass:[HVAssessmentField class] andArrayClass:[HVAssessmentFieldCollection class]];
 }
 
 +(NSString *)typeID

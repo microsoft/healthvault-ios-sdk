@@ -2,7 +2,7 @@
 //  HVMessageHeaderItem.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,8 +35,8 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
     self = [super init];
     HVCHECK_SELF;
     
-    m_name = [name retain];
-    m_value = [value retain];
+    m_name = name;
+    m_value = value;
     
     return self;
     
@@ -44,12 +44,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_value release];
-    [super dealloc];
-}
 
 -(HVClientResult *) validate
 {
@@ -69,8 +63,8 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_name = [[reader readStringElementWithXmlName:x_element_name] retain];
-    m_value = [[reader readStringElementWithXmlName:x_element_value] retain];
+    m_name = [reader readStringElementWithXmlName:x_element_name];
+    m_value = [reader readStringElementWithXmlName:x_element_value];
 }
 
 @end

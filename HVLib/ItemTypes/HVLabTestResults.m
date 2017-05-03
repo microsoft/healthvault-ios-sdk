@@ -2,7 +2,7 @@
 //  HVLabTestResults.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,18 +43,10 @@ static const xmlChar* x_element_orderedBy = XMLSTRINGCONST("ordered-by");
     return [m_labGroup itemAtIndex:0];
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_labGroup release];
-    [m_orderedBy release];
-    
-    [super dealloc];
-}
 
 -(HVLabTestResultsGroupCollection *)getAllGroups
 {
-    HVLabTestResultsGroupCollection* allGroups = [[[HVLabTestResultsGroupCollection alloc] init] autorelease];
+    HVLabTestResultsGroupCollection* allGroups = [[HVLabTestResultsGroupCollection alloc] init];
     HVCHECK_NOTNULL(allGroups);
     
     if (m_labGroup)
@@ -88,9 +80,9 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]] retain];
-    m_labGroup = (HVLabTestResultsGroupCollection *)[[reader readElementArrayWithXmlName:x_element_labGroup asClass:[HVLabTestResultsGroup class] andArrayClass:[HVLabTestResultsGroupCollection class]] retain];
-    m_orderedBy = [[reader readElementWithXmlName:x_element_orderedBy asClass:[HVOrganization class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]];
+    m_labGroup = (HVLabTestResultsGroupCollection *)[reader readElementArrayWithXmlName:x_element_labGroup asClass:[HVLabTestResultsGroup class] andArrayClass:[HVLabTestResultsGroupCollection class]];
+    m_orderedBy = [reader readElementWithXmlName:x_element_orderedBy asClass:[HVOrganization class]];
 }
 
 -(NSString *)toString

@@ -2,7 +2,7 @@
 //  HVEmotionalStateFactory.m
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 
 +(HVItemCollection *)createRandomForDay:(NSDate *)date
 {
-    HVItemCollection* items = [[[HVItemCollection alloc] init] autorelease];
+    HVItemCollection* items = [[HVItemCollection alloc] init];
     //
     // Two mood checks per day
     //

@@ -2,7 +2,7 @@
 //  XmlReader.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,24 +35,24 @@
     XConverter *m_converter;
 }
 
-@property (readwrite, nonatomic, retain) id context;
+@property (readwrite, nonatomic, strong) id context;
 
 @property (readonly, nonatomic) xmlTextReader* reader; 
-@property (readonly, nonatomic) XConverter* converter;
+@property (readonly, nonatomic, strong) XConverter* converter;
 
 @property (readonly, nonatomic) int depth;
 
 @property (readonly, nonatomic) enum XNodeType nodeType;
-@property (readonly, nonatomic) NSString* nodeTypeString;
+@property (readonly, nonatomic, strong) NSString* nodeTypeString;
 
 @property (readonly, nonatomic) BOOL isEmptyElement;
 @property (readonly, nonatomic) BOOL hasEndTag;
 @property (readonly, nonatomic) BOOL isTextualNode;
 
-@property (readonly, nonatomic) NSString* localName;
-@property (readonly, nonatomic) NSString* namespaceUri;
+@property (readonly, nonatomic, strong) NSString* localName;
+@property (readonly, nonatomic, strong) NSString* namespaceUri;
 @property (readonly, nonatomic) BOOL hasValue;
-@property (readonly, nonatomic) NSString* value;
+@property (readonly, nonatomic, strong) NSString* value;
 
 @property (readonly, nonatomic) const xmlChar* localNameRaw;
 @property (readonly, nonatomic) const xmlChar* namespaceUriRaw;

@@ -2,7 +2,7 @@
 //  HVMethodCall.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -76,12 +76,6 @@ LError:
     HVALLOC_FAIL;    
 }
 
--(void)dealloc
-{
-    [m_status release];
-    [m_record release];
-    [super dealloc];
-}
 
 -(void)clearError
 {
@@ -192,8 +186,8 @@ LError:
     }
     @finally 
     {
-        [request release];
-        [xml release];
+        request = nil;
+        xml = nil;
     }
 }
 
@@ -225,7 +219,6 @@ LError:
             
             id resultObj = [self deserializeResponse:response]; 
             self.result = resultObj;
-            [resultObj release];
         }
     }
     @catch (id ex) 
@@ -258,7 +251,7 @@ LError:
     }
     @finally 
     {
-        [writer release];
+        writer = nil;
     }
     
 LError:
@@ -285,7 +278,7 @@ LError:
     }
     @finally 
     {
-        [reader release];
+        reader = nil;
     }
 }
 

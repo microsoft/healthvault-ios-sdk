@@ -2,7 +2,7 @@
 //  HVGetAuthorizedPeopleResults.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,12 +28,6 @@ static NSString* const c_element_more = @"more-results";
 @synthesize persons = m_persons;
 @synthesize moreResults = m_moreResults;
 
--(void)dealloc
-{
-    [m_persons release];
-    [m_moreResults release];
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer
 {
@@ -49,8 +43,8 @@ static NSString* const c_element_more = @"more-results";
 {
     [reader  readStartElementWithName:c_element_results];
     
-    m_persons = [[reader readElementArray:c_element_person asClass:[HVPersonInfo class]] retain];
-    m_moreResults = [[reader readElement:c_element_more asClass:[HVBool class]] retain];
+    m_persons = [reader readElementArray:c_element_person asClass:[HVPersonInfo class]];
+    m_moreResults = [reader readElement:c_element_more asClass:[HVBool class]];
     
     [reader readEndElement];
 }

@@ -2,7 +2,7 @@
 //  HVPersonalContactInfo.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,11 +28,6 @@ static NSString* const c_element_contact = @"contact";
 
 @synthesize contact = m_contact;
 
--(void)dealloc
-{
-    [m_contact release];
-    [super dealloc];
-}
 
 -(id)initWithContact:(HVContact *)contact
 {
@@ -67,7 +62,7 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_contact = [[reader readElement:c_element_contact asClass:[HVContact class]] retain];
+    m_contact = [reader readElement:c_element_contact asClass:[HVContact class]];
 }
 
 +(NSString *)typeID

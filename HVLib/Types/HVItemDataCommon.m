@@ -2,7 +2,7 @@
 //  HVItemDataCommon.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,22 +44,10 @@ static NSString* const c_element_clientID = @"client-thing-id";
     if (![NSString isNilOrEmpty:clientIDValue])
     {
         HVString255* clientID = [[HVString255 alloc] initWith:clientIDValue];
-        m_clientID = [clientID retain];
-        [clientID release];
+        m_clientID = clientID;
     }
 }
 
--(void) dealloc
-{
-    [m_source release];
-    [m_note release];
-    [m_tags release];
-    [m_extensions release];
-    [m_relatedItems release];
-    [m_clientID release];
-    
-    [super dealloc];
-}
 
 -(HVRelatedItem *)addRelation:(NSString *)name toItem:(HVItem *)item
 {
@@ -90,12 +78,12 @@ static NSString* const c_element_clientID = @"client-thing-id";
 
 -(void) deserialize:(XReader *)reader
 {
-    m_source = [[reader readStringElement:c_element_source] retain];
-    m_note = [[reader readStringElement:c_element_note] retain];
-    m_tags = [[reader readElement:c_element_tags asClass:[HVStringZ512 class]] retain];
-    m_extensions = [[reader readRawElementArray:c_element_extension] retain];
-    m_relatedItems = (HVRelatedItemCollection *)[[reader readElementArray:c_element_related asClass:[HVRelatedItem class] andArrayClass:[HVRelatedItemCollection class]] retain];
-    m_clientID = [[reader readElement:c_element_clientID asClass:[HVString255 class]] retain];
+    m_source = [reader readStringElement:c_element_source];
+    m_note = [reader readStringElement:c_element_note];
+    m_tags = [reader readElement:c_element_tags asClass:[HVStringZ512 class]];
+    m_extensions = [reader readRawElementArray:c_element_extension];
+    m_relatedItems = (HVRelatedItemCollection *)[reader readElementArray:c_element_related asClass:[HVRelatedItem class] andArrayClass:[HVRelatedItemCollection class]];
+    m_clientID = [reader readElement:c_element_clientID asClass:[HVString255 class]];
 }
 
 @end

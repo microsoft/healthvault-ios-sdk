@@ -1,7 +1,7 @@
 //
 //  HVMessage.h
 //  HVLib
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,13 +30,13 @@
     HVMessageAttachmentCollection* m_attachments;
 }
 
-@property (readwrite, nonatomic, retain) HVDateTime* when;
-@property (readwrite, nonatomic, retain) HVMessageHeaderItemCollection* headers;
-@property (readwrite, nonatomic, retain) HVPositiveInt* size;
-@property (readwrite, nonatomic, retain) NSString* summary;
-@property (readwrite, nonatomic, retain) NSString* htmlBlobName;
-@property (readwrite, nonatomic, retain) NSString* textBlobName;
-@property (readwrite, nonatomic, retain) HVMessageAttachmentCollection* attachments;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVMessageHeaderItemCollection* headers;
+@property (readwrite, nonatomic, strong) HVPositiveInt* size;
+@property (readwrite, nonatomic, strong) NSString* summary;
+@property (readwrite, nonatomic, strong) NSString* htmlBlobName;
+@property (readwrite, nonatomic, strong) NSString* textBlobName;
+@property (readwrite, nonatomic, strong) HVMessageAttachmentCollection* attachments;
 
 @property (readonly, nonatomic) BOOL hasHeaders;
 @property (readonly, nonatomic) BOOL hasAttachments;

@@ -47,15 +47,15 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness);
 ///
 // Required
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 @property (readwrite, nonatomic) enum HVSleepiness sleepiness;
 //
 // Optional
 //
-@property (readwrite, nonatomic, retain) HVTimeCollection* caffeineIntakeTimes;
-@property (readwrite, nonatomic, retain) HVTimeCollection* alcoholIntakeTimes;
-@property (readwrite, nonatomic, retain) HVOccurenceCollection* naps;
-@property (readwrite, nonatomic, retain) HVOccurenceCollection* exercise;
+@property (readwrite, nonatomic, strong) HVTimeCollection* caffeineIntakeTimes;
+@property (readwrite, nonatomic, strong) HVTimeCollection* alcoholIntakeTimes;
+@property (readwrite, nonatomic, strong) HVOccurenceCollection* naps;
+@property (readwrite, nonatomic, strong) HVOccurenceCollection* exercise;
 
 @property (readonly, nonatomic) BOOL hasCaffeineIntakeTimes;
 @property (readonly, nonatomic) BOOL hasAlcoholIntakeTimes;

@@ -2,7 +2,7 @@
 //  HVResponseStatus.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,12 +32,6 @@ static const xmlChar* x_element_error = XMLSTRINGCONST("error");
     return (m_code != 0 || m_error != nil);
 }
 
--(void)dealloc
-{
-    [m_error release];
-    
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer
 {
@@ -48,7 +42,7 @@ static const xmlChar* x_element_error = XMLSTRINGCONST("error");
 -(void)deserialize:(XReader *)reader
 {
     m_code = [reader readIntElementXmlName:x_element_code];
-    m_error = [[reader readElementWithXmlName:x_element_error asClass:[HVServerError class]] retain];
+    m_error = [reader readElementWithXmlName:x_element_error asClass:[HVServerError class]];
 }
 
 @end

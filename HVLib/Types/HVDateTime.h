@@ -2,7 +2,7 @@
 //  DateTime.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,12 +38,12 @@
 //
 // Reqired
 //
-@property (readwrite, nonatomic, retain) HVDate* date;
+@property (readwrite, nonatomic, strong) HVDate* date;
 //
 // Optional
 //
-@property (readwrite, nonatomic, retain) HVTime* time;
-@property (readwrite, nonatomic, retain) HVCodableValue *timeZone;
+@property (readwrite, nonatomic, strong) HVTime* time;
+@property (readwrite, nonatomic, strong) HVCodableValue *timeZone;
 
 //
 // Convenience

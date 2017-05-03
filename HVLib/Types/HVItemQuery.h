@@ -2,7 +2,7 @@
 //  HVItemQuery.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@
     HVInt* m_maxFull;    
 }
 
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 //
 // itemIDs, keys, and clientIDs are a CHOICE.
 // You can specify items for one only one of them in a single query
@@ -52,7 +52,7 @@
 //
 // What format to pull data down in
 //
-@property (readwrite, nonatomic, retain) HVItemView* view;
+@property (readwrite, nonatomic, strong) HVItemView* view;
 
 @property (readwrite, nonatomic) int maxResults;
 @property (readwrite, nonatomic) int maxFullResults;

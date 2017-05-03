@@ -2,7 +2,7 @@
 //  HVAudit.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,14 +30,6 @@ static NSString* const c_element_action = @"audit-action";
 @synthesize action = m_action;
 
 
--(void) dealloc
-{
-    [m_when release];
-    [m_appID release];
-    [m_action release];
-    
-    [super dealloc];
-}
 
 -(void) serialize:(XWriter *)writer
 {
@@ -48,9 +40,9 @@ static NSString* const c_element_action = @"audit-action";
 
 -(void) deserialize:(XReader *)reader
 {
-    m_when = [[reader readDateElement:c_element_when] retain];
-    m_appID = [[reader readStringElement:c_element_appID] retain];
-    m_action = [[reader readStringElement:c_element_action] retain];    
+    m_when = [reader readDateElement:c_element_when];
+    m_appID = [reader readStringElement:c_element_appID];
+    m_action = [reader readStringElement:c_element_action];    
 }
 
 @end

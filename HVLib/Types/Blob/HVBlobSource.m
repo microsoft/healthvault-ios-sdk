@@ -2,7 +2,7 @@
 //  HVBlobSource.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,11 +32,6 @@
     return m_source.length;
 }
 
--(void)dealloc
-{
-    [m_source release];
-    [super dealloc];
-}
 
 -(id)init
 {
@@ -50,7 +45,7 @@
     self = [super init];
     HVCHECK_SELF;
     
-    m_source = [data retain];
+    m_source = data;
     
     return self;
     
@@ -90,7 +85,7 @@ LError:
     self = [super init];
     HVCHECK_SELF;
     
-    m_file = [[NSFileHandle fileHandleForReadingAtPath:filePath] retain];
+    m_file = [NSFileHandle fileHandleForReadingAtPath:filePath];
     HVCHECK_NOTNULL(m_file);
     
     m_size = [[NSFileManager defaultManager] sizeOfFileAtPath:filePath];
@@ -101,11 +96,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_file release];
-    [super dealloc];
-}
 
 -(NSData *)readStartAt:(int)offset chunkSize:(int)chunkSize
 {

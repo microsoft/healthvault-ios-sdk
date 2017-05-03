@@ -2,7 +2,7 @@
 //  HVUser.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -107,19 +107,10 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_records release];
-    [m_environment release];
-    [m_instanceID release];
-    
-    [super dealloc];
-}
 
 -(BOOL)updateWithLegacyRecords:(NSArray *)records
 {
-    HVRecord* current = [[[self currentRecord] retain] autorelease];
+    HVRecord* current = [self currentRecord];
     
     [self clear];
     
@@ -130,7 +121,7 @@ LError:
     {
         if (!m_name)
         {
-            m_name = [record.personName retain];
+            m_name = record.personName;
         }
         
         HVRecord* hvRecord = [[HVRecord alloc] initWithRecord:record];
@@ -161,7 +152,6 @@ LError:
     
     HealthVaultRecord* legacyRecord = [self newLegacyRecord:currentRecord];
     service.currentRecord = legacyRecord;
-    [legacyRecord release];
 }
 
 -(void)clearRecordsForService:(HealthVaultService *)service
@@ -172,14 +162,13 @@ LError:
 
 -(HVTask *)refreshAuthorizedRecords:(HVTaskCompletion)callback
 {
-    HVTask* refreshTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* refreshTask = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(refreshTask);
     
     HVGetAuthorizedPeopleTask* getRecordsTask = [self newGetPeopleTask];
     HVCHECK_NOTNULL(getRecordsTask);
     
     [refreshTask setNextTask:getRecordsTask];
-    [getRecordsTask release];
     
     [refreshTask start];
     
@@ -191,7 +180,7 @@ LError:
 
 -(HVTask *)authorizeAdditionalRecords:(UIViewController *)parentController andCallback:(HVTaskCompletion)callback
 {
-    HVTask* authTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* authTask = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(authTask);
     
     NSString* urlString = [[HVClient current].service getUserAuthorizationUrl];
@@ -216,7 +205,6 @@ LError:
     }];
     
     [parentController.navigationController pushViewController:controller animated:TRUE];
-    [controller release];
 
     return authTask;
     
@@ -228,7 +216,7 @@ LError:
 {
     HVCHECK_NOTNULL(record);
     
-    HVTask* removeAuthTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* removeAuthTask = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(removeAuthTask);
     
     HVRemoveRecordAuthTask* removeRecordAuthTask = [[HVRemoveRecordAuthTask alloc] initWithRecord:record andCallback:^(HVTask *task) {
@@ -237,7 +225,6 @@ LError:
         
         HVGetAuthorizedPeopleTask* refreshTask = [self newGetPeopleTask];
         [task.parent setNextTask:refreshTask];
-        [refreshTask release];
         
     }];
     HVCHECK_NOTNULL(removeRecordAuthTask);
@@ -255,12 +242,12 @@ LError:
 {
     HVCHECK_NOTNULL(record);
     
-    HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* task = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(task);
     
-    HVGetPersonalImageTask* getImageTask = [[[HVGetPersonalImageTask alloc] initWithRecord:record andCallback:^(HVTask *task) {
+    HVGetPersonalImageTask* getImageTask = [[HVGetPersonalImageTask alloc] initWithRecord:record andCallback:^(HVTask *task) {
         [self imageDownloadComplete:task forRecord:record];
-    }] autorelease];
+    }];
     HVCHECK_NOTNULL(getImageTask);
     
     [task setNextTask:getImageTask];
@@ -303,15 +290,15 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readStringElement:c_element_name] retain];
-    m_records = (HVRecordCollection *)[[reader readElementArray:c_element_recordarray itemName:c_element_record asClass:[HVRecord class] andArrayClass:[HVRecordCollection class]] retain];
+    m_name = [reader readStringElement:c_element_name];
+    m_records = (HVRecordCollection *)[reader readElementArray:c_element_recordarray itemName:c_element_record asClass:[HVRecord class] andArrayClass:[HVRecordCollection class]];
     
     NSInteger index = 0;
     index = [reader readIntElement:c_element_current];
     m_currentIndex = index;
     
-    m_environment = [[reader readStringElement:c_element_environment] retain];
-    m_instanceID = [[reader readStringElement:c_element_instanceID] retain];
+    m_environment = [reader readStringElement:c_element_environment];
+    m_instanceID = [reader readStringElement:c_element_instanceID];
 }
 
 @end

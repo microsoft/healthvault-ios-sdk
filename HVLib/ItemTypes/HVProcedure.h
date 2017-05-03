@@ -2,7 +2,7 @@
 //  HVProcedure.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,24 +39,24 @@
 // (Required)
 // Vocabulary: SNOMED (SnomedProcedures-Filtered)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* name;
+@property (readwrite, nonatomic, strong) HVCodableValue* name;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVApproxDateTime* when;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* when;
 //
 // (Optional)
 // Vocabulary: (SnomedBodyLocations-Filtered)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* anatomicLocation;
+@property (readwrite, nonatomic, strong) HVCodableValue* anatomicLocation;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVPerson* primaryProvider;
+@property (readwrite, nonatomic, strong) HVPerson* primaryProvider;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVPerson* secondaryProvider;
+@property (readwrite, nonatomic, strong) HVPerson* secondaryProvider;
 
 //-------------------------
 //

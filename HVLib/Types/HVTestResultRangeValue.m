@@ -2,7 +2,7 @@
 //  HVTestResultRangeValue.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -63,13 +63,6 @@ static const xmlChar* x_element_maxRange = XMLSTRINGCONST("maximum-range");
     }
 }
 
--(void)dealloc
-{
-    [m_minRange release];
-    [m_maxRange release];
-    
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer
 {
@@ -79,8 +72,8 @@ static const xmlChar* x_element_maxRange = XMLSTRINGCONST("maximum-range");
 
 -(void)deserialize:(XReader *)reader
 {
-    m_minRange = [[reader readElementWithXmlName:x_element_minRange asClass:[HVDouble class]] retain];
-    m_maxRange = [[reader readElementWithXmlName:x_element_maxRange asClass:[HVDouble class]] retain];
+    m_minRange = [reader readElementWithXmlName:x_element_minRange asClass:[HVDouble class]];
+    m_maxRange = [reader readElementWithXmlName:x_element_maxRange asClass:[HVDouble class]];
 }
 
 @end

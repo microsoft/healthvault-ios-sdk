@@ -2,7 +2,7 @@
 //  HVPersonalDemographics.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,24 +55,6 @@ static NSString* const c_element_donor = @"organ-donor";
 @synthesize isDisabled = m_disabled;
 @synthesize organDonor = m_donor;
 
--(void)dealloc
-{
-    [m_name release];
-    [m_birthdate release];
-    [m_bloodType release];
-    [m_ethnicity release];
-    [m_ssn release];
-    [m_maritalStatus release];
-    [m_employmentStatus release];
-    [m_isDeceased release];
-    [m_dateOfDeath release];
-    [m_religion release];
-    [m_veteran release];
-    [m_education release];
-    [m_disabled release];
-    [m_donor release];
-    [super dealloc];
-}
 
 -(NSString *)description
 {
@@ -86,17 +68,17 @@ static NSString* const c_element_donor = @"organ-donor";
 
 +(HVVocabIdentifier *)vocabForBloodType
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"blood-types"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"blood-types"];
 }
 
 +(HVVocabIdentifier *)vocabForEthnicity
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"ethnicity-types"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"ethnicity-types"];
 }
 
 +(HVVocabIdentifier *)vocabForMaritalStatus
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"marital-status"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"marital-status"];
 }
 
 -(HVClientResult *)validate
@@ -140,20 +122,20 @@ static NSString* const c_element_donor = @"organ-donor";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVName class]] retain];
-    m_birthdate = [[reader readElement:c_element_birthdate asClass:[HVDateTime class]] retain];
-    m_bloodType = [[reader readElement:c_element_bloodType asClass:[HVCodableValue class]] retain];
-    m_ethnicity = [[reader readElement:c_element_ethnicity asClass:[HVCodableValue class]] retain];
-    m_ssn = [[reader readStringElement:c_element_ssn] retain];
-    m_maritalStatus = [[reader readElement:c_element_marital asClass:[HVCodableValue class]] retain];
-    m_employmentStatus = [[reader readStringElement:c_element_employment] retain];
-    m_isDeceased = [[reader readElement:c_element_deceased asClass:[HVBool class]] retain];
-    m_dateOfDeath = [[reader readElement:c_element_dateOfDeath asClass:[HVApproxDateTime class]] retain];
-    m_religion = [[reader readElement:c_element_religion asClass:[HVCodableValue class]] retain];
-    m_veteran = [[reader readElement:c_element_veteran asClass:[HVBool class]] retain];
-    m_education = [[reader readElement:c_element_education asClass:[HVCodableValue class]] retain];
-    m_disabled = [[reader readElement:c_element_disabled asClass:[HVBool class]] retain];
-    m_donor = [[reader readStringElement:c_element_donor] retain];
+    m_name = [reader readElement:c_element_name asClass:[HVName class]];
+    m_birthdate = [reader readElement:c_element_birthdate asClass:[HVDateTime class]];
+    m_bloodType = [reader readElement:c_element_bloodType asClass:[HVCodableValue class]];
+    m_ethnicity = [reader readElement:c_element_ethnicity asClass:[HVCodableValue class]];
+    m_ssn = [reader readStringElement:c_element_ssn];
+    m_maritalStatus = [reader readElement:c_element_marital asClass:[HVCodableValue class]];
+    m_employmentStatus = [reader readStringElement:c_element_employment];
+    m_isDeceased = [reader readElement:c_element_deceased asClass:[HVBool class]];
+    m_dateOfDeath = [reader readElement:c_element_dateOfDeath asClass:[HVApproxDateTime class]];
+    m_religion = [reader readElement:c_element_religion asClass:[HVCodableValue class]];
+    m_veteran = [reader readElement:c_element_veteran asClass:[HVBool class]];
+    m_education = [reader readElement:c_element_education asClass:[HVCodableValue class]];
+    m_disabled = [reader readElement:c_element_disabled asClass:[HVBool class]];
+    m_donor = [reader readStringElement:c_element_donor];
 }
 
 +(NSString *)typeID

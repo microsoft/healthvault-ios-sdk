@@ -48,16 +48,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_onsetDate release];
-    [m_resolutionDate release];
-    [m_resolution release];
-    [m_occurrence release];
-    [m_severity release];
-    [super dealloc];
-}
 
 -(NSString *)toString
 {
@@ -95,12 +85,12 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
-    m_onsetDate = [[reader readElement:c_element_onsetDate asClass:[HVApproxDate class]] retain];
-    m_resolutionDate = [[reader readElement:c_element_resolutionDate asClass:[HVApproxDate class]] retain];
-    m_resolution = [[reader readStringElement:c_element_resolution] retain];
-    m_occurrence = [[reader readElement:c_element_occurrence asClass:[HVCodableValue class]] retain];
-    m_severity = [[reader readElement:c_element_severity asClass:[HVCodableValue class]] retain];    
+    m_name = [reader readElement:c_element_name asClass:[HVCodableValue class]];
+    m_onsetDate = [reader readElement:c_element_onsetDate asClass:[HVApproxDate class]];
+    m_resolutionDate = [reader readElement:c_element_resolutionDate asClass:[HVApproxDate class]];
+    m_resolution = [reader readStringElement:c_element_resolution];
+    m_occurrence = [reader readElement:c_element_occurrence asClass:[HVCodableValue class]];
+    m_severity = [reader readElement:c_element_severity asClass:[HVCodableValue class]];    
 }
 
 @end

@@ -2,7 +2,7 @@
 //  HVSynchronizedStore.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,15 +29,13 @@
 {
     enum HVItemSection m_sections;
     id<HVItemStore> m_localStore;
-    
-    HVSynchronizationManager* m_syncMgr;
 }
 
-@property (readonly, nonatomic) id<HVItemStore> localStore;
+@property (readonly, nonatomic, strong) id<HVItemStore> localStore;
 @property (readwrite, nonatomic) enum HVItemSection defaultSections;
 
 // Weak ref back to the owning sync manager, if any
-@property (readwrite, nonatomic, assign) HVSynchronizationManager* syncMgr;
+@property (readwrite, nonatomic, weak) HVSynchronizationManager* syncMgr;
 
 -(id) initOverStore:(id<HVObjectStore>) store;
 -(id) initOverItemStore:(id<HVItemStore>) store;

@@ -2,7 +2,7 @@
 //  HVItemChange.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,17 +43,17 @@ enum HVItemChangeType
 }
 
 @property (readonly, nonatomic) enum HVItemChangeType changeType;
-@property (readonly, nonatomic) NSString* changeID;
+@property (readonly, nonatomic, strong) NSString* changeID;
 @property (readonly, nonatomic) NSTimeInterval timestamp;
-@property (readonly, nonatomic) NSString* typeID;
-@property (readonly, nonatomic) NSString* itemID;
-@property (readonly, nonatomic) HVItemKey* itemKey;
+@property (readonly, nonatomic, strong) NSString* typeID;
+@property (readonly, nonatomic, strong) NSString* itemID;
+@property (readonly, nonatomic, strong) HVItemKey* itemKey;
 
-@property (readwrite, nonatomic, retain) HVItemKey* updatedKey;
+@property (readwrite, nonatomic, strong) HVItemKey* updatedKey;
 
 // The item whose changes are being comitted. Reserved for internal use only
-@property (readwrite, nonatomic, retain) HVItem* localItem;
-@property (readwrite, nonatomic, retain) HVItem* updatedItem;
+@property (readwrite, nonatomic, strong) HVItem* localItem;
+@property (readwrite, nonatomic, strong) HVItem* updatedItem;
 
 @property (readwrite, nonatomic) int attemptCount;
 

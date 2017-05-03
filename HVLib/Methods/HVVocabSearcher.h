@@ -1,7 +1,7 @@
 //
 //  HVVocabSearcher.h
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -77,19 +77,19 @@ seqNumber:(NSUInteger) seq;
     id<HVVocabSearcherDelegate> m_delegate; // Weak reference
 }
 
-@property (readwrite, nonatomic, retain) HVVocabIdentifier* vocab;
+@property (readwrite, nonatomic, strong) HVVocabIdentifier* vocab;
 @property (readwrite, nonatomic) enum HVVocabMatchType matchType;
 @property (readwrite, nonatomic) int maxResults;
 //
 // Search cache. 
 // Readwrite - you can potentially share caches, or hold onto them
 //
-@property (readwrite, nonatomic, retain) HVVocabSearchCache* cache;
+@property (readwrite, nonatomic, strong) HVVocabSearchCache* cache;
 //
 // DELEGATE
 // Weak reference
 //
-@property (readwrite, nonatomic, assign) id<HVVocabSearcherDelegate> delegate;
+@property (readwrite, nonatomic, weak) id<HVVocabSearcherDelegate> delegate;
 
 -(id) initWithVocab:(HVVocabIdentifier *) vocab;
 -(id) initWithVocab:(HVVocabIdentifier *)vocab andMaxResults:(int) max;

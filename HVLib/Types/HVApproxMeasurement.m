@@ -2,7 +2,7 @@
 //  HVApproxMeasurement.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -57,21 +57,15 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_display release];
-    [m_measurement release];
-    [super dealloc];
-}
 
 +(HVApproxMeasurement *)fromDisplayText:(NSString *)text
 {
-    return [[[HVApproxMeasurement alloc] initWithDisplayText:text] autorelease];
+    return [[HVApproxMeasurement alloc] initWithDisplayText:text];
 }
 
 +(HVApproxMeasurement *)fromDisplayText:(NSString *)text andMeasurement:(HVMeasurement *)measurement
 {
-    return [[[HVApproxMeasurement alloc] initWithDisplayText:text andMeasurement:measurement] autorelease];
+    return [[HVApproxMeasurement alloc] initWithDisplayText:text andMeasurement:measurement];
 }
 
 +(HVApproxMeasurement *) fromValue:(double)value unitsText:(NSString *)unitsText unitsCode:(NSString *)code unitsVocab:(NSString *) vocab
@@ -137,8 +131,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_display = [[reader readStringElement:c_element_display] retain];
-    m_measurement = [[reader readElement:c_element_structured asClass:[HVMeasurement class]] retain];
+    m_display = [reader readStringElement:c_element_display];
+    m_measurement = [reader readElement:c_element_structured asClass:[HVMeasurement class]];
 }
 
 @end

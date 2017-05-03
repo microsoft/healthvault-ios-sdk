@@ -2,7 +2,7 @@
 //  HVTime.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -123,19 +123,19 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
     self = [super init];
     HVCHECK_SELF;
     
-    if (hour != NSUndefinedDateComponent)
+    if (hour != NSDateComponentUndefined)
     {
         m_hours = [[HVHour alloc] initWith:(int)hour];
     }
     HVCHECK_NOTNULL(m_hours);
     
-    if (minute != NSUndefinedDateComponent)
+    if (minute != NSDateComponentUndefined)
     {
         m_minutes = [[HVMinute alloc] initWith:(int)minute];
     }
     HVCHECK_NOTNULL(m_minutes);
     
-    if (second >= 0 && second != NSUndefinedDateComponent)
+    if (second >= 0 && second != NSDateComponentUndefined)
     {
         m_seconds = [[HVSecond alloc] initWith:(int)second];
         HVCHECK_NOTNULL(m_seconds);
@@ -169,21 +169,13 @@ LError:
 
 +(HVTime *)fromHour:(int)hour andMinute:(int)minute
 {
-    return [[[HVTime alloc] initWithHour:hour minute:minute] autorelease];
+    return [[HVTime alloc] initWithHour:hour minute:minute];
 }
 
--(void) dealloc
-{
-    [m_hours release];
-    [m_minutes release];
-    [m_seconds release];
-    [m_milliseconds release];
-    [super dealloc];
-}
 
 -(NSDateComponents *) toComponents
 {
-    NSDateComponents *components = [[NSCalendar newComponents] autorelease];
+    NSDateComponents *components = [NSCalendar newComponents];
     HVCHECK_NOTNULL(components);
     
     HVCHECK_SUCCESS([self getComponents:components]);
@@ -225,7 +217,6 @@ LError:
     HVCHECK_SUCCESS([self getComponents:components]);
     
     NSDate* newDate = [components date];
-    [components release];
     
     return newDate;
 }
@@ -292,10 +283,10 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_hours = [[reader readElementWithXmlName:x_element_hour asClass:[HVHour class]] retain];
-    m_minutes = [[reader readElementWithXmlName:x_element_minute asClass:[HVMinute class]] retain];
-    m_seconds = [[reader readElementWithXmlName:x_element_second asClass:[HVSecond class]] retain];
-    m_milliseconds = [[reader readElementWithXmlName:x_element_millis asClass:[HVMillisecond class]] retain];
+    m_hours = [reader readElementWithXmlName:x_element_hour asClass:[HVHour class]];
+    m_minutes = [reader readElementWithXmlName:x_element_minute asClass:[HVMinute class]];
+    m_seconds = [reader readElementWithXmlName:x_element_second asClass:[HVSecond class]];
+    m_milliseconds = [reader readElementWithXmlName:x_element_millis asClass:[HVMillisecond class]];
 }
 
 @end

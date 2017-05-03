@@ -2,7 +2,7 @@
 //  XmlTextReader.m
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,13 +39,6 @@
 	return self;
 }
 
-- (void)dealloc {
-
-	[_rootElement release];
-	[_elements release];
-
-	[super dealloc];
-}
 
 - (XmlElement *)read: (NSString *)xml {
 	
@@ -73,7 +66,7 @@
 	@finally {
 		
 		// be sure we released xmlReader instance
-		[xmlReader release];
+		xmlReader = nil;
 	}
 
 	return _rootElement;
@@ -91,17 +84,15 @@
 	// copy attributes
 	NSMutableDictionary *elementAttributes = [attributeDict mutableCopy];
 	current.attributes = elementAttributes;
-	[elementAttributes release];
 	
 	// children
 	NSMutableDictionary *elementChildren = [NSMutableDictionary new];
 	current.children = elementChildren;
-	[elementChildren release];
 	
 	// if this is a root element
 	if (_rootElement == nil) {
 		
-		_rootElement = [current retain];
+		_rootElement = current;
 		
 	} else {
 		
@@ -113,14 +104,12 @@
 			
 			children = [[NSMutableArray alloc] initWithCapacity: ELEMENT_CHILD_STORE_INITIAL_CAPACITY];
 			[[parent children] setObject: children forKey: current.name];
-			[children release];
 		}
 		
 		[children addObject: current];
 	}
 
 	[_elements addObject: current];
-	[current release];
 }
 
 // Called when the end of an element is encountered in the document.

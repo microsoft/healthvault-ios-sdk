@@ -2,7 +2,7 @@
 //  HVItemDateAndKey.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
     BOOL m_isLoadPending;
 }
 
-@property (readonly, nonatomic, retain) NSDate* date;
+@property (readonly, nonatomic, strong) NSDate* date;
 @property (readwrite, nonatomic) BOOL isLoadPending;
 
 -(id) initWithDate:(NSDate *) date andID:(NSString*) itemID;

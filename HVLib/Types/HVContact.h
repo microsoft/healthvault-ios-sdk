@@ -2,7 +2,7 @@
 //  HVContact.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,15 +37,15 @@
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVAddressCollection* address;
+@property (readwrite, nonatomic, strong) HVAddressCollection* address;
 // 
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVPhoneCollection* phone;
+@property (readwrite, nonatomic, strong) HVPhoneCollection* phone;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVEmailCollection* email;
+@property (readwrite, nonatomic, strong) HVEmailCollection* email;
 
 //
 // Convenience
@@ -54,9 +54,9 @@
 @property (readonly, nonatomic) BOOL hasPhone;
 @property (readonly, nonatomic) BOOL hasEmail;
 
-@property (readonly, nonatomic) HVAddress* firstAddress;
-@property (readonly, nonatomic) HVPhone* firstPhone;
-@property (readonly, nonatomic) HVEmail* firstEmail;
+@property (readonly, nonatomic, strong) HVAddress* firstAddress;
+@property (readonly, nonatomic, strong) HVPhone* firstPhone;
+@property (readonly, nonatomic, strong) HVEmail* firstEmail;
 
 //-------------------------
 //

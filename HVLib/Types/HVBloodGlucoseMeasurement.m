@@ -2,7 +2,7 @@
 //  HVBloodGlucoseMeasurement.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,12 +54,6 @@
     [self updateDisplayValue:mgPerDL units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
 
--(void)dealloc
-{
-    [m_mmolPerl release];
-    [m_display release];
-    [super dealloc];
-}
 
 -(id)initWithMmolPerLiter:(double)value
 {
@@ -150,8 +144,8 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {    
-    m_mmolPerl = [[reader readElementWithXmlName:x_element_mmolPL asClass:[HVPositiveDouble class]] retain];
-    m_display = [[reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]] retain];
+    m_mmolPerl = [reader readElementWithXmlName:x_element_mmolPL asClass:[HVPositiveDouble class]];
+    m_display = [reader readElementWithXmlName:x_element_display asClass:[HVDisplayValue class]];
 }
 
 @end

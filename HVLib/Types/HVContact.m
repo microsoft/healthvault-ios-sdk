@@ -2,7 +2,7 @@
 //  HVContact.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ static NSString* const c_element_email = @"email";
 
 -(void)setAddress:(HVAddressCollection *)address
 {
-    m_address = [address retain];
+    m_address = address;
 }
 
 -(BOOL)hasPhone
@@ -57,7 +57,7 @@ static NSString* const c_element_email = @"email";
 
 -(void)setPhone:(HVPhoneCollection *)phone
 {
-    m_phone = [phone retain];
+    m_phone = phone;
 }
 
 -(BOOL)hasEmail
@@ -73,7 +73,7 @@ static NSString* const c_element_email = @"email";
 
 -(void)setEmail:(HVEmailCollection *)email
 {
-    m_email = [email retain];
+    m_email = email;
 }
 
 -(HVAddress *)firstAddress
@@ -112,7 +112,6 @@ static NSString* const c_element_email = @"email";
         HVCHECK_NOTNULL(phoneObj);
         
         [self.phone addObject:phoneObj];
-        [phoneObj release];
         
         HVCHECK_NOTNULL(m_phone);
     }
@@ -122,7 +121,6 @@ static NSString* const c_element_email = @"email";
         HVEmail* emailObj = [[HVEmail alloc] initWithEmailAddress:email];
         HVCHECK_NOTNULL(emailObj);
         [self.email addObject:emailObj];
-        [emailObj release];
         
         HVCHECK_NOTNULL(m_email);
     }
@@ -133,14 +131,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_address release];
-    [m_phone release];
-    [m_email release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -162,9 +152,9 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_address = (HVAddressCollection *)[[reader readElementArray:c_element_address asClass:[HVAddress class] andArrayClass:[HVAddressCollection class]] retain];
-    m_phone = (HVPhoneCollection *)[[reader readElementArray:c_element_phone asClass:[HVPhone class] andArrayClass:[HVPhoneCollection class]] retain];
-    m_email = (HVEmailCollection *)[[reader readElementArray:c_element_email asClass:[HVEmail class] andArrayClass:[HVEmailCollection class]] retain];
+    m_address = (HVAddressCollection *)[reader readElementArray:c_element_address asClass:[HVAddress class] andArrayClass:[HVAddressCollection class]];
+    m_phone = (HVPhoneCollection *)[reader readElementArray:c_element_phone asClass:[HVPhone class] andArrayClass:[HVPhoneCollection class]];
+    m_email = (HVEmailCollection *)[reader readElementArray:c_element_email asClass:[HVEmail class] andArrayClass:[HVEmailCollection class]];
 }
 
 @end

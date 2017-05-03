@@ -2,7 +2,7 @@
 //  HVBloodGlucose.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -117,18 +117,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_when release];
-    [m_value release];
-    [m_measurementType release];
-    [m_outsideOperatingTemp release];
-    [m_controlTest release];
-    [m_normalcy release];
-    [m_context release];
-    
-    [super dealloc];
-}
 
 -(NSString *)stringInMgPerDL:(NSString *)format
 {
@@ -152,27 +140,27 @@ LError:
 
 +(HVCodableValue *)createPlasmaMeasurementType
 {
-    return [[HVBloodGlucose newMeasurementText:@"Plasma" andCode:@"p"] autorelease];
+    return [HVBloodGlucose newMeasurementText:@"Plasma" andCode:@"p"];
 }
 
 +(HVCodableValue *)createWholeBloodMeasurementType
 {
-    return [[HVBloodGlucose newMeasurementText:@"Whole blood" andCode:@"wb"] autorelease];
+    return [HVBloodGlucose newMeasurementText:@"Whole blood" andCode:@"wb"];
 }
 
 +(HVVocabIdentifier *)vocabForContext
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-context"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-context"];    
 }
 
 +(HVVocabIdentifier *)vocabForMeasurementType
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-type"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-type"];    
 }
 
 +(HVVocabIdentifier *)vocabForNormalcy
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"normalcy-one-to-five"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"normalcy-one-to-five"];    
 }
 
 -(HVClientResult *)validate
@@ -203,13 +191,13 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]] retain];
-    m_value = [[reader readElementWithXmlName:x_element_value asClass:[HVBloodGlucoseMeasurement class]] retain];
-    m_measurementType = [[reader readElementWithXmlName:x_element_type asClass:[HVCodableValue class]] retain];
-    m_outsideOperatingTemp = [[reader readElementWithXmlName:x_element_operatingTemp asClass:[HVBool class]] retain];
-    m_controlTest = [[reader readElementWithXmlName:x_element_controlTest asClass:[HVBool class]] retain];
-    m_normalcy = [[reader readElementWithXmlName:x_element_normalcy asClass:[HVOneToFive class]] retain];
-    m_context = [[reader readElementWithXmlName:x_element_context asClass:[HVCodableValue class]] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVDateTime class]];
+    m_value = [reader readElementWithXmlName:x_element_value asClass:[HVBloodGlucoseMeasurement class]];
+    m_measurementType = [reader readElementWithXmlName:x_element_type asClass:[HVCodableValue class]];
+    m_outsideOperatingTemp = [reader readElementWithXmlName:x_element_operatingTemp asClass:[HVBool class]];
+    m_controlTest = [reader readElementWithXmlName:x_element_controlTest asClass:[HVBool class]];
+    m_normalcy = [reader readElementWithXmlName:x_element_normalcy asClass:[HVOneToFive class]];
+    m_context = [reader readElementWithXmlName:x_element_context asClass:[HVCodableValue class]];
 }
 
 +(NSString *)typeID
@@ -240,7 +228,6 @@ LError:
 {
     HVCodedValue* codedValue = [HVBloodGlucose newMeasurementCode:code];
     HVCodableValue* codableValue = [[HVCodableValue alloc] initWithText:text andCode:codedValue];
-    [codedValue release];
     return codableValue;
 }
 

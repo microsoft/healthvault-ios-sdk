@@ -2,7 +2,7 @@
 //  HVTestResultRange.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,14 +31,6 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 @synthesize text = m_text;
 @synthesize value = m_value;
 
--(void)dealloc
-{
-    [m_type release];
-    [m_text release];
-    [m_value release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -60,9 +52,9 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 -(void)deserialize:(XReader *)reader
 {
-    m_type = [[reader readElementWithXmlName:x_element_type asClass:[HVCodableValue class]] retain];
-    m_text = [[reader readElementWithXmlName:x_element_text asClass:[HVCodableValue class]] retain];
-    m_value = [[reader readElementWithXmlName:x_element_value asClass:[HVTestResultRangeValue class]] retain];
+    m_type = [reader readElementWithXmlName:x_element_type asClass:[HVCodableValue class]];
+    m_text = [reader readElementWithXmlName:x_element_text asClass:[HVCodableValue class]];
+    m_value = [reader readElementWithXmlName:x_element_value asClass:[HVTestResultRangeValue class]];
 }
 
 @end

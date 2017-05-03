@@ -2,7 +2,7 @@
 //  HVItemData.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ static NSString* const c_element_common = @"common";
 
 -(void) setTyped:(HVItemDataTyped *)typed
 {
-    m_typed = [typed retain];
+    m_typed = typed;
 }
 
 -(BOOL) hasCommon
@@ -64,15 +64,9 @@ static NSString* const c_element_common = @"common";
 
 -(void) setCommon:(HVItemDataCommon *)common
 {
-    m_common = [common retain];
+    m_common = common;
 }
 
--(void) dealloc
-{
-    [m_common release];
-    [m_typed release];
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -111,7 +105,7 @@ static NSString* const c_element_common = @"common";
     
     if ([reader isStartElementWithName:c_element_common])
     {
-        m_common = [[reader readElement:c_element_common asClass:[HVItemDataCommon class]] retain];
+        m_common = [reader readElement:c_element_common asClass:[HVItemDataCommon class]];
     }
 }
 

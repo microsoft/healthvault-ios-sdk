@@ -2,7 +2,7 @@
 //  HVEncounter.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,27 +39,27 @@
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* encounterType;
+@property (readwrite, nonatomic, strong) HVCodableValue* encounterType;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* reason;
+@property (readwrite, nonatomic, strong) NSString* reason;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVDuration* duration;
+@property (readwrite, nonatomic, strong) HVDuration* duration;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVBool* consent;
+@property (readwrite, nonatomic, strong) HVBool* consent;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) HVOrganization* facility;
+@property (readwrite, nonatomic, strong) HVOrganization* facility;
 
 +(NSString *) typeID;
 +(NSString *) XRootElement;

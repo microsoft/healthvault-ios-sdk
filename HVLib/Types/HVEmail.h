@@ -2,7 +2,7 @@
 //  HVEmail.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,15 +39,15 @@
 // Note: HVEmailAddress currently does the minimal validation, so you may want
 // to run any RegEx or other validation scripts on the address
 //
-@property (readwrite, nonatomic, retain) HVEmailAddress* address;
+@property (readwrite, nonatomic, strong) HVEmailAddress* address;
 //
 // (Optional) A description of this email (Personal, Work, etc)
 //
-@property (readwrite, nonatomic, retain) NSString* type;
+@property (readwrite, nonatomic, strong) NSString* type;
 //
 // (Optional) 
 //
-@property (readwrite, nonatomic, retain) HVBool* isPrimary;
+@property (readwrite, nonatomic, strong) HVBool* isPrimary;
 
 //-------------------------
 //

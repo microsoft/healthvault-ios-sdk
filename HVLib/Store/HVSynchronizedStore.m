@@ -2,7 +2,7 @@
 //  HVSynchronizedStore.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,7 +49,6 @@
 
 @synthesize defaultSections = m_sections;
 @synthesize localStore = m_localStore;
-@synthesize syncMgr = m_syncMgr;
 
 -(id)init
 {
@@ -64,7 +63,6 @@
     HVCHECK_NOTNULL(localStore);
     
     self = [self initOverItemStore:localStore];
-    [localStore release];
     
     return self;
     
@@ -88,11 +86,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void) dealloc
-{
-    [m_localStore release];    
-    [super dealloc];
-}
 
 -(void)clearCache
 {
@@ -153,7 +146,7 @@ LError:
 {
     HVCHECK_NOTNULL(keys);
     
-    HVItemQuery* query = [[self newQueryFromKeys:keys] autorelease];
+    HVItemQuery* query = [self newQueryFromKeys:keys];
     HVCHECK_NOTNULL(query);
     
     if (![NSString isNilOrEmpty:typeID])
@@ -173,7 +166,7 @@ LError:
 
 -(HVTask *)getItemsInRecord:(HVRecordReference *)record withKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVItemQuery* query = [[self newQueryFromKeys:keys] autorelease];
+    HVItemQuery* query = [self newQueryFromKeys:keys];
     return [self getItemsInRecord:record forQuery:query callback:callback];
 }
 
@@ -181,7 +174,7 @@ LError:
 {
     HVCHECK_NOTNULL(query);
     
-    HVTask* getItemsTask = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* getItemsTask = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(getItemsTask);
     getItemsTask.taskName = @"getItemsInRecord";
     //
@@ -202,7 +195,6 @@ LError:
     HVCHECK_NOTNULL(downloadTask);
     
     [getItemsTask setNextTask:downloadTask];
-    [downloadTask release];
     
     [getItemsTask start];  // this can throw
     
@@ -220,7 +212,7 @@ LError:
 
 -(HVDownloadItemsTask *)downloadItemsInRecord:(HVRecordReference *)record forKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVDownloadItemsTask* task = [[self newDownloadItemsInRecord:record forKeys:keys callback:callback] autorelease];
+    HVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forKeys:keys callback:callback];
     HVCHECK_NOTNULL(task);
     
     [task start];
@@ -233,7 +225,7 @@ LError:
 
 -(HVDownloadItemsTask *)downloadItemsInRecord:(HVRecordReference *) record query :(HVItemQuery *)query callback:(HVTaskCompletion)callback
 {
-    HVDownloadItemsTask* task = [[self newDownloadItemsInRecord:record forQuery:query callback:callback] autorelease];
+    HVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forQuery:query callback:callback];
     HVCHECK_NOTNULL(task);
     
     [task start];
@@ -246,7 +238,7 @@ LError:
 
 -(HVDownloadItemsTask *)newDownloadItemsInRecord:(HVRecordReference *)record forKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
 {
-    HVItemQuery* query = [[self newQueryFromKeys:keys] autorelease];
+    HVItemQuery* query = [self newQueryFromKeys:keys];
     HVCHECK_NOTNULL(query);
     
     return [self newDownloadItemsInRecord:record forQuery:query callback:callback];
@@ -273,7 +265,6 @@ LError:
     getItemsTask.taskName = @"getItemsTask";
     
     [downloadTask setNextTask:getItemsTask];
-    [getItemsTask release];
     
     return downloadTask;
 }
@@ -285,7 +276,7 @@ LError:
 
 -(HVItemCollection *)getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL)includeNull
 {    
-    HVItemCollection *results = [[[HVItemCollection alloc] init] autorelease];
+    HVItemCollection *results = [[HVItemCollection alloc] init];
     HVCHECK_NOTNULL(results);
     
     if (keys)
@@ -333,7 +324,7 @@ LError:
 
 -(void)setLocalStore:(id<HVItemStore>)store
 {
-    m_localStore = [store retain];
+    m_localStore = store;
 }
 
 -(void)completedGetItemsTask:(HVTask *)task
@@ -382,8 +373,6 @@ LError:
     
     [task.parent setNextTask:getPendingTask];
     
-    [pendingQuery release];
-    [getPendingTask release];
 }
 
 -(void)completedDownloadKeys:(NSArray *)keys inView:(HVTypeView *)view task:(HVTask *)task
@@ -416,11 +405,11 @@ LError:
 
 -(BOOL)replaceLocalItemWithDownloaded:(HVItem *)item
 {
-    if (m_syncMgr)
+    if (self.syncMgr)
     {
         @try
         {
-            return [m_syncMgr replaceLocalWithDownloaded:item];
+            return [self.syncMgr replaceLocalWithDownloaded:item];
         }
         @catch (id ex)
         {

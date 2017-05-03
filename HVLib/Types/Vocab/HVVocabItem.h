@@ -2,7 +2,7 @@
 //  HVVocabItem.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,20 +36,20 @@
 //
 // (Required) - Vocabulary Code - such as RxNorm or Snomed code
 //
-@property (readwrite, nonatomic, retain) NSString* code;
+@property (readwrite, nonatomic, strong) NSString* code;
 //
 // (Required) - Vocab Display Text - the actual text
 //
-@property (readwrite, nonatomic, retain) NSString* displayText;
+@property (readwrite, nonatomic, strong) NSString* displayText;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* abbreviation;
+@property (readwrite, nonatomic, strong) NSString* abbreviation;
 //
 // (Optional) - additional information about this vocab entry
 // E.g. RxNorm can contain information about dosages and strengths
 //
-@property (readwrite, nonatomic, retain) NSString* dataXml;
+@property (readwrite, nonatomic, strong) NSString* dataXml;
 
 //-------------------------
 //

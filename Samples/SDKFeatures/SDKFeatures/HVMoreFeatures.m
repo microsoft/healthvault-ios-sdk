@@ -2,7 +2,7 @@
 //  HVMoreFeatures.m
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@
     //
     // LAUNCH the GetServiceDefinition task
     //
-    [[[[HVGetServiceDefinitionTask alloc] initWithCallback:^(HVTask *task) {
+    [[[HVGetServiceDefinitionTask alloc] initWithCallback:^(HVTask *task) {
         //
         // Verify success. This will throw if there was a failure
         // You can also detect failure by checking task.hasError
@@ -66,7 +66,7 @@
         //
         HVConfigurationEntry* configEntry = [serviceDef.platform.config objectAtIndex:0];
         HVConfigurationEntry* configEntry2 = [serviceDef.platform.config objectAtIndex:1];
-        NSMutableString* output = [[[NSMutableString alloc] init] autorelease];
+        NSMutableString* output = [[NSMutableString alloc] init];
         
         [output appendLines:17, @"Some data from ServiceDefinition",
                                @"[PlatformUrl]", serviceDef.platform.url,
@@ -81,7 +81,7 @@
         
         [m_controller.statusLabel clearStatus];
         
-    }] autorelease] start];  // NOTE: Make sure you always call start
+    }] start];  // NOTE: Make sure you always call start
 }
 
 @end

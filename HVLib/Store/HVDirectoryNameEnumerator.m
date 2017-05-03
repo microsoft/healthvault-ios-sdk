@@ -2,7 +2,7 @@
 //  HVDirectoryNameEnumerator.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@
                                     errorHandler:nil];
 
     HVCHECK_NOTNULL(inner);
-    m_inner = [inner retain];
+    m_inner = inner;
     
     m_listFilesMode = filesOnly;
     
@@ -51,11 +51,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_inner release];
-    [super dealloc];
-}
 
 -(id)nextObject
 {

@@ -2,7 +2,7 @@
 //  HVItemTestExtensions.m
 //  HVTestLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 
 NSDate* createRandomDate(void)
 {
-    return [[HVRandom newRandomDayOffsetFromTodayInRangeMin:0 max:-365] autorelease];
+    return [HVRandom newRandomDayOffsetFromTodayInRangeMin:0 max:-365];
 }
 
 HVDateTime* createRandomHVDateTime(void)
@@ -32,12 +32,12 @@ HVDateTime* createRandomHVDateTime(void)
 
 HVDate* createRandomHVDate(void)
 {
-    return [[[HVDate alloc] initWithDate:createRandomDate()] autorelease]; 
+    return [[HVDate alloc] initWithDate:createRandomDate()]; 
 }
 
 HVApproxDateTime* createRandomApproxHVDate(void)
 {
-    return [[[HVApproxDateTime alloc] initWithDateTime:createRandomHVDateTime()] autorelease];
+    return [[HVApproxDateTime alloc] initWithDateTime:createRandomHVDateTime()];
 }
 
 NSString* pickRandomString(int count, ...)
@@ -72,16 +72,16 @@ NSString* pickRandomDrug(void)
 
 +(HVContact *)createRandom
 {
-    HVContact* contact = [[[HVContact alloc] init] autorelease];
+    HVContact* contact = [[HVContact alloc] init];
     
-    HVAddress* address = [[[HVAddress alloc] init] autorelease];
+    HVAddress* address = [[HVAddress alloc] init];
     [address.street addObject:@"1234 Princess Street"];
     address.city = @"Edinburgh";
     address.postalCode = @"ABCDEF";
     address.country = @"Scotland";
     
-    HVEmail* email = [[[HVEmail alloc] initWithEmailAddress:@"foo@bar.xyz"] autorelease];
-    HVPhone* phone = [[[HVPhone alloc] initWithNumber:@"555-555-5555"] autorelease];
+    HVEmail* email = [[HVEmail alloc] initWithEmailAddress:@"foo@bar.xyz"];
+    HVPhone* phone = [[HVPhone alloc] initWithNumber:@"555-555-5555"];
     
     [contact.address addObject:address];
     [contact.email addObject:email];
@@ -96,9 +96,9 @@ NSString* pickRandomDrug(void)
 
 +(HVPerson *) createRandom
 {
-    HVPerson* person = [[[HVPerson alloc] init] autorelease];
+    HVPerson* person = [[HVPerson alloc] init];
     
-    person.name = [[[HVName alloc] initWithFirst:@"Toby" middle:@"R." andLastName:@"McDuff"] autorelease];
+    person.name = [[HVName alloc] initWithFirst:@"Toby" middle:@"R." andLastName:@"McDuff"];
     person.organization = @"Justice League of Doctors";
     person.training = @"MD, Phd., AB, FRCS, PQRS, XYZ";
     
@@ -113,7 +113,7 @@ NSString* pickRandomDrug(void)
 
 +(HVOrganization *)createRandom
 {
-    HVOrganization* org = [[[HVOrganization alloc] init] autorelease];
+    HVOrganization* org = [[HVOrganization alloc] init];
     org.name = @"Toto Memorial Hospital";
     org.contact = [HVContact createRandom];
     org.website = @"http://www.bing.com";
@@ -169,7 +169,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVDateTime *)dateTime
 {
-    HVItem *item = [[HVWeight newItem] autorelease];
+    HVItem *item = [HVWeight newItem];
     item.weight.when = dateTime;
     
     double pounds = [HVRandom randomDoubleInRangeMin:120 max:145];
@@ -181,7 +181,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomMetricForDate:(HVDateTime *)dateTime
 {
-    HVItem *item = [[HVWeight newItem] autorelease];
+    HVItem *item = [HVWeight newItem];
     item.weight.when = dateTime;
     
     double kg = [HVRandom randomDoubleInRangeMin:50 max:75];
@@ -202,7 +202,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVDateTime *)dateTime withPulse:(BOOL)pulse
 {
-    HVItem *item = [[HVBloodPressure newItem] autorelease];
+    HVItem *item = [HVBloodPressure newItem];
     HVBloodPressure *bp = item.bloodPressure;
     
     bp.when = dateTime;
@@ -242,7 +242,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVDateTime *)dateTime metric:(BOOL)metric
 {
-    HVItem* item = [[HVBloodGlucose newItem] autorelease];
+    HVItem* item = [HVBloodGlucose newItem];
     HVBloodGlucose* glucose = item.bloodGlucose;
     glucose.when = dateTime;
     
@@ -288,7 +288,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVDateTime *)dateTime metric:(BOOL)metric
 {
-    HVItem* item = [[HVCholesterolV2 newItem] autorelease];
+    HVItem* item = [HVCholesterolV2 newItem];
     HVCholesterolV2* cholesterol = item.cholesterolV2;
     
     cholesterol.when = dateTime;
@@ -323,7 +323,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *) createRandomForDate:(HVDateTime *) dateTime;
 {
-    HVItem* item = [[HVHeartRate newItem] autorelease];
+    HVItem* item = [HVHeartRate newItem];
     HVHeartRate* heartRate = item.heartRate;
     
     heartRate.when = dateTime;
@@ -338,7 +338,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVItem* item = [[HVHeight newItem] autorelease];
+    HVItem* item = [HVHeight newItem];
     HVHeight* height = item.height;
     
     height.when = createRandomHVDateTime();
@@ -353,7 +353,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVItem* item = [[HVDailyDietaryIntake newItem] autorelease];
+    HVItem* item = [HVDailyDietaryIntake newItem];
     HVDailyDietaryIntake* diet = item.dailyDietaryIntake;
     
     diet.when = createRandomHVDate();
@@ -385,7 +385,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVApproxDateTime *) date metric:(BOOL)metric
 {
-    HVItem* item = [[HVExercise newItem] autorelease];
+    HVItem* item = [HVExercise newItem];
     HVExercise* exercise = item.exercise;
     
     exercise.when = date;
@@ -491,7 +491,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVItem* item = [[HVAllergy newItem] autorelease];
+    HVItem* item = [HVAllergy newItem];
     HVAllergy* allergy = item.allergy;
     
     NSString* allergen = pickRandomString(3, @"Pollen", @"Peanuts", @"Penicillin");
@@ -524,7 +524,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVItem* item = [[HVCondition newItem] autorelease];
+    HVItem* item = [HVCondition newItem];
     HVCondition* condition = item.condition;
     
     NSString* conditionName = pickRandomString(5, @"Migraine", @"Pancreatitis", @"Mild Depression", @"Ulcer", @"Endometriosis");
@@ -554,7 +554,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVApproxDateTime *)date
 {
-    HVItem* item = [[HVMedication newItem] autorelease];
+    HVItem* item = [HVMedication newItem];
     HVMedication* medication = item.medication;
     
     NSString* medicationName = pickRandomDrug();
@@ -592,7 +592,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVApproxDateTime *)date
 {
-    HVItem* item = [[HVImmunization newItem] autorelease];
+    HVItem* item = [HVImmunization newItem];
     HVImmunization* immunization = item.immunization;
     
     immunization.administeredDate = date;
@@ -636,7 +636,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVApproxDateTime *) date
 {
-    HVItem* item = [[HVProcedure newItem] autorelease];
+    HVItem* item = [HVProcedure newItem];
     HVProcedure* procedure = item.procedure;
     
     procedure.name = [HVCodableValue fromText:pickRandomString(3, @"eye surgery", @"root canal", @"colonoscopy")];
@@ -651,14 +651,14 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *) createRandom
 {
-    HVItem* item = [[HVVitalSigns newItem] autorelease];
+    HVItem* item = [HVVitalSigns newItem];
     HVVitalSigns* vitals = item.vitalSigns;
     
     double temperature = [HVRandom randomDoubleInRangeMin:97 max:103];
     long temp = (long) (temperature * 10);
     temperature = ((double) temp) * 0.1;
     
-    HVVitalSignResult* result = [[[HVVitalSignResult alloc] initWithTemperature:temperature inCelsius:FALSE] autorelease];
+    HVVitalSignResult* result = [[HVVitalSignResult alloc] initWithTemperature:temperature inCelsius:FALSE];
     
     vitals.when = createRandomHVDateTime();
     [vitals.results addObject:result];
@@ -672,12 +672,12 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVItem* item = [[HVEncounter newItem] autorelease];
+    HVItem* item = [HVEncounter newItem];
     HVEncounter* encounter = item.encounter;
     
     encounter.when = createRandomHVDateTime();
     encounter.encounterType = [HVCodableValue fromText:pickRandomString(3, @"Checkup Examination", @"Dental Procedures", @"Acute care")];
-    encounter.duration = [[[HVDuration alloc] initWithDate:[encounter.when toDate] andDurationInSeconds:3600] autorelease];
+    encounter.duration = [[HVDuration alloc] initWithDate:[encounter.when toDate] andDurationInSeconds:3600];
     encounter.facility = [HVOrganization createRandom];
     
     return item;
@@ -689,12 +689,12 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVRelative* relative = [[[HVRelative alloc] initWithRelationship:pickRandomString(4, @"Mother", @"Father", @"Grandmother", @"Grandfather")] autorelease];
-    HVConditionEntry* condition = [[[HVConditionEntry alloc] initWithName:pickRandomString(4, @"Cancer", @"Heart Disease", @"Diabetes", @"Alzheimers")] autorelease];
+    HVRelative* relative = [[HVRelative alloc] initWithRelationship:pickRandomString(4, @"Mother", @"Father", @"Grandmother", @"Grandfather")];
+    HVConditionEntry* condition = [[HVConditionEntry alloc] initWithName:pickRandomString(4, @"Cancer", @"Heart Disease", @"Diabetes", @"Alzheimers")];
     
-    HVFamilyHistory* history = [[[HVFamilyHistory alloc] initWithRelative:relative andCondition:condition] autorelease];
+    HVFamilyHistory* history = [[HVFamilyHistory alloc] initWithRelative:relative andCondition:condition];
     
-    return [[[HVItem alloc] initWithTypedData:history] autorelease];
+    return [[HVItem alloc] initWithTypedData:history];
 }
 
 @end
@@ -703,7 +703,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVItem* item = [[HVAssessment newItem] autorelease];
+    HVItem* item = [HVAssessment newItem];
     HVAssessment* assessment = item.assessment;
     
     assessment.when = createRandomHVDateTime();
@@ -725,9 +725,9 @@ NSString* pickRandomDrug(void)
     NSString* question = [NSString stringWithFormat:@"Question %d ?", number];
     NSString* answer = [NSString stringWithFormat:@"Answer to %d", number];
     
-    HVQuestionAnswer* qa = [[[HVQuestionAnswer alloc] initWithQuestion:question answer:answer andDate:createRandomDate()] autorelease];
+    HVQuestionAnswer* qa = [[HVQuestionAnswer alloc] initWithQuestion:question answer:answer andDate:createRandomDate()];
     
-    return [[[HVItem alloc] initWithTypedData:qa] autorelease];
+    return [[HVItem alloc] initWithTypedData:qa];
 }
 
 @end
@@ -740,15 +740,15 @@ NSString* pickRandomDrug(void)
     
     if ([HVRandom randomDouble] > 0.5)
     {
-        person = [[[HVPerson alloc] initWithFirstName:@"Bingo" lastName:@"Little" phone:@"555-555-0000" andEmail:@"bingo@little.pqr"] autorelease];
+        person = [[HVPerson alloc] initWithFirstName:@"Bingo" lastName:@"Little" phone:@"555-555-0000" andEmail:@"bingo@little.pqr"];
     }
     else 
     {
-        person = [[[HVPerson alloc] initWithName:@"Toby R. McDuff" phone:@"555-555-1111" andEmail:@"toby@mcduff.pqr"] autorelease];
+        person = [[HVPerson alloc] initWithName:@"Toby R. McDuff" phone:@"555-555-1111" andEmail:@"toby@mcduff.pqr"];
     }
     person.type = [HVCodableValue fromText:@"Provider"];
-    HVEmergencyOrProviderContact* contact = [[[HVEmergencyOrProviderContact alloc] initWithPerson:person] autorelease];
-    return [[[HVItem alloc] initWithTypedData:contact] autorelease];
+    HVEmergencyOrProviderContact* contact = [[HVEmergencyOrProviderContact alloc] initWithPerson:person];
+    return [[HVItem alloc] initWithTypedData:contact];
 }
 
 @end
@@ -757,7 +757,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *) createRandom
 {
-    HVItem* item = [[HVPersonalContactInfo newItem] autorelease];
+    HVItem* item = [HVPersonalContactInfo newItem];
     HVPersonalContactInfo* personalContact = item.personalContact;
     
     personalContact.contact = [HVContact createRandom];
@@ -776,7 +776,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVDateTime *)date withAwakenings:(BOOL)doAwakenings
 {
-    HVItem* item = [[HVSleepJournalAM newItem] autorelease];
+    HVItem* item = [HVSleepJournalAM newItem];
     HVSleepJournalAM* journal = item.sleepJournalAM;
     
     date.time = nil; // Don't bother noting down the time. Date is enough 
@@ -812,7 +812,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandom
 {
-    HVItem* item = [[HVSleepJournalPM newItem] autorelease];
+    HVItem* item = [HVSleepJournalPM newItem];
     HVSleepJournalPM* journal = item.sleepJournalPM;
     
     journal.when = createRandomHVDateTime();
@@ -838,7 +838,7 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomForDate:(HVDateTime *)date
 {
-    HVItem* item = [[HVEmotionalState newItem] autorelease];
+    HVItem* item = [HVEmotionalState newItem];
     HVEmotionalState* es = item.emotionalState;
     
     es.when = date;
@@ -886,7 +886,7 @@ NSString* pickRandomDrug(void)
                                      forDrug:[HVCodableValue fromText:drug]
                                      onDate:date];
     
-    return [[[HVItem alloc] initWithTypedData:[usage autorelease]] autorelease];    
+    return [[HVItem alloc] initWithTypedData:usage];    
 }
 
 @end
@@ -902,12 +902,12 @@ NSString* pickRandomDrug(void)
 
 +(HVItem *)createRandomValuesForFood:(HVCodableValue *)food meal:(HVCodableValue *)meal onDate:(HVDateTime *)date
 {
-    HVItem* item = [[HVDietaryIntake newItem] autorelease];
+    HVItem* item = [HVDietaryIntake newItem];
     HVDietaryIntake* diet = (HVDietaryIntake *) item.data.typed;
     
     diet.foodItem = food;
     diet.meal = meal;
-    diet.servingsConsumed = [[[HVNonNegativeDouble alloc] initWith:1] autorelease];
+    diet.servingsConsumed = [[HVNonNegativeDouble alloc] initWith:1];
     diet.when = date;
     
     diet.calories = [HVFoodEnergyValue fromCalories:[HVRandom randomIntInRangeMin:100 max:500]];

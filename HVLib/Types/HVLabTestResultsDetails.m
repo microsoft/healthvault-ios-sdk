@@ -2,7 +2,7 @@
 //  HVLabTestResultsDetails.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,19 +39,6 @@ static const xmlChar* x_element_note = XMLSTRINGCONST("note");
 @synthesize status = m_status;
 @synthesize note = m_note;
 
--(void)dealloc
-{
-    [m_when release];
-    [m_name release];
-    [m_substance release];
-    [m_collectionMethod release];
-    [m_clinicalCode release];
-    [m_value release];
-    [m_status release];
-    [m_note release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -81,14 +68,14 @@ static const xmlChar* x_element_note = XMLSTRINGCONST("note");
 
 -(void)deserialize:(XReader *)reader
 {
-    m_when = [[reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]] retain];
-    m_name = [[reader readStringElementWithXmlName:x_element_name] retain];
-    m_substance = [[reader readElementWithXmlName:x_element_substance asClass:[HVCodableValue class]] retain];
-    m_collectionMethod = [[reader readElementWithXmlName:x_element_method asClass:[HVCodableValue class]] retain];
-    m_clinicalCode = [[reader readElementWithXmlName:x_element_clinicalCode asClass:[HVCodableValue class]] retain];
-    m_value = [[reader readElementWithXmlName:x_element_value asClass:[HVLabTestResultValue class]] retain];
-    m_status = [[reader readElementWithXmlName:x_element_status asClass:[HVCodableValue class]] retain];
-    m_note = [[reader readStringElementWithXmlName:x_element_note] retain];
+    m_when = [reader readElementWithXmlName:x_element_when asClass:[HVApproxDateTime class]];
+    m_name = [reader readStringElementWithXmlName:x_element_name];
+    m_substance = [reader readElementWithXmlName:x_element_substance asClass:[HVCodableValue class]];
+    m_collectionMethod = [reader readElementWithXmlName:x_element_method asClass:[HVCodableValue class]];
+    m_clinicalCode = [reader readElementWithXmlName:x_element_clinicalCode asClass:[HVCodableValue class]];
+    m_value = [reader readElementWithXmlName:x_element_value asClass:[HVLabTestResultValue class]];
+    m_status = [reader readElementWithXmlName:x_element_status asClass:[HVCodableValue class]];
+    m_note = [reader readStringElementWithXmlName:x_element_note];
 }
 
 @end

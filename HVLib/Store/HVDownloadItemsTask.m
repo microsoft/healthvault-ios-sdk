@@ -2,7 +2,7 @@
 //  HVDownloadItemsTask.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,11 +42,6 @@
     return (self.didKeysDownload) ? [m_downloadedKeys objectAtIndex:0] : nil;
 }
 
--(void)dealloc
-{
-    [m_downloadedKeys release];
-    [super dealloc];
-}
 
 -(id)initWithCallback:(HVTaskCompletion)callback
 {

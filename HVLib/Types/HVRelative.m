@@ -2,7 +2,7 @@
 //  HVRelative.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,16 +59,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_relationship release];
-    [m_person release];
-    [m_dateOfBirth release];
-    [m_dateOfDeath release];
-    [m_regionOfOrigin release];
-    
-    [super dealloc];
-}
 
 -(NSString *)description
 {
@@ -87,12 +77,12 @@ LError:
 
 +(HVVocabIdentifier *)vocabForRelationship
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"personal-relationship"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"personal-relationship"];
 }
 
 +(HVVocabIdentifier *)vocabForRegionOfOrigin
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"family-history-region-of-origin"] autorelease];
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"family-history-region-of-origin"];
 }
 
 -(HVClientResult *)validate
@@ -119,11 +109,11 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_relationship = [[reader readElement:c_element_relationship asClass:[HVCodableValue class]] retain];
-    m_person = [[reader readElement:c_element_name asClass:[HVPerson class]] retain];
-    m_dateOfBirth = [[reader readElement:c_element_dateOfBirth asClass:[HVApproxDate class]] retain];
-    m_dateOfDeath = [[reader readElement:c_element_dateOfDeath asClass:[HVApproxDate class]] retain];
-    m_regionOfOrigin = [[reader readElement:c_element_region asClass:[HVCodableValue class]] retain];    
+    m_relationship = [reader readElement:c_element_relationship asClass:[HVCodableValue class]];
+    m_person = [reader readElement:c_element_name asClass:[HVPerson class]];
+    m_dateOfBirth = [reader readElement:c_element_dateOfBirth asClass:[HVApproxDate class]];
+    m_dateOfDeath = [reader readElement:c_element_dateOfDeath asClass:[HVApproxDate class]];
+    m_regionOfOrigin = [reader readElement:c_element_region asClass:[HVCodableValue class]];    
 }
 
 @end

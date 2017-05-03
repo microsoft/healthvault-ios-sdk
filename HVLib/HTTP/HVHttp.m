@@ -2,7 +2,7 @@
 //  HVHttp.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@
     self = [super initWithName:@"HVHttpException" reason:@"Http Error" userInfo:nil];
     HVCHECK_SELF;
     
-    m_error = [error retain];
+    m_error = error;
     
     return self;
     
@@ -66,11 +66,6 @@ LError:
     return [super description];
 }
 
--(void)dealloc
-{
-    [m_error dealloc];
-    [super dealloc];
-}
 
 @end
 
@@ -157,12 +152,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_request release];
-    [m_connection release];
-    [super dealloc];
-}
 
 -(void)start
 {
@@ -197,7 +186,6 @@ LError:
 
     HVHttpException* ex = [[HVHttpException alloc] initWithError:error];
     [super handleError:ex];
-    [ex release];
  
     [self complete];
 }

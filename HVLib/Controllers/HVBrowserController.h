@@ -2,7 +2,7 @@
 //  HVBrowserController.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,9 +26,9 @@
     UIActivityIndicatorView* m_activityView;
 }
 
-@property (readwrite, nonatomic, retain) NSURL* target;
+@property (readwrite, nonatomic, strong) NSURL* target;
 
-@property (retain, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 -(BOOL) navigateTo:(NSURL *) url;
 -(BOOL) start;

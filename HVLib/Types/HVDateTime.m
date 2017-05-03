@@ -2,7 +2,7 @@
 //  DateTime.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -77,12 +77,12 @@ LError:
 
 +(HVDateTime *)now
 {
-    return [[[HVDateTime alloc] initNow] autorelease];
+    return [[HVDateTime alloc] initNow];
 }
 
 +(HVDateTime *)fromDate:(NSDate *)date
 {
-    return [[[HVDateTime alloc] initWithDate:date] autorelease];
+    return [[HVDateTime alloc] initWithDate:date];
 }
 
 -(BOOL) setWithDate:(NSDate *) dateValue
@@ -116,13 +116,6 @@ LError:
     return FALSE;
 }
 
--(void) dealloc
-{
-    [m_date release];
-    [m_time release];
-    [m_timeZone release];
-    [super dealloc];
-}
 
 -(NSString *)description
 {
@@ -145,7 +138,7 @@ LError:
     NSDateComponents *components = [NSCalendar newComponents];
     HVCHECK_SUCCESS([self getComponents:components]);
     
-    return [components autorelease];
+    return components;
 }
 
 -(BOOL) getComponents:(NSDateComponents *)components
@@ -171,7 +164,6 @@ LError:
     HVCHECK_NOTNULL(calendar);
     
     NSDate *date = [self toDateForCalendar:calendar];
-    [calendar release];
     
     return date;
     
@@ -189,7 +181,6 @@ LError:
         HVCHECK_SUCCESS([self getComponents:components]);
         
         NSDate *date = [calendar dateFromComponents:components];
-        [components release];
         
         return date;
         
@@ -220,9 +211,9 @@ LError:
 
 -(void) deserialize:(XReader *)reader
 {
-    m_date = [[reader readElementWithXmlName:x_element_date asClass:[HVDate class]] retain];
-    m_time = [[reader readElementWithXmlName:x_element_time asClass:[HVTime class]] retain];
-    m_timeZone = [[reader readElementWithXmlName:x_element_timeZone asClass:[HVCodableValue class]] retain];
+    m_date = [reader readElementWithXmlName:x_element_date asClass:[HVDate class]];
+    m_time = [reader readElementWithXmlName:x_element_time asClass:[HVTime class]];
+    m_timeZone = [reader readElementWithXmlName:x_element_timeZone asClass:[HVCodableValue class]];
 }
 
 @end

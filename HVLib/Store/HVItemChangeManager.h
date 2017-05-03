@@ -2,7 +2,7 @@
 //  HVItemChangeManager.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,8 +43,6 @@ HVDECLARE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
 @interface HVItemChangeManager : NSObject
 {
 @private
-    HVSynchronizationManager* m_syncMgr; // weak reference
-    
     HVRecordReference* m_record;
     HVSynchronizedStore* m_data;
     HVItemChangeTable* m_changeTable;
@@ -57,11 +55,11 @@ HVDECLARE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
 
 @property (readwrite, nonatomic, assign) HVSynchronizationManager* syncMgr; // Weak ref
 
-@property (readonly, nonatomic) HVRecordReference* record;
-@property (readonly, nonatomic) HVSynchronizedStore* data;
-@property (readonly, nonatomic) HVItemChangeTable* changeTable;
+@property (strong, readonly, nonatomic) HVRecordReference* record;
+@property (strong, readonly, nonatomic) HVSynchronizedStore* data;
+@property (strong, readonly, nonatomic) HVItemChangeTable* changeTable;
 @property (readonly, nonatomic) HVLockTable* locks;
-@property (readwrite, nonatomic, retain) HVItemCommitErrorHandler* errorHandler;
+@property (readwrite, nonatomic, strong) HVItemCommitErrorHandler* errorHandler;
 //
 // Set to <= 0 if you don't want batching
 //
@@ -119,7 +117,7 @@ enum HVItemChangeQueueProcessState
     NSUInteger m_committedCount;
 }
 
-@property (readonly, nonatomic) HVItemChangeManager* changeManager;
+@property (strong, readonly, nonatomic) HVItemChangeManager* changeManager;
 @property (readonly, nonatomic) enum HVItemChangeQueueProcessState currentState;
 @property (readonly, nonatomic) NSUInteger committedCount;
 

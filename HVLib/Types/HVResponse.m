@@ -2,7 +2,7 @@
 //  HVResponse.m
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,20 +31,13 @@ static const xmlChar* x_element_status = XMLSTRINGCONST("status");
     return (m_status != nil && m_status.hasError);
 }
 
--(void)dealloc
-{
-    [m_status release];
-    [m_body release];
-    
-    [super dealloc];
-}
 
 -(void)deserialize:(XReader *)reader
 {
-    m_status = [[reader readElementWithXmlName:x_element_status asClass:[HVResponseStatus class]] retain];
+    m_status = [reader readElementWithXmlName:x_element_status asClass:[HVResponseStatus class]];
     if (reader.isStartElement)
     {
-        m_body = [[reader readOuterXml] retain];
+        m_body = [reader readOuterXml];
     }
 }
 

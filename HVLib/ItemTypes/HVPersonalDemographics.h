@@ -2,7 +2,7 @@
 //  HVPersonalDemographics.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,20 +46,20 @@
 //
 // ALL information is optional
 //
-@property (readwrite, nonatomic, retain) HVName* name;
-@property (readwrite, nonatomic, retain) HVDateTime* birthDate;
-@property (readwrite, nonatomic, retain) HVCodableValue* bloodType;
-@property (readwrite, nonatomic, retain) HVCodableValue* ethnicity;
-@property (readwrite, nonatomic, retain) NSString* ssn;
-@property (readwrite, nonatomic, retain) HVCodableValue* maritalStatus;
-@property (readwrite, nonatomic, retain) NSString* employmentStatus;
-@property (readwrite, nonatomic, retain) HVBool* isDeceased;
-@property (readwrite, nonatomic, retain) HVApproxDateTime* dateOfDeath;
-@property (readwrite, nonatomic, retain) HVCodableValue* religion;
-@property (readwrite, nonatomic, retain) HVBool* isVeteran;
-@property (readwrite, nonatomic, retain) HVCodableValue* education;
-@property (readwrite, nonatomic, retain) HVBool* isDisabled;
-@property (readwrite, nonatomic, retain) NSString* organDonor;
+@property (readwrite, nonatomic, strong) HVName* name;
+@property (readwrite, nonatomic, strong) HVDateTime* birthDate;
+@property (readwrite, nonatomic, strong) HVCodableValue* bloodType;
+@property (readwrite, nonatomic, strong) HVCodableValue* ethnicity;
+@property (readwrite, nonatomic, strong) NSString* ssn;
+@property (readwrite, nonatomic, strong) HVCodableValue* maritalStatus;
+@property (readwrite, nonatomic, strong) NSString* employmentStatus;
+@property (readwrite, nonatomic, strong) HVBool* isDeceased;
+@property (readwrite, nonatomic, strong) HVApproxDateTime* dateOfDeath;
+@property (readwrite, nonatomic, strong) HVCodableValue* religion;
+@property (readwrite, nonatomic, strong) HVBool* isVeteran;
+@property (readwrite, nonatomic, strong) HVCodableValue* education;
+@property (readwrite, nonatomic, strong) HVBool* isDisabled;
+@property (readwrite, nonatomic, strong) NSString* organDonor;
 
 //-------------------------
 //

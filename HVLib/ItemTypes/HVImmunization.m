@@ -2,7 +2,7 @@
 //  HVImmunization.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -65,22 +65,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_administeredDate release];
-    [m_administrator release];
-    [m_manufacturer release];
-    [m_lot release];
-    [m_route release];
-    [m_expiration release];
-    [m_sequence release];
-    [m_anatomicSurface release];
-    [m_adverseEvent release];
-    [m_consent release];
-   
-    [super dealloc];
-}
 
 -(NSDate *)getDate
 {
@@ -104,27 +88,27 @@ LError:
 
 +(HVVocabIdentifier *)vocabForName
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunizations-common"] autorelease];    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunizations-common"];    
 }
 
 +(HVVocabIdentifier *)vocabForAdverseEvent
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-adverse-effect"] autorelease];        
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-adverse-effect"];        
 }
 
 +(HVVocabIdentifier *)vocabForManufacturer
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hl7Family andName:@"vaccine-manufacturers-mvx"] autorelease];            
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hl7Family andName:@"vaccine-manufacturers-mvx"];            
 }
 
 +(HVVocabIdentifier *)vocabForSurface
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-anatomic-surface"] autorelease];                
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-anatomic-surface"];                
 }
 
 +(HVVocabIdentifier *)vocabForRoute
 {
-    return [[[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-routes"] autorelease];                    
+    return [[HVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-routes"];                    
 }
 
 -(HVClientResult *)validate
@@ -163,17 +147,17 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
-    m_administeredDate = [[reader readElement:c_element_administeredDate asClass:[HVApproxDateTime class]] retain];
-    m_administrator = [[reader readElement:c_element_administrator asClass:[HVPerson class]] retain];
-    m_manufacturer = [[reader readElement:c_element_manufacturer asClass:[HVCodableValue class]] retain];
-    m_lot = [[reader readStringElement:c_element_lot] retain];
-    m_route = [[reader readElement:c_element_route asClass:[HVCodableValue class]] retain];
-    m_expiration = [[reader readElement:c_element_expiration asClass:[HVApproxDate class]] retain];
-    m_sequence = [[reader readStringElement:c_element_sequence] retain];
-    m_anatomicSurface = [[reader readElement:c_element_surface asClass:[HVCodableValue class]] retain];
-    m_adverseEvent = [[reader readStringElement:c_element_adverseEvent] retain];
-    m_consent = [[reader readStringElement:c_element_consent] retain];
+    m_name = [reader readElement:c_element_name asClass:[HVCodableValue class]];
+    m_administeredDate = [reader readElement:c_element_administeredDate asClass:[HVApproxDateTime class]];
+    m_administrator = [reader readElement:c_element_administrator asClass:[HVPerson class]];
+    m_manufacturer = [reader readElement:c_element_manufacturer asClass:[HVCodableValue class]];
+    m_lot = [reader readStringElement:c_element_lot];
+    m_route = [reader readElement:c_element_route asClass:[HVCodableValue class]];
+    m_expiration = [reader readElement:c_element_expiration asClass:[HVApproxDate class]];
+    m_sequence = [reader readStringElement:c_element_sequence];
+    m_anatomicSurface = [reader readElement:c_element_surface asClass:[HVCodableValue class]];
+    m_adverseEvent = [reader readStringElement:c_element_adverseEvent];
+    m_consent = [reader readStringElement:c_element_consent];
 }
 
 +(NSString *)typeID

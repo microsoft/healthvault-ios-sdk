@@ -2,7 +2,7 @@
 //  HVVocabSearcher.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@
     }
     else 
     {
-        m_cache = [cache retain];
+        m_cache = cache;
     }
     
     HVCHECK_NOTNULL(m_cache);
@@ -62,12 +62,6 @@ LError:
    
 }
 
--(void)dealloc
-{
-    [m_cache release];
-    [m_emptySet release];
-    [super dealloc];
-}
 
 -(BOOL)hasCachedResultsForSearch:(NSString *)searchText
 {
@@ -165,7 +159,7 @@ LError:
 {
     if (cache)
     {
-        m_cache = [cache retain];
+        m_cache = cache;
     }
     else 
     {
@@ -183,7 +177,7 @@ LError:
 {
     HVCHECK_NOTNULL(vocab);
     
-    m_vocab = [vocab retain];
+    m_vocab = vocab;
     m_maxResults = max;
     
     return self;
@@ -220,13 +214,6 @@ LError:
     }];
 }
 
--(void)dealloc
-{
-    [m_vocab release];
-    [m_params release];
-    [m_cache release];
-    [super dealloc];
-}
 
 @end
 

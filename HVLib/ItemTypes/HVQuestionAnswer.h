@@ -2,7 +2,7 @@
 //  HVQuestionAnswer.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,25 +36,25 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVDateTime* when;
+@property (readwrite, nonatomic, strong) HVDateTime* when;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVCodableValue* question;
+@property (readwrite, nonatomic, strong) HVCodableValue* question;
 //
 // (Optional)
 // Was this a multiple choice question. If so, useful to capture the original choices
 //
-@property (readwrite, nonatomic, retain) HVCodableValueCollection* answerChoices;
+@property (readwrite, nonatomic, strong) HVCodableValueCollection* answerChoices;
 //
 // (Optional)
 // One or more answers
 //
-@property (readwrite, nonatomic, retain) HVCodableValueCollection* answers;
+@property (readwrite, nonatomic, strong) HVCodableValueCollection* answers;
 //
 // Convenience Properties
 //
-@property (readonly, nonatomic) HVCodableValue* firstAnswer;
+@property (readonly, nonatomic, strong) HVCodableValue* firstAnswer;
 @property (readonly, nonatomic) BOOL hasAnswerChoices;
 @property (readonly, nonatomic) BOOL hasAnswers;
 

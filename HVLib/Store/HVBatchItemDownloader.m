@@ -2,7 +2,7 @@
 //  HVBatchItemDownloader.m
 //  HVLib
 //
-// Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ static const NSUInteger c_defaultBatchSize = 250;
     m_keyBatch = [[NSMutableArray alloc] init];
     HVCHECK_NOTNULL(m_keyBatch);
     
-    m_store = [store retain];
+    m_store = store;
     
     m_batchSize = c_defaultBatchSize;
     
@@ -70,14 +70,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_store release];
-    [m_keysToDownload release];
-    [m_keyBatch release];
-    
-    [super dealloc];
-}
 
 -(BOOL)addKeyToDownload:(HVItemKey *)key
 {
@@ -127,7 +119,7 @@ LError:
 
 -(HVTask *)downloadWithCallback:(HVTaskCompletion)callback
 {
-    HVTask* task = [[[HVTask alloc] initWithCallback:callback] autorelease];
+    HVTask* task = [[HVTask alloc] initWithCallback:callback];
     HVCHECK_NOTNULL(task);
     
     if (![self setNextBatch:task])
@@ -176,7 +168,6 @@ LError:
     }];
     
     [parentTask setNextTask:downloadTask];
-    [downloadTask release];
     
     return TRUE;
 }

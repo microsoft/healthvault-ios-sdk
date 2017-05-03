@@ -2,7 +2,7 @@
 //  HVServiceDefinition.h
 //  HVLib
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@
     HVSystemInstances* m_instances;
 }
 
-@property (readwrite, nonatomic, retain) HVPlatformInfo* platform;
-@property (readwrite, nonatomic, retain) HVShellInfo* shell;
-@property (readwrite, nonatomic, retain) HVSystemInstances* systemInstances;
+@property (readwrite, nonatomic, strong) HVPlatformInfo* platform;
+@property (readwrite, nonatomic, strong) HVShellInfo* shell;
+@property (readwrite, nonatomic, strong) HVSystemInstances* systemInstances;
 
 @end
 
@@ -45,7 +45,7 @@
     HVStringCollection* m_sections;
 }
 
-@property (readwrite, nonatomic, retain) NSDate* updatedSince;
-@property (readwrite, nonatomic, retain) HVStringCollection* sections;
+@property (readwrite, nonatomic, strong) NSDate* updatedSince;
+@property (readwrite, nonatomic, strong) HVStringCollection* sections;
 
 @end

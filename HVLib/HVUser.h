@@ -2,7 +2,7 @@
 //  HVUser.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,25 +38,25 @@
 //
 // The user's display name in HealthVault
 //
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 //
 // Records this user is authorized to access
 //
-@property (readwrite, nonatomic, retain) HVRecordCollection* records;
+@property (readwrite, nonatomic, strong) HVRecordCollection* records;
 @property (readonly, nonatomic) BOOL hasRecords; // true if user has authorized records
 //
 // The records the application is currently working with
 // To change the current record, set the currentRecordIndex property
 //
 @property (readwrite, nonatomic) NSInteger currentRecordIndex;
-@property (readonly, nonatomic) HVRecord* currentRecord;
+@property (readonly, nonatomic, strong) HVRecord* currentRecord;
 
 //
 // Which service environment this user set up their app to work with
 //
-@property (readwrite, nonatomic, retain) NSString* environment;
+@property (readwrite, nonatomic, strong) NSString* environment;
 
-@property (readwrite, nonatomic, retain) NSString* instanceID;
+@property (readwrite, nonatomic, strong) NSString* instanceID;
 
 @property (readonly, nonatomic) BOOL hasEnvironment;
 @property (readonly, nonatomic) BOOL hasInstanceID;

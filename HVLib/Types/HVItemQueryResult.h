@@ -2,7 +2,7 @@
 //  HVItemQueryResult.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,18 +34,18 @@
 //
 // Collection of items found
 //
-@property (readwrite, nonatomic, retain) HVItemCollection* items;
+@property (readwrite, nonatomic, strong) HVItemCollection* items;
 //
 // If there were too many matches (depends on server quotas & buffer sizes), HealthVault will
 // return only the first chunk of matches. It will also return the keys of the 'pending' items
 // You must issue a fresh query to retrieve these pending items. This is easily done using
 // convenient init methods on HVItemQuery
 //
-@property (readwrite, nonatomic, retain) HVPendingItemCollection* pendingItems;
+@property (readwrite, nonatomic, strong) HVPendingItemCollection* pendingItems;
 //
 // When you issue multiple queries simultaneously, you can give them names
 //
-@property (readwrite, nonatomic, retain) NSString* name;
+@property (readwrite, nonatomic, strong) NSString* name;
 //
 // Convenience properties
 //

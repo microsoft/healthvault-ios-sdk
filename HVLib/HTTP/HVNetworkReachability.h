@@ -2,7 +2,7 @@
 //  HVNetworkReachability.h
 //  HVLib
 //
-//  Copyright (c) 2014 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ HVDECLARE_NOTIFICATION(HVHostReachabilityNotificationName);
 -(id) initWithHostName:(NSString *) hostName;
 -(id) initWithUrl:(NSURL *) url;
 
-@property(readonly, nonatomic) NSString* hostName;
+@property(readonly, nonatomic, strong) NSString* hostName;
 @property(readonly, nonatomic) SCNetworkReachabilityFlags status;
 @property(readonly, nonatomic) BOOL isReachable;
 @property(readwrite, nonatomic) BOOL isMonitoring;

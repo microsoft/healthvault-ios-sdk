@@ -2,7 +2,7 @@
 //  HVAssessmentField.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,17 +59,9 @@ LError:
 
 +(HVAssessmentField *)from:(NSString *)name andValue:(NSString *)value
 {
-    return [[[HVAssessmentField alloc] initWithName:name andValue:value] autorelease];
+    return [[HVAssessmentField alloc] initWithName:name andValue:value];
 }
 
--(void)dealloc
-{
-    [m_name release];
-    [m_value release];
-    [m_group release];
-    
-    [super dealloc];
-}
 
 -(HVClientResult *)validate
 {
@@ -91,9 +83,9 @@ LError:
 
 -(void)deserialize:(XReader *)reader
 {
-    m_name = [[reader readElement:c_element_name asClass:[HVCodableValue class]] retain];
-    m_value = [[reader readElement:c_element_value asClass:[HVCodableValue class]] retain];
-    m_group = [[reader readElement:c_element_group asClass:[HVCodableValue class]] retain];    
+    m_name = [reader readElement:c_element_name asClass:[HVCodableValue class]];
+    m_value = [reader readElement:c_element_value asClass:[HVCodableValue class]];
+    m_group = [reader readElement:c_element_group asClass:[HVCodableValue class]];    
 }
 
 @end

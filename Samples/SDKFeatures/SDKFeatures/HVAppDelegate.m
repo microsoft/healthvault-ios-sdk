@@ -2,7 +2,7 @@
 //  HVAppDelegate.m
 //  SDKFeatures
 //
-//  Copyright (c) 2013 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,21 +25,15 @@
 
 @synthesize navigationController = m_navController;
 
-- (void)dealloc
-{
-    [_window release];
-    [m_navController release];
-    [super dealloc];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    HVViewController* controller = [[[HVViewController alloc] initWithNibName:@"HVViewController" bundle:nil] autorelease];
+    HVViewController* controller = [[HVViewController alloc] initWithNibName:@"HVViewController" bundle:nil];
 
-    self.navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
 
     self.window.rootViewController = self.navigationController;
 

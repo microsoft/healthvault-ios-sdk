@@ -2,7 +2,7 @@
 //  AuthenticationCheckState.h
 //  HealthVault Mobile Library for iOS
 //
-// Copyright 2011 Microsoft Corp.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,10 +31,10 @@
 }
 
 /// Gets or sets the service.
-@property (retain) HealthVaultService *service;
+@property (strong) HealthVaultService *service;
 
 /// Gets or sets the callback handler.
-@property (retain) NSObject *target;
+@property (strong) NSObject *target;
 
 /// Gets or sets the authentication completed handler.
 @property (assign) SEL authCompletedCallBack;

@@ -2,7 +2,7 @@
 //  HVAddress.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,32 +42,32 @@
 //
 // (Optional) A description of this address, such as "Home"
 //
-@property (readwrite, nonatomic, retain) NSString* type;
-@property (readwrite, nonatomic, retain) HVBool* isPrimary;
+@property (readwrite, nonatomic, strong) NSString* type;
+@property (readwrite, nonatomic, strong) HVBool* isPrimary;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) HVStringCollection* street;
+@property (readwrite, nonatomic, strong) HVStringCollection* street;
 //
 // (Required)
 // 
-@property (readwrite, nonatomic, retain) NSString* city;
+@property (readwrite, nonatomic, strong) NSString* city;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* state;
+@property (readwrite, nonatomic, strong) NSString* state;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) NSString* postalCode;
+@property (readwrite, nonatomic, strong) NSString* postalCode;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, retain) NSString* country;
+@property (readwrite, nonatomic, strong) NSString* country;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, retain) NSString* county;
+@property (readwrite, nonatomic, strong) NSString* county;
 
 @property (readonly, nonatomic) BOOL hasStreet;
 

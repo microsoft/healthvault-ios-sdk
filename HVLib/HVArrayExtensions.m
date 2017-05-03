@@ -2,7 +2,7 @@
 //  HVArrayExtensions.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -108,7 +108,7 @@
     id popped = [self peek];
     if (popped)
     {
-        popped = [[popped retain] autorelease];
+        popped = popped;
         [self removeLastObject];
     }
     

@@ -2,7 +2,7 @@
 //  HVGetVocab.m
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,11 +30,6 @@ static NSString* const c_element_vocab = @"vocabulary";
     return (m_vocabs) ? [m_vocabs itemAtIndex:0] : nil;
 }
 
--(void)dealloc
-{
-    [m_vocabs release];
-    [super dealloc];
-}
 
 -(void)serialize:(XWriter *)writer  
 {
@@ -43,7 +38,7 @@ static NSString* const c_element_vocab = @"vocabulary";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_vocabs = (HVVocabSetCollection *)[[reader readElementArray:c_element_vocab asClass:[HVVocabCodeSet class] andArrayClass:[HVVocabSetCollection class]] retain];
+    m_vocabs = (HVVocabSetCollection *)[reader readElementArray:c_element_vocab asClass:[HVVocabCodeSet class] andArrayClass:[HVVocabSetCollection class]];
 }
 
 @end
@@ -89,11 +84,6 @@ LError:
     HVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    [m_params release];
-    [super dealloc];
-}
 
 -(void)serializeRequestBodyToWriter:(XWriter *)writer
 {

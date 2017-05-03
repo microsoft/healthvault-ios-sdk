@@ -2,7 +2,7 @@
 //  HVURLRequestExtensions.h
 //  HVLib
 //
-//  Copyright (c) 2012 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,8 +35,8 @@
     NSMutableData* m_responseBody;
 }
 
-@property (readonly, nonatomic) NSURLResponse* response;
-@property (readonly, nonatomic) NSMutableData* responseBody;
+@property (readonly, nonatomic, strong) NSURLResponse* response;
+@property (readonly, nonatomic, strong) NSMutableData* responseBody;
 
 @end
 
@@ -52,6 +52,6 @@
     NSData* m_requestBody;
 }
 
-@property (readwrite, nonatomic, retain) NSData* requestBody;
+@property (readwrite, nonatomic, strong) NSData* requestBody;
 
 @end
