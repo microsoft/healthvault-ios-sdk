@@ -4,12 +4,12 @@
 // StartApp
 //
 //------------
- // [[HVClient current] resetProvisioning];
- [[HVClient current] startWithParentController:self andStartedCallback:^(id sender) 
+ // [[MHVClient current] resetProvisioning];
+ [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender) 
      {
-         if ([HVClient current].provisionStatus == HVAppProvisionSuccess)
+         if ([MHVClient current].provisionStatus == HVAppProvisionSuccess)
          {
-             self.navigationItem.title = [HVClient current].currentRecord.name;  // Show the record owner's name
+             self.navigationItem.title = [MHVClient current].currentRecord.name;  // Show the record owner's name
              [self getWeights];   
          }
      }];
@@ -21,9 +21,9 @@
 //
 //------------
 
-    [[HVClient current].currentRecord getItemsForType:[HVWeight typeID] callback:^(HVTask *task) 
+    [[MHVClient current].currentRecord getItemsForType:[MHVWeight typeID] callback:^(MHVTask *task) 
      {
-         m_items = [((HVGetItemsTask *) task).itemsRetrieved retain];
+         m_items = [((MHVGetItemsTask *) task).itemsRetrieved retain];
          //
          // Refresh UI
          //
@@ -35,7 +35,7 @@
 // Display Weights
 //
 //-----------
-    HVWeight* weight = [m_items itemAtIndex:index].weight;
+    MHVWeight* weight = [m_items itemAtIndex:index].weight;
     //
     // Display WHEN the weight measurement was taken
     //
@@ -50,12 +50,12 @@
 // Add new weight
 //
 //------------
-    HVItem* item = [[HVWeight newItem] autorelease];
+    MHVItem* item = [[MHVWeight newItem] autorelease];
     
     item.weight.inPounds = 135;
-    item.weight.when = [[HVDateTime alloc] initNow];  
+    item.weight.when = [[MHVDateTime alloc] initNow];  
     
-    [[HVClient current].currentRecord putItem:item callback:^(HVTask *task) 
+    [[MHVClient current].currentRecord putItem:item callback:^(MHVTask *task) 
      {
          [self getWeights];  // refresh the UI  
      } ];

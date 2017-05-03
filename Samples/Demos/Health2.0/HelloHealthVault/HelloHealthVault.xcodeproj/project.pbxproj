@@ -8,22 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		5D043A27161A5AD1004AC84A /* Code.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5D043A26161A5AD1004AC84A /* Code.txt */; };
-		5D4742AC153CB54E00BF91EF /* HVMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4742AB153CB54E00BF91EF /* HVMasterViewController.xib */; };
+		5D4742AC153CB54E00BF91EF /* MHVMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4742AB153CB54E00BF91EF /* MHVMasterViewController.xib */; };
 		5DB54DD0153C765700E1C6BE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB54DCF153C765700E1C6BE /* UIKit.framework */; };
 		5DB54DD2153C765700E1C6BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB54DD1153C765700E1C6BE /* Foundation.framework */; };
 		5DB54DD4153C765700E1C6BE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB54DD3153C765700E1C6BE /* CoreGraphics.framework */; };
 		5DB54DDC153C765700E1C6BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB54DDB153C765700E1C6BE /* main.m */; };
-		5DB54DE0153C765700E1C6BE /* HVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB54DDF153C765700E1C6BE /* HVAppDelegate.m */; };
-		5DB54DE3153C765700E1C6BE /* HVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB54DE2153C765700E1C6BE /* HVMasterViewController.m */; };
+		5DB54DE0153C765700E1C6BE /* MHVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB54DDF153C765700E1C6BE /* MHVAppDelegate.m */; };
+		5DB54DE3153C765700E1C6BE /* MHVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB54DE2153C765700E1C6BE /* MHVMasterViewController.m */; };
 		5DB54E1A153C85A500E1C6BE /* ClientSettings.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5DB54E19153C85A500E1C6BE /* ClientSettings.xml */; };
-		5DB54E45153C8C1500E1C6BE /* libHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB54E44153C8C1500E1C6BE /* libHVLib.a */; };
+		5DB54E45153C8C1500E1C6BE /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB54E44153C8C1500E1C6BE /* libMHVLib.a */; };
 		5DB54E48153C8C3B00E1C6BE /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB54E47153C8C3B00E1C6BE /* libxml2.2.dylib */; };
 		5DFD4832159B72E30003EA49 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DFD4831159B72E30003EA49 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5D043A26161A5AD1004AC84A /* Code.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Code.txt; sourceTree = "<group>"; };
-		5D4742AB153CB54E00BF91EF /* HVMasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HVMasterViewController.xib; sourceTree = "<group>"; };
+		5D4742AB153CB54E00BF91EF /* MHVMasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVMasterViewController.xib; sourceTree = "<group>"; };
 		5DB54DCB153C765700E1C6BE /* HelloHealthVault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloHealthVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DB54DCF153C765700E1C6BE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5DB54DD1153C765700E1C6BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -31,12 +31,12 @@
 		5DB54DD7153C765700E1C6BE /* HelloHealthVault-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HelloHealthVault-Info.plist"; sourceTree = "<group>"; };
 		5DB54DDB153C765700E1C6BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5DB54DDD153C765700E1C6BE /* HelloHealthVault-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloHealthVault-Prefix.pch"; sourceTree = "<group>"; };
-		5DB54DDE153C765700E1C6BE /* HVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVAppDelegate.h; sourceTree = "<group>"; };
-		5DB54DDF153C765700E1C6BE /* HVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVAppDelegate.m; sourceTree = "<group>"; };
-		5DB54DE1153C765700E1C6BE /* HVMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVMasterViewController.h; sourceTree = "<group>"; };
-		5DB54DE2153C765700E1C6BE /* HVMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVMasterViewController.m; sourceTree = "<group>"; };
+		5DB54DDE153C765700E1C6BE /* MHVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVAppDelegate.h; sourceTree = "<group>"; };
+		5DB54DDF153C765700E1C6BE /* MHVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVAppDelegate.m; sourceTree = "<group>"; };
+		5DB54DE1153C765700E1C6BE /* MHVMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVMasterViewController.h; sourceTree = "<group>"; };
+		5DB54DE2153C765700E1C6BE /* MHVMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVMasterViewController.m; sourceTree = "<group>"; };
 		5DB54E19153C85A500E1C6BE /* ClientSettings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ClientSettings.xml; sourceTree = "<group>"; };
-		5DB54E44153C8C1500E1C6BE /* libHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHVLib.a; path = "../../build/Release-iphoneos/libHVLib.a"; sourceTree = "<group>"; };
+		5DB54E44153C8C1500E1C6BE /* libMHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMHVLib.a; path = "../../build/Release-iphoneos/libMHVLib.a"; sourceTree = "<group>"; };
 		5DB54E47153C8C3B00E1C6BE /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		5DFD4831159B72E30003EA49 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -48,7 +48,7 @@
 			files = (
 				5DFD4832159B72E30003EA49 /* Security.framework in Frameworks */,
 				5DB54E48153C8C3B00E1C6BE /* libxml2.2.dylib in Frameworks */,
-				5DB54E45153C8C1500E1C6BE /* libHVLib.a in Frameworks */,
+				5DB54E45153C8C1500E1C6BE /* libMHVLib.a in Frameworks */,
 				5DB54DD0153C765700E1C6BE /* UIKit.framework in Frameworks */,
 				5DB54DD2153C765700E1C6BE /* Foundation.framework in Frameworks */,
 				5DB54DD4153C765700E1C6BE /* CoreGraphics.framework in Frameworks */,
@@ -63,7 +63,7 @@
 			children = (
 				5DFD4831159B72E30003EA49 /* Security.framework */,
 				5DB54E47153C8C3B00E1C6BE /* libxml2.2.dylib */,
-				5DB54E44153C8C1500E1C6BE /* libHVLib.a */,
+				5DB54E44153C8C1500E1C6BE /* libMHVLib.a */,
 				5DB54DD5153C765700E1C6BE /* HelloHealthVault */,
 				5DB54DCE153C765700E1C6BE /* Frameworks */,
 				5DB54DCC153C765700E1C6BE /* Products */,
@@ -91,11 +91,11 @@
 		5DB54DD5153C765700E1C6BE /* HelloHealthVault */ = {
 			isa = PBXGroup;
 			children = (
-				5DB54DDE153C765700E1C6BE /* HVAppDelegate.h */,
-				5DB54DDF153C765700E1C6BE /* HVAppDelegate.m */,
-				5DB54DE1153C765700E1C6BE /* HVMasterViewController.h */,
-				5DB54DE2153C765700E1C6BE /* HVMasterViewController.m */,
-				5D4742AB153CB54E00BF91EF /* HVMasterViewController.xib */,
+				5DB54DDE153C765700E1C6BE /* MHVAppDelegate.h */,
+				5DB54DDF153C765700E1C6BE /* MHVAppDelegate.m */,
+				5DB54DE1153C765700E1C6BE /* MHVMasterViewController.h */,
+				5DB54DE2153C765700E1C6BE /* MHVMasterViewController.m */,
+				5D4742AB153CB54E00BF91EF /* MHVMasterViewController.xib */,
 				5DB54E19153C85A500E1C6BE /* ClientSettings.xml */,
 				5DB54DD6153C765700E1C6BE /* Supporting Files */,
 				5D043A26161A5AD1004AC84A /* Code.txt */,
@@ -166,7 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DB54E1A153C85A500E1C6BE /* ClientSettings.xml in Resources */,
-				5D4742AC153CB54E00BF91EF /* HVMasterViewController.xib in Resources */,
+				5D4742AC153CB54E00BF91EF /* MHVMasterViewController.xib in Resources */,
 				5D043A27161A5AD1004AC84A /* Code.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,8 +179,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DB54DDC153C765700E1C6BE /* main.m in Sources */,
-				5DB54DE0153C765700E1C6BE /* HVAppDelegate.m in Sources */,
-				5DB54DE3153C765700E1C6BE /* HVMasterViewController.m in Sources */,
+				5DB54DE0153C765700E1C6BE /* MHVAppDelegate.m in Sources */,
+				5DB54DE3153C765700E1C6BE /* MHVMasterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +240,7 @@
 				INFOPLIST_FILE = "HelloHealthVault/HelloHealthVault-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "../../../../HVLib/**";
+				USER_HEADER_SEARCH_PATHS = "../../../../MHVLib/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -255,7 +255,7 @@
 				INFOPLIST_FILE = "HelloHealthVault/HelloHealthVault-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "../../../../HVLib/**";
+				USER_HEADER_SEARCH_PATHS = "../../../../MHVLib/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
