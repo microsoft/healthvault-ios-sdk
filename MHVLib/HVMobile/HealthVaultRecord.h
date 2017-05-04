@@ -19,20 +19,7 @@
 #import <Foundation/Foundation.h>
 
 /// Stores the summary information associated with a record.
-@interface HealthVaultRecord : NSObject {
-
-	NSString *_xml;
-
-	NSString *_personId;
-	NSString *_personName;
-
-	NSString *_recordId;
-	NSString *_recordName;
-    NSString *_relationship;
-    NSString *_displayName;
-    
-	NSString *_authStatus;
-}
+@interface HealthVaultRecord : NSObject
 
 /// Gets or sets the full XML description of this record...
 @property (strong) NSString *xml;

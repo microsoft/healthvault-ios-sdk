@@ -23,6 +23,7 @@
 
 static NSString* const c_element_displayname = @"display-name";
 static NSString* const c_element_relationship = @"rel-name";
+static NSString* const c_element_auth_action = @"app-record-auth-action";
 
 @implementation MHVRecord
 
@@ -42,6 +43,7 @@ static NSString* const c_element_relationship = @"rel-name";
     self.name = record.recordName;
     self.displayName = record.displayName;
     self.relationship = record.relationship;
+    self.authStatus = record.authStatus;
     
     return self;
     
@@ -79,6 +81,7 @@ LError:
     
     [writer writeAttribute:c_element_displayname value:m_displayName];
     [writer writeAttribute:c_element_relationship value:m_relationship];
+    [writer writeAttribute:c_element_auth_action value:self.authStatus];
 }
 
 -(void)serialize:(XWriter *)writer
@@ -92,6 +95,7 @@ LError:
     
     m_displayName = [reader readAttribute:c_element_displayname];
     m_relationship = [reader readAttribute:c_element_relationship];
+    self.authStatus = [reader readAttribute:c_element_auth_action];
 }
 
 -(void)deserialize:(XReader *)reader

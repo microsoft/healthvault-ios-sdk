@@ -46,7 +46,7 @@
     //
     [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender) 
     {
-        if ([MHVClient current].provisionStatus == HVAppProvisionSuccess)
+        if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
         {
             [self startupSuccess];
         }
@@ -75,7 +75,7 @@
     [MHVUIAlert showWithMessage:@"Provisioning not completed. Retry?" callback:^(id sender) {
         
         MHVUIAlert *alert = (MHVUIAlert *) sender;
-        if (alert.result == HVUIAlertOK)
+        if (alert.result == MHVUIAlertOK)
         {
             [self startApp];
         }
@@ -95,7 +95,7 @@
             //
             // Save the collection of items retrieved
             //
-            HVCLEAR(m_items);
+            m_items = nil;
             m_items = [((MHVGetItemsTask *) task).itemsRetrieved retain];
             //
             // Refresh UI
@@ -187,7 +187,7 @@
             //
             // Save the collection of items retrieved
             //
-            HVCLEAR(m_items);
+            m_items = nil;
             m_items = [((MHVGetItemsTask *) task).itemsRetrieved retain];
             //
             // Refresh UI
@@ -334,11 +334,11 @@
     [MHVUIAlert showYesNoWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the app." callback:^(id sender) {
         
         MHVUIAlert* alert = (MHVUIAlert *) sender;
-        if (alert.result != HVUIAlertOK)
+        if (alert.result != MHVUIAlertOK)
         {
             return;
         }
-        HVCLEAR(m_items);
+        m_items = nil;
         [self refreshView];
         //
         // REMOVE RECORD AUTHORIZATION.
