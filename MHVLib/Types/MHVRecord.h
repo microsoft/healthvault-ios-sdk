@@ -55,6 +55,10 @@
 // (Optional) Such as mother, father, etc...
 //
 @property (readwrite, nonatomic, strong) NSString* relationship;
+//
+// (Optional) Such as NoAuthNeeded...
+//
+@property (readwrite, nonatomic, strong) NSString* authStatus;
 
 //-------------------------
 //

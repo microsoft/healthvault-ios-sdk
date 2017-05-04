@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import "HealthVaultRecord.h"
-#import "XmlTextReader.h"
+#import "MHVType.h"
 
 @interface HealthVaultRecord (Private)
 
@@ -76,30 +76,18 @@
 
 
 - (BOOL)parseFromXml: (NSString *)xml {
-
-    @autoreleasepool
-    {
-        @try {
-            
-            XmlTextReader *xmlReader = [XmlTextReader new];
-            XmlElement *root = [xmlReader read: xml];
-            
-            if (!root) {
-                return NO;
-            }
-            
-            self.recordId = [root attrValue: @"id"];
-            self.recordName = [root text];
-            self.authStatus = [root attrValue: @"app-record-auth-action"];
-            
-        }
-        @catch (id exc) {
-            
-            return NO;
-        }
-	}
-
-	return YES;
+    XReader *reader = [[XReader alloc] initFromString:xml];
+    [reader readStartElementWithName:@"record"];
+    
+    self.recordName = [reader readString];
+    self.recordId = [reader readAttribute:@"id"];
+    self.authStatus = [reader readAttribute:@"app-record-auth-action"];
+    
+    if (!self.recordId) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (BOOL)getIsValid {

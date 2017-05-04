@@ -20,7 +20,9 @@
 #import "Provisioner.h"
 #import "HealthVaultService.h"
 #import "AuthenticationCheckState.h"
-#import "XmlTextReader.h"
+#import "MHVType.h"
+#import "MHVBaseTypes.h"
+#import "MHVPersonInfo.h"
 
 @interface Provisioner (MHVPrivate)
 
@@ -167,39 +169,36 @@
 
     @autoreleasepool {
 
-        XmlTextReader *xmlReader = [XmlTextReader new];
-        XmlElement *infoNode = [xmlReader read: response.infoXml];
-
-        XmlElement *responseResults = [infoNode selectSingleNode: @"response-results"];
-        XmlElement *personInfo = [responseResults selectSingleNode: @"person-info"];
+        XReader *reader = [[XReader alloc] initFromString:response.infoXml];
+        [reader readStartElementWithName:@"info"];
+        [reader readStartElementWithName:@"response-results"];
+        MHVPersonInfo *personInfo = [reader readElement:@"person-info" asClass:[MHVPersonInfo class]];
 
         if (personInfo) {
 
-            NSString *personId = [personInfo selectSingleNode: @"person-id"].text;
-            NSString *personName = [personInfo selectSingleNode: @"name"].text;
+            NSString *personId = personInfo.ID;
+            NSString *personName = personInfo.name;
 
             // If we loaded our settings, the current record is incomplete. We will try
             // to match it to one that we got back...
             HealthVaultRecord *currentRecord = state.service.currentRecord;
 
-            NSArray *recordNodes = [personInfo selectNodes: @"record"];
-
-            for (XmlElement *recordNode in recordNodes) {
+            for (MHVRecord *hvRecord in personInfo.records) {
 
                 HealthVaultRecord *record = [[HealthVaultRecord alloc] initWithXml: nil
 																	  personId: personId
 																	personName: personName];
-                record.recordId = [recordNode attrValue: @"id"];
-                record.relationship = [recordNode attrValue:@"rel-name"];
-                record.recordName = [recordNode text];
-                record.displayName = [recordNode attrValue:@"display-name"];
-                record.authStatus = [recordNode attrValue: @"app-record-auth-action"];
+                record.recordId = hvRecord.ID;
+                record.relationship = hvRecord.relationship;
+                record.recordName = hvRecord.name;
+                record.displayName = hvRecord.displayName;
+                record.authStatus = hvRecord.authStatus;
 
                 if (!record.isValid) {
 
                     continue;
                 }
-
+                
                 [state.service.records addObject: record];
 
 			BOOL isRecordEqualToCurrent = currentRecord && 
@@ -266,16 +265,11 @@
         return;
     }
 
-    @autoreleasepool {
-
-        XmlTextReader *xmlReader = [XmlTextReader new];
-        XmlElement *infoNode = [xmlReader read: response.infoXml];
-
-        state.service.appIdInstance = [infoNode selectSingleNode: @"app-id"].text;
-        state.service.sharedSecret = [infoNode selectSingleNode: @"shared-secret"].text;
-        state.service.applicationCreationToken = [infoNode selectSingleNode: @"app-token"].text;
-
-    }
+    XReader *reader = [[XReader alloc] initFromString:response.infoXml];
+    [reader readStartElementWithName:@"info"];
+    state.service.appIdInstance = [reader readStringElement:@"app-id"];
+    state.service.sharedSecret = [reader readStringElement:@"shared-secret"];
+    state.service.applicationCreationToken = [reader readStringElement:@"app-token"];
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

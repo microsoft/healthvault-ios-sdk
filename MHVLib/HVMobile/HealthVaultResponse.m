@@ -18,17 +18,11 @@
 
 #import "MHVCommon.h"
 #import "HealthVaultResponse.h"
-#import "XmlTextReader.h"
-#import "XmlElement.h"
 #import "MHVResponse.h"
 
 @interface HealthVaultResponse (Private)
 
 -(BOOL) deserializeXml:(NSString *) xml;
-
-/// Initializes the fields using xml string provided.
-/// @param xml - response xml representation.
-- (BOOL)parseFromXml: (NSString *)xml __deprecated; // Use deserializeXml instead
 
 /// Retrieves info section from xml.
 /// Info section is represented by <wc:info> xml element.
@@ -123,48 +117,6 @@
     
 	return FALSE;
     
-}
-
-//
-// DEPRECATED
-//
-- (BOOL)parseFromXml: (NSString *)xml {
-
-    @autoreleasepool
-    {
-        @try {
-            
-            XmlTextReader *xmlReader = [XmlTextReader new];
-            XmlElement *root = [xmlReader read: xml];
-            
-            if (!root) {
-                return NO;
-            }
-            
-            // Parse status
-            XmlElement *statusNode = [root selectSingleNode: @"status"];
-            if (statusNode) {
-                self.statusCode = [[statusNode selectSingleNode: @"code"].text intValue];
-            }
-            
-            // Parse message
-            XmlElement *errorNode = [statusNode selectSingleNode: @"error"];
-            if (errorNode) {
-                
-                self.errorText = [errorNode selectSingleNode: @"message"].text;
-                self.errorContextXml = [errorNode selectSingleNode: @"context"].text;
-                self.errorInfo = [errorNode selectSingleNode: @"error-info"].text;
-            }
-            
-            self.infoXml = [self getInfoFromXml: xml];
-        }
-        @catch (id exc) {
-            
-            return NO;
-        }
-	}
-
-	return YES;
 }
 
 - (NSString *)getInfoFromXml: (NSString *)xml {
