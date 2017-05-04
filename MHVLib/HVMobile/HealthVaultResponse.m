@@ -20,49 +20,29 @@
 #import "HealthVaultResponse.h"
 #import "MHVResponse.h"
 
-@interface HealthVaultResponse (Private)
-
--(BOOL) deserializeXml:(NSString *) xml;
-
-/// Retrieves info section from xml.
-/// Info section is represented by <wc:info> xml element.
-/// @param xml - xml from which to retrieve info section.
-/// @returns info section in provided xml
-- (NSString *)getInfoFromXml: (NSString *)xml;
-
-@end
-
 @implementation HealthVaultResponse
 
-@synthesize statusCode = _statusCode;
-@synthesize webStatusCode = _webStatusCode;
-@synthesize infoXml = _infoXml;
-@synthesize responseXml = _responseXml;
-@synthesize errorText = _errorText;
-@synthesize errorContextXml = _errorContextXml;
-@synthesize errorInfo = _errorInfo;
-@synthesize request = _request;
-
 - (id)initWithWebResponse: (WebResponse *)webResponse
-				  request: (HealthVaultRequest *)request {
-
-	if ((self = [super init])) {
-
+				  request: (HealthVaultRequest *)request
+{
+	if ((self = [super init]))
+    {
 		NSString *xml = webResponse.responseData;
 		
 		self.request = request;
 		self.responseXml = xml;
 		self.webStatusCode = webResponse.webStatusCode;
         
-		if(webResponse.hasError) {
-			
+		if(webResponse.hasError)
+        {
 			self.errorText = webResponse.errorText;
 		}
-		else {
-			//BOOL xmlReaderesult = [self parseFromXml: xml]; // Old mechanism.. replaced by much faster new serializer
+		else
+        {
             BOOL xmlReaderesult = [self deserializeXml:xml];
 
-			if (!xmlReaderesult) {
+			if (!xmlReaderesult)
+            {
 				self.errorText = [NSString stringWithFormat: NSLocalizedString(@"Response was not a valid HealthVault response key",
 																			   @"Format to display incorrect response"), xml];
 			}
@@ -73,8 +53,8 @@
 }
 
 
-- (BOOL)getHasError {
-
+- (BOOL)getHasError
+{
 	return self.errorText != nil;
 }
 
@@ -110,21 +90,21 @@
     {
         [ex log];
 	}
-	@finally {
-        
+	@finally
+    {
 		response = nil;
 	}
     
 	return FALSE;
-    
 }
 
-- (NSString *)getInfoFromXml: (NSString *)xml {
-
+- (NSString *)getInfoFromXml: (NSString *)xml
+{
 	NSRange startInfoTagPosition = [xml rangeOfString: @"<wc:info"];
 	NSRange endInfoTagPosition = [xml rangeOfString: @"</wc:info>" options:NSBackwardsSearch];
 	
-	if (startInfoTagPosition.location == NSNotFound || endInfoTagPosition.location == NSNotFound) {
+	if (startInfoTagPosition.location == NSNotFound || endInfoTagPosition.location == NSNotFound)
+    {
 		return nil;
 	}
 

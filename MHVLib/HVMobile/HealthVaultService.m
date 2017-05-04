@@ -324,10 +324,18 @@ LError:
 
 - (void)saveCastCallResults: (NSString *)responseXml {
     
-    XReader *reader = [[XReader alloc] initFromString:responseXml];
-    [reader readStartElementWithName:@"info"];
-    self.authorizationSessionToken = [reader readStringElement:@"token"];
-    self.sessionSharedSecret = [reader readStringElement:@"shared-secret"];
+    @try
+    {
+        XReader *reader = [[XReader alloc] initFromString:responseXml];
+        [reader readStartElementWithName:@"info"];
+        self.authorizationSessionToken = [reader readStringElement:@"token"];
+        self.sessionSharedSecret = [reader readStringElement:@"shared-secret"];
+    }
+    
+    @catch (id exception)
+    {
+        MHVASSERT_MESSAGE(exception);
+    }
 }
 
 - (void)saveSettings
