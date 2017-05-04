@@ -12,16 +12,16 @@
 		5DB083F918F362BF00702B79 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB083F818F362BF00702B79 /* UIKit.framework */; };
 		5DB083FF18F362C000702B79 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DB083FD18F362C000702B79 /* InfoPlist.strings */; };
 		5DB0840118F362C000702B79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0840018F362C000702B79 /* main.m */; };
-		5DB0840518F362C000702B79 /* HVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0840418F362C000702B79 /* HVAppDelegate.m */; };
+		5DB0840518F362C000702B79 /* MHVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0840418F362C000702B79 /* MHVAppDelegate.m */; };
 		5DB0840818F362C000702B79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DB0840618F362C000702B79 /* Main.storyboard */; };
-		5DB0840B18F362C000702B79 /* HVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0840A18F362C000702B79 /* HVViewController.m */; };
+		5DB0840B18F362C000702B79 /* MHVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0840A18F362C000702B79 /* MHVViewController.m */; };
 		5DB0840D18F362C000702B79 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DB0840C18F362C000702B79 /* Images.xcassets */; };
 		5DB0842A18F3633C00702B79 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB0842918F3633C00702B79 /* MobileCoreServices.framework */; };
 		5DB0842C18F3634C00702B79 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB0842B18F3634C00702B79 /* libxml2.2.dylib */; };
 		5DB0842E18F3638200702B79 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB0842D18F3638200702B79 /* SystemConfiguration.framework */; };
 		5DB0843018F3638C00702B79 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB0842F18F3638C00702B79 /* Security.framework */; };
 		5DB0843418F368DA00702B79 /* ClientSettings.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5DB0843318F368DA00702B79 /* ClientSettings.xml */; };
-		5DB0847118F36F2400702B79 /* libHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB0847018F36F2400702B79 /* libHVLib.a */; };
+		5DB0847118F36F2400702B79 /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB0847018F36F2400702B79 /* libMHVLib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,21 +34,21 @@
 		5DB083FE18F362C000702B79 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5DB0840018F362C000702B79 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5DB0840218F362C000702B79 /* TableViewWithLocalCache-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TableViewWithLocalCache-Prefix.pch"; sourceTree = "<group>"; };
-		5DB0840318F362C000702B79 /* HVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVAppDelegate.h; sourceTree = "<group>"; };
-		5DB0840418F362C000702B79 /* HVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVAppDelegate.m; sourceTree = "<group>"; };
+		5DB0840318F362C000702B79 /* MHVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVAppDelegate.h; sourceTree = "<group>"; };
+		5DB0840418F362C000702B79 /* MHVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVAppDelegate.m; sourceTree = "<group>"; };
 		5DB0840718F362C000702B79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5DB0840918F362C000702B79 /* HVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVViewController.h; sourceTree = "<group>"; };
-		5DB0840A18F362C000702B79 /* HVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVViewController.m; sourceTree = "<group>"; };
+		5DB0840918F362C000702B79 /* MHVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVViewController.h; sourceTree = "<group>"; };
+		5DB0840A18F362C000702B79 /* MHVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVViewController.m; sourceTree = "<group>"; };
 		5DB0840C18F362C000702B79 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5DB0841318F362C000702B79 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5DB0842918F3633C00702B79 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		5DB0842B18F3634C00702B79 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		5DB0842D18F3638200702B79 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5DB0842F18F3638C00702B79 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		5DB0843118F3648F00702B79 /* libHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHVLib.a; path = "../../build/Debug-iphoneos/libHVLib.a"; sourceTree = "<group>"; };
+		5DB0843118F3648F00702B79 /* libMHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMHVLib.a; path = "../../build/Debug-iphoneos/libMHVLib.a"; sourceTree = "<group>"; };
 		5DB0843318F368DA00702B79 /* ClientSettings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ClientSettings.xml; sourceTree = "<group>"; };
 		5DB0846918F36CD300702B79 /* libHVUISampleLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHVUISampleLib.a; path = "../HVUISampleLib/build/Debug-iphoneos/libHVUISampleLib.a"; sourceTree = "<group>"; };
-		5DB0847018F36F2400702B79 /* libHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHVLib.a; path = "../../build/Debug-iphoneos/libHVLib.a"; sourceTree = "<group>"; };
+		5DB0847018F36F2400702B79 /* libMHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMHVLib.a; path = "../../build/Debug-iphoneos/libMHVLib.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DB0847118F36F2400702B79 /* libHVLib.a in Frameworks */,
+				5DB0847118F36F2400702B79 /* libMHVLib.a in Frameworks */,
 				5DB0843018F3638C00702B79 /* Security.framework in Frameworks */,
 				5DB0842E18F3638200702B79 /* SystemConfiguration.framework in Frameworks */,
 				5DB0842C18F3634C00702B79 /* libxml2.2.dylib in Frameworks */,
@@ -91,9 +91,9 @@
 			isa = PBXGroup;
 			children = (
 				5D119D9B18F37168005117E0 /* libHVUISampleLib.a */,
-				5DB0847018F36F2400702B79 /* libHVLib.a */,
+				5DB0847018F36F2400702B79 /* libMHVLib.a */,
 				5DB0846918F36CD300702B79 /* libHVUISampleLib.a */,
-				5DB0843118F3648F00702B79 /* libHVLib.a */,
+				5DB0843118F3648F00702B79 /* libMHVLib.a */,
 				5DB0842F18F3638C00702B79 /* Security.framework */,
 				5DB0842D18F3638200702B79 /* SystemConfiguration.framework */,
 				5DB0842B18F3634C00702B79 /* libxml2.2.dylib */,
@@ -110,11 +110,11 @@
 			isa = PBXGroup;
 			children = (
 				5DB0843318F368DA00702B79 /* ClientSettings.xml */,
-				5DB0840318F362C000702B79 /* HVAppDelegate.h */,
-				5DB0840418F362C000702B79 /* HVAppDelegate.m */,
+				5DB0840318F362C000702B79 /* MHVAppDelegate.h */,
+				5DB0840418F362C000702B79 /* MHVAppDelegate.m */,
 				5DB0840618F362C000702B79 /* Main.storyboard */,
-				5DB0840918F362C000702B79 /* HVViewController.h */,
-				5DB0840A18F362C000702B79 /* HVViewController.m */,
+				5DB0840918F362C000702B79 /* MHVViewController.h */,
+				5DB0840A18F362C000702B79 /* MHVViewController.m */,
 				5DB0840C18F362C000702B79 /* Images.xcassets */,
 				5DB083FB18F362C000702B79 /* Supporting Files */,
 			);
@@ -199,8 +199,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DB0840B18F362C000702B79 /* HVViewController.m in Sources */,
-				5DB0840518F362C000702B79 /* HVAppDelegate.m in Sources */,
+				5DB0840B18F362C000702B79 /* MHVViewController.m in Sources */,
+				5DB0840518F362C000702B79 /* MHVAppDelegate.m in Sources */,
 				5DB0840118F362C000702B79 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,7 +317,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.microsoft.healthvault.sdk.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "../../HVLib/**";
+				USER_HEADER_SEARCH_PATHS = "../../MHVLib/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -340,7 +340,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.microsoft.healthvault.sdk.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "../../HVLib/**";
+				USER_HEADER_SEARCH_PATHS = "../../MHVLib/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

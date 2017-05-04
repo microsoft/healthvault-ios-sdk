@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <clientSettings>
     <!--
-        See HVClientSettings.h or m for a list configurable settings
+        See MHVClientSettings.h or m for a list configurable settings
     -->
     <!--
         HealthVault Application ID

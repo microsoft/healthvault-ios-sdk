@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <clientSettings>
     <!--
-     See HVClientSettings.h or m for a list configurable settings
+     See MHVClientSettings.h or m for a list configurable settings
      -->
 	<masterAppID>1de8f11d-2521-484e-b4f8-d5f647c8f309</masterAppID>
     <appName>TableViewWithLocalCache</appName>

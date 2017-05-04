@@ -20,11 +20,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "HVAppDelegate.h"
+#import "MHVAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([HVAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([MHVAppDelegate class]));
     }
 }

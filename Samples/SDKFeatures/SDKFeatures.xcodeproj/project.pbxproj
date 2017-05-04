@@ -7,53 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D0645B818454D7000D306CC /* HVHeartRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0645B718454D7000D306CC /* HVHeartRateFactory.m */; };
+		5D0645B818454D7000D306CC /* MHVHeartRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */; };
 		5D091345166ED1980031F5F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091344166ED1980031F5F9 /* UIKit.framework */; };
 		5D091347166ED1980031F5F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091346166ED1980031F5F9 /* Foundation.framework */; };
 		5D091349166ED1980031F5F9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091348166ED1980031F5F9 /* CoreGraphics.framework */; };
 		5D09134F166ED1980031F5F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D09134D166ED1980031F5F9 /* InfoPlist.strings */; };
 		5D091351166ED1980031F5F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D091350166ED1980031F5F9 /* main.m */; };
-		5D091355166ED1980031F5F9 /* HVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D091354166ED1980031F5F9 /* HVAppDelegate.m */; };
+		5D091355166ED1980031F5F9 /* MHVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D091354166ED1980031F5F9 /* MHVAppDelegate.m */; };
 		5D091357166ED1980031F5F9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D091356166ED1980031F5F9 /* Default.png */; };
 		5D091359166ED1980031F5F9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D091358166ED1980031F5F9 /* Default@2x.png */; };
 		5D09135B166ED1980031F5F9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D09135A166ED1980031F5F9 /* Default-568h@2x.png */; };
-		5D09135E166ED1980031F5F9 /* HVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09135D166ED1980031F5F9 /* HVViewController.m */; };
-		5D091361166ED1980031F5F9 /* HVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D09135F166ED1980031F5F9 /* HVViewController.xib */; };
-		5D091374166ED1F20031F5F9 /* libHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091373166ED1F20031F5F9 /* libHVLib.a */; };
+		5D09135E166ED1980031F5F9 /* MHVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09135D166ED1980031F5F9 /* MHVViewController.m */; };
+		5D091361166ED1980031F5F9 /* MHVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D09135F166ED1980031F5F9 /* MHVViewController.xib */; };
+		5D091374166ED1F20031F5F9 /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091373166ED1F20031F5F9 /* libMHVLib.a */; };
 		5D091376166ED2AF0031F5F9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091375166ED2AF0031F5F9 /* Security.framework */; };
 		5D091378166ED2C50031F5F9 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091377166ED2C50031F5F9 /* libxml2.2.dylib */; };
 		5D09137A166ED3470031F5F9 /* ClientSettings.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5D091379166ED3470031F5F9 /* ClientSettings.xml */; };
-		5D09137E166EDB2A0031F5F9 /* HVTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09137C166EDB290031F5F9 /* HVTypeListViewController.m */; };
-		5D09137F166EDB2A0031F5F9 /* HVTypeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D09137D166EDB290031F5F9 /* HVTypeListViewController.xib */; };
-		5D3EBAB21679268E00BDE25E /* HVBloodPressureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EBAB11679268E00BDE25E /* HVBloodPressureFactory.m */; };
-		5D3EBACD16793D9200BDE25E /* HVCholesterolFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EBACC16793D9200BDE25E /* HVCholesterolFactory.m */; };
-		5D3EBB0D16794B1C00BDE25E /* HVWeightFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EBB0C16794B1C00BDE25E /* HVWeightFactory.m */; };
-		5D78987C17149A500015D375 /* HVTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78987A17149A500015D375 /* HVTypeViewController.m */; };
-		5D78987D17149A500015D375 /* HVTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D78987B17149A500015D375 /* HVTypeViewController.xib */; };
-		5D7898811714A4C90015D375 /* HVItemDataTypedFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7898801714A4C90015D375 /* HVItemDataTypedFactory.m */; };
-		5D789913171618540015D375 /* HVFeatureActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789912171618540015D375 /* HVFeatureActions.m */; };
-		5D789916171626F60015D375 /* HVMoreFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789915171626F60015D375 /* HVMoreFeatures.m */; };
-		5D789936171736050015D375 /* HVMedicationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789935171736050015D375 /* HVMedicationFactory.m */; };
-		5D78993A171739FB0015D375 /* HVConditionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789939171739FB0015D375 /* HVConditionFactory.m */; };
-		5D78993D17173B520015D375 /* HVImmunizationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78993C17173B520015D375 /* HVImmunizationFactory.m */; };
-		5D78994017173D2A0015D375 /* HVProcedureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78993F17173D290015D375 /* HVProcedureFactory.m */; };
-		5D789957171758E90015D375 /* HVStatusLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789956171758E90015D375 /* HVStatusLabel.m */; };
-		5DAFC630166FC5AC00363FA2 /* HVDietaryIntakeFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */; };
+		5D09137E166EDB2A0031F5F9 /* MHVTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09137C166EDB290031F5F9 /* MHVTypeListViewController.m */; };
+		5D09137F166EDB2A0031F5F9 /* MHVTypeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D09137D166EDB290031F5F9 /* MHVTypeListViewController.xib */; };
+		5D3EBAB21679268E00BDE25E /* MHVBloodPressureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EBAB11679268E00BDE25E /* MHVBloodPressureFactory.m */; };
+		5D3EBACD16793D9200BDE25E /* MHVCholesterolFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EBACC16793D9200BDE25E /* MHVCholesterolFactory.m */; };
+		5D3EBB0D16794B1C00BDE25E /* MHVWeightFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EBB0C16794B1C00BDE25E /* MHVWeightFactory.m */; };
+		5D78987C17149A500015D375 /* MHVTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78987A17149A500015D375 /* MHVTypeViewController.m */; };
+		5D78987D17149A500015D375 /* MHVTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D78987B17149A500015D375 /* MHVTypeViewController.xib */; };
+		5D7898811714A4C90015D375 /* MHVItemDataTypedFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7898801714A4C90015D375 /* MHVItemDataTypedFactory.m */; };
+		5D789913171618540015D375 /* MHVFeatureActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789912171618540015D375 /* MHVFeatureActions.m */; };
+		5D789916171626F60015D375 /* MHVMoreFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789915171626F60015D375 /* MHVMoreFeatures.m */; };
+		5D789936171736050015D375 /* MHVMedicationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789935171736050015D375 /* MHVMedicationFactory.m */; };
+		5D78993A171739FB0015D375 /* MHVConditionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789939171739FB0015D375 /* MHVConditionFactory.m */; };
+		5D78993D17173B520015D375 /* MHVImmunizationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78993C17173B520015D375 /* MHVImmunizationFactory.m */; };
+		5D78994017173D2A0015D375 /* MHVProcedureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78993F17173D290015D375 /* MHVProcedureFactory.m */; };
+		5D789957171758E90015D375 /* MHVStatusLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789956171758E90015D375 /* MHVStatusLabel.m */; };
+		5DAFC630166FC5AC00363FA2 /* MHVDietaryIntakeFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAFC62F166FC5AC00363FA2 /* MHVDietaryIntakeFactory.m */; };
 		5DB083DD18F3233200702B79 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB083DC18F3233200702B79 /* SystemConfiguration.framework */; };
 		5DB2E6E418D381CF0030972D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB2E6E318D381CF0030972D /* MobileCoreServices.framework */; };
-		5DD6C1EB1676C2F900A658D8 /* HVEmotionalStateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */; };
-		5DD6C23F1677D2C600A658D8 /* HVExerciseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */; };
-		5DD6C27C16780C1000A658D8 /* HVMedicationUsageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C27B16780C1000A658D8 /* HVMedicationUsageFactory.m */; };
-		5DD6C2C01679121300A658D8 /* HVBloodGlucoseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C2BF1679121300A658D8 /* HVBloodGlucoseFactory.m */; };
-		5DD6C2E016791ACD00A658D8 /* HVSleepJournalAMFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C2DF16791ACD00A658D8 /* HVSleepJournalAMFactory.m */; };
-		5DEC254C178B573A00FE971B /* HVFileFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC254B178B573A00FE971B /* HVFileFeatures.m */; };
-		5DEC255A178B5A7F00FE971B /* HVItemDataTypedFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC2559178B5A7F00FE971B /* HVItemDataTypedFeatures.m */; };
-		5DEC255D178B680400FE971B /* HVFileFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC255C178B680400FE971B /* HVFileFactory.m */; };
+		5DD6C1EB1676C2F900A658D8 /* MHVEmotionalStateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C1EA1676C2F800A658D8 /* MHVEmotionalStateFactory.m */; };
+		5DD6C23F1677D2C600A658D8 /* MHVExerciseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C23E1677D2C600A658D8 /* MHVExerciseFactory.m */; };
+		5DD6C27C16780C1000A658D8 /* MHVMedicationUsageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C27B16780C1000A658D8 /* MHVMedicationUsageFactory.m */; };
+		5DD6C2C01679121300A658D8 /* MHVBloodGlucoseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C2BF1679121300A658D8 /* MHVBloodGlucoseFactory.m */; };
+		5DD6C2E016791ACD00A658D8 /* MHVSleepJournalAMFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C2DF16791ACD00A658D8 /* MHVSleepJournalAMFactory.m */; };
+		5DEC254C178B573A00FE971B /* MHVFileFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC254B178B573A00FE971B /* MHVFileFeatures.m */; };
+		5DEC255A178B5A7F00FE971B /* MHVItemDataTypedFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC2559178B5A7F00FE971B /* MHVItemDataTypedFeatures.m */; };
+		5DEC255D178B680400FE971B /* MHVFileFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC255C178B680400FE971B /* MHVFileFactory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5D0645B618454D7000D306CC /* HVHeartRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVHeartRateFactory.h; sourceTree = "<group>"; };
-		5D0645B718454D7000D306CC /* HVHeartRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVHeartRateFactory.m; sourceTree = "<group>"; };
+		5D0645B618454D7000D306CC /* MHVHeartRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHeartRateFactory.h; sourceTree = "<group>"; };
+		5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHeartRateFactory.m; sourceTree = "<group>"; };
 		5D091340166ED1980031F5F9 /* SDKFeatures.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKFeatures.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D091344166ED1980031F5F9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5D091346166ED1980031F5F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -62,66 +62,66 @@
 		5D09134E166ED1980031F5F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5D091350166ED1980031F5F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D091352166ED1980031F5F9 /* SDKFeatures-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDKFeatures-Prefix.pch"; sourceTree = "<group>"; };
-		5D091353166ED1980031F5F9 /* HVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVAppDelegate.h; sourceTree = "<group>"; };
-		5D091354166ED1980031F5F9 /* HVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVAppDelegate.m; sourceTree = "<group>"; };
+		5D091353166ED1980031F5F9 /* MHVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVAppDelegate.h; sourceTree = "<group>"; };
+		5D091354166ED1980031F5F9 /* MHVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVAppDelegate.m; sourceTree = "<group>"; };
 		5D091356166ED1980031F5F9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5D091358166ED1980031F5F9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		5D09135A166ED1980031F5F9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		5D09135C166ED1980031F5F9 /* HVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVViewController.h; sourceTree = "<group>"; };
-		5D09135D166ED1980031F5F9 /* HVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVViewController.m; sourceTree = "<group>"; };
-		5D091360166ED1980031F5F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HVViewController.xib; sourceTree = "<group>"; };
-		5D091373166ED1F20031F5F9 /* libHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHVLib.a; path = "../../HVMobile_VNext/build/Release-iphoneos/libHVLib.a"; sourceTree = "<group>"; };
+		5D09135C166ED1980031F5F9 /* MHVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVViewController.h; sourceTree = "<group>"; };
+		5D09135D166ED1980031F5F9 /* MHVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVViewController.m; sourceTree = "<group>"; };
+		5D091360166ED1980031F5F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MHVViewController.xib; sourceTree = "<group>"; };
+		5D091373166ED1F20031F5F9 /* libMHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMHVLib.a; path = "../../HVMobile_VNext/build/Release-iphoneos/libMHVLib.a"; sourceTree = "<group>"; };
 		5D091375166ED2AF0031F5F9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5D091377166ED2C50031F5F9 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		5D091379166ED3470031F5F9 /* ClientSettings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = ClientSettings.xml; path = SDKFeatures/ClientSettings.xml; sourceTree = "<group>"; };
-		5D09137B166EDB290031F5F9 /* HVTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTypeListViewController.h; sourceTree = "<group>"; };
-		5D09137C166EDB290031F5F9 /* HVTypeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTypeListViewController.m; sourceTree = "<group>"; };
-		5D09137D166EDB290031F5F9 /* HVTypeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HVTypeListViewController.xib; sourceTree = "<group>"; };
-		5D3EBAB01679268E00BDE25E /* HVBloodPressureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBloodPressureFactory.h; sourceTree = "<group>"; };
-		5D3EBAB11679268E00BDE25E /* HVBloodPressureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBloodPressureFactory.m; sourceTree = "<group>"; };
-		5D3EBACB16793D9200BDE25E /* HVCholesterolFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVCholesterolFactory.h; sourceTree = "<group>"; };
-		5D3EBACC16793D9200BDE25E /* HVCholesterolFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVCholesterolFactory.m; sourceTree = "<group>"; };
-		5D3EBB0B16794B1C00BDE25E /* HVWeightFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVWeightFactory.h; sourceTree = "<group>"; };
-		5D3EBB0C16794B1C00BDE25E /* HVWeightFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVWeightFactory.m; sourceTree = "<group>"; };
-		5D78987917149A500015D375 /* HVTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVTypeViewController.h; sourceTree = "<group>"; };
-		5D78987A17149A500015D375 /* HVTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVTypeViewController.m; sourceTree = "<group>"; };
-		5D78987B17149A500015D375 /* HVTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HVTypeViewController.xib; sourceTree = "<group>"; };
-		5D78987F1714A4C90015D375 /* HVItemDataTypedFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemDataTypedFactory.h; sourceTree = "<group>"; };
-		5D7898801714A4C90015D375 /* HVItemDataTypedFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemDataTypedFactory.m; sourceTree = "<group>"; };
-		5D789911171618530015D375 /* HVFeatureActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFeatureActions.h; sourceTree = "<group>"; };
-		5D789912171618540015D375 /* HVFeatureActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFeatureActions.m; sourceTree = "<group>"; };
-		5D789914171626F60015D375 /* HVMoreFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMoreFeatures.h; sourceTree = "<group>"; };
-		5D789915171626F60015D375 /* HVMoreFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMoreFeatures.m; sourceTree = "<group>"; };
-		5D789934171736050015D375 /* HVMedicationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMedicationFactory.h; sourceTree = "<group>"; };
-		5D789935171736050015D375 /* HVMedicationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVMedicationFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D789938171739FA0015D375 /* HVConditionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVConditionFactory.h; sourceTree = "<group>"; };
-		5D789939171739FB0015D375 /* HVConditionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVConditionFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D78993B17173B510015D375 /* HVImmunizationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVImmunizationFactory.h; sourceTree = "<group>"; };
-		5D78993C17173B520015D375 /* HVImmunizationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVImmunizationFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D78993E17173D270015D375 /* HVProcedureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVProcedureFactory.h; sourceTree = "<group>"; };
-		5D78993F17173D290015D375 /* HVProcedureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVProcedureFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D789955171758E90015D375 /* HVStatusLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVStatusLabel.h; sourceTree = "<group>"; };
-		5D789956171758E90015D375 /* HVStatusLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVStatusLabel.m; sourceTree = "<group>"; };
-		5DAFC62E166FC5AC00363FA2 /* HVDietaryIntakeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVDietaryIntakeFactory.h; sourceTree = "<group>"; };
-		5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVDietaryIntakeFactory.m; sourceTree = "<group>"; };
+		5D09137B166EDB290031F5F9 /* MHVTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTypeListViewController.h; sourceTree = "<group>"; };
+		5D09137C166EDB290031F5F9 /* MHVTypeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTypeListViewController.m; sourceTree = "<group>"; };
+		5D09137D166EDB290031F5F9 /* MHVTypeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVTypeListViewController.xib; sourceTree = "<group>"; };
+		5D3EBAB01679268E00BDE25E /* MHVBloodPressureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBloodPressureFactory.h; sourceTree = "<group>"; };
+		5D3EBAB11679268E00BDE25E /* MHVBloodPressureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBloodPressureFactory.m; sourceTree = "<group>"; };
+		5D3EBACB16793D9200BDE25E /* MHVCholesterolFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVCholesterolFactory.h; sourceTree = "<group>"; };
+		5D3EBACC16793D9200BDE25E /* MHVCholesterolFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVCholesterolFactory.m; sourceTree = "<group>"; };
+		5D3EBB0B16794B1C00BDE25E /* MHVWeightFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVWeightFactory.h; sourceTree = "<group>"; };
+		5D3EBB0C16794B1C00BDE25E /* MHVWeightFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVWeightFactory.m; sourceTree = "<group>"; };
+		5D78987917149A500015D375 /* MHVTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTypeViewController.h; sourceTree = "<group>"; };
+		5D78987A17149A500015D375 /* MHVTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTypeViewController.m; sourceTree = "<group>"; };
+		5D78987B17149A500015D375 /* MHVTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVTypeViewController.xib; sourceTree = "<group>"; };
+		5D78987F1714A4C90015D375 /* MHVItemDataTypedFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVItemDataTypedFactory.h; sourceTree = "<group>"; };
+		5D7898801714A4C90015D375 /* MHVItemDataTypedFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVItemDataTypedFactory.m; sourceTree = "<group>"; };
+		5D789911171618530015D375 /* MHVFeatureActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFeatureActions.h; sourceTree = "<group>"; };
+		5D789912171618540015D375 /* MHVFeatureActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFeatureActions.m; sourceTree = "<group>"; };
+		5D789914171626F60015D375 /* MHVMoreFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMoreFeatures.h; sourceTree = "<group>"; };
+		5D789915171626F60015D375 /* MHVMoreFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMoreFeatures.m; sourceTree = "<group>"; };
+		5D789934171736050015D375 /* MHVMedicationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMedicationFactory.h; sourceTree = "<group>"; };
+		5D789935171736050015D375 /* MHVMedicationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVMedicationFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5D789938171739FA0015D375 /* MHVConditionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVConditionFactory.h; sourceTree = "<group>"; };
+		5D789939171739FB0015D375 /* MHVConditionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVConditionFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5D78993B17173B510015D375 /* MHVImmunizationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVImmunizationFactory.h; sourceTree = "<group>"; };
+		5D78993C17173B520015D375 /* MHVImmunizationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVImmunizationFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5D78993E17173D270015D375 /* MHVProcedureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVProcedureFactory.h; sourceTree = "<group>"; };
+		5D78993F17173D290015D375 /* MHVProcedureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVProcedureFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5D789955171758E90015D375 /* MHVStatusLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVStatusLabel.h; sourceTree = "<group>"; };
+		5D789956171758E90015D375 /* MHVStatusLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVStatusLabel.m; sourceTree = "<group>"; };
+		5DAFC62E166FC5AC00363FA2 /* MHVDietaryIntakeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDietaryIntakeFactory.h; sourceTree = "<group>"; };
+		5DAFC62F166FC5AC00363FA2 /* MHVDietaryIntakeFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVDietaryIntakeFactory.m; sourceTree = "<group>"; };
 		5DB083DC18F3233200702B79 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5DB2E6E318D381CF0030972D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		5DD6C1E91676C2F800A658D8 /* HVEmotionalStateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVEmotionalStateFactory.h; sourceTree = "<group>"; };
-		5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVEmotionalStateFactory.m; sourceTree = "<group>"; };
-		5DD6C23D1677D2C600A658D8 /* HVExerciseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVExerciseFactory.h; sourceTree = "<group>"; };
-		5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVExerciseFactory.m; sourceTree = "<group>"; };
-		5DD6C27A16780C1000A658D8 /* HVMedicationUsageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVMedicationUsageFactory.h; sourceTree = "<group>"; };
-		5DD6C27B16780C1000A658D8 /* HVMedicationUsageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVMedicationUsageFactory.m; sourceTree = "<group>"; };
-		5DD6C2BE1679121300A658D8 /* HVBloodGlucoseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVBloodGlucoseFactory.h; sourceTree = "<group>"; };
-		5DD6C2BF1679121300A658D8 /* HVBloodGlucoseFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVBloodGlucoseFactory.m; sourceTree = "<group>"; };
-		5DD6C2DE16791ACD00A658D8 /* HVSleepJournalAMFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVSleepJournalAMFactory.h; sourceTree = "<group>"; };
-		5DD6C2DF16791ACD00A658D8 /* HVSleepJournalAMFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVSleepJournalAMFactory.m; sourceTree = "<group>"; };
-		5DEC254A178B573900FE971B /* HVFileFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFileFeatures.h; sourceTree = "<group>"; };
-		5DEC254B178B573A00FE971B /* HVFileFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HVFileFeatures.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5DEC2558178B5A7F00FE971B /* HVItemDataTypedFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVItemDataTypedFeatures.h; sourceTree = "<group>"; };
-		5DEC2559178B5A7F00FE971B /* HVItemDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVItemDataTypedFeatures.m; sourceTree = "<group>"; };
-		5DEC255B178B680400FE971B /* HVFileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HVFileFactory.h; sourceTree = "<group>"; };
-		5DEC255C178B680400FE971B /* HVFileFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HVFileFactory.m; sourceTree = "<group>"; };
+		5DD6C1E91676C2F800A658D8 /* MHVEmotionalStateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVEmotionalStateFactory.h; sourceTree = "<group>"; };
+		5DD6C1EA1676C2F800A658D8 /* MHVEmotionalStateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVEmotionalStateFactory.m; sourceTree = "<group>"; };
+		5DD6C23D1677D2C600A658D8 /* MHVExerciseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVExerciseFactory.h; sourceTree = "<group>"; };
+		5DD6C23E1677D2C600A658D8 /* MHVExerciseFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVExerciseFactory.m; sourceTree = "<group>"; };
+		5DD6C27A16780C1000A658D8 /* MHVMedicationUsageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMedicationUsageFactory.h; sourceTree = "<group>"; };
+		5DD6C27B16780C1000A658D8 /* MHVMedicationUsageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMedicationUsageFactory.m; sourceTree = "<group>"; };
+		5DD6C2BE1679121300A658D8 /* MHVBloodGlucoseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBloodGlucoseFactory.h; sourceTree = "<group>"; };
+		5DD6C2BF1679121300A658D8 /* MHVBloodGlucoseFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBloodGlucoseFactory.m; sourceTree = "<group>"; };
+		5DD6C2DE16791ACD00A658D8 /* MHVSleepJournalAMFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSleepJournalAMFactory.h; sourceTree = "<group>"; };
+		5DD6C2DF16791ACD00A658D8 /* MHVSleepJournalAMFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSleepJournalAMFactory.m; sourceTree = "<group>"; };
+		5DEC254A178B573900FE971B /* MHVFileFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFileFeatures.h; sourceTree = "<group>"; };
+		5DEC254B178B573A00FE971B /* MHVFileFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVFileFeatures.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5DEC2558178B5A7F00FE971B /* MHVItemDataTypedFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVItemDataTypedFeatures.h; sourceTree = "<group>"; };
+		5DEC2559178B5A7F00FE971B /* MHVItemDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVItemDataTypedFeatures.m; sourceTree = "<group>"; };
+		5DEC255B178B680400FE971B /* MHVFileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFileFactory.h; sourceTree = "<group>"; };
+		5DEC255C178B680400FE971B /* MHVFileFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFileFactory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,7 +133,7 @@
 				5DB2E6E418D381CF0030972D /* MobileCoreServices.framework in Frameworks */,
 				5D091378166ED2C50031F5F9 /* libxml2.2.dylib in Frameworks */,
 				5D091376166ED2AF0031F5F9 /* Security.framework in Frameworks */,
-				5D091374166ED1F20031F5F9 /* libHVLib.a in Frameworks */,
+				5D091374166ED1F20031F5F9 /* libMHVLib.a in Frameworks */,
 				5D091345166ED1980031F5F9 /* UIKit.framework in Frameworks */,
 				5D091347166ED1980031F5F9 /* Foundation.framework in Frameworks */,
 				5D091349166ED1980031F5F9 /* CoreGraphics.framework in Frameworks */,
@@ -149,7 +149,7 @@
 				5D091379166ED3470031F5F9 /* ClientSettings.xml */,
 				5D091377166ED2C50031F5F9 /* libxml2.2.dylib */,
 				5D091375166ED2AF0031F5F9 /* Security.framework */,
-				5D091373166ED1F20031F5F9 /* libHVLib.a */,
+				5D091373166ED1F20031F5F9 /* libMHVLib.a */,
 				5D09134A166ED1980031F5F9 /* SDKFeatures */,
 				5D091343166ED1980031F5F9 /* Frameworks */,
 				5D091341166ED1980031F5F9 /* Products */,
@@ -179,59 +179,59 @@
 		5D09134A166ED1980031F5F9 /* SDKFeatures */ = {
 			isa = PBXGroup;
 			children = (
-				5D091353166ED1980031F5F9 /* HVAppDelegate.h */,
-				5D091354166ED1980031F5F9 /* HVAppDelegate.m */,
-				5D09135C166ED1980031F5F9 /* HVViewController.h */,
-				5D09135D166ED1980031F5F9 /* HVViewController.m */,
-				5D09135F166ED1980031F5F9 /* HVViewController.xib */,
-				5D09137B166EDB290031F5F9 /* HVTypeListViewController.h */,
-				5D09137C166EDB290031F5F9 /* HVTypeListViewController.m */,
-				5D09137D166EDB290031F5F9 /* HVTypeListViewController.xib */,
-				5D78987917149A500015D375 /* HVTypeViewController.h */,
-				5D78987A17149A500015D375 /* HVTypeViewController.m */,
-				5D78987B17149A500015D375 /* HVTypeViewController.xib */,
-				5D789911171618530015D375 /* HVFeatureActions.h */,
-				5D789912171618540015D375 /* HVFeatureActions.m */,
-				5D789914171626F60015D375 /* HVMoreFeatures.h */,
-				5D789915171626F60015D375 /* HVMoreFeatures.m */,
-				5D78987F1714A4C90015D375 /* HVItemDataTypedFactory.h */,
-				5D7898801714A4C90015D375 /* HVItemDataTypedFactory.m */,
-				5DD6C2BE1679121300A658D8 /* HVBloodGlucoseFactory.h */,
-				5DD6C2BF1679121300A658D8 /* HVBloodGlucoseFactory.m */,
-				5D3EBAB01679268E00BDE25E /* HVBloodPressureFactory.h */,
-				5D3EBAB11679268E00BDE25E /* HVBloodPressureFactory.m */,
-				5D3EBACB16793D9200BDE25E /* HVCholesterolFactory.h */,
-				5D3EBACC16793D9200BDE25E /* HVCholesterolFactory.m */,
-				5D789938171739FA0015D375 /* HVConditionFactory.h */,
-				5D789939171739FB0015D375 /* HVConditionFactory.m */,
-				5DAFC62E166FC5AC00363FA2 /* HVDietaryIntakeFactory.h */,
-				5DAFC62F166FC5AC00363FA2 /* HVDietaryIntakeFactory.m */,
-				5DD6C1E91676C2F800A658D8 /* HVEmotionalStateFactory.h */,
-				5DD6C1EA1676C2F800A658D8 /* HVEmotionalStateFactory.m */,
-				5DD6C23D1677D2C600A658D8 /* HVExerciseFactory.h */,
-				5DD6C23E1677D2C600A658D8 /* HVExerciseFactory.m */,
-				5DEC255B178B680400FE971B /* HVFileFactory.h */,
-				5DEC255C178B680400FE971B /* HVFileFactory.m */,
-				5D0645B618454D7000D306CC /* HVHeartRateFactory.h */,
-				5D0645B718454D7000D306CC /* HVHeartRateFactory.m */,
-				5D78993B17173B510015D375 /* HVImmunizationFactory.h */,
-				5D78993C17173B520015D375 /* HVImmunizationFactory.m */,
-				5D789934171736050015D375 /* HVMedicationFactory.h */,
-				5D789935171736050015D375 /* HVMedicationFactory.m */,
-				5DD6C27A16780C1000A658D8 /* HVMedicationUsageFactory.h */,
-				5DD6C27B16780C1000A658D8 /* HVMedicationUsageFactory.m */,
-				5D78993E17173D270015D375 /* HVProcedureFactory.h */,
-				5D78993F17173D290015D375 /* HVProcedureFactory.m */,
-				5DD6C2DE16791ACD00A658D8 /* HVSleepJournalAMFactory.h */,
-				5DD6C2DF16791ACD00A658D8 /* HVSleepJournalAMFactory.m */,
-				5D3EBB0B16794B1C00BDE25E /* HVWeightFactory.h */,
-				5D3EBB0C16794B1C00BDE25E /* HVWeightFactory.m */,
-				5D789955171758E90015D375 /* HVStatusLabel.h */,
-				5D789956171758E90015D375 /* HVStatusLabel.m */,
-				5DEC2558178B5A7F00FE971B /* HVItemDataTypedFeatures.h */,
-				5DEC2559178B5A7F00FE971B /* HVItemDataTypedFeatures.m */,
-				5DEC254A178B573900FE971B /* HVFileFeatures.h */,
-				5DEC254B178B573A00FE971B /* HVFileFeatures.m */,
+				5D091353166ED1980031F5F9 /* MHVAppDelegate.h */,
+				5D091354166ED1980031F5F9 /* MHVAppDelegate.m */,
+				5D09135C166ED1980031F5F9 /* MHVViewController.h */,
+				5D09135D166ED1980031F5F9 /* MHVViewController.m */,
+				5D09135F166ED1980031F5F9 /* MHVViewController.xib */,
+				5D09137B166EDB290031F5F9 /* MHVTypeListViewController.h */,
+				5D09137C166EDB290031F5F9 /* MHVTypeListViewController.m */,
+				5D09137D166EDB290031F5F9 /* MHVTypeListViewController.xib */,
+				5D78987917149A500015D375 /* MHVTypeViewController.h */,
+				5D78987A17149A500015D375 /* MHVTypeViewController.m */,
+				5D78987B17149A500015D375 /* MHVTypeViewController.xib */,
+				5D789911171618530015D375 /* MHVFeatureActions.h */,
+				5D789912171618540015D375 /* MHVFeatureActions.m */,
+				5D789914171626F60015D375 /* MHVMoreFeatures.h */,
+				5D789915171626F60015D375 /* MHVMoreFeatures.m */,
+				5D78987F1714A4C90015D375 /* MHVItemDataTypedFactory.h */,
+				5D7898801714A4C90015D375 /* MHVItemDataTypedFactory.m */,
+				5DD6C2BE1679121300A658D8 /* MHVBloodGlucoseFactory.h */,
+				5DD6C2BF1679121300A658D8 /* MHVBloodGlucoseFactory.m */,
+				5D3EBAB01679268E00BDE25E /* MHVBloodPressureFactory.h */,
+				5D3EBAB11679268E00BDE25E /* MHVBloodPressureFactory.m */,
+				5D3EBACB16793D9200BDE25E /* MHVCholesterolFactory.h */,
+				5D3EBACC16793D9200BDE25E /* MHVCholesterolFactory.m */,
+				5D789938171739FA0015D375 /* MHVConditionFactory.h */,
+				5D789939171739FB0015D375 /* MHVConditionFactory.m */,
+				5DAFC62E166FC5AC00363FA2 /* MHVDietaryIntakeFactory.h */,
+				5DAFC62F166FC5AC00363FA2 /* MHVDietaryIntakeFactory.m */,
+				5DD6C1E91676C2F800A658D8 /* MHVEmotionalStateFactory.h */,
+				5DD6C1EA1676C2F800A658D8 /* MHVEmotionalStateFactory.m */,
+				5DD6C23D1677D2C600A658D8 /* MHVExerciseFactory.h */,
+				5DD6C23E1677D2C600A658D8 /* MHVExerciseFactory.m */,
+				5DEC255B178B680400FE971B /* MHVFileFactory.h */,
+				5DEC255C178B680400FE971B /* MHVFileFactory.m */,
+				5D0645B618454D7000D306CC /* MHVHeartRateFactory.h */,
+				5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */,
+				5D78993B17173B510015D375 /* MHVImmunizationFactory.h */,
+				5D78993C17173B520015D375 /* MHVImmunizationFactory.m */,
+				5D789934171736050015D375 /* MHVMedicationFactory.h */,
+				5D789935171736050015D375 /* MHVMedicationFactory.m */,
+				5DD6C27A16780C1000A658D8 /* MHVMedicationUsageFactory.h */,
+				5DD6C27B16780C1000A658D8 /* MHVMedicationUsageFactory.m */,
+				5D78993E17173D270015D375 /* MHVProcedureFactory.h */,
+				5D78993F17173D290015D375 /* MHVProcedureFactory.m */,
+				5DD6C2DE16791ACD00A658D8 /* MHVSleepJournalAMFactory.h */,
+				5DD6C2DF16791ACD00A658D8 /* MHVSleepJournalAMFactory.m */,
+				5D3EBB0B16794B1C00BDE25E /* MHVWeightFactory.h */,
+				5D3EBB0C16794B1C00BDE25E /* MHVWeightFactory.m */,
+				5D789955171758E90015D375 /* MHVStatusLabel.h */,
+				5D789956171758E90015D375 /* MHVStatusLabel.m */,
+				5DEC2558178B5A7F00FE971B /* MHVItemDataTypedFeatures.h */,
+				5DEC2559178B5A7F00FE971B /* MHVItemDataTypedFeatures.m */,
+				5DEC254A178B573900FE971B /* MHVFileFeatures.h */,
+				5DEC254B178B573A00FE971B /* MHVFileFeatures.m */,
 				5D09134B166ED1980031F5F9 /* Supporting Files */,
 			);
 			path = SDKFeatures;
@@ -307,10 +307,10 @@
 				5D091357166ED1980031F5F9 /* Default.png in Resources */,
 				5D091359166ED1980031F5F9 /* Default@2x.png in Resources */,
 				5D09135B166ED1980031F5F9 /* Default-568h@2x.png in Resources */,
-				5D091361166ED1980031F5F9 /* HVViewController.xib in Resources */,
+				5D091361166ED1980031F5F9 /* MHVViewController.xib in Resources */,
 				5D09137A166ED3470031F5F9 /* ClientSettings.xml in Resources */,
-				5D09137F166EDB2A0031F5F9 /* HVTypeListViewController.xib in Resources */,
-				5D78987D17149A500015D375 /* HVTypeViewController.xib in Resources */,
+				5D09137F166EDB2A0031F5F9 /* MHVTypeListViewController.xib in Resources */,
+				5D78987D17149A500015D375 /* MHVTypeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,31 +322,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D091351166ED1980031F5F9 /* main.m in Sources */,
-				5D091355166ED1980031F5F9 /* HVAppDelegate.m in Sources */,
-				5D09135E166ED1980031F5F9 /* HVViewController.m in Sources */,
-				5D09137E166EDB2A0031F5F9 /* HVTypeListViewController.m in Sources */,
-				5DAFC630166FC5AC00363FA2 /* HVDietaryIntakeFactory.m in Sources */,
-				5DD6C1EB1676C2F900A658D8 /* HVEmotionalStateFactory.m in Sources */,
-				5DD6C23F1677D2C600A658D8 /* HVExerciseFactory.m in Sources */,
-				5DD6C27C16780C1000A658D8 /* HVMedicationUsageFactory.m in Sources */,
-				5DD6C2C01679121300A658D8 /* HVBloodGlucoseFactory.m in Sources */,
-				5DD6C2E016791ACD00A658D8 /* HVSleepJournalAMFactory.m in Sources */,
-				5D3EBAB21679268E00BDE25E /* HVBloodPressureFactory.m in Sources */,
-				5D3EBACD16793D9200BDE25E /* HVCholesterolFactory.m in Sources */,
-				5D3EBB0D16794B1C00BDE25E /* HVWeightFactory.m in Sources */,
-				5D78987C17149A500015D375 /* HVTypeViewController.m in Sources */,
-				5D7898811714A4C90015D375 /* HVItemDataTypedFactory.m in Sources */,
-				5D789913171618540015D375 /* HVFeatureActions.m in Sources */,
-				5D789916171626F60015D375 /* HVMoreFeatures.m in Sources */,
-				5D789936171736050015D375 /* HVMedicationFactory.m in Sources */,
-				5D78993A171739FB0015D375 /* HVConditionFactory.m in Sources */,
-				5D78993D17173B520015D375 /* HVImmunizationFactory.m in Sources */,
-				5D78994017173D2A0015D375 /* HVProcedureFactory.m in Sources */,
-				5D789957171758E90015D375 /* HVStatusLabel.m in Sources */,
-				5DEC254C178B573A00FE971B /* HVFileFeatures.m in Sources */,
-				5D0645B818454D7000D306CC /* HVHeartRateFactory.m in Sources */,
-				5DEC255A178B5A7F00FE971B /* HVItemDataTypedFeatures.m in Sources */,
-				5DEC255D178B680400FE971B /* HVFileFactory.m in Sources */,
+				5D091355166ED1980031F5F9 /* MHVAppDelegate.m in Sources */,
+				5D09135E166ED1980031F5F9 /* MHVViewController.m in Sources */,
+				5D09137E166EDB2A0031F5F9 /* MHVTypeListViewController.m in Sources */,
+				5DAFC630166FC5AC00363FA2 /* MHVDietaryIntakeFactory.m in Sources */,
+				5DD6C1EB1676C2F900A658D8 /* MHVEmotionalStateFactory.m in Sources */,
+				5DD6C23F1677D2C600A658D8 /* MHVExerciseFactory.m in Sources */,
+				5DD6C27C16780C1000A658D8 /* MHVMedicationUsageFactory.m in Sources */,
+				5DD6C2C01679121300A658D8 /* MHVBloodGlucoseFactory.m in Sources */,
+				5DD6C2E016791ACD00A658D8 /* MHVSleepJournalAMFactory.m in Sources */,
+				5D3EBAB21679268E00BDE25E /* MHVBloodPressureFactory.m in Sources */,
+				5D3EBACD16793D9200BDE25E /* MHVCholesterolFactory.m in Sources */,
+				5D3EBB0D16794B1C00BDE25E /* MHVWeightFactory.m in Sources */,
+				5D78987C17149A500015D375 /* MHVTypeViewController.m in Sources */,
+				5D7898811714A4C90015D375 /* MHVItemDataTypedFactory.m in Sources */,
+				5D789913171618540015D375 /* MHVFeatureActions.m in Sources */,
+				5D789916171626F60015D375 /* MHVMoreFeatures.m in Sources */,
+				5D789936171736050015D375 /* MHVMedicationFactory.m in Sources */,
+				5D78993A171739FB0015D375 /* MHVConditionFactory.m in Sources */,
+				5D78993D17173B520015D375 /* MHVImmunizationFactory.m in Sources */,
+				5D78994017173D2A0015D375 /* MHVProcedureFactory.m in Sources */,
+				5D789957171758E90015D375 /* MHVStatusLabel.m in Sources */,
+				5DEC254C178B573A00FE971B /* MHVFileFeatures.m in Sources */,
+				5D0645B818454D7000D306CC /* MHVHeartRateFactory.m in Sources */,
+				5DEC255A178B5A7F00FE971B /* MHVItemDataTypedFeatures.m in Sources */,
+				5DEC255D178B680400FE971B /* MHVFileFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,12 +361,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		5D09135F166ED1980031F5F9 /* HVViewController.xib */ = {
+		5D09135F166ED1980031F5F9 /* MHVViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5D091360166ED1980031F5F9 /* en */,
 			);
-			name = HVViewController.xib;
+			name = MHVViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -433,7 +433,7 @@
 				INFOPLIST_FILE = "SDKFeatures/SDKFeatures-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "../../HVLib/**";
+				USER_HEADER_SEARCH_PATHS = "../../MHVLib/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -449,7 +449,7 @@
 				INFOPLIST_FILE = "SDKFeatures/SDKFeatures-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "../../HVLib/**";
+				USER_HEADER_SEARCH_PATHS = "../../MHVLib/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
