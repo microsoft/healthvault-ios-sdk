@@ -72,10 +72,10 @@
 // Methods
 //
 //-------------------------
--(MHVHttpResponse *) createDownloadTaskWithCallback:(HVTaskCompletion) callback;
--(MHVHttpResponse *) downloadWithCallback:(HVTaskCompletion) callback;
--(MHVHttpDownload *) downloadToFilePath:(NSString *) path andCallback:(HVTaskCompletion) callback;
--(MHVHttpDownload *) downloadToFile:(NSFileHandle *) file andCallback:(HVTaskCompletion) callback;
+-(MHVHttpResponse *) createDownloadTaskWithCallback:(MHVTaskCompletion) callback;
+-(MHVHttpResponse *) downloadWithCallback:(MHVTaskCompletion) callback;
+-(MHVHttpDownload *) downloadToFilePath:(NSString *) path andCallback:(MHVTaskCompletion) callback;
+-(MHVHttpDownload *) downloadToFile:(NSFileHandle *) file andCallback:(MHVTaskCompletion) callback;
 
 @end
 

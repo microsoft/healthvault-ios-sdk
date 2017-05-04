@@ -52,7 +52,7 @@ static const xmlChar* x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
 
 -(void)setDosesConsumedValue:(int)dosesConsumedValue
 {
-    HVENSURE(m_dosesConsumed, MHVInt);
+    MHVENSURE(m_dosesConsumed, MHVInt);
     m_dosesConsumed.value = dosesConsumedValue;
 }
 
@@ -63,43 +63,43 @@ static const xmlChar* x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
 
 -(void)setDosesIntendedValue:(int)dosesIntendedValue
 {
-    HVENSURE(m_dosesIntended, MHVInt);
+    MHVENSURE(m_dosesIntended, MHVInt);
     m_dosesIntended.value = dosesIntendedValue;
 }
 
 -(id)initWithDoses:(int)doses forDrug:(MHVCodableValue *)drug onDay:(NSDate *)day
 {
-    HVCHECK_NOTNULL(day);
+    MHVCHECK_NOTNULL(day);
     
     MHVDate* date =  [[MHVDate alloc] initWithDate:day];
     if (!(self = [self initWithDoses:doses forDrug:drug onDate:date])) return nil;
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithDoses:(int)doses forDrug:(MHVCodableValue *)drug onDate:(MHVDate *)date
 {
-    HVCHECK_NOTNULL(drug);
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(drug);
+    MHVCHECK_NOTNULL(date);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_when = date;
     
     self.drugName = drug;
     
     self.dosesConsumedValue = doses;
-    HVCHECK_NOTNULL(m_dosesConsumed);
+    MHVCHECK_NOTNULL(m_dosesConsumed);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 
@@ -125,20 +125,20 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidDailyMedicationUsage);
-    HVVALIDATE(m_drugName, HVClientError_InvalidDailyMedicationUsage);
-    HVVALIDATE(m_dosesConsumed, HVClientError_InvalidDailyMedicationUsage);
+    MHVVALIDATE(m_when, MHVClientError_InvalidDailyMedicationUsage);
+    MHVVALIDATE(m_drugName, MHVClientError_InvalidDailyMedicationUsage);
+    MHVVALIDATE(m_dosesConsumed, MHVClientError_InvalidDailyMedicationUsage);
     
-    HVVALIDATE_OPTIONAL(m_purpose);
-    HVVALIDATE_OPTIONAL(m_dosesIntended);
-    HVVALIDATE_OPTIONAL(m_usageSchedule);
-    HVVALIDATE_OPTIONAL(m_drugForm);
-    HVVALIDATE_OPTIONAL(m_prescriptionType);
-    HVVALIDATE_OPTIONAL(m_singleDoseDescription);
+    MHVVALIDATE_OPTIONAL(m_purpose);
+    MHVVALIDATE_OPTIONAL(m_dosesIntended);
+    MHVVALIDATE_OPTIONAL(m_usageSchedule);
+    MHVVALIDATE_OPTIONAL(m_drugForm);
+    MHVVALIDATE_OPTIONAL(m_prescriptionType);
+    MHVVALIDATE_OPTIONAL(m_singleDoseDescription);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

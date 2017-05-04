@@ -25,7 +25,7 @@
 // MHVTask
 //
 //-----------------------------------------------
-@interface MHVTask (HVPrivate)
+@interface MHVTask (MHVPrivate)
 
 -(void) setException:(NSException *) error;
 -(void) setParent:(MHVTask *) task;
@@ -34,7 +34,7 @@
 
 -(void) queueMethod;
 -(void) executeMethod;
--(void) childCompleted:(MHVTask *) task childCallback:(HVTaskCompletion) callback;
+-(void) childCompleted:(MHVTask *) task childCallback:(MHVTaskCompletion) callback;
 
 @end
 
@@ -74,27 +74,27 @@
     return [self initWith:nil];  // this will cause an init failure, which is what we want
 }
 
--(id)initWith:(HVTaskMethod)current
+-(id)initWith:(MHVTaskMethod)current
 {
     return [self initWithCallback:nil andMethod:current];
 }
 
--(id) initWithCallback:(HVTaskCompletion)callback
+-(id) initWithCallback:(MHVTaskCompletion)callback
 {
     return [self initWithCallback:callback andChildTask:nil];
 }
 
--(id)initWithCallback:(HVTaskCompletion)callback andMethod:(HVTaskMethod)method
+-(id)initWithCallback:(MHVTaskCompletion)callback andMethod:(MHVTaskMethod)method
 {
-    HVCHECK_NOTNULL(method);
+    MHVCHECK_NOTNULL(method);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (callback)
     {
         self.callback = callback;
-        HVCHECK_NOTNULL(m_callback);
+        MHVCHECK_NOTNULL(m_callback);
     }
     
     [self setNextMethod:method];
@@ -102,18 +102,18 @@
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
--(id)initWithCallback:(HVTaskCompletion)callback andChildTask:(MHVTask *)childTask
+-(id)initWithCallback:(MHVTaskCompletion)callback andChildTask:(MHVTask *)childTask
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (callback)
     {
         self.callback = callback;
-        HVCHECK_NOTNULL(m_callback);
+        MHVCHECK_NOTNULL(m_callback);
     }
     
     if (childTask)
@@ -124,7 +124,7 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -135,7 +135,7 @@ LError:
     }];
 }
 
--(void)start:(HVAction)startAction
+-(void)start:(MHVAction)startAction
 {
     @synchronized(self)
     {
@@ -246,7 +246,7 @@ LError:
     }   
 }
 
--(BOOL) setNextMethod:(HVTaskMethod) nextMethod
+-(BOOL) setNextMethod:(MHVTaskMethod) nextMethod
 {
     @synchronized(self)
     {
@@ -282,7 +282,7 @@ LError:
             //
             // Make this task the completion handler, so we can intercept callbacks and handle exceptions right
             //
-            HVTaskCompletion childCallback = nextTask.callback;     
+            MHVTaskCompletion childCallback = nextTask.callback;     
             nextTask.parent = self;
             nextTask.callback = ^(MHVTask *task) 
             {
@@ -301,7 +301,7 @@ LError:
 
 @end
 
-@implementation MHVTask (HVPrivate)
+@implementation MHVTask (MHVPrivate)
 
 -(void)setException:(id)error
 {
@@ -364,7 +364,7 @@ LError:
     NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void) {
         [self executeMethod];
     }];
-    HVCHECK_OOM(op);
+    MHVCHECK_OOM(op);
     
     self.operation = op;
     
@@ -373,7 +373,7 @@ LError:
 
 -(void)executeMethod
 {
-    HVTaskMethod method = m_taskMethod;
+    MHVTaskMethod method = m_taskMethod;
     @try 
     {
         self.method = nil;
@@ -400,7 +400,7 @@ LError:
     
 }
 
--(void) childCompleted:(MHVTask *)child childCallback:(HVTaskCompletion)callback
+-(void) childCompleted:(MHVTask *)child childCallback:(MHVTaskCompletion)callback
 {
     @try 
     {
@@ -478,7 +478,7 @@ LError:
     
 }
 
-+(MHVTask *)run:(MHVTaskSequence *)sequence callback:(HVTaskCompletion)callback
++(MHVTask *)run:(MHVTaskSequence *)sequence callback:(MHVTaskCompletion)callback
 {
     MHVTask* task = [MHVTaskSequence newRunTaskFor:sequence callback:callback];
     [task start];
@@ -486,13 +486,13 @@ LError:
     return task;
 }
 
-+(MHVTask *)newRunTaskFor:(MHVTaskSequence *)sequence callback:(HVTaskCompletion)callback
++(MHVTask *)newRunTaskFor:(MHVTaskSequence *)sequence callback:(MHVTaskCompletion)callback
 {
     MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
 
     MHVTaskSequenceRunner* runner = [[MHVTaskSequenceRunner alloc] initWithSequence:sequence];
-    HVCHECK_NOTNULL(runner);
+    MHVCHECK_NOTNULL(runner);
     
     [task setNextTask:runner];
     
@@ -520,14 +520,14 @@ LError:
 
 -(id)initWithSequence:(MHVTaskSequence *)sequence
 {
-    HVCHECK_NOTNULL(sequence);
+    MHVCHECK_NOTNULL(sequence);
     
     self = [super initWithCallback:^(MHVTask *task) {
         
         [task checkSuccess];
         
     }];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_sequence = sequence;
     self.taskName = sequence.name;
@@ -535,7 +535,7 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 

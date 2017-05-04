@@ -20,7 +20,7 @@
 #import "MHVFileFeatures.h"
 #import "MHVTypeViewController.h"
 
-@interface MHVFileFeatures (HVPrivate)
+@interface MHVFileFeatures (MHVPrivate)
 
 -(NSFileHandle *) openFileForWrite:(NSString *) fileName;
 
@@ -31,7 +31,7 @@
 -(id)init
 {
     self = [super initWithTitle:@"File features"];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     __weak __typeof__(self) weakSelf = self;
 
@@ -47,7 +47,7 @@
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -58,7 +58,7 @@ LError:
 // Each blob is referenced using a blob Url that is active for a limited duration. So, to get a "live" Url, we must first refresh
 // an item's blob information
 //
--(void)processSelectedFile:(HVHandler)action
+-(void)processSelectedFile:(MHVHandler)action
 {
     MHVItem* fileItem = [self.controller getSelectedItem];
     if (!fileItem)
@@ -213,7 +213,7 @@ LError:
 
 @end
 
-@implementation MHVFileFeatures (HVPrivate)
+@implementation MHVFileFeatures (MHVPrivate)
 
 -(NSFileHandle *)openFileForWrite:(NSString *)fileName
 {

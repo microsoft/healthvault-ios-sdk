@@ -55,7 +55,7 @@
 #import "MHVLabTestResults.h"
 #import "MHVItemRaw.h"
 
-@interface MHVItem (HVTypedExtensions)
+@interface MHVItem (MHVTypedExtensions)
 
 -(MHVItemDataTyped *) getDataOfType:(NSString *) typeID;
 

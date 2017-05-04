@@ -44,7 +44,7 @@ static const xmlChar* x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 
 -(void) setSystolicValue:(int)systolicValue
 {
-    HVENSURE(m_systolic, MHVNonNegativeInt);
+    MHVENSURE(m_systolic, MHVNonNegativeInt);
     m_systolic.value = systolicValue;
 }
 
@@ -55,7 +55,7 @@ static const xmlChar* x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 
 -(void) setDiastolicValue:(int)diastolicValue
 {
-    HVENSURE(m_diastolic, MHVNonNegativeInt);
+    MHVENSURE(m_diastolic, MHVNonNegativeInt);
     m_diastolic.value = diastolicValue;
 }
 
@@ -66,7 +66,7 @@ static const xmlChar* x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 
 -(void) setPulseValue:(int)pulseValue
 {
-    HVENSURE(m_pulse, MHVNonNegativeInt);
+    MHVENSURE(m_pulse, MHVNonNegativeInt);
     m_pulse.value = pulseValue;
 }
 
@@ -77,41 +77,41 @@ static const xmlChar* x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 
 -(id) initWithSystolic:(int)sVal diastolic:(int)dVal andDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     self = [self initWithSystolic:sVal diastolic:dVal];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithSystolic:(int)sVal diastolic:(int)dVal pulse:(int)pVal
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_systolic = [[MHVNonNegativeInt alloc] initWith:sVal];
-    HVCHECK_NOTNULL(m_systolic);
+    MHVCHECK_NOTNULL(m_systolic);
     
     m_diastolic = [[MHVNonNegativeInt alloc] initWith:dVal];
-    HVCHECK_NOTNULL(m_diastolic);
+    MHVCHECK_NOTNULL(m_diastolic);
     
     if (pVal >= 0)
     {
         m_pulse = [[MHVNonNegativeInt alloc] initWith:pVal];
-        HVCHECK_NOTNULL(m_pulse);
+        MHVCHECK_NOTNULL(m_pulse);
     }
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSDate *)getDate
@@ -137,16 +137,16 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_when, HVClientError_InvalidBloodPressure);
-    HVVALIDATE(m_systolic, HVClientError_InvalidBloodPressure);
-    HVVALIDATE(m_diastolic, HVClientError_InvalidBloodPressure);
+    MHVVALIDATE(m_when, MHVClientError_InvalidBloodPressure);
+    MHVVALIDATE(m_systolic, MHVClientError_InvalidBloodPressure);
+    MHVVALIDATE(m_diastolic, MHVClientError_InvalidBloodPressure);
     
-    HVVALIDATE_OPTIONAL(m_pulse);
-    HVVALIDATE_OPTIONAL(m_heartbeat);
+    MHVVALIDATE_OPTIONAL(m_pulse);
+    MHVVALIDATE_OPTIONAL(m_heartbeat);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer

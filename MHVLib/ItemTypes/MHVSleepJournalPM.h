@@ -17,16 +17,16 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-enum HVSleepiness
+enum MHVSleepiness
 {
-    HVSleepiness_Unknown,
-    HVSleepiness_VerySleepy,
-    HVSleepiness_Tired,
-    HVSleepiness_Alert,
-    HVSleepiness_WideAwake
+    MHVSleepiness_Unknown,
+    MHVSleepiness_VerySleepy,
+    MHVSleepiness_Tired,
+    MHVSleepiness_Alert,
+    MHVSleepiness_WideAwake
 };
 
-NSString* stringFromSleepiness(enum HVSleepiness sleepiness);
+NSString* stringFromSleepiness(enum MHVSleepiness sleepiness);
 
 @interface MHVSleepJournalPM : MHVItemDataTyped
 {
@@ -48,7 +48,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness);
 // Required
 //
 @property (readwrite, nonatomic, strong) MHVDateTime* when;
-@property (readwrite, nonatomic) enum HVSleepiness sleepiness;
+@property (readwrite, nonatomic) enum MHVSleepiness sleepiness;
 //
 // Optional
 //

@@ -24,12 +24,12 @@
 
 static id<MHVEventLog> s_eventLog;
 
-void HVRegisterEventLog(id<MHVEventLog> log)
+void MHVRegisterEventLog(id<MHVEventLog> log)
 {
     s_eventLog = log;
 }
 
-void HVLogEvent(NSString* message)
+void MHVLogEvent(NSString* message)
 {
     if (s_eventLog)
     {
@@ -45,7 +45,7 @@ void HVLogEvent(NSString* message)
     }
 }
 
-void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line)
+void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line)
 {
     //
     // FileNames can have full paths with embedded names of developers!
@@ -57,32 +57,32 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
                                                 message, 
                                                 fileNameString, 
                                                 (unsigned long)line];
-    HVLogEvent(logLine);
+    MHVLogEvent(logLine);
 }
 
-MHVClientResult* HVValidateArray(NSArray* array, enum HVClientResultCode error)
+MHVClientResult* MHVValidateArray(NSArray* array, enum MHVClientResultCode error)
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_PTR(array, error);
+    MHVVALIDATE_PTR(array, error);
     
     Class hvClass = [MHVType class];
     Class stringClass = [NSString class];
     
     for (id obj in array) 
     {
-        HVVALIDATE_PTR(obj, error);
+        MHVVALIDATE_PTR(obj, error);
         
         if ([obj isKindOfClass:hvClass])
         {
             MHVType* hvType = (MHVType *) obj;
-            HVCHECK_RESULT([hvType validate]);
+            MHVCHECK_RESULT([hvType validate]);
         }
         else if ([obj isKindOfClass:stringClass])
         {
-            HVVALIDATE_STRING((NSString *) obj, error);
+            MHVVALIDATE_STRING((NSString *) obj, error);
         }
     }
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }

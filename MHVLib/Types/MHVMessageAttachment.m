@@ -33,11 +33,11 @@ static const xmlChar* x_element_contentid = XMLSTRINGCONST("content-id");
 
 -(id)initWithName:(NSString *)name andBlobName:(NSString *)blobName
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(blobName);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(blobName);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = name;
     m_blobName = blobName;
@@ -47,18 +47,18 @@ static const xmlChar* x_element_contentid = XMLSTRINGCONST("content-id");
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(m_name, HVClientError_InvalidMessageAttachment);
-    HVVALIDATE_STRING(m_blobName, HVClientError_InvalidMessageAttachment);
+    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidMessageAttachment);
+    MHVVALIDATE_STRING(m_blobName, MHVClientError_InvalidMessageAttachment);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -84,14 +84,14 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVMessageAttachment class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVMessageAttachment *)itemAtIndex:(NSUInteger)index

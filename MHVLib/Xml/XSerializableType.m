@@ -47,7 +47,7 @@
 -(id) newDeepClone
 {
     NSString* xml = [self toXmlStringWithRoot:@"clone"];
-    HVCHECK_NOTNULL(xml);
+    MHVCHECK_NOTNULL(xml);
     
     return [NSObject newFromString:xml withRoot:@"clone" asClass:[self class]];
     

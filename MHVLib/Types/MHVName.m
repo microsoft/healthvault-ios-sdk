@@ -42,45 +42,45 @@ static NSString* const c_element_suffix = @"suffix";
 
 -(id)initWithFirst:(NSString *)first middle:(NSString *)middle andLastName:(NSString *)last
 {
-    HVCHECK_NOTNULL(first);
-    HVCHECK_NOTNULL(last);
+    MHVCHECK_NOTNULL(first);
+    MHVCHECK_NOTNULL(last);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.first = first;
     self.middle = middle;
     self.last = last;
     
     [self buildFullName];
-    HVCHECK_NOTNULL(m_full);
+    MHVCHECK_NOTNULL(m_full);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithFullName:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.fullName = name;
     
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(BOOL)buildFullName
 {
     NSMutableString* fullName = [[NSMutableString alloc] init];
-    HVCHECK_NOTNULL(fullName);
+    MHVCHECK_NOTNULL(fullName);
     
     if (m_title)
     {
@@ -129,11 +129,11 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_STRING(m_full, HVClientError_InvalidName);
+    MHVVALIDATE_STRING(m_full, MHVClientError_InvalidName);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

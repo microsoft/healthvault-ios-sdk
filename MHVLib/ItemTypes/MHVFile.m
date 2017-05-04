@@ -40,7 +40,7 @@ static NSString* const c_element_contentType = @"content-type";
 
 -(void)setName:(NSString *)name
 {
-    HVENSURE(m_name, MHVString255);
+    MHVENSURE(m_name, MHVString255);
     m_name.value = name;
 }
 
@@ -77,12 +77,12 @@ static NSString* const c_element_contentType = @"content-type";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_name, HVClientError_InvalidFile);
-    HVVALIDATE(m_contentType, HVClientError_InvalidFile);
+    MHVVALIDATE(m_name, MHVClientError_InvalidFile);
+    MHVVALIDATE(m_contentType, MHVClientError_InvalidFile);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

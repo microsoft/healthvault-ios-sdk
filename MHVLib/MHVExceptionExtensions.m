@@ -53,7 +53,7 @@
 
 -(void) printSymbolsTo:(NSMutableString *)buffer
 {
-    HVASSERT_NOTNULL(buffer);
+    MHVASSERT_NOTNULL(buffer);
     
     if (buffer)
     {

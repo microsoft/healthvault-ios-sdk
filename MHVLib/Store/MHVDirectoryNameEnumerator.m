@@ -30,7 +30,7 @@
 -(id)initWithPath:(NSURL *) path inFileMode :(BOOL)filesOnly
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
 
     NSFileManager* fm = [NSFileManager defaultManager];
     
@@ -40,7 +40,7 @@
                                     options:NSDirectoryEnumerationSkipsSubdirectoryDescendants
                                     errorHandler:nil];
 
-    HVCHECK_NOTNULL(inner);
+    MHVCHECK_NOTNULL(inner);
     m_inner = inner;
     
     m_listFilesMode = filesOnly;
@@ -48,7 +48,7 @@
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 

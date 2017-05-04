@@ -19,7 +19,7 @@
 #import "MHVCommon.h"
 #import "MHVBlock.h"
 
-void safeInvokeAction(HVAction action)
+void safeInvokeAction(MHVAction action)
 {
     if (action)
     {
@@ -34,7 +34,7 @@ void safeInvokeAction(HVAction action)
     }
 }
 
-void safeInvokeActionInMainThread(HVAction action)
+void safeInvokeActionInMainThread(MHVAction action)
 {
     NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void){ 
         @try 
@@ -60,7 +60,7 @@ void safeInvokeActionInMainThread(HVAction action)
     }
 }
 
-void safeInvokeActionEx(HVAction action, BOOL useMainThread)
+void safeInvokeActionEx(MHVAction action, BOOL useMainThread)
 {
     if (useMainThread)
     {
@@ -72,7 +72,7 @@ void safeInvokeActionEx(HVAction action, BOOL useMainThread)
     }
 }
 
-BOOL safeInvokePredicate(HVPredicate predicate)
+BOOL safeInvokePredicate(MHVPredicate predicate)
 {
     if (predicate)
     {
@@ -89,7 +89,7 @@ BOOL safeInvokePredicate(HVPredicate predicate)
     return FALSE;
 }
 
-void safeInvokeNotify(HVNotify notify, id sender)
+void safeInvokeNotify(MHVNotify notify, id sender)
 {
     if (notify)
     {
@@ -104,7 +104,7 @@ void safeInvokeNotify(HVNotify notify, id sender)
     }
 }
 
-BOOL safeInvokeHandler(HVHandler handler, id value)
+BOOL safeInvokeHandler(MHVHandler handler, id value)
 {
     if (handler)
     {

@@ -31,14 +31,14 @@
 -(id) initWith:(NSString *)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_value = value;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -76,11 +76,11 @@ LError:
 {
     if ([self validateValue:m_value])
     {
-        return HVRESULT_SUCCESS;
+        return MHVRESULT_SUCCESS;
     }
     else
     {
-        return HVMAKE_ERROR(HVClientError_ValueOutOfRange);
+        return MHVMAKE_ERROR(MHVClientError_ValueOutOfRange);
     }
 }
 

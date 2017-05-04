@@ -22,7 +22,7 @@
 #import "MHVTypeView.h"
 
 //
-// Efficiently refreshes multiple HVTypeViews with minimal round trips.
+// Efficiently refreshes multiple MHVTypeViews with minimal round trips.
 // Only views that are:
 //  - Stale
 //  - Don't have pending changes
@@ -46,6 +46,6 @@
 //
 // Returns nil if no refresh was triggered. Else returns a task object
 //
--(MHVTask *) refreshWithCallback:(HVTaskCompletion) callback;
+-(MHVTask *) refreshWithCallback:(MHVTaskCompletion) callback;
 
 @end

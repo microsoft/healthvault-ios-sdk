@@ -35,17 +35,17 @@ static NSString* const c_element_severity = @"severity";
 
 -(id)initWithName:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = [[MHVCodableValue alloc] initWithText:name];
-    HVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_name);
     
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -61,16 +61,16 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_name, HVClientError_InvalidCondition);
-    HVVALIDATE_OPTIONAL(m_onsetDate);
-    HVVALIDATE_STRINGOPTIONAL(m_resolution, HVClientError_InvalidCondition);
-    HVVALIDATE_OPTIONAL(m_resolutionDate);
-    HVVALIDATE_OPTIONAL(m_occurrence);
-    HVVALIDATE_OPTIONAL(m_severity);
+    MHVVALIDATE(m_name, MHVClientError_InvalidCondition);
+    MHVVALIDATE_OPTIONAL(m_onsetDate);
+    MHVVALIDATE_STRINGOPTIONAL(m_resolution, MHVClientError_InvalidCondition);
+    MHVVALIDATE_OPTIONAL(m_resolutionDate);
+    MHVVALIDATE_OPTIONAL(m_occurrence);
+    MHVVALIDATE_OPTIONAL(m_severity);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -100,14 +100,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVConditionEntry class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 @end

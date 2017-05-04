@@ -21,7 +21,7 @@
 
 static NSString* const c_element_item = @"item";
 
-@interface MHVTypeViewItems (HVPrivate)
+@interface MHVTypeViewItems (MHVPrivate)
 
 -(void) ensureOrdered;
 
@@ -80,20 +80,20 @@ static NSString* const c_element_item = @"item";
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_sorted = FALSE;
     
     m_items = [[NSMutableArray alloc] init];
-    HVCHECK_NOTNULL(m_items);
+    MHVCHECK_NOTNULL(m_items);
     
     m_itemsByID = [[NSMutableDictionary alloc] init];
-    HVCHECK_NOTNULL(m_itemsByID);
+    MHVCHECK_NOTNULL(m_itemsByID);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -151,7 +151,7 @@ LError:
 
 -(BOOL) addItem:(MHVTypeViewItem *)item
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
 
     [m_items addObject:item];
     m_sorted = FALSE;
@@ -227,10 +227,10 @@ LError:
 
 -(BOOL)replaceItemAt:(NSUInteger)index with:(MHVTypeViewItem *)item
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     MHVTypeViewItem *existingItem = [self objectAtIndex:index];
-    HVCHECK_NOTNULL(existingItem);
+    MHVCHECK_NOTNULL(existingItem);
     
     [m_itemsByID removeObjectForKey:existingItem.itemID];
     [m_items replaceObjectAtIndex:index withObject:item];
@@ -311,7 +311,7 @@ LError:
 -(BOOL)addMHVItem:(MHVItem *)item
 {
     MHVTypeViewItem* dateKey = [[MHVTypeViewItem alloc] initWithMHVItem:item];
-    HVCHECK_NOTNULL(dateKey);
+    MHVCHECK_NOTNULL(dateKey);
     
     [self addItem:dateKey];
     
@@ -337,7 +337,7 @@ LError:
 -(BOOL)addPendingItem:(MHVPendingItem *)item
 {
     MHVTypeViewItem* dateKey = [[MHVTypeViewItem alloc] initWithPendingItem:item];
-    HVCHECK_NOTNULL(dateKey);
+    MHVCHECK_NOTNULL(dateKey);
  
     [self addItem:dateKey];
     
@@ -349,11 +349,11 @@ LError:
 
 -(BOOL)addHVItems:(MHVItemCollection *)items
 {
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     for (MHVItem* item in items)
     {
-        HVCHECK_SUCCESS([self addMHVItem:item]);
+        MHVCHECK_SUCCESS([self addMHVItem:item]);
     }
     return TRUE;
     
@@ -363,11 +363,11 @@ LError:
 
 -(BOOL)addPendingItems:(MHVPendingItemCollection *)items
 {
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     for (MHVPendingItem* item in items)
     {
-        HVCHECK_SUCCESS([self addPendingItem:item]);
+        MHVCHECK_SUCCESS([self addPendingItem:item]);
     }
     return TRUE;
     
@@ -377,15 +377,15 @@ LError:
 
 -(BOOL)addQueryResult:(MHVItemQueryResult *)result
 {
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_NOTNULL(result);
     
     if (result.hasItems)
     {
-        HVCHECK_SUCCESS([self addHVItems:result.items]);
+        MHVCHECK_SUCCESS([self addHVItems:result.items]);
     }
     if (result.hasPendingItems)
     {
-        HVCHECK_SUCCESS([self addPendingItems:result.pendingItems]);
+        MHVCHECK_SUCCESS([self addPendingItems:result.pendingItems]);
     }
     
     return TRUE;
@@ -396,7 +396,7 @@ LError:
 
 -(BOOL)updateMHVItem:(MHVItem *)item
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     NSUInteger itemIndex = [self indexOfItemID:item.itemID];
     if (itemIndex == NSNotFound)
@@ -414,7 +414,7 @@ LError:
     }
     
     MHVTypeViewItem *newItem = [[MHVTypeViewItem alloc] initWithMHVItem:item];
-    HVCHECK_NOTNULL(newItem);
+    MHVCHECK_NOTNULL(newItem);
     
     [self replaceItemAt:itemIndex with:newItem];
     
@@ -444,7 +444,7 @@ LError:
 
 @end
 
-@implementation MHVTypeViewItems (HVPrivate)
+@implementation MHVTypeViewItems (MHVPrivate)
 
 -(void) ensureOrdered
 {

@@ -39,10 +39,10 @@ static NSString* const c_element_structured = @"structured";
 
 -(id)initWithDisplayText:(NSString *)text andMeasurement:(MHVMeasurement *)measurement
 {
-    HVCHECK_STRING(text);
+    MHVCHECK_STRING(text);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.displayText = text;
     
@@ -54,7 +54,7 @@ static NSString* const c_element_structured = @"structured";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -71,10 +71,10 @@ LError:
 +(MHVApproxMeasurement *) fromValue:(double)value unitsText:(NSString *)unitsText unitsCode:(NSString *)code unitsVocab:(NSString *) vocab
 {
     MHVMeasurement* measurement = [MHVMeasurement fromValue:value unitsDisplayText:unitsText unitsCode:code unitsVocab:vocab];
-    HVCHECK_NOTNULL(measurement);
+    MHVCHECK_NOTNULL(measurement);
     
     NSString* displayText = [NSString localizedStringWithFormat:@"%g %@", value, unitsText];
-    HVCHECK_NOTNULL(displayText);
+    MHVCHECK_NOTNULL(displayText);
     
     MHVApproxMeasurement* approxMeasurement = [MHVApproxMeasurement fromDisplayText:displayText andMeasurement:measurement];
     return approxMeasurement;
@@ -115,12 +115,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
 
-    HVVALIDATE_STRING(m_display, HVClientError_InvalidApproxMeasurement);
-    HVVALIDATE_OPTIONAL(m_measurement);
+    MHVVALIDATE_STRING(m_display, MHVClientError_InvalidApproxMeasurement);
+    MHVVALIDATE_OPTIONAL(m_measurement);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

@@ -45,25 +45,25 @@ static NSString* const c_element_currentEncoding = @"current-content-encoding";
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_length = -1;
     
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithBlobName:(NSString *)name contentType:(NSString *)contentType length:(NSInteger)length andUrl:(NSString *)blobUrl
 {
-    HVCHECK_STRING(blobUrl);
+    MHVCHECK_STRING(blobUrl);
     
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_blobInfo = [[MHVBlobInfo alloc] initWithName:name andContentType:contentType];
-    HVCHECK_NOTNULL(m_blobInfo);
+    MHVCHECK_NOTNULL(m_blobInfo);
     
     m_length = length;
    
@@ -72,14 +72,14 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
--(MHVHttpResponse *)createDownloadTaskWithCallback:(HVTaskCompletion)callback
+-(MHVHttpResponse *)createDownloadTaskWithCallback:(MHVTaskCompletion)callback
 {
     NSURL* url = [NSURL URLWithString:m_blobUrl];
-    HVCHECK_NOTNULL(url);
+    MHVCHECK_NOTNULL(url);
     
     return [[MHVHttpResponse alloc] initWithUrl:url andCallback:callback];
 
@@ -87,10 +87,10 @@ LError:
     return nil;
 }
 
--(MHVHttpResponse *)downloadWithCallback:(HVTaskCompletion)callback
+-(MHVHttpResponse *)downloadWithCallback:(MHVTaskCompletion)callback
 {
     MHVHttpResponse* response = [self createDownloadTaskWithCallback:callback];
-    HVCHECK_NOTNULL(response);
+    MHVCHECK_NOTNULL(response);
     
     [response start];
     
@@ -100,15 +100,15 @@ LError:
     return nil;
 }
 
--(MHVHttpDownload *)downloadToFilePath:(NSString *)path andCallback:(HVTaskCompletion)callback
+-(MHVHttpDownload *)downloadToFilePath:(NSString *)path andCallback:(MHVTaskCompletion)callback
 {
     return [self downloadToFile:[NSFileHandle fileHandleForWritingAtPath:path] andCallback:callback];
 }
 
--(MHVHttpDownload *)downloadToFile:(NSFileHandle *)file andCallback:(HVTaskCompletion)callback
+-(MHVHttpDownload *)downloadToFile:(NSFileHandle *)file andCallback:(MHVTaskCompletion)callback
 {
     NSURL* url = [NSURL URLWithString:m_blobUrl];
-    HVCHECK_NOTNULL(url);
+    MHVCHECK_NOTNULL(url);
     
     MHVHttpDownload* response = [[MHVHttpDownload alloc] initWithUrl:url fileHandle:file andCallback:callback];
     [response start];
@@ -121,12 +121,12 @@ LError:
 
 -(MHVClientResult *)validate
 {   
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_blobInfo, HVClientError_InvalidBlobInfo);
-    HVVALIDATE_STRING(m_blobUrl, HVClientError_InvalidBlobInfo);
+    MHVVALIDATE(m_blobInfo, MHVClientError_InvalidBlobInfo);
+    MHVVALIDATE_STRING(m_blobUrl, MHVClientError_InvalidBlobInfo);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -154,14 +154,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVBlobPayloadItem class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVBlobPayloadItem *)itemAtIndex:(NSUInteger)index

@@ -1,6 +1,6 @@
 //
 //  MHVItemTestExtensions.h
-//  HVTestLib
+//  MHVTestLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -34,31 +34,31 @@ MHVApproxDateTime* createRandomApproxMHVDate(void);
 NSString* pickRandomString(int count, ...);
 NSString* pickRandomDrug(void);
 
-@interface MHVContact (HVTestExtensions)
+@interface MHVContact (MHVTestExtensions)
 +(MHVContact *) createRandom;
 @end
 
-@interface MHVPerson (HVTestExtensions)
+@interface MHVPerson (MHVTestExtensions)
 +(MHVPerson *) createRandom;
 @end
 
-@interface MHVOrganization (HVTestExtensions)
+@interface MHVOrganization (MHVTestExtensions)
 +(MHVOrganization *) createRandom;
 @end
 
-@interface MHVWeightMeasurement (HVTestExtensions)
+@interface MHVWeightMeasurement (MHVTestExtensions)
 
 +(MHVWeightMeasurement *) createRandomGramsMin:(NSUInteger) min max:(NSUInteger) max;
 
 @end
 
-@interface MHVItem (HVTestExtensions)
+@interface MHVItem (MHVTestExtensions)
 
 +(MHVItem *) createRandomOfClass:(NSString *) className;
 
 @end
 
-@interface MHVWeight (HVTestExtensions)
+@interface MHVWeight (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVDateTime *) dateTime;
@@ -66,14 +66,14 @@ NSString* pickRandomDrug(void);
 
 @end
 
-@interface MHVBloodPressure (HVTestExtensions)
+@interface MHVBloodPressure (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem*) createRandomForDate:(MHVDateTime *) dateTime withPulse:(BOOL) pulse;
 
 @end
 
-@interface MHVBloodGlucose (HVTestExtensions)
+@interface MHVBloodGlucose (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem*) createRandomForDate:(MHVDateTime *) dateTime;
@@ -82,7 +82,7 @@ NSString* pickRandomDrug(void);
 
 @end
 
-@interface MHVCholesterolV2 (HVTestExtensions)
+@interface MHVCholesterolV2 (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVDateTime *) dateTime;
@@ -91,33 +91,33 @@ NSString* pickRandomDrug(void);
 
 @end
 
-@interface MHVHeartRate (HVTestExtensions)
+@interface MHVHeartRate (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVDateTime *) dateTime;
 
 @end
 
-@interface MHVHeight (HVTestExtensions)
+@interface MHVHeight (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVDailyDietaryIntake (HVTestExtensions)
+@interface MHVDailyDietaryIntake (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVDietaryIntake (HVTestExtensions)
+@interface MHVDietaryIntake (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomValuesForFood:(MHVCodableValue *) food meal:(MHVCodableValue *) meal onDate:(MHVDateTime *) date;
 
 @end
 
-@interface MHVExercise (HVTestExtensions)
+@interface MHVExercise (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVApproxDateTime *) date;
@@ -125,102 +125,102 @@ NSString* pickRandomDrug(void);
 
 @end
 
-@interface MHVAllergy (HVTestExtensions)
+@interface MHVAllergy (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVCondition (HVTestExtensions)
+@interface MHVCondition (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVMedication (HVTestExtensions)
-
-+(MHVItem *) createRandom;
-+(MHVItem *) createRandomForDate:(MHVApproxDateTime *) date;
-
-@end
-
-@interface MHVImmunization (HVTestExtensions)
+@interface MHVMedication (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVApproxDateTime *) date;
 
 @end
 
-@interface MHVProcedure (HVTestExtensions)
+@interface MHVImmunization (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVApproxDateTime *) date;
 
 @end
 
-@interface MHVVitalSigns (HVTestExtensions)
+@interface MHVProcedure (MHVTestExtensions)
+
++(MHVItem *) createRandom;
++(MHVItem *) createRandomForDate:(MHVApproxDateTime *) date;
+
+@end
+
+@interface MHVVitalSigns (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVEncounter (HVTestExtensions)
+@interface MHVEncounter (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVFamilyHistory (HVTestExtensions)
+@interface MHVFamilyHistory (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVAssessment (HVTestExtensions)
+@interface MHVAssessment (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVQuestionAnswer (HVTestExtensions)
+@interface MHVQuestionAnswer (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVEmergencyOrProviderContact (HVTestExtensions)
+@interface MHVEmergencyOrProviderContact (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVPersonalContactInfo (HVTestExtensions)
+@interface MHVPersonalContactInfo (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVSleepJournalAM (HVTestExtensions)
+@interface MHVSleepJournalAM (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVDateTime *) date withAwakenings:(BOOL) doAwakenings;
 
 @end
 
-@interface MHVSleepJournalPM (HVTestExtensions)
+@interface MHVSleepJournalPM (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 
 @end
 
-@interface MHVEmotionalState (HVTestExtensions)
+@interface MHVEmotionalState (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVDateTime *) date;
 
 @end
 
-@interface MHVDailyMedicationUsage (HVTestExtensions)
+@interface MHVDailyMedicationUsage (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVDate *) date;

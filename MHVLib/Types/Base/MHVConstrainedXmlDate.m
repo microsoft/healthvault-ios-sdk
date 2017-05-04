@@ -40,7 +40,7 @@ static NSString* const c_maxDatePrefix = @"9999";
 -(id) initWith:(NSDate *)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (value)
     {
@@ -50,7 +50,7 @@ static NSString* const c_maxDatePrefix = @"9999";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -82,7 +82,7 @@ LError:
     }
     else
     {
-        // Special magic value HV uses to Remove this entry
+        // Special magic value MHV uses to Remove this entry
         [writer writeText:c_maxDate];
     }
 }

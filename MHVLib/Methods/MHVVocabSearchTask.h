@@ -1,5 +1,5 @@
 //
-//  HVSearchVocabTask.h
+//  MHVSearchVocabTask.h
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -58,12 +58,12 @@
 // Initializers
 //
 //-------------------------
--(id) initWithVocab:(MHVVocabIdentifier *) vocab searchText:(NSString*) text andCallback:(HVTaskCompletion) callback;
+-(id) initWithVocab:(MHVVocabIdentifier *) vocab searchText:(NSString*) text andCallback:(MHVTaskCompletion) callback;
 
-+(MHVVocabSearchTask *) searchForText:(NSString *) text inVocabFamily:(NSString *) family vocabName:(NSString *) name callback:(HVTaskCompletion) callback;
++(MHVVocabSearchTask *) searchForText:(NSString *) text inVocabFamily:(NSString *) family vocabName:(NSString *) name callback:(MHVTaskCompletion) callback;
 
-+(MHVVocabSearchTask *) searchForText:(NSString *) text inVocab:(MHVVocabIdentifier *) vocab callback:(HVTaskCompletion) callback;
++(MHVVocabSearchTask *) searchForText:(NSString *) text inVocab:(MHVVocabIdentifier *) vocab callback:(MHVTaskCompletion) callback;
 
-+(MHVVocabSearchTask *) searchMedications:(NSString *) text callback:(HVTaskCompletion) callback;
++(MHVVocabSearchTask *) searchMedications:(NSString *) text callback:(MHVTaskCompletion) callback;
 
 @end

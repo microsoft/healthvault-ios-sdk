@@ -25,24 +25,24 @@
 
 @synthesize file = m_file;
 
--(id)initWithUrl:(NSURL *)url filePath:(NSString *)path andCallback:(HVTaskCompletion)callback
+-(id)initWithUrl:(NSURL *)url filePath:(NSString *)path andCallback:(MHVTaskCompletion)callback
 {
     return [self initWithUrl:url fileHandle:[NSFileHandle createOrOpenForWriteAtPath:path] andCallback:callback];
 }
 
--(id)initWithUrl:(NSURL *)url fileHandle:(NSFileHandle *)file andCallback:(HVTaskCompletion)callback
+-(id)initWithUrl:(NSURL *)url fileHandle:(NSFileHandle *)file andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(file);
+    MHVCHECK_NOTNULL(file);
   
     self = [super initWithUrl:url andCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_file = file;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 

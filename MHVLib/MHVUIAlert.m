@@ -31,13 +31,13 @@
     return [self initWithInformationalMessage:@"Your message here"];
 }
 
--(id)initWithMessage:(NSString *)message callback:(HVNotify)callback
+-(id)initWithMessage:(NSString *)message callback:(MHVNotify)callback
 {
     NSString* title = [MHVClient current].settings.appName;
     return [self initWithTitle:title message:message callback:callback];
 }
 
--(id)initWithTitle:(NSString *)title message:(NSString *)message callback:(HVNotify)callback
+-(id)initWithTitle:(NSString *)title message:(NSString *)message callback:(MHVNotify)callback
 {
     return [self initWithTitle:title message:message 
                   cancelButtonText:NSLocalizedString(@"Cancel", @"Cancel button text")
@@ -45,16 +45,16 @@
                   callback:callback];
 }
 
--(id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonText:(NSString *)cancelText okButtonText:(NSString *)okText callback:(HVNotify)callback
+-(id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonText:(NSString *)cancelText okButtonText:(NSString *)okText callback:(MHVNotify)callback
 {
-    HVCHECK_STRING(title);
-    HVCHECK_STRING(cancelText);
-    HVCHECK_STRING(message);
+    MHVCHECK_STRING(title);
+    MHVCHECK_STRING(cancelText);
+    MHVCHECK_STRING(message);
 
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
-    m_result = HVUIAlertCancel;
+    m_result = MHVUIAlertCancel;
     
     if (okText)
     {
@@ -64,18 +64,18 @@
     {
         m_view = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelText otherButtonTitles:nil];       
     }
-    HVCHECK_NOTNULL(m_view);
+    MHVCHECK_NOTNULL(m_view);
     
     if (callback)
     {
         m_callback = [callback copy];
-        HVCHECK_NOTNULL(m_callback);
+        MHVCHECK_NOTNULL(m_callback);
     }
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithInformationalMessage:(NSString *)message
@@ -88,7 +88,7 @@ LError:
     return [self initWithTitle:title forInformationalMessage:message withCallback:nil];
 }
 
--(id)initWithTitle:(NSString *)title forInformationalMessage:(NSString *)message withCallback:(HVNotify)callback
+-(id)initWithTitle:(NSString *)title forInformationalMessage:(NSString *)message withCallback:(MHVNotify)callback
 {
     return [self initWithTitle:title 
                     message:message 
@@ -103,10 +103,10 @@ LError:
     [m_view show];
 }
 
-+(MHVUIAlert *) showWithMessage:(NSString *) message callback:(HVNotify) callback
++(MHVUIAlert *) showWithMessage:(NSString *) message callback:(MHVNotify) callback
 {
     MHVUIAlert* alert = [[MHVUIAlert alloc] initWithMessage:message callback:callback];
-    HVCHECK_NOTNULL(alert);
+    MHVCHECK_NOTNULL(alert);
     
     [alert show];
     //
@@ -118,7 +118,7 @@ LError:
     return nil;
 }
 
-+(MHVUIAlert *)showYesNoWithMessage:(NSString *)message callback:(HVNotify)callback
++(MHVUIAlert *)showYesNoWithMessage:(NSString *)message callback:(MHVNotify)callback
 {
     NSString* title = [MHVClient current].settings.appName;
     NSString* noText = NSLocalizedString(@"No", @"No button");
@@ -141,10 +141,10 @@ LError:
     
 }
 
-+(MHVUIAlert *) showWithTitle:(NSString *) title message:(NSString *) message callback:(HVNotify) callback
++(MHVUIAlert *) showWithTitle:(NSString *) title message:(NSString *) message callback:(MHVNotify) callback
 {
     MHVUIAlert* alert = [[MHVUIAlert alloc] initWithTitle:title message:message callback:callback];
-    HVCHECK_NOTNULL(alert);
+    MHVCHECK_NOTNULL(alert);
     
     [alert show];
     //
@@ -160,7 +160,7 @@ LError:
 +(MHVUIAlert *)showInformationalMessage:(NSString *)message
 {
     MHVUIAlert* alert = [[MHVUIAlert alloc] initWithInformationalMessage:message];
-    HVCHECK_NOTNULL(alert);
+    MHVCHECK_NOTNULL(alert);
     
     [alert show];
     return alert;
@@ -169,14 +169,14 @@ LError:
     return nil;
 }
 
-+(MHVUIAlert *)showInformationalMessage:(NSString *)message withCallback:(HVNotify) callback
++(MHVUIAlert *)showInformationalMessage:(NSString *)message withCallback:(MHVNotify) callback
 {
     MHVUIAlert* alert = [[MHVUIAlert alloc] 
                         initWithTitle:[MHVClient current].settings.appName 
                         forInformationalMessage:message 
                         withCallback:callback];
     
-    HVCHECK_NOTNULL(alert);
+    MHVCHECK_NOTNULL(alert);
     
     [alert show];
     return alert;
@@ -185,15 +185,15 @@ LError:
     return nil;
 }
 
-+(MHVUIAlert *)showPromptWithMessage:(NSString *)message callback:(HVNotify)callback
++(MHVUIAlert *)showPromptWithMessage:(NSString *)message callback:(MHVNotify)callback
 {
     return [MHVUIAlert showPromptWithMessage:message defaultText:nil andCallback:callback];
 }
 
-+(MHVUIAlert *)showPromptWithMessage:(NSString *)message defaultText:(NSString *)defaultText andCallback:(HVNotify)callback
++(MHVUIAlert *)showPromptWithMessage:(NSString *)message defaultText:(NSString *)defaultText andCallback:(MHVNotify)callback
 {
     MHVUIAlert* alert = [[MHVUIAlert alloc] initWithMessage:message callback:callback];
-    HVCHECK_NOTNULL(alert);
+    MHVCHECK_NOTNULL(alert);
     
     alert.view.alertViewStyle = UIAlertViewStylePlainTextInput;
     UITextField* textField = [alert.view textFieldAtIndex:0];
@@ -229,11 +229,11 @@ static const NSInteger c_okButtonIndex = 1;
         switch (buttonIndex) {
      
             case c_okButtonIndex:
-                m_result = HVUIAlertOK;
+                m_result = MHVUIAlertOK;
                 break;
             
             default:
-                m_result = HVUIAlertCancel;
+                m_result = MHVUIAlertCancel;
                 break;
         }
         safeInvokeNotify(m_callback, self);

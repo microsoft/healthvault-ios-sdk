@@ -22,7 +22,7 @@
 #import "MHVClient.h"
 #import "MHVItemCommitScheduler.h"
 
-@interface MHVItemCommitScheduler (HVPrivate)
+@interface MHVItemCommitScheduler (MHVPrivate)
 
 -(void) setActiveTask:(MHVTask *) task;
 -(void) commitChangesComplete:(MHVTask *) task;
@@ -81,15 +81,15 @@
 
 -(id)initWithFrequency:(NSTimeInterval)freq forLocalVault:(MHVLocalVault *)vault
 {
-    HVCHECK_NOTNULL(vault);
+    MHVCHECK_NOTNULL(vault);
 
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_localVault = vault;
     
     m_status = [[MHVWorkerStatus alloc] init];
-    HVCHECK_NOTNULL(m_status);
+    MHVCHECK_NOTNULL(m_status);
     
     m_status.isEnabled = FALSE;
     m_commitFrequency = freq;
@@ -98,7 +98,7 @@
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -155,7 +155,7 @@ LError:
 
 @end
 
-@implementation MHVItemCommitScheduler (HVPrivate)
+@implementation MHVItemCommitScheduler (MHVPrivate)
 
 -(void)setActiveTask:(MHVTask *)task
 {
@@ -209,7 +209,7 @@ LError:
                                     userInfo:nil
                                     repeats:TRUE];
             
-            HVCHECK_NOTNULL(m_timer);
+            MHVCHECK_NOTNULL(m_timer);
         }
         
         return TRUE;

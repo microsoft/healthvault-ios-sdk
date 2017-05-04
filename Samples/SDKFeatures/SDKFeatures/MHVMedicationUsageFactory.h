@@ -19,7 +19,7 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVDailyMedicationUsage (HVFactoryMethods)
+@interface MHVDailyMedicationUsage (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
@@ -28,7 +28,7 @@
 
 @end
 
-@interface MHVDailyMedicationUsage (HVDisplay)
+@interface MHVDailyMedicationUsage (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

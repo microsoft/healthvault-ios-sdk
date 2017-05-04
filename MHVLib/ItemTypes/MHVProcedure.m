@@ -38,18 +38,18 @@ static NSString* const c_element_secondaryprovider = @"secondary-provider";
 
 -(id)initWithName:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = [[MHVCodableValue alloc] initWithText:name];
-    HVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_name);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -75,15 +75,15 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_name, HVClientError_InvalidProcedure);
-    HVVALIDATE_OPTIONAL(m_when);
-    HVVALIDATE_OPTIONAL(m_anatomicLocation);
-    HVVALIDATE_OPTIONAL(m_primaryProvider);
-    HVVALIDATE_OPTIONAL(m_secondaryProvider);
+    MHVVALIDATE(m_name, MHVClientError_InvalidProcedure);
+    MHVVALIDATE_OPTIONAL(m_when);
+    MHVVALIDATE_OPTIONAL(m_anatomicLocation);
+    MHVVALIDATE_OPTIONAL(m_primaryProvider);
+    MHVVALIDATE_OPTIONAL(m_secondaryProvider);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

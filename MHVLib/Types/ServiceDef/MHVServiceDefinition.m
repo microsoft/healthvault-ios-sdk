@@ -60,7 +60,7 @@ static NSString* const c_element_section = @"section";
 
 -(MHVStringCollection *)sections
 {
-    HVENSURE(m_sections, MHVStringCollection);
+    MHVENSURE(m_sections, MHVStringCollection);
     return m_sections;
 }
 

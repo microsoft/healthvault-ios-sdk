@@ -21,7 +21,7 @@
 #import "MHVClient.h"
 #import "MHVUIAlert.h"
 
-@interface MHVAppProvisionController (HVPrivate)
+@interface MHVAppProvisionController (MHVPrivate)
 
 -(BOOL) queryStringHasAppAuthSuccess:(NSString *) qs;
 -(NSString *) instanceIDFromQs:(NSString *) qs;
@@ -36,7 +36,7 @@
 
 -(BOOL)isSuccess
 {
-    return (m_status == HVAppProvisionSuccess);
+    return (m_status == MHVAppProvisionSuccess);
 }
 
 -(BOOL)hasInstanceID
@@ -47,33 +47,33 @@
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.title = [MHVClient current].settings.signInControllerTitle;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
--(id)initWithAppCreateUrl:(NSURL *)url andCallback:(HVNotify)callback
+-(id)initWithAppCreateUrl:(NSURL *)url andCallback:(MHVNotify)callback
 {
-    HVCHECK_NOTNULL(url);
-    HVCHECK_NOTNULL(callback);
+    MHVCHECK_NOTNULL(url);
+    MHVCHECK_NOTNULL(callback);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.target = url;
     
     m_callback = [callback copy];
-    HVCHECK_NOTNULL(m_callback);
+    MHVCHECK_NOTNULL(m_callback);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -91,7 +91,7 @@ LError:
     NSString* queryString = [[request URL] query];
     if ([self queryStringHasAppAuthSuccess:queryString])
     {
-        m_status = HVAppProvisionSuccess;
+        m_status = MHVAppProvisionSuccess;
         m_hvInstanceID = [self instanceIDFromQs:queryString];
         [self abort];
     }    
@@ -116,13 +116,13 @@ LError:
     [MHVUIAlert showWithMessage:message callback:^(id sender) {
         
         MHVUIAlert *alert = (MHVUIAlert *) sender;
-        if (alert.result == HVUIAlertOK)
+        if (alert.result == MHVUIAlertOK)
         {
             [self start];
         }
         else
         {
-            m_status = HVAppProvisionFailed;
+            m_status = MHVAppProvisionFailed;
 
             m_error = error;
             
@@ -134,7 +134,7 @@ LError:
 
 @end
 
-@implementation MHVAppProvisionController (HVPrivate)
+@implementation MHVAppProvisionController (MHVPrivate)
 
 -(BOOL)queryStringHasAppAuthSuccess:(NSString *)qs
 {

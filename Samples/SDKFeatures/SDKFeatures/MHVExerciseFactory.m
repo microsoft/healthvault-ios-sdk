@@ -18,7 +18,7 @@
 
 #import "MHVExerciseFactory.h"
 
-@implementation MHVExercise (HVFactoryMethods)
+@implementation MHVExercise (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date
 {
@@ -51,7 +51,7 @@
 
 @end
 
-@implementation MHVExercise (HVDisplay)
+@implementation MHVExercise (MHVDisplay)
 
 -(NSString *)detailsString
 {

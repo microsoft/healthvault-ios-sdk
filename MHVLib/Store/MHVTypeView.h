@@ -35,10 +35,10 @@
 @class MHVSynchronizedStore;
 @class MHVTypeView;
 
-enum HVTypeViewReadAheadMode
+enum MHVTypeViewReadAheadMode
 {
-    HVTypeViewReadAheadModePage,
-    HVTypeViewReadAheadModeSequential
+    MHVTypeViewReadAheadModePage,
+    MHVTypeViewReadAheadModeSequential
 };
 
 extern const int c_hvTypeViewDefaultReadAheadChunkSize;
@@ -53,7 +53,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 // TypeViews are COLLECTIONS of MHVTypeViewItems. MHVTypeViewItem inherits from MHVItemKey
 // See MHVTypeViewItems.h
 //
-// HVTypeViews are SORTED by EffectiveDate - the same sort order in which
+// MHVTypeViews are SORTED by EffectiveDate - the same sort order in which
 // the HealthVault platform returns items, and the order in in which the HealthVault
 // Shell displays items. The sort order is:
 //  - EffectiveDate [descending]
@@ -91,7 +91,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 // Used if you want to fetch/sync/refresh items using your own logic
 //
 -(NSArray *) keysOfItemsNeedingDownloadInRange:(NSRange) range;
--(MHVTask *) ensureItemsDownloadedInRange:(NSRange)range withCallback:(HVTaskCompletion)callback;
+-(MHVTask *) ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback;
 -(BOOL) replaceKeys:(MHVTypeViewItems *) items;
 
 @end
@@ -136,7 +136,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 // MHVTypeView also makes it easy to write asynchronous UITableView displays of HealthVault data.
 // You always use MHVTypeView from the main thread.
 //
-// HVTypeViews are persistable AND xml serializable - i.e. they can be saved and loaded from disk.
+// MHVTypeViews are persistable AND xml serializable - i.e. they can be saved and loaded from disk.
 //
 // MHVTypeView uses MHVTypeViewDelegate to notify you of changes and updates to
 // the iview.
@@ -163,7 +163,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
     MHVTypeViewItems* m_items;
     MHVLocalRecordStore* m_store;
     
-    enum HVTypeViewReadAheadMode m_readAheadMode;
+    enum MHVTypeViewReadAheadMode m_readAheadMode;
     NSInteger m_readAheadChunkSize;
     BOOL m_enforceTypeCheck;
     
@@ -188,7 +188,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 // Set them to your desired settings when you load saved views
 //
 @property (readwrite, nonatomic) NSInteger tag;
-@property (readwrite, nonatomic) enum HVTypeViewReadAheadMode readAheadMode;
+@property (readwrite, nonatomic) enum MHVTypeViewReadAheadMode readAheadMode;
 // Deprecated. Use readAheadMode instead
 @property (readwrite, nonatomic) BOOL readAheadModeChunky __deprecated;
 @property (readwrite, nonatomic) BOOL enforceTypeCheck;
@@ -244,7 +244,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 -(MHVTask *) synchronize;
 //
-// Synchronize HVItems associated with this view
+// Synchronize MHVItems associated with this view
 // Calls delegate when complete
 //
 -(MHVTask *) synchronizeData;

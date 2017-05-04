@@ -40,7 +40,7 @@ static const xmlChar* x_element_maxRange = XMLSTRINGCONST("maximum-range");
     }
     else
     {
-        HVENSURE(m_minRange, MHVDouble);
+        MHVENSURE(m_minRange, MHVDouble);
         m_minRange.value = minRangeValue;
     }
 }
@@ -58,7 +58,7 @@ static const xmlChar* x_element_maxRange = XMLSTRINGCONST("maximum-range");
     }
     else
     {
-        HVENSURE(m_maxRange, MHVDouble);
+        MHVENSURE(m_maxRange, MHVDouble);
         m_maxRange.value = maxRangeValue;
     }
 }

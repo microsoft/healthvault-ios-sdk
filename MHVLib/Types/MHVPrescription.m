@@ -45,7 +45,7 @@ static NSString* const c_element_instructions = @"instructions";
 {
     if (refills >= 0)
     {
-        HVENSURE(m_refills, MHVNonNegativeInt);
+        MHVENSURE(m_refills, MHVNonNegativeInt);
         m_refills.value = refills;
     }
     else
@@ -63,7 +63,7 @@ static NSString* const c_element_instructions = @"instructions";
 {
     if (daysSupply >= 0)
     {
-        HVENSURE(m_daysSupply, MHVPositiveInt);
+        MHVENSURE(m_daysSupply, MHVPositiveInt);
         m_daysSupply.value = daysSupply;
     }
     else
@@ -75,18 +75,18 @@ static NSString* const c_element_instructions = @"instructions";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_prescriber, HVClientError_InvalidPrescription);
-    HVVALIDATE_OPTIONAL(m_datePrescribed);
-    HVVALIDATE_OPTIONAL(m_amount);
-    HVVALIDATE_OPTIONAL(m_substitution);
-    HVVALIDATE_OPTIONAL(m_refills);
-    HVVALIDATE_OPTIONAL(m_daysSupply);
-    HVVALIDATE_OPTIONAL(m_expiration);
-    HVVALIDATE_OPTIONAL(m_instructions);
+    MHVVALIDATE(m_prescriber, MHVClientError_InvalidPrescription);
+    MHVVALIDATE_OPTIONAL(m_datePrescribed);
+    MHVVALIDATE_OPTIONAL(m_amount);
+    MHVVALIDATE_OPTIONAL(m_substitution);
+    MHVVALIDATE_OPTIONAL(m_refills);
+    MHVVALIDATE_OPTIONAL(m_daysSupply);
+    MHVVALIDATE_OPTIONAL(m_expiration);
+    MHVVALIDATE_OPTIONAL(m_instructions);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

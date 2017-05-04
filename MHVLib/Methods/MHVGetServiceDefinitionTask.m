@@ -58,13 +58,13 @@
     return [super deserializeResponseBodyFromReader:reader asClass:[MHVServiceDefinition class]];
 }
 
-+(MHVGetServiceDefinitionTask *)getTopology:(HVTaskCompletion)callback
++(MHVGetServiceDefinitionTask *)getTopology:(MHVTaskCompletion)callback
 {
     MHVGetServiceDefinitionTask* task = [[MHVGetServiceDefinitionTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     MHVServiceDefinitionParams* params = [[MHVServiceDefinitionParams alloc] init];
-    HVCHECK_NOTNULL(params);
+    MHVCHECK_NOTNULL(params);
     
     [params.sections addObject:@"topology"];
     task.params = params;

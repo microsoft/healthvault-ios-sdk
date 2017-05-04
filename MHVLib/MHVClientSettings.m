@@ -145,10 +145,10 @@ static NSString* const c_element_instanceID = @"instanceID";
 
 +(MHVEnvironmentSettings *)fromInstance:(MHVInstance *)instance
 {
-    HVCHECK_NOTNULL(instance);
+    MHVCHECK_NOTNULL(instance);
     
     MHVEnvironmentSettings* settings = [[MHVEnvironmentSettings alloc] init];
-    HVCHECK_NOTNULL(settings);
+    MHVCHECK_NOTNULL(settings);
     
     settings.name = instance.name;
     settings.friendlyName = instance.name;
@@ -165,12 +165,12 @@ LError:
 
 -(BOOL)isServiceNetworkReachable
 {
-    return HVIsHostNetworkReachable(self.serviceUrl.host);
+    return MHVIsHostNetworkReachable(self.serviceUrl.host);
 }
 
 -(BOOL)isShellNetworkReachable
 {
-    return HVIsHostNetworkReachable(self.shellUrl.host);
+    return MHVIsHostNetworkReachable(self.shellUrl.host);
 }
 
 @end
@@ -269,7 +269,7 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_debug = FALSE;
     m_isMultiInstanceAware = FALSE;
@@ -279,7 +279,7 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -287,7 +287,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:m_appID])
     {
-        [MHVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientEror_InvalidMasterAppID)];
+        [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientEror_InvalidMasterAppID)];
     }
 }
 
@@ -337,7 +337,7 @@ LError:
 
 -(MHVEnvironmentSettings *)environmentWithName:(NSString *)name
 {
-    HVCHECK_NOTNULL(name);
+    MHVCHECK_NOTNULL(name);
     
     NSArray* environments = self.environments;
     for (NSUInteger i = 0, count = environments.count; i < count; ++i)

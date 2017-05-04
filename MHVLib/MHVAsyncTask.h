@@ -21,8 +21,8 @@
 
 @class  MHVTask;
 
-typedef BOOL (^HVTaskMethod) (MHVTask * task);
-typedef void (^HVTaskCompletion) (MHVTask* task);
+typedef BOOL (^MHVTaskMethod) (MHVTask * task);
+typedef void (^MHVTaskCompletion) (MHVTask* task);
 
 //-----------------------
 //
@@ -44,8 +44,8 @@ typedef void (^HVTaskCompletion) (MHVTask* task);
 
     id m_result;
     
-    HVTaskMethod m_taskMethod;
-    HVTaskCompletion m_callback;
+    MHVTaskMethod m_taskMethod;
+    MHVTaskCompletion m_callback;
     
     id m_operation;
     
@@ -85,7 +85,7 @@ typedef void (^HVTaskCompletion) (MHVTask* task);
 //
 // This task executes this method asynchronously by queuing an NSBlockOperation
 //
-@property (readwrite, nonatomic, copy) HVTaskMethod method;
+@property (readwrite, nonatomic, copy) MHVTaskMethod method;
 //
 // THE CALLBACK the task calls when it is done. In the callback you typically:
 //  1. call task.result to get the task's result, if it returns any
@@ -93,21 +93,21 @@ typedef void (^HVTaskCompletion) (MHVTask* task);
 //
 // Either can throw, so make sure you have an exception handler around it
 //
-@property (readwrite, nonatomic, copy) HVTaskCompletion callback;
+@property (readwrite, nonatomic, copy) MHVTaskCompletion callback;
 @property (readwrite, nonatomic) BOOL shouldCompleteInMainThread;
 
--(id) initWith:(HVTaskMethod) current;
--(id) initWithCallback:(HVTaskCompletion) callback;
--(id) initWithCallback:(HVTaskCompletion)callback andMethod:(HVTaskMethod) method;
--(id) initWithCallback:(HVTaskCompletion)callback andChildTask:(MHVTask *)childTask;
+-(id) initWith:(MHVTaskMethod) current;
+-(id) initWithCallback:(MHVTaskCompletion) callback;
+-(id) initWithCallback:(MHVTaskCompletion)callback andMethod:(MHVTaskMethod) method;
+-(id) initWithCallback:(MHVTaskCompletion)callback andChildTask:(MHVTask *)childTask;
 
--(BOOL) setNextMethod:(HVTaskMethod) nextMethod;
+-(BOOL) setNextMethod:(MHVTaskMethod) nextMethod;
 -(BOOL) setNextTask:(MHVTask *) nextTask;
 
 -(void) startChild:(MHVTask *) childTask;
 
 -(void) start;
--(void) start:(HVAction) startAction;
+-(void) start:(MHVAction) startAction;
 -(void) cancel;
 -(void) complete;
 -(void) handleError:(id) error;
@@ -142,8 +142,8 @@ typedef void (^HVTaskCompletion) (MHVTask* task);
 //
 // Use to run the task sequence
 //
-+(MHVTask *) run:(MHVTaskSequence *)sequence callback:(HVTaskCompletion) callback;
-+(MHVTask *) newRunTaskFor:(MHVTaskSequence *)sequence callback:(HVTaskCompletion) callback;
++(MHVTask *) run:(MHVTaskSequence *)sequence callback:(MHVTaskCompletion) callback;
++(MHVTask *) newRunTaskFor:(MHVTaskSequence *)sequence callback:(MHVTaskCompletion) callback;
 
 @end
 //

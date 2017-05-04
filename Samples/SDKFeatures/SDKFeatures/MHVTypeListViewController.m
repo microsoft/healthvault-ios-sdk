@@ -69,10 +69,10 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [m_tableView dequeueReusableCellWithIdentifier:@"HVCell"];
+    UITableViewCell* cell = [m_tableView dequeueReusableCellWithIdentifier:@"MHVCell"];
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HVCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MHVCell"];
     }
     
     NSString* typeName = [[m_classesForTypes objectAtIndex:indexPath.row] XRootElement];
@@ -165,13 +165,13 @@
 -(BOOL) addStandardFeatures
 {
     m_features = [[MHVMoreFeatures alloc] init];
-    HVCHECK_NOTNULL(m_features);
+    MHVCHECK_NOTNULL(m_features);
     m_features.controller = self;
     
     __weak __typeof__(m_features) weakFeatures = m_features;
     
     m_actions = [[MHVFeatureActions alloc] init];
-    HVCHECK_NOTNULL(m_actions);
+    MHVCHECK_NOTNULL(m_actions);
     
     [m_actions addFeature:@"Disconnect app" andAction:^{
         [weakFeatures disconnectApp];

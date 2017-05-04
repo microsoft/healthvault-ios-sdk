@@ -42,7 +42,7 @@ NSString* const c_mgDLUnitsCode = @"mg-per-dl";
 
 -(void)setMmolPerLiter:(double)mmolPerLiter
 {
-    HVENSURE(m_mmolPerl, MHVNonNegativeDouble);
+    MHVENSURE(m_mmolPerl, MHVNonNegativeDouble);
     m_mmolPerl.value = mmolPerLiter;
     [self updateDisplayValue:mmolPerLiter units:c_mmolPlUnits andUnitsCode:c_mmolUnitsCode];
 }
@@ -50,27 +50,27 @@ NSString* const c_mgDLUnitsCode = @"mg-per-dl";
 -(id)initWithMmolPerLiter:(double)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.mmolPerLiter = value;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithMgPerDL:(double)value gramsPerMole:(double)gramsPerMole
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [self setMgPerDL:value gramsPerMole:gramsPerMole];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -88,7 +88,7 @@ LError:
 {
     double mmolPerl = mgDLToMmolPerL(value, gramsPerMole);
     
-    HVENSURE(m_mmolPerl, MHVNonNegativeDouble);
+    MHVENSURE(m_mmolPerl, MHVNonNegativeDouble);
     m_mmolPerl.value = mmolPerl;
     [self updateDisplayValue:value units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
@@ -96,7 +96,7 @@ LError:
 -(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
-    HVCHECK_NOTNULL(newValue);
+    MHVCHECK_NOTNULL(newValue);
     
     if (code)
     {
@@ -128,12 +128,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_mmolPerl, HVClientError_InvalidConcentrationValue);
-    HVVALIDATE_OPTIONAL(m_display);
+    MHVVALIDATE(m_mmolPerl, MHVClientError_InvalidConcentrationValue);
+    MHVVALIDATE_OPTIONAL(m_display);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer

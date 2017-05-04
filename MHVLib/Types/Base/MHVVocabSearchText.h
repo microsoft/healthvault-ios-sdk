@@ -19,22 +19,22 @@
 #import "MHVType.h"
 #import "MHVString255.h"
 
-enum HVVocabMatchType 
+enum MHVVocabMatchType 
 {
-    HVVocabMatchTypeFullText,
-    HVVocabMatchTypePrefix,
-    HVVocabMatchTypeNone
+    MHVVocabMatchTypeFullText,
+    MHVVocabMatchTypePrefix,
+    MHVVocabMatchTypeNone
 };
 
-NSString* HVVocabMatchTypeToString(enum HVVocabMatchType type);
-enum HVVocabMatchType HVVocabMatchTypeFromString(NSString* string);
+NSString* MHVVocabMatchTypeToString(enum MHVVocabMatchType type);
+enum MHVVocabMatchType MHVVocabMatchTypeFromString(NSString* string);
 
 @interface MHVVocabSearchText : MHVString255
 {
 @private
-    enum HVVocabMatchType m_type;
+    enum MHVVocabMatchType m_type;
 }
 
-@property (readwrite, nonatomic) enum HVVocabMatchType matchType;
+@property (readwrite, nonatomic) enum MHVVocabMatchType matchType;
 
 @end

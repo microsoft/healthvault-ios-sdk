@@ -1,5 +1,5 @@
 //
-//  HVVocabSearch.m
+//  MHVVocabSearch.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -29,30 +29,30 @@ static NSString* const c_element_max = @"max-results";
 
 -(id)initWithText:(NSString *)text
 {
-    HVCHECK_STRING(text);
+    MHVCHECK_STRING(text);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_text = [[MHVVocabSearchText alloc] initWith:text];
-    HVCHECK_NOTNULL(m_text);
+    MHVCHECK_NOTNULL(m_text);
     
     m_maxResults = 25;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
 
-    HVVALIDATE(m_text, HVClientError_InvalidVocabSearch);
+    MHVVALIDATE(m_text, MHVClientError_InvalidVocabSearch);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

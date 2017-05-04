@@ -21,13 +21,13 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVHeartRate (HVFactoryMethods)
+@interface MHVHeartRate (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 
 @end
 
-@interface MHVHeartRate (HVDisplay)
+@interface MHVHeartRate (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

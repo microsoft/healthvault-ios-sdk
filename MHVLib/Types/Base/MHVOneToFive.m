@@ -18,22 +18,22 @@
 
 #import "MHVOneToFive.h"
 
-NSString* stringFromRating(enum HVRelativeRating rating)
+NSString* stringFromRating(enum MHVRelativeRating rating)
 {
     switch (rating) {
-        case HVRelativeRating_VeryLow:
+        case MHVRelativeRating_VeryLow:
             return @"Very Low";
         
-        case HVRelativeRating_Low:
+        case MHVRelativeRating_Low:
             return @"Low";
         
-        case HVRelativeRating_Moderate:
+        case MHVRelativeRating_Moderate:
             return @"Moderate";
             
-        case HVRelativeRating_High:
+        case MHVRelativeRating_High:
             return @"High";
             
-        case HVRelativeRating_VeryHigh:
+        case MHVRelativeRating_VeryHigh:
             return @"Very High";
             
         default:
@@ -43,22 +43,22 @@ NSString* stringFromRating(enum HVRelativeRating rating)
     return c_emptyString;
 }
 
-NSString* stringFromNormalcy(enum HVNormalcyRating rating)
+NSString* stringFromNormalcy(enum MHVNormalcyRating rating)
 {
     switch (rating) {
-        case HVNormalcy_WellAboveNormal:
+        case MHVNormalcy_WellAboveNormal:
             return @"Well Below Normal";
         
-        case HVNormalcy_BelowNormal:
+        case MHVNormalcy_BelowNormal:
             return @"Below Normal";
         
-        case HVNormalcy_Normal:
+        case MHVNormalcy_Normal:
             return @"Normal";
         
-        case HVNormalcy_AboveNormal:
+        case MHVNormalcy_AboveNormal:
             return @"Above Normal";
         
-        case HVNormalcy_WellBelowNormal:
+        case MHVNormalcy_WellBelowNormal:
             return @"Well Above Normal";
             
         default:

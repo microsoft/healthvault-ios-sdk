@@ -19,6 +19,6 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVProcedure (HVFactoryMethods)
+@interface MHVProcedure (MHVFactoryMethods)
 
 @end

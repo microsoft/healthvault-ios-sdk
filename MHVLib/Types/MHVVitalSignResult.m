@@ -39,26 +39,26 @@ static NSString* const c_element_flag = @"flag";
 
 -(id)initWithTitle:(MHVCodableValue *)title value:(double)value andUnit:(NSString *)unit
 {
-    HVCHECK_NOTNULL(title);
+    MHVCHECK_NOTNULL(title);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.title = title;
 
     m_value = [[MHVDouble alloc] initWith:value];
-    HVCHECK_NOTNULL(m_value);
+    MHVCHECK_NOTNULL(m_value);
     
     if (unit)
     {
         m_unit = [[MHVCodableValue alloc] initWithText:unit];
-        HVCHECK_NOTNULL(m_unit);
+        MHVCHECK_NOTNULL(m_unit);
     }
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithTemperature:(double)value inCelsius:(BOOL)celsius
@@ -83,17 +83,17 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_title, HVClientError_InvalidVitalSignResult);
-    HVVALIDATE_OPTIONAL(m_value);
-    HVVALIDATE_OPTIONAL(m_unit);
-    HVVALIDATE_OPTIONAL(m_referenceMin);
-    HVVALIDATE_OPTIONAL(m_referenceMax);
-    HVVALIDATE_STRINGOPTIONAL(m_textValue, HVClientError_InvalidVitalSignResult);
-    HVVALIDATE_OPTIONAL(m_flag);
+    MHVVALIDATE(m_title, MHVClientError_InvalidVitalSignResult);
+    MHVVALIDATE_OPTIONAL(m_value);
+    MHVVALIDATE_OPTIONAL(m_unit);
+    MHVVALIDATE_OPTIONAL(m_referenceMin);
+    MHVVALIDATE_OPTIONAL(m_referenceMax);
+    MHVVALIDATE_STRINGOPTIONAL(m_textValue, MHVClientError_InvalidVitalSignResult);
+    MHVVALIDATE_OPTIONAL(m_flag);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -125,14 +125,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVVitalSignResult class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVVitalSignResult *)itemAtIndex:(NSUInteger)index

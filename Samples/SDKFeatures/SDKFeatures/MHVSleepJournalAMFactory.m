@@ -1,5 +1,5 @@
 //
-//  HVSleepAMFactory.m
+//  MHVSleepAMFactory.m
 //  SDKFeatures
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -18,7 +18,7 @@
 
 #import "MHVSleepJournalAMFactory.h"
 
-@implementation MHVSleepJournalAM (HVFactoryMethods)
+@implementation MHVSleepJournalAM (MHVFactoryMethods)
 
 +(MHVItemCollection *)createRandomForDay:(NSDate *)date
 {
@@ -53,7 +53,7 @@
 
 @end
 
-@implementation MHVSleepJournalAM (HVDisplay)
+@implementation MHVSleepJournalAM (MHVDisplay)
 
 -(NSString *)detailsString
 {

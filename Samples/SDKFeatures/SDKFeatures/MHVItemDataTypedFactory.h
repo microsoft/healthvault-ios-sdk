@@ -1,5 +1,5 @@
 //
-//  HVItemDataTypedExtensions.h
+//  MHVItemDataTypedExtensions.h
 //  SDKFeatures
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,7 +24,7 @@
 //
 // Category for generating random, but correct, typed HealthVault data
 //
-@interface MHVItemDataTyped (HVFactoryMethods)
+@interface MHVItemDataTyped (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
@@ -33,7 +33,7 @@
 
 @end
 
-@interface MHVItemDataTyped (HVDisplay)
+@interface MHVItemDataTyped (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

@@ -34,11 +34,11 @@
 //
 // ItemChangeManager OPTIONALLY BROADCASTS the following events using [NSNotificationCenter defaultCenter]
 //
-HVDECLARE_NOTIFICATION(HVItemChangeManagerStartingCommitNotification);
-HVDECLARE_NOTIFICATION(HVItemChangeManagerFinishedCommitNotification);
-HVDECLARE_NOTIFICATION(HVItemChangeManagerChangeCommitSuccessNotification);
-HVDECLARE_NOTIFICATION(HVItemChangeManagerChangeCommitFailedNotification);
-HVDECLARE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
+MHVDECLARE_NOTIFICATION(MHVItemChangeManagerStartingCommitNotification);
+MHVDECLARE_NOTIFICATION(MHVItemChangeManagerFinishedCommitNotification);
+MHVDECLARE_NOTIFICATION(MHVItemChangeManagerChangeCommitSuccessNotification);
+MHVDECLARE_NOTIFICATION(MHVItemChangeManagerChangeCommitFailedNotification);
+MHVDECLARE_NOTIFICATION(MHVItemChangeManagerExceptionNotification);
 
 @interface MHVItemChangeManager : NSObject
 {
@@ -80,9 +80,9 @@ HVDECLARE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
 -(BOOL) trackRemoveForTypeID:(NSString *) typeID andItemKey:(MHVItemKey *)key;
 -(MHVAutoLock *) newAutoLockForItemKey:(MHVItemKey *) key;
 
--(MHVTask *) commitChangesWithCallback:(HVTaskCompletion) callback;
+-(MHVTask *) commitChangesWithCallback:(MHVTaskCompletion) callback;
 
--(MHVTask *) newCommitChangesTaskWithCallback:(HVTaskCompletion) callback;
+-(MHVTask *) newCommitChangesTaskWithCallback:(MHVTaskCompletion) callback;
 
 -(long) acquireLockForItemID:(NSString *) itemID;
 -(void) releaseLock:(long) lockID forItemID:(NSString *) itemID;
@@ -99,11 +99,11 @@ HVDECLARE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
 //
 //-----------------------------------------------------
 
-enum HVItemChangeQueueProcessState
+enum MHVItemChangeQueueProcessState
 {
-    HVItemChangeQueueProcessStateStart = 0,
-    HVItemChangeQueueProcessStateNext,
-    HVItemChangeQueueProcessStateDone
+    MHVItemChangeQueueProcessStateStart = 0,
+    MHVItemChangeQueueProcessStateNext,
+    MHVItemChangeQueueProcessStateDone
 };
 
 @interface MHVItemChangeQueueProcess : MHVTaskStateMachine
@@ -118,26 +118,26 @@ enum HVItemChangeQueueProcessState
 }
 
 @property (strong, readonly, nonatomic) MHVItemChangeManager* changeManager;
-@property (readonly, nonatomic) enum HVItemChangeQueueProcessState currentState;
+@property (readonly, nonatomic) enum MHVItemChangeQueueProcessState currentState;
 @property (readonly, nonatomic) NSUInteger committedCount;
 
 -(id) initWithChangeManager:(MHVItemChangeManager *) mgr andQueue:(NSEnumerator *) queue;
 
 @end
 
-enum HVItemChangeCommitState
+enum MHVItemChangeCommitState
 {
-    HVItemChangeCommitStateStart = 0,
-    HVItemChangeCommitStateRemove,
-    HVItemChangeCommitStateStartPut,
-    HVItemChangeCommitStateStartNew,
-    HVItemChangeCommitStateNew,
-    HVItemChangeCommitStateStartUpdate,
-    HVItemChangeCommitStateDetectDupeNew,
-    HVItemChangeCommitStateDetectDupeUpdate,
-    HVItemChangeCommitStatePut,
-    HVItemChangeCommitStateRefresh,
-    HVItemChangeCommitStateDone
+    MHVItemChangeCommitStateStart = 0,
+    MHVItemChangeCommitStateRemove,
+    MHVItemChangeCommitStateStartPut,
+    MHVItemChangeCommitStateStartNew,
+    MHVItemChangeCommitStateNew,
+    MHVItemChangeCommitStateStartUpdate,
+    MHVItemChangeCommitStateDetectDupeNew,
+    MHVItemChangeCommitStateDetectDupeUpdate,
+    MHVItemChangeCommitStatePut,
+    MHVItemChangeCommitStateRefresh,
+    MHVItemChangeCommitStateDone
 };
 
 @interface MHVItemChangeCommit : MHVTaskStateMachine
@@ -148,7 +148,7 @@ enum HVItemChangeCommitState
     MHVMethodFactory* m_methodFactory;
 }
 
-@property (readonly, nonatomic) enum HVItemChangeCommitState currentState;
+@property (readonly, nonatomic) enum MHVItemChangeCommitState currentState;
 
 -(id) initWithChangeManager:(MHVItemChangeManager *) mgr andChange:(MHVItemChange *) change;
 

@@ -23,7 +23,7 @@
 
 static NSString* const c_changeObjectRoot = @"change";
 
-@interface MHVItemChangeTable (HVPrivate)
+@interface MHVItemChangeTable (MHVPrivate)
 
 -(BOOL) partitionHasItems:(NSString *) partitionKey;
 -(MHVItemChange *) loadChangeForTypeID:(NSString *) typeID itemID:(NSString *) itemID;
@@ -45,18 +45,18 @@ static NSString* const c_changeObjectRoot = @"change";
 
 -(id)initWithObjectStore:(id<MHVObjectStore>)store
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_store = [[MHVPartitionedObjectStore alloc] initWithRoot:store];
-    HVCHECK_NOTNULL(m_store);
+    MHVCHECK_NOTNULL(m_store);
         
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -93,24 +93,24 @@ LError:
     return FALSE;
 }
 
--(NSString *) trackChange:(enum HVItemChangeType)changeType forTypeID:(NSString *)typeID andKey:(MHVItemKey *)key
+-(NSString *) trackChange:(enum MHVItemChangeType)changeType forTypeID:(NSString *)typeID andKey:(MHVItemKey *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     @synchronized(m_store)
     {
         MHVItemChange* change = [self getForTypeID:typeID itemID:key.itemID];
         if (change)
         {
-            HVCHECK_SUCCESS([MHVItemChange updateChange:change withTypeID:typeID key:key changeType:changeType]);
+            MHVCHECK_SUCCESS([MHVItemChange updateChange:change withTypeID:typeID key:key changeType:changeType]);
         }
         else
         {
             change = [[MHVItemChange alloc] initWithTypeID:typeID key:key changeType:changeType];
-            HVCHECK_NOTNULL(change);
+            MHVCHECK_NOTNULL(change);
         }
  
-        HVCHECK_SUCCESS([self put:change]);
+        MHVCHECK_SUCCESS([self put:change]);
         
         return change.changeID;
     }
@@ -124,7 +124,7 @@ LError:
     @synchronized(m_store)
     {
         NSMutableArray* changedTypes = [self getAllTypesWithChanges];
-        HVCHECK_NOTNULL(changedTypes);
+        MHVCHECK_NOTNULL(changedTypes);
         
         return [[MHVItemChangeQueue alloc] initWithChangeTable:self andChangedTypes:changedTypes];
         
@@ -138,7 +138,7 @@ LError:
     @synchronized(m_store)
     {
         NSMutableArray* changedTypes = [NSMutableArray arrayWithObject:typeID];
-        HVCHECK_NOTNULL(changedTypes);
+        MHVCHECK_NOTNULL(changedTypes);
         
         return [[MHVItemChangeQueue alloc] initWithChangeTable:self andChangedTypes:changedTypes];
         
@@ -153,7 +153,7 @@ LError:
     @synchronized(m_store)
     {
         NSMutableArray* changes = [[NSMutableArray alloc] init];
-        HVCHECK_NOTNULL(changes);
+        MHVCHECK_NOTNULL(changes);
         @autoreleasepool
         {
             [self loadAllChangesInto:changes];
@@ -171,7 +171,7 @@ LError:
     @synchronized(m_store)
     {
         NSMutableArray* typeList = [[NSMutableArray alloc] init];
-        HVCHECK_NOTNULL(typeList);
+        MHVCHECK_NOTNULL(typeList);
         @autoreleasepool
         {
             NSEnumerator* partitions = [m_store allPartitionKeys];
@@ -203,7 +203,7 @@ LError:
 {
     @synchronized(m_store)
     {
-        HVCHECK_NOTNULL(change);
+        MHVCHECK_NOTNULL(change);
         
         return [m_store partition:change.typeID putObject:change withKey:change.itemID andName:c_changeObjectRoot];
     
@@ -243,7 +243,7 @@ LError:
 
 @end
 
-@implementation MHVItemChangeTable (HVPrivate)
+@implementation MHVItemChangeTable (MHVPrivate)
 
 -(BOOL)partitionHasItems:(NSString *)partitionKey
 {
@@ -282,10 +282,10 @@ LError:
 {
     @synchronized(m_store)
     {
-        HVCHECK_STRING(typeID);
+        MHVCHECK_STRING(typeID);
         
         NSMutableArray* changes = [[NSMutableArray alloc] init];
-        HVCHECK_NOTNULL(changes);
+        MHVCHECK_NOTNULL(changes);
         
         @autoreleasepool
         {
@@ -318,7 +318,7 @@ LError:
 @end
 
 
-@interface MHVItemChangeQueue (HVPrivate)
+@interface MHVItemChangeQueue (MHVPrivate)
 
 -(BOOL) loadNextTypeQueue;
 -(void) clear;
@@ -334,11 +334,11 @@ LError:
 
 -(id)initWithChangeTable:(MHVItemChangeTable *)changeTable andChangedTypes:(NSMutableArray *)types
 {
-    HVCHECK_NOTNULL(changeTable);
-    HVCHECK_NOTNULL(types);
+    MHVCHECK_NOTNULL(changeTable);
+    MHVCHECK_NOTNULL(types);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_changeTable = changeTable;
     m_types = types;
@@ -346,7 +346,7 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -376,7 +376,7 @@ LError:
 
 @end
 
-@implementation MHVItemChangeQueue (HVPrivate)
+@implementation MHVItemChangeQueue (MHVPrivate)
 
 -(BOOL)loadNextTypeQueue
 {

@@ -21,16 +21,16 @@
 #import "XLib.h"
 #import "MHVItem.h"
 
-enum HVItemChangeType
+enum MHVItemChangeType
 {
-    HVItemChangeTypePut,
-    HVItemChangeTypeRemove
+    MHVItemChangeTypePut,
+    MHVItemChangeTypeRemove
 };
 
 @interface MHVItemChange : XSerializableType
 {
 @private
-    enum HVItemChangeType m_changeType;
+    enum MHVItemChangeType m_changeType;
     NSTimeInterval m_timestamp;
     int m_attempt;
 
@@ -42,7 +42,7 @@ enum HVItemChangeType
     MHVItem* m_updatedItem;
 }
 
-@property (readonly, nonatomic) enum HVItemChangeType changeType;
+@property (readonly, nonatomic) enum MHVItemChangeType changeType;
 @property (readonly, nonatomic, strong) NSString* changeID;
 @property (readonly, nonatomic) NSTimeInterval timestamp;
 @property (readonly, nonatomic, strong) NSString* typeID;
@@ -57,13 +57,13 @@ enum HVItemChangeType
 
 @property (readwrite, nonatomic) int attemptCount;
 
--(id) initWithTypeID:(NSString *) typeID key:(MHVItemKey *) key changeType:(enum HVItemChangeType) changeType;
+-(id) initWithTypeID:(NSString *) typeID key:(MHVItemKey *) key changeType:(enum MHVItemChangeType) changeType;
 
 -(void) assignNewChangeID;
 -(void) assignNewTimestamp;
 -(BOOL) isChangeForType:(NSString *) typeID;
 
-+(BOOL) updateChange:(MHVItemChange *) change withTypeID:(NSString *) typeID key:(MHVItemKey *) key changeType:(enum HVItemChangeType) changeType;
++(BOOL) updateChange:(MHVItemChange *) change withTypeID:(NSString *) typeID key:(MHVItemKey *) key changeType:(enum MHVItemChangeType) changeType;
 +(NSComparisonResult) compareChange:(MHVItemChange *) x to:(MHVItemChange *) y;
 
 @end

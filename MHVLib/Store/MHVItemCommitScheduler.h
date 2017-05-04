@@ -25,7 +25,7 @@
 
 //--------------------------------------------------------------
 //
-// Background worker that periodically commits pending changes to HVSynchronizedTypes
+// Background worker that periodically commits pending changes to MHVSynchronizedTypes
 // back to HealthVault
 //
 // The application manages the lifetime of this object.

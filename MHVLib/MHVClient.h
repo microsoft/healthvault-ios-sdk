@@ -29,11 +29,11 @@
 #import "MHVMethodFactory.h"
 #import "MHVNetworkReachability.h"
 
-enum HVAppProvisionStatus 
+enum MHVAppProvisionStatus 
 {
-    HVAppProvisionCancelled = 0,
-    HVAppProvisionSuccess = 1,
-    HVAppProvisionFailed = 2,
+    MHVAppProvisionCancelled = 0,
+    MHVAppProvisionSuccess = 1,
+    MHVAppProvisionFailed = 2,
 };
 
 @class MHVAppProvisionController;
@@ -63,8 +63,8 @@ enum HVAppProvisionStatus
     // Provisioning
     //
     UIViewController *m_parentController;
-    enum HVAppProvisionStatus m_provisionStatus;
-    HVNotify m_provisionCallback;
+    enum MHVAppProvisionStatus m_provisionStatus;
+    MHVNotify m_provisionCallback;
     //
     // Records and other local storage
     //
@@ -92,7 +92,7 @@ enum HVAppProvisionStatus
 @property (strong, readonly, nonatomic) MHVDirectory* rootDirectory;
 @property (strong, readonly, nonatomic) MHVEnvironmentSettings* environment;
 
-@property (readonly, nonatomic) enum HVAppProvisionStatus provisionStatus;
+@property (readonly, nonatomic) enum MHVAppProvisionStatus provisionStatus;
 @property (readonly, nonatomic) BOOL isProvisioned;
 //
 // Is the app created in HealthVault
@@ -119,7 +119,7 @@ enum HVAppProvisionStatus
 // The method may push a new viewcontroller that will take your app through HealthVault authorization
 //
 //-------------------------  
--(BOOL) startWithParentController:(UIViewController *) controller andStartedCallback:(HVNotify) callback;
+-(BOOL) startWithParentController:(UIViewController *) controller andStartedCallback:(MHVNotify) callback;
 
 //
 // See MHVUser for user specific methods

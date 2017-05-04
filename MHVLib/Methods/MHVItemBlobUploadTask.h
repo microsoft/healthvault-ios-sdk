@@ -27,7 +27,7 @@
 //   - Push a blob into HealthVault
 //   - Update the MHVItem that owns it
 //     - Update Blob Payload information
-//     - Put/Commit the item into HV
+//     - Put/Commit the item into MHV
 //
 //--------------------------------------
 @interface MHVItemBlobUploadTask : MHVTask<MHVHttpDelegate>
@@ -48,6 +48,6 @@
 //
 @property (readonly, nonatomic, strong) MHVItemKey* itemKey;
 
--(id) initWithSource:(id<MHVBlobSource>) data blobInfo:(MHVBlobInfo *) blobInfo forItem:(MHVItem *) item record:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(id) initWithSource:(id<MHVBlobSource>) data blobInfo:(MHVBlobInfo *) blobInfo forItem:(MHVItem *) item record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
 @end

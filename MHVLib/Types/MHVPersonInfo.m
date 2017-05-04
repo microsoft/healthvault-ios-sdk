@@ -29,7 +29,7 @@ static NSString* const c_element_groups = @"groups";
 static NSString* const c_element_culture = @"preferred-culture";
 static NSString* const c_element_uiculture = @"preferred-uiculture";
 
-@interface MHVPersonInfo (HVPrivate) 
+@interface MHVPersonInfo (MHVPrivate) 
 -(void) addPersonIDToRecords;
 @end
 
@@ -53,12 +53,12 @@ static NSString* const c_element_uiculture = @"preferred-uiculture";
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(m_id, HVClientError_InvalidPersonInfo);
-    HVVALIDATE_ARRAY(m_records, HVClientError_InvalidPersonInfo);
+    MHVVALIDATE_STRING(m_id, MHVClientError_InvalidPersonInfo);
+    MHVVALIDATE_ARRAY(m_records, MHVClientError_InvalidPersonInfo);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -93,7 +93,7 @@ static NSString* const c_element_uiculture = @"preferred-uiculture";
 
 @end
 
-@implementation MHVPersonInfo (HVPrivate)
+@implementation MHVPersonInfo (MHVPrivate)
 
 -(void)addPersonIDToRecords
 {

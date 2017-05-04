@@ -27,7 +27,7 @@
 -(id)init
 {
     if (!(self = [super init])) return nil;
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_isBusy = FALSE;
     m_hasPendingWork = FALSE;
@@ -35,7 +35,7 @@
     
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(BOOL)beginWork

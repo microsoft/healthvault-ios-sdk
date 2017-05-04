@@ -20,7 +20,7 @@
 #import "MHVFileFeatures.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 
-@implementation MHVFile(HVFactoryMethods)
+@implementation MHVFile(MHVFactoryMethods)
 
 +(MHVItemCollection *)createRandomForDay:(NSDate *)date
 {

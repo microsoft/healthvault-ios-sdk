@@ -25,7 +25,7 @@ NSString* const c_emptyString;
 // NSString
 //
 //---------------------------------
-@interface NSString (HVNSStringExtensions)
+@interface NSString (MHVNSStringExtensions)
 
 +(BOOL) isNilOrEmpty:(NSString *) string;
 
@@ -66,7 +66,7 @@ NSString* const c_emptyString;
 // NSString
 //
 //---------------------------------
-@interface NSMutableString (HVNSMutableStringExtensions) 
+@interface NSMutableString (MHVNSMutableStringExtensions) 
 
 -(void) clear;
 

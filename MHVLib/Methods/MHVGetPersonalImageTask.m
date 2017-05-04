@@ -21,7 +21,7 @@
 #import "MHVPersonalImage.h"
 #import "MHVClient.h"
 
-@interface MHVGetPersonalImageTask (HVPrivate)
+@interface MHVGetPersonalImageTask (MHVPrivate)
 
 -(MHVGetItemsTask *) newGetItemsTask:(MHVRecordReference *) record;
 -(void) getItemComplete:(MHVTask *) task;
@@ -36,37 +36,37 @@
 }
 
 
--(id)initWithRecord:(MHVRecordReference *)record andCallback:(HVTaskCompletion)callback
+-(id)initWithRecord:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_record = record;
     
     MHVGetItemsTask* getItemsTask = [self newGetItemsTask:record];
-    HVCHECK_NOTNULL(getItemsTask);
+    MHVCHECK_NOTNULL(getItemsTask);
     
     [self setNextTask:getItemsTask];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 @end
 
-@implementation MHVGetPersonalImageTask (HVPrivate)
+@implementation MHVGetPersonalImageTask (MHVPrivate)
 
 -(MHVGetItemsTask *) newGetItemsTask:(MHVRecordReference *)record
 {
     MHVItemQuery *query = [[MHVItemQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
-    query.view.sections = HVItemSection_Blobs;
+    query.view.sections = MHVItemSection_Blobs;
     
     MHVGetItemsTask* getItemsTask = [[MHVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(MHVTask *task) {
         [self getItemComplete:task];

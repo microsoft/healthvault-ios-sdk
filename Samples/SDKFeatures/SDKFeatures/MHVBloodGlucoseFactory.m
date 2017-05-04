@@ -18,7 +18,7 @@
 
 #import "MHVBloodGlucoseFactory.h"
 
-@implementation MHVBloodGlucose (HVFactoryMethods)
+@implementation MHVBloodGlucose (MHVFactoryMethods)
 
 +(MHVItemCollection *)createRandomForDay:(NSDate *)date
 {
@@ -66,7 +66,7 @@
 
 @end
 
-@implementation MHVBloodGlucose (HVDisplay)
+@implementation MHVBloodGlucose (MHVDisplay)
 
 -(NSString *)detailsString
 {

@@ -27,11 +27,11 @@ static NSString* const c_element_blockSize = @"block-size";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_OPTIONAL(m_blockSize);
+    MHVVALIDATE_OPTIONAL(m_blockSize);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -61,7 +61,7 @@ static NSString* const c_element_hash = @"hash";
 
 -(void)setAlgorithm:(NSString *)algorithm
 {
-    HVENSURE(m_algorithm, MHVStringZ255);
+    MHVENSURE(m_algorithm, MHVStringZ255);
     m_algorithm.value = algorithm;
 }
 
@@ -72,20 +72,20 @@ static NSString* const c_element_hash = @"hash";
 
 -(void)setHash:(NSString *)hash
 {
-    HVENSURE(m_hash, MHVStringNZ512);
+    MHVENSURE(m_hash, MHVStringNZ512);
     m_hash.value = hash;
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_algorithm, HVClientError_InvalidBlobInfo);
-    HVVALIDATE_OPTIONAL(m_params);
-    HVVALIDATE(m_hash, HVClientError_InvalidBlobInfo);
+    MHVVALIDATE(m_algorithm, MHVClientError_InvalidBlobInfo);
+    MHVVALIDATE_OPTIONAL(m_params);
+    MHVVALIDATE(m_hash, MHVClientError_InvalidBlobInfo);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

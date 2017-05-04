@@ -61,8 +61,8 @@
 // Download the given vocab and save it in the LocalVault
 // Use [[MHVClient current].localVault getVocab] to load it subsequently
 //
--(MHVTask *) downloadVocab:(MHVVocabIdentifier *) vocab withCallback:(HVTaskCompletion) callback;
--(MHVTask *) downloadVocabs:(MHVVocabIdentifierCollection *) vocabIDs withCallback:(HVTaskCompletion) callback;
+-(MHVTask *) downloadVocab:(MHVVocabIdentifier *) vocab withCallback:(MHVTaskCompletion) callback;
+-(MHVTask *) downloadVocabs:(MHVVocabIdentifierCollection *) vocabIDs withCallback:(MHVTaskCompletion) callback;
 
 -(void) ensureVocabDownloaded:(MHVVocabIdentifier *) vocab; // default - will check for new vocabs once a month
 -(void) ensureVocabDownloaded:(MHVVocabIdentifier *) vocab maxAge:(NSTimeInterval) ageInSeconds;

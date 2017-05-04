@@ -31,17 +31,17 @@ static NSString* const c_element_number = @"number";
 
 -(id)initWithNumber:(NSString *)number
 {
-    HVCHECK_STRING(number);
+    MHVCHECK_STRING(number);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.number = number;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -62,11 +62,11 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_STRING(m_number, HVClientError_InvalidPhone);
+    MHVVALIDATE_STRING(m_number, MHVClientError_InvalidPhone);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -90,14 +90,14 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVPhone class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVPhone *)itemAtIndex:(NSUInteger)index

@@ -38,13 +38,13 @@ static const xmlChar* x_element_flag = XMLSTRINGCONST("flag");
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_measurement, HVClientError_InvalidLabTestResultValue);
-    HVVALIDATE_ARRAYOPTIONAL(m_ranges, HVClientError_InvalidLabTestResultValue);
-    HVVALIDATE_OPTIONAL(m_flag);
+    MHVVALIDATE(m_measurement, MHVClientError_InvalidLabTestResultValue);
+    MHVVALIDATE_ARRAYOPTIONAL(m_ranges, MHVClientError_InvalidLabTestResultValue);
+    MHVVALIDATE_OPTIONAL(m_flag);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer

@@ -31,7 +31,7 @@ static NSString* const c_element_relative = @"relative";
 
 -(MHVConditionEntryCollection *)conditions
 {
-    HVENSURE(m_conditions, MHVConditionEntryCollection);
+    MHVENSURE(m_conditions, MHVConditionEntryCollection);
     return m_conditions;
 }
 
@@ -83,31 +83,31 @@ static NSString* const c_element_relative = @"relative";
 
 -(id)initWithRelative:(MHVRelative *)relative andCondition:(MHVConditionEntry *)condition
 {
-    HVCHECK_NOTNULL(relative);
-    HVCHECK_NOTNULL(condition);
+    MHVCHECK_NOTNULL(relative);
+    MHVCHECK_NOTNULL(condition);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.relative = relative;
 
     [self.conditions addObject:condition];
-    HVCHECK_NOTNULL(m_conditions);
+    MHVCHECK_NOTNULL(m_conditions);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_OPTIONAL(m_relative);
-    HVVALIDATE_ARRAYOPTIONAL(m_conditions, HVClientError_InvalidFamilyHistory);
+    MHVVALIDATE_OPTIONAL(m_relative);
+    MHVVALIDATE_ARRAYOPTIONAL(m_conditions, MHVClientError_InvalidFamilyHistory);
 
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

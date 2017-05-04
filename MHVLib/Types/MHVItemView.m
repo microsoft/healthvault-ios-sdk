@@ -23,7 +23,7 @@ static NSString* const c_element_section = @"section";
 static NSString* const c_element_xml = @"xml";
 static NSString* const c_element_versions = @"type-version-format";
 
-@interface MHVItemView (HVPrivate) 
+@interface MHVItemView (MHVPrivate) 
 
 -(MHVStringCollection *) createStringsFromSections;
 -(enum MHVItemSection) stringsToSections:(MHVStringCollection *) strings;
@@ -48,28 +48,28 @@ static NSString* const c_element_versions = @"type-version-format";
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
-    m_sections = HVItemSection_Standard;
+    m_sections = MHVItemSection_Standard;
     
     m_typeVersions = [[MHVStringCollection alloc] init];
     
-    HVCHECK_NOTNULL(m_typeVersions);
+    MHVCHECK_NOTNULL(m_typeVersions);
    
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_ARRAYOPTIONAL(m_typeVersions, HVClientError_InvalidItemView);
+    MHVVALIDATE_ARRAYOPTIONAL(m_typeVersions, MHVClientError_InvalidItemView);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -79,7 +79,7 @@ LError:
     {
         sections = [self createStringsFromSections];
         [writer writeElementArray:c_element_section elements:sections];
-        if (m_sections & HVItemSection_Data)
+        if (m_sections & MHVItemSection_Data)
         {
             [writer writeEmptyElement:c_element_xml];
         }
@@ -103,7 +103,7 @@ LError:
         m_sections = [self stringsToSections:sections];
         if ([m_transforms containsString:c_emptyString])
         {
-            m_sections |= HVItemSection_Data;
+            m_sections |= MHVItemSection_Data;
             [m_transforms removeString:c_emptyString];
         }
      }
@@ -115,34 +115,34 @@ LError:
 
 @end
 
-@implementation MHVItemView (HVPrivate)
+@implementation MHVItemView (MHVPrivate)
 
 -(MHVStringCollection *) createStringsFromSections
 {
     MHVStringCollection* array = [[MHVStringCollection alloc] init];
-    if (m_sections & HVItemSection_Core)
+    if (m_sections & MHVItemSection_Core)
     {
-        [array addObject:HVItemSectionToString(HVItemSection_Core)];
+        [array addObject:MHVItemSectionToString(MHVItemSection_Core)];
     }
-    if (m_sections & HVItemSection_Audits)
+    if (m_sections & MHVItemSection_Audits)
     {
-        [array addObject:HVItemSectionToString(HVItemSection_Audits)];
+        [array addObject:MHVItemSectionToString(MHVItemSection_Audits)];
     }
-    if (m_sections & HVItemSection_Blobs)
+    if (m_sections & MHVItemSection_Blobs)
     {
-        [array addObject:HVItemSectionToString(HVItemSection_Blobs)];
+        [array addObject:MHVItemSectionToString(MHVItemSection_Blobs)];
     }
-    if (m_sections & HVItemSection_Tags)
+    if (m_sections & MHVItemSection_Tags)
     {
-        [array addObject:HVItemSectionToString(HVItemSection_Tags)];
+        [array addObject:MHVItemSectionToString(MHVItemSection_Tags)];
     }
-    if (m_sections & HVItemSection_Permissions)
+    if (m_sections & MHVItemSection_Permissions)
     {
-        [array addObject:HVItemSectionToString(HVItemSection_Permissions)];
+        [array addObject:MHVItemSectionToString(MHVItemSection_Permissions)];
     }
-    if (m_sections & HVItemSection_Signatures)
+    if (m_sections & MHVItemSection_Signatures)
     {
-        [array addObject:HVItemSectionToString(HVItemSection_Signatures)];
+        [array addObject:MHVItemSectionToString(MHVItemSection_Signatures)];
     }
     
     return array;
@@ -150,12 +150,12 @@ LError:
 
 -(enum MHVItemSection) stringsToSections:(MHVStringCollection *) strings
 {
-    enum MHVItemSection section = HVItemSection_None;
+    enum MHVItemSection section = MHVItemSection_None;
     
     if (![MHVStringCollection isNilOrEmpty:strings])
     {
         for (NSString* string in strings) {
-            section |= HVItemSectionFromString(string); 
+            section |= MHVItemSectionFromString(string); 
         }
     }
     

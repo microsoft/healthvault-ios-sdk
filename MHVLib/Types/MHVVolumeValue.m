@@ -40,7 +40,7 @@ static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
     }
     else
     {
-        HVENSURE(m_liters, MHVPositiveDouble);
+        MHVENSURE(m_liters, MHVPositiveDouble);
         m_liters.value = litersValue;
     }
     
@@ -50,14 +50,14 @@ static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
 -(id)initWithLiters:(double)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.litersValue = value;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -96,12 +96,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_liters, HVClientError_InvalidVolume);
-    HVVALIDATE_OPTIONAL(m_display);
+    MHVVALIDATE(m_liters, MHVClientError_InvalidVolume);
+    MHVVALIDATE_OPTIONAL(m_display);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

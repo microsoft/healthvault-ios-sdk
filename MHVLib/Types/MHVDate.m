@@ -34,7 +34,7 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
 {
     if (year >= 0)
     {
-        HVENSURE(m_year, MHVYear);
+        MHVENSURE(m_year, MHVYear);
         m_year.value = year;
     }
     else
@@ -52,7 +52,7 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
 {
     if (month >= 0)
     {
-        HVENSURE(m_month, MHVMonth);
+        MHVENSURE(m_month, MHVMonth);
         m_month.value = month;
     }
     else
@@ -70,7 +70,7 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
 {
     if (day >= 0)
     {
-        HVENSURE(m_day, MHVDay);
+        MHVENSURE(m_day, MHVDay);
         m_day.value = day;
     }
     else
@@ -86,31 +86,31 @@ static const xmlChar* x_element_day   = XMLSTRINGCONST("d");
 
 -(id) initWithDate:(NSDate *) date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     if (!(self = [self initWithComponents:[NSCalendar componentsFromDate:date]])) return nil;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     return [self initWithYear:[components year] month:[components month] day:[components day]];
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithYear:(NSInteger)yearValue month:(NSInteger)monthValue day:(NSInteger)dayValue
 {
     self = [super init];
     
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (yearValue != NSDateComponentUndefined)
     {
@@ -125,12 +125,12 @@ LError:
         m_day = [[MHVDay alloc] initWith:(int)dayValue];
     }
     
-    HVCHECK_TRUE(m_year && m_month && m_day);
+    MHVCHECK_TRUE(m_year && m_month && m_day);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -141,7 +141,7 @@ LError:
 
 -(BOOL)setWithComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     m_year = nil;
     m_month = nil;
@@ -151,7 +151,7 @@ LError:
     m_month = [[MHVMonth alloc] initWith:(int)components.month];
     m_day = [[MHVDay alloc] initWith:(int)components.day];
     
-    HVCHECK_TRUE(m_year && m_month && m_day);
+    MHVCHECK_TRUE(m_year && m_month && m_day);
     
     return TRUE;
     
@@ -177,9 +177,9 @@ LError:
 -(NSDateComponents *) toComponents
 {
     NSDateComponents *components = [NSCalendar newComponents];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
-    HVCHECK_SUCCESS([self getComponents:components]);
+    MHVCHECK_SUCCESS([self getComponents:components]);
     
     return components;
     
@@ -190,9 +190,9 @@ LError:
 -(NSDateComponents *)toComponentsForCalendar:(NSCalendar *)calendar
 {
     NSDateComponents *components = [calendar componentsForCalendar];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
-    HVCHECK_SUCCESS([self getComponents:components]);
+    MHVCHECK_SUCCESS([self getComponents:components]);
     
     return components;
     
@@ -202,7 +202,7 @@ LError:
 
 -(BOOL) getComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     if (m_year)
     {
@@ -226,7 +226,7 @@ LError:
 -(NSDate *) toDate
 {
     NSCalendar* calendar = [NSCalendar newGregorian];
-    HVCHECK_NOTNULL(calendar);
+    MHVCHECK_NOTNULL(calendar);
     
     NSDate *date = [self toDateForCalendar:calendar];
     
@@ -241,9 +241,9 @@ LError:
     if (calendar)
     {
         NSDateComponents *components = [NSDateComponents new];
-        HVCHECK_NOTNULL(components);
+        MHVCHECK_NOTNULL(components);
         
-        HVCHECK_SUCCESS([self getComponents:components]);
+        MHVCHECK_SUCCESS([self getComponents:components]);
         
         NSDate *date = [calendar dateFromComponents:components];
         
@@ -271,13 +271,13 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_year, HVClientError_InvalidDate);
-    HVVALIDATE(m_month, HVClientError_InvalidDate);
-    HVVALIDATE(m_day, HVClientError_InvalidDate);
+    MHVVALIDATE(m_year, MHVClientError_InvalidDate);
+    MHVVALIDATE(m_month, MHVClientError_InvalidDate);
+    MHVVALIDATE(m_day, MHVClientError_InvalidDate);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *) writer

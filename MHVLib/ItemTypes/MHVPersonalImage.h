@@ -41,6 +41,6 @@
 //
 // Upload new personal image
 //
-+(MHVTask *) updateImage:(NSData *) imageData contentType:(NSString *) contentType forRecord:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
++(MHVTask *) updateImage:(NSData *) imageData contentType:(NSString *) contentType forRecord:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
 @end

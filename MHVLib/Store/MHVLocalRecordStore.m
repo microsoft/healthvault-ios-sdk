@@ -28,7 +28,7 @@ static NSString* const c_view = @"view";
 static NSString* const c_personalImage = @"personalImage";
 static NSString* const c_storedQuery = @"storedQuery";
 
-@interface MHVLocalRecordStore (HVPrivate)
+@interface MHVLocalRecordStore (MHVPrivate)
 
 -(BOOL) ensureMetadataStore;
 -(BOOL) ensureDataStore;
@@ -57,26 +57,26 @@ static NSString* const c_storedQuery = @"storedQuery";
 
 -(id)initForRecord:(MHVRecordReference *)record overRoot:(id<MHVObjectStore>)root withCache:(BOOL)cache
 {
-    HVCHECK_NOTNULL(record);
-    HVCHECK_NOTNULL(root);
+    MHVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(root);
     
     m_cache = cache;
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_root = [root newChildStore:record.ID];
-    HVCHECK_NOTNULL(m_root);
+    MHVCHECK_NOTNULL(m_root);
     
     m_record = record;
     
-    HVCHECK_SUCCESS([self ensureMetadataStore]);    
-    HVCHECK_SUCCESS([self ensureDataStore]);
+    MHVCHECK_SUCCESS([self ensureMetadataStore]);    
+    MHVCHECK_SUCCESS([self ensureDataStore]);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -173,7 +173,7 @@ LError:
     return [self ensureDataStore];
 }
 
--(MHVTask *)commitOfflineChangesWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)commitOfflineChangesWithCallback:(MHVTaskCompletion)callback
 {
     return [m_dataMgr.changeManager commitChangesWithCallback:callback];
 }
@@ -190,7 +190,7 @@ LError:
 
 @end
 
-@implementation MHVLocalRecordStore (HVPrivate)
+@implementation MHVLocalRecordStore (MHVPrivate)
 
 -(BOOL)ensureMetadataStore
 {
@@ -200,7 +200,7 @@ LError:
     }
     
     m_metadata = [m_root newChildStore:[MHVLocalRecordStore metadataStoreKey]];
-    HVCHECK_NOTNULL(m_metadata);
+    MHVCHECK_NOTNULL(m_metadata);
     
     return TRUE;
     
@@ -216,7 +216,7 @@ LError:
     }
     
     m_dataMgr = [[MHVSynchronizationManager alloc] initForRecordStore:self withCache:m_cache];
-    HVCHECK_NOTNULL(m_dataMgr);
+    MHVCHECK_NOTNULL(m_dataMgr);
     
     return TRUE;
     

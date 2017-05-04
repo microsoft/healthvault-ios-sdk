@@ -98,7 +98,7 @@
 //
 // If you are using Offline changes, call this to commit all pending changes to HealthVault
 //
--(MHVTask *) commitOfflineChangesWithCallback:(HVTaskCompletion) callback;
+-(MHVTask *) commitOfflineChangesWithCallback:(MHVTaskCompletion) callback;
 
 //
 // Must be called to close references

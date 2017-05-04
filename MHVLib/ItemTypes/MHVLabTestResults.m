@@ -47,7 +47,7 @@ static const xmlChar* x_element_orderedBy = XMLSTRINGCONST("ordered-by");
 -(MHVLabTestResultsGroupCollection *)getAllGroups
 {
     MHVLabTestResultsGroupCollection* allGroups = [[MHVLabTestResultsGroupCollection alloc] init];
-    HVCHECK_NOTNULL(allGroups);
+    MHVCHECK_NOTNULL(allGroups);
     
     if (m_labGroup)
     {
@@ -62,13 +62,13 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_OPTIONAL(m_when);
-    HVVALIDATE_ARRAY(m_labGroup, HVclientError_InvalidLabTestResults);
-    HVVALIDATE_OPTIONAL(m_orderedBy);
+    MHVVALIDATE_OPTIONAL(m_when);
+    MHVVALIDATE_ARRAY(m_labGroup, MHVclientError_InvalidLabTestResults);
+    MHVVALIDATE_OPTIONAL(m_orderedBy);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer

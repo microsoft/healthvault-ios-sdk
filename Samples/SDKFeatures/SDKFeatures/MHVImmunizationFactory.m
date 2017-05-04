@@ -19,7 +19,7 @@
 
 #import "MHVImmunizationFactory.h"
 
-@implementation MHVImmunization (HVFactoryMethods)
+@implementation MHVImmunization (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date
 {
@@ -34,7 +34,7 @@
 
 @end
 
-@implementation MHVImmunization (HVDisplay)
+@implementation MHVImmunization (MHVDisplay)
 
 -(NSString *) detailsString
 {

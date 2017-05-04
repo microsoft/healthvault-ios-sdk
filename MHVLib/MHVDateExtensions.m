@@ -21,7 +21,7 @@
 #import "MHVValidator.h"
 
 
-@implementation NSDate (HVExtensions)
+@implementation NSDate (MHVExtensions)
 
 -(NSString *)toString
 {
@@ -31,7 +31,7 @@
 -(NSString*) toStringWithFormat:(NSString *)format
 {
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init]; 
-    HVCHECK_NOTNULL(formatter);
+    MHVCHECK_NOTNULL(formatter);
     
     NSString* string = [formatter dateToString:self withFormat:format];
     
@@ -44,7 +44,7 @@ LError:
 -(NSString *)toZuluString
 {
     NSDateFormatter* formatter = [NSDateFormatter newZuluFormatter];
-    HVCHECK_NOTNULL(formatter);
+    MHVCHECK_NOTNULL(formatter);
     
     NSString* string = [formatter dateTimeToString:self];
     
@@ -58,7 +58,7 @@ LError:
 -(NSString *)toStringWithStyle:(NSDateFormatterStyle)style
 {
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init]; 
-    HVCHECK_NOTNULL(formatter);
+    MHVCHECK_NOTNULL(formatter);
     
     NSString* string = [formatter dateToString:self withStyle:style];
     
@@ -92,7 +92,7 @@ LError:
 +(NSDate *)fromHour:(int)hour andMinute:(int)minute
 {
     NSDateComponents *components = [NSCalendar newComponents];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     components.hour = hour;
     components.minute = minute;
@@ -105,7 +105,7 @@ LError:
 +(NSDate *)fromYear:(int)year month:(int)month andDay:(int)day
 {
     NSDateComponents *components = [NSCalendar newComponents];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     components.year = year;
     components.month = month;
@@ -119,7 +119,7 @@ LError:
 -(NSDate *)toStartOfDay
 {
     NSCalendar* calendar = [NSCalendar newGregorian];
-    HVCHECK_NOTNULL(calendar);
+    MHVCHECK_NOTNULL(calendar);
     
     NSDate* day = [[calendar yearMonthDayFrom:self] date];
     
@@ -133,7 +133,7 @@ LError:
 -(NSDate *)toEndOfDay
 {
     NSCalendar* calendar = [NSCalendar newGregorian];
-    HVCHECK_NOTNULL(calendar);
+    MHVCHECK_NOTNULL(calendar);
     
     NSDateComponents* dateComponents = [calendar getComponentsFor:self];
     dateComponents.hour = 23;
@@ -167,7 +167,7 @@ const NSUInteger NSAllCalendarUnits =   NSCalendarUnitDay       |
                                         NSCalendarUnitMinute    |
                                         NSCalendarUnitSecond;
 
-@implementation NSCalendar (HVExtensions)
+@implementation NSCalendar (MHVExtensions)
 
 -(NSDateComponents *)componentsForCalendar
 {
@@ -192,10 +192,10 @@ const NSUInteger NSAllCalendarUnits =   NSCalendarUnitDay       |
 
 +(NSDateComponents *) componentsFromDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     NSCalendar* calendar = [NSCalendar newGregorian];
-    HVCHECK_NOTNULL(calendar);
+    MHVCHECK_NOTNULL(calendar);
     
     NSDateComponents* components = [calendar getComponentsFor:date];
     
@@ -209,10 +209,10 @@ LError:
 +(NSDateComponents *) newComponents
 {
     NSCalendar* calendar = [NSCalendar newGregorian];
-    HVCHECK_NOTNULL(calendar);
+    MHVCHECK_NOTNULL(calendar);
     
     NSDateComponents* components = [[NSDateComponents alloc] init];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     [components setCalendar:calendar];
     
@@ -222,10 +222,10 @@ LError:
 +(NSDateComponents *) newUtcComponents
 {
     NSCalendar* calendar = [NSCalendar newGregorianUtc];
-    HVCHECK_NOTNULL(calendar);
+    MHVCHECK_NOTNULL(calendar);
     
     NSDateComponents* components = [[NSDateComponents alloc] init];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     [components setCalendar:calendar];
     
@@ -234,10 +234,10 @@ LError:
 
 +(NSDateComponents *) utcComponentsFromDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     NSCalendar* calendar = [NSCalendar newGregorianUtc];
-    HVCHECK_NOTNULL(calendar);
+    MHVCHECK_NOTNULL(calendar);
     
     NSDateComponents* components = [calendar getComponentsFor:date];
     
@@ -264,7 +264,7 @@ LError:
 
 @end
 
-@implementation NSDateFormatter (HVExtensions)
+@implementation NSDateFormatter (MHVExtensions)
 
 +(NSDateFormatter *) newUtcFormatter
 {
@@ -342,7 +342,7 @@ LError:
 
 @end
 
-@implementation NSDateComponents (HVExtensions)
+@implementation NSDateComponents (MHVExtensions)
 
 +(BOOL)isEqualYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2
 {

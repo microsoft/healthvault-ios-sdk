@@ -47,7 +47,7 @@
     [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender)
      {
          m_starting = FALSE;
-         if ([MHVClient current].provisionStatus == HVAppProvisionSuccess)
+         if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
          {
              [self startupSuccess];
          }
@@ -68,7 +68,7 @@
     [MHVUIAlert showWithMessage:@"Provisioning not completed. Retry?" callback:^(id sender) {
         
         MHVUIAlert *alert = (MHVUIAlert *) sender;
-        if (alert.result == HVUIAlertOK)
+        if (alert.result == MHVUIAlertOK)
         {
             [self startApp];
         }

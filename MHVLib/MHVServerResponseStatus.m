@@ -1,5 +1,5 @@
 //
-//  HVServerResult.m
+//  MHVServerResult.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -51,9 +51,9 @@
         default:
             return FALSE;
 
-        case HVServerStatusCodeAccessDenied:
-        case HVServerStatusCodeInvalidApp:
-        case HVServerStatusCodeInvalidApplicationAuthorization:
+        case MHVServerStatusCodeAccessDenied:
+        case MHVServerStatusCodeInvalidApp:
+        case MHVServerStatusCodeInvalidApplicationAuthorization:
             break;
     }
     
@@ -67,8 +67,8 @@
         default:
             return FALSE;
             
-        case HVServerStatusCodeAuthSessionTokenExpired:
-        case HVServerStatusCodeCredentialTokenExpired:
+        case MHVServerStatusCodeAuthSessionTokenExpired:
+        case MHVServerStatusCodeCredentialTokenExpired:
             break;
     }
     
@@ -82,8 +82,8 @@
         default:
             return FALSE;
             
-        case HVServerStatusCodeInvalidRecord:
-        case HVServerStatusCodeInvalidPerson:
+        case MHVServerStatusCodeInvalidRecord:
+        case MHVServerStatusCodeInvalidPerson:
             break;
     }
     
@@ -92,12 +92,12 @@
 
 -(BOOL)isItemNotFound
 {
-    return (m_statusCode == HVServerStatusCodeInvalidItem);
+    return (m_statusCode == MHVServerStatusCodeInvalidItem);
 }
 
 -(BOOL)isVersionStampMismatch
 {
-    return (m_statusCode == HVServerStatusCodeVersionStampMismatch);
+    return (m_statusCode == MHVServerStatusCodeVersionStampMismatch);
 }
 
 -(BOOL)isItemKeyNotFound
@@ -107,9 +107,9 @@
         default:
             return FALSE;
             
-        case HVServerStatusCodeInvalidItem:
-        case HVServerStatusCodeVersionStampMismatch:
-        case HVServerStatusCodeInvalidXml:
+        case MHVServerStatusCodeInvalidItem:
+        case MHVServerStatusCodeVersionStampMismatch:
+        case MHVServerStatusCodeInvalidXml:
             break;
     }
     
@@ -123,29 +123,29 @@
         default:
             return FALSE;
             
-        case HVServerStatusCodeFailed:
-        case HVServerStatusCodeRequestTimedOut:
+        case MHVServerStatusCodeFailed:
+        case MHVServerStatusCodeRequestTimedOut:
             break;
     }
     
     return TRUE;
 }
 
--(id)initWithStatusCode:(enum HVServerStatusCode)code
+-(id)initWithStatusCode:(enum MHVServerStatusCode)code
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_statusCode = code;
     
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
--(BOOL)isStatusCode:(enum HVServerStatusCode)code
+-(BOOL)isStatusCode:(enum MHVServerStatusCode)code
 {
     return (m_statusCode == (int) code);
 }
@@ -162,7 +162,7 @@ LError:
 
 -(void)clear
 {
-    m_statusCode = HVServerStatusCodeOK;
+    m_statusCode = MHVServerStatusCodeOK;
     m_errorText = nil;
     m_errorDetails = nil;
     m_webStatusCode = 0;
@@ -176,17 +176,17 @@ LError:
 
 -(id)initWithStatus:(MHVServerResponseStatus *)status
 {
-    HVCHECK_NOTNULL(status);
+    MHVCHECK_NOTNULL(status);
     
     self = [super initWithName:@"MHVServerException" reason:c_emptyString userInfo:nil];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.status = status;
     
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSString *)description

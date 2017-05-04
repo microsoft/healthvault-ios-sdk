@@ -49,6 +49,6 @@
 //
 // Returns nil if no task started
 //
--(MHVTask *) downloadWithCallback:(HVTaskCompletion) callback;
+-(MHVTask *) downloadWithCallback:(MHVTaskCompletion) callback;
 
 @end

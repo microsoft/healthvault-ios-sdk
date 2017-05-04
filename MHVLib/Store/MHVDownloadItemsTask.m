@@ -43,18 +43,18 @@
 }
 
 
--(id)initWithCallback:(HVTaskCompletion)callback
+-(id)initWithCallback:(MHVTaskCompletion)callback
 {
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_downloadedKeys = [[NSMutableArray alloc] init];
-    HVCHECK_NOTNULL(m_downloadedKeys);
+    MHVCHECK_NOTNULL(m_downloadedKeys);
         
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)recordItemsAsDownloaded:(MHVItemCollection *)items

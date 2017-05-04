@@ -31,28 +31,28 @@ static NSString* const c_element_contact = @"contact";
 
 -(id)initWithContact:(MHVContact *)contact
 {
-    HVCHECK_NOTNULL(contact);
+    MHVCHECK_NOTNULL(contact);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.contact = contact;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_contact, HVClientError_InvalidPersonalContactInfo);
+    MHVVALIDATE(m_contact, MHVClientError_InvalidPersonalContactInfo);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

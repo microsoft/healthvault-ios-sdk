@@ -1,5 +1,5 @@
 //
-//  HVItemDataTypedExtensions.m
+//  MHVItemDataTypedExtensions.m
 //  SDKFeatures
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -19,10 +19,10 @@
 //
 #import "MHVItemDataTypedFactory.h"
 //
-// Default implementation of HVFactoryMethods category
+// Default implementation of MHVFactoryMethods category
 // Does nothing
 //
-@implementation MHVItemDataTyped (HVFactoryMethods)
+@implementation MHVItemDataTyped (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date
 {
@@ -41,7 +41,7 @@
 
 @end
 
-@implementation MHVItemDataTyped (HVDisplay)
+@implementation MHVItemDataTyped (MHVDisplay)
 
 -(NSString *)detailsString
 {

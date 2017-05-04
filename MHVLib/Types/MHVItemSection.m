@@ -26,25 +26,25 @@ NSString* const c_itemsection_tags = @"tags";
 NSString* const c_itemsection_permissions = @"effectivepermissions";
 NSString* const c_itemsection_signatures = @"digitalsignatures";
 
-NSString* HVItemSectionToString(enum MHVItemSection section)
+NSString* MHVItemSectionToString(enum MHVItemSection section)
 {
    switch (section) {
-        case HVItemSection_Core:
+        case MHVItemSection_Core:
             return c_itemsection_core;
             
-        case HVItemSection_Audits:
+        case MHVItemSection_Audits:
             return c_itemsection_audit;
             
-        case HVItemSection_Blobs:
+        case MHVItemSection_Blobs:
             return c_itemsection_blob;
             
-        case HVItemSection_Tags:
+        case MHVItemSection_Tags:
             return c_itemsection_tags;
             
-        case HVItemSection_Permissions:
+        case MHVItemSection_Permissions:
             return c_itemsection_permissions;
             
-        case HVItemSection_Signatures:
+        case MHVItemSection_Signatures:
             return c_itemsection_signatures;
             
         default:
@@ -54,38 +54,38 @@ NSString* HVItemSectionToString(enum MHVItemSection section)
     return nil;
 }
 
-enum MHVItemSection HVItemSectionFromString(NSString* value)
+enum MHVItemSection MHVItemSectionFromString(NSString* value)
 {
     if ([NSString isNilOrEmpty:value])
     {
-        return HVItemSection_None;
+        return MHVItemSection_None;
     }
     
-    enum MHVItemSection section = HVItemSection_None;
+    enum MHVItemSection section = MHVItemSection_None;
 
     if ([value isEqualToString:c_itemsection_core])
     {
-        section = HVItemSection_Core;
+        section = MHVItemSection_Core;
     }
     else if ([value isEqualToString:c_itemsection_audit])
     {
-        section = HVItemSection_Audits;
+        section = MHVItemSection_Audits;
     }
     else if ([value isEqualToString:c_itemsection_blob])
     {
-        section = HVItemSection_Blobs;
+        section = MHVItemSection_Blobs;
     }
     else if ([value isEqualToString:c_itemsection_tags])
     {
-        section = HVItemSection_Tags;
+        section = MHVItemSection_Tags;
     }
     else if ([value isEqualToString:c_itemsection_permissions])
     {
-        section = HVItemSection_Permissions;
+        section = MHVItemSection_Permissions;
     }
     else if ([value isEqualToString:c_itemsection_signatures])
     {
-        section = HVItemSection_Signatures;
+        section = MHVItemSection_Signatures;
     }
 
     return section;

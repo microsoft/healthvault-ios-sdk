@@ -26,8 +26,8 @@
     MHVItemQueryCollection* m_queries;
 }
 
--(id) initWithQuery:(MHVItemQuery *) query andCallback:(HVTaskCompletion) callback;
--(id) initWithQueries:(MHVItemQueryCollection *) queries andCallback:(HVTaskCompletion) callback;
+-(id) initWithQuery:(MHVItemQuery *) query andCallback:(MHVTaskCompletion) callback;
+-(id) initWithQueries:(MHVItemQueryCollection *) queries andCallback:(MHVTaskCompletion) callback;
 
 //
 // You can send multiple queries to HealthVault in a single MHVGetItemsTask
@@ -57,7 +57,7 @@
 //
 @property (readonly, nonatomic, strong) MHVItem* firstItemRetrieved;
 
-+(MHVGetItemsTask *) newForRecord:(MHVRecordReference *) record query:(MHVItemQuery *)query andCallback:(HVTaskCompletion)callback;
-+(MHVGetItemsTask *) newForRecord:(MHVRecordReference *) record queries:(MHVItemQueryCollection *)queries andCallback:(HVTaskCompletion)callback;
++(MHVGetItemsTask *) newForRecord:(MHVRecordReference *) record query:(MHVItemQuery *)query andCallback:(MHVTaskCompletion)callback;
++(MHVGetItemsTask *) newForRecord:(MHVRecordReference *) record queries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback;
 
 @end

@@ -21,7 +21,7 @@
 
 static MHVVocabIdentifier* s_vocabForMeals;
 
-@implementation MHVDietaryIntake (HVFactoryMethods)
+@implementation MHVDietaryIntake (MHVFactoryMethods)
 
 //
 // Creates all 3 meals
@@ -133,7 +133,7 @@ LError:
 
 @end
 
-@implementation MHVDietaryIntake (HVDisplay)
+@implementation MHVDietaryIntake (MHVDisplay)
 
 -(NSString *)detailsString
 {

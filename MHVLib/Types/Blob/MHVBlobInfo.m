@@ -32,7 +32,7 @@ static NSString* const c_element_contentType = @"content-type";
 
 -(void)setName:(NSString *)name
 {
-    HVENSURE(m_name, MHVStringZ255);    
+    MHVENSURE(m_name, MHVStringZ255);    
     m_name.value = name;
 }
 
@@ -43,36 +43,36 @@ static NSString* const c_element_contentType = @"content-type";
 
 -(void)setContentType:(NSString *)contentType
 {
-    HVENSURE(m_contentType, MHVStringZ1024);
+    MHVENSURE(m_contentType, MHVStringZ1024);
     m_contentType.value = contentType;
 }
 
 -(id)initWithName:(NSString *)name andContentType:(NSString *)contentType
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.name = name;
     self.contentType = contentType;
     
-    HVCHECK_NOTNULL(m_name);
-    HVCHECK_NOTNULL(m_contentType);
+    MHVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_contentType);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_OPTIONAL(m_name);
-    HVVALIDATE_OPTIONAL(m_contentType);
+    MHVVALIDATE_OPTIONAL(m_name);
+    MHVVALIDATE_OPTIONAL(m_contentType);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

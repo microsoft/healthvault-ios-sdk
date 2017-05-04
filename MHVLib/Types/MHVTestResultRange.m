@@ -34,13 +34,13 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_type, HVClientError_InvalidTestResultRange);
-    HVVALIDATE(m_text, HVClientError_InvalidTestResultRange);
-    HVVALIDATE_OPTIONAL(m_value);
+    MHVVALIDATE(m_type, MHVClientError_InvalidTestResultRange);
+    MHVVALIDATE(m_text, MHVClientError_InvalidTestResultRange);
+    MHVVALIDATE_OPTIONAL(m_value);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -64,14 +64,14 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVTestResultRange class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)addItem:(MHVTestResultRange *)item

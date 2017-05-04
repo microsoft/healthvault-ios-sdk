@@ -22,16 +22,16 @@
 NSString* const c_itemstate_active = @"Active";
 NSString* const c_itemstate_deleted = @"Deleted";
 
-NSString* HVItemStateToString(enum MHVItemState state)
+NSString* MHVItemStateToString(enum MHVItemState state)
 {
     NSString* value = nil;
     
-    if (state & HVItemStateActive)
+    if (state & MHVItemStateActive)
     {
         return c_itemstate_active;
     }
     
-    if (state & HVItemStateDeleted)
+    if (state & MHVItemStateDeleted)
     {
         return c_itemstate_deleted;
     }
@@ -39,22 +39,22 @@ NSString* HVItemStateToString(enum MHVItemState state)
     return value;
 }
 
-enum MHVItemState HVItemStateFromString(NSString* value)
+enum MHVItemState MHVItemStateFromString(NSString* value)
 {
     if ([NSString isNilOrEmpty:value])
     {
-        return HVItemStateNone;
+        return MHVItemStateNone;
     }
     
     if ([value isEqualToString:c_itemstate_active])
     {
-        return HVItemStateActive;
+        return MHVItemStateActive;
     }
     
     if ([value isEqualToString:c_itemstate_deleted])
     {
-        return HVItemStateDeleted;
+        return MHVItemStateDeleted;
     }
     
-    return HVItemStateNone;
+    return MHVItemStateNone;
 }

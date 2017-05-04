@@ -52,7 +52,7 @@
 
 -(MHVItem *) getLocalItemWithKey:(MHVItemKey *) key; // Returns nil if not locally available
 -(MHVItem *) getLocalItemForEditWithKey:(MHVItemKey *) key; // Clones (in memory only) item, if available. Returns nil if not locally available
--(MHVDownloadItemsTask *) downloadItemWithKey:(MHVItemKey *) key withCallback:(HVTaskCompletion) callback;
+-(MHVDownloadItemsTask *) downloadItemWithKey:(MHVItemKey *) key withCallback:(MHVTaskCompletion) callback;
 
 -(MHVAutoLock *) newLockForItemKey:(MHVItemKey *) key;
 -(BOOL) putNewItem:(MHVItem *) item;
@@ -61,7 +61,7 @@
 -(BOOL) removeItemWithTypeID:(NSString *) typeID key:(MHVItemKey *) key itemLock:(MHVAutoLock *) lock;
 
 -(BOOL) hasPendingChanges;
--(MHVTask *) commitPendingChangesWithCallback:(HVTaskCompletion) callback;
+-(MHVTask *) commitPendingChangesWithCallback:(MHVTaskCompletion) callback;
 
 +(NSString *) dataStoreKey;
 
@@ -69,7 +69,7 @@
 
 //---------------------------------------------------
 //
-// Internal methods called HVSynchronizationStore
+// Internal methods called MHVSynchronizationStore
 //
 //---------------------------------------------------
 -(BOOL) replaceLocalWithDownloaded:(MHVItem *) item;  // Will only replace the local item if there are no pending changes to the item

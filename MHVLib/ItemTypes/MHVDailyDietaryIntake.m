@@ -55,7 +55,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setCaloriesValue:(int)caloriesValue
 {
-    HVENSURE(m_calories, MHVPositiveInt);
+    MHVENSURE(m_calories, MHVPositiveInt);
     m_calories.value = caloriesValue;
 }
 
@@ -66,7 +66,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setTotalFatGrams:(double)totalFatGrams
 {
-    HVENSURE(m_totalFat, MHVWeightMeasurement);
+    MHVENSURE(m_totalFat, MHVWeightMeasurement);
     m_totalFat.inGrams = totalFatGrams;
 }
 
@@ -77,7 +77,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setSaturatedFatGrams:(double)saturatedFatGrams
 {
-    HVENSURE(m_saturatedFat, MHVWeightMeasurement);
+    MHVENSURE(m_saturatedFat, MHVWeightMeasurement);
     m_saturatedFat.inGrams = saturatedFatGrams;   
 }
 
@@ -88,7 +88,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setTransFatGrams:(double)transFatGrams
 {
-    HVENSURE(m_transFat, MHVWeightMeasurement);
+    MHVENSURE(m_transFat, MHVWeightMeasurement);
     m_transFat.inGrams = transFatGrams;   
 }
 
@@ -99,7 +99,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setProteinGrams:(double)proteinGrams
 {
-    HVENSURE(m_protein, MHVWeightMeasurement);
+    MHVENSURE(m_protein, MHVWeightMeasurement);
     m_protein.inGrams = proteinGrams;       
 }
 
@@ -110,7 +110,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setTotalCarbGrams:(double)totalCarbGrams
 {
-    HVENSURE(m_carbs, MHVWeightMeasurement);
+    MHVENSURE(m_carbs, MHVWeightMeasurement);
     m_carbs.inGrams = totalCarbGrams;   
 }
 
@@ -121,7 +121,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setSugarGrams:(double)sugarGrams
 {
-    HVENSURE(m_sugar, MHVWeightMeasurement);
+    MHVENSURE(m_sugar, MHVWeightMeasurement);
     m_sugar.inGrams = sugarGrams;   
 }
 
@@ -132,7 +132,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setDietaryFiberGrams:(double)dietaryFiberGrams
 {
-    HVENSURE(m_fiber, MHVWeightMeasurement);
+    MHVENSURE(m_fiber, MHVWeightMeasurement);
     m_fiber.inGrams = dietaryFiberGrams;       
 }
 
@@ -143,7 +143,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setSodiumMillgrams:(double)sodiumMillgrams
 {
-    HVENSURE(m_sodium, MHVWeightMeasurement);
+    MHVENSURE(m_sodium, MHVWeightMeasurement);
     m_sodium.inMilligrams = sodiumMillgrams;       
 }
 
@@ -154,7 +154,7 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(void)setCholesterolMilligrams:(double)cholesterolMilligrams
 {
-    HVENSURE(m_cholesterol, MHVWeightMeasurement);
+    MHVENSURE(m_cholesterol, MHVWeightMeasurement);
     m_cholesterol.inMilligrams = cholesterolMilligrams;          
 }
 
@@ -171,21 +171,21 @@ static NSString* const c_element_cholesterol = @"cholesterol";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidDietaryIntake);
-    HVVALIDATE_OPTIONAL(m_calories);
-    HVVALIDATE_OPTIONAL(m_totalFat);
-    HVVALIDATE_OPTIONAL(m_saturatedFat);
-    HVVALIDATE_OPTIONAL(m_transFat);
-    HVVALIDATE_OPTIONAL(m_protein);
-    HVVALIDATE_OPTIONAL(m_carbs);
-    HVVALIDATE_OPTIONAL(m_fiber);
-    HVVALIDATE_OPTIONAL(m_sugar);
-    HVVALIDATE_OPTIONAL(m_sodium);
-    HVVALIDATE_OPTIONAL(m_cholesterol);
+    MHVVALIDATE(m_when, MHVClientError_InvalidDietaryIntake);
+    MHVVALIDATE_OPTIONAL(m_calories);
+    MHVVALIDATE_OPTIONAL(m_totalFat);
+    MHVVALIDATE_OPTIONAL(m_saturatedFat);
+    MHVVALIDATE_OPTIONAL(m_transFat);
+    MHVVALIDATE_OPTIONAL(m_protein);
+    MHVVALIDATE_OPTIONAL(m_carbs);
+    MHVVALIDATE_OPTIONAL(m_fiber);
+    MHVVALIDATE_OPTIONAL(m_sugar);
+    MHVVALIDATE_OPTIONAL(m_sodium);
+    MHVVALIDATE_OPTIONAL(m_cholesterol);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

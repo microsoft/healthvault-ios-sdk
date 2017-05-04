@@ -27,20 +27,20 @@ static NSString* const c_element_nap = @"nap";
 static NSString* const c_element_exercise = @"exercise";
 static NSString* const c_element_sleepiness = @"sleepiness";
 
-NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
+NSString* stringFromSleepiness(enum MHVSleepiness sleepiness)
 {
     switch (sleepiness)
     {
-        case HVSleepiness_VerySleepy:
+        case MHVSleepiness_VerySleepy:
             return @"Very Sleepy";
         
-        case HVSleepiness_Tired:
+        case MHVSleepiness_Tired:
             return @"Tired";
             
-        case HVSleepiness_Alert:
+        case MHVSleepiness_Alert:
             return @"Alert";
         
-        case HVSleepiness_WideAwake:
+        case MHVSleepiness_WideAwake:
             return @"Wide Awake";
         
         default:
@@ -56,7 +56,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(MHVTimeCollection *)caffeineIntakeTimes
 {
-    HVENSURE(m_caffeine, MHVTimeCollection);
+    MHVENSURE(m_caffeine, MHVTimeCollection);
     return m_caffeine;
 }
 
@@ -72,7 +72,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(MHVTimeCollection *)alcoholIntakeTimes
 {
-    HVENSURE(m_alcohol, MHVTimeCollection);
+    MHVENSURE(m_alcohol, MHVTimeCollection);
     return m_alcohol;
 }
 
@@ -88,7 +88,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(MHVOccurenceCollection *)naps
 {
-    HVENSURE(m_naps, MHVOccurenceCollection);
+    MHVENSURE(m_naps, MHVOccurenceCollection);
     return m_naps;
 }
 
@@ -104,7 +104,7 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(MHVOccurenceCollection *)exercise
 {
-    HVENSURE(m_exercise, MHVOccurenceCollection);
+    MHVENSURE(m_exercise, MHVOccurenceCollection);
     return m_exercise;
 }
 
@@ -118,20 +118,20 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
     return ![NSArray isNilOrEmpty:m_exercise];
 }
 
--(enum HVSleepiness)sleepiness
+-(enum MHVSleepiness)sleepiness
 {
-    return (m_sleepiness) ? (enum HVSleepiness) (m_sleepiness.value) : HVSleepiness_Unknown;
+    return (m_sleepiness) ? (enum MHVSleepiness) (m_sleepiness.value) : MHVSleepiness_Unknown;
 }
 
--(void) setSleepiness:(enum HVSleepiness)sleepiness
+-(void) setSleepiness:(enum MHVSleepiness)sleepiness
 {
-    if (sleepiness == HVSleepiness_Unknown)
+    if (sleepiness == MHVSleepiness_Unknown)
     {
         m_sleepiness = nil;
     }
     else 
     {
-        HVENSURE(m_sleepiness, MHVPositiveInt);
+        MHVENSURE(m_sleepiness, MHVPositiveInt);
         m_sleepiness.value = sleepiness;
     }
 }
@@ -154,16 +154,16 @@ NSString* stringFromSleepiness(enum HVSleepiness sleepiness)
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidSleepJournal);
-    HVVALIDATE(m_sleepiness, HVClientError_InvalidSleepJournal);
+    MHVVALIDATE(m_when, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(m_sleepiness, MHVClientError_InvalidSleepJournal);
     
-    HVVALIDATE_ARRAYOPTIONAL(m_caffeine, HVClientError_InvalidSleepJournal);
-    HVVALIDATE_ARRAYOPTIONAL(m_alcohol, HVClientError_InvalidSleepJournal);
-    HVVALIDATE_ARRAYOPTIONAL(m_naps, HVClientError_InvalidSleepJournal);
+    MHVVALIDATE_ARRAYOPTIONAL(m_caffeine, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_ARRAYOPTIONAL(m_alcohol, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_ARRAYOPTIONAL(m_naps, MHVClientError_InvalidSleepJournal);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

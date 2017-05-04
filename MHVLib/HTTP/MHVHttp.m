@@ -28,27 +28,27 @@
 -(id)initWithError:(NSError *)error
 {
     self = [super initWithName:@"MHVHttpException" reason:@"Http Error" userInfo:nil];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_error = error;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithStatusCode:(int)statusCode
 {
     self = [super initWithName:@"MHVHttpException" reason:[NSHTTPURLResponse localizedStringForStatusCode:m_statusCode] userInfo:nil];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_statusCode = statusCode;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 -(NSString *)description
@@ -73,7 +73,7 @@ static NSString* const c_header_contentLength = @"Content-Length";
 static NSString* const c_header_contentType = @"Content-Type";
 static NSString* const c_header_contentRange = @"Content-Range";
 
-@implementation NSMutableURLRequest (HVURLRequestExtensions)
+@implementation NSMutableURLRequest (MHVURLRequestExtensions)
 
 -(void)setContentLength:(NSUInteger)length
 {
@@ -101,7 +101,7 @@ static NSString* const c_header_contentRange = @"Content-Range";
 @end
 
 
-@interface MHVHttp (HVPrivate)
+@interface MHVHttp (MHVPrivate)
 
 -(void) clear;
 -(BOOL) retry;
@@ -113,7 +113,7 @@ static NSString* const c_header_contentRange = @"Content-Range";
 
 -(NSMutableURLRequest *)request
 {
-    HVENSURE(m_request, NSMutableURLRequest);
+    MHVENSURE(m_request, NSMutableURLRequest);
     return m_request;
 }
 
@@ -122,15 +122,15 @@ static NSString* const c_header_contentRange = @"Content-Range";
 @synthesize currentAttempt = m_currentAttempt;
 @synthesize delegate = m_delegate;
 
--(id)initWithUrl:(NSURL *)url andCallback:(HVTaskCompletion)callback
+-(id)initWithUrl:(NSURL *)url andCallback:(MHVTaskCompletion)callback
 {
     return [self initWithVerb:nil url:url andCallback:callback];
 }
 
--(id)initWithVerb:(NSString *)verb url:(NSURL *)url andCallback:(HVTaskCompletion)callback
+-(id)initWithVerb:(NSString *)verb url:(NSURL *)url andCallback:(MHVTaskCompletion)callback
 {
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.request.URL = url;
     if (verb)
@@ -138,7 +138,7 @@ static NSString* const c_header_contentRange = @"Content-Range";
         self.request.HTTPMethod = verb;
     }
  
-    HVCHECK_NOTNULL(m_request);
+    MHVCHECK_NOTNULL(m_request);
     if ([MHVClient current].settings.httpTimeout > 0)
     {
         m_request.timeoutInterval = [MHVClient current].settings.httpTimeout;
@@ -149,7 +149,7 @@ static NSString* const c_header_contentRange = @"Content-Range";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -200,7 +200,7 @@ LError:
 
 @end
 
-@implementation MHVHttp (HVPrivate)
+@implementation MHVHttp (MHVPrivate)
 
 -(void)startImpl
 {

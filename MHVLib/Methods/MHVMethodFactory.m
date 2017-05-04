@@ -23,21 +23,21 @@
 
 @implementation MHVMethodFactory
 
--(MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record queries:(MHVItemQueryCollection *)queries andCallback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record queries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback
 {
     MHVGetItemsTask* task = [MHVGetItemsTask newForRecord:record queries:queries andCallback:callback];
     task.taskName = @"GetItemsForRecord";
     return task;
 }
 
--(MHVPutItemsTask *)newPutItemsForRecord:(MHVRecordReference *)record items:(MHVItemCollection *)items andCallback:(HVTaskCompletion)callback
+-(MHVPutItemsTask *)newPutItemsForRecord:(MHVRecordReference *)record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback
 {
     MHVPutItemsTask* task = [MHVPutItemsTask newForRecord:record items:items andCallback:callback];
     task.taskName = @"PutItemsForRecord";
     return task;
 }
 
--(MHVRemoveItemsTask *)newRemoveItemsForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(HVTaskCompletion)callback
+-(MHVRemoveItemsTask *)newRemoveItemsForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback
 {
     MHVRemoveItemsTask* task = [MHVRemoveItemsTask newForRecord:record keys:keys andCallback:callback];
     task.taskName = @"RemoveItemsForRecord";
@@ -46,14 +46,14 @@
 
 @end
 
-@implementation MHVMethodFactory (HVMethodFactoryExtensions)
+@implementation MHVMethodFactory (MHVMethodFactoryExtensions)
 
--(MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record query:(MHVItemQuery *)query andCallback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record query:(MHVItemQuery *)query andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     MHVItemQueryCollection* queries = [[MHVItemQueryCollection alloc] init];
-    HVCHECK_NOTNULL(queries);
+    MHVCHECK_NOTNULL(queries);
     
     [queries addObject:query];
     
@@ -65,10 +65,10 @@ LError:
     return nil;
 }
 
--(MHVPutItemsTask *)newPutItemForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(HVTaskCompletion)callback
+-(MHVPutItemsTask *)newPutItemForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(MHVTaskCompletion)callback
 {
     MHVItemCollection* items = [[MHVItemCollection alloc] initWithItem:item];
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     MHVPutItemsTask* putItems = [self newPutItemsForRecord:record items:items andCallback:callback];
     

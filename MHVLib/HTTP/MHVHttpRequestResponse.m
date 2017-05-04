@@ -1,5 +1,5 @@
 //
-//  HVURLRequestExtensions.m
+//  MHVURLRequestExtensions.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -31,7 +31,7 @@
 
 -(void)start
 {
-    HVENSURE(m_responseBody, NSMutableData);
+    MHVENSURE(m_responseBody, NSMutableData);
     [m_responseBody setLength:0];
     
     self.result = m_responseBody;

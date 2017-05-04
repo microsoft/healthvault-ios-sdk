@@ -32,7 +32,7 @@ static NSString* const c_element_current = @"current";
 static NSString* const c_element_environment = @"environment";
 static NSString* const c_element_instanceID = @"instanceID";
 
-@interface MHVUser (HVPrivate)
+@interface MHVUser (MHVPrivate)
 
 -(void) getPeopleComplete:(MHVTask *) task;
 -(MHVGetAuthorizedPeopleTask *) newGetPeopleTask;
@@ -94,17 +94,17 @@ static NSString* const c_element_instanceID = @"instanceID";
 
 -(id)initFromLegacyRecords:(NSArray *)recordArray
 {
-    HVCHECK_NOTNULL(recordArray);
+    MHVCHECK_NOTNULL(recordArray);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
-    HVCHECK_SUCCESS([self updateWithLegacyRecords:recordArray]);
+    MHVCHECK_SUCCESS([self updateWithLegacyRecords:recordArray]);
         
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -115,7 +115,7 @@ LError:
     [self clear];
     
     m_records = [[MHVRecordCollection alloc] init];
-    HVCHECK_NOTNULL(m_records);
+    MHVCHECK_NOTNULL(m_records);
     
     for (HealthVaultRecord *record in records) 
     {
@@ -125,7 +125,7 @@ LError:
         }
         
         MHVRecord* hvRecord = [[MHVRecord alloc] initWithRecord:record];
-        HVCHECK_NOTNULL(hvRecord);
+        MHVCHECK_NOTNULL(hvRecord);
     
         if (current && [hvRecord.ID isEqualToString:current.ID])
         {
@@ -160,13 +160,13 @@ LError:
     service.currentRecord = nil;
 }
 
--(MHVTask *)refreshAuthorizedRecords:(HVTaskCompletion)callback
+-(MHVTask *)refreshAuthorizedRecords:(MHVTaskCompletion)callback
 {
     MHVTask* refreshTask = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(refreshTask);
+    MHVCHECK_NOTNULL(refreshTask);
     
     MHVGetAuthorizedPeopleTask* getRecordsTask = [self newGetPeopleTask];
-    HVCHECK_NOTNULL(getRecordsTask);
+    MHVCHECK_NOTNULL(getRecordsTask);
     
     [refreshTask setNextTask:getRecordsTask];
     
@@ -178,20 +178,20 @@ LError:
     return nil;
 }
 
--(MHVTask *)authorizeAdditionalRecords:(UIViewController *)parentController andCallback:(HVTaskCompletion)callback
+-(MHVTask *)authorizeAdditionalRecords:(UIViewController *)parentController andCallback:(MHVTaskCompletion)callback
 {
     MHVTask* authTask = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(authTask);
+    MHVCHECK_NOTNULL(authTask);
     
     NSString* urlString = [[MHVClient current].service getUserAuthorizationUrl];
     NSURL* url = [NSURL URLWithString:urlString];
-    HVCHECK_NOTNULL(url);
+    MHVCHECK_NOTNULL(url);
     
     MHVAppProvisionController* controller = [[MHVAppProvisionController alloc] initWithAppCreateUrl:url andCallback:^(MHVAppProvisionController *controller) {
                 
         if (controller.error)
         {
-            [MHVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_Web)];
+            [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_Web)];
         }
         
         if (authTask.isCancelled || !controller.isSuccess)
@@ -212,12 +212,12 @@ LError:
     return nil;
 }
 
--(MHVTask *)removeAuthForRecord:(MHVRecord *)record withCallback:(HVTaskCompletion)callback
+-(MHVTask *)removeAuthForRecord:(MHVRecord *)record withCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     MHVTask* removeAuthTask = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(removeAuthTask);
+    MHVCHECK_NOTNULL(removeAuthTask);
     
     MHVRemoveRecordAuthTask* removeRecordAuthTask = [[MHVRemoveRecordAuthTask alloc] initWithRecord:record andCallback:^(MHVTask *task) {
         
@@ -227,7 +227,7 @@ LError:
         [task.parent setNextTask:refreshTask];
         
     }];
-    HVCHECK_NOTNULL(removeRecordAuthTask);
+    MHVCHECK_NOTNULL(removeRecordAuthTask);
     
     [removeAuthTask setNextTask:removeRecordAuthTask];
     [removeAuthTask start];
@@ -238,17 +238,17 @@ LError:
     return nil;
 }
 
--(MHVTask *)downloadRecordImageFor:(MHVRecord *)record withCallback:(HVTaskCompletion)callback
+-(MHVTask *)downloadRecordImageFor:(MHVRecord *)record withCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     MHVGetPersonalImageTask* getImageTask = [[MHVGetPersonalImageTask alloc] initWithRecord:record andCallback:^(MHVTask *task) {
         [self imageDownloadComplete:task forRecord:record];
     }];
-    HVCHECK_NOTNULL(getImageTask);
+    MHVCHECK_NOTNULL(getImageTask);
     
     [task setNextTask:getImageTask];
     [task start];
@@ -266,17 +266,17 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
     if (m_records)
     {
         for (MHVRecord *record in m_records) 
         {
-            HVCHECK_RESULT([record validate]);
+            MHVCHECK_RESULT([record validate]);
         }
     }
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -303,7 +303,7 @@ LError:
 
 @end
 
-@implementation MHVUser (HVPrivate)
+@implementation MHVUser (MHVPrivate)
 
 -(void)getPeopleComplete:(MHVTask *)task
 {
@@ -331,7 +331,7 @@ LError:
 
 -(BOOL) updateWithPerson:(MHVPersonInfo *) person
 {
-    HVCHECK_NOTNULL(person);
+    MHVCHECK_NOTNULL(person);
     
     NSString* currentRecordID = (self.currentRecord) ? self.currentRecord.ID : nil;
     m_currentIndex = 0;

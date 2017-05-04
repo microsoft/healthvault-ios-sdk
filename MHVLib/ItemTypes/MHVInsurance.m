@@ -68,22 +68,22 @@ static NSString* const c_element_contact = @"contact";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_STRINGOPTIONAL(m_planName, HVClientError_InvalidInsurance);
-    HVVALIDATE_OPTIONAL(m_coverageType);
-    HVVALIDATE_STRINGOPTIONAL(m_carrierID, HVClientError_InvalidInsurance);
-    HVVALIDATE_STRINGOPTIONAL(m_groupNum, HVClientError_InvalidInsurance);
-    HVVALIDATE_STRINGOPTIONAL(m_planCode, HVClientError_InvalidInsurance);
-    HVVALIDATE_STRINGOPTIONAL(m_subscriberID, HVClientError_InvalidInsurance);
-    HVVALIDATE_STRINGOPTIONAL(m_personCode, HVClientError_InvalidInsurance);
-    HVVALIDATE_STRINGOPTIONAL(m_subscriberName, HVClientError_InvalidInsurance);
-    HVVALIDATE_OPTIONAL(m_subsriberDOB);
-    HVVALIDATE_OPTIONAL(m_isPrimary);
-    HVVALIDATE_OPTIONAL(m_expirationDate);
-    HVVALIDATE_OPTIONAL(m_contact);
+    MHVVALIDATE_STRINGOPTIONAL(m_planName, MHVClientError_InvalidInsurance);
+    MHVVALIDATE_OPTIONAL(m_coverageType);
+    MHVVALIDATE_STRINGOPTIONAL(m_carrierID, MHVClientError_InvalidInsurance);
+    MHVVALIDATE_STRINGOPTIONAL(m_groupNum, MHVClientError_InvalidInsurance);
+    MHVVALIDATE_STRINGOPTIONAL(m_planCode, MHVClientError_InvalidInsurance);
+    MHVVALIDATE_STRINGOPTIONAL(m_subscriberID, MHVClientError_InvalidInsurance);
+    MHVVALIDATE_STRINGOPTIONAL(m_personCode, MHVClientError_InvalidInsurance);
+    MHVVALIDATE_STRINGOPTIONAL(m_subscriberName, MHVClientError_InvalidInsurance);
+    MHVVALIDATE_OPTIONAL(m_subsriberDOB);
+    MHVVALIDATE_OPTIONAL(m_isPrimary);
+    MHVVALIDATE_OPTIONAL(m_expirationDate);
+    MHVVALIDATE_OPTIONAL(m_contact);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

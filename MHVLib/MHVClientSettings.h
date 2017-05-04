@@ -185,7 +185,7 @@
 @property (readwrite, nonatomic) NSInteger maxAttemptsPerRequest;
 //
 // <useCachingInStore>
-// Used for HVTypeViews. If true, uses NSCache to cache MHVItem* objects in memory
+// Used for MHVTypeViews. If true, uses NSCache to cache MHVItem* objects in memory
 //
 @property (readwrite, nonatomic) BOOL useCachingInStore;
 //

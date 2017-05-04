@@ -27,9 +27,9 @@ static const xmlChar* x_element_typeID = XMLSTRINGCONST("typeID");
 static const xmlChar* x_element_key = XMLSTRINGCONST("key");
 static const xmlChar* x_element_attempt = XMLSTRINGCONST("attempt");
 
-@interface MHVItemChange (HVPrivate)
+@interface MHVItemChange (MHVPrivate)
 
--(void) updateWithKey:(MHVItemKey *) key andChangeType:(enum HVItemChangeType) type;
+-(void) updateWithKey:(MHVItemKey *) key andChangeType:(enum MHVItemChangeType) type;
 
 @end
 
@@ -56,13 +56,13 @@ static const xmlChar* x_element_attempt = XMLSTRINGCONST("attempt");
     return [super init];
 }
 
--(id)initWithTypeID:(NSString *)typeID key:(MHVItemKey *)key changeType:(enum HVItemChangeType)changeType
+-(id)initWithTypeID:(NSString *)typeID key:(MHVItemKey *)key changeType:(enum MHVItemChangeType)changeType
 {
-    HVCHECK_STRING(typeID);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_STRING(typeID);
+    MHVCHECK_NOTNULL(key);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_typeID = typeID;
     [self updateWithKey:key andChangeType:changeType];
@@ -70,7 +70,7 @@ static const xmlChar* x_element_attempt = XMLSTRINGCONST("attempt");
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -108,19 +108,19 @@ LError:
     
     int changeType;
     changeType = [reader readIntElementXmlName:x_element_type];
-    m_changeType = (enum HVItemChangeType) changeType;
+    m_changeType = (enum MHVItemChangeType) changeType;
     
     m_typeID = [reader readStringElementWithXmlName:x_element_typeID];
     m_key = [reader readElementWithXmlName:x_element_key asClass:[MHVItemKey class]];
     m_attempt = [reader readIntElementXmlName:x_element_attempt];
 }
 
-+(BOOL)updateChange:(MHVItemChange *)change withTypeID:(NSString *)typeID key:(MHVItemKey *)key changeType:(enum HVItemChangeType)changeType
++(BOOL)updateChange:(MHVItemChange *)change withTypeID:(NSString *)typeID key:(MHVItemKey *)key changeType:(enum MHVItemChangeType)changeType
 {
-    HVCHECK_NOTNULL(change);
+    MHVCHECK_NOTNULL(change);
     
-    HVCHECK_FALSE((change.changeType == HVItemChangeTypeRemove && changeType == HVItemChangeTypePut));
-    HVCHECK_TRUE([change isChangeForType:typeID]);
+    MHVCHECK_FALSE((change.changeType == MHVItemChangeTypeRemove && changeType == MHVItemChangeTypePut));
+    MHVCHECK_TRUE([change isChangeForType:typeID]);
     
     [change updateWithKey:key andChangeType:changeType];
     return TRUE;
@@ -152,9 +152,9 @@ LError:
 
 @end
 
-@implementation MHVItemChange (HVPrivate)
+@implementation MHVItemChange (MHVPrivate)
 
--(void)updateWithKey:(MHVItemKey *)key andChangeType:(enum HVItemChangeType)type
+-(void)updateWithKey:(MHVItemKey *)key andChangeType:(enum MHVItemChangeType)type
 {
     m_key = key;
     m_changeType = type;

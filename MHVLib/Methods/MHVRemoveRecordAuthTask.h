@@ -23,6 +23,6 @@
 
 @interface MHVRemoveRecordAuthTask : MHVMethodCallTask
 
--(id) initWithRecord:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(id) initWithRecord:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
 @end

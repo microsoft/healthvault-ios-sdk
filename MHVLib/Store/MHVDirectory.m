@@ -27,7 +27,7 @@
 // NSFileManager
 //
 //---------------------------
-@implementation NSFileManager (HVExtensions) 
+@implementation NSFileManager (MHVExtensions) 
 
 -(NSURL *) pathForStandardDirectory:(NSSearchPathDirectory)name
 {
@@ -85,7 +85,7 @@
 // NSFileHandle
 //
 //---------------------------
-@implementation NSFileHandle (HVExtensions)
+@implementation NSFileHandle (MHVExtensions)
 
 +(NSFileHandle *)createOrOpenForWriteAtPath:(NSString *)path
 {
@@ -161,7 +161,7 @@
 // MHVDirectory
 //
 //---------------------------
-@interface MHVDirectory (HVPrivate)
+@interface MHVDirectory (MHVPrivate)
 
 -(XConverter *) getConverter;
 
@@ -179,40 +179,40 @@
 
 -(id)initWithPath:(NSURL *)path
 {
-    HVCHECK_NOTNULL(path);
+    MHVCHECK_NOTNULL(path);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     NSFileManager *fm = [NSFileManager defaultManager];
     m_path = path;
     m_stringPath = m_path.path;
     
-    HVCHECK_SUCCESS([fm createDirectoryAtPath:m_stringPath withIntermediateDirectories:TRUE attributes:nil error:nil]);
+    MHVCHECK_SUCCESS([fm createDirectoryAtPath:m_stringPath withIntermediateDirectories:TRUE attributes:nil error:nil]);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
    
 }
 
 -(id)initWithRelativePath:(NSString *)path
 {
-    HVCHECK_STRING(path);
+    MHVCHECK_STRING(path);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     NSFileManager *fm = [NSFileManager defaultManager];
     
     NSURL *fullPath = [[fm documentDirectoryPath] URLByAppendingPathComponent:path];
-    HVCHECK_NOTNULL(fullPath);
+    MHVCHECK_NOTNULL(fullPath);
     
     return [self initWithPath:fullPath];
      
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSURL *) makeChildUrl:(NSString *)name
@@ -222,7 +222,7 @@ LError:
 
 -(NSString *)makeChildPath:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
     
     return [m_stringPath stringByAppendingPathComponent:name];
     
@@ -256,7 +256,7 @@ LError:
 -(MHVDirectory *)newChildNamed:(NSString *)name
 {
     NSURL *path = [self makeChildUrl:name];
-    HVCHECK_NOTNULL(path);
+    MHVCHECK_NOTNULL(path);
     
     return [[MHVDirectory alloc] initWithPath:path];
     
@@ -267,7 +267,7 @@ LError:
 -(BOOL)fileExists:(NSString *)fileName
 {
     NSString* filePath = [self makeChildPath:fileName];
-    HVCHECK_NOTNULL(filePath);
+    MHVCHECK_NOTNULL(filePath);
     
     return [[NSFileManager defaultManager] fileExistsAtPath:filePath];
     
@@ -278,7 +278,7 @@ LError:
 -(NSString *)makeFilePathIfExists:(NSString *)fileName
 {
     NSString* filePath = [self makeChildPath:fileName];
-    HVCHECK_NOTNULL(filePath);
+    MHVCHECK_NOTNULL(filePath);
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
     {
@@ -293,7 +293,7 @@ LError:
 -(BOOL)createFile:(NSString *)fileName
 {
     NSString* filePath = [self makeChildPath:fileName];
-    HVCHECK_NOTNULL(filePath);
+    MHVCHECK_NOTNULL(filePath);
     
     return [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
     
@@ -304,7 +304,7 @@ LError:
 -(BOOL)deleteFile:(NSString *)fileName
 {
     NSString* filePath = [self makeChildPath:fileName];
-    HVCHECK_NOTNULL(filePath);
+    MHVCHECK_NOTNULL(filePath);
     
     return [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
 
@@ -315,7 +315,7 @@ LError:
 -(NSDictionary *)getFileProperties:(NSString *)fileName
 {
     NSString* filePath = [self makeChildPath:fileName];
-    HVCHECK_NOTNULL(filePath);
+    MHVCHECK_NOTNULL(filePath);
 
     return [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
     
@@ -348,7 +348,7 @@ LError:
 -(NSFileHandle *)openFileForWrite:(NSString *)fileName
 {
     NSString* filePath = [self makeChildPath:fileName];
-    HVCHECK_NOTNULL(filePath);
+    MHVCHECK_NOTNULL(filePath);
     
     return [NSFileHandle fileHandleForWritingAtPath:filePath];
     
@@ -478,7 +478,7 @@ LError:
             [self createFile:key];
             handle = [self openFileForWrite:key];
         }
-        HVCHECK_NOTNULL(handle);
+        MHVCHECK_NOTNULL(handle);
         
         @try 
         {
@@ -545,11 +545,11 @@ LError:
 
 @end
 
-@implementation MHVDirectory (HVPrivate)
+@implementation MHVDirectory (MHVPrivate)
 
 -(XConverter *)getConverter
 {
-    HVENSURE(m_converter, XConverter);
+    MHVENSURE(m_converter, XConverter);
     return m_converter;
 }
 

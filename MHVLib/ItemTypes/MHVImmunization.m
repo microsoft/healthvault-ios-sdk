@@ -51,18 +51,18 @@ static NSString* const c_element_consent = @"consent";
 
 -(id)initWithName:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = [[MHVCodableValue alloc] initWithText:name];
-    HVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_name);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -113,21 +113,21 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_name, HVClientError_InvalidImmunization);
-    HVVALIDATE_OPTIONAL(m_administeredDate);
-    HVVALIDATE_OPTIONAL(m_administrator);
-    HVVALIDATE_OPTIONAL(m_manufacturer);
-    HVVALIDATE_STRINGOPTIONAL(m_lot, HVClientError_InvalidImmunization);
-    HVVALIDATE_OPTIONAL(m_route);
-    HVVALIDATE_OPTIONAL(m_expiration);
-    HVVALIDATE_STRINGOPTIONAL(m_sequence, HVClientError_InvalidImmunization);
-    HVVALIDATE_OPTIONAL(m_anatomicSurface);
-    HVVALIDATE_STRINGOPTIONAL(m_adverseEvent, HVClientError_InvalidImmunization);
-    HVVALIDATE_STRINGOPTIONAL(m_consent, HVClientError_InvalidImmunization);
+    MHVVALIDATE(m_name, MHVClientError_InvalidImmunization);
+    MHVVALIDATE_OPTIONAL(m_administeredDate);
+    MHVVALIDATE_OPTIONAL(m_administrator);
+    MHVVALIDATE_OPTIONAL(m_manufacturer);
+    MHVVALIDATE_STRINGOPTIONAL(m_lot, MHVClientError_InvalidImmunization);
+    MHVVALIDATE_OPTIONAL(m_route);
+    MHVVALIDATE_OPTIONAL(m_expiration);
+    MHVVALIDATE_STRINGOPTIONAL(m_sequence, MHVClientError_InvalidImmunization);
+    MHVVALIDATE_OPTIONAL(m_anatomicSurface);
+    MHVVALIDATE_STRINGOPTIONAL(m_adverseEvent, MHVClientError_InvalidImmunization);
+    MHVVALIDATE_STRINGOPTIONAL(m_consent, MHVClientError_InvalidImmunization);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

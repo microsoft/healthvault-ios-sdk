@@ -58,7 +58,7 @@ NSString* const c_emptyString = @"";
 
 -(NSUInteger) indexOfFirstCharInSet:(NSCharacterSet *)charSet
 {
-    HVASSERT_NOTNULL(charSet);
+    MHVASSERT_NOTNULL(charSet);
     
     for(NSUInteger i = 0, count = self.length; i < count; ++i)
     {
@@ -73,7 +73,7 @@ NSString* const c_emptyString = @"";
  
 -(NSUInteger) indexOfFirstCharNotInSet:(NSCharacterSet *)charSet
 {
-    HVASSERT_NOTNULL(charSet);
+    MHVASSERT_NOTNULL(charSet);
     
     for(NSUInteger i = 0, count = self.length; i < count; ++i)
     {
@@ -154,10 +154,10 @@ NSString* const c_emptyString = @"";
 
 -(BOOL) parseFloat:(float *)pValue
 {
-    HVCHECK_NOTNULL(pValue);
+    MHVCHECK_NOTNULL(pValue);
     
     NSScanner *scanner = [self newScanner];
-    HVCHECK_NOTNULL(scanner);
+    MHVCHECK_NOTNULL(scanner);
     
     BOOL result = [scanner scanFloat:pValue];
     
@@ -169,10 +169,10 @@ LError:
 
 -(BOOL) parseDouble:(double *)pValue
 {
-    HVCHECK_NOTNULL(pValue);
+    MHVCHECK_NOTNULL(pValue);
     
     NSScanner *scanner = [self newScanner];
-    HVCHECK_NOTNULL(scanner);
+    MHVCHECK_NOTNULL(scanner);
  
     BOOL result = [scanner scanDouble:pValue];
     
@@ -184,10 +184,10 @@ LError:
 
 -(BOOL) parseInt:(int *)pValue
 {
-    HVCHECK_NOTNULL(pValue);
+    MHVCHECK_NOTNULL(pValue);
     
     NSScanner *scanner = [self newScanner];
-    HVCHECK_NOTNULL(scanner);
+    MHVCHECK_NOTNULL(scanner);
    
     BOOL result = [scanner scanInt:pValue];
     return result;   
@@ -218,7 +218,7 @@ LError:
 
 @end
 
-@implementation NSMutableString (HVNSMutableStringExtensions)
+@implementation NSMutableString (MHVNSMutableStringExtensions)
 
 -(void) clear
 {

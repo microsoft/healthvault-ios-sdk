@@ -24,10 +24,10 @@
 
 //------------------------------
 //
-// HVBlobUpload
+// MHVBlobUpload
 //
 //------------------------------
-@interface MHVBlobUploadTask (HVPrivate)
+@interface MHVBlobUploadTask (MHVPrivate)
 
 -(void) beginPutBlobComplete:(MHVTask *) task;
 -(void) postNextChunk;
@@ -51,7 +51,7 @@
     return [self initWithSource:nil record:nil andCallback:nil];
 }
 
--(id)initWithData:(NSData *)data record:(MHVRecordReference *) record andCallback:(HVTaskCompletion)callback
+-(id)initWithData:(NSData *)data record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion)callback
 {
     MHVBlobMemorySource* blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
     self = [self initWithSource:blobSource record:record andCallback:callback];
@@ -59,7 +59,7 @@
     return self;
 }
 
--(id)initWithFilePath:(NSString *)filePath record:(MHVRecordReference *) record  andCallback:(HVTaskCompletion)callback
+-(id)initWithFilePath:(NSString *)filePath record:(MHVRecordReference *) record  andCallback:(MHVTaskCompletion)callback
 {
     MHVBlobFileHandleSource* blobSource = [[MHVBlobFileHandleSource alloc] initWithFilePath:filePath];
     self = [self initWithSource:blobSource record:record andCallback:callback];
@@ -67,19 +67,19 @@
     return self;    
 }
 
--(id)initWithSource:(id<MHVBlobSource>)source record:(MHVRecordReference *) record  andCallback:(HVTaskCompletion)callback
+-(id)initWithSource:(id<MHVBlobSource>)source record:(MHVRecordReference *) record  andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(source);
+    MHVCHECK_NOTNULL(source);
     
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_source = source;
     m_record = record;
     //
     // First, we'll issue an operation to retrieve a Blob Url.
     // This is the  blobUrl to which we'll push the blob
-    // The app can subsequently 'commit' the blob by adding to an MHVItem's Blob collection and saving it to HV
+    // The app can subsequently 'commit' the blob by adding to an MHVItem's Blob collection and saving it to MHV
     //
     MHVBeginBlobPutTask* beginPutTask = [[MHVBeginBlobPutTask alloc] initWithCallback:^(MHVTask *task) {
         [self beginPutBlobComplete:task];
@@ -91,7 +91,7 @@
     
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -103,7 +103,7 @@ LError:
     }
 }
 
-+(MHVHttpRequestResponse *)newUploadRequestForUrl:(NSURL *)url withCallback:(HVTaskCompletion)callback
++(MHVHttpRequestResponse *)newUploadRequestForUrl:(NSURL *)url withCallback:(MHVTaskCompletion)callback
 {
     MHVHttpRequestResponse* postRequest = [[MHVHttpRequestResponse alloc] initWithVerb:@"POST" url:url andCallback:callback]; 
     [postRequest.request setContentType:@"application/octet-stream"];
@@ -118,7 +118,7 @@ LError:
 
 @end
 
-@implementation MHVBlobUploadTask (HVPrivate)
+@implementation MHVBlobUploadTask (MHVPrivate)
 
 -(void)beginPutBlobComplete:(MHVTask *)task
 {
@@ -126,7 +126,7 @@ LError:
     m_putParams = blobTask.putParams;
 
     m_blobUrl = [NSURL URLWithString:m_putParams.url];
-    HVCHECK_OOM(m_blobUrl);
+    MHVCHECK_OOM(m_blobUrl);
     //
     // Now that we know where to write the blob to, and in what chunks, we can begin
     //
@@ -139,7 +139,7 @@ LError:
         
         [self postChunkComplete:task];
     }];
-    HVCHECK_OOM(postRequest);
+    MHVCHECK_OOM(postRequest);
     
     postRequest.delegate = self.delegate;
     

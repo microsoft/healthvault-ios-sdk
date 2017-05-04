@@ -21,19 +21,19 @@
 
 enum MHVItemSection 
 {
-    HVItemSection_None = 0,
-    HVItemSection_Data = 0x01,
-    HVItemSection_Core = 0x02,
-    HVItemSection_Audits = 0x04,
-    HVItemSection_Tags = 0x08,          // Not supported by MHVItem parsing
-    HVItemSection_Blobs = 0x10,
-    HVItemSection_Permissions = 0x20,   // Not supported by MHVItem parsing
-    HVItemSection_Signatures = 0x40,    // Not supported by MHVItem parsing
+    MHVItemSection_None = 0,
+    MHVItemSection_Data = 0x01,
+    MHVItemSection_Core = 0x02,
+    MHVItemSection_Audits = 0x04,
+    MHVItemSection_Tags = 0x08,          // Not supported by MHVItem parsing
+    MHVItemSection_Blobs = 0x10,
+    MHVItemSection_Permissions = 0x20,   // Not supported by MHVItem parsing
+    MHVItemSection_Signatures = 0x40,    // Not supported by MHVItem parsing
     //
     // Composite
     //
-    HVItemSection_Standard = (HVItemSection_Data | HVItemSection_Core)
+    MHVItemSection_Standard = (MHVItemSection_Data | MHVItemSection_Core)
 };
 
-NSString* HVItemSectionToString(enum MHVItemSection section);
-enum MHVItemSection HVItemSectionFromString(NSString *string);
+NSString* MHVItemSectionToString(enum MHVItemSection section);
+enum MHVItemSection MHVItemSectionFromString(NSString *string);

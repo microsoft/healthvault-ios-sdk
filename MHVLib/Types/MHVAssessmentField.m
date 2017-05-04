@@ -37,24 +37,24 @@ static NSString* const c_element_group = @"group";
 -(id)initWithName:(NSString *)name value:(NSString *)value andGroup:(NSString *)group
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = [[MHVCodableValue alloc] initWithText:name];
-    HVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_name);
     
     m_value = [[MHVCodableValue alloc] initWithText:value];
-    HVCHECK_NOTNULL(m_value);
+    MHVCHECK_NOTNULL(m_value);
     
     if (group)
     {
         m_group = [[MHVCodableValue alloc] initWithText:group];
-        HVCHECK_NOTNULL(m_group);
+        MHVCHECK_NOTNULL(m_group);
     }
         
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 +(MHVAssessmentField *)from:(NSString *)name andValue:(NSString *)value
@@ -65,13 +65,13 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
 
-    HVVALIDATE(m_name, HVClientError_InvalidAssessmentField);
-    HVVALIDATE(m_value, HVClientError_InvalidAssessmentField);
-    HVVALIDATE_OPTIONAL(m_group);
+    MHVVALIDATE(m_name, MHVClientError_InvalidAssessmentField);
+    MHVVALIDATE(m_value, MHVClientError_InvalidAssessmentField);
+    MHVVALIDATE_OPTIONAL(m_group);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -96,14 +96,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVAssessmentField class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 @end

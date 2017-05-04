@@ -41,7 +41,7 @@ static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
     }
     else 
     {
-        HVENSURE(m_calories, MHVNonNegativeDouble);
+        MHVENSURE(m_calories, MHVNonNegativeDouble);
         m_calories.value = caloriesValue;
     }
     
@@ -51,14 +51,14 @@ static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
 -(id)initWithCalories:(double)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.caloriesValue = value;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -103,12 +103,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_calories, HVClientError_InvalidDietaryIntake);
-    HVVALIDATE_OPTIONAL(m_display);
+    MHVVALIDATE(m_calories, MHVClientError_InvalidDietaryIntake);
+    MHVVALIDATE_OPTIONAL(m_display);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

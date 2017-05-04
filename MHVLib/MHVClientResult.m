@@ -31,34 +31,34 @@ static MHVClientResult* s_unknownError = nil;
 
 -(BOOL) isSuccess
 {
-    return (m_error == HVClientResult_Success);
+    return (m_error == MHVClientResult_Success);
 }
 
 -(BOOL) isError
 {
-    return (m_error != HVClientResult_Success);
+    return (m_error != MHVClientResult_Success);
 }
 
 +(void) initialize
 {
-    s_success = [[MHVClientResult alloc] initWithCode:HVClientResult_Success];
-    s_unknownError = [[MHVClientResult alloc] initWithCode:HVClientError_Unknown];
+    s_success = [[MHVClientResult alloc] initWithCode:MHVClientResult_Success];
+    s_unknownError = [[MHVClientResult alloc] initWithCode:MHVClientError_Unknown];
 }
 
 -(id) init
 {
-    return [self initWithCode:HVClientError_Unknown];
+    return [self initWithCode:MHVClientError_Unknown];
 }
 
--(id) initWithCode:(enum HVClientResultCode)code
+-(id) initWithCode:(enum MHVClientResultCode)code
 {
     return [self initWithCode:code fileName:"" lineNumber:0];
 }
 
--(id) initWithCode:(enum HVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line
+-(id) initWithCode:(enum MHVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_error = code;
     m_file = fileName;
@@ -67,7 +67,7 @@ static MHVClientResult* s_unknownError = nil;
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSString *)description
@@ -90,12 +90,12 @@ LError:
     return s_success;
 }
 
-+(MHVClientResult *) fromCode:(enum HVClientResultCode)code
++(MHVClientResult *) fromCode:(enum MHVClientResultCode)code
 {
     return [[MHVClientResult alloc] initWithCode:code];
 }
 
-+(MHVClientResult *) fromCode:(enum HVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line
++(MHVClientResult *) fromCode:(enum MHVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line
 {
     return [[MHVClientResult alloc] initWithCode:code fileName:fileName lineNumber:line];
 }

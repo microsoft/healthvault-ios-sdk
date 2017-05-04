@@ -21,7 +21,7 @@
 #import "XConverter.h"
 #import "MHVDirectoryNameEnumerator.h"
 
-@interface NSFileManager (HVExtensions) 
+@interface NSFileManager (MHVExtensions) 
 
 -(NSURL *) pathForStandardDirectory:(NSSearchPathDirectory) name;
 -(NSURL *) documentDirectoryPath;
@@ -35,7 +35,7 @@
 
 @end
 
-@interface NSFileHandle (HVExtensions)
+@interface NSFileHandle (MHVExtensions)
 
 +(NSFileHandle *) createOrOpenForWriteAtPath:(NSString *) path;
 

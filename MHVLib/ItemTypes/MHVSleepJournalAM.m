@@ -1,5 +1,5 @@
 //
-//  HVMorningSleepJournal.m
+//  MHVMorningSleepJournal.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -40,27 +40,27 @@ static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
 @synthesize settlingMinutes = m_settlingMinutes;
 @synthesize medicationsBeforeBed = m_medications;
 
--(enum HVWakeState)wakeState
+-(enum MHVWakeState)wakeState
 {
-    return (m_wakeState) ? (enum HVWakeState) (m_wakeState.value) : HVWakeState_Unknown;
+    return (m_wakeState) ? (enum MHVWakeState) (m_wakeState.value) : MHVWakeState_Unknown;
 }
 
--(void)setWakeState:(enum HVWakeState)wakeState
+-(void)setWakeState:(enum MHVWakeState)wakeState
 {
-    if (wakeState == HVWakeState_Unknown)
+    if (wakeState == MHVWakeState_Unknown)
     {
         m_wakeState = nil;
     }
     else
     {
-        HVENSURE(m_wakeState, MHVPositiveInt);
+        MHVENSURE(m_wakeState, MHVPositiveInt);
         m_wakeState.value = (int) wakeState;
     }
 }
 
 -(MHVOccurenceCollection *)awakenings
 {
-    HVENSURE(m_awakenings, MHVOccurenceCollection);
+    MHVENSURE(m_awakenings, MHVOccurenceCollection);
     return m_awakenings;
 }
 
@@ -81,7 +81,7 @@ static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
 
 -(void)setSleepMinutesValue:(int)sleepMinutesValue
 {
-    HVENSURE(m_sleepMinutes, MHVNonNegativeInt);
+    MHVENSURE(m_sleepMinutes, MHVNonNegativeInt);
     m_sleepMinutes.value = sleepMinutesValue;
 }
 
@@ -92,37 +92,37 @@ static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
 
 -(void)setSettlingMinutesValue:(int)settlingMinutesValue
 {
-    HVENSURE(m_settlingMinutes, MHVNonNegativeInt);
+    MHVENSURE(m_settlingMinutes, MHVNonNegativeInt);
     m_settlingMinutes.value = settlingMinutesValue;
 }
 
 
 -(id)initWithBedtime:(NSDate *)bedtime onDate:(NSDate *)date settlingMinutes:(int)settlingMinutes sleepingMinutes:(int)sleepingMinutes wokeupAt:(NSDate *)wakeTime
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     m_bedTime = [[MHVTime alloc] initWithDate:bedtime];
-    HVCHECK_NOTNULL(m_bedTime);
+    MHVCHECK_NOTNULL(m_bedTime);
     
     m_settlingMinutes = [[MHVNonNegativeInt alloc] initWith:settlingMinutes];
-    HVCHECK_NOTNULL(m_settlingMinutes);
+    MHVCHECK_NOTNULL(m_settlingMinutes);
     
     m_sleepMinutes = [[MHVNonNegativeInt alloc] initWith:sleepingMinutes];
-    HVCHECK_NOTNULL(m_sleepMinutes);
+    MHVCHECK_NOTNULL(m_sleepMinutes);
     
     m_wakeTime = [[MHVTime alloc] initWithDate:wakeTime];
-    HVCHECK_NOTNULL(m_wakeTime);
+    MHVCHECK_NOTNULL(m_wakeTime);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSDate *)getDate
@@ -137,18 +137,18 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidSleepJournal);
-    HVVALIDATE(m_bedTime, HVClientError_InvalidSleepJournal);
-    HVVALIDATE(m_settlingMinutes, HVClientError_InvalidSleepJournal);
-    HVVALIDATE(m_sleepMinutes, HVClientError_InvalidSleepJournal);
-    HVVALIDATE(m_wakeTime, HVClientError_InvalidSleepJournal);
-    HVVALIDATE(m_wakeState, HVClientError_InvalidSleepJournal);
-    HVVALIDATE_ARRAYOPTIONAL(m_awakenings, HVClientError_InvalidSleepJournal);
-    HVVALIDATE_OPTIONAL(m_medications);
+    MHVVALIDATE(m_when, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(m_bedTime, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(m_settlingMinutes, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(m_sleepMinutes, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(m_wakeTime, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(m_wakeState, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_ARRAYOPTIONAL(m_awakenings, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_OPTIONAL(m_medications);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

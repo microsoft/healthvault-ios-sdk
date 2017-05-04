@@ -23,7 +23,7 @@
 
 static NSString* const c_element_common = @"common";
 
-@interface MHVItemData (HVPrivate)
+@interface MHVItemData (MHVPrivate)
 
 -(MHVItemDataTyped *) deserializeTyped:(XReader *) reader;
 -(MHVItemRaw *) deserializeRaw:(XReader *) reader;
@@ -42,7 +42,7 @@ static NSString* const c_element_common = @"common";
 
 -(MHVItemDataTyped *) typed
 {
-    HVENSURE(m_typed, MHVItemDataTyped);
+    MHVENSURE(m_typed, MHVItemDataTyped);
     return m_typed;
 }
 
@@ -58,7 +58,7 @@ static NSString* const c_element_common = @"common";
 
 -(MHVItemDataCommon *) common
 {
-    HVENSURE(m_common, MHVItemDataCommon);
+    MHVENSURE(m_common, MHVItemDataCommon);
     return m_common;
 }
 
@@ -70,12 +70,12 @@ static NSString* const c_element_common = @"common";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_OPTIONAL(m_common);
-    HVVALIDATE_OPTIONAL(m_typed);
+    MHVVALIDATE_OPTIONAL(m_common);
+    MHVVALIDATE_OPTIONAL(m_typed);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void) serialize:(XWriter *)writer
@@ -100,7 +100,7 @@ static NSString* const c_element_common = @"common";
         {
             m_typed = [self deserializeRaw:reader];
         }
-        HVCHECK_OOM(m_typed);
+        MHVCHECK_OOM(m_typed);
     }
     
     if ([reader isStartElementWithName:c_element_common])
@@ -111,7 +111,7 @@ static NSString* const c_element_common = @"common";
 
 @end
 
-@implementation MHVItemData (HVPrivate)
+@implementation MHVItemData (MHVPrivate)
 
 -(MHVItemDataTyped *) deserializeTyped:(XReader *)reader
 {

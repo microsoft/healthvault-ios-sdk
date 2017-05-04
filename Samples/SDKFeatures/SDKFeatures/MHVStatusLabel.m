@@ -19,7 +19,7 @@
 
 #import "MHVStatusLabel.h"
 
-@interface MHVStatusLabel (HVPrivate)
+@interface MHVStatusLabel (MHVPrivate)
 
 -(void) ensureSpinner;
 
@@ -73,7 +73,7 @@
 
 @end
 
-@implementation MHVStatusLabel (HVPrivate)
+@implementation MHVStatusLabel (MHVPrivate)
 
 -(void)ensureSpinner
 {

@@ -45,7 +45,7 @@ static NSString* const c_element_county = @"county";
 
 -(MHVStringCollection *)street
 {
-    HVENSURE(m_street, MHVStringCollection);
+    MHVENSURE(m_street, MHVStringCollection);
     return m_street;
 }
 
@@ -93,14 +93,14 @@ static NSString* const c_element_county = @"county";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_ARRAY(m_street, HVClientError_InvalidAddress);
-    HVVALIDATE_STRING(m_city, HVClientError_InvalidAddress);
-    HVVALIDATE_STRING(m_postalCode, HVClientError_InvalidAddress);
-    HVVALIDATE_STRING(m_country, HVClientError_InvalidAddress);
+    MHVVALIDATE_ARRAY(m_street, MHVClientError_InvalidAddress);
+    MHVVALIDATE_STRING(m_city, MHVClientError_InvalidAddress);
+    MHVVALIDATE_STRING(m_postalCode, MHVClientError_InvalidAddress);
+    MHVVALIDATE_STRING(m_country, MHVClientError_InvalidAddress);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -134,14 +134,14 @@ static NSString* const c_element_county = @"county";
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVAddress class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVAddress *)itemAtIndex:(NSUInteger)index

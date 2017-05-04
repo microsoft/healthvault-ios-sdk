@@ -46,33 +46,33 @@ static const xmlChar* x_element_timeZone = XMLSTRINGCONST("tz");
 
 -(id) initWithDate:(NSDate *) dateValue
 {
-    HVCHECK_NOTNULL(dateValue);
+    MHVCHECK_NOTNULL(dateValue);
     
     NSDateComponents *components = [NSCalendar componentsFromDate:dateValue];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     return [self initWithComponents:components];
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_date = [[MHVDate alloc] initWithComponents:components];
     m_time = [[MHVTime alloc] initWithComponents:components];
     
-    HVCHECK_TRUE(m_date && m_time);
+    MHVCHECK_TRUE(m_date && m_time);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 +(MHVDateTime *)now
@@ -87,10 +87,10 @@ LError:
 
 -(BOOL) setWithDate:(NSDate *) dateValue
 {
-    HVCHECK_NOTNULL(dateValue);
+    MHVCHECK_NOTNULL(dateValue);
     
     NSDateComponents *components = [NSCalendar componentsFromDate:dateValue];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     return [self setWithComponents:components];
 
@@ -100,7 +100,7 @@ LError:
 
 -(BOOL) setWithComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     m_date = nil;
     m_time = nil;
@@ -108,7 +108,7 @@ LError:
     m_date = [[MHVDate alloc] initWithComponents:components];
     m_time = [[MHVTime alloc] initWithComponents:components];
     
-    HVCHECK_TRUE(m_date && m_time);
+    MHVCHECK_TRUE(m_date && m_time);
     
     return TRUE;
     
@@ -136,15 +136,15 @@ LError:
 -(NSDateComponents *) toComponents
 {
     NSDateComponents *components = [NSCalendar newComponents];
-    HVCHECK_SUCCESS([self getComponents:components]);
+    MHVCHECK_SUCCESS([self getComponents:components]);
     
     return components;
 }
 
 -(BOOL) getComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
-    HVCHECK_NOTNULL(m_date);
+    MHVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(m_date);
     
     [m_date getComponents:components];
     if (m_time)
@@ -161,7 +161,7 @@ LError:
 -(NSDate *)toDate
 {
     NSCalendar* calendar = [NSCalendar newGregorian];
-    HVCHECK_NOTNULL(calendar);
+    MHVCHECK_NOTNULL(calendar);
     
     NSDate *date = [self toDateForCalendar:calendar];
     
@@ -176,9 +176,9 @@ LError:
     if (calendar)
     {
         NSDateComponents *components = [[NSDateComponents alloc] init];
-        HVCHECK_NOTNULL(components);
+        MHVCHECK_NOTNULL(components);
         
-        HVCHECK_SUCCESS([self getComponents:components]);
+        MHVCHECK_SUCCESS([self getComponents:components]);
         
         NSDate *date = [calendar dateFromComponents:components];
         
@@ -194,12 +194,12 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_date, HVClientError_InvalidDateTime);
-    HVVALIDATE_OPTIONAL(m_time);
+    MHVVALIDATE(m_date, MHVClientError_InvalidDateTime);
+    MHVVALIDATE_OPTIONAL(m_time);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer

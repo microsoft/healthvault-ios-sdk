@@ -51,19 +51,19 @@ static NSString* const c_element_clientID = @"client-thing-id";
 
 -(MHVRelatedItem *)addRelation:(NSString *)name toItem:(MHVItem *)item
 {
-    HVENSURE(m_relatedItems, MHVRelatedItemCollection);
+    MHVENSURE(m_relatedItems, MHVRelatedItemCollection);
     return [m_relatedItems addRelation:name toItem:item];
 }
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_OPTIONAL(m_tags);
-    HVVALIDATE_ARRAYOPTIONAL(m_relatedItems, HVClientError_InvalidRelatedItem);
-    HVVALIDATE_OPTIONAL(m_clientID);
+    MHVVALIDATE_OPTIONAL(m_tags);
+    MHVVALIDATE_ARRAYOPTIONAL(m_relatedItems, MHVClientError_InvalidRelatedItem);
+    MHVVALIDATE_OPTIONAL(m_clientID);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer

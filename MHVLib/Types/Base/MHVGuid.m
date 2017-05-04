@@ -25,17 +25,17 @@
 {
     self = [self initWithUuid:[NSUUID UUID]];
 
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
 
     return self;
 }
 
 - (instancetype)initWithUuid:(NSUUID *)uuid
 {
-    HVCHECK_NOTNULL(uuid);
+    MHVCHECK_NOTNULL(uuid);
 
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
 
     _value = uuid;
 
@@ -46,11 +46,11 @@
 {
     NSUUID *uuidValue = [[NSUUID alloc] initWithUUIDString:string];
 
-    HVCHECK_NOTNULL(uuidValue);
+    MHVCHECK_NOTNULL(uuidValue);
 
     self = [self initWithUuid:uuidValue];
 
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
 
     return self;
 }
@@ -82,10 +82,10 @@
 {
     if (!self.value)
     {
-        return HVMAKE_ERROR(HVClientError_InvalidGuid);
+        return MHVMAKE_ERROR(MHVClientError_InvalidGuid);
     }
 
-    return HVRESULT_SUCCESS;
+    return MHVRESULT_SUCCESS;
 }
 
 @end

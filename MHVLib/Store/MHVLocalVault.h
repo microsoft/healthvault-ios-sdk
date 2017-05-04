@@ -75,7 +75,7 @@
 // If you are using Offline changes, call this to commit all pending changes to HealthVault
 // This will iterate over all local record stores and commit their changes one by one
 //
--(MHVTask *) commitOfflineChangesWithCallback:(HVTaskCompletion) callback;
--(MHVTask *) commitOfflineChangesForRecords:(NSArray *) records withCallback:(HVTaskCompletion)callback;
+-(MHVTask *) commitOfflineChangesWithCallback:(MHVTaskCompletion) callback;
+-(MHVTask *) commitOfflineChangesForRecords:(NSArray *) records withCallback:(MHVTaskCompletion)callback;
 
 @end

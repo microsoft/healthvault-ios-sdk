@@ -68,7 +68,7 @@
 // Methods
 //
 //-------------------------
--(MHVGetPersonalImageTask  *) downloadPersonalImageWithCallback:(HVTaskCompletion) callback;
+-(MHVGetPersonalImageTask  *) downloadPersonalImageWithCallback:(MHVTaskCompletion) callback;
 
 @end
 

@@ -26,7 +26,7 @@ static NSString* const c_element_culture = @"fixed-culture";
 
 -(MHVVocabIdentifierCollection *)vocabIDs
 {
-    HVENSURE(m_vocabIDs, MHVVocabIdentifierCollection);
+    MHVENSURE(m_vocabIDs, MHVVocabIdentifierCollection);
     return m_vocabIDs;
 }
 
@@ -34,42 +34,42 @@ static NSString* const c_element_culture = @"fixed-culture";
 
 -(id)initWithVocabID:(MHVVocabIdentifier *)vocabID
 {
-    HVCHECK_NOTNULL(vocabID);
+    MHVCHECK_NOTNULL(vocabID);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
 
     [self.vocabIDs addObject:vocabID];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithVocabIDs:(MHVVocabIdentifierCollection *)vocabIDs
 {
-    HVCHECK_NOTNULL(vocabIDs);
+    MHVCHECK_NOTNULL(vocabIDs);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_vocabIDs = vocabIDs;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_ARRAY(m_vocabIDs, HVClientError_InvalidVocabIdentifier);
+    MHVVALIDATE_ARRAY(m_vocabIDs, MHVClientError_InvalidVocabIdentifier);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

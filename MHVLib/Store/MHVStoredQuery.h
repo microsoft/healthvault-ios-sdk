@@ -41,6 +41,6 @@
 //
 -(BOOL) isStale:(NSTimeInterval) maxAge;
 
--(MHVTask *) synchronizeForRecord:(MHVRecordReference *) record withCallback:(HVTaskCompletion) callback;
+-(MHVTask *) synchronizeForRecord:(MHVRecordReference *) record withCallback:(MHVTaskCompletion) callback;
 
 @end

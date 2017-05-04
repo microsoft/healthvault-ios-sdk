@@ -24,12 +24,12 @@
 
 -(BOOL) isValid
 {
-    return ([self validate] == HVClientResult_Success);
+    return ([self validate] == MHVClientResult_Success);
 }
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 @end

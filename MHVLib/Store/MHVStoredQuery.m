@@ -24,7 +24,7 @@ static NSString* const c_element_query = @"query";
 static NSString* const c_element_result = @"result";
 static NSString* const c_element_timestamp = @"timestamp";
 
-@interface MHVStoredQuery (HVPrivate)
+@interface MHVStoredQuery (MHVPrivate)
 
 -(void) getItemsComplete:(MHVTask *) task forRecord:(MHVRecordReference *) record;
 
@@ -55,10 +55,10 @@ static NSString* const c_element_timestamp = @"timestamp";
 
 -(id)initWithQuery:(MHVItemQuery *)query andResult:(MHVItemQueryResult *)result
 {
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.query = query;
     self.result = result;
@@ -66,7 +66,7 @@ static NSString* const c_element_timestamp = @"timestamp";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(BOOL)isStale:(NSTimeInterval) maxAge
@@ -75,18 +75,18 @@ LError:
     return ([now timeIntervalSinceDate:m_timestamp] > maxAge);
 }
 
--(MHVTask *)synchronizeForRecord:(MHVRecordReference *)record withCallback:(HVTaskCompletion)callback
+-(MHVTask *)synchronizeForRecord:(MHVRecordReference *)record withCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(m_query);
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(m_query);
+    MHVCHECK_NOTNULL(record);
     
     MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
 
     MHVGetItemsTask* getItemsTask = [[MHVClient current].methodFactory newGetItemsForRecord:record query:m_query andCallback:^(MHVTask *task) {
         [self getItemsComplete:task forRecord:record];
     }];
-    HVCHECK_NOTNULL(getItemsTask);
+    MHVCHECK_NOTNULL(getItemsTask);
     
     [task setNextTask:getItemsTask];
     [task start];
@@ -113,7 +113,7 @@ LError:
 
 @end
 
-@implementation MHVStoredQuery (HVPrivate)
+@implementation MHVStoredQuery (MHVPrivate)
 
 -(void)getItemsComplete:(MHVTask *)task forRecord:(MHVRecordReference *)record
 {

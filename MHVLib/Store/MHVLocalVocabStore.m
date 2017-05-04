@@ -19,7 +19,7 @@
 #import "MHVCommon.h"
 #import "MHVLocalVocabStore.h"
 
-@interface MHVLocalVocabStore (HVPrivate)
+@interface MHVLocalVocabStore (MHVPrivate)
 
 -(BOOL) isStaleVocabWithID:(MHVVocabIdentifier *) vocabID maxAge:(NSTimeInterval) maxAgeSeconds;
 
@@ -37,17 +37,17 @@
 
 -(id)initWithObjectStore:(id<MHVObjectStore>)store
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_objectStore = store;
     
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -75,14 +75,14 @@ LError:
     [m_objectStore deleteKey:key];
 }
 
--(MHVTask *)downloadVocab:(MHVVocabIdentifier *)vocab withCallback:(HVTaskCompletion)callback
+-(MHVTask *)downloadVocab:(MHVVocabIdentifier *)vocab withCallback:(MHVTaskCompletion)callback
 {
     MHVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocab:vocab];    
-    HVCHECK_NOTNULL(getVocab);
+    MHVCHECK_NOTNULL(getVocab);
     
     MHVTask* downloadTask = [[MHVTask alloc] initWithCallback:callback andChildTask:getVocab];
     
-    HVCHECK_NOTNULL(downloadTask);
+    MHVCHECK_NOTNULL(downloadTask);
     
     [downloadTask start];
     
@@ -92,16 +92,16 @@ LError:
     return nil;
 }
 
--(MHVTask *)downloadVocabs:(MHVVocabIdentifierCollection *)vocabIDs withCallback:(HVTaskCompletion)callback
+-(MHVTask *)downloadVocabs:(MHVVocabIdentifierCollection *)vocabIDs withCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(vocabIDs);
+    MHVCHECK_NOTNULL(vocabIDs);
     
     MHVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocabs:vocabIDs];    
-    HVCHECK_NOTNULL(getVocab);
+    MHVCHECK_NOTNULL(getVocab);
     
     MHVTask* downloadTask = [[MHVTask alloc] initWithCallback:callback andChildTask:getVocab];
     
-    HVCHECK_NOTNULL(downloadTask);
+    MHVCHECK_NOTNULL(downloadTask);
     
     [downloadTask start];
     
@@ -127,7 +127,7 @@ LError:
 
 -(BOOL)ensureVocabsDownloaded:(MHVVocabIdentifierCollection *)vocabIDs maxAge:(NSTimeInterval)ageInSeconds
 {
-    HVCHECK_NOTNULL(vocabIDs);
+    MHVCHECK_NOTNULL(vocabIDs);
     
     MHVVocabIdentifierCollection* vocabsToDownload = nil;
     
@@ -136,7 +136,7 @@ LError:
         MHVVocabIdentifier* vocabID = [vocabIDs objectAtIndex:i];
         if ([self isStaleVocabWithID:vocabID maxAge:ageInSeconds])
         {
-            HVENSURE(vocabsToDownload, MHVVocabIdentifierCollection);
+            MHVENSURE(vocabsToDownload, MHVVocabIdentifierCollection);
             [vocabsToDownload addObject:vocabID];
         }
     }
@@ -145,7 +145,7 @@ LError:
     {
         MHVGetVocabTask* task = [self newDownloadVocabTaskForVocabs:vocabsToDownload];
         
-        HVCHECK_NOTNULL(task);
+        MHVCHECK_NOTNULL(task);
         
         [task start];
     }
@@ -180,7 +180,7 @@ LError:
 
 @end
 
-@implementation MHVLocalVocabStore (HVPrivate)
+@implementation MHVLocalVocabStore (MHVPrivate)
 
 -(BOOL)isStaleVocabWithID:(MHVVocabIdentifier *)vocabID maxAge:(NSTimeInterval)maxAgeSeconds
 {

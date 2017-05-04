@@ -29,7 +29,7 @@
     [MHVUIAlert showYesNoWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the next time you run it." callback:^(id sender) {
         
         MHVUIAlert* alert = (MHVUIAlert *) sender;
-        if (alert.result != HVUIAlertOK)
+        if (alert.result != MHVUIAlertOK)
         {
             return;
         }

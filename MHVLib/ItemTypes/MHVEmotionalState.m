@@ -20,23 +20,23 @@
 #import "MHVEmotionalState.h"
 
 
-NSString* stringFromMood(enum HVMood mood)
+NSString* stringFromMood(enum MHVMood mood)
 {
     switch (mood) 
     {
-        case HVMoodDepressed:
+        case MHVMoodDepressed:
             return @"Depressed";
         
-        case HVMoodSad:
+        case MHVMoodSad:
             return @"Sad";
         
-        case HVMoodNeutral:
+        case MHVMoodNeutral:
             return @"Neutral";
         
-        case HVMoodHappy:
+        case MHVMoodHappy:
             return @"Happy";
         
-        case HVMoodElated:
+        case MHVMoodElated:
             return @"Elated";
             
         default:
@@ -46,23 +46,23 @@ NSString* stringFromMood(enum HVMood mood)
     return c_emptyString;
 }
 
-NSString* stringFromWellBeing(enum HVWellBeing wellBeing)
+NSString* stringFromWellBeing(enum MHVWellBeing wellBeing)
 {
     switch (wellBeing) 
     {
-        case HVWellBeingSick:
+        case MHVWellBeingSick:
             return @"Sick";
         
-        case HVWellBeingImpaired:
+        case MHVWellBeingImpaired:
             return @"Impaired";
         
-        case HVWellBeingAble:
+        case MHVWellBeingAble:
             return @"Able";
         
-        case HVWellBeingHealthy:
+        case MHVWellBeingHealthy:
             return @"Healthy";
         
-        case HVWellBeingVigorous:
+        case MHVWellBeingVigorous:
             return @"Vigorous";
             
         default:
@@ -94,57 +94,57 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
     return [m_when toDateForCalendar:calendar];
 }
 
--(enum HVMood)mood
+-(enum MHVMood)mood
 {
-    return (m_mood) ? (enum HVMood) m_mood.value : HVMoodUnknown;
+    return (m_mood) ? (enum MHVMood) m_mood.value : MHVMoodUnknown;
 }
 
--(void)setMood:(enum HVMood)mood
+-(void)setMood:(enum MHVMood)mood
 {
-    if (mood == HVMoodUnknown)
+    if (mood == MHVMoodUnknown)
     {
         m_mood = nil;
     }
     else
     {
-        HVENSURE(m_mood, MHVOneToFive);
+        MHVENSURE(m_mood, MHVOneToFive);
         m_mood.value = (int) mood;
     }
 }
 
 
--(enum HVRelativeRating)stress
+-(enum MHVRelativeRating)stress
 {
-    return (m_stress) ? (enum HVRelativeRating) m_stress.value : HVRelativeRating_None;
+    return (m_stress) ? (enum MHVRelativeRating) m_stress.value : MHVRelativeRating_None;
 }
 
--(void)setStress:(enum HVRelativeRating)stress
+-(void)setStress:(enum MHVRelativeRating)stress
 {
-    if (stress == HVRelativeRating_None)
+    if (stress == MHVRelativeRating_None)
     {
         m_stress = nil;
     }
     else
     {
-        HVENSURE(m_stress, MHVOneToFive);
+        MHVENSURE(m_stress, MHVOneToFive);
         m_stress.value = (int) stress;
     }
 }
 
--(enum HVWellBeing)wellbeing
+-(enum MHVWellBeing)wellbeing
 {
-    return (m_wellbeing) ? (enum HVWellBeing) m_wellbeing.value : HVWellBeingUnknown;    
+    return (m_wellbeing) ? (enum MHVWellBeing) m_wellbeing.value : MHVWellBeingUnknown;    
 }
 
--(void)setWellbeing:(enum HVWellBeing)wellbeing
+-(void)setWellbeing:(enum MHVWellBeing)wellbeing
 {
-    if (wellbeing == HVWellBeingUnknown)
+    if (wellbeing == MHVWellBeingUnknown)
     {
         m_wellbeing = nil;
     }
     else
     {
-        HVENSURE(m_wellbeing, MHVOneToFive);
+        MHVENSURE(m_wellbeing, MHVOneToFive);
         m_wellbeing.value = (int) wellbeing;
     }    
 }
@@ -182,14 +182,14 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_OPTIONAL(m_when);
-    HVVALIDATE_OPTIONAL(m_mood);
-    HVVALIDATE_OPTIONAL(m_stress);
-    HVVALIDATE_OPTIONAL(m_wellbeing);
+    MHVVALIDATE_OPTIONAL(m_when);
+    MHVVALIDATE_OPTIONAL(m_mood);
+    MHVVALIDATE_OPTIONAL(m_stress);
+    MHVVALIDATE_OPTIONAL(m_wellbeing);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

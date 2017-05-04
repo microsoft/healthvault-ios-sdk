@@ -34,7 +34,7 @@
 
 @end
 
-@interface NSMutableURLRequest (HVURLRequestExtensions)
+@interface NSMutableURLRequest (MHVURLRequestExtensions)
 
 -(void) setContentLength:(NSUInteger) length;
 -(void) setContentRangeStart:(NSUInteger) start end:(NSUInteger) end;
@@ -73,8 +73,8 @@
 
 @property (readwrite, nonatomic, weak) id<MHVHttpDelegate> delegate;
 
--(id) initWithUrl:(NSURL *) url andCallback:(HVTaskCompletion) callback;
--(id) initWithVerb:(NSString *) verb url:(NSURL *) url andCallback:(HVTaskCompletion) callback;
+-(id) initWithUrl:(NSURL *) url andCallback:(MHVTaskCompletion) callback;
+-(id) initWithVerb:(NSString *) verb url:(NSURL *) url andCallback:(MHVTaskCompletion) callback;
 
 @end
 

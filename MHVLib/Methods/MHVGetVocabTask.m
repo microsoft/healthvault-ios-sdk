@@ -1,5 +1,5 @@
 //
-//  HVGetVocab.m
+//  MHVGetVocab.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -68,20 +68,20 @@ static NSString* const c_element_vocab = @"vocabulary";
     return (results) ? results.firstVocab : nil;
 }
 
--(id)initWithVocabID:(MHVVocabIdentifier *)vocabID andCallback:(HVTaskCompletion)callback
+-(id)initWithVocabID:(MHVVocabIdentifier *)vocabID andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(vocabID);
+    MHVCHECK_NOTNULL(vocabID);
     
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_params = [[MHVVocabParams alloc] initWithVocabID:vocabID];
-    HVCHECK_NOTNULL(m_params);
+    MHVCHECK_NOTNULL(m_params);
         
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 

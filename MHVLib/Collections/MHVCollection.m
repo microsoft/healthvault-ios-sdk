@@ -26,29 +26,29 @@
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_inner = [[NSMutableArray alloc] init];
-    HVCHECK_NOTNULL(m_inner);
+    MHVCHECK_NOTNULL(m_inner);
     
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithCapacity:(NSUInteger)numItems
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
 
     m_inner = [[NSMutableArray alloc] initWithCapacity:numItems];
-    HVCHECK_NOTNULL(m_inner);
+    MHVCHECK_NOTNULL(m_inner);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -155,13 +155,13 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [NSString class];
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(BOOL) containsString:(NSString *)value
@@ -194,7 +194,7 @@ LError:
 
 -(BOOL) removeString:(NSString *)value
 {
-    HVCHECK_NOTNULL(value);
+    MHVCHECK_NOTNULL(value);
     
     NSUInteger index = [self indexOfString:value];
     if (index == NSNotFound)

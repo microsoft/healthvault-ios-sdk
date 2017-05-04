@@ -55,14 +55,14 @@ static const xmlChar* x_attribute_key = XMLSTRINGCONST("key");
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVConfigurationEntry class];
             
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 @end

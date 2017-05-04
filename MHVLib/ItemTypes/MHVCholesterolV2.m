@@ -52,7 +52,7 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)setLdlValue:(double)ldl
 {
-    HVENSURE(m_ldl, MHVConcentrationValue);
+    MHVENSURE(m_ldl, MHVConcentrationValue);
     m_ldl.mmolPerLiter = ldl;
 }
 
@@ -63,7 +63,7 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)setHdlValue:(double)hdl
 {
-    HVENSURE(m_hdl, MHVConcentrationValue);
+    MHVENSURE(m_hdl, MHVConcentrationValue);
     m_hdl.mmolPerLiter = hdl;
 }
 
@@ -74,7 +74,7 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)setTriglyceridesValue:(double)triglycerides
 {
-    HVENSURE(m_triglycerides, MHVConcentrationValue);
+    MHVENSURE(m_triglycerides, MHVConcentrationValue);
     m_triglycerides.mmolPerLiter = triglycerides;
 }
 
@@ -85,7 +85,7 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)setTotalValue:(double)totalValue
 {
-    HVENSURE(m_total, MHVConcentrationValue);
+    MHVENSURE(m_total, MHVConcentrationValue);
     m_total.mmolPerLiter = totalValue;
 }
 
@@ -96,7 +96,7 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)setLdlValueMgDL:(double)ldlValueMgDL
 {
-    HVENSURE(m_ldl, MHVConcentrationValue);
+    MHVENSURE(m_ldl, MHVConcentrationValue);
     [m_ldl setMgPerDL:ldlValueMgDL gramsPerMole:c_cholesterolMolarMass];
 }
 
@@ -107,7 +107,7 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)setHdlValueMgDL:(double)hdlValueMgDL
 {
-    HVENSURE(m_hdl, MHVConcentrationValue);
+    MHVENSURE(m_hdl, MHVConcentrationValue);
     [m_hdl setMgPerDL:hdlValueMgDL gramsPerMole:c_cholesterolMolarMass];
 }
 
@@ -118,7 +118,7 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)setTriglyceridesValueMgDl:(double)triglyceridesMgDl
 {
-    HVENSURE(m_triglycerides, MHVConcentrationValue);
+    MHVENSURE(m_triglycerides, MHVConcentrationValue);
     [m_triglycerides setMgPerDL:triglyceridesMgDl gramsPerMole:c_triglyceridesMolarMass];
 }
 
@@ -129,22 +129,22 @@ static const xmlChar* x_element_triglycerides = XMLSTRINGCONST("triglyceride");
 
 -(void)setTotalValueMgDL:(double)totalValueMgDL
 {
-    HVENSURE(m_total, MHVConcentrationValue);
+    MHVENSURE(m_total, MHVConcentrationValue);
     [m_total setMgPerDL:totalValueMgDL gramsPerMole:c_cholesterolMolarMass];
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidCholesterol);
-    HVVALIDATE_OPTIONAL(m_ldl);
-    HVVALIDATE_OPTIONAL(m_hdl);
-    HVVALIDATE_OPTIONAL(m_total);
-    HVVALIDATE_OPTIONAL(m_triglycerides);
+    MHVVALIDATE(m_when, MHVClientError_InvalidCholesterol);
+    MHVVALIDATE_OPTIONAL(m_ldl);
+    MHVVALIDATE_OPTIONAL(m_hdl);
+    MHVVALIDATE_OPTIONAL(m_total);
+    MHVVALIDATE_OPTIONAL(m_triglycerides);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

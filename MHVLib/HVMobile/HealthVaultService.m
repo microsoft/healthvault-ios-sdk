@@ -31,7 +31,7 @@
 #import "MHVCommon.h"
 #import "MHVClient.h"
 
-@interface HealthVaultService (HVPrivate)
+@interface HealthVaultService (MHVPrivate)
 
 -(BOOL) initDefaultProviders;
 
@@ -129,12 +129,9 @@
 - (id)initWithDefaultUrl: (NSString *)masterAppId {
 	
     MHVEnvironmentSettings* defaultEnvironment = [[MHVClient current].settings firstEnvironment];
-    HVCHECK_NOTNULL(defaultEnvironment);
+    MHVCHECK_NOTNULL(defaultEnvironment);
     
     return [self initForAppID:masterAppId andEnvironment:defaultEnvironment];
-
-LError:
-    HVALLOC_FAIL;
 }
 
 - (id)initWithUrl: (NSString *)healthServiceUrl
@@ -142,7 +139,7 @@ LError:
 	  masterAppId: (NSString *)masterAppId {
 
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.settingsFileName = masterAppId;
     self.healthServiceUrl = healthServiceUrl;
@@ -153,14 +150,14 @@ LError:
     self.country = DEFAULT_COUNTRY;
 
     _records = [NSMutableArray new];
-    HVCHECK_NOTNULL(_records);
+    MHVCHECK_NOTNULL(_records);
     
-    HVCHECK_SUCCESS([self initDefaultProviders]);
+    MHVCHECK_SUCCESS([self initDefaultProviders]);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initForAppID:(NSString *)appID andEnvironment:(MHVEnvironmentSettings *)environment
@@ -419,18 +416,18 @@ LError:
 
 @end
 
-@implementation HealthVaultService (HVPrivate)
+@implementation HealthVaultService (MHVPrivate)
 
 -(BOOL)initDefaultProviders
 {
     _transport = [[MHVHttpTransport alloc] init];
-    HVCHECK_NOTNULL(_transport);
+    MHVCHECK_NOTNULL(_transport);
     
     _provisioner = [[Provisioner alloc] init];
-    HVCHECK_NOTNULL(_provisioner);
+    MHVCHECK_NOTNULL(_provisioner);
     
     _cryptographer = [[MHVCryptographer alloc] init];
-    HVCHECK_NOTNULL(_cryptographer);
+    MHVCHECK_NOTNULL(_cryptographer);
     
     return TRUE;
     

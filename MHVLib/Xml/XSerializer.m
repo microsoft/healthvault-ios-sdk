@@ -26,7 +26,7 @@ NSString* const XExceptionNotSerializable = @"X_NotSerializable";
 +(NSString *) serializeToString:(id)obj withRoot:(NSString *)root
 {
     XWriter *writer = [[XWriter alloc] init];
-    HVCHECK_NOTNULL(writer);
+    MHVCHECK_NOTNULL(writer);
     
     @try 
     {
@@ -46,10 +46,10 @@ LError:
 
 +(BOOL) serialize:(id)obj withRoot:(NSString *)root toWriter:(XWriter *)writer
 {
-    HVCHECK_NOTNULL(obj);
-    HVCHECK_STRING(root);
-    HVCHECK_NOTNULL(writer);
-    HVCHECK_SUCCESS([obj conformsToProtocol:@protocol(XSerializable)]);
+    MHVCHECK_NOTNULL(obj);
+    MHVCHECK_STRING(root);
+    MHVCHECK_NOTNULL(writer);
+    MHVCHECK_SUCCESS([obj conformsToProtocol:@protocol(XSerializable)]);
     
     //
     // Alloc pool manually. If we use @autoreleasepool, and the serializer throws an exception, which
@@ -81,10 +81,10 @@ LError:
 
 +(BOOL)serialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *)filePath
 {
-    HVCHECK_STRING(filePath);
+    MHVCHECK_STRING(filePath);
     
     XWriter* writer = [[XWriter alloc] initFromFile:filePath];
-    HVCHECK_NOTNULL(writer);
+    MHVCHECK_NOTNULL(writer);
     
     @try 
     {
@@ -107,15 +107,15 @@ LError:
 +(BOOL)secureSerialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *)filePath withConverter:(XConverter *)converter
 {
     XWriter* writer = [[XWriter alloc] initWithBufferSize:2048 andConverter:converter];
-    HVCHECK_NOTNULL(writer);
+    MHVCHECK_NOTNULL(writer);
     
     NSData* rawData = nil;
     @try
     {
-        HVCHECK_SUCCESS([XSerializer serialize:obj withRoot:root toWriter:writer]);
+        MHVCHECK_SUCCESS([XSerializer serialize:obj withRoot:root toWriter:writer]);
         
         rawData = [[NSData alloc] initWithBytesNoCopy:[writer getXml] length:[writer getLength] freeWhenDone:FALSE];
-        HVCHECK_NOTNULL(rawData);
+        MHVCHECK_NOTNULL(rawData);
         
         return [rawData writeToFile:filePath
                             options:NSDataWritingAtomic | NSDataWritingFileProtectionComplete
@@ -137,9 +137,9 @@ LError:
 
 +(BOOL) deserialize:(XReader *)reader withRoot:(NSString *)root into:(id)obj
 {
-    HVCHECK_NOTNULL(reader);
-    HVCHECK_STRING(root);
-    HVCHECK_NOTNULL(obj);
+    MHVCHECK_NOTNULL(reader);
+    MHVCHECK_STRING(root);
+    MHVCHECK_NOTNULL(obj);
     
     @autoreleasepool
     {
@@ -169,7 +169,7 @@ LError:
 
 -(NSString *)toXmlStringWithRoot:(NSString *)root
 {
-    HVCHECK_STRING(root);
+    MHVCHECK_STRING(root);
     
     return [XSerializer serializeToString:self withRoot:root];
     
@@ -179,10 +179,10 @@ LError:
 
 +(id) newFromString:(NSString *)xml withRoot:(NSString *)root asClass:(Class)classObj
 {
-    HVCHECK_STRING(xml);
+    MHVCHECK_STRING(xml);
     
     XReader *reader = [[XReader alloc] initFromString:xml];
-    HVCHECK_NOTNULL(reader);
+    MHVCHECK_NOTNULL(reader);
     @try 
     {
         return [NSObject newFromReader:reader withRoot:root asClass:classObj];
@@ -200,12 +200,12 @@ LError:
 {
     id obj = nil;
     
-    HVASSERT_NOTNULL(reader);
-    HVCHECK_STRING(root);
-    HVCHECK_NOTNULL(classObj);
+    MHVASSERT_NOTNULL(reader);
+    MHVCHECK_STRING(root);
+    MHVCHECK_NOTNULL(classObj);
     
     obj = [[classObj alloc] init]; // Ownership is passed to caller
-    HVCHECK_NOTNULL(obj);
+    MHVCHECK_NOTNULL(obj);
     
     @try 
     {
@@ -226,7 +226,7 @@ LError:
 
 +(id) newFromFilePath:(NSString *)filePath withRoot:(NSString *)root asClass:(Class)classObj
 {
-    HVCHECK_STRING(filePath);
+    MHVCHECK_STRING(filePath);
     
 #ifdef LOGXML
     NSString *rawXml = [[NSString alloc] initWithContentsOfFile:filePath usedEncoding:nil error:nil];
@@ -235,7 +235,7 @@ LError:
 #endif
     
     XReader* reader = [[XReader alloc] initFromFile:filePath];
-    HVCHECK_NOTNULL(reader);
+    MHVCHECK_NOTNULL(reader);
     @try 
     {
         return [NSObject newFromReader:reader withRoot:root asClass:classObj];
@@ -261,7 +261,7 @@ LError:
 
 +(id)newFromSecureFilePath:(NSString *)filePath withRoot:(NSString *)root asClass:(Class)classObj withConverter:(XConverter *)converter
 {
-    HVCHECK_STRING(filePath);
+    MHVCHECK_STRING(filePath);
     
     XReader* reader = nil;
     NSData* fileData = nil;
@@ -274,7 +274,7 @@ LError:
         }
         
         reader = [[XReader alloc] initFromMemory:fileData withConverter:converter];
-        HVCHECK_NOTNULL(reader);
+        MHVCHECK_NOTNULL(reader);
         
         return [NSObject newFromReader:reader withRoot:root asClass:classObj];
     }
@@ -294,7 +294,7 @@ LError:
 
 +(id) newFromFileUrl:(NSURL *)url withRoot:(NSString *)root asClass:(Class)classObj
 {
-    HVCHECK_NOTNULL(url);
+    MHVCHECK_NOTNULL(url);
     
     return [NSObject newFromFilePath:url.path withRoot:root asClass:classObj];
     
@@ -579,7 +579,7 @@ LError:
 -(id) readElementRequired:(NSString *)name asClass:(Class)classObj
 {
     id obj = [[classObj alloc] init];
-    HVCHECK_OOM(obj);
+    MHVCHECK_OOM(obj);
     
     [self readElementRequired:name intoObject:obj];
     return obj;
@@ -599,7 +599,7 @@ LError:
     if ([self isStartElementWithName:name])
     {
         id obj = [[classObj alloc] init];
-        HVCHECK_OOM(obj);
+        MHVCHECK_OOM(obj);
         
         [self readElementContentIntoObject:obj];
         
@@ -631,7 +631,7 @@ LError:
 -(NSMutableArray *) readElementArray:(NSString *)name asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
 {
     const xmlChar* xName = [name toXmlString];
-    HVCHECK_OOM(xName);
+    MHVCHECK_OOM(xName);
     
     return [self readElementArrayWithXmlName:xName asClass:classObj andArrayClass:arrayClassObj];
 }
@@ -655,7 +655,7 @@ LError:
         if (elements == nil)
         {
             elements = [[MHVStringCollection alloc] init];
-            HVCHECK_OOM(elements);
+            MHVCHECK_OOM(elements);
         }
 
         [elements addObject:[self readStringElementRequired:name]];
@@ -831,7 +831,7 @@ LError:
 -(id)readElementRequiredWithXmlName:(const xmlChar *)xName asClass:(Class)classObj
 {
     id obj = [[classObj alloc] init];
-    HVCHECK_OOM(obj);
+    MHVCHECK_OOM(obj);
     
     [self readElementRequiredWithXmlName:xName intoObject:obj];
     return obj;
@@ -853,7 +853,7 @@ LError:
     if ([self isStartElementWithXmlName:xmlName])
     {
         id obj = [[classObj alloc] init];
-        HVCHECK_OOM(obj);
+        MHVCHECK_OOM(obj);
         
         [self readElementContentIntoObject:obj];
         
@@ -991,7 +991,7 @@ LError:
         if (elements == nil)
         {
             elements = [[arrayClassObj alloc] init];
-            HVCHECK_OOM(elements);
+            MHVCHECK_OOM(elements);
         }
         
         [elements addObject:[self readElementRequiredWithXmlName:xName asClass:classObj]];
@@ -1074,8 +1074,8 @@ void throwWriterError(void)
 
 -(void) writeEmptyElement:(NSString *)name
 {
-    HVCHECK_XWRITE([self writeStartElement:name]);
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeStartElement:name]);
+    MHVCHECK_XWRITE([self writeEndElement]);
 }
 
 -(void) writeElementRequired:(NSString *)name content:(id<XSerializable>)content
@@ -1085,12 +1085,12 @@ void throwWriterError(void)
         [XException throwException:XExceptionRequiredDataMissing reason:name];
     }
     
-    HVCHECK_XWRITE([self writeStartElement:name]);
+    MHVCHECK_XWRITE([self writeStartElement:name]);
     {
         [content serializeAttributes:self];
         [content serialize:self];
     }
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeEndElement]);
 }
 
 -(void) writeElementRequired:(NSString *)name value:(NSString *)value
@@ -1100,11 +1100,11 @@ void throwWriterError(void)
         [NSException throwInvalidArg];
     }
     
-    HVCHECK_XWRITE([self writeStartElement:name]);
+    MHVCHECK_XWRITE([self writeStartElement:name]);
     {
         [self writeText:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeEndElement]);
 }
 
 -(void) writeElementArrayRequired:(NSString *)name elements:(NSArray *)array
@@ -1157,11 +1157,11 @@ void throwWriterError(void)
         return;
     }
     
-    HVCHECK_XWRITE([self writeStartElement:name]);
+    MHVCHECK_XWRITE([self writeStartElement:name]);
     {
         [self writeElementArray:itemName elements:array];
     }
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeEndElement]);
 }
 
 -(void)writeRawElementArray:(NSString *)name elements:(NSArray *)array
@@ -1173,26 +1173,26 @@ void throwWriterError(void)
     
     for (NSString* xml in array) 
     {
-        HVCHECK_XWRITE([self writeRaw:xml]);
+        MHVCHECK_XWRITE([self writeRaw:xml]);
     }
 }
 
 -(void) writeElement:(NSString *)name intValue:(int)value
 {
-    HVCHECK_XWRITE([self writeStartElement:name]);
+    MHVCHECK_XWRITE([self writeStartElement:name]);
     {
         [self writeInt:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeEndElement]);
 }
 
 -(void)writeElement:(NSString *)name doubleValue:(double)value
 {
-    HVCHECK_XWRITE([self writeStartElement:name]);
+    MHVCHECK_XWRITE([self writeStartElement:name]);
     {
         [self writeDouble:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeEndElement]);
 }
 
 -(void) writeElement:(id)name dateValue:(NSDate *)value
@@ -1202,20 +1202,20 @@ void throwWriterError(void)
         return;
     }
 
-    HVCHECK_XWRITE([self writeStartElement:name]);
+    MHVCHECK_XWRITE([self writeStartElement:name]);
     {
         [self writeDate:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeEndElement]);
 }
 
 -(void)writeElement:(NSString *)name boolValue:(BOOL)value
 {
-    HVCHECK_XWRITE([self writeStartElement:name]);
+    MHVCHECK_XWRITE([self writeStartElement:name]);
     {
         [self writeBool:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);    
+    MHVCHECK_XWRITE([self writeEndElement]);    
 }
 
 -(void)writeElement:(NSString *)name object:(id)value
@@ -1247,7 +1247,7 @@ void throwWriterError(void)
         return;
     }
     
-    HVCHECK_XWRITE([self writeString:value]);
+    MHVCHECK_XWRITE([self writeString:value]);
 }
 
 -(void)writeElementXmlName:(const xmlChar *)xmlName content:(id<XSerializable>)content
@@ -1257,12 +1257,12 @@ void throwWriterError(void)
         return;
     }
     
-    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    MHVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
     {
         [content serializeAttributes:self];
         [content serialize:self];
     }
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeEndElement]);
     
 }
 
@@ -1273,20 +1273,20 @@ void throwWriterError(void)
         return;
     }
     
-    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    MHVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
     {
         [self writeText:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);
+    MHVCHECK_XWRITE([self writeEndElement]);
 }
 
 -(void)writeElementXmlName:(const xmlChar *)xmlName doubleValue:(double)value
 {
-    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    MHVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
     {
         [self writeDouble:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);    
+    MHVCHECK_XWRITE([self writeEndElement]);    
 }
 
 -(void)writeElementXmlName:(const xmlChar *)xmlName dateValue:(NSDate *)value
@@ -1296,29 +1296,29 @@ void throwWriterError(void)
         return;
     }
     
-    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    MHVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
     {
         [self writeDate:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);    
+    MHVCHECK_XWRITE([self writeEndElement]);    
 }
 
 -(void)writeElementXmlName:(const xmlChar *)xmlName intValue:(int)value
 {
-    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    MHVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
     {
         [self writeInt:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);    
+    MHVCHECK_XWRITE([self writeEndElement]);    
 }
 
 -(void)writeElementXmlName:(const xmlChar *)xmlName boolValue:(BOOL)value
 {
-    HVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
+    MHVCHECK_XWRITE([self writeStartElementXmlName:xmlName]);
     {
         [self writeBool:value];
     }
-    HVCHECK_XWRITE([self writeEndElement]);    
+    MHVCHECK_XWRITE([self writeEndElement]);    
 }
 
 @end

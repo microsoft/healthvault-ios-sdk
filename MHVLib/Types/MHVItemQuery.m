@@ -41,7 +41,7 @@ static NSString* const c_element_view = @"format";
 @synthesize view = m_view;
 -(void)setView:(MHVItemView *)view
 {
-    HVASSERT(view != nil);
+    MHVASSERT(view != nil);
     if (view)
     {
         m_view = view;
@@ -57,7 +57,7 @@ static NSString* const c_element_view = @"format";
 {
     if (maxResultsValue >= 0)
     {
-        HVENSURE(m_max, MHVInt);
+        MHVENSURE(m_max, MHVInt);
         m_max.value = maxResultsValue;       
     }
     else
@@ -75,7 +75,7 @@ static NSString* const c_element_view = @"format";
 {
     if (maxFullResultsValue >= 0)
     {
-        HVENSURE(m_maxFull, MHVInt);
+        MHVENSURE(m_maxFull, MHVInt);
         m_maxFull.value = maxFullResultsValue;       
     }
     else
@@ -87,7 +87,7 @@ static NSString* const c_element_view = @"format";
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_view = [[MHVItemView alloc] init];
     m_itemIDs = [[MHVStringCollection alloc] init];
@@ -95,17 +95,17 @@ static NSString* const c_element_view = @"format";
     m_clientIDs = [[MHVStringCollection alloc] init];
     m_filters = [[MHVItemFilterCollection alloc] init];
     
-    HVCHECK_TRUE(m_view && m_itemIDs && m_keys && m_filters);
+    MHVCHECK_TRUE(m_view && m_itemIDs && m_keys && m_filters);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithTypeID:(NSString *)typeID
 {
-    HVCHECK_STRING(typeID);
+    MHVCHECK_STRING(typeID);
     
     MHVItemFilter* filter = [[MHVItemFilter alloc] initWithTypeID:typeID];
     self = [self initWithFilter:filter];
@@ -113,15 +113,15 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithFilter:(MHVItemFilter *)filter
 {
-    HVCHECK_NOTNULL(filter);
+    MHVCHECK_NOTNULL(filter);
     
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [m_filters addObject:filter];
     
@@ -133,75 +133,75 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithItemID:(NSString *)itemID
 {
-    HVCHECK_STRING(itemID);
+    MHVCHECK_STRING(itemID);
 
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [m_itemIDs addObject:itemID];
 
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithItemIDs:(NSArray *)ids
 {
-    HVCHECK_NOTNULL(ids);
+    MHVCHECK_NOTNULL(ids);
     
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [m_itemIDs addObjectsFromArray:ids];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithItemKey:(MHVItemKey *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [m_keys addObject:key];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithItemKeys:(NSArray *)keys
 {
-    HVCHECK_NOTNULL(keys);
+    MHVCHECK_NOTNULL(keys);
     
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [m_keys addObjectsFromArray:keys];
     
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithPendingItems:(NSArray *)pendingItems
 {
-    HVCHECK_NOTNULL(pendingItems);
+    MHVCHECK_NOTNULL(pendingItems);
     
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     for (MHVPendingItem *item in pendingItems) 
     {
@@ -211,13 +211,13 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithItemKey:(MHVItemKey *)key andType:(NSString *)typeID
 {
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [m_keys addObject:key];   
     if (![NSString isNilOrEmpty:typeID])
@@ -228,15 +228,15 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithItemID:(NSString *)itemID andType:(NSString *)typeID
 {
-    HVCHECK_STRING(itemID);
+    MHVCHECK_STRING(itemID);
     
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [m_itemIDs addObject:itemID];
     if (![NSString isNilOrEmpty:typeID])
@@ -247,15 +247,15 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithClientID:(NSString *)clientID andType:(NSString *)typeID
 {
-    HVCHECK_STRING(clientID);
+    MHVCHECK_STRING(clientID);
     
     self = [self init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [m_clientIDs addObject:clientID];
     if (![NSString isNilOrEmpty:typeID])
@@ -266,24 +266,24 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_view, HVClientError_InvalidItemQuery);
+    MHVVALIDATE(m_view, MHVClientError_InvalidItemQuery);
     
-    HVVALIDATE_ARRAYOPTIONAL(m_itemIDs, HVClientError_InvalidItemQuery);
-    HVVALIDATE_ARRAYOPTIONAL(m_keys, HVClientError_InvalidItemQuery);
-    HVVALIDATE_ARRAYOPTIONAL(m_filters, HVClientError_InvalidItemQuery);
+    MHVVALIDATE_ARRAYOPTIONAL(m_itemIDs, MHVClientError_InvalidItemQuery);
+    MHVVALIDATE_ARRAYOPTIONAL(m_keys, MHVClientError_InvalidItemQuery);
+    MHVVALIDATE_ARRAYOPTIONAL(m_filters, MHVClientError_InvalidItemQuery);
 
-    HVVALIDATE_OPTIONAL(m_max);
-    HVVALIDATE_OPTIONAL(m_maxFull);
+    MHVVALIDATE_OPTIONAL(m_max);
+    MHVVALIDATE_OPTIONAL(m_maxFull);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serializeAttributes:(XWriter *)writer
@@ -352,14 +352,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVItemQuery class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)addItem:(MHVItemQuery *)query

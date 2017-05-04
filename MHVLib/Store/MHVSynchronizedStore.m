@@ -24,7 +24,7 @@
 #import "MHVSynchronizationManager.h"
 #import "MHVClient.h"
 
-@interface MHVSynchronizedStore (HVPrivate) 
+@interface MHVSynchronizedStore (MHVPrivate) 
 
 -(void) setLocalStore:(id<MHVItemStore>) store;
 
@@ -57,33 +57,33 @@
 
 -(id)initOverStore:(id)store
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     MHVLocalItemStore* localStore = [[MHVLocalItemStore alloc] initWithObjectStore:store];
-    HVCHECK_NOTNULL(localStore);
+    MHVCHECK_NOTNULL(localStore);
     
     self = [self initOverItemStore:localStore];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initOverItemStore:(id<MHVItemStore>)store
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
         
     self.localStore = store;
-    m_sections = HVItemSection_Standard;
+    m_sections = MHVItemSection_Standard;
      
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -99,7 +99,7 @@ LError:
 
 -(MHVItem *)getLocalItemWithKey:(MHVItemKey *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     MHVItem* item  = [self getlocalItemWithID:key.itemID];
     if (!item)
@@ -144,10 +144,10 @@ LError:
 
 -(MHVTask *)downloadItemsWithKeys:(NSArray *)keys typeID:(NSString *)typeID inView:(MHVTypeView *)view
 {
-    HVCHECK_NOTNULL(keys);
+    MHVCHECK_NOTNULL(keys);
     
     MHVItemQuery* query = [self newQueryFromKeys:keys];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     if (![NSString isNilOrEmpty:typeID])
     {
@@ -164,18 +164,18 @@ LError:
     return nil;
 }
 
--(MHVTask *)getItemsInRecord:(MHVRecordReference *)record withKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
+-(MHVTask *)getItemsInRecord:(MHVRecordReference *)record withKeys:(NSArray *)keys callback:(MHVTaskCompletion)callback
 {
     MHVItemQuery* query = [self newQueryFromKeys:keys];
     return [self getItemsInRecord:record forQuery:query callback:callback];
 }
 
--(MHVTask *)getItemsInRecord:(MHVRecordReference *)record forQuery:(MHVItemQuery *)query callback:(HVTaskCompletion)callback
+-(MHVTask *)getItemsInRecord:(MHVRecordReference *)record forQuery:(MHVItemQuery *)query callback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     MHVTask* getItemsTask = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(getItemsTask);
+    MHVCHECK_NOTNULL(getItemsTask);
     getItemsTask.taskName = @"getItemsInRecord";
     //
     // We'll run the download task as a child of the parent getItemsTask
@@ -192,7 +192,7 @@ LError:
         task.parent.result = [self getLocalItemsWithKeys:downloadedKeys nullForNotFound:FALSE];
         
     }];
-    HVCHECK_NOTNULL(downloadTask);
+    MHVCHECK_NOTNULL(downloadTask);
     
     [getItemsTask setNextTask:downloadTask];
     
@@ -210,10 +210,10 @@ LError:
     return [self putLocalItem:item];
 }
 
--(MHVDownloadItemsTask *)downloadItemsInRecord:(MHVRecordReference *)record forKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
+-(MHVDownloadItemsTask *)downloadItemsInRecord:(MHVRecordReference *)record forKeys:(NSArray *)keys callback:(MHVTaskCompletion)callback
 {
     MHVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forKeys:keys callback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     [task start];
     
@@ -223,10 +223,10 @@ LError:
     return nil;    
 }
 
--(MHVDownloadItemsTask *)downloadItemsInRecord:(MHVRecordReference *) record query :(MHVItemQuery *)query callback:(HVTaskCompletion)callback
+-(MHVDownloadItemsTask *)downloadItemsInRecord:(MHVRecordReference *) record query :(MHVItemQuery *)query callback:(MHVTaskCompletion)callback
 {
     MHVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forQuery:query callback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     [task start];
     
@@ -236,10 +236,10 @@ LError:
     return nil;
 }
 
--(MHVDownloadItemsTask *)newDownloadItemsInRecord:(MHVRecordReference *)record forKeys:(NSArray *)keys callback:(HVTaskCompletion)callback
+-(MHVDownloadItemsTask *)newDownloadItemsInRecord:(MHVRecordReference *)record forKeys:(NSArray *)keys callback:(MHVTaskCompletion)callback
 {
     MHVItemQuery* query = [self newQueryFromKeys:keys];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     return [self newDownloadItemsInRecord:record forQuery:query callback:callback];
     
@@ -247,21 +247,21 @@ LError:
     return nil;
 }
 
--(MHVDownloadItemsTask *)newDownloadItemsInRecord:(MHVRecordReference *)record forQuery:(MHVItemQuery *)query callback:(HVTaskCompletion)callback
+-(MHVDownloadItemsTask *)newDownloadItemsInRecord:(MHVRecordReference *)record forQuery:(MHVItemQuery *)query callback:(MHVTaskCompletion)callback
 {
     MHVDownloadItemsTask* downloadTask = nil;
     
-    HVCHECK_NOTNULL(record); 
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(record); 
+    MHVCHECK_NOTNULL(query);
         
     downloadTask = [[MHVDownloadItemsTask alloc] initWithCallback:callback]; // do not auto release
-    HVCHECK_NOTNULL(downloadTask);
+    MHVCHECK_NOTNULL(downloadTask);
     downloadTask.taskName = @"downloadItems";
  
     MHVGetItemsTask* getItemsTask = [[[MHVClient current] methodFactory] newGetItemsForRecord:record query:query andCallback:^(MHVTask *task) {
         [self completedGetItemsTask:task];
     }];
-    HVCHECK_NOTNULL(getItemsTask);
+    MHVCHECK_NOTNULL(getItemsTask);
     getItemsTask.taskName = @"getItemsTask";
     
     [downloadTask setNextTask:getItemsTask];
@@ -272,12 +272,12 @@ LError:
 @end
 
 
-@implementation MHVSynchronizedStore (HVPrivate)
+@implementation MHVSynchronizedStore (MHVPrivate)
 
 -(MHVItemCollection *)getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL)includeNull
 {    
     MHVItemCollection *results = [[MHVItemCollection alloc] init];
-    HVCHECK_NOTNULL(results);
+    MHVCHECK_NOTNULL(results);
     
     if (keys)
     {
@@ -308,7 +308,7 @@ LError:
 -(MHVItemQuery *)newQueryFromKeys:(NSArray *)keys
 {
     MHVItemQuery* query = [[MHVItemQuery alloc] init];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     query.view.sections = m_sections;
     for (MHVItemKey* key in keys) 
@@ -344,7 +344,7 @@ LError:
     //
     if (![self updateItemsInLocalStore:result.items])
     {
-        [MHVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_PutLocalStore)];
+        [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_PutLocalStore)];
     }
     //
     // Record keys that were successfully downloaded
@@ -389,12 +389,12 @@ LError:
 
 -(BOOL)updateItemsInLocalStore:(MHVItemCollection *)items
 {
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     for (NSInteger i = 0, count = items.count; i < count; ++i)
     {
         MHVItem* item = [items objectAtIndex:i];
-        HVCHECK_SUCCESS([self replaceLocalItemWithDownloaded:item]);
+        MHVCHECK_SUCCESS([self replaceLocalItemWithDownloaded:item]);
     }
     
     return TRUE;

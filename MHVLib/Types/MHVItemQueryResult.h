@@ -58,11 +58,11 @@
 //
 // If the query result has pending items, get them and ADD them to the items collection
 // 
--(MHVTask *) getPendingItemsForRecord:(MHVRecordReference *) record withCallback:(HVTaskCompletion) callback;
--(MHVTask *) getPendingItemsForRecord:(MHVRecordReference *) record itemView:(MHVItemView *) view withCallback:(HVTaskCompletion) callback;
+-(MHVTask *) getPendingItemsForRecord:(MHVRecordReference *) record withCallback:(MHVTaskCompletion) callback;
+-(MHVTask *) getPendingItemsForRecord:(MHVRecordReference *) record itemView:(MHVItemView *) view withCallback:(MHVTaskCompletion) callback;
 
--(MHVTask *) createTaskToGetPendingItemsForRecord:(MHVRecordReference *) record withCallback:(HVTaskCompletion) callback;
--(MHVTask *) createTaskToGetPendingItemsForRecord:(MHVRecordReference *) record itemView:(MHVItemView *) view withCallback:(HVTaskCompletion) callback;
+-(MHVTask *) createTaskToGetPendingItemsForRecord:(MHVRecordReference *) record withCallback:(MHVTaskCompletion) callback;
+-(MHVTask *) createTaskToGetPendingItemsForRecord:(MHVRecordReference *) record itemView:(MHVItemView *) view withCallback:(MHVTaskCompletion) callback;
 
 @end
 

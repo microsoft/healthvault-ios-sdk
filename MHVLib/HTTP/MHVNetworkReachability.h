@@ -21,9 +21,9 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "MHVCore.h"
 
-BOOL HVIsHostNetworkReachable(NSString* hostName);
+BOOL MHVIsHostNetworkReachable(NSString* hostName);
 
-HVDECLARE_NOTIFICATION(HVHostReachabilityNotificationName);
+MHVDECLARE_NOTIFICATION(MHVHostReachabilityNotificationName);
 
 @interface MHVHostReachability : NSObject
 {

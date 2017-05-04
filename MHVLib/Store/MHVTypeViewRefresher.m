@@ -22,7 +22,7 @@
 #import "MHVTypeViewRefresher.h"
 #import "MHVSynchronizedType.h"
 
-@interface MHVMultipleTypeViewRefresher (HVPrivate)
+@interface MHVMultipleTypeViewRefresher (MHVPrivate)
 
 -(BOOL) initViewList:(NSArray *) views;
 -(MHVItemQueryCollection *) collectQueriesForRefreshableViews;
@@ -42,29 +42,29 @@
 
 -(id)initWithRecord:(MHVRecordReference *)record views:(NSArray *)views andMaxAge:(NSTimeInterval)age
 {
-    HVCHECK_NOTNULL(record);
-    HVCHECK_NOTNULL(views);
+    MHVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(views);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
-    HVCHECK_SUCCESS([self initViewList:views]);
+    MHVCHECK_SUCCESS([self initViewList:views]);
     m_record = record;
     m_maxAge = age;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithRecordStore:(MHVLocalRecordStore *)store synchronizedTypeIDs:(NSArray *)typeIDs andMaxAge:(NSTimeInterval)age
 {
-    HVCHECK_NOTNULL(store);
-    HVCHECK_NOTNULL(typeIDs);
+    MHVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(typeIDs);
     
     NSMutableArray* views = [[NSMutableArray alloc] init];
-    HVCHECK_NOTNULL(views);
+    MHVCHECK_NOTNULL(views);
     
     for (NSString* typeID in typeIDs)
     {
@@ -77,11 +77,11 @@ LError:
     return [self initWithRecord:store.record views:views andMaxAge:age];
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
--(MHVTask *)refreshWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)refreshWithCallback:(MHVTaskCompletion)callback
 {
     MHVItemQueryCollection* queries = [self collectQueriesForRefreshableViews];
     if ([NSArray isNilOrEmpty:queries])
@@ -91,14 +91,14 @@ LError:
     }
     
     MHVTask* refreshTask = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(refreshTask);
+    MHVCHECK_NOTNULL(refreshTask);
     
     MHVGetItemsTask* getItems = [[[MHVClient current] methodFactory] newGetItemsForRecord:m_record queries:queries andCallback:^(MHVTask *task)
     {
         [self refreshComplete:(MHVGetItemsTask *) task];
     }];
     
-    HVCHECK_NOTNULL(getItems);
+    MHVCHECK_NOTNULL(getItems);
     [refreshTask setNextTask:getItems];
     
     [refreshTask start];
@@ -111,18 +111,18 @@ LError:
 
 @end
 
-@implementation MHVMultipleTypeViewRefresher (HVPrivate)
+@implementation MHVMultipleTypeViewRefresher (MHVPrivate)
 
 -(BOOL)initViewList:(NSArray *)views
 {
     m_views = [[NSMutableDictionary alloc] init];
-    HVCHECK_NOTNULL(m_views);
+    MHVCHECK_NOTNULL(m_views);
     
     for (NSUInteger i = 0, count = views.count; i < count; ++i)
     {
         id<MHVTypeView> view = [views objectAtIndex:i];
         NSString* viewName = [NSString stringWithFormat:@"View_%lu", (unsigned long)i];
-        HVCHECK_NOTNULL(viewName);
+        MHVCHECK_NOTNULL(viewName);
         
         [m_views setObject:view forKey:viewName];
     }
@@ -147,11 +147,11 @@ LError:
         if (!queries)
         {
             queries = [[MHVItemQueryCollection alloc] init];
-            HVCHECK_NOTNULL(queries);
+            MHVCHECK_NOTNULL(queries);
         }
         
         MHVItemQuery* refreshQuery = [view getQuery];
-        HVCHECK_NOTNULL(refreshQuery);
+        MHVCHECK_NOTNULL(refreshQuery);
         
         refreshQuery.name = viewName;
         [queries addItem:refreshQuery];

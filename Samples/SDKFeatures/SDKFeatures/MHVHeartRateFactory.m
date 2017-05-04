@@ -17,7 +17,7 @@
 
 #import "MHVHeartRateFactory.h"
 
-@implementation MHVHeartRate (HVFactoryMethods)
+@implementation MHVHeartRate (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date
 {
@@ -33,7 +33,7 @@
 
 @end
 
-@implementation MHVHeartRate (HVDisplay)
+@implementation MHVHeartRate (MHVDisplay)
 
 -(NSString *)detailsString
 {

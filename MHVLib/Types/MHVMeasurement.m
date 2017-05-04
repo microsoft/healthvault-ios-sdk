@@ -29,10 +29,10 @@ static const xmlChar* x_element_units = XMLSTRINGCONST("units");
 
 -(id)initWithValue:(double)value andUnits:(MHVCodableValue *)units
 {
-    HVCHECK_NOTNULL(units);
+    MHVCHECK_NOTNULL(units);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_value = value;
     self.units = units;
@@ -40,22 +40,22 @@ static const xmlChar* x_element_units = XMLSTRINGCONST("units");
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithValue:(double)value andUnitsString:(NSString *)units
 {
     MHVCodableValue* unitsValue = [[MHVCodableValue alloc] initWithText:units];
-    HVCHECK_NOTNULL(unitsValue);
+    MHVCHECK_NOTNULL(unitsValue);
     
     self = [self initWithValue:value andUnits:unitsValue];
     
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -72,14 +72,14 @@ LError:
 +(MHVMeasurement *)fromValue:(double)value unitsDisplayText:(NSString *)unitsText unitsCode:(NSString *)code unitsVocab:(NSString *)vocab
 {
     MHVCodableValue* unitCode = [[MHVCodableValue alloc] initWithText:unitsText code:code andVocab:vocab];
-    HVCHECK_NOTNULL(unitCode);
+    MHVCHECK_NOTNULL(unitCode);
     
     MHVMeasurement* measurement = [[MHVMeasurement alloc] initWithValue:value andUnits:unitCode];
     
     return measurement;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSString *)description
@@ -104,11 +104,11 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_units, HVClientError_InvalidMeasurement);
+    MHVVALIDATE(m_units, MHVClientError_InvalidMeasurement);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

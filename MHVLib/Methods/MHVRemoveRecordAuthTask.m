@@ -32,17 +32,17 @@
     return 1;
 }
 
--(id)initWithRecord:(MHVRecordReference *)record andCallback:(HVTaskCompletion)callback
+-(id)initWithRecord:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.record = record;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 

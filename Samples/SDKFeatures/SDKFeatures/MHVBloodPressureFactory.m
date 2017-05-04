@@ -18,7 +18,7 @@
 
 #import "MHVBloodPressureFactory.h"
 
-@implementation MHVBloodPressure (HVFactoryMethods)
+@implementation MHVBloodPressure (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date
 {
@@ -36,7 +36,7 @@
 
 @end
 
-@implementation MHVBloodPressure (HVDisplay)
+@implementation MHVBloodPressure (MHVDisplay)
 
 -(NSString *)detailsString
 {

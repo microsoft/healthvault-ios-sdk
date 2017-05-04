@@ -25,7 +25,7 @@ static NSString* const c_element_item = @"thing";
 static NSString* const c_element_pending = @"unprocessed-thing-key-info";
 static NSString* const c_attribute_name = @"name";
 
-@interface MHVItemQueryResult (HVPrivate)
+@interface MHVItemQueryResult (MHVPrivate)
 
 -(MHVGetItemsTask *) newGetTaskFor:(MHVPendingItemCollection *)pendingItems forRecord:(MHVRecordReference *) record itemView:(MHVItemView *) view;
 -(BOOL) nextGetPendingItems:(MHVPendingItemCollection *)pendingItems forRecord:(MHVRecordReference *) record itemView:(MHVItemView *) view andParentTask:(MHVTask *) parentTask; 
@@ -67,12 +67,12 @@ static NSString* const c_attribute_name = @"name";
 }
 
 
--(MHVTask *)getPendingItemsForRecord:(MHVRecordReference *)record withCallback:(HVTaskCompletion)callback
+-(MHVTask *)getPendingItemsForRecord:(MHVRecordReference *)record withCallback:(MHVTaskCompletion)callback
 {
     return [self getPendingItemsForRecord:record itemView:nil withCallback:callback];
 }
 
--(MHVTask *)getPendingItemsForRecord:(MHVRecordReference *)record itemView:(MHVItemView *)view withCallback:(HVTaskCompletion)callback
+-(MHVTask *)getPendingItemsForRecord:(MHVRecordReference *)record itemView:(MHVItemView *)view withCallback:(MHVTaskCompletion)callback
 {
     MHVTask* task = [self createTaskToGetPendingItemsForRecord:record itemView:view withCallback:callback];
     if (task)
@@ -82,14 +82,14 @@ static NSString* const c_attribute_name = @"name";
     return task;    
 }
 
--(MHVTask *)createTaskToGetPendingItemsForRecord:(MHVRecordReference *)record withCallback:(HVTaskCompletion)callback
+-(MHVTask *)createTaskToGetPendingItemsForRecord:(MHVRecordReference *)record withCallback:(MHVTaskCompletion)callback
 {
     return [self createTaskToGetPendingItemsForRecord:record itemView:nil withCallback:callback];
 }
 
--(MHVTask *)createTaskToGetPendingItemsForRecord:(MHVRecordReference *)record itemView:(MHVItemView *)view withCallback:(HVTaskCompletion)callback
+-(MHVTask *)createTaskToGetPendingItemsForRecord:(MHVRecordReference *)record itemView:(MHVItemView *)view withCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     if (!self.hasPendingItems)
     {
@@ -97,9 +97,9 @@ static NSString* const c_attribute_name = @"name";
     }
     
     MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
-    HVCHECK_SUCCESS([self nextGetPendingItems:self.pendingItems forRecord:record itemView:view andParentTask:task]);
+    MHVCHECK_SUCCESS([self nextGetPendingItems:self.pendingItems forRecord:record itemView:view andParentTask:task]);
     
     return task;
     
@@ -132,12 +132,12 @@ LError:
 
 @end
 
-@implementation MHVItemQueryResult (HVPrivate)
+@implementation MHVItemQueryResult (MHVPrivate)
 
 -(MHVGetItemsTask *) newGetTaskFor:(MHVPendingItemCollection *)pendingItems forRecord:(MHVRecordReference *)record itemView:(MHVItemView *) view
 {
     MHVItemQuery *pendingQuery = [[MHVItemQuery alloc] initWithPendingItems:pendingItems];
-    HVCHECK_NOTNULL(pendingQuery);
+    MHVCHECK_NOTNULL(pendingQuery);
     if (view)
     {
         pendingQuery.view = view;
@@ -157,7 +157,7 @@ LError:
 -(BOOL)nextGetPendingItems:(MHVPendingItemCollection *)pendingItems forRecord:(MHVRecordReference *)record itemView:(MHVItemView *) view andParentTask:(MHVTask *)parentTask
 {
     MHVGetItemsTask* getPendingTask = [self newGetTaskFor:pendingItems forRecord:record itemView:view];
-    HVCHECK_NOTNULL(getPendingTask);
+    MHVCHECK_NOTNULL(getPendingTask);
     
     [parentTask setNextTask:getPendingTask];    
     
@@ -196,7 +196,7 @@ LError:
 
 -(void)appendFoundItems:(MHVItemCollection *)items
 {
-    HVENSURE(m_items, MHVItemCollection);
+    MHVENSURE(m_items, MHVItemCollection);
     [m_items addObjectsFromArray:items];
 }
 
@@ -207,14 +207,14 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVItemQueryResult class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVItemQueryResult *)itemAtIndex:(NSUInteger)index

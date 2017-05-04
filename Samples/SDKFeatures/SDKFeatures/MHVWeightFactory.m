@@ -18,7 +18,7 @@
 
 #import "MHVWeightFactory.h"
 
-@implementation MHVWeight (HVFactoryMethods)
+@implementation MHVWeight (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date
 {
@@ -48,7 +48,7 @@
 
 @end
 
-@implementation MHVWeight (HVDisplay)
+@implementation MHVWeight (MHVDisplay)
 
 -(NSString *)detailsString
 {

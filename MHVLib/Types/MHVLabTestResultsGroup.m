@@ -56,15 +56,15 @@ static const xmlChar* x_element_results = XMLSTRINGCONST("results");
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_groupName, HVClientError_InvalidLabTestResultsGroup);
-    HVVALIDATE_OPTIONAL(m_laboratory);
-    HVVALIDATE_OPTIONAL(m_status);
-    HVVALIDATE_ARRAYOPTIONAL(m_subGroups, HVClientError_InvalidLabTestResultsGroup);
-    HVVALIDATE_ARRAYOPTIONAL(m_results, HVClientError_InvalidLabTestResultsGroup);
+    MHVVALIDATE(m_groupName, MHVClientError_InvalidLabTestResultsGroup);
+    MHVVALIDATE_OPTIONAL(m_laboratory);
+    MHVVALIDATE_OPTIONAL(m_status);
+    MHVVALIDATE_ARRAYOPTIONAL(m_subGroups, MHVClientError_InvalidLabTestResultsGroup);
+    MHVVALIDATE_ARRAYOPTIONAL(m_results, MHVClientError_InvalidLabTestResultsGroup);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -92,14 +92,14 @@ static const xmlChar* x_element_results = XMLSTRINGCONST("results");
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVLabTestResultsGroup class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)addItem:(MHVLabTestResultsGroup *)item

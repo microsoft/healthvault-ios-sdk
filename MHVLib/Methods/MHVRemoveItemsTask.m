@@ -28,7 +28,7 @@
 
 -(MHVItemKeyCollection *)keys
 {
-    HVENSURE(m_keys, MHVItemKeyCollection);
+    MHVENSURE(m_keys, MHVItemKeyCollection);
     return m_keys;
 }
 
@@ -47,31 +47,31 @@
     return 1;
 }
 
--(id)initWithKey:(MHVItemKey *)key andCallback:(HVTaskCompletion)callback
+-(id)initWithKey:(MHVItemKey *)key andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     MHVItemKeyCollection* keys = [[MHVItemKeyCollection alloc] initWithKey:key];
     self = [self initWithKeys:keys andCallback:callback];
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
--(id)initWithKeys:(MHVItemKeyCollection *)keys andCallback:(HVTaskCompletion)callback
+-(id)initWithKeys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_TRUE((![NSArray isNilOrEmpty:keys]));
+    MHVCHECK_TRUE((![NSArray isNilOrEmpty:keys]));
     
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.keys = keys;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
    
 }
 
@@ -91,12 +91,12 @@ LError:
     }
 }
 
-+(MHVRemoveItemsTask *)newForRecord:(MHVRecordReference *)record key:(MHVItemKey *)key callback:(HVTaskCompletion)callback
++(MHVRemoveItemsTask *)newForRecord:(MHVRecordReference *)record key:(MHVItemKey *)key callback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     MHVRemoveItemsTask* task = [[MHVRemoveItemsTask alloc] initWithKey:key andCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     task.record = record;
     
@@ -106,12 +106,12 @@ LError:
     return nil;
 }
 
-+(MHVRemoveItemsTask *)newForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(HVTaskCompletion)callback
++(MHVRemoveItemsTask *)newForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     MHVRemoveItemsTask* task = [[MHVRemoveItemsTask alloc] initWithKeys:keys andCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     task.record = record;
     

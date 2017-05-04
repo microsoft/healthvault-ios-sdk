@@ -32,7 +32,7 @@
 
 -(void)setMmolPerLiter:(double)mmolPerLiter
 {
-    HVENSURE(m_mmolPerl, MHVPositiveDouble);
+    MHVENSURE(m_mmolPerl, MHVPositiveDouble);
     m_mmolPerl.value = mmolPerLiter;
     [self updateDisplayValue:mmolPerLiter units:c_mmolPlUnits andUnitsCode:c_mmolUnitsCode];
 }
@@ -49,7 +49,7 @@
 
 -(void)setMgPerDL:(double)mgPerDL
 {
-    HVENSURE(m_mmolPerl, MHVPositiveDouble);
+    MHVENSURE(m_mmolPerl, MHVPositiveDouble);
     m_mmolPerl.value = [MHVBloodGlucoseMeasurement mgPerDLToMmolPerLiter:mgPerDL];
     [self updateDisplayValue:mgPerDL units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
@@ -58,35 +58,35 @@
 -(id)initWithMmolPerLiter:(double)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.mmolPerLiter = value;
-    HVCHECK_NOTNULL(m_mmolPerl);
+    MHVCHECK_NOTNULL(m_mmolPerl);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithMgPerDL:(double)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.mgPerDL = value;
-    HVCHECK_NOTNULL(m_mmolPerl);
+    MHVCHECK_NOTNULL(m_mmolPerl);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
-    HVCHECK_NOTNULL(newValue);
+    MHVCHECK_NOTNULL(newValue);
     
     if (code)
     {
@@ -128,12 +128,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_mmolPerl, HVClientError_InvalidBloodGlucoseMeasurement);
-    HVVALIDATE_OPTIONAL(m_display);
+    MHVVALIDATE(m_mmolPerl, MHVClientError_InvalidBloodGlucoseMeasurement);
+    MHVVALIDATE_OPTIONAL(m_display);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer

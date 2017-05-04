@@ -48,14 +48,14 @@ static NSString* const c_element_fact = @"fact";
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVNutritionFact class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 @end
@@ -69,11 +69,11 @@ static NSString* const c_element_nutritionFact = @"nutrition-fact";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_ARRAY(m_facts, HVClientError_InvalidDietaryIntake);
+    MHVVALIDATE_ARRAY(m_facts, MHVClientError_InvalidDietaryIntake);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

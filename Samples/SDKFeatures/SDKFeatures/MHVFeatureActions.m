@@ -30,7 +30,7 @@
 -(id)initWithTitle:(NSString *)title
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (!title)
     {
@@ -41,16 +41,16 @@
                                         cancelButtonTitle:@"Cancel"
                                         destructiveButtonTitle:nil
                                         otherButtonTitles:nil];
-    HVCHECK_NOTNULL(m_actionSheet);
+    MHVCHECK_NOTNULL(m_actionSheet);
     m_actionSheet.delegate = self;
     
     m_actions = [[NSMutableArray alloc] init];
-    HVCHECK_NOTNULL(m_actions);
+    MHVCHECK_NOTNULL(m_actions);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)dealloc
@@ -59,9 +59,9 @@ LError:
     
 }
 
--(BOOL) addFeature:(NSString *)title andAction:(HVAction)action
+-(BOOL) addFeature:(NSString *)title andAction:(MHVAction)action
 {
-    HVCHECK_NOTNULL(action);
+    MHVCHECK_NOTNULL(action);
     
     [m_actionSheet addButtonWithTitle:title];
     [m_actions addObject:action]; 
@@ -85,7 +85,7 @@ LError:
     }
     @try
     {
-        HVAction action = (HVAction) [m_actions objectAtIndex:buttonIndex - 1];
+        MHVAction action = (MHVAction) [m_actions objectAtIndex:buttonIndex - 1];
         action();
     }
     @catch (NSException *exception)

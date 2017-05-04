@@ -51,7 +51,7 @@ static const xmlChar* x_element_flags = XMLSTRINGCONST("measurement-flags");
     }
     else
     {
-        HVENSURE(m_pef, MHVFlowValue);
+        MHVENSURE(m_pef, MHVFlowValue);
         m_pef.litersPerSecondValue = pefValue;
     }
 }
@@ -59,14 +59,14 @@ static const xmlChar* x_element_flags = XMLSTRINGCONST("measurement-flags");
 -(id)initWithDate:(NSDate *)when
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_when = [[MHVApproxDateTime alloc] initWithDate:when];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -95,15 +95,15 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_when, HVClientError_InvalidPeakFlow);
-    HVVALIDATE_OPTIONAL(m_pef);
-    HVVALIDATE_OPTIONAL(m_fev1);
-    HVVALIDATE_OPTIONAL(m_fev6);
-    HVVALIDATE_OPTIONAL(m_flags);
+    MHVVALIDATE(m_when, MHVClientError_InvalidPeakFlow);
+    MHVVALIDATE_OPTIONAL(m_pef);
+    MHVVALIDATE_OPTIONAL(m_fev1);
+    MHVVALIDATE_OPTIONAL(m_fev6);
+    MHVVALIDATE_OPTIONAL(m_flags);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer

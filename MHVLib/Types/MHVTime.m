@@ -35,7 +35,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
 {
     if (hours >= 0)
     {
-        HVENSURE(m_hours, MHVHour);
+        MHVENSURE(m_hours, MHVHour);
         m_hours.value = hours;
     }
     else
@@ -53,7 +53,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
 {
     if (minutes >= 0)
     {
-        HVENSURE(m_minutes, MHVMinute);
+        MHVENSURE(m_minutes, MHVMinute);
         m_minutes.value = minutes;
     }
     else
@@ -76,7 +76,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
 {
     if (seconds >= 0)
     {
-        HVENSURE(m_seconds, MHVSecond);
+        MHVENSURE(m_seconds, MHVSecond);
         m_seconds.value = seconds;
     }
     else
@@ -99,7 +99,7 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
 {
     if (milliseconds >= 0)
     {
-        HVENSURE(m_milliseconds, MHVMillisecond);
+        MHVENSURE(m_milliseconds, MHVMillisecond);
         m_milliseconds.value = milliseconds;
         
     }
@@ -121,50 +121,50 @@ static const xmlChar* x_element_millis = XMLSTRINGCONST("f");
 -(id) initWithHour:(NSInteger)hour minute:(NSInteger)minute second:(NSInteger)second
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (hour != NSDateComponentUndefined)
     {
         m_hours = [[MHVHour alloc] initWith:(int)hour];
     }
-    HVCHECK_NOTNULL(m_hours);
+    MHVCHECK_NOTNULL(m_hours);
     
     if (minute != NSDateComponentUndefined)
     {
         m_minutes = [[MHVMinute alloc] initWith:(int)minute];
     }
-    HVCHECK_NOTNULL(m_minutes);
+    MHVCHECK_NOTNULL(m_minutes);
     
     if (second >= 0 && second != NSDateComponentUndefined)
     {
         m_seconds = [[MHVSecond alloc] initWith:(int)second];
-        HVCHECK_NOTNULL(m_seconds);
+        MHVCHECK_NOTNULL(m_seconds);
     }
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     return [self initWithHour:[components hour] minute:[components minute] second:[components second]];
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     return [self initWithComponents:[NSCalendar componentsFromDate:date]];
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 +(MHVTime *)fromHour:(int)hour andMinute:(int)minute
@@ -176,9 +176,9 @@ LError:
 -(NSDateComponents *) toComponents
 {
     NSDateComponents *components = [NSCalendar newComponents];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
-    HVCHECK_SUCCESS([self getComponents:components]);
+    MHVCHECK_SUCCESS([self getComponents:components]);
     
     return components;
     
@@ -188,7 +188,7 @@ LError:
 
 -(BOOL) getComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     if (m_hours)
     {
@@ -212,9 +212,9 @@ LError:
 -(NSDate *) toDate
 {
     NSDateComponents *components = [NSCalendar newComponents];
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
-    HVCHECK_SUCCESS([self getComponents:components]);
+    MHVCHECK_SUCCESS([self getComponents:components]);
     
     NSDate* newDate = [components date];
     
@@ -223,7 +223,7 @@ LError:
 
 -(BOOL)setWithComponents:(NSDateComponents *)components
 {
-    HVCHECK_NOTNULL(components);
+    MHVCHECK_NOTNULL(components);
     
     self.hour = (int)[components hour];
     self.minute = (int)[components minute];
@@ -237,7 +237,7 @@ LError:
 
 -(BOOL)setWithDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     return [self setWithComponents:[NSCalendar componentsFromDate:date]];
     
@@ -263,14 +263,14 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_hours, HVClientError_InvalidTime);
-    HVVALIDATE(m_minutes, HVClientError_InvalidTime);
-    HVVALIDATE_OPTIONAL(m_seconds);
-    HVVALIDATE_OPTIONAL(m_milliseconds);
+    MHVVALIDATE(m_hours, MHVClientError_InvalidTime);
+    MHVVALIDATE(m_minutes, MHVClientError_InvalidTime);
+    MHVVALIDATE_OPTIONAL(m_seconds);
+    MHVVALIDATE_OPTIONAL(m_milliseconds);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -296,14 +296,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVTime class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVTime *)itemAtIndex:(NSUInteger)index

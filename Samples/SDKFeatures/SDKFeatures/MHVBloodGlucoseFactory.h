@@ -20,7 +20,7 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVBloodGlucose (HVFactoryMethods)
+@interface MHVBloodGlucose (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
@@ -28,7 +28,7 @@
 
 @end
 
-@interface MHVBloodGlucose (HVDisplay)
+@interface MHVBloodGlucose (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

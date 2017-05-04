@@ -18,7 +18,7 @@
 
 #import "MHVTypeViewController.h"
 
-@interface MHVTypeViewController (HVPrivate)
+@interface MHVTypeViewController (MHVPrivate)
 
 -(MHVItemCollection *) createRandomForDay:(NSDate *) date isMetric:(BOOL) metric;
 
@@ -51,7 +51,7 @@ static const NSInteger c_numSecondsInDay = 86400;
 -(id)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_typeClass = typeClass;
     m_useMetric = metric;
@@ -63,7 +63,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)dealloc
@@ -232,7 +232,7 @@ LError:
     }
     
     [MHVUIAlert showYesNoWithMessage:@"Permanently delete this item?" callback:^(id sender) {
-        if (((MHVUIAlert *)sender).result != HVUIAlertOK)
+        if (((MHVUIAlert *)sender).result != MHVUIAlertOK)
         {
             return;
         }
@@ -259,7 +259,7 @@ LError:
 
 @end
 
-@implementation MHVTypeViewController (HVPrivate)
+@implementation MHVTypeViewController (MHVPrivate)
 
 -(MHVItemCollection *) createRandomForDay:(NSDate *) date isMetric:(BOOL) metric
 {

@@ -24,7 +24,7 @@
 #import "MHVSynchronizationManager.h"
 #import "MHVClient.h"
 
-@interface MHVItemChangeManager (HVPrivate)
+@interface MHVItemChangeManager (MHVPrivate)
 
 -(MHVWorkerStatus*) status;
 
@@ -38,7 +38,7 @@
 
 @end
 
-@interface MHVItemChangeQueueProcess (HVPrivate)
+@interface MHVItemChangeQueueProcess (MHVPrivate)
 
 -(void) state_start;
 -(MHVTask *) state_next;
@@ -52,7 +52,7 @@
 
 @end
 
-@interface MHVItemChangeCommit (HVPrivate)
+@interface MHVItemChangeCommit (MHVPrivate)
 
 -(void) state_start;
 -(MHVTask *) state_remove;
@@ -60,7 +60,7 @@
 -(void) state_startPut;
 -(MHVTask *) state_new;
 -(void) state_startUpdate;
--(MHVTask *) state_detectDupe:(enum HVItemChangeCommitState) state;
+-(MHVTask *) state_detectDupe:(enum MHVItemChangeCommitState) state;
 -(MHVTask *) state_put;
 -(MHVTask *) state_refresh;
 
@@ -77,9 +77,9 @@
 @implementation MHVItemChangeQueueProcess
 
 @synthesize changeManager = m_mgr;
--(enum HVItemChangeQueueProcessState)currentState
+-(enum MHVItemChangeQueueProcessState)currentState
 {
-    return (enum HVItemChangeQueueProcessState) self.stateID;
+    return (enum MHVItemChangeQueueProcessState) self.stateID;
 }
 
 -(id)init
@@ -89,22 +89,22 @@
 
 -(id)initWithChangeManager:(MHVItemChangeManager *)mgr andQueue:(NSEnumerator *)queue
 {
-    HVCHECK_NOTNULL(mgr);
-    HVCHECK_NOTNULL(queue);
+    MHVCHECK_NOTNULL(mgr);
+    MHVCHECK_NOTNULL(queue);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_mgr = mgr;
     m_queue = queue;
     
     self.name = @"MHVItemChangeQueueProcess";
-    self.stateID = HVItemChangeQueueProcessStateStart;
+    self.stateID = MHVItemChangeQueueProcessStateStart;
  
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)dealloc
@@ -119,32 +119,32 @@ LError:
     while (m_mgr.isCommitEnabled)
     {
         MHVTask* nextTask = nil;
-        enum HVItemChangeQueueProcessState currentState = self.stateID;
+        enum MHVItemChangeQueueProcessState currentState = self.stateID;
         switch (currentState)
         {
             default:
-                NSLog(@"HVitemChangeQueueProcess: Unknown State %d", self.stateID);
+                NSLog(@"MHVitemChangeQueueProcess: Unknown State %d", self.stateID);
                 return nil;
                 
-            case HVItemChangeQueueProcessStateStart:
+            case MHVItemChangeQueueProcessStateStart:
                 [self state_start];
                 break;
                 
-            case HVItemChangeQueueProcessStateNext:
+            case MHVItemChangeQueueProcessStateNext:
                 if ((nextTask = [self state_next]) != nil)
                 {
                     return nextTask;
                 }
                 break;
                 
-            case HVItemChangeQueueProcessStateDone:
+            case MHVItemChangeQueueProcessStateDone:
                 if ([self state_done])
                 {
                     return nil;
                 }
                 break;
         }
-        HVCHECK_FALSE(currentState == self.stateID);  // Prevent infinite loops
+        MHVCHECK_FALSE(currentState == self.stateID);  // Prevent infinite loops
     }
     
 LError:
@@ -158,12 +158,12 @@ LError:
 
 @end
 
-@implementation MHVItemChangeQueueProcess(HVPrivate)
+@implementation MHVItemChangeQueueProcess(MHVPrivate)
 
 -(void)state_start
 {
     m_committedCount = 0;
-    self.stateID = HVItemChangeQueueProcessStateNext;
+    self.stateID = MHVItemChangeQueueProcessStateNext;
 }
 
 -(MHVTask *)state_next
@@ -174,14 +174,14 @@ LError:
         
         if (!m_mgr.isCommitEnabled)
         {
-            self.stateID = HVItemChangeQueueProcessStateDone;
+            self.stateID = MHVItemChangeQueueProcessStateDone;
             return nil;
         }
         
         MHVItemChange* queuedChange = [m_queue nextObject];
         if (queuedChange == nil)
         {
-            self.stateID = HVItemChangeQueueProcessStateDone;
+            self.stateID = MHVItemChangeQueueProcessStateDone;
             return nil;
         }
         
@@ -231,7 +231,7 @@ LError:
         return TRUE;
     }
 
-    self.stateID = HVItemChangeQueueProcessStateStart;
+    self.stateID = MHVItemChangeQueueProcessStateStart;
     return FALSE;
 }
 
@@ -240,7 +240,7 @@ LError:
     m_commit = nil;
     
     m_commit = [[MHVItemChangeCommit alloc] initWithChangeManager:m_mgr andChange:m_current];
-    HVCHECK_NOTNULL(m_commit);
+    MHVCHECK_NOTNULL(m_commit);
     
     return [MHVTaskStateMachine newRunTaskFor:m_commit callback:^(MHVTask *task) {
         BOOL shouldDequeue = FALSE;
@@ -262,11 +262,11 @@ LError:
             {
                 [m_mgr.changeTable removeForTypeID:m_current.typeID itemID:m_current.itemID];
             }
-            self.stateID = HVItemChangeQueueProcessStateNext;
+            self.stateID = MHVItemChangeQueueProcessStateNext;
         }
         else
         {
-            self.stateID = HVItemChangeQueueProcessStateDone;
+            self.stateID = MHVItemChangeQueueProcessStateDone;
         }
         
         [self releaseLockForChange:m_current];
@@ -330,9 +330,9 @@ LError:
 
 @implementation MHVItemChangeCommit
 
--(enum HVItemChangeCommitState)currentState
+-(enum MHVItemChangeCommitState)currentState
 {
-    return (enum HVItemChangeCommitState) self.stateID;
+    return (enum MHVItemChangeCommitState) self.stateID;
 }
 
 -(id)init
@@ -342,23 +342,23 @@ LError:
 
 -(id)initWithChangeManager:(MHVItemChangeManager *)mgr andChange:(MHVItemChange *)change
 {
-    HVCHECK_NOTNULL(mgr);
-    HVCHECK_NOTNULL(change);
+    MHVCHECK_NOTNULL(mgr);
+    MHVCHECK_NOTNULL(change);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_mgr = mgr;
     m_change = change;
     m_methodFactory = [MHVClient current].methodFactory;
     
     self.name = @"MHVItemChangeCommit";
-    self.stateID = HVItemChangeCommitStateStart;
+    self.stateID = MHVItemChangeCommitStateStart;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -367,69 +367,69 @@ LError:
     while (TRUE)
     {
         MHVTask* nextTask = nil;
-        enum HVItemChangeCommitState currentState = self.stateID;
+        enum MHVItemChangeCommitState currentState = self.stateID;
         switch (currentState)
         {
             default:
-                NSLog(@"HVitemChangeCommit: Unknown State %d", self.stateID);
+                NSLog(@"MHVitemChangeCommit: Unknown State %d", self.stateID);
                 break;
                 
-            case HVItemChangeCommitStateStart:
+            case MHVItemChangeCommitStateStart:
                 [self state_start];
                 break;
                 
-            case HVItemChangeCommitStateRemove:
+            case MHVItemChangeCommitStateRemove:
                 if ((nextTask = [self state_remove]) != nil)
                 {
                     return nextTask;
                 }
                 break;
                 
-            case HVItemChangeCommitStateStartNew:
+            case MHVItemChangeCommitStateStartNew:
                 [self state_startNew];
                 break;
                 
-            case HVItemChangeCommitStateNew:
+            case MHVItemChangeCommitStateNew:
                 if ((nextTask = [self state_new]) != nil)
                 {
                     return nextTask;
                 }
                 break;
                 
-            case HVItemChangeCommitStateStartPut:
+            case MHVItemChangeCommitStateStartPut:
                 [self state_startPut];
                 break;
                 
-            case HVItemChangeCommitStateStartUpdate:
+            case MHVItemChangeCommitStateStartUpdate:
                 [self state_startUpdate];
                 break;
                 
-            case HVItemChangeCommitStateDetectDupeNew:
-            case HVItemChangeCommitStateDetectDupeUpdate:
+            case MHVItemChangeCommitStateDetectDupeNew:
+            case MHVItemChangeCommitStateDetectDupeUpdate:
                 if ((nextTask = [self state_detectDupe:currentState]) != nil)
                 {
                     return nextTask;
                 }
                 break;
                 
-            case HVItemChangeCommitStatePut:
+            case MHVItemChangeCommitStatePut:
                 if ((nextTask = [self state_put]) != nil)
                 {
                     return nextTask;
                 }
                 break;
                 
-            case HVItemChangeCommitStateRefresh:
+            case MHVItemChangeCommitStateRefresh:
                 if ((nextTask = [self state_refresh]) != nil)
                 {
                     return nextTask;
                 }
                 break;
                 
-            case HVItemChangeCommitStateDone:
+            case MHVItemChangeCommitStateDone:
                 return nil;
         }
-        HVCHECK_FALSE(currentState == self.stateID);  // Prevent infinite loops
+        MHVCHECK_FALSE(currentState == self.stateID);  // Prevent infinite loops
     }
     
 LError:
@@ -439,7 +439,7 @@ LError:
 
 @end
 
-@implementation MHVItemChangeCommit (HVPrivate)
+@implementation MHVItemChangeCommit (MHVPrivate)
 
 -(MHVSynchronizedStore *)data
 {
@@ -449,13 +449,13 @@ LError:
 -(void)state_start
 {
     [self updateChangeAttemptCount];
-    if (m_change.changeType == HVItemChangeTypeRemove)
+    if (m_change.changeType == MHVItemChangeTypeRemove)
     {
-        self.stateID = HVItemChangeCommitStateRemove;
+        self.stateID = MHVItemChangeCommitStateRemove;
     }
     else
     {
-        self.stateID = HVItemChangeCommitStateStartPut;
+        self.stateID = MHVItemChangeCommitStateStartPut;
     }
 }
 
@@ -463,12 +463,12 @@ LError:
 {
     if ([m_change.itemKey isLocal])
     {
-        self.stateID = HVItemChangeQueueProcessStateDone;
+        self.stateID = MHVItemChangeQueueProcessStateDone;
         return nil;
     }
     
     MHVItemKeyCollection* keys = [[MHVItemKeyCollection alloc] initWithKey:m_change.itemKey];
-    HVCHECK_NOTNULL(keys);
+    MHVCHECK_NOTNULL(keys);
     
     MHVMethodFactory* methods = [MHVClient current].methodFactory;
     return [methods newRemoveItemsForRecord:m_mgr.record keys:keys andCallback:^(MHVTask *task) {
@@ -484,7 +484,7 @@ LError:
             }
             [task clearError];
         }
-        self.stateID = HVItemChangeCommitStateDone;
+        self.stateID = MHVItemChangeCommitStateDone;
     }];
     
 LError:
@@ -496,29 +496,29 @@ LError:
     m_change.localItem = [[m_mgr.data getlocalItemWithID:m_change.itemID] newDeepClone];
     if (m_change.localItem == nil)
     {
-        self.stateID = HVItemChangeCommitStateDone;
+        self.stateID = MHVItemChangeCommitStateDone;
         return;
     }
         
     if ([m_change.localItem.key isLocal])
     {
-        self.stateID = HVItemChangeCommitStateStartNew;
+        self.stateID = MHVItemChangeCommitStateStartNew;
     }
     else
     {
-        self.stateID = HVItemChangeCommitStateStartUpdate;
+        self.stateID = MHVItemChangeCommitStateStartUpdate;
     }
 }
 
 -(void)state_startNew
 {
-    self.stateID = HVItemChangeCommitStateDetectDupeNew;
+    self.stateID = MHVItemChangeCommitStateDetectDupeNew;
 }
 
 -(MHVTask *)state_new
 {
     MHVItemCollection* items = [[MHVItemCollection alloc] initWithItem:m_change.localItem];
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
    
     [items prepareForNew];
     
@@ -527,7 +527,7 @@ LError:
         
         m_change.updatedKey = ((MHVPutItemsTask *) task).firstKey;
         
-        self.stateID = HVItemChangeCommitStateRefresh;
+        self.stateID = MHVItemChangeCommitStateRefresh;
         
     }];
     
@@ -537,24 +537,24 @@ LError:
 
 -(void)state_startUpdate
 {
-    self.stateID = HVItemChangeCommitStateDetectDupeUpdate;
+    self.stateID = MHVItemChangeCommitStateDetectDupeUpdate;
 }
 
 //
 // Make a best effort to avoid pushing duplicates into the system. Example scenario:
-// -Item pushed into HV but phone turned off before local tables could be updated
+// -Item pushed into MHV but phone turned off before local tables could be updated
 // - Many others
 //
--(MHVTask *)state_detectDupe:(enum HVItemChangeCommitState)state
+-(MHVTask *)state_detectDupe:(enum MHVItemChangeCommitState)state
 {
     if (m_change.attemptCount <= 1)
     {
-        self.stateID = (state == HVItemChangeCommitStateDetectDupeUpdate) ? HVItemChangeCommitStatePut : HVItemChangeCommitStateNew;
+        self.stateID = (state == MHVItemChangeCommitStateDetectDupeUpdate) ? MHVItemChangeCommitStatePut : MHVItemChangeCommitStateNew;
         return nil;
     }
   
     MHVItemQuery* query = [[MHVItemQuery alloc] initWithClientID:m_change.changeID andType:m_change.typeID];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     query.maxResults = 1;
     
     MHVMethodFactory* methods = [MHVClient current].methodFactory;
@@ -564,14 +564,14 @@ LError:
         if (existingItem == nil)
         {
             // Did not commit this change yet
-            self.stateID = (state == HVItemChangeCommitStateDetectDupeUpdate) ? HVItemChangeCommitStatePut : HVItemChangeCommitStateNew;
+            self.stateID = (state == MHVItemChangeCommitStateDetectDupeUpdate) ? MHVItemChangeCommitStatePut : MHVItemChangeCommitStateNew;
         }
         else
         {
             // Already applied this change.
             m_change.updatedKey = existingItem.key;
             m_change.updatedItem = existingItem;
-            self.stateID = HVItemChangeCommitStateDone;
+            self.stateID = MHVItemChangeCommitStateDone;
         }
         
     }];
@@ -583,14 +583,14 @@ LError:
 -(MHVTask *)state_put
 {
     MHVItemCollection* items = [[MHVItemCollection alloc] initWithItem:m_change.localItem];
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     MHVMethodFactory* methods = [MHVClient current].methodFactory;
     return [methods newPutItemsForRecord:m_mgr.record items:items andCallback:^(MHVTask *task) {
         @try
         {
             m_change.updatedKey = ((MHVPutItemsTask *) task).firstKey;
-            self.stateID = HVItemChangeCommitStateRefresh;
+            self.stateID = MHVItemChangeCommitStateRefresh;
         }
         @catch (id ex)
         {
@@ -599,7 +599,7 @@ LError:
                 @throw;
             }
             [task clearError];
-            self.stateID = HVItemChangeCommitStateNew;
+            self.stateID = MHVItemChangeCommitStateNew;
         }
         
     }];
@@ -613,7 +613,7 @@ LError:
     m_change.updatedItem = nil;
     
     MHVItemQuery* query = [[MHVItemQuery alloc] initWithItemKey:m_change.updatedKey andType:m_change.typeID];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     MHVMethodFactory* methods = [MHVClient current].methodFactory;
     return [methods newGetItemsForRecord:m_mgr.record query:query andCallback:^(MHVTask *task) {
@@ -627,7 +627,7 @@ LError:
             [task clearError];
         }
         
-        self.stateID = HVItemChangeCommitStateDone;
+        self.stateID = MHVItemChangeCommitStateDone;
         
     }];
     
@@ -648,11 +648,11 @@ LError:
 // MHVItemChangeManager
 //
 //-----------------------------------------------------
-HVDEFINE_NOTIFICATION(HVItemChangeManagerStartingCommitNotification);
-HVDEFINE_NOTIFICATION(HVItemChangeManagerFinishedCommitNotification);
-HVDEFINE_NOTIFICATION(HVItemChangeManagerChangeCommitSuccessNotification);
-HVDEFINE_NOTIFICATION(HVItemChangeManagerChangeCommitFailedNotification);
-HVDEFINE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
+MHVDEFINE_NOTIFICATION(MHVItemChangeManagerStartingCommitNotification);
+MHVDEFINE_NOTIFICATION(MHVItemChangeManagerFinishedCommitNotification);
+MHVDEFINE_NOTIFICATION(MHVItemChangeManagerChangeCommitSuccessNotification);
+MHVDEFINE_NOTIFICATION(MHVItemChangeManagerChangeCommitFailedNotification);
+MHVDEFINE_NOTIFICATION(MHVItemChangeManagerExceptionNotification);
 
 @implementation MHVItemChangeManager
 
@@ -696,33 +696,33 @@ HVDEFINE_NOTIFICATION(HVItemChangeManagerExceptionNotification);
 
 -(id)initOverStore:(id<MHVObjectStore>)store forRecord:(MHVRecordReference *)record andData:(MHVSynchronizedStore *)data
 {
-    HVCHECK_NOTNULL(store);
-    HVCHECK_NOTNULL(record);
-    HVCHECK_NOTNULL(data);
+    MHVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(data);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_record = record;
     m_data = data;
 
-    HVCHECK_SUCCESS([self ensureChangeTable:store]);
+    MHVCHECK_SUCCESS([self ensureChangeTable:store]);
     
     m_lockTable = [[MHVLockTable alloc] init];
-    HVCHECK_NOTNULL(m_lockTable);
+    MHVCHECK_NOTNULL(m_lockTable);
 
     m_status = [[MHVWorkerStatus alloc] init];
-    HVCHECK_NOTNULL(m_status);
+    MHVCHECK_NOTNULL(m_status);
     
     m_errorHandler = [[MHVItemCommitErrorHandler alloc] init];
-    HVCHECK_NOTNULL(m_errorHandler);
+    MHVCHECK_NOTNULL(m_errorHandler);
     
     m_broadcastNotifications = TRUE;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -733,7 +733,7 @@ LError:
 
 -(BOOL)hasChangesForItem:(MHVItem *)item
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     return [m_changeTable hasChangesForTypeID:item.typeID itemID:item.itemID];
     
@@ -748,10 +748,10 @@ LError:
 
 -(BOOL)trackPut:(MHVItem *)item
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     NSString* changeID = [self trackPutForTypeID:item.typeID andItemKey:item.key];
-    HVCHECK_NOTNULL(changeID);
+    MHVCHECK_NOTNULL(changeID);
     
     item.data.common.clientIDValue = changeID;
     
@@ -763,25 +763,25 @@ LError:
 
 -(NSString *)trackPutForTypeID:(NSString *)typeID andItemKey:(MHVItemKey *)key
 {
-    return [m_changeTable trackChange:HVItemChangeTypePut forTypeID:typeID andKey:key];
+    return [m_changeTable trackChange:MHVItemChangeTypePut forTypeID:typeID andKey:key];
 }
 
 -(BOOL)trackRemoveForTypeID:(NSString *)typeID andItemKey:(MHVItemKey *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     if ([key isLocal])
     {
         return [m_changeTable removeForTypeID:typeID itemID:key.itemID];
     }
     
-    NSString* changeID = [m_changeTable trackChange:HVItemChangeTypeRemove forTypeID:typeID andKey:key];
+    NSString* changeID = [m_changeTable trackChange:MHVItemChangeTypeRemove forTypeID:typeID andKey:key];
     return (changeID != nil);
     
 LError:
     return FALSE;
 }
 
--(MHVTask *)commitChangesWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)commitChangesWithCallback:(MHVTaskCompletion)callback
 {
     MHVTask* commitTask = [self newCommitChangesTaskWithCallback:callback];
     if (commitTask)
@@ -791,7 +791,7 @@ LError:
     return commitTask;
 }
 
--(MHVTask *)newCommitChangesTaskWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)newCommitChangesTaskWithCallback:(MHVTaskCompletion)callback
 {
     if (![m_status beginWork])
     {
@@ -822,7 +822,7 @@ LError:
 
 -(MHVAutoLock *)newAutoLockForItemKey:(MHVItemKey *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     return [m_lockTable newAutoLockForKey:key.itemID];
 
@@ -847,7 +847,7 @@ LError:
 
 @end
 
-@implementation MHVItemChangeManager (HVPrivate)
+@implementation MHVItemChangeManager (MHVPrivate)
 
 -(MHVWorkerStatus *)status
 {
@@ -857,11 +857,11 @@ LError:
 -(BOOL)ensureChangeTable:(id<MHVObjectStore>)store
 {
     id<MHVObjectStore> changeStore = [store newChildStore:[MHVItemChangeManager changeStoreKey]];
-    HVCHECK_NOTNULL(changeStore);
+    MHVCHECK_NOTNULL(changeStore);
     
     m_changeTable = [[MHVItemChangeTable alloc] initWithObjectStore:changeStore];
     
-    HVCHECK_NOTNULL(m_changeTable);
+    MHVCHECK_NOTNULL(m_changeTable);
     
     return TRUE;
     
@@ -875,7 +875,7 @@ LError:
         if (m_broadcastNotifications)
         {
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:HVItemChangeManagerStartingCommitNotification
+             postNotificationName:MHVItemChangeManagerStartingCommitNotification
              object:self
              ];
         }
@@ -888,7 +888,7 @@ LError:
         if (m_broadcastNotifications)
         {
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:HVItemChangeManagerFinishedCommitNotification
+             postNotificationName:MHVItemChangeManagerFinishedCommitNotification
              object:self
              ];
         }
@@ -912,7 +912,7 @@ LError:
         if (m_broadcastNotifications)
         {
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:HVItemChangeManagerChangeCommitSuccessNotification
+             postNotificationName:MHVItemChangeManagerChangeCommitSuccessNotification
              sender:self
              argName:@"itemChange"
              argValue:change
@@ -927,7 +927,7 @@ LError:
         if (m_broadcastNotifications)
         {
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:HVItemChangeManagerChangeCommitFailedNotification
+             postNotificationName:MHVItemChangeManagerChangeCommitFailedNotification
              sender:self
              argName:@"itemChange"
              argValue:change
@@ -942,7 +942,7 @@ LError:
         if (m_broadcastNotifications)
         {
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:HVItemChangeManagerExceptionNotification
+             postNotificationName:MHVItemChangeManagerExceptionNotification
              sender:self
              argName:@"exception"
              argValue:ex

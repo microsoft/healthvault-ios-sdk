@@ -43,7 +43,7 @@
 // Initializers
 //
 //-------------------------
--(id) initWithUrl:(NSURL *) url filePath:(NSString *) path andCallback:(HVTaskCompletion) callback;
--(id) initWithUrl:(NSURL *) url fileHandle:(NSFileHandle *) file andCallback:(HVTaskCompletion) callback;
+-(id) initWithUrl:(NSURL *) url filePath:(NSString *) path andCallback:(MHVTaskCompletion) callback;
+-(id) initWithUrl:(NSURL *) url fileHandle:(NSFileHandle *) file andCallback:(MHVTaskCompletion) callback;
 
 @end

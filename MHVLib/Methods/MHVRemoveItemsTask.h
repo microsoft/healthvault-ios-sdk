@@ -32,10 +32,10 @@
 @property (readwrite, nonatomic, strong) MHVItemKeyCollection* keys;
 @property (readonly, nonatomic) BOOL hasKeys;
 
--(id) initWithKey:(MHVItemKey *) key andCallback:(HVTaskCompletion) callback;
--(id) initWithKeys:(MHVItemKeyCollection *) keys andCallback:(HVTaskCompletion) callback;
+-(id) initWithKey:(MHVItemKey *) key andCallback:(MHVTaskCompletion) callback;
+-(id) initWithKeys:(MHVItemKeyCollection *) keys andCallback:(MHVTaskCompletion) callback;
 
-+(MHVRemoveItemsTask *)newForRecord:(MHVRecordReference *)record key:(MHVItemKey *)key callback:(HVTaskCompletion)callback;
-+(MHVRemoveItemsTask *)newForRecord:(MHVRecordReference *) record keys:(MHVItemKeyCollection *)keys andCallback:(HVTaskCompletion)callback;
++(MHVRemoveItemsTask *)newForRecord:(MHVRecordReference *)record key:(MHVItemKey *)key callback:(MHVTaskCompletion)callback;
++(MHVRemoveItemsTask *)newForRecord:(MHVRecordReference *) record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback;
 
 @end

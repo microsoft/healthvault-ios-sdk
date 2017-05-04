@@ -19,7 +19,7 @@
 #import "MHVCommon.h"
 #import "MHVPartitionedStore.h"
 
-@interface MHVPartitionedObjectStore (HVPrivate)
+@interface MHVPartitionedObjectStore (MHVPrivate)
 
 -(id<MHVObjectStore>) ensurePartition:(NSString *) partitionKey shouldCreate:(BOOL) shouldCreate;
 
@@ -34,27 +34,27 @@
 
 -(id)initWithRoot:(id<MHVObjectStore>)root
 {
-    HVCHECK_NOTNULL(root);
+    MHVCHECK_NOTNULL(root);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_partitions = [[NSMutableDictionary alloc] init];
-    HVCHECK_NOTNULL(m_partitions);
+    MHVCHECK_NOTNULL(m_partitions);
     
     m_rootStore = root;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(BOOL)partition:(NSString *)partitionKey keyExists:(NSString *)key
 {
-    HVCHECK_NOTNULL(partitionKey);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(partitionKey);
+    MHVCHECK_NOTNULL(key);
     
     id<MHVObjectStore> store = [self ensurePartition:partitionKey shouldCreate:FALSE];
     if (!store)
@@ -70,8 +70,8 @@ LError:
 
 -(id)partition:(NSString *)partitionKey getObjectWithKey:(NSString *)key name:(NSString *)name andClass:(Class)cls
 {
-    HVCHECK_NOTNULL(partitionKey);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(partitionKey);
+    MHVCHECK_NOTNULL(key);
     
     id<MHVObjectStore> store = [self ensurePartition:partitionKey shouldCreate:FALSE];
     if (!store)
@@ -87,11 +87,11 @@ LError:
 
 -(BOOL)partition:(NSString *)partitionKey putObject:(id)obj withKey:(NSString *)key andName:(NSString *)name
 {
-    HVCHECK_NOTNULL(partitionKey);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(partitionKey);
+    MHVCHECK_NOTNULL(key);
     
     id<MHVObjectStore> store = [self ensurePartition:partitionKey shouldCreate:TRUE];
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     return [store putObject:obj withKey:key andName:name];
     
@@ -101,8 +101,8 @@ LError:
 
 -(BOOL)partition:(NSString *) partitionKey deleteKey:(NSString *)key
 {
-    HVCHECK_NOTNULL(partitionKey);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(partitionKey);
+    MHVCHECK_NOTNULL(key);
     
     id<MHVObjectStore> store = [self ensurePartition:partitionKey shouldCreate:FALSE];
     if (!store)
@@ -128,8 +128,8 @@ LError:
 
 -(NSDate *)partition:(NSString *)partitionKey createDateForKey:(NSString *)key
 {
-    HVCHECK_NOTNULL(partitionKey);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(partitionKey);
+    MHVCHECK_NOTNULL(key);
     
     id<MHVObjectStore> store = [self ensurePartition:partitionKey shouldCreate:FALSE];
     if (!store)
@@ -145,8 +145,8 @@ LError:
 
 -(NSDate *)partition:(NSString *)partitionKey updateDateForKey:(NSString *)key
 {
-    HVCHECK_NOTNULL(partitionKey);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(partitionKey);
+    MHVCHECK_NOTNULL(key);
     
     id<MHVObjectStore> store = [self ensurePartition:partitionKey shouldCreate:FALSE];
     if (!store)
@@ -162,7 +162,7 @@ LError:
 
 -(NSEnumerator *)allKeysInPartition:(NSString *)partitionKey
 {
-    HVCHECK_NOTNULL(partitionKey);
+    MHVCHECK_NOTNULL(partitionKey);
     
     id<MHVObjectStore> store = [self ensurePartition:partitionKey shouldCreate:FALSE];
     if (!store)
@@ -191,7 +191,7 @@ LError:
 
 @end
 
-@implementation MHVPartitionedObjectStore (HVPrivate)
+@implementation MHVPartitionedObjectStore (MHVPrivate)
 
 -(id<MHVObjectStore>)ensurePartition:(NSString *)partitionKey shouldCreate:(BOOL)shouldCreate
 {

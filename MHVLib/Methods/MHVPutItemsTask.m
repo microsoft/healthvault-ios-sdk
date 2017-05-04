@@ -29,7 +29,7 @@
 
 -(MHVItemCollection *)items
 {
-    HVENSURE(m_items, MHVItemCollection);
+    MHVENSURE(m_items, MHVItemCollection);
     return m_items;
 }
 
@@ -59,31 +59,31 @@
     return 2;
 }
 
--(id)initWithItem:(MHVItem *)item andCallback:(HVTaskCompletion)callback
+-(id)initWithItem:(MHVItem *)item andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     MHVItemCollection* items = [[MHVItemCollection alloc]initWithItem:item];
     self = [self initWithItems:items andCallback:callback];
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
--(id)initWithItems:(MHVItemCollection *)items andCallback:(HVTaskCompletion)callback
+-(id)initWithItems:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_TRUE((![NSArray isNilOrEmpty:items]));
+    MHVCHECK_TRUE((![NSArray isNilOrEmpty:items]));
     
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.items = items;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -107,12 +107,12 @@ LError:
     return [super deserializeResponseBodyFromReader:reader asClass:[MHVItemKeyCollection class]];
 }
 
-+(MHVPutItemsTask *)newForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(HVTaskCompletion)callback
++(MHVPutItemsTask *)newForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     MHVPutItemsTask* task = [[MHVPutItemsTask alloc] initWithItem:item andCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     task.record = record;
     
@@ -122,12 +122,12 @@ LError:
     return nil;
 }
 
-+(MHVPutItemsTask *) newForRecord:(MHVRecordReference *) record items:(MHVItemCollection *)items andCallback:(HVTaskCompletion)callback
++(MHVPutItemsTask *) newForRecord:(MHVRecordReference *) record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     MHVPutItemsTask* task = [[MHVPutItemsTask alloc] initWithItems:items andCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     task.record = record;
     

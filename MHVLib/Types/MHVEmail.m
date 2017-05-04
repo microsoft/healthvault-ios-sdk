@@ -32,15 +32,15 @@ static NSString* const c_element_address = @"address";
 -(id)initWithEmailAddress:(NSString *)email
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_address = [[MHVEmailAddress alloc] initWith:email];
-    HVCHECK_NOTNULL(m_address);
+    MHVCHECK_NOTNULL(m_address);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -61,11 +61,11 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_address, HVClientError_InvalidEmail);
+    MHVVALIDATE(m_address, MHVClientError_InvalidEmail);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -89,14 +89,14 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVEmail class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVEmail *)itemAtIndex:(NSUInteger)index

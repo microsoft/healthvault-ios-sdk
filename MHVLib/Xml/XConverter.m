@@ -35,7 +35,7 @@ static NSString* const c_NEGATIVEINF = @"-INF";
 static NSString* const c_TRUE = @"true";
 static NSString* const c_FALSE = @"false";
 
-@interface XConverter (HVPrivate)
+@interface XConverter (MHVPrivate)
 
 -(NSDateFormatter *) ensureDateFormatter;
 -(NSDateFormatter *) ensureDateParser;
@@ -52,10 +52,10 @@ static NSString* const c_FALSE = @"false";
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
 
     m_stringBuffer = [[NSMutableString alloc] init];
-    HVCHECK_NOTNULL(m_stringBuffer);
+    MHVCHECK_NOTNULL(m_stringBuffer);
     
     return self;
 }
@@ -63,8 +63,8 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryString:(NSString *)source toInt:(int *)result
 {
-    HVCHECK_STRING(source);
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_STRING(source);
+    MHVCHECK_NOTNULL(result);
  
     return [source parseInt:result];
 }
@@ -82,10 +82,10 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryInt:(int)source toString:(NSString **)result
 {
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_NOTNULL(result);
     
     *result = [NSString stringWithFormat:@"%d", source];
-    HVCHECK_STRING(*result);
+    MHVCHECK_STRING(*result);
     
     return TRUE;
 }
@@ -103,8 +103,8 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryString:(NSString *) source toFloat:(float *) result
 {
-    HVCHECK_STRING(source);
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_STRING(source);
+    MHVCHECK_NOTNULL(result);
     
     if ([source parseFloat: result])
     {
@@ -138,7 +138,7 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryFloat:(float) source toString:(NSString **) result
 {
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_NOTNULL(result);
     
     if (source == -INFINITY)
     {
@@ -152,7 +152,7 @@ static NSString* const c_FALSE = @"false";
     }
     
     *result = [NSString stringWithFormat:@"%f", source];
-    HVCHECK_STRING(*result);
+    MHVCHECK_STRING(*result);
     
     return TRUE;
 }
@@ -170,8 +170,8 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryString:(NSString *)source toDouble:(double *)result
 {
-    HVCHECK_STRING(source);
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_STRING(source);
+    MHVCHECK_NOTNULL(result);
 
     if ([source parseDouble:result])
     {
@@ -205,7 +205,7 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryDouble:(double)source toString:(NSString **)result
 {
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_NOTNULL(result);
     
     if (source == -INFINITY)
     {
@@ -219,7 +219,7 @@ static NSString* const c_FALSE = @"false";
     }
     
     [self tryDoubleRoundtrip:source toString:result];
-    HVCHECK_STRING(*result);
+    MHVCHECK_STRING(*result);
     
     return TRUE;
 }
@@ -231,7 +231,7 @@ static NSString* const c_FALSE = @"false";
 -(BOOL)tryDoubleRoundtrip:(double)source toString:(NSString **)result
 {
     NSString* asString = [NSString stringWithFormat:@"%.15g", source];
-    HVCHECK_NOTNULL(asString);
+    MHVCHECK_NOTNULL(asString);
     
     double parsedBack = [self stringToDouble:asString];
     if (parsedBack == source)
@@ -259,10 +259,10 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryString:(NSString *) source toBool:(BOOL *) result
 {
-    HVCHECK_STRING(source);
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_STRING(source);
+    MHVCHECK_NOTNULL(result);
     
-    HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
+    MHVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
     
     if ([m_stringBuffer isEqualToString:c_TRUE])
     {
@@ -306,8 +306,8 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryString:(NSString *)source toDate:(NSDate **)result
 {
-    HVCHECK_STRING(source);
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_STRING(source);
+    MHVCHECK_NOTNULL(result);
     
     //
     // Since NSDateFormatter is otherwise incapable of parsing xsd:datetime
@@ -317,7 +317,7 @@ static NSString* const c_FALSE = @"false";
     // 
     // Use a mutable string, so we don't have to keep allocating new strings
     //
-    HVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
+    MHVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
     [m_stringBuffer replaceOccurrencesOfString:@":" withString:@""];
     
     NSDateFormatter* parser = [self ensureDateParser];
@@ -359,12 +359,12 @@ static NSString* const c_FALSE = @"false";
 
 -(BOOL) tryDate:(NSDate *) source toString:(NSString **)result
 {
-    HVCHECK_NOTNULL(source);
-    HVCHECK_NOTNULL(result);
+    MHVCHECK_NOTNULL(source);
+    MHVCHECK_NOTNULL(result);
     
     NSDateFormatter* formatter = [self ensureDateFormatter];
     *result = [formatter stringFromDate:source];
-    HVCHECK_STRING(*result);
+    MHVCHECK_STRING(*result);
     
     return TRUE;
 }
@@ -398,14 +398,14 @@ static NSString* const c_FALSE = @"false";
 
 @end
 
-@implementation XConverter (HVPrivate)
+@implementation XConverter (MHVPrivate)
 
 -(NSDateFormatter *)ensureDateFormatter
 {
     if (!m_formatter)
     {
         m_formatter = [NSDateFormatter newZuluFormatter]; // always emit Zulu form
-        HVCHECK_OOM(m_formatter);
+        MHVCHECK_OOM(m_formatter);
         [m_formatter setLocale:[self ensureLocale]];
     }
     
@@ -417,7 +417,7 @@ static NSString* const c_FALSE = @"false";
     if (!m_parser)
     {
         m_parser = [[NSDateFormatter alloc] init];
-        HVCHECK_OOM(m_parser);
+        MHVCHECK_OOM(m_parser);
         [m_parser setLocale:[self ensureLocale]];
     }
     
@@ -429,7 +429,7 @@ static NSString* const c_FALSE = @"false";
     if (!m_utcParser)
     {
         m_utcParser = [NSDateFormatter newUtcFormatter];
-        HVCHECK_OOM(m_utcParser);
+        MHVCHECK_OOM(m_utcParser);
         [m_utcParser setLocale:[self ensureLocale]];
     }
     
@@ -441,7 +441,7 @@ static NSString* const c_FALSE = @"false";
     if (!m_calendar)
     {
         m_calendar = [NSCalendar newGregorian];
-        HVCHECK_OOM(m_calendar);
+        MHVCHECK_OOM(m_calendar);
     }
     return m_calendar;
 }
@@ -451,7 +451,7 @@ static NSString* const c_FALSE = @"false";
     if (!m_dateLocale)
     {
         m_dateLocale = [NSDateFormatter newCultureNeutralLocale];
-        HVCHECK_OOM(m_dateLocale);
+        MHVCHECK_OOM(m_dateLocale);
     }
     
     return m_dateLocale;

@@ -42,16 +42,16 @@ static const xmlChar* x_element_note = XMLSTRINGCONST("note");
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_OPTIONAL(m_when);
-    HVVALIDATE_OPTIONAL(m_substance);
-    HVVALIDATE_OPTIONAL(m_collectionMethod);
-    HVVALIDATE_OPTIONAL(m_clinicalCode);
-    HVVALIDATE_OPTIONAL(m_value);
-    HVVALIDATE_OPTIONAL(m_status);
+    MHVVALIDATE_OPTIONAL(m_when);
+    MHVVALIDATE_OPTIONAL(m_substance);
+    MHVVALIDATE_OPTIONAL(m_collectionMethod);
+    MHVVALIDATE_OPTIONAL(m_clinicalCode);
+    MHVVALIDATE_OPTIONAL(m_value);
+    MHVVALIDATE_OPTIONAL(m_status);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -85,14 +85,14 @@ static const xmlChar* x_element_note = XMLSTRINGCONST("note");
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVLabTestResultsDetails class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)addItem:(MHVLabTestResultsDetails *)item

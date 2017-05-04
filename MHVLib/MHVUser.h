@@ -72,21 +72,21 @@
 // Refresh the list of authorized records - in case there were changes made using the HealthVault Shell
 // It is possible that when this returns, you no longer have any authorized records
 //
--(MHVTask *) refreshAuthorizedRecords:(HVTaskCompletion) callback;
+-(MHVTask *) refreshAuthorizedRecords:(MHVTaskCompletion) callback;
 //
 // Authorize additional records for this application to work with
 // It is possible that when this returns, you no longer have any authorized records
 //
--(MHVTask *) authorizeAdditionalRecords:(UIViewController *) parentController andCallback:(HVTaskCompletion) callback;
+-(MHVTask *) authorizeAdditionalRecords:(UIViewController *) parentController andCallback:(MHVTaskCompletion) callback;
 //
 // Remove authorization for the given record
 //
--(MHVTask *) removeAuthForRecord:(MHVRecord *) record withCallback:(HVTaskCompletion) callback;
+-(MHVTask *) removeAuthForRecord:(MHVRecord *) record withCallback:(MHVTaskCompletion) callback;
 //
 // Refresh personal images for each record
 // Automatically store the downloaded image in local storage
 //
--(MHVTask *) downloadRecordImageFor:(MHVRecord *) record withCallback:(HVTaskCompletion) callback;
+-(MHVTask *) downloadRecordImageFor:(MHVRecord *) record withCallback:(MHVTaskCompletion) callback;
 
 
 -(void) clear;

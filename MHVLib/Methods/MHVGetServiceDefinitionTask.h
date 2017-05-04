@@ -40,6 +40,6 @@
 //
 @property (readonly, nonatomic, strong) MHVServiceDefinition* serviceDef;
 
-+(MHVGetServiceDefinitionTask *) getTopology:(HVTaskCompletion) callback;
++(MHVGetServiceDefinitionTask *) getTopology:(MHVTaskCompletion) callback;
 
 @end

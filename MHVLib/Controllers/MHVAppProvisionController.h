@@ -25,16 +25,16 @@
 @interface MHVAppProvisionController : MHVBrowserController
 {
 @private
-    enum HVAppProvisionStatus m_status;
+    enum MHVAppProvisionStatus m_status;
     NSError *m_error;
-    HVNotify m_callback;
+    MHVNotify m_callback;
     NSString* m_hvInstanceID;
 }
 
--(id) initWithAppCreateUrl:(NSURL *) url andCallback:(HVNotify) callback;
+-(id) initWithAppCreateUrl:(NSURL *) url andCallback:(MHVNotify) callback;
 
 @property (strong, readonly, nonatomic) NSError* error;
-@property (readonly, nonatomic) enum HVAppProvisionStatus status;
+@property (readonly, nonatomic) enum MHVAppProvisionStatus status;
 @property (strong, readonly, nonatomic) NSString* hvInstanceID;
 
 @property (readonly, nonatomic) BOOL isSuccess;

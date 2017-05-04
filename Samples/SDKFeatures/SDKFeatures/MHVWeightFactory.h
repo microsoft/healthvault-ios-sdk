@@ -20,14 +20,14 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVWeight (HVFactoryMethods)
+@interface MHVWeight (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
 
 @end
 
-@interface MHVWeight (HVDisplay)
+@interface MHVWeight (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

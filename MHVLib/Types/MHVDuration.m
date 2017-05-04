@@ -29,16 +29,16 @@ static NSString* const c_element_end = @"end-date";
 
 -(id)initWithStartDate:(NSDate *)start endDate:(NSDate *)end
 {
-    HVCHECK_NOTNULL(start);
-    HVCHECK_NOTNULL(end);
+    MHVCHECK_NOTNULL(start);
+    MHVCHECK_NOTNULL(end);
     
     self = [super init];
         
     m_startDate = [[MHVApproxDateTime alloc] initWithDate:start];
-    HVCHECK_NOTNULL(m_startDate);
+    MHVCHECK_NOTNULL(m_startDate);
     
     m_endDate = [[MHVApproxDateTime alloc] initWithDate:end];
-    HVCHECK_NOTNULL(m_endDate);
+    MHVCHECK_NOTNULL(m_endDate);
     
     return self;
 }
@@ -51,12 +51,12 @@ static NSString* const c_element_end = @"end-date";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_startDate, HVClientError_InvalidDuration);
-    HVVALIDATE(m_endDate, HVClientError_InvalidDuration);
+    MHVVALIDATE(m_startDate, MHVClientError_InvalidDuration);
+    MHVVALIDATE(m_endDate, MHVClientError_InvalidDuration);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

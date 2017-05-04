@@ -35,7 +35,7 @@ static NSString* const c_element_email = @"email";
 
 -(MHVAddressCollection *)address
 {
-    HVENSURE(m_address, MHVAddressCollection);
+    MHVENSURE(m_address, MHVAddressCollection);
     return m_address;
 }
 
@@ -51,7 +51,7 @@ static NSString* const c_element_email = @"email";
 
 -(MHVPhoneCollection *)phone
 {
-    HVENSURE(m_phone, MHVPhoneCollection);
+    MHVENSURE(m_phone, MHVPhoneCollection);
     return m_phone;
 }
 
@@ -67,7 +67,7 @@ static NSString* const c_element_email = @"email";
 
 -(MHVEmailCollection *)email
 {
-    HVENSURE(m_email, MHVEmailCollection);
+    MHVENSURE(m_email, MHVEmailCollection);
     return m_email;
 }
 
@@ -104,43 +104,43 @@ static NSString* const c_element_email = @"email";
 -(id)initWithPhone:(NSString *)phone andEmail:(NSString *)email
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (phone)
     {
         MHVPhone* phoneObj = [[MHVPhone alloc] initWithNumber:phone];
-        HVCHECK_NOTNULL(phoneObj);
+        MHVCHECK_NOTNULL(phoneObj);
         
         [self.phone addObject:phoneObj];
         
-        HVCHECK_NOTNULL(m_phone);
+        MHVCHECK_NOTNULL(m_phone);
     }
     
     if (email)
     {
         MHVEmail* emailObj = [[MHVEmail alloc] initWithEmailAddress:email];
-        HVCHECK_NOTNULL(emailObj);
+        MHVCHECK_NOTNULL(emailObj);
         [self.email addObject:emailObj];
         
-        HVCHECK_NOTNULL(m_email);
+        MHVCHECK_NOTNULL(m_email);
     }
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_ARRAYOPTIONAL(m_address, HVClientError_InvalidContact);
-    HVVALIDATE_ARRAYOPTIONAL(m_phone, HVClientError_InvalidContact);
-    HVVALIDATE_ARRAYOPTIONAL(m_email, HVClientError_InvalidContact);
+    MHVVALIDATE_ARRAYOPTIONAL(m_address, MHVClientError_InvalidContact);
+    MHVVALIDATE_ARRAYOPTIONAL(m_phone, MHVClientError_InvalidContact);
+    MHVVALIDATE_ARRAYOPTIONAL(m_email, MHVClientError_InvalidContact);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

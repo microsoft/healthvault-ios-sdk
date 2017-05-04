@@ -40,7 +40,7 @@
     }
     
     NSMutableDictionary* nvPairs = [NSMutableDictionary dictionary];
-    HVCHECK_NOTNULL(nvPairs);
+    MHVCHECK_NOTNULL(nvPairs);
     
     for (NSUInteger i = 0, count = parts.count; i < count; ++i)
     {

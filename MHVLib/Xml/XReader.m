@@ -212,10 +212,10 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
 
 -(id)initWithReader:(xmlTextReader *)reader andConverter:(XConverter *)converter
 {
-    HVCHECK_NOTNULL(reader);
+    MHVCHECK_NOTNULL(reader);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (converter)
     {
@@ -224,7 +224,7 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
     else
     {
         m_converter = [[XConverter alloc] init];
-        HVCHECK_NOTNULL(m_converter);        
+        MHVCHECK_NOTNULL(m_converter);        
     }
     
     m_reader = reader;  // C pointer. Weak ref
@@ -232,7 +232,7 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
     
 }
 
@@ -292,10 +292,10 @@ LError:
 
 -(NSString *) getAttribute:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
      
     xmlChar *xmlName = [name toXmlString]; // The string is auto-released. Delegate null checking to reader
-    HVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlName);
     
     return [NSString fromXmlStringAndFreeXml: xmlTextReaderGetAttribute(m_reader, xmlName)];
 
@@ -310,15 +310,15 @@ LError:
 
 -(NSString *) getAttribute:(NSString *)name NS:(NSString *)ns
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(ns);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(ns);
     
     // These strings are auto released. 
     xmlChar *xmlName = [name toXmlString]; 
     xmlChar *xmlNs = [ns toXmlString];  
     
-    HVCHECK_NOTNULL(xmlName);
-    HVCHECK_NOTNULL(xmlNs);
+    MHVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlNs);
     
     return [NSString fromXmlStringAndFreeXml: xmlTextReaderGetAttributeNs(m_reader, xmlName, xmlNs)];
 
@@ -334,12 +334,12 @@ LError:
 
 -(BOOL) moveToAttribute:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
     
     [self clear];
     
     xmlChar *xmlName = [name toXmlString];
-    HVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlName);
     
     return [self isSuccess:xmlTextReaderMoveToAttribute(m_reader, xmlName)];
 
@@ -355,8 +355,8 @@ LError:
 
 -(BOOL) moveToAttribute:(NSString *)name NS:(NSString *)ns
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(ns);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(ns);
     
     [self clear];
     
@@ -364,8 +364,8 @@ LError:
     xmlChar *xmlName = [name toXmlString]; 
     xmlChar *xmlNs = [ns toXmlString];  
 
-    HVCHECK_NOTNULL(xmlName);
-    HVCHECK_NOTNULL(xmlNs);
+    MHVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlNs);
 
     return [self isSuccess:xmlTextReaderMoveToAttributeNs(m_reader, xmlName, xmlNs)];
 
@@ -398,7 +398,7 @@ LError:
 
 -(BOOL) isStartElementWithName:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
      
     return ([self isStartElement] && [name isEqualToString:self.localName]);
 
@@ -408,8 +408,8 @@ LError:
 
 -(BOOL) isStartElementWithName:(NSString *)name NS:(NSString *) ns
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(ns);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(ns);
     
     if (![self isStartElement])
     {
@@ -429,7 +429,7 @@ LError:
 
 -(BOOL)isStartElementWithXmlName:(const xmlChar *)name
 {
-    HVCHECK_NOTNULL(name);
+    MHVCHECK_NOTNULL(name);
     
     if (![self isStartElement])
     {

@@ -31,11 +31,11 @@ static NSString* const c_attribute_personID = @"person-id";
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(m_id, HVClientError_InvalidRecordReference);
+    MHVVALIDATE_STRING(m_id, MHVClientError_InvalidRecordReference);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serializeAttributes:(XWriter *)writer
@@ -54,7 +54,7 @@ static NSString* const c_attribute_personID = @"person-id";
 
 @implementation MHVRecordReference (MHVMethods)
 
--(MHVGetItemsTask *)getItemsForClass:(Class)cls callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getItemsForClass:(Class)cls callback:(MHVTaskCompletion)callback
 {
     NSString* typeID = [[MHVTypeSystem current] getTypeIDForClassName:NSStringFromClass(cls)];
     if (!typeID)
@@ -65,10 +65,10 @@ static NSString* const c_attribute_personID = @"person-id";
     return [self getItemsForType:typeID callback:callback];
 }
 
--(MHVGetItemsTask *)getItemsForType:(NSString *)typeID callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getItemsForType:(NSString *)typeID callback:(MHVTaskCompletion)callback
 {
     MHVItemQuery *query = [[MHVItemQuery alloc] initWithTypeID:typeID];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     MHVGetItemsTask* task = [self getItems:query callback:callback];
     
@@ -78,15 +78,15 @@ LError:
     return nil;
 }
 
--(MHVGetItemsTask *)getPendingItems:(MHVPendingItemCollection *)items callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getPendingItems:(MHVPendingItemCollection *)items callback:(MHVTaskCompletion)callback
 {
     return [self getPendingItems:items ofType:nil callback:callback];
 }
 
--(MHVGetItemsTask *)getPendingItems:(MHVPendingItemCollection *)items ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getPendingItems:(MHVPendingItemCollection *)items ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback
 {
     MHVItemQuery *query = [[MHVItemQuery alloc] initWithPendingItems:items];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
 
     if (![NSString isNilOrEmpty:typeID])
     {
@@ -99,15 +99,15 @@ LError:
     return nil;    
 }
 
--(MHVGetItemsTask *)getItemWithKey:(MHVItemKey *)key callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getItemWithKey:(MHVItemKey *)key callback:(MHVTaskCompletion)callback
 {
     return [self getItemWithKey:key ofType:nil callback:callback];
 }
 
--(MHVGetItemsTask *)getItemWithKey:(MHVItemKey *)key ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getItemWithKey:(MHVItemKey *)key ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback
 {
     MHVItemQuery *query = [[MHVItemQuery alloc] initWithItemKey:key andType:typeID];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
 
     return [self getItems:query callback:callback];
     
@@ -115,15 +115,15 @@ LError:
     return nil;    
 }
 
--(MHVGetItemsTask *)getItemWithID:(NSString *)itemID callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getItemWithID:(NSString *)itemID callback:(MHVTaskCompletion)callback
 {
     return [self getItemWithID:itemID ofType:nil callback:callback];
 }
 
--(MHVGetItemsTask *)getItemWithID:(NSString *)itemID ofType:(NSString *)typeID callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getItemWithID:(NSString *)itemID ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback
 {
     MHVItemQuery *query = [[MHVItemQuery alloc] initWithItemID:itemID andType:typeID];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     return [self getItems:query callback:callback];
     
@@ -131,10 +131,10 @@ LError:
     return nil;    
 }
 
--(MHVGetItemsTask *)getItems:(MHVItemQuery *)query callback:(HVTaskCompletion)callback
+-(MHVGetItemsTask *)getItems:(MHVItemQuery *)query callback:(MHVTaskCompletion)callback
 {
     MHVGetItemsTask* task = [[MHVClient current].methodFactory newGetItemsForRecord:self query:query andCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     [task start];
     return task;
@@ -143,9 +143,9 @@ LError:
     return nil;
 }
 
--(MHVPutItemsTask *)newItem:(MHVItem *)item callback:(HVTaskCompletion)callback
+-(MHVPutItemsTask *)newItem:(MHVItem *)item callback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     [item prepareForNew];
     
@@ -155,9 +155,9 @@ LError:
     return nil;
 }
 
--(MHVPutItemsTask *)newItems:(MHVItemCollection *)items callback:(HVTaskCompletion)callback
+-(MHVPutItemsTask *)newItems:(MHVItemCollection *)items callback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     [items prepareForNew];
     return [self putItems:items callback:callback];
@@ -166,12 +166,12 @@ LError:
     return nil;
 }
 
--(MHVPutItemsTask *)putItem:(MHVItem *)item callback:(HVTaskCompletion)callback
+-(MHVPutItemsTask *)putItem:(MHVItem *)item callback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     MHVItemCollection* items = [[MHVItemCollection alloc] initWithItem:item];
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     MHVPutItemsTask* task = [self putItems:items callback:callback];
     
@@ -181,10 +181,10 @@ LError:
     return nil;
 }
 
--(MHVPutItemsTask *)putItems:(MHVItemCollection *)items callback:(HVTaskCompletion)callback
+-(MHVPutItemsTask *)putItems:(MHVItemCollection *)items callback:(MHVTaskCompletion)callback
 {
     MHVPutItemsTask* task = [[MHVClient current].methodFactory newPutItemsForRecord:self items:items andCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     [task start];
     return task;
@@ -193,22 +193,22 @@ LError:
     return nil;
 }
 
--(MHVPutItemsTask *)updateItem:(MHVItem *)item callback:(HVTaskCompletion)callback
+-(MHVPutItemsTask *)updateItem:(MHVItem *)item callback:(MHVTaskCompletion)callback
 {
     [item prepareForUpdate];
     return [self putItem:item callback:callback];
 }
 
--(MHVPutItemsTask *)updateItems:(MHVItemCollection *)items callback:(HVTaskCompletion)callback
+-(MHVPutItemsTask *)updateItems:(MHVItemCollection *)items callback:(MHVTaskCompletion)callback
 {
     [items prepareForUpdate];
     return [self putItems:items callback:callback];
 }
 
--(MHVRemoveItemsTask *)removeItemWithKey:(MHVItemKey *)key callback:(HVTaskCompletion)callback
+-(MHVRemoveItemsTask *)removeItemWithKey:(MHVItemKey *)key callback:(MHVTaskCompletion)callback
 {
     MHVItemKeyCollection* keys = [[MHVItemKeyCollection alloc] initWithKey:key];
-    HVCHECK_NOTNULL(keys);
+    MHVCHECK_NOTNULL(keys);
     
     return [self removeItemsWithKeys:keys callback:callback];
     
@@ -216,10 +216,10 @@ LError:
     return nil;
 }
 
--(MHVRemoveItemsTask *)removeItemsWithKeys:(MHVItemKeyCollection *)keys callback:(HVTaskCompletion)callback
+-(MHVRemoveItemsTask *)removeItemsWithKeys:(MHVItemKeyCollection *)keys callback:(MHVTaskCompletion)callback
 {
     MHVRemoveItemsTask* task = [[MHVClient current].methodFactory newRemoveItemsForRecord:self keys:keys andCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
 
     [task start];
     return task;

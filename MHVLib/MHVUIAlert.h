@@ -20,17 +20,17 @@
 #import <UIKit/UIKit.h>
 #import "MHVBlock.h"
 
-enum HVUIAlertResult 
+enum MHVUIAlertResult 
 {
-    HVUIAlertCancel = 0,
-    HVUIAlertOK = 1
+    MHVUIAlertCancel = 0,
+    MHVUIAlertOK = 1
 };
 
 @interface MHVUIAlert : NSObject <UIAlertViewDelegate>
 {
-    enum HVUIAlertResult m_result;
+    enum MHVUIAlertResult m_result;
     UIAlertView *m_view;
-    HVNotify m_callback;
+    MHVNotify m_callback;
     NSString* m_text;
 }
 
@@ -40,7 +40,7 @@ enum HVUIAlertResult
 //
 //-------------------------
 @property (readonly, nonatomic) UIAlertView* view;
-@property (readonly, nonatomic) enum HVUIAlertResult result;
+@property (readonly, nonatomic) enum MHVUIAlertResult result;
 @property (readonly, nonatomic, strong) NSString* inputText;
 
 //-------------------------
@@ -48,12 +48,12 @@ enum HVUIAlertResult
 // Initializers
 //
 //-------------------------
--(id) initWithMessage:(NSString *) message callback:(HVNotify) callback;
--(id) initWithTitle:(NSString *) title message:(NSString *) message callback:(HVNotify) callback;
--(id) initWithTitle:(NSString *) title message:(NSString *) message cancelButtonText:(NSString *) cancelText okButtonText:(NSString *) okText callback:(HVNotify) callback;
+-(id) initWithMessage:(NSString *) message callback:(MHVNotify) callback;
+-(id) initWithTitle:(NSString *) title message:(NSString *) message callback:(MHVNotify) callback;
+-(id) initWithTitle:(NSString *) title message:(NSString *) message cancelButtonText:(NSString *) cancelText okButtonText:(NSString *) okText callback:(MHVNotify) callback;
 -(id) initWithInformationalMessage:(NSString *) message;
 -(id) initWithTitle:(NSString *) title forInformationalMessage:(NSString *) message;
--(id) initWithTitle:(NSString *) title forInformationalMessage:(NSString *) message withCallback:(HVNotify) callback;
+-(id) initWithTitle:(NSString *) title forInformationalMessage:(NSString *) message withCallback:(MHVNotify) callback;
 
 //-------------------------
 //
@@ -62,12 +62,12 @@ enum HVUIAlertResult
 //-------------------------
 -(void) show;
 
-+(MHVUIAlert *) showWithMessage:(NSString *) message callback:(HVNotify) callback;
-+(MHVUIAlert *) showYesNoWithMessage:(NSString *) message callback:(HVNotify) callback;
-+(MHVUIAlert *) showWithTitle:(NSString *) title message:(NSString *) message callback:(HVNotify) callback;
++(MHVUIAlert *) showWithMessage:(NSString *) message callback:(MHVNotify) callback;
++(MHVUIAlert *) showYesNoWithMessage:(NSString *) message callback:(MHVNotify) callback;
++(MHVUIAlert *) showWithTitle:(NSString *) title message:(NSString *) message callback:(MHVNotify) callback;
 +(MHVUIAlert *) showInformationalMessage:(NSString *) message;
-+(MHVUIAlert *) showInformationalMessage:(NSString *)message withCallback:(HVNotify) callback;
-+(MHVUIAlert *) showPromptWithMessage:(NSString *) message callback:(HVNotify) callback;
-+(MHVUIAlert *) showPromptWithMessage:(NSString *) message defaultText:(NSString *) defaultText andCallback:(HVNotify) callback;
++(MHVUIAlert *) showInformationalMessage:(NSString *)message withCallback:(MHVNotify) callback;
++(MHVUIAlert *) showPromptWithMessage:(NSString *) message callback:(MHVNotify) callback;
++(MHVUIAlert *) showPromptWithMessage:(NSString *) message defaultText:(NSString *) defaultText andCallback:(MHVNotify) callback;
 
 @end

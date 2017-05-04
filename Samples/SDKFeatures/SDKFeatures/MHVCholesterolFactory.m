@@ -18,7 +18,7 @@
 
 #import "MHVCholesterolFactory.h"
 
-@implementation MHVCholesterolV2 (HVFactoryMethods)
+@implementation MHVCholesterolV2 (MHVFactoryMethods)
 
 +(MHVItemCollection *)createRandomForDay:(NSDate *)date
 {
@@ -46,7 +46,7 @@
 
 @end
 
-@implementation MHVCholesterolV2 (HVDisplay)
+@implementation MHVCholesterolV2 (MHVDisplay)
 
 -(NSString *)detailsString
 {

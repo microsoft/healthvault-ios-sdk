@@ -1,5 +1,5 @@
 //
-//  HVGetAuthorizedPeople.m
+//  MHVGetAuthorizedPeople.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.

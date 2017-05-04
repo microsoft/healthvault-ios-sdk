@@ -36,7 +36,7 @@
     return (array == nil || array.count == 0);
 }
 
--(NSUInteger)indexOfMatchingObject:(HVFilter)filter
+-(NSUInteger)indexOfMatchingObject:(MHVFilter)filter
 {
     if (filter)
     {

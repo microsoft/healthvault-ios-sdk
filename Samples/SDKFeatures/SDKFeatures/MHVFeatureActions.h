@@ -29,7 +29,7 @@
 
 -(id) initWithTitle:(NSString *) title;
 
--(BOOL) addFeature:(NSString *) title andAction:(HVAction) action;
+-(BOOL) addFeature:(NSString *) title andAction:(MHVAction) action;
 
 -(void) showFrom:(UIBarButtonItem *) button;
 

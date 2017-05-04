@@ -32,7 +32,7 @@ static const xmlChar* x_element_context = XMLSTRINGCONST("measurement-context");
 
 static NSString* const c_vocab_measurement = @"glucose-measurement-type";
 
-@interface MHVBloodGlucose (HVPrivate)
+@interface MHVBloodGlucose (MHVPrivate)
 
 +(MHVCodableValue *) newMeasurementText:(NSString *) text andCode:(NSString *) code;
 +(MHVCodedValue *) newMeasurementCode:(NSString *) code;
@@ -65,7 +65,7 @@ static NSString* const c_vocab_measurement = @"glucose-measurement-type";
 
 -(void)setInMgPerDL:(double)inMgPerDL
 {
-    HVENSURE(m_value, MHVBloodGlucoseMeasurement);
+    MHVENSURE(m_value, MHVBloodGlucoseMeasurement);
     m_value.mgPerDL = inMgPerDL;
 }
 
@@ -76,45 +76,45 @@ static NSString* const c_vocab_measurement = @"glucose-measurement-type";
 
 -(void)setInMmolPerLiter:(double)inMmolPerLiter
 {
-    HVENSURE(m_value, MHVBloodGlucoseMeasurement);
+    MHVENSURE(m_value, MHVBloodGlucoseMeasurement);
     m_value.mmolPerLiter = inMmolPerLiter;
 }
 
--(enum HVRelativeRating)normalcy
+-(enum MHVRelativeRating)normalcy
 {
-    return (m_normalcy) ? (enum HVRelativeRating) m_normalcy.value : HVRelativeRating_None;
+    return (m_normalcy) ? (enum MHVRelativeRating) m_normalcy.value : MHVRelativeRating_None;
 }
 
--(void)setNormalcy:(enum HVRelativeRating)normalcy
+-(void)setNormalcy:(enum MHVRelativeRating)normalcy
 {
-    if (normalcy == HVRelativeRating_None)
+    if (normalcy == MHVRelativeRating_None)
     {
         m_normalcy = nil;
     }
     else 
     {
-        HVENSURE(m_normalcy, MHVOneToFive);
+        MHVENSURE(m_normalcy, MHVOneToFive);
         m_normalcy.value = normalcy;
     }
 }
 
 -(id)initWithMmolPerLiter:(double)value andDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.inMmolPerLiter = value;
-    HVCHECK_NOTNULL(m_value);
+    MHVCHECK_NOTNULL(m_value);
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -165,17 +165,17 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidBloodGlucose);
-    HVVALIDATE(m_value, HVClientError_InvalidBloodGlucose);
-    HVVALIDATE(m_measurementType, HVClientError_InvalidBloodGlucose);
-    HVVALIDATE_OPTIONAL(m_outsideOperatingTemp);
-    HVVALIDATE_OPTIONAL(m_controlTest);
-    HVVALIDATE_OPTIONAL(m_normalcy);
-    HVVALIDATE_OPTIONAL(m_context);
+    MHVVALIDATE(m_when, MHVClientError_InvalidBloodGlucose);
+    MHVVALIDATE(m_value, MHVClientError_InvalidBloodGlucose);
+    MHVVALIDATE(m_measurementType, MHVClientError_InvalidBloodGlucose);
+    MHVVALIDATE_OPTIONAL(m_outsideOperatingTemp);
+    MHVVALIDATE_OPTIONAL(m_controlTest);
+    MHVVALIDATE_OPTIONAL(m_normalcy);
+    MHVVALIDATE_OPTIONAL(m_context);
 
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -222,7 +222,7 @@ LError:
 
 @end
 
-@implementation MHVBloodGlucose (HVPrivate)
+@implementation MHVBloodGlucose (MHVPrivate)
     
 +(MHVCodableValue *)newMeasurementText:(NSString *)text andCode:(NSString *)code
 {

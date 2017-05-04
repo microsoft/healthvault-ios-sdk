@@ -32,10 +32,10 @@ static NSString* const c_element_relationship = @"rel-name";
 
 -(id)initWithRecord:(HealthVaultRecord *)record
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.ID = record.recordId;
     self.personID = record.personId;
@@ -46,14 +46,14 @@ static NSString* const c_element_relationship = @"rel-name";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
--(MHVGetPersonalImageTask *)downloadPersonalImageWithCallback:(HVTaskCompletion)callback
+-(MHVGetPersonalImageTask *)downloadPersonalImageWithCallback:(MHVTaskCompletion)callback
 {
     MHVGetPersonalImageTask* task = [[MHVGetPersonalImageTask alloc] initWithRecord:self andCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     [task start];
     return task;
@@ -64,13 +64,13 @@ LError:
 
 -(MHVClientResult *)validate
 {    
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVCHECK_RESULT([super validate]);
+    MHVCHECK_RESULT([super validate]);
     
-    HVVALIDATE_STRING(m_name, HVClientError_InvalidRecord);
+    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidRecord);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serializeAttributes:(XWriter *)writer
@@ -111,7 +111,7 @@ LError:
 -(id)initWithRecordArray:(NSArray *)records
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVRecord class];
     
@@ -127,7 +127,7 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVRecord *)itemAtIndex:(NSUInteger)index

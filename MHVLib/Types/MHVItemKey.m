@@ -41,10 +41,10 @@ static NSString* const c_localIDPrefix = @"L";
 
 -(id) initWithID:(NSString *)itemID andVersion:(NSString *)version
 {
-    HVCHECK_NOTNULL(itemID);
+    MHVCHECK_NOTNULL(itemID);
      
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.itemID = itemID;
     if (version)
@@ -55,17 +55,17 @@ static NSString* const c_localIDPrefix = @"L";
     return self;
     
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 -(id)initWithKey:(MHVItemKey *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     return [self initWithID:key.itemID andVersion:key.version];
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initNew
@@ -113,12 +113,12 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_STRING(m_id, HVClientError_InvalidItemKey);
-    HVVALIDATE_STRING(m_version, HVClientError_InvalidItemKey);
+    MHVVALIDATE_STRING(m_id, MHVClientError_InvalidItemKey);
+    MHVVALIDATE_STRING(m_version, MHVClientError_InvalidItemKey);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(NSString *)description
@@ -160,7 +160,7 @@ static NSString* const c_element_key = @"thing-id";
 -(id)initWithKey:(MHVItemKey *)key
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVItemKey class];
     if (key)
@@ -171,7 +171,7 @@ static NSString* const c_element_key = @"thing-id";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)addItem:(MHVItemKey *)key
@@ -191,11 +191,11 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_ARRAY(m_inner, HVClientError_InvalidItemList);
+    MHVVALIDATE_ARRAY(m_inner, MHVClientError_InvalidItemList);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serializeAttributes:(XWriter *)writer

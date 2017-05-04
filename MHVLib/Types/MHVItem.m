@@ -64,7 +64,7 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
 
 -(MHVItemData *) data
 {
-    HVENSURE(m_data, MHVItemData);
+    MHVENSURE(m_data, MHVItemData);
     return m_data;
 }
 
@@ -75,7 +75,7 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
 
 -(MHVBlobPayload *)blobs
 {
-    HVENSURE(m_blobs, MHVBlobPayload);
+    MHVENSURE(m_blobs, MHVBlobPayload);
     return m_blobs;
 }
 
@@ -103,7 +103,7 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
 
 -(BOOL)isReadOnly
 {
-    return ((m_flags & HVItemFlagImmutable) != 0);
+    return ((m_flags & MHVItemFlagImmutable) != 0);
 }
 
 -(BOOL)hasUpdatedEndDate
@@ -139,46 +139,46 @@ static const xmlChar* x_element_updatedEndDate = XMLSTRINGCONST("updated-end-dat
 -(id) initWithType:(NSString *)typeID
 {
     MHVItemDataTyped* data = [[MHVTypeSystem current] newFromTypeID:typeID];
-    HVCHECK_NOTNULL(data);
+    MHVCHECK_NOTNULL(data);
     
     self = [self initWithTypedData:data];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithTypedData:(MHVItemDataTyped *)data
 {
-    HVCHECK_NOTNULL(data);
+    MHVCHECK_NOTNULL(data);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
         
     m_type = [[MHVItemType alloc] initWithTypeID:data.type];
-    HVCHECK_NOTNULL(m_type);
+    MHVCHECK_NOTNULL(m_type);
     
     m_data = [[MHVItemData alloc] init];
-    HVCHECK_NOTNULL(m_data);
+    MHVCHECK_NOTNULL(m_data);
     
     m_data.typed = data;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithTypedDataClassName:(NSString *)name
 {
     NSString* typeID = [[MHVTypeSystem current] getTypeIDForClassName:name];
-    HVCHECK_NOTNULL(typeID);
+    MHVCHECK_NOTNULL(typeID);
     
     return [self initWithType:typeID];
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithTypedDataClass:(Class)cls
@@ -190,7 +190,7 @@ LError:
 -(BOOL)setKeyToNew
 {
     MHVItemKey* newKey = [MHVItemKey newLocal];
-    HVCHECK_NOTNULL(newKey);
+    MHVCHECK_NOTNULL(newKey);
     
     self.key = newKey;
     
@@ -228,7 +228,7 @@ LError:
 -(BOOL)removeEndDate
 {
     m_updatedEndDate = [MHVConstrainedXmlDate nullDate];
-    HVCHECK_NOTNULL(m_updatedEndDate);
+    MHVCHECK_NOTNULL(m_updatedEndDate);
 
     return TRUE;
     
@@ -238,10 +238,10 @@ LError:
 
 -(BOOL)updateEndDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     m_updatedEndDate = [MHVConstrainedXmlDate fromDate:date];
-    HVCHECK_NOTNULL(m_updatedEndDate);
+    MHVCHECK_NOTNULL(m_updatedEndDate);
     
     return TRUE;
     
@@ -251,12 +251,12 @@ LError:
 
 -(BOOL)updateEndDateWithApproxDate:(MHVApproxDateTime *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     if (date.isStructured)
     {
         m_updatedEndDate = [MHVConstrainedXmlDate fromDate:[date toDate]];
-        HVCHECK_NOTNULL(m_updatedEndDate);
+        MHVCHECK_NOTNULL(m_updatedEndDate);
         return TRUE;
     }
 
@@ -311,16 +311,16 @@ LError:
 // Blob - Helper methods
 //
 //------------------------
--(MHVTask *)updateBlobDataFromRecord:(MHVRecordReference *)record andCallback:(HVTaskCompletion)callback
+-(MHVTask *)updateBlobDataFromRecord:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(m_key);
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(m_key);
+    MHVCHECK_NOTNULL(record);
     //
     // We'll query for the latest blob information for this item
     //
     MHVItemQuery *query = [[MHVItemQuery alloc] initWithItemKey:m_key];
-    HVCHECK_NOTNULL(query);
-    query.view.sections = HVItemSection_Blobs;  // Blob data only
+    MHVCHECK_NOTNULL(query);
+    query.view.sections = MHVItemSection_Blobs;  // Blob data only
     
     MHVGetItemsTask* getItemsTask = [[MHVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(MHVTask *task) {
 
@@ -328,10 +328,10 @@ LError:
         m_blobs = blobItem.blobs;
     
     }];
-    HVCHECK_NOTNULL(getItemsTask);
+    MHVCHECK_NOTNULL(getItemsTask);
 
     MHVTask* getBlobTask = [[MHVTask alloc] initWithCallback:callback andChildTask:getItemsTask];
-    HVCHECK_NOTNULL(getBlobTask);
+    MHVCHECK_NOTNULL(getBlobTask);
 
     [getBlobTask start];
     
@@ -341,12 +341,12 @@ LError:
     return nil;
 }
 
--(MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data contentType:(NSString *)contentType record:(MHVRecordReference *) record andCallback:(HVTaskCompletion)callback
+-(MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data contentType:(NSString *)contentType record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion)callback
 {
     return [self uploadBlob:data forBlobName:c_emptyString contentType:contentType record:record andCallback:callback];
 }
 
--(MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *) record andCallback:(HVTaskCompletion)callback
+-(MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion)callback
 {
     MHVItemBlobUploadTask* task = [self newUploadBlobTask:data forBlobName:name contentType:contentType record:record andCallback:callback];
     
@@ -355,7 +355,7 @@ LError:
     return task;
 }
 
--(MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(HVTaskCompletion)callback
+-(MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     MHVBlobInfo* blobInfo = [[MHVBlobInfo alloc] initWithName:name andContentType:contentType];
     
@@ -406,21 +406,21 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_OPTIONAL(m_key);
-    HVVALIDATE_OPTIONAL(m_type);
-    HVVALIDATE_OPTIONAL(m_data);
-    HVVALIDATE_OPTIONAL(m_blobs);
+    MHVVALIDATE_OPTIONAL(m_key);
+    MHVVALIDATE_OPTIONAL(m_type);
+    MHVVALIDATE_OPTIONAL(m_data);
+    MHVVALIDATE_OPTIONAL(m_blobs);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_key content:m_key];
     [writer writeElementXmlName:x_element_type content:m_type];
-    [writer writeElement:c_element_state value:HVItemStateToString(m_state)];
+    [writer writeElement:c_element_state value:MHVItemStateToString(m_state)];
     [writer writeElementXmlName:x_element_flags intValue:m_flags];
     [writer writeElementXmlName:x_element_effectiveDate dateValue:m_effectiveDate];
     [writer writeElementXmlName:x_element_created content:m_created];
@@ -438,7 +438,7 @@ LError:
     NSString* state = [reader readStringElement:c_element_state];
     if (state)
     {
-        m_state = HVItemStateFromString(state);
+        m_state = MHVItemStateFromString(state);
     }
 
     m_flags = [reader readIntElementXmlName:x_element_flags];
@@ -481,7 +481,7 @@ static NSString* const c_element_item = @"thing";
 -(id)initWithItem:(MHVItem *)item
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
 
     self.type = [MHVItem class];
     
@@ -493,19 +493,19 @@ static NSString* const c_element_item = @"thing";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithItems:(NSArray *)items
 {
     self = [self  init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     [self addObjectsFromArray:items];
     
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)addItem:(MHVItem *)item
@@ -615,11 +615,11 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_ARRAY(m_inner, HVClientError_InvalidItemList);
+    MHVVALIDATE_ARRAY(m_inner, MHVClientError_InvalidItemList);
 
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(BOOL)shallowCloneItems
@@ -627,7 +627,7 @@ LError:
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
         MHVItem* clone = [[self itemAtIndex:i] shallowClone];
-        HVCHECK_NOTNULL(clone);
+        MHVCHECK_NOTNULL(clone);
         
         [self replaceObjectAtIndex:i withObject:clone];
     }

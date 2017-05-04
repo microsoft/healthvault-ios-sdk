@@ -28,6 +28,6 @@
 
 @property (readonly, nonatomic, strong) NSData* imageData;
 
--(id) initWithRecord:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(id) initWithRecord:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
 @end

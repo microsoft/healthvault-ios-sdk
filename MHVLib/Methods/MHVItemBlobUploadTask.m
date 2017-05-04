@@ -19,7 +19,7 @@
 #import "MHVLib.h"
 #import "MHVItemBlobUploadTask.h"
 
-@interface MHVItemBlobUploadTask (HVPrivate)
+@interface MHVItemBlobUploadTask (MHVPrivate)
 
 -(void) uploadBlobComplete:(MHVTask *)task;
 -(void) updateBlobWithUrl:(NSString *) url andLength:(NSInteger) length;
@@ -38,14 +38,14 @@
     return (MHVItemKey *) self.result;
 }
 
--(id)initWithSource:(id<MHVBlobSource>)data blobInfo:(MHVBlobInfo *)blobInfo forItem:(MHVItem *)item record:(MHVRecordReference *) record andCallback:(HVTaskCompletion)callback
+-(id)initWithSource:(id<MHVBlobSource>)data blobInfo:(MHVBlobInfo *)blobInfo forItem:(MHVItem *)item record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(data);
-    HVCHECK_NOTNULL(blobInfo);
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(data);
+    MHVCHECK_NOTNULL(blobInfo);
+    MHVCHECK_NOTNULL(record);
     
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_blobInfo = blobInfo;
     m_item = item;
@@ -60,7 +60,7 @@
         
     } ];
     
-    HVCHECK_NOTNULL(uploadTask);
+    MHVCHECK_NOTNULL(uploadTask);
     uploadTask.delegate = self;
     
     [self setNextTask:uploadTask];
@@ -68,7 +68,7 @@
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -82,7 +82,7 @@ LError:
 
 @end
 
-@implementation MHVItemBlobUploadTask (HVPrivate)
+@implementation MHVItemBlobUploadTask (MHVPrivate)
 
 -(void)uploadBlobComplete:(MHVTask *)task
 {
@@ -97,7 +97,7 @@ LError:
     //
     [self updateBlobWithUrl:blobUrl andLength:uploadTask.source.length];
     //
-    // Step 2. push item into HV
+    // Step 2. push item into MHV
     //
     [self putItemInHV];
 }
@@ -105,7 +105,7 @@ LError:
 -(void)updateBlobWithUrl:(NSString *)url andLength:(NSInteger)length
 {
     MHVBlobPayloadItem* blobItem = [[MHVBlobPayloadItem alloc] init];
-    HVCHECK_OOM(blobItem);
+    MHVCHECK_OOM(blobItem);
     
     blobItem.blobInfo = m_blobInfo;
     blobItem.length = length;

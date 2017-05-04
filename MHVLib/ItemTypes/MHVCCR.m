@@ -27,11 +27,11 @@ static NSString* const c_typename = @"ContinuityOfCareRecord";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_STRING(m_xml, HVClientError_InvalidCCR);
+    MHVVALIDATE_STRING(m_xml, MHVClientError_InvalidCCR);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 +(NSString *)typeID

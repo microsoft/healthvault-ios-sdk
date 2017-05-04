@@ -1,5 +1,5 @@
 //
-//  HVSleepAMFactory.h
+//  MHVSleepAMFactory.h
 //  SDKFeatures
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -20,7 +20,7 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVSleepJournalAM (HVFactoryMethods)
+@interface MHVSleepJournalAM (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
@@ -28,7 +28,7 @@
 
 @end
 
-@interface MHVSleepJournalAM (HVDisplay)
+@interface MHVSleepJournalAM (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

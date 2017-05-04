@@ -203,7 +203,7 @@ NSString* const XExceptionNotSerializable;
 
 void throwWriterError(void);
 
-#define HVCHECK_XWRITE(condition) \
+#define MHVCHECK_XWRITE(condition) \
     if (!(condition)) \
     { \
         throwWriterError(); \

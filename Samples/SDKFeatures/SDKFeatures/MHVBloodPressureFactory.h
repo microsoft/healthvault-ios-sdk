@@ -20,13 +20,13 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVBloodPressure (HVFactoryMethods)
+@interface MHVBloodPressure (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 
 @end
 
-@interface MHVBloodPressure (HVDisplay)
+@interface MHVBloodPressure (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

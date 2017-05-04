@@ -29,26 +29,26 @@ static NSString* const c_typename = @"person";
 
 -(id)initWithPerson:(MHVPerson *)person
 {
-    HVCHECK_NOTNULL(person);
+    MHVCHECK_NOTNULL(person);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.person = person;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_person, HVClientError_InvalidEmergencyContact);
+    MHVVALIDATE(m_person, MHVClientError_InvalidEmergencyContact);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -63,7 +63,7 @@ LError:
 {
     MHVPerson* person = [[MHVPerson alloc] init];
     
-    HVCHECK_OOM(person);
+    MHVCHECK_OOM(person);
     m_person = person;
    
     [person deserialize:reader];

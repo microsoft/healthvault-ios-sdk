@@ -24,18 +24,18 @@
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_store = [[NSMutableDictionary alloc] init];
-    HVCHECK_NOTNULL(m_store);
+    MHVCHECK_NOTNULL(m_store);
     
     m_metadata = [[NSMutableDictionary alloc] init];
-    HVCHECK_NOTNULL(m_metadata);
+    MHVCHECK_NOTNULL(m_metadata);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -84,7 +84,7 @@ LError:
 
 -(BOOL)putBlob:(NSData *)blob withKey:(NSString *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     [m_store setObject:blob forKey:key];
     [self touchObjectWithKey:key];
@@ -97,7 +97,7 @@ LError:
 
 -(BOOL)putObject:(id)obj withKey:(NSString *)key andName:(NSString *)name
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     [m_store setObject:obj forKey:key];
     [self touchObjectWithKey:key];

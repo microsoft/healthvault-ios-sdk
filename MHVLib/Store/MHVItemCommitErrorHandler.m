@@ -28,14 +28,14 @@
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_maxAttemptsPerChange = 0;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(BOOL)isHaltingException:(id)ex

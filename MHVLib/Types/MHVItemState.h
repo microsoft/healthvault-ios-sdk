@@ -20,10 +20,10 @@
 
 enum MHVItemState
 {
-    HVItemStateNone = 0,
-    HVItemStateActive = 1,
-    HVItemStateDeleted = 2
+    MHVItemStateNone = 0,
+    MHVItemStateActive = 1,
+    MHVItemStateDeleted = 2
 };
 
-NSString* HVItemStateToString(enum MHVItemState state);
-enum MHVItemState HVItemStateFromString(NSString* value);
+NSString* MHVItemStateToString(enum MHVItemState state);
+enum MHVItemState MHVItemStateFromString(NSString* value);

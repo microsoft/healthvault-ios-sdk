@@ -19,136 +19,136 @@
 #import <Foundation/Foundation.h>
 
 #if DEBUG
-#define HV_DETAILEDTYPEERRORS 1
+#define MHV_DETAILEDTYPEERRORS 1
 #endif
 
-#define HVRESULT_SUCCESS [MHVClientResult success]
-#define HVERROR_UNKNOWN [MHVClientResult unknownError]
+#define MHVRESULT_SUCCESS [MHVClientResult success]
+#define MHVERROR_UNKNOWN [MHVClientResult unknownError]
 
-#ifdef HV_DETAILEDTYPEERRORS
-#define HVMAKE_ERROR(code) [MHVClientResult fromCode:code fileName:__FILE__ lineNumber:__LINE__]
+#ifdef MHV_DETAILEDTYPEERRORS
+#define MHVMAKE_ERROR(code) [MHVClientResult fromCode:code fileName:__FILE__ lineNumber:__LINE__]
 #else
-#define HVMAKE_ERROR(code) [MHVClientResult fromCode:code]
+#define MHVMAKE_ERROR(code) [MHVClientResult fromCode:code]
 #endif
 
 
-enum HVClientResultCode
+enum MHVClientResultCode
 {
-    HVClientResult_Success = 0,
+    MHVClientResult_Success = 0,
     //
     // Errors
     //
-    HVClientError_Unknown,
-    HVClientError_Web,
-    HVClientEror_InvalidMasterAppID,
-    HVClientError_UnknownServiceInstance,
+    MHVClientError_Unknown,
+    MHVClientError_Web,
+    MHVClientEror_InvalidMasterAppID,
+    MHVClientError_UnknownServiceInstance,
     //
     // Base types
     //
-    HVClientError_InvalidGuid,
-    HVClientError_ValueOutOfRange,
-    HVClientError_InvalidStringLength,
+    MHVClientError_InvalidGuid,
+    MHVClientError_ValueOutOfRange,
+    MHVClientError_InvalidStringLength,
     //
     // Types
     //
-    HVClientError_InvalidDate,
-    HVClientError_InvalidTime,
-    HVClientError_InvalidDateTime,
-    HVClientError_InvalidApproxDateTime,
-    HVClientError_InvalidCodedValue,
-    HVClientError_InvalidCodableValue,
-    HVClientError_InvalidDisplayValue,
-    HVClientError_InvalidMeasurement,
-    HVClientError_InvalidApproxMeasurement,
-    HVClientError_InvalidWeightMeasurement,
-    HVClientError_InvalidLengthMeasurement,
-    HVClientError_InvalidBloodGlucoseMeasurement,
-    HVClientError_InvalidConcentrationValue,
-    HVClientError_InvalidVitalSignResult,
-    HVClientError_InvalidNameValue,
-    HVClientError_InvalidDuration,
-    HVClientError_InvalidAddress,
-    HVClientError_InvalidPhone,
-    HVClientError_InvalidEmailAddress,
-    HVClientError_InvalidEmail,
-    HVClientError_InvalidContact,
-    HVClientError_InvalidName,
-    HVClientError_InvalidPerson,
-    HVClientError_InvalidOrganization,
-    HVClientError_InvalidPrescription,
-    HVClientError_InvalidItemKey,
-    HVClientError_InvalidRelatedItem,
-    HVClientError_InvalidItemType,
-    HVClientError_InvalidItemView,
-    HVClientError_InvalidItemQuery,
-    HVClientError_InvalidItem,
-    HVClientError_InvalidRecordReference,
-    HVClientError_InvalidRecord,
-    HVClientError_InvalidPersonInfo,
-    HVClientError_InvalidPendingItem,
-    HVClientError_InvalidItemList,
-    HVClientError_InvalidVocabIdentifier,
-    HVClientError_InvalidVocabItem,
-    HVClientError_InvalidVocabSearch,
-    HVClientError_InvalidAssessmentField,
-    HVClientError_InvalidOccurrence,
-    HVClientError_InvalidRelative,
-    HVClientError_InvalidFlow,
-    HVClientError_InvalidVolume,
-    HVClientError_InvalidMessageHeader,
-    HVClientError_InvalidMessageAttachment,
-    HVClientError_InvalidTestResultRange,
-    HVClientError_InvalidLabTestResultValue,
-    HVClientError_InvalidLabTestResultDetails,
-    HVClientError_InvalidLabTestResultsGroup,
+    MHVClientError_InvalidDate,
+    MHVClientError_InvalidTime,
+    MHVClientError_InvalidDateTime,
+    MHVClientError_InvalidApproxDateTime,
+    MHVClientError_InvalidCodedValue,
+    MHVClientError_InvalidCodableValue,
+    MHVClientError_InvalidDisplayValue,
+    MHVClientError_InvalidMeasurement,
+    MHVClientError_InvalidApproxMeasurement,
+    MHVClientError_InvalidWeightMeasurement,
+    MHVClientError_InvalidLengthMeasurement,
+    MHVClientError_InvalidBloodGlucoseMeasurement,
+    MHVClientError_InvalidConcentrationValue,
+    MHVClientError_InvalidVitalSignResult,
+    MHVClientError_InvalidNameValue,
+    MHVClientError_InvalidDuration,
+    MHVClientError_InvalidAddress,
+    MHVClientError_InvalidPhone,
+    MHVClientError_InvalidEmailAddress,
+    MHVClientError_InvalidEmail,
+    MHVClientError_InvalidContact,
+    MHVClientError_InvalidName,
+    MHVClientError_InvalidPerson,
+    MHVClientError_InvalidOrganization,
+    MHVClientError_InvalidPrescription,
+    MHVClientError_InvalidItemKey,
+    MHVClientError_InvalidRelatedItem,
+    MHVClientError_InvalidItemType,
+    MHVClientError_InvalidItemView,
+    MHVClientError_InvalidItemQuery,
+    MHVClientError_InvalidItem,
+    MHVClientError_InvalidRecordReference,
+    MHVClientError_InvalidRecord,
+    MHVClientError_InvalidPersonInfo,
+    MHVClientError_InvalidPendingItem,
+    MHVClientError_InvalidItemList,
+    MHVClientError_InvalidVocabIdentifier,
+    MHVClientError_InvalidVocabItem,
+    MHVClientError_InvalidVocabSearch,
+    MHVClientError_InvalidAssessmentField,
+    MHVClientError_InvalidOccurrence,
+    MHVClientError_InvalidRelative,
+    MHVClientError_InvalidFlow,
+    MHVClientError_InvalidVolume,
+    MHVClientError_InvalidMessageHeader,
+    MHVClientError_InvalidMessageAttachment,
+    MHVClientError_InvalidTestResultRange,
+    MHVClientError_InvalidLabTestResultValue,
+    MHVClientError_InvalidLabTestResultDetails,
+    MHVClientError_InvalidLabTestResultsGroup,
     //
     // Blobs
     //
-    HVClientError_InvalidBlobInfo,
+    MHVClientError_InvalidBlobInfo,
     //
     // Item Types
     //
-    HVClientError_InvalidWeight,
-    HVClientError_InvalidBloodPressure,
-    HVClientError_InvalidCholesterol,
-    HVClientError_InvalidBloodGlucose,
-    HVClientError_InvalidHeight,
-    HVClientError_InvalidExercise,
-    HVClientError_InvalidAllergy,
-    HVClientError_InvalidCondition,
-    HVClientError_InvalidImmunization,
-    HVClientError_InvalidMedication,
-    HVClientError_InvalidProcedure,
-    HVClientError_InvalidVitalSigns,
-    HVClientError_InvalidEncounter,
-    HVClientError_InvalidFamilyHistory,
-    HVClientError_InvalidEmergencyContact,
-    HVClientError_InvalidPersonalContactInfo,   
-    HVClientError_InvalidBasicDemographics,
-    HVClientError_InvalidPersonalDemographics,
-    HVClientError_InvalidDailyMedicationUsage,
-    HVClientError_InvalidAssessment,
-    HVClientError_InvalidQuestionAnswer,
-    HVClientError_InvalidSleepJournal,
-    HVClientError_InvalidDietaryIntake,
-    HVClientError_InvalidFile,
-    HVClientError_InvalidCCD,
-    HVClientError_InvalidCCR,
-    HVClientError_InvalidInsurance,
-    HVClientError_InvalidHeartRate,
-    HVClientError_InvalidPeakFlow,
-    HVClientError_InvalidMessage,
-    HVclientError_InvalidLabTestResults,
+    MHVClientError_InvalidWeight,
+    MHVClientError_InvalidBloodPressure,
+    MHVClientError_InvalidCholesterol,
+    MHVClientError_InvalidBloodGlucose,
+    MHVClientError_InvalidHeight,
+    MHVClientError_InvalidExercise,
+    MHVClientError_InvalidAllergy,
+    MHVClientError_InvalidCondition,
+    MHVClientError_InvalidImmunization,
+    MHVClientError_InvalidMedication,
+    MHVClientError_InvalidProcedure,
+    MHVClientError_InvalidVitalSigns,
+    MHVClientError_InvalidEncounter,
+    MHVClientError_InvalidFamilyHistory,
+    MHVClientError_InvalidEmergencyContact,
+    MHVClientError_InvalidPersonalContactInfo,   
+    MHVClientError_InvalidBasicDemographics,
+    MHVClientError_InvalidPersonalDemographics,
+    MHVClientError_InvalidDailyMedicationUsage,
+    MHVClientError_InvalidAssessment,
+    MHVClientError_InvalidQuestionAnswer,
+    MHVClientError_InvalidSleepJournal,
+    MHVClientError_InvalidDietaryIntake,
+    MHVClientError_InvalidFile,
+    MHVClientError_InvalidCCD,
+    MHVClientError_InvalidCCR,
+    MHVClientError_InvalidInsurance,
+    MHVClientError_InvalidHeartRate,
+    MHVClientError_InvalidPeakFlow,
+    MHVClientError_InvalidMessage,
+    MHVclientError_InvalidLabTestResults,
     //
     // Store
     //
-    HVClientError_Sync,
-    HVClientError_PutLocalStore
+    MHVClientError_Sync,
+    MHVClientError_PutLocalStore
 };
 
 @interface MHVClientResult : NSObject
 {    
-    enum HVClientResultCode m_error;
+    enum MHVClientResultCode m_error;
     const char* m_file;
     int m_line;
 }
@@ -156,18 +156,18 @@ enum HVClientResultCode
 @property (readonly, nonatomic) BOOL isSuccess;
 @property (readonly, nonatomic) BOOL isError;
 
-@property (readonly, nonatomic) enum HVClientResultCode error;
+@property (readonly, nonatomic) enum MHVClientResultCode error;
 @property (readonly, nonatomic) const char* fileName;
 @property (readonly, nonatomic) int lineNumber;
 
 +(void) initialize;
 -(id) init;
--(id) initWithCode:(enum HVClientResultCode)code;
--(id) initWithCode:(enum HVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line;
+-(id) initWithCode:(enum MHVClientResultCode)code;
+-(id) initWithCode:(enum MHVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line;
 
 +(MHVClientResult *) success;
 +(MHVClientResult *) unknownError;
-+(MHVClientResult *) fromCode:(enum HVClientResultCode) code;
-+(MHVClientResult *) fromCode:(enum HVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line;
++(MHVClientResult *) fromCode:(enum MHVClientResultCode) code;
++(MHVClientResult *) fromCode:(enum MHVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line;
 
 @end

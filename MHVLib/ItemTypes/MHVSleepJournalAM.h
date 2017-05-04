@@ -1,5 +1,5 @@
 //
-//  HVSleepJournal.h
+//  MHVSleepJournal.h
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -20,12 +20,12 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-enum HVWakeState 
+enum MHVWakeState 
 {
-    HVWakeState_Unknown = 0,
-    HVWakeState_WideAwake = 1,
-    HVWakeState_Awake,
-    HVWakeState_Sleepy
+    MHVWakeState_Unknown = 0,
+    MHVWakeState_WideAwake = 1,
+    MHVWakeState_Awake,
+    MHVWakeState_Sleepy
 };
 
 //-------------------------
@@ -74,7 +74,7 @@ enum HVWakeState
 //
 // (Required) - how you felt when you woke up
 //
-@property (readwrite, nonatomic) enum HVWakeState wakeState;
+@property (readwrite, nonatomic) enum MHVWakeState wakeState;
 //
 // (Optional) - how many times you woke up or had your sleep interrupted
 //

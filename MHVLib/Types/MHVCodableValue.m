@@ -34,7 +34,7 @@ static const xmlChar* x_element_code = XMLSTRINGCONST("code");
 
 -(NSMutableArray *) codes
 {
-    HVENSURE(m_codes, MHVCodedValueCollection);
+    MHVENSURE(m_codes, MHVCodedValueCollection);
     return m_codes;
 }
 
@@ -55,36 +55,36 @@ static const xmlChar* x_element_code = XMLSTRINGCONST("code");
 
 -(id) initWithText:(NSString *)textValue andCode:(MHVCodedValue *)code
 {
-    HVCHECK_STRING(textValue);
+    MHVCHECK_STRING(textValue);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.text = textValue;
     if (code)
     {
         NSMutableArray *codes = self.codes;
-        HVCHECK_NOTNULL(codes);
+        MHVCHECK_NOTNULL(codes);
         [codes addObject:code];
     }
     
     return self;
     
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 -(id) initWithText:(NSString *)textValue code:(NSString *)code andVocab:(NSString *)vocab
 {
     MHVCodedValue* codedValue = [[MHVCodedValue alloc] initWithCode:code andVocab:vocab];
-    HVCHECK_NOTNULL(codedValue);
+    MHVCHECK_NOTNULL(codedValue);
     
     self = [self initWithText:textValue andCode:codedValue];
     
     return self;
 
 LError:
-    HVALLOC_FAIL; 
+    MHVALLOC_FAIL; 
 }
 
 +(MHVCodableValue *)fromText:(NSString *)textValue
@@ -121,7 +121,7 @@ LError:
 -(BOOL)addCode:(MHVCodedValue *)code
 {
     MHVCodedValueCollection* codes = self.codes;
-    HVCHECK_NOTNULL(codes);
+    MHVCHECK_NOTNULL(codes);
     
     [codes addObject:code];
     
@@ -142,7 +142,7 @@ LError:
 -(MHVCodableValue *)clone
 {
     MHVCodableValue* cloned = [[MHVCodableValue alloc] initWithText:m_text];
-    HVCHECK_NOTNULL(cloned);
+    MHVCHECK_NOTNULL(cloned);
     
     if (self.hasCodes)
     {
@@ -150,7 +150,7 @@ LError:
         for (NSUInteger i = 0, count = codes.count; i < count; ++i)
         {
             MHVCodedValue* clonedCode = [[codes itemAtIndex:i] clone];
-            HVCHECK_NOTNULL(clonedCode);
+            MHVCHECK_NOTNULL(clonedCode);
             
             [cloned addCode:clonedCode];
         }
@@ -179,18 +179,18 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(self.text, HVClientError_InvalidCodableValue);
+    MHVVALIDATE_STRING(self.text, MHVClientError_InvalidCodableValue);
     if (self.hasCodes)
     {
         for (MHVCodedValue* code in self.codes)
         {
-            HVVALIDATE(code, HVClientError_InvalidCodableValue);
+            MHVVALIDATE(code, MHVClientError_InvalidCodableValue);
         }
     }
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -212,14 +212,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVCodableValue class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void) addItem:(MHVCodableValue *)value

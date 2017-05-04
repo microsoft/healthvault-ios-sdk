@@ -40,17 +40,17 @@
 
 -(id)initWithData:(NSData *)data
 {
-    HVCHECK_NOTNULL(data);
+    MHVCHECK_NOTNULL(data);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_source = data;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSData *)readStartAt:(int)offset chunkSize:(int)chunkSize
@@ -80,20 +80,20 @@ LError:
 
 -(id)initWithFilePath:(NSString *)filePath
 {
-    HVCHECK_NOTNULL(filePath);
+    MHVCHECK_NOTNULL(filePath);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_file = [NSFileHandle fileHandleForReadingAtPath:filePath];
-    HVCHECK_NOTNULL(m_file);
+    MHVCHECK_NOTNULL(m_file);
     
     m_size = [[NSFileManager defaultManager] sizeOfFileAtPath:filePath];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 

@@ -30,7 +30,7 @@ static NSString* const c_element_triglycerides = @"triglyceride";
 double const c_cholesterolMolarMass = 386.6;  // g/mol
 double const c_triglyceridesMolarMass = 885.7; // g/mol
 
-@interface MHVCholesterol (HVPrivate)
+@interface MHVCholesterol (MHVPrivate)
 
 -(double) cholesterolInMmolPerLiter:(MHVPositiveInt *) value;
 -(int) cholesterolMgDLFromMmolPerLiter:(double) value;
@@ -62,7 +62,7 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
 
 -(void)setLdlValue:(int)ldl
 {
-    HVENSURE(m_ldl, MHVPositiveInt);
+    MHVENSURE(m_ldl, MHVPositiveInt);
     m_ldl.value = ldl;
 }
 
@@ -73,7 +73,7 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
 
 -(void)setHdlValue:(int)hdl
 {
-    HVENSURE(m_hdl, MHVPositiveInt);
+    MHVENSURE(m_hdl, MHVPositiveInt);
     m_hdl.value = hdl;        
 }
 
@@ -84,7 +84,7 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
 
 -(void)setTriglyceridesValue:(int)triglycerides
 {
-    HVENSURE(m_triglycerides, MHVPositiveInt);
+    MHVENSURE(m_triglycerides, MHVPositiveInt);
     m_triglycerides.value = triglycerides;       
 }
 
@@ -95,7 +95,7 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
 
 -(void)setTotalValue:(int)total
 {
-    HVENSURE(m_total, MHVPositiveInt);
+    MHVENSURE(m_total, MHVPositiveInt);
     m_total.value = total;
 }
 
@@ -157,15 +157,15 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_date, HVClientError_InvalidCholesterol);
-    HVVALIDATE_OPTIONAL(m_ldl);
-    HVVALIDATE_OPTIONAL(m_hdl);
-    HVVALIDATE_OPTIONAL(m_total);
-    HVVALIDATE_OPTIONAL(m_triglycerides);
+    MHVVALIDATE(m_date, MHVClientError_InvalidCholesterol);
+    MHVVALIDATE_OPTIONAL(m_ldl);
+    MHVVALIDATE_OPTIONAL(m_hdl);
+    MHVVALIDATE_OPTIONAL(m_total);
+    MHVVALIDATE_OPTIONAL(m_triglycerides);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -208,7 +208,7 @@ double const c_triglyceridesMolarMass = 885.7; // g/mol
 
 @end
 
-@implementation MHVCholesterol (HVPrivate)
+@implementation MHVCholesterol (MHVPrivate)
 
 -(double)cholesterolInMmolPerLiter:(MHVPositiveInt *)value
 {

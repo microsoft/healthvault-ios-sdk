@@ -25,7 +25,7 @@
 -(NSRange) range;
 
 -(NSUInteger) binarySearch:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp;
--(NSUInteger) indexOfMatchingObject:(HVFilter) filter;
+-(NSUInteger) indexOfMatchingObject:(MHVFilter) filter;
 
 +(BOOL) isNilOrEmpty:(NSArray *) array;
 

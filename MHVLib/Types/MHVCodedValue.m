@@ -39,11 +39,11 @@ static const xmlChar* x_element_version = XMLSTRINGCONST("version");
 
 -(id)initWithCode:(NSString *)code vocab:(NSString *)vocab vocabFamily:(NSString *)family vocabVersion:(NSString *)version
 {    
-    HVCHECK_STRING(code);
-    HVCHECK_STRING(vocab);
+    MHVCHECK_STRING(code);
+    MHVCHECK_STRING(vocab);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.code = code;
     self.vocabularyName = vocab;
@@ -58,7 +58,7 @@ static const xmlChar* x_element_version = XMLSTRINGCONST("version");
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -105,7 +105,7 @@ LError:
 -(MHVCodedValue *)clone
 {
     MHVCodedValue* cloned = [[MHVCodedValue alloc] init];
-    HVCHECK_NOTNULL(cloned);
+    MHVCHECK_NOTNULL(cloned);
     
     cloned.code = m_code;
     cloned.vocabularyName = m_vocab;
@@ -120,14 +120,14 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN; 
+    MHVVALIDATE_BEGIN; 
     
-    HVVALIDATE_STRING(m_code, HVClientError_InvalidCodedValue);
-    HVVALIDATE_STRING(m_vocab, HVClientError_InvalidCodedValue);
-    HVVALIDATE_STRINGOPTIONAL(m_family, HVClientError_InvalidCodedValue);
-    HVVALIDATE_STRINGOPTIONAL(m_version, HVClientError_InvalidCodedValue);
+    MHVVALIDATE_STRING(m_code, MHVClientError_InvalidCodedValue);
+    MHVVALIDATE_STRING(m_vocab, MHVClientError_InvalidCodedValue);
+    MHVVALIDATE_STRINGOPTIONAL(m_family, MHVClientError_InvalidCodedValue);
+    MHVVALIDATE_STRINGOPTIONAL(m_version, MHVClientError_InvalidCodedValue);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -153,14 +153,14 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVCodedValue class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVCodedValue *)firstCode

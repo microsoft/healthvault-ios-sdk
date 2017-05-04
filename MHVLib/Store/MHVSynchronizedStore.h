@@ -81,10 +81,10 @@
 // Always retrieves the LATEST item for the key
 // In the callback, MHVTask.result has an MHVItemCollection containing those items that were found
 //
--(MHVTask *) getItemsInRecord:(MHVRecordReference *) record withKeys:(NSArray *) keys callback:(HVTaskCompletion) callback;
--(MHVTask *) getItemsInRecord:(MHVRecordReference *) record forQuery:(MHVItemQuery *) query callback:(HVTaskCompletion) callback;
+-(MHVTask *) getItemsInRecord:(MHVRecordReference *) record withKeys:(NSArray *) keys callback:(MHVTaskCompletion) callback;
+-(MHVTask *) getItemsInRecord:(MHVRecordReference *) record forQuery:(MHVItemQuery *) query callback:(MHVTaskCompletion) callback;
 
-// Deprecated. Use HVSynchronizationMgr & MHVSynchronizedType
+// Deprecated. Use MHVSynchronizationMgr & MHVSynchronizedType
 -(BOOL) putItem:(MHVItem *) item __deprecated;
 
 //
@@ -92,16 +92,16 @@
 // task.result will contain updated keys - in case the items 
 // Always retrieves the LATEST item for the keys
 //
--(MHVDownloadItemsTask *) downloadItemsInRecord:(MHVRecordReference *) record forKeys:(NSArray *) keys callback:(HVTaskCompletion) callback;
+-(MHVDownloadItemsTask *) downloadItemsInRecord:(MHVRecordReference *) record forKeys:(NSArray *) keys callback:(MHVTaskCompletion) callback;
 //
 // In the callback, use [task checkForSuccess] to confirm that the operation succeeded
 //
--(MHVDownloadItemsTask *) downloadItemsInRecord:(MHVRecordReference *) record query:(MHVItemQuery *) query callback:(HVTaskCompletion) callback;
+-(MHVDownloadItemsTask *) downloadItemsInRecord:(MHVRecordReference *) record query:(MHVItemQuery *) query callback:(MHVTaskCompletion) callback;
 //
 // These create new download tasks but do NOT start them.
 // You can make the task a child of another task
 // 
--(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forKeys:(NSArray *) keys callback:(HVTaskCompletion) callback;
--(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forQuery:(MHVItemQuery *) query callback:(HVTaskCompletion) callback;
+-(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forKeys:(NSArray *) keys callback:(MHVTaskCompletion) callback;
+-(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forQuery:(MHVItemQuery *) query callback:(MHVTaskCompletion) callback;
 
 @end

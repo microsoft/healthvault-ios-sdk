@@ -1,5 +1,5 @@
 //
-//  HVGetVocab.h
+//  MHVGetVocab.h
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -64,6 +64,6 @@
 // Initializers
 //
 //-------------------------
--(id) initWithVocabID:(MHVVocabIdentifier *) vocabID andCallback:(HVTaskCompletion) callback;
+-(id) initWithVocabID:(MHVVocabIdentifier *) vocabID andCallback:(MHVTaskCompletion) callback;
 
 @end

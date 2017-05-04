@@ -21,7 +21,7 @@
 #import "MHVBatchItemDownloader.h"
 #import "MHVClient.h"
 
-@interface MHVBatchItemDownloader (HVPrivate)
+@interface MHVBatchItemDownloader (MHVPrivate)
 
 -(void) collectNextBatch;
 -(BOOL) setNextBatch:(MHVTask *) parentTask;
@@ -49,16 +49,16 @@ static const NSUInteger c_defaultBatchSize = 250;
 
 -(id)initWithRecordStore:(MHVLocalRecordStore *)store
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_keysToDownload = [[NSMutableArray alloc] init];
-    HVCHECK_NOTNULL(m_keysToDownload);
+    MHVCHECK_NOTNULL(m_keysToDownload);
     
     m_keyBatch = [[NSMutableArray alloc] init];
-    HVCHECK_NOTNULL(m_keyBatch);
+    MHVCHECK_NOTNULL(m_keyBatch);
     
     m_store = store;
     
@@ -67,13 +67,13 @@ static const NSUInteger c_defaultBatchSize = 250;
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(BOOL)addKeyToDownload:(MHVItemKey *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     [m_keysToDownload addObject:key];
     return TRUE;
@@ -84,7 +84,7 @@ LError:
 
 -(BOOL)addKeyForItemToEnsureDownloaded:(MHVItemKey *)key
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     if (![m_store.data getLocalItemWithKey:key])
     {
@@ -99,7 +99,7 @@ LError:
 
 -(BOOL)addRangeOfKeysToEnsureDownloaded:(NSRange)range inView:(id<MHVTypeView>)view
 {
-    HVCHECK_NOTNULL(view);
+    MHVCHECK_NOTNULL(view);
     
     int max = (int)range.location + (int)range.length;
     if (max > [view count])
@@ -117,10 +117,10 @@ LError:
     return FALSE;
 }
 
--(MHVTask *)downloadWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)downloadWithCallback:(MHVTaskCompletion)callback
 {
     MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     if (![self setNextBatch:task])
     {
@@ -136,7 +136,7 @@ LError:
 
 @end
 
-@implementation MHVBatchItemDownloader (HVPrivate)
+@implementation MHVBatchItemDownloader (MHVPrivate)
 
 -(void)collectNextBatch
 {

@@ -22,7 +22,7 @@
 #import "AuthenticationCheckState.h"
 #import "XmlTextReader.h"
 
-@interface Provisioner (HVPrivate)
+@interface Provisioner (MHVPrivate)
 
 /// Checks that the application is authenticated.
 /// @param state - the state information.
@@ -71,7 +71,7 @@
 
 @end
 
-@implementation Provisioner (HVPrivate)
+@implementation Provisioner (MHVPrivate)
 
 -(void)performAuthenticationCheck: (AuthenticationCheckState *)state {
 

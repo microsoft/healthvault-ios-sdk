@@ -37,7 +37,7 @@ static NSString* const c_vocabName_Units = @"exercise-units";
 static NSString* const c_code_stepCount = @"Steps_count";
 static NSString* const c_code_caloriesBurned = @"CaloriesBurned_calories";
 
-@interface MHVExercise (HVPrivate)
+@interface MHVExercise (MHVPrivate)
 
 +(MHVCodableValue *) newActivity:(NSString *) activity;
 +(MHVNameValue *) newDetailWithNameCode:(NSString *)name andValue:(MHVMeasurement *)value;
@@ -74,7 +74,7 @@ static MHVVocabIdentifier* s_vocabIDUnits;
 
 -(MHVNameValueCollection *)details
 {
-    HVENSURE(m_details, MHVNameValueCollection);
+    MHVENSURE(m_details, MHVNameValueCollection);
     return m_details;
 }
 
@@ -90,7 +90,7 @@ static MHVVocabIdentifier* s_vocabIDUnits;
 
 -(void)setDurationMinutesValue:(double)durationMinutesValue
 {
-    HVENSURE(m_duration, MHVPositiveDouble);
+    MHVENSURE(m_duration, MHVPositiveDouble);
     m_duration.value = durationMinutesValue;
 }
 
@@ -104,18 +104,18 @@ static MHVVocabIdentifier* s_vocabIDUnits;
 
 -(id)initWithDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_when = [[MHVApproxDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 +(MHVCodableValue *)createActivity:(NSString *)activity
@@ -149,7 +149,7 @@ LError:
 -(BOOL)addOrUpdateDetailWithNameCode:(NSString *)name andValue:(MHVMeasurement *)value
 {
     MHVNameValue* detail = [MHVExercise newDetailWithNameCode:name andValue:value];
-    HVCHECK_NOTNULL(detail);
+    MHVCHECK_NOTNULL(detail);
     
     [self.details addOrUpdate:detail];
     
@@ -166,7 +166,7 @@ LError:
 
 +(BOOL)isDetailForCaloriesBurned:(MHVNameValue *)nv
 {
-    HVCHECK_NOTNULL(nv);
+    MHVCHECK_NOTNULL(nv);
     
     MHVCodedValue* name = nv.name;
     return (
@@ -180,7 +180,7 @@ LError:
 
 +(BOOL)isDetailForNumberOfSteps:(MHVNameValue *)nv
 {
-    HVCHECK_NOTNULL(nv);
+    MHVCHECK_NOTNULL(nv);
     
     MHVCodedValue* name = nv.name;
     return (
@@ -211,7 +211,7 @@ LError:
 +(MHVMeasurement *)measurementFor:(double)value unitsText:(NSString *)unitsText unitsCode:(NSString *)unitsCode
 {
     MHVCodableValue* codedUnits = [MHVExercise codeFromUnitsText:unitsText andUnitsCode:unitsCode];
-    HVCHECK_NOTNULL(codedUnits);
+    MHVCHECK_NOTNULL(codedUnits);
     
     return [MHVMeasurement fromValue:value andUnits:codedUnits];
 
@@ -261,16 +261,16 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_when, HVClientError_InvalidExercise);
-    HVVALIDATE(m_activity, HVClientError_InvalidExercise);
-    HVVALIDATE_STRINGOPTIONAL(m_title, HVClientError_InvalidExercise);
-    HVVALIDATE_OPTIONAL(m_distance);
-    HVVALIDATE_OPTIONAL(m_duration);
-    HVVALIDATE_ARRAYOPTIONAL(m_details, HVClientError_InvalidExercise);
+    MHVVALIDATE(m_when, MHVClientError_InvalidExercise);
+    MHVVALIDATE(m_activity, MHVClientError_InvalidExercise);
+    MHVVALIDATE_STRINGOPTIONAL(m_title, MHVClientError_InvalidExercise);
+    MHVVALIDATE_OPTIONAL(m_distance);
+    MHVVALIDATE_OPTIONAL(m_duration);
+    MHVVALIDATE_ARRAYOPTIONAL(m_details, MHVClientError_InvalidExercise);
 
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -319,7 +319,7 @@ LError:
 
 @end
 
-@implementation MHVExercise (HVPrivate)
+@implementation MHVExercise (MHVPrivate)
 
 +(MHVCodableValue *)newActivity:(NSString *)activity
 {
@@ -329,7 +329,7 @@ LError:
 +(MHVNameValue *) newDetailWithNameCode:(NSString *)name andValue:(MHVMeasurement *)value
 {
     MHVCodedValue* codedValue = [[MHVExercise vocabForDetails] codedValueForCode:name];
-    HVCHECK_NOTNULL(codedValue);
+    MHVCHECK_NOTNULL(codedValue);
     
     return [[MHVNameValue alloc] initWithName:codedValue andValue:value];
 

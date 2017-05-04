@@ -21,14 +21,14 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVEmotionalState (HVFactoryMethods)
+@interface MHVEmotionalState (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
 
 @end
 
-@interface MHVEmotionalState (HVDisplay)
+@interface MHVEmotionalState (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

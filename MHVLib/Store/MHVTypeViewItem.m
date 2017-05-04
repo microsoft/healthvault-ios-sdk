@@ -1,5 +1,5 @@
 //
-//  HVItemDateAndKey.m
+//  MHVItemDateAndKey.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -21,7 +21,7 @@
 
 static const xmlChar* x_element_dateShort = XMLSTRINGCONST("dt");
 
-@interface MHVTypeViewItem (HVPrivate)
+@interface MHVTypeViewItem (MHVPrivate)
 
 -(void) setDate:(NSDate *) date;
 
@@ -34,62 +34,62 @@ static const xmlChar* x_element_dateShort = XMLSTRINGCONST("dt");
 
 -(id) initWithDate:(NSDate *)date andID:(NSString *)itemID
 {
-    HVCHECK_NOTNULL(date);
-    HVCHECK_NOTNULL(itemID);
+    MHVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(itemID);
     
     self = [super initWithID:itemID];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.date = date;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithItem:(MHVTypeViewItem *)item
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     self = [super initWithKey:item];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.date = item.date;
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithMHVItem:(MHVItem *)item
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     self = [super initWithKey:item.key];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.date = [item getDate];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;  
+    MHVALLOC_FAIL;  
 }
 
 -(id) initWithPendingItem:(MHVPendingItem *)pendingItem
 {
-    HVCHECK_NOTNULL(pendingItem);
+    MHVCHECK_NOTNULL(pendingItem);
     
     self = [super initWithKey:pendingItem.key];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.date = pendingItem.effectiveDate;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;      
+    MHVALLOC_FAIL;      
 }
 
 
@@ -167,12 +167,12 @@ LError:
 
     m_date = nil;
     m_date = [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:(NSTimeInterval) timespan];
-    HVCHECK_OOM(m_date);
+    MHVCHECK_OOM(m_date);
 }
 
 @end
 
-@implementation MHVTypeViewItem (HVPrivate)
+@implementation MHVTypeViewItem (MHVPrivate)
 
 -(void)setDate:(NSDate *)date
 {

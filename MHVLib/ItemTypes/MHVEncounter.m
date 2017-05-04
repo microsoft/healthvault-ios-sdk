@@ -51,16 +51,16 @@ static NSString* const c_element_facility = @"facility";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_OPTIONAL(m_when);
-    HVVALIDATE_OPTIONAL(m_type);
-    HVVALIDATE_STRINGOPTIONAL(m_reason, HVClientError_InvalidEncounter);
-    HVVALIDATE_OPTIONAL(m_duration);
-    HVVALIDATE_OPTIONAL(m_constentGranted);
-    HVVALIDATE_OPTIONAL(m_facility);
+    MHVVALIDATE_OPTIONAL(m_when);
+    MHVVALIDATE_OPTIONAL(m_type);
+    MHVVALIDATE_STRINGOPTIONAL(m_reason, MHVClientError_InvalidEncounter);
+    MHVVALIDATE_OPTIONAL(m_duration);
+    MHVVALIDATE_OPTIONAL(m_constentGranted);
+    MHVVALIDATE_OPTIONAL(m_facility);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

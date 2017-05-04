@@ -27,8 +27,8 @@
 //
 // A Task that you can use to upload blobs to HealthVault
 //
-// You push blobs to Urls returned by HVBeginBlobPut. 
-// You upload a blob to HealthVault by splitting into equal sized chunks - also returned by HVBeginBlobPut
+// You push blobs to Urls returned by MHVBeginBlobPut. 
+// You upload a blob to HealthVault by splitting into equal sized chunks - also returned by MHVBeginBlobPut
 // You POST with application/octet-stream contentType
 // You indicate the "last" chunk by setting a special header on the request [see addIsFinalUploadChunkHeader]
 //
@@ -56,14 +56,14 @@
 //
 @property (strong, readonly, nonatomic) NSString* blobUrl;
 
--(id) initWithData:(NSData *) data record:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
--(id) initWithFilePath:(NSString *) filePath record:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
--(id) initWithSource:(id<MHVBlobSource>) source record:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(id) initWithData:(NSData *) data record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
+-(id) initWithFilePath:(NSString *) filePath record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
+-(id) initWithSource:(id<MHVBlobSource>) source record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
 //
 // Create a web request configured to upload blobs correctly
 //
-+(MHVHttpRequestResponse *) newUploadRequestForUrl:(NSURL *) url withCallback:(HVTaskCompletion) callback;
++(MHVHttpRequestResponse *) newUploadRequestForUrl:(NSURL *) url withCallback:(MHVTaskCompletion) callback;
 
 // Mark this chunk as the last chunk. We indicate this by setting a special HealthVault header
 //

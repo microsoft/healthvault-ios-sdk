@@ -31,9 +31,9 @@
 
 @end
 
-void HVRegisterEventLog(id<MHVEventLog> log);
-void HVLogEvent(NSString* message);
-void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line);
+void MHVRegisterEventLog(id<MHVEventLog> log);
+void MHVLogEvent(NSString* message);
+void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line);
 
 //-----------------------------
 //
@@ -43,52 +43,52 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 
 #ifndef NOERRORLOG
 
-//#define HVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
-#define HVASSERT_MESSAGE(message) HVLogEventFromCode(message, __FILE__, __LINE__);
-#define HVASSERT(condition) if (!(condition)) { HVASSERT_MESSAGE(@#condition)}
+//#define MHVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
+#define MHVASSERT_MESSAGE(message) MHVLogEventFromCode(message, __FILE__, __LINE__);
+#define MHVASSERT(condition) if (!(condition)) { MHVASSERT_MESSAGE(@#condition)}
 
 #else
 
-#define HVASSERT(condition) 
-#define HVASSERT_MESSAGE(message) 
+#define MHVASSERT(condition) 
+#define MHVASSERT_MESSAGE(message) 
 
 #endif
 
 #ifdef DEBUG
 
-#define HVASSERT_C(condition) assert(condition);
+#define MHVASSERT_C(condition) assert(condition);
                 
 #else
 
-#define HVASSERT_C(condition)
+#define MHVASSERT_C(condition)
 
 #endif
 
-#define HVASSERT_NOTNULL(obj) HVASSERT(obj != nil)
-#define HVASSERT_STRING(string) HVASSERT(!([NSString isNilOrEmpty:string]))
+#define MHVASSERT_NOTNULL(obj) MHVASSERT(obj != nil)
+#define MHVASSERT_STRING(string) MHVASSERT(!([NSString isNilOrEmpty:string]))
 
-#define HVCHECK_TRUE(condition) if (!(condition)) \
+#define MHVCHECK_TRUE(condition) if (!(condition)) \
                                 { \
-                                    HVASSERT_MESSAGE(@#condition); \
+                                    MHVASSERT_MESSAGE(@#condition); \
                                     return 0; \
                                 }
-#define HVCHECK_FALSE(condition) HVCHECK_TRUE(!(condition))
+#define MHVCHECK_FALSE(condition) MHVCHECK_TRUE(!(condition))
 
-#define HVCHECK_NOTNULL(obj) HVCHECK_TRUE(obj != nil)
-#define HVCHECK_SELF HVCHECK_TRUE(self != nil) 
-#define HVCHECK_STRING(string) HVCHECK_FALSE([NSString isNilOrEmpty:string])
+#define MHVCHECK_NOTNULL(obj) MHVCHECK_TRUE(obj != nil)
+#define MHVCHECK_SELF MHVCHECK_TRUE(self != nil) 
+#define MHVCHECK_STRING(string) MHVCHECK_FALSE([NSString isNilOrEmpty:string])
 
-#define HVCHECK_OOM(obj) if (obj == nil) \
+#define MHVCHECK_OOM(obj) if (obj == nil) \
                          { \
                             [NSException throwOutOfMemory]; \
                          }
 
-#define HVCHECK_SUCCESS(methodCall) if (!methodCall) { \
-                                HVASSERT_MESSAGE(@#methodCall); \
+#define MHVCHECK_SUCCESS(methodCall) if (!methodCall) { \
+                                MHVASSERT_MESSAGE(@#methodCall); \
                                 return 0; \
                             }
 
-#define HVCHECK_PTR(ptr) HVASSERT_C(ptr); \
+#define MHVCHECK_PTR(ptr) MHVASSERT_C(ptr); \
                          if (!ptr) \
                          {         \
                             return 0; \
@@ -99,51 +99,51 @@ void HVLogEventFromCode(NSString* message, const char* fileName, NSUInteger line
 // Type validation
 //
 //-----------------------
-#define HVVALIDATE_BEGIN        MHVClientResult *hr = HVERROR_UNKNOWN; 
-#define HVVALIDATE_SUCCESS      return HVRESULT_SUCCESS;
+#define MHVVALIDATE_BEGIN        MHVClientResult *hr = MHVERROR_UNKNOWN; 
+#define MHVVALIDATE_SUCCESS      return MHVRESULT_SUCCESS;
 
-#define HVCHECK_RESULT(method)  hr = method; \
+#define MHVCHECK_RESULT(method)  hr = method; \
                                 if (hr.isError) \
                                 { \
-                                    HVASSERT_MESSAGE(@"Validation Failed"); \
+                                    MHVASSERT_MESSAGE(@"Validation Failed"); \
                                     return hr; \
                                 }
 
-#define HVVALIDATE(obj, error)      if (!obj) \
+#define MHVVALIDATE(obj, error)      if (!obj) \
                                     { \
-                                        hr = HVMAKE_ERROR(error); \
+                                        hr = MHVMAKE_ERROR(error); \
                                         return hr; \
                                     } \
-                                    HVCHECK_RESULT([obj validate])
+                                    MHVCHECK_RESULT([obj validate])
 
-#define HVVALIDATE_OPTIONAL(obj)    if (obj) \
+#define MHVVALIDATE_OPTIONAL(obj)    if (obj) \
                                     { \
-                                        HVCHECK_RESULT([obj validate]);\
+                                        MHVCHECK_RESULT([obj validate]);\
                                     }
 
-#define HVVALIDATE_STRING(string, error)   if (!string) \
+#define MHVVALIDATE_STRING(string, error)   if (!string) \
                                             { \
-                                                hr = HVMAKE_ERROR(error); \
+                                                hr = MHVMAKE_ERROR(error); \
                                                 return hr; \
                                             }
 
 
-#define HVVALIDATE_PTR(ptr, error)     if (!ptr) \
+#define MHVVALIDATE_PTR(ptr, error)     if (!ptr) \
                                         { \
-                                            hr = HVMAKE_ERROR(error); \
+                                            hr = MHVMAKE_ERROR(error); \
                                             return hr; \
                                         } \
 
-#define HVVALIDATE_STRINGOPTIONAL(string, error)
+#define MHVVALIDATE_STRINGOPTIONAL(string, error)
 
-#define HVVALIDATE_ARRAY(var, error) HVCHECK_RESULT(HVValidateArray(var, error));
-#define HVVALIDATE_ARRAYOPTIONAL(var, error) if (var) { HVVALIDATE_ARRAY(var, error);}
+#define MHVVALIDATE_ARRAY(var, error) MHVCHECK_RESULT(MHVValidateArray(var, error));
+#define MHVVALIDATE_ARRAYOPTIONAL(var, error) if (var) { MHVVALIDATE_ARRAY(var, error);}
 
-#define HVVALIDATE_TRUE(condition, error)   if (!condition) \
+#define MHVVALIDATE_TRUE(condition, error)   if (!condition) \
                                             { \
-                                                hr = HVMAKE_ERROR(error); \
+                                                hr = MHVMAKE_ERROR(error); \
                                                 return hr; \
                                             } \
 
-MHVClientResult* HVValidateArray(NSArray* array, enum HVClientResultCode error);
+MHVClientResult* MHVValidateArray(NSArray* array, enum MHVClientResultCode error);
 

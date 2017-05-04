@@ -23,9 +23,9 @@
 
 #define RGBColor(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 
-#define HVBLUE RGBColor(0, 176, 240)
+#define MHVBLUE RGBColor(0, 176, 240)
 
-@interface MHVBrowserController (HVPrivate)
+@interface MHVBrowserController (MHVPrivate)
 
 -(BOOL) createBrowser;
 -(void) releaseBrowser;
@@ -70,10 +70,10 @@
 
 -(BOOL)navigateTo:(NSURL *)url
 {
-    HVCHECK_NOTNULL(url);
+    MHVCHECK_NOTNULL(url);
     
     NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
-    HVCHECK_NOTNULL(request);
+    MHVCHECK_NOTNULL(request);
     
     [m_webView loadRequest:request];
     
@@ -172,7 +172,7 @@ LError:
 
 @end
 
-@implementation MHVBrowserController (HVPrivate)
+@implementation MHVBrowserController (MHVPrivate)
 
 -(BOOL)createBrowser
 {
@@ -184,7 +184,7 @@ LError:
     frame.origin.y = 0;
     
     m_webView = [[UIWebView alloc] initWithFrame:frame];
-    HVCHECK_NOTNULL(m_webView);
+    MHVCHECK_NOTNULL(m_webView);
     
     m_webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     m_webView.delegate = self;
@@ -221,7 +221,7 @@ LError:
     NSString* buttonTitle = NSLocalizedString(@"Back", @"Back button text");
     
     UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:buttonTitle style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked:)];
-    HVCHECK_NOTNULL(button);
+    MHVCHECK_NOTNULL(button);
     
     self.navigationItem.leftBarButtonItem = button;
     
@@ -241,12 +241,12 @@ LError:
         m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         if ([m_activityView respondsToSelector:@selector(setColor:)])
         {
-            [m_activityView setColor:HVBLUE];
+            [m_activityView setColor:MHVBLUE];
         }
         else 
         {
             m_activityView = nil;
-            // < iOS5... use older style. The large indication won't be visible on HV pages
+            // < iOS5... use older style. The large indication won't be visible on MHV pages
             m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         }
         m_activityView.center = m_webView.center;

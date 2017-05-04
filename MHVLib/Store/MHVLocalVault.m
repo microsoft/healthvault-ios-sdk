@@ -35,7 +35,7 @@
 
 @end
 
-@interface MHVLocalVault (HVPrivate)
+@interface MHVLocalVault (MHVPrivate)
 
 -(void) setRoot:(MHVDirectory *) root;
 -(BOOL) ensureRecordStores;
@@ -62,21 +62,21 @@
 
 -(id)initWithRoot:(MHVDirectory *)root andCache:(BOOL)cache
 {
-    HVCHECK_NOTNULL(root);
+    MHVCHECK_NOTNULL(root);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_cache = cache;
     self.root = root;
     
-    HVCHECK_SUCCESS([self ensureRecordStores]);
-    HVCHECK_SUCCESS([self ensureVocabStores]);
+    MHVCHECK_SUCCESS([self ensureRecordStores]);
+    MHVCHECK_SUCCESS([self ensureVocabStores]);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)dealloc
@@ -88,7 +88,7 @@ LError:
 
 -(MHVLocalRecordStore *)getRecordStore:(MHVRecordReference *)record
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
     
     @synchronized(m_recordStores)
     {
@@ -108,7 +108,7 @@ LError:
 
 -(BOOL)deleteRecordStore:(MHVRecordReference *)record
 {
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(record);
 
     NSString* recordID = record.ID;
     @synchronized(m_recordStores)
@@ -174,15 +174,15 @@ LError:
     }
 }
 
--(MHVTask *)commitOfflineChangesWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)commitOfflineChangesWithCallback:(MHVTaskCompletion)callback
 {
     return [self commitOfflineChangesForRecords:[MHVClient current].records withCallback:callback];
 }
 
--(MHVTask *)commitOfflineChangesForRecords:(NSArray *)records withCallback:(HVTaskCompletion)callback
+-(MHVTask *)commitOfflineChangesForRecords:(NSArray *)records withCallback:(MHVTaskCompletion)callback
 {
     MHVLocalVaultOfflineChangesCommitter* committer = [[MHVLocalVaultOfflineChangesCommitter alloc] initWithLocalVault:self andRecordReferences:records];
-    HVCHECK_NOTNULL(committer);
+    MHVCHECK_NOTNULL(committer);
     
     return [MHVTaskSequence run:committer callback:callback];
     
@@ -192,7 +192,7 @@ LError:
 
 @end
 
-@implementation MHVLocalVault (HVPrivate)
+@implementation MHVLocalVault (MHVPrivate)
 -(void)setRoot:(MHVDirectory *)root
 {
     m_root = root;
@@ -206,7 +206,7 @@ LError:
     }
  
     m_recordStores = [[NSMutableDictionary alloc] initWithCapacity:2];
-    HVCHECK_NOTNULL(m_recordStores);
+    MHVCHECK_NOTNULL(m_recordStores);
     
     return TRUE;
     
@@ -222,18 +222,18 @@ LError:
     }
     
     id<MHVObjectStore> vocabObjectStore = [m_root newChildStore:@"vocabs"];
-    HVCHECK_NOTNULL(vocabObjectStore);
+    MHVCHECK_NOTNULL(vocabObjectStore);
     
     if (m_cache)
     {
         id<MHVObjectStore> cachingDataStore = [[MHVCachingObjectStore alloc] initWithObjectStore:vocabObjectStore];
-        HVCHECK_NOTNULL(cachingDataStore);
+        MHVCHECK_NOTNULL(cachingDataStore);
         
         vocabObjectStore = cachingDataStore;
     }
     
     m_vocabs = [[MHVLocalVocabStore alloc] initWithObjectStore:vocabObjectStore];
-    HVCHECK_NOTNULL(m_vocabs);
+    MHVCHECK_NOTNULL(m_vocabs);
     
     return TRUE;
     
@@ -267,11 +267,11 @@ LError:
 
 -(id)initWithLocalVault:(MHVLocalVault *)vault andRecordReferences:(NSArray *)recordRefs
 {
-    HVCHECK_NOTNULL(vault);
-    HVCHECK_NOTNULL(recordRefs);
+    MHVCHECK_NOTNULL(vault);
+    MHVCHECK_NOTNULL(recordRefs);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_records = [[NSMutableArray alloc] initWithCapacity:recordRefs.count];
     for (MHVRecordReference* recordRef in recordRefs)
@@ -284,7 +284,7 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 

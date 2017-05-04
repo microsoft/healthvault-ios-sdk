@@ -41,7 +41,7 @@ static NSString* const c_element_position = @"position";
 
 -(MHVVitalSignResultCollection *)results
 {
-    HVENSURE(m_results, MHVVitalSignResultCollection);
+    MHVENSURE(m_results, MHVVitalSignResultCollection);
     return m_results;
 }
 
@@ -72,37 +72,37 @@ static NSString* const c_element_position = @"position";
 
 -(id)initWithResult:(MHVVitalSignResult *)result onDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     if (result)
     {
         [self.results addObject:result];
-        HVCHECK_NOTNULL(m_results);
+        MHVCHECK_NOTNULL(m_results);
     }
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidVitalSigns);
-    HVVALIDATE_ARRAYOPTIONAL(m_results, HVClientError_InvalidVitalSigns);
-    HVVALIDATE_STRINGOPTIONAL(m_site, HVClientError_InvalidVitalSigns);
-    HVVALIDATE_STRINGOPTIONAL(m_position, HVClientError_InvalidVitalSigns);
+    MHVVALIDATE(m_when, MHVClientError_InvalidVitalSigns);
+    MHVVALIDATE_ARRAYOPTIONAL(m_results, MHVClientError_InvalidVitalSigns);
+    MHVVALIDATE_STRINGOPTIONAL(m_site, MHVClientError_InvalidVitalSigns);
+    MHVVALIDATE_STRINGOPTIONAL(m_position, MHVClientError_InvalidVitalSigns);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

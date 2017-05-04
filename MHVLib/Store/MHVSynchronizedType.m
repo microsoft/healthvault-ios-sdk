@@ -30,12 +30,12 @@
         [self endViewOp]; \
     }
 
-HVDEFINE_NOTIFICATION(HVSynchronizedTypeItemsAvailableNotification);
-HVDEFINE_NOTIFICATION(HVSynchronizedTypeKeysNotAvailableNotification);
-HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncCompletedNotification);
-HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
+MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeItemsAvailableNotification);
+MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeKeysNotAvailableNotification);
+MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeSyncCompletedNotification);
+MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
 
-@interface MHVSynchronizedType (HVPrivate)
+@interface MHVSynchronizedType (MHVPrivate)
 
 -(MHVTypeView *) beginViewOp;
 -(void) endViewOp;
@@ -52,7 +52,7 @@ HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
 
 @end
 
-@interface MHVItemEditOperation (HVPrivate)
+@interface MHVItemEditOperation (MHVPrivate)
 
 -(id) initForType:(MHVSynchronizedType *) type item:(MHVItem *) item andLock:(MHVAutoLock *) lock;
 
@@ -189,11 +189,11 @@ HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
 
 -(id)initForTypeID:(NSString *)typeID withMgr:(MHVSynchronizationManager *)syncMgr
 {
-    HVCHECK_STRING(typeID);
-    HVCHECK_NOTNULL(syncMgr);
+    MHVCHECK_STRING(typeID);
+    MHVCHECK_NOTNULL(syncMgr);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_typeID = typeID;
     m_viewName = [MHVSynchronizedType makeViewNameForTypeID:typeID];
@@ -207,7 +207,7 @@ HVDEFINE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)dealloc
@@ -310,7 +310,7 @@ LError:
     }
 }
 
--(MHVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(HVTaskCompletion)callback
+-(MHVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback
 {
     @synchronized(self)
     {
@@ -345,7 +345,7 @@ LError:
      }
 }
 
--(MHVTask *)refreshWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)refreshWithCallback:(MHVTaskCompletion)callback
 {
     @synchronized(self)
     {
@@ -387,7 +387,7 @@ LError:
     }
 }
 
--(MHVTask *)ensureItemDownloadedForKey:(MHVItemKey *)key withCallback:(HVTaskCompletion)callback
+-(MHVTask *)ensureItemDownloadedForKey:(MHVItemKey *)key withCallback:(MHVTaskCompletion)callback
 {
     @synchronized(self)
     {
@@ -407,14 +407,14 @@ LError:
 {
     @synchronized(self)
     {
-        HVCHECK_NOTNULL(item);
-        HVCHECK_TRUE([item isType:m_typeID]);
+        MHVCHECK_NOTNULL(item);
+        MHVCHECK_TRUE([item isType:m_typeID]);
         
         MHVClientResult* hr = [item validate];
-        HVCHECK_TRUE(hr.isSuccess);
+        MHVCHECK_TRUE(hr.isSuccess);
         
-        HVCHECK_SUCCESS([m_syncMgr putNewItem:item]);
-        HVCHECK_SUCCESS([self addKeyForItem:item]);
+        MHVCHECK_SUCCESS([m_syncMgr putNewItem:item]);
+        MHVCHECK_SUCCESS([self addKeyForItem:item]);
         
         return TRUE;
         
@@ -516,12 +516,12 @@ LError:
 {
     @synchronized(self)
     {
-        HVCHECK_NOTNULL(item);
-        HVCHECK_NOTNULL(lock);
-        HVCHECK_TRUE([item isType:m_typeID]);
+        MHVCHECK_NOTNULL(item);
+        MHVCHECK_NOTNULL(lock);
+        MHVCHECK_TRUE([item isType:m_typeID]);
         
-        HVCHECK_SUCCESS([m_syncMgr putItem:item itemLock:lock]);
-        HVCHECK_SUCCESS([self updateKeyForItem:item]);
+        MHVCHECK_SUCCESS([m_syncMgr putItem:item itemLock:lock]);
+        MHVCHECK_SUCCESS([self updateKeyForItem:item]);
         
         return TRUE;
         
@@ -553,8 +553,8 @@ LError:
 {
     @synchronized(self)
     {
-        HVCHECK_NOTNULL(change);
-        HVCHECK_SUCCESS([lock validateLock]);
+        MHVCHECK_NOTNULL(change);
+        MHVCHECK_SUCCESS([lock validateLock]);
         
         MHVItem* updatedItem = change.updatedItem;
         if (!updatedItem)
@@ -563,12 +563,12 @@ LError:
             updatedItem.key = change.updatedKey;
         }
         
-        HVCHECK_NOTNULL(updatedItem);
+        MHVCHECK_NOTNULL(updatedItem);
         
         [m_syncMgr.data removeLocalItemWithKey:change.itemKey];
         
-        HVCHECK_SUCCESS([m_syncMgr.data putLocalItem:updatedItem]);
-        HVCHECK_SUCCESS([self replaceItemID:change.itemID withItem:updatedItem]);
+        MHVCHECK_SUCCESS([m_syncMgr.data putLocalItem:updatedItem]);
+        MHVCHECK_SUCCESS([self replaceItemID:change.itemID withItem:updatedItem]);
         
         return TRUE;
         
@@ -603,7 +603,7 @@ LError:
             [args setBoolValue:viewChanged forKey:@"viewChanged"];
             
             [[NSNotificationCenter defaultCenter]
-                postNotificationName:HVSynchronizedTypeItemsAvailableNotification
+                postNotificationName:MHVSynchronizedTypeItemsAvailableNotification
                 object:self
                 userInfo:args
             ];
@@ -625,7 +625,7 @@ LError:
             [args setObject:keys forKey:@"keys"];
 
             [[NSNotificationCenter defaultCenter]
-                postNotificationName:HVSynchronizedTypeKeysNotAvailableNotification
+                postNotificationName:MHVSynchronizedTypeKeysNotAvailableNotification
                 object:self
                 userInfo:args
              ];
@@ -646,7 +646,7 @@ LError:
         if (m_broadcastNotifications)
         {
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:HVSynchronizedTypeSyncCompletedNotification
+             postNotificationName:MHVSynchronizedTypeSyncCompletedNotification
              object:self
              ];
         }
@@ -662,7 +662,7 @@ LError:
         if (m_broadcastNotifications)
         {
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:HVSynchronizedTypeSyncFailedNotification
+             postNotificationName:MHVSynchronizedTypeSyncFailedNotification
              object:self
              ];
         }
@@ -720,7 +720,7 @@ LError:
 @end
 
 
-@implementation MHVSynchronizedType (HVPrivate)
+@implementation MHVSynchronizedType (MHVPrivate)
 
 //
 // MUST BE ALWAYS CALLED FROM WITHIN A LOCK
@@ -747,7 +747,7 @@ LError:
     }
     else
     {
-        HVASSERT(m_accessCount > 0);
+        MHVASSERT(m_accessCount > 0);
     }
 }
 
@@ -760,7 +760,7 @@ LError:
         {
             m_view = [[MHVTypeView alloc] initForTypeID:m_typeID overStore:m_syncMgr.store];
         }
-        HVCHECK_NOTNULL(m_view);
+        MHVCHECK_NOTNULL(m_view);
         
         m_view.delegate = self;
         if (m_readAheadChunkSize > 0)
@@ -848,22 +848,22 @@ LError:
 
 -(id)initForType:(MHVSynchronizedType *)type item:(MHVItem *)item andLock:(MHVAutoLock *)lock
 {
-    HVCHECK_NOTNULL(type);
-    HVCHECK_NOTNULL(item);
-    HVCHECK_NOTNULL(lock);
+    MHVCHECK_NOTNULL(type);
+    MHVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(lock);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_item = [item newDeepClone];
-    HVCHECK_NOTNULL(m_item);
+    MHVCHECK_NOTNULL(m_item);
     
     m_type = type;
     m_lock = lock;
     
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 

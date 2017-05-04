@@ -35,10 +35,10 @@
 @property (readonly, nonatomic, strong) MHVItemKeyCollection* putResults;
 @property (readonly, nonatomic, strong) MHVItemKey* firstKey;
 
--(id) initWithItem:(MHVItem *) item andCallback:(HVTaskCompletion) callback;
--(id) initWithItems:(MHVItemCollection *) items andCallback:(HVTaskCompletion) callback;
+-(id) initWithItem:(MHVItem *) item andCallback:(MHVTaskCompletion) callback;
+-(id) initWithItems:(MHVItemCollection *) items andCallback:(MHVTaskCompletion) callback;
 
-+(MHVPutItemsTask *) newForRecord:(MHVRecordReference *) record item:(MHVItem *) item andCallback:(HVTaskCompletion)callback;
-+(MHVPutItemsTask *) newForRecord:(MHVRecordReference *) record items:(MHVItemCollection *)items andCallback:(HVTaskCompletion)callback;
++(MHVPutItemsTask *) newForRecord:(MHVRecordReference *) record item:(MHVItem *) item andCallback:(MHVTaskCompletion)callback;
++(MHVPutItemsTask *) newForRecord:(MHVRecordReference *) record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback;
 
 @end

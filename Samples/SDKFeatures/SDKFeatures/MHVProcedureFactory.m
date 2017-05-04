@@ -18,7 +18,7 @@
 
 #import "MHVProcedureFactory.h"
 
-@implementation MHVProcedure (HVFactoryMethods)
+@implementation MHVProcedure (MHVFactoryMethods)
 
 +(MHVItemCollection *)createRandomForDay:(NSDate *)date
 {
@@ -33,7 +33,7 @@
 
 @end
 
-@implementation MHVProcedure (HVDisplay)
+@implementation MHVProcedure (MHVDisplay)
 
 -(NSString *) detailsString
 {

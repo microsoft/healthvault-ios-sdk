@@ -31,13 +31,13 @@
 @class MHVRecordReference;
 @class MHVItemBlobUploadTask;
 
-enum HVItemFlags
+enum MHVItemFlags
 {
-    HVItemFlagNone = 0x00,
-    HVItemFlagPersonal = 0x01,      // Item is only accessible to custodians
-    HVItemFlagDownVersioned = 0x02, // Item converted from a newer format to an older format [cannot update]
-    HVItemFlagUpVersioned = 0x04,   // Item converted from an older format to a new format [can update]
-    HVItemFlagImmutable = 0x10      // Item is locked and cannot be modified, except for updated-end-date
+    MHVItemFlagNone = 0x00,
+    MHVItemFlagPersonal = 0x01,      // Item is only accessible to custodians
+    MHVItemFlagDownVersioned = 0x02, // Item converted from a newer format to an older format [cannot update]
+    MHVItemFlagUpVersioned = 0x04,   // Item converted from an older format to a new format [can update]
+    MHVItemFlagImmutable = 0x10      // Item is locked and cannot be modified, except for updated-end-date
 };
 
 //-------------------------
@@ -47,7 +47,7 @@ enum HVItemFlags
 //   - Key and Version 
 //   - Metadata, such as creation dates
 //   - Xml Data
-//      - Typed data [e.g. Medication, Allergy, Exercise etc.] with associated HV Schemas
+//      - Typed data [e.g. Medication, Allergy, Exercise etc.] with associated MHV Schemas
 //      - Common data [Related Items, Notes, tags, extensions...] 
 //   - Blob Data
 //      - A collection of named blob streams. 
@@ -85,7 +85,7 @@ enum HVItemFlags
 
 @property (readwrite, nonatomic) enum MHVItemState state;
 //
-// (Optional) See HVItemFlags enumeration...
+// (Optional) See MHVItemFlags enumeration...
 //
 @property (readwrite, nonatomic) int flags;
 //
@@ -103,7 +103,7 @@ enum HVItemFlags
 @property (readwrite, nonatomic, strong) MHVItemData* data;
 //
 // (Optional) Information about unstructured blob streams associated with this item
-// May be null if you did not ask for Blob information (see enum HVItemSectionBlob)
+// May be null if you did not ask for Blob information (see enum MHVItemSectionBlob)
 //
 @property (readwrite, nonatomic, strong) MHVBlobPayload* blobs;
 
@@ -176,7 +176,7 @@ enum HVItemFlags
 -(MHVItem*) shallowClone;
 //
 // Sometimes you will take an existing item object, edit it inline and them PUT it back to HealthVault
-// Call this to clear fields that are typically set by the HV service
+// Call this to clear fields that are typically set by the MHV service
 // - EffectiveDate, UpdateDate, etc...
 //
 // NOTE: if you call MHVRecordReference::update, this method will get called automatically
@@ -208,14 +208,14 @@ enum HVItemFlags
 //
 // Refreshes information about blobs associated with this item
 //
--(MHVTask *) updateBlobDataFromRecord:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(MHVTask *) updateBlobDataFromRecord:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 //
 // Upload data into the default blob and put the item...
 //
--(MHVItemBlobUploadTask *) uploadBlob:(id<MHVBlobSource>) data contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
--(MHVItemBlobUploadTask *) uploadBlob:(id<MHVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(MHVItemBlobUploadTask *) uploadBlob:(id<MHVBlobSource>) data contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
+-(MHVItemBlobUploadTask *) uploadBlob:(id<MHVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
--(MHVItemBlobUploadTask *) newUploadBlobTask:(id<MHVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(HVTaskCompletion) callback;
+-(MHVItemBlobUploadTask *) newUploadBlobTask:(id<MHVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
 @end
 

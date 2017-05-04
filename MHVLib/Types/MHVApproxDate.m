@@ -23,13 +23,13 @@
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_year, HVClientError_InvalidDate);
-    HVVALIDATE_OPTIONAL(m_month);
-    HVVALIDATE_OPTIONAL(m_day);
+    MHVVALIDATE(m_year, MHVClientError_InvalidDate);
+    MHVVALIDATE_OPTIONAL(m_month);
+    MHVVALIDATE_OPTIONAL(m_day);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 @end

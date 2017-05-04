@@ -25,7 +25,7 @@
 
 static MHVClient* s_client;
 
-@interface MHVClient (HVPrivate)
+@interface MHVClient (MHVPrivate)
 
 -(id) initWithSettings:(MHVClientSettings *) settings;
 
@@ -92,7 +92,7 @@ static MHVClient* s_client;
 
 +(BOOL)initializeClientUsingSettings:(MHVClientSettings *)settings
 {
-    HVCHECK_NOTNULL(settings);
+    MHVCHECK_NOTNULL(settings);
     s_client = nil;
  
     s_client = [[MHVClient alloc] initWithSettings:settings];
@@ -102,7 +102,7 @@ LError:
     return FALSE;
 }
 
--(enum HVAppProvisionStatus)provisionStatus
+-(enum MHVAppProvisionStatus)provisionStatus
 {
     @synchronized(self)
     {
@@ -110,7 +110,7 @@ LError:
     }
 }
 
--(void)setProvisionStatus:(enum HVAppProvisionStatus)provisionStatus
+-(void)setProvisionStatus:(enum MHVAppProvisionStatus)provisionStatus
 {
     @synchronized(self)
     {
@@ -181,13 +181,13 @@ LError:
 
 }
 
--(BOOL)startWithParentController:(UIViewController *)controller andStartedCallback:(HVNotify)callback
+-(BOOL)startWithParentController:(UIViewController *)controller andStartedCallback:(MHVNotify)callback
 {
     @synchronized(self)
     {
-        HVCHECK_NOTNULL(controller);
-        HVCHECK_NOTNULL(callback);
-        HVCHECK_NOTNULL(controller.navigationController); 
+        MHVCHECK_NOTNULL(controller);
+        MHVCHECK_NOTNULL(callback);
+        MHVCHECK_NOTNULL(controller.navigationController); 
         
         m_parentController = controller;
         m_provisionCallback = nil;
@@ -199,7 +199,7 @@ LError:
         if (self.isProvisioned)
         {
             // Already provisioned. 
-            self.provisionStatus = HVAppProvisionSuccess;
+            self.provisionStatus = MHVAppProvisionSuccess;
             [self notifyOfProvisionStatus];
         }
         else
@@ -276,7 +276,7 @@ LError:
 {
     @synchronized(self)
     {
-        self.provisionStatus = HVAppProvisionCancelled;
+        self.provisionStatus = MHVAppProvisionCancelled;
         //
         // Delete local state
         //
@@ -287,7 +287,7 @@ LError:
         [self resetLocalVault];
 
         m_service = [self newService];
-        HVCHECK_NOTNULL(m_service);
+        MHVCHECK_NOTNULL(m_service);
         
         [m_service saveSettings];
  
@@ -313,7 +313,7 @@ LError:
         m_rootDirectory = nil;
         m_localVault = nil;
         
-        HVCHECK_SUCCESS([self ensureLocalVault]); // So the MHVClient object remains in valid state
+        MHVCHECK_SUCCESS([self ensureLocalVault]); // So the MHVClient object remains in valid state
         
         return TRUE;
         
@@ -350,24 +350,24 @@ LError:
 static NSString* const c_userfileName = @"user.xml";
 static NSString* const c_environmentFileName = @"environment.xml";
 
-@implementation MHVClient (HVPrivate)
+@implementation MHVClient (MHVPrivate)
 
 -(id) initWithSettings:(MHVClientSettings *)settings
 {
-    HVCHECK_NOTNULL(settings);
+    MHVCHECK_NOTNULL(settings);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_queue = [[NSOperationQueue alloc] init];
-    HVCHECK_NOTNULL(m_queue);
+    MHVCHECK_NOTNULL(m_queue);
     
     m_settings = settings;
-    HVCHECK_SUCCESS([self ensureLocalVault]);
+    MHVCHECK_SUCCESS([self ensureLocalVault]);
     
     // Set up the HealthVault Service
     m_service = [self newService];
-    HVCHECK_NOTNULL(m_service);
+    MHVCHECK_NOTNULL(m_service);
     
     m_methodFactory = [[MHVMethodFactory alloc] init];
     
@@ -377,7 +377,7 @@ static NSString* const c_environmentFileName = @"environment.xml";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)initializeState
@@ -385,7 +385,7 @@ LError:
     [self loadState];
     if (self.hasAuthorizedRecords)
     {
-        m_provisionStatus = HVAppProvisionSuccess;
+        m_provisionStatus = MHVAppProvisionSuccess;
     }
 }
 
@@ -401,13 +401,13 @@ LError:
         {
             m_rootDirectory = [[MHVDirectory alloc] initWithRelativePath:@"HealthVault"];
         }
-        HVCHECK_NOTNULL(m_rootDirectory);
+        MHVCHECK_NOTNULL(m_rootDirectory);
     }
     
     if (!m_localVault)
     {
         m_localVault = [[MHVLocalVault alloc] initWithRoot:m_rootDirectory andCache:m_settings.useCachingInStore];
-        HVCHECK_NOTNULL(m_localVault);
+        MHVCHECK_NOTNULL(m_localVault);
     }
     
     return TRUE;
@@ -576,7 +576,7 @@ LError:
                                    initForAppID:m_settings.masterAppID 
                                    andEnvironment:environment];
     
-    HVCHECK_NOTNULL(service);
+    MHVCHECK_NOTNULL(service);
     
     service.country = m_settings.country;
     service.language = m_settings.language;
@@ -613,7 +613,7 @@ LError:
 {
     [self saveState];
     
-    self.provisionStatus = HVAppProvisionCancelled;
+    self.provisionStatus = MHVAppProvisionCancelled;
         
     NSURL* creationUrl;
     if (m_settings.isMultiInstanceAware)
@@ -632,7 +632,7 @@ LError:
     
     MHVAppProvisionController * shellController = [[MHVAppProvisionController alloc] initWithAppCreateUrl:creationUrl andCallback:^(MHVAppProvisionController *controller) {
         
-        if (controller.status == HVAppProvisionSuccess)
+        if (controller.status == MHVAppProvisionSuccess)
         {
             if (m_settings.isMultiInstanceAware && controller.hasInstanceID)
             {
@@ -683,11 +683,11 @@ LError:
     //
     if (response && response.hasError)
     {
-        self.provisionStatus = HVAppProvisionFailed;
+        self.provisionStatus = MHVAppProvisionFailed;
     }
     else
     {
-        self.provisionStatus = HVAppProvisionSuccess;
+        self.provisionStatus = MHVAppProvisionSuccess;
         //
         // Capture authorized records
         //
@@ -710,7 +710,7 @@ LError:
     }
     if (index == NSNotFound)
     {
-        [MHVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_UnknownServiceInstance)];
+        [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_UnknownServiceInstance)];
     }
     
     MHVInstance* instance = (MHVInstance *)[m_serviceDef.systemInstances.instances objectAtIndex:index];

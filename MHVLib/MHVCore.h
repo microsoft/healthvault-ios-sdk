@@ -21,8 +21,8 @@
 
 #define IsNsNull(var) (var == [NSNull null])
 
-NSRange HVMakeRange(NSUInteger i);
-NSRange HVEmptyRange(void);
+NSRange MHVMakeRange(NSUInteger i);
+NSRange MHVEmptyRange(void);
 
 double roundToPrecision(double value, NSInteger precision);
 double mgDLToMmolPerL(double mgDLValue, double molarWeight);
@@ -33,26 +33,16 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight);
 // MEMORY MANAGEMENT 
 // 
 //--------------------------------------
-#define HVALLOC_FAIL return HVClear(self)
+#define MHVALLOC_FAIL return nil
 
-#define HVENSURE(var, className)    if (!var) { var = [[className alloc] init];  } 
+#define MHVENSURE(var, className)    if (!var) { var = [[className alloc] init];  }
                                     
-
-id HVClear(id obj);
-id HVAssign(id original, id newObj);
-void HVSetVar(id* var, id value);
-void HVSetVarIfNotNil(id* var, id value);
-
-CFTypeRef HVReplaceRef(CFTypeRef ref, CFTypeRef newRef);
-CFTypeRef HVRetainRef(CFTypeRef cf);
-void HVReleaseRef(CFTypeRef cf);
-
 //--------------------------------------
 //
 // Standard NSObject Extensions 
 //
 //--------------------------------------
-@interface NSObject (HVExtensions)
+@interface NSObject (MHVExtensions)
 
 -(void) safeInvoke:(SEL) sel;
 -(void) safeInvoke:(SEL) sel withParam:(id) param;
@@ -70,10 +60,10 @@ void HVReleaseRef(CFTypeRef cf);
 // Notifications
 //
 //------------------------------------
-#define HVDECLARE_NOTIFICATION(var) extern NSString* const var;
-#define HVDEFINE_NOTIFICATION(var) NSString* const var = @#var;
+#define MHVDECLARE_NOTIFICATION(var) extern NSString* const var;
+#define MHVDEFINE_NOTIFICATION(var) NSString* const var = @#var;
 
-@interface NSNotificationCenter (HVExtensions)
+@interface NSNotificationCenter (MHVExtensions)
 
 - (void)addObserver:(id)observer selector:(SEL)selector name:(NSString *)name;
 

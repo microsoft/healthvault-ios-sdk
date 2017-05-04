@@ -72,10 +72,10 @@ xmlTextWriterPtr XAllocFileWriter(NSString* filePath)
 
 -(id)initWithWriter:(xmlTextWriterPtr)writer buffer:(xmlBufferPtr)buffer andConverter:(XConverter *)converter
 {
-    HVCHECK_NOTNULL(writer);
+    MHVCHECK_NOTNULL(writer);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (converter)
     {
@@ -84,7 +84,7 @@ xmlTextWriterPtr XAllocFileWriter(NSString* filePath)
     else
     {
         m_converter = [[XConverter alloc] init];
-        HVCHECK_NOTNULL(m_converter);
+        MHVCHECK_NOTNULL(m_converter);
     }
     
     m_writer = writer;
@@ -93,7 +93,7 @@ xmlTextWriterPtr XAllocFileWriter(NSString* filePath)
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
     
 }
 
@@ -201,14 +201,14 @@ LError:
 
 -(BOOL) writeAttribute:(NSString *)name value:(NSString *)value
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(value);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(value);
     
     xmlChar* xmlName = [name toXmlString]; // autoreleased...
     xmlChar* xmlValue = [value toXmlString];
     
-    HVCHECK_NOTNULL(xmlName);
-    HVCHECK_NOTNULL(xmlValue);
+    MHVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlValue);
     
     return [self isSuccess:xmlTextWriterWriteAttribute(m_writer, xmlName, xmlValue)];
 
@@ -218,20 +218,20 @@ LError:
 
 -(BOOL) writeAttribute:(NSString *)name prefix:(NSString *)prefix NS:(NSString *)ns value:(NSString *)value
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(prefix);
-    HVCHECK_STRING(ns);
-    HVCHECK_STRING(value);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(prefix);
+    MHVCHECK_STRING(ns);
+    MHVCHECK_STRING(value);
     
     xmlChar* xmlName =[name toXmlString];
     xmlChar* xmlPrefix = [prefix toXmlString];
     xmlChar* xmlNs = [ns toXmlString];
     xmlChar* xmlValue = [value toXmlString];
     
-    HVCHECK_NOTNULL(xmlName);
-    HVCHECK_NOTNULL(xmlPrefix);
-    HVCHECK_NOTNULL(xmlNs);
-    HVCHECK_NOTNULL(xmlValue);
+    MHVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlPrefix);
+    MHVCHECK_NOTNULL(xmlNs);
+    MHVCHECK_NOTNULL(xmlValue);
     
     return [self isSuccess:xmlTextWriterWriteAttributeNS(m_writer, xmlPrefix, xmlName, xmlNs, xmlValue)];
     
@@ -257,10 +257,10 @@ LError:
 
 -(BOOL) writeStartElement:(NSString *)name
 {
-    HVASSERT_STRING(name);
+    MHVASSERT_STRING(name);
     
     xmlChar* xmlName = [name toXmlString];
-    HVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlName);
     
     return [self isSuccess:xmlTextWriterStartElement(m_writer, xmlName)];
 
@@ -270,17 +270,17 @@ LError:
 
 -(BOOL) writeStartElement:(NSString *)name prefix:(NSString *) prefix NS:(NSString *)ns
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(prefix);
-    HVCHECK_STRING(ns);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(prefix);
+    MHVCHECK_STRING(ns);
 
     xmlChar* xmlName =[name toXmlString];
     xmlChar* xmlPrefix = [prefix toXmlString];
     xmlChar* xmlNs = [ns toXmlString];
     
-    HVCHECK_NOTNULL(xmlName);
-    HVCHECK_NOTNULL(xmlPrefix);
-    HVCHECK_NOTNULL(xmlNs);
+    MHVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlPrefix);
+    MHVCHECK_NOTNULL(xmlNs);
 
     return [self isSuccess:xmlTextWriterStartElementNS(m_writer, xmlPrefix, xmlName, xmlNs)];
 
@@ -305,10 +305,10 @@ LError:
 
 -(BOOL) writeString:(NSString *)value
 {
-    HVCHECK_STRING(value);
+    MHVCHECK_STRING(value);
     
     xmlChar* xmlValue = [value toXmlString];
-    HVCHECK_NOTNULL(xmlValue);
+    MHVCHECK_NOTNULL(xmlValue);
     
     return [self isSuccess:xmlTextWriterWriteString(m_writer, xmlValue)];
 
@@ -318,10 +318,10 @@ LError:
 
 -(BOOL) writeRaw:(NSString *)xml
 {
-    HVCHECK_NOTNULL(xml);
+    MHVCHECK_NOTNULL(xml);
     
     xmlChar* xmlValue = [xml toXmlString];
-    HVCHECK_NOTNULL(xmlValue);
+    MHVCHECK_NOTNULL(xmlValue);
     
     return [self isSuccess:xmlTextWriterWriteRaw(m_writer, xmlValue)];
             

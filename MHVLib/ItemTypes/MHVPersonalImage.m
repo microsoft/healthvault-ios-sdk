@@ -40,16 +40,16 @@ static NSString* const c_typename = @"personal-image";
     return [[MHVItem alloc] initWithType:[MHVPersonalImage typeID]];
 }
 
-+(MHVTask *)updateImage:(NSData *)imageData contentType:(NSString *)contentType forRecord:(MHVRecordReference *)record andCallback:(HVTaskCompletion)callback
++(MHVTask *)updateImage:(NSData *)imageData contentType:(NSString *)contentType forRecord:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     MHVTask* uploadImageTask = nil;
     
-    HVCHECK_NOTNULL(imageData);
-    HVCHECK_STRING(contentType);
-    HVCHECK_NOTNULL(record);
+    MHVCHECK_NOTNULL(imageData);
+    MHVCHECK_STRING(contentType);
+    MHVCHECK_NOTNULL(record);
     
     uploadImageTask = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(uploadImageTask);
+    MHVCHECK_NOTNULL(uploadImageTask);
 
     MHVGetItemsTask* getExistingTask = [record getItemsForType:[MHVPersonalImage typeID] callback:^(MHVTask *task) {
        
@@ -65,23 +65,23 @@ static NSString* const c_typename = @"personal-image";
         if (!item)
         {
             item = [MHVPersonalImage newItem];
-            HVCHECK_OOM(item);
+            MHVCHECK_OOM(item);
         }
         
         id<MHVBlobSource> blobSource = [[MHVBlobMemorySource alloc] initWithData:imageData];
-        HVCHECK_OOM(blobSource);
+        MHVCHECK_OOM(blobSource);
         
         MHVTask* blobUploadTask = (MHVTask *) [item newUploadBlobTask:blobSource forBlobName:c_emptyString contentType:contentType record:record andCallback:^(MHVTask *task) {
             
             [task checkSuccess];
         }];
-        HVCHECK_OOM(blobUploadTask);
+        MHVCHECK_OOM(blobUploadTask);
         
         [task.parent setNextTask:blobUploadTask];
         
     } ];
     
-    HVCHECK_NOTNULL(getExistingTask);
+    MHVCHECK_NOTNULL(getExistingTask);
     
     [uploadImageTask setNextTask:getExistingTask];
             

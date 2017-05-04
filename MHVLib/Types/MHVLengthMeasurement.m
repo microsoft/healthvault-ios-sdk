@@ -35,7 +35,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInMeters:(double)meters
 {
-    HVENSURE(m_meters, MHVPositiveDouble);
+    MHVENSURE(m_meters, MHVPositiveDouble);
     m_meters.value = meters;
     [self updateDisplayValue:meters units:@"meters" andUnitsCode:@"m"];
 }
@@ -47,7 +47,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInCentimeters:(double)inCentimeters
 {
-    HVENSURE(m_meters, MHVPositiveDouble);
+    MHVENSURE(m_meters, MHVPositiveDouble);
     m_meters.value = inCentimeters / 100;
     [self updateDisplayValue:inCentimeters units:@"centimeters" andUnitsCode:@"cm"];
 }
@@ -59,7 +59,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInKilometers:(double)inKilometers
 {
-    HVENSURE(m_meters, MHVPositiveDouble);
+    MHVENSURE(m_meters, MHVPositiveDouble);
     m_meters.value = inKilometers * 1000;
     [self updateDisplayValue:inKilometers units:@"kilometers" andUnitsCode:@"km"];
 }
@@ -71,7 +71,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInInches:(double)inches
 {
-    HVENSURE(m_meters, MHVPositiveDouble);
+    MHVENSURE(m_meters, MHVPositiveDouble);
     m_meters.value = [MHVLengthMeasurement inchesToMeters:inches];
     [self updateDisplayValue:inches units:@"inches" andUnitsCode:@"in"];
 }
@@ -83,7 +83,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInFeet:(double)inFeet
 {
-    HVENSURE(m_meters, MHVPositiveDouble);
+    MHVENSURE(m_meters, MHVPositiveDouble);
     m_meters.value = [MHVLengthMeasurement inchesToMeters:inFeet * 12];
     [self updateDisplayValue:inFeet units:@"feet" andUnitsCode:@"ft"];    
 }
@@ -95,7 +95,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInMiles:(double)inMiles
 {
-    HVENSURE(m_meters, MHVPositiveDouble);
+    MHVENSURE(m_meters, MHVPositiveDouble);
     m_meters.value = [MHVLengthMeasurement inchesToMeters:inMiles * 5280 * 12];
     [self updateDisplayValue:inMiles units:@"miles" andUnitsCode:@"mi"];        
 }
@@ -104,35 +104,35 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 -(id)initWithInches:(double)inches
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.inInches = inches;
-    HVCHECK_NOTNULL(m_meters);
-    HVCHECK_NOTNULL(m_display);
+    MHVCHECK_NOTNULL(m_meters);
+    MHVCHECK_NOTNULL(m_display);
     
     return self;
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 -(id)initWithMeters:(double)meters
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.inMeters = meters;
-    HVCHECK_NOTNULL(m_meters);
-    HVCHECK_NOTNULL(m_display);
+    MHVCHECK_NOTNULL(m_meters);
+    MHVCHECK_NOTNULL(m_display);
     
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
-    HVCHECK_NOTNULL(newValue);
+    MHVCHECK_NOTNULL(newValue);
     if (code)
     {
         newValue.unitsCode = code;
@@ -227,12 +227,12 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_meters, HVClientError_InvalidLengthMeasurement);
-    HVVALIDATE_OPTIONAL(m_display);
+    MHVVALIDATE(m_meters, MHVClientError_InvalidLengthMeasurement);
+    MHVVALIDATE_OPTIONAL(m_display);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer

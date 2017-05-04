@@ -21,15 +21,15 @@
 #import "MHVTypes.h"
 #import "MHVVocab.h"
 
-enum HVGender 
+enum MHVGender 
 {
-    HVGenderNone = 0,
-    HVGenderFemale,
-    HVGenderMale
+    MHVGenderNone = 0,
+    MHVGenderFemale,
+    MHVGenderMale
 };
 
-NSString* stringFromGender(enum HVGender gender);
-enum HVGender stringToGender(NSString* genderString);
+NSString* stringFromGender(enum MHVGender gender);
+enum MHVGender stringToGender(NSString* genderString);
 
 //
 // Basic demographics contain less private information about the person - and may be
@@ -41,7 +41,7 @@ enum HVGender stringToGender(NSString* genderString);
 @interface MHVBasicDemographics : MHVItemDataTyped
 {
 @private
-    enum HVGender m_gender;
+    enum MHVGender m_gender;
     MHVYear* m_birthYear;
     MHVCodableValue* m_country;
     NSString* m_postalCode;
@@ -59,7 +59,7 @@ enum HVGender stringToGender(NSString* genderString);
 //
 // ALL fields are optional
 //
-@property (readwrite, nonatomic) enum HVGender gender;
+@property (readwrite, nonatomic) enum MHVGender gender;
 @property (readwrite, nonatomic, strong) MHVYear* birthYear;
 @property (readwrite, nonatomic, strong) MHVCodableValue* country;
 @property (readwrite, nonatomic, strong) NSString* postalCode;

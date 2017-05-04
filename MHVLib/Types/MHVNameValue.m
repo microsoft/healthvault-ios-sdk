@@ -34,17 +34,17 @@ static NSString* const c_element_value = @"value";
 
 -(void)setMeasurementValue:(double)measurementValue
 {
-    HVENSURE(m_value, MHVMeasurement);
+    MHVENSURE(m_value, MHVMeasurement);
     m_value.value = measurementValue;
 }
 
 -(id)initWithName:(MHVCodedValue *)name andValue:(MHVMeasurement *)value
 {
-    HVCHECK_NOTNULL(name);
-    HVCHECK_NOTNULL(value);
+    MHVCHECK_NOTNULL(name);
+    MHVCHECK_NOTNULL(value);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.name = name;
     self.value = value;
@@ -52,7 +52,7 @@ static NSString* const c_element_value = @"value";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -63,12 +63,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_name, HVClientError_InvalidNameValue);
-    HVVALIDATE(m_value, HVClientError_InvalidNameValue);
+    MHVVALIDATE(m_name, MHVClientError_InvalidNameValue);
+    MHVVALIDATE(m_value, MHVClientError_InvalidNameValue);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -90,14 +90,14 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVNameValue class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVNameValue *)itemAtIndex:(NSUInteger)index

@@ -1,6 +1,6 @@
 //
 //  MHVItemTestExtensions.m
-//  HVTestLib
+//  MHVTestLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -68,7 +68,7 @@ NSString* pickRandomDrug(void)
     return pickRandomString(8, @"Lipitor", @"Ibuprofen", @"Celebrex", @"Prozac", @"Claritin", @"Viagra", @"Omega 3 Supplement", @"Multi-vitamins");
 }
 
-@implementation MHVContact (HVTestExtensions)
+@implementation MHVContact (MHVTestExtensions)
 
 +(MHVContact *)createRandom
 {
@@ -92,7 +92,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVPerson (HVTestExtensions)
+@implementation MHVPerson (MHVTestExtensions)
 
 +(MHVPerson *) createRandom
 {
@@ -109,7 +109,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVOrganization (HVTestExtensions)
+@implementation MHVOrganization (MHVTestExtensions)
 
 +(MHVOrganization *)createRandom
 {
@@ -123,7 +123,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVWeightMeasurement (HVTestExtensions)
+@implementation MHVWeightMeasurement (MHVTestExtensions)
 
 +(MHVWeightMeasurement *)createRandomGramsMin:(NSUInteger)min max:(NSUInteger)max
 {
@@ -138,7 +138,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVItem (HVTestExtensions)
+@implementation MHVItem (MHVTestExtensions)
 
 +(MHVItem *)createRandomOfClass:(NSString *)className
 {
@@ -160,7 +160,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVWeight (HVTestExtensions)
+@implementation MHVWeight (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -193,7 +193,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVBloodPressure (HVTestExtensions)
+@implementation MHVBloodPressure (MHVTestExtensions)
     
 +(MHVItem *)createRandom
 {
@@ -223,7 +223,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVBloodGlucose (HVTestExtensions)
+@implementation MHVBloodGlucose (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -269,7 +269,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVCholesterolV2 (HVTestExtensions)
+@implementation MHVCholesterolV2 (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -314,7 +314,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVHeartRate (HVTestExtensions)
+@implementation MHVHeartRate (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -334,7 +334,7 @@ NSString* pickRandomDrug(void)
 }
 @end
 
-@implementation MHVHeight (HVTestExtensions)
+@implementation MHVHeight (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -349,7 +349,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVDailyDietaryIntake (HVTestExtensions)
+@implementation MHVDailyDietaryIntake (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -371,7 +371,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVExercise (HVTestExtensions)
+@implementation MHVExercise (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -487,7 +487,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVAllergy (HVTestExtensions)
+@implementation MHVAllergy (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -520,7 +520,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVCondition (HVTestExtensions)
+@implementation MHVCondition (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -545,7 +545,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVMedication (HVTestExtensions)
+@implementation MHVMedication (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -573,7 +573,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVImmunization (HVTestExtensions)
+@implementation MHVImmunization (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -627,7 +627,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVProcedure (HVTestExtensions)
+@implementation MHVProcedure (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -647,7 +647,7 @@ NSString* pickRandomDrug(void)
 }
 @end
 
-@implementation MHVVitalSigns (HVTestExtensions)
+@implementation MHVVitalSigns (MHVTestExtensions)
 
 +(MHVItem *) createRandom
 {
@@ -668,7 +668,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVEncounter (HVTestExtensions)
+@implementation MHVEncounter (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -685,7 +685,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVFamilyHistory (HVTestExtensions)
+@implementation MHVFamilyHistory (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -699,7 +699,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVAssessment (HVTestExtensions)
+@implementation MHVAssessment (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -717,7 +717,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVQuestionAnswer (HVTestExtensions)
+@implementation MHVQuestionAnswer (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -732,7 +732,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVEmergencyOrProviderContact (HVTestExtensions)
+@implementation MHVEmergencyOrProviderContact (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -753,7 +753,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVPersonalContactInfo (HVTestExtensions)
+@implementation MHVPersonalContactInfo (MHVTestExtensions)
 
 +(MHVItem *) createRandom
 {
@@ -767,7 +767,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVSleepJournalAM (HVTestExtensions)
+@implementation MHVSleepJournalAM (MHVTestExtensions)
 
 +(MHVItem *) createRandom
 {
@@ -801,14 +801,14 @@ NSString* pickRandomDrug(void)
     
     journal.wakeTime = wakeTime;
     
-    journal.wakeState = (enum HVWakeState) [MHVRandom randomIntInRangeMin:1 max:3];
+    journal.wakeState = (enum MHVWakeState) [MHVRandom randomIntInRangeMin:1 max:3];
     
     return item;    
 }
 
 @end
 
-@implementation MHVSleepJournalPM (HVTestExtensions)
+@implementation MHVSleepJournalPM (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -816,7 +816,7 @@ NSString* pickRandomDrug(void)
     MHVSleepJournalPM* journal = item.sleepJournalPM;
     
     journal.when = createRandomMHVDateTime();
-    journal.sleepiness = (enum HVSleepiness) [MHVRandom randomIntInRangeMin:1 max:4];
+    journal.sleepiness = (enum MHVSleepiness) [MHVRandom randomIntInRangeMin:1 max:4];
     
     for (int i = 0, count = [MHVRandom randomIntInRangeMin:3 max:5]; i < count; ++i)
     {
@@ -829,7 +829,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVEmotionalState (HVTestExtensions)
+@implementation MHVEmotionalState (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -847,17 +847,17 @@ NSString* pickRandomDrug(void)
     randInt = [MHVRandom randomIntInRangeMin:0 max:5];
     if (randInt > 0)
     {
-        es.stress = (enum HVRelativeRating) randInt;
+        es.stress = (enum MHVRelativeRating) randInt;
     }
     randInt = [MHVRandom randomIntInRangeMin:0 max:5];
     if (randInt > 0)
     {
-        es.mood = (enum HVMood) randInt;
+        es.mood = (enum MHVMood) randInt;
     }
     randInt = [MHVRandom randomIntInRangeMin:0 max:5];
     if (randInt > 0)
     {
-        es.wellbeing = (enum HVWellBeing) randInt;
+        es.wellbeing = (enum MHVWellBeing) randInt;
     }
     
     return item;
@@ -865,7 +865,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVDailyMedicationUsage (HVTestExtensions)
+@implementation MHVDailyMedicationUsage (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {
@@ -891,7 +891,7 @@ NSString* pickRandomDrug(void)
 
 @end
 
-@implementation MHVDietaryIntake (HVTestExtensions)
+@implementation MHVDietaryIntake (MHVTestExtensions)
 
 +(MHVItem *)createRandom
 {

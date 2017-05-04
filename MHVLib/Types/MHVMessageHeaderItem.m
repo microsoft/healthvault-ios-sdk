@@ -29,11 +29,11 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 -(id)initWithName:(NSString *)name value:(NSString *)value
 {
-    HVCHECK_STRING(name);
-    HVCHECK_STRING(value);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(value);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = name;
     m_value = value;
@@ -41,18 +41,18 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(m_name, HVClientError_InvalidMessageHeader);
-    HVVALIDATE_STRING(m_value, HVClientError_InvalidMessageHeader);
+    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidMessageHeader);
+    MHVVALIDATE_STRING(m_value, MHVClientError_InvalidMessageHeader);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -74,14 +74,14 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVMessageHeaderItem class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVMessageHeaderItem *)itemAtIndex:(NSUInteger)index

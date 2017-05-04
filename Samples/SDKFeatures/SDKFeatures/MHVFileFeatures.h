@@ -29,7 +29,7 @@
 -(void) viewFileInBrowser;
 -(void) downloadFile;
 
--(void) processSelectedFile:(HVHandler) action;
+-(void) processSelectedFile:(MHVHandler) action;
 -(void) downloadFileToFile:(NSFileHandle *) file;
 -(void) uploadFileWithName:(NSString *) name data:(NSData *) data andMediaType:(NSString *) mediaType;
 

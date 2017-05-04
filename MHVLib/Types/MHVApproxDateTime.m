@@ -53,45 +53,45 @@ static NSString* const c_element_structured = @"structured";
 
 -(id)initWithDescription:(NSString *)descr
 {
-    HVCHECK_NOTNULL(descr);
+    MHVCHECK_NOTNULL(descr);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.descriptive = descr;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithDate:(NSDate *)date
 {
     MHVDateTime* dateTime = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(dateTime);
+    MHVCHECK_NOTNULL(dateTime);
     
     self = [self initWithDateTime:dateTime];
     
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithDateTime:(MHVDateTime *)dateTime
 {
-    HVCHECK_NOTNULL(dateTime);
+    MHVCHECK_NOTNULL(dateTime);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.dateTime = dateTime;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initNow
@@ -162,14 +162,14 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     //
     // The data type is a choice. You can do one or the other
     //
-    HVVALIDATE_TRUE((m_dateTime || m_descriptive), HVClientError_InvalidApproxDateTime);
-    HVVALIDATE_TRUE((!(m_dateTime && m_descriptive)), HVClientError_InvalidApproxDateTime);
+    MHVVALIDATE_TRUE((m_dateTime || m_descriptive), MHVClientError_InvalidApproxDateTime);
+    MHVVALIDATE_TRUE((!(m_dateTime && m_descriptive)), MHVClientError_InvalidApproxDateTime);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

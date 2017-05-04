@@ -37,13 +37,13 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 -(void)setInPounds:(double)inPounds
 {
-    HVENSURE(m_value, MHVWeightMeasurement);
+    MHVENSURE(m_value, MHVWeightMeasurement);
     m_value.inPounds = inPounds;
 }
 
 -(void)setInKg:(double)inKg
 {
-    HVENSURE(m_value, MHVWeightMeasurement);
+    MHVENSURE(m_value, MHVWeightMeasurement);
     m_value.inKg = inKg;
 }
 
@@ -55,40 +55,40 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 -(id) initWithKg:(double)kg andDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_value = [[MHVWeightMeasurement alloc] initWithKg:kg];
-    HVCHECK_NOTNULL(m_value);
+    MHVCHECK_NOTNULL(m_value);
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithPounds:(double)pounds andDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(date);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_value = [[MHVWeightMeasurement alloc] initWithPounds:pounds];
-    HVCHECK_NOTNULL(m_value);
+    MHVCHECK_NOTNULL(m_value);
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSDate *)getDate
@@ -133,12 +133,12 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_when, HVClientError_InvalidWeight);
-    HVVALIDATE(m_value, HVClientError_InvalidWeight);
+    MHVVALIDATE(m_when, MHVClientError_InvalidWeight);
+    MHVVALIDATE(m_value, MHVClientError_InvalidWeight);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -171,7 +171,7 @@ LError:
 +(MHVItem *)newItemWithKg:(double)kg andDate:(NSDate *)date
 {
     MHVWeight* weight = [[MHVWeight alloc] initWithKg:kg andDate:date];
-    HVCHECK_NOTNULL(weight);
+    MHVCHECK_NOTNULL(weight);
     
     MHVItem* item = [[MHVItem alloc] initWithTypedData:weight];
     
@@ -184,7 +184,7 @@ LError:
 +(MHVItem *)newItemWithPounds:(double)pounds andDate:(NSDate *)date
 {
     MHVWeight* weight = [[MHVWeight alloc] initWithPounds:pounds andDate:date];
-    HVCHECK_NOTNULL(weight);
+    MHVCHECK_NOTNULL(weight);
     
     MHVItem* item = [[MHVItem alloc] initWithTypedData:weight];
     

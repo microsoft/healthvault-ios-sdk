@@ -43,24 +43,24 @@ static const xmlChar* x_element_flags = XMLSTRINGCONST("measurement-flags");
 
 -(void)setBpmValue:(int)bpmValue
 {
-    HVENSURE(m_bpm, MHVNonNegativeInt);
+    MHVENSURE(m_bpm, MHVNonNegativeInt);
     m_bpm.value = bpmValue;
 }
 
 -(id)initWithBpm:(int)bpm andDate:(NSDate *)date
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_bpm = [[MHVNonNegativeInt alloc] initWith:bpm];
-    HVCHECK_NOTNULL(m_bpm);
+    MHVCHECK_NOTNULL(m_bpm);
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -101,15 +101,15 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_when, HVClientError_InvalidHeartRate);
-    HVVALIDATE(m_bpm, HVClientError_InvalidHeartRate);
-    HVVALIDATE_OPTIONAL(m_measurementMethod);
-    HVVALIDATE_OPTIONAL(m_measurementConditions);
-    HVVALIDATE_OPTIONAL(m_measurementFlags);
+    MHVVALIDATE(m_when, MHVClientError_InvalidHeartRate);
+    MHVVALIDATE(m_bpm, MHVClientError_InvalidHeartRate);
+    MHVVALIDATE_OPTIONAL(m_measurementMethod);
+    MHVVALIDATE_OPTIONAL(m_measurementConditions);
+    MHVVALIDATE_OPTIONAL(m_measurementFlags);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer

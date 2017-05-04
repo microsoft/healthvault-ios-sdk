@@ -564,9 +564,9 @@
 		5D1B7BEE154642F600854881 /* MHVBlobHashInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobHashInfo.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D1BE473156B427F00718832 /* MHVBlobPutParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBlobPutParameters.h; sourceTree = "<group>"; };
 		5D1BE474156B427F00718832 /* MHVBlobPutParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobPutParameters.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D1BE477156B464400718832 /* MHVBeginBlobPutTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBeginBlobPutTask.h; sourceTree = "<group>"; };
-		5D1BE478156B464400718832 /* MHVBeginBlobPutTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBeginBlobPutTask.m; sourceTree = "<group>"; };
-		5D1BE47B156B483800718832 /* MHVBlobUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBlobUploadTask.h; sourceTree = "<group>"; };
+		5D1BE477156B464400718832 /* MHVBeginBlobPutTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVBeginBlobPutTask.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		5D1BE478156B464400718832 /* MHVBeginBlobPutTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBeginBlobPutTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5D1BE47B156B483800718832 /* MHVBlobUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVBlobUploadTask.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5D1BE47C156B483900718832 /* MHVBlobUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobUploadTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D1D460B1596301A00383979 /* MHVKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVKeyChain.h; sourceTree = "<group>"; };
 		5D1D460C1596301A00383979 /* MHVKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVKeyChain.m; sourceTree = "<group>"; };
@@ -734,14 +734,14 @@
 		5D5F315C150FAA2800ED11E7 /* XmlElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XmlElement.m; sourceTree = "<group>"; };
 		5D5F315D150FAA2800ED11E7 /* XmlTextReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlTextReader.h; sourceTree = "<group>"; };
 		5D5F315E150FAA2800ED11E7 /* XmlTextReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XmlTextReader.m; sourceTree = "<group>"; };
-		5D5F3182150FAE5200ED11E7 /* MHVAppProvisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVAppProvisionController.h; sourceTree = "<group>"; };
+		5D5F3182150FAE5200ED11E7 /* MHVAppProvisionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVAppProvisionController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5D5F3183150FAE5300ED11E7 /* MHVAppProvisionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVAppProvisionController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D5F318B150FDD4700ED11E7 /* MHVBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBlock.h; sourceTree = "<group>"; };
 		5D6EDDA01546233F00420262 /* MHVHttpDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpDownload.h; sourceTree = "<group>"; };
 		5D6EDDA11546233F00420262 /* MHVHttpDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHttpDownload.m; sourceTree = "<group>"; };
 		5D6EDDA61546306200420262 /* MHVBlobInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBlobInfo.h; sourceTree = "<group>"; };
 		5D6EDDA71546306200420262 /* MHVBlobInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobInfo.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D6EDDAA154631B700420262 /* MHVBlobPayloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBlobPayloadItem.h; sourceTree = "<group>"; };
+		5D6EDDAA154631B700420262 /* MHVBlobPayloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVBlobPayloadItem.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5D6EDDAB154631B700420262 /* MHVBlobPayloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobPayloadItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D6EDDAE15463DB700420262 /* MHVString1024.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVString1024.h; sourceTree = "<group>"; };
 		5D6EDDAF15463DB700420262 /* MHVString1024.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVString1024.m; sourceTree = "<group>"; };
@@ -755,7 +755,7 @@
 		5D76B9D814DCC85B00BA865F /* MHVExceptionExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVExceptionExtensions.m; sourceTree = "<group>"; };
 		5D76B9E814DCC9CF00BA865F /* MHVLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVLib.h; sourceTree = "<group>"; };
 		5D76B9EA14DCC9F400BA865F /* MHVLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVLib.m; sourceTree = "<group>"; };
-		5D775C6F15389BD7000F01AE /* MHVBasicDemographics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBasicDemographics.h; sourceTree = "<group>"; };
+		5D775C6F15389BD7000F01AE /* MHVBasicDemographics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVBasicDemographics.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5D775C7015389BD7000F01AE /* MHVBasicDemographics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBasicDemographics.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D775C731538A118000F01AE /* MHVItemTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVItemTypes.m; sourceTree = "<group>"; };
 		5D775C751538C2B7000F01AE /* MHVPersonalDemographics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonalDemographics.h; sourceTree = "<group>"; };
@@ -808,7 +808,7 @@
 		5D8E5AAF152FC45F002BC6E2 /* MHVImmunization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVImmunization.h; sourceTree = "<group>"; };
 		5D8E5AB0152FC45F002BC6E2 /* MHVImmunization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVImmunization.m; sourceTree = "<group>"; };
 		5D8E5AB3152FC551002BC6E2 /* MHVApproxDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVApproxDate.h; sourceTree = "<group>"; };
-		5D8E5AB4152FC551002BC6E2 /* MHVApproxDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVApproxDate.m; sourceTree = "<group>"; };
+		5D8E5AB4152FC551002BC6E2 /* MHVApproxDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVApproxDate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D8FC3E014E2EDDF000F28EB /* MHVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVCommon.h; sourceTree = "<group>"; };
 		5D925DD515376F21006BAAA8 /* MHVGetVocabTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGetVocabTask.h; sourceTree = "<group>"; };
 		5D925DD615376F21006BAAA8 /* MHVGetVocabTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVGetVocabTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -897,7 +897,7 @@
 		5DC50C4315015EE60078D85F /* MHVTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVTypeView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5DC50C46150160CD0078D85F /* MHVSynchronizedStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSynchronizedStore.h; sourceTree = "<group>"; };
 		5DC50C47150160CD0078D85F /* MHVSynchronizedStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSynchronizedStore.m; sourceTree = "<group>"; };
-		5DC50C4E15017CC10078D85F /* MHVAsyncTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVAsyncTask.h; sourceTree = "<group>"; };
+		5DC50C4E15017CC10078D85F /* MHVAsyncTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVAsyncTask.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5DC50C4F15017CC20078D85F /* MHVAsyncTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVAsyncTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5DC50C5A1506F5FF0078D85F /* MHVClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVClient.h; sourceTree = "<group>"; };
 		5DC50C5B1506F6010078D85F /* MHVClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVClient.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -980,7 +980,7 @@
 		5DF90BAE18F85265009ABAAB /* MHVItemCommitScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVItemCommitScheduler.m; sourceTree = "<group>"; };
 		5DF90BB918FC5719009ABAAB /* MHVTypeViewRefresher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTypeViewRefresher.h; sourceTree = "<group>"; };
 		5DF90BBA18FC5719009ABAAB /* MHVTypeViewRefresher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTypeViewRefresher.m; sourceTree = "<group>"; };
-		5DF90BBD18FC80A5009ABAAB /* MHVBatchItemDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBatchItemDownloader.h; sourceTree = "<group>"; };
+		5DF90BBD18FC80A5009ABAAB /* MHVBatchItemDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVBatchItemDownloader.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5DF90BBE18FC80A5009ABAAB /* MHVBatchItemDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBatchItemDownloader.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5DF90BCD19005044009ABAAB /* MHVCryptographer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVCryptographer.h; sourceTree = "<group>"; };
 		5DF90BCE19005044009ABAAB /* MHVCryptographer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVCryptographer.m; sourceTree = "<group>"; };

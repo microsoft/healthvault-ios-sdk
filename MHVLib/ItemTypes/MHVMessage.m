@@ -113,14 +113,14 @@ static NSString* const c_element_attachments = @"attachments";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_when, HVClientError_InvalidMessage);
-    HVVALIDATE_ARRAYOPTIONAL(m_headers, HVClientError_InvalidMessage);
-    HVVALIDATE(m_size, HVClientError_InvalidMessage);
-    HVVALIDATE_ARRAYOPTIONAL(m_attachments, HVClientError_InvalidMessage);
+    MHVVALIDATE(m_when, MHVClientError_InvalidMessage);
+    MHVVALIDATE_ARRAYOPTIONAL(m_headers, MHVClientError_InvalidMessage);
+    MHVVALIDATE(m_size, MHVClientError_InvalidMessage);
+    MHVVALIDATE_ARRAYOPTIONAL(m_attachments, MHVClientError_InvalidMessage);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer

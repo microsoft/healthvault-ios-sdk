@@ -24,7 +24,7 @@
 //-------------------------
 //
 // Xml data associated with an MHVItem
-//   - Typed data [e.g. Medication, Allergy, Exercise etc.] with associated HV Schemas
+//   - Typed data [e.g. Medication, Allergy, Exercise etc.] with associated MHV Schemas
 //   - Common data [Notes, tags, extensions...] 
 //
 //-------------------------

@@ -19,7 +19,7 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVCholesterolV2 (HVFactoryMethods)
+@interface MHVCholesterolV2 (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
@@ -27,7 +27,7 @@
 
 @end
 
-@interface MHVCholesterolV2 (HVDisplay)
+@interface MHVCholesterolV2 (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

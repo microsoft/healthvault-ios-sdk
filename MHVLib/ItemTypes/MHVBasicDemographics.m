@@ -22,16 +22,16 @@
 static NSString* const c_gender_female = @"f";
 static NSString* const c_gender_male = @"m";
 
-NSString* stringFromGender(enum HVGender gender)
+NSString* stringFromGender(enum MHVGender gender)
 {
     NSString* genderString = nil;
     
     switch (gender) {
-        case HVGenderFemale:
+        case MHVGenderFemale:
             genderString = c_gender_female; 
             break;
         
-        case HVGenderMale:
+        case MHVGenderMale:
             genderString = c_gender_male;
             break;
             
@@ -42,19 +42,19 @@ NSString* stringFromGender(enum HVGender gender)
     return genderString;
 }
 
-enum HVGender stringToGender(NSString* genderString)
+enum MHVGender stringToGender(NSString* genderString)
 {
     if ([genderString isEqualToString:c_gender_female])
     {
-        return HVGenderFemale;
+        return MHVGenderFemale;
     }
     
     if ([genderString isEqualToString:c_gender_male])
     {
-        return HVGenderMale;
+        return MHVGenderMale;
     }
     
-    return HVGenderNone;   
+    return MHVGenderNone;   
 }
 
 
@@ -93,12 +93,12 @@ static NSString* const c_element_lang = @"language";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
 
-    HVVALIDATE_OPTIONAL(m_birthYear);
-    HVVALIDATE_OPTIONAL(m_country);
+    MHVVALIDATE_OPTIONAL(m_birthYear);
+    MHVVALIDATE_OPTIONAL(m_country);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

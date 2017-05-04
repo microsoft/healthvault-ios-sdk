@@ -32,7 +32,7 @@ static NSString* const c_element_maxItems = @"maxItems";
 
 const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
-@interface MHVTypeView (HVPrivate)
+@interface MHVTypeView (MHVPrivate)
 
 -(void) setTypeID:(NSString *) typeID;
 -(void) setFilter:(MHVTypeFilter *) filter;
@@ -84,17 +84,17 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 @synthesize tag = m_tag;
 -(BOOL)readAheadModeChunky
 {
-    return (m_readAheadMode == HVTypeViewReadAheadModePage);
+    return (m_readAheadMode == MHVTypeViewReadAheadModePage);
 }
 -(void)setReadAheadModeChunky:(BOOL)readAheadModeChunky
 {
     if (readAheadModeChunky)
     {
-        m_readAheadMode = HVTypeViewReadAheadModePage;
+        m_readAheadMode = MHVTypeViewReadAheadModePage;
     }
     else
     {
-        m_readAheadMode = HVTypeViewReadAheadModeSequential;
+        m_readAheadMode = MHVTypeViewReadAheadModeSequential;
     }
 }
 
@@ -140,7 +140,7 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
 -(void)setStore:(MHVLocalRecordStore *)store
 {
-    HVASSERT(store);
+    MHVASSERT(store);
     m_store = store;
 }
 
@@ -177,16 +177,16 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
 -(id)initForTypeID:(NSString *)typeID filter:(MHVTypeFilter *)filter items:(MHVTypeViewItems *)items overStore:(MHVLocalRecordStore *)store
 {
-    HVCHECK_NOTNULL(typeID);
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(typeID);
+    MHVCHECK_NOTNULL(store);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.typeID = typeID;
     self.filter = filter;
     self.store = store;
-    m_readAheadMode = HVTypeViewReadAheadModePage;
+    m_readAheadMode = MHVTypeViewReadAheadModePage;
     m_readAheadChunkSize = c_hvTypeViewDefaultReadAheadChunkSize;
     self.enforceTypeCheck = FALSE;
     if (items)
@@ -201,22 +201,22 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
     return self;
     
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 -(id)initFromTypeView:(MHVTypeView *)typeView andItems:(MHVTypeViewItems *)items
 {
-    HVCHECK_NOTNULL(typeView);
+    MHVCHECK_NOTNULL(typeView);
     
     self = [self initForTypeID:typeView.typeID filter:typeView.filter items:items overStore:typeView.store];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_readAheadMode = typeView.readAheadMode;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -413,7 +413,7 @@ LError:
     }
     
     MHVTypeViewItem* key = [m_items objectAtIndex:index];
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     if (key.isLoadPending)
     {
@@ -431,7 +431,7 @@ LError:
     // Find the items we don't already have cached, and start loading them
     //
     NSRange range;
-    if (m_readAheadMode == HVTypeViewReadAheadModePage)
+    if (m_readAheadMode == MHVTypeViewReadAheadModePage)
     {
         range = [self getChunkForIndex:index chunkSize:readAheadCount];
     }
@@ -511,7 +511,7 @@ LError:
             if (!pendingKeys)
             {
                 pendingKeys = [[NSMutableArray alloc]init];
-                HVCHECK_NOTNULL(pendingKeys);
+                MHVCHECK_NOTNULL(pendingKeys);
             }
             MHVTypeViewItem* key = [m_items objectAtIndex:i];
             [pendingKeys addObject:key];
@@ -525,7 +525,7 @@ LError:
     
 }
 
--(MHVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(HVTaskCompletion)callback
+-(MHVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback
 {
     NSArray* pendingKeys = [self keysOfItemsNeedingDownloadInRange:range];
     if ([NSArray isNilOrEmpty:pendingKeys])
@@ -564,7 +564,7 @@ LError:
 
 -(BOOL)putItems:(MHVItemCollection *)items
 {
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     for (MHVItem* item in items)
     {
@@ -666,7 +666,7 @@ LError:
 -(MHVTask *)refresh
 {
     MHVGetItemsTask* getItems = [self newRefreshTask];
-    HVCHECK_NOTNULL(getItems);
+    MHVCHECK_NOTNULL(getItems);
     
     [getItems start];
     
@@ -676,13 +676,13 @@ LError:
     return nil;
 }
 
--(MHVTask *)refreshWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)refreshWithCallback:(MHVTaskCompletion)callback
 {
     MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
-    HVCHECK_NOTNULL(task);
+    MHVCHECK_NOTNULL(task);
     
     MHVGetItemsTask* syncTask = [self newRefreshTask];
-    HVCHECK_NOTNULL(syncTask);
+    MHVCHECK_NOTNULL(syncTask);
     
     [task setNextTask:syncTask];
     
@@ -700,7 +700,7 @@ LError:
 
 -(BOOL)replaceKeys:(MHVTypeViewItems *)items
 {
-    HVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(items);
     
     [self updateViewWith:items];
     [self notifySynchronized];
@@ -751,7 +751,7 @@ LError:
 
 +(MHVTypeView *)getViewForTypeID:(NSString *)typeID andRecordStore:(MHVLocalRecordStore *)store
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     MHVTypeView *view = [MHVTypeView loadViewNamed:typeID fromStore:store];
     if (!view)
@@ -845,7 +845,7 @@ LError:
 // PRIVATE
 //
 //----------------
-@implementation MHVTypeView (HVPrivate)
+@implementation MHVTypeView (MHVPrivate)
 
 -(void)setTypeID:(NSString *)typeID
 {
@@ -865,9 +865,9 @@ LError:
 -(MHVItemQuery *)newRefreshQuery
 {
     MHVItemQuery* query = [[MHVItemQuery alloc] initWithTypeID:m_typeID];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
-    query.view.sections = HVItemSection_Core;
+    query.view.sections = MHVItemSection_Core;
     if (m_filter)
     {
         [query.filters addObject:m_filter];
@@ -886,7 +886,7 @@ LError:
 -(MHVGetItemsTask *)newRefreshTask
 {
     MHVItemQuery* query = [self newRefreshQuery];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     MHVGetItemsTask* getItems = [[MHVClient current].methodFactory newGetItemsForRecord:self.record query:query andCallback:^(MHVTask *task) {
         
@@ -923,7 +923,7 @@ LError:
             MHVItemQueryResult* result = results.firstResult;
             if (![newViewItems addQueryResult:result])
             {
-                [MHVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_Sync)];
+                [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_Sync)];
             }
         }
         self.items = newViewItems;
@@ -975,7 +975,7 @@ LError:
             if (!pendingKeys)
             {
                 pendingKeys = [[NSMutableArray alloc]init];
-                HVCHECK_NOTNULL(pendingKeys);
+                MHVCHECK_NOTNULL(pendingKeys);
             }
             [pendingKeys addObject:key];
             

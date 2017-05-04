@@ -21,7 +21,7 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVDietaryIntake (HVFactoryMethods)
+@interface MHVDietaryIntake (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
@@ -37,7 +37,7 @@
 
 @end
 
-@interface MHVDietaryIntake (HVDisplay)
+@interface MHVDietaryIntake (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

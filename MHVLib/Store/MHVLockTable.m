@@ -55,10 +55,10 @@ static const long c_lockNotAcquired = 0;
 
 -(id)initWithID:(long)lockID
 {
-    HVCHECK_TRUE(lockID > c_lockNotAcquired);
+    MHVCHECK_TRUE(lockID > c_lockNotAcquired);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_lockID = lockID;
 #ifdef DEBUG
@@ -67,7 +67,7 @@ static const long c_lockNotAcquired = 0;
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -88,7 +88,7 @@ LError:
 
 @end
 
-@interface MHVAutoLock (HVPrivate)
+@interface MHVAutoLock (MHVPrivate)
 
 -(id) initWithLockTable:(MHVLockTable *) lockTable key:(NSString *) key andLockID:(long) lockID;
 
@@ -131,15 +131,15 @@ LError:
 
 @end
 
-@implementation MHVAutoLock (HVPrivate)
+@implementation MHVAutoLock (MHVPrivate)
 
 -(id)initWithLockTable:(MHVLockTable *)lockTable key:(NSString *)key andLockID:(long)lockID
 {
-    HVCHECK_NOTNULL(lockTable);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(lockTable);
+    MHVCHECK_NOTNULL(key);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_lockID = lockID;
     m_key = key;
@@ -148,12 +148,12 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 @end
 
-@interface MHVLockTable (HVPrivate)
+@interface MHVLockTable (MHVPrivate)
 
 -(BOOL) validateLock:(MHVLock *) lock isLock:(long) lockID;
 -(MHVLock *) lockForKey:(NSString *)key;
@@ -168,17 +168,17 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_locks = [[NSMutableDictionary alloc] init];
-    HVCHECK_NOTNULL(m_locks);
+    MHVCHECK_NOTNULL(m_locks);
     
     m_nextLockId = c_lockNotAcquired;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -242,7 +242,7 @@ LError:
     @synchronized(m_locks)
     {
         MHVLock* existingLock = [self lockForKey:key];
-        HVCHECK_SUCCESS([self validateLock:existingLock isLock:lockID]);
+        MHVCHECK_SUCCESS([self validateLock:existingLock isLock:lockID]);
         
         [m_locks removeObjectForKey:key];
         return TRUE;
@@ -271,7 +271,7 @@ LError:
 
 -(BOOL)validateLock:(MHVAutoLock *)lock
 {
-    HVCHECK_NOTNULL(lock);
+    MHVCHECK_NOTNULL(lock);
     
     return [self validateLock:lock.lockID forKey:lock.key];
     
@@ -298,7 +298,7 @@ LError:
 }
 @end
 
-@implementation MHVLockTable (HVPrivate)
+@implementation MHVLockTable (MHVPrivate)
 
 -(BOOL)validateLock:(MHVLock *)lock isLock:(long)lockID
 {

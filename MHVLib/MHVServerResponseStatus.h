@@ -21,35 +21,35 @@
 //
 // Common Status codes
 //
-enum HVServerStatusCode 
+enum MHVServerStatusCode 
 {
-    HVServerStatusCodeOK = 0,
-    HVServerStatusCodeFailed = 1,
-    HVServerStatusCodeBadHttp = 2,
-    HVServerStatusCodeInvalidXml = 3,
-    HVServerStatusCodeInvalidRequestIntegrity = 4,
-    HVServerStatusCodeBadMethod = 5,
-    HVServerStatusCodeInvalidApp = 6,
-    HVServerStatusCodeCredentialTokenExpired = 7,
-    HVServerStatusCodeInvalidToken = 8,
-    HVServerStatusCodeInvalidPerson = 9,
-    HVServerStatusCodeInvalidRecord = 10,
-    HVServerStatusCodeAccessDenied = 11,
-    HVServerStatusCodeInvalidItem = 13,
-    HVServerStatusCodeInvalidFilter = 15,
-    HVServerStatusCodeInvalidApplicationAuthorization = 18,
-    HVServerStatusCodeTypeIDNotFound = 19,
-    HVServerStatusCodeDuplicateCredentialFound = 22,
-    HVServerStatusCodeInvalidRecordState = 37,
-    HVServerStatusCodeRequestTimedOut = 0x31,
-    HVServerStatusCodeVersionStampMismatch = 0x3d,
-    HVServerStatusCodeAuthSessionTokenExpired = 0x41,
-    HVServerStatusCodeRecordQuotaExceeded = 0x44,
-    HVServerStatusCodeApplicationLimitExceeded = 0x5d,
-    HVServerStatusCodeVocabAccessDenied = 130,
-    HVServerStatusCodeInvalidAge = 157,
-    HVServerStatusCodeInvalidIPAddress = 158,
-    HVServerStatusCodeMaxRecordsExceeded = 160
+    MHVServerStatusCodeOK = 0,
+    MHVServerStatusCodeFailed = 1,
+    MHVServerStatusCodeBadHttp = 2,
+    MHVServerStatusCodeInvalidXml = 3,
+    MHVServerStatusCodeInvalidRequestIntegrity = 4,
+    MHVServerStatusCodeBadMethod = 5,
+    MHVServerStatusCodeInvalidApp = 6,
+    MHVServerStatusCodeCredentialTokenExpired = 7,
+    MHVServerStatusCodeInvalidToken = 8,
+    MHVServerStatusCodeInvalidPerson = 9,
+    MHVServerStatusCodeInvalidRecord = 10,
+    MHVServerStatusCodeAccessDenied = 11,
+    MHVServerStatusCodeInvalidItem = 13,
+    MHVServerStatusCodeInvalidFilter = 15,
+    MHVServerStatusCodeInvalidApplicationAuthorization = 18,
+    MHVServerStatusCodeTypeIDNotFound = 19,
+    MHVServerStatusCodeDuplicateCredentialFound = 22,
+    MHVServerStatusCodeInvalidRecordState = 37,
+    MHVServerStatusCodeRequestTimedOut = 0x31,
+    MHVServerStatusCodeVersionStampMismatch = 0x3d,
+    MHVServerStatusCodeAuthSessionTokenExpired = 0x41,
+    MHVServerStatusCodeRecordQuotaExceeded = 0x44,
+    MHVServerStatusCodeApplicationLimitExceeded = 0x5d,
+    MHVServerStatusCodeVocabAccessDenied = 130,
+    MHVServerStatusCodeInvalidAge = 157,
+    MHVServerStatusCodeInvalidIPAddress = 158,
+    MHVServerStatusCodeMaxRecordsExceeded = 160
 };
 
 @interface MHVServerResponseStatus : NSObject
@@ -61,7 +61,7 @@ enum HVServerStatusCode
     int m_webStatusCode;
 }
 
--(id) initWithStatusCode:(enum HVServerStatusCode) code;
+-(id) initWithStatusCode:(enum MHVServerStatusCode) code;
 
 @property (readonly, nonatomic) BOOL hasError;
 //

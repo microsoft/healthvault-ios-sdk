@@ -19,13 +19,13 @@
 #import "MHVCommon.h"
 #import "MHVVocabSearchText.h"
 
-NSString* HVVocabMatchTypeToString(enum HVVocabMatchType type)
+NSString* MHVVocabMatchTypeToString(enum MHVVocabMatchType type)
 {
     switch (type) {
-        case HVVocabMatchTypeFullText:
+        case MHVVocabMatchTypeFullText:
             return @"FullText";
         
-        case HVVocabMatchTypePrefix:
+        case MHVVocabMatchTypePrefix:
             return @"Prefix";
             
         default:
@@ -35,19 +35,19 @@ NSString* HVVocabMatchTypeToString(enum HVVocabMatchType type)
     return c_emptyString;
 }
 
-enum HVVocabMatchType HVVocabMatchTypeFromString(NSString* string)
+enum MHVVocabMatchType MHVVocabMatchTypeFromString(NSString* string)
 {
     if ([string isEqualToString:@"FullText"])
     {
-        return HVVocabMatchTypeFullText;
+        return MHVVocabMatchTypeFullText;
     }
     
     if ([string isEqualToString:@"Prefix"])
     {
-        return HVVocabMatchTypePrefix;
+        return MHVVocabMatchTypePrefix;
     }
     
-    return HVVocabMatchTypeNone;
+    return MHVVocabMatchTypeNone;
 }
 
 static NSString* const c_attribute_matchType = @"search-mode";
@@ -58,7 +58,7 @@ static NSString* const c_attribute_matchType = @"search-mode";
 
 -(void)serializeAttributes:(XWriter *)writer
 {
-    NSString* matchType = HVVocabMatchTypeToString(m_type);
+    NSString* matchType = MHVVocabMatchTypeToString(m_type);
     
     [writer writeAttribute:c_attribute_matchType value:matchType];
 }
@@ -70,7 +70,7 @@ static NSString* const c_attribute_matchType = @"search-mode";
     mode = [reader readAttribute:c_attribute_matchType];
     if (![NSString isNilOrEmpty:mode])
     {
-        m_type = HVVocabMatchTypeFromString(mode);
+        m_type = MHVVocabMatchTypeFromString(mode);
     }
 }
 

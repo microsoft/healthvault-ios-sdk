@@ -28,17 +28,17 @@ static NSString* const c_attribute_name = @"name";
 
 -(id) initWithTypeID:(NSString *)typeID
 {
-    HVCHECK_STRING(typeID);
+    MHVCHECK_STRING(typeID);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.typeID = typeID;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -49,11 +49,11 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(m_typeID, HVClientError_InvalidItemType);
+    MHVVALIDATE_STRING(m_typeID, MHVClientError_InvalidItemType);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serializeAttributes:(XWriter *)writer

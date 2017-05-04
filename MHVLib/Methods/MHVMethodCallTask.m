@@ -1,5 +1,5 @@
 //
-//  HVMethodCall.m
+//  MHVMethodCall.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,7 +24,7 @@
 #import "HealthVaultRequest.h"
 #import "HealthVaultResponse.h"
 
-@interface MHVMethodCallTask (HVPrivate)
+@interface MHVMethodCallTask (MHVPrivate)
 
 -(void) sendRequest;
 -(void) handleResponse:(HealthVaultResponse *) response;
@@ -60,20 +60,20 @@
     }
 }
 
--(id)initWithCallback:(HVTaskCompletion)callback
+-(id)initWithCallback:(MHVTaskCompletion)callback
 {
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_status = [[MHVServerResponseStatus alloc] init];
-    HVCHECK_NOTNULL(m_status);
+    MHVCHECK_NOTNULL(m_status);
     
     m_useMasterAppID = FALSE;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 
@@ -127,7 +127,7 @@ LError:
     //
     if (!m_record)
     {
-        [MHVClientException throwExceptionWithError:HVMAKE_ERROR(HVClientError_InvalidRecordReference)];
+        [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_InvalidRecordReference)];
     }
 }
 
@@ -153,7 +153,7 @@ LError:
 
 @end
 
-@implementation MHVMethodCallTask (HVPrivate)
+@implementation MHVMethodCallTask (MHVPrivate)
 
 -(void)sendRequest
 {
@@ -168,7 +168,7 @@ LError:
                    infoSection:xml 
                    target:self 
                    callBack:@selector(handleResponse:)];
-        HVCHECK_OOM(request);
+        MHVCHECK_OOM(request);
         
         self.operation = request;        
         if (m_record)
@@ -237,15 +237,15 @@ LError:
 -(NSString *)serializeRequestBody
 {
     XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
-    HVCHECK_NOTNULL(writer);
+    MHVCHECK_NOTNULL(writer);
     
     @try 
     {
-        HVCHECK_XWRITE([writer writeStartElement:@"info"]);
+        MHVCHECK_XWRITE([writer writeStartElement:@"info"]);
         {
             [self serializeRequestBodyToWriter:writer];
         }
-        HVCHECK_XWRITE([writer writeEndElement]);
+        MHVCHECK_XWRITE([writer writeEndElement]);
         
         return [writer newXmlString];
     }
@@ -271,7 +271,7 @@ LError:
 #endif
     
     XReader *reader = [[XReader alloc] initFromString:response.infoXml];
-    HVCHECK_OOM(reader);
+    MHVCHECK_OOM(reader);
     @try
     {
         return [self deserializeResponseBodyFromReader:reader];

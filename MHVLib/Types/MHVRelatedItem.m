@@ -35,11 +35,11 @@ static NSString* const c_element_relationship = @"relationship-type";
 
 -(id)initRelationship:(NSString *)relationship toItemWithKey:(MHVItemKey *)key
 {
-    HVCHECK_STRING(relationship);
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_STRING(relationship);
+    MHVCHECK_NOTNULL(key);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.itemID = key.itemID;
     self.version = key.version;
@@ -48,39 +48,39 @@ static NSString* const c_element_relationship = @"relationship-type";
     return self;
 
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initRelationship:(NSString *)relationship toItemWithClientID:(NSString *)clientID  
 {
-    HVCHECK_STRING(relationship);
-    HVCHECK_STRING(clientID);
+    MHVCHECK_STRING(relationship);
+    MHVCHECK_STRING(clientID);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.relationship = relationship;
     
     m_clientID = [[MHVString255 alloc] initWith:clientID];
-    HVCHECK_NOTNULL(m_clientID);
+    MHVCHECK_NOTNULL(m_clientID);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
     
 }
 
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
 
-    HVVALIDATE_STRINGOPTIONAL(m_itemID, HVClientError_InvalidRelatedItem);
-    HVVALIDATE_OPTIONAL(m_clientID);
-    HVVALIDATE_STRINGOPTIONAL(m_relationship, HVClientError_InvalidRelatedItem);
+    MHVVALIDATE_STRINGOPTIONAL(m_itemID, MHVClientError_InvalidRelatedItem);
+    MHVVALIDATE_OPTIONAL(m_clientID);
+    MHVVALIDATE_STRINGOPTIONAL(m_relationship, MHVClientError_InvalidRelatedItem);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -116,14 +116,14 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVRelatedItem class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSUInteger)indexOfRelation:(NSString *)name
@@ -143,7 +143,7 @@ LError:
 -(MHVRelatedItem *)addRelation:(NSString *)name toItem:(MHVItem *)item
 {
     MHVRelatedItem* relation = [MHVRelatedItem relationNamed:name toItem:item];
-    HVCHECK_NOTNULL(relation);
+    MHVCHECK_NOTNULL(relation);
     
     [self addObject:relation];
     

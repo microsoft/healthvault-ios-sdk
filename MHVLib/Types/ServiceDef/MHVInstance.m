@@ -62,14 +62,14 @@ static const xmlChar* x_element_shell = XMLSTRINGCONST("shell-url");
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVInstance class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVInstance *)indexOfInstance:(NSUInteger)index

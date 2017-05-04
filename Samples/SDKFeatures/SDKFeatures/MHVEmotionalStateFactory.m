@@ -19,7 +19,7 @@
 
 #import "MHVEmotionalStateFactory.h"
 
-@implementation MHVEmotionalState (HVFactoryMethods)
+@implementation MHVEmotionalState (MHVFactoryMethods)
 
 +(MHVItemCollection *)createRandomForDay:(NSDate *)date
 {
@@ -46,7 +46,7 @@
 
 @end
 
-@implementation MHVEmotionalState (HVDisplay)
+@implementation MHVEmotionalState (MHVDisplay)
 
 -(NSString *)detailsString
 {

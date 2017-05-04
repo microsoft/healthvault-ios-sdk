@@ -20,7 +20,7 @@
 #import "XLib.h"
 #import "MHVItemTypes.h"
 /*
-#define HVDECLARE_GETTOR(type, name) \
+#define MHVDECLARE_GETTOR(type, name) \
 -(type *) name { \
     if (self.hasTypedData) { \
             return (type *) self.data.typed; \
@@ -29,13 +29,13 @@
 }
 */
 
-#define HVDECLARE_GETTOR(type, name) \
+#define MHVDECLARE_GETTOR(type, name) \
 -(type *) name { \
     return (type *) [self getDataOfType:[type typeID]]; \
 }
 
 
-@implementation MHVItem (HVTypedExtensions)
+@implementation MHVItem (MHVTypedExtensions)
 
 -(MHVItemDataTyped *)getDataOfType:(NSString *)typeID
 {
@@ -44,80 +44,80 @@
         return nil;
     }
     
-    HVASSERT([self.type.typeID isEqualToString:typeID]);
+    MHVASSERT([self.type.typeID isEqualToString:typeID]);
     return self.data.typed;
 }
 
-HVDECLARE_GETTOR(MHVWeight, weight);
+MHVDECLARE_GETTOR(MHVWeight, weight);
 
-HVDECLARE_GETTOR(MHVBloodPressure, bloodPressure);
+MHVDECLARE_GETTOR(MHVBloodPressure, bloodPressure);
 
-HVDECLARE_GETTOR(MHVCholesterol, cholesterol);
+MHVDECLARE_GETTOR(MHVCholesterol, cholesterol);
 
-HVDECLARE_GETTOR(MHVCholesterolV2, cholesterolV2);
+MHVDECLARE_GETTOR(MHVCholesterolV2, cholesterolV2);
 
-HVDECLARE_GETTOR(MHVBloodGlucose, bloodGlucose);
+MHVDECLARE_GETTOR(MHVBloodGlucose, bloodGlucose);
 
-HVDECLARE_GETTOR(MHVHeartRate, heartRate);
+MHVDECLARE_GETTOR(MHVHeartRate, heartRate);
 
-HVDECLARE_GETTOR(MHVPeakFlow, peakFlow);
+MHVDECLARE_GETTOR(MHVPeakFlow, peakFlow);
 
-HVDECLARE_GETTOR(MHVHeight, height);
+MHVDECLARE_GETTOR(MHVHeight, height);
 
-HVDECLARE_GETTOR(MHVExercise, exercise);
+MHVDECLARE_GETTOR(MHVExercise, exercise);
 
-HVDECLARE_GETTOR(MHVDailyMedicationUsage, medicationUsage);
+MHVDECLARE_GETTOR(MHVDailyMedicationUsage, medicationUsage);
 
-HVDECLARE_GETTOR(MHVEmotionalState, emotionalState);
+MHVDECLARE_GETTOR(MHVEmotionalState, emotionalState);
 
-HVDECLARE_GETTOR(MHVAssessment, assessment);
+MHVDECLARE_GETTOR(MHVAssessment, assessment);
 
-HVDECLARE_GETTOR(MHVQuestionAnswer, questionAnswer);
+MHVDECLARE_GETTOR(MHVQuestionAnswer, questionAnswer);
 
-HVDECLARE_GETTOR(MHVDailyDietaryIntake, dailyDietaryIntake);
+MHVDECLARE_GETTOR(MHVDailyDietaryIntake, dailyDietaryIntake);
 
-HVDECLARE_GETTOR(MHVDietaryIntake, dietaryIntake);
+MHVDECLARE_GETTOR(MHVDietaryIntake, dietaryIntake);
 
-HVDECLARE_GETTOR(MHVSleepJournalAM, sleepJournalAM);
+MHVDECLARE_GETTOR(MHVSleepJournalAM, sleepJournalAM);
 
-HVDECLARE_GETTOR(MHVSleepJournalPM, sleepJournalPM);
+MHVDECLARE_GETTOR(MHVSleepJournalPM, sleepJournalPM);
 
-HVDECLARE_GETTOR(MHVAllergy, allergy);
+MHVDECLARE_GETTOR(MHVAllergy, allergy);
 
-HVDECLARE_GETTOR(MHVCondition, condition);
+MHVDECLARE_GETTOR(MHVCondition, condition);
 
-HVDECLARE_GETTOR(MHVImmunization, immunization);
+MHVDECLARE_GETTOR(MHVImmunization, immunization);
 
-HVDECLARE_GETTOR(MHVMedication, medication);
+MHVDECLARE_GETTOR(MHVMedication, medication);
 
-HVDECLARE_GETTOR(MHVProcedure, procedure);
+MHVDECLARE_GETTOR(MHVProcedure, procedure);
 
-HVDECLARE_GETTOR(MHVVitalSigns, vitalSigns);
+MHVDECLARE_GETTOR(MHVVitalSigns, vitalSigns);
 
-HVDECLARE_GETTOR(MHVEncounter, encounter);
+MHVDECLARE_GETTOR(MHVEncounter, encounter);
 
-HVDECLARE_GETTOR(MHVFamilyHistory, familyHistory);
+MHVDECLARE_GETTOR(MHVFamilyHistory, familyHistory);
 
-HVDECLARE_GETTOR(MHVCCD, ccd);
+MHVDECLARE_GETTOR(MHVCCD, ccd);
 
-HVDECLARE_GETTOR(MHVCCR, ccr);
+MHVDECLARE_GETTOR(MHVCCR, ccr);
 
-HVDECLARE_GETTOR(MHVInsurance, insurance);
+MHVDECLARE_GETTOR(MHVInsurance, insurance);
 
-HVDECLARE_GETTOR(MHVMessage, message);
+MHVDECLARE_GETTOR(MHVMessage, message);
 
-HVDECLARE_GETTOR(MHVLabTestResults, labResults);
+MHVDECLARE_GETTOR(MHVLabTestResults, labResults);
 
-HVDECLARE_GETTOR(MHVEmergencyOrProviderContact, emergencyOrProviderContact);
+MHVDECLARE_GETTOR(MHVEmergencyOrProviderContact, emergencyOrProviderContact);
 
-HVDECLARE_GETTOR(MHVPersonalContactInfo, personalContact);
+MHVDECLARE_GETTOR(MHVPersonalContactInfo, personalContact);
 
-HVDECLARE_GETTOR(MHVBasicDemographics, basicDemographics);
+MHVDECLARE_GETTOR(MHVBasicDemographics, basicDemographics);
 
-HVDECLARE_GETTOR(MHVPersonalDemographics, personalDemographics);
+MHVDECLARE_GETTOR(MHVPersonalDemographics, personalDemographics);
 
-HVDECLARE_GETTOR(MHVPersonalImage, personalImage);
+MHVDECLARE_GETTOR(MHVPersonalImage, personalImage);
 
-HVDECLARE_GETTOR(MHVFile, file);
+MHVDECLARE_GETTOR(MHVFile, file);
 
 @end

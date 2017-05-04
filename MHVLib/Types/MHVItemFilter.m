@@ -51,9 +51,9 @@ static NSString* const c_element_xpath = @"xpath";
 
 -(void) serialize:(XWriter *)writer
 {
-    if (m_state != HVItemStateNone)
+    if (m_state != MHVItemStateNone)
     {
-        [writer writeElement:c_element_state value:HVItemStateToString(m_state)];
+        [writer writeElement:c_element_state value:MHVItemStateToString(m_state)];
     }
     
     [writer writeElement:c_element_edateMin dateValue:m_eDateMin];
@@ -74,7 +74,7 @@ static NSString* const c_element_xpath = @"xpath";
     NSString* state = [reader readStringElement:c_element_state];
     if (state)
     {
-        m_state = HVItemStateFromString(state);
+        m_state = MHVItemStateFromString(state);
     }
 
     m_eDateMin = [reader readDateElement:c_element_edateMin];
@@ -96,7 +96,7 @@ static NSString* const c_element_xpath = @"xpath";
 
 -(MHVStringCollection *)typeIDs
 {
-    HVENSURE(m_typeIDs, MHVStringCollection);
+    MHVENSURE(m_typeIDs, MHVStringCollection);
     return m_typeIDs;
 }
 
@@ -113,31 +113,31 @@ static NSString* const c_element_xpath = @"xpath";
 -(id) initWithTypeID:(NSString *)typeID
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (typeID)
     {
         [self.typeIDs addObject:typeID];
-        HVCHECK_NOTNULL(m_typeIDs);
+        MHVCHECK_NOTNULL(m_typeIDs);
     }
     
-    m_state = HVItemStateActive;
+    m_state = MHVItemStateActive;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithTypeClass:(Class)typeClass
 {
     NSString* typeID = [[MHVTypeSystem current] getTypeIDForClassName:NSStringFromClass(typeClass)];
-    HVCHECK_NOTNULL(typeID);
+    MHVCHECK_NOTNULL(typeID);
     
     return [self initWithTypeID:typeID];
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -160,13 +160,13 @@ LError:
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVItemFilter class];
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(void)addItem:(MHVItemFilter *)filter

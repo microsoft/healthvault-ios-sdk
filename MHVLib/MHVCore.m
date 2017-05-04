@@ -19,12 +19,12 @@
 #import "MHVCore.h"
 #import "MHVValidator.h"
 
-NSRange HVMakeRange(NSUInteger i)
+NSRange MHVMakeRange(NSUInteger i)
 {
     return NSMakeRange(i, 1);
 }
 
-NSRange HVEmptyRange(void)
+NSRange MHVEmptyRange(void)
 {
     return NSMakeRange(0, 0);
 }
@@ -71,58 +71,7 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight)
     return (mmolPerL * molarWeight) / 10;
 }
 
-id HVClear(id obj)
-{
-    return nil;
-}
-
-id HVAssign(id original, id newObj)
-{
-    return newObj;
-}
-
-void HVSetVar(id* var, id value)
-{
-    if (*var)
-    {
-        *var = nil;
-    }
-    *var = value;
-}
-
-void HVSetVarIfNotNil(id *var, id value)
-{
-    if (value)
-    {
-        HVSetVar(var, value);
-    }
-}
-
-CFTypeRef HVReplaceRef(CFTypeRef cf, CFTypeRef newRef)
-{
-    HVReleaseRef(cf);
-    return HVRetainRef(newRef);
-}
-
-CFTypeRef HVRetainRef(CFTypeRef cf)
-{
-    if (cf)
-    {
-        CFRetain(cf);
-    }
-    
-    return cf;
-}
-
-void HVReleaseRef(CFTypeRef cf)
-{
-    if (cf)
-    {
-        CFRelease(cf);
-    }
-}
-
-@implementation NSObject (HVExtensions)
+@implementation NSObject (MHVExtensions)
 
 -(void) safeInvoke:(SEL)sel
 {
@@ -175,7 +124,7 @@ void HVReleaseRef(CFTypeRef cf)
 {
     @try
     {
-        HVLogEvent([self descriptionForLog]);
+        MHVLogEvent([self descriptionForLog]);
     }
     @catch (id ex) 
     {
@@ -201,7 +150,7 @@ void HVReleaseRef(CFTypeRef cf)
 
 @end
 
-@implementation NSNotificationCenter (HVExtensions)
+@implementation NSNotificationCenter (MHVExtensions)
 
 -(void)addObserver:(id)observer selector:(SEL)selector name:(NSString *)name
 {

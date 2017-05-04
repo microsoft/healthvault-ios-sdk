@@ -23,18 +23,18 @@
 // Standard Lambda definitions
 //
 //--------------------------------------
-typedef void (^HVAction) (void);
-typedef BOOL (^HVPredicate) (void);
-typedef void (^HVNotify) (id sender);
-typedef BOOL (^HVHandler) (id value);
-typedef BOOL (^HVFilter) (id value);
-typedef id (^HVFunc) (id value);
-typedef id (^HVFactory) (id key);
+typedef void (^MHVAction) (void);
+typedef BOOL (^MHVPredicate) (void);
+typedef void (^MHVNotify) (id sender);
+typedef BOOL (^MHVHandler) (id value);
+typedef BOOL (^MHVFilter) (id value);
+typedef id (^MHVFunc) (id value);
+typedef id (^MHVFactory) (id key);
 
 
-void safeInvokeAction(HVAction action);
-void safeInvokeActionInMainThread(HVAction action);
-void safeInvokeActionEx(HVAction action, BOOL useMainThread);
-BOOL safeInvokePredicate(HVPredicate predicate);
-void safeInvokeNotify(HVNotify notify, id sender);
-BOOL safeInvokeHandler(HVHandler handler, id value);
+void safeInvokeAction(MHVAction action);
+void safeInvokeActionInMainThread(MHVAction action);
+void safeInvokeActionEx(MHVAction action, BOOL useMainThread);
+BOOL safeInvokePredicate(MHVPredicate predicate);
+void safeInvokeNotify(MHVNotify notify, id sender);
+BOOL safeInvokeHandler(MHVHandler handler, id value);

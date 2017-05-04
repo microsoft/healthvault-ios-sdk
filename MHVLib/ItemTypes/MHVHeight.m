@@ -48,7 +48,7 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 -(void)setInMeters:(double)inMeters 
 {
-    HVENSURE(m_height, MHVLengthMeasurement);
+    MHVENSURE(m_height, MHVLengthMeasurement);
     m_height.inMeters = inMeters;        
 }
 
@@ -59,7 +59,7 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 
 -(void)setInInches:(double)inInches
 {
-    HVENSURE(m_height, MHVLengthMeasurement);
+    MHVENSURE(m_height, MHVLengthMeasurement);
     m_height.inInches = inInches;
 }
 
@@ -67,35 +67,35 @@ static const xmlChar* x_element_value = XMLSTRINGCONST("value");
 -(id)initWithMeters:(double)meters andDate:(NSDate *)date
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.inMeters = meters;
-    HVCHECK_NOTNULL(m_height);
+    MHVCHECK_NOTNULL(m_height);
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithInches:(double)inches andDate:(NSDate *)date
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.inInches = inches;
-    HVCHECK_NOTNULL(m_height);
+    MHVCHECK_NOTNULL(m_height);
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSString *)stringInMeters:(NSString *)format
@@ -125,12 +125,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_when, HVClientError_InvalidWeight);
-    HVVALIDATE(m_height, HVClientError_InvalidWeight);
+    MHVVALIDATE(m_when, MHVClientError_InvalidWeight);
+    MHVVALIDATE(m_height, MHVClientError_InvalidWeight);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer

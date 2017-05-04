@@ -41,7 +41,7 @@ static NSString* const c_element_region = @"region-of-origin";
 -(id)initWithPerson:(MHVPerson *)person andRelationship :(MHVCodableValue *)relationship 
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (person)
     {
@@ -56,7 +56,7 @@ static NSString* const c_element_region = @"region-of-origin";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -87,15 +87,15 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_relationship, HVClientError_InvalidRelative);
-    HVVALIDATE_OPTIONAL(m_person);
-    HVVALIDATE_OPTIONAL(m_dateOfBirth);
-    HVVALIDATE_OPTIONAL(m_dateOfDeath);
-    HVVALIDATE_OPTIONAL(m_regionOfOrigin);
+    MHVVALIDATE(m_relationship, MHVClientError_InvalidRelative);
+    MHVVALIDATE_OPTIONAL(m_person);
+    MHVVALIDATE_OPTIONAL(m_dateOfBirth);
+    MHVVALIDATE_OPTIONAL(m_dateOfDeath);
+    MHVVALIDATE_OPTIONAL(m_regionOfOrigin);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

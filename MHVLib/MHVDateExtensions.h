@@ -20,7 +20,7 @@
 
 const NSUInteger NSAllCalendarUnits;
 
-@interface NSDate (HVExtensions)
+@interface NSDate (MHVExtensions)
 
 -(NSString*) toString;
 -(NSString*) toStringWithFormat:(NSString*) format;
@@ -43,7 +43,7 @@ const NSUInteger NSAllCalendarUnits;
 @end
 
 
-@interface NSCalendar (HVExtensions)
+@interface NSCalendar (MHVExtensions)
 
 -(NSDateComponents *) componentsForCalendar;
 -(NSDateComponents *) getComponentsFor:(NSDate *) date;
@@ -60,7 +60,7 @@ const NSUInteger NSAllCalendarUnits;
 
 @end
 
-@interface NSDateFormatter (HVExtensions) 
+@interface NSDateFormatter (MHVExtensions) 
 
 +(NSDateFormatter *) newUtcFormatter;
 +(NSDateFormatter *) newZuluFormatter;
@@ -74,7 +74,7 @@ const NSUInteger NSAllCalendarUnits;
 
 @end
 
-@interface NSDateComponents (HVExtensions)
+@interface NSDateComponents (MHVExtensions)
 
 +(BOOL)isEqualYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2;
 +(NSComparisonResult) compareYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2;

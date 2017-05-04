@@ -19,7 +19,7 @@
 #import "MHVCommon.h"
 #import "MHVCachingObjectStore.h"
 
-@interface MHVCachingObjectStore (HVPrivate)
+@interface MHVCachingObjectStore (MHVPrivate)
 
 -(void) cacheObject:(id) obj forKey:(id) key;
 
@@ -30,12 +30,12 @@
 
 -(id)initWithObjectStore:(id<MHVObjectStore>)store
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     self = [super init];
 
     m_cache = [[NSCache alloc] init];
-    HVCHECK_NOTNULL(m_cache);
+    MHVCHECK_NOTNULL(m_cache);
     
     m_inner = store;
     
@@ -214,7 +214,7 @@
 
 @end
 
-@implementation MHVCachingObjectStore (HVPrivate)
+@implementation MHVCachingObjectStore (MHVPrivate)
 
 -(void)cacheObject:(id)obj forKey:(id)key
 {

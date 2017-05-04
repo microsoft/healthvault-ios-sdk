@@ -134,7 +134,7 @@ static MHVTypeSystem* s_typeRegistry;
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_types = [[NSMutableDictionary alloc] init];
     m_ids = [[NSMutableDictionary alloc] init];
@@ -142,7 +142,7 @@ static MHVTypeSystem* s_typeRegistry;
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -164,7 +164,7 @@ LError:
 
 -(Class) getClassForTypeID:(NSString *)type
 {
-    HVCHECK_STRING(type);
+    MHVCHECK_STRING(type);
     
     @synchronized(m_types)
     {
@@ -189,8 +189,8 @@ LError:
 
 -(BOOL) addClass:(Class)class forTypeID:(NSString *)typeID
 {
-    HVCHECK_NOTNULL(typeID);
-    HVCHECK_NOTNULL(class);
+    MHVCHECK_NOTNULL(typeID);
+    MHVCHECK_NOTNULL(class);
     
     @synchronized(m_types)
     {

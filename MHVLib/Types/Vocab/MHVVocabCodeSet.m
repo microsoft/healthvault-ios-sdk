@@ -1,5 +1,5 @@
 //
-//  HVVocabSearchResult.m
+//  MHVVocabSearchResult.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -39,7 +39,7 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
 
 -(MHVVocabItemCollection *)items
 {
-    HVENSURE(m_items, MHVVocabItemCollection);
+    MHVENSURE(m_items, MHVVocabItemCollection);
     return m_items;
 }
 
@@ -91,14 +91,14 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVVocabCodeSet class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVVocabCodeSet *)itemAtIndex:(NSUInteger)index

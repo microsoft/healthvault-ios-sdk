@@ -19,6 +19,6 @@
 
 #import "MHVItemDataTypedFactory.h"
 
-@interface MHVFile (HVFactoryMethods)
+@interface MHVFile (MHVFactoryMethods)
 
 @end

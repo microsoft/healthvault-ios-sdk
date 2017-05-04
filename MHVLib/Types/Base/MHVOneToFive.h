@@ -19,29 +19,29 @@
 #import <Foundation/Foundation.h>
 #import "MHVConstrainedInt.h"
 
-enum HVRelativeRating 
+enum MHVRelativeRating 
 {
-    HVRelativeRating_None = 0,
-    HVRelativeRating_VeryLow,
-    HVRelativeRating_Low,
-    HVRelativeRating_Moderate,
-    HVRelativeRating_High,
-    HVRelativeRating_VeryHigh
+    MHVRelativeRating_None = 0,
+    MHVRelativeRating_VeryLow,
+    MHVRelativeRating_Low,
+    MHVRelativeRating_Moderate,
+    MHVRelativeRating_High,
+    MHVRelativeRating_VeryHigh
 };
 
-NSString* stringFromRating(enum HVRelativeRating rating);
+NSString* stringFromRating(enum MHVRelativeRating rating);
 
-enum HVNormalcyRating
+enum MHVNormalcyRating
 {
-    HVNormalcy_Unknown = 0,
-    HVNormalcy_WellBelowNormal,
-    HVNormalcy_BelowNormal,
-    HVNormalcy_Normal,
-    HVNormalcy_AboveNormal,
-    HVNormalcy_WellAboveNormal
+    MHVNormalcy_Unknown = 0,
+    MHVNormalcy_WellBelowNormal,
+    MHVNormalcy_BelowNormal,
+    MHVNormalcy_Normal,
+    MHVNormalcy_AboveNormal,
+    MHVNormalcy_WellAboveNormal
 };
 
-NSString* stringFromNormalcy(enum HVNormalcyRating rating);
+NSString* stringFromNormalcy(enum MHVNormalcyRating rating);
 
 
 @interface MHVOneToFive : MHVConstrainedInt

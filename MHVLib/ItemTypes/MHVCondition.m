@@ -40,18 +40,18 @@ static NSString* const c_element_reason = @"stop-reason";
 
 -(id)initWithName:(NSString *)name
 {
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(name);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = [[MHVCodableValue alloc] initWithText:name];
-    HVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_name);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(NSString *)description
@@ -72,15 +72,15 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_name, HVClientError_InvalidCondition);
-    HVVALIDATE_OPTIONAL(m_onsetDate);
-    HVVALIDATE_OPTIONAL(m_status);
-    HVVALIDATE_OPTIONAL(m_stopDate);
-    HVVALIDATE_STRINGOPTIONAL(m_stopReason, HVClientError_InvalidCondition);
+    MHVVALIDATE(m_name, MHVClientError_InvalidCondition);
+    MHVVALIDATE_OPTIONAL(m_onsetDate);
+    MHVVALIDATE_OPTIONAL(m_status);
+    MHVVALIDATE_OPTIONAL(m_stopDate);
+    MHVVALIDATE_STRINGOPTIONAL(m_stopReason, MHVClientError_InvalidCondition);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

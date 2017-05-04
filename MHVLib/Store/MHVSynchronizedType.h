@@ -23,7 +23,7 @@
 
 //-------------------------------------------------------------------------------------------
 //
-// HVSynchronizedTypes provides simple 2-way read-write synchronization and offline work model for
+// MHVSynchronizedTypes provides simple 2-way read-write synchronization and offline work model for
 // HealthVault types.
 //
 // Each HealthVault Item Type (Weight, Blood Pressure, Medication etc.) has an equivalent
@@ -32,7 +32,7 @@
 // Each SynchronizedType is a MHVTypeView (see MHVTypeView.h).
 // Please read notes in MHVTypeView.h and MHVSyncView.h first.
 //
-// SynchronizedTypes store HVItems on the local device--in the application's LocalVault.
+// SynchronizedTypes store MHVItems on the local device--in the application's LocalVault.
 // Items are downloaded and updated as necessary.
 //
 // You can add, edit or remove item data to/from a SynchronizedType entirely OFFLINE.
@@ -63,7 +63,7 @@
 // The application can:
 //     - Commit ALL pending changes for all SynchronizedTypes in all records
 //     in the LocalVault (MHVLocalVault commitOfflineChangesWithCallback) at one go
-//     - Commit changes for a specific record (HVLocalRecodeStore commitOfflineChangesWithCallback)
+//     - Commit changes for a specific record (MHVLocalRecodeStore commitOfflineChangesWithCallback)
 //
 // *REFRESHING*
 // Refreshing a SynchronizedType is identical to refreshing a MHVTypeView.
@@ -100,10 +100,10 @@
 //
 // BROADCAST EVENT NAMES
 //
-HVDECLARE_NOTIFICATION(HVSynchronizedTypeItemsAvailableNotification);
-HVDECLARE_NOTIFICATION(HVSynchronizedTypeKeysNotAvailableNotification);
-HVDECLARE_NOTIFICATION(HVSynchronizedTypeSyncCompletedNotification);
-HVDECLARE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
+MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeItemsAvailableNotification);
+MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeKeysNotAvailableNotification);
+MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncCompletedNotification);
+MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
 //
 // Single cast notifications
 //
@@ -196,7 +196,7 @@ HVDECLARE_NOTIFICATION(HVSynchronizedTypeSyncFailedNotification);
 //
 // Returns nil if the item is already available locally
 //
--(MHVTask *) ensureItemDownloadedForKey:(MHVItemKey *) key withCallback:(HVTaskCompletion) callback;
+-(MHVTask *) ensureItemDownloadedForKey:(MHVItemKey *) key withCallback:(MHVTaskCompletion) callback;
 
 //---------------------------------------------
 //

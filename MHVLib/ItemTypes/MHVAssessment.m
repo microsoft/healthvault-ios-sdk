@@ -35,7 +35,7 @@ static NSString* const c_element_result = @"result";
 
 -(MHVAssessmentFieldCollection *)results
 {
-    HVENSURE(m_results, MHVAssessmentFieldCollection);
+    MHVENSURE(m_results, MHVAssessmentFieldCollection);
     return m_results;
 }
 
@@ -67,14 +67,14 @@ static NSString* const c_element_result = @"result";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidAssessment);
-    HVVALIDATE_STRING(m_name, HVClientError_InvalidAssessment);
-    HVVALIDATE(m_category, HVClientError_InvalidAssessment);
-    HVVALIDATE_ARRAY(m_results, HVClientError_InvalidAssessment);
+    MHVVALIDATE(m_when, MHVClientError_InvalidAssessment);
+    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidAssessment);
+    MHVVALIDATE(m_category, MHVClientError_InvalidAssessment);
+    MHVVALIDATE_ARRAY(m_results, MHVClientError_InvalidAssessment);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

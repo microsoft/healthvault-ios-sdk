@@ -33,10 +33,10 @@ static const xmlChar* x_attribute_text = XMLSTRINGCONST("text");
 
 -(id) initWithValue:(double)doubleValue andUnits:(NSString *)unitValue
 {
-    HVCHECK_STRING(unitValue);
+    MHVCHECK_STRING(unitValue);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_value = doubleValue;
     self.units = unitValue;
@@ -44,20 +44,20 @@ static const xmlChar* x_attribute_text = XMLSTRINGCONST("text");
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(m_units, HVClientError_InvalidDisplayValue);
-    HVVALIDATE_STRINGOPTIONAL(m_unitsCode, HVClientError_InvalidDisplayValue);
+    MHVVALIDATE_STRING(m_units, MHVClientError_InvalidDisplayValue);
+    MHVVALIDATE_STRINGOPTIONAL(m_unitsCode, MHVClientError_InvalidDisplayValue);
     
-    HVVALIDATE_STRINGOPTIONAL(m_text, HVClientError_InvalidDisplayValue)
+    MHVVALIDATE_STRINGOPTIONAL(m_text, MHVClientError_InvalidDisplayValue)
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serializeAttributes:(XWriter *)writer

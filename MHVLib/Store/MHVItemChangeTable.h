@@ -36,9 +36,9 @@
 -(BOOL) hasChanges;
 
 // Returns the change ID, if one was assigned
--(NSString *) trackChange:(enum HVItemChangeType) changeType forTypeID:(NSString *) typeID andKey:(MHVItemKey *) key;
+-(NSString *) trackChange:(enum MHVItemChangeType) changeType forTypeID:(NSString *) typeID andKey:(MHVItemKey *) key;
 
-// An array of HVItemChangeQueueEntry in order
+// An array of MHVItemChangeQueueEntry in order
 -(MHVItemChangeQueue *) getQueue;
 -(MHVItemChangeQueue *) getQueueForTypeID:(NSString *)typeID;
 -(NSMutableArray *) getAll;

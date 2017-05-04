@@ -37,7 +37,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void) setInKg:(double)valueInKg
 {
-    HVENSURE(m_kg, MHVPositiveDouble);
+    MHVENSURE(m_kg, MHVPositiveDouble);
     m_kg.value = valueInKg;
     
     [self updateDisplayValue:valueInKg units:@"kilogram" andUnitsCode:@"kg"];
@@ -50,7 +50,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInGrams:(double)grams
 {
-    HVENSURE(m_kg, MHVPositiveDouble);
+    MHVENSURE(m_kg, MHVPositiveDouble);
     m_kg.value = grams / 1000;
     
     [self updateDisplayValue:grams units:@"gram" andUnitsCode:@"g"];   
@@ -63,7 +63,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInMilligrams:(double)milligrams
 {
-    HVENSURE(m_kg, MHVPositiveDouble);
+    MHVENSURE(m_kg, MHVPositiveDouble);
     m_kg.value = milligrams / (1000 * 1000);
     
     [self updateDisplayValue:milligrams units:@"milligram" andUnitsCode:@"mg"];   
@@ -76,7 +76,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void) setInPounds:(double)valueInPounds
 {
-    HVENSURE(m_kg, MHVPositiveDouble);
+    MHVENSURE(m_kg, MHVPositiveDouble);
     m_kg.value = [MHVWeightMeasurement poundsToKg:valueInPounds];
 
     [self updateDisplayValue:valueInPounds units:@"pound" andUnitsCode:@"lb"];
@@ -89,7 +89,7 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 
 -(void)setInOunces:(double)ounces
 {
-    HVENSURE(m_kg, MHVPositiveDouble);
+    MHVENSURE(m_kg, MHVPositiveDouble);
     m_kg.value = [MHVWeightMeasurement poundsToKg:(ounces / 16)];
     
     [self updateDisplayValue:ounces units:@"ounce" andUnitsCode:@"oz"];
@@ -98,36 +98,36 @@ static const xmlChar* x_element_display = XMLSTRINGCONST("display");
 -(id) initWithKg:(double)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.inKg = value;
     
-    HVCHECK_NOTNULL(m_kg);
-    HVCHECK_NOTNULL(m_display);
+    MHVCHECK_NOTNULL(m_kg);
+    MHVCHECK_NOTNULL(m_display);
 
     return self;
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id) initWithPounds:(double)value
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.inPounds = value;
-    HVCHECK_NOTNULL(m_display);
+    MHVCHECK_NOTNULL(m_display);
     
     return self;
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 
 -(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
-    HVCHECK_NOTNULL(newValue);
+    MHVCHECK_NOTNULL(newValue);
     if (code)
     {
         newValue.unitsCode = code;
@@ -214,12 +214,12 @@ LError:
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_kg, HVClientError_InvalidWeightMeasurement);
-    HVVALIDATE_OPTIONAL(m_display);
+    MHVVALIDATE(m_kg, MHVClientError_InvalidWeightMeasurement);
+    MHVVALIDATE_OPTIONAL(m_display);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer

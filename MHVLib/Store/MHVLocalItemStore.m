@@ -21,7 +21,7 @@
 
 static NSString* const c_root = @"thing";
 
-@interface MHVLocalItemStore (HVPrivate)
+@interface MHVLocalItemStore (MHVPrivate)
 
 -(void) setObjectStore:(id<MHVObjectStore>) store;
 
@@ -38,17 +38,17 @@ static NSString* const c_root = @"thing";
 
 -(id)initWithObjectStore:(id<MHVObjectStore>)store
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.objectStore = store;
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -135,7 +135,7 @@ LError:
 
 @end
 
-@implementation MHVLocalItemStore (HVPrivate)
+@implementation MHVLocalItemStore (MHVPrivate)
 
 -(void)setObjectStore:(id<MHVObjectStore>)store
 {

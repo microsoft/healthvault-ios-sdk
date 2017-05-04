@@ -19,29 +19,29 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-enum HVMood 
+enum MHVMood 
 {
-    HVMoodUnknown = 0,
-    HVMoodDepressed,
-    HVMoodSad,
-    HVMoodNeutral,
-    HVMoodHappy,
-    HVMoodElated
+    MHVMoodUnknown = 0,
+    MHVMoodDepressed,
+    MHVMoodSad,
+    MHVMoodNeutral,
+    MHVMoodHappy,
+    MHVMoodElated
 };
 
-NSString* stringFromMood(enum HVMood mood);
+NSString* stringFromMood(enum MHVMood mood);
 
-enum HVWellBeing 
+enum MHVWellBeing 
 {
-    HVWellBeingUnknown = 0,
-    HVWellBeingSick,
-    HVWellBeingImpaired,
-    HVWellBeingAble,
-    HVWellBeingHealthy,
-    HVWellBeingVigorous
+    MHVWellBeingUnknown = 0,
+    MHVWellBeingSick,
+    MHVWellBeingImpaired,
+    MHVWellBeingAble,
+    MHVWellBeingHealthy,
+    MHVWellBeingVigorous
 };
 
-NSString* stringFromWellBeing(enum HVWellBeing wellBeing);
+NSString* stringFromWellBeing(enum MHVWellBeing wellBeing);
 
 @interface MHVEmotionalState : MHVItemDataTyped
 {
@@ -64,15 +64,15 @@ NSString* stringFromWellBeing(enum HVWellBeing wellBeing);
 //
 // (Optional) Mood rating - happy, depressed, sad..
 //
-@property (readwrite, nonatomic) enum HVMood mood;
+@property (readwrite, nonatomic) enum MHVMood mood;
 //
 // (Optional) A relative stress level
 //
-@property (readwrite, nonatomic) enum HVRelativeRating stress;
+@property (readwrite, nonatomic) enum MHVRelativeRating stress;
 //
 // (Optional) Sick, Healthy etc
 //
-@property (readwrite, nonatomic) enum HVWellBeing wellbeing;
+@property (readwrite, nonatomic) enum MHVWellBeing wellbeing;
 
 //-------------------------
 //

@@ -20,14 +20,14 @@
 #import "MHVLib.h"
 #import "MHVItemTestExtensions.h"
 
-@interface MHVImmunization (HVFactoryMethods)
+@interface MHVImmunization (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date;
 +(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
 
 @end
 
-@interface MHVImmunization (HVDisplay)
+@interface MHVImmunization (MHVDisplay)
 
 -(NSString *) detailsString;
 -(NSString *) detailsStringMetric;

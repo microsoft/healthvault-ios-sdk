@@ -24,10 +24,10 @@
 
 +(NSMutableDictionary *) attributesForPasswordName:(NSString *)passwordName
 {
-    HVCHECK_STRING(passwordName);
+    MHVCHECK_STRING(passwordName);
     
     NSMutableDictionary* attrib = [NSMutableDictionary dictionary];
-    HVCHECK_NOTNULL(attrib);
+    MHVCHECK_NOTNULL(attrib);
     
     [attrib setObject:passwordName forKey:(id)kSecAttrGeneric];
     [attrib setObject:passwordName forKey:(id) kSecAttrAccount];
@@ -42,7 +42,7 @@ LError:
 +(NSMutableDictionary *)queryForPasswordName:(NSString *)passwordName
 {
     NSMutableDictionary* query = [MHVKeyChain attributesForPasswordName:passwordName];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     [query setObject:(id)kSecClassGenericPassword forKey:(id)kSecClass];
     
@@ -54,7 +54,7 @@ LError:
 
 +(NSData *)runQuery:(NSMutableDictionary *)query
 {
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     [query setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];
     [query setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnData];
@@ -72,7 +72,7 @@ LError:
 +(NSData *)getPassword:(NSString *)passwordName
 {
     NSMutableDictionary* query = [MHVKeyChain queryForPasswordName:passwordName];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     return [MHVKeyChain runQuery:query];
     
@@ -103,13 +103,13 @@ LError:
     }
     
     NSMutableDictionary* query = [MHVKeyChain queryForPasswordName:passwordName];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
 
     NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
-    HVCHECK_NOTNULL(passwordData);
+    MHVCHECK_NOTNULL(passwordData);
 
     NSMutableDictionary* update = [MHVKeyChain attributesForPasswordName:passwordName];
-    HVCHECK_NOTNULL(update);
+    MHVCHECK_NOTNULL(update);
     
     [update setObject:passwordData forKey:(id)kSecValueData];
     
@@ -134,7 +134,7 @@ LError:
 +(BOOL)removePassword:(NSString *)passwordName
 {
     NSMutableDictionary* query = [MHVKeyChain queryForPasswordName:passwordName];
-    HVCHECK_NOTNULL(query);
+    MHVCHECK_NOTNULL(query);
     
     OSStatus error = SecItemDelete((CFDictionaryRef) query);
     

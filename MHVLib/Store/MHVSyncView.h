@@ -30,7 +30,7 @@
 // SyncViews implement a simple model for maintaing read-only OFFLINE/Local Storage
 // views and caches of the items in a HealthVault record.
 //
-// SyncViews automatically download and store copies of HealthVault items (HVItems) in
+// SyncViews automatically download and store copies of HealthVault items (MHVItems) in
 // your LocalVault as needed.
 // Like Database views, each SyncView has an associated Query (MHVItemQuery)
 //
@@ -38,7 +38,7 @@
 // SyncView use a simple synchronization and caching model--similar to that used by
 // HTML & RSS.
 //
-// The Query for a view defines the set of HVItems in the view.
+// The Query for a view defines the set of MHVItems in the view.
 // Each SyncView maintains a COLLECTION (array) of the KEYS (MHVItemKey) for the items in
 // the view.
 //     - The view fetches ONLY the updated set of ItemKeys when it is REFRESHED (synchronized).
@@ -124,7 +124,7 @@
 // Refresh the view. If the refresh does not start (e.g. READ-WRITE views may have pending changes)
 // then this may return NULL
 //
--(MHVTask *) refreshWithCallback:(HVTaskCompletion) callback;
+-(MHVTask *) refreshWithCallback:(MHVTaskCompletion) callback;
 
 @end
 

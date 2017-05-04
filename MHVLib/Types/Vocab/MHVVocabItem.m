@@ -49,11 +49,11 @@ static NSString* const c_element_data = @"info-xml";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(m_code, HVClientError_InvalidVocabIdentifier);
+    MHVVALIDATE_STRING(m_code, MHVClientError_InvalidVocabIdentifier);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serialize:(XWriter *)writer
@@ -79,14 +79,14 @@ static NSString* const c_element_data = @"info-xml";
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVVocabItem class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVVocabItem *)itemAtIndex:(NSUInteger)index

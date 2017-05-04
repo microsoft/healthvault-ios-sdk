@@ -48,18 +48,18 @@ static NSString* const c_element_type = @"type";
 -(id)initWithName:(NSString *)name phone:(NSString *)number andEmail:(NSString *)email
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = [[MHVName alloc] initWithFullName:name];
-    HVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_name);
     
     m_contact = [[MHVContact alloc] initWithPhone:number andEmail:email];
-    HVCHECK_NOTNULL(m_contact);
+    MHVCHECK_NOTNULL(m_contact);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initWithFirstName:(NSString *)first lastName:(NSString *)last andEmail:(NSString *)email
@@ -75,18 +75,18 @@ LError:
 -(id)initWithFirstName:(NSString *)first lastName:(NSString *)last phone:(NSString *)phone andEmail:(NSString *)email
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = [[MHVName alloc] initWithFirst:first andLastName:last];
-    HVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_name);
     
     m_contact = [[MHVContact alloc] initWithPhone:phone andEmail:email];
-    HVCHECK_NOTNULL(m_contact);
+    MHVCHECK_NOTNULL(m_contact);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -107,12 +107,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_name, HVClientError_InvalidPerson);
-    HVVALIDATE_OPTIONAL(m_contact);
+    MHVVALIDATE(m_name, MHVClientError_InvalidPerson);
+    MHVVALIDATE_OPTIONAL(m_contact);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

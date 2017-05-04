@@ -43,11 +43,11 @@ NSString* const c_usdaFamily = @"usda";
 
 -(id)initWithFamily:(NSString *)family andName:(NSString *)name
 {
-    HVCHECK_STRING(family);
-    HVCHECK_STRING(name);
+    MHVCHECK_STRING(family);
+    MHVCHECK_STRING(name);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.family = family;
     self.name = name;
@@ -55,13 +55,13 @@ NSString* const c_usdaFamily = @"usda";
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
 -(MHVCodedValue *)codedValueForItem:(MHVVocabItem *)vocabItem
 {
-    HVCHECK_NOTNULL(vocabItem);
+    MHVCHECK_NOTNULL(vocabItem);
     
     return [[MHVCodedValue alloc] initWithCode:vocabItem.code vocab:m_name vocabFamily:m_family vocabVersion:m_version];
     
@@ -71,7 +71,7 @@ LError:
 
 -(MHVCodedValue *)codedValueForCode:(NSString *)code
 {
-    HVCHECK_STRING(code);
+    MHVCHECK_STRING(code);
     
     return [[MHVCodedValue alloc] initWithCode:code vocab:m_name vocabFamily:m_family vocabVersion:m_version];
 LError:
@@ -81,10 +81,10 @@ LError:
 -(MHVCodableValue *)codableValueForText:(NSString *)text andCode:(NSString *)code
 {
     MHVCodableValue* codable = [MHVCodableValue fromText:text];
-    HVCHECK_NOTNULL(codable);
+    MHVCHECK_NOTNULL(codable);
     
     MHVCodedValue* codedValue = [self codedValueForCode:code];
-    HVCHECK_NOTNULL(codedValue);
+    MHVCHECK_NOTNULL(codedValue);
     
     [codable addCode:codedValue];
     
@@ -117,11 +117,11 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE_STRING(m_name, HVClientError_InvalidVocabIdentifier);
+    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidVocabIdentifier);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void)serializeAttributes:(XWriter *)writer
@@ -157,14 +157,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVVocabIdentifier class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 @end

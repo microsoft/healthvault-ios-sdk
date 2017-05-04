@@ -21,7 +21,7 @@
 #import "MHVCachingObjectStore.h"
 #import "MHVSynchronizedType.h"
 
-@interface MHVSynchronizationManager (HVPrivate)
+@interface MHVSynchronizationManager (MHVPrivate)
 
 -(void) releaseReferences;
 -(BOOL) setupDataStoreWithCache:(BOOL)useCache;
@@ -42,26 +42,26 @@
 
 -(id)initForRecordStore:(MHVLocalRecordStore *)store withCache:(BOOL)cache
 {
-    HVCHECK_NOTNULL(store);
+    MHVCHECK_NOTNULL(store);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_store = store;
     
-    HVCHECK_SUCCESS([self setupDataStoreWithCache:cache]);
+    MHVCHECK_SUCCESS([self setupDataStoreWithCache:cache]);
     
     m_changeManager = [[MHVItemChangeManager alloc] initOverStore:store.root forRecord:store.record andData:m_data];
-    HVCHECK_NOTNULL(m_changeManager);
+    MHVCHECK_NOTNULL(m_changeManager);
     m_changeManager.syncMgr = self;
     
     m_syncTypes = [[NSMutableDictionary alloc] init];
-    HVCHECK_NOTNULL(m_syncTypes);
+    MHVCHECK_NOTNULL(m_syncTypes);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;    
+    MHVALLOC_FAIL;    
 }
 
 -(void)dealloc
@@ -93,7 +93,7 @@ LError:
     return [m_changeManager hasPendingChanges];
 }
 
--(MHVTask *)commitPendingChangesWithCallback:(HVTaskCompletion)callback
+-(MHVTask *)commitPendingChangesWithCallback:(MHVTaskCompletion)callback
 {
     return [m_changeManager commitChangesWithCallback:callback];
 }
@@ -106,7 +106,7 @@ LError:
 
 -(MHVSynchronizedType *)getTypeForTypeID:(NSString *)typeID
 {
-    HVCHECK_STRING(typeID);
+    MHVCHECK_STRING(typeID);
     
     return [self ensureTypeForTypeID:typeID];
 
@@ -129,12 +129,12 @@ LError:
     return [[m_data getLocalItemWithKey:key] newDeepClone];
 }
 
--(MHVDownloadItemsTask *)downloadItemWithKey:(MHVItemKey *)key withCallback:(HVTaskCompletion)callback
+-(MHVDownloadItemsTask *)downloadItemWithKey:(MHVItemKey *)key withCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
     MHVItemKeyCollection* keys = [[MHVItemKeyCollection alloc] initWithKey:key];
-    HVCHECK_NOTNULL(keys);
+    MHVCHECK_NOTNULL(keys);
     
     return [m_data downloadItemsInRecord:self.record forKeys:keys callback:callback];
     
@@ -144,10 +144,10 @@ LError:
 
 -(BOOL)putNewItem:(MHVItem *)item
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
-    HVCHECK_SUCCESS([item setKeyToNew]);
-    HVCHECK_SUCCESS([item ensureEffectiveDate]);
+    MHVCHECK_SUCCESS([item setKeyToNew]);
+    MHVCHECK_SUCCESS([item ensureEffectiveDate]);
 
     MHVAutoLock* lock = [self newLockForItemKey:item.key];
     if (lock)
@@ -163,15 +163,15 @@ LError:
 
 -(BOOL)putItem:(MHVItem *)item itemLock:(MHVAutoLock *)lock
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
-    HVCHECK_SUCCESS([m_changeManager.locks validateLock:lock]);
+    MHVCHECK_SUCCESS([m_changeManager.locks validateLock:lock]);
 
     item.effectiveDate = nil;
     [item ensureEffectiveDate];
     
-    HVCHECK_SUCCESS([m_changeManager trackPut:item]);
-    HVCHECK_SUCCESS([m_data.localStore putItem:item]);
+    MHVCHECK_SUCCESS([m_changeManager trackPut:item]);
+    MHVCHECK_SUCCESS([m_data.localStore putItem:item]);
     
     return TRUE;
     
@@ -181,7 +181,7 @@ LError:
 
 -(BOOL)removeItem:(MHVItem *)item itemLock:(MHVAutoLock *)lock
 {
-    HVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(item);
     
     return [self removeItemWithTypeID:item.typeID key:item.key itemLock:lock];
     
@@ -191,12 +191,12 @@ LError:
 
 -(BOOL)removeItemWithTypeID:(NSString *)typeID key:(MHVItemKey *)key itemLock:(MHVAutoLock *)lock
 {
-    HVCHECK_NOTNULL(key);
+    MHVCHECK_NOTNULL(key);
     
-    HVCHECK_SUCCESS([m_changeManager.locks validateLock:lock]);
+    MHVCHECK_SUCCESS([m_changeManager.locks validateLock:lock]);
     
     [m_data.localStore removeItem:key.itemID];
-    HVCHECK_SUCCESS([m_changeManager trackRemoveForTypeID:typeID andItemKey:key]);
+    MHVCHECK_SUCCESS([m_changeManager trackRemoveForTypeID:typeID andItemKey:key]);
     
     return TRUE;
     
@@ -227,7 +227,7 @@ LError:
 
 -(BOOL)applyChangeCommitSuccess:(MHVItemChange *)change itemLock:(MHVAutoLock *)lock
 {
-    if (change.changeType != HVItemChangeTypePut)
+    if (change.changeType != MHVItemChangeTypePut)
     {
         return TRUE;
     }
@@ -268,7 +268,7 @@ LError:
 
 @end
 
-@implementation MHVSynchronizationManager (HVPrivate)
+@implementation MHVSynchronizationManager (MHVPrivate)
 
 -(void)releaseReferences
 {
@@ -289,19 +289,19 @@ LError:
 -(BOOL) setupDataStoreWithCache:(BOOL)useCache
 {
     id<MHVObjectStore> dataStore = [m_store.root newChildStore:[MHVSynchronizationManager dataStoreKey]];
-    HVCHECK_NOTNULL(dataStore);
+    MHVCHECK_NOTNULL(dataStore);
     
     if (useCache)
     {
         id<MHVObjectStore> cachingDataStore = [[MHVCachingObjectStore alloc] initWithObjectStore:dataStore];
-        HVCHECK_NOTNULL(cachingDataStore);
+        MHVCHECK_NOTNULL(cachingDataStore);
         
         dataStore = cachingDataStore;
     }
     
     m_data = [[MHVSynchronizedStore alloc] initOverStore:dataStore];
     
-    HVCHECK_NOTNULL(m_data);
+    MHVCHECK_NOTNULL(m_data);
     m_data.syncMgr = self;
     
     return TRUE;
@@ -323,7 +323,7 @@ LError:
         if (!type)
         {
             type = [[MHVSynchronizedType alloc] initForTypeID:typeID withMgr:self];
-            HVCHECK_NOTNULL(type);
+            MHVCHECK_NOTNULL(type);
             
             [m_syncTypes setObject:type forKey:typeID];
             [type endContentAccess];  // To ensure that the cache can remove this object's content

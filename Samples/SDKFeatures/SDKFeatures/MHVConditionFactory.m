@@ -18,7 +18,7 @@
 
 #import "MHVConditionFactory.h"
 
-@implementation MHVCondition (HVFactoryMethods)
+@implementation MHVCondition (MHVFactoryMethods)
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date
 {

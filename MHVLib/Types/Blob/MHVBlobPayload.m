@@ -25,7 +25,7 @@ static NSString* const c_element_blob = @"blob";
 
 -(MHVBlobPayloadItemCollection *) items
 {
-    HVENSURE(m_blobItems, MHVBlobPayloadItemCollection);
+    MHVENSURE(m_blobItems, MHVBlobPayloadItemCollection);
     return m_blobItems;
 }
 
@@ -63,7 +63,7 @@ static NSString* const c_element_blob = @"blob";
 
 -(BOOL)addOrUpdateBlob:(MHVBlobPayloadItem *)blob
 {
-    HVCHECK_NOTNULL(blob);
+    MHVCHECK_NOTNULL(blob);
     
     if (m_blobItems)
     {
@@ -74,8 +74,8 @@ static NSString* const c_element_blob = @"blob";
         }
     }
     
-    HVENSURE(m_blobItems, MHVBlobPayloadItemCollection);
-    HVCHECK_NOTNULL(m_blobItems);
+    MHVENSURE(m_blobItems, MHVBlobPayloadItemCollection);
+    MHVCHECK_NOTNULL(m_blobItems);
     
     [m_blobItems addObject:blob];
     
@@ -87,11 +87,11 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_ARRAY(m_blobItems, HVClientError_InvalidBlobInfo);
+    MHVVALIDATE_ARRAY(m_blobItems, MHVClientError_InvalidBlobInfo);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

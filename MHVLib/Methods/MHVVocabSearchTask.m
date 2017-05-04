@@ -1,5 +1,5 @@
 //
-//  HVSearchVocabTask.m
+//  MHVSearchVocabTask.m
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -43,22 +43,22 @@ static NSString* const c_element_params = @"text-search-parameters";
     return results.hasMatches ? results.match : nil;
 }
 
--(id)initWithVocab:(MHVVocabIdentifier *)vocab searchText:(NSString *)text andCallback:(HVTaskCompletion)callback
+-(id)initWithVocab:(MHVVocabIdentifier *)vocab searchText:(NSString *)text andCallback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(vocab);
+    MHVCHECK_NOTNULL(vocab);
     
     self = [super initWithCallback:callback];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.vocabID = vocab;
     
     m_params = [[MHVVocabSearchParams alloc] initWithText:text];
-    HVCHECK_NOTNULL(m_params);
+    MHVCHECK_NOTNULL(m_params);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -76,10 +76,10 @@ LError:
     return [super deserializeResponseBodyFromReader:reader asClass:[MHVVocabSearchResults class]];
 }
 
-+(MHVVocabSearchTask *)searchForText:(NSString *)text inVocabFamily:(NSString *)family vocabName:(NSString *)name callback:(HVTaskCompletion)callback
++(MHVVocabSearchTask *)searchForText:(NSString *)text inVocabFamily:(NSString *)family vocabName:(NSString *)name callback:(MHVTaskCompletion)callback
 {
     MHVVocabIdentifier* vocab = [[MHVVocabIdentifier alloc] initWithFamily:family andName:name];
-    HVCHECK_NOTNULL(vocab);
+    MHVCHECK_NOTNULL(vocab);
     
     MHVVocabSearchTask* searchTask = [MHVVocabSearchTask searchForText:text inVocab:vocab callback:callback];
     
@@ -89,12 +89,12 @@ LError:
     return nil;
 }
 
-+(MHVVocabSearchTask *)searchForText:(NSString *)text inVocab:(MHVVocabIdentifier *)vocab callback:(HVTaskCompletion)callback
++(MHVVocabSearchTask *)searchForText:(NSString *)text inVocab:(MHVVocabIdentifier *)vocab callback:(MHVTaskCompletion)callback
 {
-    HVCHECK_NOTNULL(vocab);
+    MHVCHECK_NOTNULL(vocab);
     
     MHVVocabSearchTask* searchTask = [[MHVVocabSearchTask alloc] initWithVocab:vocab searchText:text andCallback:callback];
-    HVCHECK_NOTNULL(searchTask);
+    MHVCHECK_NOTNULL(searchTask);
     
     [searchTask start];    
     
@@ -104,7 +104,7 @@ LError:
     return nil;    
 }
 
-+(MHVVocabSearchTask *)searchMedications:(NSString *)text callback:(HVTaskCompletion)callback
++(MHVVocabSearchTask *)searchMedications:(NSString *)text callback:(MHVTaskCompletion)callback
 {
     return [MHVVocabSearchTask searchForText:text inVocabFamily:@"RxNorm" vocabName:@"RxNorm Active Medicines" callback:callback];
 }

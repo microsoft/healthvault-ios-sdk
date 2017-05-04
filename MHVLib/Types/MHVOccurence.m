@@ -30,33 +30,33 @@ static NSString* const c_element_minutes = @"minutes";
 
 -(id)initForDuration:(int)minutes startingAt:(MHVTime *)time
 {
-    HVCHECK_NOTNULL(time);
+    MHVCHECK_NOTNULL(time);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.when = time;
     
     m_minutes = [[MHVNonNegativeInt alloc] initWith:minutes];
-    HVCHECK_NOTNULL(m_minutes);
+    MHVCHECK_NOTNULL(m_minutes);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(id)initForDuration:(int)minutes startingAtHour:(int)hour andMinute:(int)minute
 {
     MHVTime* time = [[MHVTime alloc] initWithHour:hour minute:minute];
-    HVCHECK_NOTNULL(time);
+    MHVCHECK_NOTNULL(time);
     
     self = [self initForDuration:minutes startingAt:time];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 +(MHVOccurence *)forDuration:(int)minutes atHour:(int)hour andMinute:(int)minute
@@ -66,12 +66,12 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidOccurrence);
-    HVVALIDATE(m_minutes, HVClientError_InvalidOccurrence);
+    MHVVALIDATE(m_when, MHVClientError_InvalidOccurrence);
+    MHVVALIDATE(m_minutes, MHVClientError_InvalidOccurrence);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
@@ -93,14 +93,14 @@ LError:
 -(id)init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVOccurence class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVOccurence *)itemAtIndex:(NSUInteger)index

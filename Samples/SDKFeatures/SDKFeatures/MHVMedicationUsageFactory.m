@@ -18,7 +18,7 @@
 
 #import "MHVMedicationUsageFactory.h"
 
-@implementation MHVDailyMedicationUsage (HVFactoryMethods)
+@implementation MHVDailyMedicationUsage (MHVFactoryMethods)
 
 +(MHVItemCollection *)createRandomForDay:(NSDate *)date
 {
@@ -49,7 +49,7 @@
 
 @end
 
-@implementation MHVDailyMedicationUsage (HVDisplay)
+@implementation MHVDailyMedicationUsage (MHVDisplay)
 
 -(NSString *)detailsString
 {

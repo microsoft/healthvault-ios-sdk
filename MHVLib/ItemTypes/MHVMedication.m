@@ -56,15 +56,15 @@ static NSString* const c_element_prescription = @"prescription";
 -(id)initWithName:(NSString *)name
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_name = [[MHVCodableValue alloc] initWithText:name];
-    HVCHECK_NOTNULL(m_name);
+    MHVCHECK_NOTNULL(m_name);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -105,21 +105,21 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
 
-    HVVALIDATE(m_name, HVClientError_InvalidMedication);
-    HVVALIDATE_OPTIONAL(m_genericName);
-    HVVALIDATE_OPTIONAL(m_dose);
-    HVVALIDATE_OPTIONAL(m_strength);
-    HVVALIDATE_OPTIONAL(m_freq);
-    HVVALIDATE_OPTIONAL(m_route);
-    HVVALIDATE_OPTIONAL(m_indication);
-    HVVALIDATE_OPTIONAL(m_startDate);
-    HVVALIDATE_OPTIONAL(m_stopDate);
-    HVVALIDATE_OPTIONAL(m_prescribed);
-    HVVALIDATE_OPTIONAL(m_prescription);
+    MHVVALIDATE(m_name, MHVClientError_InvalidMedication);
+    MHVVALIDATE_OPTIONAL(m_genericName);
+    MHVVALIDATE_OPTIONAL(m_dose);
+    MHVVALIDATE_OPTIONAL(m_strength);
+    MHVVALIDATE_OPTIONAL(m_freq);
+    MHVVALIDATE_OPTIONAL(m_route);
+    MHVVALIDATE_OPTIONAL(m_indication);
+    MHVVALIDATE_OPTIONAL(m_startDate);
+    MHVVALIDATE_OPTIONAL(m_stopDate);
+    MHVVALIDATE_OPTIONAL(m_prescribed);
+    MHVVALIDATE_OPTIONAL(m_prescription);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

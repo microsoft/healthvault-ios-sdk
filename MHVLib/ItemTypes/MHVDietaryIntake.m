@@ -150,51 +150,51 @@ static const xmlChar* x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_foodItem, HVClientError_InvalidDietaryIntake);
-    HVVALIDATE_OPTIONAL(m_servingSize);
-    HVVALIDATE_OPTIONAL(m_servingsConsumed);
-    HVVALIDATE_OPTIONAL(m_meal);
-    HVVALIDATE_OPTIONAL(m_when);
+    MHVVALIDATE(m_foodItem, MHVClientError_InvalidDietaryIntake);
+    MHVVALIDATE_OPTIONAL(m_servingSize);
+    MHVVALIDATE_OPTIONAL(m_servingsConsumed);
+    MHVVALIDATE_OPTIONAL(m_meal);
+    MHVVALIDATE_OPTIONAL(m_when);
     
-    HVVALIDATE_OPTIONAL(m_calories);
-    HVVALIDATE_OPTIONAL(m_caloriesFromFat);
-    HVVALIDATE_OPTIONAL(m_totalFat);
-    HVVALIDATE_OPTIONAL(m_saturatedFat);
-    HVVALIDATE_OPTIONAL(m_transFat);
-    HVVALIDATE_OPTIONAL(m_monoUnsaturatedFat);
-    HVVALIDATE_OPTIONAL(m_polyUnsaturatedFat);
+    MHVVALIDATE_OPTIONAL(m_calories);
+    MHVVALIDATE_OPTIONAL(m_caloriesFromFat);
+    MHVVALIDATE_OPTIONAL(m_totalFat);
+    MHVVALIDATE_OPTIONAL(m_saturatedFat);
+    MHVVALIDATE_OPTIONAL(m_transFat);
+    MHVVALIDATE_OPTIONAL(m_monoUnsaturatedFat);
+    MHVVALIDATE_OPTIONAL(m_polyUnsaturatedFat);
     
-    HVVALIDATE_OPTIONAL(m_protein);
-    HVVALIDATE_OPTIONAL(m_carbs);
-    HVVALIDATE_OPTIONAL(m_fiber);
-    HVVALIDATE_OPTIONAL(m_sugar);
-    HVVALIDATE_OPTIONAL(m_sodium);
-    HVVALIDATE_OPTIONAL(m_cholesterol);
+    MHVVALIDATE_OPTIONAL(m_protein);
+    MHVVALIDATE_OPTIONAL(m_carbs);
+    MHVVALIDATE_OPTIONAL(m_fiber);
+    MHVVALIDATE_OPTIONAL(m_sugar);
+    MHVVALIDATE_OPTIONAL(m_sodium);
+    MHVVALIDATE_OPTIONAL(m_cholesterol);
     
-    HVVALIDATE_OPTIONAL(m_calcium);
-    HVVALIDATE_OPTIONAL(m_iron);
-    HVVALIDATE_OPTIONAL(m_magnesium);
-    HVVALIDATE_OPTIONAL(m_phosphorus);
-    HVVALIDATE_OPTIONAL(m_potassium);
-    HVVALIDATE_OPTIONAL(m_zinc);
+    MHVVALIDATE_OPTIONAL(m_calcium);
+    MHVVALIDATE_OPTIONAL(m_iron);
+    MHVVALIDATE_OPTIONAL(m_magnesium);
+    MHVVALIDATE_OPTIONAL(m_phosphorus);
+    MHVVALIDATE_OPTIONAL(m_potassium);
+    MHVVALIDATE_OPTIONAL(m_zinc);
     
-    HVVALIDATE_OPTIONAL(m_vitaminA);
-    HVVALIDATE_OPTIONAL(m_vitaminE);
-    HVVALIDATE_OPTIONAL(m_vitaminD);
-    HVVALIDATE_OPTIONAL(m_vitaminC);
-    HVVALIDATE_OPTIONAL(m_thiamin);
-    HVVALIDATE_OPTIONAL(m_riboflavin);
-    HVVALIDATE_OPTIONAL(m_niacin);
-    HVVALIDATE_OPTIONAL(m_vitaminB6);
-    HVVALIDATE_OPTIONAL(m_folate);
-    HVVALIDATE_OPTIONAL(m_vitaminB12);
-    HVVALIDATE_OPTIONAL(m_vitaminK);
+    MHVVALIDATE_OPTIONAL(m_vitaminA);
+    MHVVALIDATE_OPTIONAL(m_vitaminE);
+    MHVVALIDATE_OPTIONAL(m_vitaminD);
+    MHVVALIDATE_OPTIONAL(m_vitaminC);
+    MHVVALIDATE_OPTIONAL(m_thiamin);
+    MHVVALIDATE_OPTIONAL(m_riboflavin);
+    MHVVALIDATE_OPTIONAL(m_niacin);
+    MHVVALIDATE_OPTIONAL(m_vitaminB6);
+    MHVVALIDATE_OPTIONAL(m_folate);
+    MHVVALIDATE_OPTIONAL(m_vitaminB12);
+    MHVVALIDATE_OPTIONAL(m_vitaminK);
     
-    HVVALIDATE_OPTIONAL(m_additionalFacts);
+    MHVVALIDATE_OPTIONAL(m_additionalFacts);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)deserialize:(XReader *)reader

@@ -32,12 +32,12 @@ static const xmlChar* x_element_edate = XMLSTRINGCONST("eff-date");
 
 -(MHVClientResult *) validate
 {
-    HVVALIDATE_BEGIN;
+    MHVVALIDATE_BEGIN;
     
-    HVVALIDATE(m_id, HVClientError_InvalidPendingItem);
-    HVVALIDATE_OPTIONAL(m_type);
+    MHVVALIDATE(m_id, MHVClientError_InvalidPendingItem);
+    MHVVALIDATE_OPTIONAL(m_type);
     
-    HVVALIDATE_SUCCESS;
+    MHVVALIDATE_SUCCESS;
 }
 
 -(void) serialize:(XWriter *)writer
@@ -61,14 +61,14 @@ static const xmlChar* x_element_edate = XMLSTRINGCONST("eff-date");
 -(id) init
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     self.type = [MHVPendingItem class];
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 @end

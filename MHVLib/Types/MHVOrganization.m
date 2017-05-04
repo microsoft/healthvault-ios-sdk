@@ -44,14 +44,14 @@ static NSString* const c_element_site = @"website";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_STRING(m_name, HVClientError_InvalidOrganization);
-    HVVALIDATE_OPTIONAL(m_contact);
-    HVVALIDATE_OPTIONAL(m_type);
-    HVVALIDATE_STRINGOPTIONAL(m_webSite, HVClientError_InvalidOrganization);
+    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidOrganization);
+    MHVVALIDATE_OPTIONAL(m_contact);
+    MHVVALIDATE_OPTIONAL(m_type);
+    MHVVALIDATE_STRINGOPTIONAL(m_webSite, MHVClientError_InvalidOrganization);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

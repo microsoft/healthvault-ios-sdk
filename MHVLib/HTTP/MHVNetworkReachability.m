@@ -20,14 +20,14 @@
 #import "MHVCommon.h"
 #import "MHVNetworkReachability.h"
 
-HVDEFINE_NOTIFICATION(HVHostReachabilityNotificationName);
+MHVDEFINE_NOTIFICATION(MHVHostReachabilityNotificationName);
 
-BOOL HVIsHostNetworkReachable(NSString* hostName)
+BOOL MHVIsHostNetworkReachable(NSString* hostName)
 {
-    HVCHECK_NOTNULL(hostName);
+    MHVCHECK_NOTNULL(hostName);
     
     const char* szHostName = [hostName cStringUsingEncoding:NSUTF8StringEncoding]; // buffer is owned by NSString
-    HVCHECK_NOTNULL(szHostName);
+    MHVCHECK_NOTNULL(szHostName);
     
     SCNetworkReachabilityRef hostRef = SCNetworkReachabilityCreateWithName(NULL, szHostName);
     SCNetworkReachabilityFlags networkFlags;
@@ -35,7 +35,7 @@ BOOL HVIsHostNetworkReachable(NSString* hostName)
     BOOL result = SCNetworkReachabilityGetFlags(hostRef, &networkFlags);
     CFRelease(hostRef);
     
-    HVCHECK_TRUE(result);
+    MHVCHECK_TRUE(result);
     
     return ((networkFlags & kSCNetworkFlagsReachable) != 0 &&
             (networkFlags & kSCNetworkFlagsConnectionRequired) == 0
@@ -61,7 +61,7 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     }
 }
 
-@interface MHVHostReachability (HVPrivate)
+@interface MHVHostReachability (MHVPrivate)
 
 -(BOOL) enableNotifications:(BOOL) enable;
 -(BOOL) enableCallback:(BOOL) enable;
@@ -87,25 +87,23 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
 
 -(id)initWithHostName:(NSString *)hostName
 {
-    HVCHECK_STRING(hostName);
+    MHVCHECK_STRING(hostName);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_hostName = hostName;
 
     const char* szHostName = [hostName cStringUsingEncoding:NSUTF8StringEncoding]; // buffer is owned by NSString
-    HVCHECK_NOTNULL(szHostName);
+    MHVCHECK_NOTNULL(szHostName);
     
     m_hostRef = SCNetworkReachabilityCreateWithName(NULL, szHostName);
-    HVCHECK_NOTNULL(m_hostRef);
+    MHVCHECK_NOTNULL(m_hostRef);
     
     m_status = kSCNetworkFlagsReachable; // Assume the best
     m_isMonitoring = FALSE;
     
     return self;
-LError:
-    HVALLOC_FAIL;
 }
 
 -(void)dealloc
@@ -139,8 +137,8 @@ LError:
     
     [self refreshStatus];
     
-    HVCHECK_SUCCESS([self enableCallback:TRUE]);
-    HVCHECK_SUCCESS([self enableNotifications:TRUE]);
+    MHVCHECK_SUCCESS([self enableCallback:TRUE]);
+    MHVCHECK_SUCCESS([self enableNotifications:TRUE]);
     
     m_isMonitoring = TRUE;
     
@@ -157,8 +155,8 @@ LError:
         return TRUE;
     }
     
-    HVCHECK_SUCCESS([self enableNotifications:FALSE]);
-    HVCHECK_SUCCESS([self enableCallback:FALSE]);
+    MHVCHECK_SUCCESS([self enableNotifications:FALSE]);
+    MHVCHECK_SUCCESS([self enableCallback:FALSE]);
     
     m_isMonitoring = FALSE;
     
@@ -179,7 +177,7 @@ LError:
     if (shouldNotify)
     {
         [[NSNotificationCenter defaultCenter]
-         postNotificationName: HVHostReachabilityNotificationName
+         postNotificationName: MHVHostReachabilityNotificationName
          object:self
          ];
     }
@@ -190,7 +188,7 @@ LError:
     [[NSNotificationCenter defaultCenter]
      addObserver:notificationObserver
      selector:notificationSelector
-     name:HVHostReachabilityNotificationName
+     name:MHVHostReachabilityNotificationName
      object:self];
 }
 
@@ -198,13 +196,13 @@ LError:
 {
     [[NSNotificationCenter defaultCenter]
      removeObserver:notificationObserver
-     name:HVHostReachabilityNotificationName
+     name:MHVHostReachabilityNotificationName
      object:self];
 }
 
 @end
 
-@implementation MHVHostReachability (HVPrivate)
+@implementation MHVHostReachability (MHVPrivate)
 
 -(BOOL)enableCallback:(BOOL)enable
 {

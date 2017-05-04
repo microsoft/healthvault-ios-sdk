@@ -34,7 +34,7 @@ static NSString* const c_element_answer = @"answer";
 
 -(MHVCodableValueCollection *)answerChoices
 {
-    HVENSURE(m_answerChoices, MHVCodableValueCollection);
+    MHVENSURE(m_answerChoices, MHVCodableValueCollection);
     return m_answerChoices;
 }
 
@@ -45,7 +45,7 @@ static NSString* const c_element_answer = @"answer";
 
 -(MHVCodableValueCollection *)answers
 {
-    HVENSURE(m_answers, MHVCodableValueCollection);
+    MHVENSURE(m_answers, MHVCodableValueCollection);
     return m_answers;
 }
 
@@ -77,31 +77,31 @@ static NSString* const c_element_answer = @"answer";
 
 -(id)initWithQuestion:(NSString *)question answer:(NSString *)answer andDate:(NSDate *)date
 {
-    HVCHECK_NOTNULL(question);
-    HVCHECK_NOTNULL(date);
+    MHVCHECK_NOTNULL(question);
+    MHVCHECK_NOTNULL(date);
     
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     m_when = [[MHVDateTime alloc] initWithDate:date];
-    HVCHECK_NOTNULL(m_when);
+    MHVCHECK_NOTNULL(m_when);
     
     m_question = [[MHVCodableValue alloc] initWithText:question];
-    HVCHECK_NOTNULL(m_question);
+    MHVCHECK_NOTNULL(m_question);
     
     if (answer)
     {
         MHVCodableValue* answerValue = [[MHVCodableValue alloc] initWithText:answer];
-        HVCHECK_NOTNULL(answerValue);
+        MHVCHECK_NOTNULL(answerValue);
         
         [self.answers addObject:answerValue];
-        HVCHECK_NOTNULL(m_answers);
+        MHVCHECK_NOTNULL(m_answers);
     }
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 
@@ -130,14 +130,14 @@ LError:
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE(m_when, HVClientError_InvalidQuestionAnswer);
-    HVVALIDATE(m_question, HVClientError_InvalidQuestionAnswer);
-    HVVALIDATE_ARRAYOPTIONAL(m_answerChoices, HVClientError_InvalidQuestionAnswer);
-    HVVALIDATE_ARRAYOPTIONAL(m_answers, HVClientError_InvalidQuestionAnswer);
+    MHVVALIDATE(m_when, MHVClientError_InvalidQuestionAnswer);
+    MHVVALIDATE(m_question, MHVClientError_InvalidQuestionAnswer);
+    MHVVALIDATE_ARRAYOPTIONAL(m_answerChoices, MHVClientError_InvalidQuestionAnswer);
+    MHVVALIDATE_ARRAYOPTIONAL(m_answers, MHVClientError_InvalidQuestionAnswer);
     
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer

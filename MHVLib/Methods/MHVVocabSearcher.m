@@ -42,7 +42,7 @@
 -(id)initWithCache:(NSCache *)cache
 {
     self = [super init];
-    HVCHECK_SELF;
+    MHVCHECK_SELF;
     
     if (!cache)
     {
@@ -53,12 +53,12 @@
         m_cache = cache;
     }
     
-    HVCHECK_NOTNULL(m_cache);
+    MHVCHECK_NOTNULL(m_cache);
     
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
    
 }
 
@@ -107,7 +107,7 @@ LError:
     
     if (![self hasCachedResultsForSearch:searchText])
     {
-        HVENSURE(m_emptySet, MHVVocabCodeSet);
+        MHVENSURE(m_emptySet, MHVVocabCodeSet);
         [self cacheResults:m_emptySet forSearch:searchText];
     }
 }
@@ -119,7 +119,7 @@ LError:
 
 @end
 
-@interface MHVVocabSearcher (HVPrivate)
+@interface MHVVocabSearcher (MHVPrivate)
 
 -(void) searchComplete:(MHVVocabSearchTask *) task forString:(NSString *) searchText seqNumber:(NSUInteger) seq;
 -(void) notifySearchComplete:(MHVVocabCodeSet *) results forSearch:(NSString *) searchText seqNumber:(NSUInteger) seq;
@@ -151,7 +151,7 @@ LError:
 
 -(MHVVocabSearchCache *)cache
 {
-    HVENSURE(m_cache, MHVVocabSearchCache);
+    MHVENSURE(m_cache, MHVVocabSearchCache);
     return m_cache;
 }
 
@@ -164,7 +164,7 @@ LError:
     else 
     {
         m_cache = nil;
-        HVENSURE(m_cache, MHVVocabSearchCache);
+        MHVENSURE(m_cache, MHVVocabSearchCache);
     }
 }
 
@@ -175,7 +175,7 @@ LError:
 
 -(id)initWithVocab:(MHVVocabIdentifier *)vocab andMaxResults:(int)max
 {
-    HVCHECK_NOTNULL(vocab);
+    MHVCHECK_NOTNULL(vocab);
     
     m_vocab = vocab;
     m_maxResults = max;
@@ -183,7 +183,7 @@ LError:
     return self;
     
 LError:
-    HVALLOC_FAIL;
+    MHVALLOC_FAIL;
 }
 
 -(MHVVocabSearchTask *)searchFor:(NSString *)text
@@ -217,7 +217,7 @@ LError:
 
 @end
 
-@implementation MHVVocabSearcher (HVPrivate)
+@implementation MHVVocabSearcher (MHVPrivate)
 
 -(void)searchComplete:(MHVVocabSearchTask *)task forString:(NSString *)searchText seqNumber:(NSUInteger)seq
 {    

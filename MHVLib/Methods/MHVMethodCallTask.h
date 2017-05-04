@@ -1,5 +1,5 @@
 //
-//  HVMethodCall.h
+//  MHVMethodCall.h
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -42,7 +42,7 @@
 @property (readwrite, nonatomic, strong) MHVRecordReference* record;
 @property (readwrite, nonatomic) BOOL useMasterAppID;
 
--(id) initWithCallback:(HVTaskCompletion) callback;
+-(id) initWithCallback:(MHVTaskCompletion) callback;
 
 -(void) validateObject:(id) obj;
 

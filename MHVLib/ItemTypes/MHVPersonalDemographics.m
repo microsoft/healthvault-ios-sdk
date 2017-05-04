@@ -83,23 +83,23 @@ static NSString* const c_element_donor = @"organ-donor";
 
 -(MHVClientResult *)validate
 {
-    HVVALIDATE_BEGIN
+    MHVVALIDATE_BEGIN
     
-    HVVALIDATE_OPTIONAL(m_name);
-    HVVALIDATE_OPTIONAL(m_birthdate);
-    HVVALIDATE_OPTIONAL(m_bloodType);
-    HVVALIDATE_OPTIONAL(m_ethnicity);
-    HVVALIDATE_STRINGOPTIONAL(m_ssn, HVClientError_InvalidPersonalDemographics);
-    HVVALIDATE_OPTIONAL(m_maritalStatus);
-    HVVALIDATE_OPTIONAL(m_isDeceased);
-    HVVALIDATE_OPTIONAL(m_dateOfDeath);
-    HVVALIDATE_OPTIONAL(m_religion);
-    HVVALIDATE_OPTIONAL(m_veteran);
-    HVVALIDATE_OPTIONAL(m_education);
-    HVVALIDATE_OPTIONAL(m_disabled);
-    HVVALIDATE_STRINGOPTIONAL(m_donor, HVClientError_InvalidPersonalDemographics);
+    MHVVALIDATE_OPTIONAL(m_name);
+    MHVVALIDATE_OPTIONAL(m_birthdate);
+    MHVVALIDATE_OPTIONAL(m_bloodType);
+    MHVVALIDATE_OPTIONAL(m_ethnicity);
+    MHVVALIDATE_STRINGOPTIONAL(m_ssn, MHVClientError_InvalidPersonalDemographics);
+    MHVVALIDATE_OPTIONAL(m_maritalStatus);
+    MHVVALIDATE_OPTIONAL(m_isDeceased);
+    MHVVALIDATE_OPTIONAL(m_dateOfDeath);
+    MHVVALIDATE_OPTIONAL(m_religion);
+    MHVVALIDATE_OPTIONAL(m_veteran);
+    MHVVALIDATE_OPTIONAL(m_education);
+    MHVVALIDATE_OPTIONAL(m_disabled);
+    MHVVALIDATE_STRINGOPTIONAL(m_donor, MHVClientError_InvalidPersonalDemographics);
 
-    HVVALIDATE_SUCCESS
+    MHVVALIDATE_SUCCESS
 }
 
 -(void)serialize:(XWriter *)writer
