@@ -139,9 +139,6 @@ static NSString* const c_element_county = @"county";
     self.type = [MHVAddress class];
     
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
 -(MHVAddress *)itemAtIndex:(NSUInteger)index
