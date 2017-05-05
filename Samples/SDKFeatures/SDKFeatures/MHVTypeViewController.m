@@ -231,18 +231,19 @@ LError:
         return;
     }
     
-    [MHVUIAlert showYesNoWithMessage:@"Permanently delete this item?" callback:^(id sender) {
-        if (((MHVUIAlert *)sender).result != MHVUIAlertOK)
+    [MHVUIAlert showYesNoPromptWithMessage:@"Permanently delete this item?"
+                                completion:^(BOOL selectedYes)
+    {
+        if (selectedYes)
         {
-            return;
+            //
+            // REMOVE from HealthVault
+            //
+            [[MHVClient current].currentRecord removeItemWithKey:selectedItem.key callback:^(MHVTask *task) {
+                
+                [self removeItemCompleted:task];
+            }];
         }
-        //
-        // REMOVE from HealthVault
-        //
-        [[MHVClient current].currentRecord removeItemWithKey:selectedItem.key callback:^(MHVTask *task) {
- 
-            [self removeItemCompleted:task];
-        }];
     }];
 }
 

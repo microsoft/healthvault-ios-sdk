@@ -65,14 +65,18 @@
 
 -(void)startupFailed
 {
-    [MHVUIAlert showWithMessage:@"Provisioning not completed. Retry?" callback:^(id sender) {
-        
-        MHVUIAlert *alert = (MHVUIAlert *) sender;
-        if (alert.result == MHVUIAlertOK)
-        {
-            [self startApp];
-        }
-    }];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[MHVClient current].settings.appName
+                                                                             message:NSLocalizedString(@"Provisioning not completed. Retry?", @"Message for retrying provisioning")
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"No", @"No button") style:UIAlertActionStyleCancel handler:nil]];
+
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes button") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                                 {
+                                     [self startApp];
+                                 }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 -(void)showTypeList

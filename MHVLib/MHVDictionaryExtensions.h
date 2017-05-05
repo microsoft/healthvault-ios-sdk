@@ -1,8 +1,8 @@
 //
-//  MHVDictionaryExtensions.h
-//  MHVLib
+// MHVDictionaryExtensions.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,18 +20,10 @@
 
 @interface NSDictionary (MHVDictionaryExtensions)
 
-+(BOOL) isNilOrEmpty:(NSDictionary *) dictionary;
++ (BOOL)isNilOrEmpty:(NSDictionary *)dictionary;
 
 // Argument string separated by '&'
-+(NSMutableDictionary *) fromArgumentString:(NSString *) qs;
-
--(BOOL) hasKey:(id) key;
--(BOOL) boolValueForKey:(id) key;
++ (NSMutableDictionary *)dictionaryFromArgumentString:(NSString *)qs;
 
 @end
 
-@interface NSMutableDictionary (MHVDictionaryExtensions)
-
-- (void)setBoolValue:(BOOL)value forKey:(id <NSCopying>)key;
-
-@end

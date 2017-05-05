@@ -600,7 +600,7 @@ LError:
         {
             NSMutableDictionary* args = [[NSMutableDictionary alloc] init];
             [args setObject:items forKey:@"items"];
-            [args setBoolValue:viewChanged forKey:@"viewChanged"];
+            [args setObject:@(viewChanged) forKey:@"viewChanged"];
             
             [[NSNotificationCenter defaultCenter]
                 postNotificationName:MHVSynchronizedTypeItemsAvailableNotification

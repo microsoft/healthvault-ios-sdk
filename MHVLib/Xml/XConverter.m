@@ -318,7 +318,10 @@ static NSString* const c_FALSE = @"false";
     // Use a mutable string, so we don't have to keep allocating new strings
     //
     MHVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
-    [m_stringBuffer replaceOccurrencesOfString:@":" withString:@""];
+    [m_stringBuffer replaceOccurrencesOfString:@":"
+                                    withString:@""
+                                       options:0
+                                         range:NSMakeRange(0, m_stringBuffer.length)];
     
     NSDateFormatter* parser = [self ensureDateParser];
     for (int i = 0; i < c_xDateFormatCount; ++i)
