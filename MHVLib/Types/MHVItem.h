@@ -1,15 +1,15 @@
 //
-//  MHVItem.h
-//  MHVLib
+// MHVItem.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -40,48 +40,35 @@ enum MHVItemFlags
     MHVItemFlagImmutable = 0x10      // Item is locked and cannot be modified, except for updated-end-date
 };
 
-//-------------------------
+// -------------------------
 //
 // A single Item ("thing") in a record
 // Each item has:
-//   - Key and Version 
-//   - Metadata, such as creation dates
-//   - Xml Data
-//      - Typed data [e.g. Medication, Allergy, Exercise etc.] with associated MHV Schemas
-//      - Common data [Related Items, Notes, tags, extensions...] 
-//   - Blob Data
-//      - A collection of named blob streams. 
+// - Key and Version
+// - Metadata, such as creation dates
+// - Xml Data
+// - Typed data [e.g. Medication, Allergy, Exercise etc.] with associated MHV Schemas
+// - Common data [Related Items, Notes, tags, extensions...]
+// - Blob Data
+// - A collection of named blob streams.
 //
-//-------------------------
+// -------------------------
 @interface MHVItem : MHVType
-{
-@private
-    MHVItemKey* m_key;
-    MHVItemType* m_type;
-    enum MHVItemState m_state;
-    int m_flags;
-    NSDate* m_effectiveDate;
-    MHVAudit* m_created;
-    MHVAudit* m_updated;    
-    MHVItemData* m_data;
-    MHVBlobPayload* m_blobs;
-    MHVConstrainedXmlDate* m_updatedEndDate;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 
 //
 // (Optional) The key for this item (id + version)
 // All existing items that have been successfully committed to HealthVault
-// will always have a key. 
+// will always have a key.
 //
-@property (readwrite, nonatomic, strong) MHVItemKey* key;
+@property (readwrite, nonatomic, strong) MHVItemKey *key;
 
-@property (readwrite, nonatomic, strong) MHVItemType* type;
+@property (readwrite, nonatomic, strong) MHVItemType *type;
 
 @property (readwrite, nonatomic) enum MHVItemState state;
 //
@@ -89,49 +76,49 @@ enum MHVItemFlags
 //
 @property (readwrite, nonatomic) int flags;
 //
-// 
+//
 // The effective date impacts the default sort order of returned results
 //
-@property (readwrite, nonatomic, strong) NSDate* effectiveDate;
+@property (readwrite, nonatomic, strong) NSDate *effectiveDate;
 
-@property (readwrite, nonatomic, strong) MHVAudit* created;
-@property (readwrite, nonatomic, strong) MHVAudit* updated;
+@property (readwrite, nonatomic, strong) MHVAudit *created;
+@property (readwrite, nonatomic, strong) MHVAudit *updated;
 //
-// (Optional) Structured data for this item. May be null if you did not 
+// (Optional) Structured data for this item. May be null if you did not
 // ask for Core data (see enum MHVItemSection) when you issued a query for items
 //
-@property (readwrite, nonatomic, strong) MHVItemData* data;
+@property (readwrite, nonatomic, strong) MHVItemData *data;
 //
 // (Optional) Information about unstructured blob streams associated with this item
 // May be null if you did not ask for Blob information (see enum MHVItemSectionBlob)
 //
-@property (readwrite, nonatomic, strong) MHVBlobPayload* blobs;
+@property (readwrite, nonatomic, strong) MHVBlobPayload *blobs;
 
 // (Optional) RAW Xml - see HealthVault Thing schema
-@property (readwrite, nonatomic, strong) NSString* effectivePermissionsXml;
+@property (readwrite, nonatomic, strong) NSString *effectivePermissionsXml;
 
 // (Optional) Tags associated with this item
-@property (readwrite, nonatomic, strong) MHVStringZ512* tags;
+@property (readwrite, nonatomic, strong) MHVStringZ512 *tags;
 
 // (Optional) Signature. Raw Xml
-@property (readwrite, nonatomic, strong) NSString* signatureInfoXml;
+@property (readwrite, nonatomic, strong) NSString *signatureInfoXml;
 
 // (Optional) Some items are immutable (locked). Users an still update the "effective"
 // end date of some item - such as the date they stopped taking a medication
-@property (readwrite, nonatomic, strong) MHVConstrainedXmlDate* updatedEndDate;
+@property (readwrite, nonatomic, strong) MHVConstrainedXmlDate *updatedEndDate;
 
-//-----------------------
+// -----------------------
 //
 // Convenience Properties
 //
-//------------------------
-@property (readonly, nonatomic, strong) NSString* itemID;
-@property (readonly, nonatomic, strong) NSString* typeID;
+// ------------------------
+@property (readonly, nonatomic, strong) NSString *itemID;
+@property (readonly, nonatomic, strong) NSString *typeID;
 //
 // (Optional) All items can have arbitrary notes...
-// References data.common.note 
+// References data.common.note
 //
-@property (readwrite, nonatomic, strong) NSString* note;
+@property (readwrite, nonatomic, strong) NSString *note;
 
 //
 // Convenience
@@ -145,35 +132,35 @@ enum MHVItemFlags
 @property (readonly, nonatomic) BOOL isReadOnly;
 @property (readonly, nonatomic) BOOL hasUpdatedEndDate;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
+// -------------------------
 
--(id) initWithType:(NSString *) typeID;
--(id) initWithTypedData:(MHVItemDataTyped *) data;
--(id) initWithTypedDataClassName:(NSString *) name;
--(id) initWithTypedDataClass:(Class) cls;
+- (instancetype)initWithType:(NSString *)typeID;
+- (instancetype)initWithTypedData:(MHVItemDataTyped *)data;
+- (instancetype)initWithTypedDataClassName:(NSString *)name;
+- (instancetype)initWithTypedDataClass:(Class)cls;
 
-//-------------------------
+// -------------------------
 //
 // Serialization
 //
-//-------------------------
--(NSString *) toXmlString;
-+(MHVItem *) newFromXmlString:(NSString *) xml;
+// -------------------------
+- (NSString *)toXmlString;
++ (MHVItem *)newFromXmlString:(NSString *)xml;
 
-//-------------------------
+// -------------------------
 //
 // Methods
 //
-//-------------------------
+// -------------------------
 //
-// Does a SHALLOW CLONE. 
+// Does a SHALLOW CLONE.
 // You get a new MHVItem but pointed at all the same internal objects
 //
--(MHVItem*) shallowClone;
+- (MHVItem *)shallowClone;
 //
 // Sometimes you will take an existing item object, edit it inline and them PUT it back to HealthVault
 // Call this to clear fields that are typically set by the MHV service
@@ -181,72 +168,72 @@ enum MHVItemFlags
 //
 // NOTE: if you call MHVRecordReference::update, this method will get called automatically
 //
--(void) prepareForUpdate;
+- (void)prepareForUpdate;
 //
 // After this call, if you put the item into HealthVault, you will add a new item
 //
--(void) prepareForNew;
+- (void)prepareForNew;
 
--(BOOL) setKeyToNew;
--(BOOL) ensureKey;
--(BOOL) ensureEffectiveDate;
+- (BOOL)setKeyToNew;
+- (BOOL)ensureKey;
+- (BOOL)ensureEffectiveDate;
 
--(BOOL) removeEndDate;
--(BOOL) updateEndDate:(NSDate *) date;
--(BOOL) updateEndDateWithApproxDate:(MHVApproxDateTime *) date;
+- (BOOL)removeEndDate;
+- (BOOL)updateEndDate:(NSDate *)date;
+- (BOOL)updateEndDateWithApproxDate:(MHVApproxDateTime *)date;
 
--(NSDate *) getDate;
+- (NSDate *)getDate;
 
--(BOOL) isVersion:(NSString *) version;
--(BOOL) isType:(NSString *) typeID;
+- (BOOL)isVersion:(NSString *)version;
+- (BOOL)isType:(NSString *)typeID;
 
-//-------------------------
+// -------------------------
 //
 // Blob
 //
-//-------------------------
+// -------------------------
 //
 // Refreshes information about blobs associated with this item
 //
--(MHVTask *) updateBlobDataFromRecord:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
+- (MHVTask *)updateBlobDataFromRecord:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
 //
 // Upload data into the default blob and put the item...
 //
--(MHVItemBlobUploadTask *) uploadBlob:(id<MHVBlobSource>) data contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
--(MHVItemBlobUploadTask *) uploadBlob:(id<MHVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
 
--(MHVItemBlobUploadTask *) newUploadBlobTask:(id<MHVBlobSource>) data forBlobName:(NSString *) name contentType:(NSString *) contentType record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
+- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
 
 @end
 
-//-------------------------
+// -------------------------
 //
 // A serializable collection of items
 //
-//-------------------------
+// -------------------------
 @interface MHVItemCollection : MHVCollection <XSerializable>
 
--(id) initWithItem:(MHVItem *) item;
--(id) initWithItems:(NSArray *) items;
+- (instancetype)initWithItem:(MHVItem *)item;
+- (instancetype)initWithItems:(NSArray *)items;
 
--(void) addItem:(MHVItem *) item;
--(MHVItem *) itemAtIndex:(NSUInteger) index;
+- (void)addItem:(MHVItem *)item;
+- (MHVItem *)itemAtIndex:(NSUInteger)index;
 
--(BOOL) containsItemID:(NSString *) itemID;
--(NSUInteger) indexOfItemID:(NSString *) itemID;
+- (BOOL)containsItemID:(NSString *)itemID;
+- (NSUInteger)indexOfItemID:(NSString *)itemID;
 
--(NSMutableDictionary *) newIndexByID;
--(NSMutableDictionary *) getItemsIndexedByID;
+- (NSMutableDictionary *)newIndexByID;
+- (NSMutableDictionary *)getItemsIndexedByID;
 
--(NSUInteger) indexOfTypeID:(NSString *) typeID;
--(MHVItem *) firstItemOfType:(NSString *) typeID;
+- (NSUInteger)indexOfTypeID:(NSString *)typeID;
+- (MHVItem *)firstItemOfType:(NSString *)typeID;
 
-+(MHVStringCollection *) idsFromItems:(NSArray *) items;
++ (MHVStringCollection *)idsFromItems:(NSArray *)items;
 
--(MHVClientResult *) validate;
+- (MHVClientResult *)validate;
 
--(BOOL) shallowCloneItems;
--(void) prepareForUpdate;
--(void) prepareForNew;
+- (BOOL)shallowCloneItems;
+- (void)prepareForUpdate;
+- (void)prepareForNew;
 
 @end
