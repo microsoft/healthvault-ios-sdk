@@ -507,7 +507,7 @@ static NSString *const c_element_item = @"thing";
 
 - (NSUInteger)indexOfItemID:(NSString *)itemID
 {
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    for (NSUInteger i = 0; i < self.count; ++i)
     {
         id obj = [self objectAtIndex:i];
         
@@ -530,7 +530,7 @@ static NSString *const c_element_item = @"thing";
 {
     NSMutableDictionary *index = [[NSMutableDictionary alloc] initWithCapacity:self.count];
 
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    for (NSUInteger i = 0; i < self.count; ++i)
     {
         id obj = [self objectAtIndex:i];
         
@@ -553,7 +553,7 @@ static NSString *const c_element_item = @"thing";
 
 - (NSUInteger)indexOfTypeID:(NSString *)typeID
 {
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    for (NSUInteger i = 0; i < self.count; ++i)
     {
         id obj = [self objectAtIndex:i];
         
@@ -611,23 +611,24 @@ static NSString *const c_element_item = @"thing";
 
 - (BOOL)shallowCloneItems
 {
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    for (NSUInteger i = 0; i < self.count; ++i)
     {
         MHVItem *clone = [[self itemAtIndex:i] shallowClone];
-        MHVCHECK_NOTNULL(clone);
+        
+        if (!clone)
+        {
+            return NO;
+        }
 
         [self replaceObjectAtIndex:i withObject:clone];
     }
 
     return YES;
-
-   LError:
-    return NO;
 }
 
 - (void)prepareForUpdate
 {
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    for (NSUInteger i = 0; i < self.count; ++i)
     {
         [[self itemAtIndex:i] prepareForUpdate];
     }
@@ -635,7 +636,7 @@ static NSString *const c_element_item = @"thing";
 
 - (void)prepareForNew
 {
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    for (NSUInteger i = 0; i < self.count; ++i)
     {
         [[self itemAtIndex:i] prepareForNew];
     }
