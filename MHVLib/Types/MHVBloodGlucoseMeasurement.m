@@ -1,15 +1,15 @@
 //
-//  MHVBloodGlucoseMeasurement.m
-//  MHVLib
+// MHVBloodGlucoseMeasurement.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,132 +20,128 @@
 #import "MHVBloodGlucoseMeasurement.h"
 #import "MHVMeasurement.h"
 
+@interface MHVBloodGlucoseMeasurement ()
+
+@property (readwrite, nonatomic, strong) MHVPositiveDouble *value;
+
+@end
+
 @implementation MHVBloodGlucoseMeasurement
 
-@synthesize value = m_mmolPerl;
-@synthesize display = m_display;
-
--(double)mmolPerLiter
+- (double)mmolPerLiter
 {
-    return (m_mmolPerl) ? m_mmolPerl.value : NAN;
+    return (self.value) ? self.value.value : NAN;
 }
 
--(void)setMmolPerLiter:(double)mmolPerLiter
+- (void)setMmolPerLiter:(double)mmolPerLiter
 {
-    MHVENSURE(m_mmolPerl, MHVPositiveDouble);
-    m_mmolPerl.value = mmolPerLiter;
+    MHVENSURE(self.value, MHVPositiveDouble);
+    self.value.value = mmolPerLiter;
     [self updateDisplayValue:mmolPerLiter units:c_mmolPlUnits andUnitsCode:c_mmolUnitsCode];
 }
 
--(double)mgPerDL
+- (double)mgPerDL
 {
-    if (m_mmolPerl)
+    if (self.value)
     {
-        return [MHVBloodGlucoseMeasurement mMolPerLiterToMgPerDL:m_mmolPerl.value];
+        return [MHVBloodGlucoseMeasurement mMolPerLiterToMgPerDL:self.value.value];
     }
-    
+
     return NAN;
 }
 
--(void)setMgPerDL:(double)mgPerDL
+- (void)setMgPerDL:(double)mgPerDL
 {
-    MHVENSURE(m_mmolPerl, MHVPositiveDouble);
-    m_mmolPerl.value = [MHVBloodGlucoseMeasurement mgPerDLToMmolPerLiter:mgPerDL];
+    MHVENSURE(self.value, MHVPositiveDouble);
+    self.value.value = [MHVBloodGlucoseMeasurement mgPerDLToMmolPerLiter:mgPerDL];
     [self updateDisplayValue:mgPerDL units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
 
-
--(id)initWithMmolPerLiter:(double)value
+- (instancetype)initWithMmolPerLiter:(double)value
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.mmolPerLiter = value;
-    MHVCHECK_NOTNULL(m_mmolPerl);
-    
+    if (self)
+    {
+        [self setMmolPerLiter:value];
+        MHVCHECK_NOTNULL(_value);
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initWithMgPerDL:(double)value
+- (instancetype)initWithMgPerDL:(double)value
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.mgPerDL = value;
-    MHVCHECK_NOTNULL(m_mmolPerl);
-    
+    if (self)
+    {
+        [self setMgPerDL:value];
+        MHVCHECK_NOTNULL(_value);
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
+- (BOOL)updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
+
     MHVCHECK_NOTNULL(newValue);
-    
+
     if (code)
     {
         newValue.unitsCode = code;
     }
-    
-    m_display = newValue;
-    
+
+    self.display = newValue;
+
     return TRUE;
-    
-LError:
-    return FALSE;
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
     return [self toStringWithFormat:@"%.3f mmol/l"];
 }
 
--(NSString *)toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
     return [NSString localizedStringWithFormat:format, self.mmolPerLiter];
 }
 
-+(double)mMolPerLiterToMgPerDL:(double)value
++ (double)mMolPerLiterToMgPerDL:(double)value
 {
     return value * 18;
 }
 
-+(double)mgPerDLToMmolPerLiter:(double)value
++ (double)mgPerDLToMmolPerLiter:(double)value
 {
     return value / 18;
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_mmolPerl, MHVClientError_InvalidBloodGlucoseMeasurement);
-    MHVVALIDATE_OPTIONAL(m_display);
-    
+
+    MHVVALIDATE(self.value, MHVClientError_InvalidBloodGlucoseMeasurement);
+    MHVVALIDATE_OPTIONAL(self.display);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_mmolPL content:m_mmolPerl];
-    [writer writeElementXmlName:x_element_display content:m_display];
+    [writer writeElementXmlName:x_element_mmolPL content:self.value];
+    [writer writeElementXmlName:x_element_display content:self.display];
 }
 
--(void)deserialize:(XReader *)reader
-{    
-    m_mmolPerl = [reader readElementWithXmlName:x_element_mmolPL asClass:[MHVPositiveDouble class]];
-    m_display = [reader readElementWithXmlName:x_element_display asClass:[MHVDisplayValue class]];
+- (void)deserialize:(XReader *)reader
+{
+    self.value = [reader readElementWithXmlName:x_element_mmolPL asClass:[MHVPositiveDouble class]];
+    self.display = [reader readElementWithXmlName:x_element_display asClass:[MHVDisplayValue class]];
 }
 
 @end
