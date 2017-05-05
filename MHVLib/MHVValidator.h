@@ -44,6 +44,13 @@ void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger lin
 #ifndef NOERRORLOG
 
 //#define MHVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
+#define MHVASSERT_PARAMETER(param) \
+do \
+{ \
+    NSString *message = [NSString stringWithFormat:@"'%s' is a required parameter.", #param];\
+    MHVASSERT_MESSAGE(message); \
+}\
+while(NO)
 #define MHVASSERT_MESSAGE(message) MHVLogEventFromCode(message, __FILE__, __LINE__);
 #define MHVASSERT(condition) if (!(condition)) { MHVASSERT_MESSAGE(@#condition)}
 
