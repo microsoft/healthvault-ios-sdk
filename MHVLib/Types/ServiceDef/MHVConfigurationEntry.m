@@ -1,8 +1,8 @@
 //
-//  MHVConfigurationEntry.m
-//  MHVLib
+// MHVConfigurationEntry.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,49 +20,42 @@
 #import "MHVCommon.h"
 #import "MHVConfigurationEntry.h"
 
-static const xmlChar* x_attribute_key = XMLSTRINGCONST("key");
+static const xmlChar *x_attribute_key = XMLSTRINGCONST("key");
 
 @implementation MHVConfigurationEntry
 
-@synthesize key = m_key;
-@synthesize value = m_value;
-
-
--(void)deserializeAttributes:(XReader *)reader
+- (void)deserializeAttributes:(XReader *)reader
 {
-    m_key = [reader readAttributeWithXmlName:x_attribute_key];
+    self.key = [reader readAttributeWithXmlName:x_attribute_key];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_value = [reader readValue];
+    self.value = [reader readValue];
 }
 
--(void)serializeAttributes:(XWriter *)writer
+- (void)serializeAttributes:(XWriter *)writer
 {
-    [writer writeAttributeXmlName:x_attribute_key value:m_key];
+    [writer writeAttributeXmlName:x_attribute_key value:self.key];
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeText:m_value];
+    [writer writeText:self.value];
 }
 
 @end
 
 @implementation MHVConfigurationEntryCollection
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVConfigurationEntry class];
-            
+    if (self)
+    {
+        self.type = [MHVConfigurationEntry class];
+    }
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
 @end

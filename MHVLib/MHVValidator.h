@@ -43,7 +43,6 @@ void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger lin
 
 #ifndef NOERRORLOG
 
-//#define MHVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
 #define MHVASSERT_MESSAGE(message) MHVLogEventFromCode(message, __FILE__, __LINE__);
 #define MHVASSERT(condition) if (!(condition)) { MHVASSERT_MESSAGE(@#condition)}
 
@@ -145,5 +144,5 @@ void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger lin
                                                 return hr; \
                                             } \
 
-MHVClientResult* MHVValidateArray(NSArray* array, enum MHVClientResultCode error);
+MHVClientResult* MHVValidateArray(NSArray *array, enum MHVClientResultCode error);
 

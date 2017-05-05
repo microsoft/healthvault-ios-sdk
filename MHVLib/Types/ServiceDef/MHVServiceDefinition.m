@@ -1,8 +1,8 @@
 //
-//  MHVServiceDefinition.m
-//  MHVLib
+// MHVServiceDefinition.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,59 +21,48 @@
 #import "MHVCommon.h"
 #import "MHVServiceDefinition.h"
 
-static const xmlChar* x_element_platform = XMLSTRINGCONST("platform");
-static const xmlChar* x_element_shell = XMLSTRINGCONST("shell");
-static const xmlChar* x_element_instance = XMLSTRINGCONST("instances");
+static const xmlChar *x_element_platform = XMLSTRINGCONST("platform");
+static const xmlChar *x_element_shell = XMLSTRINGCONST("shell");
+static const xmlChar *x_element_instance = XMLSTRINGCONST("instances");
+static NSString *const c_element_updated = @"updated-date";
+static NSString *const c_element_sections = @"response-sections";
+static NSString *const c_element_section = @"section";
 
 @implementation MHVServiceDefinition
 
-@synthesize platform = m_platform;
-@synthesize shell = m_shell;
-@synthesize systemInstances = m_instances;
-
-
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_platform = [reader readElementWithXmlName:x_element_platform asClass:[MHVPlatformInfo class]];
-    m_shell = [reader readElementWithXmlName:x_element_shell asClass:[MHVShellInfo class]];
+    self.platform = [reader readElementWithXmlName:x_element_platform
+                                           asClass:[MHVPlatformInfo class]];
+    self.shell = [reader readElementWithXmlName:x_element_shell
+                                        asClass:[MHVShellInfo class]];
     [reader skipElement:@"xml-method"];
     [reader skipElement:@"common-schema"];
-    m_instances = [reader readElementWithXmlName:x_element_instance asClass:[MHVSystemInstances class]];
+    self.systemInstances = [reader readElementWithXmlName:x_element_instance
+                                                  asClass:[MHVSystemInstances class]];
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_platform content:m_platform];
-    [writer writeElementXmlName:x_element_shell content:m_shell];
-    [writer writeElementXmlName:x_element_instance content:m_instances];
+    [writer writeElementXmlName:x_element_platform content:self.platform];
+    [writer writeElementXmlName:x_element_shell content:self.shell];
+    [writer writeElementXmlName:x_element_instance content:self.systemInstances];
 }
 
 @end
 
-static NSString* const c_element_updated = @"updated-date";
-static NSString* const c_element_sections = @"response-sections";
-static NSString* const c_element_section = @"section";
-
 @implementation MHVServiceDefinitionParams
 
-@synthesize updatedSince = m_updatedSince;
-
--(MHVStringCollection *)sections
+- (MHVStringCollection *)sections
 {
-    MHVENSURE(m_sections, MHVStringCollection);
-    return m_sections;
+    MHVENSURE(_sections, MHVStringCollection);
+    return _sections;
 }
 
--(void)setSections:(MHVStringCollection *)sections
+- (void)serialize:(XWriter *)writer
 {
-    m_sections = sections;
-}
-
-
--(void)serialize:(XWriter *)writer
-{
-    [writer writeElement:c_element_updated dateValue:m_updatedSince];
-    [writer writeElementArray:c_element_sections itemName:c_element_section elements:m_sections];
+    [writer writeElement:c_element_updated dateValue:self.updatedSince];
+    [writer writeElementArray:c_element_sections itemName:c_element_section elements:self.sections];
 }
 
 @end

@@ -425,11 +425,11 @@ LError:
         //
         if (m_user)
         {
-            [m_user updateWithLegacyRecords:m_service.records];
+            [m_user updateWithHealthVaultRecords:m_service.records];
         }
         else
         {
-            m_user = [[MHVUser alloc] initFromLegacyRecords:m_service.records];
+            m_user = [[MHVUser alloc] initFromHealthVaultRecords:m_service.records];
             if (m_environment)
             {
                 m_user.instanceID = m_environment.instanceID;

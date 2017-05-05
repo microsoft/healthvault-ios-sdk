@@ -1,15 +1,15 @@
 //
-//  MHVVocabParams.m
-//  MHVLib
+// MHVVocabParams.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,69 +19,67 @@
 #import "MHVCommon.h"
 #import "MHVVocabParams.h"
 
-static NSString* const c_element_vocabkey = @"vocabulary-key";
-static NSString* const c_element_culture = @"fixed-culture";
+static NSString *const c_element_vocabkey = @"vocabulary-key";
+static NSString *const c_element_culture = @"fixed-culture";
+
+@interface MHVVocabParams ()
+
+@property (readwrite, nonatomic, strong) MHVVocabIdentifierCollection *vocabIDs;
+
+@end
 
 @implementation MHVVocabParams
 
--(MHVVocabIdentifierCollection *)vocabIDs
+- (MHVVocabIdentifierCollection *)vocabIDs
 {
-    MHVENSURE(m_vocabIDs, MHVVocabIdentifierCollection);
-    return m_vocabIDs;
+    MHVENSURE(_vocabIDs, MHVVocabIdentifierCollection);
+    return _vocabIDs;
 }
 
-@synthesize fixedCulture = m_fixedCulture;
-
--(id)initWithVocabID:(MHVVocabIdentifier *)vocabID
+- (instancetype)initWithVocabID:(MHVVocabIdentifier *)vocabID
 {
     MHVCHECK_NOTNULL(vocabID);
-    
-    self = [super init];
-    MHVCHECK_SELF;
 
-    [self.vocabIDs addObject:vocabID];
-    
+    self = [super init];
+    if (self)
+    {
+        [_vocabIDs addObject:vocabID];
+    }
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initWithVocabIDs:(MHVVocabIdentifierCollection *)vocabIDs
+- (instancetype)initWithVocabIDs:(MHVVocabIdentifierCollection *)vocabIDs
 {
     MHVCHECK_NOTNULL(vocabIDs);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_vocabIDs = vocabIDs;
-    
+    if (self)
+    {
+        _vocabIDs = vocabIDs;
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;    
 }
 
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE_ARRAY(m_vocabIDs, MHVClientError_InvalidVocabIdentifier);
-    
+
+    MHVVALIDATE_ARRAY(self.vocabIDs, MHVClientError_InvalidVocabIdentifier);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_vocabkey elements:m_vocabIDs];
-    [writer writeElement:c_element_culture boolValue:m_fixedCulture];
+    [writer writeElementArray:c_element_vocabkey elements:self.vocabIDs];
+    [writer writeElement:c_element_culture boolValue:self.fixedCulture];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_vocabIDs = (MHVVocabIdentifierCollection *)[reader readElementArray:c_element_vocabkey asClass:[MHVVocabIdentifier class] andArrayClass:[MHVVocabIdentifierCollection class]];
-    m_fixedCulture = [reader readBoolElement:c_element_culture];
+    self.vocabIDs = (MHVVocabIdentifierCollection *)[reader readElementArray:c_element_vocabkey asClass:[MHVVocabIdentifier class] andArrayClass:[MHVVocabIdentifierCollection class]];
+    self.fixedCulture = [reader readBoolElement:c_element_culture];
 }
 
 @end
