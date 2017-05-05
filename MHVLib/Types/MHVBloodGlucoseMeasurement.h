@@ -27,19 +27,18 @@
 //
 // Required
 //
-@property (readonly, nonatomic, strong) MHVPositiveDouble *value; //value is stored in mmolPerLiter
-
-//
-// Convert value to or from unit
-//
-@property (readwrite, nonatomic) double mmolPerLiter;
-@property (readwrite, nonatomic) double mgPerDL;
+@property (readwrite, nonatomic, strong) MHVPositiveDouble *value; //value is stored in mmolPerLiter
 
 //
 // Optional
 //
 @property (readwrite, nonatomic, strong) MHVDisplayValue *display;
 
+//
+// Convenience
+//
+@property (readwrite, nonatomic) double mmolPerLiter;
+@property (readwrite, nonatomic) double mgPerDL;
 
 - (instancetype)initWithMmolPerLiter:(double)value;
 - (instancetype)initWithMgPerDL:(double)value;

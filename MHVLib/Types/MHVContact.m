@@ -1,15 +1,15 @@
 //
-//  MHVContact.m
-//  MHVLib
+// MHVContact.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,142 +19,126 @@
 #import "MHVCommon.h"
 #import "MHVContact.h"
 
-static NSString* const c_element_address = @"address";
-static NSString* const c_element_phone = @"phone";
-static NSString* const c_element_email = @"email";
+static NSString *const c_element_address = @"address";
+static NSString *const c_element_phone = @"phone";
+static NSString *const c_element_email = @"email";
 
 @implementation MHVContact
 
-@synthesize phone = m_phone;
-@synthesize email = m_email;
-
--(BOOL)hasAddress
+- (BOOL)hasAddress
 {
-    return ![NSArray isNilOrEmpty:m_address];
+    return ![NSArray isNilOrEmpty:self.address];
 }
 
--(MHVAddressCollection *)address
+- (MHVAddressCollection *)address
 {
-    MHVENSURE(m_address, MHVAddressCollection);
-    return m_address;
+    MHVENSURE(_address, MHVAddressCollection);
+    return _address;
 }
 
--(void)setAddress:(MHVAddressCollection *)address
+- (BOOL)hasPhone
 {
-    m_address = address;
+    return ![NSArray isNilOrEmpty:self.phone];
 }
 
--(BOOL)hasPhone
+- (MHVPhoneCollection *)phone
 {
-    return ![NSArray isNilOrEmpty:m_phone];
+    MHVENSURE(_phone, MHVPhoneCollection);
+    return _phone;
 }
 
--(MHVPhoneCollection *)phone
+- (BOOL)hasEmail
 {
-    MHVENSURE(m_phone, MHVPhoneCollection);
-    return m_phone;
+    return ![NSArray isNilOrEmpty:self.email];
 }
 
--(void)setPhone:(MHVPhoneCollection *)phone
+- (MHVEmailCollection *)email
 {
-    m_phone = phone;
+    MHVENSURE(_email, MHVEmailCollection);
+    return _email;
 }
 
--(BOOL)hasEmail
+- (MHVAddress *)firstAddress
 {
-    return ![NSArray isNilOrEmpty:m_email];
+    return (self.hasAddress) ? [self.address itemAtIndex:0] : nil;
 }
 
--(MHVEmailCollection *)email
+- (MHVEmail *)firstEmail
 {
-    MHVENSURE(m_email, MHVEmailCollection);
-    return m_email;
+    return (self.hasEmail) ? [self.email itemAtIndex:0] : nil;
 }
 
--(void)setEmail:(MHVEmailCollection *)email
+- (MHVPhone *)firstPhone
 {
-    m_email = email;
+    return (self.hasPhone) ? [self.phone itemAtIndex:0] : nil;
 }
 
--(MHVAddress *)firstAddress
-{
-    return (self.hasAddress) ? [m_address itemAtIndex:0] : nil;
-}
-
--(MHVEmail *) firstEmail
-{
-    return (self.hasEmail) ? [m_email itemAtIndex:0] : nil;
-}
-
--(MHVPhone *)firstPhone
-{
-    return (self.hasPhone) ? [m_phone itemAtIndex:0] : nil;
-}
-
--(id)initWithEmail:(NSString *)email
+- (instancetype)initWithEmail:(NSString *)email
 {
     return [self initWithPhone:nil andEmail:email];
 }
 
--(id)initWithPhone:(NSString *)phone
+- (instancetype)initWithPhone:(NSString *)phone
 {
     return [self initWithPhone:phone andEmail:nil];
 }
 
--(id)initWithPhone:(NSString *)phone andEmail:(NSString *)email
+- (instancetype)initWithPhone:(NSString *)phone andEmail:(NSString *)email
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    if (phone)
+    if (self)
     {
-        MHVPhone* phoneObj = [[MHVPhone alloc] initWithNumber:phone];
-        MHVCHECK_NOTNULL(phoneObj);
+        if (phone)
+        {
+            MHVPhone *phoneObj = [[MHVPhone alloc] initWithNumber:phone];
+            MHVCHECK_NOTNULL(phoneObj);
+            
+            [self.phone addObject:phoneObj];
+            
+            MHVCHECK_NOTNULL(self.phone);
+        }
         
-        [self.phone addObject:phoneObj];
-        
-        MHVCHECK_NOTNULL(m_phone);
+        if (email)
+        {
+            MHVEmail *emailObj = [[MHVEmail alloc] initWithEmailAddress:email];
+            MHVCHECK_NOTNULL(emailObj);
+            [self.email addObject:emailObj];
+            
+            MHVCHECK_NOTNULL(self.email);
+        }
     }
-    
-    if (email)
-    {
-        MHVEmail* emailObj = [[MHVEmail alloc] initWithEmailAddress:email];
-        MHVCHECK_NOTNULL(emailObj);
-        [self.email addObject:emailObj];
-        
-        MHVCHECK_NOTNULL(m_email);
-    }
-    
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE_ARRAYOPTIONAL(m_address, MHVClientError_InvalidContact);
-    MHVVALIDATE_ARRAYOPTIONAL(m_phone, MHVClientError_InvalidContact);
-    MHVVALIDATE_ARRAYOPTIONAL(m_email, MHVClientError_InvalidContact);
-    
+
+    MHVVALIDATE_ARRAYOPTIONAL(self.address, MHVClientError_InvalidContact);
+    MHVVALIDATE_ARRAYOPTIONAL(self.phone, MHVClientError_InvalidContact);
+    MHVVALIDATE_ARRAYOPTIONAL(self.email, MHVClientError_InvalidContact);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_address elements:m_address];
-    [writer writeElementArray:c_element_phone elements:m_phone];
-    [writer writeElementArray:c_element_email elements:m_email];
+    [writer writeElementArray:c_element_address elements:self.address];
+    [writer writeElementArray:c_element_phone elements:self.phone];
+    [writer writeElementArray:c_element_email elements:self.email];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_address = (MHVAddressCollection *)[reader readElementArray:c_element_address asClass:[MHVAddress class] andArrayClass:[MHVAddressCollection class]];
-    m_phone = (MHVPhoneCollection *)[reader readElementArray:c_element_phone asClass:[MHVPhone class] andArrayClass:[MHVPhoneCollection class]];
-    m_email = (MHVEmailCollection *)[reader readElementArray:c_element_email asClass:[MHVEmail class] andArrayClass:[MHVEmailCollection class]];
+    self.address = (MHVAddressCollection *)[reader readElementArray:c_element_address
+                                                            asClass:[MHVAddress class]
+                                                      andArrayClass:[MHVAddressCollection class]];
+    self.phone = (MHVPhoneCollection *)[reader readElementArray:c_element_phone
+                                                        asClass:[MHVPhone class]
+                                                  andArrayClass:[MHVPhoneCollection class]];
+    self.email = (MHVEmailCollection *)[reader readElementArray:c_element_email
+                                                        asClass:[MHVEmail class]
+                                                  andArrayClass:[MHVEmailCollection class]];
 }
 
 @end

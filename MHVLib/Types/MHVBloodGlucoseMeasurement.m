@@ -20,12 +20,6 @@
 #import "MHVBloodGlucoseMeasurement.h"
 #import "MHVMeasurement.h"
 
-@interface MHVBloodGlucoseMeasurement ()
-
-@property (readwrite, nonatomic, strong) MHVPositiveDouble *value;
-
-@end
-
 @implementation MHVBloodGlucoseMeasurement
 
 - (double)mmolPerLiter
