@@ -1,15 +1,15 @@
 //
-//  MHVFoodEnergyValue.m
-//  MHVLib
+// MHVFoodEnergyValue.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,110 +20,103 @@
 #import "MHVCommon.h"
 #import "MHVFoodEnergyValue.h"
 
-static const xmlChar* x_element_calories = XMLSTRINGCONST("calories");
-static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
+static const xmlChar *x_element_calories = XMLSTRINGCONST("calories");
+static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 
 @implementation MHVFoodEnergyValue
 
-@synthesize calories = m_calories;
-@synthesize displayValue = m_display;
-
--(double)caloriesValue
+- (double)caloriesValue
 {
-    return (m_calories) ? m_calories.value : NAN;
+    return (_calories) ? _calories.value : NAN;
 }
 
--(void)setCaloriesValue:(double)caloriesValue
+- (void)setCaloriesValue:(double)caloriesValue
 {
     if (isnan(caloriesValue))
     {
-        m_calories = nil;
+        _calories = nil;
     }
-    else 
+    else
     {
-        MHVENSURE(m_calories, MHVNonNegativeDouble);
-        m_calories.value = caloriesValue;
+        MHVENSURE(_calories, MHVNonNegativeDouble);
+        _calories.value = caloriesValue;
     }
-    
+
     [self updateDisplayText];
 }
 
--(id)initWithCalories:(double)value
+- (instancetype)initWithCalories:(double)value
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.caloriesValue = value;
-    
+    if (self)
+    {
+        [self setCaloriesValue:value];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(BOOL) updateDisplayText
+- (BOOL)updateDisplayText
 {
-    m_display = nil;
-    if (!m_calories)
+    self.displayValue = nil;
+    if (!self.calories)
     {
         return FALSE;
     }
-    
-    m_display = [[MHVDisplayValue alloc] initWithValue:m_calories.value andUnits:[MHVFoodEnergyValue calorieUnits]];
-    
-    return (m_display != nil);
+
+    self.displayValue = [[MHVDisplayValue alloc] initWithValue:self.calories.value andUnits:[MHVFoodEnergyValue calorieUnits]];
+
+    return self.displayValue != nil;
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
     return [self toStringWithFormat:@"%.0f cal"];
 }
 
--(NSString *)toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
-    if (!m_calories)
+    if (!self.calories)
     {
         return c_emptyString;
     }
-    
+
     return [NSString localizedStringWithFormat:format, self.caloriesValue];
 }
 
-+(NSString *)calorieUnits
++ (NSString *)calorieUnits
 {
     return NSLocalizedString(@"cal", @"Calorie units");
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_calories, MHVClientError_InvalidDietaryIntake);
-    MHVVALIDATE_OPTIONAL(m_display);
-    
+
+    MHVVALIDATE(self.calories, MHVClientError_InvalidDietaryIntake);
+    MHVVALIDATE_OPTIONAL(self.displayValue);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_calories content:m_calories];
-    [writer writeElementXmlName:x_element_displayValue content:m_display];
+    [writer writeElementXmlName:x_element_calories content:self.calories];
+    [writer writeElementXmlName:x_element_displayValue content:self.displayValue];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_calories = [reader readElementWithXmlName:x_element_calories asClass:[MHVNonNegativeDouble class]];
-    m_display = [reader readElementWithXmlName:x_element_displayValue asClass:[MHVDisplayValue class]];
+    self.calories = [reader readElementWithXmlName:x_element_calories asClass:[MHVNonNegativeDouble class]];
+    self.displayValue = [reader readElementWithXmlName:x_element_displayValue asClass:[MHVDisplayValue class]];
 }
 
-+(MHVFoodEnergyValue *)fromCalories:(double)value
++ (MHVFoodEnergyValue *)fromCalories:(double)value
 {
     return [[MHVFoodEnergyValue alloc] initWithCalories:value];
 }

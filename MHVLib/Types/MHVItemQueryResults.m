@@ -1,15 +1,15 @@
 //
-//  MHVItemQueryResults.m
-//  MHVLib
+// MHVItemQueryResults.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,31 +19,30 @@
 #import "MHVCommon.h"
 #import "MHVItemQueryResults.h"
 
-static NSString* const c_element_result = @"group";
+static NSString *const c_element_result = @"group";
 
 @implementation MHVItemQueryResults
 
-@synthesize results = m_results;
-
--(BOOL) hasResults
+- (BOOL)hasResults
 {
-    return !([NSArray isNilOrEmpty:m_results]);
+    return !([NSArray isNilOrEmpty:self.results]);
 }
 
--(MHVItemQueryResult *)firstResult
+- (MHVItemQueryResult *)firstResult
 {
-    return (self.hasResults) ? [m_results objectAtIndex:0] : nil;
+    return (self.hasResults) ? [self.results objectAtIndex:0] : nil;
 }
 
-
--(void) serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_result elements:m_results];
+    [writer writeElementArray:c_element_result elements:self.results];
 }
 
--(void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-     m_results = (MHVItemQueryResultCollection *)[reader readElementArray:c_element_result asClass:[MHVItemQueryResult class] andArrayClass:[MHVItemQueryResultCollection class]];
+    self.results = (MHVItemQueryResultCollection *)[reader readElementArray:c_element_result
+                                                                    asClass:[MHVItemQueryResult class]
+                                                              andArrayClass:[MHVItemQueryResultCollection class]];
 }
 
 @end

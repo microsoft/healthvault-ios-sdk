@@ -1,15 +1,15 @@
 //
-//  MHVItemQuery.h
-//  MHVLib
+// MHVItemQuery.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,56 +23,44 @@
 #import "MHVItemFilter.h"
 #import "MHVItemView.h"
 
-
 @interface MHVItemQuery : MHVType
-{
-@private
-    NSString* m_name;
-    MHVStringCollection* m_itemIDs;
-    MHVItemKeyCollection* m_keys;
-    MHVStringCollection* m_clientIDs;
-    MHVItemFilterCollection* m_filters;
-    MHVItemView* m_view;
-    MHVInt* m_max;
-    MHVInt* m_maxFull;    
-}
 
-@property (readwrite, nonatomic, strong) NSString* name;
+@property (readwrite, nonatomic, strong) NSString *name;
 //
 // itemIDs, keys, and clientIDs are a CHOICE.
 // You can specify items for one only one of them in a single query
-// 
-@property (readonly, nonatomic) MHVStringCollection* itemIDs;
-@property (readonly, nonatomic) MHVItemKeyCollection* keys;
-@property (readonly, nonatomic) MHVStringCollection* clientIDs;
+//
+@property (readonly, nonatomic, strong) MHVStringCollection *itemIDs;
+@property (readonly, nonatomic, strong) MHVItemKeyCollection *keys;
+@property (readonly, nonatomic, strong) MHVStringCollection *clientIDs;
 //
 // constrain results (where clauses
 //
-@property (readonly, nonatomic) MHVItemFilterCollection* filters;
+@property (readonly, nonatomic, strong) MHVItemFilterCollection *filters;
 //
 // What format to pull data down in
 //
-@property (readwrite, nonatomic, strong) MHVItemView* view;
+@property (readwrite, nonatomic, strong) MHVItemView *view;
 
 @property (readwrite, nonatomic) int maxResults;
 @property (readwrite, nonatomic) int maxFullResults;
 
--(id) initWithTypeID:(NSString *) typeID;
--(id) initWithFilter:(MHVItemFilter *) filter;
--(id) initWithItemKey:(MHVItemKey *) key;
--(id) initWithItemKeys:(NSArray *) keys;
--(id) initWithItemIDs:(NSArray *) ids;
--(id) initWithItemID:(NSString *) itemID;
--(id) initWithPendingItems:(NSArray *) pendingItems;
--(id) initWithItemKey:(MHVItemKey *) key andType:(NSString *) typeID;
--(id) initWithItemID:(NSString *) itemID andType:(NSString *) typeID;;
--(id) initWithClientID:(NSString *) clientID andType:(NSString *) typeID;
+- (instancetype)initWithTypeID:(NSString *)typeID;
+- (instancetype)initWithFilter:(MHVItemFilter *)filter;
+- (instancetype)initWithItemKey:(MHVItemKey *)key;
+- (instancetype)initWithItemKeys:(NSArray *)keys;
+- (instancetype)initWithItemIDs:(NSArray *)ids;
+- (instancetype)initWithItemID:(NSString *)itemID;
+- (instancetype)initWithPendingItems:(NSArray *)pendingItems;
+- (instancetype)initWithItemKey:(MHVItemKey *)key andType:(NSString *)typeID;
+- (instancetype)initWithItemID:(NSString *)itemID andType:(NSString *)typeID;
+- (instancetype)initWithClientID:(NSString *)clientID andType:(NSString *)typeID;
 
 @end
 
-@interface MHVItemQueryCollection : MHVCollection 
+@interface MHVItemQueryCollection : MHVCollection
 
--(void) addItem:(MHVItemQuery *) query;
--(MHVItemQuery *) itemAtIndex:(NSUInteger) index;
+- (void)addItem:(MHVItemQuery *)query;
+- (MHVItemQuery *)itemAtIndex:(NSUInteger)index;
 
 @end
