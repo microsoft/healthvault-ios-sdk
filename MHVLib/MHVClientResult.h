@@ -1,15 +1,15 @@
 //
-//  MHVClientResult.h
-//  MHVLib
+// MHVClientResult.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,13 +26,13 @@
 #define MHVERROR_UNKNOWN [MHVClientResult unknownError]
 
 #ifdef MHV_DETAILEDTYPEERRORS
-#define MHVMAKE_ERROR(code) [MHVClientResult fromCode:code fileName:__FILE__ lineNumber:__LINE__]
+#define MHVMAKE_ERROR(code) [MHVClientResult fromCode:code fileName: __FILE__ lineNumber: __LINE__]
 #else
 #define MHVMAKE_ERROR(code) [MHVClientResult fromCode:code]
 #endif
 
 
-enum MHVClientResultCode
+typedef NS_ENUM(NSInteger, MHVClientResultCode)
 {
     MHVClientResult_Success = 0,
     //
@@ -123,7 +123,7 @@ enum MHVClientResultCode
     MHVClientError_InvalidEncounter,
     MHVClientError_InvalidFamilyHistory,
     MHVClientError_InvalidEmergencyContact,
-    MHVClientError_InvalidPersonalContactInfo,   
+    MHVClientError_InvalidPersonalContactInfo,
     MHVClientError_InvalidBasicDemographics,
     MHVClientError_InvalidPersonalDemographics,
     MHVClientError_InvalidDailyMedicationUsage,
@@ -147,27 +147,21 @@ enum MHVClientResultCode
 };
 
 @interface MHVClientResult : NSObject
-{    
-    enum MHVClientResultCode m_error;
-    const char* m_file;
-    int m_line;
-}
 
 @property (readonly, nonatomic) BOOL isSuccess;
 @property (readonly, nonatomic) BOOL isError;
 
-@property (readonly, nonatomic) enum MHVClientResultCode error;
-@property (readonly, nonatomic) const char* fileName;
+@property (readonly, nonatomic) MHVClientResultCode error;
+@property (readonly, nonatomic) const char *fileName;
 @property (readonly, nonatomic) int lineNumber;
 
-+(void) initialize;
--(id) init;
--(id) initWithCode:(enum MHVClientResultCode)code;
--(id) initWithCode:(enum MHVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line;
+- (instancetype)init;
+- (instancetype)initWithCode:(MHVClientResultCode)code;
+- (instancetype)initWithCode:(MHVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line;
 
-+(MHVClientResult *) success;
-+(MHVClientResult *) unknownError;
-+(MHVClientResult *) fromCode:(enum MHVClientResultCode) code;
-+(MHVClientResult *) fromCode:(enum MHVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line;
++ (MHVClientResult *)success;
++ (MHVClientResult *)unknownError;
++ (MHVClientResult *)fromCode:(MHVClientResultCode)code;
++ (MHVClientResult *)fromCode:(MHVClientResultCode)code fileName:(const char *)fileName lineNumber:(int)line;
 
 @end

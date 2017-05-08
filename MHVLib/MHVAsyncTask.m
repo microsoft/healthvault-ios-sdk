@@ -1,15 +1,15 @@
 //
-//  MHVAsyncTask.m
-//  MHVLib
+// MHVAsyncTask.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,122 +20,90 @@
 #import "MHVAsyncTask.h"
 #import "MHVClient.h"
 
-//-----------------------------------------------
+// -----------------------------------------------
 //
 // MHVTask
 //
-//-----------------------------------------------
-@interface MHVTask (MHVPrivate)
+// -----------------------------------------------
+@interface MHVTask ()
 
--(void) setException:(NSException *) error;
--(void) setParent:(MHVTask *) task;
+@property (readwrite, nonatomic) BOOL cancelled;
+@property (readwrite, nonatomic) BOOL started;
+@property (readwrite, nonatomic) BOOL complete;
 
--(void) nextStep;
-
--(void) queueMethod;
--(void) executeMethod;
--(void) childCompleted:(MHVTask *) task childCallback:(MHVTaskCompletion) callback;
+@property (readwrite, nonatomic, strong) id exception;
+@property (readwrite, nonatomic, weak) MHVTask *parent;
 
 @end
 
 @implementation MHVTask
 
-@synthesize isCancelled = m_cancelled;
-@synthesize isStarted = m_started;
-@synthesize isComplete = m_completed;
-
-@synthesize taskName = m_taskName;
-@synthesize exception = m_exception;
-@synthesize result = m_result;
-@synthesize method = m_taskMethod;
-@synthesize callback = m_callback;
-
-@synthesize operation = m_operation;
-@synthesize shouldCompleteInMainThread = m_completeInMainThread;
-
--(BOOL)hasError
+- (BOOL)hasError
 {
-    return (m_exception != nil);
+    return self.exception != nil;
 }
 
--(BOOL)isDone
+- (BOOL)isDone
 {
-    return (m_cancelled || m_completed);
+    return self.cancelled || self.complete;
 }
 
--(id) result
+- (id)result
 {
     [self checkSuccess];
-    return m_result;
+    return _result;
 }
 
--(id) init
-{
-    return [self initWith:nil];  // this will cause an init failure, which is what we want
-}
-
--(id)initWith:(MHVTaskMethod)current
+- (instancetype)initWithTaskMethod:(MHVTaskMethod)current
 {
     return [self initWithCallback:nil andMethod:current];
 }
 
--(id) initWithCallback:(MHVTaskCompletion)callback
+- (instancetype)initWithCallback:(MHVTaskCompletion)callback
 {
     return [self initWithCallback:callback andChildTask:nil];
 }
 
--(id)initWithCallback:(MHVTaskCompletion)callback andMethod:(MHVTaskMethod)method
+- (instancetype)initWithCallback:(MHVTaskCompletion)callback andMethod:(MHVTaskMethod)method
 {
     MHVCHECK_NOTNULL(method);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    if (callback)
+    if (self)
     {
-        self.callback = callback;
-        MHVCHECK_NOTNULL(m_callback);
+        _callback = callback;
+        
+        [self setNextMethod:method];
     }
-    
-    [self setNextMethod:method];
-    
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initWithCallback:(MHVTaskCompletion)callback andChildTask:(MHVTask *)childTask
+- (instancetype)initWithCallback:(MHVTaskCompletion)callback andChildTask:(MHVTask *)childTask
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    if (callback)
+    if (self)
     {
-        self.callback = callback;
-        MHVCHECK_NOTNULL(m_callback);
+        _callback = callback;
+        
+        if (childTask)
+        {
+            [self setNextTask:childTask];
+        }
     }
-    
-    if (childTask)
-    {
-        [self setNextTask:childTask];
-    }
-    
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(void)start
+- (void)start
 {
-    [self start:^{
+    [self start:^
+    {
         [self nextStep];
     }];
 }
 
--(void)start:(MHVAction)startAction
+- (void)start:(MHVAction)startAction
 {
     @synchronized(self)
     {
@@ -143,13 +111,13 @@ LError:
         {
             return;
         }
-        
-         // We'll free ourselves when we are done (see complete method)
+
+        // We'll free ourselves when we are done (see complete method)
         @try
         {
-            m_cancelled = FALSE;
-            m_started = TRUE;
-            m_completeInMainThread = [NSThread isMainThread];
+            self.cancelled = FALSE;
+            self.started = TRUE;
+            self.shouldCompleteInMainThread = [NSThread isMainThread];
             if (startAction)
             {
                 startAction();
@@ -163,7 +131,7 @@ LError:
     }
 }
 
--(void) cancel
+- (void)cancel
 {
     @synchronized(self)
     {
@@ -171,82 +139,80 @@ LError:
         {
             return;
         }
-        
-        m_cancelled = TRUE;
-        @try 
+
+        self.cancelled = TRUE;
+        @try
         {
-            if (m_operation && [m_operation respondsToSelector:@selector(cancel)])
+            if (self.operation && [self.operation respondsToSelector:@selector(cancel)])
             {
-                [m_operation performSelector:@selector(cancel)];
+                [self.operation performSelector:@selector(cancel)];
                 self.operation = nil;
             }
         }
-        @catch (id exception) 
+        @catch (id exception)
         {
             // Eat cancellation exceptions, since they are harmless
         }
-        
     }
 }
 
--(void) complete
+- (void)completeTask
 {
-    if (m_completeInMainThread && ![NSThread isMainThread])
+    if (self.shouldCompleteInMainThread && ![NSThread isMainThread])
     {
-        [self invokeOnMainThread:@selector(complete)];
+        [self invokeOnMainThread:@selector(completeTask)];
         return;
     }
 
     @synchronized(self)
     {
         self.operation = nil;
-        
-        if (m_completed)
+
+        if (self.isComplete)
         {
             return;
         }
-        
-        m_completed = TRUE;
-        if (m_cancelled)
+
+        self.complete = TRUE;
+        if (self.isCancelled)
         {
             return;
         }
-        
-        @try 
+
+        @try
         {
-            if (m_callback)
+            if (self.callback)
             {
-                m_callback(self);
+                self.callback(self);
             }
         }
-        @catch (id exception) 
+        @catch (id exception)
         {
             [self handleError:exception];
         }
- 
-    }    
+    }
 }
 
--(void) handleError:(id)error
+- (void)handleError:(id)error
 {
     self.exception = error;
     [error log];
 }
 
--(void)clearError
+- (void)clearError
 {
     self.exception = nil;
 }
 
--(void)checkSuccess
+- (void)checkSuccess
 {
-    if (m_exception)
+    if (self.exception)
     {
-        @throw m_exception;
-    }   
+        @throw self.exception;
+    }
 }
 
--(BOOL) setNextMethod:(MHVTaskMethod) nextMethod
+- (BOOL)setNextMethod:(MHVTaskMethod)nextMethod
 {
     @synchronized(self)
     {
@@ -254,13 +220,13 @@ LError:
         {
             return FALSE;
         }
-        
-        self.method = nextMethod;
+
+        self.taskMethod = nextMethod;
         return TRUE;
     }
 }
 
--(BOOL)setNextTask:(MHVTask *) nextTask
+- (BOOL)setNextTask:(MHVTask *)nextTask
 {
     @synchronized(self)
     {
@@ -268,69 +234,58 @@ LError:
         {
             return FALSE;
         }
-        
+
         if (nextTask.isComplete)
         {
             // Completed synchronously perhaps
             self.exception = nextTask.exception;
             return TRUE;
         }
-        
+
         self.operation = nextTask;
         if (nextTask)
         {
             //
             // Make this task the completion handler, so we can intercept callbacks and handle exceptions right
             //
-            MHVTaskCompletion childCallback = nextTask.callback;     
+            MHVTaskCompletion childCallback = nextTask.callback;
             nextTask.parent = self;
-            nextTask.callback = ^(MHVTask *task) 
+            nextTask.callback = ^(MHVTask *task)
             {
                 [task.parent childCompleted:task childCallback:childCallback];
-            };       
+            };
         }
+
         return TRUE;
-    }    
+    }
 }
 
--(void) startChild:(MHVTask *)childTask
+- (void)startChild:(MHVTask *)childTask
 {
     [self setNextTask:childTask];
     [childTask start];
 }
 
-@end
-
-@implementation MHVTask (MHVPrivate)
-
--(void)setException:(id)error
-{
-    m_exception = error;
-}
-
--(void)setParent:(MHVTask *)task
-{
-    _parent = task;
-}
-
--(void) nextStep
+- (void)nextStep
 {
     @synchronized(self)
-    {        
+    {
         id nextOp = nil;
-        @try 
-        {     
-            if (m_completed)
+
+        @try
+        {
+            if (self.isComplete)
             {
                 return;
             }
-            
-            if (!m_cancelled)
+
+            if (!self.isCancelled)
             {
-                if (m_operation)
+                if (self.operation)
                 {
-                    nextOp = m_operation;
+                    nextOp = self.operation;
                 }
+
                 if (nextOp)
                 {
                     if ([nextOp respondsToSelector:@selector(start)])
@@ -339,227 +294,215 @@ LError:
                         return;
                     }
                 }
-                else if (m_taskMethod)
+                else if (self.taskMethod)
                 {
                     [self queueMethod];
                     return;
                 }
             }
         }
-        @catch (id exception) 
+        @catch (id exception)
         {
             [self handleError:exception];
         }
-        @finally 
+        @finally
         {
             nextOp = nil;
         }
-       
-        [self complete];
+
+        [self completeTask];
     }
 }
 
--(void ) queueMethod
+- (void)queueMethod
 {
-    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void) {
+    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^(void) {
         [self executeMethod];
     }];
+
     MHVCHECK_OOM(op);
-    
+
     self.operation = op;
-    
+
     [[MHVClient current] queueOperation:op];
 }
 
--(void)executeMethod
+- (void)executeMethod
 {
-    MHVTaskMethod method = m_taskMethod;
-    @try 
+    MHVTaskMethod method = self.taskMethod;
+
+    @try
     {
-        self.method = nil;
+        self.taskMethod = nil;
         self.operation = nil;
         if (method)
         {
             method(self);
         }
-        
+
         [self nextStep];
-        
+
         return;
     }
-    @catch (id exception) 
+    @catch (id exception)
     {
         [self handleError:exception];
     }
-    @finally 
+    @finally
     {
         method = nil;
     }
-    
-    [self complete];
-    
+
+    [self completeTask];
 }
 
--(void) childCompleted:(MHVTask *)child childCallback:(MHVTaskCompletion)callback
+- (void)childCompleted:(MHVTask *)child childCallback:(MHVTaskCompletion)callback
 {
-    @try 
+    @try
     {
         self.operation = nil;
         if (callback)
         {
             callback(child);
         }
-        
+
         [self scheduleNextChildStep];
         [self nextStep];
-        
+
         return;
     }
-    @catch (id exception) 
+    @catch (id exception)
     {
         [self handleError:exception];
     }
-    @finally 
+    @finally
     {
-        [child setParent:nil];
+        child.parent = nil;
     }
-    
-    [self complete];
-} 
 
--(void) scheduleNextChildStep
+    [self completeTask];
+}
+
+- (void)scheduleNextChildStep
 {
-    
 }
 
 @end
 
-//-----------------------------------------------
+// -----------------------------------------------
 //
 // MHVTaskSequenceRunner
 //
-//-----------------------------------------------
+// -----------------------------------------------
 @interface MHVTaskSequenceRunner : MHVTask
-{
-@protected
-    MHVTaskSequence* m_sequence;
-}
 
--(id) initWithSequence:(MHVTaskSequence *) sequence;
+@property (nonatomic, strong) MHVTaskSequence *sequence;
 
--(BOOL) moveToNextTask;
--(void) notifyAborted;
+- (instancetype)initWithSequence:(MHVTaskSequence *)sequence;
+
+- (BOOL)moveToNextTask;
+- (void)notifyAborted;
 
 @end
 
 
-//-----------------------------------------------
+// -----------------------------------------------
 //
 // MHVTaskSequence
 //
-//-----------------------------------------------
+// -----------------------------------------------
 @implementation MHVTaskSequence
 
-@synthesize name = m_name;
-
-
--(id)nextObject
+- (id)nextObject
 {
     return [self nextTask];
 }
 
--(MHVTask *)nextTask
+- (MHVTask *)nextTask
 {
     return nil;
 }
 
--(void)onAborted
+- (void)onAborted
 {
-    
 }
 
-+(MHVTask *)run:(MHVTaskSequence *)sequence callback:(MHVTaskCompletion)callback
++ (MHVTask *)run:(MHVTaskSequence *)sequence callback:(MHVTaskCompletion)callback
 {
-    MHVTask* task = [MHVTaskSequence newRunTaskFor:sequence callback:callback];
+    MHVTask *task = [MHVTaskSequence newRunTaskFor:sequence callback:callback];
+
     [task start];
-    
+
     return task;
 }
 
-+(MHVTask *)newRunTaskFor:(MHVTaskSequence *)sequence callback:(MHVTaskCompletion)callback
++ (MHVTask *)newRunTaskFor:(MHVTaskSequence *)sequence callback:(MHVTaskCompletion)callback
 {
-    MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
+    MHVTask *task = [[MHVTask alloc] initWithCallback:callback];
     MHVCHECK_NOTNULL(task);
 
-    MHVTaskSequenceRunner* runner = [[MHVTaskSequenceRunner alloc] initWithSequence:sequence];
+    MHVTaskSequenceRunner *runner = [[MHVTaskSequenceRunner alloc] initWithSequence:sequence];
     MHVCHECK_NOTNULL(runner);
-    
+
     [task setNextTask:runner];
-    
+
     return task;
-    
-LError:
-    return nil;
 }
 
 @end
 
 @implementation MHVTaskStateMachine
 
-@synthesize stateID = m_stateID;
-
 @end
 
-//-----------------------------------------------
+// -----------------------------------------------
 //
 // MHVTaskSequenceRunner
 //
-//-----------------------------------------------
+// -----------------------------------------------
 
 @implementation MHVTaskSequenceRunner
 
--(id)initWithSequence:(MHVTaskSequence *)sequence
+- (instancetype)initWithSequence:(MHVTaskSequence *)sequence
 {
     MHVCHECK_NOTNULL(sequence);
-    
-    self = [super initWithCallback:^(MHVTask *task) {
-        
+
+    self = [super initWithCallback:^(MHVTask *task)
+    {
         [task checkSuccess];
-        
     }];
-    MHVCHECK_SELF;
     
-    m_sequence = sequence;
-    self.taskName = sequence.name;
+    if (self)
+    {
+        _sequence = sequence;
+        self.taskName = sequence.name;
+    }
     
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(void)start
+- (void)start
 {
     [MHVTaskSequenceRunner setNextTaskInSequence:self];
     [super start];
 }
 
--(void)cancel
+- (void)cancel
 {
     [super cancel];
     [self notifyAborted];
 }
 
--(void) scheduleNextChildStep
+- (void)scheduleNextChildStep
 {
     [MHVTaskSequenceRunner setNextTaskInSequence:self];
 }
 
-+(void) setNextTaskInSequence:(MHVTask *) task
++ (void)setNextTaskInSequence:(MHVTask *)task
 {
-    MHVTaskSequenceRunner* runner = (MHVTaskSequenceRunner *) task;
+    MHVTaskSequenceRunner *runner = (MHVTaskSequenceRunner *)task;
     BOOL isCancelled = TRUE;
+
     @try
     {
         isCancelled = [runner moveToNextTask];
@@ -574,36 +517,37 @@ LError:
 }
 
 // Return false if aborted -- i.e. cancelled
--(BOOL) moveToNextTask
+- (BOOL)moveToNextTask
 {
     while (!self.isCancelled)
     {
-        MHVTask* nextTask = [m_sequence nextTask];
+        MHVTask *nextTask = [self.sequence nextTask];
         if (!nextTask)
         {
             self.operation = nil;
             return FALSE;
         }
-        
+
         if (![self setNextTask:nextTask] ||
             !nextTask.isComplete ||
-            nextTask.hasError
-            )
+            nextTask.hasError)
         {
             return FALSE;
         }
+
         //
         // Move on to the next state
         //
     }
-    
+
     return TRUE; // aborted
 }
 
--(void)notifyAborted
+- (void)notifyAborted
 {
-    safeInvokeAction(^{
-        [m_sequence onAborted];
+    safeInvokeAction(^
+    {
+        [self.sequence onAborted];
     });
 }
 
