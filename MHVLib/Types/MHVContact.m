@@ -30,7 +30,7 @@ static NSString* const c_element_email = @"email";
 
 -(BOOL)hasAddress
 {
-    return ![NSArray isNilOrEmpty:m_address];
+    return ![MHVCollection isNilOrEmpty:m_address];
 }
 
 -(MHVAddressCollection *)address
@@ -46,7 +46,7 @@ static NSString* const c_element_email = @"email";
 
 -(BOOL)hasPhone
 {
-    return ![NSArray isNilOrEmpty:m_phone];
+    return ![MHVCollection isNilOrEmpty:m_phone];
 }
 
 -(MHVPhoneCollection *)phone
@@ -62,7 +62,7 @@ static NSString* const c_element_email = @"email";
 
 -(BOOL)hasEmail
 {
-    return ![NSArray isNilOrEmpty:m_email];
+    return ![MHVCollection isNilOrEmpty:m_email];
 }
 
 -(MHVEmailCollection *)email
@@ -145,9 +145,9 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_address elements:m_address];
-    [writer writeElementArray:c_element_phone elements:m_phone];
-    [writer writeElementArray:c_element_email elements:m_email];
+    [writer writeElementArray:c_element_address elements:m_address.toArray];
+    [writer writeElementArray:c_element_phone elements:m_phone.toArray];
+    [writer writeElementArray:c_element_email elements:m_email.toArray];
 }
 
 -(void)deserialize:(XReader *)reader

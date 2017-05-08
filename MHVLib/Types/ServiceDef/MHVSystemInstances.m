@@ -47,7 +47,7 @@ static NSString* const c_element_instance = @"instance";
 
 -(void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_instance elements:m_instances];
+    [writer writeElementArray:c_element_instance elements:m_instances.toArray];
 }
 
 @end

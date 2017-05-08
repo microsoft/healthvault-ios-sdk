@@ -29,10 +29,10 @@ static const xmlChar* x_element_code = XMLSTRINGCONST("code");
 
 -(BOOL) hasCodes
 {
-    return ![NSArray isNilOrEmpty:m_codes];
+    return ![MHVCollection isNilOrEmpty:m_codes];
 }
 
--(NSMutableArray *) codes
+-(MHVCodedValueCollection *) codes
 {
     MHVENSURE(m_codes, MHVCodedValueCollection);
     return m_codes;
@@ -63,7 +63,7 @@ static const xmlChar* x_element_code = XMLSTRINGCONST("code");
     self.text = textValue;
     if (code)
     {
-        NSMutableArray *codes = self.codes;
+        MHVCodedValueCollection *codes = self.codes;
         MHVCHECK_NOTNULL(codes);
         [codes addObject:code];
     }
@@ -196,7 +196,7 @@ LError:
 -(void) serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_text value:m_text];
-    [writer writeElementArray:c_element_code elements:m_codes];
+    [writer writeElementArray:c_element_code elements:m_codes.toArray];
 }
 
 -(void) deserialize:(XReader *)reader

@@ -78,13 +78,13 @@ LError:
     @try
     {
         sections = [self createStringsFromSections];
-        [writer writeElementArray:c_element_section elements:sections];
+        [writer writeElementArray:c_element_section elements:sections.toArray];
         if (m_sections & MHVItemSection_Data)
         {
             [writer writeEmptyElement:c_element_xml];
         }
-        [writer writeElementArray:c_element_xml elements:m_transforms];
-        [writer writeElementArray:c_element_versions elements:m_typeVersions];
+        [writer writeElementArray:c_element_xml elements:m_transforms.toArray];
+        [writer writeElementArray:c_element_versions elements:m_typeVersions.toArray];
     }
     @finally {
         sections = nil;

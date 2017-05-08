@@ -36,7 +36,7 @@ static NSString* const c_element_position = @"position";
 
 -(BOOL)hasResults
 {
-    return ![NSArray isNilOrEmpty:m_results];
+    return ![MHVCollection isNilOrEmpty:m_results];
 }
 
 -(MHVVitalSignResultCollection *)results
@@ -108,7 +108,7 @@ LError:
 -(void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_when content:m_when];
-    [writer writeElementArray:c_element_results elements:m_results];
+    [writer writeElementArray:c_element_results elements:m_results.toArray];
     [writer writeElement:c_element_site value:m_site];
     [writer writeElement:c_element_position value:m_position];
 }
