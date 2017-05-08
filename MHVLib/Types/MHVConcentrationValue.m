@@ -1,8 +1,8 @@
 //
-//  MHVConcentrationValue.m
-//  MHVLib
+// MHVConcentrationValue.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,133 +19,128 @@
 #import "MHVCommon.h"
 #import "MHVConcentrationValue.h"
 
-NSString* const c_element_mmolPL = @"mmolPerL";
-NSString* const c_element_display = @"display";
+NSString *const c_element_mmolPL = @"mmolPerL";
+NSString *const c_element_display = @"display";
 
-const xmlChar* x_element_mmolPL = XMLSTRINGCONST("mmolPerL");
-const xmlChar* x_element_display = XMLSTRINGCONST("display");
+const xmlChar *x_element_mmolPL = XMLSTRINGCONST("mmolPerL");
+const xmlChar *x_element_display = XMLSTRINGCONST("display");
 
-NSString* const c_mmolPlUnits = @"mmol/L";
-NSString* const c_mmolUnitsCode = @"mmol-per-l";
-NSString* const c_mgDLUnits = @"mg/dL";
-NSString* const c_mgDLUnitsCode = @"mg-per-dl";
+NSString *const c_mmolPlUnits = @"mmol/L";
+NSString *const c_mmolUnitsCode = @"mmol-per-l";
+NSString *const c_mgDLUnits = @"mg/dL";
+NSString *const c_mgDLUnitsCode = @"mg-per-dl";
+
+@interface MHVConcentrationValue ()
+
+@property (readwrite, nonatomic, strong) MHVNonNegativeDouble *value;
+
+@end
 
 @implementation MHVConcentrationValue
 
-@synthesize value = m_mmolPerl;
-@synthesize display = m_display;
-
--(double)mmolPerLiter
+- (double)mmolPerLiter
 {
-    return m_mmolPerl ? m_mmolPerl.value : NAN;
+    return self.value ? self.value.value : NAN;
 }
 
--(void)setMmolPerLiter:(double)mmolPerLiter
+- (void)setMmolPerLiter:(double)mmolPerLiter
 {
-    MHVENSURE(m_mmolPerl, MHVNonNegativeDouble);
-    m_mmolPerl.value = mmolPerLiter;
+    MHVENSURE(_value, MHVNonNegativeDouble);
+    _value.value = mmolPerLiter;
     [self updateDisplayValue:mmolPerLiter units:c_mmolPlUnits andUnitsCode:c_mmolUnitsCode];
 }
 
--(id)initWithMmolPerLiter:(double)value
+- (instancetype)initWithMmolPerLiter:(double)value
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.mmolPerLiter = value;
-    
-    return self;
-    
-LError:
-    MHVALLOC_FAIL;
-}
-
--(id)initWithMgPerDL:(double)value gramsPerMole:(double)gramsPerMole
-{
-    self = [super init];
-    MHVCHECK_SELF;
-    
-    [self setMgPerDL:value gramsPerMole:gramsPerMole];
-    
-    return self;
-    
-LError:
-    MHVALLOC_FAIL;
-}
-
-
--(double)mgPerDL:(double)gramsPerMole
-{
-    if (m_mmolPerl)
+    if (self)
     {
-        return mmolPerLToMgDL(m_mmolPerl.value, gramsPerMole);
+        [self setMmolPerLiter:value];
     }
-    
+    return self;
+}
+
+- (instancetype)initWithMgPerDL:(double)value gramsPerMole:(double)gramsPerMole
+{
+    self = [super init];
+    if (self)
+    {
+        [self setMgPerDL:value gramsPerMole:gramsPerMole];
+    }
+
+    return self;
+}
+
+- (double)mgPerDL:(double)gramsPerMole
+{
+    if (_value)
+    {
+        return mmolPerLToMgDL(_value.value, gramsPerMole);
+    }
+
     return NAN;
 }
 
--(void)setMgPerDL:(double)value gramsPerMole:(double)gramsPerMole
+- (void)setMgPerDL:(double)value gramsPerMole:(double)gramsPerMole
 {
     double mmolPerl = mgDLToMmolPerL(value, gramsPerMole);
-    
-    MHVENSURE(m_mmolPerl, MHVNonNegativeDouble);
-    m_mmolPerl.value = mmolPerl;
+
+    MHVENSURE(_value, MHVNonNegativeDouble);
+    _value.value = mmolPerl;
     [self updateDisplayValue:value units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
 
--(BOOL) updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
+- (BOOL)updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
+
     MHVCHECK_NOTNULL(newValue);
-    
+
     if (code)
     {
         newValue.unitsCode = code;
     }
-    
-    m_display = newValue;
-    
+
+    self.display = newValue;
+
     return TRUE;
-    
-LError:
-    return FALSE;
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
     return [self toStringWithFormat:@"%.3f mmol/l"];
 }
 
--(NSString *)toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
     return [NSString localizedStringWithFormat:format, self.mmolPerLiter];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_mmolPerl, MHVClientError_InvalidConcentrationValue);
-    MHVVALIDATE_OPTIONAL(m_display);
-    
+
+    MHVVALIDATE(self.value, MHVClientError_InvalidConcentrationValue);
+    MHVVALIDATE_OPTIONAL(self.display);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_mmolPL content:m_mmolPerl];
-    [writer writeElementXmlName:x_element_display content:m_display];
+    [writer writeElementXmlName:x_element_mmolPL content:self.value];
+    [writer writeElementXmlName:x_element_display content:self.display];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_mmolPerl = [reader readElementWithXmlName:x_element_mmolPL asClass:[MHVNonNegativeDouble class]];
-    m_display = [reader readElementWithXmlName:x_element_display asClass:[MHVDisplayValue class]];
+    self.value = [reader readElementWithXmlName:x_element_mmolPL asClass:[MHVNonNegativeDouble class]];
+    self.display = [reader readElementWithXmlName:x_element_display asClass:[MHVDisplayValue class]];
 }
 
 @end

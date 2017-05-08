@@ -1,15 +1,15 @@
 //
-//  MHVAddress.h
-//  MHVLib
+// MHVAddress.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,82 +22,71 @@
 #import "MHVVocab.h"
 
 @interface MHVAddress : MHVType
-{
-@private
-    NSString* m_type;
-    MHVBool* m_isprimary;
-    MHVStringCollection* m_street;
-    NSString* m_city;
-    NSString* m_state;
-    NSString* m_postalCode;
-    NSString* m_country;
-    NSString* m_county;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Optional) A description of this address, such as "Home"
 //
-@property (readwrite, nonatomic, strong) NSString* type;
-@property (readwrite, nonatomic, strong) MHVBool* isPrimary;
+@property (readwrite, nonatomic, strong) NSString *type;
+@property (readwrite, nonatomic, strong) MHVBool *isPrimary;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) MHVStringCollection* street;
+@property (readwrite, nonatomic, strong) MHVStringCollection *street;
 //
 // (Required)
-// 
-@property (readwrite, nonatomic, strong) NSString* city;
+//
+@property (readwrite, nonatomic, strong) NSString *city;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) NSString* state;
+@property (readwrite, nonatomic, strong) NSString *state;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) NSString* postalCode;
+@property (readwrite, nonatomic, strong) NSString *postalCode;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) NSString* country;
+@property (readwrite, nonatomic, strong) NSString *country;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) NSString* county;
+@property (readwrite, nonatomic, strong) NSString *county;
 
 @property (readonly, nonatomic) BOOL hasStreet;
 
-//-------------------------
+// -------------------------
 //
 // Vocabs
 //
-//-------------------------
-+(MHVVocabIdentifier *) vocabForCountries;
-+(MHVVocabIdentifier *) vocabForUSStates;
-+(MHVVocabIdentifier *) vocabForCanadianProvinces;
+// -------------------------
++ (MHVVocabIdentifier *)vocabForCountries;
++ (MHVVocabIdentifier *)vocabForUSStates;
++ (MHVVocabIdentifier *)vocabForCanadianProvinces;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) toString;
+// -------------------------
+- (NSString *)toString;
 
 @end
 
 
-//-------------------------
+// -------------------------
 //
 // MHVAddressCollection
 //
-//-------------------------
+// -------------------------
 
 @interface MHVAddressCollection : MHVCollection
 
--(MHVAddress *) itemAtIndex:(NSUInteger) index;
+- (MHVAddress *)itemAtIndex:(NSUInteger)index;
 
 @end

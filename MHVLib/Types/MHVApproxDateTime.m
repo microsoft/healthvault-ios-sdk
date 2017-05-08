@@ -1,15 +1,15 @@
 //
-//  MHVApproxDateTime.m
-//  MHVLib
+// MHVApproxDateTime.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,168 +20,160 @@
 #import "MHVCommon.h"
 #import "MHVApproxDateTime.h"
 
-static NSString* const c_element_descriptive = @"descriptive";
-static NSString* const c_element_structured = @"structured";
+static NSString *const c_element_descriptive = @"descriptive";
+static NSString *const c_element_structured = @"structured";
 
 @implementation MHVApproxDateTime
 
-@synthesize descriptive = m_descriptive;
-@synthesize dateTime = m_dateTime;
-
--(void)setDescriptive:(NSString *)descriptive
+- (void)setDescriptive:(NSString *)descriptive
 {
     if (![NSString isNilOrEmpty:descriptive])
     {
-        m_dateTime = nil;    
+        _dateTime = nil;
     }
-    m_descriptive = descriptive;
+    
+    _descriptive = descriptive;
 }
 
--(void)setDateTime:(MHVDateTime *)dateTime
+- (void)setDateTime:(MHVDateTime *)dateTime
 {
     if (dateTime)
     {
-        m_descriptive = nil;
+        _descriptive = nil;
     }
-    m_dateTime = dateTime;
+    
+    _dateTime = dateTime;
 }
 
--(BOOL)isStructured
+- (BOOL)isStructured
 {
-    return (m_dateTime != nil);
+    return self.dateTime != nil;
 }
 
--(id)initWithDescription:(NSString *)descr
+- (instancetype)initWithDescription:(NSString *)descr
 {
     MHVCHECK_NOTNULL(descr);
     
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.descriptive = descr;
-    
+    if (self)
+    {
+        _descriptive = descr;
+    }
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initWithDate:(NSDate *)date
+- (instancetype)initWithDate:(NSDate *)date
 {
-    MHVDateTime* dateTime = [[MHVDateTime alloc] initWithDate:date];
+    MHVDateTime *dateTime = [[MHVDateTime alloc] initWithDate:date];
+    
     MHVCHECK_NOTNULL(dateTime);
     
     self = [self initWithDateTime:dateTime];
     
     return self;
-
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initWithDateTime:(MHVDateTime *)dateTime
+- (instancetype)initWithDateTime:(MHVDateTime *)dateTime
 {
     MHVCHECK_NOTNULL(dateTime);
     
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.dateTime = dateTime;
+    if (self)
+    {
+        _dateTime = dateTime;
+    }
     
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initNow
+- (instancetype)initNow
 {
     return [self initWithDate:[NSDate date]];
 }
 
-
-+(MHVApproxDateTime *)fromDate:(NSDate *)date
++ (MHVApproxDateTime *)fromDate:(NSDate *)date
 {
     return [[MHVApproxDateTime alloc] initWithDate:date];
 }
 
-+(MHVApproxDateTime *)fromDescription:(NSString *)descr
++ (MHVApproxDateTime *)fromDescription:(NSString *)descr
 {
     return [[MHVApproxDateTime alloc] initWithDescription:descr];
 }
 
-+(MHVApproxDateTime *)now
++ (MHVApproxDateTime *)now
 {
     return [[MHVApproxDateTime alloc] initNow];
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
-    if (m_dateTime)
+    if (self.dateTime)
     {
-        return [m_dateTime toString];
+        return [self.dateTime toString];
     }
     
-    return (m_descriptive) ? m_descriptive : c_emptyString;
+    return (self.descriptive) ? self.descriptive : c_emptyString;
 }
 
--(NSString *)toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
-    if (m_dateTime)
+    if (self.dateTime)
     {
-        return [m_dateTime toStringWithFormat:format];
+        return [self.dateTime toStringWithFormat:format];
     }
     
-    return (m_descriptive) ? m_descriptive : c_emptyString;
+    return (self.descriptive) ? self.descriptive : c_emptyString;
 }
 
--(NSDate *)toDate
+- (NSDate *)toDate
 {
-    if (m_dateTime)
+    if (self.dateTime)
     {
-        return [m_dateTime toDate];
+        return [self.dateTime toDate];
     }
     
     return nil;
 }
 
--(NSDate *)toDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)toDateForCalendar:(NSCalendar *)calendar
 {
-    if (m_dateTime)
+    if (self.dateTime)
     {
-        return [m_dateTime toDateForCalendar:calendar];
+        return [self.dateTime toDateForCalendar:calendar];
     }
     
-    return nil;    
+    return nil;
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
     //
     // The data type is a choice. You can do one or the other
     //
-    MHVVALIDATE_TRUE((m_dateTime || m_descriptive), MHVClientError_InvalidApproxDateTime);
-    MHVVALIDATE_TRUE((!(m_dateTime && m_descriptive)), MHVClientError_InvalidApproxDateTime);
+    MHVVALIDATE_TRUE((self.dateTime || self.descriptive), MHVClientError_InvalidApproxDateTime);
+    
+    MHVVALIDATE_TRUE((!(self.dateTime && self.descriptive)), MHVClientError_InvalidApproxDateTime);
     
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_descriptive value:m_descriptive];
-    [writer writeElement:c_element_structured content:m_dateTime];
+    [writer writeElement:c_element_descriptive value:self.descriptive];
+    [writer writeElement:c_element_structured content:self.dateTime];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_descriptive = [reader readStringElement:c_element_descriptive];
-    m_dateTime = [reader readElement:c_element_structured asClass:[MHVDateTime class]];
+    self.descriptive = [reader readStringElement:c_element_descriptive];
+    self.dateTime = [reader readElement:c_element_structured asClass:[MHVDateTime class]];
 }
 
 @end

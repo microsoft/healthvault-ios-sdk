@@ -1,15 +1,15 @@
 //
-//  MHVItemQueryResults.h
-//  MHVLib
+// MHVItemQueryResults.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,15 +21,11 @@
 #import "MHVItemQueryResult.h"
 
 @interface MHVItemQueryResults : MHVType
-{
-    MHVItemQueryResultCollection* m_results;
-}
-
 //
 // You can send multiple queries in a single MHVGetItemsTask
-// 
-@property (readwrite, nonatomic, strong) MHVItemQueryResultCollection* results;
+//
+@property (readwrite, nonatomic, strong) MHVItemQueryResultCollection *results;
 @property (readonly, nonatomic) BOOL hasResults;
-@property (readonly, nonatomic, strong) MHVItemQueryResult* firstResult;
+@property (readonly, nonatomic, strong) MHVItemQueryResult *firstResult;
 
 @end

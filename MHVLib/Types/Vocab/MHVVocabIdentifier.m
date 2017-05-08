@@ -1,15 +1,15 @@
 //
-//  MHVVocabIdentifier.m
-//  MHVLib
+// MHVVocabIdentifier.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,153 +19,138 @@
 #import "MHVCommon.h"
 #import "MHVVocabIdentifier.h"
 
-static NSString* const c_element_name = @"name";
-static NSString* const c_element_family = @"family";
-static NSString* const c_element_version = @"version";
-static NSString* const c_element_lang = @"xml:lang";
-static NSString* const c_element_code = @"code-value";
+static NSString *const c_element_name = @"name";
+static NSString *const c_element_family = @"family";
+static NSString *const c_element_version = @"version";
+static NSString *const c_element_lang = @"xml:lang";
+static NSString *const c_element_code = @"code-value";
 
-NSString* const c_rxNormFamily = @"RxNorm";
-NSString* const c_snomedFamily = @"Snomed";
-NSString* const c_hvFamily = @"wc";
-NSString* const c_icdFamily = @"icd";
-NSString* const c_hl7Family = @"HL7";
-NSString* const c_isoFamily = @"iso";
-NSString* const c_usdaFamily = @"usda";
+NSString *const c_rxNormFamily = @"RxNorm";
+NSString *const c_snomedFamily = @"Snomed";
+NSString *const c_hvFamily = @"wc";
+NSString *const c_icdFamily = @"icd";
+NSString *const c_hl7Family = @"HL7";
+NSString *const c_isoFamily = @"iso";
+NSString *const c_usdaFamily = @"usda";
+
+@interface MHVVocabIdentifier ()
+
+@property (nonatomic, strong) NSString *keyString;
+
+@end
 
 @implementation MHVVocabIdentifier
 
-@synthesize name = m_name;
-@synthesize family = m_family; 
-@synthesize version = m_version;
-@synthesize language = m_lang;
-@synthesize codeValue = m_codeValue;
-
--(id)initWithFamily:(NSString *)family andName:(NSString *)name
+- (instancetype)initWithFamily:(NSString *)family andName:(NSString *)name
 {
     MHVCHECK_STRING(family);
     MHVCHECK_STRING(name);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.family = family;
-    self.name = name;
-    
+    if (self)
+    {
+        _family = family;
+        _name = name;
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(MHVCodedValue *)codedValueForItem:(MHVVocabItem *)vocabItem
+- (MHVCodedValue *)codedValueForItem:(MHVVocabItem *)vocabItem
 {
     MHVCHECK_NOTNULL(vocabItem);
-    
-    return [[MHVCodedValue alloc] initWithCode:vocabItem.code vocab:m_name vocabFamily:m_family vocabVersion:m_version];
-    
-LError:
-    return nil;
+
+    return [[MHVCodedValue alloc] initWithCode:vocabItem.code vocab:self.name vocabFamily:self.family vocabVersion:self.version];
 }
 
--(MHVCodedValue *)codedValueForCode:(NSString *)code
+- (MHVCodedValue *)codedValueForCode:(NSString *)code
 {
     MHVCHECK_STRING(code);
-    
-    return [[MHVCodedValue alloc] initWithCode:code vocab:m_name vocabFamily:m_family vocabVersion:m_version];
-LError:
-    return nil;
+
+    return [[MHVCodedValue alloc] initWithCode:code vocab:self.name vocabFamily:self.family vocabVersion:self.version];
 }
 
--(MHVCodableValue *)codableValueForText:(NSString *)text andCode:(NSString *)code
+- (MHVCodableValue *)codableValueForText:(NSString *)text andCode:(NSString *)code
 {
-    MHVCodableValue* codable = [MHVCodableValue fromText:text];
+    MHVCodableValue *codable = [MHVCodableValue fromText:text];
+
     MHVCHECK_NOTNULL(codable);
-    
-    MHVCodedValue* codedValue = [self codedValueForCode:code];
+
+    MHVCodedValue *codedValue = [self codedValueForCode:code];
     MHVCHECK_NOTNULL(codedValue);
-    
+
     [codable addCode:codedValue];
-    
+
     return codable;
-    
-LError:
-    return nil;
 }
 
--(NSString *)toKeyString
+- (NSString *)toKeyString
 {
-    if (m_keyString)
+    if (self.keyString)
     {
-        return m_keyString;
+        return self.keyString;
     }
-    
-    NSString* keyString;
-    if (m_version)
+
+    if (self.version)
     {
-        keyString = [NSString stringWithFormat:@"%@_%@_%@", m_name, m_family, m_version];
+        self.keyString = [NSString stringWithFormat:@"%@_%@_%@", self.name, self.family, self.version];
     }
-    else 
+    else
     {
-        keyString = [NSString stringWithFormat:@"%@_%@", m_name, m_family];
+        self.keyString = [NSString stringWithFormat:@"%@_%@", self.name, self.family];
     }
-    
-    m_keyString = keyString;
-    return m_keyString;
+
+    return self.keyString;
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidVocabIdentifier);
-    
+
+    MHVVALIDATE_STRING(self.name, MHVClientError_InvalidVocabIdentifier);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serializeAttributes:(XWriter *)writer
+- (void)serializeAttributes:(XWriter *)writer
 {
-    [writer writeAttribute:c_element_lang value:m_lang];
+    [writer writeAttribute:c_element_lang value:self.language];
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_name value:m_name];
-    [writer writeElement:c_element_family value:m_family];
-    [writer writeElement:c_element_version value:m_version];
-    [writer writeElement:c_element_code value:m_codeValue];
+    [writer writeElement:c_element_name value:self.name];
+    [writer writeElement:c_element_family value:self.family];
+    [writer writeElement:c_element_version value:self.version];
+    [writer writeElement:c_element_code value:self.codeValue];
 }
 
--(void)deserializeAttributes:(XReader *)reader
+- (void)deserializeAttributes:(XReader *)reader
 {
-    m_lang = [reader readAttribute:c_element_lang];
+    self.language = [reader readAttribute:c_element_lang];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_name = [reader readStringElement:c_element_name];
-    m_family = [reader readStringElement:c_element_family];
-    m_version = [reader readStringElement:c_element_version];
-    m_codeValue = [reader readStringElement:c_element_code];
+    self.name = [reader readStringElement:c_element_name];
+    self.family = [reader readStringElement:c_element_family];
+    self.version = [reader readStringElement:c_element_version];
+    self.codeValue = [reader readStringElement:c_element_code];
 }
 
 @end
 
 @implementation MHVVocabIdentifierCollection
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVVocabIdentifier class];
-    
+    if (self)
+    {
+        self.type = [MHVVocabIdentifier class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
 @end
-

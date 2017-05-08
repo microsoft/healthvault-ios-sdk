@@ -1,15 +1,15 @@
 //
-//  MHVAssessmentField.h
-//  MHVLib
+// MHVAssessmentField.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,40 +21,34 @@
 #import "MHVCodableValue.h"
 
 @interface MHVAssessmentField : MHVType
-{
-@private
-    MHVCodableValue* m_name;
-    MHVCodableValue* m_value;
-    MHVCodableValue* m_group;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* name;
+@property (readwrite, nonatomic, strong) MHVCodableValue *name;
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* value;
+@property (readwrite, nonatomic, strong) MHVCodableValue *value;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* fieldGroup;
+@property (readwrite, nonatomic, strong) MHVCodableValue *fieldGroup;
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
--(id) initWithName:(NSString *) name andValue:(NSString *) value;
--(id) initWithName:(NSString *) name value:(NSString *) value andGroup:(NSString *) group;
+// -------------------------
+- (instancetype)initWithName:(NSString *)name andValue:(NSString *)value;
+- (instancetype)initWithName:(NSString *)name value:(NSString *)value andGroup:(NSString *)group;
 
-+(MHVAssessmentField *) from:(NSString *) name andValue:(NSString *) value;
++ (MHVAssessmentField *)from:(NSString *)name andValue:(NSString *)value;
 
 @end
 

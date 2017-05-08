@@ -1,8 +1,8 @@
 //
-//  MHVShellInfo.h
-//  MHVLib
+// MHVShellInfo.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,13 +21,8 @@
 #import "MHVType.h"
 
 @interface MHVShellInfo : MHVType
-{
-@private
-    NSString* m_url;
-    NSString* m_redirectUrl;
-}
 
-@property (readwrite, nonatomic, strong) NSString* url;
-@property (readwrite, nonatomic, strong) NSString* redirectUrl;
+@property (readwrite, nonatomic, strong) NSString *url;
+@property (readwrite, nonatomic, strong) NSString *redirectUrl;
 
 @end

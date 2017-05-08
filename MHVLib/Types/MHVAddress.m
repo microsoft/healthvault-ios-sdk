@@ -1,15 +1,15 @@
 //
-//  MHVAddress.m
-//  MHVLib
+// MHVAddress.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,130 +19,118 @@
 #import "MHVCommon.h"
 #import "MHVAddress.h"
 
-static NSString* const c_element_description = @"description";
-static NSString* const c_element_isPrimary = @"is-primary";
-static NSString* const c_element_street = @"street";
-static NSString* const c_element_city = @"city";
-static NSString* const c_element_state = @"state";
-static NSString* const c_element_postalCode = @"postcode";
-static NSString* const c_element_country = @"country";
-static NSString* const c_element_county = @"county";
+static NSString *const c_element_description = @"description";
+static NSString *const c_element_isPrimary = @"is-primary";
+static NSString *const c_element_street = @"street";
+static NSString *const c_element_city = @"city";
+static NSString *const c_element_state = @"state";
+static NSString *const c_element_postalCode = @"postcode";
+static NSString *const c_element_country = @"country";
+static NSString *const c_element_county = @"county";
 
 @implementation MHVAddress
 
-@synthesize type = m_type;
-@synthesize isPrimary = m_isprimary;
-@synthesize city = m_city;
-@synthesize state = m_state;
-@synthesize postalCode = m_postalCode;
-@synthesize country = m_country;
-@synthesize county = m_county;
-
 -(BOOL)hasStreet
 {
-    return ![MHVCollection isNilOrEmpty:m_street];
+    return ![MHVCollection isNilOrEmpty:self.street];
 }
 
--(MHVStringCollection *)street
+- (MHVStringCollection *)street
 {
-    MHVENSURE(m_street, MHVStringCollection);
-    return m_street;
+    MHVENSURE(_street, MHVStringCollection);
+    return _street;
 }
 
--(void)setStreet:(MHVStringCollection *)street
+- (NSString *)toString
 {
-    m_street = street;
-}
+    NSMutableString *text = [[NSMutableString alloc] init];
 
+    [text appendOptionalWords:[self.street toString]];
 
--(NSString *)toString
-{
-    NSMutableString* text = [[NSMutableString alloc] init];
-    
-    [text appendOptionalWords:[m_street toString]];
-    
-    [text appendOptionalStringOnNewLine:m_city];
-    [text appendOptionalStringOnNewLine:m_county];        
-    
-    [text appendOptionalStringOnNewLine:m_state];
-    [text appendOptionalWords:m_postalCode];
-    [text appendOptionalStringOnNewLine:m_country];
-    
+    [text appendOptionalStringOnNewLine:self.city];
+    [text appendOptionalStringOnNewLine:self.county];
+
+    [text appendOptionalStringOnNewLine:self.state];
+    [text appendOptionalWords:self.postalCode];
+    [text appendOptionalStringOnNewLine:self.country];
+
     return text;
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
-+(MHVVocabIdentifier *)vocabForCountries
++ (MHVVocabIdentifier *)vocabForCountries
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_isoFamily andName:@"iso3166"];        
+    return [[MHVVocabIdentifier alloc] initWithFamily:c_isoFamily andName:@"iso3166"];
 }
 
-+(MHVVocabIdentifier *)vocabForUSStates
++ (MHVVocabIdentifier *)vocabForUSStates
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"states"];        
+    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"states"];
 }
 
-+(MHVVocabIdentifier *)vocabForCanadianProvinces
++ (MHVVocabIdentifier *)vocabForCanadianProvinces
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"provinces"];        
+    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"provinces"];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE_ARRAY(m_street, MHVClientError_InvalidAddress);
-    MHVVALIDATE_STRING(m_city, MHVClientError_InvalidAddress);
-    MHVVALIDATE_STRING(m_postalCode, MHVClientError_InvalidAddress);
-    MHVVALIDATE_STRING(m_country, MHVClientError_InvalidAddress);
-    
+
+    MHVVALIDATE_ARRAY(self.street, MHVClientError_InvalidAddress);
+
+    MHVVALIDATE_STRING(self.city, MHVClientError_InvalidAddress);
+    MHVVALIDATE_STRING(self.postalCode, MHVClientError_InvalidAddress);
+    MHVVALIDATE_STRING(self.country, MHVClientError_InvalidAddress);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_description value:m_type];
-    [writer writeElement:c_element_isPrimary content:m_isprimary];
-    [writer writeElementArray:c_element_street elements:m_street.toArray];
-    [writer writeElement:c_element_city value:m_city];
-    [writer writeElement:c_element_state value:m_state];
-    [writer writeElement:c_element_postalCode value:m_postalCode];
-    [writer writeElement:c_element_country value:m_country];
-    [writer writeElement:c_element_county value:m_county];
+    [writer writeElement:c_element_description value:self.type];
+    [writer writeElement:c_element_isPrimary content:self.isPrimary];
+    [writer writeElementArray:c_element_street elements:self.street.toArray];
+    [writer writeElement:c_element_city value:self.city];
+    [writer writeElement:c_element_state value:self.state];
+    [writer writeElement:c_element_postalCode value:self.postalCode];
+    [writer writeElement:c_element_country value:self.country];
+    [writer writeElement:c_element_county value:self.county];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_type = [reader readStringElement:c_element_description];
-    m_isprimary = [reader readElement:c_element_isPrimary asClass:[MHVBool class]];
-    m_street = [reader readStringElementArray:c_element_street];
-    m_city = [reader readStringElement:c_element_city];
-    m_state = [reader readStringElement:c_element_state];
-    m_postalCode = [reader readStringElement:c_element_postalCode];
-    m_country = [reader readStringElement:c_element_country];
-    m_county = [reader readStringElement:c_element_county];    
+    self.type = [reader readStringElement:c_element_description];
+    self.isPrimary = [reader readElement:c_element_isPrimary asClass:[MHVBool class]];
+    self.street = [reader readStringElementArray:c_element_street];
+    self.city = [reader readStringElement:c_element_city];
+    self.state = [reader readStringElement:c_element_state];
+    self.postalCode = [reader readStringElement:c_element_postalCode];
+    self.country = [reader readStringElement:c_element_country];
+    self.county = [reader readStringElement:c_element_county];
 }
 
 @end
 
 @implementation MHVAddressCollection
 
--(id) init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVAddress class];
-    
+    if (self)
+    {
+        self.type = [MHVAddress class];
+    }
     return self;
 }
 
--(MHVAddress *)itemAtIndex:(NSUInteger)index
+- (MHVAddress *)itemAtIndex:(NSUInteger)index
 {
-    return (MHVAddress *) [self objectAtIndex:index];
+    return (MHVAddress *)[self objectAtIndex:index];
 }
+
 @end

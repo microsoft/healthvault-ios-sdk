@@ -1,15 +1,15 @@
 //
-//  MHVVocabItem.m
-//  MHVLib
+// MHVVocabItem.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,153 +19,147 @@
 #import "MHVCommon.h"
 #import "MHVVocabItem.h"
 
-static const xmlChar* x_element_code = XMLSTRINGCONST("code-value");
-static const xmlChar* x_element_displaytext = XMLSTRINGCONST("display-text");
-static const xmlChar* x_element_abbrv = XMLSTRINGCONST("abbreviation-text");
-static NSString* const c_element_data = @"info-xml";
+static const xmlChar *x_element_code = XMLSTRINGCONST("code-value");
+static const xmlChar *x_element_displaytext = XMLSTRINGCONST("display-text");
+static const xmlChar *x_element_abbrv = XMLSTRINGCONST("abbreviation-text");
+static NSString *const c_element_data = @"info-xml";
 
 @implementation MHVVocabItem
 
-@synthesize code = m_code;
-@synthesize displayText = m_displayText;
-@synthesize abbreviation = m_abbrv;
-@synthesize dataXml = m_data;
-
-
--(NSString *)toString
+- (NSString *)toString
 {
-    return m_displayText;
+    return self.displayText;
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(BOOL) matchesDisplayText:(NSString *)text
+- (BOOL)matchesDisplayText:(NSString *)text
 {
-    return ([m_displayText caseInsensitiveCompare:[text trim]] == NSOrderedSame);
+    return [self.displayText caseInsensitiveCompare:[text trim]] == NSOrderedSame;
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE_STRING(m_code, MHVClientError_InvalidVocabIdentifier);
-    
+
+    MHVVALIDATE_STRING(self.code, MHVClientError_InvalidVocabIdentifier);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_code value:m_code];
-    [writer writeElementXmlName:x_element_displaytext value:m_displayText];
-    [writer writeElementXmlName:x_element_abbrv value:m_abbrv];
-    [writer writeRaw:m_data];
+    [writer writeElementXmlName:x_element_code value:self.code];
+    [writer writeElementXmlName:x_element_displaytext value:self.displayText];
+    [writer writeElementXmlName:x_element_abbrv value:self.abbreviation];
+    [writer writeRaw:self.dataXml];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_code = [reader readStringElementWithXmlName:x_element_code];
-    m_displayText = [reader readStringElementWithXmlName:x_element_displaytext];
-    m_abbrv = [reader readStringElementWithXmlName:x_element_abbrv];
-    m_data = [reader readElementRaw:c_element_data];    
+    self.code = [reader readStringElementWithXmlName:x_element_code];
+    self.displayText = [reader readStringElementWithXmlName:x_element_displaytext];
+    self.abbreviation = [reader readStringElementWithXmlName:x_element_abbrv];
+    self.dataXml = [reader readElementRaw:c_element_data];
 }
 
 @end
 
 @implementation MHVVocabItemCollection
 
--(id) init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVVocabItem class];
-    
+    if (self)
+    {
+        self.type = [MHVVocabItem class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(MHVVocabItem *)itemAtIndex:(NSUInteger)index
+- (MHVVocabItem *)itemAtIndex:(NSUInteger)index
 {
-    return (MHVVocabItem *) [self objectAtIndex:index];
+    return (MHVVocabItem *)[self objectAtIndex:index];
 }
 
--(void)sortByDisplayText
+- (void)sortByDisplayText
 {
-    [self sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        
-        MHVVocabItem* x = (MHVVocabItem *) obj1;
-        MHVVocabItem* y = (MHVVocabItem *) obj2;
-        
+    [self sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
+    {
+        MHVVocabItem *x = (MHVVocabItem *)obj1;
+        MHVVocabItem *y = (MHVVocabItem *)obj2;
+
         return [x.displayText compare:y.displayText];
-        
     } ];
 }
 
--(void)sortByCode
+- (void)sortByCode
 {
-    [self sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        
-        MHVVocabItem* x = (MHVVocabItem *) obj1;
-        MHVVocabItem* y = (MHVVocabItem *) obj2;
-        
+    [self sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
+    {
+        MHVVocabItem *x = (MHVVocabItem *)obj1;
+        MHVVocabItem *y = (MHVVocabItem *)obj2;
+
         return [x.code compare:y.code];
     }];
 }
 
--(NSUInteger)indexOfVocabCode:(NSString *)code
+- (NSUInteger)indexOfVocabCode:(NSString *)code
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
-        MHVVocabItem* item = [self itemAtIndex:i];
+        MHVVocabItem *item = [self itemAtIndex:i];
         if ([item.code isEqualToString:code])
         {
             return i;
         }
     }
-    
+
     return NSNotFound;
 }
 
--(MHVVocabItem *)getItemWithCode:(NSString *)code
+- (MHVVocabItem *)getItemWithCode:(NSString *)code
 {
     NSUInteger index = [self indexOfVocabCode:code];
+
     if (index == NSNotFound)
     {
         return nil;
     }
-    
+
     return [self itemAtIndex:index];
 }
 
--(NSString *)displayTextForCode:(NSString *)code
+- (NSString *)displayTextForCode:(NSString *)code
 {
-    MHVVocabItem* vocabItem = [self getItemWithCode:code];
+    MHVVocabItem *vocabItem = [self getItemWithCode:code];
+
     if (!vocabItem)
     {
         return nil;
     }
-    
+
     return vocabItem.displayText;
 }
 
--(NSArray *)displayStrings
+- (NSArray *)displayStrings
 {
-    NSMutableArray* strings = [[NSMutableArray alloc]initWithCapacity:self.count];
+    NSMutableArray *strings = [[NSMutableArray alloc] initWithCapacity:self.count];
+
     [self addDisplayStringsTo:strings];
     return strings;
 }
 
--(void)addDisplayStringsTo:(NSMutableArray *)strings
+- (void)addDisplayStringsTo:(NSMutableArray *)strings
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
         [strings addObject:[self itemAtIndex:i].displayText];
-    }    
+    }
 }
 
 @end
