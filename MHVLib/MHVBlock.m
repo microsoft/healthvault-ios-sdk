@@ -1,15 +1,15 @@
 //
-//  MHVBlock.m
-//  MHVLib
+// MHVBlock.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,7 @@ void safeInvokeAction(MHVAction action)
         {
             action();
         }
-        @catch(id ex)
+        @catch (id ex)
         {
             [ex log];
         }
@@ -36,20 +36,21 @@ void safeInvokeAction(MHVAction action)
 
 void safeInvokeActionInMainThread(MHVAction action)
 {
-    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^(void){ 
-        @try 
+    NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^(void)
+    {
+        @try
         {
             if (action)
             {
                 action();
             }
         }
-        @catch (id ex) 
+        @catch (id ex)
         {
             [ex log];
         }
     }];
-    
+
     @try
     {
         [[NSOperationQueue mainQueue] addOperation:op];
@@ -80,12 +81,12 @@ BOOL safeInvokePredicate(MHVPredicate predicate)
         {
             return predicate();
         }
-        @catch(id ex)
+        @catch (id ex)
         {
             [ex log];
         }
     }
-    
+
     return FALSE;
 }
 
@@ -97,7 +98,7 @@ void safeInvokeNotify(MHVNotify notify, id sender)
         {
             notify(sender);
         }
-        @catch(id ex)
+        @catch (id ex)
         {
             [ex log];
         }
@@ -112,11 +113,11 @@ BOOL safeInvokeHandler(MHVHandler handler, id value)
         {
             return handler(value);
         }
-        @catch(id ex)
+        @catch (id ex)
         {
             [ex log];
         }
     }
-    
+
     return false;
 }

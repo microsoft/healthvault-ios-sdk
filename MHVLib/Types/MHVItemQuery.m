@@ -123,9 +123,9 @@ static NSString *const c_element_view = @"format";
     {
         [_filters addObject:filter];
         
-        if (![NSArray isNilOrEmpty:filter.typeIDs])
+    	if (![MHVCollection isNilOrEmpty:filter.typeIDs])
         {
-            [_view.typeVersions addObjectsFromArray:filter.typeIDs];
+      	  	[_view.typeVersions addObjectsFromArray:filter.typeIDs.toArray];
         }
     }
     return self;
@@ -180,7 +180,7 @@ static NSString *const c_element_view = @"format";
     return self;
 }
 
-- (instancetype)initWithPendingItems:(NSArray *)pendingItems
+- (instancetype)initWithPendingItems:(MHVCollection *)pendingItems
 {
     MHVCHECK_NOTNULL(pendingItems);
     
@@ -276,20 +276,20 @@ static NSString *const c_element_view = @"format";
     //
     // Query xml schema says - ids are a choice element
     //
-    if (![NSArray isNilOrEmpty:self.itemIDs])
+    if (![MHVCollection isNilOrEmpty:self.itemIDs])
     {
-        [writer writeElementArray:c_element_id elements:self.itemIDs];
+        [writer writeElementArray:c_element_id elements:self.itemIDs.toArray];        
     }
-    else if (![NSArray isNilOrEmpty:self.keys])
+    else if (![MHVCollection isNilOrEmpty:self.keys])
     {
-        [writer writeElementArray:c_element_key elements:self.keys];
+        [writer writeElementArray:c_element_key elements:self.keys.toArray];        
     }
-    else if (![NSArray isNilOrEmpty:self.clientIDs])
+    else if (![MHVCollection isNilOrEmpty:self.clientIDs])
     {
-        [writer writeElementArray:c_element_clientID elements:self.clientIDs];
+        [writer writeElementArray:c_element_clientID elements:self.clientIDs.toArray]; 
     }
     
-    [writer writeElementArray:c_element_filter elements:self.filters];
+    [writer writeElementArray:c_element_filter elements:self.filters.toArray];
     [writer writeElement:c_element_view content:self.view];
 }
 

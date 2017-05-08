@@ -66,7 +66,7 @@ static NSString *const c_element_clientID = @"client-thing-id";
     [writer writeElement:c_element_note value:self.note];
     [writer writeElement:c_element_tags content:self.tags];
     [writer writeRawElementArray:c_element_extension elements:self.extensions];
-    [writer writeElementArray:c_element_related elements:self.relatedItems];
+    [writer writeElementArray:c_element_related elements:self.relatedItems.toArray];
     [writer writeElement:c_element_clientID content:self.clientID];
 }
 

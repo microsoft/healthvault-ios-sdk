@@ -33,7 +33,7 @@ static NSString* const c_element_vocab = @"vocabulary";
 
 -(void)serialize:(XWriter *)writer  
 {
-    [writer writeElementArray:c_element_vocab elements:m_vocabs];
+    [writer writeElementArray:c_element_vocab elements:m_vocabs.toArray];
 }
 
 -(void)deserialize:(XReader *)reader

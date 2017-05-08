@@ -47,7 +47,7 @@ static NSString* const c_element_uiculture = @"preferred-uiculture";
 
 -(BOOL) hasRecords
 {
-    return !([NSArray isNilOrEmpty:m_records]);
+    return !([MHVCollection isNilOrEmpty:m_records]);
 }
 
 
@@ -68,7 +68,7 @@ static NSString* const c_element_uiculture = @"preferred-uiculture";
     [writer writeRaw:m_appSettingsXml];
     [writer writeElement:c_element_selectedID value:m_selectedRecordID];
     [writer writeElement:c_element_more content:m_moreRecords];
-    [writer writeElementArray:c_element_record elements:m_records];
+    [writer writeElementArray:c_element_record elements:m_records.toArray];
     [writer writeRaw:m_groupsXml];
     [writer writeRaw:m_preferredCultureXml];
     [writer writeRaw:m_preferredUICultureXml];

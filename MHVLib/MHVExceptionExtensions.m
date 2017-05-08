@@ -1,15 +1,15 @@
 //
-//  MHVExceptionExtensions.m
-//  MHVLib
+// MHVExceptionExtensions.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,50 +21,51 @@
 
 @implementation NSException (MHVExceptionExtensions)
 
-+(void) throwException:(NSString *)exceptionName
++ (void)throwException:(NSString *)exceptionName
 {
     @throw [NSException exceptionWithName:exceptionName reason:@"" userInfo:nil];
 }
 
-+(void) throwException:(NSString *)exceptionName reason:(NSString *)reason
++ (void)throwException:(NSString *)exceptionName reason:(NSString *)reason
 {
     @throw [NSException exceptionWithName:exceptionName reason:reason userInfo:nil];
 }
 
-+(void) throwInvalidArg
++ (void)throwInvalidArg
 {
     [NSException throwException:NSInvalidArgumentException];
 }
 
-+(void) throwInvalidArgWithReason:(NSString *)reason
++ (void)throwInvalidArgWithReason:(NSString *)reason
 {
-    [NSException throwException:NSInvalidArgumentException reason:reason];    
+    [NSException throwException:NSInvalidArgumentException reason:reason];
 }
 
-+(void) throwOutOfMemory
++ (void)throwOutOfMemory
 {
     [NSException throwException:NSMallocException];
 }
 
-+(void) throwNotImpl
++ (void)throwNotImpl
 {
     [NSException throwException:@"NotImplementedException"];
 }
 
--(void) printSymbolsTo:(NSMutableString *)buffer
+- (void)printSymbolsTo:(NSMutableString *)buffer
 {
     MHVASSERT_NOTNULL(buffer);
-    
+
     if (buffer)
     {
-        NSArray* symbols = [self callStackSymbols];
+        NSArray *symbols = [self callStackSymbols];
         [buffer appendStringsAsLines:symbols];
-    }    
+    }
 }
 
--(NSString *) detailedDescription
+- (NSString *)detailedDescription
 {
     NSMutableString *buffer = [[NSMutableString alloc] init];
+
     if (buffer)
     {
         [buffer appendLines:1, [self description]];
@@ -76,7 +77,7 @@
         [buffer appendNewLine];
 #endif
     }
-    
+
     return buffer;
 }
 

@@ -38,7 +38,7 @@ static const xmlChar* x_element_results = XMLSTRINGCONST("results");
 
 -(BOOL)hasSubGroups
 {
-    return ![NSArray isNilOrEmpty:m_subGroups];
+    return ![MHVCollection isNilOrEmpty:m_subGroups];
 }
 
 
@@ -72,8 +72,8 @@ static const xmlChar* x_element_results = XMLSTRINGCONST("results");
     [writer writeElementXmlName:x_element_groupName content:m_groupName];
     [writer writeElementXmlName:x_element_laboratory content:m_laboratory];
     [writer writeElementXmlName:x_element_status content:m_status];
-    [writer writeElementArray:c_element_subGroups elements:m_subGroups];
-    [writer writeElementArray:c_element_results elements:m_results];
+    [writer writeElementArray:c_element_subGroups elements:m_subGroups.toArray];
+    [writer writeElementArray:c_element_results elements:m_results.toArray];
 }
 
 -(void)deserialize:(XReader *)reader

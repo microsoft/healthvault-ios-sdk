@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C00119B1EBCC05000BABFBA /* MHVUIAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */; };
 		5D0645B818454D7000D306CC /* MHVHeartRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */; };
 		5D091345166ED1980031F5F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091344166ED1980031F5F9 /* UIKit.framework */; };
 		5D091347166ED1980031F5F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091346166ED1980031F5F9 /* Foundation.framework */; };
@@ -52,6 +53,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C0011991EBCC05000BABFBA /* MHVUIAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVUIAlert.h; sourceTree = "<group>"; };
+		4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVUIAlert.m; sourceTree = "<group>"; };
 		5D0645B618454D7000D306CC /* MHVHeartRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHeartRateFactory.h; sourceTree = "<group>"; };
 		5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHeartRateFactory.m; sourceTree = "<group>"; };
 		5D091340166ED1980031F5F9 /* SDKFeatures.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKFeatures.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +235,8 @@
 				5DEC2559178B5A7F00FE971B /* MHVItemDataTypedFeatures.m */,
 				5DEC254A178B573900FE971B /* MHVFileFeatures.h */,
 				5DEC254B178B573A00FE971B /* MHVFileFeatures.m */,
+				4C0011991EBCC05000BABFBA /* MHVUIAlert.h */,
+				4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */,
 				5D09134B166ED1980031F5F9 /* Supporting Files */,
 			);
 			path = SDKFeatures;
@@ -338,6 +343,7 @@
 				5D7898811714A4C90015D375 /* MHVItemDataTypedFactory.m in Sources */,
 				5D789913171618540015D375 /* MHVFeatureActions.m in Sources */,
 				5D789916171626F60015D375 /* MHVMoreFeatures.m in Sources */,
+				4C00119B1EBCC05000BABFBA /* MHVUIAlert.m in Sources */,
 				5D789936171736050015D375 /* MHVMedicationFactory.m in Sources */,
 				5D78993A171739FB0015D375 /* MHVConditionFactory.m in Sources */,
 				5D78993D17173B520015D375 /* MHVImmunizationFactory.m in Sources */,

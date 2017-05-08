@@ -187,7 +187,7 @@ LError:
     MHVHttpException* ex = [[MHVHttpException alloc] initWithError:error];
     [super handleError:ex];
  
-    [self complete];
+    [self completeTask];
 }
 
 -(void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite

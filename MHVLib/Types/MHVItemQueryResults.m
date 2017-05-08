@@ -25,7 +25,7 @@ static NSString *const c_element_result = @"group";
 
 - (BOOL)hasResults
 {
-    return !([NSArray isNilOrEmpty:self.results]);
+    return !([MHVCollection isNilOrEmpty:self.results]);
 }
 
 - (MHVItemQueryResult *)firstResult
@@ -35,7 +35,7 @@ static NSString *const c_element_result = @"group";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_result elements:self.results];
+    [writer writeElementArray:c_element_result elements:self.results.toArray];
 }
 
 - (void)deserialize:(XReader *)reader

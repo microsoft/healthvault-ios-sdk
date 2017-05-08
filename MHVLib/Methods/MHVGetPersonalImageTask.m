@@ -96,7 +96,7 @@ LError:
     [self setNextTask:[blob createDownloadTaskWithCallback:^(MHVTask *task) {
         
         self.result = ((MHVHttpDownload *) task).result;
-        [self complete];
+        [self completeTask];
         
     } ]];
 }

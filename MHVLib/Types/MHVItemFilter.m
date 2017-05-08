@@ -106,6 +106,7 @@ static NSString *const c_element_xpath = @"xpath";
     {
         if (typeID)
         {
+            _typeIDs = [MHVStringCollection new];
             [_typeIDs addObject:typeID];
             MHVCHECK_NOTNULL(_typeIDs);
         }
@@ -126,7 +127,7 @@ static NSString *const c_element_xpath = @"xpath";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_typeID elements:self.typeIDs];
+    [writer writeElementArray:c_element_typeID elements:self.typeIDs.toArray];
     [super serialize:writer];
 }
 

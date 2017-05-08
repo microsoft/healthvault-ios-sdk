@@ -19,6 +19,7 @@
 
 #import "MHVCommon.h"
 #import "MHVFeatureActions.h"
+#import "MHVUIAlert.h"
 
 @implementation MHVFeatureActions
 

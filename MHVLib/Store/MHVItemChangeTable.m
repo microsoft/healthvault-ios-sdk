@@ -360,8 +360,10 @@ LError:
     do
     {
         NSString* changeID = nil;
-        while (m_currentQueue && ((changeID = [m_currentQueue dequeueObject]) != nil))
+        while (m_currentQueue && ((changeID = [m_currentQueue lastObject]) != nil))
         {
+            [m_currentQueue removeObject:changeID];
+            
             MHVItemChange* change = [m_changeTable getForTypeID:m_currentType itemID:changeID];
             if (change)
             {
@@ -384,11 +386,15 @@ LError:
     {
         [self clear];
         
-        m_currentType = [m_types dequeueObject];
+        m_currentType = [m_types lastObject];
+        
         if (!m_currentType)
         {
             break;
         }
+        
+        [m_currentQueue removeObject:m_currentType];
+        
         m_currentQueue = [m_changeTable getChangeIDsForTypeID:m_currentType];
         if (m_currentQueue)
         {

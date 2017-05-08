@@ -61,12 +61,12 @@ static NSString* const c_element_answer = @"answer";
 
 -(BOOL)hasAnswerChoices
 {
-    return ![NSArray isNilOrEmpty:m_answerChoices];
+    return ![MHVCollection isNilOrEmpty:m_answerChoices];
 }
 
 -(BOOL)hasAnswers
 {
-    return ![NSArray isNilOrEmpty:m_answers];
+    return ![MHVCollection isNilOrEmpty:m_answers];
 }
 
 
@@ -144,8 +144,8 @@ LError:
 {
     [writer writeElement:c_element_when content:m_when];
     [writer writeElement:c_element_question content:m_question];
-    [writer writeElementArray:c_element_choice elements:m_answerChoices];
-    [writer writeElementArray:c_element_answer elements:m_answers];
+    [writer writeElementArray:c_element_choice elements:m_answerChoices.toArray];
+    [writer writeElementArray:c_element_answer elements:m_answers.toArray];
 }
 
 -(void)deserialize:(XReader *)reader

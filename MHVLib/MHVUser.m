@@ -58,7 +58,7 @@ static NSString* const c_element_instanceID = @"instanceID";
 
 -(BOOL)hasRecords
 {
-    return (![NSArray isNilOrEmpty:m_records]);
+    return (![MHVCollection isNilOrEmpty:m_records]);
 }
 
 -(void)setCurrentRecordIndex:(NSInteger)currentIndex
@@ -74,7 +74,7 @@ static NSString* const c_element_instanceID = @"instanceID";
 
 -(MHVRecord *)currentRecord
 {
-    if ([NSArray isNilOrEmpty:m_records])
+    if ([MHVCollection isNilOrEmpty:m_records])
     {
         return nil;
     }
@@ -282,7 +282,7 @@ LError:
 -(void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_name value:m_name];
-    [writer writeElementArray:c_element_recordarray itemName:c_element_record elements:m_records];
+    [writer writeElementArray:c_element_recordarray itemName:c_element_record elements:m_records.toArray];
     [writer writeElement:c_element_current intValue:(int)m_currentIndex];
     [writer writeElement:c_element_environment value:m_environment];
     [writer writeElement:c_element_instanceID value:m_instanceID];

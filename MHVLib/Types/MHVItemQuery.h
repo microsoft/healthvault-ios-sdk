@@ -51,7 +51,7 @@
 - (instancetype)initWithItemKeys:(NSArray *)keys;
 - (instancetype)initWithItemIDs:(NSArray *)ids;
 - (instancetype)initWithItemID:(NSString *)itemID;
-- (instancetype)initWithPendingItems:(NSArray *)pendingItems;
+- (instancetype)initWithPendingItems:(MHVCollection *)pendingItems;
 - (instancetype)initWithItemKey:(MHVItemKey *)key andType:(NSString *)typeID;
 - (instancetype)initWithItemID:(NSString *)itemID andType:(NSString *)typeID;
 - (instancetype)initWithClientID:(NSString *)clientID andType:(NSString *)typeID;
