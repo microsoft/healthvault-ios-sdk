@@ -31,7 +31,7 @@
     MHVLocalVault* m_localVault;
 }
 
--(id) initWithLocalVault:(MHVLocalVault *)vault andRecordReferences:(NSArray *) recordRefs;
+-(id) initWithLocalVault:(MHVLocalVault *)vault andRecordReferences:(MHVRecordCollection *) recordRefs;
 
 @end
 
@@ -176,12 +176,7 @@ LError:
 
 -(MHVTask *)commitOfflineChangesWithCallback:(MHVTaskCompletion)callback
 {
-    return [self commitOfflineChangesForRecords:[MHVClient current].records withCallback:callback];
-}
-
--(MHVTask *)commitOfflineChangesForRecords:(NSArray *)records withCallback:(MHVTaskCompletion)callback
-{
-    MHVLocalVaultOfflineChangesCommitter* committer = [[MHVLocalVaultOfflineChangesCommitter alloc] initWithLocalVault:self andRecordReferences:records];
+    MHVLocalVaultOfflineChangesCommitter* committer = [[MHVLocalVaultOfflineChangesCommitter alloc] initWithLocalVault:self andRecordReferences:[MHVClient current].records];
     MHVCHECK_NOTNULL(committer);
     
     return [MHVTaskSequence run:committer callback:callback];
@@ -265,7 +260,7 @@ LError:
     return [self initWithLocalVault:[MHVClient current].localVault andRecordReferences:[MHVClient current].records];
 }
 
--(id)initWithLocalVault:(MHVLocalVault *)vault andRecordReferences:(NSArray *)recordRefs
+-(id)initWithLocalVault:(MHVLocalVault *)vault andRecordReferences:(MHVRecordCollection *)recordRefs
 {
     MHVCHECK_NOTNULL(vault);
     MHVCHECK_NOTNULL(recordRefs);
@@ -292,11 +287,14 @@ LError:
 {
     while (TRUE)
     {
-        MHVRecordReference* nextRecord = [m_records dequeueObject];
+        MHVRecordReference* nextRecord = [m_records lastObject];
+        
         if (!nextRecord)
         {
             break;
         }
+        
+        [m_records removeObject:nextRecord];
         
         MHVLocalRecordStore* recordStore = [m_localVault getRecordStore:nextRecord];
         if (recordStore)

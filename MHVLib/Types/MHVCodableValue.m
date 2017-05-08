@@ -27,10 +27,10 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 
 - (BOOL)hasCodes
 {
-    return ![NSArray isNilOrEmpty:self.codes];
+    return ![MHVCollection isNilOrEmpty:self.codes];
 }
 
-- (NSMutableArray *)codes
+- (MHVCodedValueCollection *)codes
 {
     MHVENSURE(_codes, MHVCodedValueCollection);
     return _codes;
@@ -176,7 +176,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_text value:self.text];
-    [writer writeElementArray:c_element_code elements:self.codes];
+    [writer writeElementArray:c_element_code elements:self.codes.toArray];
 }
 
 - (void)deserialize:(XReader *)reader

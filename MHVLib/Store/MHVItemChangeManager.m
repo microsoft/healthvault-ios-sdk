@@ -911,12 +911,11 @@ LError:
     safeInvokeAction(^{
         if (m_broadcastNotifications)
         {
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:MHVItemChangeManagerChangeCommitSuccessNotification
-             sender:self
-             argName:@"itemChange"
-             argValue:change
-            ];
+            [[NSNotificationCenter defaultCenter] postNotificationName:MHVItemChangeManagerChangeCommitSuccessNotification
+                                                                object:self
+                                                              userInfo:@{
+                                                                         @"itemChange" : change
+                                                                         }];
         }
     });
 }
@@ -926,12 +925,11 @@ LError:
     safeInvokeAction(^{
         if (m_broadcastNotifications)
         {
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:MHVItemChangeManagerChangeCommitFailedNotification
-             sender:self
-             argName:@"itemChange"
-             argValue:change
-             ];
+            [[NSNotificationCenter defaultCenter] postNotificationName:MHVItemChangeManagerChangeCommitFailedNotification
+                                                                object:self
+                                                              userInfo:@{
+                                                                         @"itemChange" : change
+                                                                         }];
         }
     });
 }
@@ -941,12 +939,11 @@ LError:
     safeInvokeAction(^{
         if (m_broadcastNotifications)
         {
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:MHVItemChangeManagerExceptionNotification
-             sender:self
-             argName:@"exception"
-             argValue:ex
-             ];
+            [[NSNotificationCenter defaultCenter] postNotificationName:MHVItemChangeManagerExceptionNotification
+                                                                object:self
+                                                              userInfo:@{
+                                                                         @"exception" : ex
+                                                                         }];
         }
     });
 }

@@ -31,7 +31,7 @@ static NSString* const c_element_blob = @"blob";
 
 -(BOOL)hasItems
 {
-    return ![NSArray isNilOrEmpty:m_blobItems];
+    return ![MHVCollection isNilOrEmpty:m_blobItems];
 }
 
 
@@ -96,7 +96,7 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_blob elements:m_blobItems];
+    [writer writeElementArray:c_element_blob elements:m_blobItems.toArray];
 }
 
 -(void)deserialize:(XReader *)reader

@@ -300,7 +300,7 @@ LError:
     }
 }
 
--(NSArray *)keysOfItemsNeedingDownloadInRange:(NSRange)range
+-(MHVItemKeyCollection *)keysOfItemsNeedingDownloadInRange:(NSRange)range
 {
     @synchronized(self)
     {

@@ -202,7 +202,7 @@ static NSString *const c_element_key = @"thing-id";
 {
     MHVVALIDATE_BEGIN
 
-    MHVVALIDATE_ARRAY(self.inner, MHVClientError_InvalidItemList);
+    MHVVALIDATE_ARRAY(self, MHVClientError_InvalidItemList);
 
     MHVVALIDATE_SUCCESS
 }

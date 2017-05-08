@@ -30,7 +30,7 @@
 
 -(MHVItemQuery *)firstQuery
 {
-    if ([NSArray isNilOrEmpty:m_queries])
+    if ([MHVCollection isNilOrEmpty:m_queries])
     {
         return nil;
     }
@@ -88,7 +88,7 @@ LError:
 
 -(id)initWithQueries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback
 {
-    MHVCHECK_TRUE(![NSArray isNilOrEmpty:queries]);
+    MHVCHECK_TRUE(![MHVCollection isNilOrEmpty:queries]);
     
     self = [super initWithCallback:callback];
     MHVCHECK_SELF;

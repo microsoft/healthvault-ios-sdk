@@ -30,9 +30,9 @@ static NSString *const c_element_county = @"county";
 
 @implementation MHVAddress
 
-- (BOOL)hasStreet
+-(BOOL)hasStreet
 {
-    return ![NSArray isNilOrEmpty:self.street];
+    return ![MHVCollection isNilOrEmpty:self.street];
 }
 
 - (MHVStringCollection *)street
@@ -94,7 +94,7 @@ static NSString *const c_element_county = @"county";
 {
     [writer writeElement:c_element_description value:self.type];
     [writer writeElement:c_element_isPrimary content:self.isPrimary];
-    [writer writeElementArray:c_element_street elements:self.street];
+    [writer writeElementArray:c_element_street elements:self.street.toArray];
     [writer writeElement:c_element_city value:self.city];
     [writer writeElement:c_element_state value:self.state];
     [writer writeElement:c_element_postalCode value:self.postalCode];

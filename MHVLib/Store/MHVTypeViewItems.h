@@ -64,7 +64,7 @@
 -(NSUInteger) removeItemByID:(NSString *) itemID;
 -(BOOL) replaceItemAt:(NSUInteger) index with:(MHVTypeViewItem *) item;
 
--(NSArray *) selectRange:(NSRange) range;
+-(MHVItemKeyCollection *)keysInRange:(NSRange)range;
 -(NSArray *) selectIDsInRange:(NSRange) range;
 -(NSRange) correctRange:(NSRange) range;
 -(NSMutableArray*) selectItemsNotIn:(MHVTypeViewItems *) items;

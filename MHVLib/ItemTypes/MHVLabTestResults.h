@@ -21,12 +21,6 @@
 #import "MHVTypes.h"
 
 @interface MHVLabTestResults : MHVItemDataTyped
-{
-@private
-    MHVApproxDateTime* m_when;
-    MHVLabTestResultsGroupCollection* m_labGroup;
-    MHVOrganization* m_orderedBy;
-}
 
 @property (readwrite, nonatomic, strong) MHVApproxDateTime* when;
 @property (readwrite, nonatomic, strong) MHVLabTestResultsGroupCollection* labGroup;

@@ -63,6 +63,11 @@
     return self;
 }
 
++ (BOOL)isNilOrEmpty:(MHVCollection *)collection
+{
+    return (!collection|| collection.count == 0);
+}
+
 - (NSUInteger)count
 {
     return [self.inner count];
@@ -71,6 +76,11 @@
 - (id)objectAtIndex:(NSUInteger)index
 {
     return [self.inner objectAtIndex:index];
+}
+
+- (id)lastObject
+{
+    return [self.inner lastObject];
 }
 
 - (void)addObject:(id)anObject
@@ -89,6 +99,44 @@
     };
 }
 
+- (void)addObjectsFromArray:(NSArray *)array
+{
+    if (!array)
+    {
+        MHVASSERT_PARAMETER(array);
+        return;
+    }
+    
+    for (id obj in array)
+    {
+        if (![self validateNewObject:obj])
+        {
+            return;
+        }
+    }
+    
+    [self.inner addObjectsFromArray:array];
+}
+
+- (void)addObjectsFromCollection:(MHVCollection *)collection
+{
+    if (!collection)
+    {
+        MHVASSERT_PARAMETER(collection);
+        return;
+    }
+    
+    for (id obj in collection)
+    {
+        if (![self validateNewObject:obj])
+        {
+            return;
+        }
+    }
+    
+    [self.inner addObjectsFromArray:collection.toArray];
+}
+
 - (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
 {
     if([self validateNewObject:anObject])
@@ -105,6 +153,44 @@
 - (void)removeLastObject
 {
     [self.inner removeLastObject];
+}
+
+- (void)removeAllObjects
+{
+    [self.inner removeAllObjects];
+}
+
+- (void)sortUsingComparator:(NSComparator NS_NOESCAPE)cmptr
+{
+    [self.inner sortUsingComparator:cmptr];
+}
+
+- (NSUInteger)binarySearch:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp
+{
+    return [self.inner indexOfObject:object inSortedRange:NSMakeRange(0, self.count) options:opts usingComparator:cmp];
+}
+
+- (NSUInteger)indexOfMatchingObject:(MHVFilter)filter
+{
+    if (filter)
+    {
+        for (NSUInteger i = 0; i < self.count; ++i)
+        {
+            id obj = [self objectAtIndex:i];
+            
+            if (filter(obj))
+            {
+                return i;
+            }
+        }
+    }
+    
+    return NSNotFound;
+}
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
+{
+    return [self.inner countByEnumeratingWithState:state objects:buffer count:len];
 }
 
 - (BOOL)validateNewObject:(id)obj
@@ -126,6 +212,11 @@
     }
     
     return YES;
+}
+
+- (NSArray *)toArray
+{
+    return [self.inner copy];
 }
 
 - (NSString *)toString

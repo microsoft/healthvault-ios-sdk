@@ -141,7 +141,7 @@ LError:
         }
     }
  
-    if (![NSArray isNilOrEmpty:vocabsToDownload])
+    if (![MHVCollection isNilOrEmpty:vocabsToDownload])
     {
         MHVGetVocabTask* task = [self newDownloadVocabTaskForVocabs:vocabsToDownload];
         

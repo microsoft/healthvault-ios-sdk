@@ -21,6 +21,7 @@
 #import "MHVExceptionExtensions.h"
 #import "MHVClientException.h"
 #import "MHVType.h"
+#import "MHVCollection.h"
 
 static id<MHVEventLog> s_eventLog;
 
@@ -60,16 +61,16 @@ void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger lin
     MHVLogEvent(logLine);
 }
 
-MHVClientResult* MHVValidateArray(NSArray* array, enum MHVClientResultCode error)
+MHVClientResult* MHVValidateCollection(MHVCollection *collection, enum MHVClientResultCode error)
 {
     MHVVALIDATE_BEGIN;
     
-    MHVVALIDATE_PTR(array, error);
+    MHVVALIDATE_PTR(collection, error);
     
     Class hvClass = [MHVType class];
     Class stringClass = [NSString class];
     
-    for (id obj in array) 
+    for (id obj in collection)
     {
         MHVVALIDATE_PTR(obj, error);
         
