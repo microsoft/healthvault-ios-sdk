@@ -1,8 +1,8 @@
 //
-//  MHVLabTestResultsDetails.m
-//  MHVLib
+// MHVLabTestResultsDetails.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,88 +19,76 @@
 #import "MHVCommon.h"
 #import "MHVLabTestResultsDetails.h"
 
-static const xmlChar* x_element_when = XMLSTRINGCONST("when");
-static const xmlChar* x_element_name = XMLSTRINGCONST("name");
-static const xmlChar* x_element_substance = XMLSTRINGCONST("substance");
-static const xmlChar* x_element_method = XMLSTRINGCONST("collection-method");
-static const xmlChar* x_element_clinicalCode = XMLSTRINGCONST("clinical-code");
-static const xmlChar* x_element_value = XMLSTRINGCONST("value");
-static const xmlChar* x_element_status = XMLSTRINGCONST("status");
-static const xmlChar* x_element_note = XMLSTRINGCONST("note");
+static const xmlChar *x_element_when = XMLSTRINGCONST("when");
+static const xmlChar *x_element_name = XMLSTRINGCONST("name");
+static const xmlChar *x_element_substance = XMLSTRINGCONST("substance");
+static const xmlChar *x_element_method = XMLSTRINGCONST("collection-method");
+static const xmlChar *x_element_clinicalCode = XMLSTRINGCONST("clinical-code");
+static const xmlChar *x_element_value = XMLSTRINGCONST("value");
+static const xmlChar *x_element_status = XMLSTRINGCONST("status");
+static const xmlChar *x_element_note = XMLSTRINGCONST("note");
 
 @implementation MHVLabTestResultsDetails
 
-@synthesize when = m_when;
-@synthesize name = m_name;
-@synthesize substance = m_substance;
-@synthesize collectionMethod = m_collectionMethod;
-@synthesize clinicalCode = m_clinicalCode;
-@synthesize value = m_value;
-@synthesize status = m_status;
-@synthesize note = m_note;
-
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE_OPTIONAL(m_when);
-    MHVVALIDATE_OPTIONAL(m_substance);
-    MHVVALIDATE_OPTIONAL(m_collectionMethod);
-    MHVVALIDATE_OPTIONAL(m_clinicalCode);
-    MHVVALIDATE_OPTIONAL(m_value);
-    MHVVALIDATE_OPTIONAL(m_status);
-    
+
+    MHVVALIDATE_OPTIONAL(self.when);
+    MHVVALIDATE_OPTIONAL(self.substance);
+    MHVVALIDATE_OPTIONAL(self.collectionMethod);
+    MHVVALIDATE_OPTIONAL(self.clinicalCode);
+    MHVVALIDATE_OPTIONAL(self.value);
+    MHVVALIDATE_OPTIONAL(self.status);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementXmlName:x_element_name value:m_name];
-    [writer writeElementXmlName:x_element_substance content:m_substance];
-    [writer writeElementXmlName:x_element_method content:m_collectionMethod];
-    [writer writeElementXmlName:x_element_clinicalCode content:m_clinicalCode];
-    [writer writeElementXmlName:x_element_value content:m_value];
-    [writer writeElementXmlName:x_element_status content:m_status];
-    [writer writeElementXmlName:x_element_note value:m_note];
+    [writer writeElementXmlName:x_element_when content:self.when];
+    [writer writeElementXmlName:x_element_name value:self.name];
+    [writer writeElementXmlName:x_element_substance content:self.substance];
+    [writer writeElementXmlName:x_element_method content:self.collectionMethod];
+    [writer writeElementXmlName:x_element_clinicalCode content:self.clinicalCode];
+    [writer writeElementXmlName:x_element_value content:self.value];
+    [writer writeElementXmlName:x_element_status content:self.status];
+    [writer writeElementXmlName:x_element_note value:self.note];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElementWithXmlName:x_element_when asClass:[MHVApproxDateTime class]];
-    m_name = [reader readStringElementWithXmlName:x_element_name];
-    m_substance = [reader readElementWithXmlName:x_element_substance asClass:[MHVCodableValue class]];
-    m_collectionMethod = [reader readElementWithXmlName:x_element_method asClass:[MHVCodableValue class]];
-    m_clinicalCode = [reader readElementWithXmlName:x_element_clinicalCode asClass:[MHVCodableValue class]];
-    m_value = [reader readElementWithXmlName:x_element_value asClass:[MHVLabTestResultValue class]];
-    m_status = [reader readElementWithXmlName:x_element_status asClass:[MHVCodableValue class]];
-    m_note = [reader readStringElementWithXmlName:x_element_note];
+    self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVApproxDateTime class]];
+    self.name = [reader readStringElementWithXmlName:x_element_name];
+    self.substance = [reader readElementWithXmlName:x_element_substance asClass:[MHVCodableValue class]];
+    self.collectionMethod = [reader readElementWithXmlName:x_element_method asClass:[MHVCodableValue class]];
+    self.clinicalCode = [reader readElementWithXmlName:x_element_clinicalCode asClass:[MHVCodableValue class]];
+    self.value = [reader readElementWithXmlName:x_element_value asClass:[MHVLabTestResultValue class]];
+    self.status = [reader readElementWithXmlName:x_element_status asClass:[MHVCodableValue class]];
+    self.note = [reader readStringElementWithXmlName:x_element_note];
 }
 
 @end
 
 @implementation MHVLabTestResultsDetailsCollection
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVLabTestResultsDetails class];
-    
+    if (self)
+    {
+        self.type = [MHVLabTestResultsDetails class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(void)addItem:(MHVLabTestResultsDetails *)item
+- (void)addItem:(MHVLabTestResultsDetails *)item
 {
     [super addObject:item];
 }
 
--(MHVLabTestResultsDetails *)itemAtIndex:(NSUInteger)index
+- (MHVLabTestResultsDetails *)itemAtIndex:(NSUInteger)index
 {
     return [super objectAtIndex:index];
 }

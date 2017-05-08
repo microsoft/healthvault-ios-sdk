@@ -1,8 +1,8 @@
 //
-//  MHVResponseStatus.m
-//  MHVLib
+// MHVResponseStatus.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,30 +19,26 @@
 #import "MHVCommon.h"
 #import "MHVResponseStatus.h"
 
-static const xmlChar* x_element_code = XMLSTRINGCONST("code");
-static const xmlChar* x_element_error = XMLSTRINGCONST("error");
+static const xmlChar *x_element_code = XMLSTRINGCONST("code");
+static const xmlChar *x_element_error = XMLSTRINGCONST("error");
 
 @implementation MHVResponseStatus
 
-@synthesize code = m_code;
-@synthesize error = m_error;
-
--(BOOL)hasError
+- (BOOL)hasError
 {
-    return (m_code != 0 || m_error != nil);
+    return self.code != 0 || self.error != nil;
 }
 
-
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_code intValue:m_code];
-    [writer writeElementXmlName:x_element_error content:m_error];
+    [writer writeElementXmlName:x_element_code intValue:self.code];
+    [writer writeElementXmlName:x_element_error content:self.error];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_code = [reader readIntElementXmlName:x_element_code];
-    m_error = [reader readElementWithXmlName:x_element_error asClass:[MHVServerError class]];
+    self.code = [reader readIntElementXmlName:x_element_code];
+    self.error = [reader readElementWithXmlName:x_element_error asClass:[MHVServerError class]];
 }
 
 @end

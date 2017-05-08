@@ -1,8 +1,8 @@
 //
-//  MHVServerError.h
-//  MHVLib
+// MHVServerError.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,15 +21,9 @@
 #import "MHVType.h"
 
 @interface MHVServerError : MHVType
-{
-@private
-    NSString* m_message;
-    NSString* m_context;
-    NSString* m_errorInfo;
-}
 
-@property (readwrite, nonatomic, strong) NSString* message;
-@property (readwrite, nonatomic, strong) NSString* context;
-@property (readwrite, nonatomic, strong) NSString* errorInfo;
+@property (readwrite, nonatomic, strong) NSString *message;
+@property (readwrite, nonatomic, strong) NSString *context;
+@property (readwrite, nonatomic, strong) NSString *errorInfo;
 
 @end

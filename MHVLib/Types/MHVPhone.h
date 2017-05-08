@@ -1,15 +1,15 @@
 //
-//  MHVPhone.h
-//  MHVLib
+// MHVPhone.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,59 +22,53 @@
 #import "MHVVocab.h"
 
 @interface MHVPhone : MHVType
-{
-@private
-    NSString* m_type;
-    MHVBool* m_isprimary;
-    NSString* m_number;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required) Phone number
 // Note: the SDK does not validate if the phone number is in valid
-// phone number format. 
+// phone number format.
 //
-@property (readwrite, nonatomic, strong) NSString* number;
+@property (readwrite, nonatomic, strong) NSString *number;
 //
 // (Optional) A description of this number (Cell, Home, Work)
 //
-@property (readwrite, nonatomic, strong) NSString* type;
+@property (readwrite, nonatomic, strong) NSString *type;
 //
-// (Optional) 
+// (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVBool* isPrimary;
+@property (readwrite, nonatomic, strong) MHVBool *isPrimary;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
--(id) initWithNumber:(NSString *) number;
+// -------------------------
+- (instancetype)initWithNumber:(NSString *)number;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
+// -------------------------
 
--(NSString *) toString;
+- (NSString *)toString;
 
-+(MHVVocabIdentifier *) vocabForType;
++ (MHVVocabIdentifier *)vocabForType;
 
 @end
 
-//-------------------------
+// -------------------------
 //
 // MHVPhoneCollection
 //
-//-------------------------
+// -------------------------
 @interface MHVPhoneCollection : MHVCollection
 
--(MHVPhone *) itemAtIndex:(NSUInteger) index;
+- (MHVPhone *)itemAtIndex:(NSUInteger)index;
 
 @end

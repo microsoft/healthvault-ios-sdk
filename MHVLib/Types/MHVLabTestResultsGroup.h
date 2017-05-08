@@ -1,8 +1,8 @@
 //
-//  MHVLabTestResultsGroup.h
-//  MHVLib
+// MHVLabTestResultsGroup.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,32 +25,24 @@
 @class MHVLabTestResultsGroupCollection;
 
 @interface MHVLabTestResultsGroup : MHVType
-{
-@private
-    MHVCodableValue* m_groupName;
-    MHVOrganization* m_laboratory;
-    MHVCodableValue* m_status;
-    MHVLabTestResultsGroupCollection* m_subGroups;
-    MHVLabTestResultsDetailsCollection* m_results;
-}
 
-@property (readwrite, nonatomic, strong) MHVCodableValue* groupName;
-@property (readwrite, nonatomic, strong) MHVOrganization* laboratory;
-@property (readwrite, nonatomic, strong) MHVCodableValue* status;
-@property (readwrite, nonatomic, strong) MHVLabTestResultsGroupCollection* subGroups;
-@property (readwrite, nonatomic, strong) MHVLabTestResultsDetailsCollection* results;
+@property (readwrite, nonatomic, strong) MHVCodableValue *groupName;
+@property (readwrite, nonatomic, strong) MHVOrganization *laboratory;
+@property (readwrite, nonatomic, strong) MHVCodableValue *status;
+@property (readwrite, nonatomic, strong) MHVLabTestResultsGroupCollection *subGroups;
+@property (readwrite, nonatomic, strong) MHVLabTestResultsDetailsCollection *results;
 
 @property (readonly, nonatomic) BOOL hasSubGroups;
 
--(void) addToCollection:(MHVLabTestResultsGroupCollection *) groups;
+- (void)addToCollection:(MHVLabTestResultsGroupCollection *)groups;
 
 @end
 
 @interface MHVLabTestResultsGroupCollection : MHVCollection
 
--(void) addItem:(MHVLabTestResultsGroup *) item;
--(MHVLabTestResultsGroup *) itemAtIndex:(NSUInteger) index;
+- (void)addItem:(MHVLabTestResultsGroup *)item;
+- (MHVLabTestResultsGroup *)itemAtIndex:(NSUInteger)index;
 
--(void) addItemsToCollection:(MHVLabTestResultsGroupCollection *) groups;
+- (void)addItemsToCollection:(MHVLabTestResultsGroupCollection *)groups;
 
 @end
