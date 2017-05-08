@@ -1,8 +1,8 @@
 //
-//  MHVMessageAttachment.h
-//  MHVLib
+// MHVMessageAttachment.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,25 +20,18 @@
 #import "MHVType.h"
 
 @interface MHVMessageAttachment : MHVType
-{
-@private
-    NSString* m_name;
-    NSString* m_blobName;
-    BOOL m_isInline;
-    NSString* m_contentID;
-}
 
-@property (readwrite, nonatomic, strong) NSString* name;
-@property (readwrite, nonatomic, strong) NSString* blobName;
+@property (readwrite, nonatomic, strong) NSString *name;
+@property (readwrite, nonatomic, strong) NSString *blobName;
 @property (readwrite, nonatomic) BOOL isInline;
-@property (readwrite, nonatomic, strong) NSString* contentID;
+@property (readwrite, nonatomic, strong) NSString *contentID;
 
--(id) initWithName:(NSString *) name andBlobName:(NSString *) blobName;
+- (instancetype)initWithName:(NSString *)name andBlobName:(NSString *)blobName;
 
 @end
 
 @interface MHVMessageAttachmentCollection : MHVCollection
 
--(MHVMessageAttachment *) itemAtIndex:(NSUInteger) index;
+- (MHVMessageAttachment *)itemAtIndex:(NSUInteger)index;
 
 @end

@@ -1,8 +1,8 @@
 //
-//  MHVMessageHeaderItem.m
-//  MHVLib
+// MHVMessageHeaderItem.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,100 +19,92 @@
 #import "MHVCommon.h"
 #import "MHVMessageHeaderItem.h"
 
-static const xmlChar* x_element_name = XMLSTRINGCONST("name");
-static const xmlChar* x_element_value = XMLSTRINGCONST("value");
+static const xmlChar *x_element_name = XMLSTRINGCONST("name");
+static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 @implementation MHVMessageHeaderItem
 
-@synthesize name = m_name;
-@synthesize value = m_value;
-
--(id)initWithName:(NSString *)name value:(NSString *)value
+- (instancetype)initWithName:(NSString *)name value:(NSString *)value
 {
     MHVCHECK_STRING(name);
     MHVCHECK_STRING(value);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_name = name;
-    m_value = value;
-    
+    if (self)
+    {
+        _name = name;
+        _value = value;
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(MHVClientResult *) validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidMessageHeader);
-    MHVVALIDATE_STRING(m_value, MHVClientError_InvalidMessageHeader);
-    
+
+    MHVVALIDATE_STRING(self.name, MHVClientError_InvalidMessageHeader);
+    MHVVALIDATE_STRING(self.value, MHVClientError_InvalidMessageHeader);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void) serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_name value:m_name];
-    [writer writeElementXmlName:x_element_value value:m_value];
+    [writer writeElementXmlName:x_element_name value:self.name];
+    [writer writeElementXmlName:x_element_value value:self.value];
 }
 
--(void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_name = [reader readStringElementWithXmlName:x_element_name];
-    m_value = [reader readStringElementWithXmlName:x_element_value];
+    self.name = [reader readStringElementWithXmlName:x_element_name];
+    self.value = [reader readStringElementWithXmlName:x_element_value];
 }
 
 @end
 
 @implementation MHVMessageHeaderItemCollection
 
--(id) init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVMessageHeaderItem class];
-    
-    return self;
-    
-LError:
-    MHVALLOC_FAIL;
-}
-
--(MHVMessageHeaderItem *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVMessageHeaderItem *) [self objectAtIndex:index];
-}
-
--(NSUInteger)indexOfHeaderWithName:(NSString *)name
-{
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    if (self)
     {
-        MHVMessageHeaderItem* header = [self itemAtIndex:i];
+        self.type = [MHVMessageHeaderItem class];
+    }
+
+    return self;
+}
+
+- (MHVMessageHeaderItem *)itemAtIndex:(NSUInteger)index
+{
+    return (MHVMessageHeaderItem *)[self objectAtIndex:index];
+}
+
+- (NSUInteger)indexOfHeaderWithName:(NSString *)name
+{
+    for (NSUInteger i = 0; i < self.count; ++i)
+    {
+        MHVMessageHeaderItem *header = [self itemAtIndex:i];
         if ([header.name isEqualToStringCaseInsensitive:name])
         {
             return i;
         }
     }
-    
+
     return NSNotFound;
 }
 
--(MHVMessageHeaderItem *)headerWithName:(NSString *)name
+- (MHVMessageHeaderItem *)headerWithName:(NSString *)name
 {
     NSUInteger index = [self indexOfHeaderWithName:name];
+
     if (index != NSNotFound)
     {
         return [self itemAtIndex:index];
     }
-    
+
     return nil;
 }
 
 @end
-

@@ -25,7 +25,7 @@
 @interface MHVTypeFilter : MHVType 
 {
 @protected
-    enum MHVItemState m_state;
+    MHVItemState m_state;
     NSDate* m_eDateMin;
     NSDate* m_eDateMax;
     NSString* m_cAppID;
@@ -39,7 +39,7 @@
     NSString* m_xpath;
 }
 
-@property (readwrite, nonatomic) enum MHVItemState state;
+@property (readwrite, nonatomic) MHVItemState state;
 
 @property (readwrite, nonatomic, strong) NSDate* effectiveDateMin;
 @property (readwrite, nonatomic, strong) NSDate* effectiveDateMax;
