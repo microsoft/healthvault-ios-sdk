@@ -18,16 +18,16 @@
 
 #import "MHVCholesterolFactory.h"
 
-@implementation MHVCholesterolV2 (MHVFactoryMethods)
+@implementation MHVCholesterol (MHVFactoryMethods)
 
 +(MHVItemCollection *)createRandomForDay:(NSDate *)date
 {
-    return [MHVCholesterolV2 createRandomForDay:date metric:FALSE];
+    return [MHVCholesterol createRandomForDay:date metric:FALSE];
 }
 
 +(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
 {
-    return [MHVCholesterolV2 createRandomForDay:date metric:TRUE];
+    return [MHVCholesterol createRandomForDay:date metric:TRUE];
 }
 
 +(MHVItemCollection *) createRandomForDay:(NSDate *) date metric:(BOOL)metric
@@ -39,14 +39,14 @@
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:11 max:16];
     dateTime.time.minute = [MHVRandom randomIntInRangeMin:5 max:55];
     
-    [items addObject:[MHVCholesterolV2 createRandomForDate:dateTime metric:metric]];
+    [items addObject:[MHVCholesterol createRandomForDate:dateTime metric:metric]];
     
     return items;    
 }
 
 @end
 
-@implementation MHVCholesterolV2 (MHVDisplay)
+@implementation MHVCholesterol (MHVDisplay)
 
 -(NSString *)detailsString
 {

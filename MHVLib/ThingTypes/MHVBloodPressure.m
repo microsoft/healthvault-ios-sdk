@@ -1,15 +1,15 @@
 //
-//  MHVBloodPressure.m
-//  MHVLib
+// MHVBloodPressure.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,173 +19,157 @@
 #import "MHVCommon.h"
 #import "MHVBloodPressure.h"
 
-static NSString* const c_typeID = @"ca3c57f4-f4c1-4e15-be67-0a3caf5414ed";
-static NSString* const c_typeName = @"blood-pressure";
+static NSString *const c_typeID = @"ca3c57f4-f4c1-4e15-be67-0a3caf5414ed";
+static NSString *const c_typeName = @"blood-pressure";
 
-static const xmlChar* x_element_when = XMLSTRINGCONST("when");
-static const xmlChar* x_element_systolic = XMLSTRINGCONST("systolic");
-static const xmlChar* x_element_diastolic = XMLSTRINGCONST("diastolic");
-static const xmlChar* x_element_pulse = XMLSTRINGCONST("pulse");
-static const xmlChar* x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat");
-
+static const xmlChar *x_element_when = XMLSTRINGCONST("when");
+static const xmlChar *x_element_systolic = XMLSTRINGCONST("systolic");
+static const xmlChar *x_element_diastolic = XMLSTRINGCONST("diastolic");
+static const xmlChar *x_element_pulse = XMLSTRINGCONST("pulse");
+static const xmlChar *x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat");
 
 @implementation MHVBloodPressure
 
-@synthesize when = m_when;
-@synthesize irregularHeartbeat = m_heartbeat;
-@synthesize systolic = m_systolic;
-@synthesize diastolic = m_diastolic;
-@synthesize pulse = m_pulse;
-
--(int) systolicValue
+- (int)systolicValue
 {
-    return (m_systolic) ? m_systolic.value : -1;
+    return (self.systolic) ? self.systolic.value : -1;
 }
 
--(void) setSystolicValue:(int)systolicValue
+- (void)setSystolicValue:(int)systolicValue
 {
-    MHVENSURE(m_systolic, MHVNonNegativeInt);
-    m_systolic.value = systolicValue;
+    MHVENSURE(self.systolic, MHVNonNegativeInt);
+    self.systolic.value = systolicValue;
 }
 
--(int) diastolicValue
+- (int)diastolicValue
 {
-    return (m_diastolic) ? m_diastolic.value : -1;
+    return (self.diastolic) ? self.diastolic.value : -1;
 }
 
--(void) setDiastolicValue:(int)diastolicValue
+- (void)setDiastolicValue:(int)diastolicValue
 {
-    MHVENSURE(m_diastolic, MHVNonNegativeInt);
-    m_diastolic.value = diastolicValue;
+    MHVENSURE(self.diastolic, MHVNonNegativeInt);
+    self.diastolic.value = diastolicValue;
 }
 
--(int) pulseValue
+- (int)pulseValue
 {
-    return (m_pulse) ? m_pulse.value : -1;
+    return (self.pulse) ? self.pulse.value : -1;
 }
 
--(void) setPulseValue:(int)pulseValue
+- (void)setPulseValue:(int)pulseValue
 {
-    MHVENSURE(m_pulse, MHVNonNegativeInt);
-    m_pulse.value = pulseValue;
+    MHVENSURE(self.pulse, MHVNonNegativeInt);
+    self.pulse.value = pulseValue;
 }
 
--(id) initWithSystolic:(int)sVal diastolic:(int)dVal
+- (instancetype)initWithSystolic:(int)sVal diastolic:(int)dVal
 {
     return [self initWithSystolic:sVal diastolic:dVal pulse:-1];
 }
 
--(id) initWithSystolic:(int)sVal diastolic:(int)dVal andDate:(NSDate *)date
+- (instancetype)initWithSystolic:(int)sVal diastolic:(int)dVal andDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-    
+
     self = [self initWithSystolic:sVal diastolic:dVal];
-    MHVCHECK_SELF;
-    
-    m_when = [[MHVDateTime alloc] initWithDate:date];
-    MHVCHECK_NOTNULL(m_when);
-    
+    if (self)
+    {
+        _when = [[MHVDateTime alloc] initWithDate:date];
+        MHVCHECK_NOTNULL(_when);
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id) initWithSystolic:(int)sVal diastolic:(int)dVal pulse:(int)pVal
+- (instancetype)initWithSystolic:(int)sVal diastolic:(int)dVal pulse:(int)pVal
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_systolic = [[MHVNonNegativeInt alloc] initWith:sVal];
-    MHVCHECK_NOTNULL(m_systolic);
-    
-    m_diastolic = [[MHVNonNegativeInt alloc] initWith:dVal];
-    MHVCHECK_NOTNULL(m_diastolic);
-    
-    if (pVal >= 0)
+    if (self)
     {
-        m_pulse = [[MHVNonNegativeInt alloc] initWith:pVal];
-        MHVCHECK_NOTNULL(m_pulse);
+        _systolic = [[MHVNonNegativeInt alloc] initWith:sVal];
+        MHVCHECK_NOTNULL(_systolic);
+
+        _diastolic = [[MHVNonNegativeInt alloc] initWith:dVal];
+        MHVCHECK_NOTNULL(_diastolic);
+
+        if (pVal >= 0)
+        {
+            _pulse = [[MHVNonNegativeInt alloc] initWith:pVal];
+            MHVCHECK_NOTNULL(_pulse);
+        }
     }
-    
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];
+    return [self.when toDateForCalendar:calendar];
 }
 
-
--(NSString *) toString
+- (NSString *)toString
 {
     return [self toStringWithFormat:@"%d/%d"];
 }
 
--(NSString *)toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
     return [NSString localizedStringWithFormat:format, self.systolicValue, self.diastolicValue];
 }
 
--(MHVClientResult *) validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidBloodPressure);
-    MHVVALIDATE(m_systolic, MHVClientError_InvalidBloodPressure);
-    MHVVALIDATE(m_diastolic, MHVClientError_InvalidBloodPressure);
-    
-    MHVVALIDATE_OPTIONAL(m_pulse);
-    MHVVALIDATE_OPTIONAL(m_heartbeat);
-    
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidBloodPressure);
+    MHVVALIDATE(self.systolic, MHVClientError_InvalidBloodPressure);
+    MHVVALIDATE(self.diastolic, MHVClientError_InvalidBloodPressure);
+    MHVVALIDATE_OPTIONAL(self.pulse);
+    MHVVALIDATE_OPTIONAL(self.irregularHeartbeat);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void) serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementXmlName:x_element_systolic content:m_systolic];
-    [writer writeElementXmlName:x_element_diastolic content:m_diastolic];
-    
-    [writer writeElementXmlName:x_element_pulse content:m_pulse];
-    [writer writeElementXmlName:x_element_heartbeat content:m_heartbeat];
+    [writer writeElementXmlName:x_element_when content:self.when];
+    [writer writeElementXmlName:x_element_systolic content:self.systolic];
+    [writer writeElementXmlName:x_element_diastolic content:self.diastolic];
+    [writer writeElementXmlName:x_element_pulse content:self.pulse];
+    [writer writeElementXmlName:x_element_heartbeat content:self.irregularHeartbeat];
 }
 
--(void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
-    
-    m_systolic = [reader readElementWithXmlName:x_element_systolic asClass:[MHVNonNegativeInt class]];
-    m_diastolic = [reader readElementWithXmlName:x_element_diastolic asClass:[MHVNonNegativeInt class]];
-    
-    m_pulse = [reader readElementWithXmlName:x_element_pulse asClass:[MHVNonNegativeInt class]];
-    m_heartbeat = [reader readElementWithXmlName:x_element_heartbeat asClass:[MHVBool class]];
+    self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
+    self.systolic = [reader readElementWithXmlName:x_element_systolic asClass:[MHVNonNegativeInt class]];
+    self.diastolic = [reader readElementWithXmlName:x_element_diastolic asClass:[MHVNonNegativeInt class]];
+    self.pulse = [reader readElementWithXmlName:x_element_pulse asClass:[MHVNonNegativeInt class]];
+    self.irregularHeartbeat = [reader readElementWithXmlName:x_element_heartbeat asClass:[MHVBool class]];
 }
 
-+(NSString *) typeID
++ (NSString *)typeID
 {
     return c_typeID;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typeName;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVBloodPressure typeID]];
 }
 
--(NSString *)typeName
+- (NSString *)typeName
 {
     return NSLocalizedString(@"Blood Pressure", @"Blood Pressure Type Name");
 }

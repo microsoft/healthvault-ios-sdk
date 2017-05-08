@@ -1,15 +1,15 @@
 //
-//  MHVDietaryIntake.m
-//  MHVLib
+// MHVDietaryIntake.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,216 +19,204 @@
 #import "MHVCommon.h"
 #import "MHVDailyDietaryIntake.h"
 
-static NSString* const c_typeid = @"9c29c6b9-f40e-44ff-b24e-fba6f3074638";
-static NSString* const c_typename = @"dietary-intake-daily";
+static NSString *const c_typeid = @"9c29c6b9-f40e-44ff-b24e-fba6f3074638";
+static NSString *const c_typename = @"dietary-intake-daily";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_calories = @"calories";
-static NSString* const c_element_totalFat = @"total-fat";
-static NSString* const c_element_saturatedFat = @"saturated-fat";
-static NSString* const c_element_transFat = @"trans-fat";
-static NSString* const c_element_protein = @"protein";
-static NSString* const c_element_carbs = @"total-carbohydrates";
-static NSString* const c_element_fiber = @"dietary-fiber";
-static NSString* const c_element_sugar = @"sugars";
-static NSString* const c_element_sodium = @"sodium";
-static NSString* const c_element_cholesterol = @"cholesterol";
+static NSString *const c_element_when = @"when";
+static NSString *const c_element_calories = @"calories";
+static NSString *const c_element_totalFat = @"total-fat";
+static NSString *const c_element_saturatedFat = @"saturated-fat";
+static NSString *const c_element_transFat = @"trans-fat";
+static NSString *const c_element_protein = @"protein";
+static NSString *const c_element_carbs = @"total-carbohydrates";
+static NSString *const c_element_fiber = @"dietary-fiber";
+static NSString *const c_element_sugar = @"sugars";
+static NSString *const c_element_sodium = @"sodium";
+static NSString *const c_element_cholesterol = @"cholesterol";
 
 @implementation MHVDailyDietaryIntake
 
-@synthesize when = m_when;
-@synthesize calories = m_calories;
-@synthesize totalFat = m_totalFat;
-@synthesize saturatedFat = m_saturatedFat;
-@synthesize transFat = m_transFat;
-@synthesize protein = m_protein;
-@synthesize totalCarbs = m_carbs;
-@synthesize sugar = m_sugar;
-@synthesize dietaryFiber = m_fiber;
-@synthesize sodium = m_sodium;
-@synthesize cholesterol = m_cholesterol;
-
--(int)caloriesValue
+- (int)caloriesValue
 {
-    return (m_calories) ? m_calories.value : -1;
+    return (self.calories) ? self.calories.value : -1;
 }
 
--(void)setCaloriesValue:(int)caloriesValue
+- (void)setCaloriesValue:(int)caloriesValue
 {
-    MHVENSURE(m_calories, MHVPositiveInt);
-    m_calories.value = caloriesValue;
+    MHVENSURE(self.calories, MHVPositiveInt);
+    self.calories.value = caloriesValue;
 }
 
--(double)totalFatGrams
+- (double)totalFatGrams
 {
-    return (m_totalFat) ? m_totalFat.inGrams : NAN;
+    return (self.totalFat) ? self.totalFat.inGrams : NAN;
 }
 
--(void)setTotalFatGrams:(double)totalFatGrams
+- (void)setTotalFatGrams:(double)totalFatGrams
 {
-    MHVENSURE(m_totalFat, MHVWeightMeasurement);
-    m_totalFat.inGrams = totalFatGrams;
+    MHVENSURE(self.totalFat, MHVWeightMeasurement);
+    self.totalFat.inGrams = totalFatGrams;
 }
 
--(double)saturatedFatGrams
+- (double)saturatedFatGrams
 {
-    return (m_saturatedFat) ? m_saturatedFat.inGrams : NAN;
+    return (self.saturatedFat) ? self.saturatedFat.inGrams : NAN;
 }
 
--(void)setSaturatedFatGrams:(double)saturatedFatGrams
+- (void)setSaturatedFatGrams:(double)saturatedFatGrams
 {
-    MHVENSURE(m_saturatedFat, MHVWeightMeasurement);
-    m_saturatedFat.inGrams = saturatedFatGrams;   
+    MHVENSURE(self.saturatedFat, MHVWeightMeasurement);
+    self.saturatedFat.inGrams = saturatedFatGrams;
 }
 
--(double)transFatGrams
+- (double)transFatGrams
 {
-    return (m_transFat) ? m_transFat.inGrams : NAN;
+    return (self.transFat) ? self.transFat.inGrams : NAN;
 }
 
--(void)setTransFatGrams:(double)transFatGrams
+- (void)setTransFatGrams:(double)transFatGrams
 {
-    MHVENSURE(m_transFat, MHVWeightMeasurement);
-    m_transFat.inGrams = transFatGrams;   
+    MHVENSURE(self.transFat, MHVWeightMeasurement);
+    self.transFat.inGrams = transFatGrams;
 }
 
--(double)proteinGrams
+- (double)proteinGrams
 {
-    return (m_protein) ? m_protein.inGrams : NAN;
+    return (self.protein) ? self.protein.inGrams : NAN;
 }
 
--(void)setProteinGrams:(double)proteinGrams
+- (void)setProteinGrams:(double)proteinGrams
 {
-    MHVENSURE(m_protein, MHVWeightMeasurement);
-    m_protein.inGrams = proteinGrams;       
+    MHVENSURE(self.protein, MHVWeightMeasurement);
+    self.protein.inGrams = proteinGrams;
 }
 
--(double)totalCarbGrams
+- (double)totalCarbGrams
 {
-    return (m_carbs) ? m_carbs.inGrams : NAN;
+    return (self.totalCarbs) ? self.totalCarbs.inGrams : NAN;
 }
 
--(void)setTotalCarbGrams:(double)totalCarbGrams
+- (void)setTotalCarbGrams:(double)totalCarbGrams
 {
-    MHVENSURE(m_carbs, MHVWeightMeasurement);
-    m_carbs.inGrams = totalCarbGrams;   
+    MHVENSURE(self.totalCarbs, MHVWeightMeasurement);
+    self.totalCarbs.inGrams = totalCarbGrams;
 }
 
--(double)sugarGrams
+- (double)sugarGrams
 {
-    return (m_sugar) ? m_sugar.inGrams : NAN;
+    return (self.sugar) ? self.sugar.inGrams : NAN;
 }
 
--(void)setSugarGrams:(double)sugarGrams
+- (void)setSugarGrams:(double)sugarGrams
 {
-    MHVENSURE(m_sugar, MHVWeightMeasurement);
-    m_sugar.inGrams = sugarGrams;   
+    MHVENSURE(self.sugar, MHVWeightMeasurement);
+    self.sugar.inGrams = sugarGrams;
 }
 
--(double)dietaryFiberGrams
+- (double)dietaryFiberGrams
 {
-    return (m_fiber) ? m_fiber.inGrams : NAN;
+    return (self.dietaryFiber) ? self.dietaryFiber.inGrams : NAN;
 }
 
--(void)setDietaryFiberGrams:(double)dietaryFiberGrams
+- (void)setDietaryFiberGrams:(double)dietaryFiberGrams
 {
-    MHVENSURE(m_fiber, MHVWeightMeasurement);
-    m_fiber.inGrams = dietaryFiberGrams;       
+    MHVENSURE(self.dietaryFiber, MHVWeightMeasurement);
+    self.dietaryFiber.inGrams = dietaryFiberGrams;
 }
 
--(double)sodiumMillgrams
+- (double)sodiumMillgrams
 {
-    return (m_sodium) ? m_sodium.inMilligrams : NAN;
+    return (self.sodium) ? self.sodium.inMilligrams : NAN;
 }
 
--(void)setSodiumMillgrams:(double)sodiumMillgrams
+- (void)setSodiumMillgrams:(double)sodiumMillgrams
 {
-    MHVENSURE(m_sodium, MHVWeightMeasurement);
-    m_sodium.inMilligrams = sodiumMillgrams;       
+    MHVENSURE(self.sodium, MHVWeightMeasurement);
+    self.sodium.inMilligrams = sodiumMillgrams;
 }
 
--(double)cholesterolMilligrams
+- (double)cholesterolMilligrams
 {
-    return (m_cholesterol) ? m_cholesterol.inMilligrams : NAN;
+    return (self.cholesterol) ? self.cholesterol.inMilligrams : NAN;
 }
 
--(void)setCholesterolMilligrams:(double)cholesterolMilligrams
+- (void)setCholesterolMilligrams:(double)cholesterolMilligrams
 {
-    MHVENSURE(m_cholesterol, MHVWeightMeasurement);
-    m_cholesterol.inMilligrams = cholesterolMilligrams;          
+    MHVENSURE(self.cholesterol, MHVWeightMeasurement);
+    self.cholesterol.inMilligrams = cholesterolMilligrams;
 }
 
-
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];
+    return [self.when toDateForCalendar:calendar];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidDietaryIntake);
-    MHVVALIDATE_OPTIONAL(m_calories);
-    MHVVALIDATE_OPTIONAL(m_totalFat);
-    MHVVALIDATE_OPTIONAL(m_saturatedFat);
-    MHVVALIDATE_OPTIONAL(m_transFat);
-    MHVVALIDATE_OPTIONAL(m_protein);
-    MHVVALIDATE_OPTIONAL(m_carbs);
-    MHVVALIDATE_OPTIONAL(m_fiber);
-    MHVVALIDATE_OPTIONAL(m_sugar);
-    MHVVALIDATE_OPTIONAL(m_sodium);
-    MHVVALIDATE_OPTIONAL(m_cholesterol);
-    
+
+        MHVVALIDATE(self.when, MHVClientError_InvalidDietaryIntake);
+
+    MHVVALIDATE_OPTIONAL(self.calories);
+    MHVVALIDATE_OPTIONAL(self.totalFat);
+    MHVVALIDATE_OPTIONAL(self.saturatedFat);
+    MHVVALIDATE_OPTIONAL(self.transFat);
+    MHVVALIDATE_OPTIONAL(self.protein);
+    MHVVALIDATE_OPTIONAL(self.totalCarbs);
+    MHVVALIDATE_OPTIONAL(self.dietaryFiber);
+    MHVVALIDATE_OPTIONAL(self.sugar);
+    MHVVALIDATE_OPTIONAL(self.sodium);
+    MHVVALIDATE_OPTIONAL(self.cholesterol);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_when content:m_when];
-    [writer writeElement:c_element_calories content:m_calories];
-    [writer writeElement:c_element_totalFat content:m_totalFat];
-    [writer writeElement:c_element_saturatedFat content:m_saturatedFat];
-    [writer writeElement:c_element_transFat content:m_transFat];
-    [writer writeElement:c_element_protein content:m_protein];
-    [writer writeElement:c_element_carbs content:m_carbs];
-    [writer writeElement:c_element_fiber content:m_fiber];
-    [writer writeElement:c_element_sugar content:m_sugar];
-    [writer writeElement:c_element_sodium content:m_sodium];
-    [writer writeElement:c_element_cholesterol content:m_cholesterol];
+    [writer writeElement:c_element_when content:self.when];
+    [writer writeElement:c_element_calories content:self.calories];
+    [writer writeElement:c_element_totalFat content:self.totalFat];
+    [writer writeElement:c_element_saturatedFat content:self.saturatedFat];
+    [writer writeElement:c_element_transFat content:self.transFat];
+    [writer writeElement:c_element_protein content:self.protein];
+    [writer writeElement:c_element_carbs content:self.totalCarbs];
+    [writer writeElement:c_element_fiber content:self.dietaryFiber];
+    [writer writeElement:c_element_sugar content:self.sugar];
+    [writer writeElement:c_element_sodium content:self.sodium];
+    [writer writeElement:c_element_cholesterol content:self.cholesterol];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElement:c_element_when asClass:[MHVDate class]];
-    m_calories = [reader readElement:c_element_calories asClass:[MHVPositiveInt class]];
-    m_totalFat = [reader readElement:c_element_totalFat asClass:[MHVWeightMeasurement class]];
-    m_saturatedFat = [reader readElement:c_element_saturatedFat asClass:[MHVWeightMeasurement class]];
-    m_transFat = [reader readElement:c_element_transFat asClass:[MHVWeightMeasurement class]];
-    m_protein = [reader readElement:c_element_protein asClass:[MHVWeightMeasurement class]];
-    m_carbs = [reader readElement:c_element_carbs asClass:[MHVWeightMeasurement class]];
-    m_fiber = [reader readElement:c_element_fiber asClass:[MHVWeightMeasurement class]];
-    m_sugar = [reader readElement:c_element_sugar asClass:[MHVWeightMeasurement class]];
-    m_sodium = [reader readElement:c_element_sodium asClass:[MHVWeightMeasurement class]];
-    m_cholesterol = [reader readElement:c_element_cholesterol asClass:[MHVWeightMeasurement class]];    
+    self.when = [reader readElement:c_element_when asClass:[MHVDate class]];
+    self.calories = [reader readElement:c_element_calories asClass:[MHVPositiveInt class]];
+    self.totalFat = [reader readElement:c_element_totalFat asClass:[MHVWeightMeasurement class]];
+    self.saturatedFat = [reader readElement:c_element_saturatedFat asClass:[MHVWeightMeasurement class]];
+    self.transFat = [reader readElement:c_element_transFat asClass:[MHVWeightMeasurement class]];
+    self.protein = [reader readElement:c_element_protein asClass:[MHVWeightMeasurement class]];
+    self.totalCarbs = [reader readElement:c_element_carbs asClass:[MHVWeightMeasurement class]];
+    self.dietaryFiber = [reader readElement:c_element_fiber asClass:[MHVWeightMeasurement class]];
+    self.sugar = [reader readElement:c_element_sugar asClass:[MHVWeightMeasurement class]];
+    self.sodium = [reader readElement:c_element_sodium asClass:[MHVWeightMeasurement class]];
+    self.cholesterol = [reader readElement:c_element_cholesterol asClass:[MHVWeightMeasurement class]];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVDailyDietaryIntake typeID]];
 }

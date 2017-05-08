@@ -1,15 +1,15 @@
 //
-//  MHVDietaryIntake.h
-//  MHVLib
+// MHVDietaryIntake.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,79 +19,65 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-//------------------------
+// ------------------------
 //
 // DAILY Dietary Intake
 // DEPRECATED.
 // This type is obsolete.
 // Use MHVDietaryIntake
 //
-//------------------------
+// ------------------------
 @interface MHVDailyDietaryIntake : MHVItemDataTyped
-{
-@private
-    MHVDate* m_when;
-    MHVPositiveInt* m_calories;
-    MHVWeightMeasurement* m_totalFat;
-    MHVWeightMeasurement* m_saturatedFat;
-    MHVWeightMeasurement* m_transFat;
-    MHVWeightMeasurement* m_protein;
-    MHVWeightMeasurement* m_carbs;
-    MHVWeightMeasurement* m_fiber;
-    MHVWeightMeasurement* m_sugar;
-    MHVWeightMeasurement* m_sodium;
-    MHVWeightMeasurement* m_cholesterol;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required) - the day for this intake
 //
-@property (readwrite, nonatomic, strong) MHVDate* when;
+@property (readwrite, nonatomic, strong) MHVDate *when;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVPositiveInt* calories;
+@property (readwrite, nonatomic, strong) MHVPositiveInt *calories;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* totalFat;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *totalFat;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* saturatedFat;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *saturatedFat;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* transFat;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *transFat;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* protein;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *protein;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* totalCarbs;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *totalCarbs;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* sugar;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *sugar;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* dietaryFiber;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *dietaryFiber;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* sodium;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *sodium;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVWeightMeasurement* cholesterol;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *cholesterol;
 
 //
 // Convenience properties
@@ -107,9 +93,9 @@
 @property (readwrite, nonatomic) double sodiumMillgrams;
 @property (readwrite, nonatomic) double cholesterolMilligrams;
 
-+(NSString *) typeID;
-+(NSString *) XRootElement;
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
 @end

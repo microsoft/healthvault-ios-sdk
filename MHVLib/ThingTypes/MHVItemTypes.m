@@ -54,7 +54,7 @@ MHVDECLARE_GETTOR(MHVBloodPressure, bloodPressure);
 
 MHVDECLARE_GETTOR(MHVCholesterol, cholesterol);
 
-MHVDECLARE_GETTOR(MHVCholesterolV2, cholesterolV2);
+MHVDECLARE_GETTOR(MHVCholesterol, cholesterolV2);
 
 MHVDECLARE_GETTOR(MHVBloodGlucose, bloodGlucose);
 

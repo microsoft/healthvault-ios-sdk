@@ -129,7 +129,7 @@
     [typeList addObject:[MHVBloodGlucose class]];
     [typeList addObject:[MHVBloodPressure class]];
     [typeList addObject:[MHVCondition class]];
-    [typeList addObject:[MHVCholesterolV2 class]];
+    [typeList addObject:[MHVCholesterol class]];
     [typeList addObject:[MHVDietaryIntake class]];
     [typeList addObject:[MHVDailyMedicationUsage class]];
     [typeList addObject:[MHVImmunization class]];
