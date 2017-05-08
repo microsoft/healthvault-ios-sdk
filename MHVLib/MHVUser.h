@@ -59,7 +59,7 @@
 //
 // -------------------------
 
-- (instancetype)initFromHealthVaultRecords:(NSArray *)recordArray;   
+- (instancetype)initFromHealthVaultRecords:(NSArray *)recordArray;   // Infrastructure - will eventually go away
 //
 // Refresh the list of authorized records - in case there were changes made using the HealthVault Shell
 // It is possible that when this returns, you no longer have any authorized records
