@@ -25,13 +25,17 @@
     return array == nil || array.count == 0;
 }
 
+    
 @end
 
 @implementation NSMutableArray (MHVArrayExtensions)
+    
+
 
 - (void)addFromEnumerator:(NSEnumerator *)enumerator
 {
     id obj;
+
     while ((obj = enumerator.nextObject) != nil)
     {
         [self addObject:obj];

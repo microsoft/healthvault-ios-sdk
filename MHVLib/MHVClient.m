@@ -1,15 +1,15 @@
 //
-//  MHVClient.m
-//  MHVLib
+// MHVClient.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,191 +23,119 @@
 #import "MHVServiceDef.h"
 #import "MHVMethods.h"
 
-static MHVClient* s_client;
+static MHVClient *s_client;
+static NSString *const c_userfileName = @"user.xml";
+static NSString *const c_environmentFileName = @"environment.xml";
 
-@interface MHVClient (MHVPrivate)
+@interface MHVClient ()
 
--(id) initWithSettings:(MHVClientSettings *) settings;
+@property (readwrite, nonatomic, strong) NSOperationQueue *queue;
 
--(void) initializeState;
--(BOOL) ensureLocalVault;
+@property (readwrite, nonatomic, strong) id<HealthVaultService>     service;
+@property (readwrite, nonatomic, strong) MHVServiceDefinition *serviceDef;
+@property (readwrite, nonatomic, strong) MHVLocalVault *localVault;
+@property (readwrite, nonatomic, strong) MHVDirectory *rootDirectory;
+@property (readwrite, nonatomic, strong) MHVUser *user;
 
--(HealthVaultService *) newService;
--(void) updateUser;
--(MHVUser *) loadUser;
--(void) setUser:(MHVUser *) user;
--(BOOL) saveUser;
--(void) deleteUser;
--(BOOL) applyUserEnvironment;
+@property (readwrite, nonatomic, weak)   UIViewController *parentController;
 
--(void) loadSavedEnvironment;
--(void) setEnvironment:(MHVInstance *) instance;
--(BOOL) saveEnvironment;
--(void) deleteSavedEnvironment;
-
-//
-// Callbacks from HealthVaultService object
-//
--(void) shellAuthRequired: (HealthVaultResponse *)response;
--(void) authenticationCompleted: (HealthVaultResponse *)response;
-//
-// Auth state machine
-//
--(void) beginGetTopology;
--(void) beginAuth;
--(void) beginShellAuth;
--(void) setupInstanceInfo:(NSString *) instanceID;
--(void) notifyOfProvisionStatus;
-
--(void) subscribeAppEvents;
--(void) unsubscribeAppEvents;
+@property (readwrite, nonatomic, assign) MHVAppProvisionStatus provisionStatus;
+@property (readwrite, nonatomic, strong) MHVNotify provisionCallback;
 
 @end
 
-
 @implementation MHVClient
 
-@synthesize settings = m_settings;
-@synthesize localVault = m_localVault;
-@synthesize rootDirectory = m_rootDirectory;
-@synthesize provisionStatus = m_provisionStatus;
-@synthesize service = m_service;
-@synthesize user = m_user;
-@synthesize environment = m_environment;
-
-+(void)initialize
++ (void)initialize
 {
     static dispatch_once_t s_clientToken = 0;
-    dispatch_once(&s_clientToken, ^{
-        s_client = nil;
-        MHVClientSettings* settings = [MHVClientSettings newDefault];
-        s_client = [[MHVClient alloc] initWithSettings:settings];
-    });
+    
+    dispatch_once(&s_clientToken, ^
+                  {
+                      MHVClientSettings *settings = [MHVClientSettings newDefault];
+                      s_client = [[MHVClient alloc] initWithSettings:settings];
+                  });
 }
 
-+(MHVClient *)current
++ (MHVClient *)current
 {
     return s_client;
 }
 
-+(BOOL)initializeClientUsingSettings:(MHVClientSettings *)settings
++ (BOOL)initializeClientUsingSettings:(MHVClientSettings *)settings
 {
     MHVCHECK_NOTNULL(settings);
-    s_client = nil;
- 
-    s_client = [[MHVClient alloc] initWithSettings:settings];
-    return (s_client != nil);
     
-LError:
-    return FALSE;
+    s_client = [[MHVClient alloc] initWithSettings:settings];
+    return s_client != nil;
 }
 
--(enum MHVAppProvisionStatus)provisionStatus
-{
-    @synchronized(self)
-    {
-        return m_provisionStatus;
-    }
-}
-
--(void)setProvisionStatus:(enum MHVAppProvisionStatus)provisionStatus
-{
-    @synchronized(self)
-    {
-        m_provisionStatus = provisionStatus;
-    }    
-}
-
--(BOOL)isProvisioned
-{
-    return ([self isAppCreated] && m_user && m_user.hasRecords);
-}
-
--(BOOL)isAppCreated
-{
-    return [m_service isAppCreated];
-}
-
--(BOOL)hasUser
-{
-    return (m_user != nil);
-}
-
--(MHVRecordCollection *)records
-{
-    return (m_user) ? m_user.records : nil;
-}
-
--(MHVRecord *)currentRecord
-{
-    return (m_user) ? m_user.currentRecord : nil;
-}
-
--(BOOL)hasAuthorizedRecords
-{
-    return ![MHVCollection isNilOrEmpty:self.records];
-}
-
--(MHVMethodFactory *)methodFactory
-{
-    return m_methodFactory;
-}
-
--(void)setMethodFactory:(MHVMethodFactory *)methodFactory
-{
-    if (methodFactory)
-    {
-        m_methodFactory = methodFactory;
-    }
-}
-
-- (id)init
-{
-    return [self instanceWithNilSettings];
-}
-
-- (id)instanceWithNilSettings
+- (instancetype)init
 {
     return [self initWithSettings:nil];
 }
 
--(void) dealloc
+- (void)dealloc
 {
     [self unsubscribeAppEvents];
-    
-    
-    
-    
-
 }
 
--(BOOL)startWithParentController:(UIViewController *)controller andStartedCallback:(MHVNotify)callback
+- (BOOL)isProvisioned
+{
+    return [self isAppCreated] && self.user && self.user.hasRecords;
+}
+
+- (BOOL)isAppCreated
+{
+    return [self.service isAppCreated];
+}
+
+- (BOOL)hasUser
+{
+    return self.user != nil;
+}
+
+- (MHVRecordCollection *)records
+{
+    return (self.user) ? self.user.records : nil;
+}
+
+- (MHVRecord *)currentRecord
+{
+    return (self.user) ? self.user.currentRecord : nil;
+}
+
+- (BOOL)hasAuthorizedRecords
+{
+    return ![MHVCollection isNilOrEmpty:self.records];
+}
+
+- (BOOL)startWithParentController:(UIViewController *)controller andStartedCallback:(MHVNotify)callback
 {
     @synchronized(self)
     {
         MHVCHECK_NOTNULL(controller);
         MHVCHECK_NOTNULL(callback);
-        MHVCHECK_NOTNULL(controller.navigationController); 
+        MHVCHECK_NOTNULL(controller.navigationController);
         
-        m_parentController = controller;
-        m_provisionCallback = nil;
+        self.parentController = controller;
         
-        m_provisionCallback = [callback copy];
+        self.provisionCallback = [callback copy];
         
         [self loadState];
         
         if (self.isProvisioned)
         {
-            // Already provisioned. 
+            // Already provisioned.
             self.provisionStatus = MHVAppProvisionSuccess;
             [self notifyOfProvisionStatus];
         }
         else
         {
-             // Gonna have to provision this application - perhaps authorize some records
+            // Have to provision this application - perhaps authorize some records
             [self deleteState];
-            [m_service applyEnvironmentSettings:[m_settings firstEnvironment]];
-
+            [self.service applyEnvironmentSettings:[self.settings firstEnvironment]];
+            
             [self beginAuth];
         }
         
@@ -218,61 +146,60 @@ LError:
     }
 }
 
--(void)queueOperation:(NSOperation *)op
+- (void)queueOperation:(NSOperation *)op
 {
-    [m_queue addOperation:op];
+    [self.queue addOperation:op];
 }
 
--(BOOL)loadState
+- (BOOL)loadState
 {
     @synchronized(self)
     {
-        if (m_service)
+        if (self.service)
         {
-            [m_service loadSettings];
+            [self.service loadSettings];
         }
         
-        m_user = nil;
         self.user = [self loadUser]; // ok if this is null
         
         if (![self applyUserEnvironment])
         {
             self.user = nil; // Can no longer guarantee this user's settings
         }
- 
-        return TRUE;
         
-    LError:
-        return FALSE;
+        return TRUE;
     }
 }
 
--(BOOL)saveState
+- (BOOL)saveState
 {
     @synchronized(self)
     {
-        [m_service saveSettings];
+        [self.service saveSettings];
         [self saveEnvironment];
+        
         return [self saveUser];
     }
 }
 
--(BOOL)deleteState
+- (BOOL)deleteState
 {
     @synchronized(self)
     {
         [self deleteSavedEnvironment];
         [self deleteUser];
-        if (m_service)
+        
+        if (self.service)
         {
-            [m_service reset];
-            [m_service saveSettings];
+            [self.service reset];
+            [self.service saveSettings];
         }
+        
         return TRUE;
     }
 }
 
--(BOOL)resetProvisioning
+- (BOOL)resetProvisioning
 {
     @synchronized(self)
     {
@@ -285,225 +212,209 @@ LError:
         // And local storage
         //
         [self resetLocalVault];
-
-        m_service = [self newService];
-        MHVCHECK_NOTNULL(m_service);
         
-        [m_service saveSettings];
- 
+        self.service = [self newService];
+        MHVCHECK_NOTNULL(self.service);
+        
+        [self.service saveSettings];
+        
         return TRUE;
-        
-    LError:
-        return FALSE;
     }
 }
 
--(BOOL)resetLocalVault
+- (BOOL)resetLocalVault
 {
     @synchronized(self)
     {
-        if (!m_localVault)
+        if (!self.localVault)
         {
             return TRUE;
         }
-
-        NSURL* storeUrl = m_rootDirectory.url;
-        [MHVDirectory deleteUrl:storeUrl];
         
-        m_rootDirectory = nil;
-        m_localVault = nil;
+        [MHVDirectory deleteUrl:self.rootDirectory.url];
+        
+        self.rootDirectory = nil;
+        self.localVault = nil;
         
         MHVCHECK_SUCCESS([self ensureLocalVault]); // So the MHVClient object remains in valid state
         
         return TRUE;
-        
-    LError:
-        return FALSE;
-    }    
+    }
 }
 
--(BOOL)isCurrentRecord:(MHVRecord *)record
+- (BOOL)isCurrentRecord:(MHVRecord *)record
 {
     if (!record)
     {
         return FALSE;
     }
     
-    return (self.currentRecord && [self.currentRecord.ID isEqualToString:record.ID]);
+    return self.currentRecord && [self.currentRecord.ID isEqualToString:record.ID];
 }
 
--(MHVLocalRecordStore *)getCurrentRecordStore
+- (MHVLocalRecordStore *)getCurrentRecordStore
 {
-    return [m_localVault getRecordStore:self.currentRecord];
+    return [self.localVault getRecordStore:self.currentRecord];
 }
 
--(void)didReceiveMemoryWarning
+- (void)didReceiveMemoryWarning
 {
-    if (m_localVault)
+    if (self.localVault)
     {
-        [m_localVault didReceiveMemoryWarning];
+        [self.localVault didReceiveMemoryWarning];
     }
 }
 
-@end
-
-static NSString* const c_userfileName = @"user.xml";
-static NSString* const c_environmentFileName = @"environment.xml";
-
-@implementation MHVClient (MHVPrivate)
-
--(id) initWithSettings:(MHVClientSettings *)settings
+- (instancetype)initWithSettings:(MHVClientSettings *)settings
 {
     MHVCHECK_NOTNULL(settings);
     
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_queue = [[NSOperationQueue alloc] init];
-    MHVCHECK_NOTNULL(m_queue);
-    
-    m_settings = settings;
-    MHVCHECK_SUCCESS([self ensureLocalVault]);
-    
-    // Set up the HealthVault Service
-    m_service = [self newService];
-    MHVCHECK_NOTNULL(m_service);
-    
-    m_methodFactory = [[MHVMethodFactory alloc] init];
-    
-    [self initializeState];
-    [self subscribeAppEvents];
+    if (self)
+    {
+        _queue = [[NSOperationQueue alloc] init];
+        MHVCHECK_NOTNULL(_queue);
+        
+        _settings = settings;
+        MHVCHECK_SUCCESS([self ensureLocalVault]);
+        
+        // Set up the HealthVault Service
+        _service = [self newService];
+        MHVCHECK_NOTNULL(_service);
+        
+        _methodFactory = [[MHVMethodFactory alloc] init];
+        
+        [self initializeState];
+        [self subscribeAppEvents];
+    }
     
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(void)initializeState
+- (void)initializeState
 {
     [self loadState];
     if (self.hasAuthorizedRecords)
     {
-        m_provisionStatus = MHVAppProvisionSuccess;
+        self.provisionStatus = MHVAppProvisionSuccess;
     }
 }
 
--(BOOL)ensureLocalVault
+- (BOOL)ensureLocalVault
 {
-    if (!m_rootDirectory)
+    if (!self.rootDirectory)
     {
-        if (m_settings.rootDirectoryPath)
+        if (self.settings.rootDirectoryPath)
         {
-            m_rootDirectory = [[MHVDirectory alloc] initWithPath:m_settings.rootDirectoryPath];
+            self.rootDirectory = [[MHVDirectory alloc] initWithPath:self.settings.rootDirectoryPath];
         }
         else
         {
-            m_rootDirectory = [[MHVDirectory alloc] initWithRelativePath:@"HealthVault"];
+            self.rootDirectory = [[MHVDirectory alloc] initWithRelativePath:@"HealthVault"];
         }
-        MHVCHECK_NOTNULL(m_rootDirectory);
+        
+        MHVCHECK_NOTNULL(self.rootDirectory);
     }
     
-    if (!m_localVault)
+    if (!self.localVault)
     {
-        m_localVault = [[MHVLocalVault alloc] initWithRoot:m_rootDirectory andCache:m_settings.useCachingInStore];
-        MHVCHECK_NOTNULL(m_localVault);
+        self.localVault = [[MHVLocalVault alloc] initWithRoot:self.rootDirectory andCache:self.settings.useCachingInStore];
+        MHVCHECK_NOTNULL(self.localVault);
     }
     
     return TRUE;
-    
-LError:
-    return FALSE;
 }
 
--(void)updateUser
+- (void)updateUser
 {
     @synchronized(self)
     {
         //
         // Capture authorized records
         //
-        if (m_user)
+        if (self.user)
         {
-            [m_user updateWithHealthVaultRecords:m_service.records];
+            [self.user updateWithHealthVaultRecords:self.service.records];
         }
         else
         {
-            m_user = [[MHVUser alloc] initFromHealthVaultRecords:m_service.records];
-            if (m_environment)
+            self.user = [[MHVUser alloc] initFromHealthVaultRecords:self.service.records];
+            if (self.environment)
             {
-                m_user.instanceID = m_environment.instanceID;
+                self.user.instanceID = self.environment.instanceID;
             }
         }
     }
 }
 
--(MHVUser *)loadUser
+- (MHVUser *)loadUser
 {
     @synchronized(self)
     {
-        MHVUser *user = [m_localVault.root getObjectWithKey:c_userfileName name:@"user" andClass:[MHVUser class]];
+        MHVUser *user = [self.localVault.root getObjectWithKey:c_userfileName name:@"user" andClass:[MHVUser class]];
+        
         if (user && [user validate].isError)
         {
             [self deleteUser];
             user = nil;
         }
+        
         if (user)
         {
-            [user configureCurrentRecordForService:m_service];
+            [user configureCurrentRecordForService:self.service];
         }
         
         return user;
     }
 }
 
--(void)setUser:(MHVUser *)user
+- (void)setUser:(MHVUser *)user
 {
     @synchronized(self)
     {
-        m_user = user;
+        _user = user;
     }
 }
 
--(BOOL)saveUser
+- (BOOL)saveUser
 {
     @synchronized(self)
     {
-        if (!m_user)
+        if (!self.user)
         {
             return TRUE;
         }
         
-        return [m_localVault.root putObject:m_user withKey:c_userfileName andName:@"user"];
+        return [self.localVault.root putObject:self.user withKey:c_userfileName andName:@"user"];
     }
 }
 
--(void)deleteUser
+- (void)deleteUser
 {
     @synchronized(self)
     {
-        [m_localVault.root deleteKey:c_userfileName];
+        [self.localVault.root deleteKey:c_userfileName];
         self.user = nil;
     }
 }
 
--(BOOL)applyUserEnvironment
+- (BOOL)applyUserEnvironment
 {
     if (!self.hasUser)
     {
         return TRUE;
     }
     
-    NSString* userEnvironment = self.user.environment;
+    NSString *userEnvironment = self.user.environment;
     if ([NSString isNilOrEmpty:userEnvironment])
     {
         return TRUE;
     }
     
-    MHVEnvironmentSettings* environment = [m_settings environmentWithName:userEnvironment];
+    MHVEnvironmentSettings *environment = [self.settings environmentWithName:userEnvironment];
     if (environment)
     {
-        [m_service applyEnvironmentSettings:environment];
+        [self.service applyEnvironmentSettings:environment];
         return TRUE;
     }
     
@@ -511,172 +422,166 @@ LError:
     return FALSE;
 }
 
--(void)loadSavedEnvironment
+- (void)loadSavedEnvironment
 {
     @synchronized(self)
     {
-        m_environment = nil;
-        
-        MHVEnvironmentSettings* env = (MHVEnvironmentSettings *)[m_localVault.root getObjectWithKey:c_environmentFileName name:@"environment" andClass:[MHVEnvironmentSettings class]];
-        
-        m_environment = env;
+        _environment = (MHVEnvironmentSettings *)[self.localVault.root getObjectWithKey:c_environmentFileName name:@"environment" andClass:[MHVEnvironmentSettings class]];
     }
 }
 
--(BOOL)saveEnvironment
+- (BOOL)saveEnvironment
 {
     @synchronized(self)
     {
-        if (!m_environment)
+        if (!self.environment)
         {
             return TRUE;
         }
         
-        return [m_localVault.root putObject:m_environment withKey:c_environmentFileName andName:@"environment"];
+        return [self.localVault.root putObject:self.environment withKey:c_environmentFileName andName:@"environment"];
     }
 }
 
--(void)setEnvironment:(MHVInstance *)instance
+- (void)makeEnvironmentWithInstance:(MHVInstance *)instance
 {
     @synchronized(self)
     {
-        m_environment = nil;
+        _environment = nil;
+        
         if (instance)
         {
-            m_environment = [MHVEnvironmentSettings fromInstance:instance];
+            _environment = [MHVEnvironmentSettings fromInstance:instance];
         }
-        [m_service applyEnvironmentSettings:m_environment];
+        
+        [self.service applyEnvironmentSettings:self.environment];
     }
 }
 
--(void)deleteSavedEnvironment
+- (void)deleteSavedEnvironment
 {
     @synchronized(self)
     {
-        m_environment = nil;
-        [m_localVault.root deleteKey:c_environmentFileName];
+        _environment = nil;
+        
+        [self.localVault.root deleteKey:c_environmentFileName];
     }
 }
 
--(HealthVaultService *)newService
+- (HealthVaultService *)newService
 {
-    MHVEnvironmentSettings* environment = nil;
-
+    MHVEnvironmentSettings *environment = nil;
+    
     [self loadSavedEnvironment];
-    if (m_environment)
+    if (self.environment)
     {
-        environment = m_environment;
+        environment = self.environment;
     }
     else
     {
-        environment = [m_settings firstEnvironment];
+        environment = [self.settings firstEnvironment];
     }
     
-    HealthVaultService* service = [[HealthVaultService alloc] 
-                                   initForAppID:m_settings.masterAppID 
-                                   andEnvironment:environment];
+    HealthVaultService *service = [[HealthVaultService alloc] initForAppID:self.settings.masterAppID
+                                                            andEnvironment:environment];
     
     MHVCHECK_NOTNULL(service);
     
-    service.country = m_settings.country;
-    service.language = m_settings.language;
-    service.deviceName = m_settings.deviceName;
-    if (m_settings.autoRequestDelay > 0)
+    service.country = self.settings.country;
+    service.language = self.settings.language;
+    service.deviceName = self.settings.deviceName;
+    if (self.settings.autoRequestDelay > 0)
     {
-        service.requestSendDelay = m_settings.autoRequestDelay;
+        service.requestSendDelay = self.settings.autoRequestDelay;
     }
     
     return service;
-    
-LError:
-    return nil;
 }
 
--(void)shellAuthRequired:(HealthVaultResponse *)response
+- (void)shellAuthRequired:(HealthVaultResponse *)response
 {
-    if(m_settings.isMultiInstanceAware)
+    if (self.settings.isMultiInstanceAware)
     {
         [self invokeOnMainThread:@selector(beginGetTopology)];
     }
     else
     {
-        [self invokeOnMainThread:@selector(beginShellAuth)];        
+        [self invokeOnMainThread:@selector(beginShellAuth)];
     }
 }
 
--(void)beginAuth
+- (void)beginAuth
 {
-    [m_service performAuthenticationCheck:self authenticationCompleted:@selector(authenticationCompleted:) shellAuthRequired:@selector(shellAuthRequired:)];    
+    [self.service performAuthenticationCheck:self authenticationCompleted:@selector(authenticationCompleted:) shellAuthRequired:@selector(shellAuthRequired:)];
 }
 
--(void)beginShellAuth
+- (void)beginShellAuth
 {
     [self saveState];
     
     self.provisionStatus = MHVAppProvisionCancelled;
-        
-    NSURL* creationUrl;
-    if (m_settings.isMultiInstanceAware)
+    
+    NSURL *creationUrl;
+    if (self.settings.isMultiInstanceAware)
     {
-        creationUrl = [NSURL URLWithString:[m_service getApplicationCreationUrlGA]];
+        creationUrl = [NSURL URLWithString:[self.service getApplicationCreationUrlGA]];
     }
     else
     {
-        creationUrl = [NSURL URLWithString:[m_service getApplicationCreationUrl]];
+        creationUrl = [NSURL URLWithString:[self.service getApplicationCreationUrl]];
     }
+    
     if (!creationUrl)
     {
-        safeInvokeNotify(m_provisionCallback, self);
+        safeInvokeNotify(self.provisionCallback, self);
         return;
     }
     
-    MHVAppProvisionController * shellController = [[MHVAppProvisionController alloc] initWithAppCreateUrl:creationUrl andCallback:^(MHVAppProvisionController *controller) {
-        
-        if (controller.status == MHVAppProvisionSuccess)
-        {
-            if (m_settings.isMultiInstanceAware && controller.hasInstanceID)
-            {
-                [self setupInstanceInfo:controller.hvInstanceID];
-            }
-            
-            [self invokeOnMainThread:@selector(beginAuth)];
-        }
-        else
-        {
-            [self invokeOnMainThread:@selector(notifyOfProvisionStatus)];
-        }
-     }];
+    MHVAppProvisionController *shellController = [[MHVAppProvisionController alloc] initWithAppCreateUrl:creationUrl andCallback:^(MHVAppProvisionController *controller)
+                                                  {
+                                                      if (controller.status == MHVAppProvisionSuccess)
+                                                      {
+                                                          if (self.settings.isMultiInstanceAware && controller.hasInstanceID)
+                                                          {
+                                                              [self setupInstanceInfo:controller.hvInstanceID];
+                                                          }
+                                                          
+                                                          [self invokeOnMainThread:@selector(beginAuth)];
+                                                      }
+                                                      else
+                                                      {
+                                                          [self invokeOnMainThread:@selector(notifyOfProvisionStatus)];
+                                                      }
+                                                  }];
     
     if (!shellController)
     {
-        safeInvokeNotify(m_provisionCallback, self);
+        safeInvokeNotify(self.provisionCallback, self);
         return;
     }
     
-    [m_parentController.navigationController pushViewController:shellController animated:TRUE];
+    [self.parentController.navigationController pushViewController:shellController animated:TRUE];
     
     return;
 }
 
--(void)beginGetTopology
-{    
-    MHVGetServiceDefinitionTask* getTask = [MHVGetServiceDefinitionTask getTopology:^(MHVTask *task) {
-        
-        MHVServiceDefinition* serviceDef = (((MHVGetServiceDefinitionTask *) task).serviceDef);
-        m_serviceDef = serviceDef;
+- (void)beginGetTopology
+{
+    MHVGetServiceDefinitionTask *getTask = [MHVGetServiceDefinitionTask getTopology:^(MHVTask *task) {
+        MHVServiceDefinition *serviceDef = (((MHVGetServiceDefinitionTask *)task).serviceDef);
+        self.serviceDef = serviceDef;
         
         [self invokeOnMainThread:@selector(beginShellAuth)];
     }];
+    
     if (!getTask)
     {
-        safeInvokeNotify(m_provisionCallback, self);
+        safeInvokeNotify(self.provisionCallback, self);
         return;
     }
-
-    return;
 }
 
--(void)authenticationCompleted: (HealthVaultResponse *)response
+- (void)authenticationCompleted:(HealthVaultResponse *)response
 {
     //
     // Ensure that we have an authorized record
@@ -693,56 +598,53 @@ LError:
         //
         [self updateUser];
     }
-   
-    [self saveState];
-    m_parentController = nil;
     
-    [self invokeOnMainThread:@selector(notifyOfProvisionStatus)]; 
+    [self saveState];
+    self.parentController = nil;
+    
+    [self invokeOnMainThread:@selector(notifyOfProvisionStatus)];
 }
 
--(void)setupInstanceInfo:(NSString *)instanceID
+- (void)setupInstanceInfo:(NSString *)instanceID
 {
     NSUInteger index = NSNotFound;
     
-    if (m_serviceDef)
+    if (self.serviceDef)
     {
-        index = [m_serviceDef.systemInstances.instances indexOfInstanceWithID:instanceID];
+        index = [self.serviceDef.systemInstances.instances indexOfInstanceWithID:instanceID];
     }
+    
     if (index == NSNotFound)
     {
         [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_UnknownServiceInstance)];
     }
     
-    MHVInstance* instance = (MHVInstance *)[m_serviceDef.systemInstances.instances objectAtIndex:index];
+    MHVInstance *instance = (MHVInstance *)[self.serviceDef.systemInstances.instances objectAtIndex:index];
     
-    [self setEnvironment:instance];
+    [self makeEnvironmentWithInstance:instance];
     [self saveState];
     
-    m_serviceDef = nil;
+    self.serviceDef = nil;
 }
 
--(void)notifyOfProvisionStatus
+- (void)notifyOfProvisionStatus
 {
-    safeInvokeNotify(m_provisionCallback, self);
+    safeInvokeNotify(self.provisionCallback, self);
 }
 
--(void)subscribeAppEvents
+- (void)subscribeAppEvents
 {
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-        selector:@selector(didReceiveMemoryWarning)
-        name:UIApplicationDidReceiveMemoryWarningNotification
-        object:[UIApplication sharedApplication]
-     ];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveMemoryWarning)
+                                                 name:UIApplicationDidReceiveMemoryWarningNotification
+                                               object:[UIApplication sharedApplication]];
 }
 
--(void)unsubscribeAppEvents
+- (void)unsubscribeAppEvents
 {
-    [[NSNotificationCenter defaultCenter]
-        removeObserver:self
-        name:UIApplicationDidReceiveMemoryWarningNotification
-        object:[UIApplication sharedApplication]
-    ];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidReceiveMemoryWarningNotification
+                                                  object:[UIApplication sharedApplication]];
 }
 
 @end

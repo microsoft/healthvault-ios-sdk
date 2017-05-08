@@ -75,7 +75,7 @@ LError:
         [super handleError:ex];
     }
 
-    [self complete];
+    [self completeTask];
 }
 
 @end

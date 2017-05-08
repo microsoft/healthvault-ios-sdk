@@ -19,7 +19,6 @@
 #import "MHVCommon.h"
 #import "MHVAppProvisionController.h"
 #import "MHVClient.h"
-#import "MHVUIAlert.h"
 
 @interface MHVAppProvisionController (MHVPrivate)
 
@@ -110,26 +109,32 @@ LError:
     //
     // Check if the user wants to retry...
     //
-    NSString* retryMessage = [MHVClient current].settings.signinRetryMessage;
+    NSString* retryMessage = [MHVClient current].settings.signInRetryMessage;
     NSString *message = [NSString stringWithFormat:@"%@\r\n%@", [error localizedDescription], retryMessage];
     
-    [MHVUIAlert showWithMessage:message callback:^(id sender) {
-        
-        MHVUIAlert *alert = (MHVUIAlert *) sender;
-        if (alert.result == MHVUIAlertOK)
-        {
-            [self start];
-        }
-        else
-        {
-            m_status = MHVAppProvisionFailed;
-
-            m_error = error;
-            
-            [self abort];
-        }
-    }];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[MHVClient current].settings.appName
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
     
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"No", @"No button")
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction * _Nonnull action)
+                                {
+                                    m_status = MHVAppProvisionFailed;
+                                    
+                                    m_error = error;
+                                    
+                                    [self abort];
+                                }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes button")
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * _Nonnull action)
+                                {
+                                    [self start];
+                                }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
  }
 
 @end
@@ -144,7 +149,7 @@ LError:
 
 -(NSString *)instanceIDFromQs:(NSString *)qs
 {
-    NSDictionary* args = [NSDictionary fromArgumentString:qs];
+    NSDictionary* args = [NSDictionary dictionaryFromArgumentString:qs];
     if ([NSDictionary isNilOrEmpty:args])
     {
         return nil;

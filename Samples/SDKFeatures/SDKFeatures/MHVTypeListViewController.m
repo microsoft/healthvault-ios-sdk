@@ -27,6 +27,7 @@
 #import "MHVBloodPressureFactory.h"
 #import "MHVCholesterolFactory.h"
 #import "MHVWeightFactory.h"
+#import "MHVUIAlert.h"
 
 
 @implementation MHVTypeListViewController

@@ -19,6 +19,7 @@
 
 #import "MHVFileFeatures.h"
 #import "MHVTypeViewController.h"
+#import "MHVUIAlert.h"
 
 @interface MHVFileFeatures (MHVPrivate)
 

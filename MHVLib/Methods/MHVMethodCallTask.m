@@ -229,7 +229,7 @@ LError:
     {
         if (isDone)
         {
-            [self complete];
+            [self completeTask];
         }
     }
 }

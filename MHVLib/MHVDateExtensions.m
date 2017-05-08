@@ -1,15 +1,15 @@
 //
-//  MHVDateExtensions.m
-//  MHVLib
+// MHVDateExtensions.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,242 +23,206 @@
 
 @implementation NSDate (MHVExtensions)
 
--(NSString *)toString
+- (NSString *)toString
 {
     return self.description;
 }
 
--(NSString*) toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init]; 
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
     MHVCHECK_NOTNULL(formatter);
     
-    NSString* string = [formatter dateToString:self withFormat:format];
+    NSString *string = [formatter dateToString:self withFormat:format];
     
     return string;
-    
-LError:
-    return nil;
 }
 
--(NSString *)toZuluString
+- (NSString *)toStringWithStyle:(NSDateFormatterStyle)style
 {
-    NSDateFormatter* formatter = [NSDateFormatter newZuluFormatter];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
     MHVCHECK_NOTNULL(formatter);
     
-    NSString* string = [formatter dateTimeToString:self];
-    
-    
-    return string;
-
-LError:
-    return nil;
-}
-
--(NSString *)toStringWithStyle:(NSDateFormatterStyle)style
-{
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init]; 
-    MHVCHECK_NOTNULL(formatter);
-    
-    NSString* string = [formatter dateToString:self withStyle:style];
+    NSString *string = [formatter dateToString:self withStyle:style];
     
     return string;
-    
-LError:
-    return nil;
 }
 
--(NSComparisonResult) compareDescending:(NSDate *)other
+- (NSComparisonResult)compareDescending:(NSDate *)other
 {
     return -([self compare:other]);
 }
 
--(BOOL)isEqualToDateAccuracySeconds:(NSDate *)other
-{
-    double interval = (double) [self timeIntervalSinceDate:other];
-    return (interval <= 1);
-}
-
--(NSTimeInterval)offsetFromNow
+- (NSTimeInterval)offsetFromNow
 {
     return [[NSDate date] timeIntervalSinceDate:self];
 }
 
-+(NSDate *)fromHour:(int)hour
++ (NSDate *)fromHour:(int)hour
 {
     return [NSDate fromHour:hour andMinute:0];
 }
 
-+(NSDate *)fromHour:(int)hour andMinute:(int)minute
++ (NSDate *)fromHour:(int)hour andMinute:(int)minute
 {
     NSDateComponents *components = [NSCalendar newComponents];
+    
     MHVCHECK_NOTNULL(components);
     
     components.hour = hour;
     components.minute = minute;
     
-    NSDate* newDate = [components date];
+    NSDate *newDate = [components date];
     
     return newDate;
 }
 
-+(NSDate *)fromYear:(int)year month:(int)month andDay:(int)day
++ (NSDate *)fromYear:(int)year month:(int)month andDay:(int)day
 {
     NSDateComponents *components = [NSCalendar newComponents];
+    
     MHVCHECK_NOTNULL(components);
     
     components.year = year;
     components.month = month;
     components.day = day;
     
-    NSDate* newDate = [components date];
+    NSDate *newDate = [components date];
     
     return newDate;
 }
 
--(NSDate *)toStartOfDay
+- (NSDate *)toStartOfDay
 {
-    NSCalendar* calendar = [NSCalendar newGregorian];
+    NSCalendar *calendar = [NSCalendar newGregorian];
+    
     MHVCHECK_NOTNULL(calendar);
     
-    NSDate* day = [[calendar yearMonthDayFrom:self] date];
+    NSDate *day = [[calendar yearMonthDayFrom:self] date];
     
     
     return day;
-    
-LError:
-    return nil;
 }
 
--(NSDate *)toEndOfDay
+- (NSDate *)toEndOfDay
 {
-    NSCalendar* calendar = [NSCalendar newGregorian];
+    NSCalendar *calendar = [NSCalendar newGregorian];
+    
     MHVCHECK_NOTNULL(calendar);
     
-    NSDateComponents* dateComponents = [calendar getComponentsFor:self];
+    NSDateComponents *dateComponents = [calendar getComponentsFor:self];
     dateComponents.hour = 23;
     dateComponents.minute = 59;
     dateComponents.second = 59;
     
-    NSDate* day = [calendar dateFromComponents:dateComponents];
+    NSDate *day = [calendar dateFromComponents:dateComponents];
     
     return day;
-    
-LError:
-    return nil;    
-}
-
-+(NSDate *)yesterday
-{
-    //
-    // 86400 seconds in a day
-    // This method doesn't need to be perfect - just good enough.
-    //
-    return [NSDate dateWithTimeIntervalSinceNow:-86400]; 
 }
 
 @end
 
 
-const NSUInteger NSAllCalendarUnits =   NSCalendarUnitDay       |
-                                        NSCalendarUnitMonth     |
-                                        NSCalendarUnitYear      |
-                                        NSCalendarUnitHour      |
-                                        NSCalendarUnitMinute    |
-                                        NSCalendarUnitSecond;
+const NSUInteger NSAllCalendarUnits = (NSCalendarUnitDay       |
+                                       NSCalendarUnitMonth     |
+                                       NSCalendarUnitYear      |
+                                       NSCalendarUnitHour      |
+                                       NSCalendarUnitMinute    |
+                                       NSCalendarUnitSecond);
 
 @implementation NSCalendar (MHVExtensions)
 
--(NSDateComponents *)componentsForCalendar
+- (NSDateComponents *)componentsForCalendar
 {
-    NSDateComponents* components = [[NSDateComponents alloc] init];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    
     [components setCalendar:self];
     
     return components;
 }
 
--(NSDateComponents *)getComponentsFor:(NSDate *)date
+- (NSDateComponents *)getComponentsFor:(NSDate *)date
 {
-    return [self components: NSAllCalendarUnits fromDate: date];
+    return [self components:NSAllCalendarUnits fromDate:date];
 }
 
--(NSDateComponents *)yearMonthDayFrom:(NSDate *)date
+- (NSDateComponents *)yearMonthDayFrom:(NSDate *)date
 {
-    NSDateComponents* components =  [self components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    NSDateComponents *components =  [self components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    
     [components setCalendar:self];
     
     return components;
 }
 
-+(NSDateComponents *) componentsFromDate:(NSDate *)date
++ (NSDateComponents *)componentsFromDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
     
-    NSCalendar* calendar = [NSCalendar newGregorian];
+    NSCalendar *calendar = [NSCalendar newGregorian];
     MHVCHECK_NOTNULL(calendar);
     
-    NSDateComponents* components = [calendar getComponentsFor:date];
-    
-    return components;
-    
-LError:
-    return nil;
-    
-}
-
-+(NSDateComponents *) newComponents
-{
-    NSCalendar* calendar = [NSCalendar newGregorian];
-    MHVCHECK_NOTNULL(calendar);
-    
-    NSDateComponents* components = [[NSDateComponents alloc] init];
-    MHVCHECK_NOTNULL(components);
-    
-    [components setCalendar:calendar];
+    NSDateComponents *components = [calendar getComponentsFor:date];
     
     return components;
 }
 
-+(NSDateComponents *) newUtcComponents
-{
-    NSCalendar* calendar = [NSCalendar newGregorianUtc];
-    MHVCHECK_NOTNULL(calendar);
-    
-    NSDateComponents* components = [[NSDateComponents alloc] init];
-    MHVCHECK_NOTNULL(components);
-    
-    [components setCalendar:calendar];
-    
-    return components;
-}
-
-+(NSDateComponents *) utcComponentsFromDate:(NSDate *)date
-{
-    MHVCHECK_NOTNULL(date);
-    
-    NSCalendar* calendar = [NSCalendar newGregorianUtc];
-    MHVCHECK_NOTNULL(calendar);
-    
-    NSDateComponents* components = [calendar getComponentsFor:date];
-    
-    return components;
-
-LError:
-    return nil;
-}
-
-+(NSCalendar *) newGregorian
-{
-    return [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
-}
-
-+(NSCalendar *) newGregorianUtc
++ (NSDateComponents *)newComponents
 {
     NSCalendar *calendar = [NSCalendar newGregorian];
+    
+    MHVCHECK_NOTNULL(calendar);
+    
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    MHVCHECK_NOTNULL(components);
+    
+    [components setCalendar:calendar];
+    
+    return components;
+}
+
++ (NSDateComponents *)newUtcComponents
+{
+    NSCalendar *calendar = [NSCalendar newGregorianUtc];
+    
+    MHVCHECK_NOTNULL(calendar);
+    
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    MHVCHECK_NOTNULL(components);
+    
+    [components setCalendar:calendar];
+    
+    return components;
+}
+
++ (NSDateComponents *)utcComponentsFromDate:(NSDate *)date
+{
+    MHVCHECK_NOTNULL(date);
+    
+    NSCalendar *calendar = [NSCalendar newGregorianUtc];
+    MHVCHECK_NOTNULL(calendar);
+    
+    NSDateComponents *components = [calendar getComponentsFor:date];
+    
+    return components;
+}
+
++ (NSCalendar *)newGregorian
+{
+    return [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+}
+
++ (NSCalendar *)newGregorianUtc
+{
+    NSCalendar *calendar = [NSCalendar newGregorian];
+    
     if (calendar)
     {
-        [calendar setTimeZone: [NSTimeZone timeZoneWithAbbreviation: @"UTC"]];
+        [calendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     }
+    
     return calendar;
 }
 
@@ -266,20 +230,22 @@ LError:
 
 @implementation NSDateFormatter (MHVExtensions)
 
-+(NSDateFormatter *) newUtcFormatter
++ (NSDateFormatter *)newUtcFormatter
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
     if (formatter)
     {
-        [formatter setTimeZone: [NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     }
     
     return formatter;
 }
 
-+(NSDateFormatter *) newZuluFormatter
++ (NSDateFormatter *)newZuluFormatter
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
     if (formatter)
     {
         [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH:mm:ss.SSS'Z'"]; // Zulu time format
@@ -288,31 +254,31 @@ LError:
     return formatter;
 }
 
--(NSString *) dateToString:(NSDate *)date withFormat:(NSString *)format
+- (NSString *)dateToString:(NSDate *)date withFormat:(NSString *)format
 {
-    NSString* currentFormat = [self dateFormat];
+    NSString *currentFormat = [self dateFormat];
     
     [self setDateFormat:format];
-    NSString* dateString = [self stringFromDate:date];
+    NSString *dateString = [self stringFromDate:date];
     
     [self setDateFormat:currentFormat];
     
-    return dateString;  
+    return dateString;
 }
 
--(NSString *)dateToString:(NSDate *)date withStyle:(NSDateFormatterStyle)style
+- (NSString *)dateToString:(NSDate *)date withStyle:(NSDateFormatterStyle)style
 {
     NSDateFormatterStyle currentDateStyle = [self dateStyle];
     
     [self setDateStyle:style];
-    NSString* dateString = [self stringFromDate:date];   
+    NSString *dateString = [self stringFromDate:date];
     
     [self setDateStyle:currentDateStyle];
     
-    return dateString;  
+    return dateString;
 }
 
--(NSString *)dateTimeToString:(NSDate *)date withStyle:(NSDateFormatterStyle)style
+- (NSString *)dateTimeToString:(NSDate *)date withStyle:(NSDateFormatterStyle)style
 {
     NSDateFormatterStyle currentDateStyle = [self dateStyle];
     NSDateFormatterStyle currentTimeStyle = [self timeStyle];
@@ -320,23 +286,23 @@ LError:
     [self setDateStyle:style];
     [self setTimeStyle:style];
     
-    NSString* dateString = [self stringFromDate:date];   
+    NSString *dateString = [self stringFromDate:date];
     
     [self setDateStyle:currentDateStyle];
     [self setTimeStyle:currentTimeStyle];
     
-    return dateString;  
-
+    return dateString;
 }
 
--(NSString *)dateTimeToString:(NSDate *)date
+- (NSString *)dateTimeToString:(NSDate *)date
 {
     return [self dateToString:date withFormat:@"MM/dd/yy hh:mm aaa"];
 }
 
-+(NSLocale *)newCultureNeutralLocale
++ (NSLocale *)newCultureNeutralLocale
 {
-    NSLocale* locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    
     return locale;
 }
 
@@ -344,18 +310,20 @@ LError:
 
 @implementation NSDateComponents (MHVExtensions)
 
-+(BOOL)isEqualYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2
++ (BOOL)isEqualYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2
 {
-    return (d1.year == d2.year && d1.month == d2.month && d1.day == d2.day);
+    return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day;
 }
 
-+(NSComparisonResult)compareYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2
++ (NSComparisonResult)compareYearMonthDay:(NSDateComponents *)d1 and:(NSDateComponents *)d2
 {
     NSInteger cmp = d1.year - d2.year;
+    
     if (cmp != 0)
     {
         return (cmp > 0) ? NSOrderedDescending : NSOrderedAscending;
     }
+    
     //
     // Year is equal
     //
@@ -364,6 +332,7 @@ LError:
     {
         return (cmp > 0) ? NSOrderedDescending : NSOrderedAscending;
     }
+    
     //
     // Month is equal
     //

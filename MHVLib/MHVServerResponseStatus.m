@@ -1,15 +1,15 @@
 //
-//  MHVServerResult.m
-//  MHVLib
+// MHVServerResult.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,181 +21,167 @@
 
 @implementation MHVServerResponseStatus
 
-@synthesize statusCode = m_statusCode;
-@synthesize errorText  = m_errorText;
-@synthesize errorDetailsXml = m_errorDetails;
-
--(BOOL)hasError
+- (instancetype)initWithStatusCode:(MHVServerStatusCode)code
 {
-    return (m_statusCode != 0 ||
-            m_errorText != nil ||
-            m_webStatusCode >= 400);
-}
-
--(BOOL)isHVError
-{
-    return (m_statusCode > 0);
-}
-
-@synthesize webStatusCode = m_webStatusCode;
-
--(BOOL)isWebError
-{
-    return (m_webStatusCode >= 400);
-}
-
--(BOOL)isAccessDenied
-{
-    switch (m_statusCode)
+    self = [super init];
+    if (self)
     {
-        default:
-            return FALSE;
+        _statusCode = code;
+    }
 
+    return self;
+}
+
+- (BOOL)hasError
+{
+    return self.statusCode != 0 ||
+           self.errorText != nil ||
+           self.webStatusCode >= 400;
+}
+
+- (BOOL)isHVError
+{
+    return self.statusCode > 0;
+}
+
+- (BOOL)isWebError
+{
+    return self.webStatusCode >= 400;
+}
+
+- (BOOL)isAccessDenied
+{
+    switch (self.statusCode)
+    {
         case MHVServerStatusCodeAccessDenied:
         case MHVServerStatusCodeInvalidApp:
         case MHVServerStatusCodeInvalidApplicationAuthorization:
+            return TRUE;
+            
+        default:
             break;
     }
-    
-    return TRUE;
+
+    return FALSE;
 }
 
--(BOOL)isServerTokenError
+- (BOOL)isServerTokenError
 {
-    switch (m_statusCode)
+    switch (self.statusCode)
     {
-        default:
-            return FALSE;
-            
         case MHVServerStatusCodeAuthSessionTokenExpired:
         case MHVServerStatusCodeCredentialTokenExpired:
+            return TRUE;
+            
+        default:
             break;
     }
-    
-    return TRUE;
+
+    return FALSE;
 }
 
--(BOOL)isInvalidTarget
+- (BOOL)isInvalidTarget
 {
-    switch (m_statusCode)
+    switch (self.statusCode)
     {
-        default:
-            return FALSE;
-            
         case MHVServerStatusCodeInvalidRecord:
         case MHVServerStatusCodeInvalidPerson:
+            return TRUE;
+
+        default:
             break;
     }
-    
-    return TRUE;
+
+    return FALSE;
 }
 
--(BOOL)isItemNotFound
+- (BOOL)isItemNotFound
 {
-    return (m_statusCode == MHVServerStatusCodeInvalidItem);
+    return self.statusCode == MHVServerStatusCodeInvalidItem;
 }
 
--(BOOL)isVersionStampMismatch
+- (BOOL)isVersionStampMismatch
 {
-    return (m_statusCode == MHVServerStatusCodeVersionStampMismatch);
+    return self.statusCode == MHVServerStatusCodeVersionStampMismatch;
 }
 
--(BOOL)isItemKeyNotFound
+- (BOOL)isItemKeyNotFound
 {
-    switch (m_statusCode)
+    switch (self.statusCode)
     {
-        default:
-            return FALSE;
-            
         case MHVServerStatusCodeInvalidItem:
         case MHVServerStatusCodeVersionStampMismatch:
         case MHVServerStatusCodeInvalidXml:
+            return TRUE;
+
+        default:
             break;
     }
-    
-    return TRUE;
+
+    return FALSE;
 }
 
--(BOOL)isServerError
+- (BOOL)isServerError
 {
-    switch (m_statusCode)
+    switch (self.statusCode)
     {
-        default:
-            return FALSE;
-            
         case MHVServerStatusCodeFailed:
         case MHVServerStatusCodeRequestTimedOut:
+            return TRUE;
+            
+        default:
             break;
     }
-    
-    return TRUE;
+
+    return FALSE;
 }
 
--(id)initWithStatusCode:(enum MHVServerStatusCode)code
+- (BOOL)isStatusCode:(MHVServerStatusCode)code
 {
-    self = [super init];
-    MHVCHECK_SELF;
-    
-    m_statusCode = code;
-    
-    return self;
-
-LError:
-    MHVALLOC_FAIL;
+    return self.statusCode == (int)code;
 }
 
-
--(BOOL)isStatusCode:(enum MHVServerStatusCode)code
-{
-    return (m_statusCode == (int) code);
-}
-
--(NSString *)description
+- (NSString *)description
 {
     if (self.isHVError)
     {
-        return [NSString stringWithFormat:@"[StatusCode=%d], %@", m_statusCode, m_errorText];
+        return [NSString stringWithFormat:@"[StatusCode=%d], %@", self.statusCode, self.errorText];
     }
-    
-    return m_errorText;
+
+    return self.errorText;
 }
 
--(void)clear
+- (void)clear
 {
-    m_statusCode = MHVServerStatusCodeOK;
-    m_errorText = nil;
-    m_errorDetails = nil;
-    m_webStatusCode = 0;
+    self.statusCode = MHVServerStatusCodeOK;
+    self.errorText = nil;
+    self.errorDetailsXml = nil;
+    self.webStatusCode = 0;
 }
 
 @end
 
 @implementation MHVServerException
 
-@synthesize status = m_status;
-
--(id)initWithStatus:(MHVServerResponseStatus *)status
+- (instancetype)initWithStatus:(MHVServerResponseStatus *)status
 {
     MHVCHECK_NOTNULL(status);
-    
+
     self = [super initWithName:@"MHVServerException" reason:c_emptyString userInfo:nil];
-    MHVCHECK_SELF;
-    
-    self.status = status;
-    
+    if (self)
+    {
+        _status = status;
+    }
+
     return self;
-
-LError:
-    MHVALLOC_FAIL;
 }
 
--(NSString *)description
+- (NSString *)description
 {
-    return m_status.description;
+    return self.status.description;
 }
-                                
 
-+(void)throwExceptionWithStatus:(MHVServerResponseStatus *)status
++ (void)throwExceptionWithStatus:(MHVServerResponseStatus *)status
 {
     @throw [[MHVServerException alloc] initWithStatus:status];
 }
