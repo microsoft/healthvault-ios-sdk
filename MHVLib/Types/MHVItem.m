@@ -652,7 +652,7 @@ static NSString *const c_element_item = @"thing";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_item elements:self];
+    [writer writeElementArray:c_element_item elements:self.toArray];
 }
 
 - (void)deserialize:(XReader *)reader

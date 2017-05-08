@@ -71,14 +71,14 @@ static NSString *const c_element_versions = @"type-version-format";
     @try
     {
         MHVStringCollection *sections = [self createStringsFromSections];
-        [writer writeElementArray:c_element_section elements:sections];
+        [writer writeElementArray:c_element_section elements:sections.toArray];
         if (self.sections & MHVItemSection_Data)
         {
             [writer writeEmptyElement:c_element_xml];
         }
 
-        [writer writeElementArray:c_element_xml elements:self.transforms];
-        [writer writeElementArray:c_element_versions elements:self.typeVersions];
+        [writer writeElementArray:c_element_xml elements:self.transforms.toArray];
+        [writer writeElementArray:c_element_versions elements:self.typeVersions.toArray];
     }
     @catch (id exception)
     {

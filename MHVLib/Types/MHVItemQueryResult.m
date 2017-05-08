@@ -43,12 +43,12 @@ static NSString* const c_attribute_name = @"name";
 
 -(BOOL) hasItems
 {
-    return !([NSArray isNilOrEmpty:m_items]);
+    return !([MHVCollection isNilOrEmpty:m_items]);
 }
 
 -(BOOL) hasPendingItems
 {
-    return !([NSArray isNilOrEmpty:m_pendingItems]);
+    return !([MHVCollection isNilOrEmpty:m_pendingItems]);
 }
 
 -(NSUInteger)itemCount
@@ -115,8 +115,8 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_item elements:m_items];
-    [writer writeElementArray:c_element_pending elements:m_pendingItems];
+    [writer writeElementArray:c_element_item elements:m_items.toArray];
+    [writer writeElementArray:c_element_pending elements:m_pendingItems.toArray];
 }
 
 -(void) deserializeAttributes:(XReader *)reader
@@ -197,7 +197,7 @@ LError:
 -(void)appendFoundItems:(MHVItemCollection *)items
 {
     MHVENSURE(m_items, MHVItemCollection);
-    [m_items addObjectsFromArray:items];
+    [m_items addObjectsFromCollection:items];
 }
 
 @end

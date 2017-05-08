@@ -90,7 +90,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 // Used if you want to fetch/sync/refresh items using your own logic
 //
--(NSArray *) keysOfItemsNeedingDownloadInRange:(NSRange) range;
+-(MHVItemKeyCollection *) keysOfItemsNeedingDownloadInRange:(NSRange) range;
 -(MHVTask *) ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback;
 -(BOOL) replaceKeys:(MHVTypeViewItems *) items;
 
@@ -115,7 +115,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 // Keys for items no longer available in HealthVault. They have been REMOVED from the view.
 // You should now refresh your UI etc.
 //
--(void) keysNotAvailable:(NSArray *) keys inView:(MHVTypeView *) view;
+-(void) keysNotAvailable:(MHVItemKeyCollection *) keys inView:(MHVTypeView *) view;
 //
 // The full view sync is complete
 //
@@ -338,8 +338,8 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 // Delegate callbacks invoked by MHVSynchronizedStore
 //
--(void) keysNotRetrieved:(NSArray *) keys withError:(id) error;
--(void) itemsRetrieved:(MHVItemCollection *) items forKeys:(NSArray *) keys; // Not all keys may result in a match
+-(void) keysNotRetrieved:(MHVItemKeyCollection *) keys withError:(id) error;
+-(void) itemsRetrieved:(MHVItemCollection *) items forKeys:(MHVItemKeyCollection *) keys; // Not all keys may result in a match
 
 //----------------------------------
 //

@@ -34,7 +34,7 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
 
 -(BOOL)hasItems
 {
-    return (![NSArray isNilOrEmpty:m_items]);
+    return (![MHVCollection isNilOrEmpty:m_items]);
 }
 
 -(MHVVocabItemCollection *)items
@@ -71,7 +71,7 @@ static NSString* const c_element_truncated = @"is-vocab-truncated";
     [writer writeElement:c_element_name value:m_name];
     [writer writeElement:c_element_family value:m_family];
     [writer writeElement:c_element_version value:m_version];
-    [writer writeElementArray:c_element_item elements:m_items];
+    [writer writeElementArray:c_element_item elements:m_items.toArray];
     [writer writeElement:c_element_truncated content:m_isTruncated];
 }
 

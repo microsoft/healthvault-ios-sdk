@@ -55,7 +55,7 @@
 // If no local item is found for a key, returns its equivalent position in MHVItemCollection
 // contains NSNull
 //
--(MHVItemCollection *) getLocalItemsWithKeys:(NSArray *) keys;
+-(MHVItemCollection *) getLocalItemsWithKeys:(MHVItemKeyCollection *) keys;
 
 -(MHVItem *) getlocalItemWithID:(NSString *) itemID;
 -(BOOL) putLocalItem:(MHVItem *) item;
@@ -74,14 +74,14 @@
 //   - keysNotRetrieved (if error)
 //   - itemsRetrieved
 //
--(MHVTask *) downloadItemsWithKeys:(NSArray *) keys inView:(MHVTypeView *) view;
--(MHVTask *) downloadItemsWithKeys:(NSArray *) keys typeID:(NSString *) typeID inView:(MHVTypeView *) view;
+-(MHVTask *) downloadItemsWithKeys:(MHVItemKeyCollection *) keys inView:(MHVTypeView *) view;
+-(MHVTask *) downloadItemsWithKeys:(MHVItemKeyCollection *) keys typeID:(NSString *) typeID inView:(MHVTypeView *) view;
 //
 // Fetch items with given keys into the local store
 // Always retrieves the LATEST item for the key
 // In the callback, MHVTask.result has an MHVItemCollection containing those items that were found
 //
--(MHVTask *) getItemsInRecord:(MHVRecordReference *) record withKeys:(NSArray *) keys callback:(MHVTaskCompletion) callback;
+-(MHVTask *) getItemsInRecord:(MHVRecordReference *) record withKeys:(MHVItemKeyCollection *) keys callback:(MHVTaskCompletion) callback;
 -(MHVTask *) getItemsInRecord:(MHVRecordReference *) record forQuery:(MHVItemQuery *) query callback:(MHVTaskCompletion) callback;
 
 // Deprecated. Use MHVSynchronizationMgr & MHVSynchronizedType
@@ -92,7 +92,7 @@
 // task.result will contain updated keys - in case the items 
 // Always retrieves the LATEST item for the keys
 //
--(MHVDownloadItemsTask *) downloadItemsInRecord:(MHVRecordReference *) record forKeys:(NSArray *) keys callback:(MHVTaskCompletion) callback;
+-(MHVDownloadItemsTask *) downloadItemsInRecord:(MHVRecordReference *) record forKeys:(MHVItemKeyCollection *) keys callback:(MHVTaskCompletion) callback;
 //
 // In the callback, use [task checkForSuccess] to confirm that the operation succeeded
 //
@@ -101,7 +101,7 @@
 // These create new download tasks but do NOT start them.
 // You can make the task a child of another task
 // 
--(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forKeys:(NSArray *) keys callback:(MHVTaskCompletion) callback;
+-(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forKeys:(MHVItemKeyCollection *) keys callback:(MHVTaskCompletion) callback;
 -(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forQuery:(MHVItemQuery *) query callback:(MHVTaskCompletion) callback;
 
 @end

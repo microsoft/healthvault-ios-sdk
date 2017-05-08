@@ -84,7 +84,7 @@ LError:
 -(MHVTask *)refreshWithCallback:(MHVTaskCompletion)callback
 {
     MHVItemQueryCollection* queries = [self collectQueriesForRefreshableViews];
-    if ([NSArray isNilOrEmpty:queries])
+    if ([MHVCollection isNilOrEmpty:queries])
     {
         // Nothing to refresh
         return nil;

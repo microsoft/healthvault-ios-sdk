@@ -110,7 +110,7 @@ LError:
     //
     // Check if the user wants to retry...
     //
-    NSString* retryMessage = [MHVClient current].settings.signinRetryMessage;
+    NSString* retryMessage = [MHVClient current].settings.signInRetryMessage;
     NSString *message = [NSString stringWithFormat:@"%@\r\n%@", [error localizedDescription], retryMessage];
     
     [MHVUIAlert showWithMessage:message callback:^(id sender) {

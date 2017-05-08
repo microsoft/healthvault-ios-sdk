@@ -18,15 +18,37 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "MHVBlock.h"
 
 //
 // Collections allow objects of a particular type only
 // They enforce the type
 //
-@interface MHVCollection : NSMutableArray
+@interface MHVCollection : NSObject<NSFastEnumeration>
 
 @property (readwrite, nonatomic, strong) Class  type;
+
+- (instancetype)initWithCapacity:(NSUInteger)numItems;
+- (instancetype)initWithArray:(NSArray *)array;
+
++ (BOOL)isNilOrEmpty:(MHVCollection *)collection;
+- (NSUInteger)count;
+- (id)objectAtIndex:(NSUInteger)index;
+- (id)lastObject;
+- (void)addObject:(id)anObject;
+- (void)insertObject:(id)anObject atIndex:(NSUInteger)index;
+- (void)addObjectsFromArray:(NSArray *)array;
+- (void)addObjectsFromCollection:(MHVCollection *)collection;
+- (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;
+- (void)removeObjectAtIndex:(NSUInteger)index;
+- (void)removeLastObject;
+- (void)removeAllObjects;
+
+- (void)sortUsingComparator:(NSComparator NS_NOESCAPE)cmptr;
+- (NSUInteger)binarySearch:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp;
+- (NSUInteger)indexOfMatchingObject:(MHVFilter)filter;
+
+- (NSArray *)toArray;
 
 // -----------------
 //

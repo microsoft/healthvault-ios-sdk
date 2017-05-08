@@ -71,7 +71,7 @@ static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
 
 -(BOOL)hasAwakenings
 {
-    return ![NSArray isNilOrEmpty:m_awakenings];
+    return ![MHVCollection isNilOrEmpty:m_awakenings];
 }
 
 -(int)sleepMinutesValue
@@ -158,7 +158,7 @@ LError:
     [writer writeElementXmlName:x_element_waketime content:m_wakeTime];
     [writer writeElementXmlName:x_element_sleepMins content:m_sleepMinutes];
     [writer writeElementXmlName:x_element_settlingMins content:m_settlingMinutes];
-    [writer writeElementArray:c_element_awakening elements:m_awakenings];
+    [writer writeElementArray:c_element_awakening elements:m_awakenings.toArray];
     [writer writeElementXmlName:x_element_medications content:m_medications];
     [writer writeElementXmlName:x_element_state content:m_wakeState];
 }
