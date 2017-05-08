@@ -23,7 +23,7 @@
 
 -(BOOL)hasKeys
 {
-    return ![NSArray isNilOrEmpty:m_keys];
+    return ![MHVCollection isNilOrEmpty:m_keys];
 }
 
 -(MHVItemKeyCollection *)keys
@@ -61,7 +61,7 @@ LError:
 
 -(id)initWithKeys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback
 {
-    MHVCHECK_TRUE((![NSArray isNilOrEmpty:keys]));
+    MHVCHECK_TRUE((![MHVCollection isNilOrEmpty:keys]));
     
     self = [super initWithCallback:callback];
     MHVCHECK_SELF;

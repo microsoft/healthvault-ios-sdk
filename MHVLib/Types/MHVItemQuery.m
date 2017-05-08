@@ -125,9 +125,9 @@ LError:
     
     [m_filters addObject:filter];
     
-    if (![NSArray isNilOrEmpty:filter.typeIDs])
+    if (![MHVCollection isNilOrEmpty:filter.typeIDs])
     {
-        [m_view.typeVersions addObjectsFromArray:filter.typeIDs];
+        [m_view.typeVersions addObjectsFromArray:filter.typeIDs.toArray];
     }
     
     return self;
@@ -196,7 +196,7 @@ LError:
     MHVALLOC_FAIL;
 }
 
--(id)initWithPendingItems:(NSArray *)pendingItems
+-(id)initWithPendingItems:(MHVCollection *)pendingItems
 {
     MHVCHECK_NOTNULL(pendingItems);
     
@@ -304,20 +304,20 @@ LError:
     //
     // Query xml schema says - ids are a choice element 
     //
-    if (![NSArray isNilOrEmpty:m_itemIDs])
+    if (![MHVCollection isNilOrEmpty:m_itemIDs])
     {
-        [writer writeElementArray:c_element_id elements:m_itemIDs];        
+        [writer writeElementArray:c_element_id elements:m_itemIDs.toArray];
     }
-    else if (![NSArray isNilOrEmpty:m_keys])
+    else if (![MHVCollection isNilOrEmpty:m_keys])
     {
-        [writer writeElementArray:c_element_key elements:m_keys];        
+        [writer writeElementArray:c_element_key elements:m_keys.toArray];
     }
-    else if (![NSArray isNilOrEmpty:m_clientIDs])
+    else if (![MHVCollection isNilOrEmpty:m_clientIDs])
     {
-        [writer writeElementArray:c_element_clientID elements:m_clientIDs]; 
+        [writer writeElementArray:c_element_clientID elements:m_clientIDs.toArray];
     }
     
-    [writer writeElementArray:c_element_filter elements:m_filters];
+    [writer writeElementArray:c_element_filter elements:m_filters.toArray];
     [writer writeElement:c_element_view content:m_view];
 }
 

@@ -1,15 +1,15 @@
 //
-//  MHVFamilyHistory.h
-//  MHVLib
+// MHVFamilyHistory.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,54 +21,49 @@
 #import "MHVVocab.h"
 
 @interface MHVFamilyHistory : MHVItemDataTyped
-{
-@private
-    MHVRelative* m_relative;
-    MHVConditionEntryCollection* m_conditions;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
-// (Optional) Relative 
+// (Optional) Relative
 //
-@property (readwrite, nonatomic, strong) MHVRelative* relative;
+@property (readwrite, nonatomic, strong) MHVRelative *relative;
 //
 // (Optional) Any conditions this relative had
 //
-@property (readwrite, nonatomic, strong) MHVConditionEntryCollection* conditions;
+@property (readwrite, nonatomic, strong) MHVConditionEntryCollection *conditions;
 //
-// Convenience 
+// Convenience
 //
 @property (readonly, nonatomic) BOOL hasConditions;
-@property (readonly, nonatomic, strong) MHVConditionEntry* firstCondition;
+@property (readonly, nonatomic, strong) MHVConditionEntry *firstCondition;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
--(id) initWithRelative:(MHVRelative *) relative andCondition:(MHVConditionEntry *) condition;
+// -------------------------
+- (id)initWithRelative:(MHVRelative *)relative andCondition:(MHVConditionEntry *)condition;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) toString;
+// -------------------------
+- (NSString *)toString;
 
-//-------------------------
+// -------------------------
 //
 // Type info
 //
-//-------------------------
+// -------------------------
 
-+(NSString *) typeID;
-+(NSString *) XRootElement;
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 @end

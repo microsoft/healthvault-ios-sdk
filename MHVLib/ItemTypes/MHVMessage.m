@@ -42,12 +42,12 @@ static NSString* const c_element_attachments = @"attachments";
 
 -(BOOL)hasHeaders
 {
-    return (![NSArray isNilOrEmpty:m_headers]);
+    return (![MHVCollection isNilOrEmpty:m_headers]);
 }
 
 -(BOOL)hasAttachments
 {
-    return (![NSArray isNilOrEmpty:m_attachments]);
+    return (![MHVCollection isNilOrEmpty:m_attachments]);
 }
 
 -(BOOL)hasHtmlBody
@@ -126,12 +126,12 @@ static NSString* const c_element_attachments = @"attachments";
 -(void)serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementArray:c_element_headers elements:m_headers];
+    [writer writeElementArray:c_element_headers elements:m_headers.toArray];
     [writer writeElementXmlName:x_element_size content:m_size];
     [writer writeElementXmlName:x_element_summary value:m_summary];
     [writer writeElementXmlName:x_element_htmlBlob value:m_htmlBlobName];
     [writer writeElementXmlName:x_element_textBlob value:m_textBlobName];
-    [writer writeElementArray:c_element_attachments elements:m_attachments];
+    [writer writeElementArray:c_element_attachments elements:m_attachments.toArray];
 }
 
 -(void)deserialize:(XReader *)reader

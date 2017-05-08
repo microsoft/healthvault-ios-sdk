@@ -145,7 +145,7 @@ LError:
 
 -(BOOL)hasAuthorizedRecords
 {
-    return ![NSArray isNilOrEmpty:self.records];
+    return ![MHVCollection isNilOrEmpty:self.records];
 }
 
 -(MHVMethodFactory *)methodFactory

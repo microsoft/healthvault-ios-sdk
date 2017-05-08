@@ -143,7 +143,7 @@ LError:
 
 -(void) serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_typeID elements:m_typeIDs];
+    [writer writeElementArray:c_element_typeID elements:m_typeIDs.toArray];
     [super serialize:writer];
 }
 

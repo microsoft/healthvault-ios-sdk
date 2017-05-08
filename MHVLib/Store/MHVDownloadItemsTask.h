@@ -1,8 +1,8 @@
 //
-//  MHVDownloadItemsTask.h
-//  MHVLib
+// MHVDownloadItemsTask.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,15 +22,11 @@
 #import "MHVItemStore.h"
 
 @interface MHVDownloadItemsTask : MHVTask
-{
-@private
-    NSMutableArray* m_downloadedKeys;
-}
 
 @property (readonly, nonatomic) BOOL didKeysDownload;
-@property (readonly, nonatomic, strong) NSMutableArray* downloadedKeys;
-@property (readonly, nonatomic, strong) MHVItemKey* firstKey;
+@property (readonly, nonatomic, strong) MHVItemKeyCollection *downloadedKeys;
+@property (readonly, nonatomic, strong) MHVItemKey *firstKey;
 
--(void) recordItemsAsDownloaded:(MHVItemCollection *) items;
+- (void)recordItemsAsDownloaded:(MHVItemCollection *)items;
 
 @end

@@ -30,7 +30,7 @@ static NSString *c_element_config = @"configuration";
 {
     [writer writeElementXmlName:x_element_url value:self.url];
     [writer writeElementXmlName:x_element_version value:self.version];
-    [writer writeElementArray:c_element_config elements:self.config];
+    [writer writeElementArray:c_element_config elements:self.config.toArray];
 }
 
 - (void)deserialize:(XReader *)reader

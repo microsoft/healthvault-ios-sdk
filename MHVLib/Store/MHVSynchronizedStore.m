@@ -31,17 +31,17 @@
 //
 // If a local item with the right version is not found and nullForNotFound is FALSE, does not create an NSNull entry...
 //
--(MHVItemCollection *) getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL) includeNull;
+-(MHVItemCollection *) getLocalItemsWithKeys:(MHVItemKeyCollection *)keys nullForNotFound:(BOOL) includeNull;
 
 -(void) completedGetItemsTask:(MHVTask *) task;
--(void) completedDownloadKeys:(NSArray *) keys inView:(MHVTypeView *) view task:(MHVTask *) task;
--(MHVItemQuery *) newQueryFromKeys:(NSArray *) keys;
+-(void) completedDownloadKeys:(MHVItemKeyCollection *) keys inView:(MHVTypeView *) view task:(MHVTask *) task;
+-(MHVItemQuery *) newQueryFromKeys:(MHVItemKeyCollection *) keys;
 
 -(BOOL) updateItemsInLocalStore:(MHVItemCollection *)items;
 -(BOOL) replaceLocalItemWithDownloaded:(MHVItem *) item;
 
--(void) notifyView:(MHVTypeView *) view ofItems:(MHVItemCollection *) items requestedKeys:(NSArray *) requestedKeys;
--(void) notifyView:(MHVTypeView *)view ofError:(id) error retrievingKeys:(NSArray *) keys;
+-(void) notifyView:(MHVTypeView *) view ofItems:(MHVItemCollection *) items requestedKeys:(MHVItemKeyCollection *) requestedKeys;
+-(void) notifyView:(MHVTypeView *)view ofError:(id) error retrievingKeys:(MHVItemKeyCollection *) keys;
 
 @end
 
@@ -122,7 +122,7 @@ LError:
     return nil;
 }
 
--(MHVItemCollection *)getLocalItemsWithKeys:(NSArray *)keys
+-(MHVItemCollection *)getLocalItemsWithKeys:(MHVItemKeyCollection *)keys
 {
     return [self getLocalItemsWithKeys:keys nullForNotFound:TRUE];
 }
@@ -137,12 +137,12 @@ LError:
     return [m_localStore removeItem:key.itemID];
 }
 
--(MHVTask *)downloadItemsWithKeys:(NSArray *)keys inView:(MHVTypeView *)view
+-(MHVTask *)downloadItemsWithKeys:(MHVItemKeyCollection *)keys inView:(MHVTypeView *)view
 {
     return [self downloadItemsWithKeys:keys typeID:nil inView:view];
 }
 
--(MHVTask *)downloadItemsWithKeys:(NSArray *)keys typeID:(NSString *)typeID inView:(MHVTypeView *)view
+-(MHVTask *)downloadItemsWithKeys:(MHVItemKeyCollection *)keys typeID:(NSString *)typeID inView:(MHVTypeView *)view
 {
     MHVCHECK_NOTNULL(keys);
     
@@ -164,7 +164,7 @@ LError:
     return nil;
 }
 
--(MHVTask *)getItemsInRecord:(MHVRecordReference *)record withKeys:(NSArray *)keys callback:(MHVTaskCompletion)callback
+-(MHVTask *)getItemsInRecord:(MHVRecordReference *)record withKeys:(MHVItemKeyCollection *)keys callback:(MHVTaskCompletion)callback
 {
     MHVItemQuery* query = [self newQueryFromKeys:keys];
     return [self getItemsInRecord:record forQuery:query callback:callback];
@@ -185,7 +185,7 @@ LError:
         // Make sure the download succeeded
         //
         [task checkSuccess];
-        NSArray* downloadedKeys = ((MHVDownloadItemsTask *) task).downloadedKeys;
+        MHVItemKeyCollection *downloadedKeys = ((MHVDownloadItemsTask *) task).downloadedKeys;
         //
         // When the download sub-task completes, collect up all local items and return them to the caller...
         //
@@ -210,7 +210,7 @@ LError:
     return [self putLocalItem:item];
 }
 
--(MHVDownloadItemsTask *)downloadItemsInRecord:(MHVRecordReference *)record forKeys:(NSArray *)keys callback:(MHVTaskCompletion)callback
+-(MHVDownloadItemsTask *)downloadItemsInRecord:(MHVRecordReference *)record forKeys:(MHVItemKeyCollection *)keys callback:(MHVTaskCompletion)callback
 {
     MHVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forKeys:keys callback:callback];
     MHVCHECK_NOTNULL(task);
@@ -236,7 +236,7 @@ LError:
     return nil;
 }
 
--(MHVDownloadItemsTask *)newDownloadItemsInRecord:(MHVRecordReference *)record forKeys:(NSArray *)keys callback:(MHVTaskCompletion)callback
+-(MHVDownloadItemsTask *)newDownloadItemsInRecord:(MHVRecordReference *)record forKeys:(MHVItemKeyCollection *)keys callback:(MHVTaskCompletion)callback
 {
     MHVItemQuery* query = [self newQueryFromKeys:keys];
     MHVCHECK_NOTNULL(query);
@@ -274,7 +274,7 @@ LError:
 
 @implementation MHVSynchronizedStore (MHVPrivate)
 
--(MHVItemCollection *)getLocalItemsWithKeys:(NSArray *)keys nullForNotFound:(BOOL)includeNull
+-(MHVItemCollection *)getLocalItemsWithKeys:(MHVItemKeyCollection *)keys nullForNotFound:(BOOL)includeNull
 {    
     MHVItemCollection *results = [[MHVItemCollection alloc] init];
     MHVCHECK_NOTNULL(results);
@@ -305,7 +305,7 @@ LError:
 // We actually query for items by their IDs only
 // This allows to retrieve the latest version of a particular item always, which is what we want
 //
--(MHVItemQuery *)newQueryFromKeys:(NSArray *)keys
+-(MHVItemQuery *)newQueryFromKeys:(MHVItemKeyCollection *)keys
 {
     MHVItemQuery* query = [[MHVItemQuery alloc] init];
     MHVCHECK_NOTNULL(query);
@@ -375,7 +375,7 @@ LError:
     
 }
 
--(void)completedDownloadKeys:(NSArray *)keys inView:(MHVTypeView *)view task:(MHVTask *)task
+-(void)completedDownloadKeys:(MHVItemKeyCollection *)keys inView:(MHVTypeView *)view task:(MHVTask *)task
 {
     if (task.hasError)
     {
@@ -420,12 +420,12 @@ LError:
     return [m_localStore putItem:item];
 }
 
--(void)notifyView:(MHVTypeView *)view ofItems:(MHVItemCollection *)items requestedKeys:(NSArray *)requestedKeys
+-(void)notifyView:(MHVTypeView *)view ofItems:(MHVItemCollection *)items requestedKeys:(MHVItemKeyCollection *)requestedKeys
 {
     [view itemsRetrieved:items forKeys:requestedKeys];
 }
 
--(void)notifyView:(MHVTypeView *)view ofError:(id)error retrievingKeys:(NSArray *)keys
+-(void)notifyView:(MHVTypeView *)view ofError:(id)error retrievingKeys:(MHVItemKeyCollection *)keys
 {
     [view keysNotRetrieved:keys withError:error];
 }

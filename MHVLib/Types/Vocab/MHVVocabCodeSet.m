@@ -30,7 +30,7 @@ static NSString *const c_element_codeset = @"code-set-result";
 
 - (BOOL)hasItems
 {
-    return ![NSArray isNilOrEmpty:self.items];
+    return (![NSArray isNilOrEmpty:self.items.toArray]);
 }
 
 - (MHVVocabItemCollection *)items
@@ -62,7 +62,7 @@ static NSString *const c_element_codeset = @"code-set-result";
     [writer writeElement:c_element_name value:self.name];
     [writer writeElement:c_element_family value:self.family];
     [writer writeElement:c_element_version value:self.version];
-    [writer writeElementArray:c_element_item elements:self.items];
+    [writer writeElementArray:c_element_item elements:self.items.toArray];
     [writer writeElement:c_element_truncated content:self.isTruncated];
 }
 

@@ -67,7 +67,7 @@ NSString* stringFromSleepiness(enum MHVSleepiness sleepiness)
 
 -(BOOL)hasCaffeineIntakeTimes
 {
-    return ![NSArray isNilOrEmpty:m_caffeine];
+    return ![MHVCollection isNilOrEmpty:m_caffeine];
 }
 
 -(MHVTimeCollection *)alcoholIntakeTimes
@@ -83,7 +83,7 @@ NSString* stringFromSleepiness(enum MHVSleepiness sleepiness)
 
 -(BOOL)hasAlcoholIntakeTimes
 {
-    return ![NSArray isNilOrEmpty:m_alcohol];
+    return ![MHVCollection isNilOrEmpty:m_alcohol];
 }
 
 -(MHVOccurenceCollection *)naps
@@ -99,7 +99,7 @@ NSString* stringFromSleepiness(enum MHVSleepiness sleepiness)
 
 -(BOOL)hasNaps
 {
-    return ![NSArray isNilOrEmpty:m_naps];
+    return ![MHVCollection isNilOrEmpty:m_naps];
 }
 
 -(MHVOccurenceCollection *)exercise
@@ -115,7 +115,7 @@ NSString* stringFromSleepiness(enum MHVSleepiness sleepiness)
 
 -(BOOL)hasExercise
 {
-    return ![NSArray isNilOrEmpty:m_exercise];
+    return ![MHVCollection isNilOrEmpty:m_exercise];
 }
 
 -(enum MHVSleepiness)sleepiness
@@ -169,10 +169,10 @@ NSString* stringFromSleepiness(enum MHVSleepiness sleepiness)
 -(void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_when content:m_when];
-    [writer writeElementArray:c_element_caffeine elements:m_caffeine];
-    [writer writeElementArray:c_element_alcohol elements:m_alcohol];
-    [writer writeElementArray:c_element_nap elements:m_naps];
-    [writer writeElementArray:c_element_exercise elements:m_exercise];
+    [writer writeElementArray:c_element_caffeine elements:m_caffeine.toArray];
+    [writer writeElementArray:c_element_alcohol elements:m_alcohol.toArray];
+    [writer writeElementArray:c_element_nap elements:m_naps.toArray];
+    [writer writeElementArray:c_element_exercise elements:m_exercise.toArray];
     [writer writeElement:c_element_sleepiness content:m_sleepiness];
 }
 

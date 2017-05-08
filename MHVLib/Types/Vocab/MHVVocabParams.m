@@ -72,7 +72,7 @@ static NSString *const c_element_culture = @"fixed-culture";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_vocabkey elements:self.vocabIDs];
+    [writer writeElementArray:c_element_vocabkey elements:self.vocabIDs.toArray];
     [writer writeElement:c_element_culture boolValue:self.fixedCulture];
 }
 
