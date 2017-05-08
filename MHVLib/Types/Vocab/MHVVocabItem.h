@@ -1,15 +1,15 @@
 //
-//  MHVVocabItem.h
-//  MHVLib
+// MHVVocabItem.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,75 +20,68 @@
 #import "MHVCollection.h"
 
 @interface MHVVocabItem : MHVType
-{
-@private
-    NSString* m_code;
-    NSString* m_displayText;
-    NSString* m_abbrv;
-    NSString* m_data;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required) - Vocabulary Code - such as RxNorm or Snomed code
 //
-@property (readwrite, nonatomic, strong) NSString* code;
+@property (readwrite, nonatomic, strong) NSString *code;
 //
 // (Required) - Vocab Display Text - the actual text
 //
-@property (readwrite, nonatomic, strong) NSString* displayText;
+@property (readwrite, nonatomic, strong) NSString *displayText;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) NSString* abbreviation;
+@property (readwrite, nonatomic, strong) NSString *abbreviation;
 //
 // (Optional) - additional information about this vocab entry
 // E.g. RxNorm can contain information about dosages and strengths
 //
-@property (readwrite, nonatomic, strong) NSString* dataXml;
+@property (readwrite, nonatomic, strong) NSString *dataXml;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) toString;
+// -------------------------
+- (NSString *)toString;
 //
 // Will do a trimmed, lower case comparison
 //
--(BOOL) matchesDisplayText:(NSString *) text;
+- (BOOL)matchesDisplayText:(NSString *)text;
 
 @end
 
-//-------------------------
+// -------------------------
 //
 // Collection of Vocabulary Items
 //
-//-------------------------
-@interface MHVVocabItemCollection : MHVCollection 
+// -------------------------
+@interface MHVVocabItemCollection : MHVCollection
 
--(MHVVocabItem *) itemAtIndex:(NSUInteger) index;
+- (MHVVocabItem *)itemAtIndex:(NSUInteger)index;
 
--(void) sortByDisplayText;
--(void) sortByCode;
+- (void)sortByDisplayText;
+- (void)sortByCode;
 
-//------------------------
-// 
+// ------------------------
+//
 // Search vocabs
 //
 // Basic linear scans
 // You'll be working with small vocabs locally
-// 
-//------------------------
--(NSUInteger) indexOfVocabCode:(NSString *) code;
--(MHVVocabItem *) getItemWithCode:(NSString *) code;
--(NSString *) displayTextForCode:(NSString *) code;
+//
+// ------------------------
+- (NSUInteger)indexOfVocabCode:(NSString *)code;
+- (MHVVocabItem *)getItemWithCode:(NSString *)code;
+- (NSString *)displayTextForCode:(NSString *)code;
 
--(NSArray *) displayStrings;
--(void) addDisplayStringsTo:(NSMutableArray *) strings;
+- (NSArray *)displayStrings;
+- (void)addDisplayStringsTo:(NSMutableArray *)strings;
 
 @end

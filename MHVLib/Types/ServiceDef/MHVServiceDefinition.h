@@ -1,8 +1,8 @@
 //
-//  MHVServiceDefinition.h
-//  MHVLib
+// MHVServiceDefinition.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,27 +25,16 @@
 #import "MHVSystemInstances.h"
 
 @interface MHVServiceDefinition : MHVType
-{
-@private
-    MHVPlatformInfo* m_platform;
-    MHVShellInfo* m_shell;
-    MHVSystemInstances* m_instances;
-}
 
-@property (readwrite, nonatomic, strong) MHVPlatformInfo* platform;
-@property (readwrite, nonatomic, strong) MHVShellInfo* shell;
-@property (readwrite, nonatomic, strong) MHVSystemInstances* systemInstances;
+@property (readwrite, nonatomic, strong) MHVPlatformInfo *platform;
+@property (readwrite, nonatomic, strong) MHVShellInfo *shell;
+@property (readwrite, nonatomic, strong) MHVSystemInstances *systemInstances;
 
 @end
 
 @interface MHVServiceDefinitionParams : MHVType
-{
-@private
-    NSDate* m_updatedSince;
-    MHVStringCollection* m_sections;
-}
 
-@property (readwrite, nonatomic, strong) NSDate* updatedSince;
-@property (readwrite, nonatomic, strong) MHVStringCollection* sections;
+@property (readwrite, nonatomic, strong) NSDate *updatedSince;
+@property (readwrite, nonatomic, strong) MHVStringCollection *sections;
 
 @end

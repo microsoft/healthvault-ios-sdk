@@ -20,12 +20,6 @@
 #import "MHVType.h"
 
 @interface MHVAudit : MHVType
-{
-@private
-    NSDate* m_when;
-    NSString* m_appID;
-    NSString* m_action;    
-}
 
 @property (readwrite, nonatomic, strong) NSDate* when;
 @property (readwrite, nonatomic, strong) NSString* appID;

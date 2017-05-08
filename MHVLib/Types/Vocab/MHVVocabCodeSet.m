@@ -1,15 +1,15 @@
 //
-//  MHVVocabSearchResult.m
-//  MHVLib
+// MHVVocabSearchResult.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,117 +19,99 @@
 #import "MHVCommon.h"
 #import "MHVVocabCodeSet.h"
 
-static NSString* const c_element_name = @"name";
-static NSString* const c_element_family = @"family";
-static NSString* const c_element_version = @"version";
-static NSString* const c_element_item = @"code-item";
-static NSString* const c_element_truncated = @"is-vocab-truncated";
+static NSString *const c_element_name = @"name";
+static NSString *const c_element_family = @"family";
+static NSString *const c_element_version = @"version";
+static NSString *const c_element_item = @"code-item";
+static NSString *const c_element_truncated = @"is-vocab-truncated";
+static NSString *const c_element_codeset = @"code-set-result";
 
 @implementation MHVVocabCodeSet
 
-@synthesize name = m_name;
-@synthesize family = m_family;
-@synthesize version = m_version;
-@synthesize isTruncated = m_isTruncated;
-
--(BOOL)hasItems
+- (BOOL)hasItems
 {
-    return (![MHVCollection isNilOrEmpty:m_items]);
+    return (![NSArray isNilOrEmpty:self.items.toArray]);
 }
 
--(MHVVocabItemCollection *)items
+- (MHVVocabItemCollection *)items
 {
-    MHVENSURE(m_items, MHVVocabItemCollection);
-    return m_items;
+    MHVENSURE(_items, MHVVocabItemCollection);
+    return _items;
 }
 
--(void)setItems:(MHVVocabItemCollection *)items
+- (NSArray *)displayStrings
 {
-    m_items = items;
+    return (self.items) ? [self.items displayStrings] : nil;
 }
 
--(NSArray *)displayStrings
+- (void)sortItemsByDisplayText
 {
-    return (m_items) ? [m_items displayStrings] : nil;
-}
-
--(void)sortItemsByDisplayText
-{
-    if (m_items)
+    if (self.items)
     {
-        [m_items sortByDisplayText];
+        [self.items sortByDisplayText];
     }
 }
 
-
--(MHVVocabIdentifier *)getVocabID
+- (MHVVocabIdentifier *)getVocabID
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:m_family andName:m_name];
-}
--(void)serialize:(XWriter *)writer
-{
-    [writer writeElement:c_element_name value:m_name];
-    [writer writeElement:c_element_family value:m_family];
-    [writer writeElement:c_element_version value:m_version];
-    [writer writeElementArray:c_element_item elements:m_items.toArray];
-    [writer writeElement:c_element_truncated content:m_isTruncated];
+    return [[MHVVocabIdentifier alloc] initWithFamily:self.family andName:self.name];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)serialize:(XWriter *)writer
 {
-    m_name = [reader readStringElement:c_element_name];
-    m_family = [reader readStringElement:c_element_family];
-    m_version = [reader readStringElement:c_element_version];
-    m_items = (MHVVocabItemCollection *)[reader readElementArray:c_element_item asClass:[MHVVocabItem class] andArrayClass:[MHVVocabItemCollection class]];
-    m_isTruncated = [reader readElement:c_element_truncated asClass:[MHVBool class]];
+    [writer writeElement:c_element_name value:self.name];
+    [writer writeElement:c_element_family value:self.family];
+    [writer writeElement:c_element_version value:self.version];
+    [writer writeElementArray:c_element_item elements:self.items.toArray];
+    [writer writeElement:c_element_truncated content:self.isTruncated];
+}
+
+- (void)deserialize:(XReader *)reader
+{
+    self.name = [reader readStringElement:c_element_name];
+    self.family = [reader readStringElement:c_element_family];
+    self.version = [reader readStringElement:c_element_version];
+    self.items = (MHVVocabItemCollection *)[reader readElementArray:c_element_item asClass:[MHVVocabItem class] andArrayClass:[MHVVocabItemCollection class]];
+    self.isTruncated = [reader readElement:c_element_truncated asClass:[MHVBool class]];
 }
 
 @end
 
 @implementation MHVVocabSetCollection
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVVocabCodeSet class];
-    
+    if (self)
+    {
+        self.type = [MHVVocabCodeSet class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(MHVVocabCodeSet *)itemAtIndex:(NSUInteger)index
+- (MHVVocabCodeSet *)itemAtIndex:(NSUInteger)index
 {
-    return (MHVVocabCodeSet *) [super objectAtIndex:index];
+    return (MHVVocabCodeSet *)[super objectAtIndex:index];
 }
 
 @end
-
-static NSString* const c_element_codeset = @"code-set-result";
 
 @implementation MHVVocabSearchResults
 
-@synthesize match = m_match;
-
--(BOOL)hasMatches
+- (BOOL)hasMatches
 {
-    return (m_match != nil);
+    return self.match != nil;
 }
 
-
--(void)serialize:(XWriter *)writer  
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_codeset content:m_match];
+    [writer writeElement:c_element_codeset content:self.match];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_match = [reader readElement:c_element_codeset asClass:[MHVVocabCodeSet class]];
+    self.match = [reader readElement:c_element_codeset asClass:[MHVVocabCodeSet class]];
 }
 
 @end
-
-

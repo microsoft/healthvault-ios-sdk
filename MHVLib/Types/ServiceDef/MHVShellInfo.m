@@ -1,8 +1,8 @@
 //
-//  MHVShellInfo.m
-//  MHVLib
+// MHVShellInfo.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,26 +20,21 @@
 #import "MHVCommon.h"
 #import "MHVShellInfo.h"
 
-
-static const xmlChar* x_element_url = XMLSTRINGCONST("url");
-static const xmlChar* x_element_redirect = XMLSTRINGCONST("redirect-url");
+static const xmlChar *x_element_url = XMLSTRINGCONST("url");
+static const xmlChar *x_element_redirect = XMLSTRINGCONST("redirect-url");
 
 @implementation MHVShellInfo
 
-@synthesize url = m_url;
-@synthesize redirectUrl = m_redirectUrl;
-
-
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_url = [reader readStringElementWithXmlName:x_element_url];
-    m_redirectUrl = [reader readStringElementWithXmlName:x_element_redirect];
+    self.url = [reader readStringElementWithXmlName:x_element_url];
+    self.redirectUrl = [reader readStringElementWithXmlName:x_element_redirect];
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_url value:m_url];
-    [writer writeElementXmlName:x_element_redirect value:m_redirectUrl];
+    [writer writeElementXmlName:x_element_url value:self.url];
+    [writer writeElementXmlName:x_element_redirect value:self.redirectUrl];
 }
 
 @end
