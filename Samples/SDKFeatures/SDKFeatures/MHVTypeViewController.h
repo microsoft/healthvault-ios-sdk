@@ -21,6 +21,7 @@
 #import "MHVItemDataTypedFactory.h"
 #import "MHVStatusLabel.h"
 #import "MHVItemDataTypedFeatures.h"
+#import "MHVUIAlert.h"
 
 @interface MHVTypeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {

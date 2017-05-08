@@ -1,15 +1,15 @@
 //
-//  MHVServerResponseStatus.h
-//  MHVLib
+// MHVServerResponseStatus.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@
 //
 // Common Status codes
 //
-enum MHVServerStatusCode 
+typedef NS_ENUM (NSInteger, MHVServerStatusCode)
 {
     MHVServerStatusCodeOK = 0,
     MHVServerStatusCodeFailed = 1,
@@ -53,25 +53,18 @@ enum MHVServerStatusCode
 };
 
 @interface MHVServerResponseStatus : NSObject
-{
-@private
-    int m_statusCode;
-    NSString* m_errorText;
-    NSString* m_errorDetails;
-    int m_webStatusCode;
-}
 
--(id) initWithStatusCode:(enum MHVServerStatusCode) code;
+- (instancetype)initWithStatusCode:(MHVServerStatusCode)code;
 
 @property (readonly, nonatomic) BOOL hasError;
 //
 // If status code is <= 0, then the error was due to Connectivity or
-// other failure, but not a HealthVault failure. 
+// other failure, but not a HealthVault failure.
 //
 @property (readonly, nonatomic) BOOL isHVError;
 @property (readwrite, nonatomic) int statusCode;
-@property (readwrite, nonatomic, strong) NSString* errorText;
-@property (readwrite, nonatomic, strong) NSString* errorDetailsXml;
+@property (readwrite, nonatomic, strong) NSString *errorText;
+@property (readwrite, nonatomic, strong) NSString *errorDetailsXml;
 //
 // Web result code, if any
 //
@@ -86,19 +79,16 @@ enum MHVServerStatusCode
 @property (readonly, nonatomic) BOOL isItemKeyNotFound;
 @property (readonly, nonatomic) BOOL isServerError;
 
--(void) clear;
+- (void)clear;
 
 @end
 
-@interface MHVServerException : NSException 
-{
-    MHVServerResponseStatus* m_status;
-}
+@interface MHVServerException : NSException
 
-@property (readwrite, nonatomic, strong) MHVServerResponseStatus* status;
+@property (readwrite, nonatomic, strong) MHVServerResponseStatus *status;
 
--(id) initWithStatus:(MHVServerResponseStatus *) status;
+- (instancetype)initWithStatus:(MHVServerResponseStatus *)status;
 
-+(void) throwExceptionWithStatus:(MHVServerResponseStatus *) status;
++ (void)throwExceptionWithStatus:(MHVServerResponseStatus *)status;
 
 @end

@@ -122,8 +122,8 @@
     }
     else 
     {
-        settings.sharedSecret = [MHVKeyChain getPasswordString:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
-        settings.sessionSharedSecret = [MHVKeyChain getPasswordString:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
+        settings.sharedSecret = [MHVKeyChain passwordForName:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
+        settings.sessionSharedSecret = [MHVKeyChain passwordForName:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
     }
     
 	settings.country = [perfs objectForKey: [NSString stringWithFormat: @"%@country", prefix]];
