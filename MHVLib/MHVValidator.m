@@ -61,7 +61,7 @@ void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger lin
     MHVLogEvent(logLine);
 }
 
-MHVClientResult* MHVValidateCollection(MHVCollection *collection, enum MHVClientResultCode error)
+MHVClientResult* MHVValidateCollection(MHVCollection *collection, MHVClientResultCode error)
 {
     MHVVALIDATE_BEGIN;
     
