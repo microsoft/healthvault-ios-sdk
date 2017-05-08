@@ -1,8 +1,8 @@
 //
-//  MHVFlowValue.m
-//  MHVLib
+// MHVFlowValue.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,104 +19,98 @@
 #import "MHVCommon.h"
 #import "MHVFlowValue.h"
 
-static const xmlChar* x_element_litersPerSecond = XMLSTRINGCONST("liters-per-second");
-static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
+static const xmlChar *x_element_litersPerSecond = XMLSTRINGCONST("liters-per-second");
+static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 
 @implementation MHVFlowValue
 
-@synthesize litersPerSecond = m_litersPerSecond;
-@synthesize displayValue = m_display;
-
--(double)litersPerSecondValue
+- (double)litersPerSecondValue
 {
-    return m_litersPerSecond ? m_litersPerSecond.value : NAN;
+    return _litersPerSecond ? _litersPerSecond.value : NAN;
 }
 
--(void)setLitersPerSecondValue:(double)litersPerSecondValue
+- (void)setLitersPerSecondValue:(double)litersPerSecondValue
 {
     if (isnan(litersPerSecondValue))
     {
-        m_litersPerSecond = nil;
+        _litersPerSecond = nil;
     }
     else
     {
-        MHVENSURE(m_litersPerSecond, MHVPositiveDouble);
-        m_litersPerSecond.value = litersPerSecondValue;
+        MHVENSURE(_litersPerSecond, MHVPositiveDouble);
+        _litersPerSecond.value = litersPerSecondValue;
     }
-    
+
     [self updateDisplayText];
 }
 
--(id)initWithLitersPerSecond:(double)value
+- (instancetype)initWithLitersPerSecond:(double)value
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.litersPerSecondValue = value;
-    
+    if (self)
+    {
+        [self setLitersPerSecondValue:value];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(BOOL) updateDisplayText
+- (BOOL)updateDisplayText
 {
-    m_display = nil;
-    if (!m_litersPerSecond)
+    if (!self.litersPerSecond)
     {
+        self.displayValue = nil;
         return FALSE;
     }
-    
-    m_display = [[MHVDisplayValue alloc] initWithValue:m_litersPerSecond.value andUnits:[MHVFlowValue flowUnits]];
-    
-    return (m_display != nil);
+
+    self.displayValue = [[MHVDisplayValue alloc] initWithValue:self.litersPerSecond.value andUnits:[MHVFlowValue flowUnits]];
+
+    return self.displayValue != nil;
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
     return [self toStringWithFormat:@"%.1f L/s"];
 }
 
--(NSString *)toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
-    if (!m_litersPerSecond)
+    if (!self.litersPerSecond)
     {
         return c_emptyString;
     }
-    
+
     return [NSString localizedStringWithFormat:format, self.litersPerSecondValue];
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_litersPerSecond, MHVClientError_InvalidFlow);
-    MHVVALIDATE_OPTIONAL(m_display);
-    
+
+    MHVVALIDATE(self.litersPerSecond, MHVClientError_InvalidFlow);
+    MHVVALIDATE_OPTIONAL(self.displayValue);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_litersPerSecond content:m_litersPerSecond];
-    [writer writeElementXmlName:x_element_displayValue content:m_display];
+    [writer writeElementXmlName:x_element_litersPerSecond content:self.litersPerSecond];
+    [writer writeElementXmlName:x_element_displayValue content:self.displayValue];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_litersPerSecond = [reader readElementWithXmlName:x_element_litersPerSecond asClass:[MHVPositiveDouble class]];
-    m_display = [reader readElementWithXmlName:x_element_displayValue asClass:[MHVDisplayValue class]];
+    self.litersPerSecond = [reader readElementWithXmlName:x_element_litersPerSecond asClass:[MHVPositiveDouble class]];
+    self.displayValue = [reader readElementWithXmlName:x_element_displayValue asClass:[MHVDisplayValue class]];
 }
 
-+(NSString *)flowUnits
++ (NSString *)flowUnits
 {
     return NSLocalizedString(@"L/s", @"Liters per second");
 }
