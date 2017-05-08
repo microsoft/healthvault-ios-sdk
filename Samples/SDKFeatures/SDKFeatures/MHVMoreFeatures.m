@@ -19,6 +19,7 @@
 
 #import "MHVMoreFeatures.h"
 #import "MHVTypeListViewController.h"
+#import "MHVUIAlert.h"
 
 @implementation MHVMoreFeatures
 
@@ -26,25 +27,23 @@
 
 -(void)disconnectApp
 {
-    [MHVUIAlert showYesNoWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the next time you run it." callback:^(id sender) {
-        
-        MHVUIAlert* alert = (MHVUIAlert *) sender;
-        if (alert.result != MHVUIAlertOK)
-        {
-            return;
-        }
-        
-        [m_controller.statusLabel showBusy];
-        //
-        // REMOVE RECORD AUTHORIZATION.
-        //
-        [[MHVClient current].user removeAuthForRecord:[MHVClient current].currentRecord withCallback:^(MHVTask *task) {
-            
-            [[MHVClient current] resetProvisioning];  // Removes local state
-            
-            [m_controller.navigationController popViewControllerAnimated:TRUE];
-        }];
-    }];
+    [MHVUIAlert showYesNoPromptWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the next time you run it."
+                                completion:^(BOOL selectedYes)
+     {
+         if (selectedYes)
+         {
+             [m_controller.statusLabel showBusy];
+             //
+             // REMOVE RECORD AUTHORIZATION.
+             //
+             [[MHVClient current].user removeAuthForRecord:[MHVClient current].currentRecord withCallback:^(MHVTask *task) {
+                 
+                 [[MHVClient current] resetProvisioning];  // Removes local state
+                 
+                 [m_controller.navigationController popViewControllerAnimated:TRUE];
+             }];
+         }
+     }];
 }
 
 -(void)getServiceDefinition
