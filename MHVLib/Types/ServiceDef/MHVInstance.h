@@ -1,8 +1,8 @@
 //
-//  MHVInstance.h
-//  MHVLib
+// MHVInstance.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,28 +21,20 @@
 #import "MHVType.h"
 
 @interface MHVInstance : MHVType
-{
-@private
-    NSString* m_id;
-    NSString* m_name;
-    NSString* m_description;
-    NSString* m_platformUrl;
-    NSString* m_shellUrl;
-}
 
-@property (readwrite, nonatomic, strong) NSString* instanceID;
-@property (readwrite, nonatomic, strong) NSString* name;
-@property (readwrite, nonatomic, strong) NSString* instanceDescription;
-@property (readwrite, nonatomic, strong) NSString* platformUrl;
-@property (readwrite, nonatomic, strong) NSString* shellUrl;
+@property (readwrite, nonatomic, strong) NSString *instanceID;
+@property (readwrite, nonatomic, strong) NSString *name;
+@property (readwrite, nonatomic, strong) NSString *instanceDescription;
+@property (readwrite, nonatomic, strong) NSString *platformUrl;
+@property (readwrite, nonatomic, strong) NSString *shellUrl;
 
 @end
 
 @interface MHVInstanceCollection : MHVCollection
 
--(MHVInstance *) indexOfInstance:(NSUInteger) index;
+- (MHVInstance *)indexOfInstance:(NSUInteger)index;
 
--(NSInteger) indexOfInstanceNamed:(NSString *) name;
--(NSInteger) indexOfInstanceWithID:(NSString *) instanceID;
+- (NSInteger)indexOfInstanceNamed:(NSString *)name;
+- (NSInteger)indexOfInstanceWithID:(NSString *)instanceID;
 
 @end
