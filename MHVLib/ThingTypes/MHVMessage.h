@@ -1,7 +1,7 @@
 //
-//  MHVMessage.h
-//  MHVLib
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// MHVMessage.h
+// MHVLib
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,43 +19,33 @@
 #import "MHVTypes.h"
 
 @interface MHVMessage : MHVItemDataTyped
-{
-@private
-    MHVDateTime* m_when;
-    MHVMessageHeaderItemCollection* m_headers;
-    MHVPositiveInt* m_size;
-    NSString* m_summary;
-    NSString* m_htmlBlobName;
-    NSString* m_textBlobName;
-    MHVMessageAttachmentCollection* m_attachments;
-}
 
-@property (readwrite, nonatomic, strong) MHVDateTime* when;
-@property (readwrite, nonatomic, strong) MHVMessageHeaderItemCollection* headers;
-@property (readwrite, nonatomic, strong) MHVPositiveInt* size;
-@property (readwrite, nonatomic, strong) NSString* summary;
-@property (readwrite, nonatomic, strong) NSString* htmlBlobName;
-@property (readwrite, nonatomic, strong) NSString* textBlobName;
-@property (readwrite, nonatomic, strong) MHVMessageAttachmentCollection* attachments;
+@property (readwrite, nonatomic, strong) MHVDateTime *when;
+@property (readwrite, nonatomic, strong) MHVMessageHeaderItemCollection *headers;
+@property (readwrite, nonatomic, strong) MHVPositiveInt *size;
+@property (readwrite, nonatomic, strong) NSString *summary;
+@property (readwrite, nonatomic, strong) NSString *htmlBlobName;
+@property (readwrite, nonatomic, strong) NSString *textBlobName;
+@property (readwrite, nonatomic, strong) MHVMessageAttachmentCollection *attachments;
 
 @property (readonly, nonatomic) BOOL hasHeaders;
 @property (readonly, nonatomic) BOOL hasAttachments;
 @property (readonly, nonatomic) BOOL hasHtmlBody;
 @property (readonly, nonatomic) BOOL hasTextBody;
 
--(NSString *) getFrom;
--(NSString *) getTo;
--(NSString *) getCC;
--(NSString *) getSubject;
--(NSString *) getMessageDate;
--(NSString *) getValueForHeader:(NSString *) name;
+- (NSString *)getFrom;
+- (NSString *)getTo;
+- (NSString *)getCC;
+- (NSString *)getSubject;
+- (NSString *)getMessageDate;
+- (NSString *)getValueForHeader:(NSString *)name;
 
-//-------------------------
+// -------------------------
 //
 // Type Information
 //
-//-------------------------
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+// -------------------------
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 @end

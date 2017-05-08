@@ -1,13 +1,13 @@
 //
-//  MHVSleepJournalPM.m
-//  MHVLib
+// MHVSleepJournalPM.m
+// MHVLib
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,189 +17,170 @@
 #import "MHVCommon.h"
 #import "MHVSleepJournalPM.h"
 
-static NSString* const c_typeid = @"031f5706-7f1a-11db-ad56-7bd355d89593";
-static NSString* const c_typename = @"sleep-pm";
+static NSString *const c_typeid = @"031f5706-7f1a-11db-ad56-7bd355d89593";
+static NSString *const c_typename = @"sleep-pm";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_caffeine = @"caffeine";
-static NSString* const c_element_alcohol = @"alcohol";
-static NSString* const c_element_nap = @"nap";
-static NSString* const c_element_exercise = @"exercise";
-static NSString* const c_element_sleepiness = @"sleepiness";
+static NSString *const c_element_when = @"when";
+static NSString *const c_element_caffeine = @"caffeine";
+static NSString *const c_element_alcohol = @"alcohol";
+static NSString *const c_element_nap = @"nap";
+static NSString *const c_element_exercise = @"exercise";
+static NSString *const c_element_sleepiness = @"sleepiness";
 
-NSString* stringFromSleepiness(enum MHVSleepiness sleepiness)
+NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 {
     switch (sleepiness)
     {
         case MHVSleepiness_VerySleepy:
             return @"Very Sleepy";
-        
+
         case MHVSleepiness_Tired:
             return @"Tired";
-            
+
         case MHVSleepiness_Alert:
             return @"Alert";
-        
+
         case MHVSleepiness_WideAwake:
             return @"Wide Awake";
-        
+
         default:
             break;
     }
-    
+
     return c_emptyString;
 }
 
+@interface MHVSleepJournalPM ()
+
+@property (nonatomic, strong) MHVPositiveInt *sleepinessValue;
+
+@end
+
 @implementation MHVSleepJournalPM
 
-@synthesize when = m_when;
-
--(MHVTimeCollection *)caffeineIntakeTimes
+- (MHVTimeCollection *)caffeineIntakeTimes
 {
-    MHVENSURE(m_caffeine, MHVTimeCollection);
-    return m_caffeine;
+    MHVENSURE(_caffeineIntakeTimes, MHVTimeCollection);
+    return _caffeineIntakeTimes;
 }
 
--(void)setCaffeineIntakeTimes:(MHVTimeCollection *)caffeineIntakeTimes
+- (BOOL)hasCaffeineIntakeTimes
 {
-    m_caffeine = caffeineIntakeTimes;
+    return ![MHVCollection isNilOrEmpty:self.caffeineIntakeTimes];
 }
 
--(BOOL)hasCaffeineIntakeTimes
+- (MHVTimeCollection *)alcoholIntakeTimes
 {
-    return ![MHVCollection isNilOrEmpty:m_caffeine];
+    MHVENSURE(_alcoholIntakeTimes, MHVTimeCollection);
+    return _alcoholIntakeTimes;
 }
 
--(MHVTimeCollection *)alcoholIntakeTimes
+- (BOOL)hasAlcoholIntakeTimes
 {
-    MHVENSURE(m_alcohol, MHVTimeCollection);
-    return m_alcohol;
+    return ![MHVCollection isNilOrEmpty:self.alcoholIntakeTimes];
 }
 
--(void)setAlcoholIntakeTimes:(MHVTimeCollection *)alcoholIntakeTimes
+- (MHVOccurenceCollection *)naps
 {
-    m_alcohol = alcoholIntakeTimes;
+    MHVENSURE(_naps, MHVOccurenceCollection);
+    return _naps;
 }
 
--(BOOL)hasAlcoholIntakeTimes
+- (BOOL)hasNaps
 {
-    return ![MHVCollection isNilOrEmpty:m_alcohol];
+    return ![MHVCollection isNilOrEmpty:self.naps];
 }
 
--(MHVOccurenceCollection *)naps
+- (MHVOccurenceCollection *)exercise
 {
-    MHVENSURE(m_naps, MHVOccurenceCollection);
-    return m_naps;
+    MHVENSURE(_exercise, MHVOccurenceCollection);
+    return _exercise;
 }
 
--(void)setNaps:(MHVOccurenceCollection *)naps
+- (BOOL)hasExercise
 {
-    m_naps = naps;
+    return ![MHVCollection isNilOrEmpty:self.exercise];
 }
 
--(BOOL)hasNaps
+- (MHVSleepiness)sleepiness
 {
-    return ![MHVCollection isNilOrEmpty:m_naps];
+    return (self.sleepinessValue) ? (MHVSleepiness)(self.sleepinessValue.value) : MHVSleepiness_Unknown;
 }
 
--(MHVOccurenceCollection *)exercise
-{
-    MHVENSURE(m_exercise, MHVOccurenceCollection);
-    return m_exercise;
-}
-
--(void)setExercise:(MHVOccurenceCollection *)exercise
-{
-    m_exercise = exercise;
-}
-
--(BOOL)hasExercise
-{
-    return ![MHVCollection isNilOrEmpty:m_exercise];
-}
-
--(enum MHVSleepiness)sleepiness
-{
-    return (m_sleepiness) ? (enum MHVSleepiness) (m_sleepiness.value) : MHVSleepiness_Unknown;
-}
-
--(void) setSleepiness:(enum MHVSleepiness)sleepiness
+- (void)setSleepiness:(MHVSleepiness)sleepiness
 {
     if (sleepiness == MHVSleepiness_Unknown)
     {
-        m_sleepiness = nil;
+        self.sleepinessValue = nil;
     }
-    else 
+    else
     {
-        MHVENSURE(m_sleepiness, MHVPositiveInt);
-        m_sleepiness.value = sleepiness;
+        MHVENSURE(self.sleepinessValue, MHVPositiveInt);
+        self.sleepinessValue.value = sleepiness;
     }
 }
 
--(NSString *)sleepinessAsString
+- (NSString *)sleepinessAsString
 {
     return stringFromSleepiness(self.sleepiness);
 }
 
-
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];
+    return [self.when toDateForCalendar:calendar];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE(m_sleepiness, MHVClientError_InvalidSleepJournal);
-    
-    MHVVALIDATE_ARRAYOPTIONAL(m_caffeine, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE_ARRAYOPTIONAL(m_alcohol, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE_ARRAYOPTIONAL(m_naps, MHVClientError_InvalidSleepJournal);
-    
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(self.sleepinessValue, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_ARRAYOPTIONAL(self.caffeineIntakeTimes, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_ARRAYOPTIONAL(self.alcoholIntakeTimes, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_ARRAYOPTIONAL(self.naps, MHVClientError_InvalidSleepJournal);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_when content:m_when];
-    [writer writeElementArray:c_element_caffeine elements:m_caffeine.toArray];
-    [writer writeElementArray:c_element_alcohol elements:m_alcohol.toArray];
-    [writer writeElementArray:c_element_nap elements:m_naps.toArray];
-    [writer writeElementArray:c_element_exercise elements:m_exercise.toArray];
-    [writer writeElement:c_element_sleepiness content:m_sleepiness];
+    [writer writeElement:c_element_when content:self.when];
+    [writer writeElementArray:c_element_caffeine elements:self.caffeineIntakeTimes.toArray];
+    [writer writeElementArray:c_element_alcohol elements:self.alcoholIntakeTimes.toArray];
+    [writer writeElementArray:c_element_nap elements:self.naps.toArray];
+    [writer writeElementArray:c_element_exercise elements:self.exercise.toArray];
+    [writer writeElement:c_element_sleepiness content:self.sleepinessValue];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
-    m_caffeine = (MHVTimeCollection *)[reader readElementArray:c_element_caffeine asClass:[MHVTime class] andArrayClass:[MHVTimeCollection class]];
-    m_alcohol = (MHVTimeCollection *)[reader readElementArray:c_element_alcohol asClass:[MHVTime class] andArrayClass:[MHVTimeCollection class]];
-    m_naps = (MHVOccurenceCollection *)[reader readElementArray:c_element_nap asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
-    m_exercise = (MHVOccurenceCollection *)[reader readElementArray:c_element_exercise asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
-    m_sleepiness = [reader readElement:c_element_sleepiness asClass:[MHVPositiveInt class]];
+    self.when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
+    self.caffeineIntakeTimes = (MHVTimeCollection *)[reader readElementArray:c_element_caffeine asClass:[MHVTime class] andArrayClass:[MHVTimeCollection class]];
+    self.alcoholIntakeTimes = (MHVTimeCollection *)[reader readElementArray:c_element_alcohol asClass:[MHVTime class] andArrayClass:[MHVTimeCollection class]];
+    self.naps = (MHVOccurenceCollection *)[reader readElementArray:c_element_nap asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
+    self.exercise = (MHVOccurenceCollection *)[reader readElementArray:c_element_exercise asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
+    self.sleepinessValue = [reader readElement:c_element_sleepiness asClass:[MHVPositiveInt class]];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVSleepJournalPM typeID]];
 }
-
 
 @end

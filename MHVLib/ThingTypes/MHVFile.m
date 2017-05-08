@@ -1,15 +1,15 @@
 //
-//  MHVFile.m
-//  MHVLib
+// MHVFile.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,111 +21,109 @@
 #import "MHVBlob.h"
 #import "MHVCodableValue.h"
 
-static NSString* const c_typeid = @"bd0403c5-4ae2-4b0e-a8db-1888678e4528";
-static NSString* const c_typename = @"file";
+static NSString *const c_typeid = @"bd0403c5-4ae2-4b0e-a8db-1888678e4528";
+static NSString *const c_typename = @"file";
 
-static NSString* const c_element_name = @"name";
-static NSString* const c_element_size = @"size";
-static NSString* const c_element_contentType = @"content-type";
+static NSString *const c_element_name = @"name";
+static NSString *const c_element_size = @"size";
+static NSString *const c_element_contentType = @"content-type";
+
+@interface MHVFile ()
+
+@property (nonatomic, strong) MHVString255 *nameValue;
+
+@end
 
 @implementation MHVFile
 
-@synthesize size = m_size;
-@synthesize contentType = m_contentType;
-
--(NSString *)name
+- (NSString *)name
 {
-    return (m_name) ? m_name.value : nil;
+    return (self.nameValue) ? self.nameValue.value : nil;
 }
 
--(void)setName:(NSString *)name
+- (void)setName:(NSString *)name
 {
-    MHVENSURE(m_name, MHVString255);
-    m_name.value = name;
+    MHVENSURE(self.nameValue, MHVString255);
+    self.nameValue.value = name;
 }
 
-
--(NSString *)toString
+- (NSString *)toString
 {
     return self.name;
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(NSString *)sizeAsString
+- (NSString *)sizeAsString
 {
-    return [MHVFile sizeAsString:m_size];
+    if (self.size < 1024)
+    {
+        return [NSString localizedStringWithFormat:@"%d %@", (int)self.size, NSLocalizedString(@"bytes", @"Size in bytes")];
+    }
+
+    if (self.size < (1024 * 1024))
+    {
+        return [NSString localizedStringWithFormat:@"%.1f %@", ((double)self.size) / 1024, NSLocalizedString(@"KB", @"Size in KB")];
+    }
+
+    return [NSString localizedStringWithFormat:@"%.1f %@", ((double)self.size) / (1024 * 1024), NSLocalizedString(@"MB", @"Size in MB")];
 }
 
-+(NSString *)sizeAsString:(long)size
-{
-    if (size < 1024)
-    {
-        return [NSString localizedStringWithFormat:@"%d %@", (int)size, NSLocalizedString(@"bytes", @"Size in bytes")];
-    }
-    
-    if (size < (1024 * 1024))
-    {
-        return [NSString localizedStringWithFormat:@"%.1f %@", ((double) size)/ 1024, NSLocalizedString(@"KB", @"Size in KB")];
-    }
-    
-    return [NSString localizedStringWithFormat:@"%.1f %@", ((double) size)/ (1024 * 1024), NSLocalizedString(@"MB", @"Size in MB")];
-}
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_name, MHVClientError_InvalidFile);
-    MHVVALIDATE(m_contentType, MHVClientError_InvalidFile);
-    
+
+    MHVVALIDATE(self.nameValue, MHVClientError_InvalidFile);
+    MHVVALIDATE(self.contentType, MHVClientError_InvalidFile);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_name content:m_name];
-    [writer writeElement:c_element_size intValue:(int)m_size];
-    [writer writeElement:c_element_contentType content:m_contentType];
+    [writer writeElement:c_element_name content:self.nameValue];
+    [writer writeElement:c_element_size intValue:(int)self.size];
+    [writer writeElement:c_element_contentType content:self.contentType];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_name = [reader readElement:c_element_name asClass:[MHVString255 class]];
-    m_size = [reader readIntElement:c_element_size];
-    m_contentType = [reader readElement:c_element_contentType asClass:[MHVCodableValue class]];   
+    self.nameValue = [reader readElement:c_element_name asClass:[MHVString255 class]];
+    self.size = [reader readIntElement:c_element_size];
+    self.contentType = [reader readElement:c_element_contentType asClass:[MHVCodableValue class]];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVFile typeID]];
 }
 
-+(MHVItem *)newItemWithName:(NSString *)name andContentType:(NSString *)contentType
++ (MHVItem *)newItemWithName:(NSString *)name andContentType:(NSString *)contentType
 {
-    MHVItem* item = [self newItem];
+    MHVItem *item = [self newItem];
+
     if (!item)
     {
         return nil;
     }
-    
-    MHVFile* file = (MHVFile *) item.data.typed;
+
+    MHVFile *file = (MHVFile *)item.data.typed;
     file.name = name;
     file.contentType = [MHVCodableValue fromText:contentType];
-        
+
     return item;
 }
 

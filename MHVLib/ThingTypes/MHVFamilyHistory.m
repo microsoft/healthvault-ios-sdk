@@ -27,7 +27,6 @@ static NSString *const c_element_relative = @"relative";
 
 @implementation MHVFamilyHistory
 
-
 - (MHVConditionEntryCollection *)conditions
 {
     if (!_conditions)
@@ -80,7 +79,7 @@ static NSString *const c_element_relative = @"relative";
     return [self toString];
 }
 
-- (id)initWithRelative:(MHVRelative *)relative andCondition:(MHVConditionEntry *)condition
+- (instancetype)initWithRelative:(MHVRelative *)relative andCondition:(MHVConditionEntry *)condition
 {
     MHVASSERT_PARAMETER(relative);
     MHVASSERT_PARAMETER(condition);

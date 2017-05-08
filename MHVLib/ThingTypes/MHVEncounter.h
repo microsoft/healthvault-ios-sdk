@@ -1,15 +1,15 @@
 //
-//  MHVEncounter.h
-//  MHVLib
+// MHVEncounter.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,49 +21,40 @@
 #import "MHVTypes.h"
 
 @interface MHVEncounter : MHVItemDataTyped
-{
-@private
-    MHVDateTime* m_when;
-    MHVCodableValue* m_type;
-    NSString* m_reason;
-    MHVDuration* m_duration;
-    MHVBool* m_constentGranted;
-    MHVOrganization* m_facility;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVDateTime* when;
+@property (readwrite, nonatomic, strong) MHVDateTime *when;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* encounterType;
+@property (readwrite, nonatomic, strong) MHVCodableValue *encounterType;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) NSString* reason;
+@property (readwrite, nonatomic, strong) NSString *reason;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVDuration* duration;
+@property (readwrite, nonatomic, strong) MHVDuration *duration;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVBool* consent;
+@property (readwrite, nonatomic, strong) MHVBool *consent;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVOrganization* facility;
+@property (readwrite, nonatomic, strong) MHVOrganization *facility;
 
-+(NSString *) typeID;
-+(NSString *) XRootElement;
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
 @end

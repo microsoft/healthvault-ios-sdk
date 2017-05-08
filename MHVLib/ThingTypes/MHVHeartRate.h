@@ -1,8 +1,8 @@
 //
-//  MHVBloodPressure.h
-//  MHVLib
+// MHVBloodPressure.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,27 +20,19 @@
 #import "MHVTypes.h"
 
 @interface MHVHeartRate : MHVItemDataTyped
-{
-@private
-    MHVDateTime* m_when;
-    MHVNonNegativeInt* m_bpm;
-    MHVCodableValue* m_measurementMethod;
-    MHVCodableValue* m_measurementConditions;
-    MHVCodableValue* m_measurementFlags;
-}
 
 //
 // (Required) - When the measurement was made
 //
-@property (readwrite, nonatomic, strong) MHVDateTime* when;
+@property (readwrite, nonatomic, strong) MHVDateTime *when;
 //
 // (Required) - Heart rate in beats per minute
 //
-@property (readwrite, nonatomic, strong) MHVNonNegativeInt* bpm;
+@property (readwrite, nonatomic, strong) MHVNonNegativeInt *bpm;
 
-@property (readwrite, nonatomic, strong) MHVCodableValue* measurementMethod;
-@property (readwrite, nonatomic, strong) MHVCodableValue* measurementConditions;
-@property (readwrite, nonatomic, strong) MHVCodableValue* measurementFlags;
+@property (readwrite, nonatomic, strong) MHVCodableValue *measurementMethod;
+@property (readwrite, nonatomic, strong) MHVCodableValue *measurementConditions;
+@property (readwrite, nonatomic, strong) MHVCodableValue *measurementFlags;
 
 //
 // Convenience properties
@@ -48,41 +40,41 @@
 @property (readwrite, nonatomic) int bpmValue;
 
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
+// -------------------------
 
--(id) initWithBpm:(int) bpm andDate:(NSDate*) date;
+- (instancetype)initWithBpm:(int)bpm andDate:(NSDate *)date;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
-//-------------------------
+// -------------------------
 //
 // Methods
 //
-//-------------------------
-+(MHVVocabIdentifier *) vocabForMeasurementMethod;
-+(MHVVocabIdentifier *) vocabForMeasurementConditions;
+// -------------------------
++ (MHVVocabIdentifier *)vocabForMeasurementMethod;
++ (MHVVocabIdentifier *)vocabForMeasurementConditions;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) toString;
+// -------------------------
+- (NSString *)toString;
 //
 // Takes a format string with %@ in it, surrounded with other decorative text of your choice
 //
--(NSString *) toStringWithFormat:(NSString *) format;
+- (NSString *)toStringWithFormat:(NSString *)format;
 
-//-------------------------
+// -------------------------
 //
 // Type information
 //
-//-------------------------
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+// -------------------------
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 @end

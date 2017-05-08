@@ -1,8 +1,8 @@
 //
-//  MHVHeartRate.m
-//  MHVLib
+// MHVHeartRate.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,133 +19,125 @@
 #import "MHVCommon.h"
 #import "MHVHeartRate.h"
 
-static NSString* const c_typeID = @"b81eb4a6-6eac-4292-ae93-3872d6870994";
-static NSString* const c_typeName = @"heart-rate";
+static NSString *const c_typeID = @"b81eb4a6-6eac-4292-ae93-3872d6870994";
+static NSString *const c_typeName = @"heart-rate";
 
-static const xmlChar* x_element_when = XMLSTRINGCONST("when");
-static const xmlChar* x_element_value = XMLSTRINGCONST("value");
-static const xmlChar* x_element_method = XMLSTRINGCONST("measurement-method");
-static const xmlChar* x_element_conditions = XMLSTRINGCONST("measurement-conditions");
-static const xmlChar* x_element_flags = XMLSTRINGCONST("measurement-flags");
+static const xmlChar *x_element_when = XMLSTRINGCONST("when");
+static const xmlChar *x_element_value = XMLSTRINGCONST("value");
+static const xmlChar *x_element_method = XMLSTRINGCONST("measurement-method");
+static const xmlChar *x_element_conditions = XMLSTRINGCONST("measurement-conditions");
+static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
 
 @implementation MHVHeartRate
 
-@synthesize when = m_when;
-@synthesize bpm = m_bpm;
-@synthesize measurementMethod = m_measurementMethod;
-@synthesize measurementConditions = m_measurementConditions;
-@synthesize measurementFlags = m_measurementFlags;
-
--(int)bpmValue
+- (int)bpmValue
 {
-    return (m_bpm != nil) ? m_bpm.value : -1;
+    return (self.bpm != nil) ? self.bpm.value : -1;
 }
 
--(void)setBpmValue:(int)bpmValue
+- (void)setBpmValue:(int)bpmValue
 {
-    MHVENSURE(m_bpm, MHVNonNegativeInt);
-    m_bpm.value = bpmValue;
+    MHVENSURE(self.bpm, MHVNonNegativeInt);
+    self.bpm.value = bpmValue;
 }
 
--(id)initWithBpm:(int)bpm andDate:(NSDate *)date
+- (instancetype)initWithBpm:(int)bpm andDate:(NSDate *)date
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_bpm = [[MHVNonNegativeInt alloc] initWith:bpm];
-    MHVCHECK_NOTNULL(m_bpm);
-    
-    m_when = [[MHVDateTime alloc] initWithDate:date];
-    MHVCHECK_NOTNULL(m_when);
-    
+    if (self)
+    {
+        _bpm = [[MHVNonNegativeInt alloc] initWith:bpm];
+        MHVCHECK_NOTNULL(_bpm);
+
+        _when = [[MHVDateTime alloc] initWithDate:date];
+        MHVCHECK_NOTNULL(_when);
+    }
+
     return self;
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];
+    return [self.when toDateForCalendar:calendar];
 }
 
-+(MHVVocabIdentifier *)vocabForMeasurementMethod
++ (MHVVocabIdentifier *)vocabForMeasurementMethod
 {
     return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-method"];
 }
 
-+(MHVVocabIdentifier *)vocabForMeasurementConditions
++ (MHVVocabIdentifier *)vocabForMeasurementConditions
 {
     return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-conditions"];
 }
 
--(NSString *) toString
+- (NSString *)toString
 {
     return [self toStringWithFormat:@"%d bpm"];
 }
 
--(NSString *)toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
     return [NSString localizedStringWithFormat:format, self.bpmValue];
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidHeartRate);
-    MHVVALIDATE(m_bpm, MHVClientError_InvalidHeartRate);
-    MHVVALIDATE_OPTIONAL(m_measurementMethod);
-    MHVVALIDATE_OPTIONAL(m_measurementConditions);
-    MHVVALIDATE_OPTIONAL(m_measurementFlags);
-    
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidHeartRate);
+    MHVVALIDATE(self.bpm, MHVClientError_InvalidHeartRate);
+    MHVVALIDATE_OPTIONAL(self.measurementMethod);
+    MHVVALIDATE_OPTIONAL(self.measurementConditions);
+    MHVVALIDATE_OPTIONAL(self.measurementFlags);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementXmlName:x_element_value content:m_bpm];
-    [writer writeElementXmlName:x_element_method content:m_measurementMethod];
-    [writer writeElementXmlName:x_element_conditions content:m_measurementConditions];
-    [writer writeElementXmlName:x_element_flags content:m_measurementFlags];
+    [writer writeElementXmlName:x_element_when content:self.when];
+    [writer writeElementXmlName:x_element_value content:self.bpm];
+    [writer writeElementXmlName:x_element_method content:self.measurementMethod];
+    [writer writeElementXmlName:x_element_conditions content:self.measurementConditions];
+    [writer writeElementXmlName:x_element_flags content:self.measurementFlags];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
-    m_bpm = [reader readElementWithXmlName:x_element_value asClass:[MHVNonNegativeInt class]];
-    m_measurementMethod = [reader readElementWithXmlName:x_element_method asClass:[MHVCodableValue class]];
-    m_measurementConditions = [reader readElementWithXmlName:x_element_conditions asClass:[MHVCodableValue class]];
-    m_measurementFlags = [reader readElementWithXmlName:x_element_flags asClass:[MHVCodableValue class]];
+    self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
+    self.bpm = [reader readElementWithXmlName:x_element_value asClass:[MHVNonNegativeInt class]];
+    self.measurementMethod = [reader readElementWithXmlName:x_element_method asClass:[MHVCodableValue class]];
+    self.measurementConditions = [reader readElementWithXmlName:x_element_conditions asClass:[MHVCodableValue class]];
+    self.measurementFlags = [reader readElementWithXmlName:x_element_flags asClass:[MHVCodableValue class]];
 }
 
-+(NSString *) typeID
++ (NSString *)typeID
 {
     return c_typeID;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typeName;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVHeartRate typeID]];
 }
 
--(NSString *)typeName
+- (NSString *)typeName
 {
     return NSLocalizedString(@"Heart Rate", @"Heart Rate Type Name");
 }

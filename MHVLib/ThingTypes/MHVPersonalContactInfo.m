@@ -1,15 +1,15 @@
 //
-//  MHVPersonalContactInfo.m
-//  MHVLib
+// MHVPersonalContactInfo.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,63 +19,56 @@
 #import "MHVCommon.h"
 #import "MHVPersonalContactInfo.h"
 
-static NSString* const c_typeid = @"162dd12d-9859-4a66-b75f-96760d67072b";
-static NSString* const c_typename = @"contact";
+static NSString *const c_typeid = @"162dd12d-9859-4a66-b75f-96760d67072b";
+static NSString *const c_typename = @"contact";
 
-static NSString* const c_element_contact = @"contact";
+static NSString *const c_element_contact = @"contact";
 
 @implementation MHVPersonalContactInfo
 
-@synthesize contact = m_contact;
-
-
--(id)initWithContact:(MHVContact *)contact
+- (instancetype)initWithContact:(MHVContact *)contact
 {
     MHVCHECK_NOTNULL(contact);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.contact = contact;
-    
+    if (self)
+    {
+        _contact = contact;
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_contact, MHVClientError_InvalidPersonalContactInfo);
-    
+
+        MHVVALIDATE(self.contact, MHVClientError_InvalidPersonalContactInfo);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_contact content:m_contact];
+    [writer writeElement:c_element_contact content:self.contact];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_contact = [reader readElement:c_element_contact asClass:[MHVContact class]];
+    self.contact = [reader readElement:c_element_contact asClass:[MHVContact class]];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVPersonalContactInfo typeID]];
 }

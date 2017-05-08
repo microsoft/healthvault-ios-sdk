@@ -1,8 +1,8 @@
 //
-//  MHVLabTestResults.h
-//  MHVLib
+// MHVLabTestResults.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,39 +22,39 @@
 
 @interface MHVLabTestResults : MHVItemDataTyped
 
-@property (readwrite, nonatomic, strong) MHVApproxDateTime* when;
-@property (readwrite, nonatomic, strong) MHVLabTestResultsGroupCollection* labGroup;
-@property (readwrite, nonatomic, strong) MHVOrganization* orderedBy;
+@property (readwrite, nonatomic, strong) MHVApproxDateTime *when;
+@property (readwrite, nonatomic, strong) MHVLabTestResultsGroupCollection *labGroup;
+@property (readwrite, nonatomic, strong) MHVOrganization *orderedBy;
 //
 // Convenience properties
 //
-@property (readonly, nonatomic, strong) MHVLabTestResultsGroup* firstGroup;
+@property (readonly, nonatomic, strong) MHVLabTestResultsGroup *firstGroup;
 //
 // Lab groups can be nested.
 // This returns all of them in a single collection
 //
--(MHVLabTestResultsGroupCollection *) getAllGroups;
+- (MHVLabTestResultsGroupCollection *)getAllGroups;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
-+(MHVItem *) newItem;
+// -------------------------
++ (MHVItem *)newItem;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) toString;
+// -------------------------
+- (NSString *)toString;
 
-//-------------------------
+// -------------------------
 //
 // Type information
 //
-//-------------------------
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+// -------------------------
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 @end
