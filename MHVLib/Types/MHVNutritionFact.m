@@ -78,7 +78,7 @@ static NSString* const c_element_nutritionFact = @"nutrition-fact";
 
 -(void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_nutritionFact elements:m_facts];
+    [writer writeElementArray:c_element_nutritionFact elements:m_facts.toArray];
 }
 
 -(void)deserialize:(XReader *)reader

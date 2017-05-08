@@ -1,6 +1,6 @@
 //
-//  MHVBatchItemDownloader.m
-//  MHVLib
+// MHVBatchItemDownloader.m
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -21,158 +21,158 @@
 #import "MHVBatchItemDownloader.h"
 #import "MHVClient.h"
 
-@interface MHVBatchItemDownloader (MHVPrivate)
+static const NSUInteger c_defaultBatchSize = 250;
 
--(void) collectNextBatch;
--(BOOL) setNextBatch:(MHVTask *) parentTask;
--(void) batchComplete:(MHVDownloadItemsTask *) task;
+@interface MHVBatchItemDownloader ()
+
+@property (nonatomic, strong) MHVLocalRecordStore *store;
+@property (nonatomic, strong) MHVItemKeyCollection *keyBatch;
 
 @end
 
-static const NSUInteger c_defaultBatchSize = 250;
-
 @implementation MHVBatchItemDownloader
 
-@synthesize batchSize = m_batchSize;
--(void)setBatchSize:(NSUInteger)batchSize
+- (void)setBatchSize:(NSUInteger)batchSize
 {
-    if (batchSize == 0)
+    if (batchSize == 0 || batchSize > c_defaultBatchSize)
     {
-        m_batchSize = c_defaultBatchSize;
+        self.batchSize = c_defaultBatchSize;
+    }
+    else
+    {
+        self.batchSize = batchSize;
     }
 }
 
--(NSMutableArray *)keysToDownload
+- (instancetype)initWithRecordStore:(MHVLocalRecordStore *)store
 {
-    return m_keysToDownload;
-}
+    MHVASSERT_PARAMETER(store);
+    
+    if (!store)
+    {
+        return nil;
+    }
 
--(id)initWithRecordStore:(MHVLocalRecordStore *)store
-{
-    MHVCHECK_NOTNULL(store);
-    
     self = [super init];
-    MHVCHECK_SELF;
     
-    m_keysToDownload = [[NSMutableArray alloc] init];
-    MHVCHECK_NOTNULL(m_keysToDownload);
-    
-    m_keyBatch = [[NSMutableArray alloc] init];
-    MHVCHECK_NOTNULL(m_keyBatch);
-    
-    m_store = store;
-    
-    m_batchSize = c_defaultBatchSize;
+    if (self)
+    {
+        _keysToDownload = [MHVItemKeyCollection new];
+        _keyBatch = [MHVItemKeyCollection new];
+        _store = store;
+        _batchSize = c_defaultBatchSize;
+    }
     
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(BOOL)addKeyToDownload:(MHVItemKey *)key
+- (BOOL)addKeyToDownload:(MHVItemKey *)key
 {
-    MHVCHECK_NOTNULL(key);
+    MHVASSERT_PARAMETER(key);
     
-    [m_keysToDownload addObject:key];
-    return TRUE;
-    
-LError:
-    return FALSE;
-}
-
--(BOOL)addKeyForItemToEnsureDownloaded:(MHVItemKey *)key
-{
-    MHVCHECK_NOTNULL(key);
-    
-    if (![m_store.data getLocalItemWithKey:key])
+    if (!key)
     {
-        [m_keysToDownload addObject:key];
+        return NO;
     }
+
+    [self.keysToDownload addObject:key];
     
+    return YES;
+}
+
+- (BOOL)addKeyForItemToEnsureDownloaded:(MHVItemKey *)key
+{
+    MHVCHECK_NOTNULL(key);
+
+    if (![self.store.data getLocalItemWithKey:key])
+    {
+        [self.keysToDownload addObject:key];
+    }
+
     return TRUE;
-    
-LError:
+
+   LError:
     return FALSE;
 }
 
--(BOOL)addRangeOfKeysToEnsureDownloaded:(NSRange)range inView:(id<MHVTypeView>)view
+- (BOOL)addRangeOfKeysToEnsureDownloaded:(NSRange)range inView:(id<MHVTypeView>)view
 {
     MHVCHECK_NOTNULL(view);
-    
+
     int max = (int)range.location + (int)range.length;
     if (max > [view count])
     {
         max = (int)[view count];
     }
+
     for (NSUInteger i = range.location; i < max; ++i)
     {
         [self addKeyForItemToEnsureDownloaded:[view itemKeyAtIndex:i]];
     }
-    
+
     return TRUE;
-    
-LError:
+
+   LError:
     return FALSE;
 }
 
--(MHVTask *)downloadWithCallback:(MHVTaskCompletion)callback
+- (MHVTask *)downloadWithCallback:(MHVTaskCompletion)callback
 {
-    MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
+    MHVTask *task = [[MHVTask alloc] initWithCallback:callback];
+
     MHVCHECK_NOTNULL(task);
-    
+
     if (![self setNextBatch:task])
     {
         return nil;
     }
-    
+
     [task start];
     return task;
 
-LError:
+   LError:
     return nil;
 }
 
-@end
-
-@implementation MHVBatchItemDownloader (MHVPrivate)
-
--(void)collectNextBatch
+- (void)collectNextBatch
 {
-    [m_keyBatch removeAllObjects];
-    while (m_keyBatch.count < m_batchSize)
+    [self.keyBatch removeAllObjects];
+    
+    while (self.keyBatch.count < self.batchSize)
     {
-        MHVItemKey* key = [m_keysToDownload dequeueObject];
+        MHVItemKey *key = [self.keysToDownload lastObject];
+
         if (!key)
         {
             break;
         }
-        
-        [m_keyBatch addObject:key];
+
+        [self.keysToDownload removeLastObject];
+
+        [self.keyBatch addObject:key];
     }
 }
 
--(BOOL)setNextBatch:(MHVTask *)parentTask
+- (BOOL)setNextBatch:(MHVTask *)parentTask
 {
     [self collectNextBatch];
-    if (m_keyBatch.count == 0)
+    
+    if (self.keyBatch.count == 0)
     {
         return FALSE;
     }
-    
-    MHVDownloadItemsTask* downloadTask = [m_store.data newDownloadItemsInRecord:m_store.record forKeys:m_keyBatch callback:^(MHVTask *task) {
-        
-        [self batchComplete:(MHVDownloadItemsTask *) task];
-        
+
+    MHVDownloadItemsTask *downloadTask = [self.store.data newDownloadItemsInRecord:self.store.record forKeys:self.keyBatch callback:^(MHVTask *task)
+    {
+        [self batchComplete:(MHVDownloadItemsTask *)task];
     }];
-    
+
     [parentTask setNextTask:downloadTask];
-    
+
     return TRUE;
 }
 
--(void)batchComplete:(MHVDownloadItemsTask *)task
+- (void)batchComplete:(MHVDownloadItemsTask *)task
 {
     [task checkSuccess];
     [self setNextBatch:task.parent];
