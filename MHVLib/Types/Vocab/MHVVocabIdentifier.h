@@ -19,6 +19,8 @@
 #import "MHVType.h"
 #import "MHVCodableValue.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString *const c_rxNormFamily;
 NSString *const c_snomedFamily;
 NSString *const c_hvFamily;
@@ -26,8 +28,6 @@ NSString *const c_icdFamily;
 NSString *const c_hl7Family;
 NSString *const c_isoFamily;
 NSString *const c_usdaFamily;
-
-NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVVocabIdentifier : MHVType
 

@@ -57,7 +57,7 @@ static NSString *const c_element_instanceID = @"instanceID";
         return nil;
     }
 
-    return self.records[self.currentRecordIndex];
+    return [self.records objectAtIndex:self.currentRecordIndex];
 }
 
 - (BOOL)hasEnvironment

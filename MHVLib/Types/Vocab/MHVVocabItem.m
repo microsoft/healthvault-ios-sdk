@@ -83,7 +83,7 @@ static NSString *const c_element_data = @"info-xml";
 
 - (MHVVocabItem *)itemAtIndex:(NSUInteger)index
 {
-    return (MHVVocabItem *)self[index];
+    return (MHVVocabItem *)[self objectAtIndex:index];
 }
 
 - (void)sortByDisplayText
