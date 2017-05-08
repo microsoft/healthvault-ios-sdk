@@ -24,7 +24,7 @@
 // Collections allow objects of a particular type only
 // They enforce the type
 //
-@interface MHVCollection : NSObject
+@interface MHVCollection : NSObject<NSFastEnumeration>
 
 @property (readwrite, nonatomic, strong) Class  type;
 
@@ -47,7 +47,6 @@
 - (void)sortUsingComparator:(NSComparator NS_NOESCAPE)cmptr;
 - (NSUInteger)binarySearch:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp;
 - (NSUInteger)indexOfMatchingObject:(MHVFilter)filter;
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len;
 
 - (NSArray *)toArray;
 
