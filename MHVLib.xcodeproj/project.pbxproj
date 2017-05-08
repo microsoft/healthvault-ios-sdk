@@ -497,6 +497,7 @@
 		A4F066CB1C5C00E700233916 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CA1C5C00E700233916 /* Security.framework */; };
 		A4F066CD1C5C00F000233916 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */; };
 		A4F066CF1C5C010800233916 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CE1C5C010800233916 /* MobileCoreServices.framework */; };
+		BA0355401EC0BF5400BE547D /* MHVVocabularyClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -995,6 +996,7 @@
 		A4F066CA1C5C00E700233916 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A4F066CE1C5C010800233916 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyClientProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1088,6 +1090,7 @@
 		5D5299B114DCB3A700D2636E /* MHVLib */ = {
 			isa = PBXGroup;
 			children = (
+				BA03553E1EC0BF5400BE547D /* Clients */,
 				5D20D30014EF412500160611 /* Collections */,
 				5D5F312D150ED26700ED11E7 /* Controllers */,
 				5D1139B415461F430008C362 /* HTTP */,
@@ -1683,6 +1686,14 @@
 			path = Xml;
 			sourceTree = "<group>";
 		};
+		BA03553E1EC0BF5400BE547D /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */,
+			);
+			path = Clients;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1755,6 +1766,7 @@
 				5D20D32B14F42E1300160611 /* MHVItemData.h in Headers */,
 				5DAED4AD18E4BC970048ECBD /* MHVMethodFactory.h in Headers */,
 				5D20D32F14F4352A00160611 /* MHVItemDataCommon.h in Headers */,
+				BA0355401EC0BF5400BE547D /* MHVVocabularyClientProtocol.h in Headers */,
 				5D20D33314F4366200160611 /* MHVConstrainedString.h in Headers */,
 				5D20D33714F43A1400160611 /* MHVString255.h in Headers */,
 				5D8184011875FF060073F8E6 /* MHVPeakFlow.h in Headers */,
