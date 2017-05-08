@@ -1,15 +1,15 @@
 //
-//  MHVBlobPayloadItem.m
-//  MHVLib
+// MHVBlobPayloadItem.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,195 +20,190 @@
 #import "MHVCommon.h"
 #import "MHVBlobPayloadItem.h"
 
-static NSString* const c_element_blobInfo = @"blob-info";
-static NSString* const c_element_length = @"content-length";
-static NSString* const c_element_blobUrl = @"blob-ref-url";
-static NSString* const c_element_legacyEncoding = @"legacy-content-encoding";
-static NSString* const c_element_currentEncoding = @"current-content-encoding";
+static NSString *const c_element_blobInfo = @"blob-info";
+static NSString *const c_element_length = @"content-length";
+static NSString *const c_element_blobUrl = @"blob-ref-url";
+static NSString *const c_element_legacyEncoding = @"legacy-content-encoding";
+static NSString *const c_element_currentEncoding = @"current-content-encoding";
+
+@interface MHVBlobPayloadItem ()
+
+@property (nonatomic, strong) NSString *legacyEncoding;
+@property (nonatomic, strong) NSString *encoding;
+
+@end
 
 @implementation MHVBlobPayloadItem
 
-@synthesize blobInfo = m_blobInfo;
-@synthesize length = m_length;
-@synthesize blobUrl = m_blobUrl;
-
--(NSString *)name
+- (NSString *)name
 {
-    return (m_blobInfo) ? m_blobInfo.name : c_emptyString;
+    return (self.blobInfo) ? self.blobInfo.name : c_emptyString;
 }
 
--(NSString *)contentType
+- (NSString *)contentType
 {
-    return (m_blobInfo) ? m_blobInfo.contentType : c_emptyString;
+    return (self.blobInfo) ? self.blobInfo.contentType : c_emptyString;
 }
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_length = -1;
-    
-    return self;
+    if (self)
+    {
+        _length = -1;
+    }
 
-LError:
-    MHVALLOC_FAIL;
+    return self;
 }
 
--(id)initWithBlobName:(NSString *)name contentType:(NSString *)contentType length:(NSInteger)length andUrl:(NSString *)blobUrl
+- (instancetype)initWithBlobName:(NSString *)name contentType:(NSString *)contentType length:(NSInteger)length andUrl:(NSString *)blobUrl
 {
     MHVCHECK_STRING(blobUrl);
-    
+
     self = [self init];
-    MHVCHECK_SELF;
-    
-    m_blobInfo = [[MHVBlobInfo alloc] initWithName:name andContentType:contentType];
-    MHVCHECK_NOTNULL(m_blobInfo);
-    
-    m_length = length;
-   
-    m_blobUrl = blobUrl;
-    
+    if (self)
+    {
+        _blobInfo = [[MHVBlobInfo alloc] initWithName:name andContentType:contentType];
+        MHVCHECK_NOTNULL(_blobInfo);
+
+        _length = length;
+
+        _blobUrl = blobUrl;
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(MHVHttpResponse *)createDownloadTaskWithCallback:(MHVTaskCompletion)callback
+- (MHVHttpResponse *)createDownloadTaskWithCallback:(MHVTaskCompletion)callback
 {
-    NSURL* url = [NSURL URLWithString:m_blobUrl];
+    NSURL *url = [NSURL URLWithString:self.blobUrl];
+
     MHVCHECK_NOTNULL(url);
-    
+
     return [[MHVHttpResponse alloc] initWithUrl:url andCallback:callback];
 
-LError:
+   LError:
     return nil;
 }
 
--(MHVHttpResponse *)downloadWithCallback:(MHVTaskCompletion)callback
+- (MHVHttpResponse *)downloadWithCallback:(MHVTaskCompletion)callback
 {
-    MHVHttpResponse* response = [self createDownloadTaskWithCallback:callback];
-    MHVCHECK_NOTNULL(response);
-    
-    [response start];
-    
-    return response;
+    MHVHttpResponse *response = [self createDownloadTaskWithCallback:callback];
 
-LError:
-    return nil;
+    MHVCHECK_NOTNULL(response);
+
+    [response start];
+
+    return response;
 }
 
--(MHVHttpDownload *)downloadToFilePath:(NSString *)path andCallback:(MHVTaskCompletion)callback
+- (MHVHttpDownload *)downloadToFilePath:(NSString *)path andCallback:(MHVTaskCompletion)callback
 {
     return [self downloadToFile:[NSFileHandle fileHandleForWritingAtPath:path] andCallback:callback];
 }
 
--(MHVHttpDownload *)downloadToFile:(NSFileHandle *)file andCallback:(MHVTaskCompletion)callback
+- (MHVHttpDownload *)downloadToFile:(NSFileHandle *)file andCallback:(MHVTaskCompletion)callback
 {
-    NSURL* url = [NSURL URLWithString:m_blobUrl];
+    NSURL *url = [NSURL URLWithString:self.blobUrl];
+
     MHVCHECK_NOTNULL(url);
-    
-    MHVHttpDownload* response = [[MHVHttpDownload alloc] initWithUrl:url fileHandle:file andCallback:callback];
+
+    MHVHttpDownload *response = [[MHVHttpDownload alloc] initWithUrl:url fileHandle:file andCallback:callback];
     [response start];
-    
+
     return response;
-    
-LError:
-    return nil;    
 }
 
--(MHVClientResult *)validate
-{   
+- (MHVClientResult *)validate
+{
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_blobInfo, MHVClientError_InvalidBlobInfo);
-    MHVVALIDATE_STRING(m_blobUrl, MHVClientError_InvalidBlobInfo);
-    
+
+    MHVVALIDATE(self.blobInfo, MHVClientError_InvalidBlobInfo);
+    MHVVALIDATE_STRING(self.blobUrl, MHVClientError_InvalidBlobInfo);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_blobInfo content:m_blobInfo];
-    [writer writeElement:c_element_length intValue:(int)m_length];
-    [writer writeElement:c_element_blobUrl value:m_blobUrl];
-    [writer writeElement:c_element_legacyEncoding value:m_legacyEncoding];
-    [writer writeElement:c_element_currentEncoding value:m_encoding];
+    [writer writeElement:c_element_blobInfo content:self.blobInfo];
+    [writer writeElement:c_element_length intValue:(int)self.length];
+    [writer writeElement:c_element_blobUrl value:self.blobUrl];
+    [writer writeElement:c_element_legacyEncoding value:self.legacyEncoding];
+    [writer writeElement:c_element_currentEncoding value:self.encoding];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_blobInfo = [reader readElement:c_element_blobInfo asClass:[MHVBlobInfo class]];
-    m_length = [reader readIntElement:c_element_length];
-    m_blobUrl = [reader readStringElement:c_element_blobUrl];
-    m_legacyEncoding = [reader readStringElement:c_element_legacyEncoding];
-    m_encoding = [reader readStringElement:c_element_currentEncoding];
+    self.blobInfo = [reader readElement:c_element_blobInfo asClass:[MHVBlobInfo class]];
+    self.length = [reader readIntElement:c_element_length];
+    self.blobUrl = [reader readStringElement:c_element_blobUrl];
+    self.legacyEncoding = [reader readStringElement:c_element_legacyEncoding];
+    self.encoding = [reader readStringElement:c_element_currentEncoding];
 }
 
 @end
 
 @implementation MHVBlobPayloadItemCollection
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVBlobPayloadItem class];
-    
+    if (self)
+    {
+        self.type = [MHVBlobPayloadItem class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(MHVBlobPayloadItem *)itemAtIndex:(NSUInteger)index
+- (MHVBlobPayloadItem *)itemAtIndex:(NSUInteger)index
 {
-    return (MHVBlobPayloadItem *) [self objectAtIndex:index];
+    return (MHVBlobPayloadItem *)[self objectAtIndex:index];
 }
 
--(NSUInteger)indexofDefaultBlob
+- (NSUInteger)indexofDefaultBlob
 {
     return [self indexOfBlobNamed:c_emptyString];
 }
 
--(NSUInteger)indexOfBlobNamed:(NSString *)name
+- (NSUInteger)indexOfBlobNamed:(NSString *)name
 {
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    for (NSUInteger i = 0; i < self.count; ++i)
     {
-        MHVBlobPayloadItem* item = [self itemAtIndex:i];
-        NSString* blobName = item.name;
+        MHVBlobPayloadItem *item = [self itemAtIndex:i];
+        NSString *blobName = item.name;
         if ([blobName isEqualToString:name])
         {
             return i;
         }
     }
-    
+
     return NSNotFound;
 }
 
--(MHVBlobPayloadItem *)getDefaultBlob
+- (MHVBlobPayloadItem *)getDefaultBlob
 {
     NSUInteger index = [self indexofDefaultBlob];
+
     if (index != NSNotFound)
     {
         return [self itemAtIndex:index];
     }
-    
+
     return nil;
 }
 
--(MHVBlobPayloadItem *)getBlobNamed:(NSString *)name
+- (MHVBlobPayloadItem *)getBlobNamed:(NSString *)name
 {
     NSUInteger index = [self indexOfBlobNamed:name];
+
     if (index != NSNotFound)
     {
         return [self itemAtIndex:index];
     }
-    
-    return nil;    
+
+    return nil;
 }
 
 @end

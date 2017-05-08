@@ -80,12 +80,12 @@ static NSString* const c_vocab_measurement = @"glucose-measurement-type";
     m_value.mmolPerLiter = inMmolPerLiter;
 }
 
--(enum MHVRelativeRating)normalcy
+-(MHVRelativeRating)normalcy
 {
-    return (m_normalcy) ? (enum MHVRelativeRating) m_normalcy.value : MHVRelativeRating_None;
+    return (m_normalcy) ? (MHVRelativeRating) m_normalcy.value : MHVRelativeRating_None;
 }
 
--(void)setNormalcy:(enum MHVRelativeRating)normalcy
+-(void)setNormalcy:(MHVRelativeRating)normalcy
 {
     if (normalcy == MHVRelativeRating_None)
     {

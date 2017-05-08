@@ -1,15 +1,15 @@
 //
-//  MHVOneToFive.h
-//  MHVLib
+// MHVOneToFive.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVConstrainedInt.h"
 
-enum MHVRelativeRating 
+typedef NS_ENUM (NSInteger, MHVRelativeRating)
 {
     MHVRelativeRating_None = 0,
     MHVRelativeRating_VeryLow,
@@ -29,9 +29,9 @@ enum MHVRelativeRating
     MHVRelativeRating_VeryHigh
 };
 
-NSString* stringFromRating(enum MHVRelativeRating rating);
+NSString *stringFromRating(MHVRelativeRating rating);
 
-enum MHVNormalcyRating
+typedef NS_ENUM (NSInteger, MHVNormalcyRating)
 {
     MHVNormalcy_Unknown = 0,
     MHVNormalcy_WellBelowNormal,
@@ -41,10 +41,9 @@ enum MHVNormalcyRating
     MHVNormalcy_WellAboveNormal
 };
 
-NSString* stringFromNormalcy(enum MHVNormalcyRating rating);
+NSString *stringFromNormalcy(MHVNormalcyRating rating);
 
 
 @interface MHVOneToFive : MHVConstrainedInt
 
 @end
-

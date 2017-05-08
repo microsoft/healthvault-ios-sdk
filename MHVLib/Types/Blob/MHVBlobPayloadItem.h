@@ -25,14 +25,6 @@
 #import "MHVBlobPutParameters.h"
 
 @interface MHVBlobPayloadItem : MHVType
-{
-@private
-    MHVBlobInfo* m_blobInfo;
-    NSInteger m_length;
-    NSString* m_blobUrl;
-    NSString* m_legacyEncoding;
-    NSString* m_encoding;
-}
 
 //-------------------------
 //

@@ -113,12 +113,12 @@ static const xmlChar* x_element_wellbeing = XMLSTRINGCONST("wellbeing");
 }
 
 
--(enum MHVRelativeRating)stress
+-(MHVRelativeRating)stress
 {
-    return (m_stress) ? (enum MHVRelativeRating) m_stress.value : MHVRelativeRating_None;
+    return (m_stress) ? (MHVRelativeRating) m_stress.value : MHVRelativeRating_None;
 }
 
--(void)setStress:(enum MHVRelativeRating)stress
+-(void)setStress:(MHVRelativeRating)stress
 {
     if (stress == MHVRelativeRating_None)
     {

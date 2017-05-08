@@ -1,15 +1,15 @@
 //
-//  MHVBlobPutParameters.h
-//  MHVLib
+// MHVBlobPutParameters.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,30 +21,18 @@
 #import "MHVType.h"
 
 @interface MHVBlobHashAlgorithmParameters : MHVType
-{
-@private
-    NSInteger m_blockSize;
-}
 
 @property (readwrite, nonatomic) NSInteger blockSize;
 
 @end
 
 @interface MHVBlobPutParameters : MHVType
-{
-@private
-    NSString* m_url;
-    NSInteger m_chunkSize;
-    NSInteger m_maxSize;
-    NSString* m_hashAlgorithm;
-    MHVBlobHashAlgorithmParameters* m_hashParams;
-}
 
-@property (readwrite, nonatomic, strong) NSString* url;
+@property (readwrite, nonatomic, strong) NSString *url;
 @property (readwrite, nonatomic) NSInteger chunkSize;
 @property (readwrite, nonatomic) NSInteger maxSize;
-@property (readwrite, nonatomic, strong) NSString* hashAlgorithm;
-@property (readwrite, nonatomic, strong) MHVBlobHashAlgorithmParameters* hashParams;
+@property (readwrite, nonatomic, strong) NSString *hashAlgorithm;
+@property (readwrite, nonatomic, strong) MHVBlobHashAlgorithmParameters *hashParams;
 
 
 @end
