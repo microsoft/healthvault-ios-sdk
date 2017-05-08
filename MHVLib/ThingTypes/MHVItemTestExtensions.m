@@ -289,7 +289,7 @@ NSString* pickRandomDrug(void)
 +(MHVItem *)createRandomForDate:(MHVDateTime *)dateTime metric:(BOOL)metric
 {
     MHVItem* item = [MHVCholesterol newItem];
-    MHVCholesterol* cholesterol = item.cholesterolV2;
+    MHVCholesterol* cholesterol = item.cholesterol;
     
     cholesterol.when = dateTime;
     if (metric)

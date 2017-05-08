@@ -59,11 +59,7 @@
 
 -(MHVWeight *) weight;
 -(MHVBloodPressure *) bloodPressure;
-//
-// Deprecated. Use cholesterolV2
-//
 -(MHVCholesterol *) cholesterol;
--(MHVCholesterol *) cholesterolV2;
 -(MHVBloodGlucose *) bloodGlucose;
 -(MHVHeight *) height;
 -(MHVHeartRate *) heartRate;
