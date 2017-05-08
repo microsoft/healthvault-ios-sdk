@@ -68,7 +68,6 @@ seqNumber:(NSUInteger) seq;
 {
 @private
     MHVVocabIdentifier* m_vocab;
-    MHVVocabSearchParams* m_params;
     MHVVocabSearchCache* m_cache;
     enum MHVVocabMatchType m_matchType;
     int m_maxResults;

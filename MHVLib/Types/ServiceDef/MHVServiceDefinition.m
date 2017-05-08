@@ -73,7 +73,7 @@ static NSString* const c_element_section = @"section";
 -(void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_updated dateValue:m_updatedSince];
-    [writer writeElementArray:c_element_sections itemName:c_element_section elements:m_sections];
+    [writer writeElementArray:c_element_sections itemName:c_element_section elements:m_sections.toArray];
 }
 
 @end

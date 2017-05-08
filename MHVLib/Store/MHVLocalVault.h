@@ -76,6 +76,5 @@
 // This will iterate over all local record stores and commit their changes one by one
 //
 -(MHVTask *) commitOfflineChangesWithCallback:(MHVTaskCompletion) callback;
--(MHVTask *) commitOfflineChangesForRecords:(NSArray *) records withCallback:(MHVTaskCompletion)callback;
 
 @end

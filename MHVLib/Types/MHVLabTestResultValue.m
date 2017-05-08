@@ -32,7 +32,7 @@ static const xmlChar* x_element_flag = XMLSTRINGCONST("flag");
 @synthesize flag = m_flag;
 -(BOOL)hasRanges
 {
-    return ![NSArray isNilOrEmpty:m_ranges];
+    return ![MHVCollection isNilOrEmpty:m_ranges];
 }
 
 
@@ -50,7 +50,7 @@ static const xmlChar* x_element_flag = XMLSTRINGCONST("flag");
 -(void)serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_measurement content:m_measurement];
-    [writer writeElementArray:c_element_ranges elements:m_ranges];
+    [writer writeElementArray:c_element_ranges elements:m_ranges.toArray];
     [writer writeElementXmlName:x_element_flag content:m_flag];
 }
 

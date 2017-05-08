@@ -24,7 +24,7 @@
 
 -(BOOL)hasItems
 {
-    return ![NSArray isNilOrEmpty:m_items];
+    return ![MHVCollection isNilOrEmpty:m_items];
 }
 
 -(MHVItemCollection *)items
@@ -46,7 +46,7 @@
 -(MHVItemKey *)firstKey
 {
     MHVItemKeyCollection* results = self.putResults;
-    return (![NSArray isNilOrEmpty:results]) ? [results itemAtIndex:0] : nil;
+    return (![MHVCollection isNilOrEmpty:results]) ? [results itemAtIndex:0] : nil;
 }
 
 -(NSString *)name
@@ -73,7 +73,7 @@ LError:
 
 -(id)initWithItems:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback
 {
-    MHVCHECK_TRUE((![NSArray isNilOrEmpty:items]));
+    MHVCHECK_TRUE((![MHVCollection isNilOrEmpty:items]));
     
     self = [super initWithCallback:callback];
     MHVCHECK_SELF;

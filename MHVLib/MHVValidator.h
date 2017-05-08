@@ -20,6 +20,8 @@
 #import "MHVExceptionExtensions.h"
 #import "MHVClientResult.h"
 
+@class MHVCollection;
+
 //-----------------------------
 //
 // Basic Event Logging
@@ -44,6 +46,13 @@ void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger lin
 #ifndef NOERRORLOG
 
 //#define MHVASSERT_MESSAGE(message) NSLog(@"%@ file:%@ line:%d", message, [NSString stringWithUTF8String:__FILE__], __LINE__);
+#define MHVASSERT_PARAMETER(param) \
+do \
+{ \
+    NSString *message = [NSString stringWithFormat:@"'%s' is a required parameter.", #param];\
+    MHVASSERT_MESSAGE(message); \
+}\
+while(NO)
 #define MHVASSERT_MESSAGE(message) MHVLogEventFromCode(message, __FILE__, __LINE__);
 #define MHVASSERT(condition) if (!(condition)) { MHVASSERT_MESSAGE(@#condition)}
 
@@ -136,7 +145,7 @@ void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger lin
 
 #define MHVVALIDATE_STRINGOPTIONAL(string, error)
 
-#define MHVVALIDATE_ARRAY(var, error) MHVCHECK_RESULT(MHVValidateArray(var, error));
+#define MHVVALIDATE_ARRAY(var, error) MHVCHECK_RESULT(MHVValidateCollection(var, error));
 #define MHVVALIDATE_ARRAYOPTIONAL(var, error) if (var) { MHVVALIDATE_ARRAY(var, error);}
 
 #define MHVVALIDATE_TRUE(condition, error)   if (!condition) \
@@ -145,5 +154,5 @@ void MHVLogEventFromCode(NSString* message, const char* fileName, NSUInteger lin
                                                 return hr; \
                                             } \
 
-MHVClientResult* MHVValidateArray(NSArray* array, enum MHVClientResultCode error);
+MHVClientResult* MHVValidateCollection(MHVCollection *collection, enum MHVClientResultCode error);
 

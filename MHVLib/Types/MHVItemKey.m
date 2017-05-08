@@ -1,15 +1,15 @@
 //
-//  MHVItemKey.m
-//  MHVLib
+// MHVItemKey.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,200 +21,208 @@
 #import "MHVValidator.h"
 #import "MHVGuid.h"
 
-static const xmlChar* x_attribute_version = XMLSTRINGCONST("version-stamp");
-static NSString* const c_localIDPrefix = @"L";
+static const xmlChar *x_attribute_version = XMLSTRINGCONST("version-stamp");
+static NSString *const c_localIDPrefix = @"L";
 
 @implementation MHVItemKey
 
-@synthesize itemID = m_id;
-@synthesize version = m_version;
-
--(BOOL)hasVersion
+- (BOOL)hasVersion
 {
-    return (![NSString isNilOrEmpty:m_version]);
+    return ![NSString isNilOrEmpty:self.version];
 }
 
--(id)initWithID:(NSString *)itemID
+- (instancetype)initWithID:(NSString *)itemID
 {
     return [self initWithID:itemID andVersion:nil];
 }
 
--(id) initWithID:(NSString *)itemID andVersion:(NSString *)version
+- (instancetype)initWithID:(NSString *)itemID andVersion:(NSString *)version
 {
-    MHVCHECK_NOTNULL(itemID);
-     
-    self = [super init];
-    MHVCHECK_SELF;
-    
-    self.itemID = itemID;
-    if (version)
+    if (!itemID)
     {
-        self.version = version;
+        MHVASSERT_PARAMETER(itemID);
+        return nil;
     }
+
+    self = [super init];
     
+    if (self)
+    {
+        self.itemID = itemID;
+        if (version)
+        {
+            self.version = version;
+        }
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;    
 }
 
--(id)initWithKey:(MHVItemKey *)key
+- (instancetype)initWithKey:(MHVItemKey *)key
 {
-    MHVCHECK_NOTNULL(key);
-    
-    return [self initWithID:key.itemID andVersion:key.version];
+    if (!key)
+    {
+        MHVASSERT_PARAMETER(key);
+        return nil;
+    }
 
-LError:
-    MHVALLOC_FAIL;
+    return [self initWithID:key.itemID andVersion:key.version];
 }
 
--(id) initNew
+- (instancetype)initNew
 {
     return [self initWithID:[[NSUUID UUID] UUIDString]];
 }
 
-
-+(MHVItemKey *)newLocal
++ (MHVItemKey *)newLocal
 {
-    NSString* itemID =  [c_localIDPrefix stringByAppendingString:[[NSUUID UUID] UUIDString]];
-    NSString* version = [[NSUUID UUID] UUIDString];
-    
+    NSString *itemID =  [c_localIDPrefix stringByAppendingString:[[NSUUID UUID] UUIDString]];
+    NSString *version = [[NSUUID UUID] UUIDString];
+
     return [[MHVItemKey alloc] initWithID:itemID andVersion:version];
 }
 
-+(MHVItemKey *)local
++ (MHVItemKey *)local
 {
     return [MHVItemKey newLocal];
 }
 
--(BOOL)isVersion:(NSString *)version
+- (BOOL)isVersion:(NSString *)version
 {
     return [self.version isEqualToString:version];
 }
 
--(BOOL)isLocal
+- (BOOL)isLocal
 {
-    return [m_id hasPrefix:c_localIDPrefix];
+    return [self.itemID hasPrefix:c_localIDPrefix];
 }
 
--(BOOL)isEqualToKey:(MHVItemKey *)key
+- (BOOL)isEqualToKey:(MHVItemKey *)key
 {
     if (!key)
     {
-        return FALSE;
+        MHVASSERT_PARAMETER(key);
+        return NO;
     }
-    
-    
-    return ([m_id isEqualToString:key.itemID] &&
-            (m_version && key.version) &&
-            [m_version isEqualToString:key.version]
-            );
+
+    return [self.itemID isEqualToString:key.itemID] &&
+           (self.version && key.version) &&
+           [self.version isEqualToString:key.version]
+    ;
 }
 
--(MHVClientResult *) validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE_STRING(m_id, MHVClientError_InvalidItemKey);
-    MHVVALIDATE_STRING(m_version, MHVClientError_InvalidItemKey);
-    
+
+    MHVVALIDATE_STRING(self.itemID, MHVClientError_InvalidItemKey);
+
+    MHVVALIDATE_STRING(self.version, MHVClientError_InvalidItemKey);
+
     MHVVALIDATE_SUCCESS
 }
 
--(NSString *)description
+- (NSString *)description
 {
-    return m_id;
+    return self.itemID;
 }
 
--(void) serializeAttributes:(XWriter *)writer
+- (void)serializeAttributes:(XWriter *)writer
 {
-    [writer writeAttributeXmlName:x_attribute_version value:m_version];
+    [writer writeAttributeXmlName:x_attribute_version value:self.version];
 }
 
--(void) serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeText:m_id];
+    [writer writeText:self.itemID];
 }
 
--(void) deserializeAttributes:(XReader *)reader
+- (void)deserializeAttributes:(XReader *)reader
 {
-    m_version = [reader readAttributeWithXmlName:x_attribute_version];
+    self.version = [reader readAttributeWithXmlName:x_attribute_version];
 }
 
--(void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_id = [reader readValue];
+    self.itemID = [reader readValue];
 }
 
 @end
 
-static NSString* const c_element_key = @"thing-id";
+static NSString *const c_element_key = @"thing-id";
+
+@interface MHVItemKeyCollection ()
+
+@property (nonatomic, strong) NSMutableArray *inner;
+
+@end
 
 @implementation MHVItemKeyCollection
 
--(id) init
+- (instancetype)init
 {
     return [self initWithKey:nil];
 }
 
--(id)initWithKey:(MHVItemKey *)key
+- (instancetype)initWithKey:(MHVItemKey *)key
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVItemKey class];
-    if (key)
+
+    if (self)
     {
-        [self addObject:key];
+        _inner = [NSMutableArray new];
+
+        self.type = [MHVItemKey class];
+
+        if (key)
+        {
+            [self addObject:key];
+        }
     }
-    
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(void)addItem:(MHVItemKey *)key
+- (void)addItem:(MHVItemKey *)key
 {
     [super addObject:key];
 }
 
--(MHVItemKey *)firstKey
+- (MHVItemKey *)firstKey
 {
     return [self itemAtIndex:0];
 }
 
--(MHVItemKey *)itemAtIndex:(NSUInteger)index
+- (MHVItemKey *)itemAtIndex:(NSUInteger)index
 {
-    return (MHVItemKey *) [self objectAtIndex:index];
+    return (MHVItemKey *)[self objectAtIndex:index];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE_ARRAY(m_inner, MHVClientError_InvalidItemList);
-    
+
+    MHVVALIDATE_ARRAY(self, MHVClientError_InvalidItemList);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serializeAttributes:(XWriter *)writer
+- (void)serializeAttributes:(XWriter *)writer
 {
-    
-}
--(void)deserializeAttributes:(XReader *)reader
-{
-    
 }
 
--(void)serialize:(XWriter *)writer
+- (void)deserializeAttributes:(XReader *)reader
 {
-    [writer writeElementArray:c_element_key elements:m_inner];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)serialize:(XWriter *)writer
 {
-    m_inner = [reader readElementArray:c_element_key asClass:[MHVItemKey class]];
+    [writer writeElementArray:c_element_key elements:self.inner];
+}
+
+- (void)deserialize:(XReader *)reader
+{
+    _inner = [reader readElementArray:c_element_key asClass:[MHVItemKey class]];
 }
 
 @end

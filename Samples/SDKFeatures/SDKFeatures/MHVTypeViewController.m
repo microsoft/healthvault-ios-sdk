@@ -132,11 +132,6 @@ LError:
 //-------------------------------------
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([NSArray isNilOrEmpty:m_items])
-    {
-        return 0;
-    }
-    
     return m_items.count;
 }
 
@@ -274,7 +269,7 @@ LError:
 -(void)addRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
 {
     MHVItemCollection* items = [self createRandomForDay:start isMetric:metric];
-    if ([NSArray isNilOrEmpty:items])
+    if (items.count < 1)
     {
         [MHVUIAlert showInformationalMessage:@"Not Supported!"];
         return;

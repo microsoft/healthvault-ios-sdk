@@ -1,8 +1,8 @@
 //
-//  MHVDownloadItemsTask.m
-//  MHVLib
+// MHVDownloadItemsTask.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,47 +22,35 @@
 
 @implementation MHVDownloadItemsTask
 
--(BOOL)didKeysDownload
+- (BOOL)didKeysDownload
 {
-    return ![NSArray isNilOrEmpty:m_downloadedKeys];
+    return ![MHVCollection isNilOrEmpty:self.downloadedKeys];
 }
 
--(NSMutableArray *)downloadedKeys
+- (MHVItemKey *)firstKey
 {
-    if (!m_downloadedKeys)
-    {
-        m_downloadedKeys = [[NSMutableArray alloc] init];
-    }
-    
-    return m_downloadedKeys;
+    return (self.didKeysDownload) ? [self.downloadedKeys objectAtIndex:0] : nil;
 }
 
--(MHVItemKey *)firstKey
-{
-    return (self.didKeysDownload) ? [m_downloadedKeys objectAtIndex:0] : nil;
-}
-
-
--(id)initWithCallback:(MHVTaskCompletion)callback
+- (instancetype)initWithCallback:(MHVTaskCompletion)callback
 {
     self = [super initWithCallback:callback];
-    MHVCHECK_SELF;
     
-    m_downloadedKeys = [[NSMutableArray alloc] init];
-    MHVCHECK_NOTNULL(m_downloadedKeys);
-        
+    if (self)
+    {
+        _downloadedKeys = [MHVItemKeyCollection new];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(void)recordItemsAsDownloaded:(MHVItemCollection *)items
+- (void)recordItemsAsDownloaded:(MHVItemCollection *)items
 {
-    NSMutableArray* keys = self.downloadedKeys;
+    MHVItemKeyCollection *keys = self.downloadedKeys;
+
     self.result = keys;
-    
-    for (NSUInteger i = 0, count = items.count; i < count; ++i)
+
+    for (NSUInteger i = 0; i < items.count; ++i)
     {
         [keys addObject:[items itemAtIndex:i].key];
     }

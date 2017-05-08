@@ -107,7 +107,7 @@ static NSString *const c_environmentFileName = @"environment.xml";
 
 - (BOOL)hasAuthorizedRecords
 {
-    return ![NSArray isNilOrEmpty:self.records];
+    return ![MHVCollection isNilOrEmpty:self.records];
 }
 
 - (BOOL)startWithParentController:(UIViewController *)controller andStartedCallback:(MHVNotify)callback
@@ -619,7 +619,7 @@ static NSString *const c_environmentFileName = @"environment.xml";
         [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_UnknownServiceInstance)];
     }
     
-    MHVInstance *instance = (MHVInstance *)self.serviceDef.systemInstances.instances[index];
+    MHVInstance *instance = (MHVInstance *)[self.serviceDef.systemInstances.instances objectAtIndex:index];
     
     [self makeEnvironmentWithInstance:instance];
     [self saveState];

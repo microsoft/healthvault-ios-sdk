@@ -33,18 +33,7 @@
 #define RESPONSE_AUTH_SESSION_TOKEN_EXPIRED 65
 
 /// Implements HealthVault response.
-@interface HealthVaultResponse : NSObject {
-
-	int _statusCode;
-    int _webStatusCode;
-	NSString *_infoXml;
-	NSString *_responseXml;
-	NSString *_errorText;
-	NSString *_errorContextXml;
-	NSString *_errorInfo;
-
-	HealthVaultRequest *_request;
-}
+@interface HealthVaultResponse : NSObject
 
 /// Gets or sets numeric status code of the operation.
 @property (assign) int statusCode;

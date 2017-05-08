@@ -32,48 +32,6 @@ static NSString* const c_element_maxItems = @"maxItems";
 
 const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
-@interface MHVTypeView (MHVPrivate)
-
--(void) setTypeID:(NSString *) typeID;
--(void) setFilter:(MHVTypeFilter *) filter;
--(void) setItems:(MHVTypeViewItems *) items;
-
--(NSRange) getChunkForIndex:(NSUInteger) index chunkSize:(NSUInteger) chunkSize;
--(NSRange) getReadAheadRangeForIndex:(NSUInteger) index readAheadCount:(NSUInteger) readAheadCount;
--(MHVItemCollection *) getLocalItemsInRange:(NSRange) range andPendingList:(NSMutableArray **) pending nullForNotFound:(BOOL)includeNull;
--(MHVTask *) downloadItemsWithKeys:(NSMutableArray *) keys;
-
--(BOOL) updateItemsInView:(MHVItemCollection *) items;
--(BOOL) removeItemsForKeys:(NSArray *) keys;
-
--(void) setDownloadStatus:(BOOL) status forIndex:(NSUInteger) index;
--(void) setDownloadStatus:(BOOL) status forKeys:(NSArray *) keys;
--(void) setDownloadStatus:(BOOL)status forItems:(NSArray *) items;
-
--(MHVItemQuery *) newRefreshQuery;
--(MHVGetItemsTask *) newRefreshTask;
--(void) synchronizeViewCompleted:(MHVTask *) task;
--(void) stampUpdated;
-
--(void) prepareKeysForLoading:(NSMutableArray *) keys;
-//
-// SynchronizedStore calls itemsRetrieved, which invokes this in the main thread
-//
--(void) processItemsRetrieved:(NSArray *) params;
--(NSMutableArray *) selectKeys:(NSArray *) keys notIn:(MHVItemCollection *) items;
-
--(void) itemsAvailableInStore:(MHVItemCollection *) items;
--(void) keysNotAvailableInStore:(NSArray *) keys;
--(void) keysFailed:(NSArray *) params;
-
--(void) notifyItemsAvailable:(MHVItemCollection *)items viewChanged:(BOOL) viewChanged;
--(void) notifyKeysNotAvailable:(NSArray *) keys;
-
--(void) notifySynchronized;
--(void) notifySyncFailed:(id) error;
-
-@end
-
 @implementation MHVTypeView
 
 @synthesize typeID = m_typeID;
@@ -82,6 +40,7 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 @synthesize maxItems = m_maxItems;
 @synthesize store = m_store;
 @synthesize tag = m_tag;
+
 -(BOOL)readAheadModeChunky
 {
     return (m_readAheadMode == MHVTypeViewReadAheadModePage);
@@ -444,7 +403,7 @@ LError:
     //
     // In case one showed up while we were working
     //
-    if (![NSArray isNilOrEmpty:items])
+    if (![MHVCollection isNilOrEmpty:items])
     {
         return [items objectAtIndex:0];
     }
@@ -480,7 +439,7 @@ LError:
         *task = nil;
     }
     
-    NSMutableArray* pendingKeys = nil;
+    MHVItemKeyCollection* pendingKeys = nil;
     //
     // Fetch local items
     //
@@ -488,7 +447,7 @@ LError:
     //
     // Download any pending items...
     //
-    if (![NSArray isNilOrEmpty:pendingKeys])
+    if (![MHVCollection isNilOrEmpty:pendingKeys])
     {
         MHVTask* downloadTask = [self downloadItemsWithKeys:pendingKeys];
         if (task)
@@ -500,9 +459,9 @@ LError:
     return items;    
 }
 
--(NSArray *)keysOfItemsNeedingDownloadInRange:(NSRange)range
+-(MHVItemKeyCollection *)keysOfItemsNeedingDownloadInRange:(NSRange)range
 {
-    NSMutableArray* pendingKeys = nil;
+    MHVItemKeyCollection* pendingKeys = nil;
     for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
     {
         MHVItem* item = [self getLocalItemAtIndex:i];
@@ -510,7 +469,7 @@ LError:
         {
             if (!pendingKeys)
             {
-                pendingKeys = [[NSMutableArray alloc]init];
+                pendingKeys = [MHVItemKeyCollection new];
                 MHVCHECK_NOTNULL(pendingKeys);
             }
             MHVTypeViewItem* key = [m_items objectAtIndex:i];
@@ -527,8 +486,8 @@ LError:
 
 -(MHVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback
 {
-    NSArray* pendingKeys = [self keysOfItemsNeedingDownloadInRange:range];
-    if ([NSArray isNilOrEmpty:pendingKeys])
+    MHVItemKeyCollection* pendingKeys = [self keysOfItemsNeedingDownloadInRange:range];
+    if ([MHVCollection isNilOrEmpty:pendingKeys])
     {
         return nil;
     }
@@ -719,7 +678,7 @@ LError:
 -(MHVTask *)synchronizeDataInRange:(NSRange)range
 {
     range = [m_items correctRange:range];
-    return [m_store.data downloadItemsWithKeys:[m_items selectRange:range] inView:self];
+    return [m_store.data downloadItemsWithKeys:[m_items keysInRange:range] inView:self];
 }
 
 -(BOOL)save
@@ -788,7 +747,7 @@ LError:
     [self invokeOnMainThread:@selector(keysFailed:) withObject:params];
 }
 
--(void)itemsRetrieved:(MHVItemCollection *)items forKeys:(NSArray *)keys
+-(void)itemsRetrieved:(MHVItemCollection *)items forKeys:(MHVItemKeyCollection *)keys
 {
     NSMutableArray* params = [[NSMutableArray alloc] initWithCapacity:2];
     [params addObject:items];
@@ -837,15 +796,6 @@ LError:
     
     return [[MHVTypeView alloc] initFromTypeView:self andItems:subItems];
 }
-
-@end
-
-//----------------
-//
-// PRIVATE
-//
-//----------------
-@implementation MHVTypeView (MHVPrivate)
 
 -(void)setTypeID:(NSString *)typeID
 {
@@ -956,11 +906,11 @@ LError:
     return [m_items correctRange:NSMakeRange(index, readAheadCount)];
 }
 
--(MHVItemCollection *)getLocalItemsInRange:(NSRange)range andPendingList:(NSMutableArray **)pending nullForNotFound:(BOOL)includeNull
+-(MHVItemCollection *)getLocalItemsInRange:(NSRange)range andPendingList:(MHVItemKeyCollection **)pending nullForNotFound:(BOOL)includeNull
 {
     *pending = nil;
     
-    NSMutableArray* pendingKeys = nil;
+    MHVItemKeyCollection* pendingKeys = nil;
     MHVItemCollection* items = [[MHVItemCollection alloc] initWithCapacity:range.length];
     for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
     {
@@ -974,7 +924,7 @@ LError:
         {
             if (!pendingKeys)
             {
-                pendingKeys = [[NSMutableArray alloc]init];
+                pendingKeys = [MHVItemKeyCollection new];
                 MHVCHECK_NOTNULL(pendingKeys);
             }
             [pendingKeys addObject:key];
@@ -993,9 +943,9 @@ LError:
     return nil;
 }
 
--(MHVTask *) downloadItemsWithKeys:(NSMutableArray *)keys
+-(MHVTask *) downloadItemsWithKeys:(MHVItemKeyCollection *)keys
 {   
-    if ([NSArray isNilOrEmpty:keys])
+    if ([MHVCollection isNilOrEmpty:keys])
     {
         return nil;
     }
@@ -1003,7 +953,7 @@ LError:
     // This will remove any keys that have pending loads...
     //
     [self prepareKeysForLoading:keys];
-    if ([NSArray isNilOrEmpty:keys])
+    if ([MHVCollection isNilOrEmpty:keys])
     {
         return nil;
     }
@@ -1027,7 +977,7 @@ LError:
 // Keys that have pending loads are removed from the list
 // The remainder are marked as loading..
 //
--(void)prepareKeysForLoading:(NSMutableArray *)keys
+-(void)prepareKeysForLoading:(MHVItemKeyCollection *)keys
 {
     NSUInteger i = 0;
     NSUInteger count = keys.count;
@@ -1049,7 +999,7 @@ LError:
 
 -(BOOL) updateItemsInView:(MHVItemCollection *)items
 {
-    if ([NSArray isNilOrEmpty:items])
+    if ([MHVCollection isNilOrEmpty:items])
     {
         return FALSE;
     }
@@ -1071,9 +1021,9 @@ LError:
     return changed;
 }
 
--(BOOL)removeItemsForKeys:(NSArray *)keys
+-(BOOL)removeItemsForKeys:(MHVItemKeyCollection *)keys
 {
-    if ([NSArray isNilOrEmpty:keys])
+    if ([MHVCollection isNilOrEmpty:keys])
     {
         return TRUE;
     }
@@ -1106,7 +1056,7 @@ LError:
 -(void)processItemsRetrieved:(NSArray *) params
 {
     MHVItemCollection* items = [params objectAtIndex:0];
-    NSArray* keys = [params objectAtIndex:1];
+    MHVItemKeyCollection* keys = [params objectAtIndex:1];
     
     if (items && items.count > 0)
     {
@@ -1115,14 +1065,14 @@ LError:
     //
     // Not all keys may have resulted in items being retrieved
     //
-    NSMutableArray* keysNotFound = [self selectKeys:keys notIn:items];
-    if (![NSArray isNilOrEmpty:keysNotFound])
+    MHVItemKeyCollection *keysNotFound = [self selectKeys:keys notIn:items];
+    if (![MHVCollection isNilOrEmpty:keysNotFound])
     {
         [self keysNotAvailableInStore:keysNotFound];
     }
 }
 
--(NSMutableArray *)selectKeys:(NSArray *)keys notIn:(MHVItemCollection *)items
+-(MHVItemKeyCollection *)selectKeys:(MHVItemKeyCollection *)keys notIn:(MHVItemCollection *)items
 {
     if (items.count >= keys.count)
     {
@@ -1135,7 +1085,7 @@ LError:
         return nil;
     }
     
-    NSMutableArray* keysNotFound = [[NSMutableArray alloc] init];
+    MHVItemKeyCollection *keysNotFound = [MHVItemKeyCollection new];
     for (MHVItemKey* key in keys)
     {
         if (![itemsByID objectForKey:key.itemID])
@@ -1162,9 +1112,9 @@ LError:
 //
 // MUST ALWAYS BE CALLED IN THE UI THREAD
 //
--(void)keysNotAvailableInStore:(NSArray *)keys
+-(void)keysNotAvailableInStore:(MHVItemKeyCollection *)keys
 {
-    if ([NSArray isNilOrEmpty:keys])
+    if ([MHVCollection isNilOrEmpty:keys])
     {
         return;
     }
@@ -1183,7 +1133,7 @@ LError:
 //
 -(void)keysFailed:(NSArray *)params
 {
-    NSArray* keys = [params objectAtIndex:0];
+    MHVItemKeyCollection* keys = [params objectAtIndex:0];
     id error = [params objectAtIndex:1];
     
     [self setDownloadStatus:FALSE forKeys:keys]; 
@@ -1199,7 +1149,7 @@ LError:
     }    
 }
 
--(void)setDownloadStatus:(BOOL) status forKeys :(NSArray *)keys
+-(void)setDownloadStatus:(BOOL) status forKeys:(MHVItemKeyCollection *)keys
 {
     for (MHVTypeViewItem* key in keys) 
     {
@@ -1207,7 +1157,7 @@ LError:
     }
 }
 
--(void)setDownloadStatus:(BOOL)status forItems:(NSArray *)items
+-(void)setDownloadStatus:(BOOL)status forItems:(MHVItemCollection *)items
 {
     for (MHVItem* item in items)
     {
@@ -1229,7 +1179,7 @@ LError:
     });
 }
 
--(void)notifyKeysNotAvailable:(NSArray *)keys
+-(void)notifyKeysNotAvailable:(MHVItemKeyCollection *)keys
 {
     safeInvokeAction(^{
         if (self.delegate)

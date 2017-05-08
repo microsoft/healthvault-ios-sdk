@@ -1,15 +1,15 @@
 //
-//  MHVCollection.m
-//  MHVLib
+// MHVCollection.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,132 +19,249 @@
 #import "MHVCommon.h"
 #import "MHVCollection.h"
 
+@interface MHVCollection ()
+
+@property (nonatomic, strong) NSMutableArray *inner;
+
+@end
+
 @implementation MHVCollection
 
-@synthesize type = m_type;
-
--(id) init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
     
-    m_inner = [[NSMutableArray alloc] init];
-    MHVCHECK_NOTNULL(m_inner);
-    
-    return self;
+    if (self)
+    {
+        _inner = [NSMutableArray new];
+    }
 
-LError:
-    MHVALLOC_FAIL;
+    return self;
 }
 
--(id)initWithCapacity:(NSUInteger)numItems
+- (instancetype)initWithCapacity:(NSUInteger)numItems
 {
     self = [super init];
-    MHVCHECK_SELF;
-
-    m_inner = [[NSMutableArray alloc] initWithCapacity:numItems];
-    MHVCHECK_NOTNULL(m_inner);
+    
+    if (self)
+    {
+        _inner = [[NSMutableArray alloc] initWithCapacity:numItems];
+    }
     
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(NSUInteger) count
+- (instancetype)initWithArray:(NSArray *)array
 {
-    return [m_inner count];
+    self = [super init];
+    
+    if (self)
+    {
+        _inner = [[NSMutableArray alloc] initWithArray:array];
+    }
+    
+    return self;
+}
+
++ (BOOL)isNilOrEmpty:(MHVCollection *)collection
+{
+    return (!collection|| collection.count == 0);
+}
+
+- (NSUInteger)count
+{
+    return [self.inner count];
 }
 
 - (id)objectAtIndex:(NSUInteger)index
 {
-    return [m_inner objectAtIndex:index];
+    return [self.inner objectAtIndex:index];
 }
 
--(void) addObject:(id)anObject
+- (id)lastObject
 {
-    [self validateNewObject:anObject];
-    [m_inner addObject:anObject];
+    return [self.inner lastObject];
 }
 
--(void) insertObject:(id)anObject atIndex:(NSUInteger)index
+- (void)addObject:(id)anObject
 {
-    [self validateNewObject:anObject];
-    [m_inner insertObject:anObject atIndex:index];
-}
-
--(void) replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
-{
-    [self validateNewObject:anObject];
-    [m_inner replaceObjectAtIndex:index withObject:anObject];
-}
-
--(void) removeObjectAtIndex:(NSUInteger)index
-{
-    [m_inner removeObjectAtIndex:index];
-}
-
--(void) removeLastObject
-{
-    [m_inner removeLastObject];
-}
-
--(void) validateNewObject:(id)obj
-{
-    if (obj == nil)
+    if([self validateNewObject:anObject])
     {
-        [NSException throwInvalidArg];
+        [self.inner addObject:anObject];
     }
-    if (m_type)
+}
+
+- (void)insertObject:(id)anObject atIndex:(NSUInteger)index
+{
+    if([self validateNewObject:anObject])
     {
-        if (!IsNsNull(obj) && ![obj isKindOfClass:m_type])
+        [self.inner insertObject:anObject atIndex:index];
+    };
+}
+
+- (void)addObjectsFromArray:(NSArray *)array
+{
+    if (!array)
+    {
+        MHVASSERT_PARAMETER(array);
+        return;
+    }
+    
+    for (id obj in array)
+    {
+        if (![self validateNewObject:obj])
         {
-            [NSException throwInvalidArgWithReason:[NSString stringWithFormat:@"%@ expected", [m_type description]]];
+            return;
         }
     }
+    
+    [self.inner addObjectsFromArray:array];
 }
 
--(NSString *)toString
+- (void)addObjectsFromCollection:(MHVCollection *)collection
+{
+    if (!collection)
+    {
+        MHVASSERT_PARAMETER(collection);
+        return;
+    }
+    
+    for (id obj in collection)
+    {
+        if (![self validateNewObject:obj])
+        {
+            return;
+        }
+    }
+    
+    [self.inner addObjectsFromArray:collection.toArray];
+}
+
+- (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
+{
+    if([self validateNewObject:anObject])
+    {
+        [self.inner replaceObjectAtIndex:index withObject:anObject];
+    }
+}
+
+- (void)removeObjectAtIndex:(NSUInteger)index
+{
+    [self.inner removeObjectAtIndex:index];
+}
+
+- (void)removeLastObject
+{
+    [self.inner removeLastObject];
+}
+
+- (void)removeAllObjects
+{
+    [self.inner removeAllObjects];
+}
+
+- (void)sortUsingComparator:(NSComparator NS_NOESCAPE)cmptr
+{
+    [self.inner sortUsingComparator:cmptr];
+}
+
+- (NSUInteger)binarySearch:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp
+{
+    return [self.inner indexOfObject:object inSortedRange:NSMakeRange(0, self.count) options:opts usingComparator:cmp];
+}
+
+- (NSUInteger)indexOfMatchingObject:(MHVFilter)filter
+{
+    if (filter)
+    {
+        for (NSUInteger i = 0; i < self.count; ++i)
+        {
+            id obj = [self objectAtIndex:i];
+            
+            if (filter(obj))
+            {
+                return i;
+            }
+        }
+    }
+    
+    return NSNotFound;
+}
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
+{
+    return [self.inner countByEnumeratingWithState:state objects:buffer count:len];
+}
+
+- (BOOL)validateNewObject:(id)obj
+{
+    if (!obj)
+    {
+        MHVASSERT_PARAMETER(obj);
+        return NO;
+    }
+
+    if (self.type)
+    {
+        if (obj != [NSNull null] && ![obj isKindOfClass:self.type])
+        {
+            NSString *message = [NSString stringWithFormat:@"%@ expected", [self.type description]];
+            MHVASSERT_MESSAGE(message);
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (NSArray *)toArray
+{
+    return [self.inner copy];
+}
+
+- (NSString *)toString
 {
     if (self.count == 0)
     {
-        return c_emptyString;
+        return @"";
     }
-    
-    NSMutableString* text = [[NSMutableString alloc] init];
-    
+
+    NSMutableString *text = [[NSMutableString alloc] init];
+
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
         id obj = [self objectAtIndex:i];
-        NSString* descr = [obj description];
+        NSString *descr = [obj description];
         if ([NSString isNilOrEmpty:descr])
         {
             continue;
         }
+
         if (i > 0)
         {
             [text appendNewLine];
         }
+
         [text appendString:descr];
     }
-    
+
     return text;
 }
 
-
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(id)mutableCopy
+- (id)mutableCopy
 {
-    MHVCollection* copy = [[[self class] alloc] init];
+    MHVCollection *copy = [[[self class] alloc] init];
+
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
         [copy addObject:[self objectAtIndex:i]];
     }
+
     return copy;
 }
 
@@ -152,38 +269,38 @@ LError:
 
 @implementation MHVStringCollection
 
--(id) init
+- (id)init
 {
     self = [super init];
-    MHVCHECK_SELF;
     
-    self.type = [NSString class];
+    if (self)
+    {
+        self.type = [NSString class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(BOOL) containsString:(NSString *)value
+- (BOOL)containsString:(NSString *)string
 {
-    return ([self indexOfString:value] != NSNotFound);
+    return [self indexOfString:string] != NSNotFound;
 }
 
--(NSUInteger) indexOfString:(NSString *)value
+- (NSUInteger)indexOfString:(NSString *)string
 {
-    return [self indexOfString:value startingAt:0];
+    return [self indexOfString:string startingAt:0];
 }
 
--(NSUInteger) indexOfString:(NSString *)value startingAt:(NSUInteger)index
+- (NSUInteger)indexOfString:(NSString *)string startingAt:(NSUInteger)index
 {
-    if (!value)
+    if (!string)
     {
         return NSNotFound;
     }
-    
-    for (NSUInteger i = index, count = m_inner.count; i < count; ++i)
+
+    for (NSUInteger i = index, count = self.count; i < count; ++i)
     {
-        if ([[m_inner objectAtIndex:i] isEqualToString:value])
+        if ([[self objectAtIndex:i] isEqualToString:string])
         {
             return i;
         }
@@ -192,59 +309,64 @@ LError:
     return NSNotFound;
 }
 
--(BOOL) removeString:(NSString *)value
+- (BOOL)removeString:(NSString *)string
 {
-    MHVCHECK_NOTNULL(value);
-    
-    NSUInteger index = [self indexOfString:value];
+    if (!string)
+    {
+        return NO;
+    }
+
+    NSUInteger index = [self indexOfString:string];
     if (index == NSNotFound)
     {
         return NO;
     }
-    
+
     [self removeObjectAtIndex:index];
-    return TRUE;
     
-LError:
-    return FALSE;
+    return YES;
 }
 
--(MHVStringCollection *)selectStringsFoundInSet:(NSArray *)testSet
+- (MHVStringCollection *)selectStringsFoundInSet:(NSArray *)testSet
 {
-    MHVStringCollection* matches = nil;
+    MHVStringCollection *matches = nil;
+
     for (int i = 0, count = (int)testSet.count; i < count; ++i)
     {
-        NSString* testString = [testSet objectAtIndex:i];
-        if ([self containsString:testString]) 
+        NSString *testString = [testSet objectAtIndex:i];
+        if ([self containsString:testString])
         {
             if (!matches)
             {
                 matches = [[MHVStringCollection alloc] init];
             }
+
             [matches addObject:testString];
         }
     }
-    
+
     return matches;
 }
 
--(MHVStringCollection *)selectStringsNotFoundInSet:(NSArray *)testSet
+- (MHVStringCollection *)selectStringsNotFoundInSet:(NSArray *)testSet
 {
-    MHVStringCollection* matches = nil;
+    MHVStringCollection *matches = nil;
+
     for (int i = 0, count = (int)testSet.count; i < count; ++i)
     {
-        NSString* testString = [testSet objectAtIndex:i];
-        if (![self containsString:testString]) 
+        NSString *testString = [testSet objectAtIndex:i];
+        if (![self containsString:testString])
         {
             if (!matches)
             {
                 matches = [[MHVStringCollection alloc] init];
             }
+
             [matches addObject:testString];
         }
     }
-    
-    return matches;    
+
+    return matches;
 }
 
 @end

@@ -74,7 +74,7 @@ LError:
 
 -(void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_vocabkey elements:m_vocabIDs];
+    [writer writeElementArray:c_element_vocabkey elements:m_vocabIDs.toArray];
     [writer writeElement:c_element_culture boolValue:m_fixedCulture];
 }
 

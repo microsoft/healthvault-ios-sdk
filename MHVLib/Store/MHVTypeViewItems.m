@@ -135,10 +135,9 @@ LError:
 {
     [self ensureOrdered];
         
-    return [m_items binarySearch:item options:opts usingComparator:^(id o1, id o2) { 
-        
+    return [m_items indexOfObject:item inSortedRange:NSMakeRange(0, m_items.count) options:opts usingComparator:^(id o1, id o2)
+    {
         return [MHVTypeViewItem compare:o1 to:o2];
-    
     }];
 }
 
@@ -146,7 +145,7 @@ LError:
 {
     [self ensureOrdered];
     
-    return [m_items binarySearch:object options:opts usingComparator:cmp];
+    return [m_items indexOfObject:object inSortedRange:NSMakeRange(0, m_items.count) options:opts usingComparator:cmp];
 }
 
 -(BOOL) addItem:(MHVTypeViewItem *)item
@@ -244,12 +243,12 @@ LError:
     return FALSE;
 }
 
--(NSArray *) selectRange:(NSRange)range
+-(MHVItemKeyCollection *)keysInRange:(NSRange)range
 {
     [self ensureOrdered];
     [self correctRange:range];
     
-    return [m_items subarrayWithRange:range];
+    return [[MHVItemKeyCollection alloc] initWithArray:[m_items subarrayWithRange:range]];
 }
 
 -(NSArray *)selectIDsInRange:(NSRange)range

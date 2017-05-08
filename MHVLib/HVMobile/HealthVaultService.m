@@ -25,7 +25,6 @@
 #import "Base64.h"
 #import "DateTimeUtils.h"
 #import "Provisioner.h"
-#import "XmlTextReader.h"
 #import "HealthVaultSettings.h"
 #import "HealthVaultConfig.h"
 #import "MHVCommon.h"
@@ -324,21 +323,18 @@ LError:
 }
 
 - (void)saveCastCallResults: (NSString *)responseXml {
-
-    @autoreleasepool
+    
+    @try
     {
-        @try
-        {
-            XmlTextReader *xmlReader = [XmlTextReader new];
-            XmlElement *responseRootNode = [xmlReader read: responseXml];
-            
-            self.authorizationSessionToken = [responseRootNode selectSingleNode: @"token"].text;
-            self.sessionSharedSecret = [responseRootNode selectSingleNode: @"shared-secret"].text;
-            
-        }
-        @catch (id exception)
-        {
-        }
+        XReader *reader = [[XReader alloc] initFromString:responseXml];
+        [reader readStartElementWithName:@"info"];
+        self.authorizationSessionToken = [reader readStringElement:@"token"];
+        self.sessionSharedSecret = [reader readStringElement:@"shared-secret"];
+    }
+    
+    @catch (id exception)
+    {
+        MHVASSERT_MESSAGE(exception);
     }
 }
 

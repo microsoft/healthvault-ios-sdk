@@ -1,6 +1,6 @@
 //
-//  MHVBatchItemDownloader.h
-//  MHVLib
+// MHVBatchItemDownloader.h
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -26,29 +26,22 @@
 // Currently, batch sizes should be <= 250. Currently, the server will only return max 250 items at a time
 //
 @interface MHVBatchItemDownloader : NSObject
-{
-@private
-    MHVLocalRecordStore* m_store;
-    NSMutableArray* m_keysToDownload;
-    NSMutableArray* m_keyBatch;
-    NSUInteger m_batchSize;
-}
 
 @property (readwrite, nonatomic) NSUInteger batchSize;
-@property (strong, readonly, nonatomic) NSMutableArray* keysToDownload;
+@property (strong, readonly, nonatomic) MHVItemKeyCollection *keysToDownload;
 
--(id) initWithRecordStore:(MHVLocalRecordStore *) store;
+- (instancetype)initWithRecordStore:(MHVLocalRecordStore *)store;
 
--(BOOL) addKeyToDownload:(MHVItemKey *)key;
+- (BOOL)addKeyToDownload:(MHVItemKey *)key;
 //
 // These methods only download items if the item is NOT available locally
 //
--(BOOL) addKeyForItemToEnsureDownloaded:(MHVItemKey *) key;
--(BOOL) addRangeOfKeysToEnsureDownloaded:(NSRange) range inView:(id<MHVTypeView>) view;
+- (BOOL)addKeyForItemToEnsureDownloaded:(MHVItemKey *)key;
+- (BOOL)addRangeOfKeysToEnsureDownloaded:(NSRange)range inView:(id<MHVTypeView>)view;
 
 //
 // Returns nil if no task started
 //
--(MHVTask *) downloadWithCallback:(MHVTaskCompletion) callback;
+- (MHVTask *)downloadWithCallback:(MHVTaskCompletion)callback;
 
 @end

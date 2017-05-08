@@ -35,7 +35,7 @@ static const xmlChar* x_element_orderedBy = XMLSTRINGCONST("ordered-by");
 
 -(MHVLabTestResultsGroup *)firstGroup
 {
-    if ([NSArray isNilOrEmpty:m_labGroup])
+    if ([MHVCollection isNilOrEmpty:m_labGroup])
     {
         return nil;
     }
@@ -74,7 +74,7 @@ LError:
 -(void)serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementArray:c_element_labGroup elements:m_labGroup];
+    [writer writeElementArray:c_element_labGroup elements:m_labGroup.toArray];
     [writer writeElementXmlName:x_element_orderedBy content:m_orderedBy];
 }
 
