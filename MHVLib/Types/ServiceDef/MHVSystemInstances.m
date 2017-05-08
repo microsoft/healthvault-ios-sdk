@@ -1,8 +1,8 @@
 //
-//  MHVSystemInstances.m
-//  MHVLib
+// MHVSystemInstances.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,33 +21,31 @@
 #import "MHVCommon.h"
 #import "MHVSystemInstances.h"
 
-static const xmlChar* x_attribute_currentinstance = XMLSTRINGCONST("current-instance-id");
-static NSString* const c_element_instance = @"instance";
+static const xmlChar *x_attribute_currentinstance = XMLSTRINGCONST("current-instance-id");
+static NSString *const c_element_instance = @"instance";
 
 @implementation MHVSystemInstances
 
-@synthesize currentInstanceID = m_currentInstanceID;
-@synthesize instances = m_instances;
-
-
--(void)deserializeAttributes:(XReader *)reader
+- (void)deserializeAttributes:(XReader *)reader
 {
-    m_currentInstanceID = [reader readAttributeWithXmlName:x_attribute_currentinstance];
+    self.currentInstanceID = [reader readAttributeWithXmlName:x_attribute_currentinstance];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_instances = (MHVInstanceCollection *)[reader readElementArray:c_element_instance asClass:[MHVInstance class] andArrayClass:[MHVInstanceCollection class]];
+    self.instances = (MHVInstanceCollection *)[reader readElementArray:c_element_instance
+                                                               asClass:[MHVInstance class]
+                                                         andArrayClass:[MHVInstanceCollection class]];
 }
 
--(void)serializeAttributes:(XWriter *)writer
+- (void)serializeAttributes:(XWriter *)writer
 {
-    [writer writeAttributeXmlName:x_attribute_currentinstance value:m_currentInstanceID];    
+    [writer writeAttributeXmlName:x_attribute_currentinstance value:self.currentInstanceID];
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_instance elements:m_instances.toArray];
+    [writer writeElementArray:c_element_instance elements:self.instances.toArray];
 }
 
 @end

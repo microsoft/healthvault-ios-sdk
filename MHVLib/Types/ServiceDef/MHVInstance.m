@@ -1,8 +1,8 @@
 //
-//  MHVInstance.m
-//  MHVLib
+// MHVInstance.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,73 +21,65 @@
 #import "MHVCommon.h"
 #import "MHVInstance.h"
 
-static const xmlChar* x_element_id = XMLSTRINGCONST("id");
-static const xmlChar* x_element_name = XMLSTRINGCONST("name");
-static const xmlChar* x_element_description = XMLSTRINGCONST("description");
-static const xmlChar* x_element_platform = XMLSTRINGCONST("platform-url");
-static const xmlChar* x_element_shell = XMLSTRINGCONST("shell-url");
+static const xmlChar *x_element_id = XMLSTRINGCONST("id");
+static const xmlChar *x_element_name = XMLSTRINGCONST("name");
+static const xmlChar *x_element_description = XMLSTRINGCONST("description");
+static const xmlChar *x_element_platform = XMLSTRINGCONST("platform-url");
+static const xmlChar *x_element_shell = XMLSTRINGCONST("shell-url");
 
 @implementation MHVInstance
 
-@synthesize instanceID = m_id;
-@synthesize name = m_name;
-@synthesize instanceDescription = m_description;
-@synthesize platformUrl = m_platformUrl;
-@synthesize shellUrl = m_shellUrl;
-
-
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_id = [reader readStringElementWithXmlName:x_element_id];
-    m_name = [reader readStringElementWithXmlName:x_element_name];
-    m_description = [reader readStringElementWithXmlName:x_element_description];
-    m_platformUrl = [reader readStringElementWithXmlName:x_element_platform];
-    m_shellUrl = [reader readStringElementWithXmlName:x_element_shell];
+    self.instanceID = [reader readStringElementWithXmlName:x_element_id];
+    self.name = [reader readStringElementWithXmlName:x_element_name];
+    self.instanceDescription = [reader readStringElementWithXmlName:x_element_description];
+    self.platformUrl = [reader readStringElementWithXmlName:x_element_platform];
+    self.shellUrl = [reader readStringElementWithXmlName:x_element_shell];
 }
 
-
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_id value:m_id];
-    [writer writeElementXmlName:x_element_name value:m_name];
-    [writer writeElementXmlName:x_element_description value:m_description];
-    [writer writeElementXmlName:x_element_platform value:m_platformUrl];
-    [writer writeElementXmlName:x_element_shell value:m_shellUrl];
+    [writer writeElementXmlName:x_element_id value:self.instanceID];
+    [writer writeElementXmlName:x_element_name value:self.name];
+    [writer writeElementXmlName:x_element_description value:self.instanceDescription];
+    [writer writeElementXmlName:x_element_platform value:self.platformUrl];
+    [writer writeElementXmlName:x_element_shell value:self.shellUrl];
 }
 
 @end
 
 @implementation MHVInstanceCollection
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVInstance class];
-    
+    if (self)
+    {
+        self.type = [MHVInstance class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(MHVInstance *)indexOfInstance:(NSUInteger)index
+- (MHVInstance *)indexOfInstance:(NSUInteger)index
 {
-    return (MHVInstance *) [self objectAtIndex:index];
+    return (MHVInstance *)[self objectAtIndex:index];
 }
 
--(NSInteger) indexOfInstanceNamed:(NSString *)name
+- (NSInteger)indexOfInstanceNamed:(NSString *)name
 {
-    return [self indexOfMatchingObject:^BOOL(id value) {
-        return [((MHVInstance *) value).name isEqualToString:name];
+    return [self indexOfMatchingObject:^BOOL (id value)
+    {
+        return [((MHVInstance *)value).name isEqualToString:name];
     }];
 }
 
--(NSInteger) indexOfInstanceWithID:(NSString *)instanceID
+- (NSInteger)indexOfInstanceWithID:(NSString *)instanceID
 {
-    return [self indexOfMatchingObject:^BOOL(id value) {
-        return [((MHVInstance *) value).instanceID isEqualToString:instanceID];
+    return [self indexOfMatchingObject:^BOOL (id value)
+    {
+        return [((MHVInstance *)value).instanceID isEqualToString:instanceID];
     }];
 }
 

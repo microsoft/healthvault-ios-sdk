@@ -334,11 +334,11 @@ static NSString *const c_environmentFileName = @"environment.xml";
         //
         if (self.user)
         {
-            [self.user updateWithLegacyRecords:self.service.records];
+            [self.user updateWithHealthVaultRecords:self.service.records];
         }
         else
         {
-            self.user = [[MHVUser alloc] initFromLegacyRecords:self.service.records];
+            self.user = [[MHVUser alloc] initFromHealthVaultRecords:self.service.records];
             if (self.environment)
             {
                 self.user.instanceID = self.environment.instanceID;

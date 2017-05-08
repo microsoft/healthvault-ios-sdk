@@ -1,15 +1,15 @@
 //
-//  MHVFoodEnergyValue.h
-//  MHVLib
+// MHVFoodEnergyValue.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,35 +23,33 @@
 #import "MHVDisplayValue.h"
 
 @interface MHVFoodEnergyValue : MHVType
-{
-@private
-    MHVNonNegativeDouble* m_calories;
-    MHVDisplayValue* m_display;
-}
 //
 // Required
-// Note: these are dietary calories - or "large" calories. 
+// Note: these are dietary calories - or "large" calories.
 // The amount of energy needed to raise the temperature of 1Kg of water by 1 degree Celsius
 // Or approx 4.2 kilojoules
 //
-@property (readwrite, nonatomic, strong) MHVNonNegativeDouble* calories;
+@property (readwrite, nonatomic, strong) MHVNonNegativeDouble *calories;
+
 //
 // Optional
 //
-@property (readwrite, nonatomic, strong) MHVDisplayValue* displayValue;
+@property (readwrite, nonatomic, strong) MHVDisplayValue *displayValue;
 
+//
+// Convenience
+//
 @property (readwrite, nonatomic) double caloriesValue;
 
--(id) initWithCalories:(double) value;
+- (instancetype)initWithCalories:(double)value;
 
--(BOOL) updateDisplayText;
+- (BOOL)updateDisplayText;
 
--(NSString *) toString;
--(NSString *) toStringWithFormat:(NSString *) format;
+- (NSString *)toString;
+- (NSString *)toStringWithFormat:(NSString *)format;
 
-+(MHVFoodEnergyValue *) fromCalories:(double) value;
++ (MHVFoodEnergyValue *)fromCalories:(double)value;
 
-+(NSString *) calorieUnits;
-
++ (NSString *)calorieUnits;
 
 @end

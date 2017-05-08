@@ -1,8 +1,8 @@
 //
-//  MHVFlowValue.h
-//  MHVLib
+// MHVFlowValue.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,28 +22,27 @@
 #import "MHVDisplayValue.h"
 
 @interface MHVFlowValue : MHVType
-{
-@private
-    MHVPositiveDouble* m_litersPerSecond;
-    MHVDisplayValue* m_display;
-}
-
--(id) initWithLitersPerSecond:(double) value;
 
 //
 // Required
 //
-@property (readwrite, nonatomic, strong) MHVPositiveDouble* litersPerSecond;
+@property (readwrite, nonatomic, strong) MHVPositiveDouble *litersPerSecond;
+
 //
 // Optional
 //
-@property (readwrite, nonatomic, strong) MHVDisplayValue* displayValue;
+@property (readwrite, nonatomic, strong) MHVDisplayValue *displayValue;
 
+//
+// Convenience
+//
 @property (readwrite, nonatomic) double litersPerSecondValue;
 
--(NSString *) toString;
--(NSString *)toStringWithFormat:(NSString *)format;
+- (instancetype)initWithLitersPerSecond:(double)value;
 
-+(NSString *) flowUnits;
+- (NSString *)toString;
+- (NSString *)toStringWithFormat:(NSString *)format;
+
++ (NSString *)flowUnits;
 
 @end
