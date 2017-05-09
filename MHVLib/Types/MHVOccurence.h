@@ -1,15 +1,15 @@
 //
-//  MHVOccurence.h
-//  MHVLib
+// MHVOccurence.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,41 +22,36 @@
 #import "MHVTime.h"
 
 @interface MHVOccurence : MHVType
-{
-@private
-    MHVTime* m_when;
-    MHVNonNegativeInt* m_minutes;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required)
 //
-@property(readwrite, nonatomic, strong) MHVTime* when;
+@property (readwrite, nonatomic, strong) MHVTime *when;
 //
 // (Required)
 //
-@property(readwrite, nonatomic, strong) MHVNonNegativeInt* durationMinutes;
+@property (readwrite, nonatomic, strong) MHVNonNegativeInt *durationMinutes;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
+// -------------------------
 
--(id) initForDuration:(int)minutes startingAt:(MHVTime *) time;
--(id) initForDuration:(int)minutes startingAtHour:(int) hour andMinute:(int) minute;
+- (instancetype)initForDuration:(int)minutes startingAt:(MHVTime *)time;
+- (instancetype)initForDuration:(int)minutes startingAtHour:(int)hour andMinute:(int)minute;
 
-+(MHVOccurence *) forDuration:(int) minutes atHour:(int) hour andMinute:(int) minute;
++ (MHVOccurence *)forDuration:(int)minutes atHour:(int)hour andMinute:(int)minute;
 
 @end
 
 @interface MHVOccurenceCollection : MHVCollection
 
--(MHVOccurence *) itemAtIndex:(NSUInteger) index;
+- (MHVOccurence *)itemAtIndex:(NSUInteger)index;
 
 @end

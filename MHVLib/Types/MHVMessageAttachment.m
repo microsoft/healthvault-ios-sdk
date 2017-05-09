@@ -1,8 +1,8 @@
 //
-//  MHVMessageAttachment.m
-//  MHVLib
+// MHVMessageAttachment.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,86 +19,74 @@
 #import "MHVCommon.h"
 #import "MHVMessageAttachment.h"
 
-static const xmlChar* x_element_name = XMLSTRINGCONST("name");
-static const xmlChar* x_element_blob = XMLSTRINGCONST("blob-name");
-static const xmlChar* x_element_inline = XMLSTRINGCONST("inline-display");
-static const xmlChar* x_element_contentid = XMLSTRINGCONST("content-id");
+static const xmlChar *x_element_name = XMLSTRINGCONST("name");
+static const xmlChar *x_element_blob = XMLSTRINGCONST("blob-name");
+static const xmlChar *x_element_inline = XMLSTRINGCONST("inline-display");
+static const xmlChar *x_element_contentid = XMLSTRINGCONST("content-id");
 
 @implementation MHVMessageAttachment
 
-@synthesize name = m_name;
-@synthesize blobName = m_blobName;
-@synthesize isInline = m_isInline;
-@synthesize contentID = m_contentID;
-
--(id)initWithName:(NSString *)name andBlobName:(NSString *)blobName
+- (instancetype)initWithName:(NSString *)name andBlobName:(NSString *)blobName
 {
     MHVCHECK_STRING(name);
     MHVCHECK_STRING(blobName);
-    
-    self = [super init];
-    MHVCHECK_SELF;
-    
-    m_name = name;
-    m_blobName = blobName;
-    m_isInline = FALSE;
-    m_contentID = nil;
-    
-    return self;
 
-LError:
-    MHVALLOC_FAIL;
+    self = [super init];
+    if (self)
+    {
+        _name = name;
+        _blobName = blobName;
+        _isInline = FALSE;
+        _contentID = nil;
+    }
+
+    return self;
 }
 
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidMessageAttachment);
-    MHVVALIDATE_STRING(m_blobName, MHVClientError_InvalidMessageAttachment);
-    
+
+    MHVVALIDATE_STRING(self.name, MHVClientError_InvalidMessageAttachment);
+    MHVVALIDATE_STRING(self.blobName, MHVClientError_InvalidMessageAttachment);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_name value:m_name];
-    [writer writeElementXmlName:x_element_blob value:m_blobName];
-    [writer writeElementXmlName:x_element_inline boolValue:m_isInline];
-    [writer writeElementXmlName:x_element_contentid value:m_contentID];
+    [writer writeElementXmlName:x_element_name value:self.name];
+    [writer writeElementXmlName:x_element_blob value:self.blobName];
+    [writer writeElementXmlName:x_element_inline boolValue:self.isInline];
+    [writer writeElementXmlName:x_element_contentid value:self.contentID];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_name = [reader readStringElementWithXmlName:x_element_name];
-    m_blobName = [reader readStringElementWithXmlName:x_element_blob];
-    m_isInline = [reader readBoolElementXmlName:x_element_inline];
-    m_contentID = [reader readStringElementWithXmlName:x_element_contentid];
+    self.name = [reader readStringElementWithXmlName:x_element_name];
+    self.blobName = [reader readStringElementWithXmlName:x_element_blob];
+    self.isInline = [reader readBoolElementXmlName:x_element_inline];
+    self.contentID = [reader readStringElementWithXmlName:x_element_contentid];
 }
 
 @end
 
 @implementation MHVMessageAttachmentCollection
 
--(id) init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVMessageAttachment class];
-    
+    if (self)
+    {
+        self.type = [MHVMessageAttachment class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(MHVMessageAttachment *)itemAtIndex:(NSUInteger)index
+- (MHVMessageAttachment *)itemAtIndex:(NSUInteger)index
 {
-    return (MHVMessageAttachment *) [self objectAtIndex:index];
+    return (MHVMessageAttachment *)[self objectAtIndex:index];
 }
 
 @end
-
-

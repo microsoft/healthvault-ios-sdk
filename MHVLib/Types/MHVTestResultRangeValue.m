@@ -1,8 +1,8 @@
 //
-//  MHVTestResultRangeValue.m
-//  MHVLib
+// MHVTestResultRangeValue.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,60 +20,57 @@
 #import "MHVCommon.h"
 #import "MHVTestResultRangeValue.h"
 
-static const xmlChar* x_element_minRange = XMLSTRINGCONST("minimum-range");
-static const xmlChar* x_element_maxRange = XMLSTRINGCONST("maximum-range");
+static const xmlChar *x_element_minRange = XMLSTRINGCONST("minimum-range");
+static const xmlChar *x_element_maxRange = XMLSTRINGCONST("maximum-range");
 
 @implementation MHVTestResultRangeValue
 
-@synthesize minRange = m_minRange;
-@synthesize maxRange = m_maxRange;
-
--(double)minRangeValue
+- (double)minRangeValue
 {
-    return m_minRange ? m_minRange.value : NAN;
+    return self.minRange ? self.minRange.value : NAN;
 }
--(void)setMinRangeValue:(double)minRangeValue
+
+- (void)setMinRangeValue:(double)minRangeValue
 {
     if (isnan(minRangeValue))
     {
-        m_minRange = nil;
+        self.minRange = nil;
     }
     else
     {
-        MHVENSURE(m_minRange, MHVDouble);
-        m_minRange.value = minRangeValue;
+        MHVENSURE(self.minRange, MHVDouble);
+        self.minRange.value = minRangeValue;
     }
 }
 
--(double)maxRangeValue
+- (double)maxRangeValue
 {
-    return m_maxRange ? m_maxRange.value : NAN;
+    return self.maxRange ? self.maxRange.value : NAN;
 }
 
--(void)setMaxRangeValue:(double)maxRangeValue
+- (void)setMaxRangeValue:(double)maxRangeValue
 {
     if (isnan(maxRangeValue))
     {
-        m_maxRange = nil;
+        self.maxRange = nil;
     }
     else
     {
-        MHVENSURE(m_maxRange, MHVDouble);
-        m_maxRange.value = maxRangeValue;
+        MHVENSURE(self.maxRange, MHVDouble);
+        self.maxRange.value = maxRangeValue;
     }
 }
 
-
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_minRange content:m_minRange];
-    [writer writeElementXmlName:x_element_maxRange content:m_maxRange];
+    [writer writeElementXmlName:x_element_minRange content:self.minRange];
+    [writer writeElementXmlName:x_element_maxRange content:self.maxRange];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_minRange = [reader readElementWithXmlName:x_element_minRange asClass:[MHVDouble class]];
-    m_maxRange = [reader readElementWithXmlName:x_element_maxRange asClass:[MHVDouble class]];
+    self.minRange = [reader readElementWithXmlName:x_element_minRange asClass:[MHVDouble class]];
+    self.maxRange = [reader readElementWithXmlName:x_element_maxRange asClass:[MHVDouble class]];
 }
 
 @end

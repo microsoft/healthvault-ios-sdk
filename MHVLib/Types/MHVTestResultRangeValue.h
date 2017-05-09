@@ -1,8 +1,8 @@
 //
-//  MHVTestResultRangeValue.h
-//  MHVLib
+// MHVTestResultRangeValue.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,14 +22,9 @@
 #import "MHVDouble.h"
 
 @interface MHVTestResultRangeValue : MHVType
-{
-@private
-    MHVDouble* m_minRange;
-    MHVDouble* m_maxRange;
-}
 
-@property (readwrite, nonatomic, strong) MHVDouble* minRange;
-@property (readwrite, nonatomic, strong) MHVDouble* maxRange;
+@property (readwrite, nonatomic, strong) MHVDouble *minRange;
+@property (readwrite, nonatomic, strong) MHVDouble *maxRange;
 //
 // Convenience properties
 //

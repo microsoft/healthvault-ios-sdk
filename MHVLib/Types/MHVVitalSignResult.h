@@ -1,15 +1,15 @@
 //
-//  MHVVitalSignResult.h
-//  MHVLib
+// MHVVitalSignResult.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,71 +22,61 @@
 #import "MHVCodableValue.h"
 
 @interface MHVVitalSignResult : MHVType
-{
-@private
-    MHVCodableValue* m_title;
-    MHVDouble* m_value;
-    MHVCodableValue* m_unit;
-    MHVDouble* m_referenceMin;
-    MHVDouble* m_referenceMax;
-    NSString* m_textValue;
-    MHVCodableValue* m_flag;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required)
 // Vocabulary: vital-statistics
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* title;
+@property (readwrite, nonatomic, strong) MHVCodableValue *title;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVDouble* value;
+@property (readwrite, nonatomic, strong) MHVDouble *value;
 //
 // (Optional)
 // Vocabulary: lab-results-units
-@property (readwrite, nonatomic, strong) MHVCodableValue* unit;
+@property (readwrite, nonatomic, strong) MHVCodableValue *unit;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVDouble* referenceMin;
-// 
+@property (readwrite, nonatomic, strong) MHVDouble *referenceMin;
+//
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVDouble* referenceMax;
-@property (readwrite, nonatomic, strong) NSString* textValue;
-@property (readwrite, nonatomic, strong) MHVCodableValue* flag;
+@property (readwrite, nonatomic, strong) MHVDouble *referenceMax;
+@property (readwrite, nonatomic, strong) NSString *textValue;
+@property (readwrite, nonatomic, strong) MHVCodableValue *flag;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
+// -------------------------
 
--(id) initWithTitle:(MHVCodableValue *) title value:(double)value andUnit:(NSString *) unit;
--(id) initWithTemperature:(double) value inCelsius:(BOOL) celsius;
+- (instancetype)initWithTitle:(MHVCodableValue *)title value:(double)value andUnit:(NSString *)unit;
+- (instancetype)initWithTemperature:(double)value inCelsius:(BOOL)celsius;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
+// -------------------------
 
-// 
+//
 // Format template => %@ %f %@
 //
--(NSString *) toString;
+- (NSString *)toString;
 
 @end
 
 
-@interface MHVVitalSignResultCollection : MHVCollection 
+@interface MHVVitalSignResultCollection : MHVCollection
 
--(MHVVitalSignResult *) itemAtIndex:(NSUInteger) index;
+- (MHVVitalSignResult *)itemAtIndex:(NSUInteger)index;
 
 @end
