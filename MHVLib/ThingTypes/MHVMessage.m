@@ -1,8 +1,8 @@
 //
-//  MHVMessage.m
-//  MHVLib
+// MHVMessage.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,148 +19,144 @@
 #import "MHVCommon.h"
 #import "MHVMessage.h"
 
-static NSString* const c_typeid = @"72dc49e1-1486-4634-b651-ef560ed051e5";
-static NSString* const c_typename = @"message";
+static NSString *const c_typeid = @"72dc49e1-1486-4634-b651-ef560ed051e5";
+static NSString *const c_typename = @"message";
 
-static const xmlChar* x_element_when = XMLSTRINGCONST("when");
-static NSString* const c_element_headers = @"headers";
-static const xmlChar* x_element_size = XMLSTRINGCONST("size");
-static const xmlChar* x_element_summary = XMLSTRINGCONST("summary");
-static const xmlChar* x_element_htmlBlob = XMLSTRINGCONST("html-blob-name");
-static const xmlChar* x_element_textBlob = XMLSTRINGCONST("text-blob-name");
-static NSString* const c_element_attachments = @"attachments";
+static const xmlChar *x_element_when = XMLSTRINGCONST("when");
+static NSString *const c_element_headers = @"headers";
+static const xmlChar *x_element_size = XMLSTRINGCONST("size");
+static const xmlChar *x_element_summary = XMLSTRINGCONST("summary");
+static const xmlChar *x_element_htmlBlob = XMLSTRINGCONST("html-blob-name");
+static const xmlChar *x_element_textBlob = XMLSTRINGCONST("text-blob-name");
+static NSString *const c_element_attachments = @"attachments";
 
 @implementation MHVMessage
 
-@synthesize when = m_when;
-@synthesize headers = m_headers;
-@synthesize size = m_size;
-@synthesize summary = m_summary;
-@synthesize htmlBlobName = m_htmlBlobName;
-@synthesize textBlobName = m_textBlobName;
-@synthesize attachments = m_attachments;
-
--(BOOL)hasHeaders
+- (BOOL)hasHeaders
 {
-    return (![MHVCollection isNilOrEmpty:m_headers]);
+    return ![MHVCollection isNilOrEmpty:self.headers];
 }
 
--(BOOL)hasAttachments
+- (BOOL)hasAttachments
 {
-    return (![MHVCollection isNilOrEmpty:m_attachments]);
+    return ![MHVCollection isNilOrEmpty:self.attachments];
 }
 
--(BOOL)hasHtmlBody
+- (BOOL)hasHtmlBody
 {
-    return !([NSString isNilOrEmpty:m_htmlBlobName]);
+    return !([NSString isNilOrEmpty:self.htmlBlobName]);
 }
 
--(BOOL)hasTextBody
+- (BOOL)hasTextBody
 {
-    return !([NSString isNilOrEmpty:m_textBlobName]);
+    return !([NSString isNilOrEmpty:self.textBlobName]);
 }
 
-
--(NSString *)getFrom
+- (NSString *)getFrom
 {
     return [self getValueForHeader:@"From"];
 }
 
--(NSString *)getTo
+- (NSString *)getTo
 {
     return [self getValueForHeader:@"To"];
 }
 
--(NSString *)getSubject
+- (NSString *)getSubject
 {
     return [self getValueForHeader:@"Subject"];
 }
 
--(NSString *)getCC
+- (NSString *)getCC
 {
-    return [self getValueForHeader:@"CC"];    
+    return [self getValueForHeader:@"CC"];
 }
 
--(NSString *)getMessageDate
+- (NSString *)getMessageDate
 {
     return [self getValueForHeader:@"Date"];
 }
 
--(NSString *)getValueForHeader:(NSString *)name
+- (NSString *)getValueForHeader:(NSString *)name
 {
     if (!self.hasHeaders)
     {
         return nil;
     }
-    
-    MHVMessageHeaderItem* header = [m_headers headerWithName:name];
+
+    MHVMessageHeaderItem *header = [self.headers headerWithName:name];
     if (!header)
     {
         return c_emptyString;
     }
+
     return header.value;
 }
 
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];    
+    return [self.when toDateForCalendar:calendar];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidMessage);
-    MHVVALIDATE_ARRAYOPTIONAL(m_headers, MHVClientError_InvalidMessage);
-    MHVVALIDATE(m_size, MHVClientError_InvalidMessage);
-    MHVVALIDATE_ARRAYOPTIONAL(m_attachments, MHVClientError_InvalidMessage);
-    
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidMessage);
+    MHVVALIDATE_ARRAYOPTIONAL(self.headers, MHVClientError_InvalidMessage);
+    MHVVALIDATE(self.size, MHVClientError_InvalidMessage);
+    MHVVALIDATE_ARRAYOPTIONAL(self.attachments, MHVClientError_InvalidMessage);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementArray:c_element_headers elements:m_headers.toArray];
-    [writer writeElementXmlName:x_element_size content:m_size];
-    [writer writeElementXmlName:x_element_summary value:m_summary];
-    [writer writeElementXmlName:x_element_htmlBlob value:m_htmlBlobName];
-    [writer writeElementXmlName:x_element_textBlob value:m_textBlobName];
-    [writer writeElementArray:c_element_attachments elements:m_attachments.toArray];
+    [writer writeElementXmlName:x_element_when content:self.when];
+    [writer writeElementArray:c_element_headers elements:self.headers.toArray];
+    [writer writeElementXmlName:x_element_size content:self.size];
+    [writer writeElementXmlName:x_element_summary value:self.summary];
+    [writer writeElementXmlName:x_element_htmlBlob value:self.htmlBlobName];
+    [writer writeElementXmlName:x_element_textBlob value:self.textBlobName];
+    [writer writeElementArray:c_element_attachments elements:self.attachments.toArray];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
-    m_headers = (MHVMessageHeaderItemCollection *)[reader readElementArray:c_element_headers asClass:[MHVMessageHeaderItem class] andArrayClass:[MHVMessageHeaderItemCollection class]];
-    m_size = [reader readElementWithXmlName:x_element_size asClass:[MHVPositiveInt class]];
-    m_summary = [reader readStringElementWithXmlName:x_element_summary];
-    m_htmlBlobName = [reader readStringElementWithXmlName:x_element_htmlBlob];
-    m_textBlobName = [reader readStringElementWithXmlName:x_element_textBlob];
-    m_attachments = (MHVMessageAttachmentCollection *)[reader readElementArray:c_element_attachments asClass:[MHVMessageAttachment class] andArrayClass:[MHVMessageAttachmentCollection class]];
+    self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
+    self.headers = (MHVMessageHeaderItemCollection *)[reader readElementArray:c_element_headers
+                                                      asClass:[MHVMessageHeaderItem class]
+                                                      andArrayClass:[MHVMessageHeaderItemCollection class]];
+    self.size = [reader readElementWithXmlName:x_element_size asClass:[MHVPositiveInt class]];
+    self.summary = [reader readStringElementWithXmlName:x_element_summary];
+    self.htmlBlobName = [reader readStringElementWithXmlName:x_element_htmlBlob];
+    self.textBlobName = [reader readStringElementWithXmlName:x_element_textBlob];
+    self.attachments = (MHVMessageAttachmentCollection *)[reader readElementArray:c_element_attachments
+                                                          asClass:[MHVMessageAttachment class]
+                                                          andArrayClass:[MHVMessageAttachmentCollection class]];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVMessage typeID]];
 }
 
--(NSString *)typeName
+- (NSString *)typeName
 {
     return NSLocalizedString(@"Message", @"Message Type Name");
 }

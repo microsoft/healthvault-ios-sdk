@@ -21,7 +21,6 @@
 
 @interface MHVExercise : MHVItemDataTyped
 
-
 // -------------------------
 //
 // Data
@@ -68,7 +67,6 @@
 // -----------------------------
 @property (readonly, nonatomic) BOOL hasDetails;
 @property (readwrite, nonatomic) double durationMinutesValue;
-
 
 // -------------------------
 //

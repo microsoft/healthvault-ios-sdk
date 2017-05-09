@@ -1,15 +1,15 @@
 //
-//  MHVProcedure.h
-//  MHVLib
+// MHVProcedure.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,65 +21,57 @@
 #import "MHVVocab.h"
 
 @interface MHVProcedure : MHVItemDataTyped
-{
-@private
-    MHVApproxDateTime* m_when;
-    MHVCodableValue* m_name;
-    MHVCodableValue* m_anatomicLocation;
-    MHVPerson* m_primaryProvider;
-    MHVPerson* m_secondaryProvider;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required)
 // Vocabulary: SNOMED (SnomedProcedures-Filtered)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* name;
+@property (readwrite, nonatomic, strong) MHVCodableValue *name;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVApproxDateTime* when;
+@property (readwrite, nonatomic, strong) MHVApproxDateTime *when;
 //
 // (Optional)
 // Vocabulary: (SnomedBodyLocations-Filtered)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* anatomicLocation;
+@property (readwrite, nonatomic, strong) MHVCodableValue *anatomicLocation;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVPerson* primaryProvider;
+@property (readwrite, nonatomic, strong) MHVPerson *primaryProvider;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVPerson* secondaryProvider;
+@property (readwrite, nonatomic, strong) MHVPerson *secondaryProvider;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
--(id) initWithName:(NSString *) name;
+// -------------------------
+- (instancetype)initWithName:(NSString *)name;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) toString;
+// -------------------------
+- (NSString *)toString;
 
-//-------------------------
+// -------------------------
 //
 // Type info
 //
-//-------------------------
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+// -------------------------
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
 @end

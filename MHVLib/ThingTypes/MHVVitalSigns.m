@@ -1,15 +1,15 @@
 //
-//  MHVVitalSigns.m
-//  MHVLib
+// MHVVitalSigns.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,119 +19,106 @@
 #import "MHVCommon.h"
 #import "MHVVitalSigns.h"
 
-static NSString* const c_typeid = @"73822612-c15f-4b49-9e65-6af369e55c65";
-static NSString* const c_typename = @"vital-signs";
+static NSString *const c_typeid = @"73822612-c15f-4b49-9e65-6af369e55c65";
+static NSString *const c_typename = @"vital-signs";
 
-static NSString* const c_element_when = @"when";
-static NSString* const c_element_results = @"vital-signs-results";
-static NSString* const c_element_site = @"site";
-static NSString* const c_element_position = @"position";
+static NSString *const c_element_when = @"when";
+static NSString *const c_element_results = @"vital-signs-results";
+static NSString *const c_element_site = @"site";
+static NSString *const c_element_position = @"position";
 
 @implementation MHVVitalSigns
 
-@synthesize when = m_when;
-@synthesize results = m_results;
-@synthesize site = m_site;
-@synthesize position = m_position;
-
--(BOOL)hasResults
+- (BOOL)hasResults
 {
-    return ![MHVCollection isNilOrEmpty:m_results];
+    return ![MHVCollection isNilOrEmpty:self.results];
 }
 
--(MHVVitalSignResultCollection *)results
+- (MHVVitalSignResultCollection *)results
 {
-    MHVENSURE(m_results, MHVVitalSignResultCollection);
-    return m_results;
+    MHVENSURE(_results, MHVVitalSignResultCollection);
+    return _results;
 }
 
--(void)setResults:(MHVVitalSignResultCollection *)results
+- (MHVVitalSignResult *)firstResult
 {
-    m_results = results;
+    return (self.hasResults) ? [self.results itemAtIndex:0] : nil;
 }
 
--(MHVVitalSignResult *)firstResult
+- (NSDate *)getDate
 {
-    return (self.hasResults) ? [m_results itemAtIndex:0] : nil;
+    return [self.when toDate];
 }
 
--(NSDate *)getDate
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDate];
+    return [self.when toDateForCalendar:calendar];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
-{
-    return [m_when toDateForCalendar:calendar];
-}
-
--(id)initWithDate:(NSDate *)date
+- (instancetype)initWithDate:(NSDate *)date
 {
     return [self initWithResult:nil onDate:date];
 }
 
--(id)initWithResult:(MHVVitalSignResult *)result onDate:(NSDate *)date
+- (instancetype)initWithResult:(MHVVitalSignResult *)result onDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_when = [[MHVDateTime alloc] initWithDate:date];
-    MHVCHECK_NOTNULL(m_when);
-    
-    if (result)
+    if (self)
     {
-        [self.results addObject:result];
-        MHVCHECK_NOTNULL(m_results);
+        _when = [[MHVDateTime alloc] initWithDate:date];
+        MHVCHECK_NOTNULL(_when);
+
+        if (result)
+        {
+            [self.results addObject:result];
+            MHVCHECK_NOTNULL(_results);
+        }
     }
-    
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidVitalSigns);
-    MHVVALIDATE_ARRAYOPTIONAL(m_results, MHVClientError_InvalidVitalSigns);
-    MHVVALIDATE_STRINGOPTIONAL(m_site, MHVClientError_InvalidVitalSigns);
-    MHVVALIDATE_STRINGOPTIONAL(m_position, MHVClientError_InvalidVitalSigns);
-    
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidVitalSigns);
+    MHVVALIDATE_ARRAYOPTIONAL(self.results, MHVClientError_InvalidVitalSigns);
+    MHVVALIDATE_STRINGOPTIONAL(self.site, MHVClientError_InvalidVitalSigns);
+    MHVVALIDATE_STRINGOPTIONAL(self.position, MHVClientError_InvalidVitalSigns);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_when content:m_when];
-    [writer writeElementArray:c_element_results elements:m_results.toArray];
-    [writer writeElement:c_element_site value:m_site];
-    [writer writeElement:c_element_position value:m_position];
+    [writer writeElement:c_element_when content:self.when];
+    [writer writeElementArray:c_element_results elements:self.results.toArray];
+    [writer writeElement:c_element_site value:self.site];
+    [writer writeElement:c_element_position value:self.position];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
-    m_results = (MHVVitalSignResultCollection *)[reader readElementArray:c_element_results asClass:[MHVVitalSignResult class] andArrayClass:[MHVVitalSignResultCollection class]];
-    m_site = [reader readStringElement:c_element_site];
-    m_position = [reader readStringElement:c_element_position];
+    self.when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
+    self.results = (MHVVitalSignResultCollection *)[reader readElementArray:c_element_results asClass:[MHVVitalSignResult class] andArrayClass:[MHVVitalSignResultCollection class]];
+    self.site = [reader readStringElement:c_element_site];
+    self.position = [reader readStringElement:c_element_position];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVVitalSigns typeID]];
 }

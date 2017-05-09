@@ -1,15 +1,15 @@
 //
-//  MHVSleepJournal.h
-//  MHVLib
+// MHVSleepJournal.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-enum MHVWakeState 
+typedef NS_ENUM (NSInteger, MHVWakeState)
 {
     MHVWakeState_Unknown = 0,
     MHVWakeState_WideAwake = 1,
@@ -28,61 +28,50 @@ enum MHVWakeState
     MHVWakeState_Sleepy
 };
 
-//-------------------------
+// -------------------------
 //
 // Journal entries you make when you wake up in the morning
 //
-//-------------------------
+// -------------------------
 @interface MHVSleepJournalAM : MHVItemDataTyped
-{
-@private
-    MHVDateTime* m_when;
-    MHVTime* m_bedTime;
-    MHVTime* m_wakeTime;
-    MHVNonNegativeInt* m_sleepMinutes;
-    MHVNonNegativeInt* m_settlingMinutes;
-    MHVOccurenceCollection* m_awakenings;
-    MHVCodableValue* m_medications;
-    MHVPositiveInt* m_wakeState;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required) - Journal Entry is for this date/time
 //
-@property (readwrite, nonatomic, strong) MHVDateTime* when;
+@property (readwrite, nonatomic, strong) MHVDateTime *when;
 //
 // (Required) - time you went to bed
 //
-@property (readwrite, nonatomic, strong) MHVTime* bedTime;
+@property (readwrite, nonatomic, strong) MHVTime *bedTime;
 //
 // (Required) - time you finally woke up and got out of bed
 //
-@property (readwrite, nonatomic, strong) MHVTime* wakeTime;
+@property (readwrite, nonatomic, strong) MHVTime *wakeTime;
 //
 // (Required) - how long you slept for
 //
-@property (readwrite, nonatomic, strong) MHVNonNegativeInt* sleepMinutes;
+@property (readwrite, nonatomic, strong) MHVNonNegativeInt *sleepMinutes;
 //
 // (Required) - how long it took you to fall asleep
 //
-@property (readwrite, nonatomic, strong) MHVNonNegativeInt* settlingMinutes;
+@property (readwrite, nonatomic, strong) MHVNonNegativeInt *settlingMinutes;
 //
 // (Required) - how you felt when you woke up
 //
-@property (readwrite, nonatomic) enum MHVWakeState wakeState;
+@property (readwrite, nonatomic) MHVWakeState wakeState;
 //
 // (Optional) - how many times you woke up or had your sleep interrupted
 //
-@property (readwrite, nonatomic, strong) MHVOccurenceCollection* awakenings;
+@property (readwrite, nonatomic, strong) MHVOccurenceCollection *awakenings;
 //
 // (Optional) - medications you took before going to bed
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* medicationsBeforeBed;
+@property (readwrite, nonatomic, strong) MHVCodableValue *medicationsBeforeBed;
 
 //
 // Convenience
@@ -91,23 +80,23 @@ enum MHVWakeState
 @property (readwrite, nonatomic) int sleepMinutesValue;
 @property (readwrite, nonatomic) int settlingMinutesValue;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
+// -------------------------
 
--(id)initWithBedtime:(NSDate *)bedtime onDate :(NSDate *)date settlingMinutes:(int) settlingMinutes sleepingMinutes:(int) sleepingMinutes wokeupAt:(NSDate *) wakeTime;
+- (instancetype)initWithBedtime:(NSDate *)bedtime onDate:(NSDate *)date settlingMinutes:(int)settlingMinutes sleepingMinutes:(int)sleepingMinutes wokeupAt:(NSDate *)wakeTime;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
-//-------------------------
+// -------------------------
 //
 // Type info
 //
-//-------------------------
+// -------------------------
 
-+(NSString *) typeID;
-+(NSString *) XRootElement;
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 @end

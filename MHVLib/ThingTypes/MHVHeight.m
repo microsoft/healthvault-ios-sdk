@@ -1,15 +1,15 @@
 //
-//  MHVHeight.m
-//  MHVLib
+// MHVHeight.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,147 +20,139 @@
 #import "MHVCommon.h"
 #import "MHVHeight.h"
 
-static NSString* const c_typeid = @"40750a6a-89b2-455c-bd8d-b420a4cb500b";
-static NSString* const c_typename = @"height";
+static NSString *const c_typeid = @"40750a6a-89b2-455c-bd8d-b420a4cb500b";
+static NSString *const c_typename = @"height";
 
-static const xmlChar* x_element_when = XMLSTRINGCONST("when");
-static const xmlChar* x_element_value = XMLSTRINGCONST("value");
+static const xmlChar *x_element_when = XMLSTRINGCONST("when");
+static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 @implementation MHVHeight
 
-@synthesize when = m_when;
-@synthesize value = m_height;
-
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];
+    return [self.when toDateForCalendar:calendar];
 }
 
--(double)inMeters
+- (double)inMeters
 {
-    return (m_height) ? m_height.inMeters : NAN;
+    return (self.value) ? self.value.inMeters : NAN;
 }
 
--(void)setInMeters:(double)inMeters 
+- (void)setInMeters:(double)inMeters
 {
-    MHVENSURE(m_height, MHVLengthMeasurement);
-    m_height.inMeters = inMeters;        
+    MHVENSURE(self.value, MHVLengthMeasurement);
+    self.value.inMeters = inMeters;
 }
 
--(double)inInches
+- (double)inInches
 {
-    return (m_height) ? m_height.inInches : NAN;
+    return (self.value) ? self.value.inInches : NAN;
 }
 
--(void)setInInches:(double)inInches
+- (void)setInInches:(double)inInches
 {
-    MHVENSURE(m_height, MHVLengthMeasurement);
-    m_height.inInches = inInches;
+    MHVENSURE(self.value, MHVLengthMeasurement);
+    self.value.inInches = inInches;
 }
 
-
--(id)initWithMeters:(double)meters andDate:(NSDate *)date
+- (instancetype)initWithMeters:(double)meters andDate:(NSDate *)date
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.inMeters = meters;
-    MHVCHECK_NOTNULL(m_height);
-    
-    m_when = [[MHVDateTime alloc] initWithDate:date];
-    MHVCHECK_NOTNULL(m_when);
-    
+    if (self)
+    {
+        [self setInMeters:meters];
+        MHVCHECK_NOTNULL(_value);
+
+        _when = [[MHVDateTime alloc] initWithDate:date];
+        MHVCHECK_NOTNULL(_when);
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initWithInches:(double)inches andDate:(NSDate *)date
+- (instancetype)initWithInches:(double)inches andDate:(NSDate *)date
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.inInches = inches;
-    MHVCHECK_NOTNULL(m_height);
-    
-    m_when = [[MHVDateTime alloc] initWithDate:date];
-    MHVCHECK_NOTNULL(m_when);
-    
+    if (self)
+    {
+        [self setInInches:inches];
+        MHVCHECK_NOTNULL(_value);
+
+        _when = [[MHVDateTime alloc] initWithDate:date];
+        MHVCHECK_NOTNULL(_when);
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(NSString *)stringInMeters:(NSString *)format
+- (NSString *)stringInMeters:(NSString *)format
 {
-   return (m_height) ? [m_height stringInMeters:format] : c_emptyString; 
+    return (self.value) ? [self.value stringInMeters:format] : c_emptyString;
 }
 
--(NSString *)stringInInches:(NSString *)format
+- (NSString *)stringInInches:(NSString *)format
 {
-    return (m_height) ? [m_height stringInInches:format] : c_emptyString;
+    return (self.value) ? [self.value stringInInches:format] : c_emptyString;
 }
 
--(NSString *)stringInFeetAndInches:(NSString *)format
+- (NSString *)stringInFeetAndInches:(NSString *)format
 {
-    return (m_height) ? [m_height stringInFeetAndInches:format] : c_emptyString;
+    return (self.value) ? [self.value stringInFeetAndInches:format] : c_emptyString;
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
-    return (m_height) ? [m_height toString] : c_emptyString;
+    return (self.value) ? [self.value toString] : c_emptyString;
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidWeight);
-    MHVVALIDATE(m_height, MHVClientError_InvalidWeight);
-    
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidWeight);
+    MHVVALIDATE(self.value, MHVClientError_InvalidWeight);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void) serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementXmlName:x_element_value content:m_height];
+    [writer writeElementXmlName:x_element_when content:self.when];
+    [writer writeElementXmlName:x_element_value content:self.value];
 }
 
--(void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
-    m_height = [reader readElementWithXmlName:x_element_value asClass:[MHVLengthMeasurement class]];
+    self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
+    self.value = [reader readElementWithXmlName:x_element_value asClass:[MHVLengthMeasurement class]];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVHeight typeID]];
 }
 
--(NSString *)typeName
+- (NSString *)typeName
 {
     return NSLocalizedString(@"Height", @"Height Type Name");
 }

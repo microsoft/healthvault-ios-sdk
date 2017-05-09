@@ -1,8 +1,8 @@
 //
-//  MHVPeakFlow.h
-//  MHVLib
+// MHVPeakFlow.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,64 +21,56 @@
 #import "MHVTypes.h"
 
 @interface MHVPeakFlow : MHVItemDataTyped
-{
-@private
-    MHVApproxDateTime* m_when;
-    MHVFlowValue* m_pef;
-    MHVVolumeValue* m_fev1;
-    MHVVolumeValue* m_fev6;
-    MHVCodableValue* m_flags;
-}
 
 //
 // Required
 //
-@property (readwrite, nonatomic, strong) MHVApproxDateTime* when;
+@property (readwrite, nonatomic, strong) MHVApproxDateTime *when;
 //
 // (Optional) liters/second
 //
-@property (readwrite, nonatomic, strong) MHVFlowValue* peakExpiratoryFlow;
+@property (readwrite, nonatomic, strong) MHVFlowValue *peakExpiratoryFlow;
 //
 // (Optiona) Volume in 1 second
 //
-@property (readwrite, nonatomic, strong) MHVVolumeValue* forcedExpiratoryVolume1;
+@property (readwrite, nonatomic, strong) MHVVolumeValue *forcedExpiratoryVolume1;
 //
 // (Optional) Volume in 6 seconds
 //
-@property (readwrite, nonatomic, strong) MHVVolumeValue* forcedExpiratoryVolume6;
+@property (readwrite, nonatomic, strong) MHVVolumeValue *forcedExpiratoryVolume6;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* flags;
+@property (readwrite, nonatomic, strong) MHVCodableValue *flags;
 
 //
 // Convenience
 //
 @property (readwrite, nonatomic, assign) double pefValue;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
--(id) initWithDate:(NSDate *) when;
+// -------------------------
+- (instancetype)initWithDate:(NSDate *)when;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) toString;
+// -------------------------
+- (NSString *)toString;
 
-//-------------------------
+// -------------------------
 //
 // Type information
 //
-//-------------------------
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+// -------------------------
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 @end

@@ -1,15 +1,15 @@
 //
-//  MHVMorningSleepJournal.m
-//  MHVLib
+// MHVMorningSleepJournal.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,178 +19,169 @@
 #import "MHVCommon.h"
 #import "MHVSleepJournalAM.h"
 
-static NSString* const c_typeid = @"11c52484-7f1a-11db-aeac-87d355d89593";
-static NSString* const c_typename = @"sleep-am";
+static NSString *const c_typeid = @"11c52484-7f1a-11db-aeac-87d355d89593";
+static NSString *const c_typename = @"sleep-am";
 
-static const xmlChar* x_element_when = XMLSTRINGCONST("when");
-static const xmlChar* x_element_bedtime = XMLSTRINGCONST("bed-time");
-static const xmlChar* x_element_waketime = XMLSTRINGCONST("wake-time");
-static const xmlChar* x_element_sleepMins = XMLSTRINGCONST("sleep-minutes");
-static const xmlChar* x_element_settlingMins = XMLSTRINGCONST("settling-minutes");
-static NSString* const c_element_awakening = @"awakening";
-static const xmlChar* x_element_medications = XMLSTRINGCONST("medications");
-static const xmlChar* x_element_state = XMLSTRINGCONST("wake-state");
+static const xmlChar *x_element_when = XMLSTRINGCONST("when");
+static const xmlChar *x_element_bedtime = XMLSTRINGCONST("bed-time");
+static const xmlChar *x_element_waketime = XMLSTRINGCONST("wake-time");
+static const xmlChar *x_element_sleepMins = XMLSTRINGCONST("sleep-minutes");
+static const xmlChar *x_element_settlingMins = XMLSTRINGCONST("settling-minutes");
+static NSString *const c_element_awakening = @"awakening";
+static const xmlChar *x_element_medications = XMLSTRINGCONST("medications");
+static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
+
+@interface MHVSleepJournalAM ()
+
+@property (nonatomic, strong) MHVPositiveInt *wakeStateValue;
+
+@end
 
 @implementation MHVSleepJournalAM
 
-@synthesize when = m_when;
-@synthesize bedTime = m_bedTime;
-@synthesize wakeTime = m_wakeTime;
-@synthesize sleepMinutes = m_sleepMinutes;
-@synthesize settlingMinutes = m_settlingMinutes;
-@synthesize medicationsBeforeBed = m_medications;
-
--(enum MHVWakeState)wakeState
+- (MHVWakeState)wakeState
 {
-    return (m_wakeState) ? (enum MHVWakeState) (m_wakeState.value) : MHVWakeState_Unknown;
+    return (self.wakeStateValue) ? (MHVWakeState)(self.wakeStateValue.value) : MHVWakeState_Unknown;
 }
 
--(void)setWakeState:(enum MHVWakeState)wakeState
+- (void)setWakeState:(MHVWakeState)wakeState
 {
     if (wakeState == MHVWakeState_Unknown)
     {
-        m_wakeState = nil;
+        self.wakeStateValue = nil;
     }
     else
     {
-        MHVENSURE(m_wakeState, MHVPositiveInt);
-        m_wakeState.value = (int) wakeState;
+        MHVENSURE(self.wakeStateValue, MHVPositiveInt);
+        self.wakeStateValue.value = (int)wakeState;
     }
 }
 
--(MHVOccurenceCollection *)awakenings
+- (MHVOccurenceCollection *)awakenings
 {
-    MHVENSURE(m_awakenings, MHVOccurenceCollection);
-    return m_awakenings;
+    MHVENSURE(self.awakenings, MHVOccurenceCollection);
+    return self.awakenings;
 }
 
--(void)setAwakenings:(MHVOccurenceCollection *)awakenings
+- (BOOL)hasAwakenings
 {
-    m_awakenings = awakenings;
+    return ![MHVCollection isNilOrEmpty:self.awakenings];
 }
 
--(BOOL)hasAwakenings
+- (int)sleepMinutesValue
 {
-    return ![MHVCollection isNilOrEmpty:m_awakenings];
+    return (self.sleepMinutes) ? self.sleepMinutes.value : -1;
 }
 
--(int)sleepMinutesValue
+- (void)setSleepMinutesValue:(int)sleepMinutesValue
 {
-    return (m_sleepMinutes) ? m_sleepMinutes.value : -1;
+    MHVENSURE(self.sleepMinutes, MHVNonNegativeInt);
+    self.sleepMinutes.value = sleepMinutesValue;
 }
 
--(void)setSleepMinutesValue:(int)sleepMinutesValue
+- (int)settlingMinutesValue
 {
-    MHVENSURE(m_sleepMinutes, MHVNonNegativeInt);
-    m_sleepMinutes.value = sleepMinutesValue;
+    return self.settlingMinutes ? self.settlingMinutes.value : -1;
 }
 
--(int)settlingMinutesValue
+- (void)setSettlingMinutesValue:(int)settlingMinutesValue
 {
-    return m_settlingMinutes ? m_settlingMinutes.value : -1;
+    MHVENSURE(self.settlingMinutes, MHVNonNegativeInt);
+    self.settlingMinutes.value = settlingMinutesValue;
 }
 
--(void)setSettlingMinutesValue:(int)settlingMinutesValue
-{
-    MHVENSURE(m_settlingMinutes, MHVNonNegativeInt);
-    m_settlingMinutes.value = settlingMinutesValue;
-}
-
-
--(id)initWithBedtime:(NSDate *)bedtime onDate:(NSDate *)date settlingMinutes:(int)settlingMinutes sleepingMinutes:(int)sleepingMinutes wokeupAt:(NSDate *)wakeTime
+- (instancetype)initWithBedtime:(NSDate *)bedtime onDate:(NSDate *)date settlingMinutes:(int)settlingMinutes sleepingMinutes:(int)sleepingMinutes wokeupAt:(NSDate *)wakeTime
 {
     MHVCHECK_NOTNULL(date);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_when = [[MHVDateTime alloc] initWithDate:date];
-    MHVCHECK_NOTNULL(m_when);
-    
-    m_bedTime = [[MHVTime alloc] initWithDate:bedtime];
-    MHVCHECK_NOTNULL(m_bedTime);
-    
-    m_settlingMinutes = [[MHVNonNegativeInt alloc] initWith:settlingMinutes];
-    MHVCHECK_NOTNULL(m_settlingMinutes);
-    
-    m_sleepMinutes = [[MHVNonNegativeInt alloc] initWith:sleepingMinutes];
-    MHVCHECK_NOTNULL(m_sleepMinutes);
-    
-    m_wakeTime = [[MHVTime alloc] initWithDate:wakeTime];
-    MHVCHECK_NOTNULL(m_wakeTime);
-    
+    if (self)
+    {
+        _when = [[MHVDateTime alloc] initWithDate:date];
+        MHVCHECK_NOTNULL(_when);
+
+        _bedTime = [[MHVTime alloc] initWithDate:bedtime];
+        MHVCHECK_NOTNULL(_bedTime);
+
+        _settlingMinutes = [[MHVNonNegativeInt alloc] initWith:settlingMinutes];
+        MHVCHECK_NOTNULL(_settlingMinutes);
+
+        _sleepMinutes = [[MHVNonNegativeInt alloc] initWith:sleepingMinutes];
+        MHVCHECK_NOTNULL(_sleepMinutes);
+
+        _wakeTime = [[MHVTime alloc] initWithDate:wakeTime];
+        MHVCHECK_NOTNULL(_wakeTime);
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];
+    return [self.when toDateForCalendar:calendar];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE(m_bedTime, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE(m_settlingMinutes, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE(m_sleepMinutes, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE(m_wakeTime, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE(m_wakeState, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE_ARRAYOPTIONAL(m_awakenings, MHVClientError_InvalidSleepJournal);
-    MHVVALIDATE_OPTIONAL(m_medications);
-    
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(self.bedTime, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(self.settlingMinutes, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(self.sleepMinutes, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(self.wakeTime, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE(self.wakeStateValue, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_ARRAYOPTIONAL(self.awakenings, MHVClientError_InvalidSleepJournal);
+    MHVVALIDATE_OPTIONAL(self.medicationsBeforeBed);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementXmlName:x_element_bedtime content:m_bedTime];
-    [writer writeElementXmlName:x_element_waketime content:m_wakeTime];
-    [writer writeElementXmlName:x_element_sleepMins content:m_sleepMinutes];
-    [writer writeElementXmlName:x_element_settlingMins content:m_settlingMinutes];
-    [writer writeElementArray:c_element_awakening elements:m_awakenings.toArray];
-    [writer writeElementXmlName:x_element_medications content:m_medications];
-    [writer writeElementXmlName:x_element_state content:m_wakeState];
+    [writer writeElementXmlName:x_element_when content:self.when];
+    [writer writeElementXmlName:x_element_bedtime content:self.bedTime];
+    [writer writeElementXmlName:x_element_waketime content:self.wakeTime];
+    [writer writeElementXmlName:x_element_sleepMins content:self.sleepMinutes];
+    [writer writeElementXmlName:x_element_settlingMins content:self.settlingMinutes];
+    [writer writeElementArray:c_element_awakening elements:self.awakenings.toArray];
+    [writer writeElementXmlName:x_element_medications content:self.medicationsBeforeBed];
+    [writer writeElementXmlName:x_element_state content:self.wakeStateValue];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
-    m_bedTime = [reader readElementWithXmlName:x_element_bedtime asClass:[MHVTime class]];
-    m_wakeTime = [reader readElementWithXmlName:x_element_waketime asClass:[MHVTime class]];
-    m_sleepMinutes = [reader readElementWithXmlName:x_element_sleepMins asClass:[MHVNonNegativeInt class]];
-    m_settlingMinutes = [reader readElementWithXmlName:x_element_settlingMins asClass:[MHVNonNegativeInt class]];
-    m_awakenings = (MHVOccurenceCollection *)[reader readElementArray:c_element_awakening asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
-    m_medications = [reader readElementWithXmlName:x_element_medications asClass:[MHVCodableValue class]];
-    m_wakeState = [reader readElementWithXmlName:x_element_state asClass:[MHVPositiveInt class]];
+    self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
+    self.bedTime = [reader readElementWithXmlName:x_element_bedtime asClass:[MHVTime class]];
+    self.wakeTime = [reader readElementWithXmlName:x_element_waketime asClass:[MHVTime class]];
+    self.sleepMinutes = [reader readElementWithXmlName:x_element_sleepMins asClass:[MHVNonNegativeInt class]];
+    self.settlingMinutes = [reader readElementWithXmlName:x_element_settlingMins asClass:[MHVNonNegativeInt class]];
+    self.awakenings = (MHVOccurenceCollection *)[reader readElementArray:c_element_awakening asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
+    self.medicationsBeforeBed = [reader readElementWithXmlName:x_element_medications asClass:[MHVCodableValue class]];
+    self.wakeStateValue = [reader readElementWithXmlName:x_element_state asClass:[MHVPositiveInt class]];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVSleepJournalAM typeID]];
 }
 
--(NSString *)typeName
+- (NSString *)typeName
 {
     return NSLocalizedString(@"Sleep Journal", @"Daily sleep journal");
 }

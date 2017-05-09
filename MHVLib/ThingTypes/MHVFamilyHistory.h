@@ -46,7 +46,7 @@
 // Initializers
 //
 // -------------------------
-- (id)initWithRelative:(MHVRelative *)relative andCondition:(MHVConditionEntry *)condition;
+- (instancetype)initWithRelative:(MHVRelative *)relative andCondition:(MHVConditionEntry *)condition;
 
 + (MHVItem *)newItem;
 

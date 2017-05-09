@@ -1,8 +1,8 @@
 //
-//  MHVPeakFlow.m
-//  MHVLib
+// MHVPeakFlow.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,126 +21,118 @@
 #import "MHVCommon.h"
 #import "MHVPeakFlow.h"
 
-static NSString* const c_typeID = @"5d8419af-90f0-4875-a370-0f881c18f6b3";
-static NSString* const c_typeName = @"peak-flow";
+static NSString *const c_typeID = @"5d8419af-90f0-4875-a370-0f881c18f6b3";
+static NSString *const c_typeName = @"peak-flow";
 
-static const xmlChar* x_element_when = XMLSTRINGCONST("when");
-static const xmlChar* x_element_pef = XMLSTRINGCONST("pef");
-static const xmlChar* x_element_fev1 = XMLSTRINGCONST("fev1");
-static const xmlChar* x_element_fev6 = XMLSTRINGCONST("fev6");
-static const xmlChar* x_element_flags = XMLSTRINGCONST("measurement-flags");
+static const xmlChar *x_element_when = XMLSTRINGCONST("when");
+static const xmlChar *x_element_pef = XMLSTRINGCONST("pef");
+static const xmlChar *x_element_fev1 = XMLSTRINGCONST("fev1");
+static const xmlChar *x_element_fev6 = XMLSTRINGCONST("fev6");
+static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
 
 @implementation MHVPeakFlow
 
-@synthesize when = m_when;
-@synthesize peakExpiratoryFlow = m_pef;
-@synthesize forcedExpiratoryVolume1 = m_fev1;
-@synthesize forcedExpiratoryVolume6 = m_fev6;
-@synthesize flags = m_flags;
-
--(double)pefValue
+- (double)pefValue
 {
-    return (m_pef) ? m_pef.litersPerSecondValue : NAN;
+    return (self.peakExpiratoryFlow) ? self.peakExpiratoryFlow.litersPerSecondValue : NAN;
 }
 
--(void)setPefValue:(double)pefValue
+- (void)setPefValue:(double)pefValue
 {
     if (isnan(pefValue))
     {
-        m_pef = nil;
+        self.peakExpiratoryFlow = nil;
     }
     else
     {
-        MHVENSURE(m_pef, MHVFlowValue);
-        m_pef.litersPerSecondValue = pefValue;
+        MHVENSURE(self.peakExpiratoryFlow, MHVFlowValue);
+        self.peakExpiratoryFlow.litersPerSecondValue = pefValue;
     }
 }
 
--(id)initWithDate:(NSDate *)when
+- (instancetype)initWithDate:(NSDate *)when
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_when = [[MHVApproxDateTime alloc] initWithDate:when];
-    MHVCHECK_NOTNULL(m_when);
-    
+    if (self)
+    {
+        _when = [[MHVApproxDateTime alloc] initWithDate:when];
+        MHVCHECK_NOTNULL(_when);
+    }
+
     return self;
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];
+    return [self.when toDateForCalendar:calendar];
 }
 
--(NSString *) toString
+- (NSString *)toString
 {
     return [NSString localizedStringWithFormat:@"pef: %@, fev1: %@",
-            m_pef ? [m_pef toString] : c_emptyString,
-            m_fev1 ? [m_fev1 toString] : c_emptyString
-            ];
+            self.peakExpiratoryFlow ? [self.peakExpiratoryFlow toString] : c_emptyString,
+            self.forcedExpiratoryVolume1 ? [self.forcedExpiratoryVolume1 toString] : c_emptyString];
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidPeakFlow);
-    MHVVALIDATE_OPTIONAL(m_pef);
-    MHVVALIDATE_OPTIONAL(m_fev1);
-    MHVVALIDATE_OPTIONAL(m_fev6);
-    MHVVALIDATE_OPTIONAL(m_flags);
-    
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidPeakFlow);
+    MHVVALIDATE_OPTIONAL(self.peakExpiratoryFlow);
+    MHVVALIDATE_OPTIONAL(self.forcedExpiratoryVolume1);
+    MHVVALIDATE_OPTIONAL(self.forcedExpiratoryVolume6);
+    MHVVALIDATE_OPTIONAL(self.flags);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementXmlName:x_element_pef content:m_pef];
-    [writer writeElementXmlName:x_element_fev1 content:m_fev1];
-    [writer writeElementXmlName:x_element_fev6 content:m_fev6];
-    [writer writeElementXmlName:x_element_flags content:m_flags];
+    [writer writeElementXmlName:x_element_when content:self.when];
+    [writer writeElementXmlName:x_element_pef content:self.peakExpiratoryFlow];
+    [writer writeElementXmlName:x_element_fev1 content:self.forcedExpiratoryVolume1];
+    [writer writeElementXmlName:x_element_fev6 content:self.forcedExpiratoryVolume6];
+    [writer writeElementXmlName:x_element_flags content:self.flags];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElementWithXmlName:x_element_when asClass:[MHVApproxDateTime class]];
-    m_pef = [reader readElementWithXmlName:x_element_pef asClass:[MHVFlowValue class]];
-    m_fev1 = [reader readElementWithXmlName:x_element_fev1 asClass:[MHVVolumeValue class]];
-    m_fev6 = [reader readElementWithXmlName:x_element_fev6 asClass:[MHVVolumeValue class]];
-    m_flags = [reader readElementWithXmlName:x_element_flags asClass:[MHVCodableValue class]];
+    self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVApproxDateTime class]];
+    self.peakExpiratoryFlow = [reader readElementWithXmlName:x_element_pef asClass:[MHVFlowValue class]];
+    self.forcedExpiratoryVolume1 = [reader readElementWithXmlName:x_element_fev1 asClass:[MHVVolumeValue class]];
+    self.forcedExpiratoryVolume6 = [reader readElementWithXmlName:x_element_fev6 asClass:[MHVVolumeValue class]];
+    self.flags = [reader readElementWithXmlName:x_element_flags asClass:[MHVCodableValue class]];
 }
 
-+(NSString *) typeID
++ (NSString *)typeID
 {
     return c_typeID;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typeName;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVPeakFlow typeID]];
 }
 
--(NSString *)typeName
+- (NSString *)typeName
 {
     return NSLocalizedString(@"Peak Flow", @"Peak Flow Type Name");
 }
+
 @end

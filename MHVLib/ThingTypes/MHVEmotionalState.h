@@ -1,15 +1,15 @@
 //
-//  MHVEmotionalState.h
-//  MHVLib
+// MHVEmotionalState.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-enum MHVMood 
+typedef NS_ENUM (NSInteger, MHVMood)
 {
     MHVMoodUnknown = 0,
     MHVMoodDepressed,
@@ -29,9 +29,9 @@ enum MHVMood
     MHVMoodElated
 };
 
-NSString* stringFromMood(enum MHVMood mood);
+NSString *stringFromMood(MHVMood mood);
 
-enum MHVWellBeing 
+typedef NS_ENUM (NSInteger, MHVWellBeing)
 {
     MHVWellBeingUnknown = 0,
     MHVWellBeingSick,
@@ -41,30 +41,23 @@ enum MHVWellBeing
     MHVWellBeingVigorous
 };
 
-NSString* stringFromWellBeing(enum MHVWellBeing wellBeing);
+NSString *stringFromWellBeing(MHVWellBeing wellBeing);
 
 @interface MHVEmotionalState : MHVItemDataTyped
-{
-@private
-    MHVDateTime* m_when;
-    MHVOneToFive* m_mood;
-    MHVOneToFive* m_stress;
-    MHVOneToFive* m_wellbeing;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Optional) Emotional state this THIS time
 //
-@property (readwrite, nonatomic, strong) MHVDateTime* when;
+@property (readwrite, nonatomic, strong) MHVDateTime *when;
 //
 // (Optional) Mood rating - happy, depressed, sad..
 //
-@property (readwrite, nonatomic) enum MHVMood mood;
+@property (readwrite, nonatomic) MHVMood mood;
 //
 // (Optional) A relative stress level
 //
@@ -72,35 +65,35 @@ NSString* stringFromWellBeing(enum MHVWellBeing wellBeing);
 //
 // (Optional) Sick, Healthy etc
 //
-@property (readwrite, nonatomic) enum MHVWellBeing wellbeing;
+@property (readwrite, nonatomic) MHVWellBeing wellbeing;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
-+(MHVItem *) newItem;
+// -------------------------
++ (MHVItem *)newItem;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) moodAsString;
--(NSString *) stressAsString;
--(NSString *) wellBeingAsString;
+// -------------------------
+- (NSString *)moodAsString;
+- (NSString *)stressAsString;
+- (NSString *)wellBeingAsString;
 
--(NSString *) toString;
+- (NSString *)toString;
 // @Mood @Stress @WellBeing
--(NSString *) toStringWithFormat:(NSString *) format;
+- (NSString *)toStringWithFormat:(NSString *)format;
 
-//-------------------------
+// -------------------------
 //
 // Type Info
 //
-//-------------------------
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+// -------------------------
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 
 @end

@@ -1,15 +1,15 @@
 //
-//  MHVMedication.h
-//  MHVLib
+// MHVMedication.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,116 +22,102 @@
 
 
 @interface MHVMedication : MHVItemDataTyped
-{
-@private
-    MHVCodableValue* m_name;
-    MHVCodableValue* m_genericName;
-    MHVApproxMeasurement* m_dose;
-    MHVApproxMeasurement* m_strength;
-    MHVApproxMeasurement* m_freq;
-    MHVCodableValue* m_route;
-    MHVCodableValue* m_indication;
-    MHVApproxDateTime* m_startDate;
-    MHVApproxDateTime* m_stopDate;
-    MHVCodableValue* m_prescribed;
-    MHVPrescription* m_prescription;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required) Medication Name
 // Vocabularies: RxNorm, NDC
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* name;
+@property (readwrite, nonatomic, strong) MHVCodableValue *name;
 //
 // (Optional)
 // Vocabularies: RxNorm, NDC
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* genericName;
-// 
+@property (readwrite, nonatomic, strong) MHVCodableValue *genericName;
+//
 // (Optional)
 // Vocabulary for Units: medication-dose-units
 //
-@property (readwrite, nonatomic, strong) MHVApproxMeasurement* dose;
-// 
+@property (readwrite, nonatomic, strong) MHVApproxMeasurement *dose;
+//
 // (Optional)
 // Vocabulary for Units: medication-strength-unit
 //
-@property (readwrite, nonatomic, strong) MHVApproxMeasurement* strength;
-// 
+@property (readwrite, nonatomic, strong) MHVApproxMeasurement *strength;
+//
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVApproxMeasurement* frequency;
-// 
+@property (readwrite, nonatomic, strong) MHVApproxMeasurement *frequency;
+//
 // (Optional)
 // Vocabulary for Units: medication-route
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* route;
-// 
+@property (readwrite, nonatomic, strong) MHVCodableValue *route;
+//
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* indication;
-// 
+@property (readwrite, nonatomic, strong) MHVCodableValue *indication;
+//
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVApproxDateTime* startDate;
-// 
+@property (readwrite, nonatomic, strong) MHVApproxDateTime *startDate;
+//
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVApproxDateTime* stopDate;
-// 
-// (Optional) Was the medication prescribed? 
+@property (readwrite, nonatomic, strong) MHVApproxDateTime *stopDate;
+//
+// (Optional) Was the medication prescribed?
 // Vocabulary: medication-prescribed
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* prescribed;
-// 
+@property (readwrite, nonatomic, strong) MHVCodableValue *prescribed;
+//
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVPrescription* prescription;
+@property (readwrite, nonatomic, strong) MHVPrescription *prescription;
 
 //
 // Convenience Properties
 //
-@property (readonly, nonatomic, strong) MHVPerson* prescriber;
+@property (readonly, nonatomic, strong) MHVPerson *prescriber;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
--(id) initWithName:(NSString *) name;
+// -------------------------
+- (instancetype)initWithName:(NSString *)name;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
--(NSString *) toString;
+// -------------------------
+- (NSString *)toString;
 
-//-------------------------
+// -------------------------
 //
 // Standard Vocabularies
 //
-//-------------------------
-+(MHVVocabIdentifier *) vocabForName;  // RxNorm active medications
+// -------------------------
++ (MHVVocabIdentifier *)vocabForName;  // RxNorm active medications
 
-+(MHVVocabIdentifier *) vocabForDoseUnits;
-+(MHVVocabIdentifier *) vocabForStrengthUnits;
-+(MHVVocabIdentifier *) vocabForRoute;
-+(MHVVocabIdentifier *) vocabForIsPrescribed;
++ (MHVVocabIdentifier *)vocabForDoseUnits;
++ (MHVVocabIdentifier *)vocabForStrengthUnits;
++ (MHVVocabIdentifier *)vocabForRoute;
++ (MHVVocabIdentifier *)vocabForIsPrescribed;
 
-//-------------------------
+// -------------------------
 //
 // Type information
 //
-//-------------------------
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+// -------------------------
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 @end
