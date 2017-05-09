@@ -23,11 +23,7 @@
 
 - (instancetype)initWithNewUuid
 {
-    self = [self initWithUuid:[NSUUID UUID]];
-
-    MHVCHECK_SELF;
-
-    return self;
+    return [self initWithUuid:[NSUUID UUID]];;
 }
 
 - (instancetype)initWithUuid:(NSUUID *)uuid
@@ -35,9 +31,10 @@
     MHVCHECK_NOTNULL(uuid);
 
     self = [super init];
-    MHVCHECK_SELF;
-
-    _value = uuid;
+    if (self)
+    {
+        _value = uuid;
+    }
 
     return self;
 }
@@ -48,11 +45,7 @@
 
     MHVCHECK_NOTNULL(uuidValue);
 
-    self = [self initWithUuid:uuidValue];
-
-    MHVCHECK_SELF;
-
-    return self;
+    return [self initWithUuid:uuidValue];
 }
 
 - (BOOL)hasValue

@@ -62,7 +62,7 @@
 //
 // (Optional) How did this reading rate, relative to normal? 
 //
-@property (readwrite, nonatomic) enum MHVRelativeRating normalcy;
+@property (readwrite, nonatomic) MHVRelativeRating normalcy;
 //
 // (Optional) measurement context
 // Preferred Vocab: glucose-measurement-context

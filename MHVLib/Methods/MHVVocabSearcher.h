@@ -69,7 +69,7 @@ seqNumber:(NSUInteger) seq;
 @private
     MHVVocabIdentifier* m_vocab;
     MHVVocabSearchCache* m_cache;
-    enum MHVVocabMatchType m_matchType;
+    MHVVocabMatchType m_matchType;
     int m_maxResults;
     NSUInteger m_seqNumber;
 
@@ -77,7 +77,7 @@ seqNumber:(NSUInteger) seq;
 }
 
 @property (readwrite, nonatomic, strong) MHVVocabIdentifier* vocab;
-@property (readwrite, nonatomic) enum MHVVocabMatchType matchType;
+@property (readwrite, nonatomic) MHVVocabMatchType matchType;
 @property (readwrite, nonatomic) int maxResults;
 //
 // Search cache. 
