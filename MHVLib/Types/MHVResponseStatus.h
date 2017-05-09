@@ -1,8 +1,8 @@
 //
-//  MHVResponseStatus.h
-//  MHVLib
+// MHVResponseStatus.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,14 +21,9 @@
 #import "MHVServerError.h"
 
 @interface MHVResponseStatus : MHVType
-{
-@private
-    int m_code;
-    MHVServerError* m_error;
-}
 
 @property (readwrite, nonatomic) int code;
-@property (readwrite, nonatomic, strong) MHVServerError* error;
+@property (readwrite, nonatomic, strong) MHVServerError *error;
 @property (readonly, nonatomic) BOOL hasError;
 
 

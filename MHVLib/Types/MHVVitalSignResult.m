@@ -1,15 +1,15 @@
 //
-//  MHVVitalSignResult.m
-//  MHVLib
+// MHVVitalSignResult.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,123 +19,111 @@
 #import "MHVCommon.h"
 #import "MHVVitalSignResult.h"
 
-static NSString* const c_element_title = @"title";
-static NSString* const c_element_value = @"value";
-static NSString* const c_element_unit = @"unit";
-static NSString* const c_element_refMin = @"reference-minimum";
-static NSString* const c_element_refMax = @"reference-maximum";
-static NSString* const c_element_textValue = @"text-value";
-static NSString* const c_element_flag = @"flag";
+static NSString *const c_element_title = @"title";
+static NSString *const c_element_value = @"value";
+static NSString *const c_element_unit = @"unit";
+static NSString *const c_element_refMin = @"reference-minimum";
+static NSString *const c_element_refMax = @"reference-maximum";
+static NSString *const c_element_textValue = @"text-value";
+static NSString *const c_element_flag = @"flag";
 
 @implementation MHVVitalSignResult
 
-@synthesize title = m_title;
-@synthesize value = m_value;
-@synthesize unit = m_unit;
-@synthesize referenceMin = m_referenceMin;
-@synthesize referenceMax = m_referenceMax;
-@synthesize textValue = m_textValue;
-@synthesize flag = m_flag;
-
--(id)initWithTitle:(MHVCodableValue *)title value:(double)value andUnit:(NSString *)unit
+- (instancetype)initWithTitle:(MHVCodableValue *)title value:(double)value andUnit:(NSString *)unit
 {
     MHVCHECK_NOTNULL(title);
-    
-    self = [super init];
-    MHVCHECK_SELF;
-    
-    self.title = title;
 
-    m_value = [[MHVDouble alloc] initWith:value];
-    MHVCHECK_NOTNULL(m_value);
-    
-    if (unit)
+    self = [super init];
+    if (self)
     {
-        m_unit = [[MHVCodableValue alloc] initWithText:unit];
-        MHVCHECK_NOTNULL(m_unit);
+        _title = title;
+
+        _value = [[MHVDouble alloc] initWith:value];
+        MHVCHECK_NOTNULL(_value);
+
+        if (unit)
+        {
+            _unit = [[MHVCodableValue alloc] initWithText:unit];
+            MHVCHECK_NOTNULL(_unit);
+        }
     }
-    
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initWithTemperature:(double)value inCelsius:(BOOL)celsius
+- (instancetype)initWithTemperature:(double)value inCelsius:(BOOL)celsius
 {
-    MHVCodableValue* title = [MHVCodableValue fromText:@"Temperature" code:@"Tmp" andVocab:@"vital-statistics"];
+    MHVCodableValue *title = [MHVCodableValue fromText:@"Temperature" code:@"Tmp" andVocab:@"vital-statistics"];
+
     return [self initWithTitle:title value:value andUnit:(celsius) ? @"celsius" : @"fahrenheit"];
 }
 
-
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
-    return [NSString stringWithFormat:@"%@, %@ %@", 
-            (m_title) ? [m_title toString] : c_emptyString, 
-            (m_value) ? [m_value toStringWithFormat:@"%.2f"] : c_emptyString, 
-            (m_unit) ? [m_unit toString] : c_emptyString];
+    return [NSString stringWithFormat:@"%@, %@ %@",
+            (self.title) ? [self.title toString] : c_emptyString,
+            (self.value) ? [self.value toStringWithFormat:@"%.2f"] : c_emptyString,
+            (self.unit) ? [self.unit toString] : c_emptyString];
 }
 
--(MHVClientResult *) validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_title, MHVClientError_InvalidVitalSignResult);
-    MHVVALIDATE_OPTIONAL(m_value);
-    MHVVALIDATE_OPTIONAL(m_unit);
-    MHVVALIDATE_OPTIONAL(m_referenceMin);
-    MHVVALIDATE_OPTIONAL(m_referenceMax);
-    MHVVALIDATE_STRINGOPTIONAL(m_textValue, MHVClientError_InvalidVitalSignResult);
-    MHVVALIDATE_OPTIONAL(m_flag);
-    
+
+    MHVVALIDATE(self.title, MHVClientError_InvalidVitalSignResult);
+    MHVVALIDATE_OPTIONAL(self.value);
+    MHVVALIDATE_OPTIONAL(self.unit);
+    MHVVALIDATE_OPTIONAL(self.referenceMin);
+    MHVVALIDATE_OPTIONAL(self.referenceMax);
+    MHVVALIDATE_STRINGOPTIONAL(self.textValue, MHVClientError_InvalidVitalSignResult);
+    MHVVALIDATE_OPTIONAL(self.flag);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_title content:m_title];
-    [writer writeElement:c_element_value content:m_value];
-    [writer writeElement:c_element_unit content:m_unit];
-    [writer writeElement:c_element_refMin content:m_referenceMin];
-    [writer writeElement:c_element_refMax content:m_referenceMax];
-    [writer writeElement:c_element_textValue value:m_textValue];
-    [writer writeElement:c_element_flag content:m_flag];
+    [writer writeElement:c_element_title content:self.title];
+    [writer writeElement:c_element_value content:self.value];
+    [writer writeElement:c_element_unit content:self.unit];
+    [writer writeElement:c_element_refMin content:self.referenceMin];
+    [writer writeElement:c_element_refMax content:self.referenceMax];
+    [writer writeElement:c_element_textValue value:self.textValue];
+    [writer writeElement:c_element_flag content:self.flag];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_title = [reader readElement:c_element_title asClass:[MHVCodableValue class]];
-    m_value = [reader readElement:c_element_value asClass:[MHVDouble class]];
-    m_unit = [reader readElement:c_element_unit asClass:[MHVCodableValue class]];
-    m_referenceMin = [reader readElement:c_element_refMin asClass:[MHVDouble class]];
-    m_referenceMax = [reader readElement:c_element_refMax asClass:[MHVDouble class]];
-    m_textValue = [reader readStringElement:c_element_textValue];
-    m_flag = [reader readElement:c_element_flag asClass:[MHVCodableValue class]];   
+    self.title = [reader readElement:c_element_title asClass:[MHVCodableValue class]];
+    self.value = [reader readElement:c_element_value asClass:[MHVDouble class]];
+    self.unit = [reader readElement:c_element_unit asClass:[MHVCodableValue class]];
+    self.referenceMin = [reader readElement:c_element_refMin asClass:[MHVDouble class]];
+    self.referenceMax = [reader readElement:c_element_refMax asClass:[MHVDouble class]];
+    self.textValue = [reader readStringElement:c_element_textValue];
+    self.flag = [reader readElement:c_element_flag asClass:[MHVCodableValue class]];
 }
 
 @end
 
 @implementation MHVVitalSignResultCollection
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVVitalSignResult class];
-    
+    if (self)
+    {
+        self.type = [MHVVitalSignResult class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(MHVVitalSignResult *)itemAtIndex:(NSUInteger)index
+- (MHVVitalSignResult *)itemAtIndex:(NSUInteger)index
 {
     return [self objectAtIndex:index];
 }

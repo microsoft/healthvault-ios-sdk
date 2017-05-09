@@ -1,8 +1,8 @@
 //
-//  MHVTestResultRange.m
-//  MHVLib
+// MHVTestResultRange.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,65 +21,58 @@
 #import "MHVCommon.h"
 #import "MHVTestResultRange.h"
 
-static const xmlChar* x_element_type = XMLSTRINGCONST("type");
-static const xmlChar* x_element_text = XMLSTRINGCONST("text");
-static const xmlChar* x_element_value = XMLSTRINGCONST("value");
+static const xmlChar *x_element_type = XMLSTRINGCONST("type");
+static const xmlChar *x_element_text = XMLSTRINGCONST("text");
+static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 @implementation MHVTestResultRange
 
-@synthesize type = m_type;
-@synthesize text = m_text;
-@synthesize value = m_value;
-
-
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_type, MHVClientError_InvalidTestResultRange);
-    MHVVALIDATE(m_text, MHVClientError_InvalidTestResultRange);
-    MHVVALIDATE_OPTIONAL(m_value);
-    
+
+    MHVVALIDATE(self.type, MHVClientError_InvalidTestResultRange);
+    MHVVALIDATE(self.text, MHVClientError_InvalidTestResultRange);
+    MHVVALIDATE_OPTIONAL(self.value);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_type content:m_type];
-    [writer writeElementXmlName:x_element_text content:m_text];
-    [writer writeElementXmlName:x_element_value content:m_value];
+    [writer writeElementXmlName:x_element_type content:self.type];
+    [writer writeElementXmlName:x_element_text content:self.text];
+    [writer writeElementXmlName:x_element_value content:self.value];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_type = [reader readElementWithXmlName:x_element_type asClass:[MHVCodableValue class]];
-    m_text = [reader readElementWithXmlName:x_element_text asClass:[MHVCodableValue class]];
-    m_value = [reader readElementWithXmlName:x_element_value asClass:[MHVTestResultRangeValue class]];
+    self.type = [reader readElementWithXmlName:x_element_type asClass:[MHVCodableValue class]];
+    self.text = [reader readElementWithXmlName:x_element_text asClass:[MHVCodableValue class]];
+    self.value = [reader readElementWithXmlName:x_element_value asClass:[MHVTestResultRangeValue class]];
 }
 
 @end
 
 @implementation MHVTestResultRangeCollection
 
--(id) init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVTestResultRange class];
-    
+    if (self)
+    {
+        self.type = [MHVTestResultRange class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(void)addItem:(MHVTestResultRange *)item
+- (void)addItem:(MHVTestResultRange *)item
 {
     [super addObject:item];
 }
 
--(MHVTestResultRange *)itemAtIndex:(NSUInteger)index
+- (MHVTestResultRange *)itemAtIndex:(NSUInteger)index
 {
     return [self objectAtIndex:index];
 }

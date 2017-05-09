@@ -1,8 +1,8 @@
 //
-//  MHVLabTestResultsDetails.h
-//  MHVLib
+// MHVLabTestResultsDetails.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,32 +25,21 @@
 #import "MHVCollection.h"
 
 @interface MHVLabTestResultsDetails : MHVType
-{
-@private
-    MHVApproxDateTime* m_when;
-    NSString* m_name;
-    MHVCodableValue* m_substance;
-    MHVCodableValue* m_collectionMethod;
-    MHVCodableValue* m_clinicalCode;
-    MHVLabTestResultValue* m_value;
-    MHVCodableValue* m_status;
-    NSString* m_note;
-}
 
-@property (readwrite, nonatomic, strong) MHVApproxDateTime* when;
-@property (readwrite, nonatomic, strong) NSString* name;
-@property (readwrite, nonatomic, strong) MHVCodableValue* substance;
-@property (readwrite, nonatomic, strong) MHVCodableValue* collectionMethod;
-@property (readwrite, nonatomic, strong) MHVCodableValue* clinicalCode;
-@property (readwrite, nonatomic, strong) MHVLabTestResultValue* value;
-@property (readwrite, nonatomic, strong) MHVCodableValue* status;
-@property (readwrite, nonatomic, strong) NSString* note;
+@property (readwrite, nonatomic, strong) MHVApproxDateTime *when;
+@property (readwrite, nonatomic, strong) NSString *name;
+@property (readwrite, nonatomic, strong) MHVCodableValue *substance;
+@property (readwrite, nonatomic, strong) MHVCodableValue *collectionMethod;
+@property (readwrite, nonatomic, strong) MHVCodableValue *clinicalCode;
+@property (readwrite, nonatomic, strong) MHVLabTestResultValue *value;
+@property (readwrite, nonatomic, strong) MHVCodableValue *status;
+@property (readwrite, nonatomic, strong) NSString *note;
 
 @end
 
 @interface MHVLabTestResultsDetailsCollection : MHVCollection
 
--(void) addItem:(MHVLabTestResultsDetails *) item;
--(MHVLabTestResultsDetails *) itemAtIndex:(NSUInteger) index;
+- (void)addItem:(MHVLabTestResultsDetails *)item;
+- (MHVLabTestResultsDetails *)itemAtIndex:(NSUInteger)index;
 
 @end

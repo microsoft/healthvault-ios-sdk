@@ -1,15 +1,15 @@
 //
-//  MHVWeightMeasurement.h
-//  MHVLib
+// MHVWeightMeasurement.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,27 +21,22 @@
 #import "MHVPositiveDouble.h"
 #import "MHVDisplayValue.h"
 
-//-------------------------
+// -------------------------
 //
 // Weights are always measured in KG
 //
-//-------------------------
+// -------------------------
 @interface MHVWeightMeasurement : MHVType
-{
-@private
-    MHVPositiveDouble* m_kg;
-    MHVDisplayValue* m_display;
-}
 
-//-------------------------
+// -------------------------
 //
 // Weight Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required) - weight - in KG
 //
-@property (readwrite, nonatomic, strong) MHVPositiveDouble* value;
+@property (readwrite, nonatomic, strong) MHVPositiveDouble *value;
 //
 // (Optional) - what the user entered - before conversion to standard units
 //
@@ -55,50 +50,50 @@
 @property (readwrite, nonatomic) double inPounds;
 @property (readwrite, nonatomic) double inOunces;
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
--(id) initWithKg:(double) value;
--(id) initWithPounds:(double) value;
+// -------------------------
+- (instancetype)initWithKg:(double)value;
+- (instancetype)initWithPounds:(double)value;
 
-//-------------------------
+// -------------------------
 //
 // Methods
 //
-//-------------------------
+// -------------------------
 //
 // Vocabulary for units and code: weight-units
 //
--(BOOL) updateDisplayValue:(double) displayValue units:(NSString *) unitValue andUnitsCode:(NSString *) code;
+- (BOOL)updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code;
 
-+(double) kgToPounds:(double) kg;
-+(double) poundsToKg:(double) pounds;
++ (double)kgToPounds:(double)kg;
++ (double)poundsToKg:(double)pounds;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
+// -------------------------
 //
 // These methods expect a format string with one %f in it.
 //
--(NSString *) toStringWithFormat:(NSString *) format;
--(NSString *) stringInPounds:(NSString *) format;
--(NSString *) stringInOunces:(NSString *) format;
--(NSString *) stringInKg:(NSString *) format;
--(NSString *) stringInGrams:(NSString *) format;
--(NSString *) stringInMilligrams:(NSString *) format;
+- (NSString *)toStringWithFormat:(NSString *)format;
+- (NSString *)stringInPounds:(NSString *)format;
+- (NSString *)stringInOunces:(NSString *)format;
+- (NSString *)stringInKg:(NSString *)format;
+- (NSString *)stringInGrams:(NSString *)format;
+- (NSString *)stringInMilligrams:(NSString *)format;
 
--(NSString *) toString;
+- (NSString *)toString;
 
-+(MHVWeightMeasurement *) fromKg:(double) kg;
-+(MHVWeightMeasurement *) fromGrams:(double) grams;
-+(MHVWeightMeasurement *) fromMillgrams:(double) grams;
++ (MHVWeightMeasurement *)fromKg:(double)kg;
++ (MHVWeightMeasurement *)fromGrams:(double)grams;
++ (MHVWeightMeasurement *)fromMillgrams:(double)grams;
 
-+(MHVWeightMeasurement *) fromPounds:(double) pounds;
-+(MHVWeightMeasurement *) fromOunces:(double) ounces;
++ (MHVWeightMeasurement *)fromPounds:(double)pounds;
++ (MHVWeightMeasurement *)fromOunces:(double)ounces;
 
 
 @end

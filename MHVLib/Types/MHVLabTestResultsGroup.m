@@ -1,8 +1,8 @@
 //
-//  MHVLabTestResultsGroup.m
-//  MHVLib
+// MHVLabTestResultsGroup.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,101 +20,96 @@
 #import "MHVCommon.h"
 #import "MHVLabTestResultsGroup.h"
 
-static const xmlChar* x_element_groupName = XMLSTRINGCONST("group-name");
-static const xmlChar* x_element_laboratory = XMLSTRINGCONST("laboratory-name");
-static const xmlChar* x_element_status = XMLSTRINGCONST("status");
-static NSString* const c_element_subGroups = @"sub-groups";
-static const xmlChar* x_element_subGroups = XMLSTRINGCONST("sub-groups");
-static NSString* const c_element_results = @"results";
-static const xmlChar* x_element_results = XMLSTRINGCONST("results");
+static const xmlChar *x_element_groupName = XMLSTRINGCONST("group-name");
+static const xmlChar *x_element_laboratory = XMLSTRINGCONST("laboratory-name");
+static const xmlChar *x_element_status = XMLSTRINGCONST("status");
+static NSString *const c_element_subGroups = @"sub-groups";
+static const xmlChar *x_element_subGroups = XMLSTRINGCONST("sub-groups");
+static NSString *const c_element_results = @"results";
+static const xmlChar *x_element_results = XMLSTRINGCONST("results");
 
 @implementation MHVLabTestResultsGroup
 
-@synthesize groupName = m_groupName;
-@synthesize laboratory = m_laboratory;
-@synthesize status = m_status;
-@synthesize subGroups = m_subGroups;
-@synthesize results = m_results;
-
--(BOOL)hasSubGroups
+- (BOOL)hasSubGroups
 {
-    return ![MHVCollection isNilOrEmpty:m_subGroups];
+    return ![MHVCollection isNilOrEmpty:self.subGroups];
 }
 
-
--(void)addToCollection:(MHVLabTestResultsGroupCollection *)groups
+- (void)addToCollection:(MHVLabTestResultsGroupCollection *)groups
 {
     [groups addItem:self];
     if (self.hasSubGroups)
     {
-        for (NSUInteger i = 0, count = m_subGroups.count; i < count; ++i)
+        for (NSUInteger i = 0; i < self.subGroups.count; ++i)
         {
-            [[m_subGroups itemAtIndex:i] addToCollection:groups];
+            [[self.subGroups itemAtIndex:i] addToCollection:groups];
         }
     }
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE(m_groupName, MHVClientError_InvalidLabTestResultsGroup);
-    MHVVALIDATE_OPTIONAL(m_laboratory);
-    MHVVALIDATE_OPTIONAL(m_status);
-    MHVVALIDATE_ARRAYOPTIONAL(m_subGroups, MHVClientError_InvalidLabTestResultsGroup);
-    MHVVALIDATE_ARRAYOPTIONAL(m_results, MHVClientError_InvalidLabTestResultsGroup);
-    
+
+    MHVVALIDATE(self.groupName, MHVClientError_InvalidLabTestResultsGroup);
+    MHVVALIDATE_OPTIONAL(self.laboratory);
+    MHVVALIDATE_OPTIONAL(self.status);
+    MHVVALIDATE_ARRAYOPTIONAL(self.subGroups, MHVClientError_InvalidLabTestResultsGroup);
+    MHVVALIDATE_ARRAYOPTIONAL(self.results, MHVClientError_InvalidLabTestResultsGroup);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_groupName content:m_groupName];
-    [writer writeElementXmlName:x_element_laboratory content:m_laboratory];
-    [writer writeElementXmlName:x_element_status content:m_status];
-    [writer writeElementArray:c_element_subGroups elements:m_subGroups.toArray];
-    [writer writeElementArray:c_element_results elements:m_results.toArray];
+    [writer writeElementXmlName:x_element_groupName content:self.groupName];
+    [writer writeElementXmlName:x_element_laboratory content:self.laboratory];
+    [writer writeElementXmlName:x_element_status content:self.status];
+    [writer writeElementArray:c_element_subGroups elements:self.subGroups.toArray];
+    [writer writeElementArray:c_element_results elements:self.results.toArray];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_groupName = [reader readElementWithXmlName:x_element_groupName asClass:[MHVCodableValue class]];
-    m_laboratory = [reader readElementWithXmlName:x_element_laboratory asClass:[MHVOrganization class]];
-    m_status = [reader readElementWithXmlName:x_element_status asClass:[MHVCodableValue class]];
-    m_subGroups = (MHVLabTestResultsGroupCollection *)[reader readElementArrayWithXmlName:x_element_subGroups asClass:[MHVLabTestResultsGroup class] andArrayClass:[MHVLabTestResultsGroupCollection class]];
-    m_results = (MHVLabTestResultsDetailsCollection *)[reader readElementArrayWithXmlName:x_element_results asClass:[MHVLabTestResultsDetails class] andArrayClass:[MHVLabTestResultsDetailsCollection class]];
+    self.groupName = [reader readElementWithXmlName:x_element_groupName asClass:[MHVCodableValue class]];
+    self.laboratory = [reader readElementWithXmlName:x_element_laboratory asClass:[MHVOrganization class]];
+    self.status = [reader readElementWithXmlName:x_element_status asClass:[MHVCodableValue class]];
+    self.subGroups = (MHVLabTestResultsGroupCollection *)[reader readElementArrayWithXmlName:x_element_subGroups
+                                                                                     asClass:[MHVLabTestResultsGroup class]
+                                                                               andArrayClass:[MHVLabTestResultsGroupCollection class]];
+    self.results = (MHVLabTestResultsDetailsCollection *)[reader readElementArrayWithXmlName:x_element_results
+                                                                                     asClass:[MHVLabTestResultsDetails class]
+                                                                               andArrayClass:[MHVLabTestResultsDetailsCollection class]];
 }
 
 @end
 
 @implementation MHVLabTestResultsGroupCollection
 
--(id)init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.type = [MHVLabTestResultsGroup class];
-    
+    if (self)
+    {
+        self.type = [MHVLabTestResultsGroup class];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(void)addItem:(MHVLabTestResultsGroup *)item
+- (void)addItem:(MHVLabTestResultsGroup *)item
 {
     [super addObject:item];
 }
 
--(MHVLabTestResultsGroup *)itemAtIndex:(NSUInteger)index
+- (MHVLabTestResultsGroup *)itemAtIndex:(NSUInteger)index
 {
     return [super objectAtIndex:index];
 }
 
--(void) addItemsToCollection:(MHVLabTestResultsGroupCollection *)groups
+- (void)addItemsToCollection:(MHVLabTestResultsGroupCollection *)groups
 {
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
+    for (NSUInteger i = 0; i < self.count; ++i)
     {
         [[self itemAtIndex:i] addToCollection:groups];
     }

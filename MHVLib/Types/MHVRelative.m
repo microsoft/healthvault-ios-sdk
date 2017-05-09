@@ -1,15 +1,15 @@
 //
-//  MHVRelative.m
-//  MHVLib
+// MHVRelative.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,101 +19,92 @@
 #import "MHVCommon.h"
 #import "MHVRelative.h"
 
-static NSString* const c_element_relationship = @"relationship";
-static NSString* const c_element_name = @"relative-name";
-static NSString* const c_element_dateOfBirth = @"date-of-birth";
-static NSString* const c_element_dateOfDeath = @"date-of-death";
-static NSString* const c_element_region = @"region-of-origin";
+static NSString *const c_element_relationship = @"relationship";
+static NSString *const c_element_name = @"relative-name";
+static NSString *const c_element_dateOfBirth = @"date-of-birth";
+static NSString *const c_element_dateOfDeath = @"date-of-death";
+static NSString *const c_element_region = @"region-of-origin";
 
 @implementation MHVRelative
 
-@synthesize relationship = m_relationship;
-@synthesize person = m_person;
-@synthesize dateOfBirth = m_dateOfBirth;
-@synthesize dateOfDeath = m_dateOfDeath;
-@synthesize regionOfOrigin = m_regionOfOrigin;
-
--(id)initWithRelationship:(NSString *)relationship
+- (instancetype)initWithRelationship:(NSString *)relationship
 {
     return [self initWithPerson:nil andRelationship:[MHVCodableValue fromText:relationship]];
 }
 
--(id)initWithPerson:(MHVPerson *)person andRelationship :(MHVCodableValue *)relationship 
+- (instancetype)initWithPerson:(MHVPerson *)person andRelationship:(MHVCodableValue *)relationship
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    if (person)
+    if (self)
     {
-        self.person = person;
+        if (person)
+        {
+            _person = person;
+        }
+
+        if (relationship)
+        {
+            _relationship = relationship;
+        }
     }
-    
-    if (relationship)
-    {
-        self.relationship = relationship;
-    }
-    
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
-    if (m_person)
+    if (self.person)
     {
-        return [m_person toString];
+        return [self.person toString];
     }
-    
-    return (m_relationship) ? [m_relationship toString] : c_emptyString;
+
+    return (self.relationship) ? [self.relationship toString] : c_emptyString;
 }
 
-+(MHVVocabIdentifier *)vocabForRelationship
++ (MHVVocabIdentifier *)vocabForRelationship
 {
     return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"personal-relationship"];
 }
 
-+(MHVVocabIdentifier *)vocabForRegionOfOrigin
++ (MHVVocabIdentifier *)vocabForRegionOfOrigin
 {
     return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"family-history-region-of-origin"];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_relationship, MHVClientError_InvalidRelative);
-    MHVVALIDATE_OPTIONAL(m_person);
-    MHVVALIDATE_OPTIONAL(m_dateOfBirth);
-    MHVVALIDATE_OPTIONAL(m_dateOfDeath);
-    MHVVALIDATE_OPTIONAL(m_regionOfOrigin);
-    
+
+    MHVVALIDATE(self.relationship, MHVClientError_InvalidRelative);
+    MHVVALIDATE_OPTIONAL(self.person);
+    MHVVALIDATE_OPTIONAL(self.dateOfBirth);
+    MHVVALIDATE_OPTIONAL(self.dateOfDeath);
+    MHVVALIDATE_OPTIONAL(self.regionOfOrigin);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_relationship content:m_relationship];
-    [writer writeElement:c_element_name content:m_person];
-    [writer writeElement:c_element_dateOfBirth content:m_dateOfBirth];
-    [writer writeElement:c_element_dateOfDeath content:m_dateOfDeath];
-    [writer writeElement:c_element_region content:m_regionOfOrigin];
+    [writer writeElement:c_element_relationship content:self.relationship];
+    [writer writeElement:c_element_name content:self.person];
+    [writer writeElement:c_element_dateOfBirth content:self.dateOfBirth];
+    [writer writeElement:c_element_dateOfDeath content:self.dateOfDeath];
+    [writer writeElement:c_element_region content:self.regionOfOrigin];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_relationship = [reader readElement:c_element_relationship asClass:[MHVCodableValue class]];
-    m_person = [reader readElement:c_element_name asClass:[MHVPerson class]];
-    m_dateOfBirth = [reader readElement:c_element_dateOfBirth asClass:[MHVApproxDate class]];
-    m_dateOfDeath = [reader readElement:c_element_dateOfDeath asClass:[MHVApproxDate class]];
-    m_regionOfOrigin = [reader readElement:c_element_region asClass:[MHVCodableValue class]];    
+    self.relationship = [reader readElement:c_element_relationship asClass:[MHVCodableValue class]];
+    self.person = [reader readElement:c_element_name asClass:[MHVPerson class]];
+    self.dateOfBirth = [reader readElement:c_element_dateOfBirth asClass:[MHVApproxDate class]];
+    self.dateOfDeath = [reader readElement:c_element_dateOfDeath asClass:[MHVApproxDate class]];
+    self.regionOfOrigin = [reader readElement:c_element_region asClass:[MHVCodableValue class]];
 }
 
 @end

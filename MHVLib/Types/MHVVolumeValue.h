@@ -1,8 +1,8 @@
 //
-//  MHVVolumeValue.h
-//  MHVLib
+// MHVVolumeValue.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,29 +22,26 @@
 #import "MHVDisplayValue.h"
 
 @interface MHVVolumeValue : MHVType
-{
-@private
-    MHVPositiveDouble* m_liters;
-    MHVDisplayValue* m_display;
-}
-
--(id) initWithLiters:(double) value;
 
 //
 // Required
 //
-@property (readwrite, nonatomic, strong) MHVPositiveDouble* liters;
+@property (readwrite, nonatomic, strong) MHVPositiveDouble *liters;
 //
 // Optional
 //
-@property (readwrite, nonatomic, strong) MHVDisplayValue* displayValue;
-
+@property (readwrite, nonatomic, strong) MHVDisplayValue *displayValue;
+//
+// Convenience
+//
 @property (readwrite, nonatomic) double litersValue;
 
--(NSString *) toString;
--(NSString *)toStringWithFormat:(NSString *)format;
+- (instancetype)initWithLiters:(double)value;
+
+- (NSString *)toString;
+- (NSString *)toStringWithFormat:(NSString *)format;
 
 // Liters
-+(NSString *) volumeUnits;
++ (NSString *)volumeUnits;
 
 @end

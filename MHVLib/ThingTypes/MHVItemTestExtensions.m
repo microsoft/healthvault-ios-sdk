@@ -862,7 +862,7 @@ NSString *pickRandomDrug(void)
     randInt = [MHVRandom randomIntInRangeMin:0 max:5];
     if (randInt > 0)
     {
-        es.stress = (enum MHVRelativeRating)randInt;
+        es.stress = (MHVRelativeRating)randInt;
     }
     
     randInt = [MHVRandom randomIntInRangeMin:0 max:5];

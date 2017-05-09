@@ -61,7 +61,7 @@ NSString *stringFromWellBeing(MHVWellBeing wellBeing);
 //
 // (Optional) A relative stress level
 //
-@property (readwrite, nonatomic) enum MHVRelativeRating stress;
+@property (readwrite, nonatomic) MHVRelativeRating stress;
 //
 // (Optional) Sick, Healthy etc
 //

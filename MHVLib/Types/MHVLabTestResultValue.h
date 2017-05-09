@@ -23,12 +23,6 @@
 #import "MHVTestResultRange.h"
 
 @interface MHVLabTestResultValue : MHVType
-{
-@private
-    MHVApproxMeasurement* m_measurement;
-    MHVTestResultRangeCollection* m_ranges;
-    MHVCodableValue* m_flag;
-}
 
 @property (readwrite, nonatomic, strong) MHVApproxMeasurement* measurement;
 @property (readwrite, nonatomic, strong) MHVTestResultRangeCollection* ranges;

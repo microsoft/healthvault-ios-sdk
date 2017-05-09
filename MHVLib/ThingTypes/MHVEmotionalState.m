@@ -118,12 +118,12 @@ static const xmlChar *x_element_wellbeing = XMLSTRINGCONST("wellbeing");
     }
 }
 
-- (enum MHVRelativeRating)stress
+- (MHVRelativeRating)stress
 {
-    return (self.stressValue) ? (enum MHVRelativeRating)self.stressValue.value : MHVRelativeRating_None;
+    return (self.stressValue) ? (MHVRelativeRating)self.stressValue.value : MHVRelativeRating_None;
 }
 
-- (void)setStress:(enum MHVRelativeRating)stress
+- (void)setStress:(MHVRelativeRating)stress
 {
     if (stress == MHVRelativeRating_None)
     {

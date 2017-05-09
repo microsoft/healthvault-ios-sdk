@@ -1,15 +1,15 @@
 //
-//  MHVName.m
-//  MHVLib
+// MHVName.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,141 +19,139 @@
 #import "MHVCommon.h"
 #import "MHVName.h"
 
-static NSString* const c_element_fullName = @"full";
-static NSString* const c_element_title = @"title";
-static NSString* const c_element_first = @"first";
-static NSString* const c_element_middle = @"middle";
-static NSString* const c_element_last = @"last";
-static NSString* const c_element_suffix = @"suffix";
+static NSString *const c_element_fullName = @"full";
+static NSString *const c_element_title = @"title";
+static NSString *const c_element_first = @"first";
+static NSString *const c_element_middle = @"middle";
+static NSString *const c_element_last = @"last";
+static NSString *const c_element_suffix = @"suffix";
 
 @implementation MHVName
 
-@synthesize fullName = m_full;
-@synthesize title = m_title;
-@synthesize first = m_first;
-@synthesize middle = m_middle;
-@synthesize last = m_last;
-@synthesize suffix = m_suffix;
-
--(id)initWithFirst:(NSString *)first andLastName:(NSString *)last
+- (instancetype)initWithFirst:(NSString *)first andLastName:(NSString *)last
 {
     return [self initWithFirst:first middle:nil andLastName:last];
 }
 
--(id)initWithFirst:(NSString *)first middle:(NSString *)middle andLastName:(NSString *)last
+- (instancetype)initWithFirst:(NSString *)first middle:(NSString *)middle andLastName:(NSString *)last
 {
     MHVCHECK_NOTNULL(first);
     MHVCHECK_NOTNULL(last);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.first = first;
-    self.middle = middle;
-    self.last = last;
-    
-    [self buildFullName];
-    MHVCHECK_NOTNULL(m_full);
-    
+    if (self)
+    {
+        _first = first;
+        _middle = middle;
+        _last = last;
+
+        [self buildFullName];
+        MHVCHECK_NOTNULL(_fullName);
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(id)initWithFullName:(NSString *)name
+- (instancetype)initWithFullName:(NSString *)name
 {
     MHVCHECK_STRING(name);
-    
-    self = [super init];
-    MHVCHECK_SELF;
-    
-    self.fullName = name;
-    
-    return self;
 
-LError:
-    MHVALLOC_FAIL;
+    self = [super init];
+    if (self)
+    {
+        _fullName = name;
+    }
+
+    return self;
 }
 
-
--(BOOL)buildFullName
+- (NSString *)fullName
 {
-    NSMutableString* fullName = [[NSMutableString alloc] init];
-    MHVCHECK_NOTNULL(fullName);
-    
-    if (m_title)
+    if (!_fullName)
     {
-        [fullName appendOptionalString:m_title.text];
+        [self buildFullName];
     }
-    
-    [fullName appendOptionalString:m_first withSeparator:@" "];
-    if (![NSString isNilOrEmpty:m_middle])
+    return _fullName;
+}
+
+- (BOOL)buildFullName
+{
+    NSMutableString *fullName = [[NSMutableString alloc] init];
+
+    MHVCHECK_NOTNULL(fullName);
+
+    if (self.title)
     {
-        NSString* middleInitial = [NSString stringWithFormat:@"%c.", toupper([m_middle characterAtIndex:0])];
+        [fullName appendOptionalString:self.title.text];
+    }
+
+    [fullName appendOptionalString:self.first withSeparator:@" "];
+    
+    if (![NSString isNilOrEmpty:self.middle])
+    {
+        NSString *middleInitial = [[self.middle substringWithRange:[self.middle rangeOfComposedCharacterSequenceAtIndex:0]] uppercaseString];
         [fullName appendOptionalString:middleInitial withSeparator:@" "];
     }
-    [fullName appendOptionalString:m_last withSeparator:@" "];
-    if (m_suffix)
-    {
-        [fullName appendOptionalString:m_suffix.text withSeparator:@" "];
-    }
-    
-    self.fullName = fullName;
-    
-    return TRUE;
 
-LError:
-    return FALSE;
+    [fullName appendOptionalString:self.last withSeparator:@" "];
+    
+    if (self.suffix)
+    {
+        [fullName appendOptionalString:self.suffix.text withSeparator:@" "];
+    }
+
+    self.fullName = fullName;
+
+    return TRUE;
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
-    return (m_full) ? m_full : c_emptyString;
+    return (self.fullName) ? self.fullName : c_emptyString;
 }
 
-+(MHVVocabIdentifier *)vocabForTitle
++ (MHVVocabIdentifier *)vocabForTitle
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-prefixes"];    
+    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-prefixes"];
 }
 
-+(MHVVocabIdentifier *)vocabForSuffix
++ (MHVVocabIdentifier *)vocabForSuffix
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-suffixes"];        
+    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-suffixes"];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE_STRING(m_full, MHVClientError_InvalidName);
-    
+
+    MHVVALIDATE_STRING(self.fullName, MHVClientError_InvalidName);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_fullName value:m_full];
-    [writer writeElement:c_element_title content:m_title];
-    [writer writeElement:c_element_first value:m_first];
-    [writer writeElement:c_element_middle value:m_middle];
-    [writer writeElement:c_element_last value:m_last];
-    [writer writeElement:c_element_suffix content:m_suffix];
+    [writer writeElement:c_element_fullName value:self.fullName];
+    [writer writeElement:c_element_title content:self.title];
+    [writer writeElement:c_element_first value:self.first];
+    [writer writeElement:c_element_middle value:self.middle];
+    [writer writeElement:c_element_last value:self.last];
+    [writer writeElement:c_element_suffix content:self.suffix];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_full = [reader readStringElement:c_element_fullName];
-    m_title = [reader readElement:c_element_title asClass:[MHVCodableValue class]];
-    m_first = [reader readStringElement:c_element_first];
-    m_middle = [reader readStringElement:c_element_middle];
-    m_last = [reader readStringElement:c_element_last];
-    m_suffix = [reader readElement:c_element_suffix asClass:[MHVCodableValue class]];
+    self.fullName = [reader readStringElement:c_element_fullName];
+    self.title = [reader readElement:c_element_title asClass:[MHVCodableValue class]];
+    self.first = [reader readStringElement:c_element_first];
+    self.middle = [reader readStringElement:c_element_middle];
+    self.last = [reader readStringElement:c_element_last];
+    self.suffix = [reader readElement:c_element_suffix asClass:[MHVCodableValue class]];
 }
 
 @end

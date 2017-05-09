@@ -1,8 +1,8 @@
 //
-//  MHVTestResultRange.h
-//  MHVLib
+// MHVTestResultRange.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,22 +25,16 @@
 #import "MHVCollection.h"
 
 @interface MHVTestResultRange : MHVType
-{
-@private
-    MHVCodableValue* m_type;
-    MHVCodableValue* m_text;
-    MHVTestResultRangeValue* m_value;
-}
 
-@property (readwrite, nonatomic, strong) MHVCodableValue* type;
-@property (readwrite, nonatomic, strong) MHVCodableValue* text;
-@property (readwrite, nonatomic, strong) MHVTestResultRangeValue* value;
+@property (readwrite, nonatomic, strong) MHVCodableValue *type;
+@property (readwrite, nonatomic, strong) MHVCodableValue *text;
+@property (readwrite, nonatomic, strong) MHVTestResultRangeValue *value;
 
 @end
 
 @interface MHVTestResultRangeCollection : MHVCollection
 
--(void) addItem:(MHVTestResultRange *) item;
--(MHVTestResultRange *) itemAtIndex:(NSUInteger) index;
+- (void)addItem:(MHVTestResultRange *)item;
+- (MHVTestResultRange *)itemAtIndex:(NSUInteger)index;
 
 @end

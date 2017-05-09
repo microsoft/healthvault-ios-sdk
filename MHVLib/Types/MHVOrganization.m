@@ -1,15 +1,15 @@
 //
-//  MHVOrganization.m
-//  MHVLib
+// MHVOrganization.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,55 +19,49 @@
 #import "MHVCommon.h"
 #import "MHVOrganization.h"
 
-static NSString* const c_element_name = @"name";
-static NSString* const c_element_contact = @"contact";
-static NSString* const c_element_type = @"type";
-static NSString* const c_element_site = @"website";
+static NSString *const c_element_name = @"name";
+static NSString *const c_element_contact = @"contact";
+static NSString *const c_element_type = @"type";
+static NSString *const c_element_site = @"website";
 
 @implementation MHVOrganization
 
-@synthesize name = m_name;
-@synthesize contact = m_contact;
-@synthesize type = m_type;
-@synthesize website = m_webSite;
-
-
--(NSString *)toString
+- (NSString *)toString
 {
-    return m_name;
+    return self.name;
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE_STRING(m_name, MHVClientError_InvalidOrganization);
-    MHVVALIDATE_OPTIONAL(m_contact);
-    MHVVALIDATE_OPTIONAL(m_type);
-    MHVVALIDATE_STRINGOPTIONAL(m_webSite, MHVClientError_InvalidOrganization);
-    
+
+    MHVVALIDATE_STRING(self.name, MHVClientError_InvalidOrganization);
+    MHVVALIDATE_OPTIONAL(self.contact);
+    MHVVALIDATE_OPTIONAL(self.type);
+    MHVVALIDATE_STRINGOPTIONAL(self.website, MHVClientError_InvalidOrganization);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_name value:m_name];
-    [writer writeElement:c_element_contact content:m_contact];
-    [writer writeElement:c_element_type content:m_type];
-    [writer writeElement:c_element_site value:m_webSite];
+    [writer writeElement:c_element_name value:self.name];
+    [writer writeElement:c_element_contact content:self.contact];
+    [writer writeElement:c_element_type content:self.type];
+    [writer writeElement:c_element_site value:self.website];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_name = [reader readStringElement:c_element_name];
-    m_contact = [reader readElement:c_element_contact asClass:[MHVContact class]];
-    m_type = [reader readElement:c_element_type asClass:[MHVCodableValue class]];
-    m_webSite = [reader readStringElement:c_element_site];  
+    self.name = [reader readStringElement:c_element_name];
+    self.contact = [reader readElement:c_element_contact asClass:[MHVContact class]];
+    self.type = [reader readElement:c_element_type asClass:[MHVCodableValue class]];
+    self.website = [reader readStringElement:c_element_site];
 }
 
 @end

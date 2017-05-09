@@ -1,8 +1,8 @@
 //
-//  MHVConstrainedXmlDate.h
-//  MHVLib
+// MHVConstrainedXmlDate.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,21 +21,17 @@
 #import "MHVType.h"
 
 @interface MHVConstrainedXmlDate : MHVType
-{
-@protected
-    NSDate* m_value;
-}
 
-@property (readwrite, nonatomic, strong) NSDate* value;
+@property (readwrite, nonatomic, strong) NSDate *value;
 
 @property (readonly, nonatomic) BOOL isNull;
 
--(id) initWith:(NSDate *) date;
+- (instancetype)initWith:(NSDate *)date;
 
--(NSString *)toString;
--(NSString *)toStringWithFormat:(NSString *)format;
+- (NSString *)toString;
+- (NSString *)toStringWithFormat:(NSString *)format;
 
-+(MHVConstrainedXmlDate *) fromDate:(NSDate *) date;
-+(MHVConstrainedXmlDate *) nullDate;
++ (MHVConstrainedXmlDate *)fromDate:(NSDate *)date;
++ (MHVConstrainedXmlDate *)nullDate;
 
 @end

@@ -153,5 +153,5 @@ while(NO)
                                                 return hr; \
                                             } \
 
-MHVClientResult* MHVValidateCollection(MHVCollection *collection, enum MHVClientResultCode error);
+MHVClientResult* MHVValidateCollection(MHVCollection *collection, MHVClientResultCode error);
 

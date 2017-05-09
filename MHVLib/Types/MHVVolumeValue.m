@@ -1,8 +1,8 @@
 //
-//  MHVVolumeValue.m
-//  MHVLib
+// MHVVolumeValue.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,104 +19,98 @@
 #import "MHVCommon.h"
 #import "MHVVolumeValue.h"
 
-static const xmlChar* x_element_liters = XMLSTRINGCONST("liters");
-static const xmlChar* x_element_displayValue = XMLSTRINGCONST("display");
+static const xmlChar *x_element_liters = XMLSTRINGCONST("liters");
+static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 
 @implementation MHVVolumeValue
 
-@synthesize liters = m_liters;
-@synthesize displayValue = m_display;
-
--(double)litersValue
+- (double)litersValue
 {
-    return m_liters ? m_liters.value : NAN;
+    return self.liters ? self.liters.value : NAN;
 }
 
--(void)setLitersValue:(double)litersValue
+- (void)setLitersValue:(double)litersValue
 {
     if (isnan(litersValue))
     {
-        m_liters = nil;
+        self.liters = nil;
     }
     else
     {
-        MHVENSURE(m_liters, MHVPositiveDouble);
-        m_liters.value = litersValue;
+        MHVENSURE(self.liters, MHVPositiveDouble);
+        self.liters.value = litersValue;
     }
-    
+
     [self updateDisplayText];
 }
 
--(id)initWithLiters:(double)value
+- (instancetype)initWithLiters:(double)value
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.litersValue = value;
-    
+    if (self)
+    {
+        [self setLitersValue:value];
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(BOOL) updateDisplayText
+- (BOOL)updateDisplayText
 {
-    m_display = nil;
-    if (!m_liters)
+    if (!self.liters)
     {
+        self.displayValue = nil;
         return FALSE;
     }
-    
-    m_display = [[MHVDisplayValue alloc] initWithValue:m_liters.value andUnits:[MHVVolumeValue volumeUnits]];
-    
-    return (m_display != nil);
+
+    self.displayValue = [[MHVDisplayValue alloc] initWithValue:self.liters.value andUnits:[MHVVolumeValue volumeUnits]];
+
+    return self.displayValue != nil;
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
     return [self toStringWithFormat:@"%.1f L"];
 }
 
--(NSString *)toStringWithFormat:(NSString *)format
+- (NSString *)toStringWithFormat:(NSString *)format
 {
-    if (!m_liters)
+    if (!self.liters)
     {
         return c_emptyString;
     }
-    
+
     return [NSString localizedStringWithFormat:format, self.litersValue];
 }
 
--(NSString *)description
+- (NSString *)description
 {
     return [self toString];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_liters, MHVClientError_InvalidVolume);
-    MHVVALIDATE_OPTIONAL(m_display);
-    
+
+    MHVVALIDATE(self.liters, MHVClientError_InvalidVolume);
+    MHVVALIDATE_OPTIONAL(self.displayValue);
+
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_liters content:m_liters];
-    [writer writeElementXmlName:x_element_displayValue content:m_display];
+    [writer writeElementXmlName:x_element_liters content:self.liters];
+    [writer writeElementXmlName:x_element_displayValue content:self.displayValue];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_liters = [reader readElementWithXmlName:x_element_liters asClass:[MHVPositiveDouble class]];
-    m_display = [reader readElementWithXmlName:x_element_displayValue asClass:[MHVDisplayValue class]];
+    self.liters = [reader readElementWithXmlName:x_element_liters asClass:[MHVPositiveDouble class]];
+    self.displayValue = [reader readElementWithXmlName:x_element_displayValue asClass:[MHVDisplayValue class]];
 }
 
-+(NSString *)volumeUnits
++ (NSString *)volumeUnits
 {
     return NSLocalizedString(@"L", @"Liters");
 }

@@ -70,7 +70,7 @@ enum MHVItemFlags
 
 @property (readwrite, nonatomic, strong) MHVItemType *type;
 
-@property (readwrite, nonatomic) enum MHVItemState state;
+@property (readwrite, nonatomic) MHVItemState state;
 //
 // (Optional) See MHVItemFlags enumeration...
 //
@@ -85,12 +85,12 @@ enum MHVItemFlags
 @property (readwrite, nonatomic, strong) MHVAudit *updated;
 //
 // (Optional) Structured data for this item. May be null if you did not
-// ask for Core data (see enum MHVItemSection) when you issued a query for items
+// ask for Core data (see MHVItemSection) when you issued a query for items
 //
 @property (readwrite, nonatomic, strong) MHVItemData *data;
 //
 // (Optional) Information about unstructured blob streams associated with this item
-// May be null if you did not ask for Blob information (see enum MHVItemSectionBlob)
+// May be null if you did not ask for Blob information (see MHVItemSectionBlob)
 //
 @property (readwrite, nonatomic, strong) MHVBlobPayload *blobs;
 
