@@ -277,27 +277,27 @@ NSString *pickRandomDrug(void)
 
 @end
 
-@implementation MHVCholesterolV2 (MHVTestExtensions)
+@implementation MHVCholesterol (MHVTestExtensions)
 
 + (MHVItem *)createRandom
 {
-    return [MHVCholesterolV2 createRandomForDate:createRandomMHVDateTime()];
+    return [MHVCholesterol createRandomForDate:createRandomMHVDateTime()];
 }
 
 + (MHVItem *)createRandomForDate:(MHVDateTime *)dateTime
 {
-    return [MHVCholesterolV2 createRandomForDate:dateTime metric:FALSE];
+    return [MHVCholesterol createRandomForDate:dateTime metric:FALSE];
 }
 
 + (MHVItem *)createRandomMetricForDate:(MHVDateTime *)dateTime
 {
-    return [MHVCholesterolV2 createRandomForDate:dateTime metric:TRUE];
+    return [MHVCholesterol createRandomForDate:dateTime metric:TRUE];
 }
 
 + (MHVItem *)createRandomForDate:(MHVDateTime *)dateTime metric:(BOOL)metric
 {
-    MHVItem *item = [MHVCholesterolV2 newItem];
-    MHVCholesterolV2 *cholesterol = item.cholesterolV2;
+    MHVItem *item = [MHVCholesterol newItem];
+    MHVCholesterol *cholesterol = item.cholesterol;
     
     cholesterol.when = dateTime;
     if (metric)

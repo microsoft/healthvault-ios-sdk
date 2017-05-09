@@ -1,15 +1,15 @@
 //
-//  MHVBloodGlucose.h
-//  MHVLib
+// MHVBloodGlucose.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,54 +20,44 @@
 #import "MHVTypes.h"
 
 @interface MHVBloodGlucose : MHVItemDataTyped
-{
-@private
-    MHVDateTime* m_when;
-    MHVBloodGlucoseMeasurement* m_value;
-    MHVCodableValue* m_measurementType;
-    MHVBool* m_outsideOperatingTemp;
-    MHVBool* m_controlTest;
-    MHVOneToFive* m_normalcy;
-    MHVCodableValue* m_context;
-}
 
-//-------------------------
+// -------------------------
 //
 // Data
 //
-//-------------------------
+// -------------------------
 //
 // (Required) when this measurement was taken
 //
-@property (readwrite, nonatomic, strong) MHVDateTime* when;
+@property (readwrite, nonatomic, strong) MHVDateTime *when;
 //
-// (Required) Blood glucose value). 
+// (Required) Blood glucose value).
 // You can also use the convenience inMmolPerLiter and inMgPerDL properties
 //
-@property (readwrite, nonatomic, strong) MHVBloodGlucoseMeasurement* value;
+@property (readwrite, nonatomic, strong) MHVBloodGlucoseMeasurement *value;
 //
 // (Required) What type of measurement (plasma, whole blood)
-//  Preferred Vocabulary: glucose-measurement-type
-//  You can use the createPlasmaMeasurementCode & createWholeBloodMeasurentCode methods
+// Preferred Vocabulary: glucose-measurement-type
+// You can use the createPlasmaMeasurementCode & createWholeBloodMeasurentCode methods
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* measurementType;
+@property (readwrite, nonatomic, strong) MHVCodableValue *measurementType;
 //
 // (Optional) Is the reading outside operating tempature of the measuring device
 //
-@property (readwrite, nonatomic, strong) MHVBool* isOutsideOperatingTemp;
+@property (readwrite, nonatomic, strong) MHVBool *isOutsideOperatingTemp;
 //
-// (Optional) Was this reading the result of a control test? 
+// (Optional) Was this reading the result of a control test?
 //
-@property (readwrite, nonatomic, strong) MHVBool* isControlTest;
+@property (readwrite, nonatomic, strong) MHVBool *isControlTest;
 //
-// (Optional) How did this reading rate, relative to normal? 
+// (Optional) How did this reading rate, relative to normal?
 //
 @property (readwrite, nonatomic) MHVRelativeRating normalcy;
 //
 // (Optional) measurement context
 // Preferred Vocab: glucose-measurement-context
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue* context;
+@property (readwrite, nonatomic, strong) MHVCodableValue *context;
 
 //
 // Convenience properties
@@ -77,52 +67,52 @@
 @property (readwrite, nonatomic) double inMgPerDL;
 
 
-//-------------------------
+// -------------------------
 //
 // Initializers
 //
-//-------------------------
--(id) initWithMmolPerLiter:(double) value andDate:(NSDate *) date;
+// -------------------------
+- (instancetype)initWithMmolPerLiter:(double)value andDate:(NSDate *)date;
 
-+(MHVItem *) newItem;
++ (MHVItem *)newItem;
 
-//-------------------------
+// -------------------------
 //
 // Methods
 //
-//-------------------------
+// -------------------------
 //
 // You can use this to set the measurementType
 //
-+(MHVCodableValue *) createPlasmaMeasurementType;
++ (MHVCodableValue *)createPlasmaMeasurementType;
 //
 // You can use this to set the measurementType
 //
-+(MHVCodableValue *) createWholeBloodMeasurementType;
++ (MHVCodableValue *)createWholeBloodMeasurementType;
 
-+(MHVVocabIdentifier *) vocabForMeasurementType;
-+(MHVVocabIdentifier *) vocabForContext;
-+(MHVVocabIdentifier *) vocabForNormalcy;
++ (MHVVocabIdentifier *)vocabForMeasurementType;
++ (MHVVocabIdentifier *)vocabForContext;
++ (MHVVocabIdentifier *)vocabForNormalcy;
 
-//-------------------------
+// -------------------------
 //
 // Text
 //
-//-------------------------
+// -------------------------
 //
 // These methods expect a format string containing a single %f
 //
--(NSString *) stringInMmolPerLiter:(NSString *) format;
--(NSString *) stringInMgPerDL:(NSString *) format;
--(NSString *) toString;
--(NSString *) normalcyText;
+- (NSString *)stringInMmolPerLiter:(NSString *)format;
+- (NSString *)stringInMgPerDL:(NSString *)format;
+- (NSString *)toString;
+- (NSString *)normalcyText;
 
-//-------------------------
+// -------------------------
 //
 // Type information
 //
-//-------------------------
-+(NSString *) typeID;
-+(NSString *) XRootElement;
+// -------------------------
++ (NSString *)typeID;
++ (NSString *)XRootElement;
 
 @end

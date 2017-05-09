@@ -93,7 +93,6 @@ static MHVTypeSystem *s_typeRegistry;
     [s_typeRegistry addClass:[MHVWeight class] forTypeID:[MHVWeight typeID]];
     [s_typeRegistry addClass:[MHVBloodPressure class] forTypeID:[MHVBloodPressure typeID]];
     [s_typeRegistry addClass:[MHVCholesterol class] forTypeID:[MHVCholesterol typeID]];
-    [s_typeRegistry addClass:[MHVCholesterolV2 class] forTypeID:[MHVCholesterolV2 typeID]];
     [s_typeRegistry addClass:[MHVBloodGlucose class] forTypeID:[MHVBloodGlucose typeID]];
     [s_typeRegistry addClass:[MHVHeartRate class] forTypeID:[MHVHeartRate typeID]];
     [s_typeRegistry addClass:[MHVHeight class] forTypeID:[MHVHeight typeID]];
