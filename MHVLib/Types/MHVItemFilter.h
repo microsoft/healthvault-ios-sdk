@@ -24,7 +24,7 @@
 
 @interface MHVTypeFilter : MHVType
 
-@property (readwrite, nonatomic) enum MHVItemState state;
+@property (readwrite, nonatomic) MHVItemState state;
 
 @property (readwrite, nonatomic, strong) NSDate *effectiveDateMin;
 @property (readwrite, nonatomic, strong) NSDate *effectiveDateMax;
