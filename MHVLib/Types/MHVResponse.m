@@ -1,8 +1,8 @@
 //
-//  MHVResponse.m
-//  MHVLib
+// MHVResponse.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,25 +19,21 @@
 #import "MHVCommon.h"
 #import "MHVResponse.h"
 
-static const xmlChar* x_element_status = XMLSTRINGCONST("status");
+static const xmlChar *x_element_status = XMLSTRINGCONST("status");
 
 @implementation MHVResponse
 
-@synthesize status = m_status;
-@synthesize body = m_body;
-
--(BOOL)hasError
+- (BOOL)hasError
 {
-    return (m_status != nil && m_status.hasError);
+    return self.status != nil && self.status.hasError;
 }
 
-
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_status = [reader readElementWithXmlName:x_element_status asClass:[MHVResponseStatus class]];
+    self.status = [reader readElementWithXmlName:x_element_status asClass:[MHVResponseStatus class]];
     if (reader.isStartElement)
     {
-        m_body = [reader readOuterXml];
+        self.body = [reader readOuterXml];
     }
 }
 

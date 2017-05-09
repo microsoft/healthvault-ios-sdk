@@ -1,15 +1,15 @@
 //
-//  constrainedInt.m
-//  MHVLib
+// constrainedInt.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,23 +21,24 @@
 
 @implementation MHVConstrainedInt
 
--(BOOL) inRange
+- (BOOL)inRange
 {
-    return [self validateValue:m_value];
+    return [self validateValue:self.value];
 }
 
--(int) min
+- (int)min
 {
     return INT32_MIN;
 }
--(int) max
+
+- (int)max
 {
     return INT32_MAX;
 }
 
--(MHVClientResult *) validate
+- (MHVClientResult *)validate
 {
-    if ([self validateValue:m_value])
+    if ([self validateValue:self.value])
     {
         return MHVRESULT_SUCCESS;
     }
@@ -47,9 +48,9 @@
     }
 }
 
--(BOOL) validateValue:(int)value
+- (BOOL)validateValue:(int)value
 {
-    return(self.min <= value && value <= self.max);
+    return self.min <= value && value <= self.max;
 }
 
 @end

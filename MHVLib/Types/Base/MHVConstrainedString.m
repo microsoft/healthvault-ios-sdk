@@ -1,15 +1,15 @@
 //
-//  MHVConstrainedString.m
-//  MHVLib
+// MHVConstrainedString.m
+// MHVLib
 //
-//  Copyright (c) 2012, 2014 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2012, 2014 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,40 +21,35 @@
 
 @implementation MHVString
 
-@synthesize value = m_value;
-
--(NSUInteger) length
+- (NSUInteger)length
 {
-    return (m_value != nil) ? m_value.length : 0;
+    return (self.value != nil) ? self.value.length : 0;
 }
 
--(id) initWith:(NSString *)value
+- (instancetype)initWith:(NSString *)value
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_value = value;
-    
+    if (self)
+    {
+        _value = value;
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(NSString *) description
+- (NSString *)description
 {
-    return m_value;
+    return self.value;
 }
 
--(void) serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeText:m_value];
+    [writer writeText:self.value];
 }
 
--(void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_value = [reader readValue];
+    self.value = [reader readValue];
 }
 
 @end
@@ -62,19 +57,19 @@ LError:
 
 @implementation MHVConstrainedString
 
--(NSUInteger) minLength
+- (NSUInteger)minLength
 {
     return 1;
 }
 
--(NSUInteger) maxLength
+- (NSUInteger)maxLength
 {
     return INT32_MAX;
 }
 
--(MHVClientResult *) validate
+- (MHVClientResult *)validate
 {
-    if ([self validateValue:m_value])
+    if ([self validateValue:self.value])
     {
         return MHVRESULT_SUCCESS;
     }
@@ -84,10 +79,11 @@ LError:
     }
 }
 
--(BOOL) validateValue:(NSString *)value
+- (BOOL)validateValue:(NSString *)value
 {
     int length = (value != nil) ? (int)value.length : 0;
-    return (self.minLength <= length && length <= self.maxLength);
+
+    return self.minLength <= length && length <= self.maxLength;
 }
 
 @end

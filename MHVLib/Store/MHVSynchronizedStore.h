@@ -27,12 +27,12 @@
 
 @interface MHVSynchronizedStore : NSObject
 {
-    enum MHVItemSection m_sections;
+    MHVItemSection m_sections;
     id<MHVItemStore> m_localStore;
 }
 
 @property (readonly, nonatomic, strong) id<MHVItemStore> localStore;
-@property (readwrite, nonatomic) enum MHVItemSection defaultSections;
+@property (readwrite, nonatomic) MHVItemSection defaultSections;
 
 // Weak ref back to the owning sync manager, if any
 @property (readwrite, nonatomic, weak) MHVSynchronizationManager* syncMgr;

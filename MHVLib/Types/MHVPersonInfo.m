@@ -1,15 +1,15 @@
 //
-//  MHVPersonInfo.m
-//  MHVLib
+// MHVPersonInfo.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,87 +19,70 @@
 #import "MHVCommon.h"
 #import "MHVPersonInfo.h"
 
-static NSString* const c_element_id = @"person-id";
-static NSString* const c_element_name = @"name";
-static NSString* const c_element_settings = @"app-settings";
-static NSString* const c_element_selectedID = @"selected-record-id";
-static NSString* const c_element_more = @"more-records";
-static NSString* const c_element_record = @"record";
-static NSString* const c_element_groups = @"groups";
-static NSString* const c_element_culture = @"preferred-culture";
-static NSString* const c_element_uiculture = @"preferred-uiculture";
-
-@interface MHVPersonInfo (MHVPrivate) 
--(void) addPersonIDToRecords;
-@end
+static NSString *const c_element_id = @"person-id";
+static NSString *const c_element_name = @"name";
+static NSString *const c_element_settings = @"app-settings";
+static NSString *const c_element_selectedID = @"selected-record-id";
+static NSString *const c_element_more = @"more-records";
+static NSString *const c_element_record = @"record";
+static NSString *const c_element_groups = @"groups";
+static NSString *const c_element_culture = @"preferred-culture";
+static NSString *const c_element_uiculture = @"preferred-uiculture";
 
 @implementation MHVPersonInfo
 
-@synthesize ID = m_id;
-@synthesize name = m_name;
-@synthesize appSettingsXml = m_appSettingsXml;
-@synthesize selectedRecordID = m_selectedRecordID;
-@synthesize moreRecords = m_moreRecords;
-@synthesize records = m_records;
-@synthesize groupsXml = m_groupsXml;
-@synthesize preferredCultureXml = m_preferredCultureXml;
-@synthesize preferredUICultureXml = m_preferredUICultureXml;
-
--(BOOL) hasRecords
+- (BOOL)hasRecords
 {
-    return !([MHVCollection isNilOrEmpty:m_records]);
+    return !([MHVCollection isNilOrEmpty:self.records]);
 }
 
-
--(MHVClientResult *) validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-    
-    MHVVALIDATE_STRING(m_id, MHVClientError_InvalidPersonInfo);
-    MHVVALIDATE_ARRAY(m_records, MHVClientError_InvalidPersonInfo);
-    
+
+    MHVVALIDATE_STRING(self.ID, MHVClientError_InvalidPersonInfo);
+    MHVVALIDATE_ARRAY(self.records, MHVClientError_InvalidPersonInfo);
+
     MHVVALIDATE_SUCCESS;
 }
 
--(void) serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_id value:m_id];
-    [writer writeElement:c_element_name value:m_name];
-    [writer writeRaw:m_appSettingsXml];
-    [writer writeElement:c_element_selectedID value:m_selectedRecordID];
-    [writer writeElement:c_element_more content:m_moreRecords];
-    [writer writeElementArray:c_element_record elements:m_records.toArray];
-    [writer writeRaw:m_groupsXml];
-    [writer writeRaw:m_preferredCultureXml];
-    [writer writeRaw:m_preferredUICultureXml];
+    [writer writeElement:c_element_id value:self.ID];
+    [writer writeElement:c_element_name value:self.name];
+    [writer writeRaw:self.appSettingsXml];
+    [writer writeElement:c_element_selectedID value:self.selectedRecordID];
+    [writer writeElement:c_element_more content:self.moreRecords];
+    [writer writeElementArray:c_element_record elements:self.records.toArray];
+    [writer writeRaw:self.groupsXml];
+    [writer writeRaw:self.preferredCultureXml];
+    [writer writeRaw:self.preferredUICultureXml];
 }
 
--(void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_id = [reader readStringElement:c_element_id];
-    m_name = [reader readStringElement:c_element_name];
-    m_appSettingsXml = [reader readElementRaw:c_element_settings];
-    m_selectedRecordID = [reader readStringElement:c_element_selectedID];
-    m_moreRecords = [reader readElement:c_element_more asClass:[MHVBool class]];
-    m_records = (MHVRecordCollection *)[reader readElementArray:c_element_record asClass:[MHVRecord class] andArrayClass:[MHVRecordCollection class]];
-    m_groupsXml = [reader readElementRaw:c_element_groups];
-    m_preferredCultureXml = [reader readElementRaw:c_element_culture];
-    m_preferredUICultureXml = [reader readElementRaw:c_element_uiculture];
+    self.ID = [reader readStringElement:c_element_id];
+    self.name = [reader readStringElement:c_element_name];
+    self.appSettingsXml = [reader readElementRaw:c_element_settings];
+    self.selectedRecordID = [reader readStringElement:c_element_selectedID];
+    self.moreRecords = [reader readElement:c_element_more asClass:[MHVBool class]];
+    self.records = (MHVRecordCollection *)[reader readElementArray:c_element_record asClass:[MHVRecord class] andArrayClass:[MHVRecordCollection class]];
+    self.groupsXml = [reader readElementRaw:c_element_groups];
+    self.preferredCultureXml = [reader readElementRaw:c_element_culture];
+    self.preferredUICultureXml = [reader readElementRaw:c_element_uiculture];
     //
     // Fix up records with personIDs
     //
     [self addPersonIDToRecords];
 }
 
-@end
+#pragma mark - Internal methods
 
-@implementation MHVPersonInfo (MHVPrivate)
-
--(void)addPersonIDToRecords
+- (void)addPersonIDToRecords
 {
-    for (MHVRecord* record in m_records) 
+    for (MHVRecord *record in self.records)
     {
-        record.personID = m_id;
+        record.personID = self.ID;
     }
 }
 

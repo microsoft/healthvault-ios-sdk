@@ -1,8 +1,8 @@
 //
-//  MHVResponse.h
-//  MHVLib
+// MHVResponse.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,14 +22,9 @@
 #import "MHVResponseStatus.h"
 
 @interface MHVResponse : MHVType
-{
-@private
-    MHVResponseStatus* m_status;
-    NSString* m_body;
-}
 
-@property (readwrite, nonatomic, strong) MHVResponseStatus* status;
-@property (readwrite, nonatomic, strong) NSString* body;
+@property (readwrite, nonatomic, strong) MHVResponseStatus *status;
+@property (readwrite, nonatomic, strong) NSString *body;
 
 @property (readonly, nonatomic) BOOL hasError;
 
