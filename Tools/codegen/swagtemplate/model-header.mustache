@@ -1,0 +1,29 @@
+#import <Foundation/Foundation.h>
+
+{{>licenceInfo}}
+
+{{#imports}}#import "{{import}}.h"
+{{/imports}}
+#import "MHVModelBase.h"
+{{newline}}
+{{#models}}
+{{#model}}
+
+@protocol {{classname}}
+@end
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface {{classname}} : MHVModelBase
+
+{{#vars}}
+{{#description}}/* {{{description}}} {{^required}}[optional]{{/required}}
+ */{{/description}}
+@property(strong,nonatomic{{^required}},nullable{{/required}}) {{{ datatype }}} {{name}};
+{{/vars}}
+
+@end
+{{/model}}
+{{/models}}
+
+NS_ASSUME_NONNULL_END

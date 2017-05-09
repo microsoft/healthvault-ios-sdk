@@ -59,6 +59,8 @@ while(NO)
 #define MHVASSERT_MESSAGE(message) MHVLogEventFromCode(message, __FILE__, __LINE__);
 #define MHVASSERT(condition) if (!(condition)) { MHVASSERT_MESSAGE(@#condition)}
 
+#define MHVASSERT_TRUE(condition, ...) if (!(condition)) { MHVASSERT_MESSAGE(@#condition)}
+
 #else
 
 #define MHVASSERT(condition) 
