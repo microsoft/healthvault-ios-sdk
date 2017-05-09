@@ -1,15 +1,15 @@
 //
-//  MHVBloodGlucose.m
-//  MHVLib
+// MHVBloodGlucose.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,219 +19,207 @@
 #import "MHVCommon.h"
 #import "MHVBloodGlucose.h"
 
-static NSString* const c_typeid = @"879e7c04-4e8a-4707-9ad3-b054df467ce4";
-static NSString* const c_typename = @"blood-glucose";
+static NSString *const c_typeid = @"879e7c04-4e8a-4707-9ad3-b054df467ce4";
+static NSString *const c_typename = @"blood-glucose";
 
-static const xmlChar* x_element_when = XMLSTRINGCONST("when");
-static const xmlChar* x_element_value = XMLSTRINGCONST("value");
-static const xmlChar* x_element_type = XMLSTRINGCONST("glucose-measurement-type");
-static const xmlChar* x_element_operatingTemp = XMLSTRINGCONST("outside-operating-temp");
-static const xmlChar* x_element_controlTest = XMLSTRINGCONST("is-control-test");
-static const xmlChar* x_element_normalcy = XMLSTRINGCONST("normalcy");
-static const xmlChar* x_element_context = XMLSTRINGCONST("measurement-context");
+static const xmlChar *x_element_when = XMLSTRINGCONST("when");
+static const xmlChar *x_element_value = XMLSTRINGCONST("value");
+static const xmlChar *x_element_type = XMLSTRINGCONST("glucose-measurement-type");
+static const xmlChar *x_element_operatingTemp = XMLSTRINGCONST("outside-operating-temp");
+static const xmlChar *x_element_controlTest = XMLSTRINGCONST("is-control-test");
+static const xmlChar *x_element_normalcy = XMLSTRINGCONST("normalcy");
+static const xmlChar *x_element_context = XMLSTRINGCONST("measurement-context");
 
-static NSString* const c_vocab_measurement = @"glucose-measurement-type";
+static NSString *const c_vocab_measurement = @"glucose-measurement-type";
 
-@interface MHVBloodGlucose (MHVPrivate)
+@interface MHVBloodGlucose ()
 
-+(MHVCodableValue *) newMeasurementText:(NSString *) text andCode:(NSString *) code;
-+(MHVCodedValue *) newMeasurementCode:(NSString *) code;
+@property (nonatomic, strong) MHVOneToFive *normalcyValue;
 
 @end
 
 @implementation MHVBloodGlucose
 
-@synthesize when = m_when;
-@synthesize value = m_value;
-@synthesize measurementType = m_measurementType;
-@synthesize isOutsideOperatingTemp = m_outsideOperatingTemp;
-@synthesize isControlTest = m_controlTest;
-@synthesize context = m_context;
-
--(NSDate *)getDate
+- (NSDate *)getDate
 {
-    return [m_when toDate];
+    return [self.when toDate];
 }
 
--(NSDate *)getDateForCalendar:(NSCalendar *)calendar
+- (NSDate *)getDateForCalendar:(NSCalendar *)calendar
 {
-    return [m_when toDateForCalendar:calendar];
+    return [self.when toDateForCalendar:calendar];
 }
 
--(double)inMgPerDL
+- (double)inMgPerDL
 {
-    return (m_value) ? m_value.mgPerDL : NAN;
+    return (self.value) ? self.value.mgPerDL : NAN;
 }
 
--(void)setInMgPerDL:(double)inMgPerDL
+- (void)setInMgPerDL:(double)inMgPerDL
 {
-    MHVENSURE(m_value, MHVBloodGlucoseMeasurement);
-    m_value.mgPerDL = inMgPerDL;
+    MHVENSURE(self.value, MHVBloodGlucoseMeasurement);
+    self.value.mgPerDL = inMgPerDL;
 }
 
--(double)inMmolPerLiter
+- (double)inMmolPerLiter
 {
-    return (m_value) ? m_value.mmolPerLiter : NAN;
+    return (self.value) ? self.value.mmolPerLiter : NAN;
 }
 
--(void)setInMmolPerLiter:(double)inMmolPerLiter
+- (void)setInMmolPerLiter:(double)inMmolPerLiter
 {
-    MHVENSURE(m_value, MHVBloodGlucoseMeasurement);
-    m_value.mmolPerLiter = inMmolPerLiter;
+    MHVENSURE(self.value, MHVBloodGlucoseMeasurement);
+    self.value.mmolPerLiter = inMmolPerLiter;
 }
 
--(MHVRelativeRating)normalcy
+- (MHVRelativeRating)normalcy
 {
-    return (m_normalcy) ? (MHVRelativeRating) m_normalcy.value : MHVRelativeRating_None;
+    return (self.normalcyValue) ? (MHVRelativeRating)self.normalcyValue.value : MHVRelativeRating_None;
 }
 
--(void)setNormalcy:(MHVRelativeRating)normalcy
+- (void)setNormalcy:(MHVRelativeRating)normalcy
 {
     if (normalcy == MHVRelativeRating_None)
     {
-        m_normalcy = nil;
+        self.normalcyValue = nil;
     }
-    else 
+    else
     {
-        MHVENSURE(m_normalcy, MHVOneToFive);
-        m_normalcy.value = normalcy;
+        MHVENSURE(self.normalcyValue, MHVOneToFive);
+        self.normalcyValue.value = normalcy;
     }
 }
 
--(id)initWithMmolPerLiter:(double)value andDate:(NSDate *)date
+- (instancetype)initWithMmolPerLiter:(double)value andDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    self.inMmolPerLiter = value;
-    MHVCHECK_NOTNULL(m_value);
-    
-    m_when = [[MHVDateTime alloc] initWithDate:date];
-    MHVCHECK_NOTNULL(m_when);
-    
+    if (self)
+    {
+        [self setInMmolPerLiter:value];
+        MHVCHECK_NOTNULL(_value);
+
+        _when = [[MHVDateTime alloc] initWithDate:date];
+        MHVCHECK_NOTNULL(_when);
+    }
+
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
-
--(NSString *)stringInMgPerDL:(NSString *)format
+- (NSString *)stringInMgPerDL:(NSString *)format
 {
     return [NSString localizedStringWithFormat:format, self.inMgPerDL];
 }
 
--(NSString *)stringInMmolPerLiter:(NSString *)format
+- (NSString *)stringInMmolPerLiter:(NSString *)format
 {
     return [NSString localizedStringWithFormat:format, self.inMmolPerLiter];
 }
 
--(NSString *)toString
+- (NSString *)toString
 {
     return [self stringInMmolPerLiter:@"%.3f mmol/L"];
 }
 
--(NSString *)normalcyText
+- (NSString *)normalcyText
 {
     return stringFromRating(self.normalcy);
 }
 
-+(MHVCodableValue *)createPlasmaMeasurementType
++ (MHVCodableValue *)createPlasmaMeasurementType
 {
     return [MHVBloodGlucose newMeasurementText:@"Plasma" andCode:@"p"];
 }
 
-+(MHVCodableValue *)createWholeBloodMeasurementType
++ (MHVCodableValue *)createWholeBloodMeasurementType
 {
     return [MHVBloodGlucose newMeasurementText:@"Whole blood" andCode:@"wb"];
 }
 
-+(MHVVocabIdentifier *)vocabForContext
++ (MHVVocabIdentifier *)vocabForContext
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-context"];    
+    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-context"];
 }
 
-+(MHVVocabIdentifier *)vocabForMeasurementType
++ (MHVVocabIdentifier *)vocabForMeasurementType
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-type"];    
+    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-type"];
 }
 
-+(MHVVocabIdentifier *)vocabForNormalcy
++ (MHVVocabIdentifier *)vocabForNormalcy
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"normalcy-one-to-five"];    
+    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"normalcy-one-to-five"];
 }
 
--(MHVClientResult *)validate
+- (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-    
-    MHVVALIDATE(m_when, MHVClientError_InvalidBloodGlucose);
-    MHVVALIDATE(m_value, MHVClientError_InvalidBloodGlucose);
-    MHVVALIDATE(m_measurementType, MHVClientError_InvalidBloodGlucose);
-    MHVVALIDATE_OPTIONAL(m_outsideOperatingTemp);
-    MHVVALIDATE_OPTIONAL(m_controlTest);
-    MHVVALIDATE_OPTIONAL(m_normalcy);
-    MHVVALIDATE_OPTIONAL(m_context);
+
+    MHVVALIDATE(self.when, MHVClientError_InvalidBloodGlucose);
+    MHVVALIDATE(self.value, MHVClientError_InvalidBloodGlucose);
+    MHVVALIDATE(self.measurementType, MHVClientError_InvalidBloodGlucose);
+    MHVVALIDATE_OPTIONAL(self.isOutsideOperatingTemp);
+    MHVVALIDATE_OPTIONAL(self.isControlTest);
+    MHVVALIDATE_OPTIONAL(self.normalcyValue);
+    MHVVALIDATE_OPTIONAL(self.context);
 
     MHVVALIDATE_SUCCESS
 }
 
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_when content:m_when];
-    [writer writeElementXmlName:x_element_value content:m_value];
-    [writer writeElementXmlName:x_element_type content:m_measurementType];
-    [writer writeElementXmlName:x_element_operatingTemp content:m_outsideOperatingTemp];
-    [writer writeElementXmlName:x_element_controlTest content:m_controlTest];
-    [writer writeElementXmlName:x_element_normalcy content:m_normalcy];
-    [writer writeElementXmlName:x_element_context content:m_context];
+    [writer writeElementXmlName:x_element_when content:self.when];
+    [writer writeElementXmlName:x_element_value content:self.value];
+    [writer writeElementXmlName:x_element_type content:self.measurementType];
+    [writer writeElementXmlName:x_element_operatingTemp content:self.isOutsideOperatingTemp];
+    [writer writeElementXmlName:x_element_controlTest content:self.isControlTest];
+    [writer writeElementXmlName:x_element_normalcy content:self.normalcyValue];
+    [writer writeElementXmlName:x_element_context content:self.context];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
-    m_value = [reader readElementWithXmlName:x_element_value asClass:[MHVBloodGlucoseMeasurement class]];
-    m_measurementType = [reader readElementWithXmlName:x_element_type asClass:[MHVCodableValue class]];
-    m_outsideOperatingTemp = [reader readElementWithXmlName:x_element_operatingTemp asClass:[MHVBool class]];
-    m_controlTest = [reader readElementWithXmlName:x_element_controlTest asClass:[MHVBool class]];
-    m_normalcy = [reader readElementWithXmlName:x_element_normalcy asClass:[MHVOneToFive class]];
-    m_context = [reader readElementWithXmlName:x_element_context asClass:[MHVCodableValue class]];
+    self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
+    self.value = [reader readElementWithXmlName:x_element_value asClass:[MHVBloodGlucoseMeasurement class]];
+    self.measurementType = [reader readElementWithXmlName:x_element_type asClass:[MHVCodableValue class]];
+    self.isOutsideOperatingTemp = [reader readElementWithXmlName:x_element_operatingTemp asClass:[MHVBool class]];
+    self.isControlTest = [reader readElementWithXmlName:x_element_controlTest asClass:[MHVBool class]];
+    self.normalcyValue = [reader readElementWithXmlName:x_element_normalcy asClass:[MHVOneToFive class]];
+    self.context = [reader readElementWithXmlName:x_element_context asClass:[MHVCodableValue class]];
 }
 
-+(NSString *)typeID
++ (NSString *)typeID
 {
     return c_typeid;
 }
 
-+(NSString *) XRootElement
++ (NSString *)XRootElement
 {
     return c_typename;
 }
 
-+(MHVItem *) newItem
++ (MHVItem *)newItem
 {
     return [[MHVItem alloc] initWithType:[MHVBloodGlucose typeID]];
 }
 
--(NSString *)typeName
+- (NSString *)typeName
 {
     return NSLocalizedString(@"Blood Glucose", @"Blood Glucose Type Name");
 }
 
-@end
+#pragma mark - Internal methods
 
-@implementation MHVBloodGlucose (MHVPrivate)
-    
-+(MHVCodableValue *)newMeasurementText:(NSString *)text andCode:(NSString *)code
++ (MHVCodableValue *)newMeasurementText:(NSString *)text andCode:(NSString *)code
 {
-    MHVCodedValue* codedValue = [MHVBloodGlucose newMeasurementCode:code];
-    MHVCodableValue* codableValue = [[MHVCodableValue alloc] initWithText:text andCode:codedValue];
+    MHVCodedValue *codedValue = [MHVBloodGlucose newMeasurementCode:code];
+    MHVCodableValue *codableValue = [[MHVCodableValue alloc] initWithText:text andCode:codedValue];
+
     return codableValue;
 }
 
-+(MHVCodedValue *) newMeasurementCode:(NSString *)code
++ (MHVCodedValue *)newMeasurementCode:(NSString *)code
 {
     return [[MHVCodedValue alloc] initWithCode:code andVocab:c_vocab_measurement];
 }

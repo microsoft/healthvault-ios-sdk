@@ -1,15 +1,15 @@
 //
-//  MHVItemRaw.m
-//  MHVLib
+// MHVItemRaw.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,33 +19,36 @@
 #import "MHVCommon.h"
 #import "MHVItemRaw.h"
 
+@interface MHVItemRaw ()
+
+@property (nonatomic, strong) NSString *root;
+
+@end
+
 @implementation MHVItemRaw
 
-@synthesize xml = m_xml;
-
--(BOOL)hasRawData
+- (BOOL)hasRawData
 {
     return TRUE;
 }
 
-
--(NSString *)rootElement
+- (NSString *)rootElement
 {
-    return m_root;
+    return self.root;
 }
 
--(void) serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
-    if (m_xml)
+    if (self.xml)
     {
-        [writer writeRaw:m_xml];
+        [writer writeRaw:self.xml];
     }
 }
 
--(void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_root = reader.localName;
-    m_xml = [reader readElementRaw:m_root];
+    self.root = reader.localName;
+    self.xml = [reader readElementRaw:self.root];
 }
 
 @end

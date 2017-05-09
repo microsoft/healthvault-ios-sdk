@@ -21,10 +21,8 @@
 		4C191A6A1EC1033C00B5E545 /* MHVCCD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191A1C1EC1033C00B5E545 /* MHVCCD.m */; };
 		4C191A6B1EC1033C00B5E545 /* MHVCCR.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A1D1EC1033C00B5E545 /* MHVCCR.h */; };
 		4C191A6C1EC1033C00B5E545 /* MHVCCR.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191A1E1EC1033C00B5E545 /* MHVCCR.m */; };
-		4C191A6D1EC1033C00B5E545 /* MHVCholesterol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A1F1EC1033C00B5E545 /* MHVCholesterol.h */; };
-		4C191A6E1EC1033C00B5E545 /* MHVCholesterol.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191A201EC1033C00B5E545 /* MHVCholesterol.m */; };
-		4C191A6F1EC1033C00B5E545 /* MHVCholesterolV2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A211EC1033C00B5E545 /* MHVCholesterolV2.h */; };
-		4C191A701EC1033C00B5E545 /* MHVCholesterolV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191A221EC1033C00B5E545 /* MHVCholesterolV2.m */; };
+		4C191A6F1EC1033C00B5E545 /* MHVCholesterol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A211EC1033C00B5E545 /* MHVCholesterol.h */; };
+		4C191A701EC1033C00B5E545 /* MHVCholesterol.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191A221EC1033C00B5E545 /* MHVCholesterol.m */; };
 		4C191A711EC1033C00B5E545 /* MHVCondition.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A231EC1033C00B5E545 /* MHVCondition.h */; };
 		4C191A721EC1033C00B5E545 /* MHVCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191A241EC1033C00B5E545 /* MHVCondition.m */; };
 		4C191A731EC1033C00B5E545 /* MHVDailyDietaryIntake.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A251EC1033C00B5E545 /* MHVDailyDietaryIntake.h */; };
@@ -511,10 +509,8 @@
 		4C191A1C1EC1033C00B5E545 /* MHVCCD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVCCD.m; path = MHVLib/ThingTypes/MHVCCD.m; sourceTree = SOURCE_ROOT; };
 		4C191A1D1EC1033C00B5E545 /* MHVCCR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVCCR.h; path = MHVLib/ThingTypes/MHVCCR.h; sourceTree = SOURCE_ROOT; };
 		4C191A1E1EC1033C00B5E545 /* MHVCCR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVCCR.m; path = MHVLib/ThingTypes/MHVCCR.m; sourceTree = SOURCE_ROOT; };
-		4C191A1F1EC1033C00B5E545 /* MHVCholesterol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVCholesterol.h; path = MHVLib/ThingTypes/MHVCholesterol.h; sourceTree = SOURCE_ROOT; };
-		4C191A201EC1033C00B5E545 /* MHVCholesterol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVCholesterol.m; path = MHVLib/ThingTypes/MHVCholesterol.m; sourceTree = SOURCE_ROOT; };
-		4C191A211EC1033C00B5E545 /* MHVCholesterolV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVCholesterolV2.h; path = MHVLib/ThingTypes/MHVCholesterolV2.h; sourceTree = SOURCE_ROOT; };
-		4C191A221EC1033C00B5E545 /* MHVCholesterolV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVCholesterolV2.m; path = MHVLib/ThingTypes/MHVCholesterolV2.m; sourceTree = SOURCE_ROOT; };
+		4C191A211EC1033C00B5E545 /* MHVCholesterol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVCholesterol.h; path = MHVLib/ThingTypes/MHVCholesterol.h; sourceTree = SOURCE_ROOT; };
+		4C191A221EC1033C00B5E545 /* MHVCholesterol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVCholesterol.m; path = MHVLib/ThingTypes/MHVCholesterol.m; sourceTree = SOURCE_ROOT; };
 		4C191A231EC1033C00B5E545 /* MHVCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVCondition.h; path = MHVLib/ThingTypes/MHVCondition.h; sourceTree = SOURCE_ROOT; };
 		4C191A241EC1033C00B5E545 /* MHVCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVCondition.m; path = MHVLib/ThingTypes/MHVCondition.m; sourceTree = SOURCE_ROOT; };
 		4C191A251EC1033C00B5E545 /* MHVDailyDietaryIntake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVDailyDietaryIntake.h; path = MHVLib/ThingTypes/MHVDailyDietaryIntake.h; sourceTree = SOURCE_ROOT; };
@@ -1482,10 +1478,8 @@
 				4C191A1C1EC1033C00B5E545 /* MHVCCD.m */,
 				4C191A1D1EC1033C00B5E545 /* MHVCCR.h */,
 				4C191A1E1EC1033C00B5E545 /* MHVCCR.m */,
-				4C191A1F1EC1033C00B5E545 /* MHVCholesterol.h */,
-				4C191A201EC1033C00B5E545 /* MHVCholesterol.m */,
-				4C191A211EC1033C00B5E545 /* MHVCholesterolV2.h */,
-				4C191A221EC1033C00B5E545 /* MHVCholesterolV2.m */,
+				4C191A211EC1033C00B5E545 /* MHVCholesterol.h */,
+				4C191A221EC1033C00B5E545 /* MHVCholesterol.m */,
 				4C191A231EC1033C00B5E545 /* MHVCondition.h */,
 				4C191A241EC1033C00B5E545 /* MHVCondition.m */,
 				4C191A251EC1033C00B5E545 /* MHVDailyDietaryIntake.h */,
@@ -1704,7 +1698,6 @@
 				5DE3831014E4447800DFA11D /* XLib.h in Headers */,
 				5DE3831114E4447800DFA11D /* XNodeType.h in Headers */,
 				5DE3831214E4447800DFA11D /* XReader.h in Headers */,
-				4C191A6D1EC1033C00B5E545 /* MHVCholesterol.h in Headers */,
 				4C191A9F1EC1033C00B5E545 /* MHVPersonalImage.h in Headers */,
 				5DE3831414E4447800DFA11D /* XString.h in Headers */,
 				4C191A8F1EC1033C00B5E545 /* MHVItemTestExtensions.h in Headers */,
@@ -1760,7 +1753,7 @@
 				5D20D31314F2F4F400160611 /* MHVItem.h in Headers */,
 				5D20D31B14F2FA5900160611 /* MHVItemSection.h in Headers */,
 				5D20D32314F304E700160611 /* MHVItemState.h in Headers */,
-				4C191A6F1EC1033C00B5E545 /* MHVCholesterolV2.h in Headers */,
+				4C191A6F1EC1033C00B5E545 /* MHVCholesterol.h in Headers */,
 				5D20D32714F424F000160611 /* MHVItemType.h in Headers */,
 				5D20D32B14F42E1300160611 /* MHVItemData.h in Headers */,
 				4C191A951EC1033C00B5E545 /* MHVMedication.h in Headers */,
@@ -2129,7 +2122,7 @@
 				5D195D04151BC72C00E109AD /* MHVApproxMeasurement.m in Sources */,
 				4C191A601EC1033C00B5E545 /* MHVAllergy.m in Sources */,
 				5D195D10151BEBA100E109AD /* MHVAddress.m in Sources */,
-				4C191A701EC1033C00B5E545 /* MHVCholesterolV2.m in Sources */,
+				4C191A701EC1033C00B5E545 /* MHVCholesterol.m in Sources */,
 				5D195D14151BF01800E109AD /* MHVPhone.m in Sources */,
 				5D195D1C151BF2E200E109AD /* MHVEmailAddress.m in Sources */,
 				5D195D20151BF54300E109AD /* MHVEmail.m in Sources */,
@@ -2173,7 +2166,6 @@
 				5D775C901538E9BA000F01AE /* MHVAssessmentField.m in Sources */,
 				5DB2E6FC18D38E300030972D /* MHVItemChangeManager.m in Sources */,
 				4C191A7E1EC1033C00B5E545 /* MHVEncounter.m in Sources */,
-				4C191A6E1EC1033C00B5E545 /* MHVCholesterol.m in Sources */,
 				5DE34C8B15393C62003C24E8 /* MHVDuration.m in Sources */,
 				5DB2E72518D4BF910030972D /* MHVItemCommitErrorHandler.m in Sources */,
 				5DE34C8F15394314003C24E8 /* MHVOrganization.m in Sources */,

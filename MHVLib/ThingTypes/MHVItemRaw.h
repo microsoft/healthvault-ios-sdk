@@ -20,11 +20,6 @@
 #import "MHVTypes.h"
 
 @interface MHVItemRaw : MHVItemDataTyped
-{
-@protected
-    NSString* m_root;
-    NSString* m_xml;
-}
 
 @property (readwrite, nonatomic, strong) NSString* xml;
 

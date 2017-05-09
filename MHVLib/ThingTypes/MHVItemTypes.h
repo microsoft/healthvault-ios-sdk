@@ -19,9 +19,7 @@
 #import "MHVWeight.h"
 #import "MHVBloodPressure.h"
 #import "MHVCholesterol.h"
-#import "MHVCholesterolV2.h"
 #import "MHVBloodGlucose.h"
-#import "MHVCholesterolV2.h"
 #import "MHVHeartRate.h"
 #import "MHVHeight.h"
 #import "MHVPeakFlow.h"
@@ -61,11 +59,7 @@
 
 -(MHVWeight *) weight;
 -(MHVBloodPressure *) bloodPressure;
-//
-// Deprecated. Use cholesterolV2
-//
 -(MHVCholesterol *) cholesterol;
--(MHVCholesterolV2 *) cholesterolV2;
 -(MHVBloodGlucose *) bloodGlucose;
 -(MHVHeight *) height;
 -(MHVHeartRate *) heartRate;

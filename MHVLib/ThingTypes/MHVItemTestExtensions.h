@@ -82,7 +82,7 @@ NSString* pickRandomDrug(void);
 
 @end
 
-@interface MHVCholesterolV2 (MHVTestExtensions)
+@interface MHVCholesterol (MHVTestExtensions)
 
 +(MHVItem *) createRandom;
 +(MHVItem *) createRandomForDate:(MHVDateTime *) dateTime;
