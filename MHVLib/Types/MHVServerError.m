@@ -1,8 +1,8 @@
 //
-//  MHVServerError.m
-//  MHVLib
+// MHVServerError.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,22 +20,17 @@
 #import "MHVCommon.h"
 #import "MHVServerError.h"
 
-static const xmlChar* x_element_message = XMLSTRINGCONST("message");
-static const xmlChar* x_element_context = XMLSTRINGCONST("context");
-static const xmlChar* x_element_errorInfo = XMLSTRINGCONST("error-info");
+static const xmlChar *x_element_message = XMLSTRINGCONST("message");
+static const xmlChar *x_element_context = XMLSTRINGCONST("context");
+static const xmlChar *x_element_errorInfo = XMLSTRINGCONST("error-info");
 
 @implementation MHVServerError
 
-@synthesize message = m_message;
-@synthesize context = m_context;
-@synthesize errorInfo = m_errorInfo;
-
-
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
-    m_message = [reader readStringElementWithXmlName:x_element_message];
-    m_context = [reader readElementRawWithXmlName:x_element_context];
-    m_errorInfo = [reader readStringElementWithXmlName:x_element_errorInfo];
+    self.message = [reader readStringElementWithXmlName:x_element_message];
+    self.context = [reader readElementRawWithXmlName:x_element_context];
+    self.errorInfo = [reader readStringElementWithXmlName:x_element_errorInfo];
 }
 
 @end

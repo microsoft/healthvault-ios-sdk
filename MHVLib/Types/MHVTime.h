@@ -24,13 +24,6 @@
 #import "MHVMillisecond.h"
 
 @interface MHVTime : MHVType
-{
-@private
-    MHVHour *m_hours;
-    MHVMinute *m_minutes;
-    MHVSecond *m_seconds;
-    MHVMillisecond *m_milliseconds;
-}
 
 //-------------------------
 //
