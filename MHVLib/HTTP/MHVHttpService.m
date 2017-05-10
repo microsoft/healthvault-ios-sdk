@@ -49,21 +49,42 @@
     return self;
 }
 
-- (void)sendRequestForURL:(NSURL *)url
-                 withData:(NSString *)dataString
-               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+- (instancetype)initWithURLSession:(NSURLSession *)urlSession
 {
-    [self sendRequestForURL:url withData:dataString headers:nil completion:completion];
+    MHVASSERT_PARAMETER(urlSession);
+    
+    self = [super init];
+    if (self)
+    {
+        _urlSession = urlSession;
+        
+        _certificateCheckQueue = [[NSOperationQueue alloc] init];
+    }
+    
+    return self;
 }
 
 - (void)sendRequestForURL:(NSURL *)url
-                 withData:(NSString *)dataString
+                     body:(NSString *_Nullable)body
+               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+{
+    [self sendRequestForURL:url body:body headers:nil completion:completion];
+}
+
+- (void)sendRequestForURL:(NSURL *)url
+                     body:(NSString *_Nullable)body
                   headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
                completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
-    MHVASSERT_PARAMETER([url.scheme isEqualToString:@"https"]);
+    MHVASSERT_PARAMETER(url);
+    MHVASSERT([url.scheme isEqualToString:@"https"]);
     
-    NSMutableURLRequest *request = [[self requestWithUrl:url data:dataString] mutableCopy];
+    if (!url)
+    {
+        return;
+    }
+    
+    NSMutableURLRequest *request = [[self requestWithUrl:url body:body] mutableCopy];
     
     for (NSString *key in headers.allKeys)
     {
@@ -85,11 +106,17 @@
           
           if (error)
           {
-              completion(nil, error);
+              if (completion)
+              {
+                  completion(nil, error);
+              }
           }
           else
           {
-              completion([self responseFromData:data urlResponse:response], nil);
+              if (completion)
+              {
+                  completion([self responseFromData:data urlResponse:response], nil);
+              }
           }
       }] resume];
 }
@@ -98,35 +125,52 @@
                  toFilePath:(NSString *)path
                  completion:(void (^)(NSError *_Nullable error))completion
 {
-    NSURLRequest *request = [self requestWithUrl:url data:nil];
+    MHVASSERT_PARAMETER(url);
+    MHVASSERT_PARAMETER(path);
+    
+    if (!url || !path)
+    {
+        return;
+    }
+
+    NSURLRequest *request = [self requestWithUrl:url body:nil];
     
     [[self.urlSession downloadTaskWithRequest:request
                             completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error)
       {
           if (error)
           {
-              completion(error);
+              if (completion)
+              {
+                  completion(error);
+              }
               return;
           }
           
           NSError *fileError;
           if (![[NSFileManager defaultManager] copyItemAtURL:location toURL:[NSURL fileURLWithPath:path] error:&fileError])
           {
-              completion(fileError);
+              if (completion)
+              {
+                  completion(fileError);
+              }
           }
           else
           {
               [[NSFileManager defaultManager] setAttributes:@{
-                                                              NSFileProtectionKey : NSFileProtectionComplete
+                                                              NSFileProtectionKey : NSFileProtectionCompleteUntilFirstUserAuthentication
                                                               }
                                                ofItemAtPath:path
                                                       error:nil];
-              completion(nil);
+              if (completion)
+              {
+                  completion(nil);
+              }
           }
       }] resume];
 }
 
-- (void)uploadBlobSource:(id<MHVBlobSource>)blobSource
+- (void)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
                    toUrl:(NSURL *)url
                chunkSize:(NSUInteger)chunkSize
               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
@@ -134,13 +178,21 @@
     [self uploadBlobSource:blobSource toUrl:url chunkOffset:0 chunkSize:chunkSize completion:completion];
 }
 
-- (void)uploadBlobSource:(id<MHVBlobSource>)blobSource
+- (void)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
                    toUrl:(NSURL *)url
              chunkOffset:(NSUInteger)chunkOffset
                chunkSize:(NSUInteger)chunkSize
               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
-    MHVASSERT_PARAMETER([url.scheme isEqualToString:@"https"]);
+    MHVASSERT_PARAMETER(blobSource);
+    MHVASSERT_PARAMETER(url);
+    MHVASSERT([url.scheme isEqualToString:@"https"]);
+    MHVASSERT(chunkSize != 0);
+    
+    if (!blobSource || !url)
+    {
+        return;
+    }
 
     NSUInteger thisChunkSize = MIN(chunkSize, (blobSource.length - chunkOffset));
     
@@ -178,13 +230,19 @@
               {
                   [Logger write:[NSString stringWithFormat:@"Blob upload error: %@", error.localizedDescription]];
                   
-                  completion(nil, error);
+                  if (completion)
+                  {
+                      completion(nil, error);
+                  }
               }
               else
               {
                   [Logger write:[NSString stringWithFormat:@"Blob upload complete"]];
                   
-                  completion([self responseFromData:data urlResponse:response], nil);
+                  if (completion)
+                  {
+                      completion([self responseFromData:data urlResponse:response], nil);
+                  }
               }
           }
       }] resume];
@@ -193,20 +251,20 @@
 #pragma mark - Helpers
 
 - (NSURLRequest *)requestWithUrl:(NSURL *)url
-                            data:(NSString *)dataString
+                            body:(NSString *)body
 {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     
     [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     
-    if (dataString)
+    if (body)
     {
-        NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *bodyData = [body dataUsingEncoding:NSUTF8StringEncoding];
         
         request.HTTPMethod = @"POST";
-        request.HTTPBody = data;
+        request.HTTPBody = bodyData;
         
-        [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
+        [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)bodyData.length] forHTTPHeaderField:@"Content-Length"];
     }
     
     return request;
@@ -242,14 +300,14 @@
     NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
     
     return [[MHVHttpServiceResponse alloc] initWithResponseData:data
-                                               statusCode:statusCode];
+                                                     statusCode:statusCode];
 }
 
 #pragma mark - NSURLSessionDelegate
 
-- (void)     URLSession:(NSURLSession *)session
-    didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
-      completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *_Nullable credential))completionHandler
+- (void)URLSession:(NSURLSession *)session
+didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *_Nullable credential))completionHandler
 {
     // Check if certificate chain is valid or returns an error (SecTrustEvaluate is syncronous, so perform check on a Queue)
     [self.certificateCheckQueue addOperationWithBlock:^

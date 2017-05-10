@@ -68,7 +68,7 @@ static NSString *const c_typename = @"personal-image";
             MHVCHECK_OOM(item);
         }
 
-        id<MHVBlobSource> blobSource = [[MHVBlobMemorySource alloc] initWithData:imageData];
+        id<MHVBlobSourceProtocol> blobSource = [[MHVBlobMemorySource alloc] initWithData:imageData];
         MHVCHECK_OOM(blobSource);
 
         MHVTask *blobUploadTask = (MHVTask *)[item newUploadBlobTask:blobSource forBlobName:c_emptyString contentType:contentType record:record andCallback:^(MHVTask *task)

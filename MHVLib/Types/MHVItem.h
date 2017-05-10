@@ -199,10 +199,10 @@ enum MHVItemFlags
 //
 // Upload data into the default blob and put the item...
 //
-- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
-- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
 
-- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
+- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSourceProtocol>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
 
 @end
 

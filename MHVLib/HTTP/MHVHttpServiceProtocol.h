@@ -18,7 +18,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@protocol MHVBlobSource;
+@protocol MHVBlobSourceProtocol;
 @class MHVHttpServiceResponse;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -29,24 +29,24 @@ NS_ASSUME_NONNULL_BEGIN
  Send a request to HealthVault service
 
  @param url the endpoint for the request
- @param dataString data to send as POST body (usually XML)
+ @param body data to send as POST body
  @param completion response containing result of the operation, or error
  */
 - (void)sendRequestForURL:(NSURL *)url
-                 withData:(NSString *)dataString
+                     body:(NSString *_Nullable)body
                completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**
  Send a request to HealthVault service
 
  @param url the endpoint for the request
- @param dataString data to send as POST body (usually XML)
+ @param body data to send as POST body
  @param headers HTTP headers to add to the request for authentication, etc. 
         Dictionary key is HTTP header ie "Content-Type"
  @param completion response containing result of the operation, or error
  */
 - (void)sendRequestForURL:(NSURL *)url
-                 withData:(NSString *)dataString
+                     body:(NSString *_Nullable)body
                   headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
                completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param url the endpoint for the request
  @param path local file path where the downloaded file will be stored
-        For security, the file's protection attributes will be set to NSFileProtectionComplete
+        For security, the file's protection attributes will be set to NSFileProtectionCompleteUntilFirstUserAuthentication
  @param completion error if the download failed
  */
 - (void)downloadFileWithUrl:(NSURL *)url
@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param chunkSize size is given by HealthVault service when requesting to upload a blob
  @param completion response containing result of the operation, or error
  */
-- (void)uploadBlobSource:(id<MHVBlobSource>)blobSource
+- (void)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
                    toUrl:(NSURL *)url
                chunkSize:(NSUInteger)chunkSize
               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
