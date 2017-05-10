@@ -1,6 +1,6 @@
 //
-// MHVKeyChain.h
-// MHVLib
+//  MHVConnectionFactory.h
+//  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,16 +15,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
 #import <Foundation/Foundation.h>
-#import <Security/Security.h>
 
-@interface MHVKeyChain : NSObject
+@protocol MHVConnectionFactoryProtocol;
 
-+ (NSString *)passwordForName:(NSString *)passwordName;
+@interface MHVConnectionFactory : NSObject
 
-+ (BOOL)setPassword:(NSString *)password forName:(NSString *)passwordName;
-+ (BOOL)removePassword:(NSString *)passwordName;
++ (id<MHVConnectionFactoryProtocol>)current;
 
 @end

@@ -20,6 +20,7 @@
 #import "MHVAppDelegate.h"
 
 #import "MHVViewController.h"
+#import "MHVConnectionFactory.h"
 
 @implementation MHVAppDelegate
 
@@ -36,6 +37,8 @@
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
 
     self.window.rootViewController = self.navigationController;
+    
+    [MHVConnectionFactory current];
 
     [self.window makeKeyAndVisible];
     return YES;
