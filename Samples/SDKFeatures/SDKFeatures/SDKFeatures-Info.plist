@@ -28,6 +28,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Upload selected images to HealthVault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

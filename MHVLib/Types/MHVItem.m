@@ -88,6 +88,12 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     self.data.common.note = note;
 }
 
+- (MHVBlobPayload *)blobs
+{
+    MHVENSURE(_blobs, [MHVBlobPayload class]);
+    return _blobs;
+}
+
 - (NSString *)itemID
 {
     if (!self.key)
@@ -311,12 +317,12 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     return nil;
 }
 
-- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     return [self uploadBlob:data forBlobName:c_emptyString contentType:contentType record:record andCallback:callback];
 }
 
-- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     MHVItemBlobUploadTask *task = [self newUploadBlobTask:data forBlobName:name contentType:contentType record:record andCallback:callback];
 
@@ -325,7 +331,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     return task;
 }
 
-- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSource>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSourceProtocol>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     MHVBlobInfo *blobInfo = [[MHVBlobInfo alloc] initWithName:name andContentType:contentType];
 

@@ -1,15 +1,15 @@
 //
-//  HealthVaultRequest.h
-//  HealthVault Mobile Library for iOS
+// HealthVaultRequest.h
+// HealthVault Mobile Library for iOS
 //
 // Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,34 +20,7 @@
 #import "MHVService.h"
 
 /// This class encapsulates the data that is contained in a request.
-@interface HealthVaultRequest : NSObject {
-
-	NSString *_methodName;
-	float _methodVersion;
-	NSString *_infoXml;
-	NSString *_recordId;
-	NSString *_personId;
-
-	NSString *_authorizationSessionToken;
-    NSString *_userAuthToken;
-	NSString *_appIdInstance;
-	NSString *_sessionSharedSecret;
-
-	NSString *_language;
-	NSString *_country;
-	NSDate *_msgTime;
-	int _msgTTL;
-
-	NSObject *_userState;
-
-	NSObject *_target;
-	SEL _callBack;
-    
-    NSURLConnection* _connection;
-    
-    BOOL _isAnonymous;
-    id<HealthVaultService> _service; // Weak reference
-}
+@interface HealthVaultRequest : NSObject
 
 /// Gets or sets the name of the method to be called.
 /// The method name and version must be one of the methods documented in the
@@ -70,7 +43,7 @@
 /// Gets or sets the person id that will be used to perform request.
 @property (strong) NSString *personId;
 
-/// Gets or sets the authorization token that is required to talk to the HealthVault 
+/// Gets or sets the authorization token that is required to talk to the HealthVault
 /// web service.
 @property (strong) NSString *authorizationSessionToken;
 
@@ -104,8 +77,6 @@
 /// Gets or sets the callback that will be called when the request has completed.
 @property (assign) SEL callBack;
 
-@property (strong) NSURLConnection* connection;
-
 @property (readwrite) BOOL isAnonymous;
 @property (readonly) BOOL hasSessionToken;
 @property (readonly) BOOL hasUserAuthToken;
@@ -121,26 +92,23 @@
 /// The method name and version must be one of the methods documented in the
 /// method reference at:
 /// http://developer.healthvault.com/pages/methods/methods.aspx
-- (id)initWithMethodName: (NSString *)name
-		   methodVersion: (float)methodVersion
-			 infoSection: (NSString *)info
-				  target: (NSObject *)target
-				callBack: (SEL)callBack;
+- (instancetype)initWithMethodName:(NSString *)name
+                     methodVersion:(float)methodVersion
+                       infoSection:(NSString *)info
+                            target:(NSObject *)target
+                          callBack:(SEL)callBack;
 
 /// Converts the request to xml representation ready to be submitted to HealthVault service.
 /// @returns xml representation of the request.
-- (NSString *)toXml __deprecated_msg("Use toXml:");
-- (NSString *)toXml:(id<HealthVaultService>) service;
+- (NSString *)toXml:(id<HealthVaultService>)service;
 
--(void) cancel;
+- (void)writeHeader:(NSMutableString *)header forBody:(NSString *)body;
+- (void)writeMethodHeaders:(NSMutableString *)header;
+- (void)writeRecordHeaders:(NSMutableString *)header;
+- (void)writeStandardHeaders:(NSMutableString *)header;
+- (void)writeAuthSessionHeader:(NSMutableString *)header;
+- (void)writeHashHeader:(NSMutableString *)header forBody:(NSString *)body;
 
--(void) writeHeader:(NSMutableString *) header forBody:(NSString *) body;
--(void) writeMethodHeaders:(NSMutableString *) header;
--(void) writeRecordHeaders:(NSMutableString *) header;
--(void) writeStandardHeaders:(NSMutableString *) header;
--(void) writeAuthSessionHeader:(NSMutableString *) header;
--(void) writeHashHeader:(NSMutableString *) header forBody:(NSString *) body;
-
--(void) writeAuth:(NSMutableString *) xml forHeader:(NSString *) header;
+- (void)writeAuth:(NSMutableString *)xml forHeader:(NSString *)header;
 
 @end

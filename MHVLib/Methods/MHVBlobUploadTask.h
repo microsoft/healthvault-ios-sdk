@@ -40,14 +40,14 @@
 {
 @private
     MHVBlobPutParameters* m_putParams;
-    id<MHVBlobSource> m_source;
+    id<MHVBlobSourceProtocol> m_source;
     NSURL* m_blobUrl;
     int m_byteCountUploaded;
     
     MHVRecordReference* m_record; // Target record
 }
 
-@property (strong, readonly, nonatomic) id<MHVBlobSource> source;
+@property (strong, readonly, nonatomic) id<MHVBlobSourceProtocol> source;
 @property (readwrite, nonatomic, weak) id<MHVHttpDelegate> delegate;
 @property (strong, readonly, nonatomic) MHVRecordReference* record;
 
@@ -58,7 +58,7 @@
 
 -(id) initWithData:(NSData *) data record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 -(id) initWithFilePath:(NSString *) filePath record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
--(id) initWithSource:(id<MHVBlobSource>) source record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
+-(id) initWithSource:(id<MHVBlobSourceProtocol>) source record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
 //
 // Create a web request configured to upload blobs correctly

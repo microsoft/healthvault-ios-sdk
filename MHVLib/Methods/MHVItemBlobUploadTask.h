@@ -48,6 +48,6 @@
 //
 @property (readonly, nonatomic, strong) MHVItemKey* itemKey;
 
--(id) initWithSource:(id<MHVBlobSource>) data blobInfo:(MHVBlobInfo *) blobInfo forItem:(MHVItem *) item record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
+-(id) initWithSource:(id<MHVBlobSourceProtocol>) data blobInfo:(MHVBlobInfo *) blobInfo forItem:(MHVItem *) item record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion) callback;
 
 @end

@@ -104,6 +104,20 @@ typedef void (^MHVTaskCompletion) (MHVTask *task);
 
 @end
 
+
+//
+// This allows a block to perform an asynchronous operation within an MHVTask
+// When the block is started, it is passed a MHVTask: taskToComplete.
+// The block must perform [taskToComplete completeTask]; when its work is finished
+//
+typedef void (^MHVAsyncBlock)(MHVTask *taskToComplete);
+
+@interface MHVTaskAsyncBlock : MHVTask
+
+- (instancetype)initWithAsyncBlock:(MHVAsyncBlock)block;
+
+@end
+
 //
 // A sequence of tasks
 //
