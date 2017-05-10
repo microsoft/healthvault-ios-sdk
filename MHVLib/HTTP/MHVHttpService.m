@@ -75,7 +75,6 @@
 
     [Logger write:[NSString stringWithFormat:@"Begin request #%li", (long)currentRequest]];
 
-    //TODO: Could return NSURLSessionTask to allow tasks to be cancelled; that works for requests, but not blob uploads
     [[self.urlSession dataTaskWithRequest:(NSURLRequest *)request
                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
       {
