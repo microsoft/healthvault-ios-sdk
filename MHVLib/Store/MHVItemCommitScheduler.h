@@ -21,7 +21,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVAsyncTask.h"
 #import "MHVLocalVault.h"
-#import "MHVNetworkReachability.h"
 
 //--------------------------------------------------------------
 //

@@ -490,10 +490,6 @@ static NSString *const c_environmentFileName = @"environment.xml";
     service.country = self.settings.country;
     service.language = self.settings.language;
     service.deviceName = self.settings.deviceName;
-    if (self.settings.autoRequestDelay > 0)
-    {
-        service.requestSendDelay = self.settings.autoRequestDelay;
-    }
     
     return service;
 }

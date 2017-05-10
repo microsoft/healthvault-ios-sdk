@@ -155,12 +155,6 @@
 //
 @property (readwrite, nonatomic) BOOL useCachingInStore;
 //
-// <autoRequestDelay>
-// If > 0, will automatically delay each request... useful for faking "slow" networks
-// Useful for debugging
-//
-@property (readwrite, nonatomic) NSTimeInterval autoRequestDelay;
-//
 // Get/Set the outXml for an <appData> element
 // <appData> contain arbitray Xml that you can use as you see fit
 //

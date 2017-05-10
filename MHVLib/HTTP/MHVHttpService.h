@@ -1,8 +1,8 @@
 //
-//  MHVHttpTransport.m
-//  MHVLib
+// MHVHttpService.h
+// HVLib
 //
-// Copyright 2017 Microsoft Corp.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,16 +16,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-//
-#import "MHVCommon.h"
-#import "MHVHttpTransport.h"
-#import "WebTransport.h"
 
-@implementation MHVHttpTransport
+#import <Foundation/Foundation.h>
+#import "MHVHttpServiceProtocol.h"
 
--(NSURLConnection *)sendRequestForURL:(NSString *)url withData:(NSString *)data context:(NSObject *)context target:(NSObject *)target callBack:(SEL)callBack
-{
-    return [WebTransport sendRequestForURL:url withData:data context:context target:target callBack:callBack];
-}
+NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVHttpService : NSObject <MHVHttpServiceProtocol>
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -65,7 +65,7 @@ while(NO)
 #ifdef DEBUG
 
 #define MHVASSERT_C(condition) assert(condition);
-                
+
 #else
 
 #define MHVASSERT_C(condition)

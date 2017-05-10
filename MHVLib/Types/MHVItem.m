@@ -88,6 +88,12 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     self.data.common.note = note;
 }
 
+- (MHVBlobPayload *)blobs
+{
+    MHVENSURE(_blobs, [MHVBlobPayload class]);
+    return _blobs;
+}
+
 - (NSString *)itemID
 {
     if (!self.key)

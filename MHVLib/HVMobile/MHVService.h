@@ -1,6 +1,6 @@
 //
-//  MHVService.h
-//  MHVLib
+// MHVService.h
+// MHVLib
 //
 // Copyright 2017 Microsoft Corp.
 //
@@ -19,7 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVHttpTransport.h"
+#import "MHVHttpService.h"
 #import "MHVCryptographer.h"
 #import "Provisioner.h"
 #import "HealthVaultRecord.h"
@@ -37,30 +37,30 @@
 @property (retain) NSString *masterAppId;
 @property (retain) NSString *language;
 @property (retain) NSString *country;
-@property (retain) NSString* deviceName;
+@property (retain) NSString *deviceName;
 @property (retain) NSString *appIdInstance;
 @property (retain) NSString *applicationCreationToken;
 @property (retain) NSMutableArray *records;
 @property (retain) HealthVaultRecord *currentRecord;
 @property (readonly) BOOL isAppCreated;
 
-@property (retain) id<MHVHttpTransport> transport;
+@property (strong) id<MHVHttpServiceProtocol> httpService;
 @property (retain) id<MHVCryptographer> cryptographer;
-@property (retain) Provisioner* provisioner;
+@property (retain) Provisioner *provisioner;
 
 - (NSString *)getApplicationCreationUrl;
 - (NSString *)getApplicationCreationUrlGA; // HealthVault global architecture aware
 - (NSString *)getUserAuthorizationUrl;
 
 - (void)sendRequest:(HealthVaultRequest *)request;
-- (void)authorizeRecords: (NSObject *)target authenticationCompleted: (SEL)authCompleted shellAuthRequired: (SEL)shellAuthRequired;
+- (void)authorizeRecords:(NSObject *)target authenticationCompleted:(SEL)authCompleted shellAuthRequired:(SEL)shellAuthRequired;
 
-- (void)performAuthenticationCheck: (NSObject *)target authenticationCompleted: (SEL)authCompleted shellAuthRequired: (SEL)shellAuthRequired;
+- (void)performAuthenticationCheck:(NSObject *)target authenticationCompleted:(SEL)authCompleted shellAuthRequired:(SEL)shellAuthRequired;
 
 - (void)saveSettings;
 - (void)loadSettings;
 
--(void) reset;
--(void) applyEnvironmentSettings:(MHVEnvironmentSettings *) settings;
+- (void)reset;
+- (void)applyEnvironmentSettings:(MHVEnvironmentSettings *)settings;
 
 @end

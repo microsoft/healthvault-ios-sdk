@@ -391,6 +391,39 @@
 
 // -----------------------------------------------
 //
+// MHVTaskAsyncBlock
+//
+// -----------------------------------------------
+@interface MHVTaskAsyncBlock ()
+
+@property (nonatomic, strong) MHVAsyncBlock workBlock;
+
+@end
+
+@implementation MHVTaskAsyncBlock : MHVTask
+
+- (instancetype)initWithAsyncBlock:(MHVAsyncBlock)block
+{
+    MHVASSERT_PARAMETER(block);
+    
+    self = [super initWithCallback:nil];
+    
+    if (self)
+    {
+        _workBlock = block;
+    }
+    return self;
+}
+
+- (void)start
+{
+    _workBlock(self);
+}
+
+@end
+
+// -----------------------------------------------
+//
 // MHVTaskSequenceRunner
 //
 // -----------------------------------------------

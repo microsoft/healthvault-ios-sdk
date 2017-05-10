@@ -284,7 +284,6 @@ static NSString *const c_element_instanceID = @"instanceID";
     [writer writeElement:c_element_httpTimeout doubleValue:self.httpTimeout];
     [writer writeElement:c_element_maxAttemptsPerRequest intValue:(int)self.maxAttemptsPerRequest];
     [writer writeElement:c_element_useCachingInStore boolValue:self.useCachingInStore];
-    [writer writeElement:c_element_autoRequestDelay doubleValue:self.autoRequestDelay];
 
     [writer writeRaw:self.appData];
 }
@@ -308,7 +307,6 @@ static NSString *const c_element_instanceID = @"instanceID";
     self.httpTimeout = [reader readDoubleElement:c_element_httpTimeout];
     self.maxAttemptsPerRequest = [reader readIntElement:c_element_maxAttemptsPerRequest];
     self.useCachingInStore = [reader readBoolElement:c_element_useCachingInStore];
-    self.autoRequestDelay = [reader readDoubleElement:c_element_autoRequestDelay];
 
     self.appData = [reader readElementRaw:c_element_appData];
 }
