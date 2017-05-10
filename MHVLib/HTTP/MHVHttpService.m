@@ -61,7 +61,7 @@
                   headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
                completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
-    MHVASSERT_C([url.scheme isEqualToString:@"https"]);
+    MHVASSERT_PARAMETER([url.scheme isEqualToString:@"https"]);
     
     NSMutableURLRequest *request = [[self requestWithUrl:url data:dataString] mutableCopy];
     
@@ -71,6 +71,7 @@
     }
     
     NSInteger currentRequest = (++self.requestCount);
+    NSDate *startDate = [NSDate date];
 
     [Logger write:[NSString stringWithFormat:@"Begin request #%li", (long)currentRequest]];
 
@@ -80,7 +81,8 @@
       {
           NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
           
-          [Logger write:[NSString stringWithFormat:@"Response for #%li has status code: %li", (long)currentRequest, (long)statusCode]];
+          [Logger write:[NSString stringWithFormat:@"Response for #%li has status code: %li (%0.4f seconds)",
+                         (long)currentRequest, (long)statusCode, [[NSDate date] timeIntervalSinceDate:startDate]]];
           
           if (error)
           {
@@ -139,7 +141,7 @@
                chunkSize:(NSUInteger)chunkSize
               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
-    MHVASSERT_C([url.scheme isEqualToString:@"https"]);
+    MHVASSERT_PARAMETER([url.scheme isEqualToString:@"https"]);
 
     NSUInteger thisChunkSize = MIN(chunkSize, (blobSource.length - chunkOffset));
     
@@ -151,13 +153,16 @@
                                        totalSize:blobSource.length];
     
     [Logger write:[NSString stringWithFormat:@"Blob upload chunk at offset %li", (long)chunkOffset]];
+    NSDate *startDate = [NSDate date];
 
-//    [[self.urlSession uploadTaskWithRequest:request
-//                                   fromData:data
-//                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
     [[self.urlSession dataTaskWithRequest:(NSURLRequest *)request
                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
       {
+          if (!error)
+          {
+              [Logger write:[NSString stringWithFormat:@"Blob upload chunk size %li in %0.4f seconds", (long)thisChunkSize, [[NSDate date] timeIntervalSinceDate:startDate]]];
+          }
+
           if (!error && chunkOffset + thisChunkSize < blobSource.length)
           {
               //Update offset and call this method again to send the next chunk
