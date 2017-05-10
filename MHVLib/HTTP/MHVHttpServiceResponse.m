@@ -44,16 +44,4 @@
     return [[NSString alloc] initWithData:self.responseAsData encoding:NSUTF8StringEncoding];
 }
 
-- (NSDictionary *)responseAsDictionary
-{
-    NSError *error;
-    id result = [NSJSONSerialization JSONObjectWithData:self.responseAsData options:kNilOptions error:&error];
-    
-    if (!error && [result isKindOfClass:[NSDictionary class]])
-    {
-        return (NSDictionary *)result;
-    }
-    return nil;
-}
-
 @end
