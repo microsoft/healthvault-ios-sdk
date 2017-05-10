@@ -51,7 +51,8 @@
                             target:(NSObject *)target
                           callBack:(SEL)callBack
 {
-    if (self = [super init])
+    self = [super init];
+    if (self)
     {
         _methodName = name;
         _methodVersion = methodVersion;

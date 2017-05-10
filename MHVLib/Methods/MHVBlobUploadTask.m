@@ -70,7 +70,7 @@
     return self;
 }
 
-- (id)initWithSource:(id<MHVBlobSource>)source record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (id)initWithSource:(id<MHVBlobSourceProtocol>)source record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(source);
     

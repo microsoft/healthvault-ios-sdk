@@ -158,7 +158,7 @@ LError:
     //
     // Set up the data source so we can push the file to HealthVault
     //
-    id<MHVBlobSource> blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
+    id<MHVBlobSourceProtocol> blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
     //
     // This will first commit the blob and if that is successful, also PUT the associated file item
     //

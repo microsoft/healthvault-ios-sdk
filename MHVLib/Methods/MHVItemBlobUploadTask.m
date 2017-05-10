@@ -38,7 +38,7 @@
     return (MHVItemKey *) self.result;
 }
 
--(id)initWithSource:(id<MHVBlobSource>)data blobInfo:(MHVBlobInfo *)blobInfo forItem:(MHVItem *)item record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion)callback
+-(id)initWithSource:(id<MHVBlobSourceProtocol>)data blobInfo:(MHVBlobInfo *)blobInfo forItem:(MHVItem *)item record:(MHVRecordReference *) record andCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(data);
     MHVCHECK_NOTNULL(blobInfo);

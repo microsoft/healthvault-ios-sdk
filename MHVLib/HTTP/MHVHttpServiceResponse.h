@@ -26,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 // The response data
 @property (nonatomic, strong, readonly, nullable) NSData *responseAsData;
 @property (nonatomic, strong, readonly, nullable) NSString *responseAsString;
-@property (nonatomic, strong, readonly, nullable) NSDictionary *responseAsDictionary;
 
 // The localized error text.
 @property (nonatomic, strong, readonly, nullable) NSString *errorText;
