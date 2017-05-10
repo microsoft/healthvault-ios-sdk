@@ -331,8 +331,6 @@
 		5D97B93C1511743C0004B551 /* MHVUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D97B93A1511743C0004B551 /* MHVUser.h */; };
 		5D97B93D1511743C0004B551 /* MHVUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97B93B1511743C0004B551 /* MHVUser.m */; };
 		5D97B94015125A280004B551 /* MHVObjectStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D97B93F15125A270004B551 /* MHVObjectStore.h */; };
-		5D983BB814E5949B00C287B7 /* MHVGuid.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BB614E5949B00C287B7 /* MHVGuid.h */; };
-		5D983BB914E5949B00C287B7 /* MHVGuid.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BB714E5949B00C287B7 /* MHVGuid.m */; };
 		5D983BD014E5BF6700C287B7 /* XSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BCF14E5BF6700C287B7 /* XSerializer.h */; };
 		5D983BD314E5CA3300C287B7 /* XSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BD214E5CA3300C287B7 /* XSerializer.m */; };
 		5D983BD514E5E87000C287B7 /* MHVTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BD414E5E87000C287B7 /* MHVTypes.h */; };
@@ -492,6 +490,8 @@
 		A53BF8391EC3681500F018E2 /* MHVKeychainService.h in Headers */ = {isa = PBXBuildFile; fileRef = A53BF8371EC3681500F018E2 /* MHVKeychainService.h */; };
 		A53BF83A1EC3681500F018E2 /* MHVKeychainService.m in Sources */ = {isa = PBXBuildFile; fileRef = A53BF8381EC3681500F018E2 /* MHVKeychainService.m */; };
 		A53BF83C1EC3686400F018E2 /* MHVKeychainServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A53BF83B1EC3686400F018E2 /* MHVKeychainServiceProtocol.h */; };
+		A53BF8401EC3A48600F018E2 /* MHVApplicationCreationInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = A53BF83E1EC3A48600F018E2 /* MHVApplicationCreationInfo.h */; };
+		A53BF8411EC3A48600F018E2 /* MHVApplicationCreationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A53BF83F1EC3A48600F018E2 /* MHVApplicationCreationInfo.m */; };
 		A54220431EC24FF200728913 /* MHVConnectionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A54220421EC24FF200728913 /* MHVConnectionProtocol.h */; };
 		A54220461EC2651500728913 /* MHVConnectionFactoryInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = A54220441EC2651500728913 /* MHVConnectionFactoryInternal.h */; };
 		A54220471EC2651500728913 /* MHVConnectionFactoryInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = A54220451EC2651500728913 /* MHVConnectionFactoryInternal.m */; };
@@ -840,8 +840,6 @@
 		5D97B93A1511743C0004B551 /* MHVUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVUser.h; sourceTree = "<group>"; };
 		5D97B93B1511743C0004B551 /* MHVUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVUser.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D97B93F15125A270004B551 /* MHVObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVObjectStore.h; sourceTree = "<group>"; };
-		5D983BB614E5949B00C287B7 /* MHVGuid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGuid.h; sourceTree = "<group>"; };
-		5D983BB714E5949B00C287B7 /* MHVGuid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGuid.m; sourceTree = "<group>"; };
 		5D983BCF14E5BF6700C287B7 /* XSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = XSerializer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5D983BD214E5CA3300C287B7 /* XSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSerializer.m; sourceTree = "<group>"; };
 		5D983BD414E5E87000C287B7 /* MHVTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTypes.h; sourceTree = "<group>"; };
@@ -1003,6 +1001,8 @@
 		A53BF8371EC3681500F018E2 /* MHVKeychainService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVKeychainService.h; sourceTree = "<group>"; };
 		A53BF8381EC3681500F018E2 /* MHVKeychainService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVKeychainService.m; sourceTree = "<group>"; };
 		A53BF83B1EC3686400F018E2 /* MHVKeychainServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVKeychainServiceProtocol.h; sourceTree = "<group>"; };
+		A53BF83E1EC3A48600F018E2 /* MHVApplicationCreationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVApplicationCreationInfo.h; sourceTree = "<group>"; };
+		A53BF83F1EC3A48600F018E2 /* MHVApplicationCreationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVApplicationCreationInfo.m; sourceTree = "<group>"; };
 		A54220421EC24FF200728913 /* MHVConnectionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVConnectionProtocol.h; sourceTree = "<group>"; };
 		A54220441EC2651500728913 /* MHVConnectionFactoryInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVConnectionFactoryInternal.h; sourceTree = "<group>"; };
 		A54220451EC2651500728913 /* MHVConnectionFactoryInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVConnectionFactoryInternal.m; sourceTree = "<group>"; };
@@ -1123,6 +1123,7 @@
 				5D1139B415461F430008C362 /* HTTP */,
 				5D5F3138150FAA2600ED11E7 /* HVMobile */,
 				5D983BB514E58EE400C287B7 /* Methods */,
+				A53BF83D1EC3A44F00F018E2 /* PlatformInformation */,
 				5DC50C2A15003A9A0078D85F /* Store */,
 				5D983BB414E58EDA00C287B7 /* ThingTypes */,
 				5D983BB214E58DF800C287B7 /* Types */,
@@ -1460,8 +1461,6 @@
 				5D20D2F114EEF99300160611 /* MHVDouble.m */,
 				5D195D19151BF2E100E109AD /* MHVEmailAddress.h */,
 				5D195D1A151BF2E100E109AD /* MHVEmailAddress.m */,
-				5D983BB614E5949B00C287B7 /* MHVGuid.h */,
-				5D983BB714E5949B00C287B7 /* MHVGuid.m */,
 				5D983BFA14E984B500C287B7 /* MHVHour.h */,
 				5D983BFB14E984B500C287B7 /* MHVHour.m */,
 				5D20D2EC14EEF84300160611 /* MHVInt.h */,
@@ -1709,6 +1708,15 @@
 			path = Xml;
 			sourceTree = "<group>";
 		};
+		A53BF83D1EC3A44F00F018E2 /* PlatformInformation */ = {
+			isa = PBXGroup;
+			children = (
+				A53BF83E1EC3A48600F018E2 /* MHVApplicationCreationInfo.h */,
+				A53BF83F1EC3A48600F018E2 /* MHVApplicationCreationInfo.m */,
+			);
+			path = PlatformInformation;
+			sourceTree = "<group>";
+		};
 		A54220481EC2662900728913 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -1776,7 +1784,6 @@
 				4C191A8F1EC1033C00B5E545 /* MHVItemTestExtensions.h in Headers */,
 				4C191AA51EC1033C00B5E545 /* MHVSleepJournalAM.h in Headers */,
 				5D2D1C5D14E4A4F400C85B7E /* XWriter.h in Headers */,
-				5D983BB814E5949B00C287B7 /* MHVGuid.h in Headers */,
 				5D983BD014E5BF6700C287B7 /* XSerializer.h in Headers */,
 				5D983BD514E5E87000C287B7 /* MHVTypes.h in Headers */,
 				5D983BD814E5F4BD00C287B7 /* MHVItemDataTyped.h in Headers */,
@@ -1918,6 +1925,7 @@
 				A53BF8391EC3681500F018E2 /* MHVKeychainService.h in Headers */,
 				4C191A6B1EC1033C00B5E545 /* MHVCCR.h in Headers */,
 				4C191A9B1EC1033C00B5E545 /* MHVPersonalContactInfo.h in Headers */,
+				A53BF8401EC3A48600F018E2 /* MHVApplicationCreationInfo.h in Headers */,
 				5D195D4E1522527100E109AD /* MHVPutItemsTask.h in Headers */,
 				5D195D661522780800E109AD /* MHVRemoveItemsTask.h in Headers */,
 				5D195D7215228C0200E109AD /* MHVVocabSearchText.h in Headers */,
@@ -2077,6 +2085,7 @@
 				5D76B9DA14DCC85B00BA865F /* MHVStringExtensions.m in Sources */,
 				5D76B9DC14DCC85B00BA865F /* MHVExceptionExtensions.m in Sources */,
 				5DB083E718F325FD00702B79 /* MHVNetworkReachability.m in Sources */,
+				A53BF8411EC3A48600F018E2 /* MHVApplicationCreationInfo.m in Sources */,
 				5D76B9EB14DCC9F500BA865F /* MHVLib.m in Sources */,
 				5D0DACB414E2FE14002CBE52 /* MHVCore.m in Sources */,
 				5DE382FC14E338C900DFA11D /* MHVArrayExtensions.m in Sources */,
@@ -2091,7 +2100,6 @@
 				4C191A6A1EC1033C00B5E545 /* MHVCCD.m in Sources */,
 				A54220601EC26BF900728913 /* MHVConnection.m in Sources */,
 				5D2D1C6114E4AC9B00C85B7E /* XNodeType.m in Sources */,
-				5D983BB914E5949B00C287B7 /* MHVGuid.m in Sources */,
 				5D983BD314E5CA3300C287B7 /* XSerializer.m in Sources */,
 				4C191A921EC1033C00B5E545 /* MHVItemTypes.m in Sources */,
 				5D983BD914E5F4BD00C287B7 /* MHVItemDataTyped.m in Sources */,

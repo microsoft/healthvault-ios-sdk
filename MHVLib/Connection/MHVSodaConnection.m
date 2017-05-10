@@ -19,6 +19,7 @@
 #import "MHVSodaConnection.h"
 #import "NSError+MHVError.h"
 #import "MHVKeychainServiceProtocol.h"
+#import "MHVApplicationCreationInfo.h"
 
 static NSString *const kServiceInstanceKey = @"ServiceInstance";
 static NSString *const kApplicationCreationInfoKey = @"ApplicationCreationInfo";
@@ -30,6 +31,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 @property (nonatomic, assign) BOOL isAuthUpdating;
 @property (nonatomic, strong) dispatch_queue_t authQueue;
 @property (nonatomic, strong) MHVPersonInfo *personInfo;
+@property (nonatomic, strong) MHVApplicationCreationInfo *applicationCreationInfo;
 
 // Dependencies
 @property (nonatomic, strong) id<MHVKeychainServiceProtocol> keychainService;
@@ -94,7 +96,10 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
             }
         }
         
-        if (self.personInfo) {
+        if (self.applicationCreationInfo &&
+            self.sessionCredential &&
+            self.personInfo)
+        {
             
         }
         
