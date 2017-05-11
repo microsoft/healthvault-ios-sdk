@@ -90,6 +90,14 @@
 		4C191AF11EC24C2D00B5E545 /* MHVHttpService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191AED1EC24C2D00B5E545 /* MHVHttpService.h */; };
 		4C191AF21EC24C2D00B5E545 /* MHVHttpService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191AEE1EC24C2D00B5E545 /* MHVHttpService.m */; };
 		4C191AF41EC25DC500B5E545 /* MHVHttpServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191AF31EC25DC500B5E545 /* MHVHttpServiceProtocol.h */; };
+		4C3973B31EC4B66B0079C28D /* MHVLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3973B21EC4B66B0079C28D /* MHVLibTests.m */; };
+		4C3973B51EC4B66B0079C28D /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AC14DCB3A700D2636E /* libMHVLib.a */; };
+		4C7646B81EC4B91C003B85B5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */; };
+		4C7646B91EC4B922003B85B5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CE1C5C010800233916 /* MobileCoreServices.framework */; };
+		4C7646BA1EC4B922003B85B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CA1C5C00E700233916 /* Security.framework */; };
+		4C7646BB1EC4B922003B85B5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5F3111150E95E700ED11E7 /* UIKit.framework */; };
+		4C7646BC1EC4B922003B85B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AF14DCB3A700D2636E /* Foundation.framework */; };
+		4C7646BE1EC4B9AC003B85B5 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */; };
 		5D09127A166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D091278166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h */; };
 		5D09127B166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D091279166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m */; };
 		5D0B4BE6151A80A4000849D0 /* MHVApproxDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0B4BE4151A80A4000849D0 /* MHVApproxDateTime.h */; };
@@ -483,6 +491,7 @@
 		5DF90BEF19059AA9009ABAAB /* MHVSyncView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF90BED19059AA9009ABAAB /* MHVSyncView.h */; };
 		5DF91081158D09930027E0A8 /* MHVNonNegativeDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF9107F158D09930027E0A8 /* MHVNonNegativeDouble.h */; };
 		5DF91082158D09930027E0A8 /* MHVNonNegativeDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF91080158D09930027E0A8 /* MHVNonNegativeDouble.m */; };
+		821D624A894ABB037037CDA3 /* libPods-MHVLibTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D6B2053E5A0C884FFF156EA /* libPods-MHVLibTests.a */; };
 		A4F066CB1C5C00E700233916 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CA1C5C00E700233916 /* Security.framework */; };
 		A4F066CD1C5C00F000233916 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */; };
 		A4F066CF1C5C010800233916 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CE1C5C010800233916 /* MobileCoreServices.framework */; };
@@ -517,6 +526,16 @@
 		A5D1ED071EC239AC000E3295 /* MHVSodaConnectionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5D1ED061EC239AC000E3295 /* MHVSodaConnectionProtocol.h */; };
 		BA0355401EC0BF5400BE547D /* MHVVocabularyClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4C3973B61EC4B66B0079C28D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D5299A314DCB3A700D2636E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D5299AB14DCB3A700D2636E;
+			remoteInfo = MHVLib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4C191A111EC1033C00B5E545 /* MHVAllergy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVAllergy.h; path = MHVLib/ThingTypes/MHVAllergy.h; sourceTree = SOURCE_ROOT; };
@@ -602,6 +621,12 @@
 		4C191AED1EC24C2D00B5E545 /* MHVHttpService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpService.h; sourceTree = "<group>"; };
 		4C191AEE1EC24C2D00B5E545 /* MHVHttpService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHttpService.m; sourceTree = "<group>"; };
 		4C191AF31EC25DC500B5E545 /* MHVHttpServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpServiceProtocol.h; sourceTree = "<group>"; };
+		4C3973B01EC4B66B0079C28D /* MHVLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MHVLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C3973B21EC4B66B0079C28D /* MHVLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVLibTests.m; sourceTree = "<group>"; };
+		4C3973B41EC4B66B0079C28D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MHVLibTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MHVLibTests/Pods-MHVLibTests.release.xcconfig"; sourceTree = "<group>"; };
+		5BE520E8193E7C086A092CDF /* Pods-MHVLibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MHVLibTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MHVLibTests/Pods-MHVLibTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D091278166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRemoveRecordAuthTask.h; sourceTree = "<group>"; };
 		5D091279166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVRemoveRecordAuthTask.m; sourceTree = "<group>"; };
 		5D0B4BE4151A80A4000849D0 /* MHVApproxDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVApproxDateTime.h; sourceTree = "<group>"; };
@@ -1000,6 +1025,7 @@
 		5DF90BED19059AA9009ABAAB /* MHVSyncView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSyncView.h; sourceTree = "<group>"; };
 		5DF9107F158D09930027E0A8 /* MHVNonNegativeDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVNonNegativeDouble.h; sourceTree = "<group>"; };
 		5DF91080158D09930027E0A8 /* MHVNonNegativeDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVNonNegativeDouble.m; sourceTree = "<group>"; };
+		6D6B2053E5A0C884FFF156EA /* libPods-MHVLibTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MHVLibTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F066CA1C5C00E700233916 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A4F066CE1C5C010800233916 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -1037,6 +1063,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4C3973AD1EC4B66B0079C28D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C7646BE1EC4B9AC003B85B5 /* libxml2.2.tbd in Frameworks */,
+				4C3973B51EC4B66B0079C28D /* libMHVLib.a in Frameworks */,
+				4C7646BB1EC4B922003B85B5 /* UIKit.framework in Frameworks */,
+				4C7646BA1EC4B922003B85B5 /* Security.framework in Frameworks */,
+				4C7646B91EC4B922003B85B5 /* MobileCoreServices.framework in Frameworks */,
+				4C7646B81EC4B91C003B85B5 /* SystemConfiguration.framework in Frameworks */,
+				4C7646BC1EC4B922003B85B5 /* Foundation.framework in Frameworks */,
+				821D624A894ABB037037CDA3 /* libPods-MHVLibTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D5299A914DCB3A700D2636E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1052,6 +1093,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C3973B11EC4B66B0079C28D /* MHVLibTests */ = {
+			isa = PBXGroup;
+			children = (
+				4C3973B21EC4B66B0079C28D /* MHVLibTests.m */,
+				4C3973B41EC4B66B0079C28D /* Info.plist */,
+			);
+			path = MHVLibTests;
+			sourceTree = "<group>";
+		};
 		5D1139B415461F430008C362 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
@@ -1104,8 +1154,10 @@
 			children = (
 				5D5299B114DCB3A700D2636E /* MHVLib */,
 				5D5299B214DCB3A700D2636E /* Supporting Files */,
+				4C3973B11EC4B66B0079C28D /* MHVLibTests */,
 				5D5299AE14DCB3A700D2636E /* Frameworks */,
 				5D5299AD14DCB3A700D2636E /* Products */,
+				9EDB0FA29024DCE0F843F223 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1113,6 +1165,7 @@
 			isa = PBXGroup;
 			children = (
 				5D5299AC14DCB3A700D2636E /* libMHVLib.a */,
+				4C3973B01EC4B66B0079C28D /* MHVLibTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1120,11 +1173,13 @@
 		5D5299AE14DCB3A700D2636E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */,
 				A4F066CE1C5C010800233916 /* MobileCoreServices.framework */,
 				A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */,
 				A4F066CA1C5C00E700233916 /* Security.framework */,
 				5D5F3111150E95E700ED11E7 /* UIKit.framework */,
 				5D5299AF14DCB3A700D2636E /* Foundation.framework */,
+				6D6B2053E5A0C884FFF156EA /* libPods-MHVLibTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1753,6 +1808,15 @@
 				A5D1ED061EC239AC000E3295 /* MHVSodaConnectionProtocol.h */,
 			);
 			path = Connection;
+            sourceTree = "<group>";
+        };
+		9EDB0FA29024DCE0F843F223 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5BE520E8193E7C086A092CDF /* Pods-MHVLibTests.debug.xcconfig */,
+				50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		BA03553E1EC0BF5400BE547D /* Clients */ = {
@@ -2043,6 +2107,27 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4C3973AF1EC4B66B0079C28D /* MHVLibTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C3973B81EC4B66B0079C28D /* Build configuration list for PBXNativeTarget "MHVLibTests" */;
+			buildPhases = (
+				4539415BC23299C559E946BB /* [CP] Check Pods Manifest.lock */,
+				4C3973AC1EC4B66B0079C28D /* Sources */,
+				4C3973AD1EC4B66B0079C28D /* Frameworks */,
+				4C3973AE1EC4B66B0079C28D /* Resources */,
+				05CB1960A67F51248FFC9020 /* [CP] Embed Pods Frameworks */,
+				3155991B591C37810EFAA519 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4C3973B71EC4B66B0079C28D /* PBXTargetDependency */,
+			);
+			name = MHVLibTests;
+			productName = MHVLibTests;
+			productReference = 4C3973B01EC4B66B0079C28D /* MHVLibTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5D5299AB14DCB3A700D2636E /* MHVLib */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D5299B914DCB3A700D2636E /* Build configuration list for PBXNativeTarget "MHVLib" */;
@@ -2068,6 +2153,13 @@
 			attributes = {
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Microsoft Corporation";
+				TargetAttributes = {
+					4C3973AF1EC4B66B0079C28D = {
+						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = UBF8T346G9;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 5D5299A614DCB3A700D2636E /* Build configuration list for PBXProject "MHVLib" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2083,11 +2175,78 @@
 			projectRoot = "";
 			targets = (
 				5D5299AB14DCB3A700D2636E /* MHVLib */,
+				4C3973AF1EC4B66B0079C28D /* MHVLibTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		4C3973AE1EC4B66B0079C28D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		05CB1960A67F51248FFC9020 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MHVLibTests/Pods-MHVLibTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3155991B591C37810EFAA519 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MHVLibTests/Pods-MHVLibTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4539415BC23299C559E946BB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		4C3973AC1EC4B66B0079C28D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C3973B31EC4B66B0079C28D /* MHVLibTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D5299A814DCB3A700D2636E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2338,6 +2497,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4C3973B71EC4B66B0079C28D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D5299AB14DCB3A700D2636E /* MHVLib */;
+			targetProxy = 4C3973B61EC4B66B0079C28D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		5DE57A241511573500829CC2 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -2350,6 +2517,65 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4C3973B91EC4B66B0079C28D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5BE520E8193E7C086A092CDF /* Pods-MHVLibTests.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = UBF8T346G9;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = MHVLibTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.microsoft.MHVLibTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4C3973BA1EC4B66B0079C28D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = UBF8T346G9;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = MHVLibTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.microsoft.MHVLibTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		5D5299B714DCB3A700D2636E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2471,6 +2697,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4C3973B81EC4B66B0079C28D /* Build configuration list for PBXNativeTarget "MHVLibTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C3973B91EC4B66B0079C28D /* Debug */,
+				4C3973BA1EC4B66B0079C28D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5D5299A614DCB3A700D2636E /* Build configuration list for PBXProject "MHVLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
