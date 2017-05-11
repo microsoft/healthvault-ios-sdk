@@ -1768,6 +1768,15 @@
 			path = Xml;
 			sourceTree = "<group>";
 		};
+		9EDB0FA29024DCE0F843F223 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5BE520E8193E7C086A092CDF /* Pods-MHVLibTests.debug.xcconfig */,
+				50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A53BF83D1EC3A44F00F018E2 /* PlatformInformation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1808,15 +1817,6 @@
 				A5D1ED061EC239AC000E3295 /* MHVSodaConnectionProtocol.h */,
 			);
 			path = Connection;
-            sourceTree = "<group>";
-        };
-		9EDB0FA29024DCE0F843F223 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5BE520E8193E7C086A092CDF /* Pods-MHVLibTests.debug.xcconfig */,
-				50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		BA03553E1EC0BF5400BE547D /* Clients */ = {
@@ -2532,7 +2532,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = UBF8T346G9;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2564,7 +2564,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = UBF8T346G9;
 				ENABLE_NS_ASSERTIONS = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = MHVLibTests/Info.plist;
