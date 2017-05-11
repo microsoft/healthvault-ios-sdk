@@ -21,7 +21,7 @@
 @interface MHVConnection ()
 
 // Dependencies
-@property (nonatomic, strong) id<MHVClientSessionCredentialClientProtocol> credentialClient;
+@property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
 @property (nonatomic, strong) id<MHVHttpServiceProtocol> httpService;
 
 @end
@@ -29,7 +29,7 @@
 @implementation MHVConnection
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                     credentialClient:(id<MHVClientSessionCredentialClientProtocol>)credentialClient
+                     credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
                           httpService:(id<MHVHttpServiceProtocol>)httpService
 {
     self = [super init];
@@ -42,6 +42,57 @@
     }
     
     return self;
+}
+
+- (NSUUID *_Nullable)applicationId;
+{
+    return nil;
+}
+
+- (MHVSessionCredential *_Nullable)sessionCredential;
+{
+    return nil;
+}
+
+- (void)executeMethod:(MHVMethod *_Nonnull)method
+              version:(NSInteger)version
+           parameters:(NSString *_Nullable)parameters
+             recordId:(NSUUID *_Nullable)recordId
+        correlationId:(NSUUID *_Nullable)correlationId
+           completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+{
+    
+}
+
+- (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
+{
+    
+}
+
+- (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
+                            completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+{
+    
+}
+
+- (id<MHVPersonClientProtocol> _Nullable)personClient;
+{
+    return nil;
+}
+
+- (id<MHVPlatformClientProtocol> _Nullable)platformClient
+{
+    return nil;
+}
+
+- (id<MHVThingClientProtocol> _Nullable)thingClient
+{
+    return nil;
+}
+
+- (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient
+{
+    return nil;
 }
 
 @end

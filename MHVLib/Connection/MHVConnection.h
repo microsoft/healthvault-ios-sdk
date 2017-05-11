@@ -21,7 +21,7 @@
 
 @class MHVConfiguration;
 
-@protocol MHVClientSessionCredentialClientProtocol, MHVHttpServiceProtocol;
+@protocol MHVSessionCredentialClientProtocol, MHVHttpServiceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) MHVConfiguration *configuration;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                     credentialClient:(id<MHVClientSessionCredentialClientProtocol>)credentialClient
+                     credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
                           httpService:(id<MHVHttpServiceProtocol>)httpService;
 
 @end

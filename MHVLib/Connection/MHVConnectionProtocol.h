@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MHVSessionCredential, MHVPersonInfo;
+@class MHVSessionCredential, MHVPersonInfo, MHVHttpServiceResponse, MHVMethod;
 
 @protocol MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol;
 
@@ -41,6 +41,24 @@
  @return session credential.
  */
 - (MHVSessionCredential *_Nullable)sessionCredential;
+
+
+/**
+ Makes Web request call to HealthVault service for specified method name and method version.
+
+ @param method The method to execute.
+ @param version The method version.
+ @param parameters Method parameters - Optional.
+ @param recordId The record id - Optional.
+ @param correlationId The correlation id - Optional.
+ @para
+ */
+- (void)executeMethod:(MHVMethod *_Nonnull)method
+              version:(NSInteger)version
+           parameters:(NSString *_Nullable)parameters
+             recordId:(NSUUID *_Nullable)recordId
+        correlationId:(NSUUID *_Nullable)correlationId
+           completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**
  Gets the person information for the current account.

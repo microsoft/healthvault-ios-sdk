@@ -42,7 +42,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 @implementation MHVSodaConnection
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                     credentialClient:(id<MHVClientSessionCredentialClientProtocol>)credentialClient
+                     credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
                           httpService:(id<MHVHttpServiceProtocol>)httpService
                       keychainService:(id<MHVKeychainServiceProtocol>)keychainService
                      shellAuthService:(id<MHVShellAuthServiceProtocol>)shellAuthService
@@ -82,6 +82,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         
         self.isAuthUpdating = YES;
         
+        // Delete authorization data from the keychain.
         BOOL success =
             [self.keychainService removeStringForKey:kServiceInstanceKey] &&
             [self.keychainService removeStringForKey:kApplicationCreationInfoKey] &&
@@ -94,13 +95,15 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
             {
                 completion([NSError error:[NSError MHVIOError] withDescription:@"One or more values could not be deleted from the keychain."]);
             }
+            
+            return;
         }
         
         if (self.applicationCreationInfo &&
             self.sessionCredential &&
             self.personInfo)
         {
-            
+            // Remove application record authorization
         }
         
         

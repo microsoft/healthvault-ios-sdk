@@ -22,14 +22,14 @@
 
 @class MHVConfiguration;
 
-@protocol MHVClientSessionCredentialClientProtocol, MHVHttpServiceProtocol, MHVKeychainServiceProtocol, MHVShellAuthServiceProtocol;
+@protocol MHVSessionCredentialClientProtocol, MHVHttpServiceProtocol, MHVKeychainServiceProtocol, MHVShellAuthServiceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVSodaConnection : MHVConnection<MHVSodaConnectionProtocol>
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                     credentialClient:(id<MHVClientSessionCredentialClientProtocol>)credentialClient
+                     credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
                           httpService:(id<MHVHttpServiceProtocol>)httpService
                       keychainService:(id<MHVKeychainServiceProtocol>)keychainService
                      shellAuthService:(id<MHVShellAuthServiceProtocol>)shellAuthService;

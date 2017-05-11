@@ -457,6 +457,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SDKFeatures/SDKFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
@@ -473,6 +474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SDKFeatures/SDKFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
