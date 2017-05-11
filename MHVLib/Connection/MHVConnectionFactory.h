@@ -20,8 +20,12 @@
 
 @protocol MHVConnectionFactoryProtocol;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MHVConnectionFactory : NSObject
 
 + (id<MHVConnectionFactoryProtocol>)current;
 
 @end
+
+NS_ASSUME_NONNULL_END

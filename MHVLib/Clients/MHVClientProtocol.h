@@ -26,6 +26,6 @@
 /**
  * An optional identifier that can be used to correlate a request
  */
-@property (nonatomic, string, nullable) NSUUID *correlationId;
+@property (nonatomic, strong, nullable) NSUUID *correlationId;
 
 @end

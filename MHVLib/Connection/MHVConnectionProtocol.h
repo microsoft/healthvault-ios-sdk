@@ -23,6 +23,8 @@
 
 @protocol MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  Represents a connection for an application to the HealthVault service for operations.
  */
@@ -53,7 +55,7 @@
  @param correlationId The correlation id - Optional.
  @para
  */
-- (void)executeMethod:(MHVMethod *_Nonnull)method
+- (void)executeMethod:(MHVMethod *)method
               version:(NSInteger)version
            parameters:(NSString *_Nullable)parameters
              recordId:(NSUUID *_Nullable)recordId
@@ -67,7 +69,7 @@
  
  @note This includes the list of authorized records for the application instance.
  */
-- (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
+- (void)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
 
 /**
  Authenticates the connection. Calling authenticate will immediately present an authentication user interface if the connection is not authenticated.
@@ -107,8 +109,6 @@
  */
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient;
 
-
-
-
-
 @end
+
+NS_ASSUME_NONNULL_END

@@ -20,6 +20,8 @@
 
 @class MHVLocation, MHVServiceInstance, MHVServiceInfo, MHVServiceInfoSections, MHVThingTypeSections, MHVThingTypeDefinition, MHVApplicationCreationInfo, MHVPersonInfo, MHVGetAuthorizedPeopleSettings;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * Methods to interact with the platform.
  */
@@ -33,8 +35,8 @@
  *
  * @note If no suitable instance can be found, a nil is returned. This can happen, for example, if the account location is not supported by HealthVault. Currently the returned instance IDs all parse to integers, but that is not guaranteed and should not be relied upon.
  */
-- (void)selectInstanceWithPreferredLocation:(MHVLocation *_Nonnull)preferredLocation
-                                 completion:(void(^_Nonnull)(MHVServiceInstance *_Nullable serviceInstance, NSError *_Nullable error))completion;
+- (void)selectInstanceWithPreferredLocation:(MHVLocation *)preferredLocation
+                                 completion:(void(^)(MHVServiceInstance *_Nullable serviceInstance, NSError *_Nullable error))completion;
 
 /**
  * Gets information about the HealthVault service.
@@ -51,7 +53,7 @@
  * - The common schema definitions for types that the HealthVault methods use.
  * - Information about all available HealthVault instances.
  */
-- (void)getServiceDefinitionWithCompletion:(void(^_Nonnull)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+- (void)getServiceDefinitionWithCompletion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
 
 
 /**
@@ -70,8 +72,8 @@
  * - The common schema definitions for types that the HealthVault methods use.
  * - Information about all available HealthVault instances.
  */
-- (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *_Nonnull)lastUpdatedTime
-                                         completion:(void(^_Nonnull)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+- (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
+                                         completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
 
 
 /**
@@ -92,7 +94,7 @@
  * Retrieving only the sections you need will give a faster response time than downloading the full response.
  */
 - (void)getServiceDefinitionWithWithResponseSections:(MHVServiceInfoSections)responseSections
-                                          completion:(void(^_Nonnull)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+                                          completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
 
 /**
  * Gets Gets information about the HealthVault service corresponding to the specified categories if the requested information has been updated since the specified update time.
@@ -112,9 +114,9 @@
  * - Information about all available HealthVault instances.
  * Retrieving only the sections you need will give a faster response time than downloading the full response.
  */
-- (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *_Nonnull)lastUpdatedTime
+- (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
                                    responseSections:(MHVServiceInfoSections)responseSections
-                                         completion:(void(^_Nonnull)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+                                         completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
 
 
 /**
@@ -130,7 +132,7 @@
                                              sections:(MHVThingTypeSections)sections
                                            imageTypes:(NSArray<NSString *> *_Nullable)imageTypes
                                 lastClientRefreshDate:(NSDate *_Nullable)lastClientRefreshDate
-                                           completion:(void(^_Nonnull)(NSDictionary<NSUUID *, MHVThingTypeDefinition *> *_Nullable definitions, NSError *_Nullable error))completion;
+                                           completion:(void(^)(NSDictionary<NSUUID *, MHVThingTypeDefinition *> *_Nullable definitions, NSError *_Nullable error))completion;
 
 
 /**
@@ -138,7 +140,7 @@
  *
  * @param completion Envoked when the operation completes. MHVApplicationCreationInfo Information about the newly created application instance. NSError object will be nil if there is no error when performing the operation.
  */
-- (void)newApplicationCreationInfoWithCompletion:(void(^_Nonnull)(MHVApplicationCreationInfo *_Nullable applicationCreationInfo, NSError *_Nullable error))completion;
+- (void)newApplicationCreationInfoWithCompletion:(void(^)(MHVApplicationCreationInfo *_Nullable applicationCreationInfo, NSError *_Nullable error))completion;
 
 
 /**
@@ -146,7 +148,7 @@
  *
  * @param completion Envoked when the operation completes. NSArray<MHVPersonInfo *> an array of MHVPersonInfo objects representing people authorized for the application. NSError object will be nil if there is no error when performing the operation.
  */
-- (void)getAuthorizedPeopleWithCompletion:(void(^_Nonnull)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
+- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 
 
 /**
@@ -156,7 +158,7 @@
  * @param completion Envoked when the operation completes. NSArray<MHVPersonInfo *> an array of MHVPersonInfo objects representing people authorized for the application. NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *_Nonnull)settings
-                             completion:(void(^_Nonnull)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
+                             completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 
 
 /**
@@ -165,7 +167,9 @@
  * @param recordId The record to remove authorization for.
  * @param completion Envoked when the operation completes. NSError object will be nil if there is no error when performing the operation.
  */
-- (void)removeApplicationAuthorizationWithRecordId:(NSUUID *_Nonnull)recordId
+- (void)removeApplicationAuthorizationWithRecordId:(NSUUID *)recordId
                                         completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 @end
+
+NS_ASSUME_NONNULL_END

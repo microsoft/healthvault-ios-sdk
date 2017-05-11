@@ -20,18 +20,22 @@
 
 @class MHVApplicationSettings, MHVPersonInfo, MHVHealthRecordInfo;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol MHVPersonClientProtocol <MHVClientProtocol>
 
-- (void)getApplicationSettingsWithCompletion:(void(^_Nonnull)(MHVApplicationSettings *_Nullable settings, NSError *_Nullable error))completion;
+- (void)getApplicationSettingsWithCompletion:(void(^)(MHVApplicationSettings *_Nullable settings, NSError *_Nullable error))completion;
 
-- (void)setApplicationSettingsWithRequestParameters:(NSString *_Nonnull)requestParameters
-                                         completion:(void(^_Nonnull)(NSError *_Nullable error))completion;
+- (void)setApplicationSettingsWithRequestParameters:(NSString *)requestParameters
+                                         completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (void)getAuthorizedPeopleWithCompletion:(void(^_Nonnull)(NSArray<MHVPersonInfo *> *_Nullable people, NSError *_Nullable error))completion;
+- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable people, NSError *_Nullable error))completion;
 
-- (void)getPersonInfoWithCompletion:(void(^_Nonnull)(MHVPersonInfo *_Nullable person, NSError *_Nullable error))completion;
+- (void)getPersonInfoWithCompletion:(void(^)(MHVPersonInfo *_Nullable person, NSError *_Nullable error))completion;
 
-- (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *_Nonnull)recordIds
-                               completion:(void(^_Nonnull)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion;
+- (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
+                               completion:(void(^)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @end

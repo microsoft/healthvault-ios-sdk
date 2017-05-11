@@ -20,43 +20,47 @@
 
 @class MHVThing, MHVThingQuery, MHVThingCollection;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol MHVThingClientProtocol <NSObject>
 
-- (void)getThingWithThingId:(NSUUID *_Nonnull)thingId
-                    recordId:(NSUUID *_Nonnull)recordId
-                 completion:(void(^_Nonnull)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
+- (void)getThingWithThingId:(NSUUID *)thingId
+                    recordId:(NSUUID *)recordId
+                 completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
 
-- (void)getThingsWithQuery:(MHVThingQuery *_Nonnull)
-                  recordId:(NSUUID *_Nonnull)recordId
-                completion:(void(^_Nonnull)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+- (void)getThingsWithQuery:(MHVThingQuery *)
+                  recordId:(NSUUID *)recordId
+                completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
 
-- (void)getThingsForThingClass:(Class _Nonnull)thingClass
-                         query:(MHVThingQuery *_Nonnull)query
-                      recordId:(NSUUID *_Nonnull)recordId
-                    completion:(void(^_Nonnull)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+- (void)getThingsForThingClass:(Class )thingClass
+                         query:(MHVThingQuery *)query
+                      recordId:(NSUUID *)recordId
+                    completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
 
-- (void)createNewThing:(MHVThing *_Nonnull)thing
-              recordId:(NSUUID *_Nonnull)recordId
+- (void)createNewThing:(MHVThing *)thing
+              recordId:(NSUUID *)recordId
             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (void)createNewThings:(MHVThingCollection *_Nonnull)things
-              recordId:(NSUUID *_Nonnull)recordId
+- (void)createNewThings:(MHVThingCollection *)things
+              recordId:(NSUUID *)recordId
             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (void)updateThing:(MHVThing *_Nonnull)thing
-           recordId:(NSUUID *_Nonnull)recordId
+- (void)updateThing:(MHVThing *)thing
+           recordId:(NSUUID *)recordId
          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (void)updateThings:(MHVThingCollection *_Nonnull)things
-            recordId:(NSUUID *_Nonnull)recordId
+- (void)updateThings:(MHVThingCollection *)things
+            recordId:(NSUUID *)recordId
           completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (void)removeThing:(MHVThing *_Nonnull)thing
-           recordId:(NSUUID *_Nonnull)recordId
+- (void)removeThing:(MHVThing *)thing
+           recordId:(NSUUID *)recordId
          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (void)removeThings:(MHVThingCollection *_Nonnull)things
-            recordId:(NSUUID *_Nonnull)recordId
+- (void)removeThings:(MHVThingCollection *)things
+            recordId:(NSUUID *)recordId
           completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 @end
+
+NS_ASSUME_NONNULL_END
