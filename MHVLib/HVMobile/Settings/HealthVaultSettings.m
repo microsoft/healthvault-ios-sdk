@@ -18,7 +18,8 @@
 
 #import "MHVCommon.h"
 #import "HealthVaultSettings.h"
-#import "MHVKeyChain.h"
+#import "MHVKeychainServiceProtocol.h"
+#import "MHVKeychainService.h"
 
 /// Used for unique identification setting in preferences.
 #define HEALTHVAULT_SETTINGS_PREFIX @"HealthVault"
@@ -26,12 +27,9 @@
 /// Used for storing settings when name is not specified.
 #define DEFAULT_SETTINGS_NAME @""
 
-@interface HealthVaultSettings (Private)
+@interface HealthVaultSettings ()
 
-/// Makes special prefix for settings stored in user defaults on the device.
-/// @param name - name for which to make a prefix. If nil then default name is used (DEFAULT_SETTINGS_NAME).
-/// @returns special prefix for settings.
-+ (NSString *)makePrefixForName: (NSString *)name;
+@property (nonatomic, strong) id<MHVKeychainServiceProtocol> keychainService;
 
 @end
 
@@ -55,6 +53,8 @@
 	if (self = [super init]) {
 
 		self.name = name;
+        
+        _keychainService = [MHVKeychainService new];
 	}
 
 	return self;
@@ -81,8 +81,8 @@
     [perfs setObject: self.userAuthToken
 			  forKey: [NSString stringWithFormat: @"%@userAuthToken", prefix]];
     
-    [MHVKeyChain setPassword:self.sharedSecret forName:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
-    [MHVKeyChain setPassword:self.sessionSharedSecret forName:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
+    [self.keychainService setString:self.sharedSecret forKey:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
+    [self.keychainService setString:self.sessionSharedSecret forKey:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
     
 	[perfs setObject: self.country
 			  forKey: [NSString stringWithFormat: @"%@country", prefix]];
@@ -122,8 +122,10 @@
     }
     else 
     {
-        settings.sharedSecret = [MHVKeyChain passwordForName:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
-        settings.sessionSharedSecret = [MHVKeyChain passwordForName:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
+        id<MHVKeychainServiceProtocol> keychainService = [MHVKeychainService new];
+        
+        settings.sharedSecret = [keychainService stringForKey:[NSString stringWithFormat:@"%@sharedSecret", prefix]];
+        settings.sessionSharedSecret = [keychainService stringForKey:[NSString stringWithFormat:@"%@sessionSharedSecret", prefix]];
     }
     
 	settings.country = [perfs objectForKey: [NSString stringWithFormat: @"%@country", prefix]];
