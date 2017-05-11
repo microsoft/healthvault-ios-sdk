@@ -1,6 +1,6 @@
 //
-// MHVKeyChain.h
-// MHVLib
+//  MHVErrorConstants.h
+//  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,16 +15,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
-#import <Foundation/Foundation.h>
-#import <Security/Security.h>
+#ifndef MHVErrorConstants_h
+#define MHVErrorConstants_h
 
-@interface MHVKeyChain : NSObject
+static NSString *const kMHVErrorDomain = @"com.microsoft.healthvault";
 
-+ (NSString *)passwordForName:(NSString *)passwordName;
+typedef NS_ENUM(NSUInteger, MHVErrorType)
+{
+    MHVErrorTypeRequiredParameter = 0,
+    MHVErrorTypeOperationCannotBePerformed,
+    MHVErrorTypeIOError,
+};
 
-+ (BOOL)setPassword:(NSString *)password forName:(NSString *)passwordName;
-+ (BOOL)removePassword:(NSString *)passwordName;
-
-@end
+#endif /* MHVErrorConstants_h */

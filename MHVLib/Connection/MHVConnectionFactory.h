@@ -1,6 +1,6 @@
 //
-// MHVGuid.h
-// MHVLib
+//  MHVConnectionFactory.h
+//  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -17,16 +17,15 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import <CoreFoundation/CoreFoundation.h>
-#import "MHVType.h"
 
-@interface MHVGuid : MHVType
+@protocol MHVConnectionFactoryProtocol;
 
-@property (readwrite, nonatomic, strong) NSUUID *value;
-@property (readonly, nonatomic) BOOL hasValue;
+NS_ASSUME_NONNULL_BEGIN
 
-- (instancetype)initWithNewUuid;
-- (instancetype)initWithUuid:(NSUUID *)uuid;
-- (instancetype)initFromString:(NSString *)string;
+@interface MHVConnectionFactory : NSObject
+
++ (id<MHVConnectionFactoryProtocol>)current;
 
 @end
+
+NS_ASSUME_NONNULL_END

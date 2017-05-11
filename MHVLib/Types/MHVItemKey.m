@@ -19,7 +19,6 @@
 #import "MHVCommon.h"
 #import "MHVItemKey.h"
 #import "MHVValidator.h"
-#import "MHVGuid.h"
 
 static const xmlChar *x_attribute_version = XMLSTRINGCONST("version-stamp");
 static NSString *const c_localIDPrefix = @"L";
