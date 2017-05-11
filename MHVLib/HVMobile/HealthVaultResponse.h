@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "WebResponse.h"
+#import "MHVHttpServiceResponse.h"
 #import "HealthVaultRequest.h"
 
 /// OK status
@@ -65,9 +65,9 @@
 @property (readonly, getter=getHasError) BOOL hasError;
 
 /// Initializes a new instance of the HealthVaultResponse class.
-/// @param webResponse - the web response from server side.
+/// @param response - the web response from server side.
 /// @request - the original request.
-- (id)initWithWebResponse: (WebResponse *)webResponse
-				  request: (HealthVaultRequest *)request;
+- (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response
+                            request:(HealthVaultRequest *)request;
 
 @end

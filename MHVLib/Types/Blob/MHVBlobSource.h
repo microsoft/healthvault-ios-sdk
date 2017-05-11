@@ -25,21 +25,21 @@
 //
 // ------------------------------
 
-@protocol MHVBlobSource <NSObject>
+@protocol MHVBlobSourceProtocol <NSObject>
 
 @property (readonly, nonatomic) NSUInteger length;
 
-- (NSData *)readStartAt:(int)offset chunkSize:(int)chunkSize;
+-(NSData *) readStartAt:(NSInteger) offset chunkSize:(NSInteger) chunkSize;
 
 @end
 
-@interface MHVBlobMemorySource : NSObject <MHVBlobSource>
+@interface MHVBlobMemorySource : NSObject <MHVBlobSourceProtocol>
 
 - (instancetype)initWithData:(NSData *)data;
 
 @end
 
-@interface MHVBlobFileHandleSource : NSObject<MHVBlobSource>
+@interface MHVBlobFileHandleSource : NSObject<MHVBlobSourceProtocol>
 
 - (instancetype)initWithFilePath:(NSString *)filePath;
 
