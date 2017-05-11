@@ -43,8 +43,8 @@
     return self;
 }
 
-- (void)getOrCreatSodaConnectionWithConfiguration:(MHVConfiguration *_Nonnull)configuration
-                                       completion:(void(^_Nonnull)(id<MHVSodaConnectionProtocol> _Nullable connection, NSError *_Nullable error))completion
+- (void)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *_Nonnull)configuration
+                                        completion:(void(^_Nonnull)(id<MHVSodaConnectionProtocol> _Nullable connection, NSError *_Nullable error))completion
 {
     dispatch_async(self.connectionQueue, ^
     {

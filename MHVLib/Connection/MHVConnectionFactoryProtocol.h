@@ -31,8 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param configuration Configuration required for authenticating the connection.
  @param completion Envoked when the operation completes. id<MHVSodaConnectionProtocol> An instance conforming to MHVSodaConnectionProtocol, will be nil if an error occurs. NSError object will be nil if there is no error when performing the operation.
  */
-- (void)getOrCreatSodaConnectionWithConfiguration:(MHVConfiguration *)configuration
-                                       completion:(void(^)(id<MHVSodaConnectionProtocol> _Nullable connection, NSError *_Nullable error))completion;
+- (void)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration
+                                        completion:(void(^)(id<MHVSodaConnectionProtocol> _Nullable connection, NSError *_Nullable error))completion;
 
 
 @end

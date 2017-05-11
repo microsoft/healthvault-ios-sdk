@@ -7,11 +7,15 @@
 //
 
 #import "MHVSessionCredential.h"
+#import "MHVValidator.h"
 
 @implementation MHVSessionCredential
 
 - (instancetype)initWithToken:(NSString *)token sharedSecret:(NSString *)sharedSecret
 {
+    MHVASSERT_PARAMETER(token);
+    MHVASSERT_PARAMETER(sharedSecret);
+    
     self = [super init];
     
     if (self)
