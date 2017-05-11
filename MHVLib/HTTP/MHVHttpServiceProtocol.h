@@ -18,8 +18,12 @@
 //
 
 #import <Foundation/Foundation.h>
-@protocol MHVBlobSourceProtocol;
+@protocol MHVBlobSourceProtocol, MHVHttpTaskProtocol;
 @class MHVHttpServiceResponse;
+
+typedef void (^MHVHttpServiceCompletion)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error);
+typedef void (^MHVHttpServiceFileDownloadCompletion)(NSError *_Nullable error);
+typedef void (^MHVHttpServiceDataDownloadCompletion)(NSData *_Nullable data, NSError *_Nullable error);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,53 +31,67 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Send a request to HealthVault service
-
+ 
  @param url the endpoint for the request
  @param body data to send as POST body
  @param completion response containing result of the operation, or error
+ @return a task that can be cancelled
  */
-- (void)sendRequestForURL:(NSURL *)url
-                     body:(NSString *_Nullable)body
-               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
+- (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
+                                        body:(NSString *_Nullable)body
+                                  completion:(MHVHttpServiceCompletion)completion;
 
 /**
  Send a request to HealthVault service
-
+ 
  @param url the endpoint for the request
  @param body data to send as POST body
- @param headers HTTP headers to add to the request for authentication, etc. 
-        Dictionary key is HTTP header ie "Content-Type"
+ @param headers HTTP headers to add to the request for authentication, etc.
+ Dictionary key is HTTP header ie "Content-Type"
  @param completion response containing result of the operation, or error
+ @return a task that can be cancelled
  */
-- (void)sendRequestForURL:(NSURL *)url
-                     body:(NSString *_Nullable)body
-                  headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
-               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
+- (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
+                                        body:(NSString *_Nullable)body
+                                     headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
+                                  completion:(MHVHttpServiceCompletion)completion;
 
 /**
- Download a file from HealthVault service to a local file path
-
+ Download a blob from HealthVault service to a local file path
+ 
  @param url the endpoint for the request
  @param path local file path where the downloaded file will be stored
-        For security, the file's protection attributes will be set to NSFileProtectionCompleteUntilFirstUserAuthentication
+ For security, the file's protection attributes will be set to NSFileProtectionComplete
  @param completion error if the download failed
+ @return a task that can be cancelled
  */
-- (void)downloadFileWithUrl:(NSURL *)url
-                 toFilePath:(NSString *)path
-                 completion:(void (^)(NSError *_Nullable error))completion;
+- (id<MHVHttpTaskProtocol>)downloadFileWithUrl:(NSURL *)url
+                                    toFilePath:(NSString *)path
+                                    completion:(MHVHttpServiceFileDownloadCompletion)completion;
+
+/**
+ Download a blob from HealthVault service and return data
+ 
+ @param url the endpoint for the request
+ @param completion data if the download succeeded, or error
+ @return a task that can be cancelled
+ */
+- (id<MHVHttpTaskProtocol>)downloadDataWithUrl:(NSURL *)url
+                                    completion:(MHVHttpServiceDataDownloadCompletion)completion;
 
 /**
  Upload to HealthVault blob storage
-
+ 
  @param blobSource data source for blob (NSData, file, etc)
  @param toUrl the endpoint for the request
  @param chunkSize size is given by HealthVault service when requesting to upload a blob
  @param completion response containing result of the operation, or error
+ @return a task that can be cancelled
  */
-- (void)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
-                   toUrl:(NSURL *)url
-               chunkSize:(NSUInteger)chunkSize
-              completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
+- (id<MHVHttpTaskProtocol>)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
+                                      toUrl:(NSURL *)url
+                                  chunkSize:(NSUInteger)chunkSize
+                                 completion:(MHVHttpServiceCompletion)completion;
 
 @end
 

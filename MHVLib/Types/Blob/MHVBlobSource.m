@@ -56,7 +56,7 @@
     return self;
 }
 
--(NSData *)readStartAt:(NSInteger)offset chunkSize:(NSInteger)chunkSize
+- (NSData *)readStartAt:(NSInteger)offset chunkSize:(NSInteger)chunkSize
 {
     NSRange range = NSMakeRange(offset, chunkSize);
 
@@ -110,7 +110,7 @@
     [self.file closeFile];
 }
 
--(NSData *)readStartAt:(NSInteger)offset chunkSize:(NSInteger)chunkSize
+- (NSData *)readStartAt:(NSInteger)offset chunkSize:(NSInteger)chunkSize
 {
     [self.file seekToFileOffset:offset];
     return [self.file readDataOfLength:chunkSize];

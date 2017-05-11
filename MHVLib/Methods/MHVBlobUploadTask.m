@@ -19,7 +19,6 @@
 #import "MHVCommon.h"
 #import "MHVBlobUploadTask.h"
 #import "MHVBeginBlobPutTask.h"
-#import "MHVHttpRequestResponse.h"
 #import "MHVDirectory.h"
 #import "MHVClient.h"
 
@@ -28,31 +27,25 @@
 // MHVBlobUpload
 //
 // ------------------------------
-@interface MHVBlobUploadTask (MHVPrivate)
+@interface MHVBlobUploadTask ()
 
-- (void)beginPutBlobComplete:(MHVTask *)task;
-- (void)postNextChunk;
-- (void)postChunkComplete:(MHVTask *)task;
-- (void)uploadComplete;
+@property (readwrite, nonatomic, strong) MHVBlobPutParameters* putParams;
 
 @end
 
 @implementation MHVBlobUploadTask
-
-@synthesize source = m_source;
-@synthesize record = m_record;
 
 - (NSString *)blobUrl
 {
     return (NSString *)self.result;
 }
 
-- (id)init
+- (instancetype)init
 {
     return [self initWithSource:nil record:nil andCallback:nil];
 }
 
-- (id)initWithData:(NSData *)data record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (instancetype)initWithData:(NSData *)data record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
     
@@ -61,7 +54,7 @@
     return self;
 }
 
-- (id)initWithFilePath:(NSString *)filePath record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (instancetype)initWithFilePath:(NSString *)filePath record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     MHVBlobFileHandleSource *blobSource = [[MHVBlobFileHandleSource alloc] initWithFilePath:filePath];
     
@@ -70,79 +63,60 @@
     return self;
 }
 
-- (id)initWithSource:(id<MHVBlobSourceProtocol>)source record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (instancetype)initWithSource:(id<MHVBlobSourceProtocol>)source record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(source);
     
     self = [super initWithCallback:callback];
-    MHVCHECK_SELF;
-    
-    m_source = source;
-    m_record = record;
-    //
-    // First, we'll issue an operation to retrieve a Blob Url.
-    // This is the  blobUrl to which we'll push the blob
-    // The app can subsequently 'commit' the blob by adding to an MHVItem's Blob collection and saving it to MHV
-    //
-    MHVBeginBlobPutTask *beginPutTask = [[MHVBeginBlobPutTask alloc] initWithCallback:^(MHVTask *task) {
-        [self beginPutBlobComplete:task];
-    } ];
-    
-    beginPutTask.record = m_record;
-    
-    [self setNextTask:beginPutTask];
-    
-    return self;
-    
-LError:
-    MHVALLOC_FAIL;
-}
-
-- (void)totalBytesWritten:(NSInteger)byteCount
-{
-    if (self.delegate)
+    if (self)
     {
-        [self.delegate totalBytesWritten:m_byteCountUploaded + byteCount];
+        _source = source;
+        _record = record;
+        
+        //
+        // First, we'll issue an operation to retrieve a Blob Url.
+        // This is the  blobUrl to which we'll push the blob
+        // The app can subsequently 'commit' the blob by adding to an MHVItem's Blob collection and saving it to MHV
+        //
+        MHVBeginBlobPutTask *beginPutTask = [[MHVBeginBlobPutTask alloc] initWithCallback:^(MHVTask *task)
+        {
+            @try
+            {
+                [task checkSuccess];
+                
+                [self beginPutBlob:task];
+            }
+            @catch (NSException *exception)
+            {
+                [self completeTask];
+            }
+        }];
+        
+        beginPutTask.record = _record;
+        
+        [self setNextTask:beginPutTask];
     }
+    return self;
 }
 
-+ (MHVHttpRequestResponse *)newUploadRequestForUrl:(NSURL *)url withCallback:(MHVTaskCompletion)callback
-{
-    MHVHttpRequestResponse *postRequest = [[MHVHttpRequestResponse alloc] initWithVerb:@"POST" url:url andCallback:callback];
-    
-    [postRequest.request setContentType:@"application/octet-stream"];
-    
-    return postRequest;
-}
+#pragma mark - Internal methods
 
-+ (void)addIsFinalUploadChunkHeaderTo:(NSMutableURLRequest *)request
-{
-    [request setValue:@"1" forHTTPHeaderField:@"x-hv-blob-complete"];
-}
-
-@end
-
-@implementation MHVBlobUploadTask (MHVPrivate)
-
-- (void)beginPutBlobComplete:(MHVTask *)task
+- (void)beginPutBlob:(MHVTask *)task
 {
     MHVBeginBlobPutTask *blobTask = (MHVBeginBlobPutTask *)task;
     
-    m_putParams = blobTask.putParams;
-    
-    m_blobUrl = [NSURL URLWithString:m_putParams.url];
-    MHVCHECK_OOM(m_blobUrl);
+    self.putParams = blobTask.putParams;
     
     //
-    // Now that we know where to write the blob to, and in what chunks, we can begin
+    // Now that we know where to write the blob to, and in what chunks, we can upload the data
     //
     
     MHVTask *nextTask = [[MHVTaskAsyncBlock alloc] initWithAsyncBlock:^(MHVTask *taskToComplete)
     {
-        //TODO: Need to wrap httpService in MHVTask so the blob upload flow works. This can be simplified when tasks are removed
-        [[MHVClient current].service.httpService uploadBlobSource:m_source
-                                                            toUrl:m_blobUrl
-                                                        chunkSize:m_putParams.chunkSize
+        //Wrap httpService in MHVTask so the blob upload flow works. This can be simplified when tasks are removed
+        [[MHVClient current].service.httpService uploadBlobSource:self.source
+                                                            toUrl:[NSURL URLWithString:self.putParams.url]
+                                                        chunkSize:self.putParams.chunkSize
                                                        completion:^(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error)
          {
              [self uploadComplete];
@@ -154,62 +128,9 @@ LError:
     [self setNextTask:nextTask];
 }
 
-- (void)postNextChunk
-{
-    MHVHttpRequestResponse *postRequest = [MHVBlobUploadTask newUploadRequestForUrl:m_blobUrl withCallback:^(MHVTask *task) {
-        [self postChunkComplete:task];
-    }];
-    
-    MHVCHECK_OOM(postRequest);
-    
-    postRequest.delegate = self.delegate;
-    
-    @try
-    {
-        NSUInteger nextChunkSize = MIN(m_putParams.chunkSize, (m_source.length - m_byteCountUploaded));
-        if (nextChunkSize > 0)
-        {
-            NSData *nextChunk = [m_source readStartAt:m_byteCountUploaded chunkSize:(int)nextChunkSize];
-            postRequest.requestBody = nextChunk;
-            
-            [postRequest.request setContentRangeStart:m_byteCountUploaded end:(m_byteCountUploaded + nextChunkSize - 1)];
-        }
-        
-        if (nextChunkSize <= m_putParams.chunkSize)
-        {
-            [MHVBlobUploadTask addIsFinalUploadChunkHeaderTo:postRequest.request];
-        }
-        
-        [self setNextTask:postRequest];
-    }
-    @finally
-    {
-        postRequest = nil;
-    }
-}
-
-- (void)postChunkComplete:(MHVTask *)task
-{
-    MHVHttpRequestResponse *putTask = (MHVHttpRequestResponse *)task;
-    
-    [putTask checkSuccess];
-    
-    int chunkLength = (int)putTask.requestBody.length;
-    [self totalBytesWritten:chunkLength];  // Notify delegates that we've completed writing these many bytes
-    
-    m_byteCountUploaded += chunkLength;
-    if (m_byteCountUploaded < m_source.length)
-    {
-        [self postNextChunk];
-        return;
-    }
-    
-    [self uploadComplete];
-}
-
 - (void)uploadComplete
 {
-    self.result = m_putParams.url;
+    self.result = self.putParams.url;
 }
 
 @end

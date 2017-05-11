@@ -27,6 +27,7 @@
 #import "MHVBlobSource.h"
 #import "MHVAsyncTask.h"
 #import "MHVApproxDateTime.h"
+#import "MHVHttpServiceProtocol.h"
 
 @class MHVRecordReference;
 @class MHVItemBlobUploadTask;
@@ -199,10 +200,21 @@ enum MHVItemFlags
 //
 // Upload data into the default blob and put the item...
 //
-- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
-- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data
+                          contentType:(NSString *)contentType
+                               record:(MHVRecordReference *)record
+                          andCallback:(MHVTaskCompletion)callback;
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data
+                          forBlobName:(NSString *)name
+                          contentType:(NSString *)contentType
+                               record:(MHVRecordReference *)record
+                          andCallback:(MHVTaskCompletion)callback;
 
-- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSourceProtocol>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
+- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSourceProtocol>)data
+                                 forBlobName:(NSString *)name
+                                 contentType:(NSString *)contentType
+                                      record:(MHVRecordReference *)record
+                                 andCallback:(MHVTaskCompletion)callback;
 
 @end
 

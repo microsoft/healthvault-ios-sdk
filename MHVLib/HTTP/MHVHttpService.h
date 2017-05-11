@@ -24,6 +24,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVHttpService : NSObject <MHVHttpServiceProtocol>
 
+/**
+ Create MHV HTTP Service
+
+ @param urlSession NSURLSession to use
+ @return the MHVHttpService
+ */
+- (instancetype)initWithURLSession:(NSURLSession *)urlSession;
+
+/**
+ Create MHV HTTP Service using default NSURLSession
+
+ @return the MHVHttpService
+ */
+- (instancetype)init;
+
 @end
 
 NS_ASSUME_NONNULL_END

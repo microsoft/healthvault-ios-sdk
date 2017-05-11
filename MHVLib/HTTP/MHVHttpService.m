@@ -22,6 +22,7 @@
 #import "Logger.h"
 #import "MHVBlobSource.h"
 #import "MHVValidator.h"
+#import "MHVHttpTask.h"
 
 @interface MHVHttpService () <NSURLSessionDelegate>
 
@@ -64,24 +65,24 @@
     return self;
 }
 
-- (void)sendRequestForURL:(NSURL *)url
-                     body:(NSString *_Nullable)body
-               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+- (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
+                                        body:(NSString *_Nullable)body
+                                  completion:(MHVHttpServiceCompletion)completion
 {
-    [self sendRequestForURL:url body:body headers:nil completion:completion];
+    return [self sendRequestForURL:url body:body headers:nil completion:completion];
 }
 
-- (void)sendRequestForURL:(NSURL *)url
-                     body:(NSString *_Nullable)body
-                  headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
-               completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+- (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
+                                        body:(NSString *_Nullable)body
+                                     headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
+                                  completion:(MHVHttpServiceCompletion)completion
 {
     MHVASSERT_PARAMETER(url);
     MHVASSERT([url.scheme isEqualToString:@"https"]);
     
     if (!url)
     {
-        return;
+        return nil;
     }
     
     NSMutableURLRequest *request = [[self requestWithUrl:url body:body] mutableCopy];
@@ -93,111 +94,156 @@
     
     NSInteger currentRequest = (++self.requestCount);
     NSDate *startDate = [NSDate date];
-
+    
     [Logger write:[NSString stringWithFormat:@"Begin request #%li", (long)currentRequest]];
-
-    [[self.urlSession dataTaskWithRequest:(NSURLRequest *)request
-                        completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
-      {
-          NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
-          
-          [Logger write:[NSString stringWithFormat:@"Response for #%li has status code: %li (%0.4f seconds)",
-                         (long)currentRequest, (long)statusCode, [[NSDate date] timeIntervalSinceDate:startDate]]];
-          
-          if (error)
-          {
-              if (completion)
-              {
-                  completion(nil, error);
-              }
-          }
-          else
-          {
-              if (completion)
-              {
-                  completion([self responseFromData:data urlResponse:response], nil);
-              }
-          }
-      }] resume];
+    
+    NSURLSessionTask *task = [self.urlSession dataTaskWithRequest:(NSURLRequest *)request
+                                                completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                              {
+                                  NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
+                                  
+                                  [Logger write:[NSString stringWithFormat:@"Response for #%li has status code: %li (%0.4f seconds)",
+                                                 (long)currentRequest, (long)statusCode, [[NSDate date] timeIntervalSinceDate:startDate]]];
+                                  
+                                  if (error)
+                                  {
+                                      if (completion)
+                                      {
+                                          completion(nil, error);
+                                      }
+                                  }
+                                  else
+                                  {
+                                      if (completion)
+                                      {
+                                          completion([self responseFromData:data urlResponse:response], nil);
+                                      }
+                                  }
+                              }];
+    
+    [task resume];
+    return [[MHVHttpTask alloc] initWithURLSessionTask:task];
 }
 
-- (void)downloadFileWithUrl:(NSURL *)url
-                 toFilePath:(NSString *)path
-                 completion:(void (^)(NSError *_Nullable error))completion
+- (id<MHVHttpTaskProtocol>)downloadFileWithUrl:(NSURL *)url
+                                    toFilePath:(NSString *)path
+                                    completion:(MHVHttpServiceFileDownloadCompletion)completion
 {
     MHVASSERT_PARAMETER(url);
     MHVASSERT_PARAMETER(path);
     
     if (!url || !path)
     {
-        return;
+        return nil;
+    }
+    
+    NSURLRequest *request = [self requestWithUrl:url body:nil];
+    
+    NSURLSessionTask *task = [self.urlSession downloadTaskWithRequest:request
+                                                    completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                              {
+                                  if (error)
+                                  {
+                                      if (completion)
+                                      {
+                                          completion(error);
+                                      }
+                                      return;
+                                  }
+                                  
+                                  //Remove if a file already exists at the target location
+                                  [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+                                  
+                                  NSError *fileError;
+                                  if (![[NSFileManager defaultManager] copyItemAtURL:location toURL:[NSURL fileURLWithPath:path] error:&fileError])
+                                  {
+                                      if (completion)
+                                      {
+                                          completion(fileError);
+                                      }
+                                  }
+                                  else
+                                  {
+                                      [[NSFileManager defaultManager] setAttributes:@{
+                                                                                      NSFileProtectionKey : NSFileProtectionCompleteUntilFirstUserAuthentication
+                                                                                      }
+                                                                       ofItemAtPath:path
+                                                                              error:nil];
+                                      if (completion)
+                                      {
+                                          completion(nil);
+                                      }
+                                  }
+                              }];
+    
+    [task resume];
+    return [[MHVHttpTask alloc] initWithURLSessionTask:task];
+}
+
+- (id<MHVHttpTaskProtocol>)downloadDataWithUrl:(NSURL *)url
+                                    completion:(MHVHttpServiceDataDownloadCompletion)completion
+{
+    MHVASSERT_PARAMETER(url);
+
+    if (!url)
+    {
+        return nil;
     }
 
     NSURLRequest *request = [self requestWithUrl:url body:nil];
     
-    [[self.urlSession downloadTaskWithRequest:request
-                            completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error)
-      {
-          if (error)
-          {
-              if (completion)
-              {
-                  completion(error);
-              }
-              return;
-          }
-          
-          NSError *fileError;
-          if (![[NSFileManager defaultManager] copyItemAtURL:location toURL:[NSURL fileURLWithPath:path] error:&fileError])
-          {
-              if (completion)
-              {
-                  completion(fileError);
-              }
-          }
-          else
-          {
-              [[NSFileManager defaultManager] setAttributes:@{
-                                                              NSFileProtectionKey : NSFileProtectionCompleteUntilFirstUserAuthentication
-                                                              }
-                                               ofItemAtPath:path
-                                                      error:nil];
-              if (completion)
-              {
-                  completion(nil);
-              }
-          }
-      }] resume];
+    NSURLSessionTask *task = [self.urlSession downloadTaskWithRequest:request
+                                                    completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                              {
+                                  if (error)
+                                  {
+                                      completion(nil, error);
+                                      return;
+                                  }
+                                  else
+                                  {
+                                      completion([NSData dataWithContentsOfURL:location], nil);
+                                  }
+                              }];
+    
+    [task resume];
+    return [[MHVHttpTask alloc] initWithURLSessionTask:task];
 }
 
-- (void)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
-                   toUrl:(NSURL *)url
-               chunkSize:(NSUInteger)chunkSize
-              completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+- (id<MHVHttpTaskProtocol>)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
+                                      toUrl:(NSURL *)url
+                                  chunkSize:(NSUInteger)chunkSize
+                                 completion:(MHVHttpServiceCompletion)completion
 {
-    [self uploadBlobSource:blobSource toUrl:url chunkOffset:0 chunkSize:chunkSize completion:completion];
+    return [self uploadBlobSource:blobSource
+                            toUrl:url
+                      chunkOffset:0
+                        chunkSize:chunkSize
+                         httpTask:[[MHVHttpTask alloc] initWithURLSessionTask:nil totalSize:blobSource.length]
+                       completion:completion];
 }
 
-- (void)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
-                   toUrl:(NSURL *)url
-             chunkOffset:(NSUInteger)chunkOffset
-               chunkSize:(NSUInteger)chunkSize
-              completion:(void (^)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+- (id<MHVHttpTaskProtocol>)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
+                                      toUrl:(NSURL *)url
+                                chunkOffset:(NSUInteger)chunkOffset
+                                  chunkSize:(NSUInteger)chunkSize
+                                   httpTask:(MHVHttpTask *)httpTask
+                                 completion:(MHVHttpServiceCompletion)completion
 {
     MHVASSERT_PARAMETER(blobSource);
     MHVASSERT_PARAMETER(url);
     MHVASSERT([url.scheme isEqualToString:@"https"]);
     MHVASSERT(chunkSize != 0);
     
-    if (!blobSource || !url)
+    if (!blobSource || !url || chunkSize == 0)
     {
-        return;
+        return nil;
     }
-
+    
     NSUInteger thisChunkSize = MIN(chunkSize, (blobSource.length - chunkOffset));
     
     NSData *data = [blobSource readStartAt:chunkOffset chunkSize:thisChunkSize];
-
+    
     NSURLRequest *request = [self requestWithUrl:url
                                             data:data
                                      chunkOffset:chunkOffset
@@ -205,50 +251,55 @@
     
     [Logger write:[NSString stringWithFormat:@"Blob upload chunk at offset %li", (long)chunkOffset]];
     NSDate *startDate = [NSDate date];
-
-    [[self.urlSession dataTaskWithRequest:(NSURLRequest *)request
-                        completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
-      {
-          if (!error)
-          {
-              [Logger write:[NSString stringWithFormat:@"Blob upload chunk size %li in %0.4f seconds", (long)thisChunkSize, [[NSDate date] timeIntervalSinceDate:startDate]]];
-          }
-
-          if (!error && chunkOffset + thisChunkSize < blobSource.length)
-          {
-              //Update offset and call this method again to send the next chunk
-              [self uploadBlobSource:blobSource
-                               toUrl:url
-                         chunkOffset:chunkOffset + thisChunkSize
-                           chunkSize:chunkSize
-                          completion:completion];
-              return;
-          }
-          else
-          {
-              if (error)
-              {
-                  [Logger write:[NSString stringWithFormat:@"Blob upload error: %@", error.localizedDescription]];
-                  
-                  if (completion)
-                  {
-                      completion(nil, error);
-                  }
-              }
-              else
-              {
-                  [Logger write:[NSString stringWithFormat:@"Blob upload complete"]];
-                  
-                  if (completion)
-                  {
-                      completion([self responseFromData:data urlResponse:response], nil);
-                  }
-              }
-          }
-      }] resume];
+    NSURLSessionTask *task = [self.urlSession dataTaskWithRequest:(NSURLRequest *)request
+                                                completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                              {
+                                  if (!error)
+                                  {
+                                      [Logger write:[NSString stringWithFormat:@"Blob upload chunk size %li in %0.4f seconds", (long)thisChunkSize, [[NSDate date] timeIntervalSinceDate:startDate]]];
+                                  }
+                                  
+                                  if (!error && chunkOffset + thisChunkSize < blobSource.length)
+                                  {
+                                      //Update offset and call this method again to send the next chunk
+                                      [self uploadBlobSource:blobSource
+                                                       toUrl:url
+                                                 chunkOffset:chunkOffset + thisChunkSize
+                                                   chunkSize:chunkSize
+                                                    httpTask:httpTask
+                                                  completion:completion];
+                                      return;
+                                  }
+                                  else
+                                  {
+                                      if (error)
+                                      {
+                                          [Logger write:[NSString stringWithFormat:@"Blob upload error: %@", error.localizedDescription]];
+                                          
+                                          if (completion)
+                                          {
+                                              completion(nil, error);
+                                          }
+                                      }
+                                      else
+                                      {
+                                          [Logger write:[NSString stringWithFormat:@"Blob upload complete"]];
+                                          
+                                          if (completion)
+                                          {
+                                              completion([self responseFromData:data urlResponse:response], nil);
+                                          }
+                                      }
+                                  }
+                              }];
+    
+    [task resume];
+    [httpTask addTask:task];
+    
+    return httpTask;
 }
 
-#pragma mark - Helpers
+#pragma mark - Internal methods
 
 - (NSURLRequest *)requestWithUrl:(NSURL *)url
                             body:(NSString *)body
@@ -279,19 +330,19 @@
     
     request.HTTPMethod = @"POST";
     request.HTTPBody = data;
-
+    
     [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
-
+    
     NSString *contentRange = [NSString stringWithFormat:@"bytes %lu-%lu/*", (unsigned long)chunkOffset, (unsigned long)chunkOffset + data.length - 1];
     [request setValue:contentRange forHTTPHeaderField:@"Content-Range"];
-
+    
     //Last chunk, add the "complete" header
     if (chunkOffset + data.length == totalSize)
     {
         [request setValue:@"1" forHTTPHeaderField:@"x-hv-blob-complete"];
     }
-
+    
     return request;
 }
 

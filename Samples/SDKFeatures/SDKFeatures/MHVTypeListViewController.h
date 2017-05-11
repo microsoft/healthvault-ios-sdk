@@ -1,8 +1,8 @@
 //
-//  MHVTypeListViewController.h
-//  SDKFeatures
+// MHVTypeListViewController.h
+// SDKFeatures
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,30 +23,20 @@
 #import "MHVStatusLabel.h"
 
 @interface MHVTypeListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
-{
-@private
-    UITableView* m_tableView;
-    UIBarButtonItem* m_moreButton;
-    MHVStatusLabel* m_statusLabel;
-    
-    NSArray* m_classesForTypes;
-    MHVFeatureActions* m_actions;
-    MHVMoreFeatures* m_features;
-}
 
-@property (strong, nonatomic) IBOutlet UITableView* tableView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem* moreButton;
-@property (strong, nonatomic) IBOutlet MHVStatusLabel* statusLabel;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreButton;
+@property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
 
 - (IBAction)moreFeatures:(id)sender;
 
 //
 // Classes we have demo code for in this app. We display this list in m_tableView
 //
-+(NSArray *) classesForTypesToDemo;
++ (NSArray *)classesForTypesToDemo;
 //
 // Class for the item currently selected in the TableView
 //
--(Class) getSelectedClass;
+- (Class)getSelectedClass;
 
 @end

@@ -1,8 +1,8 @@
 //
-//  MHVMethodFactory.h
-//  MHVLib
+// MHVMethodFactory.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,19 +24,19 @@
 //
 // You can override the methods here to change, intercept or mock the behavior
 // You can then assign your custom object to [MHVClient current].methodFactory
-// 
+//
 @interface MHVMethodFactory : NSObject
 
--(MHVGetItemsTask *) newGetItemsForRecord:(MHVRecordReference *) record queries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback;
+- (MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record queries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback;
 
--(MHVPutItemsTask *) newPutItemsForRecord:(MHVRecordReference *) record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback;
--(MHVRemoveItemsTask *)newRemoveItemsForRecord:(MHVRecordReference *) record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback;
+- (MHVPutItemsTask *)newPutItemsForRecord:(MHVRecordReference *)record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback;
+- (MHVRemoveItemsTask *)newRemoveItemsForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback;
 
 @end
 
 @interface MHVMethodFactory (MHVMethodFactoryExtensions)
 
--(MHVGetItemsTask *) newGetItemsForRecord:(MHVRecordReference *) record query:(MHVItemQuery *)query andCallback:(MHVTaskCompletion)callback;
--(MHVPutItemsTask *) newPutItemForRecord:(MHVRecordReference *) record item:(MHVItem *) item andCallback:(MHVTaskCompletion) callback;
+- (MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record query:(MHVItemQuery *)query andCallback:(MHVTaskCompletion)callback;
+- (MHVPutItemsTask *)newPutItemForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(MHVTaskCompletion)callback;
 
 @end
