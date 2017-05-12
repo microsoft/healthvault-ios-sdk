@@ -36,7 +36,7 @@ static const xmlChar *x_element_orderedBy = XMLSTRINGCONST("ordered-by");
         return nil;
     }
 
-    return [self.labGroup itemAtIndex:0];
+    return [self.labGroup objectAtIndex:0];
 }
 
 - (MHVLabTestResultsGroupCollection *)getAllGroups

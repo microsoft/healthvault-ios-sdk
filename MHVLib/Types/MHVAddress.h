@@ -85,8 +85,6 @@
 //
 // -------------------------
 
-@interface MHVAddressCollection : MHVCollection
-
-- (MHVAddress *)itemAtIndex:(NSUInteger)index;
+@interface MHVAddressCollection : MHVCollection<MHVAddress *>
 
 @end

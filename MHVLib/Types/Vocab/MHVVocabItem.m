@@ -81,11 +81,6 @@ static NSString *const c_element_data = @"info-xml";
     return self;
 }
 
-- (MHVVocabItem *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVVocabItem *)[self objectAtIndex:index];
-}
-
 - (void)sortByDisplayText
 {
     [self sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
@@ -112,7 +107,7 @@ static NSString *const c_element_data = @"info-xml";
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
-        MHVVocabItem *item = [self itemAtIndex:i];
+        MHVVocabItem *item = [self objectAtIndex:i];
         if ([item.code isEqualToString:code])
         {
             return i;
@@ -131,7 +126,7 @@ static NSString *const c_element_data = @"info-xml";
         return nil;
     }
 
-    return [self itemAtIndex:index];
+    return [self objectAtIndex:index];
 }
 
 - (NSString *)displayTextForCode:(NSString *)code
@@ -158,7 +153,7 @@ static NSString *const c_element_data = @"info-xml";
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
-        [strings addObject:[self itemAtIndex:i].displayText];
+        [strings addObject:[self objectAtIndex:i].displayText];
     }
 }
 

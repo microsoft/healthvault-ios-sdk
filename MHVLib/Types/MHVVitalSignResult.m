@@ -123,9 +123,4 @@ static NSString *const c_element_flag = @"flag";
     return self;
 }
 
-- (MHVVitalSignResult *)itemAtIndex:(NSUInteger)index
-{
-    return [self objectAtIndex:index];
-}
-
 @end

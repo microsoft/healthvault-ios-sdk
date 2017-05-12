@@ -148,7 +148,7 @@ LError:
     return [m_items indexOfObject:object inSortedRange:NSMakeRange(0, m_items.count) options:opts usingComparator:cmp];
 }
 
--(BOOL) addItem:(MHVTypeViewItem *)item
+-(BOOL) addObject:(MHVTypeViewItem *)item
 {
     MHVCHECK_NOTNULL(item);
 
@@ -312,7 +312,7 @@ LError:
     MHVTypeViewItem* dateKey = [[MHVTypeViewItem alloc] initWithMHVItem:item];
     MHVCHECK_NOTNULL(dateKey);
     
-    [self addItem:dateKey];
+    [self addObject:dateKey];
     
     return TRUE;
     
@@ -338,7 +338,7 @@ LError:
     MHVTypeViewItem* dateKey = [[MHVTypeViewItem alloc] initWithPendingItem:item];
     MHVCHECK_NOTNULL(dateKey);
  
-    [self addItem:dateKey];
+    [self addObject:dateKey];
     
     return TRUE;
     

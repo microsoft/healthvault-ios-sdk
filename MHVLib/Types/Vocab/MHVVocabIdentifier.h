@@ -84,6 +84,6 @@ NSString *const c_usdaFamily;
 
 NS_ASSUME_NONNULL_END
 
-@interface MHVVocabIdentifierCollection : MHVCollection
+@interface MHVVocabIdentifierCollection : MHVCollection<MHVVocabIdentifier *>
 
 @end

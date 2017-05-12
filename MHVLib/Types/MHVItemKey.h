@@ -40,14 +40,11 @@
 
 @end
 
-@interface MHVItemKeyCollection : MHVCollection <XSerializable>
+@interface MHVItemKeyCollection : MHVCollection<MHVItemKey *> <XSerializable>
 
 - (instancetype)initWithKey:(MHVItemKey *)key;
 
-- (void)addItem:(MHVItemKey *)key;
-
 - (MHVItemKey *)firstKey;
-- (MHVItemKey *)itemAtIndex:(NSUInteger)index;
 
 - (MHVClientResult *)validate;
 

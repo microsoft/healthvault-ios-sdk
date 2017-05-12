@@ -35,7 +35,7 @@
         return nil;
     }
     
-    return [m_queries itemAtIndex:0];
+    return [m_queries objectAtIndex:0];
 }
 
 -(MHVItemQueryResults *)queryResults
@@ -57,7 +57,7 @@
 
 -(MHVItem *)firstItemRetrieved
 {
-    return (self.itemsRetrieved) ? [self.itemsRetrieved itemAtIndex:0] : nil;
+    return (self.itemsRetrieved) ? [self.itemsRetrieved objectAtIndex:0] : nil;
 }
 
 -(NSString *)name
@@ -111,7 +111,7 @@ LError:
 {
     for (NSUInteger i = 0, count = m_queries.count; i < count; ++i)
     {
-        MHVItemQuery* query = [m_queries itemAtIndex:i];
+        MHVItemQuery* query = [m_queries objectAtIndex:i];
         [self validateObject:query];
         [XSerializer serialize:query withRoot:@"group" toWriter:writer];
     }

@@ -30,8 +30,6 @@
 
 @end
 
-@interface MHVMessageAttachmentCollection : MHVCollection
-
-- (MHVMessageAttachment *)itemAtIndex:(NSUInteger)index;
+@interface MHVMessageAttachmentCollection : MHVCollection<MHVMessageAttachment *>
 
 @end

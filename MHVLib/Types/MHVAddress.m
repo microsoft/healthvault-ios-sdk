@@ -128,9 +128,4 @@ static NSString *const c_element_county = @"county";
     return self;
 }
 
-- (MHVAddress *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVAddress *)[self objectAtIndex:index];
-}
-
 @end

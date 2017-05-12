@@ -294,9 +294,4 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
     return self;
 }
 
-- (MHVTime *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVTime *)[self objectAtIndex:index];
-}
-
 @end

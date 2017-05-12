@@ -75,10 +75,9 @@
 // Collection of Records
 //
 // -------------------------
-@interface MHVRecordCollection : MHVCollection
+@interface MHVRecordCollection : MHVCollection<MHVRecord *>
 
 - (instancetype)initWithRecordArray:(NSArray *)records;
-- (MHVRecord *)itemAtIndex:(NSUInteger)index;
 
 - (NSInteger)indexOfRecordID:(NSString *)recordID;
 

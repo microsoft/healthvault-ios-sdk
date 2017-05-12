@@ -28,9 +28,8 @@
 
 @end
 
-@interface MHVMessageHeaderItemCollection : MHVCollection
+@interface MHVMessageHeaderItemCollection : MHVCollection<MHVMessageHeaderItem *>
 
-- (MHVMessageHeaderItem *)itemAtIndex:(NSUInteger)index;
 - (NSUInteger)indexOfHeaderWithName:(NSString *)name;
 
 - (MHVMessageHeaderItem *)headerWithName:(NSString *)name;

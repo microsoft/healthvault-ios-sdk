@@ -143,7 +143,7 @@ LError:
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MHVItem"];
     }
     
-    MHVItem* item = [m_items itemAtIndex:indexPath.row];
+    MHVItem* item = m_items[indexPath.row];
     NSString* whenString = [item.data.typed dateString];
     if ([NSString isNilOrEmpty:whenString])
     {
@@ -191,7 +191,7 @@ LError:
         return nil;
     }
     
-    return [m_items itemAtIndex:selectedRow.row];
+    return m_items[selectedRow.row];
 }
 
 -(void)getItemsFromHealthVault

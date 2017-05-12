@@ -67,14 +67,4 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
     return self;
 }
 
-- (void)addItem:(MHVTestResultRange *)item
-{
-    [super addObject:item];
-}
-
-- (MHVTestResultRange *)itemAtIndex:(NSUInteger)index
-{
-    return [self objectAtIndex:index];
-}
-
 @end

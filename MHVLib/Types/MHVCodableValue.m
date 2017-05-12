@@ -38,7 +38,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 
 - (MHVCodedValue *)firstCode
 {
-    return (self.hasCodes) ? [self.codes itemAtIndex:0] : nil;
+    return (self.hasCodes) ? [self.codes objectAtIndex:0] : nil;
 }
 
 - (id)initWithText:(NSString *)textValue
@@ -132,7 +132,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
         MHVCodedValueCollection *codes = self.codes;
         for (NSUInteger i = 0; i < codes.count; ++i)
         {
-            MHVCodedValue *clonedCode = [[codes itemAtIndex:i] clone];
+            MHVCodedValue *clonedCode = [[codes objectAtIndex:i] clone];
             MHVCHECK_NOTNULL(clonedCode);
 
             [cloned addCode:clonedCode];
@@ -198,16 +198,6 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
     }
 
     return self;
-}
-
-- (void)addItem:(MHVCodableValue *)value
-{
-    [super addObject:value];
-}
-
-- (MHVCodableValue *)itemAtIndex:(NSUInteger)index
-{
-    return [self objectAtIndex:index];
 }
 
 @end

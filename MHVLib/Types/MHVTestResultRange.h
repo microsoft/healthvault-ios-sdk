@@ -32,9 +32,6 @@
 
 @end
 
-@interface MHVTestResultRangeCollection : MHVCollection
-
-- (void)addItem:(MHVTestResultRange *)item;
-- (MHVTestResultRange *)itemAtIndex:(NSUInteger)index;
+@interface MHVTestResultRangeCollection : MHVCollection<MHVTestResultRange *>
 
 @end

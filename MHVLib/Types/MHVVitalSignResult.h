@@ -75,8 +75,6 @@
 @end
 
 
-@interface MHVVitalSignResultCollection : MHVCollection
-
-- (MHVVitalSignResult *)itemAtIndex:(NSUInteger)index;
+@interface MHVVitalSignResultCollection : MHVCollection<MHVVitalSignResult *>
 
 @end

@@ -57,7 +57,7 @@
 -(NSUInteger) indexOfItem:(MHVTypeViewItem *) item;
 -(NSUInteger) indexOfItemID:(NSString *) itemID;
 
--(BOOL) addItem:(MHVTypeViewItem *) item;
+-(BOOL) addObject:(MHVTypeViewItem *) item;
 -(NSUInteger) insertItemInOrder:(MHVTypeViewItem *) item;
 -(NSUInteger) removeItem:(MHVTypeViewItem *) item;
 -(void) removeItemAtIndex:(NSUInteger) index;
