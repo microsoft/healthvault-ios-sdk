@@ -1,8 +1,8 @@
 //
-// MHVFileFeatures.h
-// SDKFeatures
+// MHVHttpTaskProtocol.h
+// MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,16 +17,22 @@
 // limitations under the License.
 //
 
-#import "MHVItemDataTypedFeatures.h"
+#import <Foundation/Foundation.h>
 
-@interface MHVFileFeatures : MHVItemDataTypedFeatures<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+NS_ASSUME_NONNULL_BEGIN
 
-- (void)viewFileInBrowser;
-- (void)downloadFile;
+@protocol MHVHttpTaskProtocol <NSObject>
 
-- (void)processSelectedFile:(MHVHandler)action;
-- (void)uploadFileWithName:(NSString *)name data:(NSData *)data andMediaType:(NSString *)mediaType;
+/**
+ Observable progress value.  Range is from 0.0 to 1.0
+ */
+@property (nonatomic, assign, readonly) double progress;
 
-- (void)pickImageForUpload;
+/**
+ Cancels task(s)
+ */
+- (void)cancel;
 
 @end
+
+NS_ASSUME_NONNULL_END

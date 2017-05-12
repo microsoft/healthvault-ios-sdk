@@ -29,7 +29,7 @@
 
 @property (readonly, nonatomic) NSUInteger length;
 
--(NSData *) readStartAt:(NSInteger) offset chunkSize:(NSInteger) chunkSize;
+- (NSData *)readStartAt:(NSInteger)offset chunkSize:(NSInteger)chunkSize;
 
 @end
 

@@ -32,7 +32,7 @@
 @property (readwrite, nonatomic) BOOL complete;
 
 @property (readwrite, nonatomic, strong) id exception;
-@property (readwrite, nonatomic, weak) MHVTask *parent;
+@property (readwrite, nonatomic, strong) MHVTask *parent;
 
 @end
 

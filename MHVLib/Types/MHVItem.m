@@ -300,7 +300,8 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
         MHVCHECK_NOTNULL(query);
         query.view.sections = MHVItemSection_Blobs;  // Blob data only
         
-        MHVGetItemsTask *getItemsTask = [[MHVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(MHVTask *task) {
+        MHVGetItemsTask *getItemsTask = [[MHVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(MHVTask *task)
+        {
             MHVItem *blobItem = ((MHVGetItemsTask *)task).firstItemRetrieved;
             self.blobs = blobItem.blobs;
         }];
@@ -317,12 +318,19 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     return nil;
 }
 
-- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data
+                          contentType:(NSString *)contentType
+                               record:(MHVRecordReference *)record
+                          andCallback:(MHVTaskCompletion)callback
 {
     return [self uploadBlob:data forBlobName:c_emptyString contentType:contentType record:record andCallback:callback];
 }
 
-- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (MHVItemBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data
+                          forBlobName:(NSString *)name
+                          contentType:(NSString *)contentType
+                               record:(MHVRecordReference *)record
+                          andCallback:(MHVTaskCompletion)callback
 {
     MHVItemBlobUploadTask *task = [self newUploadBlobTask:data forBlobName:name contentType:contentType record:record andCallback:callback];
 
@@ -331,7 +339,11 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     return task;
 }
 
-- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSourceProtocol>)data forBlobName:(NSString *)name contentType:(NSString *)contentType record:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
+- (MHVItemBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSourceProtocol>)data
+                                 forBlobName:(NSString *)name
+                                 contentType:(NSString *)contentType
+                                      record:(MHVRecordReference *)record
+                                 andCallback:(MHVTaskCompletion)callback
 {
     MHVBlobInfo *blobInfo = [[MHVBlobInfo alloc] initWithName:name andContentType:contentType];
 

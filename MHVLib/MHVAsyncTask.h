@@ -62,7 +62,7 @@ typedef void (^MHVTaskCompletion) (MHVTask *task);
 //
 // This task's parent task
 //
-@property (readonly, nonatomic, weak) MHVTask *parent;
+@property (readonly, nonatomic, strong) MHVTask *parent;
 //
 // This task executes this method asynchronously by queuing an NSBlockOperation
 //
