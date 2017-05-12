@@ -37,10 +37,14 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     }
     else
     {
-        MHVENSURE(self.liters, MHVPositiveDouble);
+        if (!self.liters)
+        {
+            self.liters = [[MHVPositiveDouble alloc] init];
+        }
+        
         self.liters.value = litersValue;
     }
-
+    
     [self updateDisplayText];
 }
 
@@ -51,7 +55,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     {
         [self setLitersValue:value];
     }
-
+    
     return self;
 }
 
@@ -62,9 +66,9 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
         self.displayValue = nil;
         return FALSE;
     }
-
+    
     self.displayValue = [[MHVDisplayValue alloc] initWithValue:self.liters.value andUnits:[MHVVolumeValue volumeUnits]];
-
+    
     return self.displayValue != nil;
 }
 
@@ -79,7 +83,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     {
         return c_emptyString;
     }
-
+    
     return [NSString localizedStringWithFormat:format, self.litersValue];
 }
 
@@ -91,10 +95,10 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.liters, MHVClientError_InvalidVolume);
     MHVVALIDATE_OPTIONAL(self.displayValue);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

@@ -43,7 +43,11 @@ static NSString *const c_element_contentType = @"content-type";
 
 - (void)setName:(NSString *)name
 {
-    MHVENSURE(self.nameValue, MHVString255);
+    if (!self.nameValue)
+    {
+        self.nameValue = [[MHVString255 alloc] init];
+    }
+    
     self.nameValue.value = name;
 }
 
@@ -63,22 +67,22 @@ static NSString *const c_element_contentType = @"content-type";
     {
         return [NSString localizedStringWithFormat:@"%d %@", (int)self.size, NSLocalizedString(@"bytes", @"Size in bytes")];
     }
-
+    
     if (self.size < (1024 * 1024))
     {
         return [NSString localizedStringWithFormat:@"%.1f %@", ((double)self.size) / 1024, NSLocalizedString(@"KB", @"Size in KB")];
     }
-
+    
     return [NSString localizedStringWithFormat:@"%.1f %@", ((double)self.size) / (1024 * 1024), NSLocalizedString(@"MB", @"Size in MB")];
 }
 
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.nameValue, MHVClientError_InvalidFile);
     MHVVALIDATE(self.contentType, MHVClientError_InvalidFile);
-
+    
     MHVVALIDATE_SUCCESS
 }
 
@@ -114,16 +118,16 @@ static NSString *const c_element_contentType = @"content-type";
 + (MHVItem *)newItemWithName:(NSString *)name andContentType:(NSString *)contentType
 {
     MHVItem *item = [self newItem];
-
+    
     if (!item)
     {
         return nil;
     }
-
+    
     MHVFile *file = (MHVFile *)item.data.typed;
     file.name = name;
     file.contentType = [MHVCodableValue fromText:contentType];
-
+    
     return item;
 }
 

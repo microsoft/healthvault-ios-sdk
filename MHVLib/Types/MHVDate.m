@@ -42,7 +42,11 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 {
     if (year >= 0)
     {
-        MHVENSURE(_yearObject, MHVYear);
+        if (!_yearObject)
+        {
+            _yearObject = [[MHVYear alloc] init];
+        }
+        
         _yearObject.value = year;
     }
     else
@@ -60,7 +64,11 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 {
     if (month >= 0)
     {
-        MHVENSURE(_monthObject, MHVMonth);
+        if (!_monthObject)
+        {
+            _monthObject = [[MHVMonth alloc] init];
+        }
+        
         _monthObject.value = month;
     }
     else
@@ -78,7 +86,11 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 {
     if (day >= 0)
     {
-        MHVENSURE(_dayObject, MHVDay);
+        if (!_dayObject)
+        {
+            _dayObject = [[MHVDay alloc] init];
+        }
+        
         _dayObject.value = day;
     }
     else
@@ -102,7 +114,7 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 - (instancetype)initWithComponents:(NSDateComponents *)components
 {
     MHVCHECK_NOTNULL(components);
-
+    
     return [self initWithYear:[components year] month:[components month] day:[components day]];
 }
 
@@ -140,13 +152,13 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 - (BOOL)setWithComponents:(NSDateComponents *)components
 {
     MHVCHECK_NOTNULL(components);
-
+    
     self.yearObject = [[MHVYear alloc] initWith:(int)components.year];
     self.monthObject = [[MHVMonth alloc] initWith:(int)components.month];
     self.dayObject = [[MHVDay alloc] initWith:(int)components.day];
-
+    
     MHVCHECK_TRUE(_yearObject && _monthObject && _dayObject);
-
+    
     return TRUE;
 }
 
@@ -168,55 +180,55 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 - (NSDateComponents *)toComponents
 {
     NSDateComponents *components = [NSCalendar newComponents];
-
+    
     MHVCHECK_NOTNULL(components);
-
+    
     MHVCHECK_SUCCESS([self getComponents:components]);
-
+    
     return components;
 }
 
 - (NSDateComponents *)toComponentsForCalendar:(NSCalendar *)calendar
 {
     NSDateComponents *components = [calendar componentsForCalendar];
-
+    
     MHVCHECK_NOTNULL(components);
-
+    
     MHVCHECK_SUCCESS([self getComponents:components]);
-
+    
     return components;
 }
 
 - (BOOL)getComponents:(NSDateComponents *)components
 {
     MHVCHECK_NOTNULL(components);
-
+    
     if (self.yearObject)
     {
         [components setYear:self.year];
     }
-
+    
     if (self.monthObject)
     {
         [components setMonth:self.month];
     }
-
+    
     if (self.dayObject)
     {
         [components setDay:self.day];
     }
-
+    
     return TRUE;
 }
 
 - (NSDate *)toDate
 {
     NSCalendar *calendar = [NSCalendar newGregorian];
-
+    
     MHVCHECK_NOTNULL(calendar);
-
+    
     NSDate *date = [self toDateForCalendar:calendar];
-
+    
     return date;
 }
 
@@ -226,14 +238,14 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
     {
         NSDateComponents *components = [NSDateComponents new];
         MHVCHECK_NOTNULL(components);
-
+        
         MHVCHECK_SUCCESS([self getComponents:components]);
-
+        
         NSDate *date = [calendar dateFromComponents:components];
-
+        
         return date;
     }
-
+    
     return nil;
 }
 
@@ -250,18 +262,18 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 - (NSString *)toStringWithFormat:(NSString *)format
 {
     NSDate *date = [self toDate];
-
+    
     return [date toStringWithFormat:format];
 }
 
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.yearObject, MHVClientError_InvalidDate);
     MHVVALIDATE(self.monthObject, MHVClientError_InvalidDate);
     MHVVALIDATE(self.dayObject, MHVClientError_InvalidDate);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

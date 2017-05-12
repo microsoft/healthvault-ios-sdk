@@ -57,7 +57,11 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
 
 - (void)setInMgPerDL:(double)inMgPerDL
 {
-    MHVENSURE(self.value, MHVBloodGlucoseMeasurement);
+    if (!self.value)
+    {
+        self.value = [[MHVBloodGlucoseMeasurement alloc] init];
+    }
+    
     self.value.mgPerDL = inMgPerDL;
 }
 
@@ -68,7 +72,11 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
 
 - (void)setInMmolPerLiter:(double)inMmolPerLiter
 {
-    MHVENSURE(self.value, MHVBloodGlucoseMeasurement);
+    if (!self.value)
+    {
+        self.value = [[MHVBloodGlucoseMeasurement alloc] init];
+    }
+    
     self.value.mmolPerLiter = inMmolPerLiter;
 }
 
@@ -85,7 +93,11 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
     }
     else
     {
-        MHVENSURE(self.normalcyValue, MHVOneToFive);
+        if (!self.normalcyValue)
+        {
+            self.normalcyValue = [[MHVOneToFive alloc] init];
+        }
+        
         self.normalcyValue.value = normalcy;
     }
 }
@@ -93,17 +105,17 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
 - (instancetype)initWithMmolPerLiter:(double)value andDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-
+    
     self = [super init];
     if (self)
     {
         [self setInMmolPerLiter:value];
         MHVCHECK_NOTNULL(_value);
-
+        
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
     }
-
+    
     return self;
 }
 
@@ -155,7 +167,7 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidBloodGlucose);
     MHVVALIDATE(self.value, MHVClientError_InvalidBloodGlucose);
     MHVVALIDATE(self.measurementType, MHVClientError_InvalidBloodGlucose);
@@ -163,7 +175,7 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
     MHVVALIDATE_OPTIONAL(self.isControlTest);
     MHVVALIDATE_OPTIONAL(self.normalcyValue);
     MHVVALIDATE_OPTIONAL(self.context);
-
+    
     MHVVALIDATE_SUCCESS
 }
 
@@ -215,7 +227,7 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
 {
     MHVCodedValue *codedValue = [MHVBloodGlucose newMeasurementCode:code];
     MHVCodableValue *codableValue = [[MHVCodableValue alloc] initWithText:text andCode:codedValue];
-
+    
     return codableValue;
 }
 

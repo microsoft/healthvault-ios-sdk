@@ -34,13 +34,21 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 - (void)setInPounds:(double)inPounds
 {
-    MHVENSURE(self.value, MHVWeightMeasurement);
+    if (!self.value)
+    {
+        self.value = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.value.inPounds = inPounds;
 }
 
 - (void)setInKg:(double)inKg
 {
-    MHVENSURE(self.value, MHVWeightMeasurement);
+    if (!self.value)
+    {
+        self.value = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.value.inKg = inKg;
 }
 
@@ -52,34 +60,34 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 - (instancetype)initWithKg:(double)kg andDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-
+    
     self = [super init];
     if (self)
     {
         _value = [[MHVWeightMeasurement alloc] initWithKg:kg];
         MHVCHECK_NOTNULL(_value);
-
+        
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
     }
-
+    
     return self;
 }
 
 - (instancetype)initWithPounds:(double)pounds andDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-
+    
     self = [super init];
     if (self)
     {
         _value = [[MHVWeightMeasurement alloc] initWithPounds:pounds];
         MHVCHECK_NOTNULL(_value);
-
+        
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
     }
-
+    
     return self;
 }
 
@@ -126,10 +134,10 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidWeight);
     MHVVALIDATE(self.value, MHVClientError_InvalidWeight);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 
@@ -163,22 +171,22 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 + (MHVItem *)newItemWithKg:(double)kg andDate:(NSDate *)date
 {
     MHVWeight *weight = [[MHVWeight alloc] initWithKg:kg andDate:date];
-
+    
     MHVCHECK_NOTNULL(weight);
-
+    
     MHVItem *item = [[MHVItem alloc] initWithTypedData:weight];
-
+    
     return item;
 }
 
 + (MHVItem *)newItemWithPounds:(double)pounds andDate:(NSDate *)date
 {
     MHVWeight *weight = [[MHVWeight alloc] initWithPounds:pounds andDate:date];
-
+    
     MHVCHECK_NOTNULL(weight);
-
+    
     MHVItem *item = [[MHVItem alloc] initWithTypedData:weight];
-
+    
     return item;
 }
 

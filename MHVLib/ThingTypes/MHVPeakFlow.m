@@ -45,7 +45,11 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
     }
     else
     {
-        MHVENSURE(self.peakExpiratoryFlow, MHVFlowValue);
+        if (!self.peakExpiratoryFlow)
+        {
+            self.peakExpiratoryFlow = [[MHVFlowValue alloc] init];
+        }
+        
         self.peakExpiratoryFlow.litersPerSecondValue = pefValue;
     }
 }
@@ -58,7 +62,7 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
         _when = [[MHVApproxDateTime alloc] initWithDate:when];
         MHVCHECK_NOTNULL(_when);
     }
-
+    
     return self;
 }
 
@@ -87,13 +91,13 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidPeakFlow);
     MHVVALIDATE_OPTIONAL(self.peakExpiratoryFlow);
     MHVVALIDATE_OPTIONAL(self.forcedExpiratoryVolume1);
     MHVVALIDATE_OPTIONAL(self.forcedExpiratoryVolume6);
     MHVVALIDATE_OPTIONAL(self.flags);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

@@ -60,12 +60,12 @@ static NSString *const c_attribute_name = @"name";
 - (MHVTask *)getPendingItemsForRecord:(MHVRecordReference *)record itemView:(MHVItemView *)view withCallback:(MHVTaskCompletion)callback
 {
     MHVTask *task = [self createTaskToGetPendingItemsForRecord:record itemView:view withCallback:callback];
-
+    
     if (task)
     {
         [task start];
     }
-
+    
     return task;
 }
 
@@ -77,17 +77,17 @@ static NSString *const c_attribute_name = @"name";
 - (MHVTask *)createTaskToGetPendingItemsForRecord:(MHVRecordReference *)record itemView:(MHVItemView *)view withCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(record);
-
+    
     if (!self.hasPendingItems)
     {
         return nil;
     }
-
+    
     MHVTask *task = [[MHVTask alloc] initWithCallback:callback];
     MHVCHECK_NOTNULL(task);
-
+    
     MHVCHECK_SUCCESS([self nextGetPendingItems:self.pendingItems forRecord:record itemView:view andParentTask:task]);
-
+    
     return task;
 }
 
@@ -122,28 +122,28 @@ static NSString *const c_attribute_name = @"name";
 - (MHVGetItemsTask *)newGetTaskFor:(MHVPendingItemCollection *)pendingItems forRecord:(MHVRecordReference *)record itemView:(MHVItemView *)view
 {
     MHVItemQuery *pendingQuery = [[MHVItemQuery alloc] initWithPendingItems:pendingItems];
-
+    
     MHVCHECK_NOTNULL(pendingQuery);
     if (view)
     {
         pendingQuery.view = view;
     }
-
+    
     MHVGetItemsTask *getPendingTask = [[MHVClient current].methodFactory newGetItemsForRecord:record query:pendingQuery andCallback:^(MHVTask *task) {
         [self getItemsComplete:task forRecord:record itemView:view];
     }];
-
+    
     return getPendingTask;
 }
 
 - (BOOL)nextGetPendingItems:(MHVPendingItemCollection *)pendingItems forRecord:(MHVRecordReference *)record itemView:(MHVItemView *)view andParentTask:(MHVTask *)parentTask
 {
     MHVGetItemsTask *getPendingTask = [self newGetTaskFor:pendingItems forRecord:record itemView:view];
-
+    
     MHVCHECK_NOTNULL(getPendingTask);
-
+    
     [parentTask setNextTask:getPendingTask];
-
+    
     return TRUE;
 }
 
@@ -151,7 +151,7 @@ static NSString *const c_attribute_name = @"name";
 {
     MHVGetItemsTask *getItems = (MHVGetItemsTask *)task;
     MHVItemQueryResult *result = getItems.queryResults.firstResult;
-
+    
     if (result.hasItems)
     {
         //
@@ -159,7 +159,7 @@ static NSString *const c_attribute_name = @"name";
         //
         [self appendFoundItems:result.items];
     }
-
+    
     if (!result.hasPendingItems)
     {
         // No more pending items!
@@ -167,7 +167,7 @@ static NSString *const c_attribute_name = @"name";
         self.pendingItems = nil;
         return;
     }
-
+    
     //
     // The pending item query did not return all the items we had requested... MORE pending items!
     // So we have to issue another query
@@ -177,7 +177,11 @@ static NSString *const c_attribute_name = @"name";
 
 - (void)appendFoundItems:(MHVItemCollection *)items
 {
-    MHVENSURE(self.items, MHVItemCollection);
+    if (!self.items)
+    {
+        self.items = [[MHVItemCollection alloc] init];
+    }
+    
     [self.items addObjectsFromCollection:items];
 }
 

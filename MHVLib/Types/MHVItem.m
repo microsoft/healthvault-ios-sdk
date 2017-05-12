@@ -90,7 +90,11 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
 
 - (MHVBlobPayload *)blobs
 {
-    MHVENSURE(_blobs, MHVBlobPayload);
+    if (!_blobs)
+    {
+        _blobs = [[MHVBlobPayload alloc] init];
+    }
+    
     return _blobs;
 }
 
@@ -100,7 +104,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     {
         return @"";
     }
-
+    
     return self.key.itemID;
 }
 
@@ -112,14 +116,14 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
 - (instancetype)initWithType:(NSString *)typeID
 {
     MHVItemDataTyped *data = [[MHVTypeSystem current] newFromTypeID:typeID];
-
+    
     if (data)
     {
         self = [self initWithTypedData:data];
         
         return self;
     }
-
+    
     return nil;
 }
 
@@ -130,7 +134,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
         MHVASSERT_PARAMETER(data);
         return nil;
     }
-
+    
     self = [super init];
     
     if (self)
@@ -139,19 +143,19 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
         _data = [[MHVItemData alloc] init];
         _data.typed = data;
     }
-
+    
     return self;
 }
 
 - (instancetype)initWithTypedDataClassName:(NSString *)name
 {
     NSString *typeID = [[MHVTypeSystem current] getTypeIDForClassName:name];
-
+    
     if (typeID)
     {
-         return [self initWithType:typeID];
+        return [self initWithType:typeID];
     }
-
+    
     return nil;
 }
 
@@ -163,14 +167,14 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
 - (BOOL)setKeyToNew
 {
     MHVItemKey *newKey = [MHVItemKey newLocal];
-
+    
     if (newKey)
     {
         self.key = newKey;
         
         return YES;
     }
-
+    
     return NO;
 }
 
@@ -180,7 +184,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     {
         return [self setKeyToNew];
     }
-
+    
     return YES;
 }
 
@@ -194,17 +198,17 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
         {
             newDate = [NSDate date];
         }
-
+        
         self.effectiveDate = newDate;
     }
-
+    
     return self.effectiveDate != nil;
 }
 
 - (BOOL)removeEndDate
 {
     self.updatedEndDate = [MHVConstrainedXmlDate nullDate];
-
+    
     return self.updatedEndDate != nil;
 }
 
@@ -215,7 +219,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
         MHVASSERT_PARAMETER(date);
         return NO;
     }
-
+    
     self.updatedEndDate = [MHVConstrainedXmlDate fromDate:date];
     
     return self.updatedEndDate != nil;
@@ -228,14 +232,14 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
         MHVASSERT_PARAMETER(date);
         return NO;
     }
-
+    
     if (date.isStructured)
     {
         self.updatedEndDate = [MHVConstrainedXmlDate fromDate:[date toDate]];
         
         return self.updatedEndDate != nil;
     }
-
+    
     return [self removeEndDate];
 }
 
@@ -249,12 +253,12 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
             return date;
         }
     }
-
+    
     if (self.effectiveDate)
     {
         return self.effectiveDate;
     }
-
+    
     return nil;
 }
 
@@ -264,7 +268,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     {
         return [self.key.version isEqualToString:version];
     }
-
+    
     return NO;
 }
 
@@ -274,7 +278,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     {
         return [self.type isType:typeID];
     }
-
+    
     return NO;
 }
 
@@ -301,10 +305,10 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
         query.view.sections = MHVItemSection_Blobs;  // Blob data only
         
         MHVGetItemsTask *getItemsTask = [[MHVClient current].methodFactory newGetItemsForRecord:record query:query andCallback:^(MHVTask *task)
-        {
-            MHVItem *blobItem = ((MHVGetItemsTask *)task).firstItemRetrieved;
-            self.blobs = blobItem.blobs;
-        }];
+                                         {
+                                             MHVItem *blobItem = ((MHVGetItemsTask *)task).firstItemRetrieved;
+                                             self.blobs = blobItem.blobs;
+                                         }];
         MHVCHECK_NOTNULL(getItemsTask);
         
         MHVTask *getBlobTask = [[MHVTask alloc] initWithCallback:callback andChildTask:getItemsTask];
@@ -314,7 +318,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
         
         return getBlobTask;
     }
-
+    
     return nil;
 }
 
@@ -333,9 +337,9 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
                           andCallback:(MHVTaskCompletion)callback
 {
     MHVItemBlobUploadTask *task = [self newUploadBlobTask:data forBlobName:name contentType:contentType record:record andCallback:callback];
-
+    
     [task start];
-
+    
     return task;
 }
 
@@ -346,16 +350,16 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
                                  andCallback:(MHVTaskCompletion)callback
 {
     MHVBlobInfo *blobInfo = [[MHVBlobInfo alloc] initWithName:name andContentType:contentType];
-
+    
     MHVItemBlobUploadTask *task = [[MHVItemBlobUploadTask alloc] initWithSource:data blobInfo:blobInfo forItem:self record:record andCallback:callback];
-
+    
     return task;
 }
 
 - (MHVItem *)shallowClone
 {
     MHVItem *item = [[MHVItem alloc] init];
-
+    
     item.key = self.key;
     item.type = self.type;
     item.state = self.state;
@@ -367,12 +371,12 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     {
         item.data = self.data;
     }
-
+    
     if (self.hasBlobData)
     {
         item.blobs = self.blobs;
     }
-
+    
     item.updatedEndDate = self.updatedEndDate;
     
     return item;
@@ -399,12 +403,12 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE_OPTIONAL(self.key);
     MHVVALIDATE_OPTIONAL(self.type);
     MHVVALIDATE_OPTIONAL(self.data);
     MHVVALIDATE_OPTIONAL(self.blobs);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 
@@ -429,13 +433,13 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
 {
     self.key = [reader readElementWithXmlName:x_element_key asClass:[MHVItemKey class]];
     self.type = [reader readElementWithXmlName:x_element_type asClass:[MHVItemType class]];
-
+    
     NSString *state = [reader readStringElement:c_element_state];
     if (state)
     {
         self.state = MHVItemStateFromString(state);
     }
-
+    
     self.flags = [reader readIntElementXmlName:x_element_flags];
     self.effectiveDate = [reader readDateElementXmlName:x_element_effectiveDate];
     self.created = [reader readElementWithXmlName:x_element_created asClass:[MHVAudit class]];
@@ -483,19 +487,19 @@ static NSString *const c_element_item = @"thing";
 - (instancetype)initWithItem:(MHVItem *)item
 {
     self = [super init];
-
+    
     if (self)
     {
         _inner = [[NSMutableArray alloc] init];
         
         self.type = [MHVItem class];
-
+        
         if (item)
         {
             [self addObject:item];
         }
     }
-
+    
     return self;
 }
 
@@ -507,7 +511,7 @@ static NSString *const c_element_item = @"thing";
     {
         _inner = [[NSMutableArray alloc] initWithArray:items];
     }
-
+    
     return self;
 }
 
@@ -526,21 +530,21 @@ static NSString *const c_element_item = @"thing";
         {
             continue;
         }
-
+        
         MHVItem *item = (MHVItem *)obj;
         if ([item.itemID isEqualToString:itemID])
         {
             return i;
         }
     }
-
+    
     return NSNotFound;
 }
 
 - (NSMutableDictionary *)newIndexByID
 {
     NSMutableDictionary *index = [[NSMutableDictionary alloc] initWithCapacity:self.count];
-
+    
     for (NSUInteger i = 0; i < self.count; ++i)
     {
         id obj = [self objectAtIndex:i];
@@ -549,11 +553,11 @@ static NSString *const c_element_item = @"thing";
         {
             continue;
         }
-
+        
         MHVItem *item = (MHVItem *)obj;
         [index setObject:item forKey:item.key.itemID];
     }
-
+    
     return index;
 }
 
@@ -572,26 +576,26 @@ static NSString *const c_element_item = @"thing";
         {
             continue;
         }
-
+        
         MHVItem *item = (MHVItem *)obj;
         if ([item.type.typeID isEqualToString:typeID])
         {
             return i;
         }
     }
-
+    
     return NSNotFound;
 }
 
 - (MHVItem *)firstItemOfType:(NSString *)typeID
 {
     NSUInteger index = [self indexOfTypeID:typeID];
-
+    
     if (index != NSNotFound)
     {
         return [self objectAtIndex:index];
     }
-
+    
     return nil;
 }
 
@@ -601,22 +605,22 @@ static NSString *const c_element_item = @"thing";
     {
         return nil;
     }
-
+    
     MHVStringCollection *copy = [[MHVStringCollection alloc] init];
     for (MHVItem *item in items)
     {
         [copy addObject:item.itemID];
     }
-
+    
     return copy;
 }
 
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE_ARRAY(self, MHVClientError_InvalidItemList);
-
+    
     MHVVALIDATE_SUCCESS
 }
 
@@ -630,10 +634,10 @@ static NSString *const c_element_item = @"thing";
         {
             return NO;
         }
-
+        
         [self replaceObjectAtIndex:i withObject:clone];
     }
-
+    
     return YES;
 }
 

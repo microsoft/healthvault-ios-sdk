@@ -45,7 +45,11 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 - (void)setInMeters:(double)inMeters
 {
-    MHVENSURE(self.value, MHVLengthMeasurement);
+    if (!self.value)
+    {
+        self.value = [[MHVLengthMeasurement alloc] init];
+    }
+    
     self.value.inMeters = inMeters;
 }
 
@@ -56,7 +60,11 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 - (void)setInInches:(double)inInches
 {
-    MHVENSURE(self.value, MHVLengthMeasurement);
+    if (!self.value)
+    {
+        self.value = [[MHVLengthMeasurement alloc] init];
+    }
+    
     self.value.inInches = inInches;
 }
 
@@ -67,11 +75,11 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
     {
         [self setInMeters:meters];
         MHVCHECK_NOTNULL(_value);
-
+        
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
     }
-
+    
     return self;
 }
 
@@ -82,11 +90,11 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
     {
         [self setInInches:inches];
         MHVCHECK_NOTNULL(_value);
-
+        
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
     }
-
+    
     return self;
 }
 
@@ -118,10 +126,10 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidWeight);
     MHVVALIDATE(self.value, MHVClientError_InvalidWeight);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

@@ -35,8 +35,6 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight);
 // --------------------------------------
 #define MHVALLOC_FAIL return nil
 
-#define MHVENSURE(var, className)    if (!var) { var = [[className alloc] init];  }
-
 // --------------------------------------
 //
 // Standard NSObject Extensions

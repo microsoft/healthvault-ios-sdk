@@ -37,7 +37,11 @@ static const xmlChar *x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 
 - (void)setSystolicValue:(int)systolicValue
 {
-    MHVENSURE(self.systolic, MHVNonNegativeInt);
+    if (!self.systolic)
+    {
+        self.systolic = [[MHVNonNegativeInt alloc] init];
+    }
+    
     self.systolic.value = systolicValue;
 }
 
@@ -48,7 +52,11 @@ static const xmlChar *x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 
 - (void)setDiastolicValue:(int)diastolicValue
 {
-    MHVENSURE(self.diastolic, MHVNonNegativeInt);
+    if (!self.diastolic)
+    {
+        self.diastolic = [[MHVNonNegativeInt alloc] init];
+    }
+    
     self.diastolic.value = diastolicValue;
 }
 
@@ -59,7 +67,11 @@ static const xmlChar *x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 
 - (void)setPulseValue:(int)pulseValue
 {
-    MHVENSURE(self.pulse, MHVNonNegativeInt);
+    if (!self.pulse)
+    {
+        self.pulse = [[MHVNonNegativeInt alloc] init];
+    }
+    
     self.pulse.value = pulseValue;
 }
 
@@ -71,14 +83,14 @@ static const xmlChar *x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 - (instancetype)initWithSystolic:(int)sVal diastolic:(int)dVal andDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-
+    
     self = [self initWithSystolic:sVal diastolic:dVal];
     if (self)
     {
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
     }
-
+    
     return self;
 }
 
@@ -89,17 +101,17 @@ static const xmlChar *x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
     {
         _systolic = [[MHVNonNegativeInt alloc] initWith:sVal];
         MHVCHECK_NOTNULL(_systolic);
-
+        
         _diastolic = [[MHVNonNegativeInt alloc] initWith:dVal];
         MHVCHECK_NOTNULL(_diastolic);
-
+        
         if (pVal >= 0)
         {
             _pulse = [[MHVNonNegativeInt alloc] initWith:pVal];
             MHVCHECK_NOTNULL(_pulse);
         }
     }
-
+    
     return self;
 }
 
@@ -126,13 +138,13 @@ static const xmlChar *x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidBloodPressure);
     MHVVALIDATE(self.systolic, MHVClientError_InvalidBloodPressure);
     MHVVALIDATE(self.diastolic, MHVClientError_InvalidBloodPressure);
     MHVVALIDATE_OPTIONAL(self.pulse);
     MHVVALIDATE_OPTIONAL(self.irregularHeartbeat);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

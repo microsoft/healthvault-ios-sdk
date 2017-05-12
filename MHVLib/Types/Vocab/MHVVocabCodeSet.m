@@ -35,7 +35,11 @@ static NSString *const c_element_codeset = @"code-set-result";
 
 - (MHVVocabItemCollection *)items
 {
-    MHVENSURE(_items, MHVVocabItemCollection);
+    if (!_items)
+    {
+        _items = [[MHVVocabItemCollection alloc] init];
+    }
+    
     return _items;
 }
 
@@ -86,7 +90,7 @@ static NSString *const c_element_codeset = @"code-set-result";
     {
         self.type = [MHVVocabCodeSet class];
     }
-
+    
     return self;
 }
 

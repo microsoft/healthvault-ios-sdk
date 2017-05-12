@@ -7,9 +7,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,7 +45,7 @@
     m_objectStore = store;
     
     return self;
-
+    
 LError:
     MHVALLOC_FAIL;
 }
@@ -77,7 +77,7 @@ LError:
 
 -(MHVTask *)downloadVocab:(MHVVocabIdentifier *)vocab withCallback:(MHVTaskCompletion)callback
 {
-    MHVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocab:vocab];    
+    MHVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocab:vocab];
     MHVCHECK_NOTNULL(getVocab);
     
     MHVTask* downloadTask = [[MHVTask alloc] initWithCallback:callback andChildTask:getVocab];
@@ -96,7 +96,7 @@ LError:
 {
     MHVCHECK_NOTNULL(vocabIDs);
     
-    MHVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocabs:vocabIDs];    
+    MHVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocabs:vocabIDs];
     MHVCHECK_NOTNULL(getVocab);
     
     MHVTask* downloadTask = [[MHVTask alloc] initWithCallback:callback andChildTask:getVocab];
@@ -120,7 +120,7 @@ LError:
 {
     if ([self isStaleVocabWithID:vocab maxAge:ageInSeconds])
     {
-        MHVGetVocabTask* task = [self newDownloadVocabTaskForVocab:vocab];        
+        MHVGetVocabTask* task = [self newDownloadVocabTaskForVocab:vocab];
         [task start];
     }
 }
@@ -136,11 +136,15 @@ LError:
         MHVVocabIdentifier* vocabID = [vocabIDs objectAtIndex:i];
         if ([self isStaleVocabWithID:vocabID maxAge:ageInSeconds])
         {
-            MHVENSURE(vocabsToDownload, MHVVocabIdentifierCollection);
+            if (!vocabsToDownload)
+            {
+                vocabsToDownload = [[MHVVocabIdentifierCollection alloc] init];
+            }
+            
             [vocabsToDownload addObject:vocabID];
         }
     }
- 
+    
     if (![MHVCollection isNilOrEmpty:vocabsToDownload])
     {
         MHVGetVocabTask* task = [self newDownloadVocabTaskForVocabs:vocabsToDownload];
@@ -151,7 +155,7 @@ LError:
     }
     
     return TRUE;
-
+    
 LError:
     return FALSE;
 }
@@ -192,7 +196,7 @@ LError:
     }
     
     return FALSE;
-
+    
 }
 
 -(MHVGetVocabTask *)newDownloadVocabTaskForVocab:(MHVVocabIdentifier *)vocabID
@@ -205,12 +209,12 @@ LError:
 }
 -(void)downloadTaskComplete:(MHVTask *)task forVocabID:(MHVVocabIdentifier *)vocabID
 {
-    @try 
+    @try
     {
         MHVGetVocabTask* getVocab = (MHVGetVocabTask *) task;
         [self putVocab:getVocab.vocabulary withID:vocabID];
     }
-    @catch (id exception) 
+    @catch (id exception)
     {
         [exception log];
     }
@@ -232,11 +236,11 @@ LError:
 
 -(void)downloadTaskComplete:(MHVTask *)task forVocabs:(MHVVocabIdentifierCollection *)vocabIDs
 {
-    @try 
+    @try
     {
         MHVGetVocabTask* getVocab = (MHVGetVocabTask *) task;
         MHVVocabSetCollection* downloadedVocabs = getVocab.vocabResults.vocabs;
-        for (NSUInteger i = 0, count = downloadedVocabs.count; i < count; ++i) 
+        for (NSUInteger i = 0, count = downloadedVocabs.count; i < count; ++i)
         {
             MHVVocabCodeSet* vocab = [downloadedVocabs objectAtIndex:i];
             if (vocab.isTruncated)
@@ -244,9 +248,9 @@ LError:
                 continue;
             }
             [self putVocab:vocab withID:[vocab getVocabID]];
-        }        
+        }
     }
-    @catch (id exception) 
+    @catch (id exception)
     {
         [exception log];
     }

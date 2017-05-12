@@ -45,18 +45,22 @@ static NSString *const c_element_clientID = @"client-thing-id";
 
 - (MHVRelatedItem *)addRelation:(NSString *)name toItem:(MHVItem *)item
 {
-    MHVENSURE(self.relatedItems, MHVRelatedItemCollection);
+    if (!self.relatedItems)
+    {
+        self.relatedItems = [[MHVRelatedItemCollection alloc] init];
+    }
+    
     return [self.relatedItems addRelation:name toItem:item];
 }
 
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE_OPTIONAL(self.tags);
     MHVVALIDATE_ARRAYOPTIONAL(self.relatedItems, MHVClientError_InvalidRelatedItem);
     MHVVALIDATE_OPTIONAL(self.clientID);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

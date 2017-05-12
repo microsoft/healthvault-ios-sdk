@@ -43,7 +43,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setCaloriesValue:(int)caloriesValue
 {
-    MHVENSURE(self.calories, MHVPositiveInt);
+    if (!self.calories)
+    {
+        self.calories = [[MHVPositiveInt alloc] init];
+    }
+    
     self.calories.value = caloriesValue;
 }
 
@@ -54,7 +58,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setTotalFatGrams:(double)totalFatGrams
 {
-    MHVENSURE(self.totalFat, MHVWeightMeasurement);
+    if (!self.totalFat)
+    {
+        self.totalFat = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.totalFat.inGrams = totalFatGrams;
 }
 
@@ -65,7 +73,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setSaturatedFatGrams:(double)saturatedFatGrams
 {
-    MHVENSURE(self.saturatedFat, MHVWeightMeasurement);
+    if (!self.saturatedFat)
+    {
+        self.saturatedFat = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.saturatedFat.inGrams = saturatedFatGrams;
 }
 
@@ -76,7 +88,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setTransFatGrams:(double)transFatGrams
 {
-    MHVENSURE(self.transFat, MHVWeightMeasurement);
+    if (!self.transFat)
+    {
+        self.transFat = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.transFat.inGrams = transFatGrams;
 }
 
@@ -87,7 +103,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setProteinGrams:(double)proteinGrams
 {
-    MHVENSURE(self.protein, MHVWeightMeasurement);
+    if (!self.protein)
+    {
+        self.protein = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.protein.inGrams = proteinGrams;
 }
 
@@ -98,7 +118,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setTotalCarbGrams:(double)totalCarbGrams
 {
-    MHVENSURE(self.totalCarbs, MHVWeightMeasurement);
+    if (!self.totalCarbs)
+    {
+        self.totalCarbs = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.totalCarbs.inGrams = totalCarbGrams;
 }
 
@@ -109,7 +133,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setSugarGrams:(double)sugarGrams
 {
-    MHVENSURE(self.sugar, MHVWeightMeasurement);
+    if (!self.sugar)
+    {
+        self.sugar = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.sugar.inGrams = sugarGrams;
 }
 
@@ -120,7 +148,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setDietaryFiberGrams:(double)dietaryFiberGrams
 {
-    MHVENSURE(self.dietaryFiber, MHVWeightMeasurement);
+    if (!self.dietaryFiber)
+    {
+        self.dietaryFiber = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.dietaryFiber.inGrams = dietaryFiberGrams;
 }
 
@@ -131,7 +163,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setSodiumMillgrams:(double)sodiumMillgrams
 {
-    MHVENSURE(self.sodium, MHVWeightMeasurement);
+    if (!self.sodium)
+    {
+        self.sodium = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.sodium.inMilligrams = sodiumMillgrams;
 }
 
@@ -142,7 +178,11 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 
 - (void)setCholesterolMilligrams:(double)cholesterolMilligrams
 {
-    MHVENSURE(self.cholesterol, MHVWeightMeasurement);
+    if (!self.cholesterol)
+    {
+        self.cholesterol = [[MHVWeightMeasurement alloc] init];
+    }
+    
     self.cholesterol.inMilligrams = cholesterolMilligrams;
 }
 
@@ -159,9 +199,9 @@ static NSString *const c_element_cholesterol = @"cholesterol";
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
-        MHVVALIDATE(self.when, MHVClientError_InvalidDietaryIntake);
-
+    
+    MHVVALIDATE(self.when, MHVClientError_InvalidDietaryIntake);
+    
     MHVVALIDATE_OPTIONAL(self.calories);
     MHVVALIDATE_OPTIONAL(self.totalFat);
     MHVVALIDATE_OPTIONAL(self.saturatedFat);
@@ -172,7 +212,7 @@ static NSString *const c_element_cholesterol = @"cholesterol";
     MHVVALIDATE_OPTIONAL(self.sugar);
     MHVVALIDATE_OPTIONAL(self.sodium);
     MHVVALIDATE_OPTIONAL(self.cholesterol);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

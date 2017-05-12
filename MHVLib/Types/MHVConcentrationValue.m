@@ -45,7 +45,11 @@ NSString *const c_mgDLUnitsCode = @"mg-per-dl";
 
 - (void)setMmolPerLiter:(double)mmolPerLiter
 {
-    MHVENSURE(_value, MHVNonNegativeDouble);
+    if (!_value)
+    {
+        _value = [[MHVNonNegativeDouble alloc] init];
+    }
+    
     _value.value = mmolPerLiter;
     [self updateDisplayValue:mmolPerLiter units:c_mmolPlUnits andUnitsCode:c_mmolUnitsCode];
 }
@@ -67,7 +71,7 @@ NSString *const c_mgDLUnitsCode = @"mg-per-dl";
     {
         [self setMgPerDL:value gramsPerMole:gramsPerMole];
     }
-
+    
     return self;
 }
 
@@ -77,15 +81,19 @@ NSString *const c_mgDLUnitsCode = @"mg-per-dl";
     {
         return mmolPerLToMgDL(_value.value, gramsPerMole);
     }
-
+    
     return NAN;
 }
 
 - (void)setMgPerDL:(double)value gramsPerMole:(double)gramsPerMole
 {
     double mmolPerl = mgDLToMmolPerL(value, gramsPerMole);
-
-    MHVENSURE(_value, MHVNonNegativeDouble);
+    
+    if (!_value)
+    {
+        _value = [[MHVNonNegativeDouble alloc] init];
+    }
+    
     _value.value = mmolPerl;
     [self updateDisplayValue:value units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
@@ -93,16 +101,16 @@ NSString *const c_mgDLUnitsCode = @"mg-per-dl";
 - (BOOL)updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
-
+    
     MHVCHECK_NOTNULL(newValue);
-
+    
     if (code)
     {
         newValue.unitsCode = code;
     }
-
+    
     self.display = newValue;
-
+    
     return TRUE;
 }
 
@@ -124,10 +132,10 @@ NSString *const c_mgDLUnitsCode = @"mg-per-dl";
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.value, MHVClientError_InvalidConcentrationValue);
     MHVVALIDATE_OPTIONAL(self.display);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

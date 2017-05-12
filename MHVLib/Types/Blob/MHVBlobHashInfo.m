@@ -63,7 +63,11 @@ static NSString *const c_element_hash = @"hash";
 
 - (void)setAlgorithm:(NSString *)algorithm
 {
-    MHVENSURE(self.algorithmValue, MHVStringZ255);
+    if (!self.algorithmValue)
+    {
+        self.algorithmValue = [[MHVStringZ255 alloc] init];
+    }
+    
     self.algorithmValue.value = algorithm;
 }
 
@@ -74,7 +78,11 @@ static NSString *const c_element_hash = @"hash";
 
 - (void)setHash:(NSString *)hash
 {
-    MHVENSURE(self.hashValue, MHVStringNZ512);
+    if (!self.hashValue)
+    {
+        self.hashValue = [[MHVStringNZ512 alloc] init];
+    }
+    
     self.hashValue.value = hash;
 }
 

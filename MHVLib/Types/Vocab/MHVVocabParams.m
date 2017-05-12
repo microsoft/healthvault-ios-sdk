@@ -32,14 +32,18 @@ static NSString *const c_element_culture = @"fixed-culture";
 
 - (MHVVocabIdentifierCollection *)vocabIDs
 {
-    MHVENSURE(_vocabIDs, MHVVocabIdentifierCollection);
+    if (!_vocabIDs)
+    {
+        _vocabIDs = [[MHVVocabIdentifierCollection alloc] init];
+    }
+    
     return _vocabIDs;
 }
 
 - (instancetype)initWithVocabID:(MHVVocabIdentifier *)vocabID
 {
     MHVCHECK_NOTNULL(vocabID);
-
+    
     self = [super init];
     if (self)
     {
@@ -51,22 +55,22 @@ static NSString *const c_element_culture = @"fixed-culture";
 - (instancetype)initWithVocabIDs:(MHVVocabIdentifierCollection *)vocabIDs
 {
     MHVCHECK_NOTNULL(vocabIDs);
-
+    
     self = [super init];
     if (self)
     {
         _vocabIDs = vocabIDs;
     }
-
+    
     return self;
 }
 
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE_ARRAY(self.vocabIDs, MHVClientError_InvalidVocabIdentifier);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

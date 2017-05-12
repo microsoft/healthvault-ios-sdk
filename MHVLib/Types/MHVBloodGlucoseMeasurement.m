@@ -29,7 +29,11 @@
 
 - (void)setMmolPerLiter:(double)mmolPerLiter
 {
-    MHVENSURE(self.value, MHVPositiveDouble);
+    if (!self.value)
+    {
+        self.value = [[MHVPositiveDouble alloc] init];
+    }
+    
     self.value.value = mmolPerLiter;
     [self updateDisplayValue:mmolPerLiter units:c_mmolPlUnits andUnitsCode:c_mmolUnitsCode];
 }
@@ -40,13 +44,17 @@
     {
         return [MHVBloodGlucoseMeasurement mMolPerLiterToMgPerDL:self.value.value];
     }
-
+    
     return NAN;
 }
 
 - (void)setMgPerDL:(double)mgPerDL
 {
-    MHVENSURE(self.value, MHVPositiveDouble);
+    if (!self.value)
+    {
+        self.value = [[MHVPositiveDouble alloc] init];
+    }
+    
     self.value.value = [MHVBloodGlucoseMeasurement mgPerDLToMmolPerLiter:mgPerDL];
     [self updateDisplayValue:mgPerDL units:c_mgDLUnits andUnitsCode:c_mgDLUnitsCode];
 }
@@ -59,7 +67,7 @@
         [self setMmolPerLiter:value];
         MHVCHECK_NOTNULL(_value);
     }
-
+    
     return self;
 }
 
@@ -71,23 +79,23 @@
         [self setMgPerDL:value];
         MHVCHECK_NOTNULL(_value);
     }
-
+    
     return self;
 }
 
 - (BOOL)updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
-
+    
     MHVCHECK_NOTNULL(newValue);
-
+    
     if (code)
     {
         newValue.unitsCode = code;
     }
-
+    
     self.display = newValue;
-
+    
     return TRUE;
 }
 
@@ -119,10 +127,10 @@
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.value, MHVClientError_InvalidBloodGlucoseMeasurement);
     MHVVALIDATE_OPTIONAL(self.display);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

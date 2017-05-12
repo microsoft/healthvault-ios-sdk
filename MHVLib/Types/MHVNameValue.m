@@ -31,7 +31,11 @@ static NSString *const c_element_value = @"value";
 
 - (void)setMeasurementValue:(double)measurementValue
 {
-    MHVENSURE(self.value, MHVMeasurement);
+    if (!self.value)
+    {
+        self.value = [[MHVMeasurement alloc] init];
+    }
+    
     self.value.value = measurementValue;
 }
 
@@ -39,14 +43,14 @@ static NSString *const c_element_value = @"value";
 {
     MHVCHECK_NOTNULL(name);
     MHVCHECK_NOTNULL(value);
-
+    
     self = [super init];
     if (self)
     {
         _name = name;
         _value = value;
     }
-
+    
     return self;
 }
 
@@ -58,10 +62,10 @@ static NSString *const c_element_value = @"value";
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.name, MHVClientError_InvalidNameValue);
     MHVVALIDATE(self.value, MHVClientError_InvalidNameValue);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 
@@ -88,7 +92,7 @@ static NSString *const c_element_value = @"value";
     {
         self.type = [MHVNameValue class];
     }
-
+    
     return self;
 }
 
@@ -101,7 +105,7 @@ static NSString *const c_element_value = @"value";
             return i;
         }
     }
-
+    
     return NSNotFound;
 }
 
@@ -114,26 +118,26 @@ static NSString *const c_element_value = @"value";
             return i;
         }
     }
-
+    
     return NSNotFound;
 }
 
 - (MHVNameValue *)getItemWithNameCode:(NSString *)nameCode
 {
     NSUInteger index = [self indexOfItemWithNameCode:nameCode];
-
+    
     if (index == NSNotFound)
     {
         return nil;
     }
-
+    
     return [self objectAtIndex:index];
 }
 
 - (void)addOrUpdate:(MHVNameValue *)value
 {
     NSUInteger indexOf = [self indexOfItemWithName:value.name];
-
+    
     if (indexOf != NSNotFound)
     {
         [self replaceObjectAtIndex:indexOf withObject:value];

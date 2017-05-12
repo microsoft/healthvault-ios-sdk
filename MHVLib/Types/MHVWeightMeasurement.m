@@ -34,9 +34,13 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 
 - (void)setInKg:(double)valueInKg
 {
-    MHVENSURE(self.value, MHVPositiveDouble);
+    if (!self.value)
+    {
+        self.value = [[MHVPositiveDouble alloc] init];
+    }
+    
     self.value.value = valueInKg;
-
+    
     [self updateDisplayValue:valueInKg units:@"kilogram" andUnitsCode:@"kg"];
 }
 
@@ -47,9 +51,13 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 
 - (void)setInGrams:(double)grams
 {
-    MHVENSURE(self.value, MHVPositiveDouble);
+    if (!self.value)
+    {
+        self.value = [[MHVPositiveDouble alloc] init];
+    }
+    
     self.value.value = grams / 1000;
-
+    
     [self updateDisplayValue:grams units:@"gram" andUnitsCode:@"g"];
 }
 
@@ -60,9 +68,13 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 
 - (void)setInMilligrams:(double)milligrams
 {
-    MHVENSURE(self.value, MHVPositiveDouble);
+    if (!self.value)
+    {
+        self.value = [[MHVPositiveDouble alloc] init];
+    }
+    
     self.value.value = milligrams / (1000 * 1000);
-
+    
     [self updateDisplayValue:milligrams units:@"milligram" andUnitsCode:@"mg"];
 }
 
@@ -73,9 +85,13 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 
 - (void)setInPounds:(double)valueInPounds
 {
-    MHVENSURE(self.value, MHVPositiveDouble);
+    if (!self.value)
+    {
+        self.value = [[MHVPositiveDouble alloc] init];
+    }
+    
     self.value.value = [MHVWeightMeasurement poundsToKg:valueInPounds];
-
+    
     [self updateDisplayValue:valueInPounds units:@"pound" andUnitsCode:@"lb"];
 }
 
@@ -86,9 +102,13 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 
 - (void)setInOunces:(double)ounces
 {
-    MHVENSURE(self.value, MHVPositiveDouble);
+    if (!self.value)
+    {
+        self.value = [[MHVPositiveDouble alloc] init];
+    }
+    
     self.value.value = [MHVWeightMeasurement poundsToKg:(ounces / 16)];
-
+    
     [self updateDisplayValue:ounces units:@"ounce" andUnitsCode:@"oz"];
 }
 
@@ -98,11 +118,11 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
     if (self)
     {
         self.inKg = value;
-
+        
         MHVCHECK_NOTNULL(self.value);
         MHVCHECK_NOTNULL(self.display);
     }
-
+    
     return self;
 }
 
@@ -116,22 +136,22 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
         MHVCHECK_NOTNULL(self.value);
         MHVCHECK_NOTNULL(self.display);
     }
-
+    
     return self;
 }
 
 - (BOOL)updateDisplayValue:(double)displayValue units:(NSString *)unitValue andUnitsCode:(NSString *)code
 {
     MHVDisplayValue *newValue = [[MHVDisplayValue alloc] initWithValue:displayValue andUnits:unitValue];
-
+    
     MHVCHECK_NOTNULL(newValue);
     if (code)
     {
         newValue.unitsCode = code;
     }
-
+    
     self.display = newValue;
-
+    
     return TRUE;
 }
 
@@ -188,7 +208,7 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 + (MHVWeightMeasurement *)fromGrams:(double)grams
 {
     MHVWeightMeasurement *weight = [[MHVWeightMeasurement alloc] init];
-
+    
     weight.inGrams = grams;
     return weight;
 }
@@ -196,7 +216,7 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 + (MHVWeightMeasurement *)fromMillgrams:(double)mg
 {
     MHVWeightMeasurement *weight = [[MHVWeightMeasurement alloc] init];
-
+    
     weight.inMilligrams = mg;
     return weight;
 }
@@ -204,7 +224,7 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 + (MHVWeightMeasurement *)fromOunces:(double)ounces
 {
     MHVWeightMeasurement *weight = [[MHVWeightMeasurement alloc] init];
-
+    
     weight.inOunces = ounces;
     return weight;
 }
@@ -212,10 +232,10 @@ static const xmlChar *x_element_display = XMLSTRINGCONST("display");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.value, MHVClientError_InvalidWeightMeasurement);
     MHVVALIDATE_OPTIONAL(self.display);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

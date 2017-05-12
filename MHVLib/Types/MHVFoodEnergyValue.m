@@ -38,10 +38,14 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     }
     else
     {
-        MHVENSURE(_calories, MHVNonNegativeDouble);
+        if (!_calories)
+        {
+            _calories = [[MHVNonNegativeDouble alloc] init];
+        }
+        
         _calories.value = caloriesValue;
     }
-
+    
     [self updateDisplayText];
 }
 
@@ -52,7 +56,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     {
         [self setCaloriesValue:value];
     }
-
+    
     return self;
 }
 
@@ -63,9 +67,9 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     {
         return FALSE;
     }
-
+    
     self.displayValue = [[MHVDisplayValue alloc] initWithValue:self.calories.value andUnits:[MHVFoodEnergyValue calorieUnits]];
-
+    
     return self.displayValue != nil;
 }
 
@@ -80,7 +84,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     {
         return c_emptyString;
     }
-
+    
     return [NSString localizedStringWithFormat:format, self.caloriesValue];
 }
 
@@ -97,10 +101,10 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.calories, MHVClientError_InvalidDietaryIntake);
     MHVVALIDATE_OPTIONAL(self.displayValue);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

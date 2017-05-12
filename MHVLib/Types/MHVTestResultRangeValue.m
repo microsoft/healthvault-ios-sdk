@@ -38,7 +38,11 @@ static const xmlChar *x_element_maxRange = XMLSTRINGCONST("maximum-range");
     }
     else
     {
-        MHVENSURE(self.minRange, MHVDouble);
+        if (!self.minRange)
+        {
+            self.minRange = [[MHVDouble alloc] init];
+        }
+        
         self.minRange.value = minRangeValue;
     }
 }
@@ -56,7 +60,11 @@ static const xmlChar *x_element_maxRange = XMLSTRINGCONST("maximum-range");
     }
     else
     {
-        MHVENSURE(self.maxRange, MHVDouble);
+        if (!self.maxRange)
+        {
+            self.maxRange = [[MHVDouble alloc] init];
+        }
+        
         self.maxRange.value = maxRangeValue;
     }
 }

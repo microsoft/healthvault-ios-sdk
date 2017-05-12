@@ -7,9 +7,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,7 +27,7 @@
 // NSFileManager
 //
 //---------------------------
-@implementation NSFileManager (MHVExtensions) 
+@implementation NSFileManager (MHVExtensions)
 
 -(NSURL *) pathForStandardDirectory:(NSSearchPathDirectory)name
 {
@@ -37,7 +37,7 @@
     {
         return nil;
     }
-
+    
     return [urls objectAtIndex:0];
 }
 
@@ -92,7 +92,7 @@
     NSFileHandle* fileHandle = [NSFileHandle fileHandleForWritingAtPath:path];
     if (!fileHandle)
     {
-        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil]; 
+        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
         fileHandle = [NSFileHandle fileHandleForWritingAtPath:path];
     }
     
@@ -106,7 +106,7 @@
         return TRUE;
     }
     
-    @try 
+    @try
     {
         NSData* bytes = [text dataUsingEncoding:NSUTF8StringEncoding];
         if (bytes && bytes.length > 0)
@@ -194,7 +194,7 @@
     
 LError:
     MHVALLOC_FAIL;
-   
+    
 }
 
 -(id)initWithRelativePath:(NSString *)path
@@ -210,7 +210,7 @@ LError:
     MHVCHECK_NOTNULL(fullPath);
     
     return [self initWithPath:fullPath];
-     
+    
 LError:
     MHVALLOC_FAIL;
 }
@@ -232,12 +232,12 @@ LError:
 
 +(void)deleteUrl:(NSURL *)url
 {
-    @try 
+    @try
     {
         NSFileManager *fm = [NSFileManager defaultManager];
-        [fm removeItemAtURL:url error:nil];    
+        [fm removeItemAtURL:url error:nil];
     }
-    @catch (id exception) 
+    @catch (id exception)
     {
         [exception log];
     }
@@ -287,7 +287,7 @@ LError:
     
 LError:
     return nil;
-   
+    
 }
 
 -(BOOL)createFile:(NSString *)fileName
@@ -307,7 +307,7 @@ LError:
     MHVCHECK_NOTNULL(filePath);
     
     return [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-
+    
 LError:
     return FALSE;
 }
@@ -316,7 +316,7 @@ LError:
 {
     NSString* filePath = [self makeChildPath:fileName];
     MHVCHECK_NOTNULL(filePath);
-
+    
     return [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
     
 LError:
@@ -390,11 +390,11 @@ LError:
 {
     @synchronized(self)
     {
-        @try 
+        @try
         {
-            return [self deleteFile:key]; 
+            return [self deleteFile:key];
         }
-        @catch (id ex) 
+        @catch (id ex)
         {
             [ex log];
         }
@@ -427,12 +427,12 @@ LError:
 {
     @synchronized(self)
     {
-        @try 
+        @try
         {
             XConverter* converter = [self getConverter];
             return [XSerializer secureSerialize:obj withRoot:name toFilePath:[self makeChildPath:key] withConverter:converter];
         }
-        @catch (id exception) 
+        @catch (id exception)
         {
             [exception log];
         }
@@ -451,15 +451,15 @@ LError:
             return nil;
         }
         
-        @try 
+        @try
         {
             return [handle readDataToEndOfFile];
         }
-        @catch (id exception) 
+        @catch (id exception)
         {
             [exception log];
         }
-        @finally 
+        @finally
         {
             [handle closeFile];
         }
@@ -480,16 +480,16 @@ LError:
         }
         MHVCHECK_NOTNULL(handle);
         
-        @try 
+        @try
         {
             [handle writeData:blob];
             return TRUE;
         }
-        @catch (id exception) 
+        @catch (id exception)
         {
             [exception log];
         }
-        @finally 
+        @finally
         {
             [handle closeFile];
         }
@@ -549,7 +549,11 @@ LError:
 
 -(XConverter *)getConverter
 {
-    MHVENSURE(m_converter, XConverter);
+    if (!m_converter)
+    {
+        m_converter = [[XConverter alloc] init];
+    }
+    
     return m_converter;
 }
 

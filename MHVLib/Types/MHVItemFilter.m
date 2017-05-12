@@ -42,7 +42,7 @@ static NSString *const c_element_xpath = @"xpath";
     {
         [writer writeElement:c_element_state value:MHVItemStateToString(self.state)];
     }
-
+    
     [writer writeElement:c_element_edateMin dateValue:self.effectiveDateMin];
     [writer writeElement:c_element_edateMax dateValue:self.effectiveDateMax];
     [writer writeElement:c_element_cappID value:self.createdByAppID];
@@ -59,12 +59,12 @@ static NSString *const c_element_xpath = @"xpath";
 - (void)deserialize:(XReader *)reader
 {
     NSString *state = [reader readStringElement:c_element_state];
-
+    
     if (state)
     {
         self.state = MHVItemStateFromString(state);
     }
-
+    
     self.effectiveDateMin = [reader readDateElement:c_element_edateMin];
     self.effectiveDateMax = [reader readDateElement:c_element_edateMax];
     self.createdByAppID = [reader readStringElement:c_element_cappID];
@@ -90,7 +90,11 @@ static NSString *const c_element_xpath = @"xpath";
 
 - (MHVStringCollection *)typeIDs
 {
-    MHVENSURE(_typeIDs, MHVStringCollection);
+    if (!_typeIDs)
+    {
+        _typeIDs = [[MHVStringCollection alloc] init];
+    }
+    
     return _typeIDs;
 }
 
@@ -119,9 +123,9 @@ static NSString *const c_element_xpath = @"xpath";
 - (instancetype)initWithTypeClass:(Class)typeClass
 {
     NSString *typeID = [[MHVTypeSystem current] getTypeIDForClassName:NSStringFromClass(typeClass)];
-
+    
     MHVCHECK_NOTNULL(typeID);
-
+    
     return [self initWithTypeID:typeID];
 }
 
