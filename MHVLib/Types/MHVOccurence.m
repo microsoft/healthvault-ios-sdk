@@ -91,9 +91,4 @@ static NSString *const c_element_minutes = @"minutes";
     return self;
 }
 
-- (MHVOccurence *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVOccurence *)[self objectAtIndex:0];
-}
-
 @end

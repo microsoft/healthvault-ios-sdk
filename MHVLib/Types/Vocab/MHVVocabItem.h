@@ -62,9 +62,7 @@
 // Collection of Vocabulary Items
 //
 // -------------------------
-@interface MHVVocabItemCollection : MHVCollection
-
-- (MHVVocabItem *)itemAtIndex:(NSUInteger)index;
+@interface MHVVocabItemCollection : MHVCollection<MHVVocabItem *>
 
 - (void)sortByDisplayText;
 - (void)sortByCode;

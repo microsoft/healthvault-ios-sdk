@@ -78,11 +78,10 @@
 
 @end
 
-@interface MHVCodedValueCollection : MHVCollection
+@interface MHVCodedValueCollection : MHVCollection<MHVCodedValue *>
 
 - (MHVCodedValue *)firstCode;
 
-- (MHVCodedValue *)itemAtIndex:(NSUInteger)index;
 - (NSUInteger)indexOfCode:(MHVCodedValue *)code;
 - (BOOL)containsCode:(MHVCodedValue *)code;
 

@@ -91,9 +91,4 @@ static NSString *const c_element_number = @"number";
     return self;
 }
 
-- (MHVPhone *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVPhone *)[self objectAtIndex:index];
-}
-
 @end

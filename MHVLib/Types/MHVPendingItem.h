@@ -29,6 +29,6 @@
 
 @end
 
-@interface MHVPendingItemCollection : MHVCollection
+@interface MHVPendingItemCollection : MHVCollection<MHVPendingItem *>
 
 @end

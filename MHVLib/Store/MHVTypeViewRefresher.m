@@ -154,7 +154,7 @@ LError:
         MHVCHECK_NOTNULL(refreshQuery);
         
         refreshQuery.name = viewName;
-        [queries addItem:refreshQuery];
+        [queries addObject:refreshQuery];
     }
     
     return queries;

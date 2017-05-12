@@ -52,7 +52,7 @@
 
     for (NSUInteger i = 0; i < items.count; ++i)
     {
-        [keys addObject:[items itemAtIndex:i].key];
+        [keys addObject:[items objectAtIndex:i].key];
     }
 }
 

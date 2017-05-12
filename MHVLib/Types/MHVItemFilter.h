@@ -54,10 +54,6 @@
 
 @end
 
-@interface MHVItemFilterCollection : MHVCollection
-
-- (void)addItem:(MHVItemFilter *)filter;
-
-- (MHVItemFilter *)itemAtIndex:(NSUInteger)index;
+@interface MHVItemFilterCollection : MHVCollection<MHVTypeFilter *>
 
 @end

@@ -92,16 +92,11 @@ static NSString *const c_element_value = @"value";
     return self;
 }
 
-- (MHVNameValue *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVNameValue *)[self objectAtIndex:index];
-}
-
 - (NSUInteger)indexOfItemWithName:(MHVCodedValue *)code
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        if ([[self itemAtIndex:i].name isEqualToCodedValue:code])
+        if ([[self objectAtIndex:i].name isEqualToCodedValue:code])
         {
             return i;
         }
@@ -114,7 +109,7 @@ static NSString *const c_element_value = @"value";
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        if ([[self itemAtIndex:i].name.code isEqualToString:nameCode])
+        if ([[self objectAtIndex:i].name.code isEqualToString:nameCode])
         {
             return i;
         }
@@ -132,7 +127,7 @@ static NSString *const c_element_value = @"value";
         return nil;
     }
 
-    return [self itemAtIndex:index];
+    return [self objectAtIndex:index];
 }
 
 - (void)addOrUpdate:(MHVNameValue *)value

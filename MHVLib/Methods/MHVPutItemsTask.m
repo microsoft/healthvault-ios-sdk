@@ -46,7 +46,7 @@
 -(MHVItemKey *)firstKey
 {
     MHVItemKeyCollection* results = self.putResults;
-    return (![MHVCollection isNilOrEmpty:results]) ? [results itemAtIndex:0] : nil;
+    return (![MHVCollection isNilOrEmpty:results]) ? [results objectAtIndex:0] : nil;
 }
 
 -(NSString *)name

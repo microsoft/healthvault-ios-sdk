@@ -68,6 +68,6 @@
 
 @end
 
-@interface MHVConditionEntryCollection : MHVCollection
+@interface MHVConditionEntryCollection : MHVCollection<MHVConditionEntry *>
 
 @end

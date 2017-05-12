@@ -1,15 +1,15 @@
 //
-//  MHVTypeView.m
-//  MHVLib
+// MHVTypeView.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,12 +23,12 @@
 #import "MHVBlock.h"
 #import "MHVClient.h"
 
-static NSString* const c_element_typeID = @"typeID";
-static NSString* const c_element_filter = @"filter";
-static NSString* const c_element_updateDate = @"updateDate";
-static NSString* const c_element_items = @"items";
-static NSString* const c_element_chunkSize = @"chunkSize";
-static NSString* const c_element_maxItems = @"maxItems";
+static NSString *const c_element_typeID = @"typeID";
+static NSString *const c_element_filter = @"filter";
+static NSString *const c_element_updateDate = @"updateDate";
+static NSString *const c_element_items = @"items";
+static NSString *const c_element_chunkSize = @"chunkSize";
+static NSString *const c_element_maxItems = @"maxItems";
 
 const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
@@ -41,11 +41,12 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 @synthesize store = m_store;
 @synthesize tag = m_tag;
 
--(BOOL)readAheadModeChunky
+- (BOOL)readAheadModeChunky
 {
-    return (m_readAheadMode == MHVTypeViewReadAheadModePage);
+    return m_readAheadMode == MHVTypeViewReadAheadModePage;
 }
--(void)setReadAheadModeChunky:(BOOL)readAheadModeChunky
+
+- (void)setReadAheadModeChunky:(BOOL)readAheadModeChunky
 {
     if (readAheadModeChunky)
     {
@@ -59,11 +60,12 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
 @synthesize readAheadMode = m_readAheadMode;
 
--(NSInteger)readAheadChunkSize
+- (NSInteger)readAheadChunkSize
 {
     return m_readAheadChunkSize;
 }
--(void)setReadAheadChunkSize:(NSInteger)readAheadChunkSize
+
+- (void)setReadAheadChunkSize:(NSInteger)readAheadChunkSize
 {
     if (readAheadChunkSize > 0)
     {
@@ -77,71 +79,71 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
 
 @synthesize enforceTypeCheck = m_enforceTypeCheck;
 
--(MHVRecordReference *)record
+- (MHVRecordReference *)record
 {
     return m_store.record;
 }
 
--(NSDate *) lastUpdateDate
+- (NSDate *)lastUpdateDate
 {
     if (!m_lastUpdateDate)
     {
         [self stampUpdated];
     }
-    
+
     return m_lastUpdateDate;
 }
 
--(void)setLastUpdateDate:(NSDate *)lastUpdateDate
+- (void)setLastUpdateDate:(NSDate *)lastUpdateDate
 {
     m_lastUpdateDate = lastUpdateDate;
 }
 
--(void)setStore:(MHVLocalRecordStore *)store
+- (void)setStore:(MHVLocalRecordStore *)store
 {
     MHVASSERT(store);
     m_store = store;
 }
 
--(NSUInteger)count
+- (NSUInteger)count
 {
     return m_items.count;
 }
 
--(NSDate *)minDate
+- (NSDate *)minDate
 {
     return m_items.minDate;
 }
 
--(NSDate *)maxDate
+- (NSDate *)maxDate
 {
     return m_items.maxDate;
 }
 
 // We need a default vanilla constructor for Xml serialization
--(id) init
+- (id)init
 {
     return [super init];
 }
 
--(id)initForTypeID:(NSString *)typeID overStore:(MHVLocalRecordStore *)store
+- (id)initForTypeID:(NSString *)typeID overStore:(MHVLocalRecordStore *)store
 {
     return [self initForTypeID:typeID filter:nil overStore:store];
 }
 
--(id)initForTypeID:(NSString *)typeID filter:(MHVTypeFilter *)filter overStore:(MHVLocalRecordStore *)store
+- (id)initForTypeID:(NSString *)typeID filter:(MHVTypeFilter *)filter overStore:(MHVLocalRecordStore *)store
 {
     return [self initForTypeID:typeID filter:filter items:nil overStore:store];
 }
 
--(id)initForTypeID:(NSString *)typeID filter:(MHVTypeFilter *)filter items:(MHVTypeViewItems *)items overStore:(MHVLocalRecordStore *)store
+- (id)initForTypeID:(NSString *)typeID filter:(MHVTypeFilter *)filter items:(MHVTypeViewItems *)items overStore:(MHVLocalRecordStore *)store
 {
     MHVCHECK_NOTNULL(typeID);
     MHVCHECK_NOTNULL(store);
-    
+
     self = [super init];
     MHVCHECK_SELF;
-    
+
     self.typeID = typeID;
     self.filter = filter;
     self.store = store;
@@ -156,67 +158,67 @@ const int c_hvTypeViewDefaultReadAheadChunkSize = 50;
     {
         m_items = [[MHVTypeViewItems alloc] init];
     }
-    
-    return self;
-    
-LError:
-    MHVALLOC_FAIL;    
-}
 
--(id)initFromTypeView:(MHVTypeView *)typeView andItems:(MHVTypeViewItems *)items
-{
-    MHVCHECK_NOTNULL(typeView);
-    
-    self = [self initForTypeID:typeView.typeID filter:typeView.filter items:items overStore:typeView.store];
-    MHVCHECK_SELF;
-    
-    m_readAheadMode = typeView.readAheadMode;
-    
     return self;
-    
-LError:
+
+   LError:
     MHVALLOC_FAIL;
 }
 
+- (id)initFromTypeView:(MHVTypeView *)typeView andItems:(MHVTypeViewItems *)items
+{
+    MHVCHECK_NOTNULL(typeView);
 
--(MHVItemKey *)keyAtIndex:(NSUInteger)index
+    self = [self initForTypeID:typeView.typeID filter:typeView.filter items:items overStore:typeView.store];
+    MHVCHECK_SELF;
+
+    m_readAheadMode = typeView.readAheadMode;
+
+    return self;
+
+   LError:
+    MHVALLOC_FAIL;
+}
+
+- (MHVItemKey *)keyAtIndex:(NSUInteger)index
 {
     return [self itemKeyAtIndex:index];
 }
 
--(MHVTypeViewItem *)itemKeyAtIndex:(NSUInteger)index
+- (MHVTypeViewItem *)itemKeyAtIndex:(NSUInteger)index
 {
     return [m_items objectAtIndex:index];
 }
 
--(NSUInteger)indexOfItemID:(NSString *)itemID
+- (NSUInteger)indexOfItemID:(NSString *)itemID
 {
     return [m_items indexOfItemID:itemID];
 }
 
--(void) removeKeyAtIndex:(NSUInteger)index
+- (void)removeKeyAtIndex:(NSUInteger)index
 {
     [m_items removeItemAtIndex:index];
 }
 
--(NSUInteger)insertKeyForItem:(MHVItem *)item
+- (NSUInteger)insertKeyForItem:(MHVItem *)item
 {
     return [m_items insertHVItemInOrder:item];
 }
 
--(BOOL)updateKeyForItem:(MHVItem *)item
+- (BOOL)updateKeyForItem:(MHVItem *)item
 {
     return [m_items updateMHVItem:item];
 }
 
--(NSUInteger)indexOfItemWithClosestDate:(NSDate *)date
+- (NSUInteger)indexOfItemWithClosestDate:(NSDate *)date
 {
     return [self indexOfItemWithClosestDate:date firstEqual:TRUE];
 }
 
--(NSUInteger)indexOfItemWithClosestDate:(NSDate *)date firstEqual:(BOOL)firstEqual
+- (NSUInteger)indexOfItemWithClosestDate:(NSDate *)date firstEqual:(BOOL)firstEqual
 {
     NSBinarySearchingOptions searchOptions = NSBinarySearchingInsertionIndex;
+
     if (firstEqual)
     {
         searchOptions |= NSBinarySearchingFirstEqual;
@@ -225,25 +227,24 @@ LError:
     {
         searchOptions |= NSBinarySearchingLastEqual;
     }
-    
+
     NSUInteger index = [m_items searchForItem:date options:searchOptions usingComparator:^(id o1, id o2) {
-        
-        MHVTypeViewItem* item;
+        MHVTypeViewItem *item;
         NSComparisonResult cmp;
         if (date == o1)
         {
-            item = (MHVTypeViewItem *) o2;
+            item = (MHVTypeViewItem *)o2;
             cmp = [date compareDescending:item.date];
         }
         else
         {
-            item = (MHVTypeViewItem *) o1;
+            item = (MHVTypeViewItem *)o1;
             cmp = [item.date compareDescending:date];
         }
-    
+
         return cmp;
     }];
-    
+
     if (index != NSNotFound && index == m_items.count)
     {
         if (m_items.count == 0)
@@ -255,32 +256,33 @@ LError:
             index = m_items.count - 1;
         }
     }
-    
+
     return index;
 }
 
--(NSUInteger)indexOfFirstDay:(NSDate *)date
+- (NSUInteger)indexOfFirstDay:(NSDate *)date
 {
-    NSDate* day = [date toStartOfDay];
+    NSDate *day = [date toStartOfDay];
     NSUInteger index = [self indexOfItemWithClosestDate:day];
+
     if (index == NSNotFound)
     {
         return index;
     }
-    
+
     return [self indexOfFirstDay:date startAt:index];
 }
 
--(NSUInteger)indexOfFirstDay:(NSDate *)date startAt:(NSUInteger)baseIndex
+- (NSUInteger)indexOfFirstDay:(NSDate *)date startAt:(NSUInteger)baseIndex
 {
     NSUInteger index = baseIndex;
-    
-    NSCalendar* calendar = [NSCalendar newGregorian];
-    NSDateComponents* baseComponents = [calendar getComponentsFor:date];
-    
+
+    NSCalendar *calendar = [NSCalendar newGregorian];
+    NSDateComponents *baseComponents = [calendar getComponentsFor:date];
+
     for (; index > 0; --index)
     {
-        NSDateComponents* itemComponents = [calendar getComponentsFor:[self itemKeyAtIndex:index].date];
+        NSDateComponents *itemComponents = [calendar getComponentsFor:[self itemKeyAtIndex:index].date];
         NSComparisonResult cmp = [NSDateComponents compareYearMonthDay:itemComponents and:baseComponents];
         if (cmp == NSOrderedDescending)
         {
@@ -288,39 +290,41 @@ LError:
             break;
         }
     }
-    
+
     if (index >= self.count)
     {
         index = self.count - 1;
     }
-    
+
     return index;
 }
 
--(BOOL)containsItemID:(NSString *)itemID
+- (BOOL)containsItemID:(NSString *)itemID
 {
-    return ([self indexOfItemID:itemID] != NSNotFound);
+    return [self indexOfItemID:itemID] != NSNotFound;
 }
 
--(MHVTypeViewItem *)itemForItemID:(NSString *)itemID
+- (MHVTypeViewItem *)itemForItemID:(NSString *)itemID
 {
     NSUInteger index = [self indexOfItemID:itemID];
+
     if (index == NSNotFound)
     {
         return nil;
     }
-    
+
     return [self itemKeyAtIndex:index];
 }
 
--(MHVItem *)getLocalItemAtIndex:(NSUInteger)index
+- (MHVItem *)getLocalItemAtIndex:(NSUInteger)index
 {
     return [self getLocalItemWithKey:[self itemKeyAtIndex:index]];
 }
 
--(MHVItem *)getLocalItemWithKey:(MHVItemKey *)key
+- (MHVItem *)getLocalItemWithKey:(MHVItemKey *)key
 {
-    MHVItem* item = [m_store.data getLocalItemWithKey:key];
+    MHVItem *item = [m_store.data getLocalItemWithKey:key];
+
     if (item && m_enforceTypeCheck)
     {
         if (![item isType:m_typeID])
@@ -328,16 +332,16 @@ LError:
             item = nil;
         }
     }
-    
+
     return item;
 }
 
--(void)removeLocalItemAtIndex:(NSUInteger)index
+- (void)removeLocalItemAtIndex:(NSUInteger)index
 {
     return [m_store.data removeLocalItemWithKey:[self itemKeyAtIndex:index]];
 }
 
--(void)removeAllLocalItems
+- (void)removeAllLocalItems
 {
     @autoreleasepool
     {
@@ -348,44 +352,47 @@ LError:
     }
 }
 
--(MHVItem *)getItemAtIndex:(NSUInteger)index
+- (MHVItem *)getItemAtIndex:(NSUInteger)index
 {
     return [self getItemAtIndex:index readAheadCount:m_readAheadChunkSize];
 }
 
--(MHVItem *)getItemByID:(NSString *)itemID
+- (MHVItem *)getItemByID:(NSString *)itemID
 {
     NSUInteger index = [self indexOfItemID:itemID];
+
     if (index == NSNotFound)
     {
         return nil;
     }
-    
+
     return [self getItemAtIndex:index];
 }
 
--(MHVItem *)getItemAtIndex:(NSUInteger)index readAheadCount:(NSUInteger)readAheadCount
+- (MHVItem *)getItemAtIndex:(NSUInteger)index readAheadCount:(NSUInteger)readAheadCount
 {
     if (readAheadCount == 0)
     {
         readAheadCount = c_hvTypeViewDefaultReadAheadChunkSize;
     }
-    
-    MHVTypeViewItem* key = [m_items objectAtIndex:index];
+
+    MHVTypeViewItem *key = [m_items objectAtIndex:index];
     MHVCHECK_NOTNULL(key);
-    
+
     if (key.isLoadPending)
     {
         return nil; // Will be delivered via delegate
     }
+
     //
     // Check if we already have this item
     //
-    MHVItem* item = [self getLocalItemWithKey:key];
+    MHVItem *item = [self getLocalItemWithKey:key];
     if (item)
     {
         return item;
     }
+
     //
     // Find the items we don't already have cached, and start loading them
     //
@@ -399,7 +406,7 @@ LError:
         range = [self getReadAheadRangeForIndex:index readAheadCount:readAheadCount];
     }
 
-    MHVItemCollection* items = [self getItemsInRange:range nullIfNotFound:FALSE];
+    MHVItemCollection *items = [self getItemsInRange:range nullIfNotFound:FALSE];
     //
     // In case one showed up while we were working
     //
@@ -407,64 +414,66 @@ LError:
     {
         return [items objectAtIndex:0];
     }
-    
-LError:
+
+   LError:
     return nil;
 }
 
--(MHVItemCollection *) getItemsInRange:(NSRange) range
+- (MHVItemCollection *)getItemsInRange:(NSRange)range
 {
     return [self getItemsInRange:range downloadTask:nil];
 }
 
--(MHVItemCollection *)getItemsInRange:(NSRange)range downloadTask:(MHVTask **)task
+- (MHVItemCollection *)getItemsInRange:(NSRange)range downloadTask:(MHVTask **)task
 {
     return [self getItemsInRange:range nullIfNotFound:TRUE downloadTask:task];
 }
 
--(MHVItemCollection *)getItemsInRange:(NSRange)range nullIfNotFound:(BOOL)includeNull
+- (MHVItemCollection *)getItemsInRange:(NSRange)range nullIfNotFound:(BOOL)includeNull
 {
     return [self getItemsInRange:range nullIfNotFound:includeNull downloadTask:nil];
 }
 
--(MHVItemCollection *)getItemsInRange:(NSRange)range nullIfNotFound:(BOOL)includeNull downloadTask:(MHVTask **)task
+- (MHVItemCollection *)getItemsInRange:(NSRange)range nullIfNotFound:(BOOL)includeNull downloadTask:(MHVTask **)task
 {
     range = [m_items correctRange:range];
     if (range.length == 0)
     {
         return nil;
     }
+
     if (task)
     {
         *task = nil;
     }
-    
-    MHVItemKeyCollection* pendingKeys = nil;
+
+    MHVItemKeyCollection *pendingKeys = nil;
     //
     // Fetch local items
     //
-    MHVItemCollection* items = [self getLocalItemsInRange:range andPendingList:&pendingKeys nullForNotFound:includeNull];
+    MHVItemCollection *items = [self getLocalItemsInRange:range andPendingList:&pendingKeys nullForNotFound:includeNull];
     //
     // Download any pending items...
     //
     if (![MHVCollection isNilOrEmpty:pendingKeys])
     {
-        MHVTask* downloadTask = [self downloadItemsWithKeys:pendingKeys];
+        MHVTask *downloadTask = [self downloadItemsWithKeys:pendingKeys];
         if (task)
         {
             *task = downloadTask;
         }
     }
-    
-    return items;    
+
+    return items;
 }
 
--(MHVItemKeyCollection *)keysOfItemsNeedingDownloadInRange:(NSRange)range
+- (MHVItemKeyCollection *)keysOfItemsNeedingDownloadInRange:(NSRange)range
 {
-    MHVItemKeyCollection* pendingKeys = nil;
+    MHVItemKeyCollection *pendingKeys = nil;
+
     for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
     {
-        MHVItem* item = [self getLocalItemAtIndex:i];
+        MHVItem *item = [self getLocalItemAtIndex:i];
         if (!item)
         {
             if (!pendingKeys)
@@ -472,39 +481,40 @@ LError:
                 pendingKeys = [MHVItemKeyCollection new];
                 MHVCHECK_NOTNULL(pendingKeys);
             }
-            MHVTypeViewItem* key = [m_items objectAtIndex:i];
+
+            MHVTypeViewItem *key = [m_items objectAtIndex:i];
             [pendingKeys addObject:key];
         }
     }
-    
+
     return pendingKeys;
-    
-LError:
+
+   LError:
     return nil;
-    
 }
 
--(MHVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback
+- (MHVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback
 {
-    MHVItemKeyCollection* pendingKeys = [self keysOfItemsNeedingDownloadInRange:range];
+    MHVItemKeyCollection *pendingKeys = [self keysOfItemsNeedingDownloadInRange:range];
+
     if ([MHVCollection isNilOrEmpty:pendingKeys])
     {
         return nil;
     }
-    
-    MHVTask* task = [m_store.data newDownloadItemsInRecord:m_store.record forKeys:pendingKeys callback:callback];
+
+    MHVTask *task = [m_store.data newDownloadItemsInRecord:m_store.record forKeys:pendingKeys callback:callback];
     if (!task)
     {
         return nil;
     }
-    
+
     task.shouldCompleteInMainThread = TRUE;
     [task start];
-    
+
     return task;
 }
 
--(NSUInteger)putItem:(MHVItem *)item
+- (NSUInteger)putItem:(MHVItem *)item
 {
     //
     // First, place in the persistent store
@@ -513,32 +523,32 @@ LError:
     {
         return NSNotFound;
     }
-    
+
     NSUInteger index = [m_items insertHVItemInOrder:item];
-    
+
     [self stampUpdated];
-    
-    return index;   
+
+    return index;
 }
 
--(BOOL)putItems:(MHVItemCollection *)items
+- (BOOL)putItems:(MHVItemCollection *)items
 {
     MHVCHECK_NOTNULL(items);
-    
-    for (MHVItem* item in items)
+
+    for (MHVItem *item in items)
     {
         [self putItem:item];
     }
-    
+
     [self stampUpdated];
-    
+
     return TRUE;
-    
-LError:
+
+   LError:
     return FALSE;
 }
 
--(BOOL)removeItemAtIndex:(NSUInteger)index
+- (BOOL)removeItemAtIndex:(NSUInteger)index
 {
     [self removeLocalItemAtIndex:index];
     [m_items removeItemAtIndex:index];
@@ -546,218 +556,225 @@ LError:
     return TRUE;
 }
 
--(NSUInteger)updateItemInView:(MHVItem *)item prevIndex:(NSUInteger *)prevIndex
+- (NSUInteger)updateItemInView:(MHVItem *)item prevIndex:(NSUInteger *)prevIndex
 {
     NSUInteger indexAt = [m_items indexOfItemID:item.itemID];
+
     if (prevIndex)
     {
         *prevIndex = indexAt;
     }
-    
-    NSUInteger newIndex;    
+
+    NSUInteger newIndex;
     if (indexAt != NSNotFound)
     {
         [m_items removeItemAtIndex:indexAt];
     }
+
     newIndex = [m_items insertHVItemInOrder:item];
- 
+
     [self stampUpdated];
-    
+
     return newIndex;
 }
 
--(NSUInteger)updateItemInView:(MHVItem *)item
+- (NSUInteger)updateItemInView:(MHVItem *)item
 {
     return [self updateItemInView:item prevIndex:nil];
 }
 
--(BOOL)removeItemFromViewByID:(NSString *)itemID
+- (BOOL)removeItemFromViewByID:(NSString *)itemID
 {
     if ([m_items removeItemByID:itemID] == NSNotFound)
     {
         return FALSE;
     }
-    
+
     [self stampUpdated];
     return TRUE;
 }
 
--(BOOL)removeItemsFromViewByID:(NSArray *)itemIDs
+- (BOOL)removeItemsFromViewByID:(NSArray *)itemIDs
 {
     if ([NSArray isNilOrEmpty:itemIDs])
     {
         return FALSE;
     }
-    
+
     BOOL changed = FALSE;
-    for (NSString* itemID in itemIDs) 
+    for (NSString *itemID in itemIDs)
     {
         if ([m_items removeItemByID:itemID] != NSNotFound)
         {
             changed = TRUE;
         }
     }
-    
+
     if (changed)
     {
         [self stampUpdated];
     }
-    
+
     return changed;
 }
 
--(BOOL)isStale:(NSTimeInterval) maxAge
+- (BOOL)isStale:(NSTimeInterval)maxAge
 {
     if (!m_lastUpdateDate)
     {
         return TRUE;
     }
-    
-    NSDate* now = [NSDate date];
-    return ([now timeIntervalSinceDate:m_lastUpdateDate] > maxAge);
+
+    NSDate *now = [NSDate date];
+    return [now timeIntervalSinceDate:m_lastUpdateDate] > maxAge;
 }
 
--(MHVTask *)synchronize
+- (MHVTask *)synchronize
 {
     return [self refresh];
 }
 
--(MHVTask *)refresh
+- (MHVTask *)refresh
 {
-    MHVGetItemsTask* getItems = [self newRefreshTask];
+    MHVGetItemsTask *getItems = [self newRefreshTask];
+
     MHVCHECK_NOTNULL(getItems);
-    
+
     [getItems start];
-    
+
     return getItems;
 
-LError:
+   LError:
     return nil;
 }
 
--(MHVTask *)refreshWithCallback:(MHVTaskCompletion)callback
+- (MHVTask *)refreshWithCallback:(MHVTaskCompletion)callback
 {
-    MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
+    MHVTask *task = [[MHVTask alloc] initWithCallback:callback];
+
     MHVCHECK_NOTNULL(task);
-    
-    MHVGetItemsTask* syncTask = [self newRefreshTask];
+
+    MHVGetItemsTask *syncTask = [self newRefreshTask];
     MHVCHECK_NOTNULL(syncTask);
-    
+
     [task setNextTask:syncTask];
-    
+
     [task start];
     return task;
-    
-LError:
+
+   LError:
     return nil;
 }
 
--(MHVItemQuery *)getQuery
+- (MHVItemQuery *)getQuery
 {
     return [self newRefreshQuery];
 }
 
--(BOOL)replaceKeys:(MHVTypeViewItems *)items
+- (BOOL)replaceKeys:(MHVTypeViewItems *)items
 {
     MHVCHECK_NOTNULL(items);
-    
+
     [self updateViewWith:items];
     [self notifySynchronized];
-    
+
     return TRUE;
-    
-LError:
+
+   LError:
     return FALSE;
 }
 
--(MHVTask *)synchronizeData
+- (MHVTask *)synchronizeData
 {
     return [self synchronizeDataInRange:NSMakeRange(0, m_items.count)];
 }
 
--(MHVTask *)synchronizeDataInRange:(NSRange)range
+- (MHVTask *)synchronizeDataInRange:(NSRange)range
 {
     range = [m_items correctRange:range];
     return [m_store.data downloadItemsWithKeys:[m_items keysInRange:range] inView:self];
 }
 
--(BOOL)save
+- (BOOL)save
 {
     return [self saveWithName:self.typeID];
 }
 
--(BOOL)saveWithName:(NSString *)name
+- (BOOL)saveWithName:(NSString *)name
 {
     return [m_store putView:self name:name];
 }
 
-+(MHVTypeView *)loadViewNamed:(NSString *)name fromStore:(MHVLocalRecordStore *)store
++ (MHVTypeView *)loadViewNamed:(NSString *)name fromStore:(MHVLocalRecordStore *)store
 {
     return [store getView:name];
 }
 
-+(MHVTypeView *)getViewForTypeClassName:(NSString *)className inRecord:(MHVRecordReference *)record
++ (MHVTypeView *)getViewForTypeClassName:(NSString *)className inRecord:(MHVRecordReference *)record
 {
-    NSString *typeID = [[MHVTypeSystem current] getTypeIDForClassName:className]; 
+    NSString *typeID = [[MHVTypeSystem current] getTypeIDForClassName:className];
+
     return [MHVTypeView getViewForTypeID:typeID inRecord:record];
 }
 
-+(MHVTypeView *)getViewForTypeID:(NSString *)typeID inRecord:(MHVRecordReference *)record
++ (MHVTypeView *)getViewForTypeID:(NSString *)typeID inRecord:(MHVRecordReference *)record
 {
-    MHVLocalRecordStore* recordStore = [[MHVClient current].localVault getRecordStore:record];
+    MHVLocalRecordStore *recordStore = [[MHVClient current].localVault getRecordStore:record];
+
     return [MHVTypeView getViewForTypeID:typeID andRecordStore:recordStore];
 }
 
-+(MHVTypeView *)getViewForTypeID:(NSString *)typeID andRecordStore:(MHVLocalRecordStore *)store
++ (MHVTypeView *)getViewForTypeID:(NSString *)typeID andRecordStore:(MHVLocalRecordStore *)store
 {
     MHVCHECK_NOTNULL(store);
-    
+
     MHVTypeView *view = [MHVTypeView loadViewNamed:typeID fromStore:store];
     if (!view)
     {
         view = [[MHVTypeView alloc] initForTypeID:typeID overStore:store];
     }
-    
+
     return view;
-    
-LError:
+
+   LError:
     return nil;
 }
 
--(void)updateViewWith:(MHVTypeViewItems *)items
+- (void)updateViewWith:(MHVTypeViewItems *)items
 {
     m_items = nil;
     m_items = items;
     [self stampUpdated];
 }
 
-//-------------------------
+// -------------------------
 //
 // Called by SynchronizedStore.
 // These can come in on any thread. We can do local computation, but
 // we must push all changes we need to make to TypeView - to the Main thread
 //
-//------------------------
--(void)keysNotRetrieved:(NSArray *)keys withError:(id)error
+// ------------------------
+- (void)keysNotRetrieved:(NSArray *)keys withError:(id)error
 {
-    NSMutableArray* params = [[NSMutableArray alloc] initWithCapacity:2];
+    NSMutableArray *params = [[NSMutableArray alloc] initWithCapacity:2];
+
     [params addObject:keys];
     [params addObject:error];
-    
+
     [self invokeOnMainThread:@selector(keysFailed:) withObject:params];
 }
 
--(void)itemsRetrieved:(MHVItemCollection *)items forKeys:(MHVItemKeyCollection *)keys
+- (void)itemsRetrieved:(MHVItemCollection *)items forKeys:(MHVItemKeyCollection *)keys
 {
-    NSMutableArray* params = [[NSMutableArray alloc] initWithCapacity:2];
+    NSMutableArray *params = [[NSMutableArray alloc] initWithCapacity:2];
+
     [params addObject:items];
     [params addObject:keys];
-    
+
     [self invokeOnMainThread:@selector(processItemsRetrieved:) withObject:params];
 }
 
-
--(void)serialize:(XWriter *)writer
+- (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_typeID value:m_typeID];
     [writer writeElement:c_element_filter content:m_filter];
@@ -767,7 +784,7 @@ LError:
     [writer writeElement:c_element_maxItems intValue:(int)m_maxItems];
 }
 
--(void)deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
     m_typeID = [reader readStringElement:c_element_typeID];
     m_filter = [reader readElement:c_element_filter asClass:[MHVItemFilter class]];
@@ -778,68 +795,72 @@ LError:
     {
         m_readAheadChunkSize = c_hvTypeViewDefaultReadAheadChunkSize;
     }
+
     m_maxItems = [reader readIntElement:c_element_maxItems];
 }
 
--(MHVTypeView *)subviewForRange:(NSRange)range
+- (MHVTypeView *)subviewForRange:(NSRange)range
 {
-    MHVTypeViewItems* subItems = [[MHVTypeViewItems alloc] init];
-    
+    MHVTypeViewItems *subItems = [[MHVTypeViewItems alloc] init];
+
     if (m_items)
     {
         [m_items correctRange:range];
         for (NSUInteger i = 0, max = NSMaxRange(range); i < max; ++i)
         {
-            [subItems addItem:[m_items objectAtIndex:i]];
+            [subItems addObject:[m_items objectAtIndex:i]];
         }
     }
-    
+
     return [[MHVTypeView alloc] initFromTypeView:self andItems:subItems];
 }
 
--(void)setTypeID:(NSString *)typeID
+- (void)setTypeID:(NSString *)typeID
 {
     m_typeID = typeID;
 }
 
--(void)setFilter:(MHVTypeFilter *)filter
+- (void)setFilter:(MHVTypeFilter *)filter
 {
     m_filter = filter;
 }
 
--(void)setItems:(MHVTypeViewItems *)items
+- (void)setItems:(MHVTypeViewItems *)items
 {
     m_items = items;
 }
 
--(MHVItemQuery *)newRefreshQuery
+- (MHVItemQuery *)newRefreshQuery
 {
-    MHVItemQuery* query = [[MHVItemQuery alloc] initWithTypeID:m_typeID];
+    MHVItemQuery *query = [[MHVItemQuery alloc] initWithTypeID:m_typeID];
+
     MHVCHECK_NOTNULL(query);
-    
+
     query.view.sections = MHVItemSection_Core;
     if (m_filter)
     {
         [query.filters addObject:m_filter];
     }
+
     if (m_maxItems > 0)
     {
         query.maxResults = (int)m_maxItems;
     }
+
     query.maxFullResults = 0;
     return query;
-    
-LError:
+
+   LError:
     return nil;
 }
 
--(MHVGetItemsTask *)newRefreshTask
+- (MHVGetItemsTask *)newRefreshTask
 {
-    MHVItemQuery* query = [self newRefreshQuery];
+    MHVItemQuery *query = [self newRefreshQuery];
+
     MHVCHECK_NOTNULL(query);
-    
-    MHVGetItemsTask* getItems = [[MHVClient current].methodFactory newGetItemsForRecord:self.record query:query andCallback:^(MHVTask *task) {
-        
+
+    MHVGetItemsTask *getItems = [[MHVClient current].methodFactory newGetItemsForRecord:self.record query:query andCallback:^(MHVTask *task) {
         if (![NSThread isMainThread])
         {
             [self invokeOnMainThread:@selector(synchronizeViewCompleted:) withObject:task];
@@ -848,74 +869,76 @@ LError:
         {
             [self synchronizeViewCompleted:task];
         }
-        
     }];
     getItems.shouldCompleteInMainThread = TRUE;
-    
+
     return getItems;
 
-LError:
+   LError:
     return nil;
 }
 
 //
 // This MUST always be called in the main UI thread
 //
--(void)synchronizeViewCompleted:(MHVTask *)task
+- (void)synchronizeViewCompleted:(MHVTask *)task
 {
-    MHVTypeViewItems* newViewItems = [[MHVTypeViewItems alloc] init];
-    @try 
+    MHVTypeViewItems *newViewItems = [[MHVTypeViewItems alloc] init];
+
+    @try
     {
-        MHVItemQueryResults* results = task.result;
+        MHVItemQueryResults *results = task.result;
 
         if (results.hasResults)
         {
-            MHVItemQueryResult* result = results.firstResult;
+            MHVItemQueryResult *result = results.firstResult;
             if (![newViewItems addQueryResult:result])
             {
                 [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_Sync)];
             }
         }
+
         self.items = newViewItems;
-                
+
         [self stampUpdated];
-        
+
         [self notifySynchronized];
     }
-    @catch (id ex) 
+    @catch (id ex)
     {
         [ex log];
         [self notifySyncFailed:ex];
     }
-    @finally 
+    @finally
     {
         newViewItems = nil;
     }
 }
 
--(NSRange)getChunkForIndex:(NSUInteger)index chunkSize:(NSUInteger)chunkSize
+- (NSRange)getChunkForIndex:(NSUInteger)index chunkSize:(NSUInteger)chunkSize
 {
     NSUInteger chunk = index / chunkSize;
     NSUInteger chunkStartAt = chunk * chunkSize;
     NSRange range = [m_items correctRange:NSMakeRange(chunkStartAt, chunkSize)];
+
     return range;
 }
 
--(NSRange)getReadAheadRangeForIndex:(NSUInteger)index readAheadCount:(NSUInteger)readAheadCount
+- (NSRange)getReadAheadRangeForIndex:(NSUInteger)index readAheadCount:(NSUInteger)readAheadCount
 {
     return [m_items correctRange:NSMakeRange(index, readAheadCount)];
 }
 
--(MHVItemCollection *)getLocalItemsInRange:(NSRange)range andPendingList:(MHVItemKeyCollection **)pending nullForNotFound:(BOOL)includeNull
+- (MHVItemCollection *)getLocalItemsInRange:(NSRange)range andPendingList:(MHVItemKeyCollection **)pending nullForNotFound:(BOOL)includeNull
 {
     *pending = nil;
-    
-    MHVItemKeyCollection* pendingKeys = nil;
-    MHVItemCollection* items = [[MHVItemCollection alloc] initWithCapacity:range.length];
+
+    MHVItemKeyCollection *pendingKeys = nil;
+    MHVItemCollection *items = [[MHVItemCollection alloc] initWithCapacity:range.length];
     for (NSUInteger i = range.location, max = i + range.length; i < max; ++i)
     {
-        MHVTypeViewItem* key = [m_items objectAtIndex:i];
-        MHVItem* item = [self getLocalItemWithKey:key];
+        MHVTypeViewItem *key = [m_items objectAtIndex:i];
+        MHVItem *item = [self getLocalItemWithKey:key];
         if (item)
         {
             [items addObject:item];
@@ -927,28 +950,30 @@ LError:
                 pendingKeys = [MHVItemKeyCollection new];
                 MHVCHECK_NOTNULL(pendingKeys);
             }
+
             [pendingKeys addObject:key];
-            
+
             if (includeNull)
             {
-                [items addObject:[NSNull null]];
+                [items addObject:(MHVItem *)[NSNull null]];
             }
         }
     }
-    
+
     *pending = pendingKeys;
     return items;
-    
-LError:
+
+   LError:
     return nil;
 }
 
--(MHVTask *) downloadItemsWithKeys:(MHVItemKeyCollection *)keys
-{   
+- (MHVTask *)downloadItemsWithKeys:(MHVItemKeyCollection *)keys
+{
     if ([MHVCollection isNilOrEmpty:keys])
     {
         return nil;
     }
+
     //
     // This will remove any keys that have pending loads...
     //
@@ -957,19 +982,21 @@ LError:
     {
         return nil;
     }
+
     //
     // Launch the download task
     //
-    MHVTask* task = [m_store.data downloadItemsWithKeys:keys typeID:m_typeID inView:self];
+    MHVTask *task = [m_store.data downloadItemsWithKeys:keys typeID:m_typeID inView:self];
     if (task != nil)
     {
         return task;
     }
+
     //
     // Failed...
     //
     [self setDownloadStatus:FALSE forKeys:keys];
-    
+
     return task;
 }
 
@@ -977,13 +1004,14 @@ LError:
 // Keys that have pending loads are removed from the list
 // The remainder are marked as loading..
 //
--(void)prepareKeysForLoading:(MHVItemKeyCollection *)keys
+- (void)prepareKeysForLoading:(MHVItemKeyCollection *)keys
 {
     NSUInteger i = 0;
     NSUInteger count = keys.count;
+
     while (i < count)
     {
-        MHVTypeViewItem* key = [keys objectAtIndex:i];
+        MHVTypeViewItem *key = (MHVTypeViewItem *)[keys objectAtIndex:i];
         if (key.isLoadPending)
         {
             [keys removeObjectAtIndex:i];
@@ -997,13 +1025,13 @@ LError:
     }
 }
 
--(BOOL) updateItemsInView:(MHVItemCollection *)items
+- (BOOL)updateItemsInView:(MHVItemCollection *)items
 {
     if ([MHVCollection isNilOrEmpty:items])
     {
         return FALSE;
     }
-    
+
     BOOL changed = FALSE;
     for (NSUInteger i = 0, count = items.count; i < count; ++i)
     {
@@ -1012,34 +1040,34 @@ LError:
             changed = TRUE;
         }
     }
-    
+
     if (changed)
     {
         [self stampUpdated];
     }
-    
+
     return changed;
 }
 
--(BOOL)removeItemsForKeys:(MHVItemKeyCollection *)keys
+- (BOOL)removeItemsForKeys:(MHVItemKeyCollection *)keys
 {
     if ([MHVCollection isNilOrEmpty:keys])
     {
         return TRUE;
     }
-    
+
     @try
     {
         for (NSUInteger i = 0, count = keys.count; i < count; ++i)
         {
-            MHVItemKey* key = [keys objectAtIndex:i];
-            
+            MHVItemKey *key = [keys objectAtIndex:i];
+
             [m_store.data removeLocalItemWithKey:key];
             [m_items removeItemByID:key.itemID];
         }
-        
+
         [self stampUpdated];
-        
+
         return TRUE;
     }
     @catch (id exception)
@@ -1053,15 +1081,16 @@ LError:
 //
 // MUST ALWAYS BE CALLED IN THE UI THREAD
 //
--(void)processItemsRetrieved:(NSArray *) params
+- (void)processItemsRetrieved:(NSArray *)params
 {
-    MHVItemCollection* items = [params objectAtIndex:0];
-    MHVItemKeyCollection* keys = [params objectAtIndex:1];
-    
+    MHVItemCollection *items = [params objectAtIndex:0];
+    MHVItemKeyCollection *keys = [params objectAtIndex:1];
+
     if (items && items.count > 0)
     {
         [self itemsAvailableInStore:items];
     }
+
     //
     // Not all keys may have resulted in items being retrieved
     //
@@ -1072,52 +1101,53 @@ LError:
     }
 }
 
--(MHVItemKeyCollection *)selectKeys:(MHVItemKeyCollection *)keys notIn:(MHVItemCollection *)items
+- (MHVItemKeyCollection *)selectKeys:(MHVItemKeyCollection *)keys notIn:(MHVItemCollection *)items
 {
     if (items.count >= keys.count)
     {
         return nil;
     }
-    
-    NSMutableDictionary* itemsByID = [items newIndexByID];
+
+    NSMutableDictionary *itemsByID = [items newIndexByID];
     if (!itemsByID)
     {
         return nil;
     }
-    
+
     MHVItemKeyCollection *keysNotFound = [MHVItemKeyCollection new];
-    for (MHVItemKey* key in keys)
+    for (MHVItemKey *key in keys)
     {
         if (![itemsByID objectForKey:key.itemID])
         {
             [keysNotFound addObject:key];
         }
     }
-    
-    return  keysNotFound;
+
+    return keysNotFound;
 }
 
 //
 // MUST ALWAYS BE CALLED IN THE UI THREAD
 //
--(void)itemsAvailableInStore:(MHVItemCollection *)items
+- (void)itemsAvailableInStore:(MHVItemCollection *)items
 {
     [self setDownloadStatus:FALSE forItems:items];
-    
+
     BOOL viewChanged = [self updateItemsInView:items];
-    
+
     [self notifyItemsAvailable:items viewChanged:viewChanged];
 }
 
 //
 // MUST ALWAYS BE CALLED IN THE UI THREAD
 //
--(void)keysNotAvailableInStore:(MHVItemKeyCollection *)keys
+- (void)keysNotAvailableInStore:(MHVItemKeyCollection *)keys
 {
     if ([MHVCollection isNilOrEmpty:keys])
     {
         return;
     }
+
     //
     // Let the view clean itself up
     //
@@ -1131,37 +1161,38 @@ LError:
 //
 // MUST ALWAYS BE CALLED IN THE UI THREAD
 //
--(void)keysFailed:(NSArray *)params
+- (void)keysFailed:(NSArray *)params
 {
-    MHVItemKeyCollection* keys = [params objectAtIndex:0];
+    MHVItemKeyCollection *keys = [params objectAtIndex:0];
     id error = [params objectAtIndex:1];
-    
-    [self setDownloadStatus:FALSE forKeys:keys]; 
+
+    [self setDownloadStatus:FALSE forKeys:keys];
     [self notifySyncFailed:error];
 }
 
--(void)setDownloadStatus:(BOOL)status forIndex:(NSUInteger)index
+- (void)setDownloadStatus:(BOOL)status forIndex:(NSUInteger)index
 {
-    MHVTypeViewItem* key = [self itemKeyAtIndex:index];
-    if (key)
-    {
-        key.isLoadPending = status;
-    }    
-}
+    MHVTypeViewItem *key = [self itemKeyAtIndex:index];
 
--(void)setDownloadStatus:(BOOL) status forKeys:(MHVItemKeyCollection *)keys
-{
-    for (MHVTypeViewItem* key in keys) 
+    if (key)
     {
         key.isLoadPending = status;
     }
 }
 
--(void)setDownloadStatus:(BOOL)status forItems:(MHVItemCollection *)items
+- (void)setDownloadStatus:(BOOL)status forKeys:(MHVItemKeyCollection *)keys
 {
-    for (MHVItem* item in items)
+    for (MHVTypeViewItem *key in keys)
     {
-        MHVTypeViewItem* key = [m_items objectForItemID:item.itemID];
+        key.isLoadPending = status;
+    }
+}
+
+- (void)setDownloadStatus:(BOOL)status forItems:(MHVItemCollection *)items
+{
+    for (MHVItem *item in items)
+    {
+        MHVTypeViewItem *key = [m_items objectForItemID:item.itemID];
         if (key)
         {
             key.isLoadPending = status;
@@ -1169,7 +1200,7 @@ LError:
     }
 }
 
--(void)notifyItemsAvailable:(MHVItemCollection *)items viewChanged:(BOOL)viewChanged
+- (void)notifyItemsAvailable:(MHVItemCollection *)items viewChanged:(BOOL)viewChanged
 {
     safeInvokeAction(^{
         if (self.delegate)
@@ -1179,7 +1210,7 @@ LError:
     });
 }
 
--(void)notifyKeysNotAvailable:(MHVItemKeyCollection *)keys
+- (void)notifyKeysNotAvailable:(MHVItemKeyCollection *)keys
 {
     safeInvokeAction(^{
         if (self.delegate)
@@ -1189,7 +1220,7 @@ LError:
     });
 }
 
--(void)notifySynchronized
+- (void)notifySynchronized
 {
     safeInvokeAction(^{
         if (self.delegate)
@@ -1199,9 +1230,9 @@ LError:
     });
 }
 
--(void)notifySyncFailed:(id)error
+- (void)notifySyncFailed:(id)error
 {
-    safeInvokeActionEx(^{
+    safeInvokeActionEx (^{
         if (self.delegate)
         {
             [self.delegate synchronizationFailedInView:self withError:error];
@@ -1209,7 +1240,7 @@ LError:
     }, TRUE);  // Ensures that delegate is called in UI thread
 }
 
--(void)stampUpdated
+- (void)stampUpdated
 {
     self.lastUpdateDate = [NSDate date];
 }

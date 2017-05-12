@@ -83,14 +83,4 @@ static const xmlChar *x_element_note = XMLSTRINGCONST("note");
     return self;
 }
 
-- (void)addItem:(MHVLabTestResultsDetails *)item
-{
-    [super addObject:item];
-}
-
-- (MHVLabTestResultsDetails *)itemAtIndex:(NSUInteger)index
-{
-    return [super objectAtIndex:index];
-}
-
 @end

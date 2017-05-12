@@ -138,16 +138,11 @@ static NSString* const c_element_auth_action = @"app-record-auth-action";
     return self;
 }
 
-- (MHVRecord *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVRecord *)[self.inner objectAtIndex:index];
-}
-
 - (NSInteger)indexOfRecordID:(NSString *)recordID
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
-        MHVRecord *record = [self itemAtIndex:i];
+        MHVRecord *record = [self objectAtIndex:i];
         if ([record.ID isEqualToString:recordID])
         {
             return i;

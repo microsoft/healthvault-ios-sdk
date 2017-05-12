@@ -60,8 +60,6 @@
 
 @end
 
-@interface MHVItemQueryResultCollection : MHVCollection
-
-- (MHVItemQueryResult *)itemAtIndex:(NSUInteger)index;
+@interface MHVItemQueryResultCollection : MHVCollection<MHVItemQueryResult *>
 
 @end

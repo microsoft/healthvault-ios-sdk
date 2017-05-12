@@ -42,7 +42,7 @@
 
 @end
 
-@interface MHVRelatedItemCollection : MHVCollection
+@interface MHVRelatedItemCollection : MHVCollection<MHVRelatedItem *>
 
 - (NSUInteger)indexOfRelation:(NSString *)name;
 - (MHVRelatedItem *)addRelation:(NSString *)name toItem:(MHVItem *)item;

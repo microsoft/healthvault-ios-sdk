@@ -78,6 +78,19 @@
     return [self.inner objectAtIndex:index];
 }
 
+- (id)objectAtIndexedSubscript:(NSUInteger)idx
+{
+    return [self.inner objectAtIndexedSubscript:idx];
+}
+
+- (void)setObject:(id)anObject atIndexedSubscript:(NSUInteger)idx
+{
+    if([self validateNewObject:anObject])
+    {
+        [self.inner setObject:anObject atIndexedSubscript:idx];
+    }
+}
+
 - (id)lastObject
 {
     return [self.inner lastObject];
@@ -269,7 +282,7 @@
 
 @implementation MHVStringCollection
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     

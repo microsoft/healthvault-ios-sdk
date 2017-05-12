@@ -195,9 +195,4 @@ static NSString *const c_attribute_name = @"name";
     return self;
 }
 
-- (MHVItemQueryResult *)itemAtIndex:(NSUInteger)index
-{
-    return [self objectAtIndex:index];
-}
-
 @end
