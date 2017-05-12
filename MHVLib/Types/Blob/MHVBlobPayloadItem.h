@@ -20,8 +20,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVType.h"
 #import "MHVBlobInfo.h"
-#import "MHVHttpRequestResponse.h"
-#import "MHVHttpDownload.h"
 #import "MHVBlobPutParameters.h"
 
 @interface MHVBlobPayloadItem : MHVType
@@ -64,10 +62,8 @@
 // Methods
 //
 // -------------------------
-- (MHVHttpResponse *)createDownloadTaskWithCallback:(MHVTaskCompletion)callback;
-- (MHVHttpResponse *)downloadWithCallback:(MHVTaskCompletion)callback;
-- (MHVHttpDownload *)downloadToFilePath:(NSString *)path andCallback:(MHVTaskCompletion)callback;
-- (MHVHttpDownload *)downloadToFile:(NSFileHandle *)file andCallback:(MHVTaskCompletion)callback;
+- (void)downloadBlobToFilePath:(NSString *)filePath completion:(void (^)(NSError *error))completion;
+- (void)downloadBlobDataWithCompletion:(void (^)(NSData *data, NSError *error))completion;
 
 @end
 

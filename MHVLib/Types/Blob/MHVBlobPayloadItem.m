@@ -19,6 +19,7 @@
 
 #import "MHVCommon.h"
 #import "MHVBlobPayloadItem.h"
+#import "MHVClient.h"
 
 static NSString *const c_element_blobInfo = @"blob-info";
 static NSString *const c_element_length = @"content-length";
@@ -74,44 +75,17 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
     return self;
 }
 
-- (MHVHttpResponse *)createDownloadTaskWithCallback:(MHVTaskCompletion)callback
+- (void)downloadBlobToFilePath:(NSString *)filePath completion:(void (^)(NSError *error))completion
 {
-    NSURL *url = [NSURL URLWithString:self.blobUrl];
-
-    MHVCHECK_NOTNULL(url);
-
-    return [[MHVHttpResponse alloc] initWithUrl:url andCallback:callback];
-
-   LError:
-    return nil;
+    [[MHVClient current].service.httpService downloadFileWithUrl:[NSURL URLWithString:self.blobUrl]
+                                                      toFilePath:filePath
+                                                      completion:completion];
 }
 
-- (MHVHttpResponse *)downloadWithCallback:(MHVTaskCompletion)callback
+- (void)downloadBlobDataWithCompletion:(void (^)(NSData *data, NSError *error))completion
 {
-    MHVHttpResponse *response = [self createDownloadTaskWithCallback:callback];
-
-    MHVCHECK_NOTNULL(response);
-
-    [response start];
-
-    return response;
-}
-
-- (MHVHttpDownload *)downloadToFilePath:(NSString *)path andCallback:(MHVTaskCompletion)callback
-{
-    return [self downloadToFile:[NSFileHandle fileHandleForWritingAtPath:path] andCallback:callback];
-}
-
-- (MHVHttpDownload *)downloadToFile:(NSFileHandle *)file andCallback:(MHVTaskCompletion)callback
-{
-    NSURL *url = [NSURL URLWithString:self.blobUrl];
-
-    MHVCHECK_NOTNULL(url);
-
-    MHVHttpDownload *response = [[MHVHttpDownload alloc] initWithUrl:url fileHandle:file andCallback:callback];
-    [response start];
-
-    return response;
+    [[MHVClient current].service.httpService downloadDataWithUrl:[NSURL URLWithString:self.blobUrl]
+                                                      completion:completion];
 }
 
 - (MHVClientResult *)validate

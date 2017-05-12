@@ -40,7 +40,10 @@ static NSString *const c_typename = @"personal-image";
     return [[MHVItem alloc] initWithType:[MHVPersonalImage typeID]];
 }
 
-+ (MHVTask *)updateImage:(NSData *)imageData contentType:(NSString *)contentType forRecord:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
++ (MHVTask *)updateImage:(NSData *)imageData
+             contentType:(NSString *)contentType
+               forRecord:(MHVRecordReference *)record
+             andCallback:(MHVTaskCompletion)callback
 {
     MHVTask *uploadImageTask = nil;
 
@@ -71,7 +74,11 @@ static NSString *const c_typename = @"personal-image";
         id<MHVBlobSourceProtocol> blobSource = [[MHVBlobMemorySource alloc] initWithData:imageData];
         MHVCHECK_OOM(blobSource);
 
-        MHVTask *blobUploadTask = (MHVTask *)[item newUploadBlobTask:blobSource forBlobName:c_emptyString contentType:contentType record:record andCallback:^(MHVTask *task)
+        MHVTask *blobUploadTask = (MHVTask *)[item newUploadBlobTask:blobSource
+                                                         forBlobName:c_emptyString
+                                                         contentType:contentType
+                                                              record:record
+                                                         andCallback:^(MHVTask *task)
         {
             [task checkSuccess];
         }];

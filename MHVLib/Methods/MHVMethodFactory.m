@@ -1,8 +1,8 @@
 //
-//  MHVMethodFactory.m
-//  MHVLib
+// MHVMethodFactory.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,23 +23,26 @@
 
 @implementation MHVMethodFactory
 
--(MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record queries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback
+- (MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record queries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback
 {
-    MHVGetItemsTask* task = [MHVGetItemsTask newForRecord:record queries:queries andCallback:callback];
+    MHVGetItemsTask *task = [MHVGetItemsTask newForRecord:record queries:queries andCallback:callback];
+
     task.taskName = @"GetItemsForRecord";
     return task;
 }
 
--(MHVPutItemsTask *)newPutItemsForRecord:(MHVRecordReference *)record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback
+- (MHVPutItemsTask *)newPutItemsForRecord:(MHVRecordReference *)record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback
 {
-    MHVPutItemsTask* task = [MHVPutItemsTask newForRecord:record items:items andCallback:callback];
+    MHVPutItemsTask *task = [MHVPutItemsTask newForRecord:record items:items andCallback:callback];
+
     task.taskName = @"PutItemsForRecord";
     return task;
 }
 
--(MHVRemoveItemsTask *)newRemoveItemsForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback
+- (MHVRemoveItemsTask *)newRemoveItemsForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback
 {
-    MHVRemoveItemsTask* task = [MHVRemoveItemsTask newForRecord:record keys:keys andCallback:callback];
+    MHVRemoveItemsTask *task = [MHVRemoveItemsTask newForRecord:record keys:keys andCallback:callback];
+
     task.taskName = @"RemoveItemsForRecord";
     return task;
 }
@@ -48,34 +51,29 @@
 
 @implementation MHVMethodFactory (MHVMethodFactoryExtensions)
 
--(MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record query:(MHVItemQuery *)query andCallback:(MHVTaskCompletion)callback
+- (MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record query:(MHVItemQuery *)query andCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(query);
-    
-    MHVItemQueryCollection* queries = [[MHVItemQueryCollection alloc] init];
+
+    MHVItemQueryCollection *queries = [[MHVItemQueryCollection alloc] init];
     MHVCHECK_NOTNULL(queries);
-    
+
     [queries addObject:query];
-    
-    MHVGetItemsTask* task = [self newGetItemsForRecord:record queries:queries andCallback:callback];
-    
+
+    MHVGetItemsTask *task = [self newGetItemsForRecord:record queries:queries andCallback:callback];
+
     return task;
-    
-LError:
-    return nil;
 }
 
--(MHVPutItemsTask *)newPutItemForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(MHVTaskCompletion)callback
+- (MHVPutItemsTask *)newPutItemForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(MHVTaskCompletion)callback
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] initWithItem:item];
+    MHVItemCollection *items = [[MHVItemCollection alloc] initWithItem:item];
+
     MHVCHECK_NOTNULL(items);
-    
-    MHVPutItemsTask* putItems = [self newPutItemsForRecord:record items:items andCallback:callback];
-    
+
+    MHVPutItemsTask *putItems = [self newPutItemsForRecord:record items:items andCallback:callback];
+
     return putItems;
-    
-LError:
-    return nil;
 }
 
 @end

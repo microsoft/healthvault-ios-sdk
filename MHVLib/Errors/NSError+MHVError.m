@@ -1,5 +1,5 @@
 //
-//  NSObject+MHVError.m
+//  NSError+MHVError.m
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.

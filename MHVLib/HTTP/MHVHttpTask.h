@@ -1,8 +1,8 @@
 //
-// MHVFileFeatures.h
-// SDKFeatures
+// MHVHttpTask.h
+// MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,16 +17,19 @@
 // limitations under the License.
 //
 
-#import "MHVItemDataTypedFeatures.h"
+#import <Foundation/Foundation.h>
+#import "MHVHttpTaskProtocol.h"
 
-@interface MHVFileFeatures : MHVItemDataTypedFeatures<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+NS_ASSUME_NONNULL_BEGIN
 
-- (void)viewFileInBrowser;
-- (void)downloadFile;
+@interface MHVHttpTask : NSObject <MHVHttpTaskProtocol>
 
-- (void)processSelectedFile:(MHVHandler)action;
-- (void)uploadFileWithName:(NSString *)name data:(NSData *)data andMediaType:(NSString *)mediaType;
+- (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task;
+- (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task totalSize:(NSUInteger)totalSize;
+- (instancetype)init __unavailable;
 
-- (void)pickImageForUpload;
+- (void)addTask:(NSURLSessionTask *)task;
 
 @end
+
+NS_ASSUME_NONNULL_END
