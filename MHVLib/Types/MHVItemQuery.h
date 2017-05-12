@@ -58,9 +58,6 @@
 
 @end
 
-@interface MHVItemQueryCollection : MHVCollection
-
-- (void)addItem:(MHVItemQuery *)query;
-- (MHVItemQuery *)itemAtIndex:(NSUInteger)index;
+@interface MHVItemQueryCollection : MHVCollection<MHVItemQuery *>
 
 @end

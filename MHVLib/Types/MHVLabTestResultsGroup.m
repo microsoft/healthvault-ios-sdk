@@ -37,12 +37,12 @@ static const xmlChar *x_element_results = XMLSTRINGCONST("results");
 
 - (void)addToCollection:(MHVLabTestResultsGroupCollection *)groups
 {
-    [groups addItem:self];
+    [groups addObject:self];
     if (self.hasSubGroups)
     {
         for (NSUInteger i = 0; i < self.subGroups.count; ++i)
         {
-            [[self.subGroups itemAtIndex:i] addToCollection:groups];
+            [[self.subGroups objectAtIndex:i] addToCollection:groups];
         }
     }
 }
@@ -97,21 +97,11 @@ static const xmlChar *x_element_results = XMLSTRINGCONST("results");
     return self;
 }
 
-- (void)addItem:(MHVLabTestResultsGroup *)item
-{
-    [super addObject:item];
-}
-
-- (MHVLabTestResultsGroup *)itemAtIndex:(NSUInteger)index
-{
-    return [super objectAtIndex:index];
-}
-
 - (void)addItemsToCollection:(MHVLabTestResultsGroupCollection *)groups
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        [[self itemAtIndex:i] addToCollection:groups];
+        [[self objectAtIndex:i] addToCollection:groups];
     }
 }
 

@@ -67,8 +67,6 @@
 // MHVPhoneCollection
 //
 // -------------------------
-@interface MHVPhoneCollection : MHVCollection
-
-- (MHVPhone *)itemAtIndex:(NSUInteger)index;
+@interface MHVPhoneCollection : MHVCollection<MHVPhone *>
 
 @end

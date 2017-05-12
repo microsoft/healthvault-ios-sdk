@@ -290,7 +290,7 @@ LError:
             }
             else if (includeNull)
             {
-                [results addObject:[NSNull null]];
+                [results addObject:(MHVItem *)[NSNull null]];
             }
         }
     }

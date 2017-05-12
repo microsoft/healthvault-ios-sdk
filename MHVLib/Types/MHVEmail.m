@@ -88,9 +88,4 @@ static NSString *const c_element_address = @"address";
     return self;
 }
 
-- (MHVEmail *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVEmail *)[self objectAtIndex:index];
-}
-
 @end

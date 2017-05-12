@@ -43,7 +43,7 @@ static NSString *const c_element_answer = @"answer";
 
 - (MHVCodableValue *)firstAnswer
 {
-    return (self.hasAnswers) ? [self.answers itemAtIndex:0] : nil;
+    return (self.hasAnswers) ? [self.answers objectAtIndex:0] : nil;
 }
 
 - (BOOL)hasAnswerChoices

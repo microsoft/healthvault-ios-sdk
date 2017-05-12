@@ -38,10 +38,7 @@
 
 @end
 
-@interface MHVLabTestResultsGroupCollection : MHVCollection
-
-- (void)addItem:(MHVLabTestResultsGroup *)item;
-- (MHVLabTestResultsGroup *)itemAtIndex:(NSUInteger)index;
+@interface MHVLabTestResultsGroupCollection : MHVCollection<MHVLabTestResultsGroup *>
 
 - (void)addItemsToCollection:(MHVLabTestResultsGroupCollection *)groups;
 

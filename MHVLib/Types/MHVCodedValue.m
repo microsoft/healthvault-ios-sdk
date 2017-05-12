@@ -151,19 +151,14 @@ static const xmlChar *x_element_version = XMLSTRINGCONST("version");
 
 - (MHVCodedValue *)firstCode
 {
-    return [self itemAtIndex:0];
-}
-
-- (MHVCodedValue *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVCodedValue *)[self objectAtIndex:index];
+    return [self objectAtIndex:0];
 }
 
 - (NSUInteger)indexOfCode:(MHVCodedValue *)code
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
-        if ([[self itemAtIndex:i] isEqualToCodedValue:code])
+        if ([[self objectAtIndex:i] isEqualToCodedValue:code])
         {
             return i;
         }

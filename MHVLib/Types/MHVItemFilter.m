@@ -151,14 +151,4 @@ static NSString *const c_element_xpath = @"xpath";
     return self;
 }
 
-- (void)addItem:(MHVItemFilter *)filter
-{
-    [super addObject:filter];
-}
-
-- (MHVItemFilter *)itemAtIndex:(NSUInteger)index
-{
-    return [self objectAtIndex:index];
-}
-
 @end

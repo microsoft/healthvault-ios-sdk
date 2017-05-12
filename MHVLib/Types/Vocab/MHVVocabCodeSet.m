@@ -90,11 +90,6 @@ static NSString *const c_element_codeset = @"code-set-result";
     return self;
 }
 
-- (MHVVocabCodeSet *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVVocabCodeSet *)[super objectAtIndex:index];
-}
-
 @end
 
 @implementation MHVVocabSearchResults

@@ -27,7 +27,7 @@ static NSString* const c_element_vocab = @"vocabulary";
 
 -(MHVVocabCodeSet *)firstVocab
 {
-    return (m_vocabs) ? [m_vocabs itemAtIndex:0] : nil;
+    return (m_vocabs) ? [m_vocabs objectAtIndex:0] : nil;
 }
 
 

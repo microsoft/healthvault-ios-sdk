@@ -30,7 +30,7 @@
 
 @end
 
-@interface MHVInstanceCollection : MHVCollection
+@interface MHVInstanceCollection : MHVCollection<MHVInstance *>
 
 - (MHVInstance *)indexOfInstance:(NSUInteger)index;
 

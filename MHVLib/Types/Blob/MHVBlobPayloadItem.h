@@ -67,12 +67,10 @@
 
 @end
 
-@interface MHVBlobPayloadItemCollection : MHVCollection
+@interface MHVBlobPayloadItemCollection : MHVCollection<MHVBlobPayloadItem *>
 
 - (NSUInteger)indexofDefaultBlob;
 - (NSUInteger)indexOfBlobNamed:(NSString *)name;
-
-- (MHVBlobPayloadItem *)itemAtIndex:(NSUInteger)index;
 
 - (MHVBlobPayloadItem *)getDefaultBlob;
 - (MHVBlobPayloadItem *)getBlobNamed:(NSString *)name;

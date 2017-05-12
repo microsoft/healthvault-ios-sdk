@@ -50,8 +50,6 @@
 
 @end
 
-@interface MHVOccurenceCollection : MHVCollection
-
-- (MHVOccurence *)itemAtIndex:(NSUInteger)index;
+@interface MHVOccurenceCollection : MHVCollection<MHVOccurence *>
 
 @end

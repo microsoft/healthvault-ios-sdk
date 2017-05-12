@@ -508,16 +508,6 @@ static NSString *const c_element_item = @"thing";
     return self;
 }
 
-- (void)addItem:(MHVItem *)item
-{
-    return [super addObject:item];
-}
-
-- (MHVItem *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVItem *)[self objectAtIndex:index];
-}
-
 - (BOOL)containsItemID:(NSString *)itemID
 {
     return [self indexOfItemID:itemID] != NSNotFound;
@@ -631,7 +621,7 @@ static NSString *const c_element_item = @"thing";
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        MHVItem *clone = [[self itemAtIndex:i] shallowClone];
+        MHVItem *clone = [[self objectAtIndex:i] shallowClone];
         
         if (!clone)
         {
@@ -648,7 +638,7 @@ static NSString *const c_element_item = @"thing";
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        [[self itemAtIndex:i] prepareForUpdate];
+        [[self objectAtIndex:i] prepareForUpdate];
     }
 }
 
@@ -656,7 +646,7 @@ static NSString *const c_element_item = @"thing";
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        [[self itemAtIndex:i] prepareForNew];
+        [[self objectAtIndex:i] prepareForNew];
     }
 }
 
