@@ -176,7 +176,7 @@
 
         if (personInfo) {
 
-            NSString *personId = personInfo.ID;
+            NSUUID *personId = personInfo.ID;
             NSString *personName = personInfo.name;
 
             // If we loaded our settings, the current record is incomplete. We will try
@@ -202,8 +202,8 @@
                 [state.service.records addObject: record];
 
 			BOOL isRecordEqualToCurrent = currentRecord && 
-				[currentRecord.personId isEqualToString: record.personId] &&
-				[currentRecord.recordId isEqualToString: record.recordId];
+				[currentRecord.personId isEqual: record.personId] &&
+				[currentRecord.recordId isEqual: record.recordId];
 			
                 if (!currentRecord || isRecordEqualToCurrent) {
 

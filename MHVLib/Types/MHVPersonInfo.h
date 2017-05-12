@@ -23,7 +23,7 @@
 
 @interface MHVPersonInfo : MHVType
 
-@property (readwrite, nonatomic, strong) NSString *ID;
+@property (readwrite, nonatomic, strong) NSUUID *ID;
 @property (readwrite, nonatomic, strong) NSString *name;
 @property (readwrite, nonatomic, strong) NSString *appSettingsXml;
 @property (readwrite, nonatomic, strong) NSString *selectedRecordID;

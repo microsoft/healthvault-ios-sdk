@@ -17,8 +17,10 @@
 // limitations under the License.
 
 #import "MHVClientProtocol.h"
+#import "MHVPlatformConstants.h"
+#import "MHVThingConstants.h"
 
-@class MHVLocation, MHVServiceInstance, MHVServiceInfo, MHVServiceInfoSections, MHVThingTypeSections, MHVThingTypeDefinition, MHVApplicationCreationInfo, MHVPersonInfo, MHVGetAuthorizedPeopleSettings;
+@class MHVLocation, MHVServiceInstance, MHVServiceInfo, MHVThingTypeDefinition, MHVApplicationCreationInfo, MHVPersonInfo, MHVGetAuthorizedPeopleSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 

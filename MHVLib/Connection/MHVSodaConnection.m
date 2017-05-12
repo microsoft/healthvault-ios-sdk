@@ -20,6 +20,8 @@
 #import "NSError+MHVError.h"
 #import "MHVKeychainServiceProtocol.h"
 #import "MHVApplicationCreationInfo.h"
+#import "MHVPersonInfo.h"
+#import "MHVPlatformClientProtocol.h"
 
 static NSString *const kServiceInstanceKey = @"ServiceInstance";
 static NSString *const kApplicationCreationInfoKey = @"ApplicationCreationInfo";
@@ -104,9 +106,11 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
             self.personInfo)
         {
             // Remove application record authorization
+            for (MHVRecord *record in self.personInfo.records)
+            {
+                [self.platformClient removeApplicationAuthorizationWithRecordId:record.ID completion:nil];
+            }
         }
-        
-        
     });
 }
 

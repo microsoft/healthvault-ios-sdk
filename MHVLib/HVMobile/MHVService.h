@@ -20,7 +20,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVHttpService.h"
-#import "MHVCryptographer.h"
 #import "Provisioner.h"
 #import "HealthVaultRecord.h"
 #import "MHVClientSettings.h"
@@ -45,7 +44,6 @@
 @property (readonly) BOOL isAppCreated;
 
 @property (strong) id<MHVHttpServiceProtocol> httpService;
-@property (retain) id<MHVCryptographer> cryptographer;
 @property (retain) Provisioner *provisioner;
 
 - (NSString *)getApplicationCreationUrl;

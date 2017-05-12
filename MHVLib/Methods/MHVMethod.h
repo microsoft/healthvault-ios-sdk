@@ -18,10 +18,39 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MHVMethod : NSObject
 
+/**
+ The name of the method to be called. Reference at: http://developer.healthvault.com/pages/methods/methods.aspx
+ */
 @property (nonatomic, strong, readonly) NSString *name;
+
+/**
+ A Boolean representing whether the method call requires authentication
+ */
 @property (nonatomic, assign, readonly) BOOL isAnonymous;
+
+/**
+ The method version. The version will default to the latest method version at the time of the SDK release.
+ */
+@property (nonatomic, assign) int version;
+
+/**
+ Method parameters, which will be serialized into infoxml - Optional.
+ */
+@property (nonatomic, strong, nullable) NSString *parameters;
+
+/**
+ The record id for the person - Required if the method is record specfic (i.e. "GetThings").
+ */
+@property (nonatomic, strong, nullable) NSString *recordId;
+
+/**
+  An optional identifier that can be used to correlate a request.
+ */
+@property (nonatomic, strong, nullable) NSString *correlationId;
 
 /**
  Pre-allocates a DOPU package id.
@@ -313,3 +342,5 @@
 + (MHVMethod *)updateExternalId;
 
 @end
+
+NS_ASSUME_NONNULL_END

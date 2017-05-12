@@ -35,21 +35,8 @@
 
 @implementation HealthVaultSettings
 
-@synthesize name = _name;
-@synthesize version = _version;
-@synthesize applicationId = _applicationId;
-@synthesize applicationCreationToken = _applicationCreationToken;
-@synthesize authorizationSessionToken = _authorizationSessionToken;
-@synthesize sharedSecret = _sharedSecret;
-@synthesize country = _country;
-@synthesize language = _language;
-@synthesize sessionSharedSecret = _sessionSharedSecret;
-@synthesize personId = _personId;
-@synthesize recordId = _recordId;
-@synthesize userAuthToken = _userAuthToken;
-
-- (id)initWithName: (NSString *)name {
-
+- (id)initWithName: (NSString *)name
+{
 	if (self = [super init]) {
 
 		self.name = name;
@@ -90,10 +77,10 @@
 	[perfs setObject: self.language
 			  forKey: [NSString stringWithFormat: @"%@language", prefix]];
         
-	[perfs setObject: self.personId
+	[perfs setObject: self.personId.UUIDString
 			  forKey: [NSString stringWithFormat: @"%@personId", prefix]];
 	
-	[perfs setObject: self.recordId
+	[perfs setObject: self.recordId.UUIDString
 			  forKey: [NSString stringWithFormat: @"%@recordId", prefix]];
 
 	[perfs synchronize];
@@ -133,9 +120,9 @@
 	settings.language = [perfs objectForKey: [NSString stringWithFormat: @"%@language", prefix]];
 
 	
-	settings.personId = [perfs objectForKey: [NSString stringWithFormat: @"%@personId", prefix]];
+	settings.personId = [[NSUUID alloc] initWithUUIDString:[perfs objectForKey: [NSString stringWithFormat: @"%@personId", prefix]]];
 	
-	settings.recordId = [perfs objectForKey: [NSString stringWithFormat: @"%@recordId", prefix]];
+	settings.recordId = [[NSUUID alloc] initWithUUIDString:[perfs objectForKey: [NSString stringWithFormat: @"%@recordId", prefix]]];
 
 
 	return settings;

@@ -55,10 +55,6 @@
 }
 
 - (void)executeMethod:(MHVMethod *_Nonnull)method
-              version:(NSInteger)version
-           parameters:(NSString *_Nullable)parameters
-             recordId:(NSUUID *_Nullable)recordId
-        correlationId:(NSUUID *_Nullable)correlationId
            completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
     

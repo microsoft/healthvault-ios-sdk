@@ -55,12 +55,11 @@
         return;
     }
     
+    MHVMethod *method = [MHVMethod createAuthenticatedSessionToken];
+    method.parameters = [self infoSection];
+    
     [self.connection executeMethod:MHVMethod.createAuthenticatedSessionToken
-                           version:2
-                        parameters:[self infoSection]
-                          recordId:nil
-                     correlationId:nil
-                        completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+                        completion:^(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error)
     {
         if (error)
         {

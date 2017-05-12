@@ -249,7 +249,7 @@ static NSString *const c_environmentFileName = @"environment.xml";
         return FALSE;
     }
     
-    return self.currentRecord && [self.currentRecord.ID isEqualToString:record.ID];
+    return self.currentRecord && [self.currentRecord.ID isEqual:record.ID];
 }
 
 - (MHVLocalRecordStore *)getCurrentRecordStore
