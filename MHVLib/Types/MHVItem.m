@@ -90,7 +90,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
 
 - (MHVBlobPayload *)blobs
 {
-    MHVENSURE(_blobs, [MHVBlobPayload class]);
+    MHVENSURE(_blobs, MHVBlobPayload);
     return _blobs;
 }
 
@@ -418,7 +418,10 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     [writer writeElementXmlName:x_element_created content:self.created];
     [writer writeElementXmlName:x_element_updated content:self.updated];
     [writer writeElementXmlName:x_element_data content:self.data];
-    [writer writeElementXmlName:x_element_blobs content:self.blobs];
+    if ([self hasBlobData])
+    {
+        [writer writeElementXmlName:x_element_blobs content:self.blobs];
+    }
     [writer writeElementXmlName:x_element_updatedEndDate content:self.updatedEndDate];
 }
 
