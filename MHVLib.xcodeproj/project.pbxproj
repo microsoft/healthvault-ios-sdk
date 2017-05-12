@@ -102,6 +102,7 @@
 		4C7646D21EC4EA51003B85B5 /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AC14DCB3A700D2636E /* libMHVLib.a */; };
 		4C7646D31EC4EA74003B85B5 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */; };
 		4C7646D51EC4F3C8003B85B5 /* MHVHttpTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7646D41EC4F3C8003B85B5 /* MHVHttpTaskTests.m */; };
+		4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7646E91EC6581C003B85B5 /* MHVXmlTests.m */; };
 		5D09127A166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D091278166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h */; };
 		5D09127B166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D091279166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m */; };
 		5D0B4BE6151A80A4000849D0 /* MHVApproxDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0B4BE4151A80A4000849D0 /* MHVApproxDateTime.h */; };
@@ -628,6 +629,7 @@
 		4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		4C7646C01EC4E55B003B85B5 /* MHVHttpServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHttpServiceTests.m; path = Services/MHVHttpServiceTests.m; sourceTree = "<group>"; };
 		4C7646D41EC4F3C8003B85B5 /* MHVHttpTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHttpTaskTests.m; path = Services/MHVHttpTaskTests.m; sourceTree = "<group>"; };
+		4C7646E91EC6581C003B85B5 /* MHVXmlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVXmlTests.m; path = XML/MHVXmlTests.m; sourceTree = "<group>"; };
 		50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MHVLibTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MHVLibTests/Pods-MHVLibTests.release.xcconfig"; sourceTree = "<group>"; };
 		5BE520E8193E7C086A092CDF /* Pods-MHVLibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MHVLibTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MHVLibTests/Pods-MHVLibTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D091278166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRemoveRecordAuthTask.h; sourceTree = "<group>"; };
@@ -1092,6 +1094,7 @@
 		4C3973B11EC4B66B0079C28D /* MHVLibTests */ = {
 			isa = PBXGroup;
 			children = (
+				4C7646E81EC65803003B85B5 /* XML */,
 				4C7646BF1EC4E525003B85B5 /* Services */,
 				4C3973B21EC4B66B0079C28D /* MHVLibTests.m */,
 				4C3973B41EC4B66B0079C28D /* Info.plist */,
@@ -1106,6 +1109,14 @@
 				4C7646D41EC4F3C8003B85B5 /* MHVHttpTaskTests.m */,
 			);
 			name = Services;
+			sourceTree = "<group>";
+		};
+		4C7646E81EC65803003B85B5 /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				4C7646E91EC6581C003B85B5 /* MHVXmlTests.m */,
+			);
+			name = XML;
 			sourceTree = "<group>";
 		};
 		5D1139B415461F430008C362 /* HTTP */ = {
@@ -2248,6 +2259,7 @@
 				4C3973B31EC4B66B0079C28D /* MHVLibTests.m in Sources */,
 				4C7646C11EC4E55B003B85B5 /* MHVHttpServiceTests.m in Sources */,
 				4C7646D51EC4F3C8003B85B5 /* MHVHttpTaskTests.m in Sources */,
+				4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
