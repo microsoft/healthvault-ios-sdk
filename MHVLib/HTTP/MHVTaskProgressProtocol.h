@@ -21,7 +21,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol MHVHttpTaskProtocol <NSObject>
+@protocol MHVTaskProgressProtocol <NSObject>
 
 /**
  Observable progress value.  Range is from 0.0 to 1.0

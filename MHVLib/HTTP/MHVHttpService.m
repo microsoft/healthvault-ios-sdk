@@ -66,17 +66,17 @@
     return self;
 }
 
-- (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
-                                        body:(NSString *_Nullable)body
-                                  completion:(MHVHttpServiceCompletion)completion
+- (id<MHVTaskProgressProtocol> _Nullable)sendRequestForURL:(NSURL *)url
+                                                      body:(NSString *_Nullable)body
+                                                completion:(MHVHttpServiceCompletion)completion
 {
     return [self sendRequestForURL:url body:body headers:nil completion:completion];
 }
 
-- (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
-                                        body:(NSString *_Nullable)body
-                                     headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
-                                  completion:(MHVHttpServiceCompletion)completion
+- (id<MHVTaskProgressProtocol> _Nullable)sendRequestForURL:(NSURL *)url
+                                                      body:(NSString *_Nullable)body
+                                                   headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
+                                                completion:(MHVHttpServiceCompletion)completion
 {
     MHVASSERT_PARAMETER(url);
     MHVASSERT([url.scheme isEqualToString:@"https"]);
@@ -130,9 +130,9 @@
     return [[MHVHttpTask alloc] initWithURLSessionTask:task];
 }
 
-- (id<MHVHttpTaskProtocol>)downloadFileWithUrl:(NSURL *)url
-                                    toFilePath:(NSString *)path
-                                    completion:(MHVHttpServiceFileDownloadCompletion)completion
+- (id<MHVTaskProgressProtocol> _Nullable)downloadFileWithUrl:(NSURL *)url
+                                                  toFilePath:(NSString *)path
+                                                  completion:(MHVHttpServiceFileDownloadCompletion)completion
 {
     MHVASSERT_PARAMETER(url);
     MHVASSERT_PARAMETER(path);
@@ -189,11 +189,11 @@
     return [[MHVHttpTask alloc] initWithURLSessionTask:task];
 }
 
-- (id<MHVHttpTaskProtocol>)downloadDataWithUrl:(NSURL *)url
-                                    completion:(MHVHttpServiceDataDownloadCompletion)completion
+- (id<MHVTaskProgressProtocol> _Nullable)downloadDataWithUrl:(NSURL *)url
+                                                  completion:(MHVHttpServiceDataDownloadCompletion)completion
 {
     MHVASSERT_PARAMETER(url);
-
+    
     if (!url)
     {
         if (completion)
@@ -202,7 +202,7 @@
         }
         return nil;
     }
-
+    
     NSURLRequest *request = [self requestWithUrl:url body:nil];
     
     NSURLSessionTask *task = [self.urlSession downloadTaskWithRequest:request
@@ -223,10 +223,10 @@
     return [[MHVHttpTask alloc] initWithURLSessionTask:task];
 }
 
-- (id<MHVHttpTaskProtocol>)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
-                                      toUrl:(NSURL *)url
-                                  chunkSize:(NSUInteger)chunkSize
-                                 completion:(MHVHttpServiceCompletion)completion
+- (id<MHVTaskProgressProtocol> _Nullable)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
+                                                    toUrl:(NSURL *)url
+                                                chunkSize:(NSUInteger)chunkSize
+                                               completion:(MHVHttpServiceCompletion)completion
 {
     return [self uploadBlobSource:blobSource
                             toUrl:url
@@ -236,12 +236,12 @@
                        completion:completion];
 }
 
-- (id<MHVHttpTaskProtocol>)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
-                                      toUrl:(NSURL *)url
-                                chunkOffset:(NSUInteger)chunkOffset
-                                  chunkSize:(NSUInteger)chunkSize
-                                   httpTask:(MHVHttpTask *)httpTask
-                                 completion:(MHVHttpServiceCompletion)completion
+- (id<MHVTaskProgressProtocol> _Nullable)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
+                                                    toUrl:(NSURL *)url
+                                              chunkOffset:(NSUInteger)chunkOffset
+                                                chunkSize:(NSUInteger)chunkSize
+                                                 httpTask:(MHVHttpTask *)httpTask
+                                               completion:(MHVHttpServiceCompletion)completion
 {
     MHVASSERT_PARAMETER(blobSource);
     MHVASSERT_PARAMETER(url);

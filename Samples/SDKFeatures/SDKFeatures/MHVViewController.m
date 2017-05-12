@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,74 +17,81 @@
 #import "MHVViewController.h"
 #import "MHVTypeListViewController.h"
 
+@interface MHVViewController ()
+
+@property (nonatomic, assign) BOOL starting;
+
+@end
+
 @implementation MHVViewController
 
--(void)viewDidLoad
+- (void)viewDidLoad
 {
     self.navigationItem.title = nil;
     [super viewDidLoad];
-    
+
     [self startApp];
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (!m_starting && ![MHVClient current].isProvisioned)
+    if (!self.starting && ![MHVClient current].isProvisioned)
     {
         [self startApp];
     }
 }
 
--(void)startApp
+- (void)startApp
 {
-    m_starting = TRUE;
+    self.starting = TRUE;
     //
     // Startup the HealthVault Client
     // This will automatically ensure that application instance is correctly provisioned to access the user's HealthVault record
     // Look at ClientSettings.xml
     //
     [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender)
-     {
-         m_starting = FALSE;
-         if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
-         {
-             [self startupSuccess];
-         }
-         else
-         {
-             [self startupFailed];
-         }
-     }];
+    {
+        self.starting = FALSE;
+        if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
+        {
+            [self startupSuccess];
+        }
+        else
+        {
+            [self startupFailed];
+        }
+    }];
 }
 
--(void)startupSuccess
+- (void)startupSuccess
 {
     [self showTypeList];
 }
 
--(void)startupFailed
+- (void)startupFailed
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[MHVClient current].settings.appName
-                                                                             message:NSLocalizedString(@"Provisioning not completed. Retry?", @"Message for retrying provisioning")
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
+                                          message:NSLocalizedString(@"Provisioning not completed. Retry?", @"Message for retrying provisioning")
+                                          preferredStyle:UIAlertControllerStyleAlert];
+
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"No", @"No button") style:UIAlertActionStyleCancel handler:nil]];
 
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes button") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                                 {
-                                     [self startApp];
-                                 }]];
-    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes button") style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action)
+    {
+        [self startApp];
+    }]];
+
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
--(void)showTypeList
+- (void)showTypeList
 {
     //
     // Navigate to the type list
     //
-    MHVTypeListViewController* typeListController = [[MHVTypeListViewController alloc] init];
+    MHVTypeListViewController *typeListController = [[MHVTypeListViewController alloc] init];
+
     [self.navigationController pushViewController:typeListController animated:TRUE];
 }
 

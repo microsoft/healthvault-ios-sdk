@@ -19,6 +19,7 @@
 
 #import <XCTest/XCTest.h>
 #import "MHVHttpService.h"
+#import "MHVBlobSource.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVHttpServiceTests)
@@ -132,6 +133,53 @@ describe(@"MHVHttpService", ^
                        [[requested.HTTPBody should] beNil];
                    });
                 
+            });
+    
+    context(@"Uploads", ^
+            {
+                id urlSessionMock = [NSURLSession mock];
+                MHVHttpService *service = [[MHVHttpService alloc] initWithURLSession:urlSessionMock];
+                
+                NSString *string = [@"B" stringByPaddingToLength:1000 withString:@"A" startingAtIndex:0];
+                NSData *blobData = [string dataUsingEncoding:NSUTF8StringEncoding];
+                MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:blobData];
+                
+                let(spyRequest, ^
+                    {
+                        return [urlSessionMock captureArgument:@selector(dataTaskWithRequest:completionHandler:) atIndex:0];
+                    });
+                
+                it(@"should upload data to correct address", ^
+                   {
+                       //Send request
+                       [service uploadBlobSource:blobSource
+                                           toUrl:[NSURL URLWithString:@"https://test.com/upload"]
+                                       chunkSize:123456
+                                      completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error) { }];
+                       
+                       //Verify URLRequest values
+                       NSURLRequest *requested = (NSURLRequest *)spyRequest.argument;
+                       
+                       [[[requested.URL absoluteString] should] equal:@"https://test.com/upload"];
+                       [[requested.HTTPMethod should] equal:@"POST"];
+                       [[theValue(requested.HTTPBody.length) should] equal:@(1000)];
+                       [[requested.allHTTPHeaderFields[@"Content-Range"] should] equal:@"bytes 0-999/*"];
+                   });
+
+                it(@"should upload using chunk size", ^
+                   {
+                       //Send request
+                       [service uploadBlobSource:blobSource
+                                           toUrl:[NSURL URLWithString:@"https://test.com/upload"]
+                                       chunkSize:500
+                                      completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error) { }];
+                       
+                       //Verify URLRequest values
+                       NSURLRequest *requested = (NSURLRequest *)spyRequest.argument;
+                       
+                       [[theValue(requested.HTTPBody.length) should] equal:@(500)];
+                       [[requested.allHTTPHeaderFields[@"Content-Range"] should] equal:@"bytes 0-499/*"];
+                   });
             });
 });
 

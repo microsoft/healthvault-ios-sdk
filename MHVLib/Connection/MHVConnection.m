@@ -54,19 +54,19 @@
     return nil;
 }
 
-- (void)executeMethod:(MHVMethod *_Nonnull)method
-              version:(NSInteger)version
-           parameters:(NSString *_Nullable)parameters
-             recordId:(NSUUID *_Nullable)recordId
-        correlationId:(NSUUID *_Nullable)correlationId
-           completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+- (id<MHVTaskProgressProtocol> _Nullable)executeMethod:(MHVMethod *_Nonnull)method
+                                     version:(NSInteger)version
+                                  parameters:(NSString *_Nullable)parameters
+                                    recordId:(NSUUID *_Nullable)recordId
+                               correlationId:(NSUUID *_Nullable)correlationId
+                                  completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
-    
+    return nil;
 }
 
-- (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
+- (id<MHVTaskProgressProtocol>)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
 {
-    
+    return nil;
 }
 
 - (void)authenticateWithViewController:(UIViewController *_Nullable)viewController

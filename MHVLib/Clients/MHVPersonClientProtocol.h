@@ -18,23 +18,24 @@
 
 #import "MHVClientProtocol.h"
 
+@protocol MHVTaskProgressProtocol;
 @class MHVApplicationSettings, MHVPersonInfo, MHVHealthRecordInfo;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVPersonClientProtocol <MHVClientProtocol>
 
-- (void)getApplicationSettingsWithCompletion:(void(^)(MHVApplicationSettings *_Nullable settings, NSError *_Nullable error))completion;
+- (id<MHVTaskProgressProtocol> _Nullable)getApplicationSettingsWithCompletion:(void(^)(MHVApplicationSettings *_Nullable settings, NSError *_Nullable error))completion;
 
-- (void)setApplicationSettingsWithRequestParameters:(NSString *)requestParameters
-                                         completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+- (id<MHVTaskProgressProtocol> _Nullable)setApplicationSettingsWithRequestParameters:(NSString *)requestParameters
+                                                                          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable people, NSError *_Nullable error))completion;
+- (id<MHVTaskProgressProtocol> _Nullable)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable people, NSError *_Nullable error))completion;
 
-- (void)getPersonInfoWithCompletion:(void(^)(MHVPersonInfo *_Nullable person, NSError *_Nullable error))completion;
+- (id<MHVTaskProgressProtocol> _Nullable)getPersonInfoWithCompletion:(void(^)(MHVPersonInfo *_Nullable person, NSError *_Nullable error))completion;
 
-- (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
-                               completion:(void(^)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion;
+- (id<MHVTaskProgressProtocol> _Nullable)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
+                                                                completion:(void(^)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion;
 
 NS_ASSUME_NONNULL_BEGIN
 

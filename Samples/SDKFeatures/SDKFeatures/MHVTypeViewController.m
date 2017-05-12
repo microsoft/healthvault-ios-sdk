@@ -1,8 +1,8 @@
 //
-//  MHVTypeViewController.m
-//  SDKFeatures
+// MHVTypeViewController.m
+// SDKFeatures
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,24 +18,20 @@
 
 #import "MHVTypeViewController.h"
 
-@interface MHVTypeViewController (MHVPrivate)
+@interface MHVTypeViewController ()
 
--(MHVItemCollection *) createRandomForDay:(NSDate *) date isMetric:(BOOL) metric;
+@property (nonatomic, strong) MHVItemCollection *items;
 
-//
-// Creates multiple random items.. one each for each day in the give range
-//
--(void) addRandomForDaysFrom:(NSDate *) start to:(NSDate *) end isMetric:(BOOL) metric;
+@property (nonatomic, strong) IBOutlet MHVStatusLabel *statusLabel;
+@property (nonatomic, strong) IBOutlet UITableView *itemTable;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *moreActions;
 
+@property (nonatomic, strong) Class typeClass;
+@property (nonatomic, strong) MHVItemDataTypedFeatures *moreFeatures;
 
-//
-// Completion methods
-//
--(BOOL) getItemsCompleted:(MHVTask *) task;
--(BOOL) putItemsCompleted:(MHVTask *) task forDate:(NSDate *) date;
--(BOOL) removeItemCompleted:(MHVTask *) task;
-
--(NSDate *) getNextDayAfter:(NSDate *) current endDate:(NSDate *) end;
+@property (nonatomic, assign) BOOL useMetric;
+@property (nonatomic, assign) NSInteger maxDaysOffsetRandomData; // Create new data for a day with max this offset from today. (1)
+@property (nonatomic, assign) BOOL createMultiple;               // Whether to create one or multiple random items when the user clicks Add. (False)
 
 @end
 
@@ -43,40 +39,25 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 @implementation MHVTypeViewController
 
-@synthesize items = m_items;
-@synthesize itemTable = m_itemTable;
-@synthesize statusLabel = m_statusLabel;
-@synthesize moreActions = m_moreActions;
-
--(id)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric
+- (instancetype)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_typeClass = typeClass;
-    m_useMetric = metric;
-    m_moreFeatures = [typeClass moreFeatures];
-    if (m_moreFeatures)
+    if (self)
     {
-        m_moreFeatures.controller = self;
+        _typeClass = typeClass;
+        _useMetric = metric;
+        _moreFeatures = [typeClass moreFeatures];
+        if (_moreFeatures)
+        {
+            _moreFeatures.controller = self;
+        }
     }
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
-
--(void)dealloc
-{
-    m_itemTable.dataSource = nil;
-    
-    
-}
-
 
 - (IBAction)addItem:(id)sender
 {
-    [self addRandomData:m_useMetric];
+    [self addRandomData:self.useMetric];
 }
 
 - (IBAction)removeItem:(id)sender
@@ -86,9 +67,9 @@ LError:
 
 - (IBAction)moreClicked:(id)sender
 {
-    if (m_moreFeatures)
+    if (self.moreFeatures)
     {
-        [m_moreFeatures showFrom:m_moreActions];
+        [self.moreFeatures showFrom:self.moreActions];
     }
 }
 
@@ -96,63 +77,65 @@ LError:
 {
     [super viewDidLoad];
 
-    if (!m_typeClass)
+    if (!self.typeClass)
     {
         [self.navigationController popViewControllerAnimated:TRUE];
         return;
     }
 
-    m_itemTable.dataSource = self;
-    
+    self.itemTable.dataSource = self;
+
     //
     // When you click add, we add new items with random, but plausible data
     //
-    // Data is created in the time range [TODAY, (Today - m_maxDaysOffsetRandoData)]
-    // If m_createMultiple is TRUE, adds random data for EACH day in the range
+    // Data is created in the time range [TODAY, (Today - maxDaysOffsetRandoData)]
+    // If createMultiple is TRUE, adds random data for EACH day in the range
     // Else only adds random data for the LAST day in the range.
     //
-    // If m_maxDaysOffsetRandomData is 0, creates random data for TODAY
+    // If maxDaysOffsetRandomData is 0, creates random data for TODAY
     //
-    m_maxDaysOffsetRandomData = 0; // 90;
-    m_createMultiple = FALSE;  
-    
-    self.navigationItem.title = [m_typeClass XRootElement]; // Every MHVItemDataTyped implements this..
-    if (!m_moreFeatures)
+    self.maxDaysOffsetRandomData = 0; // 90;
+    self.createMultiple = FALSE;
+
+    self.navigationItem.title = [self.typeClass XRootElement]; // Every MHVItemDataTyped implements this..
+    if (!self.moreFeatures)
     {
-        [m_moreActions setEnabled:FALSE];
+        [self.moreActions setEnabled:FALSE];
     }
-    
+
     [self getItemsFromHealthVault];
 }
 
-//-------------------------------------
+// -------------------------------------
 //
 // UITableViewDataSource
 //
-//-------------------------------------
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+// -------------------------------------
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return m_items.count;
+    return self.items.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [m_itemTable dequeueReusableCellWithIdentifier:@"MHVItem"];
+    UITableViewCell *cell = [self.itemTable dequeueReusableCellWithIdentifier:@"MHVItem"];
+
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MHVItem"];
     }
     
-    MHVItem* item = m_items[indexPath.row];
+    MHVItem* item = self.items[indexPath.row];
     NSString* whenString = [item.data.typed dateString];
     if ([NSString isNilOrEmpty:whenString])
     {
         whenString = [item.effectiveDate toStringWithStyle:NSDateFormatterShortStyle];
     }
+
     cell.textLabel.text = whenString;
-    
-    NSString* details;
-    if (m_useMetric)
+
+    NSString *details;
+    if (self.useMetric)
     {
         details = [item.data.typed detailsStringMetric];
     }
@@ -160,74 +143,75 @@ LError:
     {
         details = [item.data.typed detailsString];
     }
+
     cell.detailTextLabel.text = details;
-    
+
     return cell;
 }
 
--(void)refreshView
+- (void)refreshView
 {
     [self getItemsFromHealthVault];
 }
 
-//-------------------------------------
+// -------------------------------------
 //
 // Methods
 //
-//-------------------------------------
+// -------------------------------------
 
--(MHVItem *)getSelectedItem
+- (MHVItem *)getSelectedItem
 {
-    if (!m_items)
+    if (!self.items)
     {
         return nil;
     }
-    
-    NSIndexPath* selectedRow = m_itemTable.indexPathForSelectedRow;
+
+    NSIndexPath *selectedRow = self.itemTable.indexPathForSelectedRow;
     if (!selectedRow ||
         selectedRow.row == NSNotFound ||
-        selectedRow.row >= m_items.count)
+        selectedRow.row >= self.items.count)
     {
         return nil;
     }
     
-    return m_items[selectedRow.row];
+    return self.items[selectedRow.row];
 }
 
--(void)getItemsFromHealthVault
+- (void)getItemsFromHealthVault
 {
-    [m_statusLabel showBusy];
-    
-    [[MHVClient current].currentRecord getItemsForClass:m_typeClass callback:^(MHVTask *task) {
-        
+    [self.statusLabel showBusy];
+
+    [[MHVClient current].currentRecord getItemsForClass:self.typeClass callback:^(MHVTask *task) {
         [self getItemsCompleted:task];
     }];
 }
 
--(void)addRandomData:(BOOL)isMetric
+- (void)addRandomData:(BOOL)isMetric
 {
-    NSDate* end = [NSDate date];
-    NSTimeInterval interval = -(c_numSecondsInDay * m_maxDaysOffsetRandomData);
-    NSDate* date = [end dateByAddingTimeInterval:interval];
-    if (!m_createMultiple)
+    NSDate *end = [NSDate date];
+    NSTimeInterval interval = -(c_numSecondsInDay * self.maxDaysOffsetRandomData);
+    NSDate *date = [end dateByAddingTimeInterval:interval];
+
+    if (!self.createMultiple)
     {
         end = date;
     }
-    
+
     [self addRandomForDaysFrom:date to:end isMetric:isMetric];
-    
 }
 
--(void)removeCurrentItem
+- (void)removeCurrentItem
 {
-    MHVItem* selectedItem = [self getSelectedItem];
+    MHVItem *selectedItem = [self getSelectedItem];
+
     if (!selectedItem)
     {
         return;
     }
-    
+
     [MHVUIAlert showYesNoPromptWithMessage:@"Permanently delete this item?"
-                                completion:^(BOOL selectedYes)
+     completion:^(BOOL selectedYes)
     {
         if (selectedYes)
         {
@@ -235,139 +219,139 @@ LError:
             // REMOVE from HealthVault
             //
             [[MHVClient current].currentRecord removeItemWithKey:selectedItem.key callback:^(MHVTask *task) {
-                
                 [self removeItemCompleted:task];
             }];
         }
     }];
 }
 
--(void)showActivityAndStatus:(NSString *)status
+- (void)showActivityAndStatus:(NSString *)status
 {
-    [m_statusLabel showActivity];
-    m_statusLabel.text = status;
+    [self.statusLabel showActivity];
+    self.statusLabel.text = status;
 }
 
--(void)clearStatus
+- (void)clearStatus
 {
-    //[m_statusLabel clearStatus];
+    [self.statusLabel clearStatus];
 }
 
-@end
+#pragma mark - Internal methods
 
-@implementation MHVTypeViewController (MHVPrivate)
-
--(MHVItemCollection *) createRandomForDay:(NSDate *) date isMetric:(BOOL) metric
+- (MHVItemCollection *)createRandomForDay:(NSDate *)date isMetric:(BOOL)metric
 {
     if (metric)
     {
-        return [m_typeClass createRandomMetricForDay:date];
+        return [self.typeClass createRandomMetricForDay:date];
     }
-    
-    return [m_typeClass createRandomForDay:date];
+
+    return [self.typeClass createRandomForDay:date];
 }
 
--(void)addRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
+- (void)addRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
 {
-    MHVItemCollection* items = [self createRandomForDay:start isMetric:metric];
+    MHVItemCollection *items = [self createRandomForDay:start isMetric:metric];
+
     if (items.count < 1)
     {
         [MHVUIAlert showInformationalMessage:@"Not Supported!"];
         return;
     }
+
     //
     // PUT IT INTO HEALTHVAULT
     //
     [[MHVClient current].currentRecord putItems:items callback:^(MHVTask *task)
-     {
-         //
-         // Update the UI
-         //
-         if (![self putItemsCompleted:task forDate:start])
-         {
-             return;
-         }
-         //
-         // Create another item, unless we've completed the requested data range
-         //
-         NSDate * nextDate = [self getNextDayAfter:start endDate:end];
-         if (nextDate)
-         {
-             [self addRandomForDaysFrom:nextDate to:end isMetric:metric];
-         }
-         else
-         {
-             [m_statusLabel showStatus:@"Done"];
-         }
-     }];
+    {
+        //
+        // Update the UI
+        //
+        if (![self putItemsCompleted:task forDate:start])
+        {
+            return;
+        }
+
+        //
+        // Create another item, unless we've completed the requested data range
+        //
+        NSDate *nextDate = [self getNextDayAfter:start endDate:end];
+        if (nextDate)
+        {
+            [self addRandomForDaysFrom:nextDate to:end isMetric:metric];
+        }
+        else
+        {
+            [self.statusLabel showStatus:@"Done"];
+        }
+    }];
 }
 
--(BOOL)getItemsCompleted:(MHVTask *)task
+- (BOOL)getItemsCompleted:(MHVTask *)task
 {
     @try
     {
-        m_items = ((MHVGetItemsTask *) task).itemsRetrieved;
-        
-        [m_statusLabel showStatus:[NSString stringWithFormat:@"%li items", (long)m_items.count]];
-        
-        [m_itemTable reloadData];
-        
+        self.items = ((MHVGetItemsTask *)task).itemsRetrieved;
+
+        [self.statusLabel showStatus:[NSString stringWithFormat:@"%li items", (long)self.items.count]];
+
+        [self.itemTable reloadData];
+
         return TRUE;
     }
     @catch (NSException *exception)
     {
         [MHVUIAlert showInformationalMessage:exception.description];
-        [m_statusLabel showStatus:@"Failed"];
+        [self.statusLabel showStatus:@"Failed"];
     }
-    
+
     return FALSE;
 }
 
--(BOOL)putItemsCompleted:(MHVTask *)task forDate:(NSDate *)date
+- (BOOL)putItemsCompleted:(MHVTask *)task forDate:(NSDate *)date
 {
     @try
     {
         [task checkSuccess];
-        [m_statusLabel showStatus:@"%@ added", [date toString]];
+        [self.statusLabel showStatus:@"%@ added", [date toString]];
         [self refreshView];
-        
+
         return TRUE;
     }
     @catch (NSException *exception)
     {
         [MHVUIAlert showInformationalMessage:exception.detailedDescription];
     }
-    
+
     return FALSE;
 }
 
--(BOOL)removeItemCompleted:(MHVTask *)task
+- (BOOL)removeItemCompleted:(MHVTask *)task
 {
     @try
     {
         [task checkSuccess];
-        [m_statusLabel showStatus:@"Done"];
+        [self.statusLabel showStatus:@"Done"];
         [self refreshView];
-        
+
         return TRUE;
     }
     @catch (NSException *exception)
     {
         [MHVUIAlert showInformationalMessage:exception.description];
-        [m_statusLabel showStatus:@"Failed"];
+        [self.statusLabel showStatus:@"Failed"];
     }
-    
+
     return FALSE;
 }
 
--(NSDate *)getNextDayAfter:(NSDate *)current endDate:(NSDate *)end
+- (NSDate *)getNextDayAfter:(NSDate *)current endDate:(NSDate *)end
 {
     if ([end timeIntervalSinceDate:current] > c_numSecondsInDay)  // 1 day
     {
         // Poor man's next day.. to be 100% accurate, you should use NSDateComponents
         return [NSDate dateWithTimeInterval:c_numSecondsInDay sinceDate:current];
     }
-    
+
     return nil;
 }
 
