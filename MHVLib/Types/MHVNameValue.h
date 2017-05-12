@@ -60,9 +60,7 @@
 // Collection of Named Measurements
 //
 // -------------------------
-@interface MHVNameValueCollection : MHVCollection
-
-- (MHVNameValue *)itemAtIndex:(NSUInteger)index;
+@interface MHVNameValueCollection : MHVCollection<MHVNameValue *>
 
 - (NSUInteger)indexOfItemWithName:(MHVCodedValue *)code;
 //

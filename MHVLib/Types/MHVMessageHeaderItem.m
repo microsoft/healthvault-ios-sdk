@@ -76,16 +76,11 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
     return self;
 }
 
-- (MHVMessageHeaderItem *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVMessageHeaderItem *)[self objectAtIndex:index];
-}
-
 - (NSUInteger)indexOfHeaderWithName:(NSString *)name
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        MHVMessageHeaderItem *header = [self itemAtIndex:i];
+        MHVMessageHeaderItem *header = [self objectAtIndex:i];
         if ([header.name isEqualToStringCaseInsensitive:name])
         {
             return i;
@@ -101,7 +96,7 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
     if (index != NSNotFound)
     {
-        return [self itemAtIndex:index];
+        return [self objectAtIndex:index];
     }
 
     return nil;

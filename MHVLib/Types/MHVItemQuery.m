@@ -336,14 +336,4 @@ static NSString *const c_element_view = @"format";
     return self;
 }
 
-- (void)addItem:(MHVItemQuery *)query
-{
-    return [super addObject:query];
-}
-
-- (MHVItemQuery *)itemAtIndex:(NSUInteger)index
-{
-    return [self objectAtIndex:index];
-}
-
 @end

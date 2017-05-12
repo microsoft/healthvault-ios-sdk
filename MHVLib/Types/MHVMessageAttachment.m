@@ -84,9 +84,4 @@ static const xmlChar *x_element_contentid = XMLSTRINGCONST("content-id");
     return self;
 }
 
-- (MHVMessageAttachment *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVMessageAttachment *)[self objectAtIndex:index];
-}
-
 @end

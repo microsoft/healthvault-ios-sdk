@@ -23,6 +23,7 @@
 #import "MHVBlobSource.h"
 #import "MHVValidator.h"
 #import "MHVHttpTask.h"
+#import "NSError+MHVError.h"
 
 @interface MHVHttpService () <NSURLSessionDelegate>
 
@@ -82,6 +83,10 @@
     
     if (!url)
     {
+        if (completion)
+        {
+            completion(nil, [NSError MVHInvalidParameter]);
+        }
         return nil;
     }
     
@@ -134,6 +139,10 @@
     
     if (!url || !path)
     {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter]);
+        }
         return nil;
     }
     
@@ -187,6 +196,10 @@
 
     if (!url)
     {
+        if (completion)
+        {
+            completion(nil, [NSError MVHInvalidParameter]);
+        }
         return nil;
     }
 
@@ -237,6 +250,10 @@
     
     if (!blobSource || !url || chunkSize == 0)
     {
+        if (completion)
+        {
+            completion(nil, [NSError MVHInvalidParameter]);
+        }
         return nil;
     }
     

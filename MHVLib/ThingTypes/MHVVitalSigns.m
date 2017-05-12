@@ -42,7 +42,7 @@ static NSString *const c_element_position = @"position";
 
 - (MHVVitalSignResult *)firstResult
 {
-    return (self.hasResults) ? [self.results itemAtIndex:0] : nil;
+    return (self.hasResults) ? [self.results objectAtIndex:0] : nil;
 }
 
 - (NSDate *)getDate

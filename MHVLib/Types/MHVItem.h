@@ -223,13 +223,10 @@ enum MHVItemFlags
 // A serializable collection of items
 //
 // -------------------------
-@interface MHVItemCollection : MHVCollection <XSerializable>
+@interface MHVItemCollection : MHVCollection<MHVItem *> <XSerializable>
 
 - (instancetype)initWithItem:(MHVItem *)item;
 - (instancetype)initWithItems:(NSArray *)items;
-
-- (void)addItem:(MHVItem *)item;
-- (MHVItem *)itemAtIndex:(NSUInteger)index;
 
 - (BOOL)containsItemID:(NSString *)itemID;
 - (NSUInteger)indexOfItemID:(NSString *)itemID;

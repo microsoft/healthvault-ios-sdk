@@ -60,17 +60,17 @@ static NSString *const c_element_email = @"email";
 
 - (MHVAddress *)firstAddress
 {
-    return (self.hasAddress) ? [self.address itemAtIndex:0] : nil;
+    return (self.hasAddress) ? [self.address objectAtIndex:0] : nil;
 }
 
 - (MHVEmail *)firstEmail
 {
-    return (self.hasEmail) ? [self.email itemAtIndex:0] : nil;
+    return (self.hasEmail) ? [self.email objectAtIndex:0] : nil;
 }
 
 - (MHVPhone *)firstPhone
 {
-    return (self.hasPhone) ? [self.phone itemAtIndex:0] : nil;
+    return (self.hasPhone) ? [self.phone objectAtIndex:0] : nil;
 }
 
 - (instancetype)initWithEmail:(NSString *)email

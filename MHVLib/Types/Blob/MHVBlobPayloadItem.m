@@ -131,11 +131,6 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
     return self;
 }
 
-- (MHVBlobPayloadItem *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVBlobPayloadItem *)[self objectAtIndex:index];
-}
-
 - (NSUInteger)indexofDefaultBlob
 {
     return [self indexOfBlobNamed:c_emptyString];
@@ -145,7 +140,7 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        MHVBlobPayloadItem *item = [self itemAtIndex:i];
+        MHVBlobPayloadItem *item = [self objectAtIndex:i];
         NSString *blobName = item.name;
         if ([blobName isEqualToString:name])
         {
@@ -162,7 +157,7 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
 
     if (index != NSNotFound)
     {
-        return [self itemAtIndex:index];
+        return [self objectAtIndex:index];
     }
 
     return nil;
@@ -174,7 +169,7 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
 
     if (index != NSNotFound)
     {
-        return [self itemAtIndex:index];
+        return [self objectAtIndex:index];
     }
 
     return nil;

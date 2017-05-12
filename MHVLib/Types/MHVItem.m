@@ -90,7 +90,7 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
 
 - (MHVBlobPayload *)blobs
 {
-    MHVENSURE(_blobs, [MHVBlobPayload class]);
+    MHVENSURE(_blobs, MHVBlobPayload);
     return _blobs;
 }
 
@@ -418,7 +418,10 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     [writer writeElementXmlName:x_element_created content:self.created];
     [writer writeElementXmlName:x_element_updated content:self.updated];
     [writer writeElementXmlName:x_element_data content:self.data];
-    [writer writeElementXmlName:x_element_blobs content:self.blobs];
+    if ([self hasBlobData])
+    {
+        [writer writeElementXmlName:x_element_blobs content:self.blobs];
+    }
     [writer writeElementXmlName:x_element_updatedEndDate content:self.updatedEndDate];
 }
 
@@ -506,16 +509,6 @@ static NSString *const c_element_item = @"thing";
     }
 
     return self;
-}
-
-- (void)addItem:(MHVItem *)item
-{
-    return [super addObject:item];
-}
-
-- (MHVItem *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVItem *)[self objectAtIndex:index];
 }
 
 - (BOOL)containsItemID:(NSString *)itemID
@@ -631,7 +624,7 @@ static NSString *const c_element_item = @"thing";
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        MHVItem *clone = [[self itemAtIndex:i] shallowClone];
+        MHVItem *clone = [[self objectAtIndex:i] shallowClone];
         
         if (!clone)
         {
@@ -648,7 +641,7 @@ static NSString *const c_element_item = @"thing";
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        [[self itemAtIndex:i] prepareForUpdate];
+        [[self objectAtIndex:i] prepareForUpdate];
     }
 }
 
@@ -656,7 +649,7 @@ static NSString *const c_element_item = @"thing";
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
-        [[self itemAtIndex:i] prepareForNew];
+        [[self objectAtIndex:i] prepareForNew];
     }
 }
 

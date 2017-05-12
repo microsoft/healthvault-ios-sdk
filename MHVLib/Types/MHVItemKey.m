@@ -182,19 +182,9 @@ static NSString *const c_element_key = @"thing-id";
     return self;
 }
 
-- (void)addItem:(MHVItemKey *)key
-{
-    [super addObject:key];
-}
-
 - (MHVItemKey *)firstKey
 {
-    return [self itemAtIndex:0];
-}
-
-- (MHVItemKey *)itemAtIndex:(NSUInteger)index
-{
-    return (MHVItemKey *)[self objectAtIndex:index];
+    return [self objectAtIndex:0];
 }
 
 - (MHVClientResult *)validate

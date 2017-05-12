@@ -38,9 +38,7 @@
 
 @end
 
-@interface MHVVocabSetCollection : MHVCollection
-
-- (MHVVocabCodeSet *)itemAtIndex:(NSUInteger)index;
+@interface MHVVocabSetCollection : MHVCollection<MHVVocabCodeSet *>
 
 @end
 

@@ -301,7 +301,7 @@ static NSString *const c_element_instanceID = @"instanceID";
     {
         for (NSUInteger i = 0; i < self.records.count; ++i)
         {
-            MHVRecord *record = [self.records itemAtIndex:i];
+            MHVRecord *record = [self.records objectAtIndex:i];
             if (currentRecordID && [record.ID isEqualToString:currentRecordID])
             {
                 self.currentRecordIndex = i;

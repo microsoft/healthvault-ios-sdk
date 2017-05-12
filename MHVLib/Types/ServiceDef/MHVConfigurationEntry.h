@@ -27,6 +27,6 @@
 
 @end
 
-@interface MHVConfigurationEntryCollection : MHVCollection
+@interface MHVConfigurationEntryCollection : MHVCollection<MHVConfigurationEntry *>
 
 @end

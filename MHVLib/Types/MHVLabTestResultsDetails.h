@@ -37,9 +37,6 @@
 
 @end
 
-@interface MHVLabTestResultsDetailsCollection : MHVCollection
-
-- (void)addItem:(MHVLabTestResultsDetails *)item;
-- (MHVLabTestResultsDetails *)itemAtIndex:(NSUInteger)index;
+@interface MHVLabTestResultsDetailsCollection : MHVCollection<MHVLabTestResultsDetails *>
 
 @end

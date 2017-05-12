@@ -28,7 +28,7 @@
 
 @end
 
-@interface MHVNutritionFactCollection : MHVCollection
+@interface MHVNutritionFactCollection : MHVCollection<MHVNutritionFact *>
 
 @end
 

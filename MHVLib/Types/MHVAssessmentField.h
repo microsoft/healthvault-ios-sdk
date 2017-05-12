@@ -53,6 +53,6 @@
 @end
 
 
-@interface MHVAssessmentFieldCollection : MHVCollection
+@interface MHVAssessmentFieldCollection : MHVCollection<MHVAssessmentField *>
 
 @end

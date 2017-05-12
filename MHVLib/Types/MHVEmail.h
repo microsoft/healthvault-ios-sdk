@@ -66,8 +66,6 @@
 // MHVEmailCollection
 //
 // -------------------------
-@interface MHVEmailCollection : MHVCollection
-
-- (MHVEmail *)itemAtIndex:(NSUInteger)index;
+@interface MHVEmailCollection : MHVCollection<MHVEmail *>
 
 @end

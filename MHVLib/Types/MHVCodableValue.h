@@ -89,9 +89,6 @@
 
 @end
 
-@interface MHVCodableValueCollection : MHVCollection
-
-- (void)addItem:(MHVCodableValue *)value;
-- (MHVCodableValue *)itemAtIndex:(NSUInteger)index;
+@interface MHVCodableValueCollection : MHVCollection<MHVCodableValue *>
 
 @end
