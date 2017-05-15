@@ -122,7 +122,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         }
         
         [self.shellAuthService authorizeAdditionalRecordsWithViewController:viewController
-                                                                   shellUrl:[[NSURL alloc] initWithString:self.serviceInstance.shellUrl]
+                                                                   shellUrl:self.serviceInstance.shellUrl
                                                                 masterAppId:self.configuration.masterApplicationId
                                                                  completion:^(NSError * _Nullable error)
         {

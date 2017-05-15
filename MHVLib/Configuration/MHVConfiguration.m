@@ -26,6 +26,8 @@
         self.retryOnInternal500SleepDuration = kDefaultRetryOnInternal500SleepDurationInSeconds;
         self.inlineBlobHashBlockSize = kDefaultBlobChunkSizeInBytes;
     }
+    
+    return self;
 }
 
 - (void)setDefaultHealthVaultUrl:(NSURL *)defaultHealthVaultUrl
