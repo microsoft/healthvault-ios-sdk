@@ -37,8 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @note If no suitable instance can be found, a nil is returned. This can happen, for example, if the account location is not supported by HealthVault. Currently the returned instance IDs all parse to integers, but that is not guaranteed and should not be relied upon.
  */
-- (id<MHVTaskProgressProtocol> _Nullable)selectInstanceWithPreferredLocation:(MHVLocation *)preferredLocation
-                                                                  completion:(void(^)(MHVServiceInstance *_Nullable serviceInstance, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)selectInstanceWithPreferredLocation:(MHVLocation *)preferredLocation
+                                                                         completion:(void(^)(MHVServiceInstance *_Nullable serviceInstance, NSError *_Nullable error))completion;
 
 /**
  * Gets information about the HealthVault service.
@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
  * - The common schema definitions for types that the HealthVault methods use.
  * - Information about all available HealthVault instances.
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getServiceDefinitionWithCompletion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getServiceDefinitionWithCompletion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
 
 
 /**
@@ -76,8 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
  * - The common schema definitions for types that the HealthVault methods use.
  * - Information about all available HealthVault instances.
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
-                                                                          completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
+                                                                                 completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
 
 
 /**
@@ -98,8 +98,8 @@ NS_ASSUME_NONNULL_BEGIN
  * - Information about all available HealthVault instances.
  * Retrieving only the sections you need will give a faster response time than downloading the full response.
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getServiceDefinitionWithWithResponseSections:(MHVServiceInfoSections)responseSections
-                                                                           completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getServiceDefinitionWithWithResponseSections:(MHVServiceInfoSections)responseSections
+                                                                                  completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
 
 /**
  * Gets Gets information about the HealthVault service corresponding to the specified categories if the requested information has been updated since the specified update time.
@@ -120,9 +120,9 @@ NS_ASSUME_NONNULL_BEGIN
  * - Information about all available HealthVault instances.
  * Retrieving only the sections you need will give a faster response time than downloading the full response.
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
-                                                                    responseSections:(MHVServiceInfoSections)responseSections
-                                                                          completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
+                                                                           responseSections:(MHVServiceInfoSections)responseSections
+                                                                                 completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
 
 
 /**
@@ -135,11 +135,11 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion Envoked when the operation completes. NSDictionary<NSUUID *, MHVThingTypeDefinition *> a dictionary containing type definitions for the specified types, or empty if the typeIds parameter does not represent a known unique type identifier. NSError object will be nil if there is no error when performing the operation.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getHealthRecordItemTypeDefinitionsWithTypeIds:(NSArray<NSUUID *> *_Nullable)typeIds
-                                                                              sections:(MHVThingTypeSections)sections
-                                                                            imageTypes:(NSArray<NSString *> *_Nullable)imageTypes
-                                                                 lastClientRefreshDate:(NSDate *_Nullable)lastClientRefreshDate
-                                                                            completion:(void(^)(NSDictionary<NSUUID *, MHVThingTypeDefinition *> *_Nullable definitions, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getHealthRecordItemTypeDefinitionsWithTypeIds:(NSArray<NSUUID *> *_Nullable)typeIds
+                                                                                     sections:(MHVThingTypeSections)sections
+                                                                                   imageTypes:(NSArray<NSString *> *_Nullable)imageTypes
+                                                                        lastClientRefreshDate:(NSDate *_Nullable)lastClientRefreshDate
+                                                                                   completion:(void(^)(NSDictionary<NSUUID *, MHVThingTypeDefinition *> *_Nullable definitions, NSError *_Nullable error))completion;
 
 
 /**
@@ -148,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion Envoked when the operation completes. MHVApplicationCreationInfo Information about the newly created application instance. NSError object will be nil if there is no error when performing the operation.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)newApplicationCreationInfoWithCompletion:(void(^)(MHVApplicationCreationInfo *_Nullable applicationCreationInfo, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)newApplicationCreationInfoWithCompletion:(void(^)(MHVApplicationCreationInfo *_Nullable applicationCreationInfo, NSError *_Nullable error))completion;
 
 
 /**
@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion Envoked when the operation completes. NSArray<MHVPersonInfo *> an array of MHVPersonInfo objects representing people authorized for the application. NSError object will be nil if there is no error when performing the operation.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 
 
 /**
@@ -167,8 +167,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion Envoked when the operation completes. NSArray<MHVPersonInfo *> an array of MHVPersonInfo objects representing people authorized for the application. NSError object will be nil if there is no error when performing the operation.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *_Nonnull)settings
-                                                              completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *_Nonnull)settings
+                                                                     completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 
 
 /**
@@ -178,8 +178,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion Envoked when the operation completes. NSError object will be nil if there is no error when performing the operation.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)removeApplicationAuthorizationWithRecordId:(NSUUID *)recordId
-                                                                         completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)removeApplicationAuthorizationWithRecordId:(NSUUID *)recordId
+                                                                                completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 @end
 

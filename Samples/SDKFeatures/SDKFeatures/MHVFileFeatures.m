@@ -20,11 +20,15 @@
 #import "MHVFileFeatures.h"
 #import "MHVTypeViewController.h"
 #import "MHVUIAlert.h"
+#import "MHVTaskProgressProtocol.h"
+
+static NSString *kProgressKeyPath = @"progress";
 
 @interface MHVFileFeatures ()
 
 @property (nonatomic, strong) NSData *fileData;
 @property (nonatomic, strong) NSString *fileMediaType;
+@property (nonatomic, strong) NSObject<MHVTaskProgressProtocol> *task;
 
 @end
 
@@ -52,6 +56,11 @@
     }
 
     return self;
+}
+
+- (void)dealloc
+{
+    self.task = nil;
 }
 
 //
@@ -135,21 +144,26 @@
 
         [self.controller showActivityAndStatus:[NSString stringWithFormat:@"Downloading %@", [fileItem.file sizeAsString]]];
 
-        [fileBlob downloadBlobToFilePath:filePath completion:^(NSError *error)
-        {
-            if (!error)
-            {
-                [MHVUIAlert showInformationalMessage:@"Downloaded into Documents folder."];
-                
-                NSLog(@"Downloaded to path: %@", filePath);
-            }
-            else
-            {
-                [MHVUIAlert showInformationalMessage:error.localizedDescription];
-            }
-
-            [self.controller clearStatus];
-        }];
+        self.task = [fileBlob downloadBlobToFilePath:filePath completion:^(NSError *error)
+                     {
+                         self.task = nil;
+                         
+                         if (!error)
+                         {
+                             [MHVUIAlert showInformationalMessage:@"Downloaded into Documents folder."];
+                             
+                             NSLog(@"Downloaded to path: %@", filePath);
+                         }
+                         else
+                         {
+                             [MHVUIAlert showInformationalMessage:error.localizedDescription];
+                         }
+                         
+                         [[NSOperationQueue mainQueue] addOperationWithBlock:^
+                          {
+                              [self.controller clearStatus];
+                          }];
+                     }];
 
         return TRUE;
     }];
@@ -222,6 +236,32 @@
         NSString *fileName = [NSString stringWithFormat:@"Picture_%@.jpg", [[NSDate date] toStringWithFormat:@"yyyyMMdd_HHmmss"]];
 
         [self uploadFileWithName:fileName data:self.fileData andMediaType:self.fileMediaType];
+    }];
+}
+
+#pragma mark - Observe Task progress
+
+- (void)setTask:(NSObject<MHVTaskProgressProtocol> *)task
+{
+    if (_task)
+    {
+        [_task removeObserver:self forKeyPath:kProgressKeyPath];
+    }
+    
+    _task = task;
+    
+    if (_task)
+    {
+        [_task addObserver:self forKeyPath:kProgressKeyPath options:kNilOptions context:nil];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    // Show progress as percentage
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+    {
+        [self.controller showActivityAndStatus:[NSString stringWithFormat:@"Downloading %0.0f%%", self.task.progress * 100.0]];
     }];
 }
 

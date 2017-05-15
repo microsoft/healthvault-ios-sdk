@@ -55,12 +55,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param correlationId The correlation id - Optional.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)executeMethod:(MHVMethod *)method
-                                               version:(NSInteger)version
-                                            parameters:(NSString *_Nullable)parameters
-                                              recordId:(NSUUID *_Nullable)recordId
-                                         correlationId:(NSUUID *_Nullable)correlationId
-                                            completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)executeMethod:(MHVMethod *)method
+                                                      version:(NSInteger)version
+                                                   parameters:(NSString *_Nullable)parameters
+                                                     recordId:(NSUUID *_Nullable)recordId
+                                                correlationId:(NSUUID *_Nullable)correlationId
+                                                   completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**
  * Gets the person information for the current account.
@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @note This includes the list of authorized records for the application instance.
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
 
 /**
  * Authenticates the connection. Calling authenticate will immediately present an authentication user interface if the connection is not authenticated.

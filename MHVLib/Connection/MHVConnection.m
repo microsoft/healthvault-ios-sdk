@@ -54,7 +54,7 @@
     return nil;
 }
 
-- (id<MHVTaskProgressProtocol> _Nullable)executeMethod:(MHVMethod *_Nonnull)method
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)executeMethod:(MHVMethod *_Nonnull)method
                                      version:(NSInteger)version
                                   parameters:(NSString *_Nullable)parameters
                                     recordId:(NSUUID *_Nullable)recordId
@@ -64,7 +64,7 @@
     return nil;
 }
 
-- (id<MHVTaskProgressProtocol>)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
 {
     return nil;
 }

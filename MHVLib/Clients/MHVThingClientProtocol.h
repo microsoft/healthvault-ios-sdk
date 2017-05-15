@@ -25,42 +25,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVThingClientProtocol <NSObject>
 
-- (id<MHVTaskProgressProtocol> _Nullable)getThingWithThingId:(NSUUID *)thingId
-                                                    recordId:(NSUUID *)recordId
-                                                  completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getThingWithThingId:(NSUUID *)thingId
+                                                           recordId:(NSUUID *)recordId
+                                                         completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
 
-- (id<MHVTaskProgressProtocol> _Nullable)getThingsWithQuery:(MHVThingQuery *)
-                                                   recordId:(NSUUID *)recordId
-                                                 completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getThingsWithQuery:(MHVThingQuery *)
+                                                          recordId:(NSUUID *)recordId
+                                                        completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
 
-- (id<MHVTaskProgressProtocol> _Nullable)getThingsForThingClass:(Class )thingClass
-                                                          query:(MHVThingQuery *)query
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getThingsForThingClass:(Class )thingClass
+                                                                 query:(MHVThingQuery *)query
+                                                              recordId:(NSUUID *)recordId
+                                                            completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)createNewThing:(MHVThing *)thing
+                                                      recordId:(NSUUID *)recordId
+                                                    completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)createNewThings:(MHVThingCollection *)things
                                                        recordId:(NSUUID *)recordId
-                                                     completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+                                                     completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (id<MHVTaskProgressProtocol> _Nullable)createNewThing:(MHVThing *)thing
-                                               recordId:(NSUUID *)recordId
-                                             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)updateThing:(MHVThing *)thing
+                                                   recordId:(NSUUID *)recordId
+                                                 completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (id<MHVTaskProgressProtocol> _Nullable)createNewThings:(MHVThingCollection *)things
-                                                recordId:(NSUUID *)recordId
-                                              completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)updateThings:(MHVThingCollection *)things
+                                                    recordId:(NSUUID *)recordId
+                                                  completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (id<MHVTaskProgressProtocol> _Nullable)updateThing:(MHVThing *)thing
-                                            recordId:(NSUUID *)recordId
-                                          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)removeThing:(MHVThing *)thing
+                                                   recordId:(NSUUID *)recordId
+                                                 completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
-- (id<MHVTaskProgressProtocol> _Nullable)updateThings:(MHVThingCollection *)things
-                                             recordId:(NSUUID *)recordId
-                                           completion:(void(^_Nullable)(NSError *_Nullable error))completion;
-
-- (id<MHVTaskProgressProtocol> _Nullable)removeThing:(MHVThing *)thing
-                                            recordId:(NSUUID *)recordId
-                                          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
-
-- (id<MHVTaskProgressProtocol> _Nullable)removeThings:(MHVThingCollection *)things
-                                             recordId:(NSUUID *)recordId
-                                           completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)removeThings:(MHVThingCollection *)things
+                                                    recordId:(NSUUID *)recordId
+                                                  completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 @end
 

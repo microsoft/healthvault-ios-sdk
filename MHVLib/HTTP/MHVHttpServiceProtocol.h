@@ -37,9 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion response containing result of the operation, or error
  @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)sendRequestForURL:(NSURL *)url
-                                                      body:(NSString *_Nullable)body
-                                                completion:(MHVHttpServiceCompletion)completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)sendRequestForURL:(NSURL *)url
+                                                             body:(NSString *_Nullable)body
+                                                       completion:(MHVHttpServiceCompletion)completion;
 
 /**
  Send a request to HealthVault service
@@ -51,10 +51,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion response containing result of the operation, or error
  @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)sendRequestForURL:(NSURL *)url
-                                                      body:(NSString *_Nullable)body
-                                                   headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
-                                                completion:(MHVHttpServiceCompletion)completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)sendRequestForURL:(NSURL *)url
+                                                             body:(NSString *_Nullable)body
+                                                          headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
+                                                       completion:(MHVHttpServiceCompletion)completion;
 
 /**
  Download a blob from HealthVault service to a local file path
@@ -62,22 +62,26 @@ NS_ASSUME_NONNULL_BEGIN
  @param url the endpoint for the request
  @param path local file path where the downloaded file will be stored
  For security, the file's protection attributes will be set to NSFileProtectionComplete
+ @param contentSize blob total size if known, otherwise 0.  Allows progress to be calculated
  @param completion error if the download failed
  @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)downloadFileWithUrl:(NSURL *)url
-                                                  toFilePath:(NSString *)path
-                                                  completion:(MHVHttpServiceFileDownloadCompletion)completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)downloadFileWithUrl:(NSURL *)url
+                                                         toFilePath:(NSString *)path
+                                                        contentSize:(NSUInteger)contentSize
+                                                         completion:(MHVHttpServiceFileDownloadCompletion)completion;
 
 /**
  Download a blob from HealthVault service and return data
  
  @param url the endpoint for the request
+ @param contentSize blob total size if known, otherwise 0.  Allows progress to be calculated
  @param completion data if the download succeeded, or error
  @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)downloadDataWithUrl:(NSURL *)url
-                                                  completion:(MHVHttpServiceDataDownloadCompletion)completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)downloadDataWithUrl:(NSURL *)url
+                                                        contentSize:(NSUInteger)contentSize
+                                                         completion:(MHVHttpServiceDataDownloadCompletion)completion;
 
 /**
  Upload to HealthVault blob storage
@@ -88,10 +92,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion response containing result of the operation, or error
  @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
-                                                    toUrl:(NSURL *)url
-                                                chunkSize:(NSUInteger)chunkSize
-                                               completion:(MHVHttpServiceCompletion)completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
+                                                           toUrl:(NSURL *)url
+                                                       chunkSize:(NSUInteger)chunkSize
+                                                      completion:(MHVHttpServiceCompletion)completion;
 
 @end
 

@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MHVHttpTask : NSObject <MHVTaskProgressProtocol>
 
 - (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task;
-- (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task totalSize:(NSUInteger)totalSize;
+- (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task contentSize:(NSUInteger)contentSize;
 - (instancetype)init __unavailable;
 
 - (void)addTask:(NSURLSessionTask *)task;

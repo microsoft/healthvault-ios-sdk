@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion A completion block. On success will give an NSArray of vocabulary keys. On error will give the error info.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getVocabularyKeysWithCompletion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable) vocabularyKeys, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getVocabularyKeysWithCompletion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable) vocabularyKeys, NSError *_Nullable error))completion;
 
 
 /**
@@ -45,9 +45,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion A completion block. On success will give the matching MHVVocabulary. On error will give the error info.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getVocabularyWithKey:(MHVVocabulary *)key
-                                               cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
-                                                   completion:(void(^)(MHVVocabulary *_Nullable vocabulary, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getVocabularyWithKey:(MHVVocabulary *)key
+                                                      cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
+                                                          completion:(void(^)(MHVVocabulary *_Nullable vocabulary, NSError *_Nullable error))completion;
 
 
 /**
@@ -58,9 +58,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion A completion block. On success will give one of the specified vocabularies and its items, or empty strings. On error will give the error info.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)getVocabulariesWithVocabularyKeys:(NSArray *)vocabularyKeys
-                                                            cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
-                                                                completion:(void(^)(NSArray<MHVVocabulary *> *_Nullable vocabularies, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)getVocabulariesWithVocabularyKeys:(NSArray *)vocabularyKeys
+                                                                   cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
+                                                                       completion:(void(^)(NSArray<MHVVocabulary *> *_Nullable vocabularies, NSError *_Nullable error))completion;
 
 
 /**
@@ -72,10 +72,10 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion A completion block. On success will give an array of MHVVocabularyKeys populated with entries matching the search criteria. On error will give the error info.
  * @return TaskProgress object that can be cancelled or used for observing progress. Can be nil if arguments are invalid
  */
-- (id<MHVTaskProgressProtocol> _Nullable)searchVocabularyWithSearchValue:(NSString *)searchValue
-                                                              searchType:(MHVVocabularySearchType *)searchType
-                                                              maxResults:(NSNumber *_Nullable)maxResults
-                                                              completion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable vocabularyKeys, NSError *_Nullable error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)searchVocabularyWithSearchValue:(NSString *)searchValue
+                                                                     searchType:(MHVVocabularySearchType *)searchType
+                                                                     maxResults:(NSNumber *_Nullable)maxResults
+                                                                     completion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable vocabularyKeys, NSError *_Nullable error))completion;
 
 @end
 
