@@ -1,0 +1,61 @@
+//
+//  MHVThingDataTypedExtensions.m
+//  SDKFeatures
+//
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//
+#import "MHVThingDataTypedFactory.h"
+//
+// Default implementation of MHVFactoryMethods category
+// Does nothing
+//
+@implementation MHVThingDataTyped (MHVFactoryMethods)
+
++(MHVThingCollection *) createRandomForDay:(NSDate *) date
+{
+    return nil;
+}
+
++(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date
+{
+    return nil;
+}
+
++(MHVThingDataTypedFeatures *)moreFeatures
+{
+    return nil;
+}
+
+@end
+
+@implementation MHVThingDataTyped (MHVDisplay)
+
+-(NSString *)detailsString
+{
+    return self.description;
+}
+
+-(NSString *)detailsStringMetric
+{
+    return [self detailsString];
+}
+
+-(NSString *)dateString
+{
+    return nil;
+}
+
+@end

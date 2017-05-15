@@ -211,9 +211,9 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVBloodGlucose typeID]];
+    return [[MHVThing alloc] initWithType:[MHVBloodGlucose typeID]];
 }
 
 - (NSString *)typeName

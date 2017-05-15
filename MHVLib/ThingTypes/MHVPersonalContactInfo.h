@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVPersonalContactInfo : MHVItemDataTyped
+@interface MHVPersonalContactInfo : MHVThingDataTyped
 
 // -------------------------
 //
@@ -36,7 +36,7 @@
 // -------------------------
 - (instancetype)initWithContact:(MHVContact *)contact;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

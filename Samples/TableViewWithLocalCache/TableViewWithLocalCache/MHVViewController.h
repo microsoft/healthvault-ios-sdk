@@ -24,7 +24,7 @@
 
 @class MHVViewController;
 
-@interface MHVItemsDataSource : HVTypeViewDataSource
+@interface MHVThingsDataSource : HVTypeViewDataSource
 
 @property (readwrite, nonatomic, weak) MHVViewController* parentController;
 
@@ -32,7 +32,7 @@
 
 @interface MHVViewController : UIViewController
 {
-    MHVItemsDataSource* m_dataSource;
+    MHVThingsDataSource* m_dataSource;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *itemTable;

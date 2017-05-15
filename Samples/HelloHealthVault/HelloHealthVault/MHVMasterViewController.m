@@ -96,7 +96,7 @@
             // Save the collection of items retrieved
             //
             m_items = nil;
-            m_items = [((MHVGetItemsTask *) task).itemsRetrieved retain];
+            m_items = [((MHVGetThingsTask *) task).itemsRetrieved retain];
             //
             // Refresh UI
             //
@@ -111,7 +111,7 @@
 //
 // Push a new weight into HealthVault
 //
--(void)putWeightInHealthVault:(MHVItem *)item
+-(void)putWeightInHealthVault:(MHVThing *)item
 {
     [[MHVClient current].currentRecord putItem:item callback:^(MHVTask *task) 
     {
@@ -131,7 +131,7 @@
     } ];
 }
 
--(void)removeWeightFromHealthVault:(MHVItemKey *)itemKey
+-(void)removeWeightFromHealthVault:(MHVThingKey *)itemKey
 {
     [[MHVClient current].currentRecord removeItemWithKey:itemKey callback:^(MHVTask *task) {
         @try {
@@ -150,9 +150,9 @@
 //
 // Create a new random weight between 130 and 150 pounds, and the current date&time
 //
--(MHVItem *)newWeight
+-(MHVThing *)newWeight
 {
-    MHVItem* item = [MHVWeight newItem];
+    MHVThing* item = [MHVWeight newItem];
  
     double pounds = roundToPrecision([MHVRandom randomDoubleInRangeMin:130 max:150], 2);
     item.weight.inPounds = pounds;
@@ -161,7 +161,7 @@
     return item;
 }
 
--(void)changeWeight:(MHVItem *)item
+-(void)changeWeight:(MHVThing *)item
 {
     item.weight.inPounds = [MHVRandom randomDoubleInRangeMin:130 max:150];
 }
@@ -171,7 +171,7 @@
     //
     // Set up a filter for HealthVault items
     //
-    MHVItemFilter* itemFilter = [[[MHVItemFilter alloc] initWithTypeClass:[MHVWeight class]] autorelease];  // Querying for weights
+    MHVThingFilter* itemFilter = [[[MHVThingFilter alloc] initWithTypeClass:[MHVWeight class]] autorelease];  // Querying for weights
     //
     // We only want weights no older than numDays
     //
@@ -179,7 +179,7 @@
     //
     // Create a query to issue
     //
-    MHVItemQuery* query = [[[MHVItemQuery alloc] initWithFilter:itemFilter] autorelease];
+    MHVThingQuery* query = [[[MHVThingQuery alloc] initWithFilter:itemFilter] autorelease];
     
     [[MHVClient current].currentRecord getItems:query callback:^(MHVTask *task) {
         
@@ -188,7 +188,7 @@
             // Save the collection of items retrieved
             //
             m_items = nil;
-            m_items = [((MHVGetItemsTask *) task).itemsRetrieved retain];
+            m_items = [((MHVGetThingsTask *) task).itemsRetrieved retain];
             //
             // Refresh UI
             //
@@ -288,7 +288,7 @@
 //
 - (IBAction)addButtonClicked:(id)sender 
 {
-    MHVItem* item = [[self newWeight] autorelease];
+    MHVThing* item = [[self newWeight] autorelease];
     [self putWeightInHealthVault:item];
 }
 
@@ -319,7 +319,7 @@
     }
     
     NSUInteger itemIndex = selection.row;
-    MHVItem* item = [m_items itemAtIndex:itemIndex];
+    MHVThing* item = [m_items itemAtIndex:itemIndex];
 
     [self changeWeight:item];
     

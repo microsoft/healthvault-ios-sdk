@@ -28,7 +28,7 @@
 
 @property (readwrite, nonatomic, strong) Class  type;
 
-- (instancetype)initWithCapacity:(NSUInteger)numItems;
+- (instancetype)initWithCapacity:(NSUInteger)numThings;
 - (instancetype)initWithArray:(NSArray *)array;
 
 + (BOOL)isNilOrEmpty:(MHVCollection *)collection;

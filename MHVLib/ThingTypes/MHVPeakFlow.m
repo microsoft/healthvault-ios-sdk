@@ -129,9 +129,9 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
     return c_typeName;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVPeakFlow typeID]];
+    return [[MHVThing alloc] initWithType:[MHVPeakFlow typeID]];
 }
 
 - (NSString *)typeName

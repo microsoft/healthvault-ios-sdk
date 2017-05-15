@@ -19,16 +19,16 @@
 
 @implementation MHVHeartRate (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date
++(MHVThingCollection *) createRandomForDay:(NSDate *) date
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     
     // Typically 1 a day
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];
     
-    [items addObject:[MHVHeartRate createRandomForDate:dateTime]];
+    [things addObject:[MHVHeartRate createRandomForDate:dateTime]];
     
-    return items;
+    return things;
 }
 
 @end

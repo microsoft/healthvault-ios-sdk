@@ -20,7 +20,7 @@
 #import "MHVTypes.h"
 #import "MHVVocab.h"
 
-@interface MHVProcedure : MHVItemDataTyped
+@interface MHVProcedure : MHVThingDataTyped
 
 // -------------------------
 //
@@ -72,6 +72,6 @@
 + (NSString *)typeID;
 + (NSString *)XRootElement;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 @end

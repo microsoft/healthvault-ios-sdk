@@ -122,9 +122,9 @@ static NSString *const c_element_position = @"position";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVVitalSigns typeID]];
+    return [[MHVThing alloc] initWithType:[MHVVitalSigns typeID]];
 }
 
 @end

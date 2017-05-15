@@ -30,7 +30,7 @@
         [self endViewOp]; \
     }
 
-MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeItemsAvailableNotification);
+MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeThingsAvailableNotification);
 MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeKeysNotAvailableNotification);
 MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeSyncCompletedNotification);
 MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
@@ -45,16 +45,16 @@ MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
 -(void) releaseView;
 -(BOOL) saveView;
 
--(BOOL) addKeyForItem:(MHVItem *) item;
--(BOOL) updateKeyForItem:(MHVItem *) item;
--(BOOL) replaceItemID:(NSString *) itemID withItem:(MHVItem *) item;
--(BOOL) removeKey:(MHVItemKey *) key;
+-(BOOL) addKeyForThing:(MHVThing *) thing;
+-(BOOL) updateKeyForThing:(MHVThing *) thing;
+-(BOOL) replaceThingID:(NSString *) thingID withThing:(MHVThing *) thing;
+-(BOOL) removeKey:(MHVThingKey *) key;
 
 @end
 
-@interface MHVItemEditOperation (MHVPrivate)
+@interface MHVThingEditOperation (MHVPrivate)
 
--(id) initForType:(MHVSynchronizedType *) type item:(MHVItem *) item andLock:(MHVAutoLock *) lock;
+-(id) initForType:(MHVSynchronizedType *) type thing:(MHVThing *) thing andLock:(MHVAutoLock *) lock;
 
 @end
 
@@ -132,22 +132,22 @@ MHVDEFINE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
     }
 }
 
--(NSInteger)maxItems
+-(NSInteger)maxThings
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return view.maxItems;
+        return view.maxThings;
         ENDVIEWOP
     }
 }
 
--(void)setMaxItems:(NSInteger)maxItems
+-(void)setMaxThings:(NSInteger)maxThings
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        view.maxItems = maxItems;
+        view.maxThings = maxThings;
         ENDVIEWOP
     }
 }
@@ -225,97 +225,97 @@ LError:
     }
 }
 
--(MHVItemKey *)keyAtIndex:(NSUInteger)index
+-(MHVThingKey *)keyAtIndex:(NSUInteger)index
 {
-    return [self itemKeyAtIndex:index];
+    return [self thingKeyAtIndex:index];
 }
 
--(MHVTypeViewItem *)itemKeyAtIndex:(NSUInteger)index
+-(MHVTypeViewThing *)thingKeyAtIndex:(NSUInteger)index
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view itemKeyAtIndex:index];
+        return [view thingKeyAtIndex:index];
         ENDVIEWOP
     }
 }
 
--(NSUInteger)indexOfItemID:(NSString *)itemID
+-(NSUInteger)indexOfThingID:(NSString *)thingID
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view indexOfItemID:itemID];
+        return [view indexOfThingID:thingID];
         ENDVIEWOP
     }
 }
 
--(MHVItem *)getItemAtIndex:(NSUInteger)index
+-(MHVThing *)getThingAtIndex:(NSUInteger)index
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view getItemAtIndex:index];
+        return [view getThingAtIndex:index];
         ENDVIEWOP
     }
 }
 
--(MHVItem *)getItemByID:(NSString *)itemID
+-(MHVThing *)getThingByID:(NSString *)thingID
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view getItemByID:itemID];
+        return [view getThingByID:thingID];
         ENDVIEWOP
     }
 }
 
--(MHVItemCollection *)getItemsInRange:(NSRange)range
+-(MHVThingCollection *)getThingsInRange:(NSRange)range
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view getItemsInRange:range];
+        return [view getThingsInRange:range];
         ENDVIEWOP
     }
 }
 
--(MHVItem *)getLocalItemAtIndex:(NSUInteger)index
+-(MHVThing *)getLocalThingAtIndex:(NSUInteger)index
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view getLocalItemAtIndex:index];
+        return [view getLocalThingAtIndex:index];
         ENDVIEWOP
     }
 }
 
--(MHVItem *)getLocalItemWithKey:(MHVItemKey *)key
+-(MHVThing *)getLocalThingWithKey:(MHVThingKey *)key
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view getLocalItemWithKey:key];
+        return [view getLocalThingWithKey:key];
         ENDVIEWOP
     }
 }
 
--(MHVItemKeyCollection *)keysOfItemsNeedingDownloadInRange:(NSRange)range
+-(MHVThingKeyCollection *)keysOfThingsNeedingDownloadInRange:(NSRange)range
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view keysOfItemsNeedingDownloadInRange:range];
+        return [view keysOfThingsNeedingDownloadInRange:range];
         ENDVIEWOP
     }
 }
 
--(MHVTask *)ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback
+-(MHVTask *)ensureThingsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        return [view ensureItemsDownloadedInRange:range withCallback:callback];
+        return [view ensureThingsDownloadedInRange:range withCallback:callback];
         ENDVIEWOP
     }
 }
@@ -360,7 +360,7 @@ LError:
     }
 }
 
--(MHVItemQuery *)getQuery
+-(MHVThingQuery *)getQuery
 {
     @synchronized(self)
     {
@@ -370,14 +370,14 @@ LError:
     }
 }
 
--(BOOL)replaceKeys:(MHVTypeViewItems *)items
+-(BOOL)replaceKeys:(MHVTypeViewThings *)things
 {
     @synchronized(self)
     {
         BOOL success = FALSE;
         
         BEGINVIEWOP
-        success = [view replaceKeys:items];
+        success = [view replaceKeys:things];
         ENDVIEWOP
         
         if (success)
@@ -387,34 +387,34 @@ LError:
     }
 }
 
--(MHVTask *)ensureItemDownloadedForKey:(MHVItemKey *)key withCallback:(MHVTaskCompletion)callback
+-(MHVTask *)ensureThingDownloadedForKey:(MHVThingKey *)key withCallback:(MHVTaskCompletion)callback
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        NSUInteger index = [view indexOfItemID:key.itemID];
+        NSUInteger index = [view indexOfThingID:key.thingID];
         if (index == NSNotFound)
         {
             return nil;
         }
         
-        return [view ensureItemsDownloadedInRange:NSMakeRange(index, 1) withCallback:callback];
+        return [view ensureThingsDownloadedInRange:NSMakeRange(index, 1) withCallback:callback];
         ENDVIEWOP
     }
 }
 
--(BOOL)addNewItem:(MHVItem *)item
+-(BOOL)addNewThing:(MHVThing *)thing
 {
     @synchronized(self)
     {
-        MHVCHECK_NOTNULL(item);
-        MHVCHECK_TRUE([item isType:m_typeID]);
+        MHVCHECK_NOTNULL(thing);
+        MHVCHECK_TRUE([thing isType:m_typeID]);
         
-        MHVClientResult* hr = [item validate];
+        MHVClientResult* hr = [thing validate];
         MHVCHECK_TRUE(hr.isSuccess);
         
-        MHVCHECK_SUCCESS([m_syncMgr putNewItem:item]);
-        MHVCHECK_SUCCESS([self addKeyForItem:item]);
+        MHVCHECK_SUCCESS([m_syncMgr putNewThing:thing]);
+        MHVCHECK_SUCCESS([self addKeyForThing:thing]);
         
         return TRUE;
         
@@ -423,17 +423,17 @@ LError:
     }
 }
 
--(BOOL)removeItemWithKey:(MHVItemKey *)key
+-(BOOL)removeThingWithKey:(MHVThingKey *)key
 {
     @synchronized(self)
     {
         BOOL result = FALSE;
-        MHVAutoLock* lock = [m_syncMgr.changeManager newAutoLockForItemKey:key];
+        MHVAutoLock* lock = [m_syncMgr.changeManager newAutoLockForThingKey:key];
         if (lock)
         {
             @try
             {
-                result = [m_syncMgr removeItemWithTypeID:m_typeID key:key itemLock:lock];
+                result = [m_syncMgr removeThingWithTypeID:m_typeID key:key thingLock:lock];
                 if (result)
                 {
                     [self removeKey:key];
@@ -449,36 +449,36 @@ LError:
     }
 }
 
--(BOOL)removeItemAtIndex:(NSUInteger)index
+-(BOOL)removeThingAtIndex:(NSUInteger)index
 {
     @synchronized(self)
     {
-        MHVItemKey* key = nil;
+        MHVThingKey* key = nil;
         BEGINVIEWOP
-        key = [view itemKeyAtIndex:index];
+        key = [view thingKeyAtIndex:index];
         ENDVIEWOP
         if (!key)
         {
             return FALSE;
         }
-        return [self removeItemWithKey:key];
+        return [self removeThingWithKey:key];
     }
 }
 
--(MHVItemEditOperation *)openItemForEditWithKey:(MHVItemKey *)key
+-(MHVThingEditOperation *)openThingForEditWithKey:(MHVThingKey *)key
 {
     @synchronized(self)
     {
-        MHVItemEditOperation* op = nil;
-        MHVAutoLock* lock = [m_syncMgr newLockForItemKey:key];
+        MHVThingEditOperation* op = nil;
+        MHVAutoLock* lock = [m_syncMgr newLockForThingKey:key];
         if (lock)
         {
             @try
             {
-                MHVItem* localItem = [[self beginViewOp] getLocalItemWithKey:key];
-                if (localItem)
+                MHVThing* localThing = [[self beginViewOp] getLocalThingWithKey:key];
+                if (localThing)
                 {
-                    op = [[MHVItemEditOperation alloc] initForType:self item:localItem andLock:lock];
+                    op = [[MHVThingEditOperation alloc] initForType:self thing:localThing andLock:lock];
                 }
             }
             @finally
@@ -495,33 +495,33 @@ LError:
     }
 }
 
--(MHVItemEditOperation *)openItemForEditAtIndex:(NSUInteger)index
+-(MHVThingEditOperation *)openThingForEditAtIndex:(NSUInteger)index
 {
     @synchronized(self)
     {
-        MHVItemKey* key = nil;
+        MHVThingKey* key = nil;
         BEGINVIEWOP
-        key = [view itemKeyAtIndex:index];
+        key = [view thingKeyAtIndex:index];
         ENDVIEWOP
         
         if (!key)
         {
             return FALSE;
         }
-        return [self openItemForEditWithKey:key];
+        return [self openThingForEditWithKey:key];
     }
 }
 
--(BOOL)putItem:(MHVItem *)item editLock:(MHVAutoLock *)lock
+-(BOOL)putThing:(MHVThing *)thing editLock:(MHVAutoLock *)lock
 {
     @synchronized(self)
     {
-        MHVCHECK_NOTNULL(item);
+        MHVCHECK_NOTNULL(thing);
         MHVCHECK_NOTNULL(lock);
-        MHVCHECK_TRUE([item isType:m_typeID]);
+        MHVCHECK_TRUE([thing isType:m_typeID]);
         
-        MHVCHECK_SUCCESS([m_syncMgr putItem:item itemLock:lock]);
-        MHVCHECK_SUCCESS([self updateKeyForItem:item]);
+        MHVCHECK_SUCCESS([m_syncMgr putThing:thing thingLock:lock]);
+        MHVCHECK_SUCCESS([self updateKeyForThing:thing]);
         
         return TRUE;
         
@@ -538,37 +538,37 @@ LError:
     }
 }
 
--(BOOL)removeAllLocalItems
+-(BOOL)removeAllLocalThings
 {
     @synchronized(self)
     {
         BEGINVIEWOP
-        [view removeAllLocalItems];
+        [view removeAllLocalThings];
         return [self saveView];
         ENDVIEWOP
     }
 }
 
--(BOOL)applyChangeCommitSuccess:(MHVItemChange *)change itemLock:(MHVAutoLock *)lock
+-(BOOL)applyChangeCommitSuccess:(MHVThingChange *)change thingLock:(MHVAutoLock *)lock
 {
     @synchronized(self)
     {
         MHVCHECK_NOTNULL(change);
         MHVCHECK_SUCCESS([lock validateLock]);
         
-        MHVItem* updatedItem = change.updatedItem;
-        if (!updatedItem)
+        MHVThing* updatedThing = change.updatedThing;
+        if (!updatedThing)
         {
-            updatedItem = change.localItem;
-            updatedItem.key = change.updatedKey;
+            updatedThing = change.localThing;
+            updatedThing.key = change.updatedKey;
         }
         
-        MHVCHECK_NOTNULL(updatedItem);
+        MHVCHECK_NOTNULL(updatedThing);
         
-        [m_syncMgr.data removeLocalItemWithKey:change.itemKey];
+        [m_syncMgr.data removeLocalThingWithKey:change.thingKey];
         
-        MHVCHECK_SUCCESS([m_syncMgr.data putLocalItem:updatedItem]);
-        MHVCHECK_SUCCESS([self replaceItemID:change.itemID withItem:updatedItem]);
+        MHVCHECK_SUCCESS([m_syncMgr.data putLocalThing:updatedThing]);
+        MHVCHECK_SUCCESS([self replaceThingID:change.thingID withThing:updatedThing]);
         
         return TRUE;
         
@@ -588,22 +588,22 @@ LError:
 // These calls arrive on the main thread
 //
 //------------------------------------------------
--(void) itemsAvailable:(MHVItemCollection *)items inView:(MHVTypeView *)view viewChanged:(BOOL) viewChanged
+-(void) thingsAvailable:(MHVThingCollection *)things inView:(MHVTypeView *)view viewChanged:(BOOL) viewChanged
 {
     safeInvokeAction(^{
         if (self.delegate)
         {
-            [self.delegate synchronizedType:self itemsAvailable:items typeChanged:viewChanged];
+            [self.delegate synchronizedType:self thingsAvailable:things typeChanged:viewChanged];
         }
         
         if (m_broadcastNotifications)
         {
             NSMutableDictionary* args = [[NSMutableDictionary alloc] init];
-            [args setObject:items forKey:@"items"];
+            [args setObject:things forKey:@"things"];
             [args setObject:@(viewChanged) forKey:@"viewChanged"];
             
             [[NSNotificationCenter defaultCenter]
-                postNotificationName:MHVSynchronizedTypeItemsAvailableNotification
+                postNotificationName:MHVSynchronizedTypeThingsAvailableNotification
                 object:self
                 userInfo:args
             ];
@@ -800,36 +800,36 @@ LError:
 }
 
 
--(BOOL)addKeyForItem:(MHVItem *)item
+-(BOOL)addKeyForThing:(MHVThing *)thing
 {
     BEGINVIEWOP
-    [view updateItemInView:item];
+    [view updateThingInView:thing];
     return [self saveView];
     ENDVIEWOP
 }
 
--(BOOL)updateKeyForItem:(MHVItem *)item
+-(BOOL)updateKeyForThing:(MHVThing *)thing
 {
     BEGINVIEWOP
-    [view updateItemInView:item];
+    [view updateThingInView:thing];
     return [self saveView];
     ENDVIEWOP
 }
 
--(BOOL)replaceItemID:(NSString *)itemID withItem:(MHVItem *)item
+-(BOOL)replaceThingID:(NSString *)thingID withThing:(MHVThing *)thing
 {
     BEGINVIEWOP
-    [view removeItemFromViewByID:itemID];
-    [view updateItemInView:item];
+    [view removeThingFromViewByID:thingID];
+    [view updateThingInView:thing];
     
     return [self saveView];
     ENDVIEWOP
 }
 
--(BOOL)removeKey:(MHVItemKey *)key
+-(BOOL)removeKey:(MHVThingKey *)key
 {
     BEGINVIEWOP
-    [view removeItemFromViewByID:key.itemID];
+    [view removeThingFromViewByID:key.thingID];
     return [self saveView];
     ENDVIEWOP
 }
@@ -837,26 +837,26 @@ LError:
 @end
 
 
-@implementation MHVItemEditOperation
+@implementation MHVThingEditOperation
 
-@synthesize item = m_item;
+@synthesize thing = m_thing;
 
 -(id)init
 {
-    return [self initForType:nil item:nil andLock:nil];
+    return [self initForType:nil thing:nil andLock:nil];
 }
 
--(id)initForType:(MHVSynchronizedType *)type item:(MHVItem *)item andLock:(MHVAutoLock *)lock
+-(id)initForType:(MHVSynchronizedType *)type thing:(MHVThing *)thing andLock:(MHVAutoLock *)lock
 {
     MHVCHECK_NOTNULL(type);
-    MHVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(thing);
     MHVCHECK_NOTNULL(lock);
     
     self = [super init];
     MHVCHECK_SELF;
     
-    m_item = [item newDeepClone];
-    MHVCHECK_NOTNULL(m_item);
+    m_thing = [thing newDeepClone];
+    MHVCHECK_NOTNULL(m_thing);
     
     m_type = type;
     m_lock = lock;
@@ -869,7 +869,7 @@ LError:
 
 -(BOOL)commit
 {
-    BOOL result = [m_type putItem:m_item editLock:m_lock];
+    BOOL result = [m_type putThing:m_thing editLock:m_lock];
     m_lock = nil;
     return result;
 }

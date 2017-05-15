@@ -76,19 +76,19 @@ typedef NS_ENUM(NSInteger, MHVClientResultCode)
     MHVClientError_InvalidPerson,
     MHVClientError_InvalidOrganization,
     MHVClientError_InvalidPrescription,
-    MHVClientError_InvalidItemKey,
-    MHVClientError_InvalidRelatedItem,
-    MHVClientError_InvalidItemType,
-    MHVClientError_InvalidItemView,
-    MHVClientError_InvalidItemQuery,
-    MHVClientError_InvalidItem,
+    MHVClientError_InvalidThingKey,
+    MHVClientError_InvalidRelatedThing,
+    MHVClientError_InvalidThingType,
+    MHVClientError_InvalidThingView,
+    MHVClientError_InvalidThingQuery,
+    MHVClientError_InvalidThing,
     MHVClientError_InvalidRecordReference,
     MHVClientError_InvalidRecord,
     MHVClientError_InvalidPersonInfo,
-    MHVClientError_InvalidPendingItem,
-    MHVClientError_InvalidItemList,
+    MHVClientError_InvalidPendingThing,
+    MHVClientError_InvalidThingList,
     MHVClientError_InvalidVocabIdentifier,
-    MHVClientError_InvalidVocabItem,
+    MHVClientError_InvalidVocabThing,
     MHVClientError_InvalidVocabSearch,
     MHVClientError_InvalidAssessmentField,
     MHVClientError_InvalidOccurrence,
@@ -106,7 +106,7 @@ typedef NS_ENUM(NSInteger, MHVClientResultCode)
     //
     MHVClientError_InvalidBlobInfo,
     //
-    // Item Types
+    // Thing Types
     //
     MHVClientError_InvalidWeight,
     MHVClientError_InvalidBloodPressure,

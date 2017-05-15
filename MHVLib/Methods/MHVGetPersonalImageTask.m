@@ -35,45 +35,45 @@
     self = [super initWithCallback:callback];
     if (self)
     {
-        MHVGetItemsTask *getItemsTask = [self newGetItemsTask:record];
-        MHVCHECK_NOTNULL(getItemsTask);
+        MHVGetThingsTask *getThingsTask = [self newGetThingsTask:record];
+        MHVCHECK_NOTNULL(getThingsTask);
         
-        [self setNextTask:getItemsTask];
+        [self setNextTask:getThingsTask];
     }
     return self;
 }
 
 #pragma mark - Internal methods
 
-- (MHVGetItemsTask *)newGetItemsTask:(MHVRecordReference *)record
+- (MHVGetThingsTask *)newGetThingsTask:(MHVRecordReference *)record
 {
-    MHVItemQuery *query = [[MHVItemQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
 
     MHVCHECK_NOTNULL(query);
 
-    query.view.sections = MHVItemSection_Blobs;
+    query.view.sections = MHVThingSection_Blobs;
 
-    MHVGetItemsTask *getItemsTask = [[MHVClient current].methodFactory newGetItemsForRecord:record
+    MHVGetThingsTask *getThingsTask = [[MHVClient current].methodFactory newGetThingsForRecord:record
                                                                                       query:query
                                                                                 andCallback:^(MHVTask *task)
     {
-        [self getItemComplete:task];
+        [self getThingComplete:task];
     }];
 
 
-    return getItemsTask;
+    return getThingsTask;
 }
 
-- (void)getItemComplete:(MHVTask *)task
+- (void)getThingComplete:(MHVTask *)task
 {
-    MHVItem *item = ((MHVGetItemsTask *)task).firstItemRetrieved;
+    MHVThing *thing = ((MHVGetThingsTask *)task).firstThingRetrieved;
 
-    if (!item.hasBlobData)
+    if (!thing.hasBlobData)
     {
         return;
     }
 
-    MHVBlobPayloadItem *blob = [item.blobs getDefaultBlob];
+    MHVBlobPayloadThing *blob = [thing.blobs getDefaultBlob];
     if (!blob)
     {
         return;

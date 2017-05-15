@@ -21,7 +21,7 @@
 #import "XLib.h"
 #import "MHVCachingObjectStore.h"
 #import "MHVClient.h"
-#import "MHVItemChangeManager.h"
+#import "MHVThingChangeManager.h"
 
 
 @interface MHVLocalVaultOfflineChangesCommitter : MHVTaskSequence

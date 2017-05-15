@@ -19,19 +19,19 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVLib.h"
-#import "MHVItemTestExtensions.h"
+#import "MHVThingTestExtensions.h"
 
 @interface MHVDietaryIntake (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date;
-+(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
++(MHVThingCollection *) createRandomForDay:(NSDate *) date;
++(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date;
 
-+(MHVItem *) makeBreakfastFor:(MHVDateTime *) breakfastTime;
-+(MHVItem *) makeLunchEntreeFor:(MHVDateTime *) lunchTime;
-+(MHVItem *) makeLunchVeggiesFor:(MHVDateTime *) lunchTime;
-+(MHVItem *) makeDinnerEntreeFor:(MHVDateTime *) dinnerTime;
-+(MHVItem *) makeDinnerVeggiesFor:(MHVDateTime *) dinnerTime;
-+(MHVItem *) makeDinnerDessertFor:(MHVDateTime *) dinnerTime;
++(MHVThing *) makeBreakfastFor:(MHVDateTime *) breakfastTime;
++(MHVThing *) makeLunchEntreeFor:(MHVDateTime *) lunchTime;
++(MHVThing *) makeLunchVeggiesFor:(MHVDateTime *) lunchTime;
++(MHVThing *) makeDinnerEntreeFor:(MHVDateTime *) dinnerTime;
++(MHVThing *) makeDinnerVeggiesFor:(MHVDateTime *) dinnerTime;
++(MHVThing *) makeDinnerDessertFor:(MHVDateTime *) dinnerTime;
 
 +(MHVVocabIdentifier *) getVocabForMeals;
 

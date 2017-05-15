@@ -25,9 +25,9 @@
 @interface MHVMultipleTypeViewRefresher (MHVPrivate)
 
 -(BOOL) initViewList:(NSArray *) views;
--(MHVItemQueryCollection *) collectQueriesForRefreshableViews;
+-(MHVThingQueryCollection *) collectQueriesForRefreshableViews;
 -(BOOL) shouldRefreshView:(id<MHVTypeView>) view;
--(void) refreshComplete:(MHVGetItemsTask *) task;
+-(void) refreshComplete:(MHVGetThingsTask *) task;
 
 @end
 
@@ -83,7 +83,7 @@ LError:
 
 -(MHVTask *)refreshWithCallback:(MHVTaskCompletion)callback
 {
-    MHVItemQueryCollection* queries = [self collectQueriesForRefreshableViews];
+    MHVThingQueryCollection* queries = [self collectQueriesForRefreshableViews];
     if ([MHVCollection isNilOrEmpty:queries])
     {
         // Nothing to refresh
@@ -93,13 +93,13 @@ LError:
     MHVTask* refreshTask = [[MHVTask alloc] initWithCallback:callback];
     MHVCHECK_NOTNULL(refreshTask);
     
-    MHVGetItemsTask* getItems = [[[MHVClient current] methodFactory] newGetItemsForRecord:m_record queries:queries andCallback:^(MHVTask *task)
+    MHVGetThingsTask* getThings = [[[MHVClient current] methodFactory] newGetThingsForRecord:m_record queries:queries andCallback:^(MHVTask *task)
     {
-        [self refreshComplete:(MHVGetItemsTask *) task];
+        [self refreshComplete:(MHVGetThingsTask *) task];
     }];
     
-    MHVCHECK_NOTNULL(getItems);
-    [refreshTask setNextTask:getItems];
+    MHVCHECK_NOTNULL(getThings);
+    [refreshTask setNextTask:getThings];
     
     [refreshTask start];
     
@@ -133,9 +133,9 @@ LError:
     return FALSE;
 }
 
--(MHVItemQueryCollection *)collectQueriesForRefreshableViews
+-(MHVThingQueryCollection *)collectQueriesForRefreshableViews
 {
-    MHVItemQueryCollection* queries = nil;
+    MHVThingQueryCollection* queries = nil;
     for (NSString* viewName in m_views.keyEnumerator)
     {
         id<MHVTypeView> view = [m_views objectForKey:viewName];
@@ -146,11 +146,11 @@ LError:
         
         if (!queries)
         {
-            queries = [[MHVItemQueryCollection alloc] init];
+            queries = [[MHVThingQueryCollection alloc] init];
             MHVCHECK_NOTNULL(queries);
         }
         
-        MHVItemQuery* refreshQuery = [view getQuery];
+        MHVThingQuery* refreshQuery = [view getQuery];
         MHVCHECK_NOTNULL(refreshQuery);
         
         refreshQuery.name = viewName;
@@ -182,14 +182,14 @@ LError:
     return TRUE;
 }
 
--(void)refreshComplete:(MHVGetItemsTask *)task
+-(void)refreshComplete:(MHVGetThingsTask *)task
 {
-    MHVItemQueryResults* results = task.queryResults;
-    for (MHVItemQueryResult* result in results.results)
+    MHVThingQueryResults* results = task.queryResults;
+    for (MHVThingQueryResult* result in results.results)
     {
         id<MHVTypeView> view = [m_views objectForKey:result.name];
         
-        MHVTypeViewItems* viewKeys = [[MHVTypeViewItems alloc] init];
+        MHVTypeViewThings* viewKeys = [[MHVTypeViewThings alloc] init];
         if ([viewKeys addQueryResult:result])
         {
             [view replaceKeys:viewKeys];

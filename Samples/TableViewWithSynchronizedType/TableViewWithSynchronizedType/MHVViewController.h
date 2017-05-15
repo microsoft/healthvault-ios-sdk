@@ -29,7 +29,7 @@
 {
     MHVSynchronizedType* m_type;
     HVSynchronizedTypeDataSource* m_dataSource;
-    MHVItemCommitScheduler* m_commitScheduler;
+    MHVThingCommitScheduler* m_commitScheduler;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *itemTable;

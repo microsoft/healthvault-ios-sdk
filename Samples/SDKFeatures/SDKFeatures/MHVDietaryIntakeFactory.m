@@ -26,9 +26,9 @@ static MHVVocabIdentifier* s_vocabForMeals;
 //
 // Creates all 3 meals
 //
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date
++(MHVThingCollection *)createRandomForDay:(NSDate *)date
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     //
     // Breakfast
     //
@@ -36,39 +36,39 @@ static MHVVocabIdentifier* s_vocabForMeals;
     breakfastTime.time.hour = 7;
     breakfastTime.time.minute = 30;
 
-    [items addObject:[MHVDietaryIntake makeBreakfastFor:breakfastTime]];
+    [things addObject:[MHVDietaryIntake makeBreakfastFor:breakfastTime]];
     //
     // Lunch
     //
     MHVDateTime* lunchTime = [MHVDateTime fromDate:date];
     lunchTime.time.hour = 12;
  
-    [items addObject:[MHVDietaryIntake makeLunchEntreeFor:lunchTime]];
-    [items addObject:[MHVDietaryIntake makeLunchVeggiesFor:lunchTime]];
+    [things addObject:[MHVDietaryIntake makeLunchEntreeFor:lunchTime]];
+    [things addObject:[MHVDietaryIntake makeLunchVeggiesFor:lunchTime]];
     //
     // Dinner
     //
     MHVDateTime* dinnerTime = [MHVDateTime fromDate:date];
     dinnerTime.time.hour = 18;
     dinnerTime.time.minute = 30;
-    [items addObject:[MHVDietaryIntake makeDinnerEntreeFor:dinnerTime]];
-    [items addObject:[MHVDietaryIntake makeDinnerVeggiesFor:dinnerTime]];
-    [items addObject:[MHVDietaryIntake makeDinnerDessertFor:dinnerTime]];
+    [things addObject:[MHVDietaryIntake makeDinnerEntreeFor:dinnerTime]];
+    [things addObject:[MHVDietaryIntake makeDinnerVeggiesFor:dinnerTime]];
+    [things addObject:[MHVDietaryIntake makeDinnerDessertFor:dinnerTime]];
 
-    return items;
+    return things;
 
 LError:
     return nil;
 }
 
-+(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
++(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVDietaryIntake createRandomForDay:date]; // No metric specific units
 }
 
-+(MHVItem *)makeBreakfastFor:(MHVDateTime *)breakfastTime
++(MHVThing *)makeBreakfastFor:(MHVDateTime *)breakfastTime
 {    
-    MHVItem* breakfast = [MHVDietaryIntake
+    MHVThing* breakfast = [MHVDietaryIntake
                          createRandomValuesForFood:[MHVCodableValue fromText:@"BreakfastFood"]
                          meal:[MHVDietaryIntake mealCodeForBreakfast]
                          onDate:breakfastTime];
@@ -76,45 +76,45 @@ LError:
     return breakfast;
 }
 
-+(MHVItem *)makeLunchEntreeFor:(MHVDateTime *)lunchTime
++(MHVThing *)makeLunchEntreeFor:(MHVDateTime *)lunchTime
 {
-    MHVItem* lunch = [MHVDietaryIntake
+    MHVThing* lunch = [MHVDietaryIntake
                      createRandomValuesForFood:[MHVCodableValue fromText:@"Lunch entree"]
                      meal:[MHVDietaryIntake mealCodeForLunch]
                      onDate:lunchTime];
     return lunch;
 }
 
-+(MHVItem *)makeLunchVeggiesFor:(MHVDateTime *)lunchTime
++(MHVThing *)makeLunchVeggiesFor:(MHVDateTime *)lunchTime
 {
-    MHVItem* lunch = [MHVDietaryIntake
+    MHVThing* lunch = [MHVDietaryIntake
                      createRandomValuesForFood:[MHVCodableValue fromText:@"Lunch Veggies"]
                      meal:[MHVDietaryIntake mealCodeForLunch]
                      onDate:lunchTime];
     return lunch;
 }
 
-+(MHVItem *)makeDinnerEntreeFor:(MHVDateTime *)dinnerTime
++(MHVThing *)makeDinnerEntreeFor:(MHVDateTime *)dinnerTime
 {
-    MHVItem* dinner = [MHVDietaryIntake
+    MHVThing* dinner = [MHVDietaryIntake
                       createRandomValuesForFood:[MHVCodableValue fromText:@"Dinner entree"]
                       meal:[MHVDietaryIntake mealCodeForDinner]
                       onDate:dinnerTime];
     return dinner;
 }
 
-+(MHVItem *)makeDinnerVeggiesFor:(MHVDateTime *)dinnerTime
++(MHVThing *)makeDinnerVeggiesFor:(MHVDateTime *)dinnerTime
 {
-    MHVItem* dinner = [MHVDietaryIntake
+    MHVThing* dinner = [MHVDietaryIntake
                       createRandomValuesForFood:[MHVCodableValue fromText:@"Dinner Veggies"]
                       meal:[MHVDietaryIntake mealCodeForDinner]
                       onDate:dinnerTime];
     return dinner;    
 }
 
-+(MHVItem *)makeDinnerDessertFor:(MHVDateTime *)dinnerTime
++(MHVThing *)makeDinnerDessertFor:(MHVDateTime *)dinnerTime
 {
-    MHVItem* dinner = [MHVDietaryIntake
+    MHVThing* dinner = [MHVDietaryIntake
                       createRandomValuesForFood:[MHVCodableValue fromText:@"Dinner Dessert"]
                       meal:[MHVDietaryIntake mealCodeForDinner]
                       onDate:dinnerTime];
@@ -137,7 +137,7 @@ LError:
 
 -(NSString *)detailsString
 {
-    return [NSString stringWithFormat:@"%@ [%.0f calories] %@", self.foodItem.description, self.calories.caloriesValue, self.meal ? self.meal.description : c_emptyString];
+    return [NSString stringWithFormat:@"%@ [%.0f calories] %@", self.foodThing.description, self.calories.caloriesValue, self.meal ? self.meal.description : c_emptyString];
 }
 
 -(NSString *)detailsStringMetric

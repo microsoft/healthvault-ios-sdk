@@ -84,7 +84,7 @@ static NSString *const c_element_attachments = @"attachments";
         return nil;
     }
 
-    MHVMessageHeaderItem *header = [self.headers headerWithName:name];
+    MHVMessageHeaderThing *header = [self.headers headerWithName:name];
     if (!header)
     {
         return c_emptyString;
@@ -129,9 +129,9 @@ static NSString *const c_element_attachments = @"attachments";
 - (void)deserialize:(XReader *)reader
 {
     self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
-    self.headers = (MHVMessageHeaderItemCollection *)[reader readElementArray:c_element_headers
-                                                      asClass:[MHVMessageHeaderItem class]
-                                                      andArrayClass:[MHVMessageHeaderItemCollection class]];
+    self.headers = (MHVMessageHeaderThingCollection *)[reader readElementArray:c_element_headers
+                                                      asClass:[MHVMessageHeaderThing class]
+                                                      andArrayClass:[MHVMessageHeaderThingCollection class]];
     self.size = [reader readElementWithXmlName:x_element_size asClass:[MHVPositiveInt class]];
     self.summary = [reader readStringElementWithXmlName:x_element_summary];
     self.htmlBlobName = [reader readStringElementWithXmlName:x_element_htmlBlob];
@@ -151,9 +151,9 @@ static NSString *const c_element_attachments = @"attachments";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVMessage typeID]];
+    return [[MHVThing alloc] initWithType:[MHVMessage typeID]];
 }
 
 - (NSString *)typeName

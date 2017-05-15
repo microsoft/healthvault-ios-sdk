@@ -19,7 +19,7 @@
 #import "MHVCommon.h"
 #import "MHVRecord.h"
 #import "MHVPersonalImage.h"
-#import "MHVBlobPayloadItem.h"
+#import "MHVBlobPayloadThing.h"
 
 static NSString* const c_element_displayname = @"display-name";
 static NSString* const c_element_relationship = @"rel-name";

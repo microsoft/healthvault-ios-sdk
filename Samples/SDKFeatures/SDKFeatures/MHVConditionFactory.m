@@ -20,14 +20,14 @@
 
 @implementation MHVCondition (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date
++(MHVThingCollection *) createRandomForDay:(NSDate *) date
 {
-    MHVItem* item = [MHVCondition createRandom];
+    MHVThing* thing = [MHVCondition createRandom];
    
-    return [[MHVItemCollection alloc] initWithItem:item];
+    return [[MHVThingCollection alloc] initWithThing:thing];
 }
 
-+(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date
++(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date
 {
     return [MHVCondition createRandomForDay:date];
 }

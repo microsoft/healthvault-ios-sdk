@@ -234,9 +234,9 @@ static const xmlChar *x_element_wellbeing = XMLSTRINGCONST("wellbeing");
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVEmotionalState typeID]];
+    return [[MHVThing alloc] initWithType:[MHVEmotionalState typeID]];
 }
 
 - (NSString *)typeName

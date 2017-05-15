@@ -203,9 +203,9 @@ static const xmlChar *x_element_triglycerides = XMLSTRINGCONST("triglyceride");
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVCholesterol typeID]];
+    return [[MHVThing alloc] initWithType:[MHVCholesterol typeID]];
 }
 
 - (NSString *)typeName

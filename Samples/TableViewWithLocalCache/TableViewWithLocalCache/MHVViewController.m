@@ -20,7 +20,7 @@
 
 #import "MHVViewController.h"
 
-@implementation MHVItemsDataSource
+@implementation MHVThingsDataSource
 
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -47,12 +47,12 @@
     [self.parentController showStatus:@"Sync failed."];
 }
 
--(NSString *)effectiveDateStringForItem:(MHVItem *)item
+-(NSString *)effectiveDateStringForItem:(MHVThing *)item
 {
     return [super effectiveDateStringForItem:item];
 }
 
--(NSString *)descriptionStringForItem:(MHVItem *)item
+-(NSString *)descriptionStringForItem:(MHVThing *)item
 {
     return [super descriptionStringForItem:item];
 }
@@ -65,7 +65,7 @@
 -(void) initInternal;
 -(void) initTableForTypeID:(NSString *) typeID;
 
--(MHVItem *) createRandomItem;
+-(MHVThing *) createRandomItem;
 
 @end
 
@@ -121,7 +121,7 @@
     // This data source will display items from the local store, only going to HealthVault
     // if the data is not locally available
     //
-    m_dataSource = [[MHVItemsDataSource alloc] initForTable:self.itemTable withRecord:record andTypeID:typeID];
+    m_dataSource = [[MHVThingsDataSource alloc] initForTable:self.itemTable withRecord:record andTypeID:typeID];
     m_dataSource.parentController = self;
     
     if ((m_dataSource.typeView.count == 0) || [m_dataSource.typeView isStale:3600])
@@ -130,9 +130,9 @@
     }
 }
 
--(MHVItem *)createRandomItem
+-(MHVThing *)createRandomItem
 {
-    MHVItem* item = [MHVWeight newItem];
+    MHVThing* item = [MHVWeight newItem];
     
     item.weight.inPounds = [MHVRandom randomDoubleInRangeMin:130 max:150];
     item.weight.when = [[MHVDateTime alloc] initNow];

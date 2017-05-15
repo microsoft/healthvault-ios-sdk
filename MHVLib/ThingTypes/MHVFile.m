@@ -110,25 +110,25 @@ static NSString *const c_element_contentType = @"content-type";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVFile typeID]];
+    return [[MHVThing alloc] initWithType:[MHVFile typeID]];
 }
 
-+ (MHVItem *)newItemWithName:(NSString *)name andContentType:(NSString *)contentType
++ (MHVThing *)newThingWithName:(NSString *)name andContentType:(NSString *)contentType
 {
-    MHVItem *item = [self newItem];
+    MHVThing *thing = [self newThing];
     
-    if (!item)
+    if (!thing)
     {
         return nil;
     }
     
-    MHVFile *file = (MHVFile *)item.data.typed;
+    MHVFile *file = (MHVFile *)thing.data.typed;
     file.name = name;
     file.contentType = [MHVCodableValue fromText:contentType];
     
-    return item;
+    return thing;
 }
 
 @end

@@ -160,7 +160,7 @@ LError:
     return FALSE;
 }
 
--(MHVVocabItem *)getVocabItemForCode:(NSString *)code inVocab:(MHVVocabIdentifier *)vocabID
+-(MHVVocabThing *)getVocabThingForCode:(NSString *)code inVocab:(MHVVocabIdentifier *)vocabID
 {
     MHVVocabCodeSet* vocab  = [self getVocabWithID:vocabID];
     if (!vocab)
@@ -168,18 +168,18 @@ LError:
         return nil;
     }
     
-    return [vocab.items getItemWithCode:code];
+    return [vocab.things getThingWithCode:code];
 }
 
 -(NSString *)getDisplayTextForCode:(NSString *)code inVocab:(MHVVocabIdentifier *)vocabID
 {
-    MHVVocabItem* vocabItem = [self getVocabItemForCode:code inVocab:vocabID];
-    if (!vocabItem)
+    MHVVocabThing* vocabThing = [self getVocabThingForCode:code inVocab:vocabID];
+    if (!vocabThing)
     {
         return nil;
     }
     
-    return vocabItem.displayText;
+    return vocabThing.displayText;
 }
 
 @end

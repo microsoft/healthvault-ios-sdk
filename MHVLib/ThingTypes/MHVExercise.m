@@ -139,7 +139,7 @@ static MHVVocabIdentifier *s_vocabIDUnits;
         return nil;
     }
 
-    NSUInteger index = [self.details indexOfItemWithNameCode:name];
+    NSUInteger index = [self.details indexOfThingWithNameCode:name];
     
     if (index == NSNotFound)
     {
@@ -311,9 +311,9 @@ static MHVVocabIdentifier *s_vocabIDUnits;
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVExercise typeID]];
+    return [[MHVThing alloc] initWithType:[MHVExercise typeID]];
 }
 
 - (NSString *)typeName

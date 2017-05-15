@@ -176,9 +176,9 @@ static const xmlChar *x_element_heartbeat = XMLSTRINGCONST("irregular-heartbeat"
     return c_typeName;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVBloodPressure typeID]];
+    return [[MHVThing alloc] initWithType:[MHVBloodPressure typeID]];
 }
 
 - (NSString *)typeName

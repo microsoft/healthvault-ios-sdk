@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVHeartRate : MHVItemDataTyped
+@interface MHVHeartRate : MHVThingDataTyped
 
 //
 // (Required) - When the measurement was made
@@ -48,7 +48,7 @@
 
 - (instancetype)initWithBpm:(int)bpm andDate:(NSDate *)date;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

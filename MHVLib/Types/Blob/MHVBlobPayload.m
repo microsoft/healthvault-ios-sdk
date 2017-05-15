@@ -23,45 +23,45 @@ static NSString *const c_element_blob = @"blob";
 
 @interface MHVBlobPayload ()
 
-@property (readwrite, nonatomic, strong) MHVBlobPayloadItemCollection *items;
+@property (readwrite, nonatomic, strong) MHVBlobPayloadThingCollection *things;
 
 @end
 
 @implementation MHVBlobPayload
 
-- (MHVBlobPayloadItemCollection *)items
+- (MHVBlobPayloadThingCollection *)things
 {
-    if (!_items)
+    if (!_things)
     {
-        _items = [[MHVBlobPayloadItemCollection alloc] init];
+        _things = [[MHVBlobPayloadThingCollection alloc] init];
     }
     
-    return _items;
+    return _things;
 }
 
-- (BOOL)hasItems
+- (BOOL)hasThings
 {
-    return ![MHVCollection isNilOrEmpty:self.items];
+    return ![MHVCollection isNilOrEmpty:self.things];
 }
 
-- (MHVBlobPayloadItem *)getDefaultBlob
+- (MHVBlobPayloadThing *)getDefaultBlob
 {
     return [self getBlobNamed:c_emptyString];
 }
 
-- (MHVBlobPayloadItem *)getBlobNamed:(NSString *)name
+- (MHVBlobPayloadThing *)getBlobNamed:(NSString *)name
 {
-    if (!self.hasItems)
+    if (!self.hasThings)
     {
         return nil;
     }
     
-    return [self.items getBlobNamed:name];
+    return [self.things getBlobNamed:name];
 }
 
 - (NSURL *)getUrlForBlobNamed:(NSString *)name
 {
-    MHVBlobPayloadItem *blob = [self getBlobNamed:name];
+    MHVBlobPayloadThing *blob = [self getBlobNamed:name];
     
     if (!blob)
     {
@@ -71,27 +71,27 @@ static NSString *const c_element_blob = @"blob";
     return [NSURL URLWithString:blob.blobUrl];
 }
 
-- (BOOL)addOrUpdateBlob:(MHVBlobPayloadItem *)blob
+- (BOOL)addOrUpdateBlob:(MHVBlobPayloadThing *)blob
 {
     MHVCHECK_NOTNULL(blob);
     
-    if (self.items)
+    if (self.things)
     {
-        NSUInteger existingIndex = [self.items indexOfBlobNamed:blob.name];
+        NSUInteger existingIndex = [self.things indexOfBlobNamed:blob.name];
         if (existingIndex != NSNotFound)
         {
-            [self.items removeObjectAtIndex:existingIndex];
+            [self.things removeObjectAtIndex:existingIndex];
         }
     }
     
-    if (!self.items)
+    if (!self.things)
     {
-        self.items = [[MHVBlobPayloadItemCollection alloc] init];
+        self.things = [[MHVBlobPayloadThingCollection alloc] init];
     }
 
-    MHVCHECK_NOTNULL(self.items);
+    MHVCHECK_NOTNULL(self.things);
     
-    [self.items addObject:blob];
+    [self.things addObject:blob];
     
     return TRUE;
 }
@@ -100,21 +100,21 @@ static NSString *const c_element_blob = @"blob";
 {
     MHVVALIDATE_BEGIN
     
-    MHVVALIDATE_ARRAY(self.items, MHVClientError_InvalidBlobInfo);
+    MHVVALIDATE_ARRAY(self.things, MHVClientError_InvalidBlobInfo);
     
     MHVVALIDATE_SUCCESS
 }
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_blob elements:self.items.toArray];
+    [writer writeElementArray:c_element_blob elements:self.things.toArray];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.items = (MHVBlobPayloadItemCollection *)[reader readElementArray:c_element_blob
-                                                                  asClass:[MHVBlobPayloadItem class]
-                                                            andArrayClass:[MHVBlobPayloadItemCollection class]];
+    self.things = (MHVBlobPayloadThingCollection *)[reader readElementArray:c_element_blob
+                                                                  asClass:[MHVBlobPayloadThing class]
+                                                            andArrayClass:[MHVBlobPayloadThingCollection class]];
 }
 
 @end

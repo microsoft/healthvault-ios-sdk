@@ -155,9 +155,9 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVHeight typeID]];
+    return [[MHVThing alloc] initWithType:[MHVHeight typeID]];
 }
 
 - (NSString *)typeName

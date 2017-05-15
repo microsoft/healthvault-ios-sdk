@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVAssessment : MHVItemDataTyped
+@interface MHVAssessment : MHVThingDataTyped
 
 // -------------------------
 //
@@ -48,7 +48,7 @@
 // Initializers
 //
 // -------------------------
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

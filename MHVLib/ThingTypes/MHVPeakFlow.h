@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVPeakFlow : MHVItemDataTyped
+@interface MHVPeakFlow : MHVThingDataTyped
 
 //
 // Required
@@ -55,7 +55,7 @@
 // -------------------------
 - (instancetype)initWithDate:(NSDate *)when;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 
 // -------------------------

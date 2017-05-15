@@ -28,7 +28,7 @@ typedef NS_ENUM (NSInteger, MHVSleepiness)
 
 NSString *stringFromSleepiness(MHVSleepiness sleepiness);
 
-@interface MHVSleepJournalPM : MHVItemDataTyped
+@interface MHVSleepJournalPM : MHVThingDataTyped
 
 // -------------------------
 //
@@ -58,7 +58,7 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness);
 // Initializers
 //
 // -------------------------
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 - (NSString *)sleepinessAsString;
 

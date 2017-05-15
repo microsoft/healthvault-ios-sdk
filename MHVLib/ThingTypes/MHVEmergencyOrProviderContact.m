@@ -74,9 +74,9 @@ static NSString *const c_typename = @"person";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVEmergencyOrProviderContact typeID]];
+    return [[MHVThing alloc] initWithType:[MHVEmergencyOrProviderContact typeID]];
 }
 
 - (NSString *)typeName

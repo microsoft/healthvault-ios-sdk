@@ -21,7 +21,7 @@
 #import "MHVRandom.h"
 #import "XLib.h"
 #import "MHVClient.h"
-#import "MHVItemTypes.h"
+#import "MHVThingTypes.h"
 #import "MHVAsyncTask.h"
 #import "MHVBlob.h"
 #import "MHVVocab.h"

@@ -18,7 +18,7 @@
 //
 
 #import "MHVVocabIdentifier.h"
-#import "MHVVocabItem.h"
+#import "MHVVocabThing.h"
 #import "MHVVocabCodeSet.h"
 #import "MHVVocabParams.h"
 #import "MHVVocabSearchParams.h"

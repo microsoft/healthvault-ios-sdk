@@ -97,7 +97,7 @@ static const xmlChar *x_element_results = XMLSTRINGCONST("results");
     return self;
 }
 
-- (void)addItemsToCollection:(MHVLabTestResultsGroupCollection *)groups
+- (void)addThingsToCollection:(MHVLabTestResultsGroupCollection *)groups
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {

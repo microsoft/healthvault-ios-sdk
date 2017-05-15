@@ -22,37 +22,37 @@
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_family = @"family";
 static NSString *const c_element_version = @"version";
-static NSString *const c_element_item = @"code-item";
+static NSString *const c_element_thing = @"code-thing";
 static NSString *const c_element_truncated = @"is-vocab-truncated";
 static NSString *const c_element_codeset = @"code-set-result";
 
 @implementation MHVVocabCodeSet
 
-- (BOOL)hasItems
+- (BOOL)hasThings
 {
-    return (![NSArray isNilOrEmpty:self.items.toArray]);
+    return (![NSArray isNilOrEmpty:self.things.toArray]);
 }
 
-- (MHVVocabItemCollection *)items
+- (MHVVocabThingCollection *)things
 {
-    if (!_items)
+    if (!_things)
     {
-        _items = [[MHVVocabItemCollection alloc] init];
+        _things = [[MHVVocabThingCollection alloc] init];
     }
     
-    return _items;
+    return _things;
 }
 
 - (NSArray *)displayStrings
 {
-    return (self.items) ? [self.items displayStrings] : nil;
+    return (self.things) ? [self.things displayStrings] : nil;
 }
 
-- (void)sortItemsByDisplayText
+- (void)sortThingsByDisplayText
 {
-    if (self.items)
+    if (self.things)
     {
-        [self.items sortByDisplayText];
+        [self.things sortByDisplayText];
     }
 }
 
@@ -66,7 +66,7 @@ static NSString *const c_element_codeset = @"code-set-result";
     [writer writeElement:c_element_name value:self.name];
     [writer writeElement:c_element_family value:self.family];
     [writer writeElement:c_element_version value:self.version];
-    [writer writeElementArray:c_element_item elements:self.items.toArray];
+    [writer writeElementArray:c_element_thing elements:self.things.toArray];
     [writer writeElement:c_element_truncated content:self.isTruncated];
 }
 
@@ -75,7 +75,7 @@ static NSString *const c_element_codeset = @"code-set-result";
     self.name = [reader readStringElement:c_element_name];
     self.family = [reader readStringElement:c_element_family];
     self.version = [reader readStringElement:c_element_version];
-    self.items = (MHVVocabItemCollection *)[reader readElementArray:c_element_item asClass:[MHVVocabItem class] andArrayClass:[MHVVocabItemCollection class]];
+    self.things = (MHVVocabThingCollection *)[reader readElementArray:c_element_thing asClass:[MHVVocabThing class] andArrayClass:[MHVVocabThingCollection class]];
     self.isTruncated = [reader readElement:c_element_truncated asClass:[MHVBool class]];
 }
 

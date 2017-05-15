@@ -27,16 +27,16 @@
 //
 @interface MHVMethodFactory : NSObject
 
-- (MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record queries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)newGetThingsForRecord:(MHVRecordReference *)record queries:(MHVThingQueryCollection *)queries andCallback:(MHVTaskCompletion)callback;
 
-- (MHVPutItemsTask *)newPutItemsForRecord:(MHVRecordReference *)record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback;
-- (MHVRemoveItemsTask *)newRemoveItemsForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback;
+- (MHVPutThingsTask *)newPutThingsForRecord:(MHVRecordReference *)record things:(MHVThingCollection *)things andCallback:(MHVTaskCompletion)callback;
+- (MHVRemoveThingsTask *)newRemoveThingsForRecord:(MHVRecordReference *)record keys:(MHVThingKeyCollection *)keys andCallback:(MHVTaskCompletion)callback;
 
 @end
 
 @interface MHVMethodFactory (MHVMethodFactoryExtensions)
 
-- (MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record query:(MHVItemQuery *)query andCallback:(MHVTaskCompletion)callback;
-- (MHVPutItemsTask *)newPutItemForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)newGetThingsForRecord:(MHVRecordReference *)record query:(MHVThingQuery *)query andCallback:(MHVTaskCompletion)callback;
+- (MHVPutThingsTask *)newPutThingForRecord:(MHVRecordReference *)record thing:(MHVThing *)thing andCallback:(MHVTaskCompletion)callback;
 
 @end

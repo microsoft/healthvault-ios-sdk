@@ -23,12 +23,12 @@
 
 @implementation MHVWeightTypeDataSource
 
--(NSString *)effectiveDateStringForItem:(MHVItem *)item
+-(NSString *)effectiveDateStringForItem:(MHVThing *)item
 {
     return [item.effectiveDate toStringWithFormat:@"MM-dd-yyyy hh:mm a"];
 }
 
--(NSString *)descriptionStringForItem:(MHVItem *)item
+-(NSString *)descriptionStringForItem:(MHVThing *)item
 {
     return [item.weight stringInPoundsWithFormat:@"%.2f lbs"];
 }
@@ -145,7 +145,7 @@ LError:
     // the appropriate methods on MHVLocalVault or MHVLocalRecordStore
     // This will try to automatically upload changes every 15 seconds..
     //
-    m_commitScheduler = [[MHVItemCommitScheduler alloc] initWithFrequency:15];
+    m_commitScheduler = [[MHVThingCommitScheduler alloc] initWithFrequency:15];
     HVCHECK_NOTNULL(m_commitScheduler);
     
     m_commitScheduler.isEnabled = TRUE;
@@ -232,7 +232,7 @@ LError:
 
 -(void)addNewItem
 {
-    MHVItem* item = [MHVWeight newItem];
+    MHVThing* item = [MHVWeight newItem];
     
     [item.weight setInPounds:[self generateRandomWeight]];
     item.weight.when = [[MHVDateTime alloc] initNow];
@@ -270,14 +270,14 @@ LError:
     //
     // To edit an item, we must first open it for editing
     //
-    MHVItemEditOperation* editOp = [m_type openItemForEditAtIndex:itemIndex];
+    MHVThingEditOperation* editOp = [m_type openItemForEditAtIndex:itemIndex];
     if (!editOp)
     {
         [MHVUIAlert showInformationalMessage:@"Item is locked."];
         return;
     }
     
-    MHVItem* item = editOp.item;
+    MHVThing* item = editOp.item;
     item.weight.inPounds = [self generateRandomWeight];
     //
     // This will commit the change. You can also call [editOp cancel]

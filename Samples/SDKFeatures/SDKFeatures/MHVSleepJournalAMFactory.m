@@ -20,23 +20,23 @@
 
 @implementation MHVSleepJournalAM (MHVFactoryMethods)
 
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date
++(MHVThingCollection *)createRandomForDay:(NSDate *)date
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     
-    MHVItem* item = [MHVSleepJournalAM createRandomForDate:[MHVDateTime fromDate:date] withAwakenings:FALSE];
+    MHVThing* thing = [MHVSleepJournalAM createRandomForDate:[MHVDateTime fromDate:date] withAwakenings:FALSE];
     NSString* meds = [MHVSleepJournalAM pickRandomDrug];
     if (meds)
     {
-        item.sleepJournalAM.medicationsBeforeBed = [MHVCodableValue fromText:meds];
+        thing.sleepJournalAM.medicationsBeforeBed = [MHVCodableValue fromText:meds];
     }
     
-    [items addObject:item];
+    [things addObject:thing];
     
-    return items;
+    return things;
 }
 
-+(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
++(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVSleepJournalAM createRandomForDay:date];
 }

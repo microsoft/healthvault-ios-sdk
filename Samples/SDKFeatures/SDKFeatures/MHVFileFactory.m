@@ -22,12 +22,12 @@
 
 @implementation MHVFile(MHVFactoryMethods)
 
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date
++(MHVThingCollection *)createRandomForDay:(NSDate *)date
 {
     return nil;
 }
 
-+(MHVItemDataTypedFeatures *)moreFeatures
++(MHVThingDataTypedFeatures *)moreFeatures
 {
     return [[MHVFileFeatures alloc] init];
 }

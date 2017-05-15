@@ -21,25 +21,25 @@
 
 @implementation MHVEmotionalState (MHVFactoryMethods)
 
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date
++(MHVThingCollection *)createRandomForDay:(NSDate *)date
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     //
     // Two mood checks per day
     //
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:7 max:11];
-    [items addObject:[MHVEmotionalState createRandomForDate:dateTime]];
+    [things addObject:[MHVEmotionalState createRandomForDate:dateTime]];
     
     dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:16 max:20];
     
-    [items addObject:[MHVEmotionalState createRandomForDate:dateTime]];
+    [things addObject:[MHVEmotionalState createRandomForDate:dateTime]];
     
-    return items;
+    return things;
 }
 
-+(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
++(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVEmotionalState createRandomForDay:date];
 }

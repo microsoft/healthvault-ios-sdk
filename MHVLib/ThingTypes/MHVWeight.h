@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVWeight : MHVItemDataTyped
+@interface MHVWeight : MHVThingDataTyped
 
 // -------------------------
 //
@@ -50,9 +50,9 @@
 - (instancetype)initWithKg:(double)kg andDate:(NSDate *)date;
 - (instancetype)initWithPounds:(double)pounds andDate:(NSDate *)date;
 
-+ (MHVItem *)newItem;
-+ (MHVItem *)newItemWithKg:(double)kg andDate:(NSDate *)date;
-+ (MHVItem *)newItemWithPounds:(double)pounds andDate:(NSDate *)date;
++ (MHVThing *)newThing;
++ (MHVThing *)newThingWithKg:(double)kg andDate:(NSDate *)date;
++ (MHVThing *)newThingWithPounds:(double)pounds andDate:(NSDate *)date;
 
 // -------------------------
 //

@@ -21,11 +21,11 @@
 #import "MHVTypes.h"
 #import "MHVVocab.h"
 
-@interface MHVDietaryIntake : MHVItemDataTyped
+@interface MHVDietaryIntake : MHVThingDataTyped
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) MHVCodableValue *foodItem;
+@property (readwrite, nonatomic, strong) MHVCodableValue *foodThing;
 //
 // (Optional)
 //
@@ -113,6 +113,6 @@
 + (NSString *)typeID;
 + (NSString *)XRootElement;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 @end

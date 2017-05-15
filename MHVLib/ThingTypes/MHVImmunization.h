@@ -20,7 +20,7 @@
 #import "MHVTypes.h"
 #import "MHVVocab.h"
 
-@interface MHVImmunization : MHVItemDataTyped
+@interface MHVImmunization : MHVThingDataTyped
 
 // -------------------------
 //
@@ -85,7 +85,7 @@
 
 - (instancetype)initWithName:(NSString *)name;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import "MHVDirectory.h"
-#import "MHVLocalItemStore.h"
+#import "MHVLocalThingStore.h"
 #import "MHVLocalVocabStore.h"
 #import "MHVCachingObjectStore.h"
 #import "MHVPartitionedStore.h"
@@ -27,8 +27,8 @@
 #import "MHVStoredQuery.h"
 #import "MHVSynchronizedStore.h"
 #import "MHVSynchronizedType.h"
-#import "MHVItemChangeManager.h"
+#import "MHVThingChangeManager.h"
 #import "MHVSynchronizationManager.h"
-#import "MHVItemCommitScheduler.h"
+#import "MHVThingCommitScheduler.h"
 #import "MHVTypeViewRefresher.h"
-#import "MHVBatchItemDownloader.h"
+#import "MHVBatchThingDownloader.h"

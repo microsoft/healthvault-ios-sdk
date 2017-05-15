@@ -22,7 +22,7 @@
 #import "MHVSynchronizedStore.h"
 #import "MHVCachingObjectStore.h"
 #import "MHVStoredQuery.h"
-#import "MHVItemChangeManager.h"
+#import "MHVThingChangeManager.h"
 
 static NSString* const c_view = @"view";
 static NSString* const c_personalImage = @"personalImage";

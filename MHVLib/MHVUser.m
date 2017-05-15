@@ -245,7 +245,7 @@ static NSString *const c_element_instanceID = @"instanceID";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_name value:self.name];
-    [writer writeElementArray:c_element_recordarray itemName:c_element_record elements:self.records.toArray];
+    [writer writeElementArray:c_element_recordarray thingName:c_element_record elements:self.records.toArray];
     [writer writeElement:c_element_current intValue:(int)self.currentRecordIndex];
     [writer writeElement:c_element_environment value:self.environment];
     [writer writeElement:c_element_instanceID value:self.instanceID];
@@ -254,7 +254,7 @@ static NSString *const c_element_instanceID = @"instanceID";
 - (void)deserialize:(XReader *)reader
 {
     self.name = [reader readStringElement:c_element_name];
-    self.records = (MHVRecordCollection *)[reader readElementArray:c_element_recordarray itemName:c_element_record asClass:[MHVRecord class] andArrayClass:[MHVRecordCollection class]];
+    self.records = (MHVRecordCollection *)[reader readElementArray:c_element_recordarray thingName:c_element_record asClass:[MHVRecord class] andArrayClass:[MHVRecordCollection class]];
     self.currentRecordIndex = [reader readIntElement:c_element_current];
     self.environment = [reader readStringElement:c_element_environment];
     self.instanceID = [reader readStringElement:c_element_instanceID];

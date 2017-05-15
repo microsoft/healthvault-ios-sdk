@@ -18,17 +18,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVBlobPayloadItem.h"
+#import "MHVBlobPayloadThing.h"
 
 @interface MHVBlobPayload : MHVType
 
-@property (strong, readonly, nonatomic) MHVBlobPayloadItemCollection *items;
-@property (readonly, nonatomic) BOOL hasItems;
+@property (strong, readonly, nonatomic) MHVBlobPayloadThingCollection *things;
+@property (readonly, nonatomic) BOOL hasThings;
 
-- (MHVBlobPayloadItem *)getDefaultBlob;
-- (MHVBlobPayloadItem *)getBlobNamed:(NSString *)name;
+- (MHVBlobPayloadThing *)getDefaultBlob;
+- (MHVBlobPayloadThing *)getBlobNamed:(NSString *)name;
 - (NSURL *)getUrlForBlobNamed:(NSString *)name;
 
-- (BOOL)addOrUpdateBlob:(MHVBlobPayloadItem *)blob;
+- (BOOL)addOrUpdateBlob:(MHVBlobPayloadThing *)blob;
 
 @end

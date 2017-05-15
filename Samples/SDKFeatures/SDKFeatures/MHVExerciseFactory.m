@@ -20,33 +20,33 @@
 
 @implementation MHVExercise (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date
++(MHVThingCollection *) createRandomForDay:(NSDate *) date
 {
     return [MHVExercise createRandomForDay:date metric:FALSE];
 }
 
-+(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
++(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVExercise createRandomForDay:date metric:TRUE];
 }
 
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date metric:(BOOL)metric
++(MHVThingCollection *)createRandomForDay:(NSDate *)date metric:(BOOL)metric
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     //
     // Create 2 entries per day - MOST days. This person really likes to exercise!
     // 
     MHVApproxDateTime* approxDateTime = [MHVApproxDateTime fromDate:date];
     approxDateTime.dateTime.time.hour = [MHVRandom randomIntInRangeMin:7 max:9];
     
-    [items addObject:[MHVExercise createRandomForDate:approxDateTime metric:metric]];
+    [things addObject:[MHVExercise createRandomForDate:approxDateTime metric:metric]];
     
     approxDateTime = [MHVApproxDateTime fromDate:date];
     approxDateTime.dateTime.time.hour = [MHVRandom randomIntInRangeMin:16 max:19];
     
-    [items addObject:[MHVExercise createRandomForDate:approxDateTime metric:metric]];
+    [things addObject:[MHVExercise createRandomForDate:approxDateTime metric:metric]];
     
-    return items;    
+    return things;    
 }
 
 @end

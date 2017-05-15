@@ -33,7 +33,7 @@ typedef NS_ENUM (NSInteger, MHVWakeState)
 // Journal entries you make when you wake up in the morning
 //
 // -------------------------
-@interface MHVSleepJournalAM : MHVItemDataTyped
+@interface MHVSleepJournalAM : MHVThingDataTyped
 
 // -------------------------
 //
@@ -88,7 +88,7 @@ typedef NS_ENUM (NSInteger, MHVWakeState)
 
 - (instancetype)initWithBedtime:(NSDate *)bedtime onDate:(NSDate *)date settlingMinutes:(int)settlingMinutes sleepingMinutes:(int)sleepingMinutes wokeupAt:(NSDate *)wakeTime;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

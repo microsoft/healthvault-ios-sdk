@@ -18,53 +18,53 @@
 
 #import <UIKit/UIKit.h>
 #import "MHVLib.h"
-#import "MHVItemDataTypedFactory.h"
+#import "MHVThingDataTypedFactory.h"
 #import "MHVStatusLabel.h"
-#import "MHVItemDataTypedFeatures.h"
+#import "MHVThingDataTypedFeatures.h"
 #import "MHVUIAlert.h"
 
 @interface MHVTypeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
     Class m_typeClass;
-    MHVItemCollection* m_items;
-    MHVItemDataTypedFeatures* m_moreFeatures;
+    MHVThingCollection* m_things;
+    MHVThingDataTypedFeatures* m_moreFeatures;
     
     MHVStatusLabel* m_statusLabel;
-    UITableView* m_itemTable;
+    UITableView* m_thingTable;
     UIBarButtonItem* m_moreActions;
     
     BOOL m_useMetric;
     NSInteger m_maxDaysOffsetRandomData;  // Create new data for a day with max this offset from today. (1)
-    BOOL m_createMultiple;                // Whether to create one or multiple random items when the user clicks Add. (False)
+    BOOL m_createMultiple;                // Whether to create one or multiple random things when the user clicks Add. (False)
 }
 
-@property (readonly, nonatomic, strong) MHVItemCollection* items;
+@property (readonly, nonatomic, strong) MHVThingCollection* things;
 
 @property (readwrite, nonatomic, strong) IBOutlet MHVStatusLabel* statusLabel;
-@property (readwrite, nonatomic, strong) IBOutlet UITableView *itemTable;
+@property (readwrite, nonatomic, strong) IBOutlet UITableView *thingTable;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *moreActions;
 
 -(id) initWithTypeClass:(Class) typeClass useMetric:(BOOL) metric;
 
-- (IBAction)addItem:(id)sender;
-- (IBAction)removeItem:(id)sender;
+- (IBAction)addThing:(id)sender;
+- (IBAction)removeThing:(id)sender;
 - (IBAction)moreClicked:(id)sender;
 
 //
-// Returns the item in the table that is currently selected
+// Returns the thing in the table that is currently selected
 //
--(MHVItem *) getSelectedItem;
+-(MHVThing *) getSelectedThing;
 
 //
 // Add random data for ONE DAY for the type currently selected by the user
-// For types like DietaryIntake, this may create more than one item
+// For types like DietaryIntake, this may create more than one thing
 // The data has a date within m_maxDaysOffsetRandomData from the current date
 //
 -(void) addRandomData:(BOOL) isMetric;
--(void) removeCurrentItem;
+-(void) removeCurrentThing;
 
 -(void) refreshView;
--(void) getItemsFromHealthVault;
+-(void) getThingsFromHealthVault;
 -(void) showActivityAndStatus:(NSString *) status;
 -(void) clearStatus;
 

@@ -20,18 +20,18 @@
 
 @implementation MHVBloodPressure (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date
++(MHVThingCollection *) createRandomForDay:(NSDate *) date
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     
     // Typically 1 a day
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = 8;  // Morning
     dateTime.time.minute = 35;
     
-    [items addObject:[MHVBloodPressure createRandomForDate:dateTime withPulse:TRUE]];
+    [things addObject:[MHVBloodPressure createRandomForDate:dateTime withPulse:TRUE]];
     
-    return items;
+    return things;
 }
 
 @end

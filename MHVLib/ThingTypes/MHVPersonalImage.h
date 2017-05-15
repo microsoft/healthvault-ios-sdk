@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVPersonalImage : MHVItemDataTyped
+@interface MHVPersonalImage : MHVThingDataTyped
 
 // -------------------------
 //
@@ -28,7 +28,7 @@
 //
 // -------------------------
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVBloodPressure : MHVItemDataTyped
+@interface MHVBloodPressure : MHVThingDataTyped
 
 // -------------------------
 //
@@ -66,7 +66,7 @@
 - (instancetype)initWithSystolic:(int)sVal diastolic:(int)dVal;
 - (instancetype)initWithSystolic:(int)sVal diastolic:(int)dVal andDate:(NSDate *)date;
 - (instancetype)initWithSystolic:(int)sVal diastolic:(int)dVal pulse:(int)pVal;
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

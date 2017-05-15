@@ -38,7 +38,7 @@ MHVGender stringToGender(NSString* genderString);
 // MHVPersonalDemographics contains more personal information that the user may wish to
 // keep entirely private. 
 //
-@interface MHVBasicDemographics : MHVItemDataTyped
+@interface MHVBasicDemographics : MHVThingDataTyped
 
 //-------------------------
 //
@@ -61,7 +61,7 @@ MHVGender stringToGender(NSString* genderString);
 // Initializers
 //
 //-------------------------
-+(MHVItem *) newItem;
++(MHVThing *) newThing;
 
 //-------------------------
 //

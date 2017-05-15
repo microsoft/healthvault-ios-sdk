@@ -102,9 +102,9 @@ static NSString *const c_element_reason = @"stop-reason";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVCondition typeID]];
+    return [[MHVThing alloc] initWithType:[MHVCondition typeID]];
 }
 
 - (NSString *)typeName

@@ -21,7 +21,7 @@
 #import "MHVVocab.h"
 
 
-@interface MHVMedication : MHVItemDataTyped
+@interface MHVMedication : MHVThingDataTyped
 
 // -------------------------
 //
@@ -91,7 +91,7 @@
 // -------------------------
 - (instancetype)initWithName:(NSString *)name;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

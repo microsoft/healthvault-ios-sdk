@@ -18,10 +18,10 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVMessage : MHVItemDataTyped
+@interface MHVMessage : MHVThingDataTyped
 
 @property (readwrite, nonatomic, strong) MHVDateTime *when;
-@property (readwrite, nonatomic, strong) MHVMessageHeaderItemCollection *headers;
+@property (readwrite, nonatomic, strong) MHVMessageHeaderThingCollection *headers;
 @property (readwrite, nonatomic, strong) MHVPositiveInt *size;
 @property (readwrite, nonatomic, strong) NSString *summary;
 @property (readwrite, nonatomic, strong) NSString *htmlBlobName;

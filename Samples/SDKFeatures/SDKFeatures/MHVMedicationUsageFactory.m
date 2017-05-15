@@ -20,24 +20,24 @@
 
 @implementation MHVDailyMedicationUsage (MHVFactoryMethods)
 
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date
++(MHVThingCollection *)createRandomForDay:(NSDate *)date
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     
     MHVDate* hvDate = [MHVDate fromDate:date];
     //
-    // Record 2-4 items a day
+    // Record 2-4 things a day
     //
     NSInteger count = [MHVRandom randomIntInRangeMin:2 max:4];
     for (NSInteger i = 0; i < count; ++i)
     {
-        [items addObject:[MHVDailyMedicationUsage createRandomForDate:hvDate forDrug:[MHVDailyMedicationUsage pickRandomDrug]]];
+        [things addObject:[MHVDailyMedicationUsage createRandomForDate:hvDate forDrug:[MHVDailyMedicationUsage pickRandomDrug]]];
     }
     
-    return items;
+    return things;
 }
 
-+(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
++(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVDailyMedicationUsage createRandomForDay:date];
 }

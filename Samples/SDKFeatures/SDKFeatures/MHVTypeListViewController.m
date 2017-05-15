@@ -172,8 +172,8 @@
 
     [typeList sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
     {
-        MHVItemDataTyped *t1 = (MHVItemDataTyped *)obj1;
-        MHVItemDataTyped *t2 = (MHVItemDataTyped *)obj2;
+        MHVThingDataTyped *t1 = (MHVThingDataTyped *)obj1;
+        MHVThingDataTyped *t2 = (MHVThingDataTyped *)obj2;
         return [[[t1 class] XRootElement] compare:[[t2 class] XRootElement]];
     }];
 

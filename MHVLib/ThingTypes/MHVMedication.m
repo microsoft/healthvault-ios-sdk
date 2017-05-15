@@ -153,9 +153,9 @@ static NSString *const c_element_prescription = @"prescription";
     return NSLocalizedString(@"Medication", @"Medication Type Name");
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVMedication typeID]];
+    return [[MHVThing alloc] initWithType:[MHVMedication typeID]];
 }
 
 @end

@@ -31,7 +31,7 @@
 		5D3EBB0D16794B1C00BDE25E /* MHVWeightFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EBB0C16794B1C00BDE25E /* MHVWeightFactory.m */; };
 		5D78987C17149A500015D375 /* MHVTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D78987A17149A500015D375 /* MHVTypeViewController.m */; };
 		5D78987D17149A500015D375 /* MHVTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D78987B17149A500015D375 /* MHVTypeViewController.xib */; };
-		5D7898811714A4C90015D375 /* MHVItemDataTypedFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7898801714A4C90015D375 /* MHVItemDataTypedFactory.m */; };
+		5D7898811714A4C90015D375 /* MHVThingDataTypedFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7898801714A4C90015D375 /* MHVThingDataTypedFactory.m */; };
 		5D789913171618540015D375 /* MHVFeatureActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789912171618540015D375 /* MHVFeatureActions.m */; };
 		5D789916171626F60015D375 /* MHVMoreFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789915171626F60015D375 /* MHVMoreFeatures.m */; };
 		5D789936171736050015D375 /* MHVMedicationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D789935171736050015D375 /* MHVMedicationFactory.m */; };
@@ -48,7 +48,7 @@
 		5DD6C2C01679121300A658D8 /* MHVBloodGlucoseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C2BF1679121300A658D8 /* MHVBloodGlucoseFactory.m */; };
 		5DD6C2E016791ACD00A658D8 /* MHVSleepJournalAMFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD6C2DF16791ACD00A658D8 /* MHVSleepJournalAMFactory.m */; };
 		5DEC254C178B573A00FE971B /* MHVFileFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC254B178B573A00FE971B /* MHVFileFeatures.m */; };
-		5DEC255A178B5A7F00FE971B /* MHVItemDataTypedFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC2559178B5A7F00FE971B /* MHVItemDataTypedFeatures.m */; };
+		5DEC255A178B5A7F00FE971B /* MHVThingDataTypedFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC2559178B5A7F00FE971B /* MHVThingDataTypedFeatures.m */; };
 		5DEC255D178B680400FE971B /* MHVFileFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC255C178B680400FE971B /* MHVFileFactory.m */; };
 /* End PBXBuildFile section */
 
@@ -89,8 +89,8 @@
 		5D78987917149A500015D375 /* MHVTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTypeViewController.h; sourceTree = "<group>"; };
 		5D78987A17149A500015D375 /* MHVTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTypeViewController.m; sourceTree = "<group>"; };
 		5D78987B17149A500015D375 /* MHVTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVTypeViewController.xib; sourceTree = "<group>"; };
-		5D78987F1714A4C90015D375 /* MHVItemDataTypedFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVItemDataTypedFactory.h; sourceTree = "<group>"; };
-		5D7898801714A4C90015D375 /* MHVItemDataTypedFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVItemDataTypedFactory.m; sourceTree = "<group>"; };
+		5D78987F1714A4C90015D375 /* MHVThingDataTypedFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingDataTypedFactory.h; sourceTree = "<group>"; };
+		5D7898801714A4C90015D375 /* MHVThingDataTypedFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingDataTypedFactory.m; sourceTree = "<group>"; };
 		5D789911171618530015D375 /* MHVFeatureActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFeatureActions.h; sourceTree = "<group>"; };
 		5D789912171618540015D375 /* MHVFeatureActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFeatureActions.m; sourceTree = "<group>"; };
 		5D789914171626F60015D375 /* MHVMoreFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMoreFeatures.h; sourceTree = "<group>"; };
@@ -121,8 +121,8 @@
 		5DD6C2DF16791ACD00A658D8 /* MHVSleepJournalAMFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSleepJournalAMFactory.m; sourceTree = "<group>"; };
 		5DEC254A178B573900FE971B /* MHVFileFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFileFeatures.h; sourceTree = "<group>"; };
 		5DEC254B178B573A00FE971B /* MHVFileFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVFileFeatures.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5DEC2558178B5A7F00FE971B /* MHVItemDataTypedFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVItemDataTypedFeatures.h; sourceTree = "<group>"; };
-		5DEC2559178B5A7F00FE971B /* MHVItemDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVItemDataTypedFeatures.m; sourceTree = "<group>"; };
+		5DEC2558178B5A7F00FE971B /* MHVThingDataTypedFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingDataTypedFeatures.h; sourceTree = "<group>"; };
+		5DEC2559178B5A7F00FE971B /* MHVThingDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingDataTypedFeatures.m; sourceTree = "<group>"; };
 		5DEC255B178B680400FE971B /* MHVFileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFileFactory.h; sourceTree = "<group>"; };
 		5DEC255C178B680400FE971B /* MHVFileFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFileFactory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,8 +197,8 @@
 				5D789912171618540015D375 /* MHVFeatureActions.m */,
 				5D789914171626F60015D375 /* MHVMoreFeatures.h */,
 				5D789915171626F60015D375 /* MHVMoreFeatures.m */,
-				5D78987F1714A4C90015D375 /* MHVItemDataTypedFactory.h */,
-				5D7898801714A4C90015D375 /* MHVItemDataTypedFactory.m */,
+				5D78987F1714A4C90015D375 /* MHVThingDataTypedFactory.h */,
+				5D7898801714A4C90015D375 /* MHVThingDataTypedFactory.m */,
 				5DD6C2BE1679121300A658D8 /* MHVBloodGlucoseFactory.h */,
 				5DD6C2BF1679121300A658D8 /* MHVBloodGlucoseFactory.m */,
 				5D3EBAB01679268E00BDE25E /* MHVBloodPressureFactory.h */,
@@ -231,8 +231,8 @@
 				5D3EBB0C16794B1C00BDE25E /* MHVWeightFactory.m */,
 				5D789955171758E90015D375 /* MHVStatusLabel.h */,
 				5D789956171758E90015D375 /* MHVStatusLabel.m */,
-				5DEC2558178B5A7F00FE971B /* MHVItemDataTypedFeatures.h */,
-				5DEC2559178B5A7F00FE971B /* MHVItemDataTypedFeatures.m */,
+				5DEC2558178B5A7F00FE971B /* MHVThingDataTypedFeatures.h */,
+				5DEC2559178B5A7F00FE971B /* MHVThingDataTypedFeatures.m */,
 				5DEC254A178B573900FE971B /* MHVFileFeatures.h */,
 				5DEC254B178B573A00FE971B /* MHVFileFeatures.m */,
 				4C0011991EBCC05000BABFBA /* MHVUIAlert.h */,
@@ -340,7 +340,7 @@
 				5D3EBACD16793D9200BDE25E /* MHVCholesterolFactory.m in Sources */,
 				5D3EBB0D16794B1C00BDE25E /* MHVWeightFactory.m in Sources */,
 				5D78987C17149A500015D375 /* MHVTypeViewController.m in Sources */,
-				5D7898811714A4C90015D375 /* MHVItemDataTypedFactory.m in Sources */,
+				5D7898811714A4C90015D375 /* MHVThingDataTypedFactory.m in Sources */,
 				5D789913171618540015D375 /* MHVFeatureActions.m in Sources */,
 				5D789916171626F60015D375 /* MHVMoreFeatures.m in Sources */,
 				4C00119B1EBCC05000BABFBA /* MHVUIAlert.m in Sources */,
@@ -351,7 +351,7 @@
 				5D789957171758E90015D375 /* MHVStatusLabel.m in Sources */,
 				5DEC254C178B573A00FE971B /* MHVFileFeatures.m in Sources */,
 				5D0645B818454D7000D306CC /* MHVHeartRateFactory.m in Sources */,
-				5DEC255A178B5A7F00FE971B /* MHVItemDataTypedFeatures.m in Sources */,
+				5DEC255A178B5A7F00FE971B /* MHVThingDataTypedFeatures.m in Sources */,
 				5DEC255D178B680400FE971B /* MHVFileFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

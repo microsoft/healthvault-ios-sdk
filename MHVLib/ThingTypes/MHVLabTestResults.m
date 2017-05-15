@@ -47,7 +47,7 @@ static const xmlChar *x_element_orderedBy = XMLSTRINGCONST("ordered-by");
 
     if (self.labGroup)
     {
-        [self.labGroup addItemsToCollection:allGroups];
+        [self.labGroup addThingsToCollection:allGroups];
     }
 
     return allGroups;
@@ -98,9 +98,9 @@ static const xmlChar *x_element_orderedBy = XMLSTRINGCONST("ordered-by");
     return [self toString];
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVLabTestResults typeID]];
+    return [[MHVThing alloc] initWithType:[MHVLabTestResults typeID]];
 }
 
 + (NSString *)typeID

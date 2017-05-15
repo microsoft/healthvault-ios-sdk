@@ -35,7 +35,7 @@ typedef NS_ENUM (NSInteger, MHVServerStatusCode)
     MHVServerStatusCodeInvalidPerson = 9,
     MHVServerStatusCodeInvalidRecord = 10,
     MHVServerStatusCodeAccessDenied = 11,
-    MHVServerStatusCodeInvalidItem = 13,
+    MHVServerStatusCodeInvalidThing = 13,
     MHVServerStatusCodeInvalidFilter = 15,
     MHVServerStatusCodeInvalidApplicationAuthorization = 18,
     MHVServerStatusCodeTypeIDNotFound = 19,
@@ -74,9 +74,9 @@ typedef NS_ENUM (NSInteger, MHVServerStatusCode)
 @property (readonly, nonatomic) BOOL isAccessDenied;
 @property (readonly, nonatomic) BOOL isServerTokenError;
 @property (readonly, nonatomic) BOOL isInvalidTarget;
-@property (readonly, nonatomic) BOOL isItemNotFound;
+@property (readonly, nonatomic) BOOL isThingNotFound;
 @property (readonly, nonatomic) BOOL isVersionStampMismatch;
-@property (readonly, nonatomic) BOOL isItemKeyNotFound;
+@property (readonly, nonatomic) BOOL isThingKeyNotFound;
 @property (readonly, nonatomic) BOOL isServerError;
 
 - (void)clear;

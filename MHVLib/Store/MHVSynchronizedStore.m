@@ -17,31 +17,31 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVTypeViewItem.h"
+#import "MHVTypeViewThing.h"
 #import "MHVTypeView.h"
 #import "MHVSynchronizedStore.h"
-#import "MHVLocalItemStore.h"
+#import "MHVLocalThingStore.h"
 #import "MHVSynchronizationManager.h"
 #import "MHVClient.h"
 
 @interface MHVSynchronizedStore (MHVPrivate) 
 
--(void) setLocalStore:(id<MHVItemStore>) store;
+-(void) setLocalStore:(id<MHVThingStore>) store;
 
 //
-// If a local item with the right version is not found and nullForNotFound is FALSE, does not create an NSNull entry...
+// If a local thing with the right version is not found and nullForNotFound is FALSE, does not create an NSNull entry...
 //
--(MHVItemCollection *) getLocalItemsWithKeys:(MHVItemKeyCollection *)keys nullForNotFound:(BOOL) includeNull;
+-(MHVThingCollection *) getLocalThingsWithKeys:(MHVThingKeyCollection *)keys nullForNotFound:(BOOL) includeNull;
 
--(void) completedGetItemsTask:(MHVTask *) task;
--(void) completedDownloadKeys:(MHVItemKeyCollection *) keys inView:(MHVTypeView *) view task:(MHVTask *) task;
--(MHVItemQuery *) newQueryFromKeys:(MHVItemKeyCollection *) keys;
+-(void) completedGetThingsTask:(MHVTask *) task;
+-(void) completedDownloadKeys:(MHVThingKeyCollection *) keys inView:(MHVTypeView *) view task:(MHVTask *) task;
+-(MHVThingQuery *) newQueryFromKeys:(MHVThingKeyCollection *) keys;
 
--(BOOL) updateItemsInLocalStore:(MHVItemCollection *)items;
--(BOOL) replaceLocalItemWithDownloaded:(MHVItem *) item;
+-(BOOL) updateThingsInLocalStore:(MHVThingCollection *)things;
+-(BOOL) replaceLocalThingWithDownloaded:(MHVThing *) thing;
 
--(void) notifyView:(MHVTypeView *) view ofItems:(MHVItemCollection *) items requestedKeys:(MHVItemKeyCollection *) requestedKeys;
--(void) notifyView:(MHVTypeView *)view ofError:(id) error retrievingKeys:(MHVItemKeyCollection *) keys;
+-(void) notifyView:(MHVTypeView *) view ofThings:(MHVThingCollection *) things requestedKeys:(MHVThingKeyCollection *) requestedKeys;
+-(void) notifyView:(MHVTypeView *)view ofError:(id) error retrievingKeys:(MHVThingKeyCollection *) keys;
 
 @end
 
@@ -59,10 +59,10 @@
 {
     MHVCHECK_NOTNULL(store);
     
-    MHVLocalItemStore* localStore = [[MHVLocalItemStore alloc] initWithObjectStore:store];
+    MHVLocalThingStore* localStore = [[MHVLocalThingStore alloc] initWithObjectStore:store];
     MHVCHECK_NOTNULL(localStore);
     
-    self = [self initOverItemStore:localStore];
+    self = [self initOverThingStore:localStore];
     
     return self;
     
@@ -70,7 +70,7 @@ LError:
     MHVALLOC_FAIL;
 }
 
--(id)initOverItemStore:(id<MHVItemStore>)store
+-(id)initOverThingStore:(id<MHVThingStore>)store
 {
     MHVCHECK_NOTNULL(store);
     
@@ -78,7 +78,7 @@ LError:
     MHVCHECK_SELF;
         
     self.localStore = store;
-    m_sections = MHVItemSection_Standard;
+    m_sections = MHVThingSection_Standard;
      
     return self;
 
@@ -92,61 +92,61 @@ LError:
     [m_localStore clearCache];
 }
 
--(MHVItem *)getlocalItemWithID:(NSString *)itemID
+-(MHVThing *)getlocalThingWithID:(NSString *)thingID
 {
-    return [m_localStore getItem:itemID];
+    return [m_localStore getThing:thingID];
 }
 
--(MHVItem *)getLocalItemWithKey:(MHVItemKey *)key
+-(MHVThing *)getLocalThingWithKey:(MHVThingKey *)key
 {
     MHVCHECK_NOTNULL(key);
     
-    MHVItem* item  = [self getlocalItemWithID:key.itemID];
-    if (!item)
+    MHVThing* thing  = [self getlocalThingWithID:key.thingID];
+    if (!thing)
     {
         return nil;
     }
     
     if (!key.hasVersion)
     {
-        // Did not want a version specific item.. so return the item we have
-        return item;
+        // Did not want a version specific thing.. so return the thing we have
+        return thing;
     }
     
-    if ([item isVersion:key.version]) // Check version stamp
+    if ([thing isVersion:key.version]) // Check version stamp
     {
-        return item;
+        return thing;
     }
     
 LError:
     return nil;
 }
 
--(MHVItemCollection *)getLocalItemsWithKeys:(MHVItemKeyCollection *)keys
+-(MHVThingCollection *)getLocalThingsWithKeys:(MHVThingKeyCollection *)keys
 {
-    return [self getLocalItemsWithKeys:keys nullForNotFound:TRUE];
+    return [self getLocalThingsWithKeys:keys nullForNotFound:TRUE];
 }
 
--(BOOL)putLocalItem:(MHVItem *)item
+-(BOOL)putLocalThing:(MHVThing *)thing
 {
-    return [m_localStore putItem:item];
+    return [m_localStore putThing:thing];
 }
 
--(void) removeLocalItemWithKey:(MHVItemKey *)key
+-(void) removeLocalThingWithKey:(MHVThingKey *)key
 {
-    return [m_localStore removeItem:key.itemID];
+    return [m_localStore removeThing:key.thingID];
 }
 
--(MHVTask *)downloadItemsWithKeys:(MHVItemKeyCollection *)keys inView:(MHVTypeView *)view
+-(MHVTask *)downloadThingsWithKeys:(MHVThingKeyCollection *)keys inView:(MHVTypeView *)view
 {
-    return [self downloadItemsWithKeys:keys typeID:nil inView:view];
+    return [self downloadThingsWithKeys:keys typeID:nil inView:view];
 }
 
--(MHVTask *)downloadItemsWithKeys:(MHVItemKeyCollection *)keys typeID:(NSString *)typeID inView:(MHVTypeView *)view
+-(MHVTask *)downloadThingsWithKeys:(MHVThingKeyCollection *)keys typeID:(NSString *)typeID inView:(MHVTypeView *)view
 {
     MHVCHECK_NOTNULL(keys);
     
-    MHVItemQuery* query = [self newQueryFromKeys:keys];
+    MHVThingQuery* query = [self newQueryFromKeys:keys];
     MHVCHECK_NOTNULL(query);
     
     if (![NSString isNilOrEmpty:typeID])
@@ -154,7 +154,7 @@ LError:
         [query.view.typeVersions addObject:typeID];
     }
     
-    return [self getItemsInRecord:view.record forQuery:query callback:^(MHVTask *task) {
+    return [self getThingsInRecord:view.record forQuery:query callback:^(MHVTask *task) {
         
         [self completedDownloadKeys:keys inView:view task:task];
         
@@ -164,55 +164,55 @@ LError:
     return nil;
 }
 
--(MHVTask *)getItemsInRecord:(MHVRecordReference *)record withKeys:(MHVItemKeyCollection *)keys callback:(MHVTaskCompletion)callback
+-(MHVTask *)getThingsInRecord:(MHVRecordReference *)record withKeys:(MHVThingKeyCollection *)keys callback:(MHVTaskCompletion)callback
 {
-    MHVItemQuery* query = [self newQueryFromKeys:keys];
-    return [self getItemsInRecord:record forQuery:query callback:callback];
+    MHVThingQuery* query = [self newQueryFromKeys:keys];
+    return [self getThingsInRecord:record forQuery:query callback:callback];
 }
 
--(MHVTask *)getItemsInRecord:(MHVRecordReference *)record forQuery:(MHVItemQuery *)query callback:(MHVTaskCompletion)callback
+-(MHVTask *)getThingsInRecord:(MHVRecordReference *)record forQuery:(MHVThingQuery *)query callback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(query);
     
-    MHVTask* getItemsTask = [[MHVTask alloc] initWithCallback:callback];
-    MHVCHECK_NOTNULL(getItemsTask);
-    getItemsTask.taskName = @"getItemsInRecord";
+    MHVTask* getThingsTask = [[MHVTask alloc] initWithCallback:callback];
+    MHVCHECK_NOTNULL(getThingsTask);
+    getThingsTask.taskName = @"getThingsInRecord";
     //
-    // We'll run the download task as a child of the parent getItemsTask
+    // We'll run the download task as a child of the parent getThingsTask
     //
-    MHVDownloadItemsTask *downloadTask = [self newDownloadItemsInRecord:record forQuery:query callback:^(MHVTask *task) {
+    MHVDownloadThingsTask *downloadTask = [self newDownloadThingsInRecord:record forQuery:query callback:^(MHVTask *task) {
         //
         // Make sure the download succeeded
         //
         [task checkSuccess];
-        MHVItemKeyCollection *downloadedKeys = ((MHVDownloadItemsTask *) task).downloadedKeys;
+        MHVThingKeyCollection *downloadedKeys = ((MHVDownloadThingsTask *) task).downloadedKeys;
         //
-        // When the download sub-task completes, collect up all local items and return them to the caller...
+        // When the download sub-task completes, collect up all local things and return them to the caller...
         //
-        task.parent.result = [self getLocalItemsWithKeys:downloadedKeys nullForNotFound:FALSE];
+        task.parent.result = [self getLocalThingsWithKeys:downloadedKeys nullForNotFound:FALSE];
         
     }];
     MHVCHECK_NOTNULL(downloadTask);
     
-    [getItemsTask setNextTask:downloadTask];
+    [getThingsTask setNextTask:downloadTask];
     
-    [getItemsTask start];  // this can throw
+    [getThingsTask start];  // this can throw
     
-    return getItemsTask;
+    return getThingsTask;
 
 LError:
     return nil;
 }
 
 // Deprecated
--(BOOL)putItem:(MHVItem *)item
+-(BOOL)putThing:(MHVThing *)thing
 {
-    return [self putLocalItem:item];
+    return [self putLocalThing:thing];
 }
 
--(MHVDownloadItemsTask *)downloadItemsInRecord:(MHVRecordReference *)record forKeys:(MHVItemKeyCollection *)keys callback:(MHVTaskCompletion)callback
+-(MHVDownloadThingsTask *)downloadThingsInRecord:(MHVRecordReference *)record forKeys:(MHVThingKeyCollection *)keys callback:(MHVTaskCompletion)callback
 {
-    MHVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forKeys:keys callback:callback];
+    MHVDownloadThingsTask* task = [self newDownloadThingsInRecord:record forKeys:keys callback:callback];
     MHVCHECK_NOTNULL(task);
     
     [task start];
@@ -223,9 +223,9 @@ LError:
     return nil;    
 }
 
--(MHVDownloadItemsTask *)downloadItemsInRecord:(MHVRecordReference *) record query :(MHVItemQuery *)query callback:(MHVTaskCompletion)callback
+-(MHVDownloadThingsTask *)downloadThingsInRecord:(MHVRecordReference *) record query :(MHVThingQuery *)query callback:(MHVTaskCompletion)callback
 {
-    MHVDownloadItemsTask* task = [self newDownloadItemsInRecord:record forQuery:query callback:callback];
+    MHVDownloadThingsTask* task = [self newDownloadThingsInRecord:record forQuery:query callback:callback];
     MHVCHECK_NOTNULL(task);
     
     [task start];
@@ -236,35 +236,35 @@ LError:
     return nil;
 }
 
--(MHVDownloadItemsTask *)newDownloadItemsInRecord:(MHVRecordReference *)record forKeys:(MHVItemKeyCollection *)keys callback:(MHVTaskCompletion)callback
+-(MHVDownloadThingsTask *)newDownloadThingsInRecord:(MHVRecordReference *)record forKeys:(MHVThingKeyCollection *)keys callback:(MHVTaskCompletion)callback
 {
-    MHVItemQuery* query = [self newQueryFromKeys:keys];
+    MHVThingQuery* query = [self newQueryFromKeys:keys];
     MHVCHECK_NOTNULL(query);
     
-    return [self newDownloadItemsInRecord:record forQuery:query callback:callback];
+    return [self newDownloadThingsInRecord:record forQuery:query callback:callback];
     
 LError:
     return nil;
 }
 
--(MHVDownloadItemsTask *)newDownloadItemsInRecord:(MHVRecordReference *)record forQuery:(MHVItemQuery *)query callback:(MHVTaskCompletion)callback
+-(MHVDownloadThingsTask *)newDownloadThingsInRecord:(MHVRecordReference *)record forQuery:(MHVThingQuery *)query callback:(MHVTaskCompletion)callback
 {
-    MHVDownloadItemsTask* downloadTask = nil;
+    MHVDownloadThingsTask* downloadTask = nil;
     
     MHVCHECK_NOTNULL(record); 
     MHVCHECK_NOTNULL(query);
         
-    downloadTask = [[MHVDownloadItemsTask alloc] initWithCallback:callback]; // do not auto release
+    downloadTask = [[MHVDownloadThingsTask alloc] initWithCallback:callback]; // do not auto release
     MHVCHECK_NOTNULL(downloadTask);
-    downloadTask.taskName = @"downloadItems";
+    downloadTask.taskName = @"downloadThings";
  
-    MHVGetItemsTask* getItemsTask = [[[MHVClient current] methodFactory] newGetItemsForRecord:record query:query andCallback:^(MHVTask *task) {
-        [self completedGetItemsTask:task];
+    MHVGetThingsTask* getThingsTask = [[[MHVClient current] methodFactory] newGetThingsForRecord:record query:query andCallback:^(MHVTask *task) {
+        [self completedGetThingsTask:task];
     }];
-    MHVCHECK_NOTNULL(getItemsTask);
-    getItemsTask.taskName = @"getItemsTask";
+    MHVCHECK_NOTNULL(getThingsTask);
+    getThingsTask.taskName = @"getThingsTask";
     
-    [downloadTask setNextTask:getItemsTask];
+    [downloadTask setNextTask:getThingsTask];
     
     return downloadTask;
 }
@@ -274,23 +274,23 @@ LError:
 
 @implementation MHVSynchronizedStore (MHVPrivate)
 
--(MHVItemCollection *)getLocalItemsWithKeys:(MHVItemKeyCollection *)keys nullForNotFound:(BOOL)includeNull
+-(MHVThingCollection *)getLocalThingsWithKeys:(MHVThingKeyCollection *)keys nullForNotFound:(BOOL)includeNull
 {    
-    MHVItemCollection *results = [[MHVItemCollection alloc] init];
+    MHVThingCollection *results = [[MHVThingCollection alloc] init];
     MHVCHECK_NOTNULL(results);
     
     if (keys)
     {
-        for (MHVItemKey* key in keys)
+        for (MHVThingKey* key in keys)
         {
-            MHVItem* item = [self getLocalItemWithKey:key];
-            if (item)
+            MHVThing* thing = [self getLocalThingWithKey:key];
+            if (thing)
             {
-                [results addObject:item];
+                [results addObject:thing];
             }
             else if (includeNull)
             {
-                [results addObject:(MHVItem *)[NSNull null]];
+                [results addObject:(MHVThing *)[NSNull null]];
             }
         }
     }
@@ -302,18 +302,18 @@ LError:
 }
 
 //
-// We actually query for items by their IDs only
-// This allows to retrieve the latest version of a particular item always, which is what we want
+// We actually query for things by their IDs only
+// This allows to retrieve the latest version of a particular thing always, which is what we want
 //
--(MHVItemQuery *)newQueryFromKeys:(MHVItemKeyCollection *)keys
+-(MHVThingQuery *)newQueryFromKeys:(MHVThingKeyCollection *)keys
 {
-    MHVItemQuery* query = [[MHVItemQuery alloc] init];
+    MHVThingQuery* query = [[MHVThingQuery alloc] init];
     MHVCHECK_NOTNULL(query);
     
     query.view.sections = m_sections;
-    for (MHVItemKey* key in keys) 
+    for (MHVThingKey* key in keys) 
     {
-        [query.itemIDs addObject:key.itemID];
+        [query.thingIDs addObject:key.thingID];
     }
     
     return query;
@@ -322,60 +322,60 @@ LError:
     return nil;
 }
 
--(void)setLocalStore:(id<MHVItemStore>)store
+-(void)setLocalStore:(id<MHVThingStore>)store
 {
     m_localStore = store;
 }
 
--(void)completedGetItemsTask:(MHVTask *)task
+-(void)completedGetThingsTask:(MHVTask *)task
 {
-    MHVGetItemsTask* getItems = (MHVGetItemsTask *) task;
+    MHVGetThingsTask* getThings = (MHVGetThingsTask *) task;
     //
     // Exceptions will fall through and propagate to caller
     //
-    MHVItemQueryResult* result = getItems.queryResults.firstResult;
-    if (!result.hasItems)
+    MHVThingQueryResult* result = getThings.queryResults.firstResult;
+    if (!result.hasThings)
     {
         // Nothing returned
         return;
     }
     //
-    // Write items we got back from the server to the local store
+    // Write things we got back from the server to the local store
     //
-    if (![self updateItemsInLocalStore:result.items])
+    if (![self updateThingsInLocalStore:result.things])
     {
         [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_PutLocalStore)];
     }
     //
     // Record keys that were successfully downloaded
     //
-    [((MHVDownloadItemsTask *) task.parent) recordItemsAsDownloaded:result.items];
+    [((MHVDownloadThingsTask *) task.parent) recordThingsAsDownloaded:result.things];
     
-    if (!result.hasPendingItems)
+    if (!result.hasPendingThings)
     {
         return;
     }
     //
-    // Trigger a load of pending items
+    // Trigger a load of pending things
     //
-    MHVItemQuery *pendingQuery = [[MHVItemQuery alloc] initWithPendingItems:result.pendingItems];
+    MHVThingQuery *pendingQuery = [[MHVThingQuery alloc] initWithPendingThings:result.pendingThings];
     if (!pendingQuery)
     {
         return;
     }
-    pendingQuery.view = getItems.firstQuery.view;
-    MHVGetItemsTask* getPendingTask = [[MHVClient current].methodFactory newGetItemsForRecord:getItems.record query:pendingQuery andCallback:^(MHVTask *task) {
+    pendingQuery.view = getThings.firstQuery.view;
+    MHVGetThingsTask* getPendingTask = [[MHVClient current].methodFactory newGetThingsForRecord:getThings.record query:pendingQuery andCallback:^(MHVTask *task) {
         
-        [self completedGetItemsTask:task];
+        [self completedGetThingsTask:task];
         
     }];
-    getPendingTask.record = getItems.record;
+    getPendingTask.record = getThings.record;
     
     [task.parent setNextTask:getPendingTask];
     
 }
 
--(void)completedDownloadKeys:(MHVItemKeyCollection *)keys inView:(MHVTypeView *)view task:(MHVTask *)task
+-(void)completedDownloadKeys:(MHVThingKeyCollection *)keys inView:(MHVTypeView *)view task:(MHVTask *)task
 {
     if (task.hasError)
     {
@@ -383,18 +383,18 @@ LError:
     }
     else
     {
-        [self notifyView:view ofItems:task.result requestedKeys:keys];
+        [self notifyView:view ofThings:task.result requestedKeys:keys];
     }
 }
 
--(BOOL)updateItemsInLocalStore:(MHVItemCollection *)items
+-(BOOL)updateThingsInLocalStore:(MHVThingCollection *)things
 {
-    MHVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(things);
     
-    for (NSInteger i = 0, count = items.count; i < count; ++i)
+    for (NSInteger i = 0, count = things.count; i < count; ++i)
     {
-        MHVItem* item = [items objectAtIndex:i];
-        MHVCHECK_SUCCESS([self replaceLocalItemWithDownloaded:item]);
+        MHVThing* thing = [things objectAtIndex:i];
+        MHVCHECK_SUCCESS([self replaceLocalThingWithDownloaded:thing]);
     }
     
     return TRUE;
@@ -403,13 +403,13 @@ LError:
     return FALSE;
 }
 
--(BOOL)replaceLocalItemWithDownloaded:(MHVItem *)item
+-(BOOL)replaceLocalThingWithDownloaded:(MHVThing *)thing
 {
     if (self.syncMgr)
     {
         @try
         {
-            return [self.syncMgr replaceLocalWithDownloaded:item];
+            return [self.syncMgr replaceLocalWithDownloaded:thing];
         }
         @catch (id ex)
         {
@@ -417,15 +417,15 @@ LError:
         return FALSE;
     }
     
-    return [m_localStore putItem:item];
+    return [m_localStore putThing:thing];
 }
 
--(void)notifyView:(MHVTypeView *)view ofItems:(MHVItemCollection *)items requestedKeys:(MHVItemKeyCollection *)requestedKeys
+-(void)notifyView:(MHVTypeView *)view ofThings:(MHVThingCollection *)things requestedKeys:(MHVThingKeyCollection *)requestedKeys
 {
-    [view itemsRetrieved:items forKeys:requestedKeys];
+    [view thingsRetrieved:things forKeys:requestedKeys];
 }
 
--(void)notifyView:(MHVTypeView *)view ofError:(id)error retrievingKeys:(MHVItemKeyCollection *)keys
+-(void)notifyView:(MHVTypeView *)view ofError:(id)error retrievingKeys:(MHVThingKeyCollection *)keys
 {
     [view keysNotRetrieved:keys withError:error];
 }

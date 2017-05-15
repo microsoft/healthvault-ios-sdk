@@ -96,7 +96,7 @@ static NSString *const c_element_value = @"value";
     return self;
 }
 
-- (NSUInteger)indexOfItemWithName:(MHVCodedValue *)code
+- (NSUInteger)indexOfThingWithName:(MHVCodedValue *)code
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
@@ -109,7 +109,7 @@ static NSString *const c_element_value = @"value";
     return NSNotFound;
 }
 
-- (NSUInteger)indexOfItemWithNameCode:(NSString *)nameCode
+- (NSUInteger)indexOfThingWithNameCode:(NSString *)nameCode
 {
     for (NSUInteger i = 0; i < self.count; ++i)
     {
@@ -122,9 +122,9 @@ static NSString *const c_element_value = @"value";
     return NSNotFound;
 }
 
-- (MHVNameValue *)getItemWithNameCode:(NSString *)nameCode
+- (MHVNameValue *)getThingWithNameCode:(NSString *)nameCode
 {
-    NSUInteger index = [self indexOfItemWithNameCode:nameCode];
+    NSUInteger index = [self indexOfThingWithNameCode:nameCode];
     
     if (index == NSNotFound)
     {
@@ -136,7 +136,7 @@ static NSString *const c_element_value = @"value";
 
 - (void)addOrUpdate:(MHVNameValue *)value
 {
-    NSUInteger indexOf = [self indexOfItemWithName:value.name];
+    NSUInteger indexOf = [self indexOfThingWithName:value.name];
     
     if (indexOf != NSNotFound)
     {

@@ -17,7 +17,7 @@
 //
 //
 
-#import "MHVItemDataTypedFactory.h"
+#import "MHVThingDataTypedFactory.h"
 
 @interface MHVFile (MHVFactoryMethods)
 

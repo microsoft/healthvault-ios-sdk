@@ -51,7 +51,7 @@
 //
 @property (strong, readonly, nonatomic) id<MHVObjectStore> metadata;
 //
-// All Item Data (Xml) is stored here
+// All Thing Data (Xml) is stored here
 //
 @property (strong, readonly, nonatomic) MHVSynchronizedStore* data;
 //

@@ -156,9 +156,9 @@ static NSString *const c_element_answer = @"answer";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVQuestionAnswer typeID]];
+    return [[MHVThing alloc] initWithType:[MHVQuestionAnswer typeID]];
 }
 
 @end

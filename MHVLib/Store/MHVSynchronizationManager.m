@@ -51,7 +51,7 @@
     
     MHVCHECK_SUCCESS([self setupDataStoreWithCache:cache]);
     
-    m_changeManager = [[MHVItemChangeManager alloc] initOverStore:store.root forRecord:store.record andData:m_data];
+    m_changeManager = [[MHVThingChangeManager alloc] initOverStore:store.root forRecord:store.record andData:m_data];
     MHVCHECK_NOTNULL(m_changeManager);
     m_changeManager.syncMgr = self;
     
@@ -83,7 +83,7 @@ LError:
 {
     @synchronized(self)
     {
-        [m_store.root deleteChildStore:[MHVItemChangeManager changeStoreKey]];
+        [m_store.root deleteChildStore:[MHVThingChangeManager changeStoreKey]];
         [m_store.root deleteChildStore:[MHVSynchronizationManager dataStoreKey]];
     }
 }
@@ -114,45 +114,45 @@ LError:
     return nil;
 }
 
--(MHVAutoLock *)newLockForItemKey:(MHVItemKey *)key
+-(MHVAutoLock *)newLockForThingKey:(MHVThingKey *)key
 {
-    return [m_changeManager newAutoLockForItemKey:key];
+    return [m_changeManager newAutoLockForThingKey:key];
 }
 
--(MHVItem *)getLocalItemWithKey:(MHVItemKey *)key
+-(MHVThing *)getLocalThingWithKey:(MHVThingKey *)key
 {
-    return [m_data getLocalItemWithKey:key];
+    return [m_data getLocalThingWithKey:key];
 }
 
--(MHVItem *)getLocalItemForEditWithKey:(MHVItemKey *)key
+-(MHVThing *)getLocalThingForEditWithKey:(MHVThingKey *)key
 {
-    return [[m_data getLocalItemWithKey:key] newDeepClone];
+    return [[m_data getLocalThingWithKey:key] newDeepClone];
 }
 
--(MHVDownloadItemsTask *)downloadItemWithKey:(MHVItemKey *)key withCallback:(MHVTaskCompletion)callback
+-(MHVDownloadThingsTask *)downloadThingWithKey:(MHVThingKey *)key withCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(key);
     
-    MHVItemKeyCollection* keys = [[MHVItemKeyCollection alloc] initWithKey:key];
+    MHVThingKeyCollection* keys = [[MHVThingKeyCollection alloc] initWithKey:key];
     MHVCHECK_NOTNULL(keys);
     
-    return [m_data downloadItemsInRecord:self.record forKeys:keys callback:callback];
+    return [m_data downloadThingsInRecord:self.record forKeys:keys callback:callback];
     
 LError:
     return nil;
 }
 
--(BOOL)putNewItem:(MHVItem *)item
+-(BOOL)putNewThing:(MHVThing *)thing
 {
-    MHVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(thing);
     
-    MHVCHECK_SUCCESS([item setKeyToNew]);
-    MHVCHECK_SUCCESS([item ensureEffectiveDate]);
+    MHVCHECK_SUCCESS([thing setKeyToNew]);
+    MHVCHECK_SUCCESS([thing ensureEffectiveDate]);
 
-    MHVAutoLock* lock = [self newLockForItemKey:item.key];
+    MHVAutoLock* lock = [self newLockForThingKey:thing.key];
     if (lock)
     {
-        [self putItem:item itemLock:lock];
+        [self putThing:thing thingLock:lock];
     }
     
     return TRUE;
@@ -161,17 +161,17 @@ LError:
     return FALSE;
 }
 
--(BOOL)putItem:(MHVItem *)item itemLock:(MHVAutoLock *)lock
+-(BOOL)putThing:(MHVThing *)thing thingLock:(MHVAutoLock *)lock
 {
-    MHVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(thing);
     
     MHVCHECK_SUCCESS([m_changeManager.locks validateLock:lock]);
 
-    item.effectiveDate = nil;
-    [item ensureEffectiveDate];
+    thing.effectiveDate = nil;
+    [thing ensureEffectiveDate];
     
-    MHVCHECK_SUCCESS([m_changeManager trackPut:item]);
-    MHVCHECK_SUCCESS([m_data.localStore putItem:item]);
+    MHVCHECK_SUCCESS([m_changeManager trackPut:thing]);
+    MHVCHECK_SUCCESS([m_data.localStore putThing:thing]);
     
     return TRUE;
     
@@ -179,24 +179,24 @@ LError:
     return FALSE;
 }
 
--(BOOL)removeItem:(MHVItem *)item itemLock:(MHVAutoLock *)lock
+-(BOOL)removeThing:(MHVThing *)thing thingLock:(MHVAutoLock *)lock
 {
-    MHVCHECK_NOTNULL(item);
+    MHVCHECK_NOTNULL(thing);
     
-    return [self removeItemWithTypeID:item.typeID key:item.key itemLock:lock];
+    return [self removeThingWithTypeID:thing.typeID key:thing.key thingLock:lock];
     
 LError:
     return FALSE;
 }
 
--(BOOL)removeItemWithTypeID:(NSString *)typeID key:(MHVItemKey *)key itemLock:(MHVAutoLock *)lock
+-(BOOL)removeThingWithTypeID:(NSString *)typeID key:(MHVThingKey *)key thingLock:(MHVAutoLock *)lock
 {
     MHVCHECK_NOTNULL(key);
     
     MHVCHECK_SUCCESS([m_changeManager.locks validateLock:lock]);
     
-    [m_data.localStore removeItem:key.itemID];
-    MHVCHECK_SUCCESS([m_changeManager trackRemoveForTypeID:typeID andItemKey:key]);
+    [m_data.localStore removeThing:key.thingID];
+    MHVCHECK_SUCCESS([m_changeManager trackRemoveForTypeID:typeID andThingKey:key]);
     
     return TRUE;
     
@@ -204,17 +204,17 @@ LError:
     return FALSE;
 }
 
--(BOOL)replaceLocalWithDownloaded:(MHVItem *)item
+-(BOOL)replaceLocalWithDownloaded:(MHVThing *)thing
 {
     BOOL result = false;
-    MHVAutoLock* lock = [self newLockForItemKey:item.key];
+    MHVAutoLock* lock = [self newLockForThingKey:thing.key];
     if (lock)
     {
         @try
         {
-            if (![m_changeManager hasChangesForItem:item])
+            if (![m_changeManager hasChangesForThing:thing])
             {
-                result = [m_data.localStore putItem:item];
+                result = [m_data.localStore putThing:thing];
             }
         }
         @finally
@@ -225,9 +225,9 @@ LError:
     return result;
 }
 
--(BOOL)applyChangeCommitSuccess:(MHVItemChange *)change itemLock:(MHVAutoLock *)lock
+-(BOOL)applyChangeCommitSuccess:(MHVThingChange *)change thingLock:(MHVAutoLock *)lock
 {
-    if (change.changeType != MHVItemChangeTypePut)
+    if (change.changeType != MHVThingChangeTypePut)
     {
         return TRUE;
     }
@@ -238,7 +238,7 @@ LError:
         return FALSE;
     }
     
-    return [st applyChangeCommitSuccess:change itemLock:lock];
+    return [st applyChangeCommitSuccess:change thingLock:lock];
 }
 
 +(NSString *)dataStoreKey
