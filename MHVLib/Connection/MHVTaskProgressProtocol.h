@@ -1,8 +1,8 @@
 //
-// MHVMoreFeatures.h
-// SDKFeatures
+// MHVTaskProgressProtocol.h
+// MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,22 +18,21 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVLib.h"
-#import "MHVStatusLabel.h"
 
-@class MHVTypeListViewController;
+NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVMoreFeatures : NSObject
+@protocol MHVTaskProgressProtocol <NSObject>
 
-@property (readwrite, nonatomic, weak) MHVTypeListViewController *controller; // Weak ref
+/**
+ Observable progress value.  Range is from 0.0 to 1.0
+ */
+@property (nonatomic, assign, readonly) double progress;
 
-//
-// How to disconnect an app
-//
-- (void)disconnectApp;
-//
-// Get service definition
-//
-- (void)getServiceDefinition;
+/**
+ Cancels task(s)
+ */
+- (void)cancel;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -1,8 +1,8 @@
 //
-//  MHVMoreFeatures.m
-//  SDKFeatures
+// MHVMoreFeatures.m
+// SDKFeatures
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,63 +23,61 @@
 
 @implementation MHVMoreFeatures
 
-@synthesize controller = m_controller;  // Weak ref
-
--(void)disconnectApp
+- (void)disconnectApp
 {
     [MHVUIAlert showYesNoPromptWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the next time you run it."
-                                completion:^(BOOL selectedYes)
-     {
-         if (selectedYes)
-         {
-             [m_controller.statusLabel showBusy];
-             //
-             // REMOVE RECORD AUTHORIZATION.
-             //
-             [[MHVClient current].user removeAuthForRecord:[MHVClient current].currentRecord withCallback:^(MHVTask *task) {
-                 
-                 [[MHVClient current] resetProvisioning];  // Removes local state
-                 
-                 [m_controller.navigationController popViewControllerAnimated:TRUE];
-             }];
-         }
-     }];
+     completion:^(BOOL selectedYes)
+    {
+        if (selectedYes)
+        {
+            [self.controller.statusLabel showBusy];
+            //
+            // REMOVE RECORD AUTHORIZATION.
+            //
+            [[MHVClient current].user removeAuthForRecord:[MHVClient current].currentRecord withCallback:^(MHVTask *task)
+            {
+                [[MHVClient current] resetProvisioning];   // Removes local state
+
+                [self.controller.navigationController popViewControllerAnimated:TRUE];
+            }];
+        }
+    }];
 }
 
--(void)getServiceDefinition
+- (void)getServiceDefinition
 {
-    [m_controller.statusLabel showBusy];
+    [self.controller.statusLabel showBusy];
     //
     // LAUNCH the GetServiceDefinition task
     //
-    [[[MHVGetServiceDefinitionTask alloc] initWithCallback:^(MHVTask *task) {
+    [[[MHVGetServiceDefinitionTask alloc] initWithCallback:^(MHVTask *task)
+    {
         //
         // Verify success. This will throw if there was a failure
         // You can also detect failure by checking task.hasError
         //
-        [task checkSuccess];  
-        
-        MHVServiceDefinition* serviceDef = ((MHVGetServiceDefinitionTask *) task).serviceDef;
-        // 
+        [task checkSuccess];
+
+        MHVServiceDefinition *serviceDef = ((MHVGetServiceDefinitionTask *)task).serviceDef;
+        //
         // Show some sample information to the user
         //
-        MHVConfigurationEntry* configEntry = [serviceDef.platform.config objectAtIndex:0];
-        MHVConfigurationEntry* configEntry2 = [serviceDef.platform.config objectAtIndex:1];
-        NSMutableString* output = [[NSMutableString alloc] init];
-        
+        MHVConfigurationEntry *configEntry = [serviceDef.platform.config objectAtIndex:0];
+        MHVConfigurationEntry *configEntry2 = [serviceDef.platform.config objectAtIndex:1];
+        NSMutableString *output = [[NSMutableString alloc] init];
+
         [output appendLines:17, @"Some data from ServiceDefinition",
-                               @"[PlatformUrl]", serviceDef.platform.url,
-                               @"[PlatformVersion]", serviceDef.platform.version,
-                               @"[ShellUrl]", serviceDef.shell.url,
-                               @"[ShellRedirect]", serviceDef.shell.redirectUrl,
-                               @"[Example Config Entries]",
-                               configEntry.key, @"==", configEntry.value, @"==========",
-                               configEntry2.key, @"==", configEntry2.value];
-        
+         @"[PlatformUrl]", serviceDef.platform.url,
+         @"[PlatformVersion]", serviceDef.platform.version,
+         @"[ShellUrl]", serviceDef.shell.url,
+         @"[ShellRedirect]", serviceDef.shell.redirectUrl,
+         @"[Example Config Entries]",
+         configEntry.key, @"==", configEntry.value, @"==========",
+         configEntry2.key, @"==", configEntry2.value];
+
         [MHVUIAlert showInformationalMessage:output];
-        
-        [m_controller.statusLabel clearStatus];
-        
+
+        [self.controller.statusLabel clearStatus];
     }] start];  // NOTE: Make sure you always call start
 }
 

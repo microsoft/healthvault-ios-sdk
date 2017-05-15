@@ -20,6 +20,7 @@
 #import "MHVCommon.h"
 #import "MHVBlobPayloadItem.h"
 #import "MHVClient.h"
+#import "MHVHttpTask.h"
 
 static NSString *const c_element_blobInfo = @"blob-info";
 static NSString *const c_element_length = @"content-length";
@@ -75,17 +76,19 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
     return self;
 }
 
-- (void)downloadBlobToFilePath:(NSString *)filePath completion:(void (^)(NSError *error))completion
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)downloadBlobToFilePath:(NSString *)filePath completion:(void (^)(NSError *error))completion
 {
-    [[MHVClient current].service.httpService downloadFileWithUrl:[NSURL URLWithString:self.blobUrl]
-                                                      toFilePath:filePath
-                                                      completion:completion];
+    return [[MHVClient current].service.httpService downloadFileWithUrl:[NSURL URLWithString:self.blobUrl]
+                                                             toFilePath:filePath
+                                                            contentSize:self.length
+                                                             completion:completion];
 }
 
-- (void)downloadBlobDataWithCompletion:(void (^)(NSData *data, NSError *error))completion
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)downloadBlobDataWithCompletion:(void (^)(NSData *data, NSError *error))completion
 {
-    [[MHVClient current].service.httpService downloadDataWithUrl:[NSURL URLWithString:self.blobUrl]
-                                                      completion:completion];
+    return [[MHVClient current].service.httpService downloadDataWithUrl:[NSURL URLWithString:self.blobUrl]
+                                                            contentSize:self.length
+                                                             completion:completion];
 }
 
 - (MHVClientResult *)validate

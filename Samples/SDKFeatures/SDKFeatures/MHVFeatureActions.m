@@ -1,8 +1,8 @@
 //
-//  MHVFeatureActions.m
-//  SDKFeatures
+// MHVFeatureActions.m
+// SDKFeatures
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,72 +21,72 @@
 #import "MHVFeatureActions.h"
 #import "MHVUIAlert.h"
 
+@interface MHVFeatureActions ()
+
+@property (nonatomic, strong) UIActionSheet *actionSheet;
+@property (nonatomic, strong) NSMutableArray *actions;
+
+@end
+
 @implementation MHVFeatureActions
 
--(id)init
+- (instancetype)init
 {
     return [self initWithTitle:nil];
 }
 
--(id)initWithTitle:(NSString *)title
+- (instancetype)initWithTitle:(NSString *)title
 {
     self = [super init];
-    MHVCHECK_SELF;
-    
-    if (!title)
+    if (self)
     {
-        title = @"Try MORE Features";
+        if (!title)
+        {
+            title = @"Try MORE Features";
+        }
+        
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:title
+                                                    delegate:self
+                                           cancelButtonTitle:@"Cancel"
+                                      destructiveButtonTitle:nil
+                                           otherButtonTitles:nil];
+        MHVCHECK_NOTNULL(_actionSheet);
+        _actionSheet.delegate = self;
+        
+        _actions = [[NSMutableArray alloc] init];
+        MHVCHECK_NOTNULL(_actions);
     }
-    m_actionSheet = [[UIActionSheet alloc] initWithTitle:title
-                                        delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                        destructiveButtonTitle:nil
-                                        otherButtonTitles:nil];
-    MHVCHECK_NOTNULL(m_actionSheet);
-    m_actionSheet.delegate = self;
-    
-    m_actions = [[NSMutableArray alloc] init];
-    MHVCHECK_NOTNULL(m_actions);
-    
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(void)dealloc
-{
-    m_actionSheet.delegate = nil;
-    
-}
-
--(BOOL) addFeature:(NSString *)title andAction:(MHVAction)action
+- (BOOL)addFeature:(NSString *)title andAction:(MHVAction)action
 {
     MHVCHECK_NOTNULL(action);
-    
-    [m_actionSheet addButtonWithTitle:title];
-    [m_actions addObject:action]; 
-    
+
+    [self.actionSheet addButtonWithTitle:title];
+    [self.actions addObject:action];
+
     return TRUE;
-    
-LError:
+
+   LError:
     return FALSE;
 }
 
--(void)showFrom:(UIBarButtonItem *)button
+- (void)showFrom:(UIBarButtonItem *)button
 {
-    [m_actionSheet showFromBarButtonItem:button animated:true];
+    [self.actionSheet showFromBarButtonItem:button animated:true];
 }
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0)
     {
         return;  // Cancel
     }
+
     @try
     {
-        MHVAction action = (MHVAction) [m_actions objectAtIndex:buttonIndex - 1];
+        MHVAction action = (MHVAction)[self.actions objectAtIndex:buttonIndex - 1];
         action();
     }
     @catch (NSException *exception)

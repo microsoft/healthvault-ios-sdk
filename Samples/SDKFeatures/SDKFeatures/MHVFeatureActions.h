@@ -1,8 +1,8 @@
 //
-//  MHVFeatureActions.h
-//  SDKFeatures
+// MHVFeatureActions.h
+// SDKFeatures
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,16 +21,11 @@
 #import "MHVLib.h"
 
 @interface MHVFeatureActions : NSObject<UIActionSheetDelegate>
-{
-@private
-    UIActionSheet* m_actionSheet;
-    NSMutableArray* m_actions;
-}
 
--(id) initWithTitle:(NSString *) title;
+- (instancetype)initWithTitle:(NSString *)title;
 
--(BOOL) addFeature:(NSString *) title andAction:(MHVAction) action;
+- (BOOL)addFeature:(NSString *)title andAction:(MHVAction)action;
 
--(void) showFrom:(UIBarButtonItem *) button;
+- (void)showFrom:(UIBarButtonItem *)button;
 
 @end

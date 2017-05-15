@@ -21,6 +21,9 @@
 #import "MHVType.h"
 #import "MHVBlobInfo.h"
 #import "MHVBlobPutParameters.h"
+@protocol MHVTaskProgressProtocol;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVBlobPayloadItem : MHVType
 
@@ -62,8 +65,8 @@
 // Methods
 //
 // -------------------------
-- (void)downloadBlobToFilePath:(NSString *)filePath completion:(void (^)(NSError *error))completion;
-- (void)downloadBlobDataWithCompletion:(void (^)(NSData *data, NSError *error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)downloadBlobToFilePath:(NSString *)filePath completion:(void (^)(NSError *error))completion;
+- (NSObject<MHVTaskProgressProtocol> *_Nullable)downloadBlobDataWithCompletion:(void (^)(NSData *data, NSError *error))completion;
 
 @end
 
@@ -76,3 +79,5 @@
 - (MHVBlobPayloadItem *)getBlobNamed:(NSString *)name;
 
 @end
+
+NS_ASSUME_NONNULL_END

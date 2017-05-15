@@ -18,14 +18,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVHttpTaskProtocol.h"
+#import "MHVTaskProgressProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVHttpTask : NSObject <MHVHttpTaskProtocol>
+@interface MHVHttpTask : NSObject <MHVTaskProgressProtocol>
 
 - (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task;
-- (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task totalSize:(NSUInteger)totalSize;
+- (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task contentSize:(NSUInteger)contentSize;
 - (instancetype)init __unavailable;
 
 - (void)addTask:(NSURLSessionTask *)task;

@@ -27,7 +27,7 @@ static NSString *kProgressKeyPath = @"progress";
 @interface MHVHttpTask ()
 
 @property (nonatomic, assign) double progress;
-@property (nonatomic, strong) NSNumber *totalSize;
+@property (nonatomic, strong) NSNumber *contentSize;
 
 //A Blob upload can have several tasks, as it is uploaded in chunks. Array for all tasks
 @property (nonatomic, strong) NSMutableArray<NSURLSessionTask *> *tasks;
@@ -38,19 +38,19 @@ static NSString *kProgressKeyPath = @"progress";
 
 - (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task
 {
-    return [self initWithURLSessionTask:task totalSize:0];
+    return [self initWithURLSessionTask:task contentSize:0];
 }
 
-- (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task totalSize:(NSUInteger)totalSize
+- (instancetype)initWithURLSessionTask:(NSURLSessionTask *_Nullable)task contentSize:(NSUInteger)contentSize
 {
     self = [super init];
     if (self)
     {
         _tasks = [NSMutableArray new];
         
-        if (totalSize != 0)
+        if (contentSize != 0)
         {
-            _totalSize = @(totalSize);
+            _contentSize = @(contentSize);
         }
         
         [self addTask:task];
@@ -105,9 +105,9 @@ static NSString *kProgressKeyPath = @"progress";
     
     double progress = 0.0;
     
-    if (self.totalSize)
+    if (self.contentSize)
     {
-        progress = countOfBytesSent / [self.totalSize doubleValue];
+        progress = (countOfBytesReceived + countOfBytesSent) / [self.contentSize doubleValue];
     }
     else if (countOfBytesExpectedToSend > 0 || countOfBytesExpectedToReceive > 0)
     {
