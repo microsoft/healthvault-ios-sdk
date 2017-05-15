@@ -21,13 +21,13 @@
 
 @implementation MHVImmunization (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date
++(MHVThingCollection *) createRandomForDay:(NSDate *) date
 {
-    MHVItem* item = [MHVImmunization createRandomForDate:[MHVApproxDateTime fromDate:date]];
-    return [[MHVItemCollection alloc] initWithItem:item];
+    MHVThing* thing = [MHVImmunization createRandomForDate:[MHVApproxDateTime fromDate:date]];
+    return [[MHVThingCollection alloc] initWithThing:thing];
 }
 
-+(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date
++(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date
 {
     return [MHVImmunization createRandomForDay:date];
 }

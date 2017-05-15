@@ -35,9 +35,9 @@ describe(@"MHVArrayExtensions", ^
         [[theValue([NSArray isNilOrEmpty:@[]]) should] beYes];
     });
 
-    it(@"should be no for 1 item array", ^
+    it(@"should be no for 1 thing array", ^
     {
-        [[theValue([NSArray isNilOrEmpty:@[@"item"]]) should] beNo];
+        [[theValue([NSArray isNilOrEmpty:@[@"thing"]]) should] beNo];
     });
 });
 

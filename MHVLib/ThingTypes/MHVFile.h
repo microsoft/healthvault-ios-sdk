@@ -19,9 +19,9 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVItemBlobUploadTask.h"
+#import "MHVThingBlobUploadTask.h"
 
-@interface MHVFile : MHVItemDataTyped
+@interface MHVFile : MHVThingDataTyped
 
 // -------------------------
 //
@@ -47,8 +47,8 @@
 //
 // -------------------------
 
-+ (MHVItem *)newItem;
-+ (MHVItem *)newItemWithName:(NSString *)name andContentType:(NSString *)contentType;
++ (MHVThing *)newThing;
++ (MHVThing *)newThingWithName:(NSString *)name andContentType:(NSString *)contentType;
 
 // -------------------------
 //

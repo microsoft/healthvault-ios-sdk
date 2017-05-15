@@ -198,9 +198,9 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVSleepJournalPM typeID]];
+    return [[MHVThing alloc] initWithType:[MHVSleepJournalPM typeID]];
 }
 
 @end

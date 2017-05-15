@@ -139,9 +139,9 @@ static NSString *const c_element_lang = @"language";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVBasicDemographics typeID]];
+    return [[MHVThing alloc] initWithType:[MHVBasicDemographics typeID]];
 }
 
 + (BOOL)isSingletonType

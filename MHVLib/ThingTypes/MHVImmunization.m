@@ -156,9 +156,9 @@ static NSString *const c_element_consent = @"consent";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVImmunization typeID]];
+    return [[MHVThing alloc] initWithType:[MHVImmunization typeID]];
 }
 
 - (NSString *)typeName

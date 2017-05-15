@@ -18,7 +18,7 @@
 #import "MHVTypes.h"
 #import "MHVVocab.h"
 
-@interface MHVAllergy : MHVItemDataTyped
+@interface MHVAllergy : MHVThingDataTyped
 
 // -------------------------
 //
@@ -86,6 +86,6 @@
 
 - (NSString *)toString;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 @end

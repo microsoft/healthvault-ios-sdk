@@ -18,13 +18,13 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVLib.h"
-#import "MHVItemTestExtensions.h"
+#import "MHVThingTestExtensions.h"
 
 @interface MHVExercise (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date;
-+(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date metric:(BOOL) metric;
++(MHVThingCollection *) createRandomForDay:(NSDate *) date;
++(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date;
++(MHVThingCollection *) createRandomForDay:(NSDate *) date metric:(BOOL) metric;
 
 @end
 

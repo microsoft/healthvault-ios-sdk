@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVEncounter : MHVItemDataTyped
+@interface MHVEncounter : MHVThingDataTyped
 
 // -------------------------
 //
@@ -55,6 +55,6 @@
 + (NSString *)typeID;
 + (NSString *)XRootElement;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 @end

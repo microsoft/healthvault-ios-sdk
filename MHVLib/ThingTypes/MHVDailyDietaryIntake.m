@@ -256,9 +256,9 @@ static NSString *const c_element_cholesterol = @"cholesterol";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVDailyDietaryIntake typeID]];
+    return [[MHVThing alloc] initWithType:[MHVDailyDietaryIntake typeID]];
 }
 
 @end

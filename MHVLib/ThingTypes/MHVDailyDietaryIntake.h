@@ -27,7 +27,7 @@
 // Use MHVDietaryIntake
 //
 // ------------------------
-@interface MHVDailyDietaryIntake : MHVItemDataTyped
+@interface MHVDailyDietaryIntake : MHVThingDataTyped
 
 // -------------------------
 //
@@ -96,6 +96,6 @@
 + (NSString *)typeID;
 + (NSString *)XRootElement;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 @end

@@ -39,13 +39,13 @@
     return self;
 }
 
-- (instancetype)initWithCapacity:(NSUInteger)numItems
+- (instancetype)initWithCapacity:(NSUInteger)numThings
 {
     self = [super init];
     
     if (self)
     {
-        _inner = [[NSMutableArray alloc] initWithCapacity:numItems];
+        _inner = [[NSMutableArray alloc] initWithCapacity:numThings];
     }
     
     return self;

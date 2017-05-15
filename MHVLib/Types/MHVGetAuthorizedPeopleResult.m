@@ -29,7 +29,7 @@ static NSString *const c_element_more = @"more-results";
 {
     [writer writeStartElement:c_element_results];
 
-    [writer writeElementArray:c_element_results itemName:c_element_person elements:self.persons];
+    [writer writeElementArray:c_element_results thingName:c_element_person elements:self.persons];
     [writer writeElement:c_element_more content:self.moreResults];
 
     [writer writeEndElement];

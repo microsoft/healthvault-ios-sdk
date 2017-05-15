@@ -136,9 +136,9 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
     return c_typeName;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVHeartRate typeID]];
+    return [[MHVThing alloc] initWithType:[MHVHeartRate typeID]];
 }
 
 - (NSString *)typeName

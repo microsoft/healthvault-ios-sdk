@@ -24,17 +24,17 @@
 @interface MHVStoredQuery : XSerializableType
 {
 @private
-    MHVItemQuery* m_query;
-    MHVItemQueryResult* m_result;
+    MHVThingQuery* m_query;
+    MHVThingQueryResult* m_result;
     NSDate* m_timestamp;
 }
 
-@property (readwrite, nonatomic, strong) MHVItemQuery* query;
-@property (readwrite, nonatomic, strong) MHVItemQueryResult* result;
+@property (readwrite, nonatomic, strong) MHVThingQuery* query;
+@property (readwrite, nonatomic, strong) MHVThingQueryResult* result;
 @property (readwrite, nonatomic, strong) NSDate* timestamp;
 
--(id) initWithQuery:(MHVItemQuery *) query;
--(id) initWithQuery:(MHVItemQuery *) query andResult:(MHVItemQueryResult *) result;
+-(id) initWithQuery:(MHVThingQuery *) query;
+-(id) initWithQuery:(MHVThingQuery *) query andResult:(MHVThingQueryResult *) result;
 
 //
 // maxAgeInSeconds

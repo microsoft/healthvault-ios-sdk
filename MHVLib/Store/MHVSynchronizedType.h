@@ -26,17 +26,17 @@
 // MHVSynchronizedTypes provides simple 2-way read-write synchronization and offline work model for
 // HealthVault types.
 //
-// Each HealthVault Item Type (Weight, Blood Pressure, Medication etc.) has an equivalent
+// Each HealthVault Thing Type (Weight, Blood Pressure, Medication etc.) has an equivalent
 // SynchronizedType.
 //
 // Each SynchronizedType is a MHVTypeView (see MHVTypeView.h).
 // Please read notes in MHVTypeView.h and MHVSyncView.h first.
 //
-// SynchronizedTypes store MHVItems on the local device--in the application's LocalVault.
-// Items are downloaded and updated as necessary.
+// SynchronizedTypes store MHVThings on the local device--in the application's LocalVault.
+// Things are downloaded and updated as necessary.
 //
-// You can add, edit or remove item data to/from a SynchronizedType entirely OFFLINE.
-// SynchronizedTypes track changes to items.
+// You can add, edit or remove thing data to/from a SynchronizedType entirely OFFLINE.
+// SynchronizedTypes track changes to things.
 // They background commit/synchronize those changes with the HealthVault cloud store.
 //
 // Tracking of changes and commits is PERSISTENT--i.e. it survives application restarts,
@@ -57,7 +57,7 @@
 // The application periodically triggers a commit of pending changes to HealthVault.
 // The application decides the frequency at which changes are background committed.
 
-// The typical application commits changes by using the *MHVItemCommitScheduler* class.
+// The typical application commits changes by using the *MHVThingCommitScheduler* class.
 // Advanced applications may use lower level methods to customize the behavior.
 //
 // The application can:
@@ -67,7 +67,7 @@
 //
 // *REFRESHING*
 // Refreshing a SynchronizedType is identical to refreshing a MHVTypeView.
-// Refresh allows the SynchronizedType to discover new items, updates and removes made by
+// Refresh allows the SynchronizedType to discover new things, updates and removes made by
 // OTHER applications to the user's HealthVault record. Refresh is the *read" part of 2-way
 // synchronization.
 //  - The application determines if a SynchronizedType is stale--last updated more than some time
@@ -80,7 +80,7 @@
 //
 // An application that never refreshes a SynchronizedType will continue to function correctly.
 // However, it will never discover changes made by other applications. It will however
-// operate correctly with items it added/updated/removed.
+// operate correctly with things it added/updated/removed.
 //
 //-----------------------------------------------------------------------
 
@@ -100,7 +100,7 @@
 //
 // BROADCAST EVENT NAMES
 //
-MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeItemsAvailableNotification);
+MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeThingsAvailableNotification);
 MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeKeysNotAvailableNotification);
 MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncCompletedNotification);
 MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
@@ -109,13 +109,13 @@ MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
 //
 @protocol MHVSynchronizedTypeDelegate <NSObject>
 //
-// Called when asynchronously retrieved items become available locally
+// Called when asynchronously retrieved things become available locally
 // If typeChanged is true, you may want to refresh your entire UI
-// Otherwise you can only redraw the items that are now available
+// Otherwise you can only redraw the things that are now available
 //
--(void) synchronizedType:(MHVSynchronizedType *) type itemsAvailable:(MHVItemCollection *) items typeChanged:(BOOL) changed;
+-(void) synchronizedType:(MHVSynchronizedType *) type thingsAvailable:(MHVThingCollection *) things typeChanged:(BOOL) changed;
 //
-// Keys for items no longer available in HealthVault. They have been REMOVED from the type.
+// Keys for things no longer available in HealthVault. They have been REMOVED from the type.
 // You should now refresh your UI etc.
 //
 -(void) synchronizedType:(MHVSynchronizedType *) type keysNotAvailable:(NSArray *)keys;
@@ -128,23 +128,23 @@ MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
 //-----------------------------------------------------------------
 //
 // Object that makes it simple to:
-//  - Safely edit a locally stored item
+//  - Safely edit a locally stored thing
 //  - Track changes in the commit queue
 //
 //-----------------------------------------------------------------
-@interface MHVItemEditOperation : NSObject
+@interface MHVThingEditOperation : NSObject
 {
 @private
-    MHVItem* m_item;
+    MHVThing* m_thing;
     MHVSynchronizedType* m_type;
     MHVAutoLock* m_lock;
 }
 
 //
-// A deep clone of the original item, so you can safely edit/alter its
+// A deep clone of the original thing, so you can safely edit/alter its
 // properties in memory without any impact elsewhere
 //
-@property (readonly, nonatomic) MHVItem* item;
+@property (readonly, nonatomic) MHVThing* thing;
 
 //
 // Call commit if you want the changes to be:
@@ -194,9 +194,9 @@ MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
 //
 -(BOOL) hasPendingChanges;
 //
-// Returns nil if the item is already available locally
+// Returns nil if the thing is already available locally
 //
--(MHVTask *) ensureItemDownloadedForKey:(MHVItemKey *) key withCallback:(MHVTaskCompletion) callback;
+-(MHVTask *) ensureThingDownloadedForKey:(MHVThingKey *) key withCallback:(MHVTaskCompletion) callback;
 
 //---------------------------------------------
 //
@@ -206,16 +206,16 @@ MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
 //
 //---------------------------------------------
 
--(BOOL) addNewItem:(MHVItem *) item;
+-(BOOL) addNewThing:(MHVThing *) thing;
 //
-// Will return nil if the item is not available locally OR the item could not be locked
+// Will return nil if the thing is not available locally OR the thing could not be locked
 //
--(MHVItemEditOperation *) openItemForEditWithKey:(MHVItemKey *) key;
--(MHVItemEditOperation *) openItemForEditAtIndex:(NSUInteger) index;
--(BOOL) putItem:(MHVItem *) item editLock:(MHVAutoLock *) lock;
+-(MHVThingEditOperation *) openThingForEditWithKey:(MHVThingKey *) key;
+-(MHVThingEditOperation *) openThingForEditAtIndex:(NSUInteger) index;
+-(BOOL) putThing:(MHVThing *) thing editLock:(MHVAutoLock *) lock;
 
--(BOOL) removeItemWithKey:(MHVItemKey *) key;
--(BOOL) removeItemAtIndex:(NSUInteger) index;
+-(BOOL) removeThingWithKey:(MHVThingKey *) key;
+-(BOOL) removeThingAtIndex:(NSUInteger) index;
 //
 // Will return null if there are pending changes not yet committed
 //
@@ -224,14 +224,14 @@ MHVDECLARE_NOTIFICATION(MHVSynchronizedTypeSyncFailedNotification);
 // Save this type to disk
 //
 -(BOOL) save;
--(BOOL) removeAllLocalItems;
+-(BOOL) removeAllLocalThings;
 
 //---------------------------------------------
 //
 // Internal methods used by the SDK
 //
 //---------------------------------------------
--(BOOL) applyChangeCommitSuccess:(MHVItemChange *) change itemLock:(MHVAutoLock *) lock;
+-(BOOL) applyChangeCommitSuccess:(MHVThingChange *) change thingLock:(MHVAutoLock *) lock;
 +(NSString *) makeViewNameForTypeID:(NSString *) typeID;
 
 -(BOOL) isContentDiscardable;

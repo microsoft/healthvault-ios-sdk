@@ -26,9 +26,9 @@
 //
 // MHVTypeView is a SPECIALIZED SyncView
 //
-//  - It is scoped to exactly ONE HealthVault Item Type
+//  - It is scoped to exactly ONE HealthVault Thing Type
 //  - It *does not* let you customize the query associated with the view
-//  - It *does* let you customize the ItemFilter for the view
+//  - It *does* let you customize the ThingFilter for the view
 //
 //---------------------------------------------------------------------------------
 
@@ -50,14 +50,14 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 // *REQUIRED*
 // Please read about MHVSyncView first. (MHVSyncView.h)
 //
-// TypeViews are COLLECTIONS of MHVTypeViewItems. MHVTypeViewItem inherits from MHVItemKey
-// See MHVTypeViewItems.h
+// TypeViews are COLLECTIONS of MHVTypeViewThings. MHVTypeViewThing inherits from MHVThingKey
+// See MHVTypeViewThings.h
 //
 // MHVTypeViews are SORTED by EffectiveDate - the same sort order in which
-// the HealthVault platform returns items, and the order in in which the HealthVault
-// Shell displays items. The sort order is:
+// the HealthVault platform returns things, and the order in in which the HealthVault
+// Shell displays things. The sort order is:
 //  - EffectiveDate [descending]
-//  - itemID [ascending]
+//  - thingID [ascending]
 //
 //---------------------------------------------------------------------------
 @protocol MHVTypeView <MHVSyncView>
@@ -66,10 +66,10 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 @property (readonly, nonatomic) NSString* typeID;
 //
-// The maximum number of items for this view. Useful for large views
-// This lets you work with the most RECENT maxItems
+// The maximum number of things for this view. Useful for large views
+// This lets you work with the most RECENT maxThings
 //
-@property (readwrite, nonatomic) NSInteger maxItems;
+@property (readwrite, nonatomic) NSInteger maxThings;
 
 //----------------------------------------------------------
 //
@@ -77,45 +77,45 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 // More methods in MHVSyncView
 //
 //----------------------------------------------------------
--(MHVTypeViewItem *) itemKeyAtIndex:(NSUInteger) index;
+-(MHVTypeViewThing *) thingKeyAtIndex:(NSUInteger) index;
 //
-// Reverse lookup.. find the location of the given itemID in the collection
+// Reverse lookup.. find the location of the given thingID in the collection
 //
--(NSUInteger) indexOfItemID:(NSString *)itemID;
+-(NSUInteger) indexOfThingID:(NSString *)thingID;
 //
 // Returns null if not found
 //
--(MHVItem *) getItemByID:(NSString *) itemID;
--(MHVItem *) getLocalItemWithKey:(MHVItemKey *) key;
+-(MHVThing *) getThingByID:(NSString *) thingID;
+-(MHVThing *) getLocalThingWithKey:(MHVThingKey *) key;
 //
-// Used if you want to fetch/sync/refresh items using your own logic
+// Used if you want to fetch/sync/refresh things using your own logic
 //
--(MHVItemKeyCollection *) keysOfItemsNeedingDownloadInRange:(NSRange) range;
--(MHVTask *) ensureItemsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback;
--(BOOL) replaceKeys:(MHVTypeViewItems *) items;
+-(MHVThingKeyCollection *) keysOfThingsNeedingDownloadInRange:(NSRange) range;
+-(MHVTask *) ensureThingsDownloadedInRange:(NSRange)range withCallback:(MHVTaskCompletion)callback;
+-(BOOL) replaceKeys:(MHVTypeViewThings *) things;
 
 @end
 
 //-----------------------------------------------------------
 //
 // Delegate for MHVTypeView objects
-// MHVTypeView automatically downloads items from HealthVault as needed... in the background
+// MHVTypeView automatically downloads things from HealthVault as needed... in the background
 // You are notified when these downloads complete
 //
 //-----------------------------------------------------------
 @protocol MHVTypeViewDelegate <NSObject>
 //
-// Called when asynchronously retrieved items become available locally
-// viewChanged indicates that the SORT order of the typeView was impacted when new items were pulled.
+// Called when asynchronously retrieved things become available locally
+// viewChanged indicates that the SORT order of the typeView was impacted when new things were pulled.
 // If so, you should RELOAD any associated views, such as UITableView
 // Otherwise you can do a more target reload of changed rows only
 //
--(void) itemsAvailable:(MHVItemCollection *)items inView:(MHVTypeView *)view viewChanged:(BOOL) viewChanged;
+-(void) thingsAvailable:(MHVThingCollection *)things inView:(MHVTypeView *)view viewChanged:(BOOL) viewChanged;
 //
-// Keys for items no longer available in HealthVault. They have been REMOVED from the view.
+// Keys for things no longer available in HealthVault. They have been REMOVED from the view.
 // You should now refresh your UI etc.
 //
--(void) keysNotAvailable:(MHVItemKeyCollection *) keys inView:(MHVTypeView *) view;
+-(void) keysNotAvailable:(MHVThingKeyCollection *) keys inView:(MHVTypeView *) view;
 //
 // The full view sync is complete
 //
@@ -158,9 +158,9 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
     NSString* m_typeID;
     MHVTypeFilter* m_filter;
     NSDate* m_lastUpdateDate;
-    NSInteger m_maxItems;
+    NSInteger m_maxThings;
   
-    MHVTypeViewItems* m_items;
+    MHVTypeViewThings* m_things;
     MHVLocalRecordStore* m_store;
     
     enum MHVTypeViewReadAheadMode m_readAheadMode;
@@ -181,7 +181,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 @property (readonly, nonatomic, strong) MHVTypeFilter* filter;
 @property (readwrite, nonatomic, strong) NSDate* lastUpdateDate;
 @property (readonly, nonatomic) NSUInteger count;
-@property (readwrite, nonatomic) NSInteger maxItems;
+@property (readwrite, nonatomic) NSInteger maxThings;
 @property (readwrite, nonatomic) NSInteger readAheadChunkSize;
 //
 // These properties are NOT persisted when you save to disk
@@ -205,8 +205,8 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //-------------------
 -(id) initForTypeID:(NSString *) typeID overStore:(MHVLocalRecordStore *) store;
 -(id) initForTypeID:(NSString *)typeID filter:(MHVTypeFilter *) filter overStore:(MHVLocalRecordStore *) store;
--(id) initForTypeID:(NSString *)typeID filter:(MHVTypeFilter *) filter items:(MHVTypeViewItems *) items overStore:(MHVLocalRecordStore *) store;
--(id) initFromTypeView:(MHVTypeView *) typeView andItems:(MHVTypeViewItems *) items;
+-(id) initForTypeID:(NSString *)typeID filter:(MHVTypeFilter *) filter things:(MHVTypeViewThings *) things overStore:(MHVLocalRecordStore *) store;
+-(id) initFromTypeView:(MHVTypeView *) typeView andThings:(MHVTypeViewThings *) things;
 
 //------------------------------------
 //
@@ -215,15 +215,15 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 //------------------------------------
 //
-// Returns the FIRST item that has the closest (or equal) date to the one supplied
+// Returns the FIRST thing that has the closest (or equal) date to the one supplied
 // 
--(NSUInteger) indexOfItemWithClosestDate:(NSDate *) date;
--(NSUInteger) indexOfItemWithClosestDate:(NSDate *)date firstEqual:(BOOL) firstEqual;
+-(NSUInteger) indexOfThingWithClosestDate:(NSDate *) date;
+-(NSUInteger) indexOfThingWithClosestDate:(NSDate *)date firstEqual:(BOOL) firstEqual;
 
--(BOOL) containsItemID:(NSString *) itemID;
--(MHVTypeViewItem *) itemForItemID:(NSString *) itemID;
+-(BOOL) containsThingID:(NSString *) thingID;
+-(MHVTypeViewThing *) thingForThingID:(NSString *) thingID;
 //
-// Very useful for finding the closest item by DAY
+// Very useful for finding the closest thing by DAY
 //
 -(NSUInteger) indexOfFirstDay:(NSDate *)date;
 -(NSUInteger) indexOfFirstDay:(NSDate *)date startAt:(NSUInteger) baseIndex;
@@ -244,7 +244,7 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 -(MHVTask *) synchronize;
 //
-// Synchronize MHVItems associated with this view
+// Synchronize MHVThings associated with this view
 // Calls delegate when complete
 //
 -(MHVTask *) synchronizeData;
@@ -252,49 +252,49 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //---------------------------
 //
 // See MHVSyncView and MHVTypeView protocols for a list
-// of base methods to fetch items with
+// of base methods to fetch things with
 //
-// PENDING items are fetched in the background.
+// PENDING things are fetched in the background.
 // When they become available, self.delegate is notified
 //
 //------------------------------
--(MHVItem *) getItemAtIndex:(NSUInteger) index readAheadCount:(NSUInteger) readAheadCount;
+-(MHVThing *) getThingAtIndex:(NSUInteger) index readAheadCount:(NSUInteger) readAheadCount;
 //
-// Returns what items it has, and triggers an async pull of the remaining
-//  MHVItemCollection.count == range.length
-//  Any positions that do not have a local item get an NSNull object
+// Returns what things it has, and triggers an async pull of the remaining
+//  MHVThingCollection.count == range.length
+//  Any positions that do not have a local thing get an NSNull object
 //
--(MHVItemCollection *) getItemsInRange:(NSRange) range;
--(MHVItemCollection *) getItemsInRange:(NSRange) range downloadTask:(MHVTask **) task;
+-(MHVThingCollection *) getThingsInRange:(NSRange) range;
+-(MHVThingCollection *) getThingsInRange:(NSRange) range downloadTask:(MHVTask **) task;
 //
 // If includeNull is true:
-//  MHVItemCollection.count == range.length
-//  Any positions that do not have a local item get an NSNull object
+//  MHVThingCollection.count == range.length
+//  Any positions that do not have a local thing get an NSNull object
 //
--(MHVItemCollection *) getItemsInRange:(NSRange) range nullIfNotFound:(BOOL) includeNull;
--(MHVItemCollection *) getItemsInRange:(NSRange) range nullIfNotFound:(BOOL) includeNull downloadTask:(MHVTask **) task;
+-(MHVThingCollection *) getThingsInRange:(NSRange) range nullIfNotFound:(BOOL) includeNull;
+-(MHVThingCollection *) getThingsInRange:(NSRange) range nullIfNotFound:(BOOL) includeNull downloadTask:(MHVTask **) task;
 
 //------------------
 //
-// Operations that alter the view AND any items in the local store
+// Operations that alter the view AND any things in the local store
 //
 //------------------
 //
-// Removes item from the view AND any associated LOCAL data only.
-// Does NOT delete the item from HealthVault
+// Removes thing from the view AND any associated LOCAL data only.
+// Does NOT delete the thing from HealthVault
 //
--(BOOL) removeItemAtIndex:(NSUInteger) index;
+-(BOOL) removeThingAtIndex:(NSUInteger) index;
 //
-// Stores items in the LOCAL STORE ONLY AND updates the view
+// Stores things in the LOCAL STORE ONLY AND updates the view
 // Does NOT automatically push the data to HealthVault.
 // Use the MHVSynchronizedType object if you want data to be pushed into HealthVault
 // MHVSynchronizedType will background commit the data to HealthVault
 //
--(NSUInteger) putItem:(MHVItem *) item;
--(BOOL) putItems:(MHVItemCollection *) items;
+-(NSUInteger) putThing:(MHVThing *) thing;
+-(BOOL) putThings:(MHVThingCollection *) things;
 
--(void) removeLocalItemAtIndex:(NSUInteger) index;
--(void) removeAllLocalItems;
+-(void) removeLocalThingAtIndex:(NSUInteger) index;
+-(void) removeAllLocalThings;
 
 //------------------
 //
@@ -303,15 +303,15 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 //------------------
 //
-// Updates the item's position in the view. The position is impacted by the view's sort order
-// Returns the new position of item in the view.
-// Also returns the old position of the item, if it already existed, or NSNotFound
+// Updates the thing's position in the view. The position is impacted by the view's sort order
+// Returns the new position of thing in the view.
+// Also returns the old position of the thing, if it already existed, or NSNotFound
 //
--(NSUInteger) updateItemInView:(MHVItem *) item prevIndex:(NSUInteger *) prevIndex;
--(NSUInteger) updateItemInView:(MHVItem *) item;
+-(NSUInteger) updateThingInView:(MHVThing *) thing prevIndex:(NSUInteger *) prevIndex;
+-(NSUInteger) updateThingInView:(MHVThing *) thing;
 
--(BOOL) removeItemFromViewByID:(NSString *) itemID;
--(BOOL) removeItemsFromViewByID:(NSArray *) itemIDs;
+-(BOOL) removeThingFromViewByID:(NSString *) thingID;
+-(BOOL) removeThingsFromViewByID:(NSArray *) thingIDs;
 
 //----------------------------------
 //
@@ -338,8 +338,8 @@ extern const int c_hvTypeViewDefaultReadAheadChunkSize;
 //
 // Delegate callbacks invoked by MHVSynchronizedStore
 //
--(void) keysNotRetrieved:(MHVItemKeyCollection *) keys withError:(id) error;
--(void) itemsRetrieved:(MHVItemCollection *) items forKeys:(MHVItemKeyCollection *) keys; // Not all keys may result in a match
+-(void) keysNotRetrieved:(MHVThingKeyCollection *) keys withError:(id) error;
+-(void) thingsRetrieved:(MHVThingCollection *) things forKeys:(MHVThingKeyCollection *) keys; // Not all keys may result in a match
 
 //----------------------------------
 //

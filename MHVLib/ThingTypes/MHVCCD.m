@@ -43,9 +43,9 @@ static NSString *const c_typename = @"ClinicalDocument";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVCCD typeID]];
+    return [[MHVThing alloc] initWithType:[MHVCCD typeID]];
 }
 
 @end

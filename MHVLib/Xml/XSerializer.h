@@ -108,7 +108,7 @@ NSString* const XExceptionNotSerializable;
 
 -(NSMutableArray *) readElementArray:(NSString *) name asClass:(Class) classObj;
 -(NSMutableArray *) readElementArray:(NSString *) name asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
--(NSMutableArray *) readElementArray:(NSString *) name itemName:(NSString*) itemName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
+-(NSMutableArray *) readElementArray:(NSString *) name thingName:(NSString*) thingName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
 
 -(MHVStringCollection *) readStringElementArray:(NSString *) name;
 
@@ -127,7 +127,7 @@ NSString* const XExceptionNotSerializable;
 -(BOOL) skipToElement:(NSString *) name;
 
 //
-// These are noticeably faster for lots of items in a lop, as they do fewer string allocations
+// These are noticeably faster for lots of things in a lop, as they do fewer string allocations
 // There are now xmlChar* equivalents of most useful methods from above
 //
 -(id) readElementRequiredWithXmlName:(const xmlChar *) xName asClass:(Class) classObj;
@@ -145,7 +145,7 @@ NSString* const XExceptionNotSerializable;
 
 -(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName asClass:(Class) classObj;
 -(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
--(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName itemName:(const xmlChar *) itemName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
+-(NSMutableArray *) readElementArrayWithXmlName:(const xmlChar *) xName thingName:(const xmlChar *) thingName asClass:(Class) classObj andArrayClass:(Class) arrayClassObj;
 
 -(NSString *) readAttributeWithXmlName:(const xmlChar *) xmlName;
 -(NSString *) readElementRawWithXmlName:(const xmlChar *) xmlName;
@@ -186,7 +186,7 @@ NSString* const XExceptionNotSerializable;
 -(void) writeElement:(NSString *) name object:(id) value;
 
 -(void) writeElementArray:(NSString *)name elements:(NSArray *) array;
--(void) writeElementArray:(NSString *)name itemName:(NSString*) itemName elements:(NSArray *)array;
+-(void) writeElementArray:(NSString *)name thingName:(NSString*) thingName elements:(NSArray *)array;
 -(void) writeRawElementArray:(NSString *) name elements:(NSArray *) array;
 
 -(void) writeAttribute:(NSString *) name intValue:(int) value;

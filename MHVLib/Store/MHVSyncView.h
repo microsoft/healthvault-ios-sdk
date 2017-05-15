@@ -20,43 +20,43 @@
 #import <Foundation/Foundation.h>
 #import "XLib.h"
 #import "MHVAsyncTask.h"
-#import "MHVTypeViewItems.h"
+#import "MHVTypeViewThings.h"
 #import "MHVLocalVault.h"
-#import "MHVItemFilter.h"
+#import "MHVThingFilter.h"
 #import "MHVBlock.h"
 
 //---------------------------------------------------------------------------------
 //
 // SyncViews implement a simple model for maintaing read-only OFFLINE/Local Storage
-// views and caches of the items in a HealthVault record.
+// views and caches of the things in a HealthVault record.
 //
-// SyncViews automatically download and store copies of HealthVault items (MHVItems) in
+// SyncViews automatically download and store copies of HealthVault things (MHVThings) in
 // your LocalVault as needed.
-// Like Database views, each SyncView has an associated Query (MHVItemQuery)
+// Like Database views, each SyncView has an associated Query (MHVThingQuery)
 //
-// SyncView implement read-only synchronization, downloading changed items when required.
+// SyncView implement read-only synchronization, downloading changed things when required.
 // SyncView use a simple synchronization and caching model--similar to that used by
 // HTML & RSS.
 //
-// The Query for a view defines the set of MHVItems in the view.
-// Each SyncView maintains a COLLECTION (array) of the KEYS (MHVItemKey) for the items in
+// The Query for a view defines the set of MHVThings in the view.
+// Each SyncView maintains a COLLECTION (array) of the KEYS (MHVThingKey) for the things in
 // the view.
-//     - The view fetches ONLY the updated set of ItemKeys when it is REFRESHED (synchronized).
-//     - The view does not fetch the *actual* item data until necessary.
+//     - The view fetches ONLY the updated set of ThingKeys when it is REFRESHED (synchronized).
+//     - The view does not fetch the *actual* thing data until necessary.
 //     - Keys are relatively small in size
-//     - The collection of item keys representing the view can optionally be saved and
+//     - The collection of thing keys representing the view can optionally be saved and
 //      loaded from the LocalVault.
 //
-//     - When the caller asks for the MHVItem for a particular ItemKey, the view checks
+//     - When the caller asks for the MHVThing for a particular ThingKey, the view checks
 //      the LocalVault for a copy that was downloaded earlier - EITHER by this view or another.
-//          - BOTH the itemID and the version stamp must match.
-//          - If a local copy is available (the itemID & the version matched), it returns
-//          the item immediately.
-//          (All Views share the same underlying LocalVault. An item that appears in multiple
+//          - BOTH the thingID and the version stamp must match.
+//          - If a local copy is available (the thingID & the version matched), it returns
+//          the thing immediately.
+//          (All Views share the same underlying LocalVault. An thing that appears in multiple
 //          views and was downloaded via one...is automatically available for the others).
-//          - If a local item is not available, the view downloads the item from HealthVault
-//          in the background and lets you know when the item is available.
-//          - The view may chose to *read ahead* and download additional items in anticipation
+//          - If a local thing is not available, the view downloads the thing from HealthVault
+//          in the background and lets you know when the thing is available.
+//          - The view may chose to *read ahead* and download additional things in anticipation
 //          of future usage.
 //
 //     - Like an HTML page or RSS feed, the application chooses to periodically REFRESH the SyncView
@@ -65,11 +65,11 @@
 //          OR the user hits a refresh button.
 //          - This refreshed set of keys can be saved to the LocalVault and subsequently loaded
 //          from the local store, just like a cached HTML page or RSS feed.
-//          - For any given View, virtually ALL the ItemKeys will be unchanged from refresh to refresh.
-//          - If a matching MHVItem was downloaded by any of your views,
-//          - Thus, once downloaded, an MHVItem will only ever need to downloaded again if:
-//              - The item was updated (version stamp is different)
-//              - The item was deleted from the local store
+//          - For any given View, virtually ALL the ThingKeys will be unchanged from refresh to refresh.
+//          - If a matching MHVThing was downloaded by any of your views,
+//          - Thus, once downloaded, an MHVThing will only ever need to downloaded again if:
+//              - The thing was updated (version stamp is different)
+//              - The thing was deleted from the local store
 //          - This minimizes the amount of data that must be periodically synchronized.
 //
 // Classes that adopt the MHVSyncView protocol use different mechanisms to notify
@@ -87,34 +87,34 @@
 //
 @property (readwrite, nonatomic, retain) NSDate* lastUpdateDate;
 //
-// The number of items in this view
+// The number of things in this view
 //
 @property (readonly, nonatomic) NSUInteger count;
 //
 // The Query Associated with this view
 //
--(MHVItemQuery *) getQuery;
+-(MHVThingQuery *) getQuery;
 
--(MHVItemKey *) keyAtIndex:(NSUInteger) index;
+-(MHVThingKey *) keyAtIndex:(NSUInteger) index;
 
 //----------------------------------------------------------
 //
-// Methods to retrieve items
+// Methods to retrieve things
 //
 //----------------------------------------------------------
 //
-// These return null if no local item is available
+// These return null if no local thing is available
 // A background load is automatically triggered. You are notified of
 // progress and results via a delegate or notification model defined by the
 // adopter of this protocol
 //
--(MHVItem *) getItemAtIndex:(NSUInteger) index;
--(MHVItemCollection *) getItemsInRange:(NSRange) range;
+-(MHVThing *) getThingAtIndex:(NSUInteger) index;
+-(MHVThingCollection *) getThingsInRange:(NSRange) range;
 //
 // Work with local copies of data only
-// Return null if no local item available
+// Return null if no local thing available
 //
--(MHVItem *) getLocalItemAtIndex:(NSUInteger) index;
+-(MHVThing *) getLocalThingAtIndex:(NSUInteger) index;
 //
 // A view is stale if it is older than the given age - it was last updated more than the given
 // time interval ago

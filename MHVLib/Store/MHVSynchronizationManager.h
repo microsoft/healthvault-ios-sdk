@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 #import <Foundation/Foundation.h>
-#import "MHVItemChangeManager.h"
+#import "MHVThingChangeManager.h"
 #import "MHVSynchronizedStore.h"
 
 @class MHVLocalRecordStore;
@@ -28,14 +28,14 @@
 @private
     MHVLocalRecordStore* m_store;
     MHVSynchronizedStore* m_data;
-    MHVItemChangeManager* m_changeManager;
+    MHVThingChangeManager* m_changeManager;
     NSMutableDictionary* m_syncTypes;
 }
 
 @property (strong, readonly, nonatomic) MHVLocalRecordStore* store;
 @property (strong, readonly, nonatomic) MHVRecordReference* record;
 @property (strong, readonly, nonatomic) MHVSynchronizedStore* data;
-@property (readonly, nonatomic) MHVItemChangeManager* changeManager;
+@property (readonly, nonatomic) MHVThingChangeManager* changeManager;
 
 -(id) initForRecordStore:(MHVLocalRecordStore *) store withCache:(BOOL) cache;
 
@@ -50,15 +50,15 @@
 -(MHVSynchronizedType *) getTypeForClassName:(NSString *)className;
 -(MHVSynchronizedType *) getTypeForTypeID:(NSString *) typeID;
 
--(MHVItem *) getLocalItemWithKey:(MHVItemKey *) key; // Returns nil if not locally available
--(MHVItem *) getLocalItemForEditWithKey:(MHVItemKey *) key; // Clones (in memory only) item, if available. Returns nil if not locally available
--(MHVDownloadItemsTask *) downloadItemWithKey:(MHVItemKey *) key withCallback:(MHVTaskCompletion) callback;
+-(MHVThing *) getLocalThingWithKey:(MHVThingKey *) key; // Returns nil if not locally available
+-(MHVThing *) getLocalThingForEditWithKey:(MHVThingKey *) key; // Clones (in memory only) thing, if available. Returns nil if not locally available
+-(MHVDownloadThingsTask *) downloadThingWithKey:(MHVThingKey *) key withCallback:(MHVTaskCompletion) callback;
 
--(MHVAutoLock *) newLockForItemKey:(MHVItemKey *) key;
--(BOOL) putNewItem:(MHVItem *) item;
--(BOOL) putItem:(MHVItem *) item itemLock:(MHVAutoLock *) lock;
--(BOOL) removeItem:(MHVItem *) item itemLock:(MHVAutoLock *) lock;
--(BOOL) removeItemWithTypeID:(NSString *) typeID key:(MHVItemKey *) key itemLock:(MHVAutoLock *) lock;
+-(MHVAutoLock *) newLockForThingKey:(MHVThingKey *) key;
+-(BOOL) putNewThing:(MHVThing *) thing;
+-(BOOL) putThing:(MHVThing *) thing thingLock:(MHVAutoLock *) lock;
+-(BOOL) removeThing:(MHVThing *) thing thingLock:(MHVAutoLock *) lock;
+-(BOOL) removeThingWithTypeID:(NSString *) typeID key:(MHVThingKey *) key thingLock:(MHVAutoLock *) lock;
 
 -(BOOL) hasPendingChanges;
 -(MHVTask *) commitPendingChangesWithCallback:(MHVTaskCompletion) callback;
@@ -72,7 +72,7 @@
 // Internal methods called MHVSynchronizationStore
 //
 //---------------------------------------------------
--(BOOL) replaceLocalWithDownloaded:(MHVItem *) item;  // Will only replace the local item if there are no pending changes to the item
--(BOOL) applyChangeCommitSuccess:(MHVItemChange *) change itemLock:(MHVAutoLock *) lock;
+-(BOOL) replaceLocalWithDownloaded:(MHVThing *) thing;  // Will only replace the local thing if there are no pending changes to the thing
+-(BOOL) applyChangeCommitSuccess:(MHVThingChange *) change thingLock:(MHVAutoLock *) lock;
 
 @end

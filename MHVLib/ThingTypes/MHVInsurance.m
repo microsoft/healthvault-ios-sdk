@@ -114,9 +114,9 @@ static NSString *const c_element_contact = @"contact";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVInsurance typeID]];
+    return [[MHVThing alloc] initWithType:[MHVInsurance typeID]];
 }
 
 - (NSString *)typeName

@@ -27,7 +27,7 @@
     //
     // Collection of items you retrieved from HealthVault
     //
-    MHVItemCollection* m_items;  
+    MHVThingCollection* m_items;  
 }
 //
 // Table we will display HV items in
@@ -48,16 +48,16 @@
 //
 // Asynchronously write items to the User's HealthVault record
 //
--(void) putWeightInHealthVault:(MHVItem *) weight;
+-(void) putWeightInHealthVault:(MHVThing *) weight;
 //
 // Asynchronously remove items from the User's HealthVault record
 //
--(void) removeWeightFromHealthVault:(MHVItemKey *) itemKey;
+-(void) removeWeightFromHealthVault:(MHVThingKey *) itemKey;
 //
 // Create a new weight measurement
 //
--(MHVItem *) newWeight;
--(void) changeWeight:(MHVItem *) item;
+-(MHVThing *) newWeight;
+-(void) changeWeight:(MHVThing *) item;
 //
 // Displaying Weights in TableView
 //

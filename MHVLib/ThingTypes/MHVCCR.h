@@ -19,16 +19,16 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVItemRaw.h"
+#import "MHVThingRaw.h"
 
-@interface MHVCCR : MHVItemRaw
+@interface MHVCCR : MHVThingRaw
 
 // -------------------------
 //
 // Initializers
 //
 // -------------------------
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

@@ -165,9 +165,9 @@ static const xmlChar *x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVDailyMedicationUsage typeID]];
+    return [[MHVThing alloc] initWithType:[MHVDailyMedicationUsage typeID]];
 }
 
 - (NSString *)typeName

@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVQuestionAnswer : MHVItemDataTyped
+@interface MHVQuestionAnswer : MHVThingDataTyped
 
 // -------------------------
 //
@@ -59,7 +59,7 @@
 - (instancetype)initWithQuestion:(NSString *)question andDate:(NSDate *)date;
 - (instancetype)initWithQuestion:(NSString *)question answer:(NSString *)answer andDate:(NSDate *)date;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

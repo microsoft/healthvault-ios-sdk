@@ -20,10 +20,10 @@
 
 @interface MHVTypeViewController (MHVPrivate)
 
--(MHVItemCollection *) createRandomForDay:(NSDate *) date isMetric:(BOOL) metric;
+-(MHVThingCollection *) createRandomForDay:(NSDate *) date isMetric:(BOOL) metric;
 
 //
-// Creates multiple random items.. one each for each day in the give range
+// Creates multiple random things.. one each for each day in the give range
 //
 -(void) addRandomForDaysFrom:(NSDate *) start to:(NSDate *) end isMetric:(BOOL) metric;
 
@@ -31,9 +31,9 @@
 //
 // Completion methods
 //
--(BOOL) getItemsCompleted:(MHVTask *) task;
--(BOOL) putItemsCompleted:(MHVTask *) task forDate:(NSDate *) date;
--(BOOL) removeItemCompleted:(MHVTask *) task;
+-(BOOL) getThingsCompleted:(MHVTask *) task;
+-(BOOL) putThingsCompleted:(MHVTask *) task forDate:(NSDate *) date;
+-(BOOL) removeThingCompleted:(MHVTask *) task;
 
 -(NSDate *) getNextDayAfter:(NSDate *) current endDate:(NSDate *) end;
 
@@ -43,8 +43,8 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 @implementation MHVTypeViewController
 
-@synthesize items = m_items;
-@synthesize itemTable = m_itemTable;
+@synthesize things = m_things;
+@synthesize thingTable = m_thingTable;
 @synthesize statusLabel = m_statusLabel;
 @synthesize moreActions = m_moreActions;
 
@@ -68,20 +68,20 @@ LError:
 
 -(void)dealloc
 {
-    m_itemTable.dataSource = nil;
+    m_thingTable.dataSource = nil;
     
     
 }
 
 
-- (IBAction)addItem:(id)sender
+- (IBAction)addThing:(id)sender
 {
     [self addRandomData:m_useMetric];
 }
 
-- (IBAction)removeItem:(id)sender
+- (IBAction)removeThing:(id)sender
 {
-    [self removeCurrentItem];
+    [self removeCurrentThing];
 }
 
 - (IBAction)moreClicked:(id)sender
@@ -102,10 +102,10 @@ LError:
         return;
     }
 
-    m_itemTable.dataSource = self;
+    m_thingTable.dataSource = self;
     
     //
-    // When you click add, we add new items with random, but plausible data
+    // When you click add, we add new things with random, but plausible data
     //
     // Data is created in the time range [TODAY, (Today - m_maxDaysOffsetRandoData)]
     // If m_createMultiple is TRUE, adds random data for EACH day in the range
@@ -116,13 +116,13 @@ LError:
     m_maxDaysOffsetRandomData = 0; // 90;
     m_createMultiple = FALSE;  
     
-    self.navigationItem.title = [m_typeClass XRootElement]; // Every MHVItemDataTyped implements this..
+    self.navigationItem.title = [m_typeClass XRootElement]; // Every MHVThingDataTyped implements this..
     if (!m_moreFeatures)
     {
         [m_moreActions setEnabled:FALSE];
     }
     
-    [self getItemsFromHealthVault];
+    [self getThingsFromHealthVault];
 }
 
 //-------------------------------------
@@ -132,33 +132,33 @@ LError:
 //-------------------------------------
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return m_items.count;
+    return m_things.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [m_itemTable dequeueReusableCellWithIdentifier:@"MHVItem"];
+    UITableViewCell* cell = [m_thingTable dequeueReusableCellWithIdentifier:@"MHVThing"];
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MHVItem"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MHVThing"];
     }
     
-    MHVItem* item = m_items[indexPath.row];
-    NSString* whenString = [item.data.typed dateString];
+    MHVThing* thing = m_things[indexPath.row];
+    NSString* whenString = [thing.data.typed dateString];
     if ([NSString isNilOrEmpty:whenString])
     {
-        whenString = [item.effectiveDate toStringWithStyle:NSDateFormatterShortStyle];
+        whenString = [thing.effectiveDate toStringWithStyle:NSDateFormatterShortStyle];
     }
     cell.textLabel.text = whenString;
     
     NSString* details;
     if (m_useMetric)
     {
-        details = [item.data.typed detailsStringMetric];
+        details = [thing.data.typed detailsStringMetric];
     }
     else
     {
-        details = [item.data.typed detailsString];
+        details = [thing.data.typed detailsString];
     }
     cell.detailTextLabel.text = details;
     
@@ -167,7 +167,7 @@ LError:
 
 -(void)refreshView
 {
-    [self getItemsFromHealthVault];
+    [self getThingsFromHealthVault];
 }
 
 //-------------------------------------
@@ -176,31 +176,31 @@ LError:
 //
 //-------------------------------------
 
--(MHVItem *)getSelectedItem
+-(MHVThing *)getSelectedThing
 {
-    if (!m_items)
+    if (!m_things)
     {
         return nil;
     }
     
-    NSIndexPath* selectedRow = m_itemTable.indexPathForSelectedRow;
+    NSIndexPath* selectedRow = m_thingTable.indexPathForSelectedRow;
     if (!selectedRow ||
         selectedRow.row == NSNotFound ||
-        selectedRow.row >= m_items.count)
+        selectedRow.row >= m_things.count)
     {
         return nil;
     }
     
-    return m_items[selectedRow.row];
+    return m_things[selectedRow.row];
 }
 
--(void)getItemsFromHealthVault
+-(void)getThingsFromHealthVault
 {
     [m_statusLabel showBusy];
     
-    [[MHVClient current].currentRecord getItemsForClass:m_typeClass callback:^(MHVTask *task) {
+    [[MHVClient current].currentRecord getThingsForClass:m_typeClass callback:^(MHVTask *task) {
         
-        [self getItemsCompleted:task];
+        [self getThingsCompleted:task];
     }];
 }
 
@@ -218,15 +218,15 @@ LError:
     
 }
 
--(void)removeCurrentItem
+-(void)removeCurrentThing
 {
-    MHVItem* selectedItem = [self getSelectedItem];
-    if (!selectedItem)
+    MHVThing* selectedThing = [self getSelectedThing];
+    if (!selectedThing)
     {
         return;
     }
     
-    [MHVUIAlert showYesNoPromptWithMessage:@"Permanently delete this item?"
+    [MHVUIAlert showYesNoPromptWithMessage:@"Permanently delete this thing?"
                                 completion:^(BOOL selectedYes)
     {
         if (selectedYes)
@@ -234,9 +234,9 @@ LError:
             //
             // REMOVE from HealthVault
             //
-            [[MHVClient current].currentRecord removeItemWithKey:selectedItem.key callback:^(MHVTask *task) {
+            [[MHVClient current].currentRecord removeThingWithKey:selectedThing.key callback:^(MHVTask *task) {
                 
-                [self removeItemCompleted:task];
+                [self removeThingCompleted:task];
             }];
         }
     }];
@@ -257,7 +257,7 @@ LError:
 
 @implementation MHVTypeViewController (MHVPrivate)
 
--(MHVItemCollection *) createRandomForDay:(NSDate *) date isMetric:(BOOL) metric
+-(MHVThingCollection *) createRandomForDay:(NSDate *) date isMetric:(BOOL) metric
 {
     if (metric)
     {
@@ -269,8 +269,8 @@ LError:
 
 -(void)addRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
 {
-    MHVItemCollection* items = [self createRandomForDay:start isMetric:metric];
-    if (items.count < 1)
+    MHVThingCollection* things = [self createRandomForDay:start isMetric:metric];
+    if (things.count < 1)
     {
         [MHVUIAlert showInformationalMessage:@"Not Supported!"];
         return;
@@ -278,17 +278,17 @@ LError:
     //
     // PUT IT INTO HEALTHVAULT
     //
-    [[MHVClient current].currentRecord putItems:items callback:^(MHVTask *task)
+    [[MHVClient current].currentRecord putThings:things callback:^(MHVTask *task)
      {
          //
          // Update the UI
          //
-         if (![self putItemsCompleted:task forDate:start])
+         if (![self putThingsCompleted:task forDate:start])
          {
              return;
          }
          //
-         // Create another item, unless we've completed the requested data range
+         // Create another thing, unless we've completed the requested data range
          //
          NSDate * nextDate = [self getNextDayAfter:start endDate:end];
          if (nextDate)
@@ -302,15 +302,15 @@ LError:
      }];
 }
 
--(BOOL)getItemsCompleted:(MHVTask *)task
+-(BOOL)getThingsCompleted:(MHVTask *)task
 {
     @try
     {
-        m_items = ((MHVGetItemsTask *) task).itemsRetrieved;
+        m_things = ((MHVGetThingsTask *) task).thingsRetrieved;
         
-        [m_statusLabel showStatus:[NSString stringWithFormat:@"%li items", (long)m_items.count]];
+        [m_statusLabel showStatus:[NSString stringWithFormat:@"%li things", (long)m_things.count]];
         
-        [m_itemTable reloadData];
+        [m_thingTable reloadData];
         
         return TRUE;
     }
@@ -323,7 +323,7 @@ LError:
     return FALSE;
 }
 
--(BOOL)putItemsCompleted:(MHVTask *)task forDate:(NSDate *)date
+-(BOOL)putThingsCompleted:(MHVTask *)task forDate:(NSDate *)date
 {
     @try
     {
@@ -341,7 +341,7 @@ LError:
     return FALSE;
 }
 
--(BOOL)removeItemCompleted:(MHVTask *)task
+-(BOOL)removeThingCompleted:(MHVTask *)task
 {
     @try
     {

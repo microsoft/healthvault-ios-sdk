@@ -19,9 +19,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVGetItemsTask.h"
-#import "MHVPutItemsTask.h"
-#import "MHVRemoveItemsTask.h"
+#import "MHVGetThingsTask.h"
+#import "MHVPutThingsTask.h"
+#import "MHVRemoveThingsTask.h"
 #import "MHVVocabSearchTask.h"
 #import "MHVGetAuthorizedPeopleTask.h"
 #import "MHVGetPersonalImageTask.h"
@@ -29,7 +29,7 @@
 #import "MHVVocabSearcher.h"
 #import "MHVBeginBlobPutTask.h"
 #import "MHVBlobUploadTask.h"
-#import "MHVItemBlobUploadTask.h"
+#import "MHVThingBlobUploadTask.h"
 #import "MHVRemoveRecordAuthTask.h"
 #import "MHVGetServiceDefinitionTask.h"
 #import "MHVMethodFactory.h"

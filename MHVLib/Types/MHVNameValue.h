@@ -62,12 +62,12 @@
 // -------------------------
 @interface MHVNameValueCollection : MHVCollection<MHVNameValue *>
 
-- (NSUInteger)indexOfItemWithName:(MHVCodedValue *)code;
+- (NSUInteger)indexOfThingWithName:(MHVCodedValue *)code;
 //
 // Name codes should typically be from [MHVExercise vocabForDetails]
 //
-- (NSUInteger)indexOfItemWithNameCode:(NSString *)nameCode;
-- (MHVNameValue *)getItemWithNameCode:(NSString *)nameCode;
+- (NSUInteger)indexOfThingWithNameCode:(NSString *)nameCode;
+- (MHVNameValue *)getThingWithNameCode:(NSString *)nameCode;
 
 - (void)addOrUpdate:(MHVNameValue *)value;
 

@@ -19,11 +19,11 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVLib.h"
-#import "MHVItemTestExtensions.h"
+#import "MHVThingTestExtensions.h"
 
 @interface MHVHeartRate (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date;
++(MHVThingCollection *) createRandomForDay:(NSDate *) date;
 
 @end
 

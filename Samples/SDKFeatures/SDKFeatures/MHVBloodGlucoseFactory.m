@@ -20,19 +20,19 @@
 
 @implementation MHVBloodGlucose (MHVFactoryMethods)
 
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date
++(MHVThingCollection *)createRandomForDay:(NSDate *)date
 {
     return [MHVBloodGlucose createRandomForDay:date metric:FALSE];
 }
 
-+(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
++(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVBloodGlucose createRandomForDay:date metric:TRUE];
 }
 
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date metric:(BOOL)metric
++(MHVThingCollection *)createRandomForDay:(NSDate *)date metric:(BOOL)metric
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     //
     // Create 3 BG measurements per day
     //
@@ -40,28 +40,28 @@
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:6 max:8]; // Morning;
     dateTime.time.minute = [MHVRandom randomIntInRangeMin:5 max:55];
     
-    MHVItem* item = [MHVBloodGlucose createRandomForDate:dateTime metric:metric];
-    item.bloodGlucose.context = [[MHVBloodGlucose vocabForContext] codableValueForText:@"After breakfast" andCode:@"AfterBreakfast"];
+    MHVThing* thing = [MHVBloodGlucose createRandomForDate:dateTime metric:metric];
+    thing.bloodGlucose.context = [[MHVBloodGlucose vocabForContext] codableValueForText:@"After breakfast" andCode:@"AfterBreakfast"];
     
-    [items addObject:item];
+    [things addObject:thing];
     
     dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:11 max:13]; // Afternoon;
     dateTime.time.minute = [MHVRandom randomIntInRangeMin:5 max:55];
     
-    item = [MHVBloodGlucose createRandomForDate:dateTime metric:metric];
-    item.bloodGlucose.context = [[MHVBloodGlucose vocabForContext] codableValueForText:@"After lunch" andCode:@"AfterLunch"];
-    [items addObject:item];
+    thing = [MHVBloodGlucose createRandomForDate:dateTime metric:metric];
+    thing.bloodGlucose.context = [[MHVBloodGlucose vocabForContext] codableValueForText:@"After lunch" andCode:@"AfterLunch"];
+    [things addObject:thing];
     
     dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:18 max:20]; // Evening;
     dateTime.time.minute = [MHVRandom randomIntInRangeMin:5 max:55];
     
-    item = [MHVBloodGlucose createRandomForDate:dateTime metric:metric];
-    item.bloodGlucose.context = [[MHVBloodGlucose vocabForContext] codableValueForText:@"After dinner" andCode:@"AfterDinner"];
-    [items addObject:item];
+    thing = [MHVBloodGlucose createRandomForDate:dateTime metric:metric];
+    thing.bloodGlucose.context = [[MHVBloodGlucose vocabForContext] codableValueForText:@"After dinner" andCode:@"AfterDinner"];
+    [things addObject:thing];
     
-    return items;    
+    return things;    
 }
 
 @end

@@ -23,25 +23,25 @@
 
 @implementation MHVMethodFactory
 
-- (MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record queries:(MHVItemQueryCollection *)queries andCallback:(MHVTaskCompletion)callback
+- (MHVGetThingsTask *)newGetThingsForRecord:(MHVRecordReference *)record queries:(MHVThingQueryCollection *)queries andCallback:(MHVTaskCompletion)callback
 {
-    MHVGetItemsTask *task = [MHVGetItemsTask newForRecord:record queries:queries andCallback:callback];
+    MHVGetThingsTask *task = [MHVGetThingsTask newForRecord:record queries:queries andCallback:callback];
 
     task.taskName = @"GetItemsForRecord";
     return task;
 }
 
-- (MHVPutItemsTask *)newPutItemsForRecord:(MHVRecordReference *)record items:(MHVItemCollection *)items andCallback:(MHVTaskCompletion)callback
+- (MHVPutThingsTask *)newPutThingsForRecord:(MHVRecordReference *)record things:(MHVThingCollection *)things andCallback:(MHVTaskCompletion)callback
 {
-    MHVPutItemsTask *task = [MHVPutItemsTask newForRecord:record items:items andCallback:callback];
+    MHVPutThingsTask *task = [MHVPutThingsTask newForRecord:record things:things andCallback:callback];
 
     task.taskName = @"PutItemsForRecord";
     return task;
 }
 
-- (MHVRemoveItemsTask *)newRemoveItemsForRecord:(MHVRecordReference *)record keys:(MHVItemKeyCollection *)keys andCallback:(MHVTaskCompletion)callback
+- (MHVRemoveThingsTask *)newRemoveThingsForRecord:(MHVRecordReference *)record keys:(MHVThingKeyCollection *)keys andCallback:(MHVTaskCompletion)callback
 {
-    MHVRemoveItemsTask *task = [MHVRemoveItemsTask newForRecord:record keys:keys andCallback:callback];
+    MHVRemoveThingsTask *task = [MHVRemoveThingsTask newForRecord:record keys:keys andCallback:callback];
 
     task.taskName = @"RemoveItemsForRecord";
     return task;
@@ -51,29 +51,29 @@
 
 @implementation MHVMethodFactory (MHVMethodFactoryExtensions)
 
-- (MHVGetItemsTask *)newGetItemsForRecord:(MHVRecordReference *)record query:(MHVItemQuery *)query andCallback:(MHVTaskCompletion)callback
+- (MHVGetThingsTask *)newGetThingsForRecord:(MHVRecordReference *)record query:(MHVThingQuery *)query andCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(query);
 
-    MHVItemQueryCollection *queries = [[MHVItemQueryCollection alloc] init];
+    MHVThingQueryCollection *queries = [[MHVThingQueryCollection alloc] init];
     MHVCHECK_NOTNULL(queries);
 
     [queries addObject:query];
 
-    MHVGetItemsTask *task = [self newGetItemsForRecord:record queries:queries andCallback:callback];
+    MHVGetThingsTask *task = [self newGetThingsForRecord:record queries:queries andCallback:callback];
 
     return task;
 }
 
-- (MHVPutItemsTask *)newPutItemForRecord:(MHVRecordReference *)record item:(MHVItem *)item andCallback:(MHVTaskCompletion)callback
+- (MHVPutThingsTask *)newPutThingForRecord:(MHVRecordReference *)record thing:(MHVThing *)thing andCallback:(MHVTaskCompletion)callback
 {
-    MHVItemCollection *items = [[MHVItemCollection alloc] initWithItem:item];
+    MHVThingCollection *things = [[MHVThingCollection alloc] initWithThing:thing];
 
-    MHVCHECK_NOTNULL(items);
+    MHVCHECK_NOTNULL(things);
 
-    MHVPutItemsTask *putItems = [self newPutItemsForRecord:record items:items andCallback:callback];
+    MHVPutThingsTask *putThings = [self newPutThingsForRecord:record things:things andCallback:callback];
 
-    return putItems;
+    return putThings;
 }
 
 @end

@@ -36,10 +36,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * Retrieves lists of vocabulary items for the specified vocabulary in the user's current culture.
+ * Retrieves lists of vocabulary things for the specified vocabulary in the user's current culture.
  *
  * @param key The key for the vocabulary to fetch.
- * @param cultureIsFixed Healthvault looks for the vocabulary items for the culture info specified by the system. If this parameter is set to NO or is not specified and if items are not found for the specified culture then items for the default fallback culture will be returned. If this parameter is set to YES then fallback will not occur.
+ * @param cultureIsFixed Healthvault looks for the vocabulary things for the culture info specified by the system. If this parameter is set to NO or is not specified and if things are not found for the specified culture then things for the default fallback culture will be returned. If this parameter is set to YES then fallback will not occur.
  * @param completion A completion block. On success will give the matching MHVVocabulary. On error will give the error info.
  */
 - (void)getVocabularyWithKey:(MHVVocabulary *)key
@@ -48,11 +48,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * Retrieves lists of vocabulary items for the specified vocabularies in the user's current culture.
+ * Retrieves lists of vocabulary things for the specified vocabularies in the user's current culture.
  *
  * @param vocabularyKeys An array of VocabularyKeys identifying the requested vocabularies.
- * @param cultureIsFixed Healthvault looks for the vocabulary items for the culture info specified by the system. If this parameter is set to NO or is not specified and if items are not found for the specified culture then items for the default fallback culture will be returned. If this parameter is set to YES then fallback will not occur.
- * @param completion A completion block. On success will give one of the specified vocabularies and its items, or empty strings. On error will give the error info.
+ * @param cultureIsFixed Healthvault looks for the vocabulary things for the culture info specified by the system. If this parameter is set to NO or is not specified and if things are not found for the specified culture then things for the default fallback culture will be returned. If this parameter is set to YES then fallback will not occur.
+ * @param completion A completion block. On success will give one of the specified vocabularies and its things, or empty strings. On error will give the error info.
  */
 - (void)getVocabulariesWithVocabularyKeys:(NSArray *)vocabularyKeys
                            cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- * Searches a specific vocabulary and retrieves the matching vocabulary items.
+ * Searches a specific vocabulary and retrieves the matching vocabulary things.
  *
  * @param searchValue The search string to use.
  * @param searchType The type of search to perform.

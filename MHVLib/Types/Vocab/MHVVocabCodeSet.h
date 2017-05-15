@@ -18,7 +18,7 @@
 
 #import "MHVType.h"
 #import "MHVBaseTypes.h"
-#import "MHVVocabItem.h"
+#import "MHVVocabThing.h"
 #import "MHVVocabIdentifier.h"
 
 @interface MHVVocabCodeSet : MHVType
@@ -26,13 +26,13 @@
 @property (readwrite, nonatomic, strong) NSString *name;
 @property (readwrite, nonatomic, strong) NSString *family;
 @property (readwrite, nonatomic, strong) NSString *version;
-@property (readwrite, nonatomic, strong) MHVVocabItemCollection *items;
+@property (readwrite, nonatomic, strong) MHVVocabThingCollection *things;
 @property (readwrite, nonatomic, strong) MHVBool *isTruncated;
 
-@property (readonly, nonatomic) BOOL hasItems;
+@property (readonly, nonatomic) BOOL hasThings;
 
 - (NSArray *)displayStrings;
-- (void)sortItemsByDisplayText;
+- (void)sortThingsByDisplayText;
 
 - (MHVVocabIdentifier *)getVocabID;
 

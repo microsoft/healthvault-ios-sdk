@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVLabTestResults : MHVItemDataTyped
+@interface MHVLabTestResults : MHVThingDataTyped
 
 @property (readwrite, nonatomic, strong) MHVApproxDateTime *when;
 @property (readwrite, nonatomic, strong) MHVLabTestResultsGroupCollection *labGroup;
@@ -40,7 +40,7 @@
 // Initializers
 //
 // -------------------------
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

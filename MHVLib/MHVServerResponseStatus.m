@@ -95,9 +95,9 @@
     return FALSE;
 }
 
-- (BOOL)isItemNotFound
+- (BOOL)isThingNotFound
 {
-    return self.statusCode == MHVServerStatusCodeInvalidItem;
+    return self.statusCode == MHVServerStatusCodeInvalidThing;
 }
 
 - (BOOL)isVersionStampMismatch
@@ -105,11 +105,11 @@
     return self.statusCode == MHVServerStatusCodeVersionStampMismatch;
 }
 
-- (BOOL)isItemKeyNotFound
+- (BOOL)isThingKeyNotFound
 {
     switch (self.statusCode)
     {
-        case MHVServerStatusCodeInvalidItem:
+        case MHVServerStatusCodeInvalidThing:
         case MHVServerStatusCodeVersionStampMismatch:
         case MHVServerStatusCodeInvalidXml:
             return TRUE;

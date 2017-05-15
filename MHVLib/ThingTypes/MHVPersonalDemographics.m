@@ -132,9 +132,9 @@ static NSString *const c_element_donor = @"organ-donor";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVPersonalDemographics typeID]];
+    return [[MHVThing alloc] initWithType:[MHVPersonalDemographics typeID]];
 }
 
 + (BOOL)isSingletonType

@@ -20,7 +20,7 @@
 #import "MHVTypes.h"
 #import "MHVVocab.h"
 
-@interface MHVInsurance : MHVItemDataTyped
+@interface MHVInsurance : MHVThingDataTyped
 
 // ------------------
 //
@@ -74,7 +74,7 @@
 // Initializers
 //
 // -------------------------
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 - (NSString *)toString;
 

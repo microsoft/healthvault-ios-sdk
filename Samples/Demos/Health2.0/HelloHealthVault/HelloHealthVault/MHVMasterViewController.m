@@ -43,7 +43,7 @@
 {
     [[MHVClient current].currentRecord getItemsForType:[MHVWeight typeID] callback:^(MHVTask *task) 
      {
-         m_items = [((MHVGetItemsTask *) task).itemsRetrieved retain];
+         m_items = [((MHVGetThingsTask *) task).itemsRetrieved retain];
          //
          // Refresh UI
          //
@@ -68,7 +68,7 @@
 
 -(void)addNewWeight
 {
-    MHVItem* item = [[MHVWeight newItem] autorelease];
+    MHVThing* item = [[MHVWeight newItem] autorelease];
     
     item.weight.inPounds = 135;
     item.weight.when = [[MHVDateTime alloc] initNow];  

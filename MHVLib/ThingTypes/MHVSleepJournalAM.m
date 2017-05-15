@@ -192,9 +192,9 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVSleepJournalAM typeID]];
+    return [[MHVThing alloc] initWithType:[MHVSleepJournalAM typeID]];
 }
 
 - (NSString *)typeName

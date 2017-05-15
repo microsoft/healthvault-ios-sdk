@@ -32,7 +32,7 @@
     //
     // Collection of items you retrieved from HealthVault
     //
-    MHVItemCollection* m_items;  
+    MHVThingCollection* m_items;  
 }
 
 //--------------------------

@@ -105,9 +105,9 @@ static NSString *const c_element_secondaryprovider = @"secondary-provider";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVProcedure typeID]];
+    return [[MHVThing alloc] initWithType:[MHVProcedure typeID]];
 }
 
 - (NSString *)typeName

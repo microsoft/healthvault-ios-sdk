@@ -35,7 +35,7 @@
 //
 + (NSArray *)classesForTypesToDemo;
 //
-// Class for the item currently selected in the TableView
+// Class for the thing currently selected in the TableView
 //
 - (Class)getSelectedClass;
 

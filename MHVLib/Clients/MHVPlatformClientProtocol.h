@@ -124,13 +124,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Gets the definitions for one or more thing type definitions supported by HealthVault.
  *
- * @param typeIds A collection of health item type IDs whose details are being requested. Nil indicates that all health item types should be returned.
- * @param sections A collection of ThingTypeSections enumeration values that indicate the type of details to be returned for the specified health item records(s).
- * @param imageTypes A collection of strings that identify which health item record images should be retrieved.
+ * @param typeIds A collection of health thing type IDs whose details are being requested. Nil indicates that all health thing types should be returned.
+ * @param sections A collection of ThingTypeSections enumeration values that indicate the type of details to be returned for the specified health thing records(s).
+ * @param imageTypes A collection of strings that identify which health thing record images should be retrieved.
  * @param lastClientRefreshDate  A NSDate instance that specifies the time of the last refresh made by the client.
  * @param completion Envoked when the operation completes. NSDictionary<NSUUID *, MHVThingTypeDefinition *> a dictionary containing type definitions for the specified types, or empty if the typeIds parameter does not represent a known unique type identifier. NSError object will be nil if there is no error when performing the operation.
  */
-- (void)getHealthRecordItemTypeDefinitionsWithTypeIds:(NSArray<NSUUID *> *_Nullable)typeIds
+- (void)getHealthRecordThingTypeDefinitionsWithTypeIds:(NSArray<NSUUID *> *_Nullable)typeIds
                                              sections:(MHVThingTypeSections)sections
                                            imageTypes:(NSArray<NSString *> *_Nullable)imageTypes
                                 lastClientRefreshDate:(NSDate *_Nullable)lastClientRefreshDate

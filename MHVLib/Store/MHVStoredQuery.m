@@ -26,7 +26,7 @@ static NSString* const c_element_timestamp = @"timestamp";
 
 @interface MHVStoredQuery (MHVPrivate)
 
--(void) getItemsComplete:(MHVTask *) task forRecord:(MHVRecordReference *) record;
+-(void) getThingsComplete:(MHVTask *) task forRecord:(MHVRecordReference *) record;
 
 @end
 
@@ -34,12 +34,12 @@ static NSString* const c_element_timestamp = @"timestamp";
 
 @synthesize query = m_query;
 
--(MHVItemQueryResult *)result
+-(MHVThingQueryResult *)result
 {
     return m_result;
 }
 
--(void)setResult:(MHVItemQueryResult *)result
+-(void)setResult:(MHVThingQueryResult *)result
 {
     m_result = result;
     self.timestamp = [NSDate date];
@@ -48,12 +48,12 @@ static NSString* const c_element_timestamp = @"timestamp";
 @synthesize timestamp = m_timestamp;
 
 
--(id)initWithQuery:(MHVItemQuery *)query
+-(id)initWithQuery:(MHVThingQuery *)query
 {
     return [self initWithQuery:query andResult:nil];
 }
 
--(id)initWithQuery:(MHVItemQuery *)query andResult:(MHVItemQueryResult *)result
+-(id)initWithQuery:(MHVThingQuery *)query andResult:(MHVThingQueryResult *)result
 {
     MHVCHECK_NOTNULL(query);
     
@@ -83,12 +83,12 @@ LError:
     MHVTask* task = [[MHVTask alloc] initWithCallback:callback];
     MHVCHECK_NOTNULL(task);
 
-    MHVGetItemsTask* getItemsTask = [[MHVClient current].methodFactory newGetItemsForRecord:record query:m_query andCallback:^(MHVTask *task) {
-        [self getItemsComplete:task forRecord:record];
+    MHVGetThingsTask* getThingsTask = [[MHVClient current].methodFactory newGetThingsForRecord:record query:m_query andCallback:^(MHVTask *task) {
+        [self getThingsComplete:task forRecord:record];
     }];
-    MHVCHECK_NOTNULL(getItemsTask);
+    MHVCHECK_NOTNULL(getThingsTask);
     
-    [task setNextTask:getItemsTask];
+    [task setNextTask:getThingsTask];
     [task start];
     
     return task;
@@ -107,32 +107,32 @@ LError:
 -(void)deserialize:(XReader *)reader
 {
     m_timestamp = [reader readDateElement:c_element_timestamp];
-    m_query = [reader readElement:c_element_query asClass:[MHVItemQuery class]];
-    m_result = [reader readElement:c_element_result asClass:[MHVItemQueryResult class]];    
+    m_query = [reader readElement:c_element_query asClass:[MHVThingQuery class]];
+    m_result = [reader readElement:c_element_result asClass:[MHVThingQueryResult class]];    
 }
 
 @end
 
 @implementation MHVStoredQuery (MHVPrivate)
 
--(void)getItemsComplete:(MHVTask *)task forRecord:(MHVRecordReference *)record
+-(void)getThingsComplete:(MHVTask *)task forRecord:(MHVRecordReference *)record
 {
-    MHVItemQueryResult* queryResult = ((MHVGetItemsTask*) task).queryResult;
-    if (!queryResult.hasPendingItems)
+    MHVThingQueryResult* queryResult = ((MHVGetThingsTask*) task).queryResult;
+    if (!queryResult.hasPendingThings)
     {
         self.result = queryResult;
         return;
     }
     //
-    // Populate the query result's pending items
+    // Populate the query result's pending things
     //
-    MHVTask* pendingItemsTask = [queryResult createTaskToGetPendingItemsForRecord:record itemView:m_query.view withCallback:^(MHVTask *task) {
+    MHVTask* pendingThingsTask = [queryResult createTaskToGetPendingThingsForRecord:record thingView:m_query.view withCallback:^(MHVTask *task) {
         
         [task checkSuccess];
         self.result = queryResult;
     }];
     
-    [task.parent setNextTask:pendingItemsTask];
+    [task.parent setNextTask:pendingThingsTask];
 }
 
 @end

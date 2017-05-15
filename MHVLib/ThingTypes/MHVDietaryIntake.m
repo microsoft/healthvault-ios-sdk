@@ -24,7 +24,7 @@ static NSString *const c_typename = @"dietary-intake";
 
 static NSString *const c_element_additionalFacts = @"additional-nutrition-facts";
 
-static const xmlChar *x_element_foodItem = XMLSTRINGCONST("food-item");
+static const xmlChar *x_element_foodThing = XMLSTRINGCONST("food-thing");
 static const xmlChar *x_element_servingSize = XMLSTRINGCONST("serving-size");
 static const xmlChar *x_element_servingsConsumed = XMLSTRINGCONST("servings-consumed");
 static const xmlChar *x_element_meal = XMLSTRINGCONST("meal");
@@ -109,7 +109,7 @@ static const xmlChar *x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
 {
     MHVVALIDATE_BEGIN
 
-        MHVVALIDATE(self.foodItem, MHVClientError_InvalidDietaryIntake);
+        MHVVALIDATE(self.foodThing, MHVClientError_InvalidDietaryIntake);
 
     MHVVALIDATE_OPTIONAL(self.servingSize);
     MHVVALIDATE_OPTIONAL(self.servingsConsumed);
@@ -157,7 +157,7 @@ static const xmlChar *x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
 
 - (void)deserialize:(XReader *)reader
 {
-    self.foodItem = [reader readElementWithXmlName:x_element_foodItem asClass:[MHVCodableValue class]];
+    self.foodThing = [reader readElementWithXmlName:x_element_foodThing asClass:[MHVCodableValue class]];
     self.servingSize = [reader readElementWithXmlName:x_element_servingSize asClass:[MHVCodableValue class]];
     self.servingsConsumed = [reader readElementWithXmlName:x_element_servingsConsumed asClass:[MHVNonNegativeDouble class]];
     self.meal = [reader readElementWithXmlName:x_element_meal asClass:[MHVCodableValue class]];
@@ -203,7 +203,7 @@ static const xmlChar *x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_foodItem content:self.foodItem];
+    [writer writeElementXmlName:x_element_foodThing content:self.foodThing];
     [writer writeElementXmlName:x_element_servingSize content:self.servingSize];
     [writer writeElementXmlName:x_element_servingsConsumed content:self.servingsConsumed];
     [writer writeElementXmlName:x_element_meal content:self.meal];
@@ -257,9 +257,9 @@ static const xmlChar *x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVDietaryIntake typeID]];
+    return [[MHVThing alloc] initWithType:[MHVDietaryIntake typeID]];
 }
 
 - (NSString *)typeName

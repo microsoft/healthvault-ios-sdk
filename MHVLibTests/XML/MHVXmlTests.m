@@ -22,20 +22,20 @@ describe(@"XML", ^
                         return [[XWriter alloc] initWithBufferSize:2048];
                     });
                 
-                let(item, ^
+                let(thing, ^
                     {
                         MHVAllergy *allergy = [[MHVAllergy alloc] initWithName:@"TestAllergy"];
                         allergy.reaction = [[MHVCodableValue alloc] initWithText:@"TestReaction"];
                         
-                        MHVItem *item = [[MHVItem alloc] initWithTypedData:allergy];
-                        item.key = [[MHVItemKey alloc] initWithID:@"000000-0000-0000-000000" andVersion:@"1.2.3"];
+                        MHVThing *thing = [[MHVThing alloc] initWithTypedData:allergy];
+                        thing.key = [[MHVThingKey alloc] initWithID:@"000000-0000-0000-000000" andVersion:@"1.2.3"];
                         
-                        return item;
+                        return thing;
                     });
                 
-                it(@"should serialize item without blobs", ^
+                it(@"should serialize thing without blobs", ^
                    {
-                       [item serialize:writer];
+                       [thing serialize:writer];
                        
                        NSString *string = [writer newXmlString];
                        
@@ -45,15 +45,15 @@ describe(@"XML", ^
                                                "<data-xml><allergy><name><text>TestAllergy</text></name><reaction><text>TestReaction</text></reaction></allergy><common/></data-xml>")];
                    });
                 
-                it(@"should serialize item with blobs", ^
+                it(@"should serialize thing with blobs", ^
                    {
-                       MHVBlobPayloadItem *blobItem = [[MHVBlobPayloadItem alloc] initWithBlobName:@"BlobName"
+                       MHVBlobPayloadThing *blobThing = [[MHVBlobPayloadThing alloc] initWithBlobName:@"BlobName"
                                                                                        contentType:@"image/jpeg"
                                                                                             length:12345
                                                                                             andUrl:@"https://www.healthvault.com/test-blob-url"];
-                       [item.blobs addOrUpdateBlob:blobItem];
+                       [thing.blobs addOrUpdateBlob:blobThing];
                        
-                       [item serialize:writer];
+                       [thing serialize:writer];
                        
                        NSString *string = [writer newXmlString];
                        
@@ -68,7 +68,7 @@ describe(@"XML", ^
     
     context(@"Deserialize", ^
             {
-                it(@"should deserialize item", ^
+                it(@"should deserialize thing", ^
                    {
                        NSString *xml = (@"<wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\">"\
                                         "<group><thing><thing-id version-stamp=\"ad57ba08-3ee2-4080-8886-165b61979301\">a9ce136b-43d5-4bdf-a7f6-e64c7e3f728c</thing-id>"\
@@ -81,22 +81,22 @@ describe(@"XML", ^
                        XReader *reader = [[XReader alloc] initFromString:xml];
                        
                        //Can query for several things at once, should have one result
-                       MHVItemQueryResults *results = [NSObject newFromReader:reader withRoot:@"info" asClass:[MHVItemQueryResults class]];
+                       MHVThingQueryResults *results = [NSObject newFromReader:reader withRoot:@"info" asClass:[MHVThingQueryResults class]];
                        [[theValue(results.hasResults) should] beYes];
                        [[theValue(results.results.count) should] equal:@(1)];
                        
-                       //The Result should have one item
-                       MHVItemQueryResult *result = [results.results objectAtIndex:0];
-                       [[theValue(result.hasItems) should] beYes];
-                       [[theValue(result.items.count) should] equal:@(1)];
+                       //The Result should have one thing
+                       MHVThingQueryResult *result = [results.results objectAtIndex:0];
+                       [[theValue(result.hasThings) should] beYes];
+                       [[theValue(result.things.count) should] equal:@(1)];
                        
-                       //The typed item in the results should be heartrate
-                       MHVItem *item = [result.items objectAtIndex:0];
-                       [[item should] beKindOfClass:[MHVItem class]];
-                       [[item.data.typed should] beKindOfClass:[MHVHeartRate class]];
+                       //The typed thing in the results should be heartrate
+                       MHVThing *thing = [result.things objectAtIndex:0];
+                       [[thing should] beKindOfClass:[MHVThing class]];
+                       [[thing.data.typed should] beKindOfClass:[MHVHeartRate class]];
                        
                        //The heartrate value should be 106
-                       MHVHeartRate *heartRate = item.data.typed;
+                       MHVHeartRate *heartRate = thing.data.typed;
                        [[theValue(heartRate.bpmValue) should] equal:@(106)];
                    });
             });

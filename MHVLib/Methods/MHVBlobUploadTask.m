@@ -76,7 +76,7 @@
         //
         // First, we'll issue an operation to retrieve a Blob Url.
         // This is the  blobUrl to which we'll push the blob
-        // The app can subsequently 'commit' the blob by adding to an MHVItem's Blob collection and saving it to MHV
+        // The app can subsequently 'commit' the blob by adding to an MHVThing's Blob collection and saving it to MHV
         //
         MHVBeginBlobPutTask *beginPutTask = [[MHVBeginBlobPutTask alloc] initWithCallback:^(MHVTask *task)
         {

@@ -127,9 +127,9 @@ static NSString *const c_element_negated = @"is-negated";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVAllergy typeID]];
+    return [[MHVThing alloc] initWithType:[MHVAllergy typeID]];
 }
 
 - (NSString *)typeName

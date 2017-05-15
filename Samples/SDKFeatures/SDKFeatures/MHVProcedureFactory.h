@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import "MHVLib.h"
-#import "MHVItemTestExtensions.h"
+#import "MHVThingTestExtensions.h"
 
 @interface MHVProcedure (MHVFactoryMethods)
 

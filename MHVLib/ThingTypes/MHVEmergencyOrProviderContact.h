@@ -21,7 +21,7 @@
 #import "MHVTypes.h"
 #import "MHVVocab.h"
 
-@interface MHVEmergencyOrProviderContact : MHVItemDataTyped
+@interface MHVEmergencyOrProviderContact : MHVThingDataTyped
 
 // -------------------------
 //
@@ -37,7 +37,7 @@
 // -------------------------
 - (instancetype)initWithPerson:(MHVPerson *)person;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

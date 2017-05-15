@@ -19,12 +19,12 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVLib.h"
-#import "MHVItemTestExtensions.h"
+#import "MHVThingTestExtensions.h"
 
 @interface MHVEmotionalState (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date;
-+(MHVItemCollection *) createRandomMetricForDay:(NSDate *) date;
++(MHVThingCollection *) createRandomForDay:(NSDate *) date;
++(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date;
 
 @end
 

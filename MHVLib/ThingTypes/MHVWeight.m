@@ -163,31 +163,31 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVWeight typeID]];
+    return [[MHVThing alloc] initWithType:[MHVWeight typeID]];
 }
 
-+ (MHVItem *)newItemWithKg:(double)kg andDate:(NSDate *)date
++ (MHVThing *)newThingWithKg:(double)kg andDate:(NSDate *)date
 {
     MHVWeight *weight = [[MHVWeight alloc] initWithKg:kg andDate:date];
     
     MHVCHECK_NOTNULL(weight);
     
-    MHVItem *item = [[MHVItem alloc] initWithTypedData:weight];
+    MHVThing *thing = [[MHVThing alloc] initWithTypedData:weight];
     
-    return item;
+    return thing;
 }
 
-+ (MHVItem *)newItemWithPounds:(double)pounds andDate:(NSDate *)date
++ (MHVThing *)newThingWithPounds:(double)pounds andDate:(NSDate *)date
 {
     MHVWeight *weight = [[MHVWeight alloc] initWithPounds:pounds andDate:date];
     
     MHVCHECK_NOTNULL(weight);
     
-    MHVItem *item = [[MHVItem alloc] initWithTypedData:weight];
+    MHVThing *thing = [[MHVThing alloc] initWithTypedData:weight];
     
-    return item;
+    return thing;
 }
 
 - (NSString *)typeName

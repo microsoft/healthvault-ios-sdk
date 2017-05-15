@@ -1,5 +1,5 @@
 //
-// MHVItemDataTypedFeatures.h
+// MHVThingDataTypedFeatures.h
 // SDKFeatures
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -56,29 +56,29 @@
 
 //
 // Files are stored in HealthVault Blobs (note: Any HealthVault type can have multiple associated NAMED blob streams of arbitrary size).
-// File data is stored in the default or 'unnamed' blob stream for an item
+// File data is stored in the default or 'unnamed' blob stream for an thing
 //
 // Each blob is referenced using a blob Url that is active for a limited duration. So, to get a "live" Url, we must first refresh
-// an item's blob information
+// an thing's blob information
 //
 - (void)processSelectedFile:(MHVHandler)action
 {
-    MHVItem *fileItem = [self.controller getSelectedItem];
+    MHVThing *fileThing = [self.controller getSelectedThing];
 
-    if (!fileItem)
+    if (!fileThing)
     {
         return;
     }
 
     [self.controller showActivityAndStatus:@"Getting updated File info"];
 
-    [fileItem updateBlobDataFromRecord:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
+    [fileThing updateBlobDataFromRecord:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
     {
         @try
         {
             [task checkSuccess];
 
-            MHVBlobPayloadItem *fileBlob = [fileItem.blobs getDefaultBlob];
+            MHVBlobPayloadThing *fileBlob = [fileThing.blobs getDefaultBlob];
             action(fileBlob);
         }
         @catch (NSException *exception)
@@ -93,7 +93,7 @@
 {
     [self processSelectedFile:^BOOL(id value)
     {
-        MHVBlobPayloadItem *fileBlob = (MHVBlobPayloadItem *)value;
+        MHVBlobPayloadThing *fileBlob = (MHVBlobPayloadThing *)value;
 
         NSURL *blobUrl = [NSURL URLWithString:fileBlob.blobUrl];
         
@@ -107,15 +107,15 @@
 
 - (void)downloadFile
 {
-    MHVItem *fileItem = [self.controller getSelectedItem];
+    MHVThing *fileThing = [self.controller getSelectedThing];
 
-    if (!fileItem)
+    if (!fileThing)
     {
         return;
     }
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString *filePath = [[paths firstObject] stringByAppendingPathComponent:fileItem.file.name];
+    NSString *filePath = [[paths firstObject] stringByAppendingPathComponent:fileThing.file.name];
     
     [self downloadFileToFilePath:filePath];
 }
@@ -127,13 +127,13 @@
         return;
     }
     
-    MHVItem *fileItem = [self.controller getSelectedItem];
+    MHVThing *fileThing = [self.controller getSelectedThing];
 
     [self processSelectedFile:^BOOL (id value)
     {
-        MHVBlobPayloadItem *fileBlob = (MHVBlobPayloadItem *)value;
+        MHVBlobPayloadThing *fileBlob = (MHVBlobPayloadThing *)value;
 
-        [self.controller showActivityAndStatus:[NSString stringWithFormat:@"Downloading %@", [fileItem.file sizeAsString]]];
+        [self.controller showActivityAndStatus:[NSString stringWithFormat:@"Downloading %@", [fileThing.file sizeAsString]]];
 
         [fileBlob downloadBlobToFilePath:filePath completion:^(NSError *error)
         {
@@ -164,18 +164,18 @@
 
     [self.controller showActivityAndStatus:@"Uploading file. Please wait..."];
     //
-    // Create a new file item
+    // Create a new file thing
     //
-    MHVItem *fileItem = [MHVFile newItemWithName:name andContentType:mediaType];
-    fileItem.file.size = data.length;
+    MHVThing *fileThing = [MHVFile newThingWithName:name andContentType:mediaType];
+    fileThing.file.size = data.length;
     //
     // Set up the data source so we can push the file to HealthVault
     //
     id<MHVBlobSourceProtocol> blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
     //
-    // This will first commit the blob and if that is successful, also PUT the associated file item
+    // This will first commit the blob and if that is successful, also PUT the associated file thing
     //
-    [fileItem uploadBlob:blobSource contentType:mediaType record:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
+    [fileThing uploadBlob:blobSource contentType:mediaType record:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
     {
         @try
         {
@@ -183,7 +183,7 @@
 
             [MHVUIAlert showInformationalMessage:@"File uploaded!"];
 
-            [self.controller getItemsFromHealthVault]; // Refresh
+            [self.controller getThingsFromHealthVault]; // Refresh
         }
         @catch (id exception)
         {

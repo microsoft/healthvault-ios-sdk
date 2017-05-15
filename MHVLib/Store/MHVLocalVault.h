@@ -26,7 +26,7 @@
 //
 // The LocalVault is a simple, readymade store
 // that uses the local FILESYSTEM for storage
-// You can use it to store Vocabs, Items, Blobs, Xml Setttings etc. 
+// You can use it to store Vocabs, Things, Blobs, Xml Setttings etc. 
 // 
 //-------------------------
 

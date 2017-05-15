@@ -17,9 +17,9 @@
 // limitations under the License.
 //
 
-#import "MHVItemDataTypedFeatures.h"
+#import "MHVThingDataTypedFeatures.h"
 
-@interface MHVFileFeatures : MHVItemDataTypedFeatures<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MHVFileFeatures : MHVThingDataTypedFeatures<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 - (void)viewFileInBrowser;
 - (void)downloadFile;

@@ -19,89 +19,89 @@
 #import <Foundation/Foundation.h>
 #import "MHVAsyncTask.h"
 #import "MHVObjectStore.h"
-#import "MHVItemStore.h"
-#import "MHVDownloadItemsTask.h"
+#import "MHVThingStore.h"
+#import "MHVDownloadThingsTask.h"
 
 @class MHVTypeView;
 @class MHVSynchronizationManager;
 
 @interface MHVSynchronizedStore : NSObject
 {
-    MHVItemSection m_sections;
-    id<MHVItemStore> m_localStore;
+    MHVThingSection m_sections;
+    id<MHVThingStore> m_localStore;
 }
 
-@property (readonly, nonatomic, strong) id<MHVItemStore> localStore;
-@property (readwrite, nonatomic) MHVItemSection defaultSections;
+@property (readonly, nonatomic, strong) id<MHVThingStore> localStore;
+@property (readwrite, nonatomic) MHVThingSection defaultSections;
 
 // Weak ref back to the owning sync manager, if any
 @property (readwrite, nonatomic, weak) MHVSynchronizationManager* syncMgr;
 
 -(id) initOverStore:(id<MHVObjectStore>) store;
--(id) initOverItemStore:(id<MHVItemStore>) store;
+-(id) initOverThingStore:(id<MHVThingStore>) store;
 
 -(void) clearCache;
 
 //---------------------------------
 //
-// Operations on items locally available on this machine
+// Operations on things locally available on this machine
 //
 //---------------------------------
 
--(MHVItem *) getLocalItemWithKey:(MHVItemKey *) key;
+-(MHVThing *) getLocalThingWithKey:(MHVThingKey *) key;
 //
-// Retrieve locally stored items for the given keys
-// MHVItemCollection.count is always == keys.count
-// If no local item is found for a key, returns its equivalent position in MHVItemCollection
+// Retrieve locally stored things for the given keys
+// MHVThingCollection.count is always == keys.count
+// If no local thing is found for a key, returns its equivalent position in MHVThingCollection
 // contains NSNull
 //
--(MHVItemCollection *) getLocalItemsWithKeys:(MHVItemKeyCollection *) keys;
+-(MHVThingCollection *) getLocalThingsWithKeys:(MHVThingKeyCollection *) keys;
 
--(MHVItem *) getlocalItemWithID:(NSString *) itemID;
--(BOOL) putLocalItem:(MHVItem *) item;
--(void) removeLocalItemWithKey:(MHVItemKey *) key;
+-(MHVThing *) getlocalThingWithID:(NSString *) thingID;
+-(BOOL) putLocalThing:(MHVThing *) thing;
+-(void) removeLocalThingWithKey:(MHVThingKey *) key;
 
 //---------------------------------
 //
 // Operations that go to HealthVault
-// They pull items down to the local store
+// They pull things down to the local store
 //
 //---------------------------------
 //
-// Downloads items for the given keys and store them locally.
-// Always retrieves the LATEST item for the key 
+// Downloads things for the given keys and store them locally.
+// Always retrieves the LATEST thing for the key 
 // When complete, notify MHVTypeView of completions by calling:
 //   - keysNotRetrieved (if error)
-//   - itemsRetrieved
+//   - thingsRetrieved
 //
--(MHVTask *) downloadItemsWithKeys:(MHVItemKeyCollection *) keys inView:(MHVTypeView *) view;
--(MHVTask *) downloadItemsWithKeys:(MHVItemKeyCollection *) keys typeID:(NSString *) typeID inView:(MHVTypeView *) view;
+-(MHVTask *) downloadThingsWithKeys:(MHVThingKeyCollection *) keys inView:(MHVTypeView *) view;
+-(MHVTask *) downloadThingsWithKeys:(MHVThingKeyCollection *) keys typeID:(NSString *) typeID inView:(MHVTypeView *) view;
 //
-// Fetch items with given keys into the local store
-// Always retrieves the LATEST item for the key
-// In the callback, MHVTask.result has an MHVItemCollection containing those items that were found
+// Fetch things with given keys into the local store
+// Always retrieves the LATEST thing for the key
+// In the callback, MHVTask.result has an MHVThingCollection containing those things that were found
 //
--(MHVTask *) getItemsInRecord:(MHVRecordReference *) record withKeys:(MHVItemKeyCollection *) keys callback:(MHVTaskCompletion) callback;
--(MHVTask *) getItemsInRecord:(MHVRecordReference *) record forQuery:(MHVItemQuery *) query callback:(MHVTaskCompletion) callback;
+-(MHVTask *) getThingsInRecord:(MHVRecordReference *) record withKeys:(MHVThingKeyCollection *) keys callback:(MHVTaskCompletion) callback;
+-(MHVTask *) getThingsInRecord:(MHVRecordReference *) record forQuery:(MHVThingQuery *) query callback:(MHVTaskCompletion) callback;
 
 // Deprecated. Use MHVSynchronizationMgr & MHVSynchronizedType
--(BOOL) putItem:(MHVItem *) item __deprecated;
+-(BOOL) putThing:(MHVThing *) thing __deprecated;
 
 //
 // In the callback, use [task checkForSuccess] to confirm that the operation succeeded
-// task.result will contain updated keys - in case the items 
-// Always retrieves the LATEST item for the keys
+// task.result will contain updated keys - in case the things 
+// Always retrieves the LATEST thing for the keys
 //
--(MHVDownloadItemsTask *) downloadItemsInRecord:(MHVRecordReference *) record forKeys:(MHVItemKeyCollection *) keys callback:(MHVTaskCompletion) callback;
+-(MHVDownloadThingsTask *) downloadThingsInRecord:(MHVRecordReference *) record forKeys:(MHVThingKeyCollection *) keys callback:(MHVTaskCompletion) callback;
 //
 // In the callback, use [task checkForSuccess] to confirm that the operation succeeded
 //
--(MHVDownloadItemsTask *) downloadItemsInRecord:(MHVRecordReference *) record query:(MHVItemQuery *) query callback:(MHVTaskCompletion) callback;
+-(MHVDownloadThingsTask *) downloadThingsInRecord:(MHVRecordReference *) record query:(MHVThingQuery *) query callback:(MHVTaskCompletion) callback;
 //
 // These create new download tasks but do NOT start them.
 // You can make the task a child of another task
 // 
--(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forKeys:(MHVItemKeyCollection *) keys callback:(MHVTaskCompletion) callback;
--(MHVDownloadItemsTask *) newDownloadItemsInRecord:(MHVRecordReference *) record forQuery:(MHVItemQuery *) query callback:(MHVTaskCompletion) callback;
+-(MHVDownloadThingsTask *) newDownloadThingsInRecord:(MHVRecordReference *) record forKeys:(MHVThingKeyCollection *) keys callback:(MHVTaskCompletion) callback;
+-(MHVDownloadThingsTask *) newDownloadThingsInRecord:(MHVRecordReference *) record forQuery:(MHVThingQuery *) query callback:(MHVTaskCompletion) callback;
 
 @end

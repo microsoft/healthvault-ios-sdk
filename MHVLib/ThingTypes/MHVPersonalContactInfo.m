@@ -68,9 +68,9 @@ static NSString *const c_element_contact = @"contact";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVPersonalContactInfo typeID]];
+    return [[MHVThing alloc] initWithType:[MHVPersonalContactInfo typeID]];
 }
 
 @end

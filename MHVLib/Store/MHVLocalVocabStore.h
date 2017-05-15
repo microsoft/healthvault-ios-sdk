@@ -71,7 +71,7 @@
 //
 // Convenience Lookup of codes
 //
--(MHVVocabItem *) getVocabItemForCode:(NSString *) code inVocab:(MHVVocabIdentifier *) vocabID;
+-(MHVVocabThing *) getVocabThingForCode:(NSString *) code inVocab:(MHVVocabIdentifier *) vocabID;
 -(NSString *) getDisplayTextForCode:(NSString *) code inVocab:(MHVVocabIdentifier *) vocabID;
 
 @end

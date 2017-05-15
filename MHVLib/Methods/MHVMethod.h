@@ -279,7 +279,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (MHVMethod *)removeThings;
 
 /**
- Search a specific vocabulary and retrieve the matching vocabulary items.
+ Search a specific vocabulary and retrieve the matching vocabulary things.
  
  @return An instance of MHVMethod.
  */

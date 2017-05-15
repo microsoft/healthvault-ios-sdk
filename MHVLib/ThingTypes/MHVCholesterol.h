@@ -20,7 +20,7 @@
 #import "MHVTypes.h"
 #import "MHVCholesterol.h"
 
-@interface MHVCholesterol : MHVItemDataTyped
+@interface MHVCholesterol : MHVThingDataTyped
 
 //
 // (Required) When the measurement was taken
@@ -62,6 +62,6 @@
 +(NSString *) typeID;
 +(NSString *) XRootElement;
 
-+(MHVItem *) newItem;
++(MHVThing *) newThing;
 
 @end

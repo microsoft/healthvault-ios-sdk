@@ -97,9 +97,9 @@ static NSString *const c_element_result = @"result";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVAssessment typeID]];
+    return [[MHVThing alloc] initWithType:[MHVAssessment typeID]];
 }
 
 @end

@@ -20,28 +20,28 @@
 
 @implementation MHVCholesterol (MHVFactoryMethods)
 
-+(MHVItemCollection *)createRandomForDay:(NSDate *)date
++(MHVThingCollection *)createRandomForDay:(NSDate *)date
 {
     return [MHVCholesterol createRandomForDay:date metric:FALSE];
 }
 
-+(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
++(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVCholesterol createRandomForDay:date metric:TRUE];
 }
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date metric:(BOOL)metric
++(MHVThingCollection *) createRandomForDay:(NSDate *) date metric:(BOOL)metric
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     
     // Typically 1 a day
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:11 max:16];
     dateTime.time.minute = [MHVRandom randomIntInRangeMin:5 max:55];
     
-    [items addObject:[MHVCholesterol createRandomForDate:dateTime metric:metric]];
+    [things addObject:[MHVCholesterol createRandomForDate:dateTime metric:metric]];
     
-    return items;    
+    return things;    
 }
 
 @end

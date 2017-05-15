@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVExercise : MHVItemDataTyped
+@interface MHVExercise : MHVThingDataTyped
 
 // -------------------------
 //
@@ -73,7 +73,7 @@
 // Initializers
 //
 // -------------------------
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 - (instancetype)initWithDate:(NSDate *)date;
 

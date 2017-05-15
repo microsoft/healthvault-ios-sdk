@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVVitalSigns : MHVItemDataTyped
+@interface MHVVitalSigns : MHVThingDataTyped
 
 // -------------------------
 //
@@ -52,7 +52,7 @@
 - (instancetype)initWithDate:(NSDate *)date;
 - (instancetype)initWithResult:(MHVVitalSignResult *)result onDate:(NSDate *)date;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

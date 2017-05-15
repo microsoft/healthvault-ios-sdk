@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVBloodGlucose : MHVItemDataTyped
+@interface MHVBloodGlucose : MHVThingDataTyped
 
 // -------------------------
 //
@@ -74,7 +74,7 @@
 // -------------------------
 - (instancetype)initWithMmolPerLiter:(double)value andDate:(NSDate *)date;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

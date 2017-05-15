@@ -43,7 +43,7 @@ typedef NS_ENUM (NSInteger, MHVWellBeing)
 
 NSString *stringFromWellBeing(MHVWellBeing wellBeing);
 
-@interface MHVEmotionalState : MHVItemDataTyped
+@interface MHVEmotionalState : MHVThingDataTyped
 
 // -------------------------
 //
@@ -72,7 +72,7 @@ NSString *stringFromWellBeing(MHVWellBeing wellBeing);
 // Initializers
 //
 // -------------------------
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

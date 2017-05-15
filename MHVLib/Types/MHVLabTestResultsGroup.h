@@ -40,6 +40,6 @@
 
 @interface MHVLabTestResultsGroupCollection : MHVCollection<MHVLabTestResultsGroup *>
 
-- (void)addItemsToCollection:(MHVLabTestResultsGroupCollection *)groups;
+- (void)addThingsToCollection:(MHVLabTestResultsGroupCollection *)groups;
 
 @end

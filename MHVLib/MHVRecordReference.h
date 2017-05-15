@@ -17,11 +17,11 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVItemQuery.h"
+#import "MHVThingQuery.h"
 #import "MHVAsyncTask.h"
-#import "MHVGetItemsTask.h"
-#import "MHVPutItemsTask.h"
-#import "MHVRemoveItemsTask.h"
+#import "MHVGetThingsTask.h"
+#import "MHVPutThingsTask.h"
+#import "MHVRemoveThingsTask.h"
 
 @interface MHVRecordReference : MHVType
 
@@ -31,71 +31,71 @@
 // -------------------------
 //
 // Get Data
-// Each of these work with an MHVGetItemsTask
+// Each of these work with an MHVGetThingsTask
 //
-// On success, the result property of MHVTask will contain any found items
-// You can also do: ((MHVGetItemsTask *) task).itemsRetrieved in your callback
+// On success, the result property of MHVTask will contain any found things
+// You can also do: ((MHVGetThingsTask *) task).thingsRetrieved in your callback
 //
 // -------------------------
 
 //
-// Get all items of the given type
+// Get all things of the given type
 //
-- (MHVGetItemsTask *)getItemsForClass:(Class)cls callback:(MHVTaskCompletion)callback;
-- (MHVGetItemsTask *)getItemsForType:(NSString *)typeID callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getThingsForClass:(Class)cls callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getThingsForType:(NSString *)typeID callback:(MHVTaskCompletion)callback;
 //
-// Get the item with the given key. ItemKey includes a version stamp
+// Get the thing with the given key. ThingKey includes a version stamp
 //
-- (MHVGetItemsTask *)getItemWithKey:(MHVItemKey *)key callback:(MHVTaskCompletion)callback;
-- (MHVGetItemsTask *)getItemWithKey:(MHVItemKey *)key ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getThingWithKey:(MHVThingKey *)key callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getThingWithKey:(MHVThingKey *)key ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback;
 //
-// Get item with the given ID. If the item exists, will retrieve the latest version
+// Get thing with the given ID. If the thing exists, will retrieve the latest version
 //
-- (MHVGetItemsTask *)getItemWithID:(NSString *)itemID callback:(MHVTaskCompletion)callback;
-- (MHVGetItemsTask *)getItemWithID:(NSString *)itemID ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getThingWithID:(NSString *)thingID callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getThingWithID:(NSString *)thingID ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback;
 
 //
-// Get all items matching the given query
+// Get all things matching the given query
 //
-- (MHVGetItemsTask *)getItems:(MHVItemQuery *)query callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getThings:(MHVThingQuery *)query callback:(MHVTaskCompletion)callback;
 
-- (MHVGetItemsTask *)getPendingItems:(MHVPendingItemCollection *)items callback:(MHVTaskCompletion)callback;
-- (MHVGetItemsTask *)getPendingItems:(MHVPendingItemCollection *)items ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getPendingThings:(MHVPendingThingCollection *)things callback:(MHVTaskCompletion)callback;
+- (MHVGetThingsTask *)getPendingThings:(MHVPendingThingCollection *)things ofType:(NSString *)typeID callback:(MHVTaskCompletion)callback;
 
 // -------------------------
 //
 // Put Data
-// Each of these work with a MHVPutItemsTask
+// Each of these work with a MHVPutThingsTask
 //
 // -------------------------
-- (MHVPutItemsTask *)newItem:(MHVItem *)item callback:(MHVTaskCompletion)callback;
-- (MHVPutItemsTask *)newItems:(MHVItemCollection *)items callback:(MHVTaskCompletion)callback;
+- (MHVPutThingsTask *)newThing:(MHVThing *)thing callback:(MHVTaskCompletion)callback;
+- (MHVPutThingsTask *)newThings:(MHVThingCollection *)things callback:(MHVTaskCompletion)callback;
 
-- (MHVPutItemsTask *)putItem:(MHVItem *)item callback:(MHVTaskCompletion)callback;
-- (MHVPutItemsTask *)putItems:(MHVItemCollection *)items callback:(MHVTaskCompletion)callback;
+- (MHVPutThingsTask *)putThing:(MHVThing *)thing callback:(MHVTaskCompletion)callback;
+- (MHVPutThingsTask *)putThings:(MHVThingCollection *)things callback:(MHVTaskCompletion)callback;
 
 //
-// Update Item assumes that you fetched items from MHV, made some changes, and are now
+// Update Thing assumes that you fetched things from MHV, made some changes, and are now
 // writing it back. It will automatically CLEAR system fields that are *typically* set by the MHV service,
-// such as effectiveDates. It does so by calling [item prepareForPut].
-// If the fields are not cleared, the system data present in the item will get persisted into MHV.
+// such as effectiveDates. It does so by calling [thing prepareForPut].
+// If the fields are not cleared, the system data present in the thing will get persisted into MHV.
 //
-// If you wish to manage this information yourself, you should call putItem/putItems directly
+// If you wish to manage this information yourself, you should call putThing/putThings directly
 //
-// Since updateItem alters the item object you supplied, you should call getItem again.
-// This will give you the latest updated Xml from MHV. Alternatively, you can call [item shallowClone] and
-// pass that to updateItem
+// Since updateThing alters the thing object you supplied, you should call getThing again.
+// This will give you the latest updated Xml from MHV. Alternatively, you can call [thing shallowClone] and
+// pass that to updateThing
 //
-- (MHVPutItemsTask *)updateItem:(MHVItem *)item callback:(MHVTaskCompletion)callback;
-- (MHVPutItemsTask *)updateItems:(MHVItemCollection *)items callback:(MHVTaskCompletion)callback;
+- (MHVPutThingsTask *)updateThing:(MHVThing *)thing callback:(MHVTaskCompletion)callback;
+- (MHVPutThingsTask *)updateThings:(MHVThingCollection *)things callback:(MHVTaskCompletion)callback;
 
 // -------------------------
 //
 // Remove Data
 //
 // -------------------------
-- (MHVRemoveItemsTask *)removeItemWithKey:(MHVItemKey *)key callback:(MHVTaskCompletion)callback;
-- (MHVRemoveItemsTask *)removeItemsWithKeys:(MHVItemKeyCollection *)keys callback:(MHVTaskCompletion)callback;
+- (MHVRemoveThingsTask *)removeThingWithKey:(MHVThingKey *)key callback:(MHVTaskCompletion)callback;
+- (MHVRemoveThingsTask *)removeThingsWithKeys:(MHVThingKeyCollection *)keys callback:(MHVTaskCompletion)callback;
 
 
 @end

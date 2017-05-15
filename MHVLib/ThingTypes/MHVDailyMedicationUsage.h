@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVDailyMedicationUsage : MHVItemDataTyped
+@interface MHVDailyMedicationUsage : MHVThingDataTyped
 
 // -------------------------
 //
@@ -69,7 +69,7 @@
 - (instancetype)initWithDoses:(int)doses forDrug:(MHVCodableValue *)drug onDay:(NSDate *)day;
 - (instancetype)initWithDoses:(int)doses forDrug:(MHVCodableValue *)drug onDate:(MHVDate *)date;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

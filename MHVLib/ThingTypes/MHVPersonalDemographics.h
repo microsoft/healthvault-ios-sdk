@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVPersonalDemographics : MHVItemDataTyped
+@interface MHVPersonalDemographics : MHVThingDataTyped
 
 // -------------------------
 //
@@ -49,7 +49,7 @@
 // Initializers
 //
 // -------------------------
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 
 - (NSString *)toString;

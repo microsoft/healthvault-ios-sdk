@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
 
-@interface MHVHeight : MHVItemDataTyped
+@interface MHVHeight : MHVThingDataTyped
 
 // -------------------------
 //
@@ -49,7 +49,7 @@
 - (instancetype)initWithInches:(double)inches andDate:(NSDate *)date;
 - (instancetype)initWithMeters:(double)meters andDate:(NSDate *)date;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

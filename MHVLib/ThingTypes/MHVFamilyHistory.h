@@ -20,7 +20,7 @@
 #import "MHVTypes.h"
 #import "MHVVocab.h"
 
-@interface MHVFamilyHistory : MHVItemDataTyped
+@interface MHVFamilyHistory : MHVThingDataTyped
 
 // -------------------------
 //
@@ -48,7 +48,7 @@
 // -------------------------
 - (instancetype)initWithRelative:(MHVRelative *)relative andCondition:(MHVConditionEntry *)condition;
 
-+ (MHVItem *)newItem;
++ (MHVThing *)newThing;
 
 // -------------------------
 //

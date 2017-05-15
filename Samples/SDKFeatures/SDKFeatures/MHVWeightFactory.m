@@ -20,30 +20,30 @@
 
 @implementation MHVWeight (MHVFactoryMethods)
 
-+(MHVItemCollection *) createRandomForDay:(NSDate *) date
++(MHVThingCollection *) createRandomForDay:(NSDate *) date
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:6 max:8];
     dateTime.time.minute = [MHVRandom randomIntInRangeMin:5 max:55];
     
-    [items addObject:[MHVWeight createRandomForDate:dateTime]];
+    [things addObject:[MHVWeight createRandomForDate:dateTime]];
     
-    return items;
+    return things;
 }
 
-+(MHVItemCollection *)createRandomMetricForDay:(NSDate *)date
++(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
 {
-    MHVItemCollection* items = [[MHVItemCollection alloc] init];
+    MHVThingCollection* things = [[MHVThingCollection alloc] init];
     
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:6 max:8];
     dateTime.time.minute = [MHVRandom randomIntInRangeMin:5 max:55];
     
-    [items addObject:[MHVWeight createRandomMetricForDate:dateTime]];
+    [things addObject:[MHVWeight createRandomMetricForDate:dateTime]];
     
-    return items;    
+    return things;    
 }
 
 @end

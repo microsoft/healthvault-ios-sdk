@@ -565,7 +565,7 @@ LError:
         //
         [content deserialize:self];
         //
-        // We may not have consumed all items...
+        // We may not have consumed all things...
         // So skip any that were not
         //
         while (self.depth > currentDepth && [self read]);
@@ -636,12 +636,12 @@ LError:
     return [self readElementArrayWithXmlName:xName asClass:classObj andArrayClass:arrayClassObj];
 }
 
--(NSMutableArray *) readElementArray:(NSString *)name itemName:(NSString *)itemName asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
+-(NSMutableArray *) readElementArray:(NSString *)name thingName:(NSString *)thingName asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
 {
     NSMutableArray* array = nil;
     if ([self readStartElementWithName:name])
     {
-        array = [self readElementArray:itemName asClass:classObj andArrayClass:arrayClassObj];
+        array = [self readElementArray:thingName asClass:classObj andArrayClass:arrayClassObj];
         [self readEndElement];
     }
     return array;
@@ -1000,12 +1000,12 @@ LError:
     return elements;
 }
 
--(NSMutableArray *)readElementArrayWithXmlName:(const xmlChar *)xName itemName:(const xmlChar *)itemName asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
+-(NSMutableArray *)readElementArrayWithXmlName:(const xmlChar *)xName thingName:(const xmlChar *)thingName asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
 {
     NSMutableArray* array = nil;
     if ([self readStartElementWithXmlName:xName])
     {
-        array = [self readElementArrayWithXmlName:itemName asClass:classObj andArrayClass:arrayClassObj];
+        array = [self readElementArrayWithXmlName:thingName asClass:classObj andArrayClass:arrayClassObj];
         [self readEndElement];
     }
     return array;
@@ -1150,7 +1150,7 @@ void throwWriterError(void)
     [self writeElementArrayRequired:name elements:array];
 }
 
--(void) writeElementArray:(NSString *)name itemName:(NSString *)itemName elements :(NSArray *)array
+-(void) writeElementArray:(NSString *)name thingName:(NSString *)thingName elements :(NSArray *)array
 {
     if ([NSArray isNilOrEmpty:array])
     {
@@ -1159,7 +1159,7 @@ void throwWriterError(void)
     
     MHVCHECK_XWRITE([self writeStartElement:name]);
     {
-        [self writeElementArray:itemName elements:array];
+        [self writeElementArray:thingName elements:array];
     }
     MHVCHECK_XWRITE([self writeEndElement]);
 }

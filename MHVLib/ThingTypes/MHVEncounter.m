@@ -85,9 +85,9 @@ static NSString *const c_element_facility = @"facility";
     return c_typename;
 }
 
-+ (MHVItem *)newItem
++ (MHVThing *)newThing
 {
-    return [[MHVItem alloc] initWithType:[MHVEncounter typeID]];
+    return [[MHVThing alloc] initWithType:[MHVEncounter typeID]];
 }
 
 - (NSString *)typeName
