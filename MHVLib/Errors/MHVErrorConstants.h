@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, MHVErrorType)
     MHVErrorTypeUnauthorized,
     MHVErrorTypeOperationCancelled,
     MHVErrorTypeUnknown,
+    MHVErrorTypeNotFound,
 };
 
 #endif /* MHVErrorConstants_h */

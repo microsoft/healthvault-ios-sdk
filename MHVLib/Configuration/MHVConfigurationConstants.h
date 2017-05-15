@@ -17,7 +17,7 @@ static NSInteger const kDefaultRetryOnInternal500Count = 2;
 /*
  Default URL for Shell application
  */
-static NSString *const kDefaultShellUrlString = @"https://account.healthvault.com";
+static NSString *const kDefaultShellUrlString = @"https://account.healthvault.com/";
 
 /*
  Default URL for HealthVault application

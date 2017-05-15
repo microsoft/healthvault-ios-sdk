@@ -26,6 +26,7 @@
 + (NSError *)MHVUnauthorizedError;
 + (NSError *)MHVOperationCancelled;
 + (NSError *)MHVUnknownError;
++ (NSError *)MHVNotFound;
 
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description;
 

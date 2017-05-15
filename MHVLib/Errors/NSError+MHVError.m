@@ -75,6 +75,15 @@
                                       }];
 }
 
++ (NSError *)MHVNotFound
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeNotFound
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"The specified resource could not be found."
+                                      }];
+}
+
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description
 {
     if (!error)

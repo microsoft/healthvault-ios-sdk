@@ -21,7 +21,7 @@
 
 @interface MHVApplicationCreationInfo : XSerializableType
 
-@property (nonatomic, strong, readonly) NSUUID *appInstanceId;
+@property (nonatomic, strong, readonly) NSString *appInstanceId;
 @property (nonatomic, strong, readonly) NSString *sharedSecret;
 @property (nonatomic, strong, readonly) NSString *appCreationToken;
 

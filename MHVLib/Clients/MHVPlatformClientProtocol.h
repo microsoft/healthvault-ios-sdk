@@ -20,7 +20,7 @@
 #import "MHVPlatformConstants.h"
 #import "MHVThingConstants.h"
 
-@class MHVLocation, MHVServiceInstance, MHVServiceInfo, MHVThingTypeDefinition, MHVApplicationCreationInfo, MHVPersonInfo, MHVGetAuthorizedPeopleSettings;
+@class MHVLocation, MHVServiceInstance, MHVServiceDefinition, MHVThingTypeDefinition, MHVApplicationCreationInfo, MHVPersonInfo, MHVGetAuthorizedPeopleSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Gets information about the HealthVault service.
  *
- * @param completion Envoked when the operation completes. MHVServiceInfo instance that contains the service version, SDK assemblies versions and URLs, method information, and so on. NSError object will be nil if there is no error when performing the operation.
+ * @param completion Envoked when the operation completes. MHVServiceDefinition instance that contains the service version, SDK assemblies versions and URLs, method information, and so on. NSError object will be nil if there is no error when performing the operation.
  *
  * @note This includes:
  * - The version of the service.
@@ -55,14 +55,14 @@ NS_ASSUME_NONNULL_BEGIN
  * - The common schema definitions for types that the HealthVault methods use.
  * - Information about all available HealthVault instances.
  */
-- (void)getServiceDefinitionWithCompletion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+- (void)getServiceDefinitionWithCompletion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
 
 
 /**
  * Gets information about the HealthVault service only if it has been updated since the specified update time.
  *
- * @param lastUpdatedTime The time of the last update to an existing cached copy of MHVServiceInfo
- * @param completion Envoked when the operation completes. MHVServiceInfo instance that contains the service version, SDK assemblies versions and URLs, method information, and so on. If there were no updates MHVServiceInfo will be nil. NSError object will be nil if there is no error when performing the operation.
+ * @param lastUpdatedTime The time of the last update to an existing cached copy of MHVServiceDefinition
+ * @param completion Envoked when the operation completes. MHVServiceDefinition instance that contains the service version, SDK assemblies versions and URLs, method information, and so on. If there were no updates MHVServiceDefinition will be nil. NSError object will be nil if there is no error when performing the operation.
  *
  * @note This includes:
  * - The version of the service.
@@ -75,14 +75,14 @@ NS_ASSUME_NONNULL_BEGIN
  * - Information about all available HealthVault instances.
  */
 - (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
-                                         completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+                                         completion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
 
 
 /**
  * Gets information about the HealthVault service corresponding to the specified categories.
  *
- * @param responseSections A bitmask of one or more MHVServiceInfoSections which specify the categories of information to be populated in the MHVServiceInfo object
- * @param completion Envoked when the operation completes. MHVServiceInfo instance that contains the service version, SDK assemblies versions and URLs, method information, and so on. If there were no updates MHVServiceInfo will be nil. NSError object will be nil if there is no error when performing the operation.
+ * @param responseSections A bitmask of one or more MHVServiceInfoSections which specify the categories of information to be populated in the MHVServiceDefinition object
+ * @param completion Envoked when the operation completes. MHVServiceDefinition instance that contains the service version, SDK assemblies versions and URLs, method information, and so on. If there were no updates MHVServiceDefinition will be nil. NSError object will be nil if there is no error when performing the operation.
  *
  * @note Depending on the specified responseSections this will include some or all of:
  * - The version of the service.
@@ -96,14 +96,14 @@ NS_ASSUME_NONNULL_BEGIN
  * Retrieving only the sections you need will give a faster response time than downloading the full response.
  */
 - (void)getServiceDefinitionWithWithResponseSections:(MHVServiceInfoSections)responseSections
-                                          completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+                                          completion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
 
 /**
  * Gets Gets information about the HealthVault service corresponding to the specified categories if the requested information has been updated since the specified update time.
  *
- * @param lastUpdatedTime The time of the last update to an existing cached copy of MHVServiceInfo
- * @param responseSections A bitmask of one or more MHVServiceInfoSections which specify the categories of information to be populated in the MHVServiceInfo object
- * @param completion Envoked when the operation completes. MHVServiceInfo instance that contains the service version, SDK assemblies versions and URLs, method information, and so on. If there were no updates MHVServiceInfo will be nil. NSError object will be nil if there is no error when performing the operation.
+ * @param lastUpdatedTime The time of the last update to an existing cached copy of MHVServiceDefinition
+ * @param responseSections A bitmask of one or more MHVServiceInfoSections which specify the categories of information to be populated in the MHVServiceDefinition object
+ * @param completion Envoked when the operation completes. MHVServiceDefinition instance that contains the service version, SDK assemblies versions and URLs, method information, and so on. If there were no updates MHVServiceDefinition will be nil. NSError object will be nil if there is no error when performing the operation.
  *
  * @note Depending on the specified responseSections this will include some or all of:
  * - The version of the service.
@@ -118,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
                                    responseSections:(MHVServiceInfoSections)responseSections
-                                         completion:(void(^)(MHVServiceInfo *_Nullable serviceInfo, NSError *_Nullable error))completion;
+                                         completion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
 
 
 /**
