@@ -285,6 +285,11 @@
 				CLASSPREFIX = HV;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Microsoft;
+				TargetAttributes = {
+					5D09133F166ED1980031F5F9 = {
+						DevelopmentTeam = UBF8T346G9;
+					};
+				};
 			};
 			buildConfigurationList = 5D09133A166ED1980031F5F9 /* Build configuration list for PBXProject "SDKFeatures" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -457,6 +462,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SDKFeatures/SDKFeatures-Prefix.pch";
@@ -474,6 +480,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SDKFeatures/SDKFeatures-Prefix.pch";

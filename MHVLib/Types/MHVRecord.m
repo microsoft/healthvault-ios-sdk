@@ -143,7 +143,8 @@ static NSString* const c_element_auth_action = @"app-record-auth-action";
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
         MHVRecord *record = [self objectAtIndex:i];
-        if ([record.ID isEqualToString:recordID])
+        
+        if ([record.ID isEqual:recordID])
         {
             return i;
         }

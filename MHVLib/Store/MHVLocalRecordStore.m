@@ -65,7 +65,7 @@ static NSString* const c_storedQuery = @"storedQuery";
     self = [super init];
     MHVCHECK_SELF;
     
-    m_root = [root newChildStore:record.ID];
+    m_root = [root newChildStore:record.ID.UUIDString];
     MHVCHECK_NOTNULL(m_root);
     
     m_record = record;

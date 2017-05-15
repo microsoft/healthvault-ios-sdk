@@ -102,7 +102,7 @@ static NSString *const c_element_instanceID = @"instanceID";
         MHVRecord *hvRecord = [[MHVRecord alloc] initWithRecord:record];
         MHVCHECK_NOTNULL(hvRecord);
 
-        if (current && [hvRecord.ID isEqualToString:current.ID])
+        if (current && [hvRecord.ID isEqual:current.ID])
         {
             self.currentRecordIndex = self.records.count;
         }
@@ -291,7 +291,7 @@ static NSString *const c_element_instanceID = @"instanceID";
 {
     MHVCHECK_NOTNULL(person);
 
-    NSString *currentRecordID = (self.currentRecord) ? self.currentRecord.ID : nil;
+    NSUUID *currentRecordID = (self.currentRecord) ? self.currentRecord.ID : nil;
     self.currentRecordIndex = 0;
 
     self.name = person.name;
@@ -302,7 +302,8 @@ static NSString *const c_element_instanceID = @"instanceID";
         for (NSUInteger i = 0; i < self.records.count; ++i)
         {
             MHVRecord *record = [self.records objectAtIndex:i];
-            if (currentRecordID && [record.ID isEqualToString:currentRecordID])
+            
+            if (currentRecordID && [record.ID isEqual:currentRecordID])
             {
                 self.currentRecordIndex = i;
             }

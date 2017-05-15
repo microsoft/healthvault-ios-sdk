@@ -1,8 +1,8 @@
 //
-//  MHVSessionCredentialClientProtocol.h
+//  MHVBrowserAuthBrokerProtocol.h
 //  MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,18 +18,16 @@
 
 #import <Foundation/Foundation.h>
 
-@class MHVSessionCredential;
-
-@protocol MHVConnectionProtocol;
+@class UIViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol MHVSessionCredentialClientProtocol <NSObject>
+@protocol MHVBrowserAuthBrokerProtocol <NSObject>
 
-@property (nonatomic, strong) id<MHVConnectionProtocol> connection;
-@property (nonatomic, strong) NSString *sharedSecret;
-
-- (void)getSessionCredentialWithCompletion:(void (^)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error))completion;
+- (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
+                              startUrl:(NSURL *)startUrl
+                                endUrl:(NSURL *)endUrl
+                            completion:(void (^)(NSURL *_Nullable successUrl, NSError *_Nullable error))completion;
 
 @end
 

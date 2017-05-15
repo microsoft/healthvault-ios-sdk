@@ -48,7 +48,7 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_id value:self.ID];
+    [writer writeElement:c_element_id value:self.ID.UUIDString];
     [writer writeElement:c_element_name value:self.name];
     [writer writeRaw:self.appSettingsXml];
     [writer writeElement:c_element_selectedID value:self.selectedRecordID];
@@ -61,7 +61,7 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.ID = [reader readStringElement:c_element_id];
+    self.ID = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_id]];
     self.name = [reader readStringElement:c_element_name];
     self.appSettingsXml = [reader readElementRaw:c_element_settings];
     self.selectedRecordID = [reader readStringElement:c_element_selectedID];

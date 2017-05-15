@@ -19,21 +19,12 @@
 #import <UIKit/UIKit.h>
 
 @interface MHVBrowserController : UIViewController <UIWebViewDelegate>
-{
-@private
-    NSURL* m_target;
-    UIWebView* m_webView;
-    UIActivityIndicatorView* m_activityView;
-}
 
-@property (readwrite, nonatomic, strong) NSURL* target;
+@property (nonatomic, strong, readwrite) NSURL* target;
 
-@property (strong, nonatomic) IBOutlet UIWebView *webView;
+- (BOOL)start;
+- (BOOL)stop;
 
--(BOOL) navigateTo:(NSURL *) url;
--(BOOL) start;
--(BOOL) stop;
-
--(void) abort;
+- (void)abort;
 
 @end

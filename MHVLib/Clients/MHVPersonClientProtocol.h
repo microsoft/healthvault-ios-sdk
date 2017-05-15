@@ -36,6 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
                                completion:(void(^)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion;
 
-NS_ASSUME_NONNULL_BEGIN
-
 @end
+
+NS_ASSUME_NONNULL_END

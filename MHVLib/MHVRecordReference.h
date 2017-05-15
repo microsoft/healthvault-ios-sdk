@@ -25,8 +25,8 @@
 
 @interface MHVRecordReference : MHVType
 
-@property (readwrite, nonatomic, strong) NSString *ID;
-@property (readwrite, nonatomic, strong) NSString *personID;
+@property (readwrite, nonatomic, strong) NSUUID *ID;
+@property (readwrite, nonatomic, strong) NSUUID *personID;
 
 // -------------------------
 //

@@ -110,10 +110,10 @@ LError:
 {
     MHVCHECK_NOTNULL(record);
 
-    NSString* recordID = record.ID;
+    NSUUID* recordID = record.ID;
     @synchronized(m_recordStores)
     {
-        MHVLocalRecordStore* recordStore = [m_recordStores objectForKey:recordID];
+        MHVLocalRecordStore* recordStore = [m_recordStores objectForKey:recordID.UUIDString];
         if (recordStore)
         {
             if (recordStore.dataMgr.changeManager.isBusy)
@@ -121,8 +121,8 @@ LError:
                 return FALSE;
             }
             
-            [m_recordStores removeObjectForKey:recordID];
-            [m_root deleteChildStore:recordID];
+            [m_recordStores removeObjectForKey:recordID.UUIDString];
+            [m_root deleteChildStore:recordID.UUIDString];
         }
     }
     

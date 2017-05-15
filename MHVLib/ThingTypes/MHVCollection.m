@@ -91,6 +91,11 @@
     }
 }
 
+- (id)firstObject
+{
+    return [self.inner firstObject];
+}
+
 - (id)lastObject
 {
     return [self.inner lastObject];
@@ -161,6 +166,21 @@
 - (void)removeObjectAtIndex:(NSUInteger)index
 {
     [self.inner removeObjectAtIndex:index];
+}
+
+- (void)removeObject:(id)obj
+{    
+    [self.inner removeObject:obj];
+}
+
+- (void)removeFirstObject
+{
+    if (self.inner.count < 1)
+    {
+        return;
+    }
+    
+    [self.inner removeObjectAtIndex:0];
 }
 
 - (void)removeLastObject

@@ -17,10 +17,11 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import "XSerializableType.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVSessionCredential : NSObject
+@interface MHVSessionCredential : XSerializableType
 
 - (instancetype)initWithToken:(NSString *)token sharedSecret:(NSString *)sharedSecret;
 

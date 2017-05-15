@@ -26,6 +26,10 @@ typedef NS_ENUM(NSUInteger, MHVErrorType)
     MHVErrorTypeRequiredParameter = 0,
     MHVErrorTypeOperationCannotBePerformed,
     MHVErrorTypeIOError,
+    MHVErrorTypeUnauthorized,
+    MHVErrorTypeOperationCancelled,
+    MHVErrorTypeUnknown,
+    MHVErrorTypeNotFound,
 };
 
 #endif /* MHVErrorConstants_h */
