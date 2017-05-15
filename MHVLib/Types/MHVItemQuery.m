@@ -61,7 +61,11 @@ static NSString *const c_element_view = @"format";
 {
     if (maxResultsValue >= 0)
     {
-        MHVENSURE(self.max, MHVInt);
+        if (!self.max)
+        {
+            self.max = [[MHVInt alloc] init];
+        }
+        
         self.max.value = maxResultsValue;
     }
     else
@@ -79,7 +83,11 @@ static NSString *const c_element_view = @"format";
 {
     if (maxFullResultsValue >= 0)
     {
-        MHVENSURE(self.maxFull, MHVInt);
+        if (!self.maxFull)
+        {
+            self.maxFull = [[MHVInt alloc] init];
+        }
+        
         self.maxFull.value = maxFullResultsValue;
     }
     else
@@ -123,9 +131,9 @@ static NSString *const c_element_view = @"format";
     {
         [_filters addObject:filter];
         
-    	if (![MHVCollection isNilOrEmpty:filter.typeIDs])
+        if (![MHVCollection isNilOrEmpty:filter.typeIDs])
         {
-      	  	[_view.typeVersions addObjectsFromArray:filter.typeIDs.toArray];
+            [_view.typeVersions addObjectsFromArray:filter.typeIDs.toArray];
         }
     }
     return self;
@@ -278,15 +286,15 @@ static NSString *const c_element_view = @"format";
     //
     if (![MHVCollection isNilOrEmpty:self.itemIDs])
     {
-        [writer writeElementArray:c_element_id elements:self.itemIDs.toArray];        
+        [writer writeElementArray:c_element_id elements:self.itemIDs.toArray];
     }
     else if (![MHVCollection isNilOrEmpty:self.keys])
     {
-        [writer writeElementArray:c_element_key elements:self.keys.toArray];        
+        [writer writeElementArray:c_element_key elements:self.keys.toArray];
     }
     else if (![MHVCollection isNilOrEmpty:self.clientIDs])
     {
-        [writer writeElementArray:c_element_clientID elements:self.clientIDs.toArray]; 
+        [writer writeElementArray:c_element_clientID elements:self.clientIDs.toArray];
     }
     
     [writer writeElementArray:c_element_filter elements:self.filters.toArray];

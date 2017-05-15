@@ -26,23 +26,23 @@ NSString *stringFromMood(MHVMood mood)
     {
         case MHVMoodDepressed:
             return @"Depressed";
-
+            
         case MHVMoodSad:
             return @"Sad";
-
+            
         case MHVMoodNeutral:
             return @"Neutral";
-
+            
         case MHVMoodHappy:
             return @"Happy";
-
+            
         case MHVMoodElated:
             return @"Elated";
-
+            
         default:
             break;
     }
-
+    
     return c_emptyString;
 }
 
@@ -52,23 +52,23 @@ NSString *stringFromWellBeing(MHVWellBeing wellBeing)
     {
         case MHVWellBeingSick:
             return @"Sick";
-
+            
         case MHVWellBeingImpaired:
             return @"Impaired";
-
+            
         case MHVWellBeingAble:
             return @"Able";
-
+            
         case MHVWellBeingHealthy:
             return @"Healthy";
-
+            
         case MHVWellBeingVigorous:
             return @"Vigorous";
-
+            
         default:
             break;
     }
-
+    
     return c_emptyString;
 }
 
@@ -113,7 +113,11 @@ static const xmlChar *x_element_wellbeing = XMLSTRINGCONST("wellbeing");
     }
     else
     {
-        MHVENSURE(self.moodValue, MHVOneToFive);
+        if (!self.moodValue)
+        {
+            self.moodValue = [[MHVOneToFive alloc] init];
+        }
+        
         self.moodValue.value = (int)mood;
     }
 }
@@ -131,7 +135,11 @@ static const xmlChar *x_element_wellbeing = XMLSTRINGCONST("wellbeing");
     }
     else
     {
-        MHVENSURE(self.stressValue, MHVOneToFive);
+        if (!self.stressValue)
+        {
+            self.stressValue = [[MHVOneToFive alloc] init];
+        }
+        
         self.stressValue.value = (int)stress;
     }
 }
@@ -149,7 +157,11 @@ static const xmlChar *x_element_wellbeing = XMLSTRINGCONST("wellbeing");
     }
     else
     {
-        MHVENSURE(self.wellbeingValue, MHVOneToFive);
+        if (!self.wellbeingValue)
+        {
+            self.wellbeingValue = [[MHVOneToFive alloc] init];
+        }
+        
         self.wellbeingValue.value = (int)wellbeing;
     }
 }
@@ -187,12 +199,12 @@ static const xmlChar *x_element_wellbeing = XMLSTRINGCONST("wellbeing");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE_OPTIONAL(self.when);
     MHVVALIDATE_OPTIONAL(self.moodValue);
     MHVVALIDATE_OPTIONAL(self.stressValue);
     MHVVALIDATE_OPTIONAL(self.wellbeingValue);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

@@ -33,20 +33,20 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
     {
         case MHVSleepiness_VerySleepy:
             return @"Very Sleepy";
-
+            
         case MHVSleepiness_Tired:
             return @"Tired";
-
+            
         case MHVSleepiness_Alert:
             return @"Alert";
-
+            
         case MHVSleepiness_WideAwake:
             return @"Wide Awake";
-
+            
         default:
             break;
     }
-
+    
     return c_emptyString;
 }
 
@@ -60,7 +60,11 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 - (MHVTimeCollection *)caffeineIntakeTimes
 {
-    MHVENSURE(_caffeineIntakeTimes, MHVTimeCollection);
+    if (!_caffeineIntakeTimes)
+    {
+        _caffeineIntakeTimes = [[MHVTimeCollection alloc] init];
+    }
+    
     return _caffeineIntakeTimes;
 }
 
@@ -71,7 +75,11 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 - (MHVTimeCollection *)alcoholIntakeTimes
 {
-    MHVENSURE(_alcoholIntakeTimes, MHVTimeCollection);
+    if (!_alcoholIntakeTimes)
+    {
+        _alcoholIntakeTimes = [[MHVTimeCollection alloc] init];
+    }
+    
     return _alcoholIntakeTimes;
 }
 
@@ -82,7 +90,11 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 - (MHVOccurenceCollection *)naps
 {
-    MHVENSURE(_naps, MHVOccurenceCollection);
+    if (!_naps)
+    {
+        _naps = [[MHVOccurenceCollection alloc] init];
+    }
+    
     return _naps;
 }
 
@@ -93,7 +105,11 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 - (MHVOccurenceCollection *)exercise
 {
-    MHVENSURE(_exercise, MHVOccurenceCollection);
+    if (!_exercise)
+    {
+        _exercise = [[MHVOccurenceCollection alloc] init];
+    }
+    
     return _exercise;
 }
 
@@ -115,7 +131,11 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
     }
     else
     {
-        MHVENSURE(self.sleepinessValue, MHVPositiveInt);
+        if (!self.sleepinessValue)
+        {
+            self.sleepinessValue = [[MHVPositiveInt alloc] init];
+        }
+        
         self.sleepinessValue.value = sleepiness;
     }
 }
@@ -138,13 +158,13 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidSleepJournal);
     MHVVALIDATE(self.sleepinessValue, MHVClientError_InvalidSleepJournal);
     MHVVALIDATE_ARRAYOPTIONAL(self.caffeineIntakeTimes, MHVClientError_InvalidSleepJournal);
     MHVVALIDATE_ARRAYOPTIONAL(self.alcoholIntakeTimes, MHVClientError_InvalidSleepJournal);
     MHVVALIDATE_ARRAYOPTIONAL(self.naps, MHVClientError_InvalidSleepJournal);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

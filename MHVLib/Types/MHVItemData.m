@@ -32,7 +32,11 @@ static NSString *const c_element_common = @"common";
 
 - (MHVItemDataTyped *)typed
 {
-    MHVENSURE(_typed, MHVItemDataTyped);
+    if (!_typed)
+    {
+        _typed = [[MHVItemDataTyped alloc] init];
+    }
+    
     return _typed;
 }
 
@@ -43,17 +47,21 @@ static NSString *const c_element_common = @"common";
 
 - (MHVItemDataCommon *)common
 {
-    MHVENSURE(_common, MHVItemDataCommon);
+    if (!_common)
+    {
+        _common = [[MHVItemDataCommon alloc] init];
+    }
+    
     return _common;
 }
 
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE_OPTIONAL(self.common);
     MHVVALIDATE_OPTIONAL(self.typed);
-
+    
     MHVVALIDATE_SUCCESS
 }
 
@@ -63,7 +71,7 @@ static NSString *const c_element_common = @"common";
     {
         [writer writeElement:self.typed.rootElement content:self.typed];
     }
-
+    
     [writer writeElement:c_element_common content:self.common];
 }
 
@@ -79,10 +87,10 @@ static NSString *const c_element_common = @"common";
         {
             self.typed = [self deserializeRaw:reader];
         }
-
+        
         MHVCHECK_OOM(self.typed);
     }
-
+    
     if ([reader isStartElementWithName:c_element_common])
     {
         self.common = [reader readElement:c_element_common asClass:[MHVItemDataCommon class]];
@@ -95,9 +103,9 @@ static NSString *const c_element_common = @"common";
 {
     MHVItemType *itemType = (MHVItemType *)reader.context;
     NSString *typeID = (itemType != nil) ? itemType.typeID : nil;
-
+    
     MHVItemDataTyped *typedItem = [[MHVTypeSystem current] newFromTypeID:typeID];
-
+    
     if (typedItem)
     {
         if (typedItem.hasRawData)
@@ -109,19 +117,19 @@ static NSString *const c_element_common = @"common";
             [reader readElementRequired:reader.localName intoObject:typedItem];
         }
     }
-
+    
     return typedItem;
 }
 
 - (MHVItemRaw *)deserializeRaw:(XReader *)reader
 {
     MHVItemRaw *raw = [[MHVItemRaw alloc] init];
-
+    
     if (raw)
     {
         [raw deserialize:reader];
     }
-
+    
     return raw;
 }
 

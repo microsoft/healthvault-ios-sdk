@@ -40,7 +40,11 @@ static NSString *const c_element_contentType = @"content-type";
 
 - (void)setName:(NSString *)name
 {
-    MHVENSURE(_nameValue, MHVStringZ255);
+    if (!_nameValue)
+    {
+        _nameValue = [[MHVStringZ255 alloc] init];
+    }
+
     _nameValue.value = name;
 }
 
@@ -51,7 +55,11 @@ static NSString *const c_element_contentType = @"content-type";
 
 - (void)setContentType:(NSString *)contentType
 {
-    MHVENSURE(_contentTypeValue, MHVStringZ1024);
+    if (!_contentTypeValue)
+    {
+        _contentTypeValue = [[MHVStringZ1024 alloc] init];
+    }
+    
     _contentTypeValue.value = contentType;
 }
 

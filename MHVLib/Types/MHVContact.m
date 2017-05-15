@@ -32,7 +32,11 @@ static NSString *const c_element_email = @"email";
 
 - (MHVAddressCollection *)address
 {
-    MHVENSURE(_address, MHVAddressCollection);
+    if (!_address)
+    {
+        _address = [[MHVAddressCollection alloc] init];
+    }
+    
     return _address;
 }
 
@@ -43,7 +47,11 @@ static NSString *const c_element_email = @"email";
 
 - (MHVPhoneCollection *)phone
 {
-    MHVENSURE(_phone, MHVPhoneCollection);
+    if (!_phone)
+    {
+        _phone = [[MHVPhoneCollection alloc] init];
+    }
+    
     return _phone;
 }
 
@@ -54,7 +62,11 @@ static NSString *const c_element_email = @"email";
 
 - (MHVEmailCollection *)email
 {
-    MHVENSURE(_email, MHVEmailCollection);
+    if (!_email)
+    {
+        _email = [[MHVEmailCollection alloc] init];
+    }
+    
     return _email;
 }
 
@@ -113,11 +125,11 @@ static NSString *const c_element_email = @"email";
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE_ARRAYOPTIONAL(self.address, MHVClientError_InvalidContact);
     MHVVALIDATE_ARRAYOPTIONAL(self.phone, MHVClientError_InvalidContact);
     MHVVALIDATE_ARRAYOPTIONAL(self.email, MHVClientError_InvalidContact);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

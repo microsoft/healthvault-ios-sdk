@@ -31,7 +31,11 @@ static NSString *const c_element_blob = @"blob";
 
 - (MHVBlobPayloadItemCollection *)items
 {
-    MHVENSURE(_items, MHVBlobPayloadItemCollection);
+    if (!_items)
+    {
+        _items = [[MHVBlobPayloadItemCollection alloc] init];
+    }
+    
     return _items;
 }
 
@@ -80,7 +84,11 @@ static NSString *const c_element_blob = @"blob";
         }
     }
     
-    MHVENSURE(self.items, MHVBlobPayloadItemCollection);
+    if (!self.items)
+    {
+        self.items = [[MHVBlobPayloadItemCollection alloc] init];
+    }
+
     MHVCHECK_NOTNULL(self.items);
     
     [self.items addObject:blob];

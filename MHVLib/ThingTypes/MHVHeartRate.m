@@ -37,7 +37,11 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
 
 - (void)setBpmValue:(int)bpmValue
 {
-    MHVENSURE(self.bpm, MHVNonNegativeInt);
+    if (!self.bpm)
+    {
+        self.bpm = [[MHVNonNegativeInt alloc] init];
+    }
+    
     self.bpm.value = bpmValue;
 }
 
@@ -48,11 +52,11 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
     {
         _bpm = [[MHVNonNegativeInt alloc] initWith:bpm];
         MHVCHECK_NOTNULL(_bpm);
-
+        
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
     }
-
+    
     return self;
 }
 
@@ -94,13 +98,13 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidHeartRate);
     MHVVALIDATE(self.bpm, MHVClientError_InvalidHeartRate);
     MHVVALIDATE_OPTIONAL(self.measurementMethod);
     MHVVALIDATE_OPTIONAL(self.measurementConditions);
     MHVVALIDATE_OPTIONAL(self.measurementFlags);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 

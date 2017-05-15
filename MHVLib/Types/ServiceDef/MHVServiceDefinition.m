@@ -55,7 +55,11 @@ static NSString *const c_element_section = @"section";
 
 - (MHVStringCollection *)sections
 {
-    MHVENSURE(_sections, MHVStringCollection);
+    if (!_sections)
+    {
+        _sections = [[MHVStringCollection alloc] init];
+    }
+    
     return _sections;
 }
 

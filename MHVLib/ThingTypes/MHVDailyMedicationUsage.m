@@ -42,7 +42,11 @@ static const xmlChar *x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
 
 - (void)setDosesConsumedValue:(int)dosesConsumedValue
 {
-    MHVENSURE(self.dosesConsumed, MHVInt);
+    if (!self.dosesConsumed)
+    {
+        self.dosesConsumed = [[MHVInt alloc] init];
+    }
+    
     self.dosesConsumed.value = dosesConsumedValue;
 }
 
@@ -53,14 +57,18 @@ static const xmlChar *x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
 
 - (void)setDosesIntendedValue:(int)dosesIntendedValue
 {
-    MHVENSURE(self.dosesIntended, MHVInt);
+    if (!self.dosesIntended)
+    {
+        self.dosesIntended = [[MHVInt alloc] init];
+    }
+    
     self.dosesIntended.value = dosesIntendedValue;
 }
 
 - (instancetype)initWithDoses:(int)doses forDrug:(MHVCodableValue *)drug onDay:(NSDate *)day
 {
     MHVCHECK_NOTNULL(day);
-
+    
     MHVDate *date =  [[MHVDate alloc] initWithDate:day];
     return [self initWithDoses:doses forDrug:drug onDate:date];
 }
@@ -69,18 +77,18 @@ static const xmlChar *x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
 {
     MHVCHECK_NOTNULL(drug);
     MHVCHECK_NOTNULL(date);
-
+    
     self = [super init];
     if (self)
     {
         _when = date;
-
+        
         _drugName = drug;
-
+        
         [self setDosesConsumedValue:doses];
         MHVCHECK_NOTNULL(_dosesConsumed);
     }
-
+    
     return self;
 }
 
@@ -107,7 +115,7 @@ static const xmlChar *x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidDailyMedicationUsage);
     MHVVALIDATE(self.drugName, MHVClientError_InvalidDailyMedicationUsage);
     MHVVALIDATE(self.dosesConsumed, MHVClientError_InvalidDailyMedicationUsage);
@@ -117,7 +125,7 @@ static const xmlChar *x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
     MHVVALIDATE_OPTIONAL(self.drugForm);
     MHVVALIDATE_OPTIONAL(self.prescriptionType);
     MHVVALIDATE_OPTIONAL(self.singleDoseDescription);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

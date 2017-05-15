@@ -37,10 +37,14 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     }
     else
     {
-        MHVENSURE(_litersPerSecond, MHVPositiveDouble);
+        if (!_litersPerSecond)
+        {
+            _litersPerSecond = [[MHVPositiveDouble alloc] init];
+        }
+        
         _litersPerSecond.value = litersPerSecondValue;
     }
-
+    
     [self updateDisplayText];
 }
 
@@ -51,7 +55,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     {
         [self setLitersPerSecondValue:value];
     }
-
+    
     return self;
 }
 
@@ -62,9 +66,9 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
         self.displayValue = nil;
         return FALSE;
     }
-
+    
     self.displayValue = [[MHVDisplayValue alloc] initWithValue:self.litersPerSecond.value andUnits:[MHVFlowValue flowUnits]];
-
+    
     return self.displayValue != nil;
 }
 
@@ -79,7 +83,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
     {
         return c_emptyString;
     }
-
+    
     return [NSString localizedStringWithFormat:format, self.litersPerSecondValue];
 }
 
@@ -91,10 +95,10 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.litersPerSecond, MHVClientError_InvalidFlow);
     MHVVALIDATE_OPTIONAL(self.displayValue);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

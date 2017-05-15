@@ -36,7 +36,11 @@ static NSString *const c_element_position = @"position";
 
 - (MHVVitalSignResultCollection *)results
 {
-    MHVENSURE(_results, MHVVitalSignResultCollection);
+    if (!_results)
+    {
+        _results = [[MHVVitalSignResultCollection alloc] init];
+    }
+    
     return _results;
 }
 
@@ -63,32 +67,32 @@ static NSString *const c_element_position = @"position";
 - (instancetype)initWithResult:(MHVVitalSignResult *)result onDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-
+    
     self = [super init];
     if (self)
     {
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
-
+        
         if (result)
         {
             [self.results addObject:result];
             MHVCHECK_NOTNULL(_results);
         }
     }
-
+    
     return self;
 }
 
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidVitalSigns);
     MHVVALIDATE_ARRAYOPTIONAL(self.results, MHVClientError_InvalidVitalSigns);
     MHVVALIDATE_STRINGOPTIONAL(self.site, MHVClientError_InvalidVitalSigns);
     MHVVALIDATE_STRINGOPTIONAL(self.position, MHVClientError_InvalidVitalSigns);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

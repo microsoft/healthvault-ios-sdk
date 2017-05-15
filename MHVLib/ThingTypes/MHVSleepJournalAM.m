@@ -52,15 +52,23 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
     }
     else
     {
-        MHVENSURE(self.wakeStateValue, MHVPositiveInt);
+        if (!self.wakeStateValue)
+        {
+            self.wakeStateValue = [[MHVPositiveInt alloc] init];
+        }
+        
         self.wakeStateValue.value = (int)wakeState;
     }
 }
 
 - (MHVOccurenceCollection *)awakenings
 {
-    MHVENSURE(self.awakenings, MHVOccurenceCollection);
-    return self.awakenings;
+    if (!_awakenings)
+    {
+        _awakenings = [[MHVOccurenceCollection alloc] init];
+    }
+    
+    return _awakenings;
 }
 
 - (BOOL)hasAwakenings
@@ -75,7 +83,11 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
 
 - (void)setSleepMinutesValue:(int)sleepMinutesValue
 {
-    MHVENSURE(self.sleepMinutes, MHVNonNegativeInt);
+    if (!self.sleepMinutes)
+    {
+        self.sleepMinutes = [[MHVNonNegativeInt alloc] init];
+    }
+    
     self.sleepMinutes.value = sleepMinutesValue;
 }
 
@@ -86,33 +98,37 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
 
 - (void)setSettlingMinutesValue:(int)settlingMinutesValue
 {
-    MHVENSURE(self.settlingMinutes, MHVNonNegativeInt);
+    if (!self.settlingMinutes)
+    {
+        self.settlingMinutes = [[MHVNonNegativeInt alloc] init];
+    }
+    
     self.settlingMinutes.value = settlingMinutesValue;
 }
 
 - (instancetype)initWithBedtime:(NSDate *)bedtime onDate:(NSDate *)date settlingMinutes:(int)settlingMinutes sleepingMinutes:(int)sleepingMinutes wokeupAt:(NSDate *)wakeTime
 {
     MHVCHECK_NOTNULL(date);
-
+    
     self = [super init];
     if (self)
     {
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
-
+        
         _bedTime = [[MHVTime alloc] initWithDate:bedtime];
         MHVCHECK_NOTNULL(_bedTime);
-
+        
         _settlingMinutes = [[MHVNonNegativeInt alloc] initWith:settlingMinutes];
         MHVCHECK_NOTNULL(_settlingMinutes);
-
+        
         _sleepMinutes = [[MHVNonNegativeInt alloc] initWith:sleepingMinutes];
         MHVCHECK_NOTNULL(_sleepMinutes);
-
+        
         _wakeTime = [[MHVTime alloc] initWithDate:wakeTime];
         MHVCHECK_NOTNULL(_wakeTime);
     }
-
+    
     return self;
 }
 
@@ -129,7 +145,7 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidSleepJournal);
     MHVVALIDATE(self.bedTime, MHVClientError_InvalidSleepJournal);
     MHVVALIDATE(self.settlingMinutes, MHVClientError_InvalidSleepJournal);
@@ -138,7 +154,7 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
     MHVVALIDATE(self.wakeStateValue, MHVClientError_InvalidSleepJournal);
     MHVVALIDATE_ARRAYOPTIONAL(self.awakenings, MHVClientError_InvalidSleepJournal);
     MHVVALIDATE_OPTIONAL(self.medicationsBeforeBed);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

@@ -31,13 +31,21 @@ static NSString *const c_element_answer = @"answer";
 
 - (MHVCodableValueCollection *)answerChoices
 {
-    MHVENSURE(_answerChoices, MHVCodableValueCollection);
+    if (!_answerChoices)
+    {
+        _answerChoices = [[MHVCodableValueCollection alloc] init];
+    }
+    
     return _answerChoices;
 }
 
 - (MHVCodableValueCollection *)answers
 {
-    MHVENSURE(_answers, MHVCodableValueCollection);
+    if (!_answers)
+    {
+        _answers = [[MHVCodableValueCollection alloc] init];
+    }
+    
     return _answers;
 }
 
@@ -65,26 +73,26 @@ static NSString *const c_element_answer = @"answer";
 {
     MHVCHECK_NOTNULL(question);
     MHVCHECK_NOTNULL(date);
-
+    
     self = [super init];
     if (self)
     {
         _when = [[MHVDateTime alloc] initWithDate:date];
         MHVCHECK_NOTNULL(_when);
-
+        
         _question = [[MHVCodableValue alloc] initWithText:question];
         MHVCHECK_NOTNULL(_question);
-
+        
         if (answer)
         {
             MHVCodableValue *answerValue = [[MHVCodableValue alloc] initWithText:answer];
             MHVCHECK_NOTNULL(answerValue);
-
+            
             [self.answers addObject:answerValue];
             MHVCHECK_NOTNULL(self.answers);
         }
     }
-
+    
     return self;
 }
 
@@ -113,12 +121,12 @@ static NSString *const c_element_answer = @"answer";
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE(self.when, MHVClientError_InvalidQuestionAnswer);
     MHVVALIDATE(self.question, MHVClientError_InvalidQuestionAnswer);
     MHVVALIDATE_ARRAYOPTIONAL(self.answerChoices, MHVClientError_InvalidQuestionAnswer);
     MHVVALIDATE_ARRAYOPTIONAL(self.answers, MHVClientError_InvalidQuestionAnswer);
-
+    
     MHVVALIDATE_SUCCESS
 }
 

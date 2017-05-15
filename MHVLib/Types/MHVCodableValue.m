@@ -32,7 +32,11 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 
 - (MHVCodedValueCollection *)codes
 {
-    MHVENSURE(_codes, MHVCodedValueCollection);
+    if (!_codes)
+    {
+        _codes = [[MHVCodedValueCollection alloc] init];
+    }
+    
     return _codes;
 }
 
@@ -49,7 +53,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 - (id)initWithText:(NSString *)textValue andCode:(MHVCodedValue *)code
 {
     MHVCHECK_STRING(textValue);
-
+    
     self = [super init];
     if (self)
     {
@@ -61,18 +65,18 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
             [_codes addObject:code];
         }
     }
-
+    
     return self;
 }
 
 - (id)initWithText:(NSString *)textValue code:(NSString *)code andVocab:(NSString *)vocab
 {
     MHVCodedValue *codedValue = [[MHVCodedValue alloc] initWithCode:code andVocab:vocab];
-
+    
     MHVCHECK_NOTNULL(codedValue);
-
+    
     self = [self initWithText:textValue andCode:codedValue];
-
+    
     return self;
 }
 
@@ -102,14 +106,14 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
     {
         return FALSE;
     }
-
+    
     return [self.codes containsCode:code];
 }
 
 - (BOOL)addCode:(MHVCodedValue *)code
 {
     [self.codes addObject:code];
-
+    
     return TRUE;
 }
 
@@ -124,9 +128,9 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 - (MHVCodableValue *)clone
 {
     MHVCodableValue *cloned = [[MHVCodableValue alloc] initWithText:self.text];
-
+    
     MHVCHECK_NOTNULL(cloned);
-
+    
     if (self.hasCodes)
     {
         MHVCodedValueCollection *codes = self.codes;
@@ -134,11 +138,11 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
         {
             MHVCodedValue *clonedCode = [[codes objectAtIndex:i] clone];
             MHVCHECK_NOTNULL(clonedCode);
-
+            
             [cloned addCode:clonedCode];
         }
     }
-
+    
     return cloned;
 }
 
@@ -160,7 +164,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE_STRING(self.text, MHVClientError_InvalidCodableValue);
     if (self.hasCodes)
     {
@@ -169,7 +173,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
             MHVVALIDATE(code, MHVClientError_InvalidCodableValue);
         }
     }
-
+    
     MHVVALIDATE_SUCCESS;
 }
 
@@ -196,7 +200,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
     {
         self.type = [MHVCodableValue class];
     }
-
+    
     return self;
 }
 

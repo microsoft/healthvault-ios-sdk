@@ -44,7 +44,11 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
 {
     if (hours >= 0)
     {
-        MHVENSURE(self.hourValue, MHVHour);
+        if (!self.hourValue)
+        {
+            self.hourValue = [[MHVHour alloc] init];
+        }
+        
         self.hourValue.value = hours;
     }
     else
@@ -62,7 +66,11 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
 {
     if (minutes >= 0)
     {
-        MHVENSURE(self.minuteValue, MHVMinute);
+        if (!self.minuteValue)
+        {
+            self.minuteValue = [[MHVMinute alloc] init];
+        }
+        
         self.minuteValue.value = minutes;
     }
     else
@@ -85,7 +93,11 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
 {
     if (seconds >= 0)
     {
-        MHVENSURE(self.secondValue, MHVSecond);
+        if (!self.secondValue)
+        {
+            self.secondValue = [[MHVSecond alloc] init];
+        }
+        
         self.secondValue.value = seconds;
     }
     else
@@ -108,7 +120,11 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
 {
     if (milliseconds >= 0)
     {
-        MHVENSURE(self.millisecondValue, MHVMillisecond);
+        if (!self.millisecondValue)
+        {
+            self.millisecondValue = [[MHVMillisecond alloc] init];
+        }
+        
         self.millisecondValue.value = milliseconds;
     }
     else
@@ -131,37 +147,37 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
         {
             _hourValue = [[MHVHour alloc] initWith:(int)hour];
         }
-
+        
         MHVCHECK_NOTNULL(_hourValue);
-
+        
         if (minute != NSDateComponentUndefined)
         {
             _minuteValue = [[MHVMinute alloc] initWith:(int)minute];
         }
-
+        
         MHVCHECK_NOTNULL(_minuteValue);
-
+        
         if (second >= 0 && second != NSDateComponentUndefined)
         {
             _secondValue = [[MHVSecond alloc] initWith:(int)second];
             MHVCHECK_NOTNULL(_secondValue);
         }
     }
-
+    
     return self;
 }
 
 - (instancetype)initWithComponents:(NSDateComponents *)components
 {
     MHVCHECK_NOTNULL(components);
-
+    
     return [self initWithHour:[components hour] minute:[components minute] second:[components second]];
 }
 
 - (instancetype)initWithDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-
+    
     return [self initWithComponents:[NSCalendar componentsFromDate:date]];
 }
 
@@ -173,64 +189,64 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
 - (NSDateComponents *)toComponents
 {
     NSDateComponents *components = [NSCalendar newComponents];
-
+    
     MHVCHECK_NOTNULL(components);
-
+    
     MHVCHECK_SUCCESS([self getComponents:components]);
-
+    
     return components;
 }
 
 - (BOOL)getComponents:(NSDateComponents *)components
 {
     MHVCHECK_NOTNULL(components);
-
+    
     if (self.hourValue)
     {
         [components setHour:self.hour];
     }
-
+    
     if (self.minuteValue)
     {
         [components setMinute:self.minute];
     }
-
+    
     if (self.secondValue)
     {
         [components setSecond:self.second];
     }
-
+    
     return TRUE;
 }
 
 - (NSDate *)toDate
 {
     NSDateComponents *components = [NSCalendar newComponents];
-
+    
     MHVCHECK_NOTNULL(components);
-
+    
     MHVCHECK_SUCCESS([self getComponents:components]);
-
+    
     NSDate *newDate = [components date];
-
+    
     return newDate;
 }
 
 - (BOOL)setWithComponents:(NSDateComponents *)components
 {
     MHVCHECK_NOTNULL(components);
-
+    
     self.hour = (int)[components hour];
     self.minute = (int)[components minute];
     self.second = (int)[components second];
-
+    
     return TRUE;
 }
 
 - (BOOL)setWithDate:(NSDate *)date
 {
     MHVCHECK_NOTNULL(date);
-
+    
     return [self setWithComponents:[NSCalendar componentsFromDate:date]];
 }
 
@@ -247,19 +263,19 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
 - (NSString *)toStringWithFormat:(NSString *)format
 {
     NSDate *date = [self toDate];
-
+    
     return [date toStringWithFormat:format];
 }
 
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
-
+    
     MHVVALIDATE(self.hourValue, MHVClientError_InvalidTime);
     MHVVALIDATE(self.minuteValue, MHVClientError_InvalidTime);
     MHVVALIDATE_OPTIONAL(self.secondValue);
     MHVVALIDATE_OPTIONAL(self.millisecondValue);
-
+    
     MHVVALIDATE_SUCCESS;
 }
 
@@ -290,7 +306,7 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
     {
         self.type = [MHVTime class];
     }
-
+    
     return self;
 }
 

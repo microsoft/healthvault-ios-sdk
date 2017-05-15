@@ -37,23 +37,27 @@ static NSString *const c_element_county = @"county";
 
 - (MHVStringCollection *)street
 {
-    MHVENSURE(_street, MHVStringCollection);
+    if (!_street)
+    {
+        _street = [[MHVStringCollection alloc] init];
+    }
+    
     return _street;
 }
 
 - (NSString *)toString
 {
     NSMutableString *text = [[NSMutableString alloc] init];
-
+    
     [text appendOptionalWords:[self.street toString]];
-
+    
     [text appendOptionalStringOnNewLine:self.city];
     [text appendOptionalStringOnNewLine:self.county];
-
+    
     [text appendOptionalStringOnNewLine:self.state];
     [text appendOptionalWords:self.postalCode];
     [text appendOptionalStringOnNewLine:self.country];
-
+    
     return text;
 }
 
@@ -80,13 +84,13 @@ static NSString *const c_element_county = @"county";
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN
-
+    
     MHVVALIDATE_ARRAY(self.street, MHVClientError_InvalidAddress);
-
+    
     MHVVALIDATE_STRING(self.city, MHVClientError_InvalidAddress);
     MHVVALIDATE_STRING(self.postalCode, MHVClientError_InvalidAddress);
     MHVVALIDATE_STRING(self.country, MHVClientError_InvalidAddress);
-
+    
     MHVVALIDATE_SUCCESS
 }
 
