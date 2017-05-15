@@ -68,27 +68,27 @@
     NSMutableString *xml = [NSMutableString new];
     
     [xml appendString:@"<wc-request:request xmlns:wc-request=\"urn:com.microsoft.wc.request\">"];
+    
+    NSString *infoString;
+    if (self.infoXml)
     {
-        NSString *infoString;
-        if (self.infoXml)
-        {
-            infoString = self.infoXml;
-        }
-        else
-        {
-            infoString = @"<info />";
-        }
-        
-        NSMutableString *header = [[NSMutableString alloc] init];
-        
-        [self writeHeader:header forBody:infoString];
-        
-        [self writeAuth:xml forHeader:header];
-        [xml appendString:header];
-        
-        
-        [xml appendString:infoString];
+        infoString = self.infoXml;
     }
+    else
+    {
+        infoString = @"<info />";
+    }
+    
+    NSMutableString *header = [[NSMutableString alloc] init];
+    
+    [self writeHeader:header forBody:infoString];
+    
+    [self writeAuth:xml forHeader:header];
+    
+    [xml appendString:header];
+    
+    [xml appendString:infoString];
+    
     [xml appendString:@"</wc-request:request>"];
     
     return xml;
@@ -112,9 +112,7 @@
 {
     [header appendXmlElement:@"method" text:self.method.name];
     [header appendXmlElementStart:@"method-version"];
-    {
-        [header appendFormat:@"%.0d", self.method.version];
-    }
+    [header appendFormat:@"%.0d", self.method.version];
     [header appendXmlElementEnd:@"method-version"];
 }
 
@@ -132,9 +130,7 @@
     [header appendXmlElement:@"country" text:self.country];
     [header appendXmlElement:@"msg-time" text:[DateTimeUtils dateToUtcString:self.msgTime]];
     [header appendXmlElementStart:@"msg-ttl"];
-    {
-        [header appendFormat:@"%d", self.msgTTL];
-    }
+    [header appendFormat:@"%d", self.msgTTL];
     [header appendXmlElementEnd:@"msg-ttl"];
     [header appendXmlElement:@"version" text:[MobilePlatform platformAbbreviationAndVersion]];
 }
@@ -171,10 +167,7 @@
     }
     
     [header appendXmlElementStart:@"info-hash"];
-    {
-        [header appendFormat:@"<hash-data algName=\"SHA256\">%@</hash-data>", [MobilePlatform computeSha256Hash:body]];
-    }
-    
+    [header appendFormat:@"<hash-data algName=\"SHA256\">%@</hash-data>", [MobilePlatform computeSha256Hash:body]];
     [header appendXmlElementEnd:@"info-hash"];
 }
 
@@ -185,9 +178,7 @@
         NSData *decodedKey = [[NSData alloc] initWithBase64EncodedString:self.sessionSharedSecret options:0];
         
         [xml appendXmlElementStart:@"auth"];
-        {
-            [xml appendFormat:@"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [MobilePlatform computeSha256Hmac:decodedKey data:header]];
-        }
+        [xml appendFormat:@"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [MobilePlatform computeSha256Hmac:decodedKey data:header]];
         [xml appendXmlElementEnd:@"auth"];
     }
 }

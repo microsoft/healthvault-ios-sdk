@@ -42,7 +42,7 @@
     MHVMethod *method = [MHVMethod createAuthenticatedSessionToken];
     method.parameters = [self infoSection];
     
-    [self.connection executeMethod:MHVMethod.createAuthenticatedSessionToken
+    [self.connection executeMethod:method
                         completion:^(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error)
     {
         if (error)

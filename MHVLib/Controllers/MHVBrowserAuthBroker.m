@@ -38,7 +38,7 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
     
     if (self)
     {
-        _authQueue = dispatch_queue_create("MHVAppProvisionController.authQueue", DISPATCH_QUEUE_SERIAL);
+        _authQueue = dispatch_queue_create("MHVBrowserAuthBroker.authQueue", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;

@@ -52,7 +52,7 @@
 @property (nonatomic, assign) NSTimeInterval requestTimeToLiveDuration;
 
 /**
- Gets the number of retries the .NET APIs will make when getting an internal error response (error 500) from HealthVault.
+ Gets the number of retries the SDK will make when getting an internal error response (error 500) from HealthVault.
  
  @note This property corresponds to the "HV_RequestRetryOnInternal500Count" configuration value when reading from web.config. The value defaults to 2.
  */
@@ -71,13 +71,6 @@
  @note This property corresponds to the "HV_DefaultInlineBlobHashBlockSize" configuration value when reading from web.config. The value defaults to 2MB.
  */
 @property (nonatomic, assign) NSInteger inlineBlobHashBlockSize;
-
-/**
- Gets the type version identifiers of types supported by this application.
- 
- @note Although most applications don't need this configuration setting, if an application calls HealthRecordAccessor GetItem or makes any query to HealthVault that doesn't specify the type identifier in the filter, this configuration setting will tell HealthVault the format of the type to reply with. For example, if a web application has two servers and makes a call to GetItemAsync for EncounterV1 and the application authorization is set to the EncounterV1 format then the application will get EncounterV1 instances back even if the record contains Encounter v2 instances. Now the application wants to upgrade to Encounter v2 without having application down-time. In order to do this, one of the application servers must be updated to Encounter v2 while the other still works with EncounterV1. If we were to rely solely on application authorization one of the servers would be broken during the upgrade. However, by using this configuration value to specify what type version the server supports (rather than the application), then both servers can continue to work while the application is upgraded. This property corresponds to the "HV_SupportedTypeVersions" configuration value when reading from web.config.
- */
-@property (nonatomic, strong) NSArray<NSUUID *> *supportedTypeVersions;
 
 /**
  Gets a value indicating whether or not legacy type versioning support should be used.

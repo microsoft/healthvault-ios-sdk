@@ -73,7 +73,7 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
         
         if (self.isAuthInProgress)
         {
-            completion(nil, [NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currenlty running."]);
+            completion(nil, [NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currently running."]);
             
             return;
         }
@@ -105,7 +105,7 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
                     return;
                 }
                 
-                NSString *instanceId = [self InstanceIdFromUrl:successUrl];
+                NSString *instanceId = [self instanceIdFromUrl:successUrl];
                 
                 if ([NSString isNilOrEmpty:instanceId])
                 {
@@ -190,7 +190,7 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
     return self.configuration.isMultiRecordApp ? @"&aib=true" : @"";
 }
 
-- (NSString *)InstanceIdFromUrl:(NSURL *)url
+- (NSString *)instanceIdFromUrl:(NSURL *)url
 {
     NSDictionary* args = [NSDictionary dictionaryFromArgumentString:[url query]];
     

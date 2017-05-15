@@ -89,7 +89,6 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
                        
         [self setConnectionPropertiesFromKeychain];
         
-        
         [self provisionForSodaWithViewController:viewController completion:^(NSError * _Nullable error)
         {
             if (error)
@@ -134,6 +133,8 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         {
             [self finishAuthWithError:[NSError error:[NSError MHVUnauthorizedError] withDescription:@"Authorization required to perform this operation."]
                            completion:completion];
+            
+            return;
         }
         
         [self.shellAuthService authorizeAdditionalRecordsWithViewController:viewController
@@ -340,7 +341,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         {
             if (completion)
             {
-                completion([NSError error:[NSError MHVNotFound] withDescription:[NSString stringWithFormat:@"the service instance for id %@ could not be found", instanceId]]);
+                completion([NSError error:[NSError MHVNotFound] withDescription:[NSString stringWithFormat:@"The service instance for id %@ could not be found.", instanceId]]);
             }
             
             return;
@@ -425,7 +426,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
              return;
          }
          
-         MHVPersonInfo *personInfo = [people firstObject];
+        MHVPersonInfo *personInfo = [people firstObject];
          
         if(![self.keychainService setXMLObject:personInfo forKey:kPersonInfoKey])
         {

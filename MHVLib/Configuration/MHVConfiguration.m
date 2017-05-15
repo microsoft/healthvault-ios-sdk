@@ -56,7 +56,7 @@
         return url;
     }
     
-    return [[NSURL alloc] initWithString:[NSString stringWithFormat:@"urlString%@", @"/"]];
+    return [[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@", urlString, @"/"]];
 }
 
 @end
