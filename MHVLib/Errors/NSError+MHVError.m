@@ -48,6 +48,42 @@
                                       }];
 }
 
++ (NSError *)MHVUnauthorizedError
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeUnauthorized
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"The session authorization is invalid or expired."
+                                      }];
+}
+
++ (NSError *)MHVOperationCancelled
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeOperationCancelled
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"The operation has been cancelled."
+                                      }];
+}
+
++ (NSError *)MHVUnknownError
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeUnknown
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"An unknown error occured."
+                                      }];
+}
+
++ (NSError *)MHVNotFound
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeNotFound
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"The specified resource could not be found."
+                                      }];
+}
+
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description
 {
     if (!error)

@@ -22,7 +22,7 @@
 @implementation HealthVaultRecord
 
 + (id)newFromXml: (NSString *)xml
-		personId: (NSString *)personId
+		personId: (NSUUID *)personId
 	  personName: (NSString *)personName
 {
 
@@ -39,7 +39,7 @@
 }
 
 - (id)initWithXml: (NSString *)xml
-		 personId: (NSString *)personId
+		 personId: (NSUUID *)personId
 	   personName: (NSString *)personName
 {
 
@@ -64,7 +64,7 @@
     [reader readStartElementWithName:@"record"];
     
     self.recordName = [reader readString];
-    self.recordId = [reader readAttribute:@"id"];
+    self.recordId = [[NSUUID alloc] initWithUUIDString:[reader readAttribute:@"id"]];
     self.authStatus = [reader readAttribute:@"app-record-auth-action"];
     
     return self.recordId != nil;

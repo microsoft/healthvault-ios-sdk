@@ -19,21 +19,7 @@
 #import <Foundation/Foundation.h>
 
 /// Provides settings management functionality.
-@interface HealthVaultSettings : NSObject {
-
-	NSString *_version;
-	NSString *_applicationId;
-	NSString *_applicationCreationToken;
-	NSString *_authorizationSessionToken;
-	NSString *_sharedSecret;
-	NSString *_country;
-	NSString *_language;
-	NSString *_sessionSharedSecret;
-	NSString *_personId;
-	NSString *_recordId;
-	NSString *_name;
-    NSString *_userAuthToken;
-}
+@interface HealthVaultSettings : NSObject
 
 /// Gets or sets the settings name.
 @property (strong) NSString *name;
@@ -63,10 +49,10 @@
 @property (strong) NSString *sessionSharedSecret;
 
 /// Gets or sets person Id.
-@property (strong) NSString *personId;
+@property (strong) NSUUID *personId;
 
 /// Gets or sets record Id.
-@property (strong) NSString *recordId;
+@property (strong) NSUUID *recordId;
 
 // Gets or sets the user-auth-token, if any
 @property (strong) NSString* userAuthToken;

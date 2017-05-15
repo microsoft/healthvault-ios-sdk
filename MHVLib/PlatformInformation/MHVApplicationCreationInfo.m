@@ -31,7 +31,7 @@ static NSString *const c_element_appToken = @"app-token";
 
 - (void)deserializeAttributes:(XReader *)reader
 {
-    _appInstanceId = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_appId]];
+    _appInstanceId = [reader readStringElement:c_element_appId];
     _sharedSecret = [reader readStringElement:c_element_sharedSecret];
     _appCreationToken = [reader readStringElement:c_element_appToken];
 }

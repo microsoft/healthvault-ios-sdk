@@ -19,6 +19,9 @@
 #import "MHVSessionCredential.h"
 #import "MHVValidator.h"
 
+static const xmlChar *x_element_app_token = XMLSTRINGCONST("app-token");
+static const xmlChar *x_element_shared_secret = XMLSTRINGCONST("shared-secret");
+
 @implementation MHVSessionCredential
 
 - (instancetype)initWithToken:(NSString *)token sharedSecret:(NSString *)sharedSecret
@@ -35,6 +38,18 @@
     }
     
     return self;
+}
+
+- (void)deserialize:(XReader *)reader
+{
+    _token = [reader readStringElementWithXmlName:x_element_app_token];
+    _sharedSecret = [reader readStringElementWithXmlName:x_element_shared_secret];
+}
+
+- (void)serialize:(XWriter *)writer
+{
+    [writer writeElementXmlName:x_element_app_token value:self.token];
+    [writer writeElementXmlName:x_element_shared_secret value:self.sharedSecret];
 }
 
 @end

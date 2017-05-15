@@ -1,6 +1,6 @@
 //
-// HealthVaultRequest.h
-// HealthVault Mobile Library for iOS
+// MVHServiceRequest.h
+// MHVLib
 //
 // Copyright 2017 Microsoft Corp.
 //
@@ -17,31 +17,20 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVService.h"
+
+@class MHVMethod;
 
 /// This class encapsulates the data that is contained in a request.
-@interface HealthVaultRequest : NSObject
-
-/// Gets or sets the name of the method to be called.
-/// The method name and version must be one of the methods documented in the
-/// method reference at:
-/// http://developer.healthvault.com/pages/methods/methods.aspx
-@property (strong) NSString *methodName;
-
-/// Gets or sets the version of the method to be called.
-/// The method name and version must be one of the methods documented in the
-/// method reference at:
-/// http://developer.healthvault.com/pages/methods/methods.aspx
-@property (assign) float methodVersion;
+@interface MVHServiceRequest : NSObject
 
 /// Gets or sets the request-specific information.
 @property (strong) NSString *infoXml;
 
 /// Gets or sets the record id that will be used to perform request.
-@property (strong) NSUUID *recordId;
+@property (strong) NSString *recordId;
 
 /// Gets or sets the person id that will be used to perform request.
-@property (strong) NSUUID *personId;
+@property (strong) NSString *personId;
 
 /// Gets or sets the authorization token that is required to talk to the HealthVault
 /// web service.
@@ -77,10 +66,7 @@
 /// Gets or sets the callback that will be called when the request has completed.
 @property (assign) SEL callBack;
 
-@property (readwrite) BOOL isAnonymous;
-@property (readonly) BOOL hasSessionToken;
 @property (readonly) BOOL hasUserAuthToken;
-@property (readonly) BOOL hasCredentials;
 
 /// Initializes a new instance of the HealthVaultRequest class.
 /// @param name - the name of the method.
@@ -92,23 +78,12 @@
 /// The method name and version must be one of the methods documented in the
 /// method reference at:
 /// http://developer.healthvault.com/pages/methods/methods.aspx
-- (instancetype)initWithMethodName:(NSString *)name
-                     methodVersion:(float)methodVersion
-                       infoSection:(NSString *)info
-                            target:(NSObject *)target
-                          callBack:(SEL)callBack;
+- (instancetype)initWithMethod:(MHVMethod *)name
+                        target:(NSObject *)target
+                      callBack:(SEL)callBack;
 
 /// Converts the request to xml representation ready to be submitted to HealthVault service.
 /// @returns xml representation of the request.
-- (NSString *)toXml:(id<HealthVaultService>)service;
-
-- (void)writeHeader:(NSMutableString *)header forBody:(NSString *)body;
-- (void)writeMethodHeaders:(NSMutableString *)header;
-- (void)writeRecordHeaders:(NSMutableString *)header;
-- (void)writeStandardHeaders:(NSMutableString *)header;
-- (void)writeAuthSessionHeader:(NSMutableString *)header;
-- (void)writeHashHeader:(NSMutableString *)header forBody:(NSString *)body;
-
-- (void)writeAuth:(NSMutableString *)xml forHeader:(NSString *)header;
+- (NSString *)toXmlString;
 
 @end

@@ -20,84 +20,27 @@
 #import "MHVClient.h"
 #import "MHVKeychainService.h"
 #import <Security/Security.h>
+#import "XSerializer.h"
+
+static NSString *const kKeychainRoot = @"root";
 
 @implementation MHVKeychainService
 
-- (NSMutableDictionary *)attributesForKey:(NSString *)key
-{
-    MHVASSERT_PARAMETER(key);
-    
-    if (!key)
-    {
-        return nil;
-    }
-
-    NSMutableDictionary *attrib = [NSMutableDictionary new];
-
-    [attrib setObject:key forKey:(id)kSecAttrGeneric];
-    [attrib setObject:key forKey:(id)kSecAttrAccount];
-    [attrib setObject:@"HealthVault" forKey:(id)kSecAttrService];
-
-    return attrib;
-}
-
-- (NSMutableDictionary *)queryForKey:(NSString *)key
-{
-    NSMutableDictionary *query = [self attributesForKey:key];
-
-    if (!query)
-    {
-        return nil;
-    }
-
-    [query setObject:(id)kSecClassGenericPassword forKey:(id)kSecClass];
-
-    return query;
-}
-
-- (NSData *)runQuery:(NSMutableDictionary *)query
-{
-    MHVASSERT_PARAMETER(query);
-    
-    if (!query)
-    {
-        return nil;
-    }
-
-    [query setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];
-    [query setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnData];
-
-    CFTypeRef result = nil;
-    
-    if (SecItemCopyMatching((CFDictionaryRef)query, &result) == errSecSuccess)
-    {
-        return (NSData *)CFBridgingRelease(result);
-    }
-
-    return nil;
-}
-
-- (NSData *)getDataForKey:(NSString *)key
-{
-    NSMutableDictionary *query = [self queryForKey:key];
-
-    if (!query)
-    {
-        return nil;
-    }
-
-    return [self runQuery:query];
-}
+#pragma mark - Public
 
 - (NSString *)stringForKey:(NSString *)key
 {
-    NSData *data = [self getDataForKey:key];
-
-    if (!data || data.length == 0)
+    NSDictionary *dictionary = [self getAttributesForKey:key];
+    
+    NSString *cls = [dictionary objectForKey:(__bridge id)kSecAttrDescription];
+    
+    NSData *data = [dictionary objectForKey:(__bridge id)kSecValueData];
+    
+    if (!data || data.length == 0 || NSClassFromString(cls) != [NSString class])
     {
         return nil;
     }
-
+    
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
@@ -112,36 +55,59 @@
     
     if ([NSString isNilOrEmpty:string])
     {
-        return [self removeStringForKey:key];
+        return [self removeObjectForKey:key];
     }
-
-    NSMutableDictionary *query = [self queryForKey:key];
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableDictionary *update = [self attributesForKey:key];
     
-    if (!query || !data || !update)
+    return [self setString:string class:[NSString class] forKey:key];
+}
+
+- (BOOL)setXMLObject:(id<XSerializable>)obj forKey:(NSString *)key
+{
+    MHVASSERT_PARAMETER(key);
+    
+    if (!key)
     {
         return NO;
     }
-
-    [update setObject:data forKey:(id)kSecValueData];
-
-    OSStatus error = 0;
-    if ([self stringForKey:key] != nil)
+    
+    NSString *string = [XSerializer serializeToString:obj withRoot:kKeychainRoot];
+    
+    if (!string)
     {
-        // Update existing
-        error = SecItemUpdate((CFDictionaryRef)query, (CFDictionaryRef)update);
+        return [self removeObjectForKey:key];
     }
-    else
-    {
-        [update setObject:(id)kSecClassGenericPassword forKey:(id)kSecClass];
-        error = SecItemAdd((CFDictionaryRef)update, NULL);
-    }
-
-    return error == errSecSuccess;
+    
+    return [self setString:string class:[obj class] forKey:key];
+    
+    return YES;
 }
 
-- (BOOL)removeStringForKey:(NSString *)key
+- (id<XSerializable>)xmlObjectForKey:(NSString *)key
+{
+    MHVASSERT_PARAMETER(key);
+    
+    if (!key)
+    {
+        return nil;
+    }
+    
+    NSDictionary *dictionary = [self getAttributesForKey:key];
+    
+    NSString *cls = [dictionary objectForKey:(__bridge id)kSecAttrDescription];
+    
+    NSData *data = [dictionary objectForKey:(__bridge id)kSecValueData];
+    
+    NSString *xml = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    if ([NSString isNilOrEmpty:xml] || [NSString isNilOrEmpty:cls])
+    {
+        return nil;
+    }
+    
+    return (id<XSerializable>)[XSerializer newFromString:xml withRoot:kKeychainRoot asClass:NSClassFromString(cls)];
+}
+
+- (BOOL)removeObjectForKey:(NSString *)key
 {
     MHVASSERT_PARAMETER(key);
     
@@ -156,10 +122,112 @@
     {
         return NO;
     }
-
+    
     OSStatus error = SecItemDelete((CFDictionaryRef)query);
-
+    
     return error == errSecSuccess;
+}
+
+#pragma mark - Private
+
+- (BOOL)setString:(NSString *)string class:(Class)cls forKey:(NSString *)key
+{
+    NSMutableDictionary *query = [self queryForKey:key];
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *update = [self attributesForKey:key class:cls];
+    
+    if (!query || !data || !update)
+    {
+        return NO;
+    }
+    
+    [update setObject:data forKey:(__bridge id)kSecValueData];
+    
+    OSStatus error = 0;
+    if ([self stringForKey:key] != nil)
+    {
+        // Update existing
+        error = SecItemUpdate((CFDictionaryRef)query, (CFDictionaryRef)update);
+    }
+    else
+    {
+        [update setObject:(__bridge id)kSecClassGenericPassword forKey:(__bridge id)kSecClass];
+        error = SecItemAdd((CFDictionaryRef)update, NULL);
+    }
+    
+    return error == errSecSuccess;
+}
+
+- (NSMutableDictionary *)attributesForKey:(NSString *)key class:(Class)cls
+{
+    MHVASSERT_PARAMETER(key);
+    
+    if (!key)
+    {
+        return nil;
+    }
+
+    NSMutableDictionary *attrib = [NSMutableDictionary new];
+    
+    [attrib setObject:key forKey:(__bridge id)kSecAttrGeneric];
+    [attrib setObject:key forKey:(__bridge id)kSecAttrAccount];
+    [attrib setObject:@"HealthVault" forKey:(__bridge id)kSecAttrService];
+    
+    if (cls)
+    {
+        [attrib setObject:NSStringFromClass(cls) forKey:(__bridge id)kSecAttrDescription];
+    }
+
+    return attrib;
+}
+
+- (NSMutableDictionary *)queryForKey:(NSString *)key
+{
+    NSMutableDictionary *query = [self attributesForKey:key class:nil];
+
+    if (!query)
+    {
+        return nil;
+    }
+
+    [query setObject:(__bridge id)kSecClassGenericPassword forKey:(__bridge id)kSecClass];
+
+    return query;
+}
+
+- (NSDictionary *)runQuery:(NSMutableDictionary *)query
+{
+    MHVASSERT_PARAMETER(query);
+    
+    if (!query)
+    {
+        return nil;
+    }
+
+    [query setObject:(__bridge id)kSecMatchLimitOne forKey:(__bridge id)kSecMatchLimit];
+    [query setObject:(__bridge id)kCFBooleanTrue forKey:(__bridge id)kSecReturnData];
+    [query setObject:(__bridge id)kCFBooleanTrue forKey:(__bridge id)kSecReturnAttributes];
+
+    CFTypeRef result = nil;
+    
+    if (SecItemCopyMatching((CFDictionaryRef)query, &result) == errSecSuccess)
+    {
+        return (NSDictionary *)CFBridgingRelease(result);
+    }
+
+    return nil;
+}
+
+- (NSDictionary *)getAttributesForKey:(NSString *)key
+{
+    NSMutableDictionary *query = [self queryForKey:key];
+
+    if (!query)
+    {
+        return nil;
+    }
+
+    return [self runQuery:query];
 }
 
 @end

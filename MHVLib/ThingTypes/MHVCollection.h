@@ -35,6 +35,7 @@
 - (NSUInteger)count;
 - (ObjectType)objectAtIndex:(NSUInteger)index;
 - (ObjectType)objectAtIndexedSubscript:(NSUInteger)idx;
+- (ObjectType)firstObject;
 - (ObjectType)lastObject;
 - (void)addObject:(ObjectType)anObject;
 - (void)insertObject:(ObjectType)anObject atIndex:(NSUInteger)index;
@@ -43,6 +44,8 @@
 - (void)addObjectsFromCollection:(MHVCollection<ObjectType> *)collection;
 - (void)replaceObjectAtIndex:(NSUInteger)index withObject:(ObjectType)anObject;
 - (void)removeObjectAtIndex:(NSUInteger)index;
+- (void)removeObject:(ObjectType)object;
+- (void)removeFirstObject;
 - (void)removeLastObject;
 - (void)removeAllObjects;
 

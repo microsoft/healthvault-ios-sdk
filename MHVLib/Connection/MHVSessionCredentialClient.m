@@ -24,27 +24,11 @@
 #import "MobilePlatform.h"
 #import "MHVSessionCredential.h"
 
-@interface MHVSessionCredentialClient ()
-
-@property (nonatomic, strong) id<MHVConnectionProtocol> connection;
-
-@end
 
 @implementation MHVSessionCredentialClient
 
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-{
-    MHVASSERT_PARAMETER(connection);
-    
-    self = [super init];
-    
-    if (self)
-    {
-        _connection = connection;
-    }
-    
-    return self;
-}
+@synthesize connection = _connection;
+@synthesize sharedSecret = _sharedSecret;
 
 - (void)getSessionCredentialWithCompletion:(void (^_Nonnull)(MHVSessionCredential *_Nullable, NSError *_Nullable error))completion
 {
@@ -55,12 +39,11 @@
         return;
     }
     
-    [self.connection executeMethod:MHVMethod.createAuthenticatedSessionToken
-                           version:2
-                        parameters:[self infoSection]
-                          recordId:nil
-                     correlationId:nil
-                        completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+    MHVMethod *method = [MHVMethod createAuthenticatedSessionToken];
+    method.parameters = [self infoSection];
+    
+    [self.connection executeMethod:method
+                        completion:^(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error)
     {
         if (error)
         {
@@ -88,7 +71,7 @@
     [stringToSign appendFormat:@"<signing-time>%@</signing-time>", msgTimeString];
     [stringToSign appendString:@"</content>"];
     
-    NSData *keyData = [[NSData alloc] initWithBase64EncodedString:self.connection.sessionCredential.sharedSecret options:0];
+    NSData *keyData = [[NSData alloc] initWithBase64EncodedString:self.sharedSecret options:0];
     NSString *hmac = [MobilePlatform computeSha256Hmac:keyData data:stringToSign];
     
     NSMutableString *xml = [NSMutableString new];

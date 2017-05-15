@@ -19,6 +19,8 @@
 #import <Foundation/Foundation.h>
 #import "MHVConnectionProtocol.h"
 
+@class UIViewController;
+
 /**
  A client connection to HealthVault
  */
@@ -27,9 +29,11 @@
 /**
  Prompt the user to authorize additional records for use in this app.
 
+ @param viewController Optional A view controller used to present a user authentication user interface. If the viewController parameter is nil the authentication flow will be presented from the current window's root view controller.
  @param completion Envoked when the operation completes. NSError object will be nil if there is no error when performing the operation.
  */
-- (void)authorizeAdditionalRecordsWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion;
+- (void)authorizeAdditionalRecordsWithViewController:(UIViewController *_Nullable)viewController
+                                          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 /**
  Deletes connection information, forcing new application provisioning and authentication on the next call.

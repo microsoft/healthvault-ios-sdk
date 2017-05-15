@@ -20,13 +20,14 @@
 
 @implementation MHVMethod
 
-- (instancetype)initWithName:(NSString *)name isAnonymous:(BOOL)isAnonymous
+- (instancetype)initWithName:(NSString *)name version:(int)version isAnonymous:(BOOL)isAnonymous
 {
     self = [super init];
     
     if (self)
     {
         _name = name;
+        _version = version;
         _isAnonymous = isAnonymous;
     }
     
@@ -35,453 +36,207 @@
 
 + (MHVMethod *)allocatePackageId;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-    {
-        method = [[MHVMethod alloc] initWithName:@"AllocatePackageId" isAnonymous:NO];
-    });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"AllocatePackageId" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)associateAlternateId;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"AssociateAlternateId" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"AssociateAlternateId" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)beginPutBlob;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"BeginPutBlob" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"BeginPutBlob" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)beginPutConnectPackageBlob;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"BeginPutConnectPackageBlob" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"BeginPutConnectPackageBlob" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)createAuthenticatedSessionToken;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"CreateAuthenticatedSessionToken" isAnonymous:YES];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"CreateAuthenticatedSessionToken" version:2 isAnonymous:YES];
 }
 
 + (MHVMethod *)createConnectPackage;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"CreateConnectPackage" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"CreateConnectPackage" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)createConnectRequest;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"CreateConnectRequest" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"CreateConnectRequest" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)deletePendingConnectPackage;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"DeletePendingConnectPackage" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"DeletePendingConnectPackage" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)deletePendingConnectRequest;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"DeletePendingConnectRequest" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"DeletePendingConnectRequest" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)disassociateAlternateId;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"DisassociateAlternateId" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"DisassociateAlternateId" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getAlternateIds;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetAlternateIds" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetAlternateIds" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getApplicationInfo;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetApplicationInfo" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetApplicationInfo" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getApplicationSettings;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetApplicationSettings" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetApplicationSettings" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getAuthorizedConnectRequests;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetAuthorizedConnectRequests" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetAuthorizedConnectRequests" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getAuthorizedPeople;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetAuthorizedPeople" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetAuthorizedPeople" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getAuthorizedRecords;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetAuthorizedRecords" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetAuthorizedRecords" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getEventSubscriptions;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetEventSubscriptions" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetEventSubscriptions" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getMeaningfulUseTimelyAccessReport;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetMeaningfulUseTimelyAccessReport" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetMeaningfulUseTimelyAccessReport" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getMeaningfulUseVDTReport;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetMeaningfulUseVDTReport" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetMeaningfulUseVDTReport" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getPersonInfo;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetPersonInfo" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetPersonInfo" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getServiceDefinition;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetServiceDefinition" isAnonymous:YES];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetServiceDefinition" version:2 isAnonymous:YES];
 }
 
 + (MHVMethod *)getThings;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetThings" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetThings" version:3 isAnonymous:NO];
 }
 
 + (MHVMethod *)getThingType;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetThingType" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetThingType" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getUpdatedRecordsForApplication;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetUpdatedRecordsForApplication" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetUpdatedRecordsForApplication" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getValidGroupMembership;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetValidGroupMembership" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetValidGroupMembership" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)getVocabulary;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"GetVocabulary" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"GetVocabulary" version:2 isAnonymous:NO];
 }
 
 + (MHVMethod *)newApplicationCreationInfo;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"NewApplicationCreationInfo" isAnonymous:YES];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"NewApplicationCreationInfo" version:1 isAnonymous:YES];
 }
 
 + (MHVMethod *)newSignupCode;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"NewSignupCode" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"NewSignupCode" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)putThings;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"PutThings" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"PutThings" version:2 isAnonymous:NO];
 }
 
 + (MHVMethod *)queryPermissions;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"QueryPermissions" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"QueryPermissions" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)removeApplicationRecordAuthorization;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"RemoveApplicationRecordAuthorization" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"RemoveApplicationRecordAuthorization" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)removeThings;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"RemoveThings" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"RemoveThings" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)searchVocabulary;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"SearchVocabulary" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"SearchVocabulary" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)selectInstance;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"SelectInstance" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"SelectInstance" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)sendInsecureMessage;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"SendInsecureMessage" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"SendInsecureMessage" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)sendInsecureMessageFromApplication;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"SendInsecureMessageFromApplication" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"SendInsecureMessageFromApplication" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)setApplicationSettings;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"SetApplicationSettings" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"SetApplicationSettings" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)subscribeToEvent;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"SubscribeToEvent" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"SubscribeToEvent" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)unsubscribeToEvent;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"UnsubscribeToEvent" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"UnsubscribeToEvent" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)updateEventSubscription;
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"UpdateEventSubscription" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"UpdateEventSubscription" version:1 isAnonymous:NO];
 }
 
 + (MHVMethod *)updateExternalId
 {
-    static MHVMethod *method = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-                  {
-                      method = [[MHVMethod alloc] initWithName:@"UpdateExternalId" isAnonymous:NO];
-                  });
-    return method;
+    return [[MHVMethod alloc] initWithName:@"UpdateExternalId" version:1 isAnonymous:NO];
 }
 
 @end

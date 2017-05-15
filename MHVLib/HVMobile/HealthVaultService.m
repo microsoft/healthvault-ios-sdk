@@ -309,9 +309,6 @@
     _provisioner = [[Provisioner alloc] init];
     MHVCHECK_NOTNULL(_provisioner);
     
-    _cryptographer = [[MHVCryptographer alloc] init];
-    MHVCHECK_NOTNULL(_cryptographer);
-    
     return TRUE;
 }
 

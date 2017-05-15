@@ -80,7 +80,6 @@
 //
 // --------------------------------------------
 @property (strong) id<MHVHttpServiceProtocol> httpService;
-@property (strong) id<MHVCryptographer> cryptographer;
 @property (strong) Provisioner *provisioner;
 
 // --------------------------------------------

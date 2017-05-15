@@ -36,14 +36,14 @@ static NSString *const c_attribute_personID = @"person-id";
 
 - (void)serializeAttributes:(XWriter *)writer
 {
-    [writer writeAttribute:c_attribute_id value:self.ID];
-    [writer writeAttribute:c_attribute_personID value:self.personID];
+    [writer writeAttribute:c_attribute_id value:self.ID.UUIDString];
+    [writer writeAttribute:c_attribute_personID value:self.personID.UUIDString];
 }
 
 - (void)deserializeAttributes:(XReader *)reader
 {
-    self.ID = [reader readAttribute:c_attribute_id];
-    self.personID = [reader readAttribute:c_attribute_personID];
+    self.ID = [[NSUUID alloc] initWithUUIDString:[reader readAttribute:c_attribute_id]];
+    self.personID = [[NSUUID alloc] initWithUUIDString:[reader readAttribute:c_attribute_personID]];
 }
 
 - (MHVGetItemsTask *)getItemsForClass:(Class)cls callback:(MHVTaskCompletion)callback

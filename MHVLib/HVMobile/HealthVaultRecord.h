@@ -25,13 +25,13 @@
 @property (strong) NSString *xml;
 
 /// Gets or sets the person id of the person who has access to this record.
-@property (strong) NSString *personId;
+@property (strong) NSUUID *personId;
 
 /// Gets or sets the name of the person who has access to this record.
 @property (strong) NSString *personName;
 
 /// Gets or sets the record id of this record.
-@property (strong) NSString *recordId;
+@property (strong) NSUUID *recordId;
 
 /// Gets or sets the name of this record.
 @property (strong) NSString *recordName;
@@ -55,7 +55,7 @@
 /// @returns a HealthVaultRecord class instance or nil if xml is not well formed 
 /// or record is invalid( see isValid property for more details)
 + (id)newFromXml: (NSString *)xml
-		personId: (NSString *)personId
+		personId: (NSUUID *)personId
 	  personName: (NSString *)personName;
 
 /// Initializes a new instance of the HealthVaultRecord class.
@@ -63,7 +63,7 @@
 /// @param personId - the  id of the person.
 /// @param personName - the name of the person. 
 - (id)initWithXml: (NSString *)xml
-		 personId: (NSString *)personId
+		 personId: (NSUUID *)personId
 	   personName: (NSString *)personName;
 
 @end

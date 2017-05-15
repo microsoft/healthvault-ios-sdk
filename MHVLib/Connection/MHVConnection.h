@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVConnectionProtocol.h"
 
-@class MHVConfiguration;
+@class MHVConfiguration, MHVInstance;
 
 @protocol MHVSessionCredentialClientProtocol, MHVHttpServiceProtocol;
 
@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MHVConnection : NSObject<MHVConnectionProtocol>
 
 @property (nonatomic, strong, readonly) MHVConfiguration *configuration;
+@property (nonatomic, strong, readonly, nullable) MHVInstance *serviceInstance;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                      credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
