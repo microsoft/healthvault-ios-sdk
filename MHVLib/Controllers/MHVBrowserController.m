@@ -20,118 +20,98 @@
 #import "MHVBrowserController.h"
 #import <QuartzCore/QuartzCore.h>
 
-
 #define RGBColor(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 
 #define MHVBLUE RGBColor(0, 176, 240)
 
-@interface MHVBrowserController (MHVPrivate)
+@interface MHVBrowserController ()
 
--(BOOL) createBrowser;
--(void) releaseBrowser;
--(BOOL) addBackButton;
--(void) backButtonClicked:(id) sender;
--(void) showActivitySpinner;
--(void) hideActivitySpinner;
+@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
 
 @end
 
 @implementation MHVBrowserController
 
-@synthesize target = m_target;
-@synthesize webView = m_webView;
-
--(void)dealloc
+- (void)dealloc
 {
-    [self releaseBrowser];
-    
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
--(BOOL)start
+- (BOOL)start
 {
-    if (m_target)
+    if (self.target)
     {
-        return [self navigateTo:m_target];
+        return [self navigateTo:self.target];
     }
     
     [self abort];
     
-    return FALSE;
+    return NO;
 }
 
--(BOOL)stop
+- (BOOL)stop
 {
-    if (m_webView)
+    if (self.webView)
     {
-        [m_webView stopLoading];
+        [self.webView stopLoading];
     }
-    return TRUE;
+    
+    return YES;
 }
 
--(BOOL)navigateTo:(NSURL *)url
+- (BOOL)navigateTo:(NSURL *)url
 {
-    MHVCHECK_NOTNULL(url);
+    MHVASSERT_PARAMETER(url);
+    
+    if (!url)
+    {
+        return NO;
+    }
     
     NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
-    MHVCHECK_NOTNULL(request);
     
-    [m_webView loadRequest:request];
+    [self.webView loadRequest:request];
     
-    return TRUE;
-    
-LError:
-    return false;
+    return YES;
 }
 
--(void)abort
+- (void)abort
 {
     [self stop];
     [self.navigationController popViewControllerAnimated:TRUE];
 }
 
-//-----------------------
-//
-// WebView Delegate
-//
-//-----------------------
--(BOOL)webView: (UIWebView *)webView shouldStartLoadWithRequest: (NSURLRequest *)request
- navigationType: (UIWebViewNavigationType)navigationType 
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     [self showActivitySpinner];
  	return YES;
 }
 
--(void)webViewDidStartLoad:(UIWebView *)webView
-{
-}
-
--(void)webViewDidFinishLoad:(UIWebView *)webView
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self hideActivitySpinner];
 }
 
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [self hideActivitySpinner];
 }
-
-//-----------------------
-//
-// Controller Stuff
-//
-//-----------------------
 
 #pragma mark - View lifecycle
 
--(void)viewDidLoad
+- (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self createBrowser];    
-    [self addBackButton];
+    [self addCancelButton];
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self start];
@@ -141,18 +121,6 @@ LError:
 {
     [self stop];
 	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    [self releaseBrowser];
-}
-
--(void)didReceiveMemoryWarning
-{
-    [self releaseBrowser];
-    [super didReceiveMemoryWarning];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -170,99 +138,53 @@ LError:
     return TRUE;
 }
 
-@end
-
-@implementation MHVBrowserController (MHVPrivate)
-
--(BOOL)createBrowser
+- (void)createBrowser
 {
-    [self releaseBrowser];
-    
     UIView* superView = super.view;
     CGRect frame = superView.frame;
     frame.origin.x = 0;
     frame.origin.y = 0;
     
-    m_webView = [[UIWebView alloc] initWithFrame:frame];
-    MHVCHECK_NOTNULL(m_webView);
+    self.webView = [[UIWebView alloc] initWithFrame:frame];
     
-    m_webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    m_webView.delegate = self;
+    self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.webView.delegate = self;
     
-    [superView addSubview:m_webView];  
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
+    [superView addSubview:self.webView];
 }
 
--(void)releaseBrowser
-{
-    if (m_webView)
-    {
-        [self stop];
-        if (m_activityView)
-        {
-            [m_activityView removeFromSuperview];
-        }
-        m_webView.delegate = nil;
-        [m_webView removeFromSuperview];
-    }
-    m_webView = nil;
-
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
-}
-
--(BOOL)addBackButton
+- (void)addCancelButton
 {
     self.navigationItem.hidesBackButton = TRUE;
-
-    NSString* buttonTitle = NSLocalizedString(@"Back", @"Back button text");
     
-    UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:buttonTitle style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked:)];
-    MHVCHECK_NOTNULL(button);
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
     
-    self.navigationItem.leftBarButtonItem = button;
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
+    self.navigationItem.leftBarButtonItem = cancelButton;
 }
 
--(void)showActivitySpinner
+- (void)showActivitySpinner
 {    
     //
     // Find any existing indicators already in place
     //
-    if (!m_activityView)
+    if (!self.activityView)
     {
-        m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        if ([m_activityView respondsToSelector:@selector(setColor:)])
-        {
-            [m_activityView setColor:MHVBLUE];
-        }
-        else 
-        {
-            m_activityView = nil;
-            // < iOS5... use older style. The large indication won't be visible on MHV pages
-            m_activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        }
-        m_activityView.center = m_webView.center;
-        m_activityView.hidesWhenStopped = TRUE;
+        self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        [self.activityView setColor:MHVBLUE];
+        self.activityView.center = self.webView.center;
+        self.activityView.hidesWhenStopped = TRUE;
         
-        [m_webView addSubview:m_activityView];
+        [self.webView addSubview:self.activityView];
     }
     
-    [m_activityView startAnimating];
+    [self.activityView startAnimating];
 }
 
--(void)backButtonClicked:(id)sender
+- (void)cancelButtonPressed:(id)sender
 {
-    if (m_webView.canGoBack)
+    if (self.webView.canGoBack)
     {
-        [m_webView goBack];
+        [self.webView goBack];
     }
     else 
     {
@@ -270,11 +192,11 @@ LError:
     }
 }
 
--(void)hideActivitySpinner
+- (void)hideActivitySpinner
 {
-    if (m_activityView)
+    if (self.activityView)
     {
-        [m_activityView stopAnimating];
+        [self.activityView stopAnimating];
     }
 }
 

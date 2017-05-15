@@ -34,8 +34,8 @@ static const xmlChar *x_element_shell = XMLSTRINGCONST("shell-url");
     self.instanceID = [reader readStringElementWithXmlName:x_element_id];
     self.name = [reader readStringElementWithXmlName:x_element_name];
     self.instanceDescription = [reader readStringElementWithXmlName:x_element_description];
-    self.platformUrl = [reader readStringElementWithXmlName:x_element_platform];
-    self.shellUrl = [reader readStringElementWithXmlName:x_element_shell];
+    self.healthServiceUrl = [[NSURL alloc]initWithString:[reader readStringElementWithXmlName:x_element_platform]];
+    self.shellUrl = [[NSURL alloc]initWithString:[reader readStringElementWithXmlName:x_element_shell]];
 }
 
 - (void)serialize:(XWriter *)writer
@@ -43,8 +43,8 @@ static const xmlChar *x_element_shell = XMLSTRINGCONST("shell-url");
     [writer writeElementXmlName:x_element_id value:self.instanceID];
     [writer writeElementXmlName:x_element_name value:self.name];
     [writer writeElementXmlName:x_element_description value:self.instanceDescription];
-    [writer writeElementXmlName:x_element_platform value:self.platformUrl];
-    [writer writeElementXmlName:x_element_shell value:self.shellUrl];
+    [writer writeElementXmlName:x_element_platform value:self.healthServiceUrl.absoluteString];
+    [writer writeElementXmlName:x_element_shell value:self.shellUrl.absoluteString];
 }
 
 @end

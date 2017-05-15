@@ -18,6 +18,8 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol XSerializable;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVKeychainServiceProtocol <NSObject>
@@ -29,24 +31,41 @@ NS_ASSUME_NONNULL_BEGIN
  @param key The key the string is stored under.
  @return The string value or nil if the no string could be found for the given key.
  */
-- (NSString *)stringForKey:(NSString *)key;
+- (NSString *_Nullable)stringForKey:(NSString *)key;
 
 /**
  Saves a string value to the keychain.
 
  @param string The string to be saved. If nil is passed as the string parameter, the string for key will be deleted.
- @param key The key used to save the string valuen under.
+ @param key The key used to save the string value under.
  @return YES if the save is successful NO if the save fails.
  */
 - (BOOL)setString:(NSString *_Nullable)string forKey:(NSString *)key;
 
 /**
- Deletes a string value from the keychain for a given key
+ Fetches a XSerializable object stored in the keychain.
+ 
+ @param key The key the string is stored under.
+ @return The string value or nil if the no string could be found for the given key.
+ */
+- (BOOL)setXMLObject:(id<XSerializable>)obj forKey:(NSString *)key;
 
+/**
+ Saves an XSerializable object to the keychain.
+ 
+ @param obj The object to be saved. If nil is passed as the obj parameter, the obj for key will be deleted.
+ @param key The key used to save the object value under.
+ @return YES if the save is successful NO if the save fails.
+ */
+- (id<XSerializable> _Nullable)xmlObjectForKey:(NSString *)key;
+
+/**
+ Deletes a string or object value from the keychain for a given key
+ 
  @param key The key the string value to be deleted is saved under.
  @return YES if the delete is successful, or the key is not found, NO if the delete fails.
  */
-- (BOOL)removeStringForKey:(NSString *)key;
+- (BOOL)removeObjectForKey:(NSString *)key;
 
 @end
 

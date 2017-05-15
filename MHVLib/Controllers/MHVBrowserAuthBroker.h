@@ -1,8 +1,8 @@
 //
-//  NSError+MHVError.h
+//  MHVBrowserAuthBroker.h
 //  MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,17 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import "MHVBrowserController.h"
+#import "MHVBrowserAuthBrokerProtocol.h"
 
-@interface NSError (MHVError)
-
-+ (NSError *)MVHInvalidParameter;
-+ (NSError *)MHVOperationCannotBePerformed;
-+ (NSError *)MHVIOError;
-+ (NSError *)MHVUnauthorizedError;
-+ (NSError *)MHVOperationCancelled;
-+ (NSError *)MHVUnknownError;
-
-+ (NSError *)error:(NSError *)error withDescription:(NSString *)description;
+@interface MHVBrowserAuthBroker : MHVBrowserController<MHVBrowserAuthBrokerProtocol>
 
 @end

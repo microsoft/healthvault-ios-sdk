@@ -24,7 +24,7 @@
 // Collections allow objects of a particular type only
 // They enforce the type
 //
-@interface MHVCollection : NSObject<NSFastEnumeration>
+@interface MHVCollection<__covariant ObjectType> : NSObject<NSFastEnumeration>
 
 @property (readwrite, nonatomic, strong) Class  type;
 
@@ -33,19 +33,24 @@
 
 + (BOOL)isNilOrEmpty:(MHVCollection *)collection;
 - (NSUInteger)count;
-- (id)objectAtIndex:(NSUInteger)index;
-- (id)lastObject;
-- (void)addObject:(id)anObject;
-- (void)insertObject:(id)anObject atIndex:(NSUInteger)index;
-- (void)addObjectsFromArray:(NSArray *)array;
-- (void)addObjectsFromCollection:(MHVCollection *)collection;
-- (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;
+- (ObjectType)objectAtIndex:(NSUInteger)index;
+- (ObjectType)objectAtIndexedSubscript:(NSUInteger)idx;
+- (ObjectType)firstObject;
+- (ObjectType)lastObject;
+- (void)addObject:(ObjectType)anObject;
+- (void)insertObject:(ObjectType)anObject atIndex:(NSUInteger)index;
+- (void)setObject:(ObjectType)obj atIndexedSubscript:(NSUInteger)idx;
+- (void)addObjectsFromArray:(NSArray<ObjectType> *)array;
+- (void)addObjectsFromCollection:(MHVCollection<ObjectType> *)collection;
+- (void)replaceObjectAtIndex:(NSUInteger)index withObject:(ObjectType)anObject;
 - (void)removeObjectAtIndex:(NSUInteger)index;
+- (void)removeObject:(ObjectType)object;
+- (void)removeFirstObject;
 - (void)removeLastObject;
 - (void)removeAllObjects;
 
 - (void)sortUsingComparator:(NSComparator NS_NOESCAPE)cmptr;
-- (NSUInteger)binarySearch:(id)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp;
+- (NSUInteger)binarySearch:(ObjectType)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp;
 - (NSUInteger)indexOfMatchingObject:(MHVFilter)filter;
 
 - (NSArray *)toArray;
@@ -59,7 +64,7 @@
 
 @end
 
-@interface MHVStringCollection : MHVCollection
+@interface MHVStringCollection : MHVCollection<NSString *>
 
 - (BOOL)containsString:(NSString *)value;
 - (NSUInteger)indexOfString:(NSString *)value;

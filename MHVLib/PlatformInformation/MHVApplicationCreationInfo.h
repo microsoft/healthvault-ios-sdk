@@ -17,9 +17,9 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "XSerializer.h"
+#import "XSerializableType.h"
 
-@interface MHVApplicationCreationInfo : NSObject<XSerializable>
+@interface MHVApplicationCreationInfo : XSerializableType
 
 @property (nonatomic, strong, readonly) NSUUID *appInstanceId;
 @property (nonatomic, strong, readonly) NSString *sharedSecret;

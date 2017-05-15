@@ -1,8 +1,8 @@
 //
-//  NSError+MHVError.h
+//  MHVBrowserAuthBrokerProtocol.h
 //  MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,15 +18,17 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSError (MHVError)
+@class UIViewController;
 
-+ (NSError *)MVHInvalidParameter;
-+ (NSError *)MHVOperationCannotBePerformed;
-+ (NSError *)MHVIOError;
-+ (NSError *)MHVUnauthorizedError;
-+ (NSError *)MHVOperationCancelled;
-+ (NSError *)MHVUnknownError;
+NS_ASSUME_NONNULL_BEGIN
 
-+ (NSError *)error:(NSError *)error withDescription:(NSString *)description;
+@protocol MHVBrowserAuthBrokerProtocol <NSObject>
+
+- (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
+                              startUrl:(NSURL *)startUrl
+                                endUrl:(NSURL *)endUrl
+                            completion:(void (^)(NSURL *_Nullable successUrl, NSError *_Nullable error))completion;
 
 @end
+
+NS_ASSUME_NONNULL_END

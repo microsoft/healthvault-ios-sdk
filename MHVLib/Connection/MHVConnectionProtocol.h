@@ -31,19 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MHVConnectionProtocol <NSObject>
 
 /**
- Gets the application identifier.
-
- @return The application identifier.
+ The application identifier.
  */
-- (NSUUID *_Nullable)applicationId;
+@property (nonatomic, strong, readonly, nullable) NSUUID *applicationId;
 
 /**
- Gets session credential.
-
- @return session credential.
+ The credential object for the current session.
  */
-- (MHVSessionCredential *_Nullable)sessionCredential;
-
+@property (nonatomic, strong, readonly, nullable) MHVSessionCredential *sessionCredential;
 
 /**
  Makes Web request call to HealthVault service for specified method name and method version.

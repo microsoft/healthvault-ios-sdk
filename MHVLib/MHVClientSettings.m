@@ -150,8 +150,8 @@ static NSString *const c_element_instanceID = @"instanceID";
 
     settings.name = instance.name;
     settings.friendlyName = instance.name;
-    settings.serviceUrl = [NSURL URLWithString:instance.platformUrl];
-    settings.shellUrl = [NSURL URLWithString:instance.shellUrl];
+    settings.serviceUrl = instance.healthServiceUrl;
+    settings.shellUrl = instance.shellUrl;
     settings.instanceID = instance.instanceID;
 
     return settings;

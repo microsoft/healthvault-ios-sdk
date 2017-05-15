@@ -78,6 +78,24 @@
     return [self.inner objectAtIndex:index];
 }
 
+- (id)objectAtIndexedSubscript:(NSUInteger)idx
+{
+    return [self.inner objectAtIndexedSubscript:idx];
+}
+
+- (void)setObject:(id)anObject atIndexedSubscript:(NSUInteger)idx
+{
+    if([self validateNewObject:anObject])
+    {
+        [self.inner setObject:anObject atIndexedSubscript:idx];
+    }
+}
+
+- (id)firstObject
+{
+    return [self.inner firstObject];
+}
+
 - (id)lastObject
 {
     return [self.inner lastObject];
@@ -148,6 +166,21 @@
 - (void)removeObjectAtIndex:(NSUInteger)index
 {
     [self.inner removeObjectAtIndex:index];
+}
+
+- (void)removeObject:(id)obj
+{    
+    [self.inner removeObject:obj];
+}
+
+- (void)removeFirstObject
+{
+    if (self.inner.count < 1)
+    {
+        return;
+    }
+    
+    [self.inner removeObjectAtIndex:0];
 }
 
 - (void)removeLastObject
@@ -269,7 +302,7 @@
 
 @implementation MHVStringCollection
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     

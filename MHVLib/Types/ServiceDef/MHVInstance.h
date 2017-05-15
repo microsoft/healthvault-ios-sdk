@@ -22,11 +22,30 @@
 
 @interface MHVInstance : MHVType
 
+/**
+ A string uniquely identifying the instance.
+ */
 @property (readwrite, nonatomic, strong) NSString *instanceID;
+
+/**
+ A friendly name for the instance.
+ */
 @property (readwrite, nonatomic, strong) NSString *name;
+
+/**
+ A friendly description of the instance.
+ */
 @property (readwrite, nonatomic, strong) NSString *instanceDescription;
-@property (readwrite, nonatomic, strong) NSString *platformUrl;
-@property (readwrite, nonatomic, strong) NSString *shellUrl;
+
+/**
+ A string representing a URL to the HealthVault service.
+ */
+@property (readwrite, nonatomic, strong) NSURL *healthServiceUrl;
+
+/**
+ A string representing the URL to access the HealthVault Shell.
+ */
+@property (readwrite, nonatomic, strong) NSURL *shellUrl;
 
 @end
 
