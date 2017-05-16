@@ -81,7 +81,7 @@ describe(@"XML", ^
                        XReader *reader = [[XReader alloc] initFromString:xml];
                        
                        //Can query for several things at once, should have one result
-                       MHVThingQueryResults *results = [NSObject newFromReader:reader withRoot:@"info" asClass:[MHVThingQueryResults class]];
+                       MHVThingQueryResults *results = (MHVThingQueryResults *)[NSObject newFromReader:reader withRoot:@"info" asClass:[MHVThingQueryResults class]];
                        [[theValue(results.hasResults) should] beYes];
                        [[theValue(results.results.count) should] equal:@(1)];
                        
@@ -96,7 +96,7 @@ describe(@"XML", ^
                        [[thing.data.typed should] beKindOfClass:[MHVHeartRate class]];
                        
                        //The heartrate value should be 106
-                       MHVHeartRate *heartRate = thing.data.typed;
+                       MHVHeartRate *heartRate = (MHVHeartRate *)thing.data.typed;
                        [[theValue(heartRate.bpmValue) should] equal:@(106)];
                    });
             });

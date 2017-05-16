@@ -7,4 +7,7 @@
    <FileRef
       location = "group:SDKFeatures/SDKFeatures.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:../Pods/Pods.xcodeproj">
+   </FileRef>
 </Workspace>
