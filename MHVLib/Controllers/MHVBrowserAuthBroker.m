@@ -93,7 +93,7 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
         
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
         
-        [viewController presentViewController:navigationController animated:YES completion:nil];
+        [vc presentViewController:navigationController animated:YES completion:nil];
     }];
 }
 
