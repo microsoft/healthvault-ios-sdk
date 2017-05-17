@@ -89,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return a task that can be cancelled
  */
 - (id<MHVHttpTaskProtocol>)uploadBlobSource:(id<MHVBlobSourceProtocol>)blobSource
-                                      toUrl:(NSURL *)url
+                                      toUrl:(NSURL *)toUrl
                                   chunkSize:(NSUInteger)chunkSize
                                  completion:(MHVHttpServiceCompletion)completion;
 
