@@ -21,11 +21,19 @@
 
 NSString *const c_emptyString = @"";
 
+static NSString *kStringTrue = @"true";
+static NSString *kStringFalse = @"false";
+
 @implementation NSString (NVNSStringExtensions)
 
 + (BOOL)isNilOrEmpty:(NSString *)string
 {
     return string == nil || string.length == 0;
+}
+
++ (NSString*)boolString:(BOOL)boolValue
+{
+    return boolValue ? [kStringTrue copy] : [kStringFalse copy];
 }
 
 - (BOOL)isEmpty
@@ -283,6 +291,18 @@ NSString *const c_emptyString = @"";
     [self appendXmlElementStart:tag];
     [self appendString:text];
     [self appendXmlElementEnd:tag];
+}
+
+- (NSString *)capitalizedStringForSelectors
+{
+    if ([self isEqualToString:@""])
+    {
+        return self;
+    }
+    NSRange rangeForFirstChar = NSMakeRange(0, 1);
+    NSString *substringFirstChar = [self substringWithRange:rangeForFirstChar];
+    
+    return [self stringByReplacingCharactersInRange:rangeForFirstChar withString:[substringFirstChar uppercaseString]];
 }
 
 @end

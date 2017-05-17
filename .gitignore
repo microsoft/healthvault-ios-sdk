@@ -2,6 +2,8 @@
 xcuserdata
 xcuserdata/
 *.xcuserstate
+Tools/codegen/output
+Tools/codegen/KHV*
 
 Samples/Demos/Health2.0/HelloHealthVault/HelloHealthVault/Code.txt
 
