@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MHVConnection : NSObject<MHVConnectionProtocol>
 
 @property (nonatomic, strong, readonly) MHVConfiguration *configuration;
-@property (nonatomic, strong, readonly, nullable) MHVInstance *serviceInstance;
+@property (nonatomic, strong, nullable) MHVInstance *serviceInstance;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                      credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient

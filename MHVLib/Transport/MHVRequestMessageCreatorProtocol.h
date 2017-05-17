@@ -1,6 +1,6 @@
 //
-// MHVServiceResponse.h
-// MHVLib
+//  MHVRequestMessageCreatorProtocol.h
+//  MHVLib
 //
 // Copyright 2017 Microsoft Corp.
 //
@@ -18,21 +18,17 @@
 
 #import <Foundation/Foundation.h>
 
-@class MHVHttpServiceResponse;
+NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVServiceResponse : NSObject
+@protocol MHVRequestMessageCreatorProtocol <NSObject>
 
-// Gets the Http response code...
-@property (assign) int statusCode;
-
-/// Gets or sets the informational part of the response.
-@property (strong) NSString *infoXml;
-
-@property (nonatomic, strong) NSError *error;
-
-/// Initializes a new instance of the HealthVaultResponse class.
-/// @param response - the web response from server side.
-/// @request - the original request.
-- (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response;
+/**
+ Creates a request XML for a given method.
+ 
+ @return An XML request string.
+ */
+- (NSString *)xmlString;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
                                       shellUrl:(NSURL *)shellUrl
                                    masterAppId:(NSUUID *)masterAppId
                               appCreationToken:(NSString *)appCreationToken
-                                 appInstanceId:(NSString *)appInstanceId
+                                 appInstanceId:(NSUUID *)appInstanceId
                                     completion:(void (^)(NSString *_Nullable instanceId, NSError *_Nullable error))completion;
 
 - (void)authorizeAdditionalRecordsWithViewController:(UIViewController *_Nullable)viewController

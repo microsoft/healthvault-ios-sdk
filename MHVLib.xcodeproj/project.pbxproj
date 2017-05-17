@@ -492,6 +492,8 @@
 		A4F066CB1C5C00E700233916 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CA1C5C00E700233916 /* Security.framework */; };
 		A4F066CD1C5C00F000233916 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */; };
 		A4F066CF1C5C010800233916 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CE1C5C010800233916 /* MobileCoreServices.framework */; };
+		A51203961ECCB3A100845680 /* MHVPersonClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A51203941ECCB3A100845680 /* MHVPersonClient.h */; };
+		A51203971ECCB3A100845680 /* MHVPersonClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A51203951ECCB3A100845680 /* MHVPersonClient.m */; };
 		A51B6C981EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A51B6C971EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h */; };
 		A51B6C9B1EC4A806003BFBDC /* MHVSessionCredentialClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A51B6C991EC4A806003BFBDC /* MHVSessionCredentialClient.h */; };
 		A51B6C9C1EC4A806003BFBDC /* MHVSessionCredentialClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B6C9A1EC4A806003BFBDC /* MHVSessionCredentialClient.m */; };
@@ -525,11 +527,20 @@
 		A57A80C11EC4FB7900DDD636 /* MHVServiceResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = A57A80BF1EC4FB7900DDD636 /* MHVServiceResponse.m */; };
 		A57A80C41EC51EC600DDD636 /* MHVCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = A57A80C21EC51EC600DDD636 /* MHVCollection.h */; };
 		A57A80C51EC51EC600DDD636 /* MHVCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A57A80C31EC51EC600DDD636 /* MHVCollection.m */; };
-		A57A80C81EC51F3D00DDD636 /* MHVServiceRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = A57A80C61EC51F3D00DDD636 /* MHVServiceRequest.h */; };
-		A57A80C91EC51F3D00DDD636 /* MHVServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A57A80C71EC51F3D00DDD636 /* MHVServiceRequest.m */; };
+		A5A1BBA51ECB9F5700CE6F64 /* MHVPlatformClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A5A1BBA31ECB9F5700CE6F64 /* MHVPlatformClient.h */; };
+		A5A1BBA61ECB9F5700CE6F64 /* MHVPlatformClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A1BBA41ECB9F5700CE6F64 /* MHVPlatformClient.m */; };
+		A5A1BBB91ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = A5A1BBB71ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.h */; };
+		A5A1BBBA1ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A1BBB81ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.m */; };
 		A5AC1F571EC0F93A0049C24D /* MHVPersonClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5AC1F551EC0F93A0049C24D /* MHVPersonClientProtocol.h */; };
 		A5AC1F581EC0F93A0049C24D /* MHVPlatformClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5AC1F561EC0F93A0049C24D /* MHVPlatformClientProtocol.h */; };
 		A5AC1F5A1EC0F9B00049C24D /* MHVClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5AC1F591EC0F9B00049C24D /* MHVClientProtocol.h */; };
+		A5B384941ECB428000788619 /* MHVRequestMessageCreator.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B384921ECB428000788619 /* MHVRequestMessageCreator.h */; };
+		A5B384951ECB428000788619 /* MHVRequestMessageCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B384931ECB428000788619 /* MHVRequestMessageCreator.m */; };
+		A5B384971ECB432400788619 /* MHVRequestMessageCreatorProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B384961ECB432400788619 /* MHVRequestMessageCreatorProtocol.h */; };
+		A5B3849A1ECB4CE400788619 /* MHVAuthSession.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B384981ECB4CE400788619 /* MHVAuthSession.h */; };
+		A5B3849B1ECB4CE400788619 /* MHVAuthSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B384991ECB4CE400788619 /* MHVAuthSession.m */; };
+		A5B3849E1ECB741200788619 /* MHVMethodRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B3849C1ECB741200788619 /* MHVMethodRequest.h */; };
+		A5B3849F1ECB741200788619 /* MHVMethodRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B3849D1ECB741200788619 /* MHVMethodRequest.m */; };
 		A5D1ECEE1EC0FC0A000E3295 /* MHVThingClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5D1ECED1EC0FC0A000E3295 /* MHVThingClientProtocol.h */; };
 		A5D1ED021EC23884000E3295 /* MHVConnectionFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A5D1ED001EC23884000E3295 /* MHVConnectionFactory.h */; };
 		A5D1ED031EC23884000E3295 /* MHVConnectionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D1ED011EC23884000E3295 /* MHVConnectionFactory.m */; };
@@ -1038,6 +1049,8 @@
 		A4F066CA1C5C00E700233916 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A4F066CE1C5C010800233916 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		A51203941ECCB3A100845680 /* MHVPersonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonClient.h; sourceTree = "<group>"; };
+		A51203951ECCB3A100845680 /* MHVPersonClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonClient.m; sourceTree = "<group>"; };
 		A51B6C971EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSessionCredentialClientProtocol.h; sourceTree = "<group>"; };
 		A51B6C991EC4A806003BFBDC /* MHVSessionCredentialClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSessionCredentialClient.h; sourceTree = "<group>"; };
 		A51B6C9A1EC4A806003BFBDC /* MHVSessionCredentialClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSessionCredentialClient.m; sourceTree = "<group>"; };
@@ -1075,11 +1088,20 @@
 		A57A80BF1EC4FB7900DDD636 /* MHVServiceResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVServiceResponse.m; sourceTree = "<group>"; };
 		A57A80C21EC51EC600DDD636 /* MHVCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVCollection.h; path = MHVLib/ThingTypes/MHVCollection.h; sourceTree = SOURCE_ROOT; };
 		A57A80C31EC51EC600DDD636 /* MHVCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVCollection.m; path = MHVLib/ThingTypes/MHVCollection.m; sourceTree = SOURCE_ROOT; };
-		A57A80C61EC51F3D00DDD636 /* MHVServiceRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVServiceRequest.h; sourceTree = "<group>"; };
-		A57A80C71EC51F3D00DDD636 /* MHVServiceRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVServiceRequest.m; sourceTree = "<group>"; };
+		A5A1BBA31ECB9F5700CE6F64 /* MHVPlatformClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPlatformClient.h; sourceTree = "<group>"; };
+		A5A1BBA41ECB9F5700CE6F64 /* MHVPlatformClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPlatformClient.m; sourceTree = "<group>"; };
+		A5A1BBB71ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVServiceDefinitionRequestParameters.h; sourceTree = "<group>"; };
+		A5A1BBB81ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVServiceDefinitionRequestParameters.m; sourceTree = "<group>"; };
 		A5AC1F551EC0F93A0049C24D /* MHVPersonClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonClientProtocol.h; sourceTree = "<group>"; };
 		A5AC1F561EC0F93A0049C24D /* MHVPlatformClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPlatformClientProtocol.h; sourceTree = "<group>"; };
 		A5AC1F591EC0F9B00049C24D /* MHVClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVClientProtocol.h; sourceTree = "<group>"; };
+		A5B384921ECB428000788619 /* MHVRequestMessageCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRequestMessageCreator.h; sourceTree = "<group>"; };
+		A5B384931ECB428000788619 /* MHVRequestMessageCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVRequestMessageCreator.m; sourceTree = "<group>"; };
+		A5B384961ECB432400788619 /* MHVRequestMessageCreatorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRequestMessageCreatorProtocol.h; sourceTree = "<group>"; };
+		A5B384981ECB4CE400788619 /* MHVAuthSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVAuthSession.h; sourceTree = "<group>"; };
+		A5B384991ECB4CE400788619 /* MHVAuthSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAuthSession.m; sourceTree = "<group>"; };
+		A5B3849C1ECB741200788619 /* MHVMethodRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMethodRequest.h; sourceTree = "<group>"; };
+		A5B3849D1ECB741200788619 /* MHVMethodRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMethodRequest.m; sourceTree = "<group>"; };
 		A5D1ECED1EC0FC0A000E3295 /* MHVThingClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingClientProtocol.h; sourceTree = "<group>"; };
 		A5D1ED001EC23884000E3295 /* MHVConnectionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVConnectionFactory.h; sourceTree = "<group>"; };
 		A5D1ED011EC23884000E3295 /* MHVConnectionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVConnectionFactory.m; sourceTree = "<group>"; };
@@ -1231,6 +1253,7 @@
 				A53BF83D1EC3A44F00F018E2 /* PlatformInformation */,
 				5DC50C2A15003A9A0078D85F /* Store */,
 				5D983BB414E58EDA00C287B7 /* ThingTypes */,
+				A5B384911ECB41C000788619 /* Transport */,
 				5D983BB214E58DF800C287B7 /* Types */,
 				5DE3830114E4447800DFA11D /* Xml */,
 				5DE382F914E338C900DFA11D /* MHVArrayExtensions.h */,
@@ -1315,8 +1338,6 @@
 				5DF90BCD19005044009ABAAB /* MHVCryptographer.h */,
 				5DF90BCE19005044009ABAAB /* MHVCryptographer.m */,
 				5DF90BD219005347009ABAAB /* MHVService.h */,
-				A57A80C61EC51F3D00DDD636 /* MHVServiceRequest.h */,
-				A57A80C71EC51F3D00DDD636 /* MHVServiceRequest.m */,
 				A57A80BE1EC4FB7900DDD636 /* MHVServiceResponse.h */,
 				A57A80BF1EC4FB7900DDD636 /* MHVServiceResponse.m */,
 				5D5F3144150FAA2800ED11E7 /* MobilePlatform.h */,
@@ -1691,29 +1712,31 @@
 				5D1BE47C156B483900718832 /* MHVBlobUploadTask.m */,
 				5DC799901535FEE300193A3B /* MHVGetAuthorizedPeopleTask.h */,
 				5DC799911535FEE300193A3B /* MHVGetAuthorizedPeopleTask.m */,
-				5D39F92D1513E41200208A7B /* MHVGetThingsTask.h */,
-				5D39F92E1513E41200208A7B /* MHVGetThingsTask.m */,
 				5D591D2A1547330100EAC934 /* MHVGetPersonalImageTask.h */,
 				5D591D2B1547330100EAC934 /* MHVGetPersonalImageTask.m */,
 				5D78990417160DFF0015D375 /* MHVGetServiceDefinitionTask.h */,
 				5D78990517160DFF0015D375 /* MHVGetServiceDefinitionTask.m */,
+				5D39F92D1513E41200208A7B /* MHVGetThingsTask.h */,
+				5D39F92E1513E41200208A7B /* MHVGetThingsTask.m */,
 				5D925DD515376F21006BAAA8 /* MHVGetVocabTask.h */,
 				5D925DD615376F21006BAAA8 /* MHVGetVocabTask.m */,
-				5DB4206B156C959200E1A473 /* MHVThingBlobUploadTask.h */,
-				5DB4206C156C959200E1A473 /* MHVThingBlobUploadTask.m */,
 				A51B6CA11EC4AFE5003BFBDC /* MHVMethod.h */,
 				A51B6CA21EC4AFE5003BFBDC /* MHVMethod.m */,
 				5D39F9251513A63500208A7B /* MHVMethodCallTask.h */,
 				5D39F9261513A63500208A7B /* MHVMethodCallTask.m */,
 				5DAED4AB18E4BC960048ECBD /* MHVMethodFactory.h */,
 				5DAED4AC18E4BC960048ECBD /* MHVMethodFactory.m */,
+				A5B3849C1ECB741200788619 /* MHVMethodRequest.h */,
+				A5B3849D1ECB741200788619 /* MHVMethodRequest.m */,
 				5DC799941535FF4100193A3B /* MHVMethods.h */,
 				5D195D4C1522527100E109AD /* MHVPutThingsTask.h */,
 				5D195D4D1522527100E109AD /* MHVPutThingsTask.m */,
-				5D195D641522780600E109AD /* MHVRemoveThingsTask.h */,
-				5D195D651522780700E109AD /* MHVRemoveThingsTask.m */,
 				5D091278166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h */,
 				5D091279166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m */,
+				5D195D641522780600E109AD /* MHVRemoveThingsTask.h */,
+				5D195D651522780700E109AD /* MHVRemoveThingsTask.m */,
+				5DB4206B156C959200E1A473 /* MHVThingBlobUploadTask.h */,
+				5DB4206C156C959200E1A473 /* MHVThingBlobUploadTask.m */,
 				5D9E83711553000000072A0C /* MHVVocabSearcher.h */,
 				5D9E83721553000000072A0C /* MHVVocabSearcher.m */,
 				5D195D801522973300E109AD /* MHVVocabSearchTask.h */,
@@ -1826,6 +1849,8 @@
 				A53BF83E1EC3A48600F018E2 /* MHVApplicationCreationInfo.h */,
 				A53BF83F1EC3A48600F018E2 /* MHVApplicationCreationInfo.m */,
 				A57208A21EC62B5D00C7BB72 /* MHVPlatformConstants.h */,
+				A5A1BBB71ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.h */,
+				A5A1BBB81ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.m */,
 			);
 			path = PlatformInformation;
 			sourceTree = "<group>";
@@ -1860,6 +1885,18 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		A5B384911ECB41C000788619 /* Transport */ = {
+			isa = PBXGroup;
+			children = (
+				A5B384921ECB428000788619 /* MHVRequestMessageCreator.h */,
+				A5B384931ECB428000788619 /* MHVRequestMessageCreator.m */,
+				A5B384961ECB432400788619 /* MHVRequestMessageCreatorProtocol.h */,
+				A5B384981ECB4CE400788619 /* MHVAuthSession.h */,
+				A5B384991ECB4CE400788619 /* MHVAuthSession.m */,
+			);
+			path = Transport;
+			sourceTree = "<group>";
+		};
 		A5D1ECFF1EC237CE000E3295 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1887,7 +1924,11 @@
 			isa = PBXGroup;
 			children = (
 				A5AC1F591EC0F9B00049C24D /* MHVClientProtocol.h */,
+				A51203941ECCB3A100845680 /* MHVPersonClient.h */,
+				A51203951ECCB3A100845680 /* MHVPersonClient.m */,
 				A5AC1F551EC0F93A0049C24D /* MHVPersonClientProtocol.h */,
+				A5A1BBA31ECB9F5700CE6F64 /* MHVPlatformClient.h */,
+				A5A1BBA41ECB9F5700CE6F64 /* MHVPlatformClient.m */,
 				A5AC1F561EC0F93A0049C24D /* MHVPlatformClientProtocol.h */,
 				A5D1ECED1EC0FC0A000E3295 /* MHVThingClientProtocol.h */,
 				BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */,
@@ -1960,9 +2001,11 @@
 				5D20D2DA14EDD32500160611 /* MHVConstrainedDouble.h in Headers */,
 				5D20D2DE14EDD5FE00160611 /* MHVPositiveDouble.h in Headers */,
 				5D20D2E214EDD6C100160611 /* MHVWeightMeasurement.h in Headers */,
+				A5B3849A1ECB4CE400788619 /* MHVAuthSession.h in Headers */,
 				5D20D2E614EDDEF500160611 /* MHVDisplayValue.h in Headers */,
 				5D20D2EE14EEF84400160611 /* MHVInt.h in Headers */,
 				5D20D2F214EEF99400160611 /* MHVDouble.h in Headers */,
+				A5B384941ECB428000788619 /* MHVRequestMessageCreator.h in Headers */,
 				5D20D2F614EEFA7600160611 /* MHVNonNegativeInt.h in Headers */,
 				5D18A4A1187361AB000AE3BD /* MHVFlowValue.h in Headers */,
 				5D20D2FA14EEFF6D00160611 /* MHVBool.h in Headers */,
@@ -1988,7 +2031,6 @@
 				5D20D33314F4366200160611 /* MHVConstrainedString.h in Headers */,
 				5D20D33714F43A1400160611 /* MHVString255.h in Headers */,
 				4C191A631EC1033C00B5E545 /* MHVBasicDemographics.h in Headers */,
-				A57A80C81EC51F3D00DDD636 /* MHVServiceRequest.h in Headers */,
 				4C191A711EC1033C00B5E545 /* MHVCondition.h in Headers */,
 				5DB2E71418D3BD950030972D /* MHVDirectoryNameEnumerator.h in Headers */,
 				5D20D33B14F43A9C00160611 /* MHVStringZ512.h in Headers */,
@@ -2012,6 +2054,7 @@
 				5DC50C40150051DD0078D85F /* MHVMemoryStore.h in Headers */,
 				4C191A931EC1033C00B5E545 /* MHVLabTestResults.h in Headers */,
 				4C191AF91EC3998800B5E545 /* MHVHttpTask.h in Headers */,
+				A5A1BBB91ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.h in Headers */,
 				A545214A1EC9E5BF00A17A1B /* MHVBrowserAuthBroker.h in Headers */,
 				5DF90BDD19005FF0009ABAAB /* MHVTestResultRange.h in Headers */,
 				5DC50C4415015EE60078D85F /* MHVTypeView.h in Headers */,
@@ -2074,6 +2117,7 @@
 				5D195D2B151BFA5300E109AD /* MHVName.h in Headers */,
 				A53BF8391EC3681500F018E2 /* MHVKeychainService.h in Headers */,
 				4C191A6B1EC1033C00B5E545 /* MHVCCR.h in Headers */,
+				A5A1BBA51ECB9F5700CE6F64 /* MHVPlatformClient.h in Headers */,
 				4C191A9B1EC1033C00B5E545 /* MHVPersonalContactInfo.h in Headers */,
 				A53BF8401EC3A48600F018E2 /* MHVApplicationCreationInfo.h in Headers */,
 				5D195D4E1522527100E109AD /* MHVPutThingsTask.h in Headers */,
@@ -2090,6 +2134,7 @@
 				A5AC1F581EC0F93A0049C24D /* MHVPlatformClientProtocol.h in Headers */,
 				A5AC1F571EC0F93A0049C24D /* MHVPersonClientProtocol.h in Headers */,
 				A5D1ECEE1EC0FC0A000E3295 /* MHVThingClientProtocol.h in Headers */,
+				A5B3849E1ECB741200788619 /* MHVMethodRequest.h in Headers */,
 				A542205B1EC2698F00728913 /* MHVSodaConnection.h in Headers */,
 				A51B6CA31EC4AFE5003BFBDC /* MHVMethod.h in Headers */,
 				5DC799641534C97200193A3B /* MHVOneToFive.h in Headers */,
@@ -2116,6 +2161,7 @@
 				5DB2E73418D7905F0030972D /* MHVWorkerStatus.h in Headers */,
 				5D775C8F1538E9BA000F01AE /* MHVAssessmentField.h in Headers */,
 				5DE34C8A15393C62003C24E8 /* MHVDuration.h in Headers */,
+				A51203961ECCB3A100845680 /* MHVPersonClient.h in Headers */,
 				5DE34C8E15394314003C24E8 /* MHVOrganization.h in Headers */,
 				5D1ACC8919104559000689FD /* MHVServerError.h in Headers */,
 				A54220461EC2651500728913 /* MHVConnectionFactoryInternal.h in Headers */,
@@ -2135,6 +2181,7 @@
 				5D6EDDB015463DB700420262 /* MHVString1024.h in Headers */,
 				5D1B7BEF154642F600854881 /* MHVBlobHashInfo.h in Headers */,
 				4C191A831EC1033C00B5E545 /* MHVFile.h in Headers */,
+				A5B384971ECB432400788619 /* MHVRequestMessageCreatorProtocol.h in Headers */,
 				4C191A991EC1033C00B5E545 /* MHVPeakFlow.h in Headers */,
 				5D591CFC15464FD800EAC934 /* MHVBlobPayload.h in Headers */,
 				5DF90BBF18FC80A5009ABAAB /* MHVBatchThingDownloader.h in Headers */,
@@ -2356,6 +2403,7 @@
 				5D983BEB14E6035900C287B7 /* MHVDay.m in Sources */,
 				A54521521EC9EC2800A17A1B /* MHVShellAuthService.m in Sources */,
 				5D983BEF14E6038000C287B7 /* MHVMonth.m in Sources */,
+				A51203971ECCB3A100845680 /* MHVPersonClient.m in Sources */,
 				A54220471EC2651500728913 /* MHVConnectionFactoryInternal.m in Sources */,
 				5D983BF314E6039C00C287B7 /* MHVYear.m in Sources */,
 				A53BF83A1EC3681500F018E2 /* MHVKeychainService.m in Sources */,
@@ -2394,6 +2442,7 @@
 				5D20D31C14F2FA5900160611 /* MHVThingSection.m in Sources */,
 				5D20D32414F304E700160611 /* MHVThingState.m in Sources */,
 				5DB2E69518D2553B0030972D /* MHVThingChange.m in Sources */,
+				A5B3849F1ECB741200788619 /* MHVMethodRequest.m in Sources */,
 				5D20D32814F424F000160611 /* MHVThingType.m in Sources */,
 				5D20D32C14F42E1300160611 /* MHVThingData.m in Sources */,
 				5D20D33014F4352A00160611 /* MHVThingDataCommon.m in Sources */,
@@ -2426,6 +2475,7 @@
 				5DC50C611508049F0078D85F /* MHVLocalVault.m in Sources */,
 				5D5F311F150E9A3E00ED11E7 /* MHVCommon.c in Sources */,
 				5D5F3121150E9A3E00ED11E7 /* MHVClientSettings.m in Sources */,
+				A5A1BBA61ECB9F5700CE6F64 /* MHVPlatformClient.m in Sources */,
 				4C191A821EC1033C00B5E545 /* MHVFamilyHistory.m in Sources */,
 				5DF90BC018FC80A5009ABAAB /* MHVBatchThingDownloader.m in Sources */,
 				5D5F3127150EAD8400ED11E7 /* MHVDirectory.m in Sources */,
@@ -2480,7 +2530,6 @@
 				5D195D2C151BFA5300E109AD /* MHVName.m in Sources */,
 				5D195D4F1522527100E109AD /* MHVPutThingsTask.m in Sources */,
 				4C191A981EC1033C00B5E545 /* MHVMessage.m in Sources */,
-				A57A80C91EC51F3D00DDD636 /* MHVServiceRequest.m in Sources */,
 				4C191A801EC1033C00B5E545 /* MHVExercise.m in Sources */,
 				5DF90BD019005044009ABAAB /* MHVCryptographer.m in Sources */,
 				5D195D671522780800E109AD /* MHVRemoveThingsTask.m in Sources */,
@@ -2491,6 +2540,7 @@
 				4C191AF01EC24C2D00B5E545 /* MHVHttpServiceResponse.m in Sources */,
 				5DB2E69918D271F30030972D /* MHVThingChangeTable.m in Sources */,
 				5D362B56152F8542006CC30C /* MHVPrescription.m in Sources */,
+				A5B384951ECB428000788619 /* MHVRequestMessageCreator.m in Sources */,
 				5D57A8B7152F8A0C00A80C4A /* MHVPositiveInt.m in Sources */,
 				5D8E5AB6152FC552002BC6E2 /* MHVApproxDate.m in Sources */,
 				4C191AF21EC24C2D00B5E545 /* MHVHttpService.m in Sources */,
@@ -2530,9 +2580,11 @@
 				5DF90BD619005CA5009ABAAB /* MHVLabTestResultsDetails.m in Sources */,
 				5DB2E72118D3CBCF0030972D /* MHVPartitionedStore.m in Sources */,
 				5D6EDDA91546306200420262 /* MHVBlobInfo.m in Sources */,
+				A5B3849B1ECB4CE400788619 /* MHVAuthSession.m in Sources */,
 				5D6EDDAD154631B700420262 /* MHVBlobPayloadThing.m in Sources */,
 				5D6EDDB115463DB700420262 /* MHVString1024.m in Sources */,
 				5D1B7BF0154642F600854881 /* MHVBlobHashInfo.m in Sources */,
+				A5A1BBBA1ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.m in Sources */,
 				5D591CFD15464FD800EAC934 /* MHVBlobPayload.m in Sources */,
 				5D591D2D1547330100EAC934 /* MHVGetPersonalImageTask.m in Sources */,
 				5D9E83741553000000072A0C /* MHVVocabSearcher.m in Sources */,

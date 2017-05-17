@@ -1,6 +1,6 @@
 //
-// MHVServiceResponse.h
-// MHVLib
+//  MHVAuthSession.m
+//  MHVLib
 //
 // Copyright 2017 Microsoft Corp.
 //
@@ -16,23 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import "MHVAuthSession.h"
 
-@class MHVHttpServiceResponse;
-
-@interface MHVServiceResponse : NSObject
-
-// Gets the Http response code...
-@property (assign) int statusCode;
-
-/// Gets or sets the informational part of the response.
-@property (strong) NSString *infoXml;
-
-@property (nonatomic, strong) NSError *error;
-
-/// Initializes a new instance of the HealthVaultResponse class.
-/// @param response - the web response from server side.
-/// @request - the original request.
-- (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response;
+@implementation MHVAuthSession
 
 @end
