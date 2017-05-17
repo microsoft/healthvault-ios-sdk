@@ -23,14 +23,17 @@
 #import "DateTimeUtils.h"
 #import "MobilePlatform.h"
 #import "MHVSessionCredential.h"
-
+#import "MHVServiceResponse.h"
+#import "MHVConfiguration.h"
+#import "XSerializer.h"
+#import "NSError+MHVError.h"
 
 @implementation MHVSessionCredentialClient
 
 @synthesize connection = _connection;
 @synthesize sharedSecret = _sharedSecret;
 
-- (void)getSessionCredentialWithCompletion:(void (^_Nonnull)(MHVSessionCredential *_Nullable, NSError *_Nullable error))completion
+- (void)getSessionCredentialWithCompletion:(void (^_Nonnull)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
     
@@ -43,7 +46,7 @@
     method.parameters = [self infoSection];
     
     [self.connection executeMethod:method
-                        completion:^(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error)
+                        completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
     {
         if (error)
         {
@@ -51,11 +54,21 @@
             {
                 completion(nil, error);
             }
+            
+            return;
         }
-        else
+
+        MHVSessionCredential *credential = (MHVSessionCredential *)[XSerializer newFromString:response.infoXml withRoot:@"info" asClass:[MHVSessionCredential class]];
+        
+        if (!credential)
         {
-            // Process Response
+            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The CreateAuthenticatedSessionToken response is invalid."]);
+            
+            return;
         }
+        
+        completion(credential, nil);
+        
     }];
 }
 

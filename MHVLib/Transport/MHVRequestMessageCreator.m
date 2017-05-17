@@ -16,68 +16,63 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVServiceRequest.h"
+#import "MHVRequestMessageCreator.h"
 #import "DateTimeUtils.h"
 #import "MobilePlatform.h"
 #import "MHVCommon.h"
 #import "MHVMethod.h"
+#import "MHVValidator.h"
+#import "MHVConfiguration.h"
+#import "MHVAuthSession.h"
 
-@interface MVHServiceRequest ()
+@interface MHVRequestMessageCreator ()
 
 @property (nonatomic, strong) MHVMethod *method;
-//@property (nonatomic, weak) id<HealthVaultService>  service;
+@property (nonatomic, strong) NSString *sharedSecret;
+@property (nonatomic, strong) MHVAuthSession *authSession;
+@property (nonatomic, strong) MHVConfiguration *configuration;
+@property (nonatomic, strong) NSUUID *appId;
+@property (nonatomic, strong) NSDate *messageTime;
 
 @end
 
-@implementation MVHServiceRequest
+@implementation MHVRequestMessageCreator
 
 - (instancetype)initWithMethod:(MHVMethod *)method
-                        target:(NSObject *)target
-                      callBack:(SEL)callBack
+                  sharedSecret:(NSString *_Nullable)sharedSecret
+                   authSession:(MHVAuthSession *)authSession
+                 configuration:(MHVConfiguration *)configuration
+                         appId:(NSUUID *)appId
+                   messageTime:(NSDate *)messageTime
 {
+    MHVASSERT_PARAMETER(method);
+    MHVASSERT_PARAMETER(authSession);
+    MHVASSERT_PARAMETER(configuration);
+    MHVASSERT_PARAMETER(messageTime);
+    
     self = [super init];
     
     if (self)
     {
         _method = method;
-        _infoXml = method.parameters;
-        _target = target;
-        _callBack = callBack;
+        _sharedSecret = sharedSecret;
+        _authSession = authSession;
+        _configuration = configuration;
+        _appId = appId;
+        _messageTime = messageTime;
         
-        // Sets default values.
-        _language = @"en";
-        _country = @"US";
-        _msgTTL = 1800;
     }
     
     return self;
 }
 
-- (BOOL)hasSessionToken
-{
-    return ![NSString isNilOrEmpty:_authorizationSessionToken];
-}
-
-- (BOOL)hasUserAuthToken
-{
-    return ![NSString isNilOrEmpty:_userAuthToken];
-}
-
-- (NSString *)toXmlString
+- (NSString *)xmlString
 {
     NSMutableString *xml = [NSMutableString new];
     
     [xml appendString:@"<wc-request:request xmlns:wc-request=\"urn:com.microsoft.wc.request\">"];
     
-    NSString *infoString;
-    if (self.infoXml)
-    {
-        infoString = self.infoXml;
-    }
-    else
-    {
-        infoString = @"<info />";
-    }
+    NSString *infoString = self.method.parameters != nil ? self.method.parameters : @"<info />";
     
     NSMutableString *header = [[NSMutableString alloc] init];
     
@@ -92,18 +87,18 @@
     [xml appendString:@"</wc-request:request>"];
     
     return xml;
+    
 }
 
 - (void)writeHeader:(NSMutableString *)header forBody:(NSString *)body
 {
     [header appendXmlElementStart:@"header"];
-    {
-        [self writeMethodHeaders:header];
-        [self writeRecordHeaders:header];
-        [self writeAuthSessionHeader:header];
-        [self writeStandardHeaders:header];
-        [self writeHashHeader:header forBody:body];
-    }
+    
+    [self writeMethodHeaders:header];
+    [self writeRecordHeaders:header];
+    [self writeAuthSessionHeader:header];
+    [self writeStandardHeaders:header];
+    [self writeHashHeader:header forBody:body];
     
     [header appendXmlElementEnd:@"header"];
 }
@@ -118,41 +113,45 @@
 
 - (void)writeRecordHeaders:(NSMutableString *)header
 {
-    if (self.recordId)
+    if (self.method.recordId)
     {
-        [header appendXmlElement:@"record-id" text:self.recordId];
+        [header appendXmlElement:@"record-id" text:self.method.recordId];
     }
 }
 
 - (void)writeStandardHeaders:(NSMutableString *)header
 {
-    [header appendXmlElement:@"language" text:self.language];
-    [header appendXmlElement:@"country" text:self.country];
-    [header appendXmlElement:@"msg-time" text:[DateTimeUtils dateToUtcString:self.msgTime]];
+//    //TODO : Ask the OneSDK team about missing language and country headers.
+//    [header appendXmlElement:@"language" text:self.language];
+//    [header appendXmlElement:@"country" text:self.country];
+    [header appendXmlElement:@"msg-time" text:[DateTimeUtils dateToUtcString:self.messageTime]];
     [header appendXmlElementStart:@"msg-ttl"];
-    [header appendFormat:@"%d", self.msgTTL];
+    [header appendFormat:@"%ld", (long)self.configuration.requestTimeToLiveDuration];
     [header appendXmlElementEnd:@"msg-ttl"];
     [header appendXmlElement:@"version" text:[MobilePlatform platformAbbreviationAndVersion]];
 }
 
 - (void)writeAuthSessionHeader:(NSMutableString *)header
 {
-    if (!self.hasSessionToken)
+    if ([NSString isNilOrEmpty:self.authSession.authToken])
     {
-        [header appendXmlElement:@"app-id" text:self.appIdInstance];
+        NSUUID *appId = self.appId != nil ? self.appId : self.configuration.masterApplicationId;
+        
+        [header appendXmlElement:@"app-id" text:appId.UUIDString];
         return;
     }
     
     [header appendXmlElementStart:@"auth-session"];
-    [header appendXmlElement:@"auth-token" text:self.authorizationSessionToken];
-    if (self.hasUserAuthToken)
+    [header appendXmlElement:@"auth-token" text:self.authSession.authToken];
+    
+    if (self.authSession.userAuthToken)
     {
-        [header appendXmlElement:@"user-auth-token" text:self.userAuthToken];
+        [header appendXmlElement:@"user-auth-token" text:self.authSession.userAuthToken];
     }
-    else if (self.personId)
+    else if (self.authSession.offlinePersonId)
     {
         [header appendXmlElementStart:@"offline-person-info"];
-        [header appendXmlElement:@"offline-person-id" text:self.personId];
+        [header appendXmlElement:@"offline-person-id" text:self.authSession.offlinePersonId.UUIDString];
         [header appendXmlElementEnd:@"offline-person-info"];
     }
     
@@ -173,9 +172,9 @@
 
 - (void)writeAuth:(NSMutableString *)xml forHeader:(NSString *)header
 {
-    if (self.sessionSharedSecret && !self.method.isAnonymous)
+    if (self.sharedSecret && !self.method.isAnonymous)
     {
-        NSData *decodedKey = [[NSData alloc] initWithBase64EncodedString:self.sessionSharedSecret options:0];
+        NSData *decodedKey = [[NSData alloc] initWithBase64EncodedString:self.sharedSecret options:0];
         
         [xml appendXmlElementStart:@"auth"];
         [xml appendFormat:@"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [MobilePlatform computeSha256Hmac:decodedKey data:header]];

@@ -17,14 +17,17 @@
 #import "MHVViewController.h"
 #import "MHVTypeListViewController.h"
 
+#import "MHVConfiguration.h"
+#import "MHVSodaConnectionProtocol.h"
+#import "MHVConnectionFactoryProtocol.h"
+#import "MHVConnectionFactory.h"
+
 @implementation MHVViewController
 
 -(void)viewDidLoad
 {
     self.navigationItem.title = nil;
     [super viewDidLoad];
-    
-    [self startApp];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -44,18 +47,35 @@
     // This will automatically ensure that application instance is correctly provisioned to access the user's HealthVault record
     // Look at ClientSettings.xml
     //
-    [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender)
-     {
-         m_starting = FALSE;
-         if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
-         {
-             [self startupSuccess];
-         }
-         else
-         {
-             [self startupFailed];
-         }
-     }];
+//    [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender)
+//     {
+//         m_starting = FALSE;
+//         if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
+//         {
+//             [self startupSuccess];
+//         }
+//         else
+//         {
+//             [self startupFailed];
+//         }
+//     }];
+    
+    MHVConfiguration *config = [MHVConfiguration new];
+    config.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"cf0cb893-d411-495c-b66f-9d72b4fd2b97"];
+    config.defaultHealthVaultUrl = [[NSURL alloc] initWithString:@"https://platform.healthvault-ppe.com/platform"];
+    config.defaultShellUrl = [[NSURL alloc] initWithString:@"https://account.healthvault-ppe.com"];
+    
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
+    
+    [connection authenticateWithViewController:self
+                                    completion:^(NSError * _Nullable error)
+    {
+        if (error)
+        {
+            [self startupFailed];
+        }
+    }];
+    
 }
 
 -(void)startupSuccess

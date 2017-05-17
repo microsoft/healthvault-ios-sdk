@@ -20,11 +20,16 @@
 #import "MHVValidator.h"
 #import "NSError+MHVError.h"
 #import "MHVSodaConnection.h"
+#import "MHVSessionCredentialClient.h"
+#import "MHVHttpService.h"
+#import "MHVKeychainService.h"
+#import "MHVShellAuthService.h"
+#import "MHVBrowserAuthBroker.h"
 
 @interface MHVConnectionFactoryInternal ()
 
-@property (nonatomic, strong) dispatch_queue_t connectionQueue;
-@property (nonatomic, strong) NSMutableArray *completions;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
+@property (nonatomic, strong) NSObject *lockObject;
 
 @end
 
@@ -36,43 +41,35 @@
     
     if (self)
     {
-        _connectionQueue = dispatch_queue_create("MHVConnectionFactoryInternal.connectionQueue", DISPATCH_QUEUE_SERIAL);
-        _completions = [NSMutableArray new];
+        _lockObject = [NSObject new];
     }
     
     return self;
 }
 
-- (void)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *_Nonnull)configuration
-                                        completion:(void(^_Nonnull)(id<MHVSodaConnectionProtocol> _Nullable connection, NSError *_Nullable error))completion
+- (id<MHVSodaConnectionProtocol>)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration
 {
-    dispatch_async(self.connectionQueue, ^
+    MHVASSERT_PARAMETER(configuration);
+    
+    @synchronized (self.lockObject)
     {
-        MHVASSERT_PARAMETER(configuration);
-        MHVASSERT_PARAMETER(completion);
-        
-        // The completion parameter is required. Return if it is not present.
-        if (!completion)
-        {
-            return;
-        }
-        
-        // The configuration parameter is required. Complete with an error if it is not present
+        // The configuration parameter is required.
         if (!configuration)
         {
-            completion(nil, [NSError MVHInvalidParameter]);
+            return nil;
         }
         
-        // Add completions to the completions array
-        if (completion)
+        if (!self.connection)
         {
-            [self.completions addObject:completion];
+            self.connection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
+                                                              credentialClient:[MHVSessionCredentialClient new]
+                                                                   httpService:[MHVHttpService new]
+                                                               keychainService:[MHVKeychainService new]
+                                                              shellAuthService:[[MHVShellAuthService alloc] initWithConfiguration:configuration authBroker:[MHVBrowserAuthBroker new]]];
         }
         
-        
-        
-        
-    });
+        return self.connection;
+    }
 }
 
 @end

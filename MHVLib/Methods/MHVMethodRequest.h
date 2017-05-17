@@ -1,6 +1,6 @@
 //
-// MHVGetAuthorizedPeopleResult.h
-// MHVLib
+//  MHVMethodRequest.h
+//  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -17,13 +17,22 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVType.h"
-#import "MHVBaseTypes.h"
-#import "MHVPersonInfo.h"
 
-@interface MHVGetAuthorizedPeopleResult : MHVType
+@class MHVMethod, MHVServiceResponse;
 
-@property (readwrite, nonatomic, strong) NSMutableArray *persons;
-@property (readwrite, nonatomic, strong) MHVBool *moreResults;
+typedef void (^MHVRequestCompletion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error);
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVMethodRequest : NSObject
+
+@property (nonatomic, strong, readonly) MHVMethod *method;
+@property (nonatomic, strong, readonly, nullable) MHVRequestCompletion completion;
+@property (nonatomic, assign) NSInteger retryAttempts;
+
+- (instancetype)initWithMethod:(MHVMethod *)method completion:(MHVRequestCompletion _Nullable)completion;
 
 @end
+
+NS_ASSUME_NONNULL_END
+

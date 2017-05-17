@@ -31,6 +31,7 @@
 #import "MHVPlatformConstants.h"
 #import "MHVServiceDefinition.h"
 #import "MHVSessionCredentialClientProtocol.h"
+#import "MHVAuthSession.h"
 
 static NSString *const kServiceInstanceKey = @"ServiceInstance";
 static NSString *const kApplicationCreationInfoKey = @"ApplicationCreationInfo";
@@ -77,6 +78,11 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
     return self;
 }
 
+- (NSUUID *)applicationId
+{
+    return self.applicationCreationInfo.appInstanceId;
+}
+
 - (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
                             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 {
@@ -94,6 +100,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
             if (error)
             {
                 [self finishAuthWithError:error completion:completion];
+                [self clearConnectionProperties];
                 
                 return;
             }
@@ -103,12 +110,18 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
                 if (error)
                 {
                     [self finishAuthWithError:error completion:completion];
+                    [self clearConnectionProperties];
                     
                     return;
                 }
                 
                 [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
                 {
+                    if (error)
+                    {
+                        [self clearConnectionProperties];
+                    }
+                    
                     [self finishAuthWithError:error completion:completion];
                 }];
                 
@@ -169,13 +182,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         }
         
         // Delete authorization data from the keychain.
-        BOOL success =
-            [self.keychainService removeObjectForKey:kServiceInstanceKey] &&
-            [self.keychainService removeObjectForKey:kApplicationCreationInfoKey] &&
-            [self.keychainService removeObjectForKey:kSessionCredentialKey] &&
-            [self.keychainService removeObjectForKey:kPersonInfoKey];
-    
-        if (!success)
+        if (![self removeConnectionPropertiesFromKeychain])
         {
             [self finishAuthWithError:[NSError error:[NSError MHVIOError] withDescription:@"One or more values could not be deleted from the keychain."]
                            completion:completion];
@@ -242,7 +249,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 - (void)provisionForSodaWithViewController:(UIViewController *_Nullable)viewController
                                 completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (self.applicationCreationInfo)
+    if (self.applicationCreationInfo && self.serviceInstance)
     {
         if (completion)
         {
@@ -252,15 +259,12 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         return;
     }
     
-    NSURLComponents *healthVaultUrlComponents = [NSURLComponents componentsWithURL:self.configuration.defaultHealthVaultUrl resolvingAgainstBaseURL:YES];
-    healthVaultUrlComponents.path = @"wildcat.ashx";
-    
      // Set a temporary service instance for the newApplicationCreationInfo call
     _serviceInstance = [MHVInstance new];
     self.serviceInstance.instanceID = @"1";
     self.serviceInstance.name = @"Default";
     self.serviceInstance.instanceDescription = @"Default HealthVault instance";
-    self.serviceInstance.healthServiceUrl = healthVaultUrlComponents.URL;
+    self.serviceInstance.healthServiceUrl = [self.configuration.defaultHealthVaultUrl URLByAppendingPathComponent: @"wildcat.ashx"];
     self.serviceInstance.shellUrl = self.configuration.defaultShellUrl;
     
     [self.platformClient newApplicationCreationInfoWithCompletion:^(MHVApplicationCreationInfo * _Nullable applicationCreationInfo, NSError * _Nullable error)
@@ -287,8 +291,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         
         _applicationCreationInfo = applicationCreationInfo;
         
-        [self provisionForSodaWithViewController:viewController completion:completion];
-        
+        [self provisionWithViewController:viewController completion:completion];
     }];
 }
          
@@ -299,7 +302,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
                                                          shellUrl:self.configuration.defaultShellUrl
                                                       masterAppId:self.configuration.masterApplicationId
                                                  appCreationToken:self.applicationCreationInfo.appCreationToken
-                                                    appInstanceId:self.applicationCreationInfo.appInstanceId
+                                                    appInstanceId:self.applicationId
                                                        completion:^(NSString * _Nullable instanceId, NSError * _Nullable error)
     {
         if (error)
@@ -349,7 +352,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         
         MHVInstance *instance = [instances objectAtIndex:index];
         
-        if(![self.keychainService setXMLObject:instance forKey:kApplicationCreationInfoKey])
+        if(![self.keychainService setXMLObject:instance forKey:kServiceInstanceKey])
         {
             if (completion)
             {
@@ -496,6 +499,35 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
     {
         self.personInfo = [self.keychainService xmlObjectForKey:kPersonInfoKey];
     }
+}
+
+- (void)clearConnectionProperties
+{
+    [self removeConnectionPropertiesFromKeychain];
+    
+    _serviceInstance = nil;
+    _applicationCreationInfo = nil;
+    _sessionCredential = nil;
+    _personInfo = nil;
+}
+
+- (BOOL)removeConnectionPropertiesFromKeychain
+{
+    BOOL serviceSuccess = [self.keychainService removeObjectForKey:kServiceInstanceKey];
+    BOOL creationSuccess = [self.keychainService removeObjectForKey:kApplicationCreationInfoKey];
+    BOOL credentialSuccess = [self.keychainService removeObjectForKey:kSessionCredentialKey];
+    BOOL personSuccess = [self.keychainService removeObjectForKey:kPersonInfoKey];
+    
+    return serviceSuccess && creationSuccess && credentialSuccess && personSuccess;
+}
+
+- (MHVAuthSession *)authSession
+{
+    MHVAuthSession *authSession = [MHVAuthSession new];
+    authSession.authToken = self.sessionCredential.token;
+    authSession.offlinePersonId = self.personInfo.ID;
+    
+    return authSession;
 }
 
 @end

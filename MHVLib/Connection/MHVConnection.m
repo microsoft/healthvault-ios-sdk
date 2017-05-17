@@ -17,8 +17,35 @@
 // limitations under the License.
 
 #import "MHVConnection.h"
+#import "MHVValidator.h"
+#import "MHVAuthSession.h"
+#import "MHVMethod.h"
+#import "MHVStringExtensions.h"
+#import "MHVSessionCredential.h"
+#import "MHVRequestMessageCreatorProtocol.h"
+#import "MHVRequestMessageCreator.h"
+#import "MHVHttpServiceProtocol.h"
+#import "MHVInstance.h"
+#import "NSError+MHVError.h"
+#import "MHVErrorConstants.h"
+#import "MHVServiceResponse.h"
+#import "MHVMethodRequest.h"
+#import "MHVSessionCredentialClientProtocol.h"
+#import "MHVPlatformClient.h"
+#import "MHVPersonClient.h"
+
+static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
+static NSString *const kResponseIdContextKey = @"WC_ResponseId";
+static NSTimeInterval const kSessionCredentialCallThresholdSeconds = 300;
 
 @interface MHVConnection ()
+
+@property (nonatomic, strong) dispatch_queue_t completionQueue;
+@property (nonatomic, strong) NSMutableArray<MHVMethodRequest *> *requests;
+
+// Clients
+@property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
+@property (nonatomic, strong) id<MHVPersonClientProtocol> personClient;
 
 // Dependencies
 @property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
@@ -27,6 +54,8 @@
 @end
 
 @implementation MHVConnection
+
+@dynamic sessionCredential;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                      credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
@@ -39,24 +68,68 @@
         _configuration = configuration;
         _credentialClient = credentialClient;
         _httpService = httpService;
+        _requests = [NSMutableArray new];
+        _completionQueue = dispatch_queue_create("MHVConnection.requestQueue", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
 }
+
+#pragma mark - Public
 
 - (NSUUID *_Nullable)applicationId;
 {
     return nil;
 }
 
-- (MHVSessionCredential *_Nullable)sessionCredential;
-{
-    return nil;
-}
-
 - (void)executeMethod:(MHVMethod *_Nonnull)method
-           completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion
+           completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
+    MHVASSERT_PARAMETER(method);
+    
+    dispatch_async(self.completionQueue, ^
+    {
+        MHVMethodRequest *request = [[MHVMethodRequest alloc] initWithMethod:method completion:completion];
+        
+        if (!request.method.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
+        {
+            [self.requests addObject:request];
+            
+            if (self.requests.count > 1)
+            {
+                return;
+            }
+            
+            [self authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+            {
+                if (error)
+                {
+                    if (completion)
+                    {
+                        completion(nil, error);
+                    }
+                    
+                    return;
+                }
+                
+                dispatch_async(self.completionQueue, ^
+                {
+                    while (self.requests.count > 0)
+                    {
+                        MHVMethodRequest *request = [self.requests firstObject];
+                        
+                        [self.requests removeObject:request];
+                        
+                        [self executeMethodRequest:request];
+                    }
+                });
+            }];
+        }
+        else
+        {
+            [self executeMethodRequest:request];
+        }
+    });
     
 }
 
@@ -73,12 +146,22 @@
 
 - (id<MHVPersonClientProtocol> _Nullable)personClient;
 {
-    return nil;
+    if (!_personClient)
+    {
+        _personClient = [[MHVPersonClient alloc] initWithConnection:self];
+    }
+    
+    return _personClient;
 }
 
 - (id<MHVPlatformClientProtocol> _Nullable)platformClient
 {
-    return nil;
+    if (!_platformClient)
+    {
+        _platformClient = [[MHVPlatformClient alloc] initWithConnection:self];
+    };
+    
+    return _platformClient;
 }
 
 - (id<MHVThingClientProtocol> _Nullable)thingClient
@@ -87,6 +170,139 @@
 }
 
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient
+{
+    return nil;
+}
+
+#pragma mark - Private
+
+- (void)executeMethodRequest:(MHVMethodRequest *)request
+{
+    [self.httpService sendRequestForURL:self.serviceInstance.healthServiceUrl
+                                   body:[self messageForMethod:request.method]
+                                headers:[self headersForMethod:request.method]
+                             completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            if (error.code == MHVErrorTypeUnauthorized)
+            {
+                [self refreshTokenAndReissueRequest:request];
+                
+                return;
+            }
+            else
+            {
+                if (request.completion)
+                {
+                    request.completion(nil, error);
+                }
+                
+                return;
+            }
+        }
+        else
+        {
+            [self parseResponse:response request:request completion:request.completion];
+        }
+        
+    }];
+    
+    
+}
+
+- (NSString *)messageForMethod:(MHVMethod *)method
+{
+    MHVRequestMessageCreator *creator = [[MHVRequestMessageCreator alloc] initWithMethod:method
+                                                                            sharedSecret:self.sessionCredential.sharedSecret
+                                                                             authSession:[self authSession]
+                                                                           configuration:self.configuration
+                                                                                   appId:self.applicationId
+                                                                             messageTime:[NSDate date]];
+    
+    return creator.xmlString;
+}
+
+- (NSDictionary<NSString *, NSString *> *)headersForMethod:(MHVMethod *)method
+{
+    NSString *correlationId = method.correlationId != nil ? method.correlationId : [NSUUID new].UUIDString;
+    
+    return @{kCorrelationIdContextKey : correlationId};
+}
+
+- (void)parseResponse:(MHVHttpServiceResponse *)response
+              request:(MHVMethodRequest *)request
+           completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
+{
+    // If there is no completion, there is no need to parse the response.
+    if (!completion)
+    {
+        return;
+    }
+    
+    MHVServiceResponse *serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:response];
+    
+    NSError *error = serviceResponse.error;
+    
+    if (error)
+    {
+        if (error.code == MHVErrorTypeUnauthorized)
+        {
+            [self refreshTokenAndReissueRequest:request];
+            
+            return;
+        }
+        
+        serviceResponse = nil;
+    }
+
+    if (completion)
+    {
+        completion(serviceResponse, error);
+    }
+}
+
+- (void)refreshTokenAndReissueRequest:(MHVMethodRequest *)request
+{
+    dispatch_async(self.completionQueue, ^
+    {
+        [self.requests addObject:request];
+        
+        if (self.requests.count > 1)
+        {
+            return;
+        }
+        
+        [self.credentialClient getSessionCredentialWithCompletion:^(MHVSessionCredential * _Nullable credential, NSError * _Nullable error)
+        {
+            dispatch_async(self.completionQueue, ^
+            {
+                while (self.requests.count > 0)
+                {
+                    MHVMethodRequest *request = [self.requests firstObject];
+                    
+                    [self.requests removeObject:request];
+                    
+                    if (error)
+                    {
+                        if (request.completion)
+                        {
+                            request.completion(nil, error);
+                        }
+                        
+                        return;
+                    }
+                    else
+                    {
+                        [self executeMethodRequest:request];
+                    }
+                }
+            });
+        }];
+    });
+}
+
+- (MHVAuthSession *)authSession
 {
     return nil;
 }

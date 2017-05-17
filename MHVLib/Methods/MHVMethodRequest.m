@@ -1,6 +1,6 @@
 //
-// MHVGetAuthorizedPeopleResult.h
-// MHVLib
+//  MHVMethodRequest.m
+//  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -16,14 +16,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
-#import "MHVType.h"
-#import "MHVBaseTypes.h"
-#import "MHVPersonInfo.h"
+#import "MHVMethodRequest.h"
+#import "MHVValidator.h"
 
-@interface MHVGetAuthorizedPeopleResult : MHVType
+@implementation MHVMethodRequest
 
-@property (readwrite, nonatomic, strong) NSMutableArray *persons;
-@property (readwrite, nonatomic, strong) MHVBool *moreResults;
+- (instancetype)initWithMethod:(MHVMethod *)method completion:(MHVRequestCompletion _Nullable)completion
+{
+    MHVASSERT_PARAMETER(method);
+    
+    self = [super init];
+    
+    if (self)
+    {
+        _method = method;
+        _completion = completion;
+        _retryAttempts = 0;
+    }
+    
+    return self;
+}
 
 @end

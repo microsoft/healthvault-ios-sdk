@@ -1,8 +1,8 @@
 //
-// MHVGetAuthorizedPeopleResult.h
-// MHVLib
+//  MHVRequestMessageCreatorProtocol.h
+//  MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright 2017 Microsoft Corp.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,13 +17,18 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVType.h"
-#import "MHVBaseTypes.h"
-#import "MHVPersonInfo.h"
 
-@interface MHVGetAuthorizedPeopleResult : MHVType
+NS_ASSUME_NONNULL_BEGIN
 
-@property (readwrite, nonatomic, strong) NSMutableArray *persons;
-@property (readwrite, nonatomic, strong) MHVBool *moreResults;
+@protocol MHVRequestMessageCreatorProtocol <NSObject>
+
+/**
+ Creates a request XML for a given method.
+ 
+ @return An XML request string.
+ */
+- (NSString *)xmlString;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -81,15 +81,20 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
 
 - (void)showAuthenticationControllerFromViewController:(UIViewController *)viewController
 {
-    if (!viewController)
+    __block UIViewController *vc = viewController;
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
     {
-        // If no view controller parameter, default to using the root view controller.
-        viewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-    }
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
-    
-    [viewController presentViewController:navigationController animated:YES completion:nil];
+        if (!vc)
+        {
+            // If no view controller parameter, default to using the root view controller.
+            vc = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+        }
+        
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
+        
+        [vc presentViewController:navigationController animated:YES completion:nil];
+    }];
 }
 
 - (void)completeWithSuccessUrl:(NSURL *)successUrl error:(NSError *)error

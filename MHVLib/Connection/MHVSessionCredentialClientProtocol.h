@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MHVSessionCredential;
+@class MHVSessionCredential, MHVConfiguration;
 
 @protocol MHVConnectionProtocol;
 

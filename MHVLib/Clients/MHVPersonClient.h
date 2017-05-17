@@ -1,6 +1,6 @@
 //
-// MHVGetAuthorizedPeopleResult.h
-// MHVLib
+//  MHVPersonClient.h
+//  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -17,13 +17,12 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVType.h"
-#import "MHVBaseTypes.h"
-#import "MHVPersonInfo.h"
+#import "MHVPersonClientProtocol.h"
 
-@interface MHVGetAuthorizedPeopleResult : MHVType
+@protocol MHVConnectionProtocol;
 
-@property (readwrite, nonatomic, strong) NSMutableArray *persons;
-@property (readwrite, nonatomic, strong) MHVBool *moreResults;
+@interface MHVPersonClient : NSObject<MHVPersonClientProtocol>
+
+- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
 
 @end

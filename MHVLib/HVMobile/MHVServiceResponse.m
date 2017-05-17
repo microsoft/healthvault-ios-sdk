@@ -19,22 +19,37 @@
 #import "MHVCommon.h"
 #import "MHVServiceResponse.h"
 #import "MHVResponse.h"
+#import "NSError+MHVError.h"
+#import "MHVHttpServiceResponse.h"
+
+/// OK status
+#define RESPONSE_OK  0;
+
+/// App does not exist, app is invalid, app is not active or calling IP is invalid.
+#define RESPONSE_INVALID_APPLICATION 6
+
+/// Represents security problem for current app.
+#define RESPONSE_ACCESS_DENIED 8
+
+/// Represents that current token has been expired and should be updated.
+#define RESPONSE_AUTH_SESSION_TOKEN_EXPIRED 65
 
 @implementation MHVServiceResponse
 
 - (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response
-                            request:(HealthVaultRequest *)request
 {
     self = [super init];
     
     if (self)
     {
-        _request = request;
-        _webStatusCode = (int)response.statusCode;
+        _statusCode = (int)response.statusCode;
         
         if (response.hasError)
         {
-            _errorText = response.errorText;
+            if (_statusCode == 401)
+            {
+                self.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The Authorization token is missing, malformed or expired."];
+            }
         }
         else
         {
@@ -44,8 +59,7 @@
             
             if (!xmlReaderesult)
             {
-                _errorText = [NSString stringWithFormat:NSLocalizedString(@"Response was not a valid HealthVault response key",
-                                                                          @"Format to display incorrect response"), xml];
+                self.error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"Response was not a valid HealthVault response.\n%@",xml]];
             }
         }
     }
@@ -53,10 +67,6 @@
     return self;
 }
 
-- (BOOL)getHasError
-{
-    return self.errorText != nil;
-}
 
 - (BOOL)deserializeXml:(NSString *)xml
 {
@@ -71,13 +81,18 @@
     
     if (status)
     {
-        self.statusCode = status.code;
-        MHVServerError *error = status.error;
-        if (status.error)
+        if (status.code == RESPONSE_AUTH_SESSION_TOKEN_EXPIRED)
         {
-            self.errorText = error.message;
-            self.errorContextXml = error.context;
-            self.errorInfo = error.errorInfo;
+            self.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The Authorization token has expired."];
+        }
+        else
+        {
+            MHVServerError *error = status.error;
+            
+            if (error)
+            {
+                self.error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"%@\n%@\n%@",error.message, error.context, error.errorInfo]];
+            }
         }
     }
     

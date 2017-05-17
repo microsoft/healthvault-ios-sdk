@@ -18,32 +18,24 @@
 
 #import "MHVApplicationCreationInfo.h"
 
-static NSString *const c_element_appId = @"app-id";
-static NSString *const c_element_sharedSecret = @"shared-secret";
-static NSString *const c_element_appToken = @"app-token";
+static const xmlChar *x_element_app_id = XMLSTRINGCONST("app-id");
+static const xmlChar *x_element_shared_secret = XMLSTRINGCONST("shared-secret");
+static const xmlChar *x_element_app_token = XMLSTRINGCONST("app-token");
 
 @implementation MHVApplicationCreationInfo
 
 - (void)deserialize:(XReader *)reader
 {
-    
-}
-
-- (void)deserializeAttributes:(XReader *)reader
-{
-    _appInstanceId = [reader readStringElement:c_element_appId];
-    _sharedSecret = [reader readStringElement:c_element_sharedSecret];
-    _appCreationToken = [reader readStringElement:c_element_appToken];
+    _appInstanceId = [[NSUUID alloc] initWithUUIDString:[reader readStringElementWithXmlName:x_element_app_id]];
+    _sharedSecret = [reader readStringElementWithXmlName:x_element_shared_secret];
+    _appCreationToken = [reader readStringElementWithXmlName:x_element_app_token];
 }
 
 - (void)serialize:(XWriter *)writer
 {
-    
-}
-
-- (void)serializeAttributes:(XWriter *)writer
-{
-    
+    [writer writeElementXmlName:x_element_app_id value:self.appInstanceId.UUIDString];
+    [writer writeElementXmlName:x_element_shared_secret value:self.sharedSecret];
+    [writer writeElementXmlName:x_element_app_token value:self.appCreationToken];
 }
 
 @end

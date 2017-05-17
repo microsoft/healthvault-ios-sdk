@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MHVSessionCredential, MHVPersonInfo, MHVHttpServiceResponse, MHVMethod;
+@class MHVSessionCredential, MHVPersonInfo, MHVServiceResponse, MHVMethod;
 
 @protocol MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol;
 
@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
  @para
  */
 - (void)executeMethod:(MHVMethod *)method
-           completion:(void (^_Nullable)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error))completion;
+           completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**
  Gets the person information for the current account.

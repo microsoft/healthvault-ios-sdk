@@ -145,23 +145,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)newApplicationCreationInfoWithCompletion:(void(^)(MHVApplicationCreationInfo *_Nullable applicationCreationInfo, NSError *_Nullable error))completion;
 
 
-/**
- * Gets information about people authorized for an application.
- *
- * @param completion Envoked when the operation completes. NSArray<MHVPersonInfo *> an array of MHVPersonInfo objects representing people authorized for the application. NSError object will be nil if there is no error when performing the operation.
- */
-- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
-
-
-/**
- * Gets information about people authorized for an application.
- *
- * @param settings The MHVGetAuthorizedPeopleSettings object used to configure the results returned by this method.
- * @param completion Envoked when the operation completes. NSArray<MHVPersonInfo *> an array of MHVPersonInfo objects representing people authorized for the application. NSError object will be nil if there is no error when performing the operation.
- */
-- (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *_Nonnull)settings
-                             completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
-
 
 /**
  * Removes authorization for the given record.
