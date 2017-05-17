@@ -29,9 +29,7 @@
 #import "NSString+DataModel.h"
 #import "NSArray+DataModel.h"
 #import "NSDictionary+DataModel.h"
-#import "MHVPersistedDataService.h"
 #import "MHVValidator.h"
-#import "NSObject+MHVDependencyInjection.h"
 
 static NSInteger kJSONCacheMaxItems = 25;
 
@@ -151,8 +149,6 @@ static NSInteger kJSONCacheMaxItems = 25;
     {
         return nil;
     }
-    
-    MHVASSERT_TRUE([ResolveProtocol(MHVPersistedDataService) fileExistsAtPath:filePath], @"file not found");
     
     NSString *jsonString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
     

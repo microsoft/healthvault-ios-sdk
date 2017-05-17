@@ -18,7 +18,7 @@
 
 #import "NSNumber+DataModel.h"
 #import "NSString+DataModel.h"
-#import "NSString+Utils.h"
+#import "MHVStringExtensions.h"
 #import "MHVValidator.h"
 
 @implementation NSNumber (DataModel)

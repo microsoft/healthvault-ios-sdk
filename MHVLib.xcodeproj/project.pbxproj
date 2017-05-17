@@ -567,20 +567,6 @@
 		BA0356111EC1257F00BE547D /* NSString+DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355E41EC1257F00BE547D /* NSString+DataModel.m */; };
 		BA0356121EC1257F00BE547D /* NSUUID+DataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355E51EC1257F00BE547D /* NSUUID+DataModel.h */; };
 		BA0356131EC1257F00BE547D /* NSUUID+DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355E61EC1257F00BE547D /* NSUUID+DataModel.m */; };
-		BA0356141EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355E81EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.h */; };
-		BA0356151EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355E91EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.m */; };
-		BA0356161EC1257F00BE547D /* MHVDistanceSystemOfMeasure.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355EA1EC1257F00BE547D /* MHVDistanceSystemOfMeasure.h */; };
-		BA0356171EC1257F00BE547D /* MHVDistanceSystemOfMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355EB1EC1257F00BE547D /* MHVDistanceSystemOfMeasure.m */; };
-		BA0356181EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355EC1EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.h */; };
-		BA0356191EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355ED1EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.m */; };
-		BA03561A1EC1257F00BE547D /* MHVSizeSystemOfMeasure.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355EE1EC1257F00BE547D /* MHVSizeSystemOfMeasure.h */; };
-		BA03561B1EC1257F00BE547D /* MHVSizeSystemOfMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355EF1EC1257F00BE547D /* MHVSizeSystemOfMeasure.m */; };
-		BA03561C1EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355F01EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.h */; };
-		BA03561D1EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355F11EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.m */; };
-		BA03561E1EC1257F00BE547D /* MHVVolumeSystemOfMeasure.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355F21EC1257F00BE547D /* MHVVolumeSystemOfMeasure.h */; };
-		BA03561F1EC1257F00BE547D /* MHVVolumeSystemOfMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355F31EC1257F00BE547D /* MHVVolumeSystemOfMeasure.m */; };
-		BA0356201EC1257F00BE547D /* MHVWeightSystemOfMeasure.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355F41EC1257F00BE547D /* MHVWeightSystemOfMeasure.h */; };
-		BA0356211EC1257F00BE547D /* MHVWeightSystemOfMeasure.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355F51EC1257F00BE547D /* MHVWeightSystemOfMeasure.m */; };
 		BA0356221EC1257F00BE547D /* MHVModelBase.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355F61EC1257F00BE547D /* MHVModelBase.h */; };
 		BA0356231EC1257F00BE547D /* MHVModelBase.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0355F71EC1257F00BE547D /* MHVModelBase.m */; };
 		BA0356241EC1257F00BE547D /* MHVDataModelDynamicClass.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355F81EC1257F00BE547D /* MHVDataModelDynamicClass.h */; };
@@ -607,17 +593,6 @@
 		BA03564B1EC235E000BE547D /* NSData+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0356491EC235E000BE547D /* NSData+Utils.h */; };
 		BA03564C1EC235E000BE547D /* NSData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = BA03564A1EC235E000BE547D /* NSData+Utils.m */; };
 		BA03564E1EC236B600BE547D /* MHVPersistedDataService.h in Headers */ = {isa = PBXBuildFile; fileRef = BA03564D1EC236B600BE547D /* MHVPersistedDataService.h */; };
-		BA0356511EC239B400BE547D /* NSObject+MHVDependencyInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = BA03564F1EC239B400BE547D /* NSObject+MHVDependencyInjection.h */; };
-		BA0356521EC239B400BE547D /* NSObject+MHVDependencyInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0356501EC239B400BE547D /* NSObject+MHVDependencyInjection.m */; };
-		BA03565B1EC23AA700BE547D /* MHVDIContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0356541EC23AA700BE547D /* MHVDIContainer.h */; };
-		BA03565C1EC23AA700BE547D /* MHVDIContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0356551EC23AA700BE547D /* MHVDIContainer.m */; };
-		BA03565D1EC23AA700BE547D /* MHVDIMapProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0356561EC23AA700BE547D /* MHVDIMapProtocol.h */; };
-		BA03565E1EC23AA700BE547D /* MHVDIObjectDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0356571EC23AA700BE547D /* MHVDIObjectDescriptor.h */; };
-		BA03565F1EC23AA700BE547D /* MHVDIObjectDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0356581EC23AA700BE547D /* MHVDIObjectDescriptor.m */; };
-		BA0356601EC23AA700BE547D /* MHVInstanceLocator.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0356591EC23AA700BE547D /* MHVInstanceLocator.h */; };
-		BA0356611EC23AA700BE547D /* MHVInstanceLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = BA03565A1EC23AA700BE547D /* MHVInstanceLocator.m */; };
-		BA0356641EC23F8C00BE547D /* NSString+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0356621EC23F8C00BE547D /* NSString+Utils.h */; };
-		BA0356651EC23F8C00BE547D /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0356631EC23F8C00BE547D /* NSString+Utils.m */; };
 		BA0356CF1EC5278700BE547D /* MHVActionPlan.h in Headers */ = {isa = PBXBuildFile; fileRef = BA03567B1EC5278700BE547D /* MHVActionPlan.h */; };
 		BA0356D01EC5278700BE547D /* MHVActionPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = BA03567C1EC5278700BE547D /* MHVActionPlan.m */; };
 		BA0356D11EC5278700BE547D /* MHVActionPlanAdherenceSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = BA03567D1EC5278700BE547D /* MHVActionPlanAdherenceSummary.h */; };
@@ -1287,20 +1262,6 @@
 		BA0355E41EC1257F00BE547D /* NSString+DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DataModel.m"; sourceTree = "<group>"; };
 		BA0355E51EC1257F00BE547D /* NSUUID+DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUUID+DataModel.h"; sourceTree = "<group>"; };
 		BA0355E61EC1257F00BE547D /* NSUUID+DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUUID+DataModel.m"; sourceTree = "<group>"; };
-		BA0355E81EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVCaloriesSystemOfMeasure.h; sourceTree = "<group>"; };
-		BA0355E91EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVCaloriesSystemOfMeasure.m; sourceTree = "<group>"; };
-		BA0355EA1EC1257F00BE547D /* MHVDistanceSystemOfMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDistanceSystemOfMeasure.h; sourceTree = "<group>"; };
-		BA0355EB1EC1257F00BE547D /* MHVDistanceSystemOfMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVDistanceSystemOfMeasure.m; sourceTree = "<group>"; };
-		BA0355EC1EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVImperialOrMetricSystemOfMeasure.h; sourceTree = "<group>"; };
-		BA0355ED1EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVImperialOrMetricSystemOfMeasure.m; sourceTree = "<group>"; };
-		BA0355EE1EC1257F00BE547D /* MHVSizeSystemOfMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSizeSystemOfMeasure.h; sourceTree = "<group>"; };
-		BA0355EF1EC1257F00BE547D /* MHVSizeSystemOfMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSizeSystemOfMeasure.m; sourceTree = "<group>"; };
-		BA0355F01EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTemperatureSystemOfMeasure.h; sourceTree = "<group>"; };
-		BA0355F11EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTemperatureSystemOfMeasure.m; sourceTree = "<group>"; };
-		BA0355F21EC1257F00BE547D /* MHVVolumeSystemOfMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVolumeSystemOfMeasure.h; sourceTree = "<group>"; };
-		BA0355F31EC1257F00BE547D /* MHVVolumeSystemOfMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVolumeSystemOfMeasure.m; sourceTree = "<group>"; };
-		BA0355F41EC1257F00BE547D /* MHVWeightSystemOfMeasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVWeightSystemOfMeasure.h; sourceTree = "<group>"; };
-		BA0355F51EC1257F00BE547D /* MHVWeightSystemOfMeasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVWeightSystemOfMeasure.m; sourceTree = "<group>"; };
 		BA0355F61EC1257F00BE547D /* MHVModelBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVModelBase.h; sourceTree = "<group>"; };
 		BA0355F71EC1257F00BE547D /* MHVModelBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVModelBase.m; sourceTree = "<group>"; };
 		BA0355F81EC1257F00BE547D /* MHVDataModelDynamicClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDataModelDynamicClass.h; sourceTree = "<group>"; };
@@ -1327,17 +1288,6 @@
 		BA0356491EC235E000BE547D /* NSData+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; };
 		BA03564A1EC235E000BE547D /* NSData+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Utils.m"; sourceTree = "<group>"; };
 		BA03564D1EC236B600BE547D /* MHVPersistedDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersistedDataService.h; sourceTree = "<group>"; };
-		BA03564F1EC239B400BE547D /* NSObject+MHVDependencyInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MHVDependencyInjection.h"; sourceTree = "<group>"; };
-		BA0356501EC239B400BE547D /* NSObject+MHVDependencyInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MHVDependencyInjection.m"; sourceTree = "<group>"; };
-		BA0356541EC23AA700BE547D /* MHVDIContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDIContainer.h; sourceTree = "<group>"; };
-		BA0356551EC23AA700BE547D /* MHVDIContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVDIContainer.m; sourceTree = "<group>"; };
-		BA0356561EC23AA700BE547D /* MHVDIMapProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDIMapProtocol.h; sourceTree = "<group>"; };
-		BA0356571EC23AA700BE547D /* MHVDIObjectDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDIObjectDescriptor.h; sourceTree = "<group>"; };
-		BA0356581EC23AA700BE547D /* MHVDIObjectDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVDIObjectDescriptor.m; sourceTree = "<group>"; };
-		BA0356591EC23AA700BE547D /* MHVInstanceLocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVInstanceLocator.h; sourceTree = "<group>"; };
-		BA03565A1EC23AA700BE547D /* MHVInstanceLocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVInstanceLocator.m; sourceTree = "<group>"; };
-		BA0356621EC23F8C00BE547D /* NSString+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utils.h"; sourceTree = "<group>"; };
-		BA0356631EC23F8C00BE547D /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
 		BA03567B1EC5278700BE547D /* MHVActionPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVActionPlan.h; sourceTree = "<group>"; };
 		BA03567C1EC5278700BE547D /* MHVActionPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlan.m; sourceTree = "<group>"; };
 		BA03567D1EC5278700BE547D /* MHVActionPlanAdherenceSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanAdherenceSummary.h; sourceTree = "<group>"; };
@@ -1560,7 +1510,6 @@
 			isa = PBXGroup;
 			children = (
 				A545214C1EC9E9F600A17A1B /* Authentication */,
-				BA0356531EC23A4400BE547D /* DI */,
 				BA03553E1EC0BF5400BE547D /* Clients */,
 				A5D1ECFF1EC237CE000E3295 /* Connection */,
 				A54521531EC9EEDF00A17A1B /* Configuration */,
@@ -2266,7 +2215,6 @@
 			isa = PBXGroup;
 			children = (
 				BA0355D01EC1257F00BE547D /* Categories */,
-				BA0355E71EC1257F00BE547D /* DynamicConfigurationEnums */,
 				BA03567A1EC5278700BE547D /* Generated */,
 				BA0355F81EC1257F00BE547D /* MHVDataModelDynamicClass.h */,
 				BA0355F91EC1257F00BE547D /* MHVDataModelProtocol.h */,
@@ -2305,33 +2253,10 @@
 				BA0355E21EC1257F00BE547D /* NSSet+DataModel.m */,
 				BA0355E31EC1257F00BE547D /* NSString+DataModel.h */,
 				BA0355E41EC1257F00BE547D /* NSString+DataModel.m */,
-				BA0356621EC23F8C00BE547D /* NSString+Utils.h */,
-				BA0356631EC23F8C00BE547D /* NSString+Utils.m */,
 				BA0355E51EC1257F00BE547D /* NSUUID+DataModel.h */,
 				BA0355E61EC1257F00BE547D /* NSUUID+DataModel.m */,
 			);
 			path = Categories;
-			sourceTree = "<group>";
-		};
-		BA0355E71EC1257F00BE547D /* DynamicConfigurationEnums */ = {
-			isa = PBXGroup;
-			children = (
-				BA0355E81EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.h */,
-				BA0355E91EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.m */,
-				BA0355EA1EC1257F00BE547D /* MHVDistanceSystemOfMeasure.h */,
-				BA0355EB1EC1257F00BE547D /* MHVDistanceSystemOfMeasure.m */,
-				BA0355EC1EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.h */,
-				BA0355ED1EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.m */,
-				BA0355EE1EC1257F00BE547D /* MHVSizeSystemOfMeasure.h */,
-				BA0355EF1EC1257F00BE547D /* MHVSizeSystemOfMeasure.m */,
-				BA0355F01EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.h */,
-				BA0355F11EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.m */,
-				BA0355F21EC1257F00BE547D /* MHVVolumeSystemOfMeasure.h */,
-				BA0355F31EC1257F00BE547D /* MHVVolumeSystemOfMeasure.m */,
-				BA0355F41EC1257F00BE547D /* MHVWeightSystemOfMeasure.h */,
-				BA0355F51EC1257F00BE547D /* MHVWeightSystemOfMeasure.m */,
-			);
-			path = DynamicConfigurationEnums;
 			sourceTree = "<group>";
 		};
 		BA03562A1EC1278F00BE547D /* Json */ = {
@@ -2352,22 +2277,6 @@
 			name = Json;
 			path = MHVLib/Json;
 			sourceTree = SOURCE_ROOT;
-		};
-		BA0356531EC23A4400BE547D /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				BA0356541EC23AA700BE547D /* MHVDIContainer.h */,
-				BA0356551EC23AA700BE547D /* MHVDIContainer.m */,
-				BA0356561EC23AA700BE547D /* MHVDIMapProtocol.h */,
-				BA0356571EC23AA700BE547D /* MHVDIObjectDescriptor.h */,
-				BA0356581EC23AA700BE547D /* MHVDIObjectDescriptor.m */,
-				BA0356591EC23AA700BE547D /* MHVInstanceLocator.h */,
-				BA03565A1EC23AA700BE547D /* MHVInstanceLocator.m */,
-				BA03564F1EC239B400BE547D /* NSObject+MHVDependencyInjection.h */,
-				BA0356501EC239B400BE547D /* NSObject+MHVDependencyInjection.m */,
-			);
-			path = DI;
-			sourceTree = "<group>";
 		};
 		BA03567A1EC5278700BE547D /* Generated */ = {
 			isa = PBXGroup;
@@ -2533,14 +2442,12 @@
 				5D983C0014E984CE00C287B7 /* MHVMinute.h in Headers */,
 				BA03571D1EC5278800BE547D /* MHVTime.h in Headers */,
 				5D983C0414E984EE00C287B7 /* MHVSecond.h in Headers */,
-				BA0356161EC1257F00BE547D /* MHVDistanceSystemOfMeasure.h in Headers */,
 				5D1ACC7D19103C73000689FD /* MHVResponse.h in Headers */,
 				5D983C0814E9850500C287B7 /* MHVMillisecond.h in Headers */,
 				4C191A911EC1033C00B5E545 /* MHVThingTypes.h in Headers */,
 				5DEF154A14E985C5009D05D5 /* MHVType.h in Headers */,
 				BA0356FB1EC5278800BE547D /* MHVGoalRecommendationsResponse.h in Headers */,
 				5DEF154F14E98DCB009D05D5 /* MHVTime.h in Headers */,
-				BA0356201EC1257F00BE547D /* MHVWeightSystemOfMeasure.h in Headers */,
 				5DEF155714E9987F009D05D5 /* MHVDateExtensions.h in Headers */,
 				5DEF156714EB0988009D05D5 /* MHVClientResult.h in Headers */,
 				5DEF156B14EB180F009D05D5 /* MHVDateTime.h in Headers */,
@@ -2570,7 +2477,6 @@
 				5DB2E69818D271F30030972D /* MHVThingChangeTable.h in Headers */,
 				5D20D31314F2F4F400160611 /* MHVThing.h in Headers */,
 				5D20D31B14F2FA5900160611 /* MHVThingSection.h in Headers */,
-				BA0356641EC23F8C00BE547D /* NSString+Utils.h in Headers */,
 				BA0357051EC5278800BE547D /* MHVMicrosoftKhronosCloudCommonErrorsErrorResponse.h in Headers */,
 				4C191AF61EC3997600B5E545 /* MHVHttpTaskProtocol.h in Headers */,
 				5D20D32314F304E700160611 /* MHVThingState.h in Headers */,
@@ -2578,7 +2484,6 @@
 				A54521471EC9D71D00A17A1B /* MHVBrowserAuthBrokerProtocol.h in Headers */,
 				5D20D32714F424F000160611 /* MHVThingType.h in Headers */,
 				5D20D32B14F42E1300160611 /* MHVThingData.h in Headers */,
-				BA03561E1EC1257F00BE547D /* MHVVolumeSystemOfMeasure.h in Headers */,
 				4C191A6F1EC1033C00B5E545 /* MHVCholesterol.h in Headers */,
 				4C191A6F1EC1033C00B5E545 /* MHVCholesterol.h in Headers */,
 				4C191A951EC1033C00B5E545 /* MHVMedication.h in Headers */,
@@ -2598,7 +2503,6 @@
 				5DF90BE119006203009ABAAB /* MHVLabTestResultValue.h in Headers */,
 				A54220641EC2735700728913 /* NSError+MHVError.h in Headers */,
 				5D20D34714F4804F00160611 /* MHVRecord.h in Headers */,
-				BA0356181EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.h in Headers */,
 				5D20D34B14F4808400160611 /* MHVPersonInfo.h in Headers */,
 				5D20D34F14F487C100160611 /* MHVThingQueryResults.h in Headers */,
 				BA03570F1EC5278800BE547D /* MHVOnboardingResponse.h in Headers */,
@@ -2643,14 +2547,12 @@
 				BA0356021EC1257F00BE547D /* NSArray+MHVEnum.h in Headers */,
 				BA0356251EC1257F00BE547D /* MHVDataModelProtocol.h in Headers */,
 				5D5F3166150FAA2800ED11E7 /* HealthVaultService.h in Headers */,
-				BA03565B1EC23AA700BE547D /* MHVDIContainer.h in Headers */,
 				5D5F3168150FAA2800ED11E7 /* MobilePlatform.h in Headers */,
 				BA4FBEA51ECA5CCD00C8EBF9 /* MHVRemoteMonitoringClient.h in Headers */,
 				5D5F316A150FAA2800ED11E7 /* AuthenticationCheckState.h in Headers */,
 				A57A80C41EC51EC600DDD636 /* MHVCollection.h in Headers */,
 				5D5F316C150FAA2800ED11E7 /* Provisioner.h in Headers */,
 				5DB2E6FB18D38E300030972D /* MHVThingChangeManager.h in Headers */,
-				BA03561C1EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.h in Headers */,
 				BA0356F31EC5278800BE547D /* MHVGoal.h in Headers */,
 				5DF90BBB18FC5719009ABAAB /* MHVTypeViewRefresher.h in Headers */,
 				5D5F316E150FAA2800ED11E7 /* HealthVaultSettings.h in Headers */,
@@ -2706,7 +2608,6 @@
 				A53BF8401EC3A48600F018E2 /* MHVApplicationCreationInfo.h in Headers */,
 				5D195D4E1522527100E109AD /* MHVPutThingsTask.h in Headers */,
 				5D195D661522780800E109AD /* MHVRemoveThingsTask.h in Headers */,
-				BA0356141EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.h in Headers */,
 				BA0356E31EC5278800BE547D /* MHVActionPlanTaskOccurrenceMetrics.h in Headers */,
 				5D195D7215228C0200E109AD /* MHVVocabSearchText.h in Headers */,
 				5D195D821522973500E109AD /* MHVVocabSearchTask.h in Headers */,
@@ -2736,7 +2637,6 @@
 				BA0356101EC1257F00BE547D /* NSString+DataModel.h in Headers */,
 				4C191A791EC1033C00B5E545 /* MHVEmergencyOrProviderContact.h in Headers */,
 				BA0356F11EC5278800BE547D /* MHVAudit.h in Headers */,
-				BA03565D1EC23AA700BE547D /* MHVDIMapProtocol.h in Headers */,
 				5DC799781534EC2E00193A3B /* MHVLengthMeasurement.h in Headers */,
 				5DC799921535FEE300193A3B /* MHVGetAuthorizedPeopleTask.h in Headers */,
 				BA0356001EC1257F00BE547D /* NSArray+DataModel.h in Headers */,
@@ -2756,7 +2656,6 @@
 				4C191A811EC1033C00B5E545 /* MHVFamilyHistory.h in Headers */,
 				BA0357131EC5278800BE547D /* MHVSleepsSleep.h in Headers */,
 				5D925DDC15376F8A006BAAA8 /* MHVVocab.h in Headers */,
-				BA03565E1EC23AA700BE547D /* MHVDIObjectDescriptor.h in Headers */,
 				5D925DE015377348006BAAA8 /* MHVVocabParams.h in Headers */,
 				5D775C871538DED2000F01AE /* MHVVitalSignResult.h in Headers */,
 				BA0356D51EC5278700BE547D /* MHVActionPlanInstance.h in Headers */,
@@ -2805,9 +2704,7 @@
 				5D1BE479156B464400718832 /* MHVBeginBlobPutTask.h in Headers */,
 				BA0356081EC1257F00BE547D /* NSDictionary+DataModel.h in Headers */,
 				5D1BE47D156B483900718832 /* MHVBlobUploadTask.h in Headers */,
-				BA0356511EC239B400BE547D /* NSObject+MHVDependencyInjection.h in Headers */,
 				4C191A651EC1033C00B5E545 /* MHVBloodGlucose.h in Headers */,
-				BA03561A1EC1257F00BE547D /* MHVSizeSystemOfMeasure.h in Headers */,
 				5DF44784156BC54000532EAA /* MHVBlob.h in Headers */,
 				5DB4206D156C959200E1A473 /* MHVThingBlobUploadTask.h in Headers */,
 				5DC8D505156D9FFF00CA119A /* MHVBlobSource.h in Headers */,
@@ -2819,7 +2716,6 @@
 				BA0356DD1EC5278700BE547D /* MHVActionPlanTask.h in Headers */,
 				BA0356241EC1257F00BE547D /* MHVDataModelDynamicClass.h in Headers */,
 				5D88C5E4161F4F1700F74D54 /* MHVNutritionFact.h in Headers */,
-				BA0356601EC23AA700BE547D /* MHVInstanceLocator.h in Headers */,
 				BA0356261EC1257F00BE547D /* MHVDynamicEnum.h in Headers */,
 				5D4A93211635BC49007390B7 /* MHVDictionaryExtensions.h in Headers */,
 				BA0357071EC5278800BE547D /* MHVMicrosoftWin32SafeHandlesSafeWaitHandle.h in Headers */,
@@ -2992,7 +2888,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA03561B1EC1257F00BE547D /* MHVSizeSystemOfMeasure.m in Sources */,
 				4C191AA01EC1033C00B5E545 /* MHVPersonalImage.m in Sources */,
 				5D76B9D414DCC84C00BA865F /* MHVValidator.m in Sources */,
 				A57A80C11EC4FB7900DDD636 /* MHVServiceResponse.m in Sources */,
@@ -3046,7 +2941,6 @@
 				5D983C0114E984CE00C287B7 /* MHVMinute.m in Sources */,
 				5D983C0514E984EE00C287B7 /* MHVSecond.m in Sources */,
 				5D983C0914E9850500C287B7 /* MHVMillisecond.m in Sources */,
-				BA03565F1EC23AA700BE547D /* MHVDIObjectDescriptor.m in Sources */,
 				5DEF154B14E985C5009D05D5 /* MHVType.m in Sources */,
 				5DEF155014E98DCB009D05D5 /* MHVTime.m in Sources */,
 				5DEF155814E9987F009D05D5 /* MHVDateExtensions.m in Sources */,
@@ -3084,9 +2978,7 @@
 				5D20D32814F424F000160611 /* MHVThingType.m in Sources */,
 				5D20D32C14F42E1300160611 /* MHVThingData.m in Sources */,
 				5D20D33014F4352A00160611 /* MHVThingDataCommon.m in Sources */,
-				BA0356211EC1257F00BE547D /* MHVWeightSystemOfMeasure.m in Sources */,
 				BA0356F61EC5278800BE547D /* MHVGoalRange.m in Sources */,
-				BA0356211EC1257F00BE547D /* MHVWeightSystemOfMeasure.m in Sources */,
 				BA0356D21EC5278700BE547D /* MHVActionPlanAdherenceSummary.m in Sources */,
 				5D20D33414F4366200160611 /* MHVConstrainedString.m in Sources */,
 				5D20D33814F43A1400160611 /* MHVString255.m in Sources */,
@@ -3102,7 +2994,6 @@
 				5D20D35414F487F100160611 /* MHVPendingThing.m in Sources */,
 				5D20D35814F4883700160611 /* MHVThingQueryResult.m in Sources */,
 				4C191A8E1EC1033C00B5E545 /* MHVThingRaw.m in Sources */,
-				BA03561D1EC1257F00BE547D /* MHVTemperatureSystemOfMeasure.m in Sources */,
 				4C191A681EC1033C00B5E545 /* MHVBloodPressure.m in Sources */,
 				5DD0B80B14F81DDE00AAD54F /* XSerializableType.m in Sources */,
 				5DC44B7D14FEA3E600E2E02F /* MHVRandom.m in Sources */,
@@ -3111,12 +3002,9 @@
 				5DC50C3215003C3D0078D85F /* MHVTypeViewThings.m in Sources */,
 				4C191A941EC1033C00B5E545 /* MHVLabTestResults.m in Sources */,
 				BAF50D3F1ECB610900C060D7 /* MHVGoalsApi.m in Sources */,
-				BA0356191EC1257F00BE547D /* MHVImperialOrMetricSystemOfMeasure.m in Sources */,
 				4C191A721EC1033C00B5E545 /* MHVCondition.m in Sources */,
 				5DC50C41150051DD0078D85F /* MHVMemoryStore.m in Sources */,
 				5DC50C4515015EE60078D85F /* MHVTypeView.m in Sources */,
-				BA0356651EC23F8C00BE547D /* NSString+Utils.m in Sources */,
-				BA03565C1EC23AA700BE547D /* MHVDIContainer.m in Sources */,
 				BA0356D41EC5278700BE547D /* MHVActionPlanFrequencyTaskCompletionMetrics.m in Sources */,
 				5DC50C49150160CE0078D85F /* MHVSynchronizedStore.m in Sources */,
 				5DC50C5115017CC50078D85F /* MHVAsyncTask.m in Sources */,
@@ -3150,7 +3038,6 @@
 				4C191A881EC1033C00B5E545 /* MHVHeight.m in Sources */,
 				BA03563C1EC1278F00BE547D /* MHVJsonSerializer.m in Sources */,
 				BA0356071EC1257F00BE547D /* NSDate+DataModel.m in Sources */,
-				BA0356521EC239B400BE547D /* NSObject+MHVDependencyInjection.m in Sources */,
 				5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */,
 				BA0356271EC1257F00BE547D /* MHVDynamicEnum.m in Sources */,
 				5D5F3175150FAA2800ED11E7 /* Logger.m in Sources */,
@@ -3228,14 +3115,12 @@
 				5DB2E73918D8B6F00030972D /* MHVSynchronizedType.m in Sources */,
 				5DC799931535FEE300193A3B /* MHVGetAuthorizedPeopleTask.m in Sources */,
 				5D25D67318AC567800B29B6D /* MHVMessageAttachment.m in Sources */,
-				BA0356151EC1257F00BE547D /* MHVCaloriesSystemOfMeasure.m in Sources */,
 				BA0356F81EC5278800BE547D /* MHVGoalRecommendation.m in Sources */,
 				5DC3C43815360123008BBDBF /* MHVGetAuthorizedPeopleResult.m in Sources */,
 				5D227B8E153766E500E12075 /* MHVVocabIdentifier.m in Sources */,
 				5D227B90153766E500E12075 /* MHVVocabThing.m in Sources */,
 				5DF90BE619008C62009ABAAB /* MHVLabTestResultsGroup.m in Sources */,
 				5D227B92153766E500E12075 /* MHVVocabSearchParams.m in Sources */,
-				BA03561F1EC1257F00BE547D /* MHVVolumeSystemOfMeasure.m in Sources */,
 				5D227B94153766E500E12075 /* MHVVocabCodeSet.m in Sources */,
 				5D925DD815376F21006BAAA8 /* MHVGetVocabTask.m in Sources */,
 				5D925DE115377348006BAAA8 /* MHVVocabParams.m in Sources */,
@@ -3276,7 +3161,6 @@
 				5D9E83741553000000072A0C /* MHVVocabSearcher.m in Sources */,
 				BA0356D81EC5278700BE547D /* MHVActionPlanRangeMetric.m in Sources */,
 				5DD216221556E18A001C8F31 /* MHVLocalVocabStore.m in Sources */,
-				BA0356611EC23AA700BE547D /* MHVInstanceLocator.m in Sources */,
 				4C191AA81EC1033C00B5E545 /* MHVSleepJournalPM.m in Sources */,
 				5D338B6215680895005A6C55 /* MHVCachingObjectStore.m in Sources */,
 				5D1BE476156B427F00718832 /* MHVBlobPutParameters.m in Sources */,
@@ -3288,7 +3172,6 @@
 				BA03560D1EC1257F00BE547D /* NSNumber+DataModel.m in Sources */,
 				BA0356391EC1278F00BE547D /* MHVJsonCacheService.m in Sources */,
 				BA0357021EC5278800BE547D /* MHVGoalsWrapper.m in Sources */,
-				BA0356171EC1257F00BE547D /* MHVDistanceSystemOfMeasure.m in Sources */,
 				5DC8D506156D9FFF00CA119A /* MHVBlobSource.m in Sources */,
 				A51B6CA41EC4AFE5003BFBDC /* MHVMethod.m in Sources */,
 				BA0356481EC2338500BE547D /* MHVQueuedDictionary.m in Sources */,

@@ -18,11 +18,11 @@
 
 #import "MHVModelBase.h"
 #import <objc/runtime.h>
+#import "MHVStringExtensions.h"
 #import "MHVDynamicEnum.h"
 #import "MHVJsonSerializer.h"
 #import "NSDictionary+DataModel.h"
 #import "NSArray+Utils.h"
-#import "NSString+Utils.h"
 #import "MHVValidator.h"
 
 static NSString *kDataModelObjectParametersKey = @"DataModelObjectParametersKey";
@@ -592,7 +592,8 @@ static NSString *kClassPrefix = @"KHR";
 #if DEBUG
                         MHVASSERT_TRUE(NO, @"Couldn't restore value for %@.%@", NSStringFromClass([self class]), propertyName);
 #else
-                        DebugLog(@"Couldn't restore value for %@.%@", NSStringFromClass([self class]), propertyName);
+                        NSString *message = [NSString stringWithFormat:@"Couldn't restore value for %@.%@", NSStringFromClass([self class]), propertyName];
+                        MHVASSERT_MESSAGE(message);
 #endif
                     }
                 }

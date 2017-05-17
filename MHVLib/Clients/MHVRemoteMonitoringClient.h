@@ -39,14 +39,14 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return The created session task.
  */
-+ (NSURLSessionTask*) requestWithPath: (NSString* _Nonnull) path
-                               method: (NSString* _Nonnull) method
-                           pathParams: (NSDictionary * _Nullable) pathParams
-                          queryParams: (NSDictionary* _Nullable) queryParams
-                           formParams: (NSDictionary * _Nullable) formParams
-                                 body: (id _Nullable) body
-                              toClass: (Class) toClass
-                      completionBlock: (void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completionBlock;
++ (NSURLSessionTask*) requestWithPath:(NSString* _Nonnull)path
+                               method:(NSString* _Nonnull)method
+                           pathParams:(NSDictionary * _Nullable)pathParams
+                          queryParams:(NSDictionary* _Nullable)queryParams
+                           formParams:(NSDictionary * _Nullable)formParams
+                                 body:(id _Nullable)body
+                              toClass:(Class)toClass
+                      completionBlock:(void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completionBlock;
 
 
 @end
