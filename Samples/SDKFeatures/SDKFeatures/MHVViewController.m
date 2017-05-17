@@ -17,7 +17,6 @@
 #import "MHVViewController.h"
 #import "MHVTypeListViewController.h"
 
-#import "MHVConfiguration.h"
 #import "MHVSodaConnectionProtocol.h"
 #import "MHVConnectionFactoryProtocol.h"
 #import "MHVConnectionFactory.h"
@@ -41,41 +40,59 @@
 
 -(void)startApp
 {
-    m_starting = TRUE;
+#if SHOULD_USE_LEGACY
+    [self startAppLegacy];
+#else
+    [self startAppNew];
+#endif
+}
+
+-(void)startAppNew
+{
+    m_starting = YES;
+    // New authentication and setup flow.
+    // Consumers will create a configuration and override the default properties
+    // Using the connection factory, create a connection.
+    // Then authenticate the connection.
+    // The connection is stored in the connection factory and can be used to get clients to make requests.
+    
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection authenticateWithViewController:self
+                                    completion:^(NSError * _Nullable error)
+     {
+         m_starting = NO;
+         if (error)
+         {
+             [self startupFailed];
+         }
+         else
+         {
+             [self startupSuccess];
+         }
+     }];
+}
+
+-(void)startAppLegacy
+{
+    m_starting = YES;
     //
     // Startup the HealthVault Client
     // This will automatically ensure that application instance is correctly provisioned to access the user's HealthVault record
     // Look at ClientSettings.xml
     //
-//    [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender)
-//     {
-//         m_starting = FALSE;
-//         if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
-//         {
-//             [self startupSuccess];
-//         }
-//         else
-//         {
-//             [self startupFailed];
-//         }
-//     }];
-    
-    MHVConfiguration *config = [MHVConfiguration new];
-    config.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"cf0cb893-d411-495c-b66f-9d72b4fd2b97"];
-    config.defaultHealthVaultUrl = [[NSURL alloc] initWithString:@"https://platform.healthvault-ppe.com/platform"];
-    config.defaultShellUrl = [[NSURL alloc] initWithString:@"https://account.healthvault-ppe.com"];
-    
-    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
-    
-    [connection authenticateWithViewController:self
-                                    completion:^(NSError * _Nullable error)
-    {
-        if (error)
-        {
-            [self startupFailed];
-        }
-    }];
-    
+    [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender)
+     {
+         m_starting = FALSE;
+         if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
+         {
+             [self startupSuccess];
+         }
+         else
+         {
+             [self startupFailed];
+         }
+     }];
 }
 
 -(void)startupSuccess
@@ -90,22 +107,28 @@
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"No", @"No button") style:UIAlertActionStyleCancel handler:nil]];
-
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes button") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                                 {
-                                     [self startApp];
-                                 }]];
     
-    [self presentViewController:alertController animated:YES completion:nil];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes button") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                                {
+                                    [self startApp];
+                                }]];
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+    {
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
 }
 
 -(void)showTypeList
 {
-    //
-    // Navigate to the type list
-    //
-    MHVTypeListViewController* typeListController = [[MHVTypeListViewController alloc] init];
-    [self.navigationController pushViewController:typeListController animated:TRUE];
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+    {
+        //
+        // Navigate to the type list
+        //
+        MHVTypeListViewController* typeListController = [[MHVTypeListViewController alloc] init];
+        [self.navigationController pushViewController:typeListController animated:TRUE];
+    }];
 }
 
 @end

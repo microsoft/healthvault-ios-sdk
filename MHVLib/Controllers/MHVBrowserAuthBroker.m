@@ -140,9 +140,11 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
     NSURL* url = [request URL];
     
     if ([self didReachEndUrl:url])
-    {
+    {        
         [self completeWithSuccessUrl:url error:nil];
     }
+    
+    //account.healthvault-ppe.com
     
     return YES;
 }
