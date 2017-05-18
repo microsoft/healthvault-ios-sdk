@@ -34,6 +34,7 @@
 #import "MHVPlatformClient.h"
 #import "MHVPersonClient.h"
 #import "MHVValidator.h"
+#import "MHVThingClient.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -46,6 +47,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 // Clients
 @property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
 @property (nonatomic, strong) id<MHVPersonClientProtocol> personClient;
+@property (nonatomic, strong) id<MHVThingClientProtocol> thingClient;
 
 // Dependencies
 @property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
@@ -56,6 +58,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 @implementation MHVConnection
 
 @dynamic sessionCredential;
+@dynamic personInfo;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                      credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
@@ -166,7 +169,12 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (id<MHVThingClientProtocol> _Nullable)thingClient
 {
-    return nil;
+    if (!_thingClient)
+    {
+        _thingClient = [[MHVThingClient alloc] initWithConnection:self];
+    }
+    
+    return _thingClient;
 }
 
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient

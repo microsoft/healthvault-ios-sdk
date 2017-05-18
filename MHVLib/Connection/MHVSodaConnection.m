@@ -37,6 +37,7 @@ static NSString *const kServiceInstanceKey = @"ServiceInstance";
 static NSString *const kApplicationCreationInfoKey = @"ApplicationCreationInfo";
 static NSString *const kSessionCredentialKey = @"SessionCredential";
 static NSString *const kPersonInfoKey = @"PersonInfo";
+static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 
 @interface MHVSodaConnection ()
 
@@ -56,6 +57,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 
 @synthesize serviceInstance = _serviceInstance;
 @synthesize sessionCredential = _sessionCredential;
+@synthesize personInfo = _personInfo;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                      credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
@@ -415,6 +417,33 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
     }];
 }
 
+- (void)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo * _Nullable, NSError * _Nullable))completion
+{
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (self.personInfo)
+    {
+        completion(self.personInfo, nil);
+    }
+    else
+    {
+        [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
+        {
+            if (error)
+            {
+                completion(nil, error);
+            }
+            else
+            {
+                completion(self.personInfo, nil);
+            }
+        }];
+    }
+}
+
 - (void)getAuthorizedPersonInfoWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
     [self.personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> * _Nullable people, NSError * _Nullable error)
@@ -442,7 +471,13 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         }
         
         _personInfo = personInfo;
-         
+        
+        if (!self.personInfo.selectedRecordID ||
+            [self.personInfo.selectedRecordID isEqual:[[NSUUID alloc] initWithUUIDString:kBlankUUID]])
+        {
+            self.personInfo.selectedRecordID = [self.personInfo.records firstObject].ID;
+        }
+        
         if (completion)
         {
             completion(nil);
@@ -500,6 +535,12 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
     if (!self.personInfo)
     {
         self.personInfo = [self.keychainService xmlObjectForKey:kPersonInfoKey];
+
+        if (!self.personInfo.selectedRecordID ||
+            [self.personInfo.selectedRecordID isEqual:[[NSUUID alloc] initWithUUIDString:kBlankUUID]])
+        {
+            self.personInfo.selectedRecordID = [self.personInfo.records firstObject].ID;
+        }
     }
 }
 
@@ -511,6 +552,11 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
     _applicationCreationInfo = nil;
     _sessionCredential = nil;
     _personInfo = nil;
+}
+
+- (void)clearSessionCredential
+{
+    _sessionCredential = nil;
 }
 
 - (BOOL)removeConnectionPropertiesFromKeychain

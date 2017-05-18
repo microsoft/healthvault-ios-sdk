@@ -21,10 +21,12 @@
 @interface NSError (MHVError)
 
 + (NSError *)MVHInvalidParameter;
++ (NSError *)MVHInvalidParameter:(NSString *)message;
 + (NSError *)MHVOperationCannotBePerformed;
 + (NSError *)MHVIOError;
 + (NSError *)MHVUnauthorizedError;
 + (NSError *)MHVOperationCancelled;
++ (NSError *)MHVNoResultsError;
 + (NSError *)MHVUnknownError;
 + (NSError *)MHVNotFound;
 

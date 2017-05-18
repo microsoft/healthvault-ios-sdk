@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4C00119B1EBCC05000BABFBA /* MHVUIAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */; };
+		4C2975CC1ECE17F3006B3673 /* MHVRecordSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2975CA1ECE17F3006B3673 /* MHVRecordSelectorViewController.m */; };
+		4C2975CD1ECE17F3006B3673 /* MHVRecordSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2975CB1ECE17F3006B3673 /* MHVRecordSelectorViewController.xib */; };
 		5D0645B818454D7000D306CC /* MHVHeartRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */; };
 		5D091345166ED1980031F5F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091344166ED1980031F5F9 /* UIKit.framework */; };
 		5D091347166ED1980031F5F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091346166ED1980031F5F9 /* Foundation.framework */; };
@@ -56,6 +58,9 @@
 /* Begin PBXFileReference section */
 		4C0011991EBCC05000BABFBA /* MHVUIAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVUIAlert.h; sourceTree = "<group>"; };
 		4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVUIAlert.m; sourceTree = "<group>"; };
+		4C2975C91ECE17F3006B3673 /* MHVRecordSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRecordSelectorViewController.h; sourceTree = "<group>"; };
+		4C2975CA1ECE17F3006B3673 /* MHVRecordSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVRecordSelectorViewController.m; sourceTree = "<group>"; };
+		4C2975CB1ECE17F3006B3673 /* MHVRecordSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVRecordSelectorViewController.xib; sourceTree = "<group>"; };
 		5D0645B618454D7000D306CC /* MHVHeartRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHeartRateFactory.h; sourceTree = "<group>"; };
 		5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHeartRateFactory.m; sourceTree = "<group>"; };
 		5D091340166ED1980031F5F9 /* SDKFeatures.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKFeatures.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +196,9 @@
 				5D09135C166ED1980031F5F9 /* MHVViewController.h */,
 				5D09135D166ED1980031F5F9 /* MHVViewController.m */,
 				5D09135F166ED1980031F5F9 /* MHVViewController.xib */,
+				4C2975C91ECE17F3006B3673 /* MHVRecordSelectorViewController.h */,
+				4C2975CA1ECE17F3006B3673 /* MHVRecordSelectorViewController.m */,
+				4C2975CB1ECE17F3006B3673 /* MHVRecordSelectorViewController.xib */,
 				5D09137B166EDB290031F5F9 /* MHVTypeListViewController.h */,
 				5D09137C166EDB290031F5F9 /* MHVTypeListViewController.m */,
 				5D09137D166EDB290031F5F9 /* MHVTypeListViewController.xib */,
@@ -323,6 +331,7 @@
 				5D09134F166ED1980031F5F9 /* InfoPlist.strings in Resources */,
 				5D091357166ED1980031F5F9 /* Default.png in Resources */,
 				5D091359166ED1980031F5F9 /* Default@2x.png in Resources */,
+				4C2975CD1ECE17F3006B3673 /* MHVRecordSelectorViewController.xib in Resources */,
 				5D09135B166ED1980031F5F9 /* Default-568h@2x.png in Resources */,
 				5D091361166ED1980031F5F9 /* MHVViewController.xib in Resources */,
 				5D09137A166ED3470031F5F9 /* ClientSettings.xml in Resources */,
@@ -360,6 +369,7 @@
 				A51203BB1ECCDD3E00845680 /* MHVFeaturesConfiguration.m in Sources */,
 				5D78993A171739FB0015D375 /* MHVConditionFactory.m in Sources */,
 				5D78993D17173B520015D375 /* MHVImmunizationFactory.m in Sources */,
+				4C2975CC1ECE17F3006B3673 /* MHVRecordSelectorViewController.m in Sources */,
 				5D78994017173D2A0015D375 /* MHVProcedureFactory.m in Sources */,
 				5D789957171758E90015D375 /* MHVStatusLabel.m in Sources */,
 				5DEC254C178B573A00FE971B /* MHVFileFeatures.m in Sources */,

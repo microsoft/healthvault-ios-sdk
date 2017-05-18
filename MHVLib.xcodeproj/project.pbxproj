@@ -93,16 +93,19 @@
 		4C191AF61EC3997600B5E545 /* MHVHttpTaskProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191AF51EC3997600B5E545 /* MHVHttpTaskProtocol.h */; };
 		4C191AF91EC3998800B5E545 /* MHVHttpTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191AF71EC3998800B5E545 /* MHVHttpTask.h */; };
 		4C191AFA1EC3998800B5E545 /* MHVHttpTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191AF81EC3998800B5E545 /* MHVHttpTask.m */; };
+		4C2975C71ECDFB63006B3673 /* MHVHttpServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2975C51ECDFB63006B3673 /* MHVHttpServiceTests.m */; };
+		4C2975C81ECDFB63006B3673 /* MHVHttpTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2975C61ECDFB63006B3673 /* MHVHttpTaskTests.m */; };
 		4C3973B31EC4B66B0079C28D /* MHVLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3973B21EC4B66B0079C28D /* MHVLibTests.m */; };
 		4C7646B81EC4B91C003B85B5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */; };
 		4C7646B91EC4B922003B85B5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CE1C5C010800233916 /* MobileCoreServices.framework */; };
 		4C7646BA1EC4B922003B85B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CA1C5C00E700233916 /* Security.framework */; };
 		4C7646BC1EC4B922003B85B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AF14DCB3A700D2636E /* Foundation.framework */; };
-		4C7646C11EC4E55B003B85B5 /* MHVHttpServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7646C01EC4E55B003B85B5 /* MHVHttpServiceTests.m */; };
 		4C7646D21EC4EA51003B85B5 /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AC14DCB3A700D2636E /* libMHVLib.a */; };
 		4C7646D31EC4EA74003B85B5 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */; };
-		4C7646D51EC4F3C8003B85B5 /* MHVHttpTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7646D41EC4F3C8003B85B5 /* MHVHttpTaskTests.m */; };
 		4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7646E91EC6581C003B85B5 /* MHVXmlTests.m */; };
+		4C7647491ECA32FE003B85B5 /* MHVThingClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7647471ECA32FE003B85B5 /* MHVThingClient.h */; };
+		4C76474A1ECA32FE003B85B5 /* MHVThingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7647481ECA32FE003B85B5 /* MHVThingClient.m */; };
+		4C76474D1ECA546F003B85B5 /* MHVThingClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76474C1ECA546F003B85B5 /* MHVThingClientTests.m */; };
 		5D09127A166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D091278166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h */; };
 		5D09127B166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D091279166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m */; };
 		5D0B4BE6151A80A4000849D0 /* MHVApproxDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0B4BE4151A80A4000849D0 /* MHVApproxDateTime.h */; };
@@ -780,13 +783,16 @@
 		4C191AF51EC3997600B5E545 /* MHVHttpTaskProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpTaskProtocol.h; sourceTree = "<group>"; };
 		4C191AF71EC3998800B5E545 /* MHVHttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpTask.h; sourceTree = "<group>"; };
 		4C191AF81EC3998800B5E545 /* MHVHttpTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHttpTask.m; sourceTree = "<group>"; };
+		4C2975C51ECDFB63006B3673 /* MHVHttpServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHttpServiceTests.m; path = HTTP/MHVHttpServiceTests.m; sourceTree = "<group>"; };
+		4C2975C61ECDFB63006B3673 /* MHVHttpTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHttpTaskTests.m; path = HTTP/MHVHttpTaskTests.m; sourceTree = "<group>"; };
 		4C3973B01EC4B66B0079C28D /* MHVLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MHVLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3973B21EC4B66B0079C28D /* MHVLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVLibTests.m; sourceTree = "<group>"; };
 		4C3973B41EC4B66B0079C28D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
-		4C7646C01EC4E55B003B85B5 /* MHVHttpServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHttpServiceTests.m; path = Services/MHVHttpServiceTests.m; sourceTree = "<group>"; };
-		4C7646D41EC4F3C8003B85B5 /* MHVHttpTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHttpTaskTests.m; path = Services/MHVHttpTaskTests.m; sourceTree = "<group>"; };
 		4C7646E91EC6581C003B85B5 /* MHVXmlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVXmlTests.m; path = XML/MHVXmlTests.m; sourceTree = "<group>"; };
+		4C7647471ECA32FE003B85B5 /* MHVThingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingClient.h; sourceTree = "<group>"; };
+		4C7647481ECA32FE003B85B5 /* MHVThingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingClient.m; sourceTree = "<group>"; };
+		4C76474C1ECA546F003B85B5 /* MHVThingClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVThingClientTests.m; path = Clients/MHVThingClientTests.m; sourceTree = "<group>"; };
 		50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MHVLibTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MHVLibTests/Pods-MHVLibTests.release.xcconfig"; sourceTree = "<group>"; };
 		5BE520E8193E7C086A092CDF /* Pods-MHVLibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MHVLibTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MHVLibTests/Pods-MHVLibTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D091278166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRemoveRecordAuthTask.h; sourceTree = "<group>"; };
@@ -1411,21 +1417,22 @@
 		4C3973B11EC4B66B0079C28D /* MHVLibTests */ = {
 			isa = PBXGroup;
 			children = (
-				4C7646E81EC65803003B85B5 /* XML */,
-				4C7646BF1EC4E525003B85B5 /* Services */,
-				4C3973B21EC4B66B0079C28D /* MHVLibTests.m */,
+				4C76474B1ECA544B003B85B5 /* Clients */,
+				4C7646BF1EC4E525003B85B5 /* HTTP */,
 				4C3973B41EC4B66B0079C28D /* Info.plist */,
+				4C3973B21EC4B66B0079C28D /* MHVLibTests.m */,
+				4C7646E81EC65803003B85B5 /* XML */,
 			);
 			path = MHVLibTests;
 			sourceTree = "<group>";
 		};
-		4C7646BF1EC4E525003B85B5 /* Services */ = {
+		4C7646BF1EC4E525003B85B5 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
-				4C7646C01EC4E55B003B85B5 /* MHVHttpServiceTests.m */,
-				4C7646D41EC4F3C8003B85B5 /* MHVHttpTaskTests.m */,
+				4C2975C51ECDFB63006B3673 /* MHVHttpServiceTests.m */,
+				4C2975C61ECDFB63006B3673 /* MHVHttpTaskTests.m */,
 			);
-			name = Services;
+			name = HTTP;
 			sourceTree = "<group>";
 		};
 		4C7646E81EC65803003B85B5 /* XML */ = {
@@ -1434,6 +1441,14 @@
 				4C7646E91EC6581C003B85B5 /* MHVXmlTests.m */,
 			);
 			name = XML;
+			sourceTree = "<group>";
+		};
+		4C76474B1ECA544B003B85B5 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				4C76474C1ECA546F003B85B5 /* MHVThingClientTests.m */,
+			);
+			name = Clients;
 			sourceTree = "<group>";
 		};
 		5D1139B415461F430008C362 /* HTTP */ = {
@@ -1938,12 +1953,6 @@
 				4C191A3C1EC1033C00B5E545 /* MHVImmunization.m */,
 				4C191A3D1EC1033C00B5E545 /* MHVInsurance.h */,
 				4C191A3E1EC1033C00B5E545 /* MHVInsurance.m */,
-				4C191A3F1EC1033C00B5E545 /* MHVThingRaw.h */,
-				4C191A401EC1033C00B5E545 /* MHVThingRaw.m */,
-				4C191A411EC1033C00B5E545 /* MHVThingTestExtensions.h */,
-				4C191A421EC1033C00B5E545 /* MHVThingTestExtensions.m */,
-				4C191A431EC1033C00B5E545 /* MHVThingTypes.h */,
-				4C191A441EC1033C00B5E545 /* MHVThingTypes.m */,
 				4C191A451EC1033C00B5E545 /* MHVLabTestResults.h */,
 				4C191A461EC1033C00B5E545 /* MHVLabTestResults.m */,
 				4C191A471EC1033C00B5E545 /* MHVMedication.h */,
@@ -1966,11 +1975,17 @@
 				4C191A581EC1033C00B5E545 /* MHVSleepJournalAM.m */,
 				4C191A591EC1033C00B5E545 /* MHVSleepJournalPM.h */,
 				4C191A5A1EC1033C00B5E545 /* MHVSleepJournalPM.m */,
+				A57208A31EC62D9F00C7BB72 /* MHVThingConstants.h */,
+				4C191A3F1EC1033C00B5E545 /* MHVThingRaw.h */,
+				4C191A401EC1033C00B5E545 /* MHVThingRaw.m */,
+				4C191A411EC1033C00B5E545 /* MHVThingTestExtensions.h */,
+				4C191A421EC1033C00B5E545 /* MHVThingTestExtensions.m */,
+				4C191A431EC1033C00B5E545 /* MHVThingTypes.h */,
+				4C191A441EC1033C00B5E545 /* MHVThingTypes.m */,
 				4C191A5B1EC1033C00B5E545 /* MHVVitalSigns.h */,
 				4C191A5C1EC1033C00B5E545 /* MHVVitalSigns.m */,
 				4C191A5D1EC1033C00B5E545 /* MHVWeight.h */,
 				4C191A5E1EC1033C00B5E545 /* MHVWeight.m */,
-				A57208A31EC62D9F00C7BB72 /* MHVThingConstants.h */,
 			);
 			name = ThingTypes;
 			path = ItemTypes;
@@ -2203,6 +2218,8 @@
 				A5A1BBA31ECB9F5700CE6F64 /* MHVPlatformClient.h */,
 				A5A1BBA41ECB9F5700CE6F64 /* MHVPlatformClient.m */,
 				A5AC1F561EC0F93A0049C24D /* MHVPlatformClientProtocol.h */,
+				4C7647471ECA32FE003B85B5 /* MHVThingClient.h */,
+				4C7647481ECA32FE003B85B5 /* MHVThingClient.m */,
 				A5D1ECED1EC0FC0A000E3295 /* MHVThingClientProtocol.h */,
 				BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */,
 				BA4FBEA41ECA5CCC00C8EBF9 /* MHVRemoteMonitoringClient.h */,
@@ -2709,6 +2726,7 @@
 				5DB4206D156C959200E1A473 /* MHVThingBlobUploadTask.h in Headers */,
 				5DC8D505156D9FFF00CA119A /* MHVBlobSource.h in Headers */,
 				5D74847E157A7C5E001A7713 /* MHVStoredQuery.h in Headers */,
+				4C7647491ECA32FE003B85B5 /* MHVThingClient.h in Headers */,
 				5DF91081158D09930027E0A8 /* MHVNonNegativeDouble.h in Headers */,
 				A5D1ED051EC23987000E3295 /* MHVConnectionFactoryProtocol.h in Headers */,
 				5DF90BD519005CA5009ABAAB /* MHVLabTestResultsDetails.h in Headers */,
@@ -2878,9 +2896,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C3973B31EC4B66B0079C28D /* MHVLibTests.m in Sources */,
-				4C7646C11EC4E55B003B85B5 /* MHVHttpServiceTests.m in Sources */,
-				4C7646D51EC4F3C8003B85B5 /* MHVHttpTaskTests.m in Sources */,
+				4C2975C71ECDFB63006B3673 /* MHVHttpServiceTests.m in Sources */,
 				4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */,
+				4C76474D1ECA546F003B85B5 /* MHVThingClientTests.m in Sources */,
+				4C2975C81ECDFB63006B3673 /* MHVHttpTaskTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3077,6 +3096,7 @@
 				5D195D14151BF01800E109AD /* MHVPhone.m in Sources */,
 				BA0356051EC1257F00BE547D /* NSData+DataModel.m in Sources */,
 				5D195D1C151BF2E200E109AD /* MHVEmailAddress.m in Sources */,
+				4C76474A1ECA32FE003B85B5 /* MHVThingClient.m in Sources */,
 				5D195D20151BF54300E109AD /* MHVEmail.m in Sources */,
 				BA03564C1EC235E000BE547D /* NSData+Utils.m in Sources */,
 				4C191A781EC1033C00B5E545 /* MHVDietaryIntake.m in Sources */,
