@@ -27,6 +27,10 @@
     config.defaultHealthVaultUrl = [[NSURL alloc] initWithString:@"https://platform.healthvault-ppe.com/platform"];
     config.defaultShellUrl = [[NSURL alloc] initWithString:@"https://account.healthvault-ppe.com"];
     
+#if SHOULD_USE_MULTI_RECORD
+    config.isMultiRecordApp = YES;
+#endif
+
     return config;
 }
 

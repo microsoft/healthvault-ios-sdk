@@ -27,7 +27,7 @@
 
 static NSString *kDataModelObjectParametersKey = @"DataModelObjectParametersKey";
 static NSString *kDataModelNameMapKey = @"DataModelNameMapKey";
-static NSString *kClassPrefix = @"KHR";
+static NSString *kClassPrefix = @"MHV";
 
 @implementation MHVModelBase
 

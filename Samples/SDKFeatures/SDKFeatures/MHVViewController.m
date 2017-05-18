@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,25 +20,32 @@
 #import "MHVSodaConnectionProtocol.h"
 #import "MHVConnectionFactoryProtocol.h"
 #import "MHVConnectionFactory.h"
+#import "MHVRecordSelectorViewController.h"
+
+@interface MHVViewController ()
+
+@property (nonatomic, assign) BOOL starting;
+
+@end
 
 @implementation MHVViewController
 
--(void)viewDidLoad
+- (void)viewDidLoad
 {
     self.navigationItem.title = nil;
     [super viewDidLoad];
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (!m_starting && ![MHVClient current].isProvisioned)
+    if (!self.starting && ![MHVClient current].isProvisioned)
     {
         [self startApp];
     }
 }
 
--(void)startApp
+- (void)startApp
 {
 #if SHOULD_USE_LEGACY
     [self startAppLegacy];
@@ -47,9 +54,10 @@
 #endif
 }
 
--(void)startAppNew
+- (void)startAppNew
 {
-    m_starting = YES;
+    self.starting = YES;
+    
     // New authentication and setup flow.
     // Consumers will create a configuration and override the default properties
     // Using the connection factory, create a connection.
@@ -59,34 +67,43 @@
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
     [connection authenticateWithViewController:self
-                                    completion:^(NSError * _Nullable error)
+                                    completion:^(NSError *_Nullable error)
      {
-         m_starting = NO;
+         self.starting = NO;
+         
          if (error)
          {
              [self startupFailed];
          }
          else
          {
-             [self startupSuccess];
+             if (connection.personInfo.records.count == 1)
+             {
+                 [self showTypeList];
+             }
+             else
+             {
+                 [self showRecordSelector];
+             }
          }
      }];
 }
 
--(void)startAppLegacy
+- (void)startAppLegacy
 {
-    m_starting = YES;
-    //
+    self.starting = YES;
+    
     // Startup the HealthVault Client
     // This will automatically ensure that application instance is correctly provisioned to access the user's HealthVault record
     // Look at ClientSettings.xml
     //
     [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender)
      {
-         m_starting = FALSE;
+         self.starting = NO;
+         
          if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
          {
-             [self startupSuccess];
+             [self showTypeList];
          }
          else
          {
@@ -95,12 +112,7 @@
      }];
 }
 
--(void)startupSuccess
-{
-    [self showTypeList];
-}
-
--(void)startupFailed
+- (void)startupFailed
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[MHVClient current].settings.appName
                                                                              message:NSLocalizedString(@"Provisioning not completed. Retry?", @"Message for retrying provisioning")
@@ -108,27 +120,41 @@
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"No", @"No button") style:UIAlertActionStyleCancel handler:nil]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes button") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", @"Yes button") style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action)
                                 {
                                     [self startApp];
                                 }]];
     
     [[NSOperationQueue mainQueue] addOperationWithBlock:^
-    {
-        [self presentViewController:alertController animated:YES completion:nil];
-    }];
+     {
+         [self presentViewController:alertController animated:YES completion:nil];
+     }];
 }
 
--(void)showTypeList
+- (void)showTypeList
 {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^
-    {
-        //
-        // Navigate to the type list
-        //
-        MHVTypeListViewController* typeListController = [[MHVTypeListViewController alloc] init];
-        [self.navigationController pushViewController:typeListController animated:TRUE];
-    }];
+     {
+         //
+         // Navigate to the type list
+         //
+         MHVTypeListViewController *typeListController = [[MHVTypeListViewController alloc] init];
+         
+         [self.navigationController pushViewController:typeListController animated:TRUE];
+     }];
+}
+
+- (void)showRecordSelector
+{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+     {
+         //
+         // Navigate to the record selector list
+         //
+         MHVRecordSelectorViewController *typeListController = [[MHVRecordSelectorViewController alloc] init];
+         
+         [self.navigationController pushViewController:typeListController animated:TRUE];
+     }];
 }
 
 @end

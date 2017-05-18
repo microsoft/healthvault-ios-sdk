@@ -30,6 +30,7 @@
 
 - (instancetype)initWithCapacity:(NSUInteger)numThings;
 - (instancetype)initWithArray:(NSArray *)array;
+- (instancetype)initWithObject:(ObjectType)object;
 
 + (BOOL)isNilOrEmpty:(MHVCollection *)collection;
 - (NSUInteger)count;

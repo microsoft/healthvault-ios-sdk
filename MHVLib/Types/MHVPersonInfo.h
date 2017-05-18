@@ -26,7 +26,7 @@
 @property (readwrite, nonatomic, strong) NSUUID *ID;
 @property (readwrite, nonatomic, strong) NSString *name;
 @property (readwrite, nonatomic, strong) NSString *appSettingsXml;
-@property (readwrite, nonatomic, strong) NSString *selectedRecordID;
+@property (readwrite, nonatomic, strong) NSUUID *selectedRecordID;
 @property (readwrite, nonatomic, strong) MHVBool *moreRecords;
 @property (readwrite, nonatomic, strong) MHVRecordCollection *records;
 @property (readwrite, nonatomic, strong) NSString *groupsXml;

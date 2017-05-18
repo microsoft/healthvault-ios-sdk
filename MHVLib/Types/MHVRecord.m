@@ -138,7 +138,7 @@ static NSString* const c_element_auth_action = @"app-record-auth-action";
     return self;
 }
 
-- (NSInteger)indexOfRecordID:(NSString *)recordID
+- (NSInteger)indexOfRecordID:(NSUUID *)recordID
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {

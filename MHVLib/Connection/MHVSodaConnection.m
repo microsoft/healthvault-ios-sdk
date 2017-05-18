@@ -37,6 +37,7 @@ static NSString *const kServiceInstanceKey = @"ServiceInstance";
 static NSString *const kApplicationCreationInfoKey = @"ApplicationCreationInfo";
 static NSString *const kSessionCredentialKey = @"SessionCredential";
 static NSString *const kPersonInfoKey = @"PersonInfo";
+static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 
 @interface MHVSodaConnection ()
 
@@ -55,6 +56,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 
 @synthesize serviceInstance = _serviceInstance;
 @synthesize sessionCredential = _sessionCredential;
+@synthesize personInfo = _personInfo;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                         clientFactory:(MHVClientFactory *)clientFactory
@@ -217,6 +219,33 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
             [self finishAuthWithError:nil completion:completion];
         }
     });
+}
+
+- (void)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo * _Nullable, NSError * _Nullable))completion
+{
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (self.personInfo)
+    {
+        completion(self.personInfo, nil);
+    }
+    else
+    {
+        [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
+         {
+             if (error)
+             {
+                 completion(nil, error);
+             }
+             else
+             {
+                 completion(self.personInfo, nil);
+             }
+         }];
+    }
 }
 
 #pragma mark - Private
@@ -430,6 +459,12 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
          
         MHVPersonInfo *personInfo = [people firstObject];
          
+        if (!personInfo.selectedRecordID ||
+            [personInfo.selectedRecordID isEqual:[[NSUUID alloc] initWithUUIDString:kBlankUUID]])
+        {
+            personInfo.selectedRecordID = [personInfo.records firstObject].ID;
+        }
+        
         if(![self.keychainService setXMLObject:personInfo forKey:kPersonInfoKey])
         {
             if (completion)
@@ -441,7 +476,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         }
         
         _personInfo = personInfo;
-         
+        
         if (completion)
         {
             completion(nil);
