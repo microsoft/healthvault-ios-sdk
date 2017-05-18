@@ -380,16 +380,6 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 
 - (void)refreshSessionCredentialWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (self.sessionCredential)
-    {
-        if (completion)
-        {
-            completion(nil);
-        }
-        
-        return;
-    }
-    
     self.credentialClient.connection = self;
     self.credentialClient.sharedSecret = self.applicationCreationInfo.sharedSecret;
     

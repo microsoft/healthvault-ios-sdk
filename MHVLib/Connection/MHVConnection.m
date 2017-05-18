@@ -33,6 +33,7 @@
 #import "MHVSessionCredentialClientProtocol.h"
 #import "MHVPlatformClient.h"
 #import "MHVPersonClient.h"
+#import "MHVValidator.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -134,13 +135,13 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
 {
-    
 }
 
 - (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
                             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 {
-    
+    NSString *message = [NSString stringWithFormat:@"Subclasses must implement %@", NSStringFromSelector(_cmd)];\
+    MHVASSERT_MESSAGE(message);
 }
 
 - (id<MHVPersonClientProtocol> _Nullable)personClient;
@@ -261,6 +262,12 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     }
 }
 
+- (void)refreshSessionCredentialWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
+{
+    NSString *message = [NSString stringWithFormat:@"Subclasses must implement %@", NSStringFromSelector(_cmd)];\
+    MHVASSERT_MESSAGE(message);
+}
+
 - (void)refreshTokenAndReissueRequest:(MHVMethodRequest *)request
 {
     dispatch_async(self.completionQueue, ^
@@ -272,7 +279,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
             return;
         }
         
-        [self.credentialClient getSessionCredentialWithCompletion:^(MHVSessionCredential * _Nullable credential, NSError * _Nullable error)
+        [self refreshSessionCredentialWithCompletion:^(NSError * _Nullable error)
         {
             dispatch_async(self.completionQueue, ^
             {

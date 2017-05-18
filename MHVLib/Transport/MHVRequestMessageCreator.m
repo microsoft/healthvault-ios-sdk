@@ -133,7 +133,7 @@
 
 - (void)writeAuthSessionHeader:(NSMutableString *)header
 {
-    if ([NSString isNilOrEmpty:self.authSession.authToken])
+    if ([NSString isNilOrEmpty:self.authSession.authToken] || self.method.isAnonymous)
     {
         NSUUID *appId = self.appId != nil ? self.appId : self.configuration.masterApplicationId;
         
