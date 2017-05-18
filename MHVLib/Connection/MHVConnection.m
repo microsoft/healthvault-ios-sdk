@@ -190,7 +190,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 {
     if (!_thingClient)
     {
-        _thingClient = [[MHVThingClient alloc] initWithConnection:self];
+        _thingClient = [self.clientFactory thingClientWithConnection:self];
     }
     
     return _thingClient;

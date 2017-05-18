@@ -2224,10 +2224,10 @@
 				A5A1BBA31ECB9F5700CE6F64 /* MHVPlatformClient.h */,
 				A5A1BBA41ECB9F5700CE6F64 /* MHVPlatformClient.m */,
 				A5AC1F561EC0F93A0049C24D /* MHVPlatformClientProtocol.h */,
-				4C7647471ECA32FE003B85B5 /* MHVThingClient.h */,
-				4C7647481ECA32FE003B85B5 /* MHVThingClient.m */,
 				BA4FBEA41ECA5CCC00C8EBF9 /* MHVRemoteMonitoringClient.h */,
 				BA4FBEA61ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m */,
+				4C7647471ECA32FE003B85B5 /* MHVThingClient.h */,
+				4C7647481ECA32FE003B85B5 /* MHVThingClient.m */,
 				A5D1ECED1EC0FC0A000E3295 /* MHVThingClientProtocol.h */,
 				BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */,
 			);
