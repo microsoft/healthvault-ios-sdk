@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVSessionCredentialClient : NSObject<MHVSessionCredentialClientProtocol>
 
+- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
+
 @end
 
 NS_ASSUME_NONNULL_END
