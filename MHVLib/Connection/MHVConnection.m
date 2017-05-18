@@ -31,6 +31,8 @@
 #import "MHVServiceResponse.h"
 #import "MHVMethodRequest.h"
 #import "MHVSessionCredentialClientProtocol.h"
+#import "MHVClientFactory.h"
+#import "MHVApplicationCreationInfo.h"
 #import "MHVPlatformClient.h"
 #import "MHVPersonClient.h"
 #import "MHVValidator.h"
@@ -44,11 +46,12 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 @property (nonatomic, strong) NSMutableArray<MHVMethodRequest *> *requests;
 
 // Clients
+@property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
 @property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
 @property (nonatomic, strong) id<MHVPersonClientProtocol> personClient;
 
 // Dependencies
-@property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
+@property (nonatomic, strong) MHVClientFactory *clientFactory;
 @property (nonatomic, strong) id<MHVHttpServiceProtocol> httpService;
 
 @end
@@ -58,15 +61,19 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 @dynamic sessionCredential;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                     credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
+                        clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
 {
+    MHVASSERT_PARAMETER(configuration);
+    MHVASSERT_PARAMETER(clientFactory);
+    MHVASSERT_PARAMETER(httpService);
+    
     self = [super init];
     
     if (self)
     {
         _configuration = configuration;
-        _credentialClient = credentialClient;
+        _clientFactory = clientFactory;
         _httpService = httpService;
         _requests = [NSMutableArray new];
         _completionQueue = dispatch_queue_create("MHVConnection.requestQueue", DISPATCH_QUEUE_SERIAL);
@@ -144,11 +151,21 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     MHVASSERT_MESSAGE(message);
 }
 
+- (id<MHVSessionCredentialClientProtocol>)credentialClient
+{
+    if (!_credentialClient)
+    {
+        _credentialClient = [self.clientFactory credentialClientWithConnection:self];
+    }
+    
+    return _credentialClient;
+}
+
 - (id<MHVPersonClientProtocol> _Nullable)personClient;
 {
     if (!_personClient)
     {
-        _personClient = [[MHVPersonClient alloc] initWithConnection:self];
+        _personClient = [self.clientFactory personClientWithConnection:self];
     }
     
     return _personClient;
@@ -158,7 +175,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 {
     if (!_platformClient)
     {
-        _platformClient = [[MHVPlatformClient alloc] initWithConnection:self];
+        _platformClient = [self.clientFactory platformClientWithConnection:self];
     };
     
     return _platformClient;

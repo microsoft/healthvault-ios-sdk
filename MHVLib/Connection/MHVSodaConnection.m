@@ -46,7 +46,6 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 @property (nonatomic, strong) MHVApplicationCreationInfo *applicationCreationInfo;
 
 // Dependencies
-@property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
 @property (nonatomic, strong) id<MHVKeychainServiceProtocol> keychainService;
 @property (nonatomic, strong) id<MHVShellAuthServiceProtocol> shellAuthService;
 
@@ -58,18 +57,20 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 @synthesize sessionCredential = _sessionCredential;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                     credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
+                        clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
                       keychainService:(id<MHVKeychainServiceProtocol>)keychainService
                      shellAuthService:(id<MHVShellAuthServiceProtocol>)shellAuthService
 {
+    MHVASSERT_PARAMETER(keychainService);
+    MHVASSERT_PARAMETER(shellAuthService);
+    
     self = [super initWithConfiguration:configuration
-                       credentialClient:credentialClient
+                          clientFactory:clientFactory
                             httpService:httpService];
     
     if (self)
     {
-        _credentialClient = credentialClient;
         _keychainService = keychainService;
         _shellAuthService = shellAuthService;
         _authQueue = dispatch_queue_create("MHVSodaConnection.authQueue", DISPATCH_QUEUE_SERIAL);
@@ -380,10 +381,8 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 
 - (void)refreshSessionCredentialWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    self.credentialClient.connection = self;
-    self.credentialClient.sharedSecret = self.applicationCreationInfo.sharedSecret;
-    
-    [self.credentialClient getSessionCredentialWithCompletion:^(MHVSessionCredential * _Nullable credential, NSError * _Nullable error)
+    [self.credentialClient getSessionCredentialWithSharedSecret:self.applicationCreationInfo.sharedSecret
+                                                     completion:^(MHVSessionCredential * _Nullable credential, NSError * _Nullable error)
     {
         if (error)
         {
