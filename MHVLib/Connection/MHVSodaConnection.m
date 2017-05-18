@@ -105,7 +105,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
                 return;
             }
             
-            [self refreshSessionCredentialWithCompletion:^(NSError * _Nullable error)
+            [self refreshSessionCredential:NO completion:^(NSError * _Nullable error)
             {
                 if (error)
                 {
@@ -378,9 +378,12 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
     }];
 }
 
-- (void)refreshSessionCredentialWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
+- (void)refreshSessionCredential:(BOOL)forceRefresh completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (self.sessionCredential)
+    self.credentialClient.connection = self;
+    self.credentialClient.sharedSecret = self.applicationCreationInfo.sharedSecret;
+    
+    if (self.sessionCredential && !forceRefresh)
     {
         if (completion)
         {
@@ -389,9 +392,6 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         
         return;
     }
-    
-    self.credentialClient.connection = self;
-    self.credentialClient.sharedSecret = self.applicationCreationInfo.sharedSecret;
     
     [self.credentialClient getSessionCredentialWithCompletion:^(MHVSessionCredential * _Nullable credential, NSError * _Nullable error)
     {

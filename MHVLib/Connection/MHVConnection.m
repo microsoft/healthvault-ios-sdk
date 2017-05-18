@@ -134,13 +134,12 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
 {
-    
 }
 
 - (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
                             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 {
-    
+    NSAssert(NO, @"Subclasses must implement %@", NSStringFromSelector(_cmd));
 }
 
 - (id<MHVPersonClientProtocol> _Nullable)personClient;
@@ -261,6 +260,11 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     }
 }
 
+- (void)refreshSessionCredential:(BOOL)forceRefresh completion:(void(^_Nullable)(NSError *_Nullable error))completion
+{
+    NSAssert(NO, @"Subclasses must implement %@", NSStringFromSelector(_cmd));
+}
+
 - (void)refreshTokenAndReissueRequest:(MHVMethodRequest *)request
 {
     dispatch_async(self.completionQueue, ^
@@ -272,7 +276,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
             return;
         }
         
-        [self.credentialClient getSessionCredentialWithCompletion:^(MHVSessionCredential * _Nullable credential, NSError * _Nullable error)
+        [self refreshSessionCredential:YES completion:^(NSError * _Nullable error)
         {
             dispatch_async(self.completionQueue, ^
             {
