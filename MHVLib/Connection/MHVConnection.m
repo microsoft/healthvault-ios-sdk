@@ -145,6 +145,8 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
 {
+    NSString *message = [NSString stringWithFormat:@"Subclasses must implement %@", NSStringFromSelector(_cmd)];\
+    MHVASSERT_MESSAGE(message);
 }
 
 - (void)authenticateWithViewController:(UIViewController *_Nullable)viewController

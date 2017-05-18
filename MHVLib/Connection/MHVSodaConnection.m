@@ -221,6 +221,33 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     });
 }
 
+- (void)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo * _Nullable, NSError * _Nullable))completion
+{
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (self.personInfo)
+    {
+        completion(self.personInfo, nil);
+    }
+    else
+    {
+        [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
+         {
+             if (error)
+             {
+                 completion(nil, error);
+             }
+             else
+             {
+                 completion(self.personInfo, nil);
+             }
+         }];
+    }
+}
+
 #pragma mark - Private
 
 // Use in conjunction with the authQueue to ensure various auth related calls are synchronized.
@@ -416,33 +443,6 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     }];
 }
 
-- (void)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo * _Nullable, NSError * _Nullable))completion
-{
-    if (!completion)
-    {
-        return;
-    }
-    
-    if (self.personInfo)
-    {
-        completion(self.personInfo, nil);
-    }
-    else
-    {
-        [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
-        {
-            if (error)
-            {
-                completion(nil, error);
-            }
-            else
-            {
-                completion(self.personInfo, nil);
-            }
-        }];
-    }
-}
-
 - (void)getAuthorizedPersonInfoWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
     [self.personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> * _Nullable people, NSError * _Nullable error)
@@ -459,6 +459,12 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
          
         MHVPersonInfo *personInfo = [people firstObject];
          
+        if (!personInfo.selectedRecordID ||
+            [personInfo.selectedRecordID isEqual:[[NSUUID alloc] initWithUUIDString:kBlankUUID]])
+        {
+            personInfo.selectedRecordID = [personInfo.records firstObject].ID;
+        }
+        
         if(![self.keychainService setXMLObject:personInfo forKey:kPersonInfoKey])
         {
             if (completion)
@@ -470,12 +476,6 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
         }
         
         _personInfo = personInfo;
-        
-        if (!self.personInfo.selectedRecordID ||
-            [self.personInfo.selectedRecordID isEqual:[[NSUUID alloc] initWithUUIDString:kBlankUUID]])
-        {
-            self.personInfo.selectedRecordID = [self.personInfo.records firstObject].ID;
-        }
         
         if (completion)
         {
@@ -534,12 +534,6 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     if (!self.personInfo)
     {
         self.personInfo = [self.keychainService xmlObjectForKey:kPersonInfoKey];
-
-        if (!self.personInfo.selectedRecordID ||
-            [self.personInfo.selectedRecordID isEqual:[[NSUUID alloc] initWithUUIDString:kBlankUUID]])
-        {
-            self.personInfo.selectedRecordID = [self.personInfo.records firstObject].ID;
-        }
     }
 }
 
@@ -551,11 +545,6 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     _applicationCreationInfo = nil;
     _sessionCredential = nil;
     _personInfo = nil;
-}
-
-- (void)clearSessionCredential
-{
-    _sessionCredential = nil;
 }
 
 - (BOOL)removeConnectionPropertiesFromKeychain

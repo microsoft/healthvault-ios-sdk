@@ -162,13 +162,13 @@
          else
          {
              MHVThingQueryResults *queryResults = [self thingQueryResultsFromResponse:response];
-             if (queryResults.hasResults)
+             if (queryResults.results)
              {
                  completion(queryResults.results, nil);
              }
              else
              {
-                 completion(nil, [NSError MHVNoResultsError]);
+                 completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetThings results could not be extracted."]);
              }
          }
      }];
