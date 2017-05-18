@@ -115,7 +115,7 @@
 {
     if (self.method.recordId)
     {
-        [header appendXmlElement:@"record-id" text:self.method.recordId];
+        [header appendXmlElement:@"record-id" text:self.method.recordId.UUIDString];
     }
 }
 

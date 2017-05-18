@@ -36,7 +36,6 @@
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
-static NSTimeInterval const kSessionCredentialCallThresholdSeconds = 300;
 
 @interface MHVConnection ()
 
@@ -225,9 +224,9 @@ static NSTimeInterval const kSessionCredentialCallThresholdSeconds = 300;
 
 - (NSDictionary<NSString *, NSString *> *)headersForMethod:(MHVMethod *)method
 {
-    NSString *correlationId = method.correlationId != nil ? method.correlationId : [NSUUID new].UUIDString;
+    NSUUID *correlationId = method.correlationId != nil ? method.correlationId : [NSUUID new];
     
-    return @{kCorrelationIdContextKey : correlationId};
+    return @{kCorrelationIdContextKey : correlationId.UUIDString};
 }
 
 - (void)parseResponse:(MHVHttpServiceResponse *)response

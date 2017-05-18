@@ -21,6 +21,10 @@
 #import "MHVTypeListViewController.h"
 #import "MHVUIAlert.h"
 
+#import "MHVConnectionFactory.h"
+#import "MHVConnectionFactoryProtocol.h"
+#import "MHVSodaConnectionProtocol.h"
+
 @implementation MHVMoreFeatures
 
 @synthesize controller = m_controller;  // Weak ref
@@ -36,12 +40,24 @@
              //
              // REMOVE RECORD AUTHORIZATION.
              //
+#if SHOULD_USE_LEGACY
              [[MHVClient current].user removeAuthForRecord:[MHVClient current].currentRecord withCallback:^(MHVTask *task) {
                  
                  [[MHVClient current] resetProvisioning];  // Removes local state
                  
                  [m_controller.navigationController popViewControllerAnimated:TRUE];
              }];
+#else
+             id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+             
+             [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error)
+             {
+                 [[NSOperationQueue mainQueue] addOperationWithBlock:^
+                 {
+                     [m_controller.navigationController popViewControllerAnimated:TRUE];
+                 }];
+             }];
+#endif
          }
      }];
 }

@@ -115,16 +115,22 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
                     return;
                 }
                 
-                [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
+                if (!self.personInfo)
                 {
-                    if (error)
-                    {
-                        [self clearConnectionProperties];
-                    }
-                    
-                    [self finishAuthWithError:error completion:completion];
-                }];
-                
+                    [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
+                     {
+                         if (error)
+                         {
+                             [self clearConnectionProperties];
+                         }
+                         
+                         [self finishAuthWithError:error completion:completion];
+                     }];
+                }
+                else
+                {
+                    [self finishAuthWithError:nil completion:completion];
+                }
             }];
         }];
     });
@@ -202,7 +208,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
                 _sessionCredential = nil;
                 _personInfo = nil;
                 
-                [self finishAuthWithError:nil completion:completion];
+                [self finishAuthWithError:error completion:completion];
             }];
         }
         else
@@ -380,6 +386,8 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         {
             completion(nil);
         }
+        
+        return;
     }
     
     self.credentialClient.connection = self;
@@ -393,6 +401,8 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
             {
                 completion(error);
             }
+            
+            return;
         }
         
         if(![self.keychainService setXMLObject:credential forKey:kSessionCredentialKey])
@@ -458,6 +468,8 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
         {
             completion(nil);
         }
+        
+        return;
     }
 
     __block MHVRecord *record = [records firstObject];

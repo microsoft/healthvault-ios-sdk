@@ -129,7 +129,16 @@
 - (void)removeApplicationAuthorizationWithRecordId:(NSUUID *)recordId
                                         completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
+    MHVMethod *method = [MHVMethod removeApplicationRecordAuthorization];
+    method.recordId = recordId;
     
+    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    {
+        if (completion)
+        {
+            completion(error);
+        }
+    }];
 }
 
 #pragma mark - Private

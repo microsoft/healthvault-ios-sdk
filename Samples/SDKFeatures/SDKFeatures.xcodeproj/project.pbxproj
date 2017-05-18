@@ -50,6 +50,7 @@
 		5DEC254C178B573A00FE971B /* MHVFileFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC254B178B573A00FE971B /* MHVFileFeatures.m */; };
 		5DEC255A178B5A7F00FE971B /* MHVThingDataTypedFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC2559178B5A7F00FE971B /* MHVThingDataTypedFeatures.m */; };
 		5DEC255D178B680400FE971B /* MHVFileFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC255C178B680400FE971B /* MHVFileFactory.m */; };
+		A51203BB1ECCDD3E00845680 /* MHVFeaturesConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A51203BA1ECCDD3E00845680 /* MHVFeaturesConfiguration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +126,9 @@
 		5DEC2559178B5A7F00FE971B /* MHVThingDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingDataTypedFeatures.m; sourceTree = "<group>"; };
 		5DEC255B178B680400FE971B /* MHVFileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFileFactory.h; sourceTree = "<group>"; };
 		5DEC255C178B680400FE971B /* MHVFileFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFileFactory.m; sourceTree = "<group>"; };
+		A51203A81ECCD98500845680 /* MHVFeaturesConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVFeaturesConstants.h; sourceTree = "<group>"; };
+		A51203B91ECCDD3E00845680 /* MHVFeaturesConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFeaturesConfiguration.h; sourceTree = "<group>"; };
+		A51203BA1ECCDD3E00845680 /* MHVFeaturesConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFeaturesConfiguration.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +242,9 @@
 				4C0011991EBCC05000BABFBA /* MHVUIAlert.h */,
 				4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */,
 				5D09134B166ED1980031F5F9 /* Supporting Files */,
+				A51203A81ECCD98500845680 /* MHVFeaturesConstants.h */,
+				A51203B91ECCDD3E00845680 /* MHVFeaturesConfiguration.h */,
+				A51203BA1ECCDD3E00845680 /* MHVFeaturesConfiguration.m */,
 			);
 			path = SDKFeatures;
 			sourceTree = "<group>";
@@ -350,6 +357,7 @@
 				5D789916171626F60015D375 /* MHVMoreFeatures.m in Sources */,
 				4C00119B1EBCC05000BABFBA /* MHVUIAlert.m in Sources */,
 				5D789936171736050015D375 /* MHVMedicationFactory.m in Sources */,
+				A51203BB1ECCDD3E00845680 /* MHVFeaturesConfiguration.m in Sources */,
 				5D78993A171739FB0015D375 /* MHVConditionFactory.m in Sources */,
 				5D78993D17173B520015D375 /* MHVImmunizationFactory.m in Sources */,
 				5D78994017173D2A0015D375 /* MHVProcedureFactory.m in Sources */,
