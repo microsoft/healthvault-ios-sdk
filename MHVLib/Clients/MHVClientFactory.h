@@ -20,6 +20,8 @@
 
 @protocol MHVConnectionProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVSessionCredentialClientProtocol;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MHVClientFactory : NSObject
 
 - (id<MHVPersonClientProtocol>)personClientWithConnection:(id<MHVConnectionProtocol>)connection;
@@ -33,3 +35,5 @@
 - (id<MHVSessionCredentialClientProtocol>)credentialClientWithConnection:(id<MHVConnectionProtocol>)connection;
 
 @end
+
+NS_ASSUME_NONNULL_END
