@@ -142,6 +142,9 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
     if ([self didReachEndUrl:url])
     {        
         [self completeWithSuccessUrl:url error:nil];
+        
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] removeCookiesSinceDate:[NSDate distantPast]];
     }
     
     return YES;

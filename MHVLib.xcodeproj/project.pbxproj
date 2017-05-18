@@ -497,6 +497,8 @@
 		A4F066CF1C5C010800233916 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CE1C5C010800233916 /* MobileCoreServices.framework */; };
 		A51203961ECCB3A100845680 /* MHVPersonClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A51203941ECCB3A100845680 /* MHVPersonClient.h */; };
 		A51203971ECCB3A100845680 /* MHVPersonClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A51203951ECCB3A100845680 /* MHVPersonClient.m */; };
+		A51203C61ECE207000845680 /* MHVClientFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A51203C41ECE207000845680 /* MHVClientFactory.h */; };
+		A51203C71ECE207000845680 /* MHVClientFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A51203C51ECE207000845680 /* MHVClientFactory.m */; };
 		A51B6C981EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A51B6C971EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h */; };
 		A51B6C9B1EC4A806003BFBDC /* MHVSessionCredentialClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A51B6C991EC4A806003BFBDC /* MHVSessionCredentialClient.h */; };
 		A51B6C9C1EC4A806003BFBDC /* MHVSessionCredentialClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B6C9A1EC4A806003BFBDC /* MHVSessionCredentialClient.m */; };
@@ -1191,6 +1193,8 @@
 		A4F066CE1C5C010800233916 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		A51203941ECCB3A100845680 /* MHVPersonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonClient.h; sourceTree = "<group>"; };
 		A51203951ECCB3A100845680 /* MHVPersonClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonClient.m; sourceTree = "<group>"; };
+		A51203C41ECE207000845680 /* MHVClientFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVClientFactory.h; sourceTree = "<group>"; };
+		A51203C51ECE207000845680 /* MHVClientFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVClientFactory.m; sourceTree = "<group>"; };
 		A51B6C971EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSessionCredentialClientProtocol.h; sourceTree = "<group>"; };
 		A51B6C991EC4A806003BFBDC /* MHVSessionCredentialClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSessionCredentialClient.h; sourceTree = "<group>"; };
 		A51B6C9A1EC4A806003BFBDC /* MHVSessionCredentialClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSessionCredentialClient.m; sourceTree = "<group>"; };
@@ -2211,6 +2215,8 @@
 		BA03553E1EC0BF5400BE547D /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				A51203C41ECE207000845680 /* MHVClientFactory.h */,
+				A51203C51ECE207000845680 /* MHVClientFactory.m */,
 				A5AC1F591EC0F9B00049C24D /* MHVClientProtocol.h */,
 				A51203941ECCB3A100845680 /* MHVPersonClient.h */,
 				A51203951ECCB3A100845680 /* MHVPersonClient.m */,
@@ -2220,10 +2226,10 @@
 				A5AC1F561EC0F93A0049C24D /* MHVPlatformClientProtocol.h */,
 				4C7647471ECA32FE003B85B5 /* MHVThingClient.h */,
 				4C7647481ECA32FE003B85B5 /* MHVThingClient.m */,
-				A5D1ECED1EC0FC0A000E3295 /* MHVThingClientProtocol.h */,
-				BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */,
 				BA4FBEA41ECA5CCC00C8EBF9 /* MHVRemoteMonitoringClient.h */,
 				BA4FBEA61ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m */,
+				A5D1ECED1EC0FC0A000E3295 /* MHVThingClientProtocol.h */,
+				BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */,
 			);
 			path = Clients;
 			sourceTree = "<group>";
@@ -2555,6 +2561,7 @@
 				5DB2E74D18DA3F870030972D /* MHVSynchronizationManager.h in Headers */,
 				5D5F3126150EAD8400ED11E7 /* MHVDirectory.h in Headers */,
 				BA0356D31EC5278700BE547D /* MHVActionPlanFrequencyTaskCompletionMetrics.h in Headers */,
+				A51203C61ECE207000845680 /* MHVClientFactory.h in Headers */,
 				5D5F3131150ED29F00ED11E7 /* MHVBrowserController.h in Headers */,
 				5D5F315F150FAA2800ED11E7 /* HealthVaultConfig.h in Headers */,
 				BA0356401EC128B600BE547D /* MHVJsonEnumProtocol.h in Headers */,
@@ -3140,6 +3147,7 @@
 				5D227B8E153766E500E12075 /* MHVVocabIdentifier.m in Sources */,
 				5D227B90153766E500E12075 /* MHVVocabThing.m in Sources */,
 				5DF90BE619008C62009ABAAB /* MHVLabTestResultsGroup.m in Sources */,
+				A51203C71ECE207000845680 /* MHVClientFactory.m in Sources */,
 				5D227B92153766E500E12075 /* MHVVocabSearchParams.m in Sources */,
 				5D227B94153766E500E12075 /* MHVVocabCodeSet.m in Sources */,
 				5D925DD815376F21006BAAA8 /* MHVGetVocabTask.m in Sources */,
