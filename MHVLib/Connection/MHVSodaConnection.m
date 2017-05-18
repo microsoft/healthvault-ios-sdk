@@ -43,6 +43,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 @property (nonatomic, assign) BOOL isAuthUpdating;
 @property (nonatomic, strong) dispatch_queue_t authQueue;
 @property (nonatomic, strong) MHVPersonInfo *personInfo;
+@property (nonatomic, strong) MHVApplicationCreationInfo *applicationCreationInfo;
 
 // Dependencies
 @property (nonatomic, strong) id<MHVKeychainServiceProtocol> keychainService;
@@ -54,7 +55,6 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 
 @synthesize serviceInstance = _serviceInstance;
 @synthesize sessionCredential = _sessionCredential;
-@synthesize applicationCreationInfo = _applicationCreationInfo;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                         clientFactory:(MHVClientFactory *)clientFactory
@@ -381,16 +381,6 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
 
 - (void)refreshSessionCredentialWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (self.sessionCredential)
-    {
-        if (completion)
-        {
-            completion(nil);
-        }
-        
-        return;
-    }
-    
     [self.credentialClient getSessionCredentialWithSharedSecret:self.applicationCreationInfo.sharedSecret
                                                      completion:^(MHVSessionCredential * _Nullable credential, NSError * _Nullable error)
     {
@@ -498,7 +488,7 @@ static NSString *const kPersonInfoKey = @"PersonInfo";
     
     if (!self.applicationCreationInfo)
     {
-        _applicationCreationInfo = [self.keychainService xmlObjectForKey:kApplicationCreationInfoKey];
+        self.applicationCreationInfo = [self.keychainService xmlObjectForKey:kApplicationCreationInfoKey];
     }
     
     if (!self.sessionCredential)
