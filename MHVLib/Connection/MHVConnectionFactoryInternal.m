@@ -20,11 +20,11 @@
 #import "MHVValidator.h"
 #import "NSError+MHVError.h"
 #import "MHVSodaConnection.h"
-#import "MHVSessionCredentialClient.h"
 #import "MHVHttpService.h"
 #import "MHVKeychainService.h"
 #import "MHVShellAuthService.h"
 #import "MHVBrowserAuthBroker.h"
+#import "MHVClientFactory.h"
 
 @interface MHVConnectionFactoryInternal ()
 
@@ -62,7 +62,7 @@
         if (!self.connection)
         {
             self.connection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
-                                                              credentialClient:[MHVSessionCredentialClient new]
+                                                                 clientFactory:[MHVClientFactory new]
                                                                    httpService:[MHVHttpService new]
                                                                keychainService:[MHVKeychainService new]
                                                               shellAuthService:[[MHVShellAuthService alloc] initWithConfiguration:configuration authBroker:[MHVBrowserAuthBroker new]]];
