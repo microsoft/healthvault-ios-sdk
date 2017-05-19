@@ -18,36 +18,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MHVRemoteMonitoringClientProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVRemoteMonitoringClient : NSObject
-
-@property (nonatomic, strong) NSString *id;
-
-/**
- * Performs request
- *
- * @param path Request url.
- * @param method Request method.
- * @param pathParams Request path parameters.
- * @param queryParams Request query parameters.
- * @param formParams Request form parameters.
- * @param body Request body.
- * @param toClass the response should be deserialized to.
- * @param completionBlock The block will be executed when the request completed.
- *
- * @return The created session task.
- */
-+ (NSURLSessionTask*) requestWithPath:(NSString* _Nonnull)path
-                               method:(NSString* _Nonnull)method
-                           pathParams:(NSDictionary * _Nullable)pathParams
-                          queryParams:(NSDictionary* _Nullable)queryParams
-                           formParams:(NSDictionary * _Nullable)formParams
-                                 body:(id _Nullable)body
-                              toClass:(Class)toClass
-                           completion:(void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completion;
-
+@interface MHVRemoteMonitoringClient : NSObject<MHVRemoteMonitoringClientProtocol>
 
 @end
 

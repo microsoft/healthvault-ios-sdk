@@ -28,15 +28,18 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
 ///
 /// {{/allParams}} @returns {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
 ///
-+ (NSURLSessionTask*){{#vendorExtensions.x-objc-operationId}}{{vendorExtensions.x-objc-operationId}}{{/vendorExtensions.x-objc-operationId}}{{^vendorExtensions.x-objc-operationId}}{{nickname}}{{#hasParams}}With{{vendorExtensions.firstParamAltName}}{{/hasParams}}{{^hasParams}}WithCompletion: {{/hasParams}}{{/vendorExtensions.x-objc-operationId}}{{#allParams}}{{#secondaryParam}}
-    {{paramName}}{{/secondaryParam}}: ({{{dataType}}}) {{paramName}}{{/allParams}}
-    {{#hasParams}}completion: {{/hasParams}}(void (^ _Nonnull)({{#returnBaseType}}{{{returnType}}} _Nullable output, {{/returnBaseType}}NSError* _Nullable error)) completion {
++ (NSURLSessionTask*){{#vendorExtensions.x-objc-operationId}}{{vendorExtensions.x-objc-operationId}}{{/vendorExtensions.x-objc-operationId}}{{^vendorExtensions.x-objc-operationId}}{{nickname}}{{#hasParams}}With{{vendorExtensions.firstParamAltName}}{{/hasParams}}{{^hasParams}}WithCompletion:{{/hasParams}}{{/vendorExtensions.x-objc-operationId}}{{#allParams}}{{#secondaryParam}}
+    {{paramName}}{{/secondaryParam}}:({{{dataType}}}){{paramName}}{{/allParams}}
+    {{#hasParams}}completion:{{/hasParams}}(void (^ _Nonnull)({{#returnBaseType}}{{{returnType}}} _Nullable output, {{/returnBaseType}}NSError* _Nullable error))completion
+{
     {{#allParams}}
     {{#required}}
     // verify the required parameter '{{paramName}}' is set
-    if ({{paramName}} == nil) {
+    if ({{paramName}} == nil)
+    {
         NSParameterAssert({{paramName}});
-        if(completion) {
+        if(completion)
+        {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"{{paramName}}"] };
             NSError* error = [NSError errorWithDomain:k{{classname}}ErrorDomain code:k{{classname}}MissingParamErrorCode userInfo:userInfo];
             completion({{#returnType}}nil, {{/returnType}}error);
@@ -50,14 +53,16 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
     {{#pathParams}}
-    if ({{paramName}} != nil) {
+    if ({{paramName}} != nil)
+    {
         pathParams[@"{{baseName}}"] = {{paramName}};
     }
     {{/pathParams}}
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     {{#queryParams}}
-    if ({{paramName}} != nil) {
+    if ({{paramName}} != nil)
+    {
         {{#collectionFormat}}
         queryParams[@"{{baseName}}"] = [[{{classPrefix}}QueryParamCollection alloc] initWithValuesAndFormat: {{paramName}} format: @"{{collectionFormat}}"];
         {{/collectionFormat}}
@@ -73,7 +78,8 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
     {{^bodyParam}}
     {{#formParams}}
     {{#notFile}}
-    if ({{paramName}}) {
+    if ({{paramName}})
+    {
         formParams[@"{{baseName}}"] = {{paramName}};
     }
     {{/notFile}}
@@ -90,11 +96,14 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
                                 formParams:formParams
                                       body:bodyParam
                                    toClass:[{{{returnBaseType}}} class]
-                                completion:^(id data, NSError *error) {
-                                    if(completion) {
+                                completion:^(id data, NSError *error)
+                                {
+                                    if(completion)
+                                    {
                                         completion({{#returnType}}({{{ returnType }}})data, {{/returnType}}error);
                                     }
-                                }];
+                                }
+            ];
 }
 
 {{/operation}}
