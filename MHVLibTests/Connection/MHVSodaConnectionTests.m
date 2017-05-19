@@ -52,7 +52,7 @@ describe(@"MHVSodaConnection", ^
     __block BOOL shouldDeletePersonInfo;
     
     // Response for newApplicationCreationInfoWithCompletion:
-    __block MHVApplicationCreationInfo *info;
+    __block MHVApplicationCreationInfo *appCreationInfo;
     __block NSError *appCreationError;
     
     // Response for provisionApplicationWithViewController
@@ -81,6 +81,11 @@ describe(@"MHVSodaConnection", ^
     __block BOOL didDeleteSessionCredential;
     __block BOOL didDeletePersonInfo;
     
+    // Error validation
+    __block NSError *loginError;
+    __block NSString *errorMessage;
+    
+    // Connection
     __block MHVSodaConnection *connection;
     
     MHVConfiguration *config = [MHVConfiguration new];
@@ -114,9 +119,9 @@ describe(@"MHVSodaConnection", ^
         shouldDeleteApplicationCreationInfo = YES;
         shouldDeleteSessionCredential = YES;
         shouldDeletePersonInfo = YES;
-        info =  [[MHVApplicationCreationInfo alloc] initWithAppInstanceId:[[NSUUID alloc]initWithUUIDString:kDefaultAppIdGuid]
-                                                                                                 sharedSecret:kDefaultSharedSecret
-                                                                                             appCreationToken:kDefaultAppCreationToken];;
+        appCreationInfo =  [[MHVApplicationCreationInfo alloc] initWithAppInstanceId:[[NSUUID alloc]initWithUUIDString:kDefaultAppIdGuid]
+                                                                        sharedSecret:kDefaultSharedSecret
+                                                                    appCreationToken:kDefaultAppCreationToken];;
         appCreationError = nil;
         instanceId = kDefaultInstanceId;
         provisionError = nil;
@@ -139,6 +144,8 @@ describe(@"MHVSodaConnection", ^
         didDeleteApplicationCreationInfo = NO;
         didDeleteSessionCredential = NO;
         didDeletePersonInfo = NO;
+        loginError = nil;
+        errorMessage = nil;
     });
     
     
@@ -205,7 +212,7 @@ describe(@"MHVSodaConnection", ^
     [(id)platformClient stub:@selector(newApplicationCreationInfoWithCompletion:) withBlock:^id(NSArray *params)
     {
         void (^appCreationBlk)(MHVApplicationCreationInfo *applicationCreationInfo, NSError *error) = params[0];
-        appCreationBlk(info, appCreationError);
+        appCreationBlk(appCreationInfo, appCreationError);
         return nil;
     }];
     
@@ -269,12 +276,12 @@ describe(@"MHVSodaConnection", ^
                    });
             });
     
-    context(@"when the authenticateWithViewController is call is successful", ^
+    context(@"when authenticateWithViewController call is successful", ^
             {
+                __block NSError *loginError;
+
                 it(@"should complete with no errors", ^
                    {
-                       __block NSError *loginError;
-                       
                        [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                         {
                             loginError = error;
@@ -337,114 +344,224 @@ describe(@"MHVSodaConnection", ^
                    });
             });
     
-    context(@"when the authenticateWithViewController call fails", ^
+    context(@"when authenticateWithViewController fails to obtain application creation info", ^
             {
-                it(@"should provide an error if the newApplicationCreationInfo call fails", ^
-                   {
-                       info = nil;
-                       NSString *message = @"newApplicationCreationInfo failed";
-                       appCreationError = [NSError error:[NSError MHVUnknownError] withDescription:message];
-                       __block NSError *loginError;
-                       
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
-                        {
-                            loginError = error;
-                        }];
-                       
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:message];
-                   });
+                beforeEach(^
+                           {
+                               appCreationInfo = nil;
+                               errorMessage = @"provisionApplicationWithViewController failed";
+                               appCreationError = [NSError error:[NSError MHVUnknownError] withDescription:errorMessage];
+                               
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
                 
-                it(@"should provide an error if the provisionApplicationWithViewController call fails", ^
+                it(@"should provide the error from the method call", ^
                    {
-                       instanceId = nil;
-                       NSString *message = @"provisionApplicationWithViewController failed";
-                       provisionError = [NSError error:[NSError MHVUnknownError] withDescription:message];
-                       __block NSError *loginError;
-                       
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
-                        {
-                            loginError = error;
-                        }];
-                       
                        [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:message];
-                   });
-                
-                it(@"should provide an error if the getServiceDefinitionWithWithResponseSections call fails", ^
-                   {
-                       serviceDefinition = nil;
-                       NSString *message = @"getServiceDefinitionWithWithResponseSections failed";
-                       serviceDefinitionError = [NSError error:[NSError MHVUnknownError] withDescription:message];
-                       __block NSError *loginError;
-                       
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
-                        {
-                            loginError = error;
-                        }];
-                       
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:message];
-                   });
-                
-                it(@"should provide an error if the getSessionCredentialWithSharedSecret call fails", ^
-                   {
-                       credential = nil;
-                       NSString *message = @"getSessionCredentialWithSharedSecret failed";
-                       credentialError = [NSError error:[NSError MHVUnknownError] withDescription:message];
-                       __block NSError *loginError;
-                       
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
-                        {
-                            loginError = error;
-                        }];
-                       
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:message];
-                   });
-                
-                it(@"should provide an error if the getAuthorizedPeopleWithCompletion call fails", ^
-                   {
-                       personInfo = nil;
-                       NSString *message = @"getAuthorizedPeopleWithCompletion failed";
-                       authorizedPeopleError = [NSError error:[NSError MHVUnknownError] withDescription:message];
-                       __block NSError *loginError;
-                       
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
-                        {
-                            loginError = error;
-                        }];
-                       
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:message];
-                   });
-                
-                it(@"should delete any credential data saved to disk", ^
-                   {
-                       personInfo = nil;
-                       authorizedPeopleError = [NSError MHVUnknownError];
-                       
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
-                       
-                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
-                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
-                       [[expectFutureValue(theValue(didSaveSessionCredential)) shouldEventually] beYes];
-                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
                    });
                 
                 it(@"should have no service instance data", ^
                    {
-                       [[connection.serviceInstance should] beNil];
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
                    });
                 
                 it(@"should have no application id data", ^
                    {
-                       [[connection.applicationId should] beNil];
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
                    });
                 
                 it(@"should have no session credential", ^
                    {
-                       [[connection.sessionCredential should] beNil];
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController fails to provision the application", ^
+            {
+                beforeEach(^
+                           {
+                               instanceId = nil;
+                               errorMessage = @"provisionApplicationWithViewController failed";
+                               provisionError = [NSError error:[NSError MHVUnknownError] withDescription:errorMessage];
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should provide the error from the method call", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController fails to get a valid service definition", ^
+            {
+                beforeEach(^
+                           {
+                               serviceDefinition = nil;
+                               errorMessage = @"getServiceDefinitionWithWithResponseSections failed";
+                               serviceDefinitionError = [NSError error:[NSError MHVUnknownError] withDescription:errorMessage];
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should provide the error from the method call", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController fails to get a valid session credential", ^
+            {
+                beforeEach(^
+                           {
+                               credential = nil;
+                               errorMessage = @"getSessionCredentialWithSharedSecret failed";
+                               credentialError = [NSError error:[NSError MHVUnknownError] withDescription:errorMessage];
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should provide the error from the method call", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController fails to get a valid session credential", ^
+            {
+                beforeEach(^
+                           {
+                               personInfo = nil;
+                               errorMessage = @"getAuthorizedPeopleWithCompletion failed";
+                               authorizedPeopleError = [NSError error:[NSError MHVUnknownError] withDescription:errorMessage];
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should provide the error from the method call", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
                    });
             });
 });
