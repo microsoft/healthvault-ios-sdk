@@ -1,6 +1,6 @@
 //
-// HVFeaturesConstants.m
-// SDKFeatures
+//  MHVThingClient.h
+//  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,12 +15,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#ifndef MHVFeaturesConstants_h
-#define MHVFeaturesConstants_h
 
-#define SHOULD_USE_LEGACY 0
+#import <Foundation/Foundation.h>
+#import "MHVThingClientProtocol.h"
+@protocol MHVConnectionProtocol;
 
-#define SHOULD_USE_MULTI_RECORD 1
+NS_ASSUME_NONNULL_BEGIN
 
-#endif /* MHVFeaturesConstants_h */
+@interface MHVThingClient : NSObject<MHVThingClientProtocol>
+
+- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
+
+@end
+
+NS_ASSUME_NONNULL_END

@@ -18,47 +18,62 @@
 
 #import "MHVClientProtocol.h"
 
-@class MHVThing, MHVThingQuery, MHVThingCollection;
+@class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVThingClientProtocol <NSObject>
 
+/**
+ * Gets the an individual thing by its ID
+ *
+ * @param thingId Identifier of the thing to be retrieved.
+ * @param recordId an authorized person's record ID.
+ *        If nil, the current connection.personInfo.selectedRecordID will be used.
+ *        Multi-Record apps should allow selecting the person record
+ * @param completion Envoked when the operation completes.  
+ *        MHVThing object will have the requested thing, or nil if the thing can not be retrieved.
+ *        NSError object will be nil if there is no error when performing the operation.
+ */
 - (void)getThingWithThingId:(NSUUID *)thingId
-                    recordId:(NSUUID *)recordId
+                    recordId:(NSUUID *_Nullable)recordId
                  completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
 
-- (void)getThingsWithQuery:(MHVThingQuery *)
-                  recordId:(NSUUID *)recordId
+- (void)getThingsWithQuery:(MHVThingQuery *)query
+                  recordId:(NSUUID *_Nullable)recordId
                 completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
 
+- (void)getThingsWithQueries:(MHVThingQueryCollection *)queries
+                    recordId:(NSUUID *_Nullable)recordId
+                  completion:(void(^)(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error))completion;
+
 - (void)getThingsForThingClass:(Class )thingClass
-                         query:(MHVThingQuery *)query
-                      recordId:(NSUUID *)recordId
+                         query:(MHVThingQuery *_Nullable)query
+                      recordId:(NSUUID *_Nullable)recordId
                     completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
 
 - (void)createNewThing:(MHVThing *)thing
-              recordId:(NSUUID *)recordId
+              recordId:(NSUUID *_Nullable)recordId
             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 - (void)createNewThings:(MHVThingCollection *)things
-              recordId:(NSUUID *)recordId
+              recordId:(NSUUID *_Nullable)recordId
             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 - (void)updateThing:(MHVThing *)thing
-           recordId:(NSUUID *)recordId
+           recordId:(NSUUID *_Nullable)recordId
          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 - (void)updateThings:(MHVThingCollection *)things
-            recordId:(NSUUID *)recordId
+            recordId:(NSUUID *_Nullable)recordId
           completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 - (void)removeThing:(MHVThing *)thing
-           recordId:(NSUUID *)recordId
+           recordId:(NSUUID *_Nullable)recordId
          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 - (void)removeThings:(MHVThingCollection *)things
-            recordId:(NSUUID *)recordId
+            recordId:(NSUUID *_Nullable)recordId
           completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 @end

@@ -36,6 +36,7 @@
 #import "MHVPlatformClient.h"
 #import "MHVPersonClient.h"
 #import "MHVValidator.h"
+#import "MHVThingClient.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -49,6 +50,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 @property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
 @property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
 @property (nonatomic, strong) id<MHVPersonClientProtocol> personClient;
+@property (nonatomic, strong) id<MHVThingClientProtocol> thingClient;
 
 // Dependencies
 @property (nonatomic, strong) MHVClientFactory *clientFactory;
@@ -59,6 +61,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 @implementation MHVConnection
 
 @dynamic sessionCredential;
+@dynamic personInfo;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                         clientFactory:(MHVClientFactory *)clientFactory
@@ -142,6 +145,8 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
 {
+    NSString *message = [NSString stringWithFormat:@"Subclasses must implement %@", NSStringFromSelector(_cmd)];\
+    MHVASSERT_MESSAGE(message);
 }
 
 - (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
@@ -183,7 +188,12 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (id<MHVThingClientProtocol> _Nullable)thingClient
 {
-    return nil;
+    if (!_thingClient)
+    {
+        _thingClient = [[MHVThingClient alloc] initWithConnection:self];
+    }
+    
+    return _thingClient;
 }
 
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient
