@@ -49,15 +49,18 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns MHVSystemObject*
 ///
-+ (NSURLSessionTask*)createGoalsWithGoalsWrapper: (MHVGoalsWrapper*) goalsWrapper
-    completionHandler: (void (^ _Nonnull)(MHVSystemObject* _Nullable output, NSError* _Nullable error)) handler {
++ (NSURLSessionTask*)createGoalsWithGoalsWrapper:(MHVGoalsWrapper*)goalsWrapper
+    completion:(void (^ _Nonnull)(MHVSystemObject* _Nullable output, NSError* _Nullable error))completion
+{
     // verify the required parameter 'goalsWrapper' is set
-    if (goalsWrapper == nil) {
+    if (goalsWrapper == nil)
+    {
         NSParameterAssert(goalsWrapper);
-        if(handler) {
+        if(completion)
+        {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"goalsWrapper"] };
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
+            completion(nil, error);
         }
         return nil;
     }
@@ -73,18 +76,20 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     bodyParam = goalsWrapper;
 
     return [MHVRemoteMonitoringClient requestWithPath: resourcePath
-                                    method: @"POST"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                      body: bodyParam
-                                   toClass: [MHVSystemObject class]
-                    //        responseType: [MHVSystemObject* class]
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler((MHVSystemObject*)data, error);
+                                    method:@"POST"
+                                pathParams:pathParams
+                               queryParams:queryParams
+                                formParams:formParams
+                                      body:bodyParam
+                                   toClass:[MHVSystemObject class]
+                                completion:^(id data, NSError *error)
+                                {
+                                    if(completion)
+                                    {
+                                        completion((MHVSystemObject*)data, error);
+                                    }
                                 }
-                            }];
+            ];
 }
 
 ///
@@ -94,15 +99,18 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns MHVSystemObject*
 ///
-+ (NSURLSessionTask*)deleteGoalWithGoalId: (NSString*) goalId
-    completionHandler: (void (^ _Nonnull)(MHVSystemObject* _Nullable output, NSError* _Nullable error)) handler {
++ (NSURLSessionTask*)deleteGoalWithGoalId:(NSString*)goalId
+    completion:(void (^ _Nonnull)(MHVSystemObject* _Nullable output, NSError* _Nullable error))completion
+{
     // verify the required parameter 'goalId' is set
-    if (goalId == nil) {
+    if (goalId == nil)
+    {
         NSParameterAssert(goalId);
-        if(handler) {
+        if(completion)
+        {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"goalId"] };
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
+            completion(nil, error);
         }
         return nil;
     }
@@ -110,7 +118,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals/{goalId}"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
-    if (goalId != nil) {
+    if (goalId != nil)
+    {
         pathParams[@"goalId"] = goalId;
     }
 
@@ -120,18 +129,20 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     return [MHVRemoteMonitoringClient requestWithPath: resourcePath
-                                    method: @"DELETE"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                      body: bodyParam
-                                   toClass: [MHVSystemObject class]
-                    //        responseType: [MHVSystemObject* class]
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler((MHVSystemObject*)data, error);
+                                    method:@"DELETE"
+                                pathParams:pathParams
+                               queryParams:queryParams
+                                formParams:formParams
+                                      body:bodyParam
+                                   toClass:[MHVSystemObject class]
+                                completion:^(id data, NSError *error)
+                                {
+                                    if(completion)
+                                    {
+                                        completion((MHVSystemObject*)data, error);
+                                    }
                                 }
-                            }];
+            ];
 }
 
 ///
@@ -143,18 +154,21 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns MHVGoalsResponse*
 ///
-+ (NSURLSessionTask*)getActiveGoalsWithTypes: (NSString*) types
-    windowTypes: (NSString*) windowTypes
-    completionHandler: (void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error)) handler {
++ (NSURLSessionTask*)getActiveGoalsWithTypes:(NSString*)types
+    windowTypes:(NSString*)windowTypes
+    completion:(void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion
+{
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals/active"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if (types != nil) {
+    if (types != nil)
+    {
         queryParams[@"types"] = types;
     }
-    if (windowTypes != nil) {
+    if (windowTypes != nil)
+    {
         queryParams[@"windowTypes"] = windowTypes;
     }
 
@@ -162,18 +176,20 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     return [MHVRemoteMonitoringClient requestWithPath: resourcePath
-                                    method: @"GET"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                      body: bodyParam
-                                   toClass: [MHVGoalsResponse class]
-                    //        responseType: [MHVGoalsResponse* class]
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler((MHVGoalsResponse*)data, error);
+                                    method:@"GET"
+                                pathParams:pathParams
+                               queryParams:queryParams
+                                formParams:formParams
+                                      body:bodyParam
+                                   toClass:[MHVGoalsResponse class]
+                                completion:^(id data, NSError *error)
+                                {
+                                    if(completion)
+                                    {
+                                        completion((MHVGoalsResponse*)data, error);
+                                    }
                                 }
-                            }];
+            ];
 }
 
 ///
@@ -183,15 +199,18 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns MHVGoal*
 ///
-+ (NSURLSessionTask*)getGoalByIdWithGoalId: (NSString*) goalId
-    completionHandler: (void (^ _Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error)) handler {
++ (NSURLSessionTask*)getGoalByIdWithGoalId:(NSString*)goalId
+    completion:(void (^ _Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error))completion
+{
     // verify the required parameter 'goalId' is set
-    if (goalId == nil) {
+    if (goalId == nil)
+    {
         NSParameterAssert(goalId);
-        if(handler) {
+        if(completion)
+        {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"goalId"] };
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
+            completion(nil, error);
         }
         return nil;
     }
@@ -199,7 +218,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals/{goalId}"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
-    if (goalId != nil) {
+    if (goalId != nil)
+    {
         pathParams[@"goalId"] = goalId;
     }
 
@@ -209,18 +229,20 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     return [MHVRemoteMonitoringClient requestWithPath: resourcePath
-                                    method: @"GET"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                      body: bodyParam
-                                   toClass: [MHVGoal class]
-                    //        responseType: [MHVGoal* class]
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler((MHVGoal*)data, error);
+                                    method:@"GET"
+                                pathParams:pathParams
+                               queryParams:queryParams
+                                formParams:formParams
+                                      body:bodyParam
+                                   toClass:[MHVGoal class]
+                                completion:^(id data, NSError *error)
+                                {
+                                    if(completion)
+                                    {
+                                        completion((MHVGoal*)data, error);
+                                    }
                                 }
-                            }];
+            ];
 }
 
 ///
@@ -236,26 +258,31 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns MHVGoalsResponse*
 ///
-+ (NSURLSessionTask*)getGoalsWithTypes: (NSString*) types
-    windowTypes: (NSString*) windowTypes
-    startDate: (NSDate*) startDate
-    endDate: (NSDate*) endDate
-    completionHandler: (void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error)) handler {
++ (NSURLSessionTask*)getGoalsWithTypes:(NSString*)types
+    windowTypes:(NSString*)windowTypes
+    startDate:(NSDate*)startDate
+    endDate:(NSDate*)endDate
+    completion:(void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion
+{
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if (types != nil) {
+    if (types != nil)
+    {
         queryParams[@"types"] = types;
     }
-    if (windowTypes != nil) {
+    if (windowTypes != nil)
+    {
         queryParams[@"windowTypes"] = windowTypes;
     }
-    if (startDate != nil) {
+    if (startDate != nil)
+    {
         queryParams[@"startDate"] = startDate;
     }
-    if (endDate != nil) {
+    if (endDate != nil)
+    {
         queryParams[@"endDate"] = endDate;
     }
 
@@ -263,18 +290,20 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     return [MHVRemoteMonitoringClient requestWithPath: resourcePath
-                                    method: @"GET"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                      body: bodyParam
-                                   toClass: [MHVGoalsResponse class]
-                    //        responseType: [MHVGoalsResponse* class]
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler((MHVGoalsResponse*)data, error);
+                                    method:@"GET"
+                                pathParams:pathParams
+                               queryParams:queryParams
+                                formParams:formParams
+                                      body:bodyParam
+                                   toClass:[MHVGoalsResponse class]
+                                completion:^(id data, NSError *error)
+                                {
+                                    if(completion)
+                                    {
+                                        completion((MHVGoalsResponse*)data, error);
+                                    }
                                 }
-                            }];
+            ];
 }
 
 ///
@@ -284,15 +313,18 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns MHVGoalsResponse*
 ///
-+ (NSURLSessionTask*)patchGoalsWithGoalsWrapper: (MHVGoalsWrapper*) goalsWrapper
-    completionHandler: (void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error)) handler {
++ (NSURLSessionTask*)patchGoalsWithGoalsWrapper:(MHVGoalsWrapper*)goalsWrapper
+    completion:(void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion
+{
     // verify the required parameter 'goalsWrapper' is set
-    if (goalsWrapper == nil) {
+    if (goalsWrapper == nil)
+    {
         NSParameterAssert(goalsWrapper);
-        if(handler) {
+        if(completion)
+        {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"goalsWrapper"] };
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
+            completion(nil, error);
         }
         return nil;
     }
@@ -308,18 +340,20 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     bodyParam = goalsWrapper;
 
     return [MHVRemoteMonitoringClient requestWithPath: resourcePath
-                                    method: @"PATCH"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                      body: bodyParam
-                                   toClass: [MHVGoalsResponse class]
-                    //        responseType: [MHVGoalsResponse* class]
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler((MHVGoalsResponse*)data, error);
+                                    method:@"PATCH"
+                                pathParams:pathParams
+                               queryParams:queryParams
+                                formParams:formParams
+                                      body:bodyParam
+                                   toClass:[MHVGoalsResponse class]
+                                completion:^(id data, NSError *error)
+                                {
+                                    if(completion)
+                                    {
+                                        completion((MHVGoalsResponse*)data, error);
+                                    }
                                 }
-                            }];
+            ];
 }
 
 ///
@@ -329,15 +363,18 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 ///
 ///  @returns MHVGoal*
 ///
-+ (NSURLSessionTask*)putGoalWithGoal: (MHVGoal*) goal
-    completionHandler: (void (^ _Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error)) handler {
++ (NSURLSessionTask*)putGoalWithGoal:(MHVGoal*)goal
+    completion:(void (^ _Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error))completion
+{
     // verify the required parameter 'goal' is set
-    if (goal == nil) {
+    if (goal == nil)
+    {
         NSParameterAssert(goal);
-        if(handler) {
+        if(completion)
+        {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"goal"] };
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
-            handler(nil, error);
+            completion(nil, error);
         }
         return nil;
     }
@@ -353,18 +390,20 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     bodyParam = goal;
 
     return [MHVRemoteMonitoringClient requestWithPath: resourcePath
-                                    method: @"PUT"
-                                pathParams: pathParams
-                               queryParams: queryParams
-                                formParams: formParams
-                                      body: bodyParam
-                                   toClass: [MHVGoal class]
-                    //        responseType: [MHVGoal* class]
-                           completionBlock: ^(id data, NSError *error) {
-                                if(handler) {
-                                    handler((MHVGoal*)data, error);
+                                    method:@"PUT"
+                                pathParams:pathParams
+                               queryParams:queryParams
+                                formParams:formParams
+                                      body:bodyParam
+                                   toClass:[MHVGoal class]
+                                completion:^(id data, NSError *error)
+                                {
+                                    if(completion)
+                                    {
+                                        completion((MHVGoal*)data, error);
+                                    }
                                 }
-                            }];
+            ];
 }
 
 

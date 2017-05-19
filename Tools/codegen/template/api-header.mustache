@@ -24,9 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:{{{code}}} message:"{{{message}}}"{{#hasMore}},{{/hasMore}}{{/responses}}
 ///
 /// @return {{{returnType}}}
-+ (NSURLSessionTask* _Nullable){{#vendorExtensions.x-objc-operationId}}{{vendorExtensions.x-objc-operationId}}{{/vendorExtensions.x-objc-operationId}}{{^vendorExtensions.x-objc-operationId}}{{nickname}}{{#hasParams}}With{{vendorExtensions.firstParamAltName}}{{/hasParams}}{{^hasParams}}WithCompletionHandler: {{/hasParams}}{{/vendorExtensions.x-objc-operationId}}{{#allParams}}{{#secondaryParam}}
-    {{paramName}}{{/secondaryParam}}: ({{{dataType}}} {{^required}}_Nullable{{/required}}) {{paramName}}{{/allParams}}
-    {{#hasParams}}completionHandler: {{/hasParams}}(void (^ _Nonnull)({{#returnBaseType}}{{{returnType}}} _Nullable output, {{/returnBaseType}}NSError* _Nullable error)) handler;
++ (NSURLSessionTask* _Nullable){{#vendorExtensions.x-objc-operationId}}{{vendorExtensions.x-objc-operationId}}{{/vendorExtensions.x-objc-operationId}}{{^vendorExtensions.x-objc-operationId}}{{nickname}}{{#hasParams}}With{{vendorExtensions.firstParamAltName}}{{/hasParams}}{{^hasParams}}WithCompletion:{{/hasParams}}{{/vendorExtensions.x-objc-operationId}}{{#allParams}}{{#secondaryParam}}
+    {{paramName}}{{/secondaryParam}}:({{{dataType}}} {{^required}}_Nullable{{/required}}){{paramName}}{{/allParams}}
+    {{#hasParams}}completion:{{/hasParams}}(void (^ _Nonnull)({{#returnBaseType}}{{{returnType}}} _Nullable output, {{/returnBaseType}}NSError* _Nullable error))completion;
 
 {{newline}}
 {{/operation}}
