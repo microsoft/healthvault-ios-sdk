@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
                            formParams:(NSDictionary * _Nullable)formParams
                                  body:(id _Nullable)body
                               toClass:(Class)toClass
-                      completionBlock:(void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completionBlock;
+                           completion:(void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completion;
 
 
 @end

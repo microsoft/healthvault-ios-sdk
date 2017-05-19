@@ -31,7 +31,7 @@
                            formParams:(NSDictionary * _Nullable)formParams
                                  body:(id _Nullable)body
                               toClass:(Class)toClass
-                      completionBlock:(void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completionBlock
+                           completion:(void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completion
 {
     if (pathParams != nil) {
         NSMutableString * queryPath = [NSMutableString stringWithString:path];
@@ -54,12 +54,12 @@
             if (!response.hasError) {
                 NSString *body = response.responseAsString;
                 id result = [MHVJsonSerializer deserialize:body toClass:[toClass class] shouldCache:NO];
-                completionBlock(result, error);
+                completion(result, error);
             } else {
-                completionBlock(nil, error);
+                completion(nil, error);
             }
         } else {
-            completionBlock(nil, error);
+            completion(nil, error);
         }
      }];
     
