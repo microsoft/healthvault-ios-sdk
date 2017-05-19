@@ -17,12 +17,33 @@
 // limitations under the License.
 
 #import "MHVApplicationCreationInfo.h"
+#import "MHVValidator.h"
 
 static const xmlChar *x_element_app_id = XMLSTRINGCONST("app-id");
 static const xmlChar *x_element_shared_secret = XMLSTRINGCONST("shared-secret");
 static const xmlChar *x_element_app_token = XMLSTRINGCONST("app-token");
 
 @implementation MHVApplicationCreationInfo
+
+- (instancetype)initWithAppInstanceId:(NSUUID *)appInstanceId
+                         sharedSecret:(NSString *)sharedSecret
+                     appCreationToken:(NSString *)appCreationToken
+{
+    MHVASSERT_PARAMETER(appInstanceId);
+    MHVASSERT_PARAMETER(sharedSecret);
+    MHVASSERT_PARAMETER(appCreationToken);
+    
+    self = [super init];
+    
+    if (self)
+    {
+        _appInstanceId = appInstanceId;
+        _sharedSecret = sharedSecret;
+        _appCreationToken = appCreationToken;
+    }
+    
+    return self;
+}
 
 - (void)deserialize:(XReader *)reader
 {

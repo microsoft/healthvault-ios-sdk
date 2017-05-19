@@ -7,11 +7,7 @@
 //
 
 #import "MHVRecordSelectorViewController.h"
-#import "MHVLib.h"
-#import "MHVSodaConnectionProtocol.h"
-#import "MHVConnectionFactory.h"
 #import "MHVFeaturesConfiguration.h"
-#import "MHVConnectionFactoryProtocol.h"
 #import "MHVTypeListViewController.h"
 
 @interface MHVRecordSelectorViewController ()

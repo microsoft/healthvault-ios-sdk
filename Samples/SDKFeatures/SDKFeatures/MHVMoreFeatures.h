@@ -18,7 +18,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVLib.h"
 #import "MHVStatusLabel.h"
 
 @class MHVTypeListViewController;
