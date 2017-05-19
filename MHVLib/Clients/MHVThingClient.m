@@ -418,6 +418,175 @@
      }];
 }
 
+#pragma mark - Blobs
+
+- (void)refreshBlobsForThing:(MHVThing *)thing
+                    recordId:(NSUUID *)recordId
+                  completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion
+{
+    if (!recordId)
+    {
+        recordId = self.connection.personInfo.selectedRecordID;
+    }
+    
+    MHVASSERT_PARAMETER(thing);
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!thing || !recordId)
+    {
+        if (completion)
+        {
+            completion(nil, [NSError MVHInvalidParameter]);
+        }
+        return;
+    }
+    
+    [self refreshBlobsForThings:[[MHVThingCollection alloc] initWithThing:thing]
+                       recordId:recordId
+                     completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            completion(nil, error);
+        }
+        else
+        {
+            completion(things.firstObject, nil);
+        }
+    }];
+}
+
+- (void)refreshBlobsForThings:(MHVThingCollection *)things
+                     recordId:(NSUUID *)recordId
+                   completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
+{
+    if (!recordId)
+    {
+        recordId = self.connection.personInfo.selectedRecordID;
+    }
+    
+    MHVASSERT_PARAMETER(things);
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!things || !recordId)
+    {
+        if (completion)
+        {
+            completion(nil, [NSError MVHInvalidParameter]);
+        }
+        return;
+    }
+    
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[things arrayOfThingIDs]];
+    query.view.sections = MHVThingSection_Standard | MHVThingSection_Blobs;
+    
+    [self getThingsWithQuery:query
+                    recordId:recordId
+                  completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+    {
+        if (completion)
+        {
+            completion(things, error);
+        }
+    }];
+}
+
+- (void)downloadBlobData:(MHVBlobPayloadThing *)blobPayloadThing
+                recordId:(NSUUID *_Nullable)recordId
+              completion:(void(^)(NSData *_Nullable data, NSError *_Nullable error))completion
+{
+    if (!recordId)
+    {
+        recordId = self.connection.personInfo.selectedRecordID;
+    }
+    
+    MHVASSERT_PARAMETER(blobPayloadThing);
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!blobPayloadThing || !recordId)
+    {
+        if (completion)
+        {
+            completion(nil, [NSError MVHInvalidParameter]);
+        }
+        return;
+    }
+    
+    MHVMethod *method = [MHVMethod httpMethodWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]];
+    
+    //Download from the URL
+    [self.connection executeMethod:method
+                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+         }
+         else
+         {
+             completion(response.responseData, nil);
+         }
+     }];
+}
+
+- (void)downloadBlob:(MHVBlobPayloadThing *)blobPayloadThing
+          toFilePath:(NSString *)filePath
+            recordId:(NSUUID *_Nullable)recordId
+          completion:(void(^)(NSError *_Nullable error))completion
+{
+    if (!recordId)
+    {
+        recordId = self.connection.personInfo.selectedRecordID;
+    }
+    
+    MHVASSERT_PARAMETER(blobPayloadThing);
+    MHVASSERT_PARAMETER(filePath);
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!blobPayloadThing || !filePath || !recordId)
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter]);
+        }
+        return;
+    }
+    
+    MHVMethod *method = [MHVMethod httpMethodWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
+                                          toFilePath:filePath];
+    
+    //Download from the URL
+    [self.connection executeMethod:method
+                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         completion(error);
+     }];
+}
+
 #pragma mark - Internal methods
 
 - (MHVThingQueryResults *)thingQueryResultsFromResponse:(MHVServiceResponse *)response

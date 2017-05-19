@@ -13,11 +13,13 @@
 #import "MHVFeaturesConfiguration.h"
 #import "MHVConnectionFactoryProtocol.h"
 #import "MHVTypeListViewController.h"
+#import "MHVPersonClientProtocol.h"
 
 @interface MHVRecordSelectorViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
+@property (nonatomic, strong) NSCache *cache;
 
 @end
 
@@ -29,6 +31,8 @@
     // Do any additional setup after loading the view from its nib.
 
     self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    self.cache = [[NSCache alloc] init];
 
     self.navigationItem.title = NSLocalizedString(@"Select Person", @"Title to select person to view");
 }
@@ -55,6 +59,33 @@
     MHVRecord *record = self.connection.personInfo.records[indexPath.row];
     
     cell.textLabel.text = record.displayName;
+    
+    cell.tag = indexPath.hash;
+    
+    // Cache, so don't have to reload image if it was already retrieved
+    if ([self.cache objectForKey:record.ID])
+    {
+        cell.imageView.image = [self.cache objectForKey:record.ID];
+    }
+    else
+    {
+        [self.connection.personClient getPersonalImageWithRecordId:record.ID
+                                                        completion:^(UIImage * _Nullable image, NSError * _Nullable error)
+         {
+             // Use tag to make sure cell hasn't been re-used
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^
+              {
+                  [self.cache setObject:image forKey:record.ID];
+                  
+                  if (image && cell.tag == indexPath.hash)
+                  {
+                      cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+                      cell.imageView.image = image;
+                      [cell setNeedsUpdateConstraints];
+                  }
+              }];
+         }];
+    }
     
     return cell;
 }

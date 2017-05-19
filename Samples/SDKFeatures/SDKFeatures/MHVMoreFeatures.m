@@ -45,7 +45,7 @@
                  
                  [[MHVClient current] resetProvisioning];  // Removes local state
                  
-                 [m_controller.navigationController popViewControllerAnimated:TRUE];
+                 [m_controller.navigationController popToRootViewControllerAnimated:TRUE];
              }];
 #else
              id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
@@ -54,7 +54,7 @@
              {
                  [[NSOperationQueue mainQueue] addOperationWithBlock:^
                  {
-                     [m_controller.navigationController popViewControllerAnimated:TRUE];
+                     [m_controller.navigationController popToRootViewControllerAnimated:YES];
                  }];
              }];
 #endif

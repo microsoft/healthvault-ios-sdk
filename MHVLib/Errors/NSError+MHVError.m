@@ -75,15 +75,6 @@
                                       }];
 }
 
-+ (NSError *)MHVNoResultsError
-{
-    return [NSError errorWithDomain:kMHVErrorDomain
-                               code:MHVErrorTypeNoResults
-                           userInfo:@{
-                                      NSLocalizedFailureReasonErrorKey : @"Could not extract results from HealthVault response."
-                                      }];
-}
-
 + (NSError *)MHVUnknownError
 {
     return [NSError errorWithDomain:kMHVErrorDomain

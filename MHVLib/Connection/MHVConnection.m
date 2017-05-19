@@ -37,6 +37,7 @@
 #import "MHVPersonClient.h"
 #import "MHVValidator.h"
 #import "MHVThingClient.h"
+#import "MHVHttpServiceResponse.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -205,6 +206,22 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeMethodRequest:(MHVMethodRequest *)request
 {
+    if (request.method.type == MHVMethodTypeHealthVaultXML)
+    {
+        [self executeXMLMethodRequest:request];
+    }
+    else if (request.method.type == MHVMethodTypeHTTPData)
+    {
+        [self executeHTTPDataMethodRequest:request];
+    }
+    else if (request.method.type == MHVMethodTypeHTTPFile)
+    {
+        [self executeHTTPFileMethodRequest:request];
+    }
+}
+
+- (void)executeXMLMethodRequest:(MHVMethodRequest *)request
+{
     [self.httpService sendRequestForURL:self.serviceInstance.healthServiceUrl
                                    body:[self messageForMethod:request.method]
                                 headers:[self headersForMethod:request.method]
@@ -230,12 +247,48 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         }
         else
         {
-            [self parseResponse:response request:request completion:request.completion];
+            [self parseXMLResponse:response request:request completion:request.completion];
         }
         
     }];
-    
-    
+}
+
+- (void)executeHTTPDataMethodRequest:(MHVMethodRequest *)request
+{
+    [self.httpService sendRequestForURL:request.method.url
+                                   body:nil
+                                headers:nil
+                             completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         // PlainHTTP method does not include authorization headers, so no need to refreshToken
+         if (error)
+         {
+             if (request.completion)
+             {
+                 request.completion(nil, error);
+             }
+         }
+         else
+         {
+             if (request.completion)
+             {
+                 request.completion([[MHVServiceResponse alloc] initWithDataWebResponse:response], nil);
+             }
+         }
+     }];
+}
+
+- (void)executeHTTPFileMethodRequest:(MHVMethodRequest *)request
+{
+    [self.httpService downloadFileWithUrl:request.method.url
+                               toFilePath:request.method.filePath
+                               completion:^(NSError * _Nullable error)
+     {
+         if (request.completion)
+         {
+             request.completion(nil, error);
+         }
+     }];
 }
 
 - (NSString *)messageForMethod:(MHVMethod *)method
@@ -257,9 +310,9 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     return @{kCorrelationIdContextKey : correlationId.UUIDString};
 }
 
-- (void)parseResponse:(MHVHttpServiceResponse *)response
-              request:(MHVMethodRequest *)request
-           completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
+- (void)parseXMLResponse:(MHVHttpServiceResponse *)response
+                 request:(MHVMethodRequest *)request
+              completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
     // If there is no completion, there is no need to parse the response.
     if (!completion)
@@ -267,7 +320,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         return;
     }
     
-    MHVServiceResponse *serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:response];
+    MHVServiceResponse *serviceResponse = [[MHVServiceResponse alloc] initWithXmlWebResponse:response];
     
     NSError *error = serviceResponse.error;
     

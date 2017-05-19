@@ -42,6 +42,8 @@
 @property (nonatomic, strong) MHVFeatureActions *actions;
 @property (nonatomic, strong) MHVMoreFeatures *features;
 
+@property (nonatomic, assign) BOOL hasLoadedPersonImage;
+
 @end
 
 @implementation MHVTypeListViewController
@@ -57,9 +59,20 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
-    [self downloadPersonImage];
-
     [self addStandardFeatures];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    // Load image after view has appeared to avoid flickering if image set while view is animating
+    if (!self.hasLoadedPersonImage)
+    {
+        self.hasLoadedPersonImage = YES;
+        
+        [self downloadPersonImage];
+    }
 }
 
 - (NSString *)personName
@@ -94,13 +107,13 @@
 - (void)downloadPersonImage
 {
 #if SHOULD_USE_LEGACY
-    [self downloadPersonImageLegacy];
+    [self downloadPersonalImageLegacy];
 #else
-    [self downloadPersonImageNew];
+    [self downloadPersonalImageNew];
 #endif
 }
 
-- (void)downloadPersonImageLegacy
+- (void)downloadPersonalImageLegacy
 {
     [[MHVClient current].currentRecord downloadPersonalImageWithCallback:^(MHVTask *task)
      {
@@ -110,15 +123,11 @@
              
              if (task.result)
              {
-                 UIImage *personImage = [UIImage imageWithData:task.result];
+                 UIImage *image = [UIImage imageWithData:task.result];
                  
-                 if (personImage)
+                 if (image)
                  {
-                     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-                     imageView.image = personImage;
-                     imageView.contentMode = UIViewContentModeScaleAspectFit;
-                     
-                     self.navigationItem.titleView = imageView;
+                     [self setTitleViewImage:image];
                  }
              }
          }
@@ -128,19 +137,33 @@
      }];
 }
 
-- (void)downloadPersonImageNew
+- (void)downloadPersonalImageNew
 {
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];    
-    query.view.sections = MHVThingSection_Blobs;
-
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    [connection.thingClient getThingsWithQuery:query
-                                      recordId:connection.personInfo.selectedRecordID
-                                    completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
-    {
-        NSLog(@"Blobs In Progress... Thing Count: %li", things.count);
+    [connection.personClient getPersonalImageWithRecordId:connection.personInfo.selectedRecordID
+                                               completion:^(UIImage * _Nullable image, NSError * _Nullable error)
+     {
+        if (image)
+        {
+            [self setTitleViewImage:image];
+        }
     }];
+}
+
+- (void)setTitleViewImage:(UIImage *)image
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    imageView.image = image;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    UIView *imageContainer = [[UIView alloc] initWithFrame:imageView.bounds];
+    [imageContainer addSubview:imageView];
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+     {
+         self.navigationItem.titleView = imageContainer;
+     }];
 }
 
 // -------------------------------------
@@ -169,11 +192,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    [self tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

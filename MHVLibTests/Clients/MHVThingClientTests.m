@@ -23,6 +23,7 @@
 #import "MHVConnectionProtocol.h"
 #import "MHVMethod.h"
 #import "MHVAllergy.h"
+#import "MHVFile.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVThingClientTests)
@@ -50,11 +51,21 @@ describe(@"MHVThingClient", ^
             allergy.reaction = [[MHVCodableValue alloc] initWithText:@"Itching"];
             
             MHVThing *thing = [[MHVThing alloc] initWithTypedData:allergy];
-            thing.key = [[MHVThingKey alloc] initWithID:@"ThingKey" andVersion:@"ThingVersion"];
+            thing.key = [[MHVThingKey alloc] initWithID:@"AllergyThingKey" andVersion:@"AllergyVersion"];
             
             return thing;
         });
-    
+
+    let(fileThing, ^
+        {
+            MHVFile *file = [[MHVFile alloc] init];
+            
+            MHVThing *thing = [[MHVThing alloc] initWithTypedData:file];
+            thing.key = [[MHVThingKey alloc] initWithID:@"FileThingKey" andVersion:@"FileVersion"];
+            
+            return thing;
+        });
+
     context(@"GetThings", ^
             {
                 it(@"should get with thing id", ^
@@ -67,7 +78,7 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><group><id>10000000-1000-1000-1000-100000000000</id><format><section>core</section><xml/></format></group></info>"];
                    });
   
@@ -82,7 +93,7 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><group><filter><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><thing-state>Active</thing-state></filter>"\
                         "<format><section>core</section><xml/></format></group></info>"];
                    });
@@ -101,7 +112,7 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"PutThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><thing><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><flags>0</flags>"\
                         "<data-xml><allergy><name><text>Bees</text></name><reaction><text>Itching</text></reaction></allergy><common/></data-xml></thing></info>"];
                    });
@@ -116,8 +127,8 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"PutThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><thing><thing-id version-stamp=\"ThingVersion\">ThingKey</thing-id>"\
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.parameters should] equal:@"<info><thing><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id>"\
                         "<type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><flags>0</flags><data-xml>"\
                         "<allergy><name><text>Bees</text></name><reaction><text>Itching</text></reaction></allergy><common/></data-xml></thing></info>"];
                    });
@@ -135,8 +146,39 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"RemoveThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><thing-id version-stamp=\"ThingVersion\">ThingKey</thing-id></info>"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.parameters should] equal:@"<info><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id></info>"];
+                   });
+            });
+
+    context(@"RefreshBlobs", ^
+            {
+                it(@"should refresh a thing", ^
+                   {
+                       [thingClient refreshBlobsForThing:allergyThing
+                                                recordId:recordId
+                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       
+                       [[method.name should] equal:@"GetThings"];
+                       [[theValue(method.isAnonymous) should] beNo];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.parameters should] equal:@"<info><group><id>AllergyThingKey</id><format><section>core</section><section>blobpayload</section><xml/></format></group></info>"];
+                   });
+
+                it(@"should refresh a thing collection", ^
+                   {
+                       [thingClient refreshBlobsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
+                                                 recordId:recordId
+                                               completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       
+                       [[method.name should] equal:@"GetThings"];
+                       [[theValue(method.isAnonymous) should] beNo];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.parameters should] equal:@"<info><group><id>AllergyThingKey</id><id>FileThingKey</id><format><section>core</section><section>blobpayload</section><xml/></format></group></info>"];
                    });
             });
 });

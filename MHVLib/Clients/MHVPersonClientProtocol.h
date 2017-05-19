@@ -18,7 +18,7 @@
 
 #import "MHVClientProtocol.h"
 
-@class MHVApplicationSettings, MHVPersonInfo, MHVHealthRecordInfo, MHVGetAuthorizedPeopleSettings;
+@class MHVApplicationSettings, MHVPersonInfo, MHVHealthRecordInfo, MHVGetAuthorizedPeopleSettings, UIImage;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -50,6 +50,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
                                completion:(void(^)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion;
+
+/**
+ * Gets the personal image for a record
+ *
+ * @param recordId The record ID to retrieve the personal image
+ * @param completion Envoked when the operation completes.
+ *        UIImage image for the person if successful.
+ *        NSError object will be nil if there is no error when performing the operation.
+ *        Both values can be nil if no personal image is set.
+ */
+- (void)getPersonalImageWithRecordId:(NSUUID *)recordId
+                          completion:(void(^)(UIImage *_Nullable image, NSError *_Nullable error))completion;
 
 @end
 
