@@ -17,12 +17,7 @@
 // limitations under the License.
 
 #import "MHVTypeViewController.h"
-#import "MHVSodaConnectionProtocol.h"
-#import "MHVPersonClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVConnectionFactory.h"
 #import "MHVFeaturesConfiguration.h"
-#import "MHVConnectionFactoryProtocol.h"
 
 @interface MHVTypeViewController ()
 

@@ -32,6 +32,7 @@
 #import "MHVServiceDefinition.h"
 #import "MHVSessionCredentialClientProtocol.h"
 #import "MHVAuthSession.h"
+#import "MHVClientFactory.h"
 
 static NSString *const kServiceInstanceKey = @"ServiceInstance";
 static NSString *const kApplicationCreationInfoKey = @"ApplicationCreationInfo";
@@ -45,6 +46,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 @property (nonatomic, strong) dispatch_queue_t authQueue;
 @property (nonatomic, strong) MHVPersonInfo *personInfo;
 @property (nonatomic, strong) MHVApplicationCreationInfo *applicationCreationInfo;
+@property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
 
 // Dependencies
 @property (nonatomic, strong) id<MHVKeychainServiceProtocol> keychainService;
@@ -75,6 +77,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     {
         _keychainService = keychainService;
         _shellAuthService = shellAuthService;
+        _credentialClient = [clientFactory credentialClientWithConnection:self];
         _authQueue = dispatch_queue_create("MHVSodaConnection.authQueue", DISPATCH_QUEUE_SERIAL);
     }
     

@@ -21,10 +21,6 @@
 #import "MHVTypeListViewController.h"
 #import "MHVUIAlert.h"
 
-#import "MHVConnectionFactory.h"
-#import "MHVConnectionFactoryProtocol.h"
-#import "MHVSodaConnectionProtocol.h"
-
 @implementation MHVMoreFeatures
 
 @synthesize controller = m_controller;  // Weak ref

@@ -17,7 +17,6 @@
 // limitations under the License.
 //
 
-#import "MHVLib.h"
 #import "MHVFeatureActions.h"
 
 @class MHVTypeViewController;

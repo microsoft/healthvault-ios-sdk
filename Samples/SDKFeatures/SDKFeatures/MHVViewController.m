@@ -13,13 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVLib.h"
 #import "MHVViewController.h"
 #import "MHVTypeListViewController.h"
-
-#import "MHVSodaConnectionProtocol.h"
-#import "MHVConnectionFactoryProtocol.h"
-#import "MHVConnectionFactory.h"
 #import "MHVRecordSelectorViewController.h"
 
 @interface MHVViewController ()
