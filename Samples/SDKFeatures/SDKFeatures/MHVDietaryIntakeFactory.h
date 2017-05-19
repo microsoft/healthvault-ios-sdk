@@ -18,7 +18,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVLib.h"
 #import "MHVThingTestExtensions.h"
 
 @interface MHVDietaryIntake (MHVFactoryMethods)

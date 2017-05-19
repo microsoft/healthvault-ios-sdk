@@ -30,7 +30,6 @@
 #import "MHVErrorConstants.h"
 #import "MHVServiceResponse.h"
 #import "MHVMethodRequest.h"
-#import "MHVSessionCredentialClientProtocol.h"
 #import "MHVClientFactory.h"
 #import "MHVApplicationCreationInfo.h"
 #import "MHVPlatformClient.h"
@@ -47,7 +46,6 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 @property (nonatomic, strong) NSMutableArray<MHVMethodRequest *> *requests;
 
 // Clients
-@property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
 @property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
 @property (nonatomic, strong) id<MHVPersonClientProtocol> personClient;
 @property (nonatomic, strong) id<MHVThingClientProtocol> thingClient;
@@ -99,45 +97,18 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     
     dispatch_async(self.completionQueue, ^
     {
-        MHVMethodRequest *request = [[MHVMethodRequest alloc] initWithMethod:method completion:completion];
-        
-        if (!request.method.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
+        if (!method.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
         {
-            [self.requests addObject:request];
-            
-            if (self.requests.count > 1)
+            if (completion)
             {
-                return;
+                completion(nil, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The connection is not authenticated. You must first call authenticateWithViewController:completion: before this operation can be performed."]);
             }
             
-            [self authenticateWithViewController:nil completion:^(NSError * _Nullable error)
-            {
-                if (error)
-                {
-                    if (completion)
-                    {
-                        completion(nil, error);
-                    }
-                    
-                    return;
-                }
-                
-                dispatch_async(self.completionQueue, ^
-                {
-                    while (self.requests.count > 0)
-                    {
-                        MHVMethodRequest *request = [self.requests firstObject];
-                        
-                        [self.requests removeObject:request];
-                        
-                        [self executeMethodRequest:request];
-                    }
-                });
-            }];
+            return;
         }
         else
         {
-            [self executeMethodRequest:request];
+            [self executeMethodRequest:[[MHVMethodRequest alloc] initWithMethod:method completion:completion]];
         }
     });
     
@@ -154,16 +125,6 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 {
     NSString *message = [NSString stringWithFormat:@"Subclasses must implement %@", NSStringFromSelector(_cmd)];\
     MHVASSERT_MESSAGE(message);
-}
-
-- (id<MHVSessionCredentialClientProtocol>)credentialClient
-{
-    if (!_credentialClient)
-    {
-        _credentialClient = [self.clientFactory credentialClientWithConnection:self];
-    }
-    
-    return _credentialClient;
 }
 
 - (id<MHVPersonClientProtocol> _Nullable)personClient;

@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "MHVLib.h"
 #import "MHVThingDataTypedFactory.h"
 #import "MHVStatusLabel.h"
 #import "MHVThingDataTypedFeatures.h"

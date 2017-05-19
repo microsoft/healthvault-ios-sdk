@@ -18,7 +18,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MHVLib.h"
 
 @interface MHVFeatureActions : NSObject<UIActionSheetDelegate>
 {

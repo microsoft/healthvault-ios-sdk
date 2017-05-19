@@ -16,7 +16,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVLib.h"
 #import "MHVTypeListViewController.h"
 #import "MHVDietaryIntakeFactory.h"
 #import "MHVEmotionalStateFactory.h"
@@ -28,13 +27,7 @@
 #import "MHVCholesterolFactory.h"
 #import "MHVWeightFactory.h"
 #import "MHVUIAlert.h"
-#import "MHVConnectionFactoryProtocol.h"
-#import "MHVSodaConnectionProtocol.h"
-#import "MHVPersonClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVConnectionFactory.h"
 #import "MHVFeaturesConfiguration.h"
-#import "MHVConnectionFactoryProtocol.h"
 
 @interface MHVTypeListViewController ()
 
