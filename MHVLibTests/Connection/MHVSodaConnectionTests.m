@@ -20,6 +20,7 @@
 #import "MHVSessionCredential.h"
 #import "MHVPlatformClientProtocol.h"
 #import "MHVApplicationCreationInfo.h"
+#import "MHVClientFactory.h"
 
 #import "Kiwi.h"
 
@@ -28,14 +29,18 @@ SPEC_BEGIN(MHVSodaConnectionTests)
 describe(@"MHVSodaConnection", ^
 {
     MHVConfiguration *config = [MHVConfiguration new];
-    id<MHVSessionCredentialClientProtocol> credentialClient = [KWMock mockForProtocol:@protocol(MHVSessionCredentialClientProtocol)];
+    MHVClientFactory *clientFactory = [MHVClientFactory mock];
     id<MHVHttpServiceProtocol> httpservice = [KWMock mockForProtocol:@protocol(MHVHttpServiceProtocol)];
     id<MHVKeychainServiceProtocol> keychainService = [KWMock mockForProtocol:@protocol(MHVKeychainServiceProtocol)];
     id<MHVShellAuthServiceProtocol> authService = [KWMock mockForProtocol:@protocol(MHVShellAuthServiceProtocol)];
+    
+    
     id<MHVPlatformClientProtocol> platformClient = [KWMock mockForProtocol:@protocol(MHVPlatformClientProtocol)];
+    id<MHVSessionCredentialClientProtocol> credentialClient = [KWMock mockForProtocol:@protocol(MHVSessionCredentialClientProtocol)];
+    
     
     MHVSodaConnection *connection = [[MHVSodaConnection alloc] initWithConfiguration:config
-                                                                    credentialClient:credentialClient
+                                                                       clientFactory:clientFactory
                                                                          httpService:httpservice
                                                                      keychainService:keychainService
                                                                     shellAuthService:authService];
@@ -47,7 +52,7 @@ describe(@"MHVSodaConnection", ^
     {
      
         MHVSodaConnection *newConnection = [[MHVSodaConnection alloc] initWithConfiguration:config
-                                                                           credentialClient:credentialClient
+                                                                              clientFactory:clientFactory
                                                                                 httpService:httpservice
                                                                             keychainService:keychainService
                                                                            shellAuthService:authService];

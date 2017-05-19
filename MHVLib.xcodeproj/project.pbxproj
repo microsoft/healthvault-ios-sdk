@@ -496,6 +496,7 @@
 		A51203971ECCB3A100845680 /* MHVPersonClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A51203951ECCB3A100845680 /* MHVPersonClient.m */; };
 		A51203C61ECE207000845680 /* MHVClientFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A51203C41ECE207000845680 /* MHVClientFactory.h */; };
 		A51203C71ECE207000845680 /* MHVClientFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A51203C51ECE207000845680 /* MHVClientFactory.m */; };
+		A51203CA1ECF2CB600845680 /* MHVSodaConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A51203C91ECF2CB600845680 /* MHVSodaConnectionTests.m */; };
 		A51B6C981EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A51B6C971EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h */; };
 		A51B6C9B1EC4A806003BFBDC /* MHVSessionCredentialClient.h in Headers */ = {isa = PBXBuildFile; fileRef = A51B6C991EC4A806003BFBDC /* MHVSessionCredentialClient.h */; };
 		A51B6C9C1EC4A806003BFBDC /* MHVSessionCredentialClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A51B6C9A1EC4A806003BFBDC /* MHVSessionCredentialClient.m */; };
@@ -1189,6 +1190,7 @@
 		A51203951ECCB3A100845680 /* MHVPersonClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonClient.m; sourceTree = "<group>"; };
 		A51203C41ECE207000845680 /* MHVClientFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVClientFactory.h; sourceTree = "<group>"; };
 		A51203C51ECE207000845680 /* MHVClientFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVClientFactory.m; sourceTree = "<group>"; };
+		A51203C91ECF2CB600845680 /* MHVSodaConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSodaConnectionTests.m; sourceTree = "<group>"; };
 		A51B6C971EC4A565003BFBDC /* MHVSessionCredentialClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSessionCredentialClientProtocol.h; sourceTree = "<group>"; };
 		A51B6C991EC4A806003BFBDC /* MHVSessionCredentialClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSessionCredentialClient.h; sourceTree = "<group>"; };
 		A51B6C9A1EC4A806003BFBDC /* MHVSessionCredentialClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSessionCredentialClient.m; sourceTree = "<group>"; };
@@ -1415,10 +1417,11 @@
 		4C3973B11EC4B66B0079C28D /* MHVLibTests */ = {
 			isa = PBXGroup;
 			children = (
-				4C7646E81EC65803003B85B5 /* XML */,
-				4C7646BF1EC4E525003B85B5 /* Services */,
-				4C3973B21EC4B66B0079C28D /* MHVLibTests.m */,
+				A51203C81ECF2CB600845680 /* Connection */,
 				4C3973B41EC4B66B0079C28D /* Info.plist */,
+				4C3973B21EC4B66B0079C28D /* MHVLibTests.m */,
+				4C7646BF1EC4E525003B85B5 /* Services */,
+				4C7646E81EC65803003B85B5 /* XML */,
 			);
 			path = MHVLibTests;
 			sourceTree = "<group>";
@@ -2118,6 +2121,14 @@
 				50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A51203C81ECF2CB600845680 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				A51203C91ECF2CB600845680 /* MHVSodaConnectionTests.m */,
+			);
+			path = Connection;
 			sourceTree = "<group>";
 		};
 		A53BF83D1EC3A44F00F018E2 /* PlatformInformation */ = {
@@ -2888,6 +2899,7 @@
 				4C7646C11EC4E55B003B85B5 /* MHVHttpServiceTests.m in Sources */,
 				4C7646D51EC4F3C8003B85B5 /* MHVHttpTaskTests.m in Sources */,
 				4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */,
+				A51203CA1ECF2CB600845680 /* MHVSodaConnectionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
