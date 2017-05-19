@@ -1,5 +1,5 @@
 //
-// MHVRecordListrViewController.swift
+// MHVRecordListViewController.swift
 // SDKFeatures
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
