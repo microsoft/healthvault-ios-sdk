@@ -18,7 +18,6 @@
 //
 
 #import "MHVUIAlert.h"
-#import "MHVLib.h"
 
 @implementation MHVUIAlert
 
@@ -26,7 +25,7 @@
 {
     NSParameterAssert(message);
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[MHVClient current].settings.appName
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[[NSBundle bundleWithIdentifier:@"BundleIdentifier"] objectForInfoDictionaryKey:(id)kCFBundleExecutableKey]
                                                                              message:message
                                                                       preferredStyle:UIAlertControllerStyleAlert];
 
@@ -42,7 +41,7 @@
     NSParameterAssert(message);
     NSParameterAssert(completion);
 
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[MHVClient current].settings.appName
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[[NSBundle bundleWithIdentifier:@"BundleIdentifier"] objectForInfoDictionaryKey:(id)kCFBundleExecutableKey]
                                                                              message:message
                                                                       preferredStyle:UIAlertControllerStyleAlert];
 

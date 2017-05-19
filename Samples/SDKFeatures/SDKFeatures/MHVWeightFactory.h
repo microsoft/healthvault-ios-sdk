@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVLib.h"
 #import "MHVThingTestExtensions.h"
 
 @interface MHVWeight (MHVFactoryMethods)

@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param completion A completion block. On success will give an NSArray of vocabulary keys. On error will give the error info.
  */
-- (void)getVocabularyKeysWithCompletion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable) vocabularyKeys, NSError *_Nullable error))completion;
+- (void)getVocabularyKeysWithCompletion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable vocabularyKeys, NSError *_Nullable error))completion;
 
 
 /**
