@@ -20,7 +20,7 @@
 #import "MHVSodaConnectionProtocol.h"
 #import "MHVConnectionFactoryProtocol.h"
 #import "MHVConnectionFactory.h"
-#import "MHVRecordSelectorViewController.h"
+#import "SDKFeatures-Swift.h"
 
 @interface MHVViewController ()
 
@@ -151,9 +151,9 @@
          //
          // Navigate to the record selector list
          //
-         MHVRecordSelectorViewController *typeListController = [[MHVRecordSelectorViewController alloc] init];
+         MHVRecordListViewController *recordListController = [[MHVRecordListViewController alloc] init];
          
-         [self.navigationController pushViewController:typeListController animated:TRUE];
+         [self.navigationController pushViewController:recordListController animated:TRUE];
      }];
 }
 
