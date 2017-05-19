@@ -190,7 +190,7 @@
 }
 
 - (id<MHVHttpTaskProtocol>)downloadDataWithUrl:(NSURL *)url
-                                    completion:(MHVHttpServiceDataDownloadCompletion)completion
+                                    completion:(MHVHttpServiceCompletion)completion
 {
     MHVASSERT_PARAMETER(url);
 
@@ -215,7 +215,8 @@
                                   }
                                   else
                                   {
-                                      completion([NSData dataWithContentsOfURL:location], nil);
+                                      NSData *data = [NSData dataWithContentsOfURL:location];
+                                      completion([self responseFromData:data urlResponse:response], nil);
                                   }
                               }];
     

@@ -23,7 +23,6 @@
 
 typedef void (^MHVHttpServiceCompletion)(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error);
 typedef void (^MHVHttpServiceFileDownloadCompletion)(NSError *_Nullable error);
-typedef void (^MHVHttpServiceDataDownloadCompletion)(NSData *_Nullable data, NSError *_Nullable error);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -73,11 +72,11 @@ NS_ASSUME_NONNULL_BEGIN
  Download a blob from HealthVault service and return data
  
  @param url the endpoint for the request
- @param completion data if the download succeeded, or error
+ @param completion result with data if the download succeeded, or error
  @return a task that can be cancelled
  */
 - (id<MHVHttpTaskProtocol>)downloadDataWithUrl:(NSURL *)url
-                                    completion:(MHVHttpServiceDataDownloadCompletion)completion;
+                                    completion:(MHVHttpServiceCompletion)completion;
 
 /**
  Upload to HealthVault blob storage

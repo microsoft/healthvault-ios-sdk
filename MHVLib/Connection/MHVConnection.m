@@ -216,12 +216,10 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeHTTPDataMethodRequest:(MHVMethodRequest *)request
 {
-    [self.httpService sendRequestForURL:request.method.url
-                                   body:nil
-                                headers:nil
-                             completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.httpService downloadDataWithUrl:request.method.url
+                               completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
      {
-         // PlainHTTP method does not include authorization headers, so no need to refreshToken
+         // Data HTTP method does not include authorization headers, so no need to refresh Token
          if (error)
          {
              if (request.completion)
@@ -245,6 +243,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
                                toFilePath:request.method.filePath
                                completion:^(NSError * _Nullable error)
      {
+         // File HTTP method does not include authorization headers, so no need to refresh Token
          if (request.completion)
          {
              request.completion(nil, error);

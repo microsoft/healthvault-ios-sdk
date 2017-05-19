@@ -85,7 +85,13 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
 - (void)downloadBlobDataWithCompletion:(void (^)(NSData *data, NSError *error))completion
 {
     [[MHVClient current].service.httpService downloadDataWithUrl:[NSURL URLWithString:self.blobUrl]
-                                                      completion:completion];
+                                                      completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+    {
+        if (completion)
+        {
+            completion(response.responseAsData, error);
+        }
+    }];
 }
 
 - (MHVClientResult *)validate
