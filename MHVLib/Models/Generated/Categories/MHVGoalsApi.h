@@ -47,8 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:0 message:"Error"
 ///
 /// @return MHVSystemObject*
-+ (NSURLSessionTask* _Nullable)createGoalsWithGoalsWrapper: (MHVGoalsWrapper* ) goalsWrapper
-    completionHandler: (void (^ _Nonnull)(MHVSystemObject* _Nullable output, NSError* _Nullable error)) handler;
++ (NSURLSessionTask* _Nullable)createGoalsWithGoalsWrapper:(MHVGoalsWrapper* )goalsWrapper
+    completion:(void (^ _Nonnull)(MHVSystemObject* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Delete a goal instance
@@ -61,8 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:0 message:"Error"
 ///
 /// @return MHVSystemObject*
-+ (NSURLSessionTask* _Nullable)deleteGoalWithGoalId: (NSString* ) goalId
-    completionHandler: (void (^ _Nonnull)(MHVSystemObject* _Nullable output, NSError* _Nullable error)) handler;
++ (NSURLSessionTask* _Nullable)deleteGoalWithGoalId:(NSString* )goalId
+    completion:(void (^ _Nonnull)(MHVSystemObject* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Get a collection of the active goals
@@ -75,9 +75,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:0 message:"Error"
 ///
 /// @return MHVGoalsResponse*
-+ (NSURLSessionTask* _Nullable)getActiveGoalsWithTypes: (NSString* _Nullable) types
-    windowTypes: (NSString* _Nullable) windowTypes
-    completionHandler: (void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error)) handler;
++ (NSURLSessionTask* _Nullable)getActiveGoalsWithTypes:(NSString* _Nullable)types
+    windowTypes:(NSString* _Nullable)windowTypes
+    completion:(void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Get an instance of a specific goal
@@ -89,8 +89,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:0 message:"Error"
 ///
 /// @return MHVGoal*
-+ (NSURLSessionTask* _Nullable)getGoalByIdWithGoalId: (NSString* ) goalId
-    completionHandler: (void (^ _Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error)) handler;
++ (NSURLSessionTask* _Nullable)getGoalByIdWithGoalId:(NSString* )goalId
+    completion:(void (^ _Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Get a collection of all goals
@@ -105,11 +105,11 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:0 message:"Error"
 ///
 /// @return MHVGoalsResponse*
-+ (NSURLSessionTask* _Nullable)getGoalsWithTypes: (NSString* _Nullable) types
-    windowTypes: (NSString* _Nullable) windowTypes
-    startDate: (NSDate* _Nullable) startDate
-    endDate: (NSDate* _Nullable) endDate
-    completionHandler: (void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error)) handler;
++ (NSURLSessionTask* _Nullable)getGoalsWithTypes:(NSString* _Nullable)types
+    windowTypes:(NSString* _Nullable)windowTypes
+    startDate:(NSDate* _Nullable)startDate
+    endDate:(NSDate* _Nullable)endDate
+    completion:(void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Update collection of goal instances with merge
@@ -121,8 +121,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:0 message:"Error"
 ///
 /// @return MHVGoalsResponse*
-+ (NSURLSessionTask* _Nullable)patchGoalsWithGoalsWrapper: (MHVGoalsWrapper* ) goalsWrapper
-    completionHandler: (void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error)) handler;
++ (NSURLSessionTask* _Nullable)patchGoalsWithGoalsWrapper:(MHVGoalsWrapper* )goalsWrapper
+    completion:(void (^ _Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Update/Replace a complete goal instance with no merge
@@ -134,8 +134,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:0 message:"Error"
 ///
 /// @return MHVGoal*
-+ (NSURLSessionTask* _Nullable)putGoalWithGoal: (MHVGoal* ) goal
-    completionHandler: (void (^ _Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error)) handler;
++ (NSURLSessionTask* _Nullable)putGoalWithGoal:(MHVGoal* )goal
+    completion:(void (^ _Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error))completion;
 
 
 

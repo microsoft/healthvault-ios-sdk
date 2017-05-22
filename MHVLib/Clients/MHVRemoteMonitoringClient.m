@@ -31,11 +31,14 @@
                            formParams:(NSDictionary * _Nullable)formParams
                                  body:(id _Nullable)body
                               toClass:(Class)toClass
-                      completionBlock:(void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completionBlock
+                           completion:(void (^ _Nonnull)(id _Nullable output, NSError * _Nullable error))completion
 {
-    if (pathParams != nil) {
+    if (pathParams != nil)
+    {
         NSMutableString * queryPath = [NSMutableString stringWithString:path];
-        [pathParams enumerateKeysAndObjectsUsingBlock:^(id _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        [pathParams enumerateKeysAndObjectsUsingBlock:^(id _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop)
+        {
             [queryPath replaceCharactersInRange:[queryPath rangeOfString:[NSString stringWithFormat:@"{%@}", key]] withString:obj];
         }];
         
@@ -50,16 +53,22 @@
      
     [[MHVClient current].service.httpService sendRequestForURL:url body:nil headers:headers completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
     {
-        if (!error) {
-            if (!response.hasError) {
+        if (!error)
+        {
+            if (!response.hasError)
+            {
                 NSString *body = response.responseAsString;
                 id result = [MHVJsonSerializer deserialize:body toClass:[toClass class] shouldCache:NO];
-                completionBlock(result, error);
-            } else {
-                completionBlock(nil, error);
+                completion(result, error);
             }
-        } else {
-            completionBlock(nil, error);
+            else
+            {
+                completion(nil, error);
+            }
+        }
+        else
+        {
+            completion(nil, error);
         }
      }];
     
