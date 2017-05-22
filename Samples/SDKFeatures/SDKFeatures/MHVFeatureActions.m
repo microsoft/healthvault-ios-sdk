@@ -30,12 +30,12 @@
 
 @implementation MHVFeatureActions
 
-- (id)init
+- (instancetype)init
 {
     return [self initWithTitle:nil];
 }
 
-- (id)initWithTitle:(NSString *)title
+- (instancetype)initWithTitle:(NSString *)title
 {
     self = [super init];
     

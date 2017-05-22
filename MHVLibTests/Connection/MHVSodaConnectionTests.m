@@ -811,6 +811,43 @@ describe(@"MHVSodaConnection", ^
                        [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
                    });
             });
+    
+    context(@"when deauthorizeApplication is successful", ^
+            {
+                beforeEach(^
+                           {
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error)
+                                     {
+                                         
+                                     }];
+                                }];
+                           });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
 });
 
 SPEC_END

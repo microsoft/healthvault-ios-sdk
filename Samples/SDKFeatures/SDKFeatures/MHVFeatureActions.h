@@ -21,7 +21,7 @@
 
 @interface MHVFeatureActions : NSObject
 
-- (id)initWithTitle:(NSString *)title;
+- (instancetype)initWithTitle:(NSString *)title;
 
 - (BOOL)addFeature:(NSString *)title andAction:(MHVAction)action;
 
