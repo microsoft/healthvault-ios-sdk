@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4C3973AF1EC4B66B0079C28D"
+               BuildableName = "MHVLibTests.xctest"
+               BlueprintName = "MHVLibTests"
+               ReferencedContainer = "container:MHVLib.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5D5299AB14DCB3A700D2636E"
+            BuildableName = "libMHVLib.a"
+            BlueprintName = "MHVLib"
+            ReferencedContainer = "container:MHVLib.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

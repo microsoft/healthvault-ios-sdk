@@ -16,7 +16,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVLib.h"
 #import "MHVTypeListViewController.h"
 #import "MHVDietaryIntakeFactory.h"
 #import "MHVEmotionalStateFactory.h"
@@ -28,6 +27,7 @@
 #import "MHVCholesterolFactory.h"
 #import "MHVWeightFactory.h"
 #import "MHVUIAlert.h"
+#import "MHVFeaturesConfiguration.h"
 
 @interface MHVTypeListViewController ()
 
@@ -44,7 +44,7 @@
     [super viewDidLoad];
 
     [self.navigationController.navigationBar setTranslucent:FALSE];
-    self.navigationItem.title = [MHVClient current].currentRecord.name;
+    self.navigationItem.title = [self personName];
 
     self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];
     self.tableView.dataSource = self;
@@ -55,7 +55,45 @@
     [self addStandardFeatures];
 }
 
+- (NSString *)personName
+{
+#if SHOULD_USE_LEGACY
+    return [self personNameLegacy];
+#else
+    return [self personNameNew];
+#endif
+}
+
+- (NSString *)personNameLegacy
+{
+    return [MHVClient current].currentRecord.name;
+}
+
+- (NSString *)personNameNew
+{
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    NSUInteger index = [connection.personInfo.records indexOfRecordID:connection.personInfo.selectedRecordID];
+    if (index != NSNotFound)
+    {
+        return connection.personInfo.records[index].displayName;
+    }
+    else
+    {
+        return connection.personInfo.name;
+    }
+}
+
 - (void)downloadPersonImage
+{
+#if SHOULD_USE_LEGACY
+    [self downloadPersonImageLegacy];
+#else
+    [self downloadPersonImageNew];
+#endif
+}
+
+- (void)downloadPersonImageLegacy
 {
     [[MHVClient current].currentRecord downloadPersonalImageWithCallback:^(MHVTask *task)
      {
@@ -66,7 +104,7 @@
              if (task.result)
              {
                  UIImage *personImage = [UIImage imageWithData:task.result];
-
+                 
                  if (personImage)
                  {
                      UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
@@ -81,6 +119,21 @@
          {
          }
      }];
+}
+
+- (void)downloadPersonImageNew
+{
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];    
+    query.view.sections = MHVThingSection_Blobs;
+
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection.thingClient getThingsWithQuery:query
+                                      recordId:connection.personInfo.selectedRecordID
+                                    completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+    {
+        NSLog(@"Blobs In Progress... Thing Count: %li", things.count);
+    }];
 }
 
 // -------------------------------------
@@ -197,7 +250,7 @@
 {
     self.features = [[MHVMoreFeatures alloc] init];
     MHVCHECK_NOTNULL(self.features);
-    self.features.controller = self;
+    self.features.listController = self;
 
     __weak __typeof__(self.features)weakFeatures = self.features;
 
@@ -212,6 +265,11 @@
     [self.actions addFeature:@"GetServiceDefintion" andAction:^
     {
         [weakFeatures getServiceDefinition];
+    }];
+    
+    [self.actions addFeature:@"Authorize records" andAction:^
+    {
+         [weakFeatures authorizeAdditionalRecords];
     }];
 
     return TRUE;

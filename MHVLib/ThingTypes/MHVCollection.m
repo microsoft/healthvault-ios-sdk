@@ -63,6 +63,16 @@
     return self;
 }
 
+- (instancetype)initWithObject:(id)object
+{
+    self = [self init];
+    if (self)
+    {
+        [_inner addObject:object];
+    }
+    return self;
+}
+
 + (BOOL)isNilOrEmpty:(MHVCollection *)collection
 {
     return (!collection|| collection.count == 0);

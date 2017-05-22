@@ -2,9 +2,21 @@
 //  MHVXmlTests.m
 //  MHVLib
 //
-//  Created by Michael Burford on 5/12/17.
-//  Copyright © 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
 
 #import <XCTest/XCTest.h>
 #import "MHVAllergy.h"
@@ -81,7 +93,7 @@ describe(@"XML", ^
                        XReader *reader = [[XReader alloc] initFromString:xml];
                        
                        //Can query for several things at once, should have one result
-                       MHVThingQueryResults *results = [NSObject newFromReader:reader withRoot:@"info" asClass:[MHVThingQueryResults class]];
+                       MHVThingQueryResults *results = (MHVThingQueryResults *)[NSObject newFromReader:reader withRoot:@"info" asClass:[MHVThingQueryResults class]];
                        [[theValue(results.hasResults) should] beYes];
                        [[theValue(results.results.count) should] equal:@(1)];
                        
@@ -96,7 +108,7 @@ describe(@"XML", ^
                        [[thing.data.typed should] beKindOfClass:[MHVHeartRate class]];
                        
                        //The heartrate value should be 106
-                       MHVHeartRate *heartRate = thing.data.typed;
+                       MHVHeartRate *heartRate = (MHVHeartRate *)thing.data.typed;
                        [[theValue(heartRate.bpmValue) should] equal:@(106)];
                    });
             });

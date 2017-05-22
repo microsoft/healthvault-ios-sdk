@@ -19,16 +19,44 @@
 
 #import "MHVStatusLabel.h"
 
-@interface MHVStatusLabel (MHVPrivate)
+@interface MHVStatusLabel ()
 
--(void) ensureSpinner;
+@property (nonatomic, strong) UIActivityIndicatorView *activity;
 
 @end
 
 @implementation MHVStatusLabel
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self)
+    {
+        _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+        CGRect frame = self.frame;
+        float side = frame.size.height;  // We'll size the spinner so it is a square as tall as this label
+        
+        if (self.textAlignment == NSTextAlignmentRight)
+        {
+            frame.origin.x = 0;
+        }
+        else
+        {
+            frame.origin.x = frame.size.width - side;
+        }
+        frame.origin.y = 0;
+        frame.size.width = side;
+        frame.size.height = side;
 
--(void)showStatus:(NSString *)format, ...
+        [self addSubview:_activity];
+    }
+    
+    return self;
+}
+
+- (void)showStatus:(NSString *)format, ...
 {
     va_list args;
     va_start(args, format);
@@ -43,64 +71,44 @@
     [self hideActivity];
 }
 
--(void)clearStatus
+- (void)clearStatus
 {
-    self.text = nil;
-    [self hideActivity];
-}
-
--(void)showActivity
-{
-    [self ensureSpinner];
-    [m_activity setHidden:FALSE];
-    [m_activity startAnimating];
-}
-
--(void)hideActivity
-{
-    if (m_activity)
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
     {
-        [m_activity stopAnimating];
-        [m_activity setHidden:TRUE];
-    }
+        self.text = nil;
+        [self hideActivity];
+    }];
 }
 
--(void)showBusy
+- (void)showActivity
 {
-    [self showStatus:@"Working. Please wait..."];    
-    [self showActivity];
-}
-
-@end
-
-@implementation MHVStatusLabel (MHVPrivate)
-
--(void)ensureSpinner
-{
-    if (m_activity)
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
     {
-        return;
-    }
-
-    m_activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [self.activity setHidden:FALSE];
+        [self.activity startAnimating];
+    }];
     
-    CGRect frame = self.frame;
-    float side = frame.size.height;  // We'll size the spinner so it is a square as tall as this label
+}
 
-    if (self.textAlignment == NSTextAlignmentRight)
+- (void)hideActivity
+{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
     {
-        frame.origin.x = 0;
-    }
-    else
-    {
-        frame.origin.x = frame.size.width - side;
-    }
-    frame.origin.y = 0;
-    frame.size.width = side;
-    frame.size.height = side;
-    
-    [self addSubview:m_activity];
+        if (self.activity)
+        {
+            [self.activity stopAnimating];
+            [self.activity setHidden:TRUE];
+        }
+    }];
+}
 
+- (void)showBusy
+{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+    {
+        [self showStatus:@"Working. Please wait..."];
+        [self showActivity];
+    }];
 }
 
 @end

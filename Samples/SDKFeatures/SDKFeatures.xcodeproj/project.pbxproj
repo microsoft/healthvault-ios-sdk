@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4C00119B1EBCC05000BABFBA /* MHVUIAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */; };
+		4C2975D11ECF3429006B3673 /* MHVRecordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2975CF1ECF3429006B3673 /* MHVRecordListViewController.swift */; };
+		4C2975D21ECF3429006B3673 /* MHVRecordListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2975D01ECF3429006B3673 /* MHVRecordListViewController.xib */; };
 		5D0645B818454D7000D306CC /* MHVHeartRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */; };
 		5D091345166ED1980031F5F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091344166ED1980031F5F9 /* UIKit.framework */; };
 		5D091347166ED1980031F5F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D091346166ED1980031F5F9 /* Foundation.framework */; };
@@ -50,11 +52,15 @@
 		5DEC254C178B573A00FE971B /* MHVFileFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC254B178B573A00FE971B /* MHVFileFeatures.m */; };
 		5DEC255A178B5A7F00FE971B /* MHVThingDataTypedFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC2559178B5A7F00FE971B /* MHVThingDataTypedFeatures.m */; };
 		5DEC255D178B680400FE971B /* MHVFileFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC255C178B680400FE971B /* MHVFileFactory.m */; };
+		A51203BB1ECCDD3E00845680 /* MHVFeaturesConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A51203BA1ECCDD3E00845680 /* MHVFeaturesConfiguration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4C0011991EBCC05000BABFBA /* MHVUIAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVUIAlert.h; sourceTree = "<group>"; };
 		4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVUIAlert.m; sourceTree = "<group>"; };
+		4C2975CE1ECF3428006B3673 /* SDKFeatures-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDKFeatures-Bridging-Header.h"; sourceTree = "<group>"; };
+		4C2975CF1ECF3429006B3673 /* MHVRecordListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MHVRecordListViewController.swift; sourceTree = "<group>"; };
+		4C2975D01ECF3429006B3673 /* MHVRecordListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVRecordListViewController.xib; sourceTree = "<group>"; };
 		5D0645B618454D7000D306CC /* MHVHeartRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHeartRateFactory.h; sourceTree = "<group>"; };
 		5D0645B718454D7000D306CC /* MHVHeartRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHeartRateFactory.m; sourceTree = "<group>"; };
 		5D091340166ED1980031F5F9 /* SDKFeatures.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKFeatures.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +131,9 @@
 		5DEC2559178B5A7F00FE971B /* MHVThingDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingDataTypedFeatures.m; sourceTree = "<group>"; };
 		5DEC255B178B680400FE971B /* MHVFileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFileFactory.h; sourceTree = "<group>"; };
 		5DEC255C178B680400FE971B /* MHVFileFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFileFactory.m; sourceTree = "<group>"; };
+		A51203A81ECCD98500845680 /* MHVFeaturesConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVFeaturesConstants.h; sourceTree = "<group>"; };
+		A51203B91ECCDD3E00845680 /* MHVFeaturesConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFeaturesConfiguration.h; sourceTree = "<group>"; };
+		A51203BA1ECCDD3E00845680 /* MHVFeaturesConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFeaturesConfiguration.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +196,8 @@
 				5D09135C166ED1980031F5F9 /* MHVViewController.h */,
 				5D09135D166ED1980031F5F9 /* MHVViewController.m */,
 				5D09135F166ED1980031F5F9 /* MHVViewController.xib */,
+				4C2975CF1ECF3429006B3673 /* MHVRecordListViewController.swift */,
+				4C2975D01ECF3429006B3673 /* MHVRecordListViewController.xib */,
 				5D09137B166EDB290031F5F9 /* MHVTypeListViewController.h */,
 				5D09137C166EDB290031F5F9 /* MHVTypeListViewController.m */,
 				5D09137D166EDB290031F5F9 /* MHVTypeListViewController.xib */,
@@ -238,6 +249,10 @@
 				4C0011991EBCC05000BABFBA /* MHVUIAlert.h */,
 				4C00119A1EBCC05000BABFBA /* MHVUIAlert.m */,
 				5D09134B166ED1980031F5F9 /* Supporting Files */,
+				A51203A81ECCD98500845680 /* MHVFeaturesConstants.h */,
+				A51203B91ECCDD3E00845680 /* MHVFeaturesConfiguration.h */,
+				A51203BA1ECCDD3E00845680 /* MHVFeaturesConfiguration.m */,
+				4C2975CE1ECF3428006B3673 /* SDKFeatures-Bridging-Header.h */,
 			);
 			path = SDKFeatures;
 			sourceTree = "<group>";
@@ -288,6 +303,7 @@
 				TargetAttributes = {
 					5D09133F166ED1980031F5F9 = {
 						DevelopmentTeam = UBF8T346G9;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -321,6 +337,7 @@
 				5D09137A166ED3470031F5F9 /* ClientSettings.xml in Resources */,
 				5D09137F166EDB2A0031F5F9 /* MHVTypeListViewController.xib in Resources */,
 				5D78987D17149A500015D375 /* MHVTypeViewController.xib in Resources */,
+				4C2975D21ECF3429006B3673 /* MHVRecordListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +358,7 @@
 				5DD6C27C16780C1000A658D8 /* MHVMedicationUsageFactory.m in Sources */,
 				5DD6C2C01679121300A658D8 /* MHVBloodGlucoseFactory.m in Sources */,
 				5DD6C2E016791ACD00A658D8 /* MHVSleepJournalAMFactory.m in Sources */,
+				4C2975D11ECF3429006B3673 /* MHVRecordListViewController.swift in Sources */,
 				5D3EBAB21679268E00BDE25E /* MHVBloodPressureFactory.m in Sources */,
 				5D3EBACD16793D9200BDE25E /* MHVCholesterolFactory.m in Sources */,
 				5D3EBB0D16794B1C00BDE25E /* MHVWeightFactory.m in Sources */,
@@ -350,6 +368,7 @@
 				5D789916171626F60015D375 /* MHVMoreFeatures.m in Sources */,
 				4C00119B1EBCC05000BABFBA /* MHVUIAlert.m in Sources */,
 				5D789936171736050015D375 /* MHVMedicationFactory.m in Sources */,
+				A51203BB1ECCDD3E00845680 /* MHVFeaturesConfiguration.m in Sources */,
 				5D78993A171739FB0015D375 /* MHVConditionFactory.m in Sources */,
 				5D78993D17173B520015D375 /* MHVImmunizationFactory.m in Sources */,
 				5D78994017173D2A0015D375 /* MHVProcedureFactory.m in Sources */,
@@ -461,6 +480,7 @@
 		5D091365166ED1980031F5F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEVELOPMENT_TEAM = UBF8T346G9;
 				GCC_NO_COMMON_BLOCKS = NO;
@@ -468,9 +488,13 @@
 				GCC_PREFIX_HEADER = "SDKFeatures/SDKFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
 				INFOPLIST_FILE = "SDKFeatures/SDKFeatures-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.microsoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SDKFeatures/SDKFeatures-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "../../MHVLib/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -479,6 +503,7 @@
 		5D091366166ED1980031F5F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEVELOPMENT_TEAM = UBF8T346G9;
 				GCC_NO_COMMON_BLOCKS = NO;
@@ -486,9 +511,12 @@
 				GCC_PREFIX_HEADER = "SDKFeatures/SDKFeatures-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDK_DIR)/usr/include/libxml2/**";
 				INFOPLIST_FILE = "SDKFeatures/SDKFeatures-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.microsoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SDKFeatures/SDKFeatures-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "../../MHVLib/**";
 				WRAPPER_EXTENSION = app;
 			};

@@ -30,6 +30,15 @@
                                       }];
 }
 
++ (NSError *)MVHInvalidParameter:(NSString *)message
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeRequiredParameter
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : message ?: @"Missing required parameter."
+                                      }];
+}
+
 + (NSError *)MHVOperationCannotBePerformed
 {
     return [NSError errorWithDomain:kMHVErrorDomain

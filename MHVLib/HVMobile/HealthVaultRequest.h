@@ -94,7 +94,7 @@
 /// http://developer.healthvault.com/pages/methods/methods.aspx
 - (instancetype)initWithMethodName:(NSString *)name
                      methodVersion:(float)methodVersion
-                       infoSection:(NSString *)info
+                       infoSection:(NSString *)infoSection
                             target:(NSObject *)target
                           callBack:(SEL)callBack;
 

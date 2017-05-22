@@ -23,27 +23,55 @@
 #import "DateTimeUtils.h"
 #import "MobilePlatform.h"
 #import "MHVSessionCredential.h"
+#import "MHVServiceResponse.h"
+#import "MHVConfiguration.h"
+#import "XSerializer.h"
+#import "NSError+MHVError.h"
+#import "MHVStringExtensions.h"
 
+@interface MHVSessionCredentialClient ()
+
+@property (nonatomic, weak) id<MHVConnectionProtocol> connection;
+
+@end
 
 @implementation MHVSessionCredentialClient
 
-@synthesize connection = _connection;
-@synthesize sharedSecret = _sharedSecret;
+- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
+{
+    MHVASSERT_PARAMETER(connection);
+    
+    self = [super init];
+    
+    if (self)
+    {
+        _connection = connection;
+    }
+    
+    return self;
+}
 
-- (void)getSessionCredentialWithCompletion:(void (^_Nonnull)(MHVSessionCredential *_Nullable, NSError *_Nullable error))completion
+- (void)getSessionCredentialWithSharedSecret:(NSString *)sharedSecret
+                                  completion:(void (^_Nonnull)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
+    MHVASSERT_PARAMETER(sharedSecret);
     
     if (!completion)
     {
         return;
     }
     
+    if ([NSString isNilOrEmpty:sharedSecret])
+    {
+        completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"The 'sharedSecret' parameter is required."]);
+    }
+    
     MHVMethod *method = [MHVMethod createAuthenticatedSessionToken];
-    method.parameters = [self infoSection];
+    method.parameters = [self infoSectionWithSharedSecret:sharedSecret];
     
     [self.connection executeMethod:method
-                        completion:^(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error)
+                        completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
     {
         if (error)
         {
@@ -51,15 +79,25 @@
             {
                 completion(nil, error);
             }
+            
+            return;
         }
-        else
+
+        MHVSessionCredential *credential = (MHVSessionCredential *)[XSerializer newFromString:response.infoXml withRoot:@"info" asClass:[MHVSessionCredential class]];
+        
+        if (!credential || [NSString isNilOrEmpty:credential.token] || [NSString isNilOrEmpty:credential.sharedSecret])
         {
-            // Process Response
+            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The CreateAuthenticatedSessionToken response is invalid."]);
+            
+            return;
         }
+        
+        completion(credential, nil);
+        
     }];
 }
 
-- (NSString *)infoSection
+- (NSString *)infoSectionWithSharedSecret:(NSString *)sharedSecret
 {
     NSString *msgTimeString = [DateTimeUtils dateToUtcString:[NSDate date]];
     
@@ -71,7 +109,7 @@
     [stringToSign appendFormat:@"<signing-time>%@</signing-time>", msgTimeString];
     [stringToSign appendString:@"</content>"];
     
-    NSData *keyData = [[NSData alloc] initWithBase64EncodedString:self.sharedSecret options:0];
+    NSData *keyData = [[NSData alloc] initWithBase64EncodedString:sharedSecret options:0];
     NSString *hmac = [MobilePlatform computeSha256Hmac:keyData data:stringToSign];
     
     NSMutableString *xml = [NSMutableString new];

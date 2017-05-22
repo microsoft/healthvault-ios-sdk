@@ -28,6 +28,7 @@ NSString *const c_emptyString;
 @interface NSString (MHVNSStringExtensions)
 
 + (BOOL)isNilOrEmpty:(NSString *)string;
++ (NSString *)boolString:(BOOL)boolValue;
 
 - (BOOL)isEmpty;
 - (NSString *)trim;
@@ -46,6 +47,7 @@ NSString *const c_emptyString;
 
 - (NSString *)toString;
 - (NSString *)toStringWithFormat:(NSString *)format;
+- (NSString *)capitalizedStringForSelectors;
 
 @end
 

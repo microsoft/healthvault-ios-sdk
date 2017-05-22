@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MHVSessionCredential;
+@class MHVSessionCredential, MHVConfiguration;
 
 @protocol MHVConnectionProtocol;
 
@@ -26,10 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVSessionCredentialClientProtocol <NSObject>
 
-@property (nonatomic, strong) id<MHVConnectionProtocol> connection;
-@property (nonatomic, strong) NSString *sharedSecret;
-
-- (void)getSessionCredentialWithCompletion:(void (^)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error))completion;
+- (void)getSessionCredentialWithSharedSecret:(NSString *)sharedSecret
+                                  completion:(void (^)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error))completion;
 
 @end
 

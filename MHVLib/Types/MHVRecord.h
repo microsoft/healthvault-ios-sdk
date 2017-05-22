@@ -79,6 +79,6 @@
 
 - (instancetype)initWithRecordArray:(NSArray *)records;
 
-- (NSInteger)indexOfRecordID:(NSString *)recordID;
+- (NSInteger)indexOfRecordID:(NSUUID *)recordID;
 
 @end

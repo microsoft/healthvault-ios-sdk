@@ -20,16 +20,11 @@
 #import <UIKit/UIKit.h>
 
 @interface MHVStatusLabel : UILabel
-{
-@private
-    UIActivityIndicatorView* m_activity;
-}
 
--(void) showStatus:(NSString *) format, ...;
--(void) clearStatus;
--(void) showActivity;
--(void) hideActivity;
-
--(void) showBusy;
+- (void)showStatus:(NSString *)format, ...;
+- (void)clearStatus;
+- (void)showActivity;
+- (void)hideActivity;
+- (void)showBusy;
 
 @end

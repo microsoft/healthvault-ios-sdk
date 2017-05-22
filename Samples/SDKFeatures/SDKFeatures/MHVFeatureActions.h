@@ -18,19 +18,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MHVLib.h"
 
-@interface MHVFeatureActions : NSObject<UIActionSheetDelegate>
-{
-@private
-    UIActionSheet* m_actionSheet;
-    NSMutableArray* m_actions;
-}
+@interface MHVFeatureActions : NSObject
 
--(id) initWithTitle:(NSString *) title;
+- (instancetype)initWithTitle:(NSString *)title;
 
--(BOOL) addFeature:(NSString *) title andAction:(MHVAction) action;
+- (BOOL)addFeature:(NSString *)title andAction:(MHVAction)action;
 
--(void) showFrom:(UIBarButtonItem *) button;
+- (void)showFrom:(UIBarButtonItem *)button;
 
 @end

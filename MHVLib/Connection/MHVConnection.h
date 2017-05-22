@@ -19,19 +19,20 @@
 #import <Foundation/Foundation.h>
 #import "MHVConnectionProtocol.h"
 
-@class MHVConfiguration, MHVInstance;
+@class MHVConfiguration, MHVClientFactory, MHVInstance, MHVApplicationCreationInfo;
 
-@protocol MHVSessionCredentialClientProtocol, MHVHttpServiceProtocol;
+@protocol MHVHttpServiceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVConnection : NSObject<MHVConnectionProtocol>
 
 @property (nonatomic, strong, readonly) MHVConfiguration *configuration;
-@property (nonatomic, strong, readonly, nullable) MHVInstance *serviceInstance;
+@property (nonatomic, strong, nullable) MHVInstance *serviceInstance;
+@property (nonatomic, strong, readonly, nullable) MHVPersonInfo *personInfo;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                     credentialClient:(id<MHVSessionCredentialClientProtocol>)credentialClient
+                        clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService;
 
 @end

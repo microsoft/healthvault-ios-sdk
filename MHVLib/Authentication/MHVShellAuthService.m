@@ -2,9 +2,19 @@
 //  MHVShellAuthService.m
 //  MHVLib
 //
-//  Created by Nathan Malubay on 5/15/17.
-//  Copyright © 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "MHVShellAuthService.h"
 #import "MHVValidator.h"
@@ -15,9 +25,10 @@
 #import "MHVStringExtensions.h"
 
 static NSString *const kInstanceIdKey = @"instanceId=";
-static NSString *const kBaseQueryFormat = @"redirect.aspx?target=CREATEAPPLICATION&targetqs=%@";
-static NSString *const kAppCreationQueryFormat = @"appid=%@&appCreationToken=%@&instanceName=%@&ismra=%@&mobile=true%@";
-static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
+static NSString *const kAppCreationQueryFormat = @"%@/redirect.aspx?target=CREATEAPPLICATION&targetqs=%@";
+static NSString *const kAuthorizeRecordsQueryFormat =@"%@/redirect.aspx?target=APPAUTH&targetqs=%@";
+static NSString *const kAppCreationArgs = @"?appid=%@&appCreationToken=%@&instanceName=%@&ismra=%@&mobile=true";
+static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
 
 @interface MHVShellAuthService ()
 
@@ -42,7 +53,7 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
     {
         _configuration = configuration;
         _authBroker = authBroker;
-        _authQueue = _authQueue = dispatch_queue_create("MHVShellAuthService.authQueue", DISPATCH_QUEUE_SERIAL);
+        _authQueue = dispatch_queue_create("MHVShellAuthService.authQueue", DISPATCH_QUEUE_SERIAL);
         _isAuthInProgress = NO;
     }
     
@@ -55,7 +66,7 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
                                       shellUrl:(NSURL *)shellUrl
                                    masterAppId:(NSUUID *)masterAppId
                               appCreationToken:(NSString *)appCreationToken
-                                 appInstanceId:(NSString *)appInstanceId
+                                 appInstanceId:(NSUUID *)appInstanceId
                                     completion:(void (^)(NSString *_Nullable instanceId, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(shellUrl);
@@ -85,15 +96,19 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
             completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"One or more required parameters are missing."]);
         }
         
-        NSString *queryString = [NSString stringWithFormat:kAppCreationQueryFormat, masterAppId, appCreationToken, appInstanceId, [self mraBooleanString], [self miaParamString]];
+        NSURL *startUrl = [self getApplicationCreationUrlWithShellUrl:shellUrl
+                                                          queryFormat:kAppCreationQueryFormat
+                                                                appId:masterAppId
+                                                     appCreationToken:appCreationToken
+                                                        appInstanceId:appInstanceId];
         
-        queryString = [queryString stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
+        NSURL *endUrl = [self endUrlWithShellUrl:shellUrl];
         
-        [self authenticateInBrowserWithViewController:viewController
-                                             shellUrl:shellUrl
-                                          queryString:queryString
-                                           completion:^(NSURL * _Nullable successUrl, NSError * _Nullable error)
-        {
+        [self.authBroker authenticateWithViewController:viewController
+                                               startUrl:startUrl
+                                                 endUrl:endUrl
+                                             completion:^(NSURL * _Nullable successUrl, NSError * _Nullable error)
+         {
             dispatch_async(self.authQueue, ^
             {
                 if (error)
@@ -126,11 +141,11 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
 
 - (void)authorizeAdditionalRecordsWithViewController:(UIViewController *_Nullable)viewController
                                             shellUrl:(NSURL *)shellUrl
-                                         masterAppId:(NSUUID *)masterAppId
+                                       appInstanceId:(NSUUID *)appInstanceId
                                           completion:(void (^_Nullable)(NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(shellUrl);
-    MHVASSERT_PARAMETER(masterAppId);
+    MHVASSERT_PARAMETER(appInstanceId);
     
     dispatch_async(self.authQueue, ^
     {
@@ -148,7 +163,7 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
         
         self.isAuthInProgress = YES;
         
-        if (!shellUrl || !masterAppId)
+        if (!shellUrl || !appInstanceId)
         {
             if (completion)
             {
@@ -156,14 +171,18 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
             }
         }
         
-        NSString *queryString = [NSString stringWithFormat:kRecordAuthQueryFormat, masterAppId, [self mraBooleanString]];
+        NSURL *startUrl = [self getApplicationCreationUrlWithShellUrl:shellUrl
+                                                          queryFormat:kAuthorizeRecordsQueryFormat
+                                                                appId:appInstanceId
+                                                     appCreationToken:nil
+                                                        appInstanceId:nil];
         
-        queryString = [queryString stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
+        NSURL *endUrl = [self endUrlWithShellUrl:shellUrl];
         
-        [self authenticateInBrowserWithViewController:viewController
-                                             shellUrl:shellUrl
-                                          queryString:queryString
-                                           completion:^(NSURL * _Nullable successUrl, NSError * _Nullable error)
+        [self.authBroker authenticateWithViewController:viewController
+                                               startUrl:startUrl
+                                                 endUrl:endUrl
+                                             completion:^(NSURL * _Nullable successUrl, NSError * _Nullable error)
         {
             dispatch_async(self.authQueue, ^
             {
@@ -180,15 +199,51 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
 
 #pragma mark - Private
 
-- (NSString *)mraBooleanString
+- (NSURL *)getApplicationCreationUrlWithShellUrl:(NSURL *)shellUrl
+                                     queryFormat:(NSString *)queryFormat
+                                           appId:(NSUUID *)appId
+                                appCreationToken:(NSString *)appCreationToken
+                                   appInstanceId:(NSUUID *)appInstanceId
 {
-    return self.configuration.isMultiRecordApp ? @"true" : @"false";
+    CFStringRef tokenEncoded = CreateHVUrlEncode((__bridge CFStringRef)appCreationToken);
+    
+    CFStringRef instanceEncoded = CreateHVUrlEncode((__bridge CFStringRef)appInstanceId.UUIDString);
+    
+    NSString *isMultiRecord = self.configuration.isMultiRecordApp ? @"true" : @"false";
+    
+    NSString *queryString = nil;
+    
+    if (tokenEncoded && instanceEncoded)
+    {
+        queryString = [NSString stringWithFormat:kAppCreationArgs, appId, tokenEncoded, instanceEncoded, isMultiRecord];
+        
+        if (self.configuration.isMultiInstanceAware)
+        {
+            queryString = [queryString stringByAppendingString:@"&aib=true"];
+        }
+        
+        CFRelease(tokenEncoded);
+        CFRelease(instanceEncoded);
+    }
+    else
+    {
+        queryString = [NSString stringWithFormat:kAuthorizeRecordsArgs, appId, isMultiRecord];
+    }
+    
+    CFStringRef queryStringEncoded = CreateHVUrlEncode((__bridge CFStringRef)queryString);
+    
+    NSString *urlString = [NSString stringWithFormat:queryFormat, shellUrl, (__bridge NSString *)queryStringEncoded];
+    
+    CFRelease(queryStringEncoded);
+    
+    return [[NSURL alloc] initWithString:urlString];
 }
 
-- (NSString *)miaParamString
+- (NSURL *)endUrlWithShellUrl:(NSURL *)shellUrl
 {
-    return self.configuration.isMultiRecordApp ? @"&aib=true" : @"";
+    return [shellUrl URLByAppendingPathComponent:@"application/complete"];
 }
+
 
 - (NSString *)instanceIdFromUrl:(NSURL *)url
 {
@@ -200,23 +255,6 @@ static NSString *const kRecordAuthQueryFormat = @"appid=%@&ismra=%@";
     }
     
     return [args objectForKey:@"instanceid"];
-}
-
-- (void)authenticateInBrowserWithViewController:(UIViewController *)viewController
-                                       shellUrl:(NSURL *)shellUrl
-                              queryString:(NSString *)queryString
-                               completion:(void (^)(NSURL * _Nullable successUrl, NSError *_Nullable error))completion
-{
-    NSURLComponents *startComponents = [NSURLComponents componentsWithURL:shellUrl resolvingAgainstBaseURL:YES];
-    startComponents.query = [NSString stringWithFormat:kBaseQueryFormat, queryString];
-    
-    NSURLComponents *endComponents = [NSURLComponents componentsWithURL:shellUrl resolvingAgainstBaseURL:YES];
-    endComponents.path = @"application/complete";
-    
-    [self.authBroker authenticateWithViewController:viewController
-                                           startUrl:startComponents.URL
-                                             endUrl:endComponents.URL
-                                         completion:completion];
 }
 
 @end

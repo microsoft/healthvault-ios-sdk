@@ -27,3 +27,6 @@
 #import "MHVVocab.h"
 #import "MHVMethods.h"
 #import "MHVStore.h"
+#import "MHVClients.h"
+#import "MHVConnections.h"
+#import "MHVErrorConstants.h"

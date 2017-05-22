@@ -45,12 +45,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The record id for the person - Required if the method is record specfic (i.e. "GetThings").
  */
-@property (nonatomic, strong, nullable) NSString *recordId;
+@property (nonatomic, strong, nullable) NSUUID *recordId;
 
 /**
   An optional identifier that can be used to correlate a request.
  */
-@property (nonatomic, strong, nullable) NSString *correlationId;
+@property (nonatomic, strong, nullable) NSUUID *correlationId;
 
 /**
  Pre-allocates a DOPU package id.

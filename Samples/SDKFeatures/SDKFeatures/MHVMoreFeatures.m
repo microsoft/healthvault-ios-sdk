@@ -23,32 +23,44 @@
 
 @implementation MHVMoreFeatures
 
-@synthesize controller = m_controller;  // Weak ref
-
--(void)disconnectApp
+- (void)disconnectApp
 {
     [MHVUIAlert showYesNoPromptWithMessage:@"Are you sure you want to disconnect this application from HealthVault?\r\nIf you click Yes, you will need to re-authorize the next time you run it."
                                 completion:^(BOOL selectedYes)
      {
          if (selectedYes)
          {
-             [m_controller.statusLabel showBusy];
+             [self.listController.statusLabel showBusy];
              //
              // REMOVE RECORD AUTHORIZATION.
              //
+#if SHOULD_USE_LEGACY
              [[MHVClient current].user removeAuthForRecord:[MHVClient current].currentRecord withCallback:^(MHVTask *task) {
                  
                  [[MHVClient current] resetProvisioning];  // Removes local state
                  
-                 [m_controller.navigationController popViewControllerAnimated:TRUE];
+                 [self.listController.navigationController popToRootViewControllerAnimated:YES];
              }];
+#else
+             id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+             
+             [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error)
+             {
+                 [[NSOperationQueue mainQueue] addOperationWithBlock:^
+                 {
+                     [self.listController.navigationController popToRootViewControllerAnimated:YES];
+                 }];
+             }];
+#endif
          }
      }];
 }
 
--(void)getServiceDefinition
+- (void)getServiceDefinition
 {
-    [m_controller.statusLabel showBusy];
+    [self.listController.statusLabel showBusy];
+    
+#if SHOULD_USE_LEGACY
     //
     // LAUNCH the GetServiceDefinition task
     //
@@ -78,9 +90,62 @@
         
         [MHVUIAlert showInformationalMessage:output];
         
-        [m_controller.statusLabel clearStatus];
+        [self.listController.statusLabel clearStatus];
         
     }] start];  // NOTE: Make sure you always call start
+#else
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection.platformClient getServiceDefinitionWithCompletion:^(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            [MHVUIAlert showInformationalMessage:error.localizedDescription];
+        }
+        else
+        {
+            MHVConfigurationEntry* configEntry = [serviceDefinition.platform.config objectAtIndex:0];
+            MHVConfigurationEntry* configEntry2 = [serviceDefinition.platform.config objectAtIndex:1];
+            NSMutableString* output = [[NSMutableString alloc] init];
+            
+            [output appendLines:17, @"Some data from ServiceDefinition",
+             @"[PlatformUrl]", serviceDefinition.platform.url,
+             @"[PlatformVersion]", serviceDefinition.platform.version,
+             @"[ShellUrl]", serviceDefinition.shell.url,
+             @"[ShellRedirect]", serviceDefinition.shell.redirectUrl,
+             @"[Example Config Entries]",
+             configEntry.key, @"==", configEntry.value, @"==========",
+             configEntry2.key, @"==", configEntry2.value];
+            
+            [MHVUIAlert showInformationalMessage:output];
+        }
+        
+        
+        [self.listController.statusLabel clearStatus];
+    }];
+#endif
+}
+
+- (void)authorizeAdditionalRecords
+{
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection authorizeAdditionalRecordsWithViewController:self.listController
+                                                  completion:^(NSError * _Nullable error)
+    {
+        if (error)
+        {
+             [MHVUIAlert showInformationalMessage:error.localizedDescription];
+        }
+        else
+        {
+            // Popping to the root view controller will reload to the updated list of authorized records
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^
+            {
+                [self.listController.navigationController popToRootViewControllerAnimated:YES];
+            }];
+        }
+    }];
 }
 
 @end

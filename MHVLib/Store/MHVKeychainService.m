@@ -125,10 +125,17 @@ static NSString *const kKeychainRoot = @"root";
     
     OSStatus error = SecItemDelete((CFDictionaryRef)query);
     
-    return error == errSecSuccess;
+    return error == errSecSuccess || error == errSecItemNotFound;
 }
 
 #pragma mark - Private
+
+- (BOOL)dataExistsForKey:(NSString *)key
+{
+    NSDictionary *dictionary = [self getAttributesForKey:key];
+    
+    return [dictionary objectForKey:(__bridge id)kSecValueData] != nil;
+}
 
 - (BOOL)setString:(NSString *)string class:(Class)cls forKey:(NSString *)key
 {
@@ -144,7 +151,7 @@ static NSString *const kKeychainRoot = @"root";
     [update setObject:data forKey:(__bridge id)kSecValueData];
     
     OSStatus error = 0;
-    if ([self stringForKey:key] != nil)
+    if ([self dataExistsForKey:key])
     {
         // Update existing
         error = SecItemUpdate((CFDictionaryRef)query, (CFDictionaryRef)update);

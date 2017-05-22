@@ -26,14 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MHVConnectionFactoryProtocol <NSObject>
 
 /**
- Gets an instance of MHVSodaConnectionProtocol used to connect to HealthVault
+ Gets an instance of MHVSodaConnectionProtocol used to connect to HealthVault;
 
- @param configuration Configuration required for authenticating the connection.
- @param completion Envoked when the operation completes. id<MHVSodaConnectionProtocol> An instance conforming to MHVSodaConnectionProtocol, will be nil if an error occurs. NSError object will be nil if there is no error when performing the operation.
+ @param configuration configuration Configuration required for authenticating the connection.
+ @return An instance of MHVSodaConnectionProtocol.
  */
-- (void)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration
-                                        completion:(void(^)(id<MHVSodaConnectionProtocol> _Nullable connection, NSError *_Nullable error))completion;
-
+- (id<MHVSodaConnectionProtocol>)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration;
 
 @end
 
