@@ -599,20 +599,15 @@ static NSString *const c_element_thing = @"thing";
     return nil;
 }
 
-+ (MHVStringCollection *)idsFromThings:(NSArray *)things
+- (NSArray *)arrayOfThingIDs
 {
-    if (!things)
+    NSMutableArray *idArray = [[NSMutableArray alloc] init];
+    for (MHVThing *thing in self)
     {
-        return nil;
+        [idArray addObject:thing.thingID];
     }
     
-    MHVStringCollection *copy = [[MHVStringCollection alloc] init];
-    for (MHVThing *thing in things)
-    {
-        [copy addObject:thing.thingID];
-    }
-    
-    return copy;
+    return idArray;
 }
 
 - (MHVClientResult *)validate

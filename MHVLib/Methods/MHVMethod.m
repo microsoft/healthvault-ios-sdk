@@ -29,6 +29,22 @@
         _name = name;
         _version = version;
         _isAnonymous = isAnonymous;
+        _type = MHVMethodTypeHealthVaultXML;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithURL:(NSURL *)url filePath:(NSString *)filePath isAnonymous:(BOOL)isAnonymous
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _url = url;
+        _filePath = filePath;
+        _isAnonymous = isAnonymous;
+        _type = filePath ? MHVMethodTypeHTTPFile : MHVMethodTypeHTTPData;
     }
     
     return self;
@@ -237,6 +253,16 @@
 + (MHVMethod *)updateExternalId
 {
     return [[MHVMethod alloc] initWithName:@"UpdateExternalId" version:1 isAnonymous:NO];
+}
+
++ (MHVMethod *)httpMethodWithURL:(NSURL *)url
+{
+    return [[MHVMethod alloc] initWithURL:url filePath:nil isAnonymous:YES];
+}
+
++ (MHVMethod *)httpMethodWithURL:(NSURL *)url toFilePath:(NSString *)filePath
+{
+    return [[MHVMethod alloc] initWithURL:url filePath:filePath isAnonymous:YES];
 }
 
 @end

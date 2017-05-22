@@ -20,6 +20,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, MHVMethodType)
+{
+    MHVMethodTypeHealthVaultXML,
+    MHVMethodTypeHealthVaultJSON,
+    MHVMethodTypeHTTPData,
+    MHVMethodTypeHTTPFile,
+};
+
 @interface MHVMethod : NSObject
 
 /**
@@ -38,6 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) int version;
 
 /**
+ A MHVMethodType indicating the method type
+ */
+@property (nonatomic, assign, readonly) MHVMethodType type;
+
+/**
  Method parameters, which will be serialized into infoxml - Optional.
  */
 @property (nonatomic, strong, nullable) NSString *parameters;
@@ -51,6 +64,16 @@ NS_ASSUME_NONNULL_BEGIN
   An optional identifier that can be used to correlate a request.
  */
 @property (nonatomic, strong, nullable) NSUUID *correlationId;
+
+/**
+ URL for method (ignored for MHVMethodTypeHealthVaultXML type)
+ */
+@property (nonatomic, strong, readonly) NSURL *url;
+
+/**
+ File path for where data should be saved
+ */
+@property (nonatomic, strong, readonly) NSString *filePath;
 
 /**
  Pre-allocates a DOPU package id.
@@ -340,6 +363,27 @@ NS_ASSUME_NONNULL_BEGIN
  @return An instance of MHVMethod.
  */
 + (MHVMethod *)updateExternalId;
+
+/**
+ Method to download from the URL. 
+ The URL should not require authirization headers
+ This should only be used for retrieving Blob object data
+ 
+ @param url The URL to be downloaded
+ @return An instance of MHVMethod.
+ */
++ (MHVMethod *)httpMethodWithURL:(NSURL *)url;
+
+/**
+ Method to download from the URL to a file.
+ The URL should not require authirization headers
+ This should only be used for retrieving Blob object data
+ 
+ @param url The URL to be downloaded
+ @param filePath The file path where the file data should be saved
+ @return An instance of MHVMethod.
+ */
++ (MHVMethod *)httpMethodWithURL:(NSURL *)url toFilePath:(NSString *)filePath;
 
 @end
 

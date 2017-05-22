@@ -25,11 +25,12 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
     
     // The current connection, which has personInfo records
     let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: MHVFeaturesConfiguration.configuration())
+    let cache = NSCache<AnyObject, UIImage>.init()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.navigationItem.title = NSLocalizedString("Select Person", comment: "Title to select person to view");
     }
@@ -58,12 +59,50 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
             if let record = personInfo.records .object(at: UInt(indexPath.row))
             {
                 cell?.textLabel?.text = record.displayName;
+                
+                self.loadImage(cell: cell, recordId: record.id)
             }
         }
         
         return cell!
     }
-
+    
+    func loadImage(cell: UITableViewCell?, recordId: UUID)
+    {
+        // Retrieve personal image to show for all authorized records
+        if let cachedImage = self.cache.object(forKey: recordId as AnyObject)
+        {
+            // Cached, so don't have to reload image if it was already retrieved
+            cell?.imageView?.image = cachedImage
+        }
+        else
+        {
+            cell?.tag = recordId.hashValue
+            
+            self.connection.personClient()?.getPersonalImage(withRecord: recordId,
+                                                             completion:
+                { (image: UIImage?, error: Error?) in
+                    
+                    OperationQueue.main .addOperation(
+                        {
+                            // Use the tag as a simple check to make sure the cell was not re-used while the image loaded
+                            if cell?.tag == recordId.hashValue
+                            {
+                                if let theImage = image
+                                {
+                                    // Set image on the cell
+                                    cell?.imageView?.image = theImage
+                                    cell?.setNeedsUpdateConstraints()
+                                    
+                                    // Add to Cache
+                                    self.cache.setObject(theImage, forKey: recordId as AnyObject)
+                                }
+                            }
+                    })
+            })
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         tableView .deselectRow(at: indexPath, animated: true)
@@ -71,7 +110,7 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
         guard let personInfo = self.connection.personInfo else {
             return
         }
-
+        
         guard let record = personInfo.records .object(at: UInt(indexPath.row)) else {
             return
         }
@@ -80,6 +119,6 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
         
         let typeListController = MHVTypeListViewController.init()
         
-        self.navigationController?.pushViewController(typeListController, animated: true)        
+        self.navigationController?.pushViewController(typeListController, animated: true)
     }
 }

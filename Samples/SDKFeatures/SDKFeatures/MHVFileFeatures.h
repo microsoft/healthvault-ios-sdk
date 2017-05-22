@@ -21,12 +21,4 @@
 
 @interface MHVFileFeatures : MHVThingDataTypedFeatures<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-- (void)viewFileInBrowser;
-- (void)downloadFile;
-
-- (void)processSelectedFile:(MHVHandler)action;
-- (void)uploadFileWithName:(NSString *)name data:(NSData *)data andMediaType:(NSString *)mediaType;
-
-- (void)pickImageForUpload;
-
 @end

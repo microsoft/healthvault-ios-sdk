@@ -107,7 +107,7 @@ describe(@"MHVHttpService", ^
                    {
                        //Send request
                        [service downloadDataWithUrl:[NSURL URLWithString:@"https://test.com/download"]
-                                       completion:^(NSData *_Nullable data, NSError *_Nullable error) { }];
+                                         completion:^(MHVHttpServiceResponse *_Nullable response, NSError *_Nullable error) { }];
                        
                        //Verify URLRequest values
                        NSURLRequest *requested = (NSURLRequest *)spyRequest.argument;

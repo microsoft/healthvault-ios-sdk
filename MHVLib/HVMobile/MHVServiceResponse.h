@@ -22,17 +22,25 @@
 
 @interface MHVServiceResponse : NSObject
 
-// Gets the Http response code...
-@property (assign) int statusCode;
+// Gets the http response code...
+@property (nonatomic, assign) int statusCode;
 
 /// Gets or sets the informational part of the response.
-@property (strong) NSString *infoXml;
+@property (nonatomic, strong) NSString *infoXml;
+
+/// Gets the response data
+@property (nonatomic, strong) NSData *responseData;
 
 @property (nonatomic, strong) NSError *error;
 
-/// Initializes a new instance of the HealthVaultResponse class.
+/// Initializes a new instance of the MHVServiceResponse class.
+/// The response will be parsed into infoXml
 /// @param response - the web response from server side.
-/// @request - the original request.
-- (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response;
+- (instancetype)initWithXmlWebResponse:(MHVHttpServiceResponse *)response;
+
+/// Initializes a new instance of the MHVServiceResponse class.
+/// The response will stored as NSData in responseData
+/// @param response - the web response from server side.
+- (instancetype)initWithDataWebResponse:(MHVHttpServiceResponse *)response;
 
 @end
