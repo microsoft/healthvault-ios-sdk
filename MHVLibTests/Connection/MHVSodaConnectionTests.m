@@ -28,6 +28,7 @@
 #import "MHVPersonClientProtocol.h"
 #import "MHVPersonInfo.h"
 #import "NSError+MHVError.h"
+#import "MHVErrorConstants.h"
 
 static NSString *const kDefaultInstanceId = @"TESTINSTANCE1";
 static NSString *const kDefaultSharedSecret = @"TESTSHAREDSECRET";
@@ -71,7 +72,7 @@ describe(@"MHVSodaConnection", ^
     __block MHVPersonInfo *personInfo;
     __block NSError *authorizedPeopleError;
     
-    // Values to validate keychain interaction
+    // Values to mock and validate keychain interaction
     __block BOOL didSaveServiceInstance;
     __block BOOL didSaveApplicationCreationInfo;
     __block BOOL didSaveSessionCredential;
@@ -80,6 +81,10 @@ describe(@"MHVSodaConnection", ^
     __block BOOL didDeleteApplicationCreationInfo;
     __block BOOL didDeleteSessionCredential;
     __block BOOL didDeletePersonInfo;
+    __block MHVInstance *serviceInstanceFromKeychain;
+    __block MHVApplicationCreationInfo *appCreationInfoFromKeychain;
+    __block MHVSessionCredential *sessionCredentialFromKeychain;
+    __block MHVPersonInfo *personInfoFromKeychain;
     
     // Error validation
     __block NSError *loginError;
@@ -144,6 +149,10 @@ describe(@"MHVSodaConnection", ^
         didDeleteApplicationCreationInfo = NO;
         didDeleteSessionCredential = NO;
         didDeletePersonInfo = NO;
+        serviceInstanceFromKeychain = nil;
+        appCreationInfoFromKeychain = nil;
+        sessionCredentialFromKeychain = nil;
+        personInfoFromKeychain = nil;
         loginError = nil;
         errorMessage = nil;
     });
@@ -152,7 +161,29 @@ describe(@"MHVSodaConnection", ^
 #pragma mark - Mocks
     
     // Mock the keychain service
-    [(id)keychainService stub:@selector(xmlObjectForKey:) andReturn:nil];
+    [(id)keychainService stub:@selector(xmlObjectForKey:) withBlock:^id(NSArray *params)
+    {
+        NSString *key = params[0];
+        
+        if ([key isEqualToString:@"ServiceInstance"])
+        {
+            return serviceInstanceFromKeychain;
+        }
+        else if ([key isEqualToString:@"ApplicationCreationInfo"])
+        {
+            return appCreationInfoFromKeychain;
+        }
+        else if ([key isEqualToString:@"SessionCredential"])
+        {
+            return sessionCredentialFromKeychain;
+        }
+        else if ([key isEqualToString:@"PersonInfo"])
+        {
+            return personInfoFromKeychain;
+        }
+        
+        return nil;
+    }];
     [(id)keychainService stub:@selector(setXMLObject:forKey:) withBlock:^id(NSArray *params)
     {
         NSString *key = params[1];
@@ -276,68 +307,95 @@ describe(@"MHVSodaConnection", ^
                    });
             });
     
-    context(@"when authenticateWithViewController call is successful", ^
+    context(@"when authenticateWithViewController is successful", ^
             {
-                __block NSError *loginError;
+                beforeEach(^
+                {
+                    [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                     {
+                         loginError = error;
+                     }];
+                });
 
                 it(@"should complete with no errors", ^
                    {
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
-                        {
-                            loginError = error;
-                        }];
-                       
                        [[expectFutureValue(loginError) shouldEventually] beNil];
                    });
                 
                 it(@"should save the service instance to disk", ^
                    {
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
-                       
                        [[expectFutureValue(theValue(didSaveServiceInstance)) shouldEventually] beYes];
                    });
                 
                 it(@"should save the application creation to disk", ^
                    {
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
-                       
                        [[expectFutureValue(theValue(didSaveApplicationCreationInfo)) shouldEventually] beYes];
                    });
                 
                 it(@"should save the session credential to disk", ^
                    {
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
-                       
                        [[expectFutureValue(theValue(didSaveSessionCredential)) shouldEventually] beYes];
                    });
                 
                 it(@"should save the person info to disk", ^
                    {
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
-                       
                        [[expectFutureValue(theValue(didSavePersonInfo)) shouldEventually] beYes];
                    });
                 
                 it(@"should have the correct service instance data", ^
                    {
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
-                       
                        [[expectFutureValue(connection.serviceInstance) shouldEventually] beNonNil];
                        [[expectFutureValue(connection.serviceInstance.instanceID) shouldEventually] containString:kDefaultInstanceId];
                    });
                 
                 it(@"should have the correct application id data", ^
                    {
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
-                       
                        [[expectFutureValue(connection.applicationId) shouldEventually] beNonNil];
                        [[expectFutureValue(connection.applicationId.UUIDString) shouldEventually] containString:kDefaultAppIdGuid];
                    });
                 
                 it(@"should have the correct session credential data", ^
                    {
-                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
-                       
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNonNil];
+                       [[expectFutureValue(connection.sessionCredential.token) shouldEventually] containString:kDefaultToken];
+                       [[expectFutureValue(connection.sessionCredential.sharedSecret) shouldEventually] containString:kDefaultSharedSecret];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController is called and the connection data is cached", ^
+            {
+                beforeEach(^
+                           {
+                               serviceInstanceFromKeychain = serviceDefinition.systemInstances.instances[0];
+                               appCreationInfoFromKeychain = appCreationInfo;
+                               sessionCredentialFromKeychain = credential;
+                               personInfoFromKeychain = personInfo;
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should complete with no errors", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNil];
+                   });
+                
+                it(@"should have the correct service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNonNil];
+                       [[expectFutureValue(connection.serviceInstance.instanceID) shouldEventually] containString:kDefaultInstanceId];
+                   });
+                
+                it(@"should have the correct application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNonNil];
+                       [[expectFutureValue(connection.applicationId.UUIDString) shouldEventually] containString:kDefaultAppIdGuid];
+                   });
+                
+                it(@"should have the correct session credential data", ^
+                   {
                        [[expectFutureValue(connection.sessionCredential) shouldEventually] beNonNil];
                        [[expectFutureValue(connection.sessionCredential.token) shouldEventually] containString:kDefaultToken];
                        [[expectFutureValue(connection.sessionCredential.sharedSecret) shouldEventually] containString:kDefaultSharedSecret];
@@ -521,7 +579,7 @@ describe(@"MHVSodaConnection", ^
                    });
             });
     
-    context(@"when authenticateWithViewController fails to get a valid session credential", ^
+    context(@"when authenticateWithViewController fails to get authorized people", ^
             {
                 beforeEach(^
                            {
@@ -539,6 +597,195 @@ describe(@"MHVSodaConnection", ^
                    {
                        [[expectFutureValue(loginError) shouldEventually] beNonNil];
                        [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController is called and authentication is already in progerss", ^
+            {
+                
+                it(@"should provide a detailed error", ^
+                   {
+                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
+                       [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                       {
+                           loginError = error;
+                       }];
+                       
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeOperationCannotBePerformed)];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Another authentication operation is currenlty running."];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController fails to save the service instance to disk", ^
+            {
+                beforeEach(^
+                           {
+                               shouldSaveServiceInstance = NO;
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should provide a detailed error", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Could not save the service instance to the keychain."];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController fails to save the application creation info to disk", ^
+            {
+                beforeEach(^
+                           {
+                               shouldSaveApplicationCreationInfo = NO;
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should provide a detailed error", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Could not save the application creation info to the keychain."];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController fails to save the session credential to disk", ^
+            {
+                beforeEach(^
+                           {
+                               shouldSaveSessionCredential = NO;
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should provide a detailed error", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Could not save the session credential to the keychain."];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when authenticateWithViewController fails to save the person info to disk", ^
+            {
+                beforeEach(^
+                           {
+                               shouldSavePersonInfo = NO;
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    loginError = error;
+                                }];
+                           });
+                
+                it(@"should provide a detailed error", ^
+                   {
+                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Could not save the person info to the keychain."];
                    });
                 
                 it(@"should have no service instance data", ^

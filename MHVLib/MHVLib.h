@@ -29,3 +29,4 @@
 #import "MHVStore.h"
 #import "MHVClients.h"
 #import "MHVConnections.h"
+#import "MHVErrorConstants.h"

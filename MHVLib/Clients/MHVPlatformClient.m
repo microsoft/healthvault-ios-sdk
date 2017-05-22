@@ -61,13 +61,14 @@
 
 - (void)getServiceDefinitionWithCompletion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
 {
-    
+    [self getServiceDefinitionWithWithParameters:nil
+                                      completion:completion];
 }
 
 - (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
                                          completion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
 {
-    
+
 }
 
 - (void)getServiceDefinitionWithWithResponseSections:(MHVServiceInfoSections)responseSections
@@ -115,7 +116,7 @@
         
         MHVApplicationCreationInfo *info = (MHVApplicationCreationInfo *)[XSerializer newFromString:response.infoXml withRoot:@"info" asClass:[MHVApplicationCreationInfo class]];
         
-        if (!info)
+        if (!info || !info.appInstanceId || [NSString isNilOrEmpty:info.sharedSecret] || [NSString isNilOrEmpty:info.appCreationToken])
         {
             completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The NewApplicationCreationInfo response is invalid."]);
             

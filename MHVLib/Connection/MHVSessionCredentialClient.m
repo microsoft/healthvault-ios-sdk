@@ -85,7 +85,7 @@
 
         MHVSessionCredential *credential = (MHVSessionCredential *)[XSerializer newFromString:response.infoXml withRoot:@"info" asClass:[MHVSessionCredential class]];
         
-        if (!credential)
+        if (!credential || [NSString isNilOrEmpty:credential.token] || [NSString isNilOrEmpty:credential.sharedSecret])
         {
             completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The CreateAuthenticatedSessionToken response is invalid."]);
             

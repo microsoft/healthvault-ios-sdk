@@ -21,64 +21,60 @@
 #import "MHVFeatureActions.h"
 #import "MHVUIAlert.h"
 
+@interface MHVFeatureActions ()<UIActionSheetDelegate>
+
+@property (nonatomic, strong) UIActionSheet *actionSheet;
+@property (nonatomic, strong) NSMutableArray<MHVAction> *actions;
+
+@end
+
 @implementation MHVFeatureActions
 
--(id)init
+- (id)init
 {
     return [self initWithTitle:nil];
 }
 
--(id)initWithTitle:(NSString *)title
+- (id)initWithTitle:(NSString *)title
 {
     self = [super init];
-    MHVCHECK_SELF;
+    
     
     if (!title)
     {
         title = @"Try MORE Features";
     }
-    m_actionSheet = [[UIActionSheet alloc] initWithTitle:title
-                                        delegate:self
-                                        cancelButtonTitle:@"Cancel"
-                                        destructiveButtonTitle:nil
-                                        otherButtonTitles:nil];
-    MHVCHECK_NOTNULL(m_actionSheet);
-    m_actionSheet.delegate = self;
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:title
+                                               delegate:self
+                                      cancelButtonTitle:@"Cancel"
+                                 destructiveButtonTitle:nil
+                                      otherButtonTitles:nil];
     
-    m_actions = [[NSMutableArray alloc] init];
-    MHVCHECK_NOTNULL(m_actions);
+    _actionSheet.delegate = self;
+    
+    _actions = [NSMutableArray new];
     
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
 }
 
--(void)dealloc
+- (BOOL)addFeature:(NSString *)title andAction:(MHVAction)action
 {
-    m_actionSheet.delegate = nil;
+    MHVASSERT_PARAMETER(action);
     
+    [self.actionSheet addButtonWithTitle:title];
+    [self.actions addObject:action];
+    
+    return YES;
 }
 
--(BOOL) addFeature:(NSString *)title andAction:(MHVAction)action
+- (void)showFrom:(UIBarButtonItem *)button
 {
-    MHVCHECK_NOTNULL(action);
-    
-    [m_actionSheet addButtonWithTitle:title];
-    [m_actions addObject:action]; 
-    
-    return TRUE;
-    
-LError:
-    return FALSE;
+    [self.actionSheet showFromBarButtonItem:button animated:true];
 }
 
--(void)showFrom:(UIBarButtonItem *)button
-{
-    [m_actionSheet showFromBarButtonItem:button animated:true];
-}
+#pragma mark - UIActionSheetDelegate
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0)
     {
@@ -86,7 +82,7 @@ LError:
     }
     @try
     {
-        MHVAction action = (MHVAction) [m_actions objectAtIndex:buttonIndex - 1];
+        MHVAction action = (MHVAction) [self.actions objectAtIndex:buttonIndex - 1];
         action();
     }
     @catch (NSException *exception)
