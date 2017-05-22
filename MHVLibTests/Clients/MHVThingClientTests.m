@@ -67,7 +67,7 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><group><id>10000000-1000-1000-1000-100000000000</id><format><section>core</section><xml/></format></group></info>"];
                    });
   
@@ -82,7 +82,7 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><group><filter><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><thing-state>Active</thing-state></filter>"\
                         "<format><section>core</section><xml/></format></group></info>"];
                    });
@@ -101,7 +101,7 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"PutThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><thing><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><flags>0</flags>"\
                         "<data-xml><allergy><name><text>Bees</text></name><reaction><text>Itching</text></reaction></allergy><common/></data-xml></thing></info>"];
                    });
@@ -116,7 +116,7 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"PutThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><thing><thing-id version-stamp=\"ThingVersion\">ThingKey</thing-id>"\
                         "<type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><flags>0</flags><data-xml>"\
                         "<allergy><name><text>Bees</text></name><reaction><text>Itching</text></reaction></allergy><common/></data-xml></thing></info>"];
@@ -135,7 +135,7 @@ describe(@"MHVThingClient", ^
                        
                        [[method.name should] equal:@"RemoveThings"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><thing-id version-stamp=\"ThingVersion\">ThingKey</thing-id></info>"];
                    });
             });

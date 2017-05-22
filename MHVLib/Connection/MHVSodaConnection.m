@@ -164,7 +164,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
         
         [self.shellAuthService authorizeAdditionalRecordsWithViewController:viewController
                                                                    shellUrl:self.serviceInstance.shellUrl
-                                                                masterAppId:self.configuration.masterApplicationId
+                                                              appInstanceId:self.applicationId
                                                                  completion:^(NSError * _Nullable error)
         {
             if (error)

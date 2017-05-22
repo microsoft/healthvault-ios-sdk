@@ -25,9 +25,10 @@
 #import "MHVStringExtensions.h"
 
 static NSString *const kInstanceIdKey = @"instanceId=";
-static NSString *const kBaseQueryFormat = @"%@/redirect.aspx?target=CREATEAPPLICATION&targetqs=%@";
-static NSString *const kAppCreationQueryFormat = @"?appid=%@&appCreationToken=%@&instanceName=%@&ismra=%@&mobile=true";
-static NSString *const kRecordAuthQueryFormat = @"?appid=%@&ismra=%@";
+static NSString *const kAppCreationQueryFormat = @"%@/redirect.aspx?target=CREATEAPPLICATION&targetqs=%@";
+static NSString *const kAuthorizeRecordsQueryFormat =@"%@/redirect.aspx?target=APPAUTH&targetqs=%@";
+static NSString *const kAppCreationArgs = @"?appid=%@&appCreationToken=%@&instanceName=%@&ismra=%@&mobile=true";
+static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
 
 @interface MHVShellAuthService ()
 
@@ -96,7 +97,8 @@ static NSString *const kRecordAuthQueryFormat = @"?appid=%@&ismra=%@";
         }
         
         NSURL *startUrl = [self getApplicationCreationUrlWithShellUrl:shellUrl
-                                                          masterAppId:masterAppId
+                                                          queryFormat:kAppCreationQueryFormat
+                                                                appId:masterAppId
                                                      appCreationToken:appCreationToken
                                                         appInstanceId:appInstanceId];
         
@@ -139,11 +141,11 @@ static NSString *const kRecordAuthQueryFormat = @"?appid=%@&ismra=%@";
 
 - (void)authorizeAdditionalRecordsWithViewController:(UIViewController *_Nullable)viewController
                                             shellUrl:(NSURL *)shellUrl
-                                         masterAppId:(NSUUID *)masterAppId
+                                       appInstanceId:(NSUUID *)appInstanceId
                                           completion:(void (^_Nullable)(NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(shellUrl);
-    MHVASSERT_PARAMETER(masterAppId);
+    MHVASSERT_PARAMETER(appInstanceId);
     
     dispatch_async(self.authQueue, ^
     {
@@ -161,7 +163,7 @@ static NSString *const kRecordAuthQueryFormat = @"?appid=%@&ismra=%@";
         
         self.isAuthInProgress = YES;
         
-        if (!shellUrl || !masterAppId)
+        if (!shellUrl || !appInstanceId)
         {
             if (completion)
             {
@@ -170,7 +172,8 @@ static NSString *const kRecordAuthQueryFormat = @"?appid=%@&ismra=%@";
         }
         
         NSURL *startUrl = [self getApplicationCreationUrlWithShellUrl:shellUrl
-                                                          masterAppId:masterAppId
+                                                          queryFormat:kAuthorizeRecordsQueryFormat
+                                                                appId:appInstanceId
                                                      appCreationToken:nil
                                                         appInstanceId:nil];
         
@@ -197,7 +200,8 @@ static NSString *const kRecordAuthQueryFormat = @"?appid=%@&ismra=%@";
 #pragma mark - Private
 
 - (NSURL *)getApplicationCreationUrlWithShellUrl:(NSURL *)shellUrl
-                                     masterAppId:(NSUUID *)masterAppId
+                                     queryFormat:(NSString *)queryFormat
+                                           appId:(NSUUID *)appId
                                 appCreationToken:(NSString *)appCreationToken
                                    appInstanceId:(NSUUID *)appInstanceId
 {
@@ -211,7 +215,7 @@ static NSString *const kRecordAuthQueryFormat = @"?appid=%@&ismra=%@";
     
     if (tokenEncoded && instanceEncoded)
     {
-        queryString = [NSString stringWithFormat:kAppCreationQueryFormat, masterAppId, tokenEncoded, instanceEncoded, isMultiRecord];
+        queryString = [NSString stringWithFormat:kAppCreationArgs, appId, tokenEncoded, instanceEncoded, isMultiRecord];
         
         if (self.configuration.isMultiInstanceAware)
         {
@@ -223,12 +227,12 @@ static NSString *const kRecordAuthQueryFormat = @"?appid=%@&ismra=%@";
     }
     else
     {
-        queryString = [NSString stringWithFormat:kRecordAuthQueryFormat, masterAppId, isMultiRecord];
+        queryString = [NSString stringWithFormat:kAuthorizeRecordsArgs, appId, isMultiRecord];
     }
     
     CFStringRef queryStringEncoded = CreateHVUrlEncode((__bridge CFStringRef)queryString);
     
-    NSString *urlString = [NSString stringWithFormat:kBaseQueryFormat, shellUrl, (__bridge NSString *)queryStringEncoded];
+    NSString *urlString = [NSString stringWithFormat:queryFormat, shellUrl, (__bridge NSString *)queryStringEncoded];
     
     CFRelease(queryStringEncoded);
     

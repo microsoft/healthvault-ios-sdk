@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)authorizeAdditionalRecordsWithViewController:(UIViewController *_Nullable)viewController
                                             shellUrl:(NSURL *)shellUrl
-                                         masterAppId:(NSUUID *)masterAppId
+                                       appInstanceId:(NSUUID *)appInstanceId
                                           completion:(void (^_Nullable)(NSError *_Nullable error))completion;
 
 @end
