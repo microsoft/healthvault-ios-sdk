@@ -17,20 +17,16 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import "MHVHttpServiceOperationProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVMethod : NSObject
+@interface MHVMethod : NSObject <MHVHttpServiceOperationProtocol>
 
 /**
  The name of the method to be called. Reference at: http://developer.healthvault.com/pages/methods/methods.aspx
  */
 @property (nonatomic, strong, readonly) NSString *name;
-
-/**
- A Boolean representing whether the method call requires authentication
- */
-@property (nonatomic, assign, readonly) BOOL isAnonymous;
 
 /**
  The method version. The version will default to the latest method version at the time of the SDK release.

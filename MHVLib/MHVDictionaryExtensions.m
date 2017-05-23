@@ -66,4 +66,24 @@
     return nvPairs;
 }
 
+- (NSString *)queryString
+{
+    if (self.allKeys.count == 0)
+    {
+        return @"";
+    }
+    
+    NSMutableString *query = [[NSMutableString alloc] init];
+    
+    for (NSString *key in self.allKeys)
+    {
+        if (query.length > 0)
+        {
+            [query appendString:@"&"];
+        }
+        [query appendFormat:@"%@=%@", key, [self[key] urlEncode]];
+    }
+    return query;
+}
+
 @end
