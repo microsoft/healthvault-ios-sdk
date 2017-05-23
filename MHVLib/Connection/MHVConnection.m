@@ -156,6 +156,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient
 {
+    NSAssert(NO, @"Must Implement");
     return nil;
 }
 
