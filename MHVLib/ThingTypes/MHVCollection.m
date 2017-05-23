@@ -41,23 +41,23 @@
 
 - (instancetype)initWithCapacity:(NSUInteger)numThings
 {
-    self = [super init];
-    
-    if (self)
-    {
-        _inner = [[NSMutableArray alloc] initWithCapacity:numThings];
-    }
+    self = [self init];
     
     return self;
 }
 
 - (instancetype)initWithArray:(NSArray *)array
 {
-    self = [super init];
+    MHVASSERT_PARAMETER(array);
+    
+    self = [self init];
     
     if (self)
     {
-        _inner = [[NSMutableArray alloc] initWithArray:array];
+        if (array)
+        {
+            [self.inner addObjectsFromArray:array];
+        }
     }
     
     return self;
@@ -65,11 +65,15 @@
 
 - (instancetype)initWithObject:(id)object
 {
+    MHVASSERT_PARAMETER(object);
+    
     self = [self init];
+    
     if (self)
     {
-        [_inner addObject:object];
+        [self addObject:object];
     }
+    
     return self;
 }
 

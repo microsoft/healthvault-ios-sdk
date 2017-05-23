@@ -55,15 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
            completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**
- Gets the person information for the current account.
-
- @param completion Envoked when the operation completes. MHVPersonInfo the person info for the current account. NSError object will be nil if there is no error when performing the operation.
- 
- @note This includes the list of authorized records for the application instance.
- */
-- (void)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo *_Nullable personInfo, NSError *_Nullable error))completion;
-
-/**
  Authenticates the connection. Calling authenticate will immediately present an authentication user interface if the connection is not authenticated.
 
  @param viewController Optional A view controller used to present a user authentication user interface. If the viewController parameter is nil the authentication flow will be presented from the current window's root view controller.
