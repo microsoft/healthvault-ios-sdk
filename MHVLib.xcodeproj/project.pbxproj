@@ -528,6 +528,7 @@
 		A54521521EC9EC2800A17A1B /* MHVShellAuthService.m in Sources */ = {isa = PBXBuildFile; fileRef = A54521501EC9EC2800A17A1B /* MHVShellAuthService.m */; };
 		A54521561EC9EF0100A17A1B /* MHVConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = A54521541EC9EF0100A17A1B /* MHVConfiguration.h */; };
 		A54521571EC9EF0100A17A1B /* MHVConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A54521551EC9EF0100A17A1B /* MHVConfiguration.m */; };
+		A575B4261ED488F400AB781C /* MHVShellAuthServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A575B4251ED488F400AB781C /* MHVShellAuthServiceTests.m */; };
 		A57A80C01EC4FB7900DDD636 /* MHVServiceResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = A57A80BE1EC4FB7900DDD636 /* MHVServiceResponse.h */; };
 		A57A80C11EC4FB7900DDD636 /* MHVServiceResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = A57A80BF1EC4FB7900DDD636 /* MHVServiceResponse.m */; };
 		A57A80C41EC51EC600DDD636 /* MHVCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = A57A80C21EC51EC600DDD636 /* MHVCollection.h */; };
@@ -1229,6 +1230,7 @@
 		A54521581EC9F68E00A17A1B /* MHVConfigurationConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVConfigurationConstants.h; sourceTree = "<group>"; };
 		A57208A21EC62B5D00C7BB72 /* MHVPlatformConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVPlatformConstants.h; sourceTree = "<group>"; };
 		A57208A31EC62D9F00C7BB72 /* MHVThingConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MHVThingConstants.h; path = MHVLib/PlatformInformation/MHVThingConstants.h; sourceTree = SOURCE_ROOT; };
+		A575B4251ED488F400AB781C /* MHVShellAuthServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVShellAuthServiceTests.m; sourceTree = "<group>"; };
 		A57A80BE1EC4FB7900DDD636 /* MHVServiceResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVServiceResponse.h; sourceTree = "<group>"; };
 		A57A80BF1EC4FB7900DDD636 /* MHVServiceResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVServiceResponse.m; sourceTree = "<group>"; };
 		A57A80C21EC51EC600DDD636 /* MHVCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVCollection.h; path = MHVLib/ThingTypes/MHVCollection.h; sourceTree = SOURCE_ROOT; };
@@ -1425,6 +1427,7 @@
 		4C3973B11EC4B66B0079C28D /* MHVLibTests */ = {
 			isa = PBXGroup;
 			children = (
+				A575B4241ED488D600AB781C /* Authentication */,
 				A51203C81ECF2CB600845680 /* Connection */,
 				4C76474B1ECA544B003B85B5 /* Clients */,
 				4C7646BF1EC4E525003B85B5 /* HTTP */,
@@ -2189,6 +2192,14 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		A575B4241ED488D600AB781C /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				A575B4251ED488F400AB781C /* MHVShellAuthServiceTests.m */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		A5B384911ECB41C000788619 /* Transport */ = {
 			isa = PBXGroup;
 			children = (
@@ -2924,6 +2935,7 @@
 				A51203CA1ECF2CB600845680 /* MHVSodaConnectionTests.m in Sources */,
 				4C76474D1ECA546F003B85B5 /* MHVThingClientTests.m in Sources */,
 				4C2975C81ECDFB63006B3673 /* MHVHttpTaskTests.m in Sources */,
+				A575B4261ED488F400AB781C /* MHVShellAuthServiceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
