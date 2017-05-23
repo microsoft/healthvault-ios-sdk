@@ -333,7 +333,7 @@
     NSString *requestXml = [request toXml:self];
     
     [self.httpService sendRequestForURL:[NSURL URLWithString:self.healthServiceUrl]
-                                   body:requestXml
+                                   body:[requestXml dataUsingEncoding:NSUTF8StringEncoding]
                              completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          [self sendRequestCallback:response

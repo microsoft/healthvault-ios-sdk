@@ -56,6 +56,7 @@ describe(@"MHVHttpService", ^
            {
                //Send request
                [service sendRequestForURL:[NSURL URLWithString:@"https://test.com/path"]
+                                   method:nil
                                      body:@"testbody"
                                   headers:@{
                                             @"Header-One" : @"ABC",

@@ -21,7 +21,7 @@
 
 @class MHVSessionCredential, MHVPersonInfo, MHVServiceResponse, MHVMethod;
 
-@protocol MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol;
+@protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param method The method to execute. MHVMethod class has properties representing the method name, version, parameters, recordId and correlationId.
  @para
  */
-- (void)executeMethod:(MHVMethod *)method
+- (void)executeMethod:(id<MHVHttpServiceOperationProtocol>)method
            completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**

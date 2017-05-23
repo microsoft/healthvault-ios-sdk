@@ -34,32 +34,41 @@
 /// Represents that current token has been expired and should be updated.
 #define RESPONSE_AUTH_SESSION_TOKEN_EXPIRED 65
 
+@interface MHVServiceResponse ()
+
+@property (nonatomic, strong) NSError *error;
+@property (nonatomic, strong) NSString *infoXml;
+
+@end
+
 @implementation MHVServiceResponse
 
-- (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response
+- (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response isXML:(BOOL)isXML
 {
     self = [super init];
     
     if (self)
     {
         _statusCode = (int)response.statusCode;
+        _responseAsData = response.responseAsData;
+        _responseAsString = response.responseAsString;
         
         if (response.hasError)
         {
             if (_statusCode == 401)
             {
-                self.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The Authorization token is missing, malformed or expired."];
+                _error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The Authorization token is missing, malformed or expired."];
             }
         }
-        else
+        else if (isXML)
         {
             NSString *xml = response.responseAsString;
             
-            BOOL xmlReaderesult = [self deserializeXml:xml];
+            BOOL xmlReaderResult = [self deserializeXml:xml];
             
-            if (!xmlReaderesult)
+            if (!xmlReaderResult)
             {
-                self.error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"Response was not a valid HealthVault response.\n%@",xml]];
+                _error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"Response was not a valid HealthVault response.\n%@",xml]];
             }
         }
     }

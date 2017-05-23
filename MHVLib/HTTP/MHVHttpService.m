@@ -67,14 +67,15 @@
 }
 
 - (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
-                                        body:(NSString *_Nullable)body
+                                        body:(NSData *_Nullable)body
                                   completion:(MHVHttpServiceCompletion)completion
 {
-    return [self sendRequestForURL:url body:body headers:nil completion:completion];
+    return [self sendRequestForURL:url method:nil body:body headers:nil completion:completion];
 }
 
 - (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
-                                        body:(NSString *_Nullable)body
+                                      method:(NSString *_Nullable)method
+                                        body:(NSData *_Nullable)body
                                      headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
                                   completion:(MHVHttpServiceCompletion)completion
 {
@@ -95,6 +96,11 @@
     for (NSString *key in headers.allKeys)
     {
         [request setValue:headers[key] forHTTPHeaderField:key];
+    }
+    
+    if (method)
+    {
+        request.HTTPMethod = method;
     }
     
     NSInteger currentRequest = (++self.requestCount);
@@ -319,7 +325,7 @@
 #pragma mark - Internal methods
 
 - (NSURLRequest *)requestWithUrl:(NSURL *)url
-                            body:(NSString *)body
+                            body:(NSData *)body
 {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     
@@ -327,12 +333,10 @@
     
     if (body)
     {
-        NSData *bodyData = [body dataUsingEncoding:NSUTF8StringEncoding];
-        
         request.HTTPMethod = @"POST";
-        request.HTTPBody = bodyData;
+        request.HTTPBody = body;
         
-        [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)bodyData.length] forHTTPHeaderField:@"Content-Length"];
+        [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)body.length] forHTTPHeaderField:@"Content-Length"];
     }
     
     return request;
