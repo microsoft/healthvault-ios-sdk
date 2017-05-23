@@ -1037,7 +1037,7 @@ describe(@"MHVSodaConnection", ^
                                 }];
                            });
                 
-                it(@"should not complete with an error an error", ^
+                it(@"should not complete with an error", ^
                    {
                        [[expectFutureValue(expectedError) shouldEventually] beNil];
                    });
