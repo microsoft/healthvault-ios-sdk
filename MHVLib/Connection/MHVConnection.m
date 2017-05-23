@@ -87,14 +87,14 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     return nil;
 }
 
-- (void)executeMethod:(id<MHVHttpServiceOperationProtocol> _Nonnull)method
-           completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
+- (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol> _Nonnull)operation
+                         completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
-    MHVASSERT_PARAMETER(method);
+    MHVASSERT_PARAMETER(operation);
     
     dispatch_async(self.completionQueue, ^
     {
-        if (!method.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
+        if (!operation.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
         {
             if (completion)
             {
@@ -105,7 +105,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         }
         else
         {
-            [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:method completion:completion]];
+            [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation completion:completion]];
         }
     });
     
@@ -156,7 +156,6 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient
 {
-    NSAssert(NO, @"Must Implement");
     return nil;
 }
 
@@ -182,7 +181,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 - (void)executeMethodRequest:(MHVHttpServiceRequest *)request
 {
     [self.httpService sendRequestForURL:self.serviceInstance.healthServiceUrl
-                                 method:nil
+                             httpMethod:nil
                                    body:[[self messageForMethod:request.serviceOperation] dataUsingEncoding:NSUTF8StringEncoding]
                                 headers:[self headersForMethod:request.serviceOperation]
                              completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
@@ -216,16 +215,6 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 {
     MHVRestRequest *restRequest = request.serviceOperation;
     
-    if (restRequest.restRequestType == MHVRestRequestJSON)
-    {
-        [self executeJsonRestRequest:request];
-    }
-}
-
-- (void)executeJsonRestRequest:(MHVHttpServiceRequest *)request
-{
-    MHVRestRequest *restRequest = request.serviceOperation;
-
     // If no URL is set, build it from serviceInstance
     if (!restRequest.url)
     {
@@ -240,7 +229,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     }
     
     [self.httpService sendRequestForURL:restRequest.url
-                                 method:restRequest.method
+                             httpMethod:restRequest.httpMethod
                                    body:restRequest.body
                                 headers:headers
                              completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)

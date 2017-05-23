@@ -39,7 +39,7 @@ describe(@"MHVHttpService", ^
            {
                //Send request
                [service sendRequestForURL:[NSURL URLWithString:@"https://test.com/path"]
-                                     body:@"testbody"
+                                     body:[@"testbody" dataUsingEncoding:NSUTF8StringEncoding]
                                completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error) { }];
 
                //Verify URLRequest values
@@ -56,8 +56,8 @@ describe(@"MHVHttpService", ^
            {
                //Send request
                [service sendRequestForURL:[NSURL URLWithString:@"https://test.com/path"]
-                                   method:nil
-                                     body:@"testbody"
+                               httpMethod:nil
+                                     body:[@"testbody" dataUsingEncoding:NSUTF8StringEncoding]
                                   headers:@{
                                             @"Header-One" : @"ABC",
                                             @"Header-Two" : @"123",

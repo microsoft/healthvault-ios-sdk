@@ -41,7 +41,6 @@
 
 - (id<MHVVocabularyClientProtocol>)vocabularyClientWithConnection:(id<MHVConnectionProtocol>)connection
 {
-    NSAssert(NO, @"Must Implement");
     return nil;
 }
 

@@ -11,20 +11,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, MHVRestRequestType)
-{
-    MHVRestRequestJSON,
-    //MHVRestRequestDownloadBlobData,
-    //MHVRestRequestDownloadBlobFile,
-    //MHVRestRequestUploadBlob,
-};
-
 @interface MHVRestRequest : NSObject <MHVHttpServiceOperationProtocol>
 
-@property (nonatomic, assign, readonly)           MHVRestRequestType restRequestType;
-
 @property (nonatomic, strong, readonly)           NSString      *path;
-@property (nonatomic, strong, readonly)           NSString      *method;
+@property (nonatomic, strong, readonly)           NSString      *httpMethod;
 @property (nonatomic, strong, readonly, nullable) NSDictionary  *pathParams;
 @property (nonatomic, strong, readonly, nullable) NSDictionary  *queryParams;
 @property (nonatomic, strong, readonly, nullable) NSDictionary  *formParams;
@@ -34,7 +24,7 @@ typedef NS_ENUM(NSInteger, MHVRestRequestType)
 @property (nonatomic, strong, readonly)           NSURL         *url;
 
 - (instancetype)initWithPath:(NSString *)path
-                      method:(NSString *)method
+                  httpMethod:(NSString *)httpMethod
                   pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
                  queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
                   formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
@@ -42,7 +32,7 @@ typedef NS_ENUM(NSInteger, MHVRestRequestType)
                  isAnonymous:(BOOL)isAnonymous;
 
 - (instancetype)initWithURL:(NSURL *)url
-                     method:(NSString *)method
+                 httpMethod:(NSString *)httpMethod
                        body:(NSData *_Nullable)body
                 isAnonymous:(BOOL)isAnonymous;
 

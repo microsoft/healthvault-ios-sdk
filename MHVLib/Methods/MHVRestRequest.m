@@ -12,7 +12,7 @@
 @implementation MHVRestRequest
 
 - (instancetype)initWithPath:(NSString *)path
-                      method:(NSString *)method
+                  httpMethod:(NSString *)httpMethod
                   pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
                  queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
                   formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
@@ -20,13 +20,13 @@
                  isAnonymous:(BOOL)isAnonymous
 {
     MHVASSERT_PARAMETER(path);
-    MHVASSERT_PARAMETER(method);
+    MHVASSERT_PARAMETER(httpMethod);
     
     self = [super init];
     if (self)
     {
         _path = path;
-        _method = method;
+        _httpMethod = httpMethod;
         _pathParams = pathParams;
         _queryParams = queryParams;
         _formParams = formParams;
@@ -37,18 +37,18 @@
 }
 
 - (instancetype)initWithURL:(NSURL *)url
-                     method:(NSString *)method
+                 httpMethod:(NSString *)httpMethod
                        body:(NSData *_Nullable)body
                 isAnonymous:(BOOL)isAnonymous
 {
     MHVASSERT_PARAMETER(url);
     MHVASSERT_PARAMETER(url);
-
+    
     self = [super init];
     if (self)
     {
         _url = url;
-        _method = method;
+        _httpMethod = httpMethod;
         _body = body;
         _isAnonymous = isAnonymous;
     }
@@ -65,7 +65,7 @@
         _path = [NSString stringWithFormat:@"/%@", _path];
     }
     urlComponents.path = self.path;
-
+    
     urlComponents.query = [self.queryParams queryString];
     
     _url = urlComponents.URL;

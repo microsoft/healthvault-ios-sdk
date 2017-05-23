@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Performs request
  *
  * @param path Request url.
- * @param method Request method, "GET", "POST", "PATCH", etc
+ * @param httpMethod Request method, "GET", "POST", "PATCH", etc
  * @param pathParams Request path parameters.  Values in {brackets} in the path will be replaced by values from this dictionary
  *        pathParams { @"date" : @"2017-05-23" } with path @"endDate={date}" would result in @"endDate=2017-05-23"
  * @param queryParams Request query parameters dictionary
@@ -45,16 +45,16 @@ NS_ASSUME_NONNULL_BEGIN
                            formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
                                  body:(NSData *_Nullable)body
                               toClass:(Class)toClass
-                           completion:(void(^)(id _Nullable output, NSError *_Nullable error))completion;
+                           completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion;
 
 - (void)requestWithPath:(NSString *)path
-                 method:(NSString *)method
+             httpMethod:(NSString *)httpMethod
              pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
             queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
              formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
                    body:(NSData *_Nullable)body
                 toClass:(Class)toClass
-             completion:(void(^)(id _Nullable output, NSError *_Nullable error))completion;
+             completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion;
 
 @end
 

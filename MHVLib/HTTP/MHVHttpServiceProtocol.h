@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  Send a request to HealthVault service
  
  @param url the endpoint for the request
- @param method the method (GET, POST, etc) to use.  nil will use GET, unless there is body which will use POST
+ @param httpMethod the http method (GET, POST, etc) to use.  nil will use GET, unless there is body which will use POST
  @param body data to send as POST body
  @param headers HTTP headers to add to the request for authentication, etc.
  Dictionary key is HTTP header ie "Content-Type"
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return a task that can be cancelled
  */
 - (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
-                                      method:(NSString *_Nullable)method
+                                  httpMethod:(NSString *_Nullable)httpMethod
                                         body:(NSData *_Nullable)body
                                      headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
                                   completion:(MHVHttpServiceCompletion)completion;

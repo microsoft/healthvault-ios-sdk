@@ -105,7 +105,8 @@
         return;
     }
     
-    [self.connection executeMethod:[MHVMethod newApplicationCreationInfo] completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:[MHVMethod newApplicationCreationInfo]
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
     {
         if (error)
         {
@@ -133,7 +134,8 @@
     MHVMethod *method = [MHVMethod removeApplicationRecordAuthorization];
     method.recordId = recordId;
     
-    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
     {
         if (completion)
         {
@@ -157,8 +159,8 @@
     MHVMethod *method = [MHVMethod getServiceDefinition];
     method.parameters = parameters;
     
-    [self.connection executeMethod:method
-                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
     {
         if (error)
         {

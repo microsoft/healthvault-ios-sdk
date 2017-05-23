@@ -70,11 +70,11 @@
                                         body:(NSData *_Nullable)body
                                   completion:(MHVHttpServiceCompletion)completion
 {
-    return [self sendRequestForURL:url method:nil body:body headers:nil completion:completion];
+    return [self sendRequestForURL:url httpMethod:nil body:body headers:nil completion:completion];
 }
 
 - (id<MHVHttpTaskProtocol>)sendRequestForURL:(NSURL *)url
-                                      method:(NSString *_Nullable)method
+                                  httpMethod:(NSString *_Nullable)httpMethod
                                         body:(NSData *_Nullable)body
                                      headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
                                   completion:(MHVHttpServiceCompletion)completion
@@ -98,9 +98,9 @@
         [request setValue:headers[key] forHTTPHeaderField:key];
     }
     
-    if (method)
+    if (httpMethod)
     {
-        request.HTTPMethod = method;
+        request.HTTPMethod = httpMethod;
     }
     
     NSInteger currentRequest = (++self.requestCount);

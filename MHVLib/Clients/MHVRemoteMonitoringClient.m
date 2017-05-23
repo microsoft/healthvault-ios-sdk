@@ -57,7 +57,7 @@
                            formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
                                  body:(NSData *_Nullable)body
                               toClass:(Class)toClass
-                           completion:(void(^_Nonnull)(id _Nullable output, NSError *_Nullable error))completion
+                           completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion
 {
     //    [[MHVRemoteMonitoringClient current] requestWithPath:path
     //                                              method:method
@@ -72,53 +72,57 @@
 }
 
 - (void)requestWithPath:(NSString *_Nonnull)path
-                 method:(NSString *_Nonnull)method
+             httpMethod:(NSString *_Nonnull)httpMethod
              pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
             queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
              formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
                    body:(NSData *_Nullable)body
                 toClass:(Class)toClass
-             completion:(void(^_Nonnull)(id _Nullable output, NSError *_Nullable error))completion
+             completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion
 {
-    if (!completion)
-    {
-        return;
-    }
+    MHVASSERT_PARAMETER(path);
+    MHVASSERT_PARAMETER(httpMethod);
     
     if (pathParams != nil)
     {
-        NSMutableString *queryPath = [NSMutableString stringWithString:path];
+        NSMutableString *queryPath = [path mutableCopy];
         
         [pathParams enumerateKeysAndObjectsUsingBlock:^(id _Nonnull key, id _Nonnull obj, BOOL *_Nonnull stop)
          {
              [queryPath replaceCharactersInRange:[queryPath rangeOfString:[NSString stringWithFormat:@"{%@}", key]] withString:obj];
          }];
         
-        path = [queryPath toString];
+        path = queryPath;
     }
     
     MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:path
-                                                                method:method
+                                                            httpMethod:httpMethod
                                                             pathParams:pathParams
                                                            queryParams:queryParams
                                                             formParams:formParams
                                                                   body:body
                                                            isAnonymous:NO];
     
-    [self.connection executeMethod:restRequest
-                        completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
+    [self.connection executeHttpServiceOperation:restRequest
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
          if (error)
          {
-             completion(nil, error);
+             if (completion)
+             {
+                 completion(nil, error);
+             }
          }
          else
          {
-             id result = [MHVJsonSerializer deserialize:response.responseAsString
-                                                toClass:[toClass class]
-                                            shouldCache:YES];
-             
-             completion(result, nil);
+             if (completion)
+             {
+                 id result = [MHVJsonSerializer deserialize:response.responseAsString
+                                                    toClass:[toClass class]
+                                                shouldCache:YES];
+                 
+                 completion(result, nil);
+             }
          }
      }];
 }
