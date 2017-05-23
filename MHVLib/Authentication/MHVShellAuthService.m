@@ -84,7 +84,7 @@ static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
         
         if (self.isAuthInProgress)
         {
-            completion(nil, [NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currently running."]);
+            completion(nil, [NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currently in progress."]);
             
             return;
         }
@@ -94,6 +94,10 @@ static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
         if (!shellUrl || !masterAppId || !appCreationToken || !appInstanceId)
         {
             completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"One or more required parameters are missing."]);
+            
+            self.isAuthInProgress = NO;
+            
+            return;
         }
         
         NSURL *startUrl = [self getApplicationCreationUrlWithShellUrl:shellUrl
@@ -156,7 +160,7 @@ static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
         
         if (self.isAuthInProgress)
         {
-            completion([NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currenlty running."]);
+            completion([NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currenlty in progress."]);
             
             return;
         }
@@ -169,6 +173,10 @@ static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
             {
                 completion([NSError error:[NSError MVHInvalidParameter] withDescription:@"One or more required parameters are missing."]);
             }
+            
+            self.isAuthInProgress = NO;
+            
+            return;
         }
         
         NSURL *startUrl = [self getApplicationCreationUrlWithShellUrl:shellUrl
