@@ -29,6 +29,7 @@
 #import "MHVPersonInfo.h"
 #import "NSError+MHVError.h"
 #import "MHVErrorConstants.h"
+#import "MHVRecord.h"
 
 static NSString *const kDefaultInstanceId = @"TESTINSTANCE1";
 static NSString *const kDefaultSharedSecret = @"TESTSHAREDSECRET";
@@ -60,9 +61,15 @@ describe(@"MHVSodaConnection", ^
     __block NSString *instanceId;
     __block NSError *provisionError;
     
+    // Response for authorizeAdditionalRecordsWithViewController
+    __block NSError *additionalAuthError;
+    
     // Response for getServiceDefinitionWithWithResponseSections
     __block MHVServiceDefinition *serviceDefinition;
     __block NSError *serviceDefinitionError;
+    
+    // Response for removeApplicationAuthorizationWithRecordId
+    __block NSError *removeAuthError;
     
     // Response for getSessionCredentialWithSharedSecret
     __block MHVSessionCredential *credential;
@@ -87,7 +94,7 @@ describe(@"MHVSodaConnection", ^
     __block MHVPersonInfo *personInfoFromKeychain;
     
     // Error validation
-    __block NSError *loginError;
+    __block NSError *expectedError;
     __block NSString *errorMessage;
     
     // Connection
@@ -130,6 +137,7 @@ describe(@"MHVSodaConnection", ^
         appCreationError = nil;
         instanceId = kDefaultInstanceId;
         provisionError = nil;
+        additionalAuthError = nil;
         serviceDefinition = [MHVServiceDefinition new];
         serviceDefinition.systemInstances = [MHVSystemInstances new];
         MHVInstance *testInstance = [MHVInstance new];
@@ -139,7 +147,10 @@ describe(@"MHVSodaConnection", ^
         credential = [[MHVSessionCredential alloc]initWithToken:kDefaultToken sharedSecret:kDefaultSharedSecret];
         credentialError = nil;
         personInfo = [MHVPersonInfo new];
-        personInfo.selectedRecordID = [NSUUID UUID];
+        MHVRecord *record = [MHVRecord new];
+        record.ID = [NSUUID UUID];
+        personInfo.records = [[MHVRecordCollection alloc] initWithObject:record];
+        personInfo.selectedRecordID = record.ID;
         authorizedPeopleError = nil;
         didSaveServiceInstance = NO;
         didSaveApplicationCreationInfo = NO;
@@ -153,7 +164,7 @@ describe(@"MHVSodaConnection", ^
         appCreationInfoFromKeychain = nil;
         sessionCredentialFromKeychain = nil;
         personInfoFromKeychain = nil;
-        loginError = nil;
+        expectedError = nil;
         errorMessage = nil;
     });
     
@@ -255,11 +266,27 @@ describe(@"MHVSodaConnection", ^
         return nil;
     }];
     
+    // Mock the authorizeAdditionalRecordsWithViewController call
+    [(id)authService stub:@selector(authorizeAdditionalRecordsWithViewController:shellUrl:appInstanceId:completion:) withBlock:^id(NSArray *params)
+     {
+         void (^authorizeBlk)(NSError * _Nullable error) = params[3];
+         authorizeBlk(additionalAuthError);
+         return nil;
+     }];
+    
     // Mock the getServiceDefinitionWithWithResponseSections call
     [(id)platformClient stub:@selector(getServiceDefinitionWithWithResponseSections:completion:) withBlock:^id(NSArray *params)
     {
         void (^serviceDefBlk)(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error) = params[1];
         serviceDefBlk(serviceDefinition, serviceDefinitionError);
+        return nil;
+    }];
+    
+    // Mock the removeApplicationAuthorizationWithRecordId call
+    [(id)platformClient stub:@selector(removeApplicationAuthorizationWithRecordId:completion:) withBlock:^id(NSArray *params)
+    {
+        void (^removeAuthBlk)(NSError * _Nullable error) = params[1];
+        removeAuthBlk(removeAuthError);
         return nil;
     }];
     
@@ -313,13 +340,13 @@ describe(@"MHVSodaConnection", ^
                 {
                     [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                      {
-                         loginError = error;
+                         expectedError = error;
                      }];
                 });
 
                 it(@"should complete with no errors", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNil];
+                       [[expectFutureValue(expectedError) shouldEventually] beNil];
                    });
                 
                 it(@"should save the service instance to disk", ^
@@ -373,13 +400,13 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should complete with no errors", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNil];
+                       [[expectFutureValue(expectedError) shouldEventually] beNil];
                    });
                 
                 it(@"should have the correct service instance data", ^
@@ -413,14 +440,14 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide the error from the method call", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -457,14 +484,14 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide the error from the method call", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -501,14 +528,14 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide the error from the method call", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -545,14 +572,14 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide the error from the method call", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -589,14 +616,14 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide the error from the method call", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:errorMessage];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -631,12 +658,12 @@ describe(@"MHVSodaConnection", ^
                        [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error){}];
                        [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                        {
-                           loginError = error;
+                           expectedError = error;
                        }];
                        
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeOperationCannotBePerformed)];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Another authentication operation is currenlty running."];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeOperationCannotBePerformed)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"Another authentication operation is currenlty running."];
                    });
             });
     
@@ -648,15 +675,15 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide a detailed error", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Could not save the service instance to the keychain."];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"Could not save the service instance to the keychain."];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -691,15 +718,15 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide a detailed error", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Could not save the application creation info to the keychain."];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"Could not save the application creation info to the keychain."];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -734,15 +761,15 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide a detailed error", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Could not save the session credential to the keychain."];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"Could not save the session credential to the keychain."];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -777,15 +804,15 @@ describe(@"MHVSodaConnection", ^
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    loginError = error;
+                                    expectedError = error;
                                 }];
                            });
                 
                 it(@"should provide a detailed error", ^
                    {
-                       [[expectFutureValue(loginError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(loginError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
-                       [[expectFutureValue(loginError.localizedDescription) shouldEventually] containString:@"Could not save the person info to the keychain."];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"Could not save the person info to the keychain."];
                    });
                 
                 it(@"should have no service instance data", ^
@@ -818,10 +845,7 @@ describe(@"MHVSodaConnection", ^
                            {
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
-                                    [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error)
-                                     {
-                                         
-                                     }];
+                                    [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error){}];
                                 }];
                            });
                 
@@ -848,6 +872,252 @@ describe(@"MHVSodaConnection", ^
                        [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
                    });
             });
+    
+    context(@"when deauthorizeApplication is called and the app is not authenticated", ^
+            {
+                beforeEach(^
+                           {
+                               [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error){}];
+                           });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when deauthorizeApplication is successful and there are multiple records", ^
+            {
+                beforeEach(^
+                           {
+                               [personInfo.records addObject:[MHVRecord new]];
+                               [personInfo.records addObject:[MHVRecord new]];
+                               [personInfo.records addObject:[MHVRecord new]];
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error){}];
+                                }];
+                           });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when deauthorizeApplication fails to delete credential data from disk", ^
+            {
+                beforeEach(^
+                           {
+                               removeAuthError = [NSError MHVUnknownError];
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error)
+                                    {
+                                        expectedError = error;
+                                    }];
+                                }];
+                           });
+                
+                it(@"should not fail the process with an error", ^
+                   {
+                       [[expectFutureValue(expectedError) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no service instance data", ^
+                   {
+                       [[expectFutureValue(connection.serviceInstance) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no application id data", ^
+                   {
+                       [[expectFutureValue(connection.applicationId) shouldEventually] beNil];
+                   });
+                
+                it(@"should have no session credential", ^
+                   {
+                       [[expectFutureValue(connection.sessionCredential) shouldEventually] beNil];
+                   });
+                
+                it(@"should delete any credential data saved to disk", ^
+                   {
+                       [[expectFutureValue(theValue(didDeleteServiceInstance)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteApplicationCreationInfo)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeleteSessionCredential)) shouldEventually] beYes];
+                       [[expectFutureValue(theValue(didDeletePersonInfo)) shouldEventually] beYes];
+                   });
+            });
+    
+    context(@"when deauthorizeApplication fails to remove authorization record", ^
+            {
+                beforeEach(^
+                           {
+                               shouldDeleteServiceInstance = NO;
+                               shouldDeleteApplicationCreationInfo = NO;
+                               shouldDeleteSessionCredential = NO;
+                               shouldDeletePersonInfo = NO;
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error)
+                                     {
+                                         expectedError = error;
+                                     }];
+                                }];
+                           });
+                
+                it(@"should provide a detailed error", ^
+                   {
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"One or more values could not be deleted from the keychain."];
+                   });
+            });
+    
+    context(@"when authorizeAdditionalRecordsWithViewController is successful", ^
+            {
+                __block NSInteger originalRecordCount = 0;
+                __block NSInteger additionalRecordCount = 0;
+                
+                beforeEach(^
+                           {
+                               originalRecordCount = 0;
+                               additionalRecordCount = 0;
+                               
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    originalRecordCount = connection.personInfo.records.count;
+                                    [personInfo.records addObject:[MHVRecord new]];
+                                    [personInfo.records addObject:[MHVRecord new]];
+                                    
+                                    [connection authorizeAdditionalRecordsWithViewController:nil
+                                                                                  completion:^(NSError * _Nullable error)
+                                     {
+                                         additionalRecordCount = connection.personInfo.records.count;
+                                         expectedError = error;
+                                     }];
+                                }];
+                           });
+                
+                it(@"should not complete with an error an error", ^
+                   {
+                       [[expectFutureValue(expectedError) shouldEventually] beNil];
+                   });
+                
+                it(@"should have updated personInfo records", ^
+                   {
+                       [[expectFutureValue(theValue(originalRecordCount)) shouldEventually] equal:theValue(1)];
+                       [[expectFutureValue(theValue(additionalRecordCount)) shouldEventually] equal:theValue(3)];
+                   });
+            });
+    
+    context(@"when authorizeAdditionalRecordsWithViewController is called when the connection is not authenticated", ^
+            {
+                beforeEach(^
+                           {
+                               [connection authorizeAdditionalRecordsWithViewController:nil
+                                                                             completion:^(NSError * _Nullable error)
+                                {
+                                    expectedError = error;
+                                }];
+                           });
+                
+                it(@"should provide a detailed error", ^
+                   {
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeUnauthorized)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"Authorization required to authorize additional records. Must call authenticateWithViewController:completion: first."];
+                   });
+            });
+    
+    context(@"when authorizeAdditionalRecordsWithViewController is called and the internal authorization process fails", ^
+            {
+                beforeEach(^
+                           {
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    errorMessage = @"TEST ADDITIONAL AUTH ERROR";
+                                    additionalAuthError = [NSError error:[NSError MHVUnknownError] withDescription:errorMessage];
+                                    
+                                    [connection authorizeAdditionalRecordsWithViewController:nil
+                                                                                  completion:^(NSError * _Nullable error)
+                                     {
+                                         expectedError = error;
+                                     }];
+                                }];
+                           });
+                
+                it(@"should forward the error to the caller", ^
+                   {
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeUnknown)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
+                   });
+            });
+    
+    context(@"when authorizeAdditionalRecordsWithViewController is called and fails to get new person info", ^
+            {
+                beforeEach(^
+                           {
+                               [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
+                                {
+                                    errorMessage = @"TEST PERSON INFO ERROR";
+                                    authorizedPeopleError = [NSError error:[NSError MHVIOError] withDescription:errorMessage];
+                                    
+                                    [connection authorizeAdditionalRecordsWithViewController:nil
+                                                                                  completion:^(NSError * _Nullable error)
+                                     {
+                                         expectedError = error;
+                                     }];
+                                }];
+                           });
+                
+                it(@"should forward the error to the caller", ^
+                   {
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
+                   });
+            });
+    
 });
 
 SPEC_END
