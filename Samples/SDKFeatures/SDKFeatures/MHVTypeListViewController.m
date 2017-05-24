@@ -29,6 +29,7 @@
 #import "MHVUIAlert.h"
 #import "MHVFeaturesConfiguration.h"
 
+#import "MHVGoalsListViewController.h"
 #import "MHVGoalFactory.h"
 
 @interface MHVTypeListViewController ()
@@ -231,7 +232,7 @@
     [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVEmotionalState class])];
     [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVHeartRate class])];
     
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVGoal class])];
+    [typeDictionary setObject:[MHVGoalsListViewController class] forKey:NSStringFromClass([MHVGoal class])];
 
     /*
     [typeList sortUsingComparator:^NSComparisonResult (id obj1, id obj2)

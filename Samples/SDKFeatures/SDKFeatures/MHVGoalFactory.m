@@ -67,10 +67,7 @@
 
 -(void) getDataFromHealthVault
 {
-    [MHVRemoteMonitoringClient getGoalsWithTypes:nil windowTypes:nil startDate:nil endDate:nil completion:^(MHVGoalsResponse *_Nullable response, NSError *_Nullable error) {
-        int i = 0;
-        i++;
-    }];
+
 }
 
 @end

@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
+#import "MHVConfiguration.h"
 #import "MHVConnection.h"
 #import "MHVAuthSession.h"
 #import "MHVMethod.h"
@@ -45,6 +46,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 // Clients
 @property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
 @property (nonatomic, strong) id<MHVPersonClientProtocol> personClient;
+@property (nonatomic, strong) id<MHVRemoteMonitoringClientProtocol> remoteMonitoringClient;
 @property (nonatomic, strong) id<MHVThingClientProtocol> thingClient;
 
 // Dependencies
@@ -154,6 +156,16 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     return _thingClient;
 }
 
+- (id<MHVRemoteMonitoringClientProtocol> _Nullable)remoteMonitoringClient
+{
+    if (!_remoteMonitoringClient)
+    {
+        _remoteMonitoringClient = [self.clientFactory remoteMonitoringClientWithConnection:self];
+    }
+    
+    return _remoteMonitoringClient;
+}
+
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient
 {
     return nil;
@@ -218,14 +230,15 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     // If no URL is set, build it from serviceInstance
     if (!restRequest.url)
     {
-        [restRequest updateUrlWithServiceUrl:self.serviceInstance.healthServiceUrl];
+        [restRequest updateUrlWithServiceUrl:self.configuration.restHealthVaultUrl];
     }
     
     // Add authorization header
     NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
     if (!restRequest.isAnonymous)
     {
-        headers[@"Authorization"] = self.sessionCredential.token;
+        //headers[@"Authorization"] = self.sessionCredential.token;
+        headers[@"Authorization"] = @"MSH-V1 app-token=AiAAAInaPSXoVPxDhpEZ5hjfVSJ31y1WNrTlqe1YfeBcH/TCQHizokAd8VqaI8QYiGdOi8AAAACdKGgXdisC/tDQrEA2GrwvCJGP1olulhJ1lyRAJndsEuvi6TcnN3Cjr4sBUkMuF++wpdXl6xwsgI7QfsofgrTMtZ45NO2/7TENtOzRs0F5LAYfZaHOf99Rr232flqezOR4xqA3qRypdnqByNI7A6/JRPjLWGvL3PQyytIsSHku9mu3cTPZVN5z3fV/BNw3JobW7ysYOccE2xct6934SjLn+PY53rDBwDVEZpLDzUr059iEWwcDR6U0YiJYmznl3z8gAAAALshlNuRxGdysmSEIztKJ4xG0cG35KaMkylrl6L+TUYEgAAAALshlNuRxGdysmSEIztKJ4xG0cG35KaMkylrl6L+TUYE=,offline-person-id=d8fbd7d2-42af-4105-841e-b7b609330f52,record-id=a5dac20c-21d8-48dd-b88c-6a2608adf0bc";
     }
     
     [self.httpService sendRequestForURL:restRequest.url

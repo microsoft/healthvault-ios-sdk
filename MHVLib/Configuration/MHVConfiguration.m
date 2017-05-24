@@ -30,6 +30,7 @@
         // Set default values
         self.defaultHealthVaultUrl = [[NSURL alloc] initWithString:kDefaultHealthVaultRootUrlString];
         self.defaultShellUrl = [[NSURL alloc] initWithString:kDefaultShellUrlString];
+        self.restHealthVaultUrl = [[NSURL alloc] initWithString:kDefaultRestUrlString];
         self.requestTimeoutDuration = kDefaultRequestTimeoutDurationInSeconds;
         self.requestTimeToLiveDuration = kDefaultRequestTimeToLiveDurationInSeconds;
         self.retryOnInternal500Count = kDefaultRetryOnInternal500Count;

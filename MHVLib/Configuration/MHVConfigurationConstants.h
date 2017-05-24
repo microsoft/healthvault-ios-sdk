@@ -30,6 +30,11 @@ static NSInteger const kDefaultRetryOnInternal500Count = 2;
 static NSString *const kDefaultShellUrlString = @"https://account.healthvault.com/";
 
 /*
+ Default URL for Rest API calls
+ */
+static NSString *const kDefaultRestUrlString = @"https://data.microsofthealth.net/";
+
+/*
  Default URL for HealthVault application
  */
 static NSString *const kDefaultHealthVaultRootUrlString = @"https://platform.healthvault.com/platform/";
