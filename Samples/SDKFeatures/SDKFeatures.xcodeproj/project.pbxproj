@@ -56,6 +56,8 @@
 		BA6EF7521ED3583500EF043A /* MHVGoalFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF7511ED3583500EF043A /* MHVGoalFactory.m */; };
 		BA6EF7561ED607AC00EF043A /* MHVGoalsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6EF7551ED607AC00EF043A /* MHVGoalsListViewController.xib */; };
 		BA6EF7591ED608A000EF043A /* MHVGoalsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF7581ED608A000EF043A /* MHVGoalsListViewController.m */; };
+		BA6EF75B1ED6495C00EF043A /* MHVGoalDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6EF75A1ED6495C00EF043A /* MHVGoalDetailViewController.xib */; };
+		BA6EF75E1ED649AD00EF043A /* MHVGoalDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF75D1ED649AD00EF043A /* MHVGoalDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +144,9 @@
 		BA6EF7551ED607AC00EF043A /* MHVGoalsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalsListViewController.xib; sourceTree = "<group>"; };
 		BA6EF7571ED6085500EF043A /* MHVGoalsListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVGoalsListViewController.h; sourceTree = "<group>"; };
 		BA6EF7581ED608A000EF043A /* MHVGoalsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsListViewController.m; sourceTree = "<group>"; };
+		BA6EF75A1ED6495C00EF043A /* MHVGoalDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalDetailViewController.xib; sourceTree = "<group>"; };
+		BA6EF75C1ED6499A00EF043A /* MHVGoalDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVGoalDetailViewController.h; sourceTree = "<group>"; };
+		BA6EF75D1ED649AD00EF043A /* MHVGoalDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +279,9 @@
 		BA6EF7541ED6076A00EF043A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BA6EF75C1ED6499A00EF043A /* MHVGoalDetailViewController.h */,
+				BA6EF75D1ED649AD00EF043A /* MHVGoalDetailViewController.m */,
+				BA6EF75A1ED6495C00EF043A /* MHVGoalDetailViewController.xib */,
 				BA6EF7571ED6085500EF043A /* MHVGoalsListViewController.h */,
 				BA6EF7581ED608A000EF043A /* MHVGoalsListViewController.m */,
 				BA6EF7551ED607AC00EF043A /* MHVGoalsListViewController.xib */,
@@ -352,6 +360,7 @@
 			files = (
 				5D09134F166ED1980031F5F9 /* InfoPlist.strings in Resources */,
 				5D091357166ED1980031F5F9 /* Default.png in Resources */,
+				BA6EF75B1ED6495C00EF043A /* MHVGoalDetailViewController.xib in Resources */,
 				5D091359166ED1980031F5F9 /* Default@2x.png in Resources */,
 				BA6EF7561ED607AC00EF043A /* MHVGoalsListViewController.xib in Resources */,
 				5D09135B166ED1980031F5F9 /* Default-568h@2x.png in Resources */,
@@ -394,6 +403,7 @@
 				5D789936171736050015D375 /* MHVMedicationFactory.m in Sources */,
 				A51203BB1ECCDD3E00845680 /* MHVFeaturesConfiguration.m in Sources */,
 				5D78993A171739FB0015D375 /* MHVConditionFactory.m in Sources */,
+				BA6EF75E1ED649AD00EF043A /* MHVGoalDetailViewController.m in Sources */,
 				5D78993D17173B520015D375 /* MHVImmunizationFactory.m in Sources */,
 				5D78994017173D2A0015D375 /* MHVProcedureFactory.m in Sources */,
 				5D789957171758E90015D375 /* MHVStatusLabel.m in Sources */,

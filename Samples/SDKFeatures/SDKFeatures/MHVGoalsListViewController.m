@@ -19,6 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVGoalsApi.h"
 #import "MHVGoalsListViewController.h"
+#import "MHVGoalDetailViewController.h"
 #import "MHVFeaturesConfiguration.h"
 #import "MHVConfiguration.h"
 #import "MHVConnection.h"
@@ -122,7 +123,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   
+    NSArray *values = [self.goals allValues];
+    NSString *goalId = values[indexPath.row];
+    
+    id typeView = [[MHVGoalDetailViewController alloc] initWithGoalId:goalId];
+    
+    if (!typeView || !goalId)
+    {
+        [MHVUIAlert showInformationalMessage:@"Could not create MHVTypeViewController view for goal."];
+        return;
+    }
+    
+    [self.navigationController pushViewController:typeView animated:TRUE];
+    
     return;
 }
 
