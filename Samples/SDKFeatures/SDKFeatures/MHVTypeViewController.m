@@ -100,7 +100,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     {
         [self.moreActions setEnabled:FALSE];
     }
-
+    
     [self getThingsFromHealthVault];
 }
 
@@ -178,6 +178,13 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 - (void)getThingsFromHealthVault
 {
+    if ([self.typeClass respondsToSelector:@selector(useRestClient)])
+    {
+        [self getRestThings];
+        return;
+    }
+    
+    
 #if SHOULD_USE_LEGACY
     [self getThingsFromHealthVaultLegacy];
 #else
@@ -217,6 +224,16 @@ static const NSInteger c_numSecondsInDay = 86400;
               }
           }];
      }];
+}
+
+- (void)getRestThings
+{
+    [self.statusLabel showBusy];
+    
+    id item = [[self.typeClass alloc] init];
+    [item performSelector:NSSelectorFromString(@"getDataFromHealthVault")];
+    
+    
 }
 
 - (void)getThingsFromHealthVaultLegacy

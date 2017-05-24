@@ -104,7 +104,6 @@
 		4C7646BA1EC4B922003B85B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CA1C5C00E700233916 /* Security.framework */; };
 		4C7646BC1EC4B922003B85B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AF14DCB3A700D2636E /* Foundation.framework */; };
 		4C7646D21EC4EA51003B85B5 /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5299AC14DCB3A700D2636E /* libMHVLib.a */; };
-		4C7646D31EC4EA74003B85B5 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */; };
 		4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7646E91EC6581C003B85B5 /* MHVXmlTests.m */; };
 		4C7647491ECA32FE003B85B5 /* MHVThingClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7647471ECA32FE003B85B5 /* MHVThingClient.h */; };
 		4C76474A1ECA32FE003B85B5 /* MHVThingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7647481ECA32FE003B85B5 /* MHVThingClient.m */; };
@@ -688,6 +687,7 @@
 		BA2637591ECF8C200022D060 /* MHVRemoteMonitoringClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BA2637581ECF8C200022D060 /* MHVRemoteMonitoringClientProtocol.h */; };
 		BA4FBEA51ECA5CCD00C8EBF9 /* MHVRemoteMonitoringClient.h in Headers */ = {isa = PBXBuildFile; fileRef = BA4FBEA41ECA5CCC00C8EBF9 /* MHVRemoteMonitoringClient.h */; };
 		BA4FBEA71ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4FBEA61ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m */; };
+		BA6EF74F1ECFB56E00EF043A /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */; };
 		BAC7EA771ECCA47800F3C1AB /* MHVGoalRecommendationInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0356A61EC5278700BE547D /* MHVGoalRecommendationInstance.m */; };
 		BAF50D3E1ECB610900C060D7 /* MHVGoalsApi.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF50D3C1ECB610900C060D7 /* MHVGoalsApi.h */; };
 		BAF50D3F1ECB610900C060D7 /* MHVGoalsApi.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF50D3D1ECB610900C060D7 /* MHVGoalsApi.m */; };
@@ -1405,7 +1405,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C7646D31EC4EA74003B85B5 /* libxml2.2.tbd in Frameworks */,
+				BA6EF74F1ECFB56E00EF043A /* libxml2.2.tbd in Frameworks */,
 				4C7646D21EC4EA51003B85B5 /* libMHVLib.a in Frameworks */,
 				4C7646BA1EC4B922003B85B5 /* Security.framework in Frameworks */,
 				4C7646B91EC4B922003B85B5 /* MobileCoreServices.framework in Frameworks */,
@@ -3384,7 +3384,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
+				HEADER_SEARCH_PATHS = "/usr/local/include/xcode/libxml2/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -3418,7 +3418,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
+				HEADER_SEARCH_PATHS = "/usr/local/include/xcode/libxml2/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

@@ -29,9 +29,11 @@
 #import "MHVUIAlert.h"
 #import "MHVFeaturesConfiguration.h"
 
+#import "MHVGoalFactory.h"
+
 @interface MHVTypeListViewController ()
 
-@property (nonatomic, strong) NSArray *classesForTypes;
+@property (nonatomic, strong) NSDictionary *classesForTypes;
 @property (nonatomic, strong) MHVFeatureActions *actions;
 @property (nonatomic, strong) MHVMoreFeatures *features;
 
@@ -155,8 +157,10 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MHVCell"];
     }
+    
+    NSArray *keys = [self.classesForTypes allKeys];
 
-    NSString *typeName = [[self.classesForTypes objectAtIndex:indexPath.row] XRootElement];
+    NSString *typeName = keys[indexPath.row];
     cell.textLabel.text = typeName;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -171,9 +175,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Class selectedCls = [self.classesForTypes objectAtIndex:indexPath.row];
+    NSArray *keys = [self.classesForTypes allKeys];
+    Class selectedCls = NSClassFromString(keys[indexPath.row]);
+    
+    Class controllerClass = [self.classesForTypes objectForKey:keys[indexPath.row]];
 
-    MHVTypeViewController *typeView = [[MHVTypeViewController alloc] initWithTypeClass:selectedCls useMetric:FALSE];
+    id typeView = [[controllerClass alloc] initWithTypeClass:selectedCls useMetric:FALSE];
 
     if (!typeView)
     {
@@ -203,34 +210,39 @@
 //
 // -------------------------------------
 
-+ (NSArray *)classesForTypesToDemo
++ (NSDictionary *)classesForTypesToDemo
 {
-    NSMutableArray *typeList = [[NSMutableArray alloc] init];
+    NSMutableDictionary *typeDictionary = [[NSMutableDictionary alloc] init];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVBloodGlucose class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVBloodPressure class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVCondition class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVCholesterol class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVDietaryIntake class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVDailyMedicationUsage class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVImmunization class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVEmotionalState class])];
+    
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVExercise class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVMedication class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVProcedure class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVSleepJournalAM class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVWeight class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVFile class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVEmotionalState class])];
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVHeartRate class])];
+    
+    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVGoal class])];
 
-    [typeList addObject:[MHVBloodGlucose class]];
-    [typeList addObject:[MHVBloodPressure class]];
-    [typeList addObject:[MHVCondition class]];
-    [typeList addObject:[MHVCholesterol class]];
-    [typeList addObject:[MHVDietaryIntake class]];
-    [typeList addObject:[MHVDailyMedicationUsage class]];
-    [typeList addObject:[MHVImmunization class]];
-    [typeList addObject:[MHVEmotionalState class]];
-    [typeList addObject:[MHVExercise class]];
-    [typeList addObject:[MHVMedication class]];
-    [typeList addObject:[MHVProcedure class]];
-    [typeList addObject:[MHVSleepJournalAM class]];
-    [typeList addObject:[MHVWeight class]];
-    [typeList addObject:[MHVFile class]];
-    [typeList addObject:[MHVHeartRate class]];
-
+    /*
     [typeList sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
     {
         MHVThingDataTyped *t1 = (MHVThingDataTyped *)obj1;
         MHVThingDataTyped *t2 = (MHVThingDataTyped *)obj2;
         return [[[t1 class] XRootElement] compare:[[t2 class] XRootElement]];
     }];
-
-    return typeList;
+    */
+    
+    return typeDictionary;
 }
 
 - (Class)getSelectedClass
@@ -243,8 +255,8 @@
         return nil;
     }
 
-    return [self.classesForTypes objectAtIndex:selectedRow.row];
-}
+    NSArray *keys = [self.classesForTypes allKeys];
+    return NSClassFromString(keys[selectedRow.row]);}
 
 - (BOOL)addStandardFeatures
 {
