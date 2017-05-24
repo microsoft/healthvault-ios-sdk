@@ -1,5 +1,5 @@
 //
-//  MHVMethods.h
+//  MHVVocabularySearchText.h
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -15,21 +15,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
-#import <Foundation/Foundation.h>
+#import "MHVType.h"
+#import "MHVString255.h"
 
-#import "MHVGetThingsTask.h"
-#import "MHVPutThingsTask.h"
-#import "MHVRemoveThingsTask.h"
-#import "MHVVocabularySearchTask.h"
-#import "MHVGetAuthorizedPeopleTask.h"
-#import "MHVGetPersonalImageTask.h"
-#import "MHVGetVocabTask.h"
-#import "MHVVocabularySearcher.h"
-#import "MHVBeginBlobPutTask.h"
-#import "MHVBlobUploadTask.h"
-#import "MHVThingBlobUploadTask.h"
-#import "MHVRemoveRecordAuthTask.h"
-#import "MHVGetServiceDefinitionTask.h"
-#import "MHVMethodFactory.h"
+typedef NS_ENUM(NSInteger, MHVVocabularyMatchType)
+{
+    MHVVocabularyMatchTypeFullText,
+    MHVVocabularyMatchTypePrefix,
+    MHVVocabularyMatchTypeNone
+};
+
+NSString* MHVVocabularyMatchTypeToString(MHVVocabularyMatchType type);
+MHVVocabularyMatchType MHVVocabularyMatchTypeFromString(NSString* string);
+
+@interface MHVVocabularySearchText : MHVString255
+
+@property (readwrite, nonatomic) MHVVocabularyMatchType matchType;
+
+@end

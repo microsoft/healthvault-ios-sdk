@@ -29,6 +29,10 @@
 #import "MHVUIAlert.h"
 #import "MHVFeaturesConfiguration.h"
 
+// TODO: Remove after testing
+#import "MHVVocabularyClient.h"
+#import "MHVClientFactory.h"
+
 @interface MHVTypeListViewController ()
 
 @property (nonatomic, strong) NSArray *classesForTypes;
@@ -45,14 +49,24 @@
 
     [self.navigationController.navigationBar setTranslucent:FALSE];
     self.navigationItem.title = [self personName];
-
-    self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];
+    
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection.vocabularyClient getVocabularyKeysWithCompletion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error)
+     {
+         if (error) {
+             NSLog(@"There was an error *******************");
+         }
+         NSLog(@"Andrew is logging somethig-------------------");
+     }];
+/*    self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
     [self downloadPersonImage];
 
     [self addStandardFeatures];
+ */
 }
 
 - (NSString *)personName

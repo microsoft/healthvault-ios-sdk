@@ -1,5 +1,5 @@
 //
-// MHVVocabThing.m
+// MHVVocabularyThing.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,14 +17,14 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabThing.h"
+#import "MHVVocabularyThing.h"
 
 static const xmlChar *x_element_code = XMLSTRINGCONST("code-value");
 static const xmlChar *x_element_displaytext = XMLSTRINGCONST("display-text");
 static const xmlChar *x_element_abbrv = XMLSTRINGCONST("abbreviation-text");
 static NSString *const c_element_data = @"info-xml";
 
-@implementation MHVVocabThing
+@implementation MHVVocabularyThing
 
 - (NSString *)toString
 {
@@ -68,14 +68,14 @@ static NSString *const c_element_data = @"info-xml";
 
 @end
 
-@implementation MHVVocabThingCollection
+@implementation MHVVocabularyThingCollection
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.type = [MHVVocabThing class];
+        self.type = [MHVVocabularyThing class];
     }
 
     return self;
@@ -85,8 +85,8 @@ static NSString *const c_element_data = @"info-xml";
 {
     [self sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
     {
-        MHVVocabThing *x = (MHVVocabThing *)obj1;
-        MHVVocabThing *y = (MHVVocabThing *)obj2;
+        MHVVocabularyThing *x = (MHVVocabularyThing *)obj1;
+        MHVVocabularyThing *y = (MHVVocabularyThing *)obj2;
 
         return [x.displayText compare:y.displayText];
     } ];
@@ -96,8 +96,8 @@ static NSString *const c_element_data = @"info-xml";
 {
     [self sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
     {
-        MHVVocabThing *x = (MHVVocabThing *)obj1;
-        MHVVocabThing *y = (MHVVocabThing *)obj2;
+        MHVVocabularyThing *x = (MHVVocabularyThing *)obj1;
+        MHVVocabularyThing *y = (MHVVocabularyThing *)obj2;
 
         return [x.code compare:y.code];
     }];
@@ -107,7 +107,7 @@ static NSString *const c_element_data = @"info-xml";
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
-        MHVVocabThing *thing = [self objectAtIndex:i];
+        MHVVocabularyThing *thing = [self objectAtIndex:i];
         if ([thing.code isEqualToString:code])
         {
             return i;
@@ -117,7 +117,7 @@ static NSString *const c_element_data = @"info-xml";
     return NSNotFound;
 }
 
-- (MHVVocabThing *)getThingWithCode:(NSString *)code
+- (MHVVocabularyThing *)getThingWithCode:(NSString *)code
 {
     NSUInteger index = [self indexOfVocabCode:code];
 
@@ -131,7 +131,7 @@ static NSString *const c_element_data = @"info-xml";
 
 - (NSString *)displayTextForCode:(NSString *)code
 {
-    MHVVocabThing *vocabThing = [self getThingWithCode:code];
+    MHVVocabularyThing *vocabThing = [self getThingWithCode:code];
 
     if (!vocabThing)
     {

@@ -21,13 +21,13 @@
 
 @interface MHVLocalVocabStore (MHVPrivate)
 
--(BOOL) isStaleVocabWithID:(MHVVocabIdentifier *) vocabID maxAge:(NSTimeInterval) maxAgeSeconds;
+-(BOOL) isStaleVocabWithID:(MHVVocabularyIdentifier *) vocabID maxAge:(NSTimeInterval) maxAgeSeconds;
 
--(MHVGetVocabTask *) newDownloadVocabTaskForVocab:(MHVVocabIdentifier *) vocabID;
--(void) downloadTaskComplete:(MHVTask *) task forVocabID:(MHVVocabIdentifier *) vocabID;
+-(MHVGetVocabTask *) newDownloadVocabTaskForVocab:(MHVVocabularyIdentifier *) vocabID;
+-(void) downloadTaskComplete:(MHVTask *) task forVocabID:(MHVVocabularyIdentifier *) vocabID;
 
--(MHVGetVocabTask *) newDownloadVocabTaskForVocabs:(MHVVocabIdentifierCollection *) vocabIDs;
--(void) downloadTaskComplete:(MHVTask *) task forVocabs:(MHVVocabIdentifierCollection *) vocabIDs;
+-(MHVGetVocabTask *) newDownloadVocabTaskForVocabs:(MHVVocabularyIdentifierCollection *) vocabIDs;
+-(void) downloadTaskComplete:(MHVTask *) task forVocabs:(MHVVocabularyIdentifierCollection *) vocabIDs;
 
 @end
 
@@ -51,31 +51,31 @@ LError:
 }
 
 
--(BOOL)containsVocabWithID:(MHVVocabIdentifier *)vocabID
+-(BOOL)containsVocabWithID:(MHVVocabularyIdentifier *)vocabID
 {
     NSString* key = [vocabID toKeyString];
     return [m_objectStore keyExists:key];
 }
 
--(MHVVocabCodeSet *)getVocabWithID:(MHVVocabIdentifier *)vocabID
+-(MHVVocabularyCodeSet *)getVocabWithID:(MHVVocabularyIdentifier *)vocabID
 {
     NSString* key = [vocabID toKeyString];
-    return [m_objectStore getObjectWithKey:key name:@"vocab" andClass:[MHVVocabCodeSet class]];
+    return [m_objectStore getObjectWithKey:key name:@"vocab" andClass:[MHVVocabularyCodeSet class]];
 }
 
--(BOOL)putVocab:(MHVVocabCodeSet *)vocab withID:(MHVVocabIdentifier *)vocabID
+-(BOOL)putVocab:(MHVVocabularyCodeSet *)vocab withID:(MHVVocabularyIdentifier *)vocabID
 {
     NSString* key = [vocabID toKeyString];
     return [m_objectStore putObject:vocab withKey:key andName:@"vocab"];
 }
 
--(void)removeVocabWithID:(MHVVocabIdentifier *)vocabID
+-(void)removeVocabWithID:(MHVVocabularyIdentifier *)vocabID
 {
     NSString* key = [vocabID toKeyString];
     [m_objectStore deleteKey:key];
 }
 
--(MHVTask *)downloadVocab:(MHVVocabIdentifier *)vocab withCallback:(MHVTaskCompletion)callback
+-(MHVTask *)downloadVocab:(MHVVocabularyIdentifier *)vocab withCallback:(MHVTaskCompletion)callback
 {
     MHVGetVocabTask* getVocab = [self newDownloadVocabTaskForVocab:vocab];
     MHVCHECK_NOTNULL(getVocab);
@@ -92,7 +92,7 @@ LError:
     return nil;
 }
 
--(MHVTask *)downloadVocabs:(MHVVocabIdentifierCollection *)vocabIDs withCallback:(MHVTaskCompletion)callback
+-(MHVTask *)downloadVocabs:(MHVVocabularyIdentifierCollection *)vocabIDs withCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(vocabIDs);
     
@@ -111,12 +111,12 @@ LError:
     return nil;
 }
 
--(void)ensureVocabDownloaded:(MHVVocabIdentifier *)vocab
+-(void)ensureVocabDownloaded:(MHVVocabularyIdentifier *)vocab
 {
     [self ensureVocabDownloaded:vocab maxAge:60 * 24 * 3600]; // Every 60 days - these many seconds
 }
 
--(void)ensureVocabDownloaded:(MHVVocabIdentifier *)vocab maxAge:(NSTimeInterval)ageInSeconds
+-(void)ensureVocabDownloaded:(MHVVocabularyIdentifier *)vocab maxAge:(NSTimeInterval)ageInSeconds
 {
     if ([self isStaleVocabWithID:vocab maxAge:ageInSeconds])
     {
@@ -125,20 +125,20 @@ LError:
     }
 }
 
--(BOOL)ensureVocabsDownloaded:(MHVVocabIdentifierCollection *)vocabIDs maxAge:(NSTimeInterval)ageInSeconds
+-(BOOL)ensureVocabsDownloaded:(MHVVocabularyIdentifierCollection *)vocabIDs maxAge:(NSTimeInterval)ageInSeconds
 {
     MHVCHECK_NOTNULL(vocabIDs);
     
-    MHVVocabIdentifierCollection* vocabsToDownload = nil;
+    MHVVocabularyIdentifierCollection* vocabsToDownload = nil;
     
     for (NSUInteger i = 0, count = vocabIDs.count; i < count; ++i)
     {
-        MHVVocabIdentifier* vocabID = [vocabIDs objectAtIndex:i];
+        MHVVocabularyIdentifier* vocabID = [vocabIDs objectAtIndex:i];
         if ([self isStaleVocabWithID:vocabID maxAge:ageInSeconds])
         {
             if (!vocabsToDownload)
             {
-                vocabsToDownload = [[MHVVocabIdentifierCollection alloc] init];
+                vocabsToDownload = [[MHVVocabularyIdentifierCollection alloc] init];
             }
             
             [vocabsToDownload addObject:vocabID];
@@ -160,9 +160,9 @@ LError:
     return FALSE;
 }
 
--(MHVVocabThing *)getVocabThingForCode:(NSString *)code inVocab:(MHVVocabIdentifier *)vocabID
+-(MHVVocabularyThing *)getVocabThingForCode:(NSString *)code inVocab:(MHVVocabularyIdentifier *)vocabID
 {
-    MHVVocabCodeSet* vocab  = [self getVocabWithID:vocabID];
+    MHVVocabularyCodeSet* vocab  = [self getVocabWithID:vocabID];
     if (!vocab)
     {
         return nil;
@@ -171,9 +171,9 @@ LError:
     return [vocab.things getThingWithCode:code];
 }
 
--(NSString *)getDisplayTextForCode:(NSString *)code inVocab:(MHVVocabIdentifier *)vocabID
+-(NSString *)getDisplayTextForCode:(NSString *)code inVocab:(MHVVocabularyIdentifier *)vocabID
 {
-    MHVVocabThing* vocabThing = [self getVocabThingForCode:code inVocab:vocabID];
+    MHVVocabularyThing* vocabThing = [self getVocabThingForCode:code inVocab:vocabID];
     if (!vocabThing)
     {
         return nil;
@@ -186,7 +186,7 @@ LError:
 
 @implementation MHVLocalVocabStore (MHVPrivate)
 
--(BOOL)isStaleVocabWithID:(MHVVocabIdentifier *)vocabID maxAge:(NSTimeInterval)maxAgeSeconds
+-(BOOL)isStaleVocabWithID:(MHVVocabularyIdentifier *)vocabID maxAge:(NSTimeInterval)maxAgeSeconds
 {
     NSString* key = [vocabID toKeyString];
     NSDate* lastUpdate = [m_objectStore updateDateForKey:key];
@@ -199,7 +199,7 @@ LError:
     
 }
 
--(MHVGetVocabTask *)newDownloadVocabTaskForVocab:(MHVVocabIdentifier *)vocabID
+-(MHVGetVocabTask *)newDownloadVocabTaskForVocab:(MHVVocabularyIdentifier *)vocabID
 {
     return [[MHVGetVocabTask alloc] initWithVocabID:vocabID andCallback:^(MHVTask *task) {
         
@@ -207,7 +207,7 @@ LError:
         
     }];
 }
--(void)downloadTaskComplete:(MHVTask *)task forVocabID:(MHVVocabIdentifier *)vocabID
+-(void)downloadTaskComplete:(MHVTask *)task forVocabID:(MHVVocabularyIdentifier *)vocabID
 {
     @try
     {
@@ -220,7 +220,7 @@ LError:
     }
 }
 
--(MHVGetVocabTask *)newDownloadVocabTaskForVocabs:(MHVVocabIdentifierCollection *)vocabIDs
+-(MHVGetVocabTask *)newDownloadVocabTaskForVocabs:(MHVVocabularyIdentifierCollection *)vocabIDs
 {
     MHVGetVocabTask* task = [[MHVGetVocabTask alloc] initWithCallback:^(MHVTask *task) {
         
@@ -228,21 +228,21 @@ LError:
         
     }];
     
-    MHVVocabParams* params = [[MHVVocabParams alloc] initWithVocabIDs:vocabIDs];
+    MHVVocabularyParams* params = [[MHVVocabularyParams alloc] initWithVocabIDs:vocabIDs];
     task.params = params;
     
     return task;
 }
 
--(void)downloadTaskComplete:(MHVTask *)task forVocabs:(MHVVocabIdentifierCollection *)vocabIDs
+-(void)downloadTaskComplete:(MHVTask *)task forVocabs:(MHVVocabularyIdentifierCollection *)vocabIDs
 {
     @try
     {
         MHVGetVocabTask* getVocab = (MHVGetVocabTask *) task;
-        MHVVocabSetCollection* downloadedVocabs = getVocab.vocabResults.vocabs;
+        MHVVocabularySetCollection* downloadedVocabs = getVocab.vocabResults.vocabs;
         for (NSUInteger i = 0, count = downloadedVocabs.count; i < count; ++i)
         {
-            MHVVocabCodeSet* vocab = [downloadedVocabs objectAtIndex:i];
+            MHVVocabularyCodeSet* vocab = [downloadedVocabs objectAtIndex:i];
             if (vocab.isTruncated)
             {
                 continue;

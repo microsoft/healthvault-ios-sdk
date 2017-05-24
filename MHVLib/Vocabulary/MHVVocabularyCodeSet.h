@@ -1,5 +1,5 @@
 //
-// MHVVocabCodeSet.h
+// MHVVocabularyCodeSet.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -18,15 +18,15 @@
 
 #import "MHVType.h"
 #import "MHVBaseTypes.h"
-#import "MHVVocabThing.h"
-#import "MHVVocabIdentifier.h"
+#import "MHVVocabularyThing.h"
+#import "MHVVocabularyIdentifier.h"
 
-@interface MHVVocabCodeSet : MHVType
+@interface MHVVocabularyCodeSet : MHVType
 
 @property (readwrite, nonatomic, strong) NSString *name;
 @property (readwrite, nonatomic, strong) NSString *family;
 @property (readwrite, nonatomic, strong) NSString *version;
-@property (readwrite, nonatomic, strong) MHVVocabThingCollection *things;
+@property (readwrite, nonatomic, strong) MHVVocabularyThingCollection *things;
 @property (readwrite, nonatomic, strong) MHVBool *isTruncated;
 
 @property (readonly, nonatomic) BOOL hasThings;
@@ -34,18 +34,18 @@
 - (NSArray *)displayStrings;
 - (void)sortThingsByDisplayText;
 
-- (MHVVocabIdentifier *)getVocabID;
+- (MHVVocabularyIdentifier *)getVocabID;
 
 @end
 
-@interface MHVVocabSetCollection : MHVCollection<MHVVocabCodeSet *>
+@interface MHVVocabularySetCollection : MHVCollection<MHVVocabularyCodeSet *>
 
 @end
 
 
-@interface MHVVocabSearchResults : MHVType
+@interface MHVVocabularySearchResults : MHVType
 
-@property (readwrite, nonatomic, strong) MHVVocabCodeSet *match;
+@property (readwrite, nonatomic, strong) MHVVocabularyCodeSet *match;
 @property (readonly, nonatomic) BOOL hasMatches;
 
 @end

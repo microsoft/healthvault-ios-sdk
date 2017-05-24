@@ -17,9 +17,9 @@
 // limitations under the License.
 
 #import "MHVMethodCallTask.h"
-#import "MHVVocabIdentifier.h"
-#import "MHVVocabSearchParams.h"
-#import "MHVVocabCodeSet.h"
+#import "MHVVocabularyIdentifier.h"
+#import "MHVVocabularySearchParams.h"
+#import "MHVVocabularyCodeSet.h"
 
 //-------------------------
 //
@@ -28,11 +28,11 @@
 // Ideal for auto-complete scenarios
 //
 //-------------------------
-@interface MHVVocabSearchTask : MHVMethodCallTask
+@interface MHVVocabularySearchTask : MHVMethodCallTask
 {
 @private
-    MHVVocabIdentifier* m_vocabID;
-    MHVVocabSearchParams* m_params;
+    MHVVocabularyIdentifier* m_vocabID;
+    MHVVocabularySearchParams* m_params;
 }
 
 //-------------------------
@@ -43,27 +43,27 @@
 //
 // (Required) - vocabulary being searched
 //
-@property (readwrite, nonatomic, strong) MHVVocabIdentifier* vocabID;
+@property (readwrite, nonatomic, strong) MHVVocabularyIdentifier* vocabID;
 //
 // (Required) - search parameters
 //
-@property (readwrite, nonatomic, strong) MHVVocabSearchParams* params;
+@property (readwrite, nonatomic, strong) MHVVocabularySearchParams* params;
 //
 // RESULT - use this property to retrieve results when the task completes
 //
-@property (readonly, nonatomic, strong) MHVVocabCodeSet* searchResult;
+@property (readonly, nonatomic, strong) MHVVocabularyCodeSet* searchResult;
 
 //-------------------------
 //
 // Initializers
 //
 //-------------------------
--(id) initWithVocab:(MHVVocabIdentifier *) vocab searchText:(NSString*) text andCallback:(MHVTaskCompletion) callback;
+-(id) initWithVocab:(MHVVocabularyIdentifier *) vocab searchText:(NSString*) text andCallback:(MHVTaskCompletion) callback;
 
-+(MHVVocabSearchTask *) searchForText:(NSString *) text inVocabFamily:(NSString *) family vocabName:(NSString *) name callback:(MHVTaskCompletion) callback;
++(MHVVocabularySearchTask *) searchForText:(NSString *) text inVocabFamily:(NSString *) family vocabName:(NSString *) name callback:(MHVTaskCompletion) callback;
 
-+(MHVVocabSearchTask *) searchForText:(NSString *) text inVocab:(MHVVocabIdentifier *) vocab callback:(MHVTaskCompletion) callback;
++(MHVVocabularySearchTask *) searchForText:(NSString *) text inVocab:(MHVVocabularyIdentifier *) vocab callback:(MHVTaskCompletion) callback;
 
-+(MHVVocabSearchTask *) searchMedications:(NSString *) text callback:(MHVTaskCompletion) callback;
++(MHVVocabularySearchTask *) searchMedications:(NSString *) text callback:(MHVTaskCompletion) callback;
 
 @end

@@ -52,6 +52,7 @@ NSString* const XExceptionNotSerializable;
 -(NSString *) toXmlStringWithRoot:(NSString *) root;
 
 +(id) newFromString:(NSString *)xml withRoot:(NSString *) root asClass:(Class) classObj;
++(id) newFromString:(NSString *)xml withRoot:(NSString *)root andElementName:(NSString *)name asClass:(Class)classObj andArrayClass:(Class)arrayClassObj;
 +(id) newFromReader:(XReader *) reader withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromFilePath:(NSString*) filePath withRoot:(NSString *) root asClass:(Class) classObj;
 +(id) newFromSecureFilePath:(NSString*) filePath withRoot:(NSString *) root asClass:(Class) classObj;

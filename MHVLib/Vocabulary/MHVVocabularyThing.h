@@ -1,5 +1,5 @@
 //
-// MHVVocabThing.h
+// MHVVocabularyThing.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -19,7 +19,7 @@
 #import "MHVType.h"
 #import "MHVCollection.h"
 
-@interface MHVVocabThing : MHVType
+@interface MHVVocabularyThing : MHVType
 
 // -------------------------
 //
@@ -62,7 +62,7 @@
 // Collection of Vocabulary Things
 //
 // -------------------------
-@interface MHVVocabThingCollection : MHVCollection<MHVVocabThing *>
+@interface MHVVocabularyThingCollection : MHVCollection<MHVVocabularyThing *>
 
 - (void)sortByDisplayText;
 - (void)sortByCode;
@@ -76,7 +76,7 @@
 //
 // ------------------------
 - (NSUInteger)indexOfVocabCode:(NSString *)code;
-- (MHVVocabThing *)getThingWithCode:(NSString *)code;
+- (MHVVocabularyThing *)getThingWithCode:(NSString *)code;
 - (NSString *)displayTextForCode:(NSString *)code;
 
 - (NSArray *)displayStrings;

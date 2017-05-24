@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVAllergy : MHVThingDataTyped
 
@@ -73,8 +73,8 @@
 // Standard Vocabs
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForType;
-+ (MHVVocabIdentifier *)vocabForReaction;
++ (MHVVocabularyIdentifier *)vocabForType;
++ (MHVVocabularyIdentifier *)vocabForReaction;
 
 // -------------------------
 //

@@ -18,15 +18,15 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVMethodCallTask.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
-@interface MHVVocabGetResults : MHVType 
+@interface MHVVocabularyGetResults : MHVType 
 {
-    MHVVocabSetCollection* m_vocabs;
+    MHVVocabularySetCollection* m_vocabs;
 }
 
-@property (readwrite, nonatomic, strong) MHVVocabSetCollection* vocabs;
-@property (readonly, nonatomic, strong) MHVVocabCodeSet* firstVocab;
+@property (readwrite, nonatomic, strong) MHVVocabularySetCollection* vocabs;
+@property (readonly, nonatomic, strong) MHVVocabularyCodeSet* firstVocab;
 
 @end
 
@@ -38,7 +38,7 @@
 @interface MHVGetVocabTask : MHVMethodCallTask
 {
 @private
-    MHVVocabParams* m_params;
+    MHVVocabularyParams* m_params;
 }
 
 //-------------------------
@@ -49,21 +49,21 @@
 //
 // (Required) - Request - which vocabularies to get
 //
-@property (readwrite, nonatomic, strong) MHVVocabParams* params;
+@property (readwrite, nonatomic, strong) MHVVocabularyParams* params;
 //
 // Response - retrieved vocabulary data
 //
-@property (readonly, nonatomic, strong) MHVVocabGetResults* vocabResults;
+@property (readonly, nonatomic, strong) MHVVocabularyGetResults* vocabResults;
 //
 // Convenience property to get the vocabulary from vocabResults
 //
-@property (readonly, nonatomic, strong) MHVVocabCodeSet* vocabulary;
+@property (readonly, nonatomic, strong) MHVVocabularyCodeSet* vocabulary;
 
 //-------------------------
 //
 // Initializers
 //
 //-------------------------
--(id) initWithVocabID:(MHVVocabIdentifier *) vocabID andCallback:(MHVTaskCompletion) callback;
+-(id) initWithVocabID:(MHVVocabularyIdentifier *) vocabID andCallback:(MHVTaskCompletion) callback;
 
 @end

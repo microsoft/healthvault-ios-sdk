@@ -1,5 +1,5 @@
 //
-// MHVVocabSearchText.m
+// MHVVocabularySearchText.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,16 +17,16 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabSearchText.h"
+#import "MHVVocabularySearchText.h"
 
-NSString *MHVVocabMatchTypeToString(MHVVocabMatchType type)
+NSString *MHVVocabularyMatchTypeToString(MHVVocabularyMatchType type)
 {
     switch (type)
     {
-        case MHVVocabMatchTypeFullText:
+        case MHVVocabularyMatchTypeFullText:
             return @"FullText";
 
-        case MHVVocabMatchTypePrefix:
+        case MHVVocabularyMatchTypePrefix:
             return @"Prefix";
 
         default:
@@ -36,28 +36,28 @@ NSString *MHVVocabMatchTypeToString(MHVVocabMatchType type)
     return c_emptyString;
 }
 
-MHVVocabMatchType MHVVocabMatchTypeFromString(NSString *string)
+MHVVocabularyMatchType MHVVocabularyMatchTypeFromString(NSString *string)
 {
     if ([string isEqualToString:@"FullText"])
     {
-        return MHVVocabMatchTypeFullText;
+        return MHVVocabularyMatchTypeFullText;
     }
 
     if ([string isEqualToString:@"Prefix"])
     {
-        return MHVVocabMatchTypePrefix;
+        return MHVVocabularyMatchTypePrefix;
     }
 
-    return MHVVocabMatchTypeNone;
+    return MHVVocabularyMatchTypeNone;
 }
 
 static NSString *const c_attribute_matchType = @"search-mode";
 
-@implementation MHVVocabSearchText
+@implementation MHVVocabularySearchText
 
 - (void)serializeAttributes:(XWriter *)writer
 {
-    NSString *matchType = MHVVocabMatchTypeToString(self.matchType);
+    NSString *matchType = MHVVocabularyMatchTypeToString(self.matchType);
 
     [writer writeAttribute:c_attribute_matchType value:matchType];
 }
@@ -69,7 +69,7 @@ static NSString *const c_attribute_matchType = @"search-mode";
     mode = [reader readAttribute:c_attribute_matchType];
     if (![NSString isNilOrEmpty:mode])
     {
-        self.matchType = MHVVocabMatchTypeFromString(mode);
+        self.matchType = MHVVocabularyMatchTypeFromString(mode);
     }
 }
 

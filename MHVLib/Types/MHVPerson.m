@@ -87,9 +87,9 @@ static NSString* const c_element_type = @"type";
     return (self.name) ? [self.name toString] : c_emptyString;
 }
 
-+(MHVVocabIdentifier *)vocabForPersonType
++(MHVVocabularyIdentifier *)vocabForPersonType
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"person-types"];                
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"person-types"];                
 }
 
 -(MHVClientResult *)validate

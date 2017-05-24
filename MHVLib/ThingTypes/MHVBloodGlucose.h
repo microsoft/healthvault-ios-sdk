@@ -90,9 +90,9 @@
 //
 + (MHVCodableValue *)createWholeBloodMeasurementType;
 
-+ (MHVVocabIdentifier *)vocabForMeasurementType;
-+ (MHVVocabIdentifier *)vocabForContext;
-+ (MHVVocabIdentifier *)vocabForNormalcy;
++ (MHVVocabularyIdentifier *)vocabForMeasurementType;
++ (MHVVocabularyIdentifier *)vocabForContext;
++ (MHVVocabularyIdentifier *)vocabForNormalcy;
 
 // -------------------------
 //

@@ -32,8 +32,6 @@
 #import "MHVMethodRequest.h"
 #import "MHVClientFactory.h"
 #import "MHVApplicationCreationInfo.h"
-#import "MHVPlatformClient.h"
-#import "MHVPersonClient.h"
 #import "MHVValidator.h"
 #import "MHVThingClient.h"
 
@@ -49,6 +47,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 @property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
 @property (nonatomic, strong) id<MHVPersonClientProtocol> personClient;
 @property (nonatomic, strong) id<MHVThingClientProtocol> thingClient;
+@property (nonatomic, strong) id<MHVVocabularyClientProtocol> vocabularyClient;
 
 // Dependencies
 @property (nonatomic, strong) MHVClientFactory *clientFactory;
@@ -159,7 +158,12 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient
 {
-    return nil;
+    if (!_vocabularyClient)
+    {
+        _vocabularyClient = [self.clientFactory vocabularyClientWithConnection:self];
+    }
+    
+    return _vocabularyClient;
 }
 
 #pragma mark - Private

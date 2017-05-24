@@ -55,8 +55,8 @@
 // Methods
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForMeasurementMethod;
-+ (MHVVocabIdentifier *)vocabForMeasurementConditions;
++ (MHVVocabularyIdentifier *)vocabForMeasurementMethod;
++ (MHVVocabularyIdentifier *)vocabForMeasurementConditions;
 
 // -------------------------
 //

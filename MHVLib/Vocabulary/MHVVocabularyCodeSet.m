@@ -1,5 +1,5 @@
 //
-// MHVVocabSearchResult.m
+// MHVVocabularySearchResult.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabCodeSet.h"
+#import "MHVVocabularyCodeSet.h"
 
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_family = @"family";
@@ -26,18 +26,18 @@ static NSString *const c_element_thing = @"code-thing";
 static NSString *const c_element_truncated = @"is-vocab-truncated";
 static NSString *const c_element_codeset = @"code-set-result";
 
-@implementation MHVVocabCodeSet
+@implementation MHVVocabularyCodeSet
 
 - (BOOL)hasThings
 {
     return (![NSArray isNilOrEmpty:self.things.toArray]);
 }
 
-- (MHVVocabThingCollection *)things
+- (MHVVocabularyThingCollection *)things
 {
     if (!_things)
     {
-        _things = [[MHVVocabThingCollection alloc] init];
+        _things = [[MHVVocabularyThingCollection alloc] init];
     }
     
     return _things;
@@ -56,9 +56,9 @@ static NSString *const c_element_codeset = @"code-set-result";
     }
 }
 
-- (MHVVocabIdentifier *)getVocabID
+- (MHVVocabularyIdentifier *)getVocabID
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:self.family andName:self.name];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:self.family andName:self.name];
 }
 
 - (void)serialize:(XWriter *)writer
@@ -75,20 +75,20 @@ static NSString *const c_element_codeset = @"code-set-result";
     self.name = [reader readStringElement:c_element_name];
     self.family = [reader readStringElement:c_element_family];
     self.version = [reader readStringElement:c_element_version];
-    self.things = (MHVVocabThingCollection *)[reader readElementArray:c_element_thing asClass:[MHVVocabThing class] andArrayClass:[MHVVocabThingCollection class]];
+    self.things = (MHVVocabularyThingCollection *)[reader readElementArray:c_element_thing asClass:[MHVVocabularyThing class] andArrayClass:[MHVVocabularyThingCollection class]];
     self.isTruncated = [reader readElement:c_element_truncated asClass:[MHVBool class]];
 }
 
 @end
 
-@implementation MHVVocabSetCollection
+@implementation MHVVocabularySetCollection
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.type = [MHVVocabCodeSet class];
+        self.type = [MHVVocabularyCodeSet class];
     }
     
     return self;
@@ -96,7 +96,7 @@ static NSString *const c_element_codeset = @"code-set-result";
 
 @end
 
-@implementation MHVVocabSearchResults
+@implementation MHVVocabularySearchResults
 
 - (BOOL)hasMatches
 {
@@ -110,7 +110,7 @@ static NSString *const c_element_codeset = @"code-set-result";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.match = [reader readElement:c_element_codeset asClass:[MHVVocabCodeSet class]];
+    self.match = [reader readElement:c_element_codeset asClass:[MHVVocabularyCodeSet class]];
 }
 
 @end

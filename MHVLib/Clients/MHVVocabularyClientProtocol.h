@@ -17,8 +17,10 @@
 // limitations under the License.
 
 #import "MHVClientProtocol.h"
+#import "MHVVocabularyKey.h"
+#import "MHVVocabularyThing.h"
 
-@class MHVVocabulary, MHVVocabulary, MHVVocabularyKey, MHVVocabularySearchType;
+@class MHVVocabularySearchType;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -40,11 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param key The key for the vocabulary to fetch.
  * @param cultureIsFixed Healthvault looks for the vocabulary things for the culture info specified by the system. If this parameter is set to NO or is not specified and if things are not found for the specified culture then things for the default fallback culture will be returned. If this parameter is set to YES then fallback will not occur.
- * @param completion A completion block. On success will give the matching MHVVocabulary. On error will give the error info.
+ * @param completion A completion block. On success will give the matching MHVVocabularyThing. On error will give the error info.
  */
-- (void)getVocabularyWithKey:(MHVVocabulary *)key
+- (void)getVocabularyWithKey:(MHVVocabularyKey *)key
               cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
-                  completion:(void(^)(MHVVocabulary *_Nullable vocabulary, NSError *_Nullable error))completion;
+                  completion:(void(^)(MHVVocabularyThing *_Nullable vocabulary, NSError *_Nullable error))completion;
 
 
 /**
@@ -56,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)getVocabulariesWithVocabularyKeys:(NSArray *)vocabularyKeys
                            cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
-                               completion:(void(^)(NSArray<MHVVocabulary *> *_Nullable vocabularies, NSError *_Nullable error))completion;
+                               completion:(void(^)(NSArray<MHVVocabularyThing *> *_Nullable vocabularies, NSError *_Nullable error))completion;
 
 
 /**

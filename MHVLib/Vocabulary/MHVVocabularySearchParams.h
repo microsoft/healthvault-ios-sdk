@@ -1,5 +1,5 @@
 //
-// MHVVocabSearch.h
+// MHVVocabularySearch.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,11 +17,11 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVVocabSearchText.h"
+#import "MHVVocabularySearchText.h"
 
-@interface MHVVocabSearchParams : MHVType
+@interface MHVVocabularySearchParams : MHVType
 
-@property (readwrite, nonatomic, strong) MHVVocabSearchText *text;
+@property (readwrite, nonatomic, strong) MHVVocabularySearchText *text;
 @property (readwrite, nonatomic) NSInteger maxResults;
 
 - (instancetype)initWithText:(NSString *)text;

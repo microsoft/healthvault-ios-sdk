@@ -149,19 +149,19 @@ static NSString *const c_vocab_measurement = @"glucose-measurement-type";
     return [MHVBloodGlucose newMeasurementText:@"Whole blood" andCode:@"wb"];
 }
 
-+ (MHVVocabIdentifier *)vocabForContext
++ (MHVVocabularyIdentifier *)vocabForContext
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-context"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-context"];
 }
 
-+ (MHVVocabIdentifier *)vocabForMeasurementType
++ (MHVVocabularyIdentifier *)vocabForMeasurementType
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-type"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"glucose-measurement-type"];
 }
 
-+ (MHVVocabIdentifier *)vocabForNormalcy
++ (MHVVocabularyIdentifier *)vocabForNormalcy
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"normalcy-one-to-five"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"normalcy-one-to-five"];
 }
 
 - (MHVClientResult *)validate

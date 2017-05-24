@@ -1,5 +1,5 @@
 //
-// MHVVocabSearch.m
+// MHVVocabularySearch.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,12 +17,12 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabSearchParams.h"
+#import "MHVVocabularySearchParams.h"
 
 static NSString *const c_element_text = @"search-string";
 static NSString *const c_element_max = @"max-results";
 
-@implementation MHVVocabSearchParams
+@implementation MHVVocabularySearchParams
 
 - (instancetype)initWithText:(NSString *)text
 {
@@ -31,7 +31,7 @@ static NSString *const c_element_max = @"max-results";
     self = [super init];
     if (self)
     {
-        _text = [[MHVVocabSearchText alloc] initWith:text];
+        _text = [[MHVVocabularySearchText alloc] initWith:text];
         MHVCHECK_NOTNULL(_text);
         
         _maxResults = 25;
@@ -59,7 +59,7 @@ static NSString *const c_element_max = @"max-results";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.text = [reader readElement:c_element_text asClass:[MHVVocabSearchText class]];
+    self.text = [reader readElement:c_element_text asClass:[MHVVocabularySearchText class]];
     self.maxResults = [reader readIntElement:c_element_max];
 }
 

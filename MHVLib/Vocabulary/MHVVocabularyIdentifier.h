@@ -1,5 +1,5 @@
 //
-// MHVVocabIdentifier.h
+// MHVVocabularyIdentifier.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -29,7 +29,7 @@ NSString *const c_hl7Family;
 NSString *const c_isoFamily;
 NSString *const c_usdaFamily;
 
-@interface MHVVocabIdentifier : MHVType
+@interface MHVVocabularyIdentifier : MHVType
 
 // -------------------------
 //
@@ -72,7 +72,7 @@ NSString *const c_usdaFamily;
 //
 // Create a codedValue for the vocabThing
 //
-- (MHVCodedValue *)codedValueForThing:(MHVVocabThing *)vocabThing;
+- (MHVCodedValue *)codedValueForThing:(MHVVocabularyThing *)vocabThing;
 - (MHVCodedValue *)codedValueForCode:(NSString *)code;
 - (MHVCodableValue *)codableValueForText:(NSString *)text andCode:(NSString *)code;
 //
@@ -84,6 +84,6 @@ NSString *const c_usdaFamily;
 
 NS_ASSUME_NONNULL_END
 
-@interface MHVVocabIdentifierCollection : MHVCollection<MHVVocabIdentifier *>
+@interface MHVVocabularyIdentifierCollection : MHVCollection<MHVVocabularyIdentifier *>
 
 @end

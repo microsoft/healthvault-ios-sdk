@@ -1,5 +1,5 @@
 //
-// MHVVocabIdentifier.m
+// MHVVocabularyIdentifier.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabIdentifier.h"
+#import "MHVVocabularyIdentifier.h"
 
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_family = @"family";
@@ -33,13 +33,13 @@ NSString *const c_hl7Family = @"HL7";
 NSString *const c_isoFamily = @"iso";
 NSString *const c_usdaFamily = @"usda";
 
-@interface MHVVocabIdentifier ()
+@interface MHVVocabularyIdentifier ()
 
 @property (nonatomic, strong) NSString *keyString;
 
 @end
 
-@implementation MHVVocabIdentifier
+@implementation MHVVocabularyIdentifier
 
 - (instancetype)initWithFamily:(NSString *)family andName:(NSString *)name
 {
@@ -56,7 +56,7 @@ NSString *const c_usdaFamily = @"usda";
     return self;
 }
 
-- (MHVCodedValue *)codedValueForThing:(MHVVocabThing *)vocabThing
+- (MHVCodedValue *)codedValueForThing:(MHVVocabularyThing *)vocabThing
 {
     MHVCHECK_NOTNULL(vocabThing);
 
@@ -140,14 +140,14 @@ NSString *const c_usdaFamily = @"usda";
 
 @end
 
-@implementation MHVVocabIdentifierCollection
+@implementation MHVVocabularyIdentifierCollection
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.type = [MHVVocabIdentifier class];
+        self.type = [MHVVocabularyIdentifier class];
     }
 
     return self;

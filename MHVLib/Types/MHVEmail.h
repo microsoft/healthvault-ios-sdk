@@ -19,7 +19,7 @@
 #import "MHVType.h"
 #import "MHVBaseTypes.h"
 #import "MHVCollection.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVEmail : MHVType
 
@@ -50,7 +50,7 @@
 // -------------------------
 - (instancetype)initWithEmailAddress:(NSString *)email;
 
-+ (MHVVocabIdentifier *)vocabForType;
++ (MHVVocabularyIdentifier *)vocabForType;
 
 // -------------------------
 //

@@ -59,9 +59,9 @@
 // Vocab
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForBloodType;
-+ (MHVVocabIdentifier *)vocabForEthnicity;
-+ (MHVVocabIdentifier *)vocabForMaritalStatus;
++ (MHVVocabularyIdentifier *)vocabForBloodType;
++ (MHVVocabularyIdentifier *)vocabForEthnicity;
++ (MHVVocabularyIdentifier *)vocabForMaritalStatus;
 
 // -------------------------
 //

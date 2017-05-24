@@ -37,9 +37,9 @@ static NSString *const c_vocabName_Units = @"exercise-units";
 static NSString *const c_code_stepCount = @"Steps_count";
 static NSString *const c_code_caloriesBurned = @"CaloriesBurned_calories";
 
-static MHVVocabIdentifier *s_vocabIDActivities;
-static MHVVocabIdentifier *s_vocabIDDetails;
-static MHVVocabIdentifier *s_vocabIDUnits;
+static MHVVocabularyIdentifier *s_vocabIDActivities;
+static MHVVocabularyIdentifier *s_vocabIDDetails;
+static MHVVocabularyIdentifier *s_vocabIDUnits;
 
 @interface MHVExercise ()
 
@@ -91,9 +91,9 @@ static MHVVocabIdentifier *s_vocabIDUnits;
 
 + (void)initialize
 {
-    s_vocabIDActivities = [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Activities];
-    s_vocabIDDetails = [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Details];
-    s_vocabIDUnits = [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Units];
+    s_vocabIDActivities = [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Activities];
+    s_vocabIDDetails = [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Details];
+    s_vocabIDUnits = [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:c_vocabName_Units];
 }
 
 - (instancetype)initWithDate:(NSDate *)date
@@ -248,17 +248,17 @@ static MHVVocabIdentifier *s_vocabIDUnits;
     return [MHVExercise detailNameWithCode:c_code_caloriesBurned];
 }
 
-+ (MHVVocabIdentifier *)vocabForActivities
++ (MHVVocabularyIdentifier *)vocabForActivities
 {
     return s_vocabIDActivities;
 }
 
-+ (MHVVocabIdentifier *)vocabForDetails
++ (MHVVocabularyIdentifier *)vocabForDetails
 {
     return s_vocabIDDetails;
 }
 
-+ (MHVVocabIdentifier *)vocabForUnits
++ (MHVVocabularyIdentifier *)vocabForUnits
 {
     return s_vocabIDUnits;
 }
