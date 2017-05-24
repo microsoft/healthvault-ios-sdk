@@ -49,28 +49,6 @@
     return self;
 }
 
-//PENDING: Swagger generated code needs to update to be injected with RemoteMonitoringClient & remove this method
-+ (NSURLSessionTask *)requestWithPath:(NSString *_Nonnull)path
-                               method:(NSString *_Nonnull)method
-                           pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
-                          queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-                           formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
-                                 body:(NSData *_Nullable)body
-                              toClass:(Class)toClass
-                           completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion
-{
-    //    [[MHVRemoteMonitoringClient current] requestWithPath:path
-    //                                              method:method
-    //                                           pathParams:pathParams
-    //                                         queryParams:queryParams
-    //                                          formParams:formParams
-    //                                                body:body
-    //                                             toClass:toClass
-    //                                          completion:completion];
-    
-    return nil;
-}
-
 - (void)requestWithPath:(NSString *_Nonnull)path
              httpMethod:(NSString *_Nonnull)httpMethod
              pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
