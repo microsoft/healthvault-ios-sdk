@@ -27,4 +27,6 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
 
+- (IBAction)addGoal:(id)sender;
+
 @end

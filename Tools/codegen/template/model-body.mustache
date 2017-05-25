@@ -24,6 +24,29 @@
   }
   return self;
 }
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+    self = [[{{classname}} alloc] init];
+
+    if (self != nil)
+    {
+        {{#vars}}
+        self.{{name}} = [coder decodeObjectForKey:@"{{name}}"];
+        {{/vars}}
+    }
+
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    {{#vars}}
+    [coder encodeObject:self.{{name}} forKey:@"{{name}}"];
+    {{/vars}}
+}
+
+
 {{#vars}}{{^vendorExtensions.x-unique-id-key}}{{/vendorExtensions.x-unique-id-key}}{{#vendorExtensions.x-unique-id-key}}
 -(NSString*)indexPropertyName {
     return @"{{name}}";

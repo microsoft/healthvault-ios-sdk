@@ -238,8 +238,11 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     if (!restRequest.isAnonymous)
     {
         //headers[@"Authorization"] = self.sessionCredential.token;
-        headers[@"Authorization"] = @"MSH-V1 app-token=AiAAAInaPSXoVPxDhpEZ5hjfVSJ31y1WNrTlqe1YfeBcH/TCQHizokAd8VqaI8QYiGdOi8AAAACdKGgXdisC/tDQrEA2GrwvCJGP1olulhJ1lyRAJndsEuvi6TcnN3Cjr4sBUkMuF++wpdXl6xwsgI7QfsofgrTMtZ45NO2/7TENtOzRs0F5LAYfZaHOf99Rr232flqezOR4xqA3qRypdnqByNI7A6/JRPjLWGvL3PQyytIsSHku9mu3cTPZVN5z3fV/BNw3JobW7ysYOccE2xct6934SjLn+PY53rDBwDVEZpLDzUr059iEWwcDR6U0YiJYmznl3z8gAAAALshlNuRxGdysmSEIztKJ4xG0cG35KaMkylrl6L+TUYEgAAAALshlNuRxGdysmSEIztKJ4xG0cG35KaMkylrl6L+TUYE=,offline-person-id=d8fbd7d2-42af-4105-841e-b7b609330f52,record-id=a5dac20c-21d8-48dd-b88c-6a2608adf0bc";
+        
+        headers[@"Authorization"] = @"MSH-V1 app-token=AiAAAML47WGYEfRCjJD4xSaFJiDXr8owHSWaHgtOs/cHmPGJERaN4mOgHciD4eh9Q9dDecAAAAA+FaTgOMhpwFEH2UQk5WebU7S5ZCbRS2exUpWHDz4pRqWMCHYnIgf2hn8X6oCH5LXQWCQOq5PjLCLHgyuR3Yt/B9AxE8SN03oUPFg+A/+UZNl+fynm1nf/+yeWntTFwR/o37qH33k2UUkGcFHnW8Jiu5XzqOP12IwuGO/+0eleRWVp69VQcxOMY8di9WRdlw+oqbCiHjNo/y7Siz1X4l0XAnDZZNaXtvKHa5w3VKZgTmgzBUtLa/tRZH3SBa2y8dAgAAAApuHWo+sBpE0NAwdiemjnq42H3KHuRvYeqohCxjjR0xcgAAAApuHWo+sBpE0NAwdiemjnq42H3KHuRvYeqohCxjjR0xc=,offline-person-id=d8fbd7d2-42af-4105-841e-b7b609330f52,record-id=a5dac20c-21d8-48dd-b88c-6a2608adf0bc";
     }
+    
+    headers[@"Content-Type"] = @"application/json";
     
     [self.httpService sendRequestForURL:restRequest.url
                              httpMethod:restRequest.httpMethod

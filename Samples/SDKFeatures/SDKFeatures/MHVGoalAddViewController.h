@@ -1,5 +1,5 @@
 //
-// MHVGoalDetailViewController.h
+// MHVGoalAddViewController.h
 // SDKFeatures
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -22,11 +22,8 @@
 #import "MHVFeatureActions.h"
 #import "MHVStatusLabel.h"
 
-@interface MHVGoalDetailViewController : UIViewController
+@interface MHVGoalAddViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
-@property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
 
 @property (strong, nonatomic) IBOutlet UITextField *nameValue;
 @property (strong, nonatomic) IBOutlet UITextField *typeValue;
@@ -37,9 +34,6 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *startDate;
 
-- (id)initWithGoalId:(NSString *)goalId;
-
-- (IBAction)updateGoal:(id)sender;
-- (IBAction)deleteGoal:(id)sender;
+- (IBAction)saveGoal:(id)sender;
 
 @end

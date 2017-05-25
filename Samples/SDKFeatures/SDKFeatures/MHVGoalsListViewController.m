@@ -18,12 +18,12 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVGoalsApi.h"
+#import "MHVGoalAddViewController.h"
 #import "MHVGoalsListViewController.h"
 #import "MHVGoalDetailViewController.h"
 #import "MHVFeaturesConfiguration.h"
 #import "MHVConfiguration.h"
 #import "MHVConnection.h"
-
 
 @interface MHVGoalsListViewController ()
 
@@ -56,7 +56,7 @@
     [self loadGoals];
 }
 
-- (void) loadGoals
+- (void)loadGoals
 {
     [self.statusLabel showBusy];
     
@@ -84,6 +84,12 @@
             }
           }];
      }];
+}
+
+- (IBAction)addGoal:(id)sender
+{
+    id view = [[MHVGoalAddViewController alloc] init];
+    [self.navigationController pushViewController:view animated:YES];
 }
 
 // -------------------------------------
@@ -134,7 +140,7 @@
         return;
     }
     
-    [self.navigationController pushViewController:typeView animated:TRUE];
+    [self.navigationController pushViewController:typeView animated:YES];
     
     return;
 }

@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVRemoteMonitoringClient.h"
 #import "MHVClient.h"
+#import "MHVJsonSerializer.h"
 #import "{{classname}}.h"
 {{#imports}}#import "{{import}}.h"
 {{/imports}}
@@ -72,7 +73,8 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     {{#bodyParam}}
-    bodyParam = {{paramName}};
+    NSString *json = [MHVJsonSerializer serialize:{{paramName}}];
+    bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
     {{/bodyParam}}
     {{^bodyParam}}
     {{#formParams}}

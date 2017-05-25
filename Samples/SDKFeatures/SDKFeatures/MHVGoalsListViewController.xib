@@ -11,7 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MHVGoalsListViewController">
             <connections>
-                <outlet property="addButton" destination="vCJ-4g-ahW" id="utM-4w-7I8"/>
                 <outlet property="statusLabel" destination="R68-Q1-6Xp" id="GCY-aj-iFN"/>
                 <outlet property="tableView" destination="sSO-pn-Bya" id="YSI-jU-VlI"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Qxc-5d-zqf"/>
@@ -30,7 +29,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sSO-pn-Bya">
-                    <rect key="frame" x="0.0" y="68" width="375" height="555"/>
+                    <rect key="frame" x="0.0" y="53" width="375" height="570"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
@@ -39,7 +38,11 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="oM4-8G-4tM"/>
-                        <barButtonItem systemItem="add" id="vCJ-4g-ahW"/>
+                        <barButtonItem systemItem="add" id="vCJ-4g-ahW">
+                            <connections>
+                                <action selector="addGoal:" destination="-1" id="TyS-yC-WTx"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                 </toolbar>
             </subviews>

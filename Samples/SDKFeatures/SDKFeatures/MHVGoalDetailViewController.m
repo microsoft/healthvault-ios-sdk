@@ -40,6 +40,39 @@
     return self;
 }
 
+- (IBAction)deleteGoal:(id)sender
+{
+    [_connection.remoteMonitoringClient deleteGoalWithGoalId:_goalId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+         {
+             if (!error) {
+                 [self.navigationController popViewControllerAnimated:YES];
+             }
+         }];
+    }];
+}
+
+- (IBAction)updateGoal:(id)sender
+{
+    _goal.name = self.nameValue.text;
+    
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    _goal.range.maximum = [f numberFromString:self.maxValue.text];
+    _goal.range.minimum = [f numberFromString:self.minValue.text];
+    _goal.range.name = @"range";
+    _goal.range.units = self.unitsValue.text;
+    
+    [_connection.remoteMonitoringClient putGoalWithGoal:_goal completion:^(MHVGoal * _Nullable output, NSError * _Nullable error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+         {
+             if (!error) {
+                 [self.navigationController popViewControllerAnimated:YES];
+             }
+         }];
+    }];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -58,18 +91,28 @@
     MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
     _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     
-    [_connection.remoteMonitoringClient getGoalByIdWithGoalId:_goalId completion:^(MHVGoal *reponse, NSError *error)
+    [_connection.remoteMonitoringClient getGoalByIdWithGoalId:_goalId completion:^(MHVGoal *response, NSError *error)
      {
          [[NSOperationQueue mainQueue] addOperationWithBlock:^
           {
               if (!error)
               {
-                  self.nameValue.text = reponse.name;
+                  self.nameValue.text = response.name;
+                  self.typeValue.text = response.goalType;
+                  self.startDate.text = response.startDate.toString;
+                  
+                  if (response.range)
+                  {
+                      self.unitsValue.text = response.range.units;
+                      self.maxValue.text = [response.range.maximum stringValue];
+                      self.minValue.text = [response.range.minimum stringValue];
+                  }
+                  
+                  _goal = response;
                   
                   [self.statusLabel clearStatus];
               }
           }];
-
      }];
 }
 

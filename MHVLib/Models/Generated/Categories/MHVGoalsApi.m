@@ -27,6 +27,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVRemoteMonitoringClient.h"
 #import "MHVClient.h"
+#import "MHVJsonSerializer.h"
 #import "MHVGoalsApi.h"
 #import "MHVGoal.h"
 #import "MHVGoalsResponse.h"
@@ -72,7 +73,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
-    bodyParam = goalsWrapper;
+    NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
+    bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
     
     [self requestWithPath:resourcePath
                httpMethod:@"POST"
@@ -298,7 +300,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
-    bodyParam = goalsWrapper;
+    NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
+    bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
     
     [self requestWithPath:resourcePath
                httpMethod:@"PATCH"
@@ -340,7 +343,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     
     id bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
-    bodyParam = goal;
+    NSString *json = [MHVJsonSerializer serialize:goal];
+    bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
     
     [self requestWithPath:resourcePath
                httpMethod:@"PUT"

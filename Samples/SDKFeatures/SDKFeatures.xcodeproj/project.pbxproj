@@ -58,6 +58,8 @@
 		BA6EF7591ED608A000EF043A /* MHVGoalsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF7581ED608A000EF043A /* MHVGoalsListViewController.m */; };
 		BA6EF75B1ED6495C00EF043A /* MHVGoalDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6EF75A1ED6495C00EF043A /* MHVGoalDetailViewController.xib */; };
 		BA6EF75E1ED649AD00EF043A /* MHVGoalDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF75D1ED649AD00EF043A /* MHVGoalDetailViewController.m */; };
+		BA6EF7601ED7375300EF043A /* MHVGoalAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6EF75F1ED7375300EF043A /* MHVGoalAddViewController.xib */; };
+		BA6EF7641ED737C000EF043A /* MHVGoalAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF7631ED737C000EF043A /* MHVGoalAddViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,6 +149,9 @@
 		BA6EF75A1ED6495C00EF043A /* MHVGoalDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalDetailViewController.xib; sourceTree = "<group>"; };
 		BA6EF75C1ED6499A00EF043A /* MHVGoalDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVGoalDetailViewController.h; sourceTree = "<group>"; };
 		BA6EF75D1ED649AD00EF043A /* MHVGoalDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalDetailViewController.m; sourceTree = "<group>"; };
+		BA6EF75F1ED7375300EF043A /* MHVGoalAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalAddViewController.xib; sourceTree = "<group>"; };
+		BA6EF7621ED7378C00EF043A /* MHVGoalAddViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVGoalAddViewController.h; sourceTree = "<group>"; };
+		BA6EF7631ED737C000EF043A /* MHVGoalAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalAddViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,12 +284,7 @@
 		BA6EF7541ED6076A00EF043A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				BA6EF75C1ED6499A00EF043A /* MHVGoalDetailViewController.h */,
-				BA6EF75D1ED649AD00EF043A /* MHVGoalDetailViewController.m */,
-				BA6EF75A1ED6495C00EF043A /* MHVGoalDetailViewController.xib */,
-				BA6EF7571ED6085500EF043A /* MHVGoalsListViewController.h */,
-				BA6EF7581ED608A000EF043A /* MHVGoalsListViewController.m */,
-				BA6EF7551ED607AC00EF043A /* MHVGoalsListViewController.xib */,
+				BA6EF7611ED7376300EF043A /* Goals */,
 				5D09135C166ED1980031F5F9 /* MHVViewController.h */,
 				5D09135D166ED1980031F5F9 /* MHVViewController.m */,
 				5D09135F166ED1980031F5F9 /* MHVViewController.xib */,
@@ -298,6 +298,22 @@
 				5D78987B17149A500015D375 /* MHVTypeViewController.xib */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BA6EF7611ED7376300EF043A /* Goals */ = {
+			isa = PBXGroup;
+			children = (
+				BA6EF7621ED7378C00EF043A /* MHVGoalAddViewController.h */,
+				BA6EF7631ED737C000EF043A /* MHVGoalAddViewController.m */,
+				BA6EF75F1ED7375300EF043A /* MHVGoalAddViewController.xib */,
+				BA6EF75C1ED6499A00EF043A /* MHVGoalDetailViewController.h */,
+				BA6EF75D1ED649AD00EF043A /* MHVGoalDetailViewController.m */,
+				BA6EF75A1ED6495C00EF043A /* MHVGoalDetailViewController.xib */,
+				BA6EF7571ED6085500EF043A /* MHVGoalsListViewController.h */,
+				BA6EF7581ED608A000EF043A /* MHVGoalsListViewController.m */,
+				BA6EF7551ED607AC00EF043A /* MHVGoalsListViewController.xib */,
+			);
+			name = Goals;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +385,7 @@
 				5D09137F166EDB2A0031F5F9 /* MHVTypeListViewController.xib in Resources */,
 				5D78987D17149A500015D375 /* MHVTypeViewController.xib in Resources */,
 				4C2975D21ECF3429006B3673 /* MHVRecordListViewController.xib in Resources */,
+				BA6EF7601ED7375300EF043A /* MHVGoalAddViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +427,7 @@
 				5DEC254C178B573A00FE971B /* MHVFileFeatures.m in Sources */,
 				5D0645B818454D7000D306CC /* MHVHeartRateFactory.m in Sources */,
 				5DEC255A178B5A7F00FE971B /* MHVThingDataTypedFeatures.m in Sources */,
+				BA6EF7641ED737C000EF043A /* MHVGoalAddViewController.m in Sources */,
 				5DEC255D178B680400FE971B /* MHVFileFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
