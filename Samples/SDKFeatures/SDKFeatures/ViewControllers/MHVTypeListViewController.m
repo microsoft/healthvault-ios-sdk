@@ -30,7 +30,9 @@
 #import "MHVFeaturesConfiguration.h"
 
 #import "MHVGoalsListViewController.h"
-#import "MHVGoalFactory.h"
+#import "MHVGoal.h"
+#import "MHVActionPlansListViewController.h"
+#import "MHVActionPlan.h"
 
 @interface MHVTypeListViewController ()
 
@@ -233,6 +235,7 @@
     [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVHeartRate class])];
     
     [typeDictionary setObject:[MHVGoalsListViewController class] forKey:NSStringFromClass([MHVGoal class])];
+    [typeDictionary setObject:[MHVActionPlansListViewController class] forKey:NSStringFromClass([MHVActionPlan class])];
 
     /*
     [typeList sortUsingComparator:^NSComparisonResult (id obj1, id obj2)

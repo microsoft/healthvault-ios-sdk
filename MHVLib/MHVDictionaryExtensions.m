@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVDictionaryExtensions.h"
+#import "MHVStringExtensions.h"
 
 @implementation NSDictionary (MHVDictionaryExtensions)
 
@@ -81,7 +82,7 @@
         {
             [query appendString:@"&"];
         }
-        [query appendFormat:@"%@=%@", key, [self[key] urlEncode]];
+        [query appendFormat:@"%@=%@", key, [[self[key] description] urlEncode]];
     }
     return query;
 }

@@ -239,7 +239,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     {
         //headers[@"Authorization"] = self.sessionCredential.token;
         
-        headers[@"Authorization"] = @"MSH-V1 app-token=AiAAAML47WGYEfRCjJD4xSaFJiDXr8owHSWaHgtOs/cHmPGJERaN4mOgHciD4eh9Q9dDecAAAAA+FaTgOMhpwFEH2UQk5WebU7S5ZCbRS2exUpWHDz4pRqWMCHYnIgf2hn8X6oCH5LXQWCQOq5PjLCLHgyuR3Yt/B9AxE8SN03oUPFg+A/+UZNl+fynm1nf/+yeWntTFwR/o37qH33k2UUkGcFHnW8Jiu5XzqOP12IwuGO/+0eleRWVp69VQcxOMY8di9WRdlw+oqbCiHjNo/y7Siz1X4l0XAnDZZNaXtvKHa5w3VKZgTmgzBUtLa/tRZH3SBa2y8dAgAAAApuHWo+sBpE0NAwdiemjnq42H3KHuRvYeqohCxjjR0xcgAAAApuHWo+sBpE0NAwdiemjnq42H3KHuRvYeqohCxjjR0xc=,offline-person-id=d8fbd7d2-42af-4105-841e-b7b609330f52,record-id=a5dac20c-21d8-48dd-b88c-6a2608adf0bc";
+        headers[@"Authorization"] = @"MSH-V1 app-token=AiAAAInaPSXoVPxDhpEZ5hjfVSKFGJyaOHuzpwkUrUPMEkj+sb8ysCsbT0s59Hr/J2xoKMAAAADL42UhBnWWMEHmLw+zMg3a15scbzt/i9+lazRJV93CfFj/SnwH+VPHdgC5ya5DqO3T4lJvu8UGZgDIfQFKIDZL0eGxfAuFR6J3qmTsVgCr88ZDYqRg8+oCS/KRnuksY6dZY17XmowlJ4CL9MG070F22LaA5GV8eCB+EJtDLaCLodhO+sQIMb5L43jPI9QBNaK8bcSGCU3rAp9vvv7ET4byk5MV5As9G8h41OCSyI+4nfAR25Qt3UcFbLL1ONj7fNkgAAAAfjuanKQ8wmAPgGCaF6I13sT5KimuIzKTUcMZPH6I78kgAAAAfjuanKQ8wmAPgGCaF6I13sT5KimuIzKTUcMZPH6I78k=,offline-person-id=21fdef67-28a4-4e0e-b327-c48a510a3467,record-id=9c9c4020-7a0d-436e-be68-e00ceec4c0dc";
     }
     
     headers[@"Content-Type"] = @"application/json";
