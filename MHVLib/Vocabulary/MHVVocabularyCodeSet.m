@@ -22,7 +22,7 @@
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_family = @"family";
 static NSString *const c_element_version = @"version";
-static NSString *const c_element_thing = @"code-thing";
+static NSString *const c_element_thing = @"code-item";
 static NSString *const c_element_truncated = @"is-vocab-truncated";
 static NSString *const c_element_codeset = @"code-set-result";
 

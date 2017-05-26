@@ -32,9 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Retrieves a collection of key information for identifying and describing the vocabularies in the system.
  *
- * @param completion A completion block. On success will give an NSArray of vocabulary keys. On error will give the error info.
+ * @param completion A completion block. On success will give an MHVVocabularyKeyCollection. On error will give the error info.
  */
-- (void)getVocabularyKeysWithCompletion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable vocabularyKeys, NSError *_Nullable error))completion;
+- (void)getVocabularyKeysWithCompletion:(void(^)(MHVVocabularyKeyCollection *_Nullable vocabularyKeys, NSError *_Nullable error))completion;
 
 
 /**
@@ -56,9 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @param cultureIsFixed Healthvault looks for the vocabulary things for the culture info specified by the system. If this parameter is set to NO or is not specified and if things are not found for the specified culture then things for the default fallback culture will be returned. If this parameter is set to YES then fallback will not occur.
  * @param completion A completion block. On success will give one of the specified vocabularies and its things, or empty strings. On error will give the error info.
  */
-- (void)getVocabulariesWithVocabularyKeys:(NSArray *)vocabularyKeys
+- (void)getVocabulariesWithVocabularyKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
                            cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
-                               completion:(void(^)(NSArray<MHVVocabularyThing *> *_Nullable vocabularies, NSError *_Nullable error))completion;
+                               completion:(void(^)(MHVVocabularyThingCollection * _Nullable vocabularies, NSError *_Nullable error))completion;
 
 
 /**

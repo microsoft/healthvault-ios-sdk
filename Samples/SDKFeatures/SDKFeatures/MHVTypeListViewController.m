@@ -52,12 +52,14 @@
     
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    [connection.vocabularyClient getVocabularyKeysWithCompletion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error)
+    [connection.vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error)
      {
-         if (error) {
-             NSLog(@"There was an error *******************");
-         }
-         NSLog(@"Andrew is logging somethig-------------------");
+         MHVVocabularyKey *selectedKey = [vocabularyKeys objectAtIndex:88];
+         MHVVocabularyKeyCollection *args = [[MHVVocabularyKeyCollection alloc] initWithArray:@[selectedKey]];
+         
+         [connection.vocabularyClient getVocabulariesWithVocabularyKeys:args cultureIsFixed:[NSNumber numberWithBool:NO] completion:^(MHVVocabularyThingCollection* _Nullable vocabularies, NSError * _Nullable error) {
+             NSLog(@"Got a response");
+         }];
      }];
 /*    self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];
     self.tableView.dataSource = self;

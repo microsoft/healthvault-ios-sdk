@@ -27,7 +27,9 @@ static const xmlChar *x_element_description = XMLSTRINGCONST("description");
     [writer writeElementXmlName:x_element_name value:self.name];
     [writer writeElementXmlName:x_element_family value:self.family];
     [writer writeElementXmlName:x_element_version value:self.version];
-    [writer writeElementXmlName:x_element_description value:self.descriptionText];
+    
+    // NOTE: We do not serialize the description field. It is optional
+    // and only used for requests, not respones
 }
 
 - (void) deserialize:(XReader *)reader

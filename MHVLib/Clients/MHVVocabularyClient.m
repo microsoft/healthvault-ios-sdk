@@ -18,6 +18,7 @@
 
 #import "MHVVocabularyClient.h"
 #import "MHVValidator.h"
+#import "MHVVocabularyThing.h"
 #import "MHVMethod.h"
 #import "MHVServiceResponse.h"
 #import "MHVConnectionProtocol.h"
@@ -42,7 +43,7 @@
     return self;
 }
 
-- (void)getVocabularyKeysWithCompletion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable vocabularyKeys, NSError *_Nullable error))completion
+- (void)getVocabularyKeysWithCompletion:(void(^)(MHVVocabularyKeyCollection *_Nullable vocabularyKeys, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
     
@@ -66,6 +67,72 @@
         completion(vocabularyKeys, nil);
         return;
     }];
+}
+
+- (void)getVocabularyWithKey:(MHVVocabularyKey *)key
+              cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
+                  completion:(void(^)(MHVVocabularyThing *_Nullable vocabulary, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(key);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion) {
+        return;
+    }
+    
+    [self getVocabulariesWithVocabularyKeys:[[MHVVocabularyKeyCollection alloc]initWithArray:@[key]] cultureIsFixed:cultureIsFixed completion:^(MHVVocabularyThingCollection * _Nullable vocabularies, NSError * _Nullable error) {
+        if (error || !vocabularies || [vocabularies count] <= 0)
+        {
+            completion(nil, error);
+            return;
+        }
+        
+        completion([vocabularies objectAtIndex:0], nil);
+        return;
+    }];
+    
+    return;
+}
+
+- (void)getVocabulariesWithVocabularyKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+                           cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
+                               completion:(void(^)(MHVVocabularyThingCollection* _Nullable vocabularies, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(vocabularyKeys);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion || !vocabularyKeys) {
+        return;
+    }
+    
+    XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+    [writer writeStartElement:@"info"];
+    [writer writeStartElement:@"vocabulary-parameters"];
+    
+    for (MHVVocabularyKey *key in vocabularyKeys)
+    {
+        [writer writeStartElement:@"vocabulary-key"];
+        [key serialize:writer];
+        [writer writeEndElement];
+    }
+    
+    [writer writeElement:@"fixed-culture" boolValue:[cultureIsFixed isEqualToNumber:[NSNumber numberWithBool:YES]]];
+    [writer writeEndElement];   // </vocabulary-parameters>
+    [writer writeEndElement];   // </info>
+    
+    MHVMethod *method = [MHVMethod getVocabulary];
+    method.parameters = [writer newXmlString];
+    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            completion(nil, error);
+            return;
+        }
+        
+        MHVVocabularyThingCollection *vocabularies = (MHVVocabularyThingCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"vocabulary" asClass:[MHVVocabularyThing class] andArrayClass:[MHVVocabularyThingCollection class]];
+        
+        completion(vocabularies, nil);
+    }];
+    //MHVVocabularyThingCollection *vocabularies =
 }
 
 
