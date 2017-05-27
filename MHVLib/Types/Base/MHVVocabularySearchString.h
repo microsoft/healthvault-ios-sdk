@@ -1,5 +1,5 @@
 //
-//  MHVVocabularySearchText.h
+//  MHVVocabularySearchString.h
 //  MHVLib
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -19,18 +19,19 @@
 #import "MHVType.h"
 #import "MHVString255.h"
 
-typedef NS_ENUM(NSInteger, MHVVocabularyMatchType)
+typedef NS_ENUM(NSInteger, MHVSearchMode)
 {
-    MHVVocabularyMatchTypeFullText,
-    MHVVocabularyMatchTypePrefix,
-    MHVVocabularyMatchTypeNone
+    MHVSearchModePrefix,
+    MHVSearchModeContains,
+    MHVSearchModeFullText,
+    MHVSearchModeNone
 };
 
-NSString* MHVVocabularyMatchTypeToString(MHVVocabularyMatchType type);
-MHVVocabularyMatchType MHVVocabularyMatchTypeFromString(NSString* string);
+NSString* MHVSearchModeToString(MHVSearchMode type);
+MHVSearchMode MHVSearchModeFromString(NSString* string);
 
-@interface MHVVocabularySearchText : MHVString255
+@interface MHVVocabularySearchString : MHVString255
 
-@property (readwrite, nonatomic) MHVVocabularyMatchType matchType;
+@property (readwrite, nonatomic) MHVSearchMode matchType;
 
 @end

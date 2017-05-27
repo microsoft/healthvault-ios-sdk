@@ -18,7 +18,7 @@
 
 #import "MHVType.h"
 #import "MHVBaseTypes.h"
-#import "MHVVocabularyThing.h"
+#import "MHVVocabularyCodeItem.h"
 #import "MHVVocabularyIdentifier.h"
 
 @interface MHVVocabularyCodeSet : MHVType
@@ -26,19 +26,19 @@
 @property (readwrite, nonatomic, strong) NSString *name;
 @property (readwrite, nonatomic, strong) NSString *family;
 @property (readwrite, nonatomic, strong) NSString *version;
-@property (readwrite, nonatomic, strong) MHVVocabularyThingCollection *things;
+@property (readwrite, nonatomic, strong) MHVVocabularyCodeItemCollection *vocabularyCodeItems;
 @property (readwrite, nonatomic, strong) MHVBool *isTruncated;
 
 @property (readonly, nonatomic) BOOL hasThings;
 
 - (NSArray *)displayStrings;
-- (void)sortThingsByDisplayText;
+- (void)sortVocabularyCodeItemsByDisplayText;
 
-- (MHVVocabularyIdentifier *)getVocabID;
+- (MHVVocabularyIdentifier *)getVocabularyID;
 
 @end
 
-@interface MHVVocabularySetCollection : MHVCollection<MHVVocabularyCodeSet *>
+@interface MHVVocabularyCodeSetCollection : MHVCollection<MHVVocabularyCodeSet *>
 
 @end
 

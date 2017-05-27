@@ -22,10 +22,10 @@
 
 @interface MHVVocabularyGetResults : MHVType 
 {
-    MHVVocabularySetCollection* m_vocabs;
+    MHVVocabularyCodeSetCollection* m_vocabs;
 }
 
-@property (readwrite, nonatomic, strong) MHVVocabularySetCollection* vocabs;
+@property (readwrite, nonatomic, strong) MHVVocabularyCodeSetCollection* vocabs;
 @property (readonly, nonatomic, strong) MHVVocabularyCodeSet* firstVocab;
 
 @end

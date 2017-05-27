@@ -18,9 +18,7 @@
 
 #import "MHVClientProtocol.h"
 #import "MHVVocabularyKey.h"
-#import "MHVVocabularyThing.h"
-
-@class MHVVocabularySearchType;
+#import "MHVVocabularyCodeItem.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -42,11 +40,11 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param key The key for the vocabulary to fetch.
  * @param cultureIsFixed Healthvault looks for the vocabulary things for the culture info specified by the system. If this parameter is set to NO or is not specified and if things are not found for the specified culture then things for the default fallback culture will be returned. If this parameter is set to YES then fallback will not occur.
- * @param completion A completion block. On success will give the matching MHVVocabularyThing. On error will give the error info.
+ * @param completion A completion block. On success will give the matching MHVVocabularyCodeItem. On error will give the error info.
  */
 - (void)getVocabularyWithKey:(MHVVocabularyKey *)key
               cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
-                  completion:(void(^)(MHVVocabularyThing *_Nullable vocabulary, NSError *_Nullable error))completion;
+                  completion:(void(^)(MHVVocabularyCodeSet *_Nullable vocabulary, NSError *_Nullable error))completion;
 
 
 /**
@@ -58,21 +56,23 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)getVocabulariesWithVocabularyKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
                            cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
-                               completion:(void(^)(MHVVocabularyThingCollection * _Nullable vocabularies, NSError *_Nullable error))completion;
+                               completion:(void(^)(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError *_Nullable error))completion;
 
 
 /**
  * Searches a specific vocabulary and retrieves the matching vocabulary things.
  *
  * @param searchValue The search string to use.
- * @param searchType The type of search to perform.
+ * @param searchMode The type of search mode to perform.
+ * @param vocanularyKey The key to perform the search on.
  * @param maxResults The maximum number of results to return. If null, all matching results are returned, up to a maximum number defined by the service config value with key maxResultsPerVocabularyRetrieval.
- * @param completion A completion block. On success will give an array of MHVVocabularyKeys populated with entries matching the search criteria. On error will give the error info.
+ * @param completion A completion block. On success will give a MHVVocabularyCodeSetCollection populated with entries matching the search criteria. On error will give the error info.
  */
 - (void)searchVocabularyWithSearchValue:(NSString *)searchValue
-                             searchType:(MHVVocabularySearchType *)searchType
+                             searchMode:(MHVSearchMode)searchMode
+                             vocabularyKey:(MHVVocabularyKey *_Nullable)vocabularyKey
                              maxResults:(NSNumber *_Nullable)maxResults
-                             completion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable vocabularyKeys, NSError *_Nullable error))completion;
+                             completion:(void(^)(MHVVocabularyCodeSetCollection *_Nullable vocabularyKeys, NSError *_Nullable error))completion;
 
 @end
 

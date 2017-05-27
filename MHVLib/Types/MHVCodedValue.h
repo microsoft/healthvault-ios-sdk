@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVType.h"
-#import "MHVVocabularyThing.h"
+#import "MHVVocabularyCodeItem.h"
 
 @class MHVCodedValueCollection;
 

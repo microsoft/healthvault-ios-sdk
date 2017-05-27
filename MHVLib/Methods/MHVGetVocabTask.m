@@ -38,7 +38,7 @@ static NSString* const c_element_vocab = @"vocabulary";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_vocabs = (MHVVocabularySetCollection *)[reader readElementArray:c_element_vocab asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularySetCollection class]];
+    m_vocabs = (MHVVocabularyCodeSetCollection *)[reader readElementArray:c_element_vocab asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularyCodeSetCollection class]];
 }
 
 @end

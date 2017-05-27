@@ -54,11 +54,22 @@
     
     [connection.vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error)
      {
-         MHVVocabularyKey *selectedKey = [vocabularyKeys objectAtIndex:88];
+         MHVVocabularyKey *selectedKey = [vocabularyKeys objectAtIndex:1];
          MHVVocabularyKeyCollection *args = [[MHVVocabularyKeyCollection alloc] initWithArray:@[selectedKey]];
          
-         [connection.vocabularyClient getVocabulariesWithVocabularyKeys:args cultureIsFixed:[NSNumber numberWithBool:NO] completion:^(MHVVocabularyThingCollection* _Nullable vocabularies, NSError * _Nullable error) {
+         /*
+         [connection.vocabularyClient getVocabulariesWithVocabularyKeys:args cultureIsFixed:[NSNumber numberWithBool:NO] completion:^(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError * _Nullable error) {
              NSLog(@"Got a response");
+         }];
+          */
+         
+         /*[connection.vocabularyClient getVocabularyWithKey:selectedKey cultureIsFixed:[NSNumber numberWithBool:NO] completion:^(MHVVocabularyCodeSet * _Nullable vocabulary, NSError * _Nullable error) {
+             NSLog(@"Got a response");
+         }];
+          */
+         
+         [connection.vocabularyClient searchVocabularyWithSearchValue:@"Rx" searchMode:MHVSearchModeContains vocabularyKey:nil maxResults:[NSNumber numberWithInt:5] completion:^(MHVVocabularyCodeSetCollection* _Nullable vocabularyKeys, NSError * _Nullable error) {
+             NSLog(@"Got results");
          }];
      }];
 /*    self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];

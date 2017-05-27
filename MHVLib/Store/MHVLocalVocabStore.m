@@ -160,7 +160,7 @@ LError:
     return FALSE;
 }
 
--(MHVVocabularyThing *)getVocabThingForCode:(NSString *)code inVocab:(MHVVocabularyIdentifier *)vocabID
+-(MHVVocabularyCodeItem *)getVocabThingForCode:(NSString *)code inVocab:(MHVVocabularyIdentifier *)vocabID
 {
     MHVVocabularyCodeSet* vocab  = [self getVocabWithID:vocabID];
     if (!vocab)
@@ -168,12 +168,12 @@ LError:
         return nil;
     }
     
-    return [vocab.things getThingWithCode:code];
+    return [vocab.vocabularyCodeItems getThingWithCode:code];
 }
 
 -(NSString *)getDisplayTextForCode:(NSString *)code inVocab:(MHVVocabularyIdentifier *)vocabID
 {
-    MHVVocabularyThing* vocabThing = [self getVocabThingForCode:code inVocab:vocabID];
+    MHVVocabularyCodeItem* vocabThing = [self getVocabThingForCode:code inVocab:vocabID];
     if (!vocabThing)
     {
         return nil;
@@ -239,7 +239,7 @@ LError:
     @try
     {
         MHVGetVocabTask* getVocab = (MHVGetVocabTask *) task;
-        MHVVocabularySetCollection* downloadedVocabs = getVocab.vocabResults.vocabs;
+        MHVVocabularyCodeSetCollection* downloadedVocabs = getVocab.vocabResults.vocabs;
         for (NSUInteger i = 0, count = downloadedVocabs.count; i < count; ++i)
         {
             MHVVocabularyCodeSet* vocab = [downloadedVocabs objectAtIndex:i];
@@ -247,7 +247,7 @@ LError:
             {
                 continue;
             }
-            [self putVocab:vocab withID:[vocab getVocabID]];
+            [self putVocab:vocab withID:[vocab getVocabularyID]];
         }
     }
     @catch (id exception)

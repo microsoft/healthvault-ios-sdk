@@ -17,11 +17,11 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVVocabularySearchText.h"
+#import "MHVVocabularySearchString.h"
 
 @interface MHVVocabularySearchParams : MHVType
 
-@property (readwrite, nonatomic, strong) MHVVocabularySearchText *text;
+@property (readwrite, nonatomic, strong) MHVVocabularySearchString *text;
 @property (readwrite, nonatomic) NSInteger maxResults;
 
 - (instancetype)initWithText:(NSString *)text;

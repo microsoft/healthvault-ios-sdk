@@ -31,7 +31,7 @@ static NSString *const c_element_max = @"max-results";
     self = [super init];
     if (self)
     {
-        _text = [[MHVVocabularySearchText alloc] initWith:text];
+        _text = [[MHVVocabularySearchString alloc] initWith:text];
         MHVCHECK_NOTNULL(_text);
         
         _maxResults = 25;
@@ -59,7 +59,7 @@ static NSString *const c_element_max = @"max-results";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.text = [reader readElement:c_element_text asClass:[MHVVocabularySearchText class]];
+    self.text = [reader readElement:c_element_text asClass:[MHVVocabularySearchString class]];
     self.maxResults = [reader readIntElement:c_element_max];
 }
 

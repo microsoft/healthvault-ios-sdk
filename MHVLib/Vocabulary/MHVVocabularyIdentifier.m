@@ -56,11 +56,11 @@ NSString *const c_usdaFamily = @"usda";
     return self;
 }
 
-- (MHVCodedValue *)codedValueForThing:(MHVVocabularyThing *)vocabThing
+- (MHVCodedValue *)codedValueForThing:(MHVVocabularyCodeItem *)vocabThing
 {
     MHVCHECK_NOTNULL(vocabThing);
 
-    return [[MHVCodedValue alloc] initWithCode:vocabThing.code vocab:self.name vocabFamily:self.family vocabVersion:self.version];
+    return [[MHVCodedValue alloc] initWithCode:vocabThing.codeValue vocab:self.name vocabFamily:self.family vocabVersion:self.version];
 }
 
 - (MHVCodedValue *)codedValueForCode:(NSString *)code

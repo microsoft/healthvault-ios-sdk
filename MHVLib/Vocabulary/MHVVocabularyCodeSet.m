@@ -33,30 +33,30 @@ static NSString *const c_element_codeset = @"code-set-result";
     return (![NSArray isNilOrEmpty:self.things.toArray]);
 }
 
-- (MHVVocabularyThingCollection *)things
+- (MHVVocabularyCodeItemCollection *)things
 {
-    if (!_things)
+    if (!_vocabularyCodeItems)
     {
-        _things = [[MHVVocabularyThingCollection alloc] init];
+        _vocabularyCodeItems = [[MHVVocabularyCodeItemCollection alloc] init];
     }
     
-    return _things;
+    return _vocabularyCodeItems;
 }
 
 - (NSArray *)displayStrings
 {
-    return (self.things) ? [self.things displayStrings] : nil;
+    return (self.vocabularyCodeItems) ? [self.vocabularyCodeItems displayStrings] : nil;
 }
 
-- (void)sortThingsByDisplayText
+- (void)sortVocabularyCodeItemsByDisplayText
 {
-    if (self.things)
+    if (self.vocabularyCodeItems)
     {
-        [self.things sortByDisplayText];
+        [self.vocabularyCodeItems sortByDisplayText];
     }
 }
 
-- (MHVVocabularyIdentifier *)getVocabID
+- (MHVVocabularyIdentifier *)getVocabularyID
 {
     return [[MHVVocabularyIdentifier alloc] initWithFamily:self.family andName:self.name];
 }
@@ -75,13 +75,13 @@ static NSString *const c_element_codeset = @"code-set-result";
     self.name = [reader readStringElement:c_element_name];
     self.family = [reader readStringElement:c_element_family];
     self.version = [reader readStringElement:c_element_version];
-    self.things = (MHVVocabularyThingCollection *)[reader readElementArray:c_element_thing asClass:[MHVVocabularyThing class] andArrayClass:[MHVVocabularyThingCollection class]];
+    self.vocabularyCodeItems = (MHVVocabularyCodeItemCollection *)[reader readElementArray:c_element_thing asClass:[MHVVocabularyCodeItem class] andArrayClass:[MHVVocabularyCodeItemCollection class]];
     self.isTruncated = [reader readElement:c_element_truncated asClass:[MHVBool class]];
 }
 
 @end
 
-@implementation MHVVocabularySetCollection
+@implementation MHVVocabularyCodeSetCollection
 
 - (instancetype)init
 {

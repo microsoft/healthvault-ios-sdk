@@ -18,7 +18,7 @@
 //
 
 #import "MHVVocabularyIdentifier.h"
-#import "MHVVocabularyThing.h"
+#import "MHVVocabularyCodeItem.h"
 #import "MHVVocabularyCodeSet.h"
 #import "MHVVocabularyParams.h"
 #import "MHVVocabularySearchParams.h"

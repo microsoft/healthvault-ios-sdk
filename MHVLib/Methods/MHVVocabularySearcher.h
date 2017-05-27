@@ -62,7 +62,7 @@
 @interface MHVVocabularySearcher : NSObject
 
 @property (readwrite, nonatomic, strong) MHVVocabularyIdentifier *vocab;
-@property (readwrite, nonatomic) MHVVocabularyMatchType matchType;
+@property (readwrite, nonatomic) MHVSearchMode matchType;
 @property (readwrite, nonatomic) int maxResults;
 //
 // Search cache.

@@ -72,7 +72,7 @@ NSString *const c_usdaFamily;
 //
 // Create a codedValue for the vocabThing
 //
-- (MHVCodedValue *)codedValueForThing:(MHVVocabularyThing *)vocabThing;
+- (MHVCodedValue *)codedValueForThing:(MHVVocabularyCodeItem *)vocabThing;
 - (MHVCodedValue *)codedValueForCode:(NSString *)code;
 - (MHVCodableValue *)codableValueForText:(NSString *)text andCode:(NSString *)code;
 //
