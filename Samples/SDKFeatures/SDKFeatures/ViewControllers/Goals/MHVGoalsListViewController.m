@@ -141,9 +141,6 @@
     }
     
     [self.navigationController pushViewController:typeView animated:YES];
-    
-    return;
 }
-
 
 @end

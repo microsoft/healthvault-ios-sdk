@@ -107,7 +107,6 @@
     NSDate *startDate = [NSDate date];
     
     [Logger write:[NSString stringWithFormat:@"Begin request #%li", (long)currentRequest]];
-    [Logger write:[NSString stringWithFormat:@"Request body: %@", [[NSString alloc] initWithData:[request HTTPBody] encoding:4]]];
     
     NSURLSessionTask *task = [self.urlSession dataTaskWithRequest:(NSURLRequest *)request
                                                 completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
@@ -335,7 +334,7 @@
     if (body)
     {
         request.HTTPMethod = @"POST";
-        [request setHTTPBody:body];
+        request.HTTPBody = body;
         
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)body.length] forHTTPHeaderField:@"Content-Length"];
     }

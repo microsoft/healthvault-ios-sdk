@@ -118,7 +118,6 @@
     newPlan._description = @"A sample activity plan";
     newPlan.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
     newPlan.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
-    // organization info ?
     newPlan.category = @"Activity";
     newPlan.objectives = [[NSArray<MHVObjective> alloc] initWithObjects:objective, nil];
     newPlan.associatedTasks = [[NSArray<MHVActionPlanTask> alloc] initWithObjects:frequencyTask, nil];
@@ -183,8 +182,6 @@
     }
     
     [self.navigationController pushViewController:typeView animated:YES];
-    
-    return;
 }
 
 @end
