@@ -36,7 +36,9 @@
 
 @interface MHVTypeListViewController ()
 
-@property (nonatomic, strong) NSDictionary *classesForTypes;
+@property (nonatomic, strong) NSDictionary *itemTypes;
+@property (nonatomic, strong) NSDictionary *itemViewTypes;
+@property (nonatomic, strong) NSArray *itemList;
 @property (nonatomic, strong) MHVFeatureActions *actions;
 @property (nonatomic, strong) MHVMoreFeatures *features;
 
@@ -51,7 +53,8 @@
     [self.navigationController.navigationBar setTranslucent:FALSE];
     self.navigationItem.title = [self personName];
 
-    self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];
+    [self setupList];
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
@@ -149,7 +152,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.classesForTypes count];
+    return [self.itemList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -160,10 +163,8 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MHVCell"];
     }
-    
-    NSArray *keys = [self.classesForTypes allKeys];
 
-    NSString *typeName = keys[indexPath.row];
+    NSString *typeName = _itemList[indexPath.row];
     cell.textLabel.text = typeName;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -178,10 +179,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *keys = [self.classesForTypes allKeys];
-    Class selectedCls = NSClassFromString(keys[indexPath.row]);
-    
-    Class controllerClass = [self.classesForTypes objectForKey:keys[indexPath.row]];
+    NSString *name = _itemList[indexPath.row];
+    Class selectedCls = [self.itemTypes objectForKey:name];
+    Class controllerClass = [self.itemViewTypes objectForKey:name];
 
     id typeView = [[controllerClass alloc] initWithTypeClass:selectedCls useMetric:FALSE];
 
@@ -213,40 +213,52 @@
 //
 // -------------------------------------
 
-+ (NSDictionary *)classesForTypesToDemo
+- (void)setupList
 {
-    NSMutableDictionary *typeDictionary = [[NSMutableDictionary alloc] init];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVBloodGlucose class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVBloodPressure class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVCondition class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVCholesterol class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVDietaryIntake class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVDailyMedicationUsage class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVImmunization class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVEmotionalState class])];
+    NSMutableDictionary *itemDictionary = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *viewDictionary = [[NSMutableDictionary alloc] init];
+    NSMutableArray *typeList = [[NSMutableArray alloc] init];
     
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVExercise class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVMedication class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVProcedure class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVSleepJournalAM class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVWeight class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVFile class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVEmotionalState class])];
-    [typeDictionary setObject:[MHVTypeViewController class] forKey:NSStringFromClass([MHVHeartRate class])];
-    
-    [typeDictionary setObject:[MHVGoalsListViewController class] forKey:NSStringFromClass([MHVGoal class])];
-    [typeDictionary setObject:[MHVActionPlansListViewController class] forKey:NSStringFromClass([MHVActionPlan class])];
+    NSArray<Class> *thingTypes = @[[MHVBloodGlucose class],
+                            [MHVBloodPressure class],
+                            [MHVCondition class],
+                            [MHVCholesterol class],
+                            [MHVDietaryIntake class],
+                            [MHVDailyMedicationUsage class],
+                            [MHVImmunization class],
+                            [MHVEmotionalState class],
+                            [MHVExercise class],
+                            [MHVMedication class],
+                            [MHVProcedure class],
+                            [MHVSleepJournalAM class],
+                            [MHVWeight class],
+                            [MHVFile class],
+                            [MHVHeartRate class]];
 
-    /*
-    [typeList sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
-    {
-        MHVThingDataTyped *t1 = (MHVThingDataTyped *)obj1;
-        MHVThingDataTyped *t2 = (MHVThingDataTyped *)obj2;
-        return [[[t1 class] XRootElement] compare:[[t2 class] XRootElement]];
-    }];
-    */
+    for (int i = 0; i < thingTypes.count; i++) {
+        NSString *name = [thingTypes[i] XRootElement];
+        [typeList addObject:name];
+        [itemDictionary setObject:thingTypes[i] forKey:name];
+        [viewDictionary setObject:[MHVTypeViewController class] forKey:name];
+    }
     
-    return typeDictionary;
+    NSString *name = @"action plans [REST]";
+    [typeList addObject:name];
+    [itemDictionary setObject:[MHVActionPlan class] forKey:name];
+    [viewDictionary setObject:[MHVActionPlansListViewController class] forKey:name];
+    
+    name = @"goals [REST]";
+    [typeList addObject:name];
+    [itemDictionary setObject:[MHVGoal class] forKey:name];
+    [viewDictionary setObject:[MHVGoalsListViewController class] forKey:name];
+
+    [typeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        return [obj1 compare:obj2];
+    }];
+
+    _itemTypes = itemDictionary;
+    _itemViewTypes = viewDictionary;
+    _itemList = typeList;
 }
 
 - (Class)getSelectedClass
@@ -259,8 +271,9 @@
         return nil;
     }
 
-    NSArray *keys = [self.classesForTypes allKeys];
-    return NSClassFromString(keys[selectedRow.row]);}
+    NSString *typeName = _itemList[selectedRow.row];
+    return [self.itemTypes objectForKey:typeName];
+}
 
 - (BOOL)addStandardFeatures
 {
