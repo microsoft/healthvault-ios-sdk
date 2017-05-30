@@ -34,6 +34,7 @@
 #import "MHVApplicationCreationInfo.h"
 #import "MHVRestRequest.h"
 #import "MHVHttpServiceResponse.h"
+#import "MHVPersonInfo.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -237,9 +238,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
     if (!restRequest.isAnonymous)
     {
-        //headers[@"Authorization"] = self.sessionCredential.token;
-        
-        headers[@"Authorization"] = @"MSH-V1 app-token=AiAAAInaPSXoVPxDhpEZ5hjfVSKFGJyaOHuzpwkUrUPMEkj+sb8ysCsbT0s59Hr/J2xoKMAAAADL42UhBnWWMEHmLw+zMg3a15scbzt/i9+lazRJV93CfFj/SnwH+VPHdgC5ya5DqO3T4lJvu8UGZgDIfQFKIDZL0eGxfAuFR6J3qmTsVgCr88ZDYqRg8+oCS/KRnuksY6dZY17XmowlJ4CL9MG070F22LaA5GV8eCB+EJtDLaCLodhO+sQIMb5L43jPI9QBNaK8bcSGCU3rAp9vvv7ET4byk5MV5As9G8h41OCSyI+4nfAR25Qt3UcFbLL1ONj7fNkgAAAAfjuanKQ8wmAPgGCaF6I13sT5KimuIzKTUcMZPH6I78kgAAAAfjuanKQ8wmAPgGCaF6I13sT5KimuIzKTUcMZPH6I78k=,offline-person-id=21fdef67-28a4-4e0e-b327-c48a510a3467,record-id=9c9c4020-7a0d-436e-be68-e00ceec4c0dc";
+        headers[@"Authorization"] = [NSString stringWithFormat:@"MSH-V1 app-token=%@,offline-person-id=%@,record-id=%@", self.sessionCredential.token, self.personInfo.ID, self.personInfo.selectedRecordID];
     }
     
     headers[@"Content-Type"] = @"application/json";
