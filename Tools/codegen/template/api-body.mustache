@@ -28,9 +28,9 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
 ///
 /// {{/allParams}} @returns {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
 ///
-+ (NSURLSessionTask*){{#vendorExtensions.x-objc-operationId}}{{vendorExtensions.x-objc-operationId}}{{/vendorExtensions.x-objc-operationId}}{{^vendorExtensions.x-objc-operationId}}{{nickname}}{{#hasParams}}With{{vendorExtensions.firstParamAltName}}{{/hasParams}}{{^hasParams}}WithCompletion:{{/hasParams}}{{/vendorExtensions.x-objc-operationId}}{{#allParams}}{{#secondaryParam}}
+- (void){{#vendorExtensions.x-objc-operationId}}{{vendorExtensions.x-objc-operationId}}{{/vendorExtensions.x-objc-operationId}}{{^vendorExtensions.x-objc-operationId}}{{nickname}}{{#hasParams}}With{{vendorExtensions.firstParamAltName}}{{/hasParams}}{{^hasParams}}WithCompletion:{{/hasParams}}{{/vendorExtensions.x-objc-operationId}}{{#allParams}}{{#secondaryParam}}
     {{paramName}}{{/secondaryParam}}:({{{dataType}}}){{paramName}}{{/allParams}}
-    {{#hasParams}}completion:{{/hasParams}}(void (^ _Nonnull)({{#returnBaseType}}{{{returnType}}} _Nullable output, {{/returnBaseType}}NSError* _Nullable error))completion
+    {{#hasParams}}completion:{{/hasParams}}(void(^_Nonnull)({{#returnBaseType}}{{{returnType}}} _Nullable output, {{/returnBaseType}}NSError* _Nullable error))completion
 {
     {{#allParams}}
     {{#required}}
@@ -44,7 +44,6 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:k{{classname}}ErrorDomain code:k{{classname}}MissingParamErrorCode userInfo:userInfo];
             completion({{#returnType}}nil, {{/returnType}}error);
         }
-        return nil;
     }
 
     {{/required}}
@@ -89,21 +88,14 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
     {{/formParams}}
     {{/bodyParam}}
 
-    return [MHVRemoteMonitoringClient requestWithPath: resourcePath
-                                    method:@"{{httpMethod}}"
-                                pathParams:pathParams
-                               queryParams:queryParams
-                                formParams:formParams
-                                      body:bodyParam
-                                   toClass:[{{{returnBaseType}}} class]
-                                completion:^(id data, NSError *error)
-                                {
-                                    if(completion)
-                                    {
-                                        completion({{#returnType}}({{{ returnType }}})data, {{/returnType}}error);
-                                    }
-                                }
-            ];
+    [self requestWithPath:resourcePath
+                      httpMethod:@"{{httpMethod}}"
+                      pathParams:pathParams
+                     queryParams:queryParams
+                      formParams:formParams
+                            body:bodyParam
+                         toClass:[{{{returnBaseType}}} class]
+                      completion:completion];
 }
 
 {{/operation}}

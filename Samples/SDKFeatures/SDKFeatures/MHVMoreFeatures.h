@@ -23,20 +23,22 @@
 @class MHVTypeListViewController;
 
 @interface MHVMoreFeatures : NSObject
-{
-@private
-    MHVTypeListViewController* __weak m_controller; // Weak ref
-}
 
-@property (readwrite, nonatomic, weak) MHVTypeListViewController* controller; // Weak ref
+@property (readwrite, nonatomic, weak) MHVTypeListViewController* listController;
 
 //
 // How to disconnect an app
 //
--(void) disconnectApp;
+- (void)disconnectApp;
+
 //
 // Get service definition
 //
--(void) getServiceDefinition;
+- (void)getServiceDefinition;
+
+//
+// Authorize Additional Records;
+//
+- (void)authorizeAdditionalRecords;
 
 @end

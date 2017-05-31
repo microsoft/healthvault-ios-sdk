@@ -25,5 +25,7 @@
 // Argument string separated by '&'
 + (NSMutableDictionary *)dictionaryFromArgumentString:(NSString *)qs;
 
+- (NSString *)queryString;
+
 @end
 

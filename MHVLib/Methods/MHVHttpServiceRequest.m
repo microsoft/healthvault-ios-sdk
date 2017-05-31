@@ -16,20 +16,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVMethodRequest.h"
+#import "MHVHttpServiceRequest.h"
 #import "MHVValidator.h"
 
-@implementation MHVMethodRequest
+@implementation MHVHttpServiceRequest
 
-- (instancetype)initWithMethod:(MHVMethod *)method completion:(MHVRequestCompletion _Nullable)completion
+- (instancetype)initWithServiceOperation:(id<MHVHttpServiceOperationProtocol>)serviceOperation
+                              completion:(MHVRequestCompletion _Nullable)completion
 {
-    MHVASSERT_PARAMETER(method);
+    MHVASSERT_PARAMETER(serviceOperation);
     
     self = [super init];
     
     if (self)
     {
-        _method = method;
+        _serviceOperation = serviceOperation;
         _completion = completion;
         _retryAttempts = 0;
     }

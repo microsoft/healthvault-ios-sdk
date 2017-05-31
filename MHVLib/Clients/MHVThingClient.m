@@ -152,8 +152,8 @@
     method.recordId = recordId;
     method.parameters = [self bodyForQueryCollection:queries];
     
-    [self.connection executeMethod:method
-                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (error)
          {
@@ -199,7 +199,7 @@
         return;
     }
     
-    MHVThingFilter *filter = [[MHVThingFilter alloc] initWithTypeClass:thingClass];    
+    MHVThingFilter *filter = [[MHVThingFilter alloc] initWithTypeClass:thingClass];
     if (!filter)
     {
         completion(nil, [NSError MVHInvalidParameter:[NSString stringWithFormat:@"%@ not found in HealthVault thing types", NSStringFromClass(thingClass)]]);
@@ -270,15 +270,15 @@
     
     for (MHVThing *thing in things)
     {
-        [thing prepareForNew];        
+        [thing prepareForNew];
     }
     
     MHVMethod *method = [MHVMethod putThings];
     method.recordId = recordId;
     method.parameters = [self bodyForThingCollection:things];
     
-    [self.connection executeMethod:method
-                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (completion)
          {
@@ -335,18 +335,18 @@
         }
         return;
     }
-
+    
     for (MHVThing *thing in things)
     {
         [thing prepareForUpdate];
     }
-
+    
     MHVMethod *method = [MHVMethod putThings];
     method.recordId = recordId;
     method.parameters = [self bodyForThingCollection:things];
     
-    [self.connection executeMethod:method
-                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (completion)
          {
@@ -408,8 +408,8 @@
     method.recordId = recordId;
     method.parameters = [self bodyForThingIdsFromThingCollection:things];
     
-    [self.connection executeMethod:method
-                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (completion)
          {
@@ -608,7 +608,7 @@
             [XSerializer serialize:query withRoot:@"group" toWriter:writer];
         }
     }
-
+    
     [writer writeEndElement];
     
     return [writer newXmlString];

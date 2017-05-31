@@ -17,18 +17,11 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import "MHVHttpServiceOperationProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, MHVMethodType)
-{
-    MHVMethodTypeHealthVaultXML,
-    MHVMethodTypeHealthVaultJSON,
-    MHVMethodTypeHTTPData,
-    MHVMethodTypeHTTPFile,
-};
-
-@interface MHVMethod : NSObject
+@interface MHVMethod : NSObject <MHVHttpServiceOperationProtocol>
 
 /**
  The name of the method to be called. Reference at: http://developer.healthvault.com/pages/methods/methods.aspx
@@ -36,19 +29,9 @@ typedef NS_ENUM(NSInteger, MHVMethodType)
 @property (nonatomic, strong, readonly) NSString *name;
 
 /**
- A Boolean representing whether the method call requires authentication
- */
-@property (nonatomic, assign, readonly) BOOL isAnonymous;
-
-/**
  The method version. The version will default to the latest method version at the time of the SDK release.
  */
 @property (nonatomic, assign) int version;
-
-/**
- A MHVMethodType indicating the method type
- */
-@property (nonatomic, assign, readonly) MHVMethodType type;
 
 /**
  Method parameters, which will be serialized into infoxml - Optional.

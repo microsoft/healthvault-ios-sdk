@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly) MHVConfiguration *configuration;
 @property (nonatomic, strong, nullable) MHVInstance *serviceInstance;
+@property (nonatomic, strong, readonly, nullable) MHVPersonInfo *personInfo;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
                         clientFactory:(MHVClientFactory *)clientFactory

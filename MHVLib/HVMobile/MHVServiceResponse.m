@@ -36,7 +36,7 @@
 
 @implementation MHVServiceResponse
 
-- (instancetype)initWithXmlWebResponse:(MHVHttpServiceResponse *)response
+- (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response isXML:(BOOL)isXML
 {
     self = [super init];
     
@@ -48,19 +48,23 @@
         {
             if (_statusCode == 401)
             {
-                self.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The Authorization token is missing, malformed or expired."];
+                _error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The Authorization token is missing, malformed or expired."];
+            }
+        }
+        else if (isXML)
+        {
+            NSString *xml = response.responseAsString;
+            
+            BOOL xmlReaderResult = [self deserializeXml:xml];
+            
+            if (!xmlReaderResult)
+            {
+                _error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"Response was not a valid HealthVault response.\n%@",xml]];
             }
         }
         else
         {
-            NSString *xml = response.responseAsString;
-            
-            BOOL xmlReaderesult = [self deserializeXml:xml];
-            
-            if (!xmlReaderesult)
-            {
-                self.error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"Response was not a valid HealthVault response.\n%@",xml]];
-            }
+            _responseData = response.responseAsData;
         }
     }
     
@@ -84,7 +88,7 @@
         }
         else
         {
-            self.responseData = response.responseAsData;
+            _responseData = response.responseAsData;
         }
     }
     

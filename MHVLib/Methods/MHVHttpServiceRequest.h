@@ -18,19 +18,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class MHVMethod, MHVServiceResponse;
+@class MHVMethod, MHVServiceResponse, MHVHttpServiceRequest;
+@protocol MHVHttpServiceOperationProtocol;
 
 typedef void (^MHVRequestCompletion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error);
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVMethodRequest : NSObject
+@interface MHVHttpServiceRequest : NSObject
 
-@property (nonatomic, strong, readonly) MHVMethod *method;
+@property (nonatomic, strong, readonly) id<MHVHttpServiceOperationProtocol> serviceOperation;
 @property (nonatomic, strong, readonly, nullable) MHVRequestCompletion completion;
 @property (nonatomic, assign) NSInteger retryAttempts;
 
-- (instancetype)initWithMethod:(MHVMethod *)method completion:(MHVRequestCompletion _Nullable)completion;
+- (instancetype)initWithServiceOperation:(id<MHVHttpServiceOperationProtocol>)serviceOperation
+                              completion:(MHVRequestCompletion _Nullable)completion;
 
 @end
 

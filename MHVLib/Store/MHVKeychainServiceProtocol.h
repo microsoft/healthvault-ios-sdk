@@ -53,7 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Saves an XSerializable object to the keychain.
  
- @param obj The object to be saved. If nil is passed as the obj parameter, the obj for key will be deleted.
  @param key The key used to save the object value under.
  @return YES if the save is successful NO if the save fails.
  */

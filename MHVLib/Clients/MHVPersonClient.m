@@ -76,7 +76,8 @@
     MHVMethod *method = [MHVMethod getAuthorizedPeople];
     method.parameters = @"<info><parameters></parameters></info>";
     
-    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
     {
         if (error)
         {

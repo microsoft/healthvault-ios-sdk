@@ -268,7 +268,7 @@
 {
     self.features = [[MHVMoreFeatures alloc] init];
     MHVCHECK_NOTNULL(self.features);
-    self.features.controller = self;
+    self.features.listController = self;
 
     __weak __typeof__(self.features)weakFeatures = self.features;
 
@@ -283,6 +283,11 @@
     [self.actions addFeature:@"GetServiceDefintion" andAction:^
     {
         [weakFeatures getServiceDefinition];
+    }];
+    
+    [self.actions addFeature:@"Authorize records" andAction:^
+    {
+         [weakFeatures authorizeAdditionalRecords];
     }];
 
     return TRUE;
