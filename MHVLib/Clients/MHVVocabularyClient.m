@@ -31,6 +31,8 @@
 
 @implementation MHVVocabularyClient
 
+@synthesize correlationId = _correlationId;
+
 - (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
 {
     MHVASSERT_PARAMETER(connection);
@@ -70,7 +72,7 @@
 }
 
 - (void)getVocabularyWithKey:(MHVVocabularyKey *)key
-              cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
+              cultureIsFixed:(BOOL)cultureIsFixed
                   completion:(void(^)(MHVVocabularyCodeSet *_Nullable vocabulary, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(key);
@@ -96,7 +98,7 @@
 }
 
 - (void)getVocabulariesWithVocabularyKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
-                           cultureIsFixed:(NSNumber *_Nullable)cultureIsFixed
+                           cultureIsFixed:(BOOL)cultureIsFixed
                                completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(vocabularyKeys);
@@ -117,7 +119,7 @@
         [writer writeEndElement];
     }
     
-    [writer writeElement:@"fixed-culture" boolValue:[cultureIsFixed isEqualToNumber:[NSNumber numberWithBool:YES]]];
+    [writer writeElement:@"fixed-culture" boolValue:cultureIsFixed];
     [writer writeEndElement];   // </vocabulary-parameters>
     [writer writeEndElement];   // </info>
     
@@ -138,11 +140,10 @@
     }];
 }
 
-- (void)searchVocabularyWithSearchValue:(NSString *)searchValue
-                             searchMode:(MHVSearchMode)searchMode
-                             vocabularyKey:(MHVVocabularyKey * _Nullable)vocabularyKey
-                             maxResults:(NSNumber *_Nullable)maxResults
-                             completion:(void(^)(MHVVocabularyCodeSetCollection *_Nullable vocabularyKeys, NSError *_Nullable error))completion
+- (void)searchVocabularyKeysWithSearchValue:(NSString *)searchValue
+                                 searchMode:(MHVSearchMode)searchMode
+                                 maxResults:(NSNumber * _Nullable)maxResults
+                                 completion:(void(^)(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable))completion
 {
     MHVASSERT_PARAMETER(searchValue);
     MHVASSERT_PARAMETER(searchMode);
@@ -152,6 +153,62 @@
         return;
     }
     
+    MHVMethod * method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:nil];
+    
+    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+             return;
+         }
+         
+         MHVVocabularyKeyCollection *vocabularyKeys = (MHVVocabularyKeyCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"vocabulary-key" asClass:[MHVVocabularyKey class] andArrayClass:[MHVVocabularyKeyCollection class]];
+         
+         completion(vocabularyKeys, nil);
+         return;
+     }];
+    
+}
+
+- (void)searchVocabularyWithSearchValue:(NSString *)searchValue
+                             searchMode:(MHVSearchMode)searchMode
+                          vocabularyKey:(MHVVocabularyKey *)vocabularyKey
+                             maxResults:(NSNumber *_Nullable)maxResults
+                             completion:(void(^)(MHVVocabularyCodeSetCollection *_Nullable vocabularyKeys, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(searchValue);
+    MHVASSERT_PARAMETER(searchMode);
+    MHVASSERT_PARAMETER(vocabularyKey);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!searchValue || !searchMode || !vocabularyKey || !completion) {
+        return;
+    }
+    
+    MHVMethod * method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:vocabularyKey];
+    
+    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+             return;
+         }
+         
+         MHVVocabularyCodeSetCollection *vocabularyCodeSet = (MHVVocabularyCodeSetCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"code-set-result" asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularyCodeSetCollection class]];
+         
+         completion(vocabularyCodeSet, nil);
+         return;
+     }];
+
+}
+
+- (MHVMethod *) getVocabularySearchMethodWithSearchValue:(NSString *)searchValue
+                                           andSearchMode:(MHVSearchMode)searchMode
+                                           andMaxResults:(NSNumber * _Nullable)maxResults
+                                        andVocabularyKey:(MHVVocabularyKey * _Nullable)vocabularyKey
+{
     MHVVocabularySearchParams *searchParams = [[MHVVocabularySearchParams alloc] initWithText:searchValue];
     [searchParams.text setMatchType:searchMode];
     if (maxResults)
@@ -177,29 +234,7 @@
     MHVMethod *method = [MHVMethod searchVocabulary];
     method.parameters = [writer newXmlString];
     
-    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
-    {
-        if (error)
-        {
-            completion(nil, error);
-            return;
-        }
-        
-        // If no key is provided we search the keys
-        // if key is provided we search the
-        /*
-         Not fully sure what this method is supposed to do, we have different behaviour depending on values passed.
-         MAybe it should be two methods. One for seaching within a provided key, and one for searching all keys. 
-         
-         - Documentation: https://developer.healthvault.com/Methods/ResponseSchema?Name=SearchVocabulary&Version=1 
-         makes it seem like we should always get the code-set-result object, and then a variable number of vocabkeys
-         but in reality it seems like we either get one or the other
-         */
-        MHVVocabularyCodeSetCollection *vocabularies = (MHVVocabularyCodeSetCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"code-set-result" asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularyCodeSetCollection class]];
-        
-        completion(vocabularies, nil);
-        return;
-    }];
+    return method;
 }
 
 @end

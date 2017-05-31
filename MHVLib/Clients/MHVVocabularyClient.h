@@ -19,6 +19,7 @@
 
 #import "MHVClient.h"
 #import "MHVVocabularyClientProtocol.h"
+#import "MHVMethod.h"
 
 @protocol MHVConnectionProtocol;
 
@@ -28,6 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
 
+- (MHVMethod *) getVocabularySearchMethodWithSearchValue:(NSString *)searchValue
+                                           andSearchMode:(MHVSearchMode)searchMode
+                                           andMaxResults:(NSNumber * _Nullable)maxResults
+                                        andVocabularyKey:(MHVVocabularyKey * _Nullable)vocabularyKey;
 @end
 
 NS_ASSUME_NONNULL_END

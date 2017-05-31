@@ -25,120 +25,130 @@
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVVocabularyClientTests)
-/*
+
 describe(@"MHVVocabularyClient", ^
 {
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
     [mockConnection stub:@selector(executeMethod:completion:) andReturn:nil];
-    
-    NSUUID *recordId = [[NSUUID alloc] initWithUUIDString:@"20000000-2000-2000-2000-200000000000"];
     
     let(spyExecuteMethod, ^
         {
             return [mockConnection captureArgument:@selector(executeMethod:completion:) atIndex:0];
         });
     
-    let(thingClient, ^
+    let(vocabularyClient, ^
         {
-            return [[MHVThingClient alloc] initWithConnection:mockConnection];
+            return [[MHVVocabularyClient alloc] initWithConnection:mockConnection];
         });
     
-    let(allergyThing, ^
-        {
-            MHVAllergy *allergy = [[MHVAllergy alloc] initWithName:@"Bees"];
-            allergy.reaction = [[MHVCodableValue alloc] initWithText:@"Itching"];
-            
-            MHVThing *thing = [[MHVThing alloc] initWithTypedData:allergy];
-            thing.key = [[MHVThingKey alloc] initWithID:@"ThingKey" andVersion:@"ThingVersion"];
-            
-            return thing;
-        });
-    
-    context(@"GetThings", ^
+    context(@"GetVocabularyKeys", ^
             {
-                it(@"should get with thing id", ^
+                it(@"should get vocabulary keys", ^
                    {
-                       [thingClient getThingWithThingId:[[NSUUID alloc] initWithUUIDString:@"10000000-1000-1000-1000-100000000000"]
-                                               recordId:recordId
-                                             completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
+                       [vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        
-                       [[method.name should] equal:@"GetThings"];
+                       [[method.name should] equal:@"GetVocabulary"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><group><id>10000000-1000-1000-1000-100000000000</id><format><section>core</section><xml/></format></group></info>"];
-                   });
-                
-                it(@"should get for thing class", ^
-                   {
-                       [thingClient getThingsForThingClass:[MHVAllergy class]
-                                                     query:[MHVThingQuery new]
-                                                  recordId:recordId
-                                                completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
-                       
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
-                       
-                       [[method.name should] equal:@"GetThings"];
-                       [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><group><filter><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><thing-state>Active</thing-state></filter>"\
-                        "<format><section>core</section><xml/></format></group></info>"];
-                   });
-                
-            });
-    
-    context(@"PutThings", ^
-            {
-                it(@"should create new thing", ^
-                   {
-                       [thingClient createNewThing:allergyThing
-                                          recordId:recordId
-                                        completion:^(NSError *error) { }];
-                       
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
-                       
-                       [[method.name should] equal:@"PutThings"];
-                       [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><thing><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><flags>0</flags>"\
-                        "<data-xml><allergy><name><text>Bees</text></name><reaction><text>Itching</text></reaction></allergy><common/></data-xml></thing></info>"];
-                   });
-                
-                it(@"should update a thing", ^
-                   {
-                       [thingClient updateThing:allergyThing
-                                       recordId:recordId
-                                     completion:^(NSError *error) { }];
-                       
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
-                       
-                       [[method.name should] equal:@"PutThings"];
-                       [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><thing><thing-id version-stamp=\"ThingVersion\">ThingKey</thing-id>"\
-                        "<type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><flags>0</flags><data-xml>"\
-                        "<allergy><name><text>Bees</text></name><reaction><text>Itching</text></reaction></allergy><common/></data-xml></thing></info>"];
+                       [[method.parameters should] beNil];
                    });
             });
     
-    context(@"DeleteThings", ^
+    context(@"GetVocabulary", ^
             {
-                it(@"should delete a thing", ^
+                it(@"should get with single key", ^
                    {
-                       [thingClient removeThing:allergyThing
-                                       recordId:recordId
-                                     completion:^(NSError *error) { }];
+                       MHVVocabularyKey *testKey = [[MHVVocabularyKey alloc]init];
+                       [testKey setName:@"Test key name"];
+                       [testKey setFamily:@"Test family"];
+                       [testKey setDescriptionText:@"Test description"];
+                       [testKey setVersion:@"Test version"];
+                       [testKey setCode:@"Test code"];
+                       
+                       [vocabularyClient getVocabularyWithKey:testKey cultureIsFixed:NO completion:^(MHVVocabularyCodeSet * _Nullable vocabulary, NSError * _Nullable error) {
+                       }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        
-                       [[method.name should] equal:@"RemoveThings"];
+                       [[method.name should] equal:@"GetVocabulary"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><thing-id version-stamp=\"ThingVersion\">ThingKey</thing-id></info>"];
+                       [[method.parameters should]equal:@"<info><vocabulary-parameters><vocabulary-key><code-value>Test code</code-value><name>Test key name</name><family>Test family</family><version>Test version</version></vocabulary-key><fixed-culture>false</fixed-culture></vocabulary-parameters></info>"];
+                   });
+                
+                it(@"should get with multiple keys", ^
+                   {
+                       MHVVocabularyKey *testKey1 = [[MHVVocabularyKey alloc]init];
+                       [testKey1 setName:@"Name 1"];
+                       [testKey1 setFamily:@"Family 1"];
+                       [testKey1 setDescriptionText:@"Description 1"];
+                       [testKey1 setVersion:@"Version 1"];
+                       [testKey1 setCode:@"Code 1"];
+                       
+                       MHVVocabularyKey *testKey2 = [[MHVVocabularyKey alloc]init];
+                       [testKey2 setName:@"Name 2"];
+                       [testKey2 setFamily:@"Family 2"];
+                       [testKey2 setDescriptionText:@"Description 2"];
+                       [testKey2 setVersion:@"Version 2"];
+                       [testKey2 setCode:@"Code 2"];
+                       
+                       MHVVocabularyKeyCollection *keys = [[MHVVocabularyKeyCollection alloc]initWithArray:@[testKey1, testKey2]];
+                       
+                       [vocabularyClient getVocabulariesWithVocabularyKeys:keys cultureIsFixed:NO completion:
+                        ^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error) {}];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       
+                       [[method.name should] equal:@"GetVocabulary"];
+                       [[theValue(method.isAnonymous) should] beNo];
+                       [[method.parameters should]equal:@"<info><vocabulary-parameters><vocabulary-key><code-value>Code 1</code-value><name>Name 1</name><family>Family 1</family><version>Version 1</version></vocabulary-key><vocabulary-key><code-value>Code 2</code-value><name>Name 2</name><family>Family 2</family><version>Version 2</version></vocabulary-key><fixed-culture>false</fixed-culture></vocabulary-parameters></info>"];
+                       
                    });
             });
-});*/
+    context(@"SearchVocabularies", ^
+            {
+                it(@"should search without vocabulary key", ^
+                   {
+                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains maxResults:[NSNumber numberWithInteger:10] completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       
+                       [[method.name should]equal:@"SearchVocabulary"];
+                       [[theValue(method.isAnonymous) should] beNo];
+                       [[method.parameters should]equal:@"<info><text-search-parameters><search-string search-mode=\"Contains\">SearchText</search-string><max-results>10</max-results></text-search-parameters></info>"];
+                   });
+                
+                it(@"should search without vocabulary key and nil maxResults", ^
+                   {
+                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains maxResults:nil completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       
+                       [[method.name should]equal:@"SearchVocabulary"];
+                       [[theValue(method.isAnonymous) should] beNo];
+                       [[method.parameters should]equal:@"<info><text-search-parameters><search-string search-mode=\"Contains\">SearchText</search-string><max-results>25</max-results></text-search-parameters></info>"];
+                       
+                   });
+                
+                it(@"should search with vocabulary key", ^
+                   {
+                       MHVVocabularyKey *testKey = [[MHVVocabularyKey alloc]init];
+                       [testKey setName:@"Test key name"];
+                       [testKey setFamily:@"Test family"];
+                       [testKey setDescriptionText:@"Test description"];
+                       [testKey setVersion:@"Test version"];
+                       [testKey setCode:@"Test code"];
+                       
+                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains vocabularyKey:testKey maxResults:nil completion:^(MHVVocabularyCodeSetCollection * _Nullable codeSet, NSError * _Nullable error) {}];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       
+                       [[method.name should]equal:@"SearchVocabulary"];
+                       [[theValue(method.isAnonymous) should] beNo];
+                       [[method.parameters should]equal:@"<info><vocabulary-key><code-value>Test code</code-value><name>Test key name</name><family>Test family</family><version>Test version</version></vocabulary-key><text-search-parameters><search-string search-mode=\"Contains\">SearchText</search-string><max-results>25</max-results></text-search-parameters></info>"];
+                   });
+            });
+});
 
 SPEC_END
 

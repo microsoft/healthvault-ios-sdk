@@ -68,7 +68,11 @@
          }];
           */
          
-         [connection.vocabularyClient searchVocabularyWithSearchValue:@"Rx" searchMode:MHVSearchModeContains vocabularyKey:nil maxResults:[NSNumber numberWithInt:5] completion:^(MHVVocabularyCodeSetCollection* _Nullable vocabularyKeys, NSError * _Nullable error) {
+         [connection.vocabularyClient searchVocabularyKeysWithSearchValue:@"RX" searchMode:MHVSearchModeContains maxResults:[NSNumber numberWithInt:5] completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) {
+             NSLog(@"Got results");
+         }];
+         
+         [connection.vocabularyClient searchVocabularyWithSearchValue:@"RX" searchMode:MHVSearchModeContains vocabularyKey:selectedKey maxResults:[NSNumber numberWithInt:5] completion:^(MHVVocabularyCodeSetCollection* _Nullable vocabularyCodeSet, NSError * _Nullable error) {
              NSLog(@"Got results");
          }];
      }];
