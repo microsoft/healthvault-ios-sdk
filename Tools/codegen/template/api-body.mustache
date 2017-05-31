@@ -16,7 +16,7 @@
 
 @implementation MHVRemoteMonitoringClient ({{classname}})
 
-NSString* k{{classname}}ErrorDomain = @"{{classname}}ErrorDomain";
+NSString* _Nonnull k{{classname}}ErrorDomain = @"{{classname}}ErrorDomain";
 NSInteger k{{classname}}MissingParamErrorCode = 234513;
 
 #pragma mark - Api Methods
@@ -30,7 +30,7 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
 /// {{/allParams}} @returns {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}
 ///
 - (void){{#vendorExtensions.x-objc-operationId}}{{vendorExtensions.x-objc-operationId}}{{/vendorExtensions.x-objc-operationId}}{{^vendorExtensions.x-objc-operationId}}{{nickname}}{{#hasParams}}With{{vendorExtensions.firstParamAltName}}{{/hasParams}}{{^hasParams}}WithCompletion:{{/hasParams}}{{/vendorExtensions.x-objc-operationId}}{{#allParams}}{{#secondaryParam}}
-    {{paramName}}{{/secondaryParam}}:({{{dataType}}}){{paramName}}{{/allParams}}
+    {{paramName}}{{/secondaryParam}}:({{{dataType}}}{{#required}} _Nonnull{{/required}}{{^required}} _Nullable{{/required}}){{paramName}}{{/allParams}}
     {{#hasParams}}completion:{{/hasParams}}(void(^_Nonnull)({{#returnBaseType}}{{{returnType}}} _Nullable output, {{/returnBaseType}}NSError* _Nullable error))completion
 {
     {{#allParams}}
@@ -70,7 +70,7 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
     }
     {{/queryParams}}
 
-    id bodyParam = nil;
+    NSData *bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     {{#bodyParam}}
     NSString *json = [MHVJsonSerializer serialize:{{paramName}}];

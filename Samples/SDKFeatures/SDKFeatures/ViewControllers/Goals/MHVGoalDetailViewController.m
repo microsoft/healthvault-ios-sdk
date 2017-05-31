@@ -29,11 +29,27 @@
 @property (nonatomic, strong) MHVGoal *goal;
 @property (nonatomic, strong) MHVConnection *connection;
 
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
+@property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
+
+@property (strong, nonatomic) IBOutlet UITextField *nameValue;
+@property (strong, nonatomic) IBOutlet UITextField *typeValue;
+
+@property (strong, nonatomic) IBOutlet UITextField *unitsValue;
+@property (strong, nonatomic) IBOutlet UITextField *maxValue;
+@property (strong, nonatomic) IBOutlet UITextField *minValue;
+
+@property (strong, nonatomic) IBOutlet UITextField *startDate;
+
+- (IBAction)updateGoal:(id)sender;
+- (IBAction)deleteGoal:(id)sender;
+
 @end;
 
 @implementation MHVGoalDetailViewController
 
-- (id)initWithGoalId:(NSString *)goalId
+- (instancetype)initWithGoalId:(NSString *)goalId
 {
     self = [super init];
     _goalId = goalId;
@@ -42,11 +58,16 @@
 
 - (IBAction)deleteGoal:(id)sender
 {
-    [_connection.remoteMonitoringClient deleteGoalWithGoalId:_goalId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient deleteGoalWithGoalId:_goalId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
                  [self.navigationController popViewControllerAnimated:YES];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed"];
              }
          }];
     }];
@@ -54,20 +75,25 @@
 
 - (IBAction)updateGoal:(id)sender
 {
-    _goal.name = self.nameValue.text;
+    self.goal.name = self.nameValue.text;
     
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    f.numberStyle = NSNumberFormatterDecimalStyle;
-    _goal.range.maximum = [f numberFromString:self.maxValue.text];
-    _goal.range.minimum = [f numberFromString:self.minValue.text];
-    _goal.range.name = @"range";
-    _goal.range.units = self.unitsValue.text;
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    self.goal.range.maximum = [formatter numberFromString:self.maxValue.text];
+    self.goal.range.minimum = [formatter numberFromString:self.minValue.text];
+    self.goal.range.name = @"range";
+    self.goal.range.units = self.unitsValue.text;
     
-    [_connection.remoteMonitoringClient putGoalWithGoal:_goal completion:^(MHVGoal * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient putGoalWithGoal:_goal completion:^(MHVGoal * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
                  [self.navigationController popViewControllerAnimated:YES];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed"];
              }
          }];
     }];
@@ -76,7 +102,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _goal = [[MHVGoal alloc] init];
+    self.goal = [[MHVGoal alloc] init];
     
     [self.navigationController.navigationBar setTranslucent:FALSE];
     self.navigationItem.title = @"Goal Details";
@@ -89,9 +115,9 @@
     [self.statusLabel showBusy];
     
     MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
-    _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
+    self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     
-    [_connection.remoteMonitoringClient getGoalByIdWithGoalId:_goalId completion:^(MHVGoal *response, NSError *error)
+    [self.connection.remoteMonitoringClient getGoalByIdWithGoalId:_goalId completion:^(MHVGoal *response, NSError *error)
      {
          [[NSOperationQueue mainQueue] addOperationWithBlock:^
           {
@@ -108,9 +134,14 @@
                       self.minValue.text = [response.range.minimum stringValue];
                   }
                   
-                  _goal = response;
+                  self.goal = response;
                   
                   [self.statusLabel clearStatus];
+              }
+              else
+              {
+                  [MHVUIAlert showInformationalMessage:error.description];
+                  [self.statusLabel showStatus:@"Failed"];
               }
           }];
      }];

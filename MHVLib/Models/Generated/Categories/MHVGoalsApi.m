@@ -71,7 +71,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
@@ -118,7 +118,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -158,7 +158,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
         queryParams[@"windowTypes"] = windowTypes;
     }
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -203,7 +203,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -257,7 +257,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
         queryParams[@"endDate"] = endDate;
     }
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -298,7 +298,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
@@ -341,7 +341,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:goal];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];

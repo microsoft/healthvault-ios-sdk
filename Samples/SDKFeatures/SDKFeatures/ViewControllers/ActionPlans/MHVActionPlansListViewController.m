@@ -24,14 +24,20 @@
 
 @interface MHVActionPlansListViewController ()
 
-@property (nonatomic, strong) NSMutableDictionary *actionPlans;
+@property (nonatomic, strong) NSArray<MHVActionPlanInstance *> *actionPlans;
 @property (nonatomic, strong) MHVConnection *connection;
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
+@property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
+
+- (IBAction)addActionPlan:(id)sender;
 
 @end
 
 @implementation MHVActionPlansListViewController
 
-- (id)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric
+- (instancetype)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric
 {
     self = [super init];
     return self;
@@ -40,7 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _actionPlans = [[NSMutableDictionary alloc] init];
+    _actionPlans = [[NSArray alloc] init];
     
     [self.navigationController.navigationBar setTranslucent:FALSE];
     self.navigationItem.title = @"Action Plans List";
@@ -58,21 +64,20 @@
     MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
     _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     
-    [_connection.remoteMonitoringClient getActionPlansWithMaxPageSize:[NSNumber numberWithInt:10] completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient getActionPlansWithMaxPageSize:@(10) completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
             if (!error)
             {
-                NSMutableDictionary *planDictionary = [[NSMutableDictionary alloc] init];
+                self.actionPlans = output.plans;
                 
-                for (MHVActionPlanInstance *instance in output.plans) {
-                    planDictionary[instance.name] = instance._id;
-                }
-                
-                _actionPlans = planDictionary;
                 [self.tableView reloadData];
-                
                 [self.statusLabel clearStatus];
+            }
+            else
+            {
+                [MHVUIAlert showInformationalMessage:error.description];
+                [self.statusLabel showStatus:@"Failed"];
             }
          }];
     }];
@@ -81,6 +86,8 @@
 - (IBAction)addActionPlan:(id)sender
 {
     // Create a new action plan, we don't allow input here because plans are fairly complicated. Just create one.
+    
+    NSNumber *rand = @(arc4random_uniform(100));
     
     MHVObjective *objective = [[MHVObjective alloc] init];
     objective._description = @"A sample objective which encourages you to get more activity.";
@@ -91,29 +98,29 @@
     objective._id = [[NSUUID UUID] UUIDString];
     
     MHVActionPlanTrackingPolicy *policy = [[MHVActionPlanTrackingPolicy alloc] init];
-    policy.isAutoTrackable = [NSNumber numberWithBool:NO];
+    policy.isAutoTrackable = @(NO);
     
     MHVActionPlanFrequencyTaskCompletionMetrics *metrics = [[MHVActionPlanFrequencyTaskCompletionMetrics alloc] init];
     metrics.reminderState = @"Off";
     metrics.scheduledDays = @[@"Monday", @"Wednesday", @"Friday"];
-    metrics.occurrenceCount = [NSNumber numberWithInt:1];
+    metrics.occurrenceCount = @(1);
     metrics.windowType = @"Daily";
     
     MHVActionPlanTask *frequencyTask = [[MHVActionPlanTask alloc] init];
-    frequencyTask.name = @"Do a fun activity.";
+    NSString *taskName =[NSString stringWithFormat:@"Do a fun activity (plan %@)", rand];
+    frequencyTask.name = taskName;
     frequencyTask.shortDescription = @"Do an activity to get some exercise.";
     frequencyTask.longDescription = @"Go for a run, hike a mountain, ride your bike around town, or something else to get moving.";
     frequencyTask.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1rXx2?ver=d68e";
     frequencyTask.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1s2KS?ver=0ad8";
     frequencyTask.taskType = @"Other";
-    frequencyTask.signupName = @"Do a fun activity.";
+    frequencyTask.signupName = taskName;
     frequencyTask.associatedObjectiveIds = [[NSArray alloc] initWithObjects:objective._id, nil];
     frequencyTask.trackingPolicy = policy;
     frequencyTask.completionType = @"Frequency";
     frequencyTask.frequencyTaskCompletionMetrics = metrics;
     
     MHVActionPlan *newPlan = [[MHVActionPlan alloc] init];
-    NSNumber *rand = [NSNumber numberWithUnsignedInteger:arc4random_uniform(100)];
     newPlan.name = [NSString stringWithFormat:@"My new plan (%@)", rand];
     newPlan._description = @"A sample activity plan";
     newPlan.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
@@ -122,12 +129,17 @@
     newPlan.objectives = [[NSArray<MHVObjective> alloc] initWithObjects:objective, nil];
     newPlan.associatedTasks = [[NSArray<MHVActionPlanTask> alloc] initWithObjects:frequencyTask, nil];
     
-    [_connection.remoteMonitoringClient createActionPlanWithActionPlan:newPlan completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient createActionPlanWithActionPlan:newPlan completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
              {
                  [self loadActionPlans];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed"];
              }
          }];
     }];
@@ -141,7 +153,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_actionPlans count];
+    return [self.actionPlans count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -153,10 +165,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MHVCell"];
     }
     
-    NSArray *keys = [self.actionPlans allKeys];
-    
-    NSString *typeName = keys[indexPath.row];
-    cell.textLabel.text = typeName;
+    cell.textLabel.text = self.actionPlans[indexPath.row].name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     
@@ -170,10 +179,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *values = [self.actionPlans allValues];
-    NSString *planId = values[indexPath.row];
+    NSString *planId = self.actionPlans[indexPath.row]._id;
     
-    id typeView = [[MHVActionPlanDetailViewController alloc] initWithPlanId:planId];
+    MHVActionPlanDetailViewController *typeView = [[MHVActionPlanDetailViewController alloc] initWithPlanId:planId];
     
     if (!typeView || !planId)
     {

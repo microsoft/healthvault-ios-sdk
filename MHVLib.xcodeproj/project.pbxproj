@@ -687,6 +687,7 @@
 		BA4FBEA51ECA5CCD00C8EBF9 /* MHVRemoteMonitoringClient.h in Headers */ = {isa = PBXBuildFile; fileRef = BA4FBEA41ECA5CCC00C8EBF9 /* MHVRemoteMonitoringClient.h */; };
 		BA4FBEA71ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4FBEA61ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m */; };
 		BA6EF74F1ECFB56E00EF043A /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */; };
+		BA9844D21EDF19B20064389A /* MHVActionPlanTasksApi.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844D11EDF19B20064389A /* MHVActionPlanTasksApi.m */; };
 		BAC7EA771ECCA47800F3C1AB /* MHVGoalRecommendationInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0356A61EC5278700BE547D /* MHVGoalRecommendationInstance.m */; };
 		BAF50D3E1ECB610900C060D7 /* MHVGoalsApi.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF50D3C1ECB610900C060D7 /* MHVGoalsApi.h */; };
 		BAF50D3F1ECB610900C060D7 /* MHVGoalsApi.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF50D3D1ECB610900C060D7 /* MHVGoalsApi.m */; };
@@ -1395,6 +1396,8 @@
 		BA2637581ECF8C200022D060 /* MHVRemoteMonitoringClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRemoteMonitoringClientProtocol.h; sourceTree = "<group>"; };
 		BA4FBEA41ECA5CCC00C8EBF9 /* MHVRemoteMonitoringClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRemoteMonitoringClient.h; sourceTree = "<group>"; };
 		BA4FBEA61ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVRemoteMonitoringClient.m; sourceTree = "<group>"; };
+		BA9844D11EDF19B20064389A /* MHVActionPlanTasksApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTasksApi.m; sourceTree = "<group>"; };
+		BA9844D31EDF19C60064389A /* MHVActionPlanTasksApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTasksApi.h; sourceTree = "<group>"; };
 		BAF50D3C1ECB610900C060D7 /* MHVGoalsApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGoalsApi.h; sourceTree = "<group>"; };
 		BAF50D3D1ECB610900C060D7 /* MHVGoalsApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsApi.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2430,6 +2433,8 @@
 			children = (
 				BA0324F31ED8818600A641AD /* MHVActionPlansApi.h */,
 				BA0324F41ED881A000A641AD /* MHVActionPlansApi.m */,
+				BA9844D31EDF19C60064389A /* MHVActionPlanTasksApi.h */,
+				BA9844D11EDF19B20064389A /* MHVActionPlanTasksApi.m */,
 				BAF50D3C1ECB610900C060D7 /* MHVGoalsApi.h */,
 				BAF50D3D1ECB610900C060D7 /* MHVGoalsApi.m */,
 			);
@@ -3101,6 +3106,7 @@
 				BA03570E1EC5278800BE547D /* MHVOnboardingRequest.m in Sources */,
 				4C191A881EC1033C00B5E545 /* MHVHeight.m in Sources */,
 				BA03563C1EC1278F00BE547D /* MHVJsonSerializer.m in Sources */,
+				BA9844D21EDF19B20064389A /* MHVActionPlanTasksApi.m in Sources */,
 				BA0324F51ED881A000A641AD /* MHVActionPlansApi.m in Sources */,
 				BA0356071EC1257F00BE547D /* NSDate+DataModel.m in Sources */,
 				5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */,

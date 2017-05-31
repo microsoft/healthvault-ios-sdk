@@ -28,6 +28,17 @@
 
 @property (nonatomic, strong) MHVConnection *connection;
 
+@property (strong, nonatomic) IBOutlet UITextField *nameValue;
+@property (strong, nonatomic) IBOutlet UITextField *typeValue;
+
+@property (strong, nonatomic) IBOutlet UITextField *unitsValue;
+@property (strong, nonatomic) IBOutlet UITextField *maxValue;
+@property (strong, nonatomic) IBOutlet UITextField *minValue;
+
+@property (strong, nonatomic) IBOutlet UITextField *startDate;
+
+- (IBAction)saveGoal:(id)sender;
+
 @end;
 
 @implementation MHVGoalAddViewController
@@ -39,10 +50,10 @@
     metrics.windowType = @"Daily";
     
     MHVGoalRange *range = [[MHVGoalRange alloc] init];
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    f.numberStyle = NSNumberFormatterDecimalStyle;
-    range.maximum = [f numberFromString:self.maxValue.text];
-    range.minimum = [f numberFromString:self.minValue.text];
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    range.maximum = [formatter numberFromString:self.maxValue.text];
+    range.minimum = [formatter numberFromString:self.minValue.text];
     range.name = @"range";
     range.units = self.unitsValue.text;
     
@@ -63,7 +74,7 @@
     MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
     _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     
-    [_connection.remoteMonitoringClient createGoalsWithGoalsWrapper:wrapper completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient createGoalsWithGoalsWrapper:wrapper completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
            if (!error)
            {
@@ -71,7 +82,7 @@
            }
            else
            {
-               // show the error.
+               [MHVUIAlert showInformationalMessage:error.description];
            }
         }];
     }];

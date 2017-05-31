@@ -24,16 +24,4 @@
 
 @interface MHVGoalAddViewController : UIViewController
 
-
-@property (strong, nonatomic) IBOutlet UITextField *nameValue;
-@property (strong, nonatomic) IBOutlet UITextField *typeValue;
-
-@property (strong, nonatomic) IBOutlet UITextField *unitsValue;
-@property (strong, nonatomic) IBOutlet UITextField *maxValue;
-@property (strong, nonatomic) IBOutlet UITextField *minValue;
-
-@property (strong, nonatomic) IBOutlet UITextField *startDate;
-
-- (IBAction)saveGoal:(id)sender;
-
 @end

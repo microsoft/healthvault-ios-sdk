@@ -1,5 +1,5 @@
 //
-// MHVGoalDetailViewController.h
+// MHVActionPlanTaskListViewController.h
 // SDKFeatures
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,14 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
 #import "MHVTypeViewController.h"
-#import "MHVMoreFeatures.h"
-#import "MHVFeatureActions.h"
-#import "MHVStatusLabel.h"
 
-@interface MHVGoalDetailViewController : UIViewController
-
-- (instancetype)initWithGoalId:(NSString *)goalId;
+@interface MHVActionPlanTaskListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @end

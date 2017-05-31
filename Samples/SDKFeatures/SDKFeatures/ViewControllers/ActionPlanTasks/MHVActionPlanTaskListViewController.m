@@ -1,5 +1,5 @@
 //
-// MHVGoalsListViewController.m
+// MHVActionPlanTaskViewController.m
 // SDKFeatures
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,82 +17,69 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVGoalsApi.h"
-#import "MHVGoalAddViewController.h"
-#import "MHVGoalsListViewController.h"
-#import "MHVGoalDetailViewController.h"
-#import "MHVFeaturesConfiguration.h"
-#import "MHVConfiguration.h"
+#import "MHVActionPlanTaskListViewController.h"
+#import "MHVActionPlanTasksApi.h"
 #import "MHVConnection.h"
 
-@interface MHVGoalsListViewController ()
 
-@property (nonatomic, strong) NSArray<MHVGoal *> *goals;
-@property (nonatomic, strong) MHVFeatureActions *actions;
-@property (nonatomic, strong) MHVMoreFeatures *features;
+@interface MHVActionPlanTaskListViewController ()
+
+@property (nonatomic, strong) NSArray<MHVActionPlanTaskInstance *> *taskList;
 @property (nonatomic, strong) MHVConnection *connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
 
-- (IBAction)addGoal:(id)sender;
-
 @end
 
-@implementation MHVGoalsListViewController
+@implementation MHVActionPlanTaskListViewController
 
-- (id)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric
+- (instancetype)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric
 {
     self = [super init];
+    
+    MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
+    _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
+    
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _goals = [[NSArray alloc] init];
+    self.taskList = [[NSArray alloc] init];
     
     [self.navigationController.navigationBar setTranslucent:FALSE];
-    self.navigationItem.title = @"Goals List";
+    self.navigationItem.title = @"Action Plan Tasks";
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    [self loadGoals];
+    [self loadActionPlanTasks];
 }
 
-- (void)loadGoals
+- (void)loadActionPlanTasks
 {
     [self.statusLabel showBusy];
     
-    MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
-    self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
-    
-    [self.connection.remoteMonitoringClient getActiveGoalsWithTypes:nil windowTypes:nil
-                                                     completion:^(MHVGoalsResponse *response, NSError *error)
-     {
-         [[NSOperationQueue mainQueue] addOperationWithBlock:^
-          {
-            if (!error)
-            {
-                self.goals = response.goals;
-                [self.tableView reloadData];
-                [self.statusLabel clearStatus];
-            }
-            else
-            {
-                [MHVUIAlert showInformationalMessage:error.description];
-                [self.statusLabel showStatus:@"Failed"];
-            }
-          }];
-     }];
-}
-
-- (IBAction)addGoal:(id)sender
-{
-    id view = [[MHVGoalAddViewController alloc] init];
-    [self.navigationController pushViewController:view animated:YES];
+    [self.connection.remoteMonitoringClient actionPlanTasksGetActionPlanTasksWithActionPlanTaskStatus:@"InProgress" maxPageSize:nil completion:^(MHVActionPlanTasksResponseActionPlanTaskInstance_ * _Nullable output, NSError * _Nullable error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+         {
+             if (!error)
+             {
+                 self.taskList = output.tasks;
+                 
+                 [self.tableView reloadData];
+                 [self.statusLabel clearStatus];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed"];
+             }
+         }];
+    }];
 }
 
 // -------------------------------------
@@ -103,7 +90,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.goals count];
+    return [self.taskList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -115,7 +102,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MHVCell"];
     }
     
-    cell.textLabel.text = self.goals[indexPath.row].name;
+    cell.textLabel.text = self.taskList[indexPath.row].name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     
@@ -129,17 +116,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *goalId = self.goals[indexPath.row]._id;
+    NSString *taskId = self.taskList[indexPath.row]._id;
     
-    MHVGoalDetailViewController *typeView = [[MHVGoalDetailViewController alloc] initWithGoalId:goalId];
+    /*
+    id typeView = [[MHVActionPlanDetailViewController alloc] initWithPlanId:planId];
     
-    if (!typeView || !goalId)
+    if (!typeView || !planId)
     {
-        [MHVUIAlert showInformationalMessage:@"Could not create MHVTypeViewController view for goal."];
+        [MHVUIAlert showInformationalMessage:@"Could not create MHVActionPlanDetailViewController view for plan."];
         return;
     }
     
     [self.navigationController pushViewController:typeView animated:YES];
+    */
 }
 
 @end

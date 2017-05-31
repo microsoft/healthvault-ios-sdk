@@ -16,9 +16,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MHVActionPlanDetailViewController_h
-#define MHVActionPlanDetailViewController_h
-
 #import "MHVTypeViewController.h"
 #import "MHVMoreFeatures.h"
 #import "MHVFeatureActions.h"
@@ -26,20 +23,6 @@
 
 @interface MHVActionPlanDetailViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
-
-@property (strong, nonatomic) IBOutlet UITextField *nameValue;
-@property (strong, nonatomic) IBOutlet UITextField *categoryValue;
-@property (strong, nonatomic) IBOutlet UITextField *statusValue;
-
-@property (strong, nonatomic) IBOutlet UITextView *descriptionValue;
-
-- (id)initWithPlanId:(NSString *)planId;
-
-- (IBAction)updatePlan:(id)sender;
-- (IBAction)deletePlan:(id)sender;
+- (instancetype)initWithPlanId:(NSString *)planId;
 
 @end;
-
-#endif /* MHVActionPlanDetailViewController_h */

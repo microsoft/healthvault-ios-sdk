@@ -33,6 +33,7 @@
 #import "MHVGoal.h"
 #import "MHVActionPlansListViewController.h"
 #import "MHVActionPlan.h"
+#import "MHVActionPlanTaskListViewController.h"
 
 @interface MHVTypeListViewController ()
 
@@ -246,6 +247,11 @@
     [typeList addObject:name];
     [itemDictionary setObject:[MHVActionPlan class] forKey:name];
     [viewDictionary setObject:[MHVActionPlansListViewController class] forKey:name];
+    
+    name = @"action plan tasks [REST]";
+    [typeList addObject:name];
+    [itemDictionary setObject:[MHVActionPlanTask class] forKey:name];
+    [viewDictionary setObject:[MHVActionPlanTaskListViewController class] forKey:name];
     
     name = @"goals [REST]";
     [typeList addObject:name];

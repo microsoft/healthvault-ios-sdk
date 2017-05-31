@@ -28,12 +28,24 @@
 @property (nonatomic, strong) MHVActionPlanInstance *plan;
 @property (nonatomic, strong) MHVConnection *connection;
 
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
+
+@property (strong, nonatomic) IBOutlet UITextField *nameValue;
+@property (strong, nonatomic) IBOutlet UITextField *categoryValue;
+@property (strong, nonatomic) IBOutlet UITextField *statusValue;
+
+@property (strong, nonatomic) IBOutlet UITextView *descriptionValue;
+
+- (IBAction)updatePlan:(id)sender;
+- (IBAction)deletePlan:(id)sender;
+
 @end;
 
 
 @implementation MHVActionPlanDetailViewController
 
-- (id)initWithPlanId:(NSString *)planId
+- (instancetype)initWithPlanId:(NSString *)planId
 {
     self = [super init];
     _planId = planId;
@@ -51,11 +63,16 @@
     _plan.category = self.categoryValue.text;
     _plan.status = self.statusValue.text;
     
-    [_connection.remoteMonitoringClient putActionPlanWithActionPlan:_plan completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient putActionPlanWithActionPlan:_plan completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
                  [self.navigationController popViewControllerAnimated:YES];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed"];
              }
          }];
     }];
@@ -63,11 +80,16 @@
 
 - (IBAction)deletePlan:(id)sender
 {
-    [_connection.remoteMonitoringClient deleteActionPlanWithActionPlanId:_planId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient deleteActionPlanWithActionPlanId:_planId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
                  [self.navigationController popViewControllerAnimated:YES];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed"];
              }
          }];
     }];
@@ -88,7 +110,7 @@
 {
     [self.statusLabel showBusy];
     
-    [_connection.remoteMonitoringClient getActionPlanByIdWithActionPlanId:_planId completion:^(MHVActionPlanInstance * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient getActionPlanByIdWithActionPlanId:_planId completion:^(MHVActionPlanInstance * _Nullable output, NSError * _Nullable error) {
         [[ NSOperationQueue mainQueue] addOperationWithBlock:^
         {
             if (!error) {
@@ -100,6 +122,11 @@
                 self.statusValue.text = output.status;
                 
                 [self.statusLabel clearStatus];
+            }
+            else
+            {
+                [MHVUIAlert showInformationalMessage:error.description];
+                [self.statusLabel showStatus:@"Failed"];
             }
         }];
     }];

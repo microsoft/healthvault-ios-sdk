@@ -23,10 +23,4 @@
 
 @interface MHVActionPlansListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
-@property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
-
-- (IBAction)addActionPlan:(id)sender;
-
 @end

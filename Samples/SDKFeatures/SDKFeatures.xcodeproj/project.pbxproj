@@ -63,6 +63,8 @@
 		BA6EF75E1ED649AD00EF043A /* MHVGoalDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF75D1ED649AD00EF043A /* MHVGoalDetailViewController.m */; };
 		BA6EF7601ED7375300EF043A /* MHVGoalAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA6EF75F1ED7375300EF043A /* MHVGoalAddViewController.xib */; };
 		BA6EF7641ED737C000EF043A /* MHVGoalAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF7631ED737C000EF043A /* MHVGoalAddViewController.m */; };
+		BA9844CD1EDF16280064389A /* MHVActionPlanTaskListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9844CC1EDF16280064389A /* MHVActionPlanTaskListViewController.xib */; };
+		BA9844D01EDF16570064389A /* MHVActionPlanTaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844CF1EDF16570064389A /* MHVActionPlanTaskListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,6 +161,9 @@
 		BA6EF75F1ED7375300EF043A /* MHVGoalAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MHVGoalAddViewController.xib; path = ViewControllers/Goals/MHVGoalAddViewController.xib; sourceTree = "<group>"; };
 		BA6EF7621ED7378C00EF043A /* MHVGoalAddViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MHVGoalAddViewController.h; path = ViewControllers/Goals/MHVGoalAddViewController.h; sourceTree = "<group>"; };
 		BA6EF7631ED737C000EF043A /* MHVGoalAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVGoalAddViewController.m; path = ViewControllers/Goals/MHVGoalAddViewController.m; sourceTree = "<group>"; };
+		BA9844CC1EDF16280064389A /* MHVActionPlanTaskListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVActionPlanTaskListViewController.xib; sourceTree = "<group>"; };
+		BA9844CE1EDF16410064389A /* MHVActionPlanTaskListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTaskListViewController.h; sourceTree = "<group>"; };
+		BA9844CF1EDF16570064389A /* MHVActionPlanTaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTaskListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +221,7 @@
 		5D09134A166ED1980031F5F9 /* SDKFeatures */ = {
 			isa = PBXGroup;
 			children = (
+				BA6EF7541ED6076A00EF043A /* ViewControllers */,
 				5D091353166ED1980031F5F9 /* MHVAppDelegate.h */,
 				5D091354166ED1980031F5F9 /* MHVAppDelegate.m */,
 				5D789911171618530015D375 /* MHVFeatureActions.h */,
@@ -267,7 +273,6 @@
 				A51203B91ECCDD3E00845680 /* MHVFeaturesConfiguration.h */,
 				A51203BA1ECCDD3E00845680 /* MHVFeaturesConfiguration.m */,
 				4C2975CE1ECF3428006B3673 /* SDKFeatures-Bridging-Header.h */,
-				BA6EF7541ED6076A00EF043A /* ViewControllers */,
 			);
 			path = SDKFeatures;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				BA0324ED1ED87C5300A641AD /* ActionPlans */,
+				BA9844CB1EDF16010064389A /* ActionPlanTasks */,
 				BA6EF7611ED7376300EF043A /* Goals */,
 				4C2975CF1ECF3429006B3673 /* MHVRecordListViewController.swift */,
 				4C2975D01ECF3429006B3673 /* MHVRecordListViewController.xib */,
@@ -336,6 +342,17 @@
 			name = Goals;
 			sourceTree = "<group>";
 		};
+		BA9844CB1EDF16010064389A /* ActionPlanTasks */ = {
+			isa = PBXGroup;
+			children = (
+				BA9844CE1EDF16410064389A /* MHVActionPlanTaskListViewController.h */,
+				BA9844CF1EDF16570064389A /* MHVActionPlanTaskListViewController.m */,
+				BA9844CC1EDF16280064389A /* MHVActionPlanTaskListViewController.xib */,
+			);
+			name = ActionPlanTasks;
+			path = ViewControllers/ActionPlanTasks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -362,7 +379,7 @@
 		5D091337166ED1980031F5F9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = HV;
+				CLASSPREFIX = MHV;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Microsoft;
 				TargetAttributes = {
@@ -397,6 +414,7 @@
 				5D09134F166ED1980031F5F9 /* InfoPlist.strings in Resources */,
 				5D091357166ED1980031F5F9 /* Default.png in Resources */,
 				BA0324F71ED8C88900A641AD /* MHVActionPlanDetailViewController.xib in Resources */,
+				BA9844CD1EDF16280064389A /* MHVActionPlanTaskListViewController.xib in Resources */,
 				BA6EF75B1ED6495C00EF043A /* MHVGoalDetailViewController.xib in Resources */,
 				5D091359166ED1980031F5F9 /* Default@2x.png in Resources */,
 				BA0324EF1ED87EFA00A641AD /* MHVActionPlansListViewController.xib in Resources */,
@@ -421,6 +439,7 @@
 				BA0324F21ED87F4400A641AD /* MHVActionPlansListViewController.m in Sources */,
 				5D091351166ED1980031F5F9 /* main.m in Sources */,
 				5D091355166ED1980031F5F9 /* MHVAppDelegate.m in Sources */,
+				BA9844D01EDF16570064389A /* MHVActionPlanTaskListViewController.m in Sources */,
 				5D09135E166ED1980031F5F9 /* MHVViewController.m in Sources */,
 				5D09137E166EDB2A0031F5F9 /* MHVTypeListViewController.m in Sources */,
 				5DAFC630166FC5AC00363FA2 /* MHVDietaryIntakeFactory.m in Sources */,

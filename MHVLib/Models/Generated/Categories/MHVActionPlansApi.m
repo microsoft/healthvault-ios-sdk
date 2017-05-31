@@ -72,7 +72,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlan];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
@@ -119,7 +119,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -183,7 +183,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -280,7 +280,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
         queryParams[@"taskId"] = taskId;
     }
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -325,7 +325,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -358,7 +358,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
         queryParams[@"maxPageSize"] = maxPageSize;
     }
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     
     [self requestWithPath:resourcePath
@@ -374,7 +374,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 ///
 /// Update an action plan instance with merge
 ///
-///  @param actionPlan The instance of the plan to update. Only the fields present in the passed in model will be updated. All other fields and colelctions              will be left, as is, unless invalid.
+///  @param actionPlan The instance of the plan to update. Only the fields present in the passed in model will be updated. All other fields and collections              will be left, as is, unless invalid.
 ///
 ///  @returns MHVActionPlansResponseActionPlanInstance_*
 ///
@@ -399,7 +399,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlan];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
@@ -442,7 +442,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
     
-    id bodyParam = nil;
+    NSData *bodyParam = nil;;
     NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlan];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
