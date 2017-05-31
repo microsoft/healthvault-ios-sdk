@@ -29,11 +29,11 @@ SPEC_BEGIN(MHVVocabularyClientTests)
 describe(@"MHVVocabularyClient", ^
 {
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
-    [mockConnection stub:@selector(executeMethod:completion:) andReturn:nil];
+    [mockConnection stub:@selector(executeHttpServiceOperation:completion:) andReturn:nil];
     
     let(spyExecuteMethod, ^
         {
-            return [mockConnection captureArgument:@selector(executeMethod:completion:) atIndex:0];
+            return [mockConnection captureArgument:@selector(executeHttpServiceOperation:completion:) atIndex:0];
         });
     
     let(vocabularyClient, ^

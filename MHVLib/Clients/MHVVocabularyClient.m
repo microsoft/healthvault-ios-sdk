@@ -56,7 +56,7 @@
     
     MHVMethod *method = [MHVMethod getVocabulary];
     
-    [self.connection executeMethod:method completion:^(MHVServiceResponse *_Nullable response, NSError  *_Nullable error)
+    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse *_Nullable response, NSError  *_Nullable error)
     {
         if (error)
         {
@@ -125,7 +125,7 @@
     
     MHVMethod *method = [MHVMethod getVocabulary];
     method.parameters = [writer newXmlString];
-    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
     {
         if (error)
         {
@@ -155,7 +155,7 @@
     
     MHVMethod * method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:nil];
     
-    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (error)
          {
@@ -188,7 +188,7 @@
     
     MHVMethod * method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:vocabularyKey];
     
-    [self.connection executeMethod:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (error)
          {

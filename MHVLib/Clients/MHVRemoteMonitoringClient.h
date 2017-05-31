@@ -19,10 +19,13 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVRemoteMonitoringClientProtocol.h"
+@protocol MHVConnectionProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVRemoteMonitoringClient : NSObject<MHVRemoteMonitoringClientProtocol>
+
+- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
 
 @end
 

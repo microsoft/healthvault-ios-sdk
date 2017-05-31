@@ -21,7 +21,7 @@
 
 @class MHVSessionCredential, MHVPersonInfo, MHVServiceResponse, MHVMethod;
 
-@protocol MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol;
+@protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,22 +46,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly, nullable) MHVPersonInfo *personInfo;
 
 /**
- Makes Web request call to HealthVault service for specified method name and method version.
+ Makes Web request call to HealthVault service.
 
- @param method The method to execute. MHVMethod class has properties representing the method name, version, parameters, recordId and correlationId.
- @para
+ @param operation The operation to execute.  Either MHVMethod or MHVRestRequest.
+        MHVMethod class has properties representing the method name, version, parameters, recordId and correlationId.
+        MHVRestRequest class has properties for url, query parameters, etc.
  */
-- (void)executeMethod:(MHVMethod *)method
-           completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion;
-
-/**
- Gets the person information for the current account.
-
- @param completion Envoked when the operation completes. MHVPersonInfo the person info for the current account. NSError object will be nil if there is no error when performing the operation.
- 
- @note This includes the list of authorized records for the application instance.
- */
-- (void)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo *_Nullable personInfo, NSError *_Nullable error))completion;
+- (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol>)operation
+                         completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**
  Authenticates the connection. Calling authenticate will immediately present an authentication user interface if the connection is not authenticated.

@@ -156,7 +156,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
         
         if (!self.sessionCredential || !self.applicationCreationInfo)
         {
-            [self finishAuthWithError:[NSError error:[NSError MHVUnauthorizedError] withDescription:@"Authorization required to perform this operation."]
+            [self finishAuthWithError:[NSError error:[NSError MHVUnauthorizedError] withDescription:@"Authorization required to authorize additional records. Must call authenticateWithViewController:completion: first."]
                            completion:completion];
             
             return;
@@ -219,36 +219,10 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
         }
         else
         {
+            [self clearConnectionProperties];
             [self finishAuthWithError:nil completion:completion];
         }
     });
-}
-
-- (void)getPersonInfoWithCompletion:(void (^)(MHVPersonInfo * _Nullable, NSError * _Nullable))completion
-{
-    if (!completion)
-    {
-        return;
-    }
-    
-    if (self.personInfo)
-    {
-        completion(self.personInfo, nil);
-    }
-    else
-    {
-        [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
-         {
-             if (error)
-             {
-                 completion(nil, error);
-             }
-             else
-             {
-                 completion(self.personInfo, nil);
-             }
-         }];
-    }
 }
 
 #pragma mark - Private

@@ -18,6 +18,12 @@
 
 #import "MHVMethod.h"
 
+@interface MHVMethod ()
+
+@property (nonatomic, assign) BOOL isAnonymous;
+
+@end
+
 @implementation MHVMethod
 
 - (instancetype)initWithName:(NSString *)name version:(int)version isAnonymous:(BOOL)isAnonymous
