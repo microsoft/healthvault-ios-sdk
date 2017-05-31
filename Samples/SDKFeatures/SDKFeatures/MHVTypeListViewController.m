@@ -29,10 +29,6 @@
 #import "MHVUIAlert.h"
 #import "MHVFeaturesConfiguration.h"
 
-// TODO: Remove after testing
-#import "MHVVocabularyClient.h"
-#import "MHVClientFactory.h"
-
 @interface MHVTypeListViewController ()
 
 @property (nonatomic, strong) NSArray *classesForTypes;
@@ -49,41 +45,14 @@
 
     [self.navigationController.navigationBar setTranslucent:FALSE];
     self.navigationItem.title = [self personName];
-    
-    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
-    
-    [connection.vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error)
-     {
-         MHVVocabularyKey *selectedKey = [vocabularyKeys objectAtIndex:1];
-         MHVVocabularyKeyCollection *args = [[MHVVocabularyKeyCollection alloc] initWithArray:@[selectedKey]];
-         
-         /*
-         [connection.vocabularyClient getVocabulariesWithVocabularyKeys:args cultureIsFixed:[NSNumber numberWithBool:NO] completion:^(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError * _Nullable error) {
-             NSLog(@"Got a response");
-         }];
-          */
-         
-         /*[connection.vocabularyClient getVocabularyWithKey:selectedKey cultureIsFixed:[NSNumber numberWithBool:NO] completion:^(MHVVocabularyCodeSet * _Nullable vocabulary, NSError * _Nullable error) {
-             NSLog(@"Got a response");
-         }];
-          */
-         
-         [connection.vocabularyClient searchVocabularyKeysWithSearchValue:@"RX" searchMode:MHVSearchModeContains maxResults:[NSNumber numberWithInt:5] completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) {
-             NSLog(@"Got results");
-         }];
-         
-         [connection.vocabularyClient searchVocabularyWithSearchValue:@"RX" searchMode:MHVSearchModeContains vocabularyKey:selectedKey maxResults:[NSNumber numberWithInt:5] completion:^(MHVVocabularyCodeSetCollection* _Nullable vocabularyCodeSet, NSError * _Nullable error) {
-             NSLog(@"Got results");
-         }];
-     }];
-/*    self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];
+
+    self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
     [self downloadPersonImage];
 
     [self addStandardFeatures];
- */
 }
 
 - (NSString *)personName
