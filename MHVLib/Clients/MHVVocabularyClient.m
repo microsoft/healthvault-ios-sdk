@@ -1,4 +1,4 @@
-////
+//
 //  MHVVocabularyClient.m
 //  MHVLib
 //
@@ -78,15 +78,22 @@
     MHVASSERT_PARAMETER(key);
     MHVASSERT_PARAMETER(completion);
     
-    if (!completion) {
+    if (!completion)
+    {
         return;
     }
     
     [self getVocabulariesWithVocabularyKeys:[[MHVVocabularyKeyCollection alloc]initWithArray:@[key]] cultureIsFixed:cultureIsFixed completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error)
     {
-        if (error || !vocabularies || [vocabularies count] <= 0)
+        if (error)
         {
             completion(nil, error);
+            return;
+        }
+        
+        if (!vocabularies || [vocabularies count] <= 0)
+        {
+            completion(nil, nil);
             return;
         }
         
@@ -104,7 +111,8 @@
     MHVASSERT_PARAMETER(vocabularyKeys);
     MHVASSERT_PARAMETER(completion);
     
-    if (!completion || !vocabularyKeys) {
+    if (!completion || !vocabularyKeys)
+    {
         return;
     }
     
@@ -149,7 +157,8 @@
     MHVASSERT_PARAMETER(searchMode);
     MHVASSERT_PARAMETER(completion);
     
-    if (!searchValue || !searchMode || !completion) {
+    if (!searchValue || !searchMode || !completion)
+    {
         return;
     }
     
@@ -168,7 +177,6 @@
          completion(vocabularyKeys, nil);
          return;
      }];
-    
 }
 
 - (void)searchVocabularyWithSearchValue:(NSString *)searchValue
@@ -182,7 +190,8 @@
     MHVASSERT_PARAMETER(vocabularyKey);
     MHVASSERT_PARAMETER(completion);
     
-    if (!searchValue || !searchMode || !vocabularyKey || !completion) {
+    if (!searchValue || !searchMode || !vocabularyKey || !completion)
+    {
         return;
     }
     
