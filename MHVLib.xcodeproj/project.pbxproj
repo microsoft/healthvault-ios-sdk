@@ -99,6 +99,7 @@
 		4C2975EC1ED37AAD006B3673 /* MHVRestRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2975EA1ED37AAD006B3673 /* MHVRestRequest.m */; };
 		4C2975EE1ED380F8006B3673 /* MHVHttpServiceOperationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2975ED1ED380F8006B3673 /* MHVHttpServiceOperationProtocol.h */; };
 		4C3973B31EC4B66B0079C28D /* MHVLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3973B21EC4B66B0079C28D /* MHVLibTests.m */; };
+		4C5E80511ED5EA2E00BD7FC0 /* MHVConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5E80501ED5EA2E00BD7FC0 /* MHVConnectionTests.m */; };
 		4C7646B81EC4B91C003B85B5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CC1C5C00F000233916 /* SystemConfiguration.framework */; };
 		4C7646B91EC4B922003B85B5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CE1C5C010800233916 /* MobileCoreServices.framework */; };
 		4C7646BA1EC4B922003B85B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F066CA1C5C00E700233916 /* Security.framework */; };
@@ -798,6 +799,7 @@
 		4C3973B01EC4B66B0079C28D /* MHVLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MHVLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C3973B21EC4B66B0079C28D /* MHVLibTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVLibTests.m; sourceTree = "<group>"; };
 		4C3973B41EC4B66B0079C28D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C5E80501ED5EA2E00BD7FC0 /* MHVConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVConnectionTests.m; sourceTree = "<group>"; };
 		4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		4C7646E91EC6581C003B85B5 /* MHVXmlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVXmlTests.m; path = XML/MHVXmlTests.m; sourceTree = "<group>"; };
 		4C7647471ECA32FE003B85B5 /* MHVThingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingClient.h; sourceTree = "<group>"; };
@@ -2155,6 +2157,7 @@
 			isa = PBXGroup;
 			children = (
 				A51203C91ECF2CB600845680 /* MHVSodaConnectionTests.m */,
+				4C5E80501ED5EA2E00BD7FC0 /* MHVConnectionTests.m */,
 			);
 			path = Connection;
 			sourceTree = "<group>";
@@ -2940,6 +2943,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C5E80511ED5EA2E00BD7FC0 /* MHVConnectionTests.m in Sources */,
 				4C3973B31EC4B66B0079C28D /* MHVLibTests.m in Sources */,
 				4C2975C71ECDFB63006B3673 /* MHVHttpServiceTests.m in Sources */,
 				4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */,

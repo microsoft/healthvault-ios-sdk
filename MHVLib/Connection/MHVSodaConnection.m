@@ -47,6 +47,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 @property (nonatomic, strong) MHVPersonInfo *personInfo;
 @property (nonatomic, strong) MHVApplicationCreationInfo *applicationCreationInfo;
 @property (nonatomic, strong) id<MHVSessionCredentialClientProtocol> credentialClient;
+@property (nonatomic, strong) MHVSessionCredential *sessionCredential;
 
 // Dependencies
 @property (nonatomic, strong) id<MHVKeychainServiceProtocol> keychainService;

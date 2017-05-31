@@ -41,6 +41,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 @property (nonatomic, strong) dispatch_queue_t completionQueue;
 @property (nonatomic, strong) NSMutableArray<MHVHttpServiceRequest *> *requests;
+@property (nonatomic, strong) MHVConfiguration *configuration;
 
 // Clients
 @property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
