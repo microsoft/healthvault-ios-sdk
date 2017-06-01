@@ -16,6 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
 #import "MHVClientProtocol.h"
 
 @class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVBlobPayloadThing;
@@ -31,12 +32,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param recordId an authorized person's record ID.
  *        If nil, the current connection.personInfo.selectedRecordID will be used.
  *        Multi-Record apps should allow selecting the person record
- * @param completion Envoked when the operation completes.  
+ * @param completion Envoked when the operation completes.
  *        MHVThing object will have the requested thing, or nil if the thing can not be retrieved.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getThingWithThingId:(NSUUID *)thingId
-                    recordId:(NSUUID *_Nullable)recordId
+                   recordId:(NSUUID *_Nullable)recordId
                  completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
 
 /**
@@ -112,8 +113,8 @@ NS_ASSUME_NONNULL_BEGIN
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)createNewThings:(MHVThingCollection *)things
-              recordId:(NSUUID *_Nullable)recordId
-            completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+               recordId:(NSUUID *_Nullable)recordId
+             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 /**
  * Update an existing Thing in the HealthVault service
@@ -172,7 +173,7 @@ NS_ASSUME_NONNULL_BEGIN
           completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 /**
- * Refresh the blobs collection on a thing.  
+ * Refresh the blobs collection on a thing.
  *
  * @note The URLs returned for blobs are valid for a limited time
  *
@@ -184,9 +185,9 @@ NS_ASSUME_NONNULL_BEGIN
  *        MHVThing object that is updated with its .blobs object refreshed
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)refreshBlobsForThing:(MHVThing *)thing
-                    recordId:(NSUUID *_Nullable)recordId
-                  completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
+- (void)refreshBlobUrlsForThing:(MHVThing *)thing
+                       recordId:(NSUUID *)recordId
+                     completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
 
 /**
  * Refresh the blobs collection for a collection of things.
@@ -201,9 +202,9 @@ NS_ASSUME_NONNULL_BEGIN
  *        MHVThingCollection things updated with their .blobs objects refreshed
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)refreshBlobsForThings:(MHVThingCollection *)things
-                     recordId:(NSUUID *_Nullable)recordId
-                   completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+- (void)refreshBlobUrlsForThings:(MHVThingCollection *)things
+                        recordId:(NSUUID *)recordId
+                      completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
 
 /**
  * Download a blob as NSData
@@ -217,7 +218,7 @@ NS_ASSUME_NONNULL_BEGIN
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)downloadBlobData:(MHVBlobPayloadThing *)blobPayloadThing
-                recordId:(NSUUID *_Nullable)recordId
+                recordId:(NSUUID *)recordId
               completion:(void(^)(NSData *_Nullable data, NSError *_Nullable error))completion;
 
 /**
@@ -233,8 +234,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)downloadBlob:(MHVBlobPayloadThing *)blobPayloadThing
           toFilePath:(NSString *)toFilePath
-            recordId:(NSUUID *_Nullable)recordId
+            recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion;
+
+/**
+ * Gets the personal image for a record
+ *
+ * @param recordId The record ID to retrieve the personal image
+ * @param completion Envoked when the operation completes.
+ *        UIImage image for the person if successful.
+ *        NSError object will be nil if there is no error when performing the operation.
+ *        Both values can be nil if no personal image is set.
+ */
+- (void)getPersonalImageWithRecordId:(NSUUID *)recordId
+                          completion:(void(^)(UIImage *_Nullable image, NSError *_Nullable error))completion;
 
 @end
 

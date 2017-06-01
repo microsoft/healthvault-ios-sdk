@@ -155,9 +155,9 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should refresh a thing", ^
                    {
-                       [thingClient refreshBlobsForThing:allergyThing
-                                                recordId:recordId
-                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
+                       [thingClient refreshBlobUrlsForThing:allergyThing
+                                                   recordId:recordId
+                                                 completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        
@@ -169,9 +169,9 @@ describe(@"MHVThingClient", ^
 
                 it(@"should refresh a thing collection", ^
                    {
-                       [thingClient refreshBlobsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
-                                                 recordId:recordId
-                                               completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
+                       [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
+                                                    recordId:recordId
+                                                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        

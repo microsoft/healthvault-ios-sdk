@@ -79,7 +79,7 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
         {
             cell?.tag = recordId.hashValue
             
-            self.connection.personClient()?.getPersonalImage(withRecord: recordId,
+            self.connection.thingClient()?.getPersonalImage(withRecord: recordId,
                                                              completion:
                 { (image: UIImage?, error: Error?) in
                     

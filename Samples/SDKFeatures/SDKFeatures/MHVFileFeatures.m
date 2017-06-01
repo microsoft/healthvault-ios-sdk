@@ -110,9 +110,9 @@
 
 - (void)updateBlobsForThingNew:(MHVThing *)thing action:(void(^)(MHVBlobPayloadThing *value))action
 {
-    [self.connection.thingClient refreshBlobsForThing:thing
-                                             recordId:self.connection.personInfo.selectedRecordID
-                                           completion:^(MHVThing * _Nullable thing, NSError * _Nullable error)
+    [self.connection.thingClient refreshBlobUrlsForThing:thing
+                                                recordId:self.connection.personInfo.selectedRecordID
+                                              completion:^(MHVThing * _Nullable thing, NSError * _Nullable error)
      {
          MHVBlobPayloadThing *fileBlob = [thing.blobs getDefaultBlob];
          action(fileBlob);

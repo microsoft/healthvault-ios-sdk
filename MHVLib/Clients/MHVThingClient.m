@@ -25,6 +25,7 @@
 #import "MHVTypes.h"
 #import "NSError+MHVError.h"
 #import "MHVConnectionProtocol.h"
+#import "MHVPersonalImage.h"
 
 @interface MHVThingClient ()
 
@@ -421,15 +422,10 @@
 
 #pragma mark - Blobs
 
-- (void)refreshBlobsForThing:(MHVThing *)thing
-                    recordId:(NSUUID *)recordId
-                  completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion
+- (void)refreshBlobUrlsForThing:(MHVThing *)thing
+                       recordId:(NSUUID *)recordId
+                     completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(thing);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
@@ -448,9 +444,9 @@
         return;
     }
     
-    [self refreshBlobsForThings:[[MHVThingCollection alloc] initWithThing:thing]
-                       recordId:recordId
-                     completion:^(MHVThingCollection * _Nullable resultThings, NSError * _Nullable error)
+    [self refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThing:thing]
+                          recordId:recordId
+                        completion:^(MHVThingCollection * _Nullable resultThings, NSError * _Nullable error)
      {
          if (error)
          {
@@ -466,15 +462,10 @@
      }];
 }
 
-- (void)refreshBlobsForThings:(MHVThingCollection *)things
-                     recordId:(NSUUID *)recordId
-                   completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
+- (void)refreshBlobUrlsForThings:(MHVThingCollection *)things
+                        recordId:(NSUUID *)recordId
+                      completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
@@ -518,14 +509,9 @@
 }
 
 - (void)downloadBlobData:(MHVBlobPayloadThing *)blobPayloadThing
-                recordId:(NSUUID *_Nullable)recordId
+                recordId:(NSUUID *)recordId
               completion:(void(^)(NSData *_Nullable data, NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(blobPayloadThing);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
@@ -571,14 +557,9 @@
 
 - (void)downloadBlob:(MHVBlobPayloadThing *)blobPayloadThing
           toFilePath:(NSString *)filePath
-            recordId:(NSUUID *_Nullable)recordId
+            recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(blobPayloadThing);
     MHVASSERT_PARAMETER(filePath);
     MHVASSERT_PARAMETER(recordId);
@@ -595,19 +576,11 @@
         return;
     }
     
-    //If blob has inline base64 encoded data, can return it immediately
+    //If blob has inline base64 encoded data, can write to the desired file and return immediately
     if (blobPayloadThing.inlineData)
     {
-        NSData *data = [[NSData alloc] initWithBase64EncodedString:blobPayloadThing.inlineData options:kNilOptions];
-        if (!data)
-        {
-            completion([NSError error:[NSError MHVUnknownError] withDescription:@"Could not decode blob base64 string"]);
-        }
-        else
-        {
-            [data writeToFile:filePath atomically:YES];
-            completion(nil);
-        }
+        [blobPayloadThing.inlineData writeToFile:filePath atomically:YES];
+        completion(nil);
         return;
     }
     
@@ -622,6 +595,62 @@
                                       completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          completion(error);
+     }];
+}
+
+- (void)getPersonalImageWithRecordId:(NSUUID *)recordId
+                          completion:(void(^)(UIImage *_Nullable image, NSError *_Nullable error))completion
+{
+    if (!completion)
+    {
+        return;
+    }
+    
+    //Get the personalImage thing, including the blob section
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
+    query.view.sections = MHVThingSection_Blobs;
+    
+    [self.connection.thingClient getThingsWithQuery:query
+                                           recordId:recordId
+                                         completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+     {
+         //Gets the defaultBlob from the first thing in the result collection
+         MHVThing *thing = [things firstObject];
+         if (!thing)
+         {
+             completion(nil, [NSError MHVNotFound]);
+             return;
+         }
+         
+         MHVBlobPayloadThing *blob = [thing.blobs getDefaultBlob];
+         if (!blob)
+         {
+             completion(nil, [NSError MHVNotFound]);
+             return;
+         }
+         
+         [self.connection.thingClient downloadBlobData:blob
+                                              recordId:recordId
+                                            completion:^(NSData * _Nullable data, NSError * _Nullable error)
+          {
+              if (error || !data)
+              {
+                  completion(nil, error);
+              }
+              else
+              {
+                  UIImage *personImage = [UIImage imageWithData:data];
+                  if (personImage)
+                  {
+                      completion(personImage, nil);
+                  }
+                  else
+                  {
+                      completion(nil, [NSError error:[NSError MHVUnknownError]
+                                     withDescription:@"Response data could not be converted to UIImage"]);
+                  }
+              }
+          }];
      }];
 }
 

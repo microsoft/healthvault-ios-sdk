@@ -134,8 +134,8 @@
 {
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    [connection.personClient getPersonalImageWithRecordId:connection.personInfo.selectedRecordID
-                                               completion:^(UIImage * _Nullable image, NSError * _Nullable error)
+    [connection.thingClient getPersonalImageWithRecordId:connection.personInfo.selectedRecordID
+                                              completion:^(UIImage * _Nullable image, NSError * _Nullable error)
      {
         if (image)
         {

@@ -26,8 +26,6 @@
 #import "MHVServiceResponse.h"
 #import "NSError+MHVError.h"
 #import "MHVGetAuthorizedPeopleResult.h"
-#import "MHVPersonalImage.h"
-#import "MHVThingClientProtocol.h"
 
 @interface MHVPersonClient ()
 
@@ -122,62 +120,6 @@
                                completion:(void(^)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion
 {
     
-}
-
-- (void)getPersonalImageWithRecordId:(NSUUID *)recordId
-                          completion:(void(^)(UIImage *_Nullable image, NSError *_Nullable error))completion
-{
-    if (!completion)
-    {
-        return;
-    }
-    
-    //Get the personalImage thing, including the blob section
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
-    query.view.sections = MHVThingSection_Blobs;
-    
-    [self.connection.thingClient getThingsWithQuery:query
-                                           recordId:recordId
-                                         completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
-     {
-         //Gets the defaultBlob from the first thing in the result collection
-         MHVThing *thing = [things firstObject];
-         if (!thing)
-         {
-             completion(nil, [NSError MHVNotFound]);
-             return;
-         }
-         
-         MHVBlobPayloadThing *blob = [thing.blobs getDefaultBlob];
-         if (!blob)
-         {
-             completion(nil, [NSError MHVNotFound]);
-             return;
-         }
-         
-         [self.connection.thingClient downloadBlobData:blob
-                                              recordId:recordId
-                                            completion:^(NSData * _Nullable data, NSError * _Nullable error)
-          {
-              if (error || !data)
-              {
-                  completion(nil, error);
-              }
-              else
-              {
-                  UIImage *personImage = [UIImage imageWithData:data];
-                  if (personImage)
-                  {
-                      completion(personImage, nil);
-                  }
-                  else
-                  {
-                      completion(nil, [NSError error:[NSError MHVUnknownError]
-                                     withDescription:@"Response data could not be converted to UIImage"]);
-                  }
-              }
-          }];
-     }];
 }
 
 @end
