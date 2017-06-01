@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVPendingThing.h"
+#import "MHVThing.h"
 
 static const xmlChar *x_element_id = XMLSTRINGCONST("thing-id");
 static const xmlChar *x_element_type = XMLSTRINGCONST("type-id");
@@ -61,6 +62,23 @@ static const xmlChar *x_element_edate = XMLSTRINGCONST("eff-date");
         self.type = [MHVPendingThing class];
     }
     return self;
+}
+
+- (void)removeThings:(MHVThingCollection *)things
+{
+    for (MHVThing *thing in things)
+    {
+        for (NSInteger i = 0; i < self.count; i++)
+        {
+            MHVPendingThing *pendingThing = self[i];
+            
+            if ([pendingThing.key.thingID isEqualToString:thing.key.thingID])
+            {
+                [self removeObjectAtIndex:i];
+                break;
+            }
+        }
+    }
 }
 
 @end

@@ -344,4 +344,16 @@ static NSString *const c_element_view = @"format";
     return self;
 }
 
+- (MHVThingQuery *)queryWithName:(NSString *)name
+{
+    for (MHVThingQuery *query in self)
+    {
+        if ([query.name isEqualToString:name])
+        {
+            return query;
+        }
+    }
+    return nil;
+}
+
 @end
