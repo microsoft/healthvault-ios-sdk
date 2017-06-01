@@ -11,7 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MHVActionPlanTaskListViewController">
             <connections>
-                <outlet property="addButton" destination="kdr-rj-KfX" id="xqT-iU-xHO"/>
                 <outlet property="statusLabel" destination="2fE-5O-sLo" id="z3s-GE-JUb"/>
                 <outlet property="tableView" destination="SGl-mm-JZ8" id="4O8-VY-e1X"/>
                 <outlet property="view" destination="iN0-l3-epB" id="w1I-RK-VWT"/>
@@ -39,7 +38,11 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="6RC-JO-W9b"/>
-                        <barButtonItem systemItem="add" id="kdr-rj-KfX"/>
+                        <barButtonItem systemItem="add" id="kdr-rj-KfX">
+                            <connections>
+                                <action selector="addTask:" destination="-1" id="cDV-jB-820"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                 </toolbar>
             </subviews>

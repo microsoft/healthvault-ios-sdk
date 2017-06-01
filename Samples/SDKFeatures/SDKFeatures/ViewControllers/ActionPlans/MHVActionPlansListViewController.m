@@ -87,6 +87,8 @@
 {
     // Create a new action plan, we don't allow input here because plans are fairly complicated. Just create one.
     
+    [self.statusLabel showBusy];
+
     NSNumber *rand = @(arc4random_uniform(100));
     
     MHVObjective *objective = [[MHVObjective alloc] init];
