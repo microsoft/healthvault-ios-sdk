@@ -43,6 +43,7 @@
 }
 
 
+
 /**
  * Maps json key to property name.
  * This method is used by `JSONModel`.
@@ -94,17 +95,6 @@
         }];
     });
     return types;
-}
-
-/**
- * Indicates whether the property with the given name is optional.
- * If `propertyName` is optional, then return `YES`, otherwise return `NO`.
- * This method is used by `JSONModel`.
- */
-+ (BOOL)propertyIsOptional:(NSString *)propertyName {
-
-  NSArray *optionalProperties = @[@"name", @"shortDescription", @"longDescription", @"imageUrl", @"thumbnailImageUrl", @"taskType", @"trackingPolicy", @"signupName", @"associatedPlanId", @"associatedObjectiveIds", @"completionType", @"frequencyTaskCompletionMetrics", @"scheduledTaskCompletionMetrics"];
-  return [optionalProperties containsObject:propertyName];
 }
 
 @end

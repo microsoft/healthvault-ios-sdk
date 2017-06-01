@@ -100,7 +100,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     {
         [self.moreActions setEnabled:FALSE];
     }
-
+    
     [self getThingsFromHealthVault];
 }
 
