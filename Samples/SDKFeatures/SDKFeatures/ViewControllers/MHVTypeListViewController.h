@@ -31,10 +31,6 @@
 - (IBAction)moreFeatures:(id)sender;
 
 //
-// Classes we have demo code for in this app. We display this list in m_tableView
-//
-+ (NSArray *)classesForTypesToDemo;
-//
 // Class for the thing currently selected in the TableView
 //
 - (Class)getSelectedClass;
