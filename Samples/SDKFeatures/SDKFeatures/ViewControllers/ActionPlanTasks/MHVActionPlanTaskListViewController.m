@@ -20,16 +20,20 @@
 #import "MHVActionPlanTaskListViewController.h"
 #import "MHVActionPlanTasksApi.h"
 #import "MHVConnection.h"
-
+#import "MHVActionPlanTaskDetailViewController.h"
+#import "MHVActionPlan.h"
+#import "MHVActionPlansApi.h"
 
 @interface MHVActionPlanTaskListViewController ()
 
 @property (nonatomic, strong) NSArray<MHVActionPlanTaskInstance *> *taskList;
+@property (nonatomic, strong) MHVActionPlanInstance *plan;
 @property (nonatomic, strong) MHVConnection *connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
+
+- (IBAction)addTask:(id)sender;
 
 @end
 
@@ -45,18 +49,73 @@
     return self;
 }
 
+- (IBAction)addTask:(id)sender
+{
+    if (self.plan == nil)
+    {
+        [MHVUIAlert showInformationalMessage:@"You must create an action plan before adding a task."];
+        [self.statusLabel showStatus:@"Failed"];
+        return;
+    }
+
+    [self.statusLabel showBusy];
+    NSNumber *rand = @(arc4random_uniform(100));
+
+    // Create a random task since the UI for these can be complicated.
+
+    MHVActionPlanTrackingPolicy *policy = [[MHVActionPlanTrackingPolicy alloc] init];
+    policy.isAutoTrackable = @(NO);
+
+    MHVActionPlanFrequencyTaskCompletionMetrics *metrics = [[MHVActionPlanFrequencyTaskCompletionMetrics alloc] init];
+    metrics.reminderState = @"Off";
+    metrics.scheduledDays = @[@"Monday", @"Wednesday", @"Friday"];
+    metrics.occurrenceCount = @(1);
+    metrics.windowType = @"Daily";
+
+    MHVActionPlanTask *frequencyTask = [[MHVActionPlanTask alloc] init];
+    NSString *taskName =[NSString stringWithFormat:@"My new task #%@", rand];
+    frequencyTask.name = taskName;
+    frequencyTask.shortDescription = @"Do an activity to get some exercise.";
+    frequencyTask.longDescription = @"Go for a run, hike a mountain, ride your bike around town, or something else to get moving.";
+    frequencyTask.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1rXx2?ver=d68e";
+    frequencyTask.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1s2KS?ver=0ad8";
+    frequencyTask.taskType = @"Other";
+    frequencyTask.signupName = taskName;
+    frequencyTask.trackingPolicy = policy;
+    frequencyTask.completionType = @"Frequency";
+    frequencyTask.frequencyTaskCompletionMetrics = metrics;
+    frequencyTask.associatedPlanId = self.plan._id;
+    frequencyTask.associatedObjectiveIds = @[[self.plan.objectives.firstObject _id]];
+
+    [self.connection.remoteMonitoringClient actionPlanTasksPostActionPlanTasksWithActionPlanTask:frequencyTask completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+         {
+             if (!error)
+             {
+                 [self loadActionPlanTasks];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed"];
+             }
+         }];
+    }];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.taskList = [[NSArray alloc] init];
     
-    [self.navigationController.navigationBar setTranslucent:FALSE];
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = @"Action Plan Tasks";
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
     [self loadActionPlanTasks];
+    [self loadActionPlan];
 }
 
 - (void)loadActionPlanTasks
@@ -77,6 +136,31 @@
              {
                  [MHVUIAlert showInformationalMessage:error.description];
                  [self.statusLabel showStatus:@"Failed"];
+             }
+         }];
+    }];
+}
+
+- (void)loadActionPlan
+{
+    [self.connection.remoteMonitoringClient getActionPlansWithMaxPageSize:@(10) completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+         {
+             if (!error)
+             {
+                 if (output.plans && output.plans.count > 0)
+                 {
+                     self.plan = output.plans[0];
+                 }
+                 else
+                 {
+                     self.plan = nil;
+                 }
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed to retrieve an action plan"];
              }
          }];
     }];
@@ -118,17 +202,16 @@
 {
     NSString *taskId = self.taskList[indexPath.row]._id;
     
-    /*
-    id typeView = [[MHVActionPlanDetailViewController alloc] initWithPlanId:planId];
     
-    if (!typeView || !planId)
+    MHVActionPlanTaskDetailViewController *typeView = [[MHVActionPlanTaskDetailViewController alloc] initWithTaskId:taskId];
+
+    if (!typeView || !taskId)
     {
-        [MHVUIAlert showInformationalMessage:@"Could not create MHVActionPlanDetailViewController view for plan."];
+        [MHVUIAlert showInformationalMessage:@"Could not create MHVActionPlanTaskDetailViewController view for task."];
         return;
     }
-    
+
     [self.navigationController pushViewController:typeView animated:YES];
-    */
 }
 
 @end

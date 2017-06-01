@@ -65,6 +65,8 @@
 		BA6EF7641ED737C000EF043A /* MHVGoalAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6EF7631ED737C000EF043A /* MHVGoalAddViewController.m */; };
 		BA9844CD1EDF16280064389A /* MHVActionPlanTaskListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9844CC1EDF16280064389A /* MHVActionPlanTaskListViewController.xib */; };
 		BA9844D01EDF16570064389A /* MHVActionPlanTaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844CF1EDF16570064389A /* MHVActionPlanTaskListViewController.m */; };
+		BA9844D51EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9844D41EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib */; };
+		BA9844D81EDF3D170064389A /* MHVActionPlanTaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844D71EDF3D170064389A /* MHVActionPlanTaskDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +166,9 @@
 		BA9844CC1EDF16280064389A /* MHVActionPlanTaskListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVActionPlanTaskListViewController.xib; sourceTree = "<group>"; };
 		BA9844CE1EDF16410064389A /* MHVActionPlanTaskListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTaskListViewController.h; sourceTree = "<group>"; };
 		BA9844CF1EDF16570064389A /* MHVActionPlanTaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTaskListViewController.m; sourceTree = "<group>"; };
+		BA9844D41EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVActionPlanTaskDetailViewController.xib; sourceTree = "<group>"; };
+		BA9844D61EDF3CE90064389A /* MHVActionPlanTaskDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTaskDetailViewController.h; sourceTree = "<group>"; };
+		BA9844D71EDF3D170064389A /* MHVActionPlanTaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTaskDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,6 +350,9 @@
 		BA9844CB1EDF16010064389A /* ActionPlanTasks */ = {
 			isa = PBXGroup;
 			children = (
+				BA9844D61EDF3CE90064389A /* MHVActionPlanTaskDetailViewController.h */,
+				BA9844D71EDF3D170064389A /* MHVActionPlanTaskDetailViewController.m */,
+				BA9844D41EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib */,
 				BA9844CE1EDF16410064389A /* MHVActionPlanTaskListViewController.h */,
 				BA9844CF1EDF16570064389A /* MHVActionPlanTaskListViewController.m */,
 				BA9844CC1EDF16280064389A /* MHVActionPlanTaskListViewController.xib */,
@@ -414,6 +422,7 @@
 				5D09134F166ED1980031F5F9 /* InfoPlist.strings in Resources */,
 				5D091357166ED1980031F5F9 /* Default.png in Resources */,
 				BA0324F71ED8C88900A641AD /* MHVActionPlanDetailViewController.xib in Resources */,
+				BA9844D51EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib in Resources */,
 				BA9844CD1EDF16280064389A /* MHVActionPlanTaskListViewController.xib in Resources */,
 				BA6EF75B1ED6495C00EF043A /* MHVGoalDetailViewController.xib in Resources */,
 				5D091359166ED1980031F5F9 /* Default@2x.png in Resources */,
@@ -471,6 +480,7 @@
 				5DEC255A178B5A7F00FE971B /* MHVThingDataTypedFeatures.m in Sources */,
 				BA6EF7641ED737C000EF043A /* MHVGoalAddViewController.m in Sources */,
 				5DEC255D178B680400FE971B /* MHVFileFactory.m in Sources */,
+				BA9844D81EDF3D170064389A /* MHVActionPlanTaskDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

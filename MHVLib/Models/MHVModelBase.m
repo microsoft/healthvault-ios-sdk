@@ -212,6 +212,11 @@ Class classFromProperty(objc_property_t property);
                             
                             @synchronized (propertyParametersCache)
                             {
+                                if (!objectParameters)
+                                {
+                                    objectParameters = [NSString class];
+                                }
+
                                 propertyParametersCache[propertyName] = objectParameters;
                             }
                         }

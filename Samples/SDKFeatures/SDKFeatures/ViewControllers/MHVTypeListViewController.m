@@ -51,7 +51,7 @@
 {
     [super viewDidLoad];
 
-    [self.navigationController.navigationBar setTranslucent:FALSE];
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = [self personName];
 
     [self setupList];

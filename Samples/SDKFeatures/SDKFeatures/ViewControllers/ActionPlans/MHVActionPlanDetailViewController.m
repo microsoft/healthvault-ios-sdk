@@ -100,7 +100,7 @@
     [super viewDidLoad];
     _plan = [[MHVActionPlanInstance alloc] init];
     
-    [self.navigationController.navigationBar setTranslucent:FALSE];
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = @"Plan Details";
     
     [self loadPlan];

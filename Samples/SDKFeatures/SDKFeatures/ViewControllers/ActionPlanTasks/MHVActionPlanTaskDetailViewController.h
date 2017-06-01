@@ -1,6 +1,6 @@
 //
-//  MHVErrorConstants.h
-//  MHVLib
+// MHVActionPlanTaskDetailViewController.h
+// SDKFeatures
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -16,21 +16,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MHVErrorConstants_h
-#define MHVErrorConstants_h
+#import "MHVTypeViewController.h"
 
-static NSString *const kMHVErrorDomain = @"com.microsoft.healthvault";
+@interface MHVActionPlanTaskDetailViewController : UIViewController
 
-typedef NS_ENUM(NSUInteger, MHVErrorType)
-{
-    MHVErrorTypeRequiredParameter = 0,
-    MHVErrorTypeOperationCannotBePerformed,
-    MHVErrorTypeIOError,
-    MHVErrorTypeUnauthorized,
-    MHVErrorTypeOperationCancelled,
-    MHVErrorTypeUnknown,
-    MHVErrorTypeNotFound,
-    MHVErrorTypeNetworkError
-};
+- (instancetype)initWithTaskId:(NSString *)taskId;
 
-#endif /* MHVErrorConstants_h */
+@end

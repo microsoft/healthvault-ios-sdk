@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MHVActionPlanTaskDetailViewController">
+            <connections>
+                <outlet property="nameValue" destination="rhH-4H-0is" id="J3M-Q3-kVw"/>
+                <outlet property="shortDescriptionValue" destination="Tdp-kL-IOF" id="78x-sO-syG"/>
+                <outlet property="startDate" destination="Ws3-ft-Sob" id="ipv-eI-BYC"/>
+                <outlet property="statusLabel" destination="6MN-Oy-pFK" id="IH2-Ai-sxs"/>
+                <outlet property="statusValue" destination="VoL-xT-zFy" id="K40-4N-WYj"/>
+                <outlet property="view" destination="iN0-l3-epB" id="VG2-dv-vEw"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6MN-Oy-pFK" userLabel="Status" customClass="MHVStatusLabel">
+                    <rect key="frame" x="16" y="0.0" width="280" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.69019607839999997" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="clI-F0-w0U">
+                    <rect key="frame" x="16" y="36" width="88" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rhH-4H-0is">
+                    <rect key="frame" x="112" y="37" width="200" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" staticText="YES"/>
+                    </accessibility>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VoL-xT-zFy">
+                    <rect key="frame" x="112" y="76" width="200" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" staticText="YES"/>
+                    </accessibility>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cb9-H7-sbZ">
+                    <rect key="frame" x="16" y="119" width="93" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qE6-RK-iHb">
+                    <rect key="frame" x="16" y="81" width="54" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmT-NI-kfe">
+                    <rect key="frame" x="184" y="349" width="81" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" button="YES" staticText="YES"/>
+                    </accessibility>
+                    <state key="normal" title="Delete Task"/>
+                    <connections>
+                        <action selector="deleteTask:" destination="-1" eventType="touchUpInside" id="j7i-8r-vQU"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpv-GF-egG">
+                    <rect key="frame" x="63" y="349" width="75" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Patch Task"/>
+                    <connections>
+                        <action selector="updateTask:" destination="-1" eventType="touchUpInside" id="KEa-6q-s6q"/>
+                    </connections>
+                </button>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Tdp-kL-IOF">
+                    <rect key="frame" x="112" y="119" width="200" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STR-a9-mdC">
+                    <rect key="frame" x="16" y="260" width="83" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ws3-ft-Sob">
+                    <rect key="frame" x="112" y="255" width="200" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" notEnabled="YES"/>
+                    </accessibility>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <point key="canvasLocation" x="26.5" y="51.5"/>
+        </view>
+    </objects>
+</document>
