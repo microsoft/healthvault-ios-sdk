@@ -218,7 +218,7 @@ static NSString *const c_attribute_name = @"name";
         MHVThingQueryResult *existingResult = [self resultWithName:result.name];
         if (existingResult)
         {
-            [existingResult.things addObjectsFromArray:result.things.toArray];
+            [existingResult.things addObjectsFromCollection:result.things];
             [existingResult.pendingThings removeThings:result.things];
         }
         else

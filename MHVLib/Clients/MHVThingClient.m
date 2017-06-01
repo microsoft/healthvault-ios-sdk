@@ -182,6 +182,12 @@
          else
          {
              MHVThingQueryResults *queryResults = [self thingQueryResultsFromResponse:response];
+             if (!queryResults)
+             {
+                 completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"MHVThingQueryResults could not be extracted from the server response."]);
+                 return;
+             }
+             
              MHVThingQueryCollection *queriesForPendingThings = [[MHVThingQueryCollection alloc] init];
              
              // Check for any Pending things, and build queries to fetch remaining things
@@ -216,14 +222,7 @@
              }
              else
              {
-                 if (results)
-                 {
-                     completion(results, nil);
-                 }
-                 else
-                 {
-                     completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetThings results could not be extracted."]);
-                 }
+                 completion(results, nil);
              }
          }
      }];
