@@ -62,4 +62,6 @@
 
 @interface MHVThingQueryResultCollection : MHVCollection<MHVThingQueryResult *>
 
+- (void)mergeThingQueryResultCollection:(MHVThingQueryResultCollection *)collection;
+
 @end

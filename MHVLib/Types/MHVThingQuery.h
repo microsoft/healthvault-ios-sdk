@@ -60,4 +60,6 @@
 
 @interface MHVThingQueryCollection : MHVCollection<MHVThingQuery *>
 
+- (MHVThingQuery *)queryWithName:(NSString *)name;
+
 @end

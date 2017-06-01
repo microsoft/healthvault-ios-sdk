@@ -192,9 +192,12 @@ static const NSInteger c_numSecondsInDay = 86400;
     // Get the current HealthVault service connection
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
+    MHVThingQuery *query = [[MHVThingQuery alloc] init];
+    query.maxResults = 500;
+    
     // Send request to get all things for the type class set for this view controller.
     [connection.thingClient getThingsForThingClass:self.typeClass
-                                             query:nil
+                                             query:query
                                           recordId:connection.personInfo.selectedRecordID
                                         completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
      {
@@ -209,7 +212,7 @@ static const NSInteger c_numSecondsInDay = 86400;
                   
                   [self.thingTable reloadData];
                   
-                  [self.statusLabel clearStatus];
+                  [self.statusLabel showStatus:[NSString stringWithFormat:@"Count: %li", things.count]];
               }
               else
               {
