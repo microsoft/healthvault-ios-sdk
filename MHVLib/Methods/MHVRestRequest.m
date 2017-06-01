@@ -37,6 +37,7 @@
 }
 
 - (instancetype)initWithURL:(NSURL *)url
+                 toFilePath:(NSString *_Nullable)toFilePath
                  httpMethod:(NSString *)httpMethod
                        body:(NSData *_Nullable)body
                 isAnonymous:(BOOL)isAnonymous
@@ -48,6 +49,7 @@
     if (self)
     {
         _url = url;
+        _toFilePath = toFilePath;
         _httpMethod = httpMethod;
         _body = body;
         _isAnonymous = isAnonymous;

@@ -347,27 +347,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (MHVMethod *)updateExternalId;
 
-/**
- Method to download from the URL. 
- The URL should not require authirization headers
- This should only be used for retrieving Blob object data
- 
- @param url The URL to be downloaded
- @return An instance of MHVMethod.
- */
-+ (MHVMethod *)httpMethodWithURL:(NSURL *)url;
-
-/**
- Method to download from the URL to a file.
- The URL should not require authirization headers
- This should only be used for retrieving Blob object data
- 
- @param url The URL to be downloaded
- @param filePath The file path where the file data should be saved
- @return An instance of MHVMethod.
- */
-+ (MHVMethod *)httpMethodWithURL:(NSURL *)url toFilePath:(NSString *)filePath;
-
 @end
 
 NS_ASSUME_NONNULL_END

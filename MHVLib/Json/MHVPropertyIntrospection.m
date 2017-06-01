@@ -20,6 +20,8 @@
 #import "MHVPropertyIntrospection.h"
 #import <objc/runtime.h>
 
+const char * property_getTypeString(objc_property_t property);
+
 @implementation MHVPropertyIntrospection
 
 + (BOOL) class:(Class)class hasPropertyNamed: (NSString *) name

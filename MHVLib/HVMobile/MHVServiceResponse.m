@@ -71,30 +71,6 @@
     return self;
 }
 
-- (instancetype)initWithDataWebResponse:(MHVHttpServiceResponse *)response
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _statusCode = (int)response.statusCode;
-        
-        if (response.hasError)
-        {
-            if (_statusCode == 401)
-            {
-                self.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The Authorization token is missing, malformed or expired."];
-            }
-        }
-        else
-        {
-            _responseData = response.responseAsData;
-        }
-    }
-    
-    return self;
-}
-
 - (BOOL)deserializeXml:(NSString *)xml
 {
     MHVResponse *response = (MHVResponse *)[NSObject newFromString:xml withRoot:@"response" asClass:[MHVResponse class]];

@@ -228,6 +228,20 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         headers[@"Authorization"] = self.sessionCredential.token;
     }
     
+    if (restRequest.toFilePath)
+    {
+        [self.httpService downloadFileWithUrl:restRequest.url
+                                   toFilePath:restRequest.toFilePath
+                                   completion:^(NSError * _Nullable error)
+         {
+             if (request.completion)
+             {
+                 request.completion(nil, error);
+             }
+         }];
+        return;
+    }
+    
     [self.httpService sendRequestForURL:restRequest.url
                              httpMethod:restRequest.httpMethod
                                    body:restRequest.body
@@ -288,7 +302,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         return;
     }
     
-    MHVServiceResponse *serviceResponse = [[MHVServiceResponse alloc] initWithXmlWebResponse:response isXML:isXML];
+    MHVServiceResponse *serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:response isXML:isXML];
     
     NSError *error = serviceResponse.error;
     

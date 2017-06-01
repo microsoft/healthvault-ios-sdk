@@ -20,6 +20,7 @@
 #import "MHVThingClient.h"
 #import "MHVCommon.h"
 #import "MHVMethod.h"
+#import "MHVRestRequest.h"
 #import "MHVServiceResponse.h"
 #import "MHVTypes.h"
 #import "NSError+MHVError.h"
@@ -449,17 +450,20 @@
     
     [self refreshBlobsForThings:[[MHVThingCollection alloc] initWithThing:thing]
                        recordId:recordId
-                     completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
-    {
-        if (error)
-        {
-            completion(nil, error);
-        }
-        else
-        {
-            completion(things.firstObject, nil);
-        }
-    }];
+                     completion:^(MHVThingCollection * _Nullable resultThings, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+         }
+         else
+         {
+             //Update the blobs on original thing & return that to the completion
+             thing.blobs = resultThings.firstObject.blobs;
+             
+             completion(thing, nil);
+         }
+     }];
 }
 
 - (void)refreshBlobsForThings:(MHVThingCollection *)things
@@ -494,13 +498,23 @@
     
     [self getThingsWithQuery:query
                     recordId:recordId
-                  completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
-    {
-        if (completion)
-        {
-            completion(things, error);
-        }
-    }];
+                  completion:^(MHVThingCollection * _Nullable resultThings, NSError * _Nullable error)
+     {
+         //Update the blobs on original thing collection & return that to the completion
+         for (MHVThing *thing in resultThings)
+         {
+             NSUInteger index = [things indexOfThingID:thing.thingID];
+             if (index != NSNotFound)
+             {
+                 things[index].blobs = thing.blobs;
+             }
+         }
+         
+         if (completion)
+         {
+             completion(things, error);
+         }
+     }];
 }
 
 - (void)downloadBlobData:(MHVBlobPayloadThing *)blobPayloadThing
@@ -523,18 +537,26 @@
     
     if (!blobPayloadThing || !recordId)
     {
-        if (completion)
-        {
-            completion(nil, [NSError MVHInvalidParameter]);
-        }
+        completion(nil, [NSError MVHInvalidParameter]);
         return;
     }
     
-    MHVMethod *method = [MHVMethod httpMethodWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]];
+    //If blob has inline base64 encoded data, can return it immediately
+    if (blobPayloadThing.inlineData)
+    {
+        completion(blobPayloadThing.inlineData, nil);
+        return;
+    }
+    
+    MHVRestRequest *request = [[MHVRestRequest alloc] initWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
+                                                       toFilePath:nil
+                                                       httpMethod:@"GET"
+                                                             body:nil
+                                                      isAnonymous:YES];
     
     //Download from the URL
-    [self.connection executeMethod:method
-                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:request
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (error)
          {
@@ -569,19 +591,35 @@
     
     if (!blobPayloadThing || !filePath || !recordId)
     {
-        if (completion)
+        completion([NSError MVHInvalidParameter]);
+        return;
+    }
+    
+    //If blob has inline base64 encoded data, can return it immediately
+    if (blobPayloadThing.inlineData)
+    {
+        NSData *data = [[NSData alloc] initWithBase64EncodedString:blobPayloadThing.inlineData options:kNilOptions];
+        if (!data)
         {
-            completion([NSError MVHInvalidParameter]);
+            completion([NSError error:[NSError MHVUnknownError] withDescription:@"Could not decode blob base64 string"]);
+        }
+        else
+        {
+            [data writeToFile:filePath atomically:YES];
+            completion(nil);
         }
         return;
     }
     
-    MHVMethod *method = [MHVMethod httpMethodWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
-                                          toFilePath:filePath];
+    MHVRestRequest *request = [[MHVRestRequest alloc] initWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
+                                                       toFilePath:filePath
+                                                       httpMethod:@"GET"
+                                                             body:nil
+                                                      isAnonymous:YES];
     
     //Download from the URL
-    [self.connection executeMethod:method
-                        completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:request
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          completion(error);
      }];

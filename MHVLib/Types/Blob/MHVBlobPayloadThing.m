@@ -24,6 +24,7 @@
 static NSString *const c_element_blobInfo = @"blob-info";
 static NSString *const c_element_length = @"content-length";
 static NSString *const c_element_blobUrl = @"blob-ref-url";
+static NSString *const c_element_base64data = @"base64data";
 static NSString *const c_element_legacyEncoding = @"legacy-content-encoding";
 static NSString *const c_element_currentEncoding = @"current-content-encoding";
 
@@ -31,6 +32,7 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
 
 @property (nonatomic, strong) NSString *legacyEncoding;
 @property (nonatomic, strong) NSString *encoding;
+@property (nonatomic, strong) NSString *inlineDataString;
 
 @end
 
@@ -108,6 +110,7 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
 {
     [writer writeElement:c_element_blobInfo content:self.blobInfo];
     [writer writeElement:c_element_length intValue:(int)self.length];
+    [writer writeElement:c_element_base64data value:self.inlineDataString];
     [writer writeElement:c_element_blobUrl value:self.blobUrl];
     [writer writeElement:c_element_legacyEncoding value:self.legacyEncoding];
     [writer writeElement:c_element_currentEncoding value:self.encoding];
@@ -117,9 +120,32 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
 {
     self.blobInfo = [reader readElement:c_element_blobInfo asClass:[MHVBlobInfo class]];
     self.length = [reader readIntElement:c_element_length];
+    self.inlineDataString = [reader readStringElement:c_element_base64data];
     self.blobUrl = [reader readStringElement:c_element_blobUrl];
     self.legacyEncoding = [reader readStringElement:c_element_legacyEncoding];
     self.encoding = [reader readStringElement:c_element_currentEncoding];
+}
+
+// Convert inlineData to and from base64 as the string is read or written by the serializer
+- (void)setInlineDataString:(NSString *)inlineDataString
+{
+    if (inlineDataString)
+    {
+        self.inlineData = [[NSData alloc] initWithBase64EncodedString:inlineDataString options:kNilOptions];
+        if (!self.inlineData)
+        {
+            MHVASSERT_MESSAGE(@"Could not convert Base64 encoded string to NSData");
+        }
+    }
+    else
+    {
+        self.inlineData = nil;
+    }
+}
+
+- (NSString *)inlineDataString
+{
+    return [self.inlineData base64EncodedStringWithOptions:kNilOptions];
 }
 
 @end

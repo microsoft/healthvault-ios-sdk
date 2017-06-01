@@ -37,11 +37,6 @@
 /// The response will be parsed into infoXml
 /// @param response - the web response from server side.
 /// @param isXML - whether the response HealthVault XML and infoXml should be filled.
-- (instancetype)initWithXmlWebResponse:(MHVHttpServiceResponse *)response isXML:(BOOL)isXML;
-
-/// Initializes a new instance of the MHVServiceResponse class.
-/// The response will stored as NSData in responseData
-/// @param response - the web response from server side.
-- (instancetype)initWithDataWebResponse:(MHVHttpServiceResponse *)response;
+- (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response isXML:(BOOL)isXML;
 
 @end

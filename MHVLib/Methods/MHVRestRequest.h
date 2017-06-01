@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly)           BOOL          isAnonymous;
 
 @property (nonatomic, strong, readonly)           NSURL         *url;
+@property (nonatomic, strong, readonly, nullable) NSString      *toFilePath;
 
 - (instancetype)initWithPath:(NSString *)path
                   httpMethod:(NSString *)httpMethod
@@ -32,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
                  isAnonymous:(BOOL)isAnonymous;
 
 - (instancetype)initWithURL:(NSURL *)url
+                 toFilePath:(NSString *_Nullable)toFilePath
                  httpMethod:(NSString *)httpMethod
                        body:(NSData *_Nullable)body
                 isAnonymous:(BOOL)isAnonymous;
