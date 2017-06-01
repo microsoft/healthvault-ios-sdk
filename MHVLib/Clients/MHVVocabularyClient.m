@@ -21,6 +21,7 @@
 #import "MHVVocabularyCodeItem.h"
 #import "MHVMethod.h"
 #import "MHVServiceResponse.h"
+#import "NSError+MHVError.h"
 #import "MHVConnectionProtocol.h"
 
 @interface MHVVocabularyClient ()
@@ -66,6 +67,12 @@
         
         MHVVocabularyKeyCollection *vocabularyKeys = (MHVVocabularyKeyCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"vocabulary-key" asClass:[MHVVocabularyKey class] andArrayClass:[MHVVocabularyKeyCollection class]];
         
+        if (!vocabularyKeys)
+        {
+            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The MHVVocabularyKeyCollection response is invalid."]);
+            return;
+        }
+        
         completion(vocabularyKeys, nil);
         return;
     }];
@@ -83,6 +90,12 @@
         return;
     }
     
+    if (!key)
+    {
+        completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"key cannot be nil"]);
+        return;
+    }
+    
     [self getVocabulariesWithVocabularyKeys:[[MHVVocabularyKeyCollection alloc]initWithArray:@[key]] cultureIsFixed:cultureIsFixed completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error)
     {
         if (error)
@@ -91,13 +104,13 @@
             return;
         }
         
-        if (!vocabularies || [vocabularies count] <= 0)
+        if (!vocabularies)
         {
-            completion(nil, nil);
+            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The MHVVocabularyCodeSet response is invalid."]);
             return;
         }
         
-        completion([vocabularies objectAtIndex:0], nil);
+        completion([vocabularies firstObject], nil);
         return;
     }];
     
@@ -111,8 +124,14 @@
     MHVASSERT_PARAMETER(vocabularyKeys);
     MHVASSERT_PARAMETER(completion);
     
-    if (!completion || !vocabularyKeys)
+    if (!completion)
     {
+        return;
+    }
+    
+    if (!vocabularyKeys)
+    {
+        completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"vocabularyKeys cannot be nil"]);
         return;
     }
     
@@ -157,8 +176,20 @@
     MHVASSERT_PARAMETER(searchMode);
     MHVASSERT_PARAMETER(completion);
     
-    if (!searchValue || !searchMode || !completion)
+    if (!completion)
     {
+        return;
+    }
+    
+    if (!searchValue)
+    {
+        completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"searchValue cannot be nil"]);
+        return;
+    }
+    
+    if (!searchMode)
+    {
+        completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"searchMode cannot be nil"]);
         return;
     }
     
@@ -190,8 +221,26 @@
     MHVASSERT_PARAMETER(vocabularyKey);
     MHVASSERT_PARAMETER(completion);
     
-    if (!searchValue || !searchMode || !vocabularyKey || !completion)
+    if (!completion)
     {
+        return;
+    }
+    
+    if (!searchValue)
+    {
+        completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"searcValue cannot be nil"]);
+        return;
+    }
+    
+    if (!searchMode)
+    {
+        completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"searchMode cannot be nil"]);
+        return;
+    }
+    
+    if (!vocabularyKey)
+    {
+        completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"vocabularyKey cannot be nil"]);
         return;
     }
     
