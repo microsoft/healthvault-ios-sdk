@@ -104,7 +104,7 @@
     [super viewDidLoad];
     self.goal = [[MHVGoal alloc] init];
     
-    [self.navigationController.navigationBar setTranslucent:FALSE];
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = @"Goal Details";
 
     [self loadGoal];

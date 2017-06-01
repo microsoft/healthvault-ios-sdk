@@ -48,7 +48,7 @@
     [super viewDidLoad];
     _actionPlans = [[NSArray alloc] init];
     
-    [self.navigationController.navigationBar setTranslucent:FALSE];
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = @"Action Plans List";
     
     self.tableView.dataSource = self;

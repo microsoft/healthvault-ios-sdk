@@ -45,11 +45,15 @@
 - (instancetype)initWithTaskId:(NSString *)taskId
 {
     self = [super init];
-    self.taskId = taskId;
     
-    MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
-    self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
-    
+    if (self)
+    {
+        _taskId = taskId;
+        
+        MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
+        _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
+    }
+
     return self;
 }
 
@@ -58,7 +62,7 @@
     [super viewDidLoad];
     self.task = [[MHVActionPlanTaskInstance alloc] init];
     
-    [self.navigationController.navigationBar setTranslucent:FALSE];
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = @"Task Details";
     
     [self loadTask];

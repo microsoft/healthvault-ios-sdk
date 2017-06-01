@@ -53,7 +53,7 @@
     [super viewDidLoad];
     _goals = [[NSArray alloc] init];
     
-    [self.navigationController.navigationBar setTranslucent:FALSE];
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = @"Goals List";
     
     self.tableView.dataSource = self;

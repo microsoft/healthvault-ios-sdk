@@ -263,7 +263,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
             {
                 if (!error)
                 {
-                    error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"Response code:%@(%@) - %@", @(response.statusCode), response.errorText, response.responseAsString]];
+                    error = [NSError error:[NSError MHVNetworkError] withDescription:[NSString stringWithFormat:@"Response:%@(%@) - %@", @(response.statusCode), response.errorText, response.responseAsString]];
                 }
 
                 request.completion(nil, error);
