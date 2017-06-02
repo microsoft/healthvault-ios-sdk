@@ -34,6 +34,8 @@
 #import "MHVActionPlansListViewController.h"
 #import "MHVActionPlan.h"
 #import "MHVActionPlanTaskListViewController.h"
+#import "MHVGoalRecommendation.h"
+#import "MHVGoalsRecommendationsListViewController.h"
 
 @interface MHVTypeListViewController ()
 
@@ -257,6 +259,11 @@
     [typeList addObject:name];
     [itemDictionary setObject:[MHVGoal class] forKey:name];
     [viewDictionary setObject:[MHVGoalsListViewController class] forKey:name];
+    
+    name = @"goal recommendations [REST]";
+    [typeList addObject:name];
+    [itemDictionary setObject:[MHVGoalRecommendation class] forKey:name];
+    [viewDictionary setObject:[MHVGoalsRecommendationsListViewController class] forKey:name];
 
     [typeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         return [obj1 compare:obj2];

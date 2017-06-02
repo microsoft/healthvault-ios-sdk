@@ -1,5 +1,5 @@
 //
-// MHVGoalsListViewController.h
+// MHVGoalsRecommendationsListViewController.h
 // SDKFeatures
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,12 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVTypeViewController.h"
-#import "MHVMoreFeatures.h"
-#import "MHVFeatureActions.h"
-#import "MHVStatusLabel.h"
+#import <Foundation/Foundation.h>
 
-@interface MHVGoalsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface MHVGoalsRecommendationsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 - (id)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric;
 
