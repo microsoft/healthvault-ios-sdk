@@ -32,6 +32,8 @@
 
 @property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
+
 @end
 
 @implementation MHVFileFeatures

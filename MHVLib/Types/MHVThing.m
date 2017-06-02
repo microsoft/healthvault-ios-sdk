@@ -599,9 +599,9 @@ static NSString *const c_element_thing = @"thing";
     return nil;
 }
 
-- (NSArray *)arrayOfThingIDs
+- (NSArray<NSString *> *)arrayOfThingIDs
 {
-    NSMutableArray *idArray = [[NSMutableArray alloc] init];
+    NSMutableArray<NSString *> *idArray = [[NSMutableArray alloc] init];
     for (MHVThing *thing in self)
     {
         [idArray addObject:thing.thingID];
