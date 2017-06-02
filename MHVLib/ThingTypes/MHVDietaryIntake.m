@@ -75,14 +75,14 @@ static const xmlChar *x_element_vitaminK = XMLSTRINGCONST("vitamin-K");
     return (self.when) ? [self.when toDateForCalendar:calendar] : nil;
 }
 
-+ (MHVVocabIdentifier *)vocabForFood
++ (MHVVocabularyIdentifier *)vocabForFood
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_usdaFamily andName:@"food-description"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_usdaFamily andName:@"food-description"];
 }
 
-+ (MHVVocabIdentifier *)vocabForMeals
++ (MHVVocabularyIdentifier *)vocabForMeals
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"dietary-intake-meals"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"dietary-intake-meals"];
 }
 
 + (MHVCodableValue *)mealCodeForBreakfast

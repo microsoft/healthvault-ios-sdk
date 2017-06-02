@@ -48,9 +48,9 @@ static NSString *const c_element_number = @"number";
     return (self.number) ? self.number : c_emptyString;
 }
 
-+ (MHVVocabIdentifier *)vocabForType
++ (MHVVocabularyIdentifier *)vocabForType
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"phone-types"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"phone-types"];
 }
 
 - (MHVClientResult *)validate

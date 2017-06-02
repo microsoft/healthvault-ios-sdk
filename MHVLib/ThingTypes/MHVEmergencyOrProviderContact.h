@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVEmergencyOrProviderContact : MHVThingDataTyped
 

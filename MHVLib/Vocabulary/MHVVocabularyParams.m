@@ -1,5 +1,5 @@
 //
-// MHVVocabParams.m
+// MHVVocabularyParams.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,30 +17,30 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabParams.h"
+#import "MHVVocabularyParams.h"
 
 static NSString *const c_element_vocabkey = @"vocabulary-key";
 static NSString *const c_element_culture = @"fixed-culture";
 
-@interface MHVVocabParams ()
+@interface MHVVocabularyParams ()
 
-@property (readwrite, nonatomic, strong) MHVVocabIdentifierCollection *vocabIDs;
+@property (readwrite, nonatomic, strong) MHVVocabularyIdentifierCollection *vocabIDs;
 
 @end
 
-@implementation MHVVocabParams
+@implementation MHVVocabularyParams
 
-- (MHVVocabIdentifierCollection *)vocabIDs
+- (MHVVocabularyIdentifierCollection *)vocabIDs
 {
     if (!_vocabIDs)
     {
-        _vocabIDs = [[MHVVocabIdentifierCollection alloc] init];
+        _vocabIDs = [[MHVVocabularyIdentifierCollection alloc] init];
     }
     
     return _vocabIDs;
 }
 
-- (instancetype)initWithVocabID:(MHVVocabIdentifier *)vocabID
+- (instancetype)initWithVocabID:(MHVVocabularyIdentifier *)vocabID
 {
     MHVCHECK_NOTNULL(vocabID);
     
@@ -52,7 +52,7 @@ static NSString *const c_element_culture = @"fixed-culture";
     return self;
 }
 
-- (instancetype)initWithVocabIDs:(MHVVocabIdentifierCollection *)vocabIDs
+- (instancetype)initWithVocabIDs:(MHVVocabularyIdentifierCollection *)vocabIDs
 {
     MHVCHECK_NOTNULL(vocabIDs);
     
@@ -82,7 +82,7 @@ static NSString *const c_element_culture = @"fixed-culture";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.vocabIDs = (MHVVocabIdentifierCollection *)[reader readElementArray:c_element_vocabkey asClass:[MHVVocabIdentifier class] andArrayClass:[MHVVocabIdentifierCollection class]];
+    self.vocabIDs = (MHVVocabularyIdentifierCollection *)[reader readElementArray:c_element_vocabkey asClass:[MHVVocabularyIdentifier class] andArrayClass:[MHVVocabularyIdentifierCollection class]];
     self.fixedCulture = [reader readBoolElement:c_element_culture];
 }
 

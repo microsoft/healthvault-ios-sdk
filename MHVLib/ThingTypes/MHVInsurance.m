@@ -47,9 +47,9 @@ static NSString *const c_element_contact = @"contact";
     return [self toString];
 }
 
-+ (MHVVocabIdentifier *)vocabForCoverage
++ (MHVVocabularyIdentifier *)vocabForCoverage
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"coverage-types"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"coverage-types"];
 }
 
 - (MHVClientResult *)validate

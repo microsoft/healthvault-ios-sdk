@@ -1,5 +1,5 @@
 //
-// MHVVocabSearcher.h
+// MHVVocabularySearcher.h
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -16,21 +16,21 @@
 // limitations under the License.
 //
 #import <Foundation/Foundation.h>
-#import "MHVVocab.h"
-#import "MHVVocabSearchTask.h"
+#import "MHVVocabulary.h"
+#import "MHVVocabularySearchTask.h"
 
-@class MHVVocabSearcher;
+@class MHVVocabularySearcher;
 
-@protocol MHVVocabSearcherDelegate <NSObject>
+@protocol MHVVocabularySearcherDelegate <NSObject>
 
-- (void)resultsAvailable:(MHVVocabCodeSet *)results forSearch:(NSString *)searchText inSearcher:(MHVVocabSearcher *)searcher
+- (void)resultsAvailable:(MHVVocabularyCodeSet *)results forSearch:(NSString *)searchText inSearcher:(MHVVocabularySearcher *)searcher
                seqNumber:(NSUInteger)seq;
 
-- (void)searchFailedFor:(NSString *)search inSearcher:(MHVVocabSearcher *)searcher seqNumber:(NSUInteger)seq;
+- (void)searchFailedFor:(NSString *)search inSearcher:(MHVVocabularySearcher *)searcher seqNumber:(NSUInteger)seq;
 
 @end
 
-@interface MHVVocabSearchCache : NSObject
+@interface MHVVocabularySearchCache : NSObject
 
 @property (readonly, nonatomic) NSCache *cache;
 @property (readwrite, nonatomic) NSUInteger maxCachedResults;
@@ -43,8 +43,8 @@
 //
 - (BOOL)hasCachedResultsForSearch:(NSString *)searchText;
 
-- (MHVVocabCodeSet *)getResultsForSearch:(NSString *)searchText;
-- (void)cacheResults:(MHVVocabCodeSet *)results forSearch:(NSString *)searchText;
+- (MHVVocabularyCodeSet *)getResultsForSearch:(NSString *)searchText;
+- (void)cacheResults:(MHVVocabularyCodeSet *)results forSearch:(NSString *)searchText;
 - (void)removeCachedResultsForSearch:(NSString *)searchText;
 
 - (void)ensureDummyEntryForSearch:(NSString *)searchText;
@@ -59,25 +59,25 @@
 // 2. Maintains an internal cache to reduce roundtrips
 // 3. All completions in UI thread
 //
-@interface MHVVocabSearcher : NSObject
+@interface MHVVocabularySearcher : NSObject
 
-@property (readwrite, nonatomic, strong) MHVVocabIdentifier *vocab;
-@property (readwrite, nonatomic) MHVVocabMatchType matchType;
+@property (readwrite, nonatomic, strong) MHVVocabularyIdentifier *vocab;
+@property (readwrite, nonatomic) MHVSearchMode matchType;
 @property (readwrite, nonatomic) int maxResults;
 //
 // Search cache.
 // Readwrite - you can potentially share caches, or hold onto them
 //
-@property (readwrite, nonatomic, strong) MHVVocabSearchCache *cache;
+@property (readwrite, nonatomic, strong) MHVVocabularySearchCache *cache;
 //
 // DELEGATE
 // Weak reference
 //
-@property (readwrite, nonatomic, weak) id<MHVVocabSearcherDelegate> delegate;
+@property (readwrite, nonatomic, weak) id<MHVVocabularySearcherDelegate> delegate;
 
-- (instancetype)initWithVocab:(MHVVocabIdentifier *)vocab;
-- (instancetype)initWithVocab:(MHVVocabIdentifier *)vocab andMaxResults:(int)max;
+- (instancetype)initWithVocab:(MHVVocabularyIdentifier *)vocab;
+- (instancetype)initWithVocab:(MHVVocabularyIdentifier *)vocab andMaxResults:(int)max;
 
-- (MHVVocabSearchTask *)searchFor:(NSString *)text;
+- (MHVVocabularySearchTask *)searchFor:(NSString *)text;
 
 @end

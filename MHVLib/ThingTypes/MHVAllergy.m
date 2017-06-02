@@ -66,14 +66,14 @@ static NSString *const c_element_negated = @"is-negated";
     return (self.name) ? [self.name toString] : c_emptyString;
 }
 
-+ (MHVVocabIdentifier *)vocabForType
++ (MHVVocabularyIdentifier *)vocabForType
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"allergen-type"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"allergen-type"];
 }
 
-+ (MHVVocabIdentifier *)vocabForReaction
++ (MHVVocabularyIdentifier *)vocabForReaction
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"reactions"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"reactions"];
 }
 
 - (MHVClientResult *)validate

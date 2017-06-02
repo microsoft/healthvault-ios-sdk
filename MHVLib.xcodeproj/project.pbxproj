@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		438160D81ED3868700BB8C94 /* MHVVocabularyClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 438160D61ED3868700BB8C94 /* MHVVocabularyClient.h */; };
+		438160D91ED3868700BB8C94 /* MHVVocabularyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160D71ED3868700BB8C94 /* MHVVocabularyClient.m */; };
+		438160F41ED4EFBA00BB8C94 /* MHVVocabularyCodeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160E61ED4B0D500BB8C94 /* MHVVocabularyCodeSet.m */; };
+		438160F51ED4EFBE00BB8C94 /* MHVVocabularyIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160E81ED4B0D500BB8C94 /* MHVVocabularyIdentifier.m */; };
+		438160F61ED4EFC200BB8C94 /* MHVVocabularyParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160EA1ED4B0D500BB8C94 /* MHVVocabularyParams.m */; };
+		438160F71ED4EFC600BB8C94 /* MHVVocabularySearchParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160EC1ED4B0D500BB8C94 /* MHVVocabularySearchParams.m */; };
+		438160F81ED4EFC900BB8C94 /* MHVVocabularyCodeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160EE1ED4B0D500BB8C94 /* MHVVocabularyCodeItem.m */; };
+		438160FB1ED507DD00BB8C94 /* MHVVocabularyClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160FA1ED507DD00BB8C94 /* MHVVocabularyClientTests.m */; };
+		438160FE1ED6269900BB8C94 /* MHVVocabularyKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 438160FC1ED6269900BB8C94 /* MHVVocabularyKey.h */; };
+		438160FF1ED6269900BB8C94 /* MHVVocabularyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160FD1ED6269900BB8C94 /* MHVVocabularyKey.m */; };
 		4C191A5F1EC1033C00B5E545 /* MHVAllergy.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A111EC1033C00B5E545 /* MHVAllergy.h */; };
 		4C191A601EC1033C00B5E545 /* MHVAllergy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191A121EC1033C00B5E545 /* MHVAllergy.m */; };
 		4C191A611EC1033C00B5E545 /* MHVAssessment.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A131EC1033C00B5E545 /* MHVAssessment.h */; };
@@ -143,10 +153,10 @@
 		5D195D4F1522527100E109AD /* MHVPutThingsTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D4D1522527100E109AD /* MHVPutThingsTask.m */; };
 		5D195D661522780800E109AD /* MHVRemoveThingsTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D641522780600E109AD /* MHVRemoveThingsTask.h */; };
 		5D195D671522780800E109AD /* MHVRemoveThingsTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D651522780700E109AD /* MHVRemoveThingsTask.m */; };
-		5D195D7215228C0200E109AD /* MHVVocabSearchText.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D7015228C0200E109AD /* MHVVocabSearchText.h */; };
-		5D195D7315228C0200E109AD /* MHVVocabSearchText.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D7115228C0200E109AD /* MHVVocabSearchText.m */; };
-		5D195D821522973500E109AD /* MHVVocabSearchTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D801522973300E109AD /* MHVVocabSearchTask.h */; };
-		5D195D831522973500E109AD /* MHVVocabSearchTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D811522973400E109AD /* MHVVocabSearchTask.m */; };
+		5D195D7215228C0200E109AD /* MHVVocabularySearchString.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D7015228C0200E109AD /* MHVVocabularySearchString.h */; };
+		5D195D7315228C0200E109AD /* MHVVocabularySearchString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D7115228C0200E109AD /* MHVVocabularySearchString.m */; };
+		5D195D821522973500E109AD /* MHVVocabularySearchTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D195D801522973300E109AD /* MHVVocabularySearchTask.h */; };
+		5D195D831522973500E109AD /* MHVVocabularySearchTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D195D811522973400E109AD /* MHVVocabularySearchTask.m */; };
 		5D1ACC7D19103C73000689FD /* MHVResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1ACC7B19103C73000689FD /* MHVResponse.h */; };
 		5D1ACC7E19103C73000689FD /* MHVResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ACC7C19103C73000689FD /* MHVResponse.m */; };
 		5D1ACC8119104056000689FD /* MHVResponseStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1ACC7F19104056000689FD /* MHVResponseStatus.h */; };
@@ -219,14 +229,6 @@
 		5D20D35414F487F100160611 /* MHVPendingThing.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D35214F487E600160611 /* MHVPendingThing.m */; };
 		5D20D35714F4883700160611 /* MHVThingQueryResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D20D35514F4882C00160611 /* MHVThingQueryResult.h */; };
 		5D20D35814F4883700160611 /* MHVThingQueryResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D20D35614F4883100160611 /* MHVThingQueryResult.m */; };
-		5D227B8D153766E500E12075 /* MHVVocabIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D227B85153766E500E12075 /* MHVVocabIdentifier.h */; };
-		5D227B8E153766E500E12075 /* MHVVocabIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D227B86153766E500E12075 /* MHVVocabIdentifier.m */; };
-		5D227B8F153766E500E12075 /* MHVVocabThing.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D227B87153766E500E12075 /* MHVVocabThing.h */; };
-		5D227B90153766E500E12075 /* MHVVocabThing.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D227B88153766E500E12075 /* MHVVocabThing.m */; };
-		5D227B91153766E500E12075 /* MHVVocabSearchParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D227B89153766E500E12075 /* MHVVocabSearchParams.h */; };
-		5D227B92153766E500E12075 /* MHVVocabSearchParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D227B8A153766E500E12075 /* MHVVocabSearchParams.m */; };
-		5D227B93153766E500E12075 /* MHVVocabCodeSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D227B8B153766E500E12075 /* MHVVocabCodeSet.h */; };
-		5D227B94153766E500E12075 /* MHVVocabCodeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D227B8C153766E500E12075 /* MHVVocabCodeSet.m */; };
 		5D25D67218AC567800B29B6D /* MHVMessageAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D25D66E18AC567800B29B6D /* MHVMessageAttachment.h */; };
 		5D25D67318AC567800B29B6D /* MHVMessageAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D25D66F18AC567800B29B6D /* MHVMessageAttachment.m */; };
 		5D25D67418AC567800B29B6D /* MHVMessageHeaderThing.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D25D67018AC567800B29B6D /* MHVMessageHeaderThing.h */; };
@@ -340,9 +342,6 @@
 		5D8FC3E114E2EDDF000F28EB /* MHVCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8FC3E014E2EDDF000F28EB /* MHVCommon.h */; };
 		5D925DD715376F21006BAAA8 /* MHVGetVocabTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D925DD515376F21006BAAA8 /* MHVGetVocabTask.h */; };
 		5D925DD815376F21006BAAA8 /* MHVGetVocabTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D925DD615376F21006BAAA8 /* MHVGetVocabTask.m */; };
-		5D925DDC15376F8A006BAAA8 /* MHVVocab.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D925DDA15376F8A006BAAA8 /* MHVVocab.h */; };
-		5D925DE015377348006BAAA8 /* MHVVocabParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D925DDE15377348006BAAA8 /* MHVVocabParams.h */; };
-		5D925DE115377348006BAAA8 /* MHVVocabParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D925DDF15377348006BAAA8 /* MHVVocabParams.m */; };
 		5D97B93C1511743C0004B551 /* MHVUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D97B93A1511743C0004B551 /* MHVUser.h */; };
 		5D97B93D1511743C0004B551 /* MHVUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97B93B1511743C0004B551 /* MHVUser.m */; };
 		5D97B94015125A280004B551 /* MHVObjectStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D97B93F15125A270004B551 /* MHVObjectStore.h */; };
@@ -372,8 +371,8 @@
 		5D983C0514E984EE00C287B7 /* MHVSecond.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983C0314E984ED00C287B7 /* MHVSecond.m */; };
 		5D983C0814E9850500C287B7 /* MHVMillisecond.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983C0614E9850300C287B7 /* MHVMillisecond.h */; };
 		5D983C0914E9850500C287B7 /* MHVMillisecond.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983C0714E9850400C287B7 /* MHVMillisecond.m */; };
-		5D9E83731553000000072A0C /* MHVVocabSearcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D9E83711553000000072A0C /* MHVVocabSearcher.h */; };
-		5D9E83741553000000072A0C /* MHVVocabSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9E83721553000000072A0C /* MHVVocabSearcher.m */; };
+		5D9E83731553000000072A0C /* MHVVocabularySearcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D9E83711553000000072A0C /* MHVVocabularySearcher.h */; };
+		5D9E83741553000000072A0C /* MHVVocabularySearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9E83721553000000072A0C /* MHVVocabularySearcher.m */; };
 		5DAED4AD18E4BC970048ECBD /* MHVMethodFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAED4AB18E4BC960048ECBD /* MHVMethodFactory.h */; };
 		5DAED4AE18E4BC970048ECBD /* MHVMethodFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAED4AC18E4BC960048ECBD /* MHVMethodFactory.m */; };
 		5DB2E61418D22EA90030972D /* MHVLockTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB2E61218D22EA90030972D /* MHVLockTable.h */; };
@@ -691,6 +690,7 @@
 		BA4FBEA71ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4FBEA61ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m */; };
 		BA6EF74F1ECFB56E00EF043A /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7646BD1EC4B9AC003B85B5 /* libxml2.2.tbd */; };
 		BA9844D21EDF19B20064389A /* MHVActionPlanTasksApi.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844D11EDF19B20064389A /* MHVActionPlanTasksApi.m */; };
+		BA9844DC1EE081810064389A /* MHVGoalsRecommendationsApi.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844DB1EE081810064389A /* MHVGoalsRecommendationsApi.m */; };
 		BAC7EA771ECCA47800F3C1AB /* MHVGoalRecommendationInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0356A61EC5278700BE547D /* MHVGoalRecommendationInstance.m */; };
 		BAF50D3E1ECB610900C060D7 /* MHVGoalsApi.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF50D3C1ECB610900C060D7 /* MHVGoalsApi.h */; };
 		BAF50D3F1ECB610900C060D7 /* MHVGoalsApi.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF50D3D1ECB610900C060D7 /* MHVGoalsApi.m */; };
@@ -707,6 +707,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		438160D61ED3868700BB8C94 /* MHVVocabularyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyClient.h; sourceTree = "<group>"; };
+		438160D71ED3868700BB8C94 /* MHVVocabularyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularyClient.m; sourceTree = "<group>"; };
+		438160E41ED4B0D500BB8C94 /* MHVVocabulary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabulary.h; sourceTree = "<group>"; };
+		438160E51ED4B0D500BB8C94 /* MHVVocabularyCodeSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyCodeSet.h; sourceTree = "<group>"; };
+		438160E61ED4B0D500BB8C94 /* MHVVocabularyCodeSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularyCodeSet.m; sourceTree = "<group>"; };
+		438160E71ED4B0D500BB8C94 /* MHVVocabularyIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyIdentifier.h; sourceTree = "<group>"; };
+		438160E81ED4B0D500BB8C94 /* MHVVocabularyIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularyIdentifier.m; sourceTree = "<group>"; };
+		438160E91ED4B0D500BB8C94 /* MHVVocabularyParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyParams.h; sourceTree = "<group>"; };
+		438160EA1ED4B0D500BB8C94 /* MHVVocabularyParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularyParams.m; sourceTree = "<group>"; };
+		438160EB1ED4B0D500BB8C94 /* MHVVocabularySearchParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularySearchParams.h; sourceTree = "<group>"; };
+		438160EC1ED4B0D500BB8C94 /* MHVVocabularySearchParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularySearchParams.m; sourceTree = "<group>"; };
+		438160ED1ED4B0D500BB8C94 /* MHVVocabularyCodeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyCodeItem.h; sourceTree = "<group>"; };
+		438160EE1ED4B0D500BB8C94 /* MHVVocabularyCodeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularyCodeItem.m; sourceTree = "<group>"; };
+		438160FA1ED507DD00BB8C94 /* MHVVocabularyClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVVocabularyClientTests.m; path = Clients/MHVVocabularyClientTests.m; sourceTree = "<group>"; };
+		438160FC1ED6269900BB8C94 /* MHVVocabularyKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyKey.h; sourceTree = "<group>"; };
+		438160FD1ED6269900BB8C94 /* MHVVocabularyKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularyKey.m; sourceTree = "<group>"; };
 		4C191A111EC1033C00B5E545 /* MHVAllergy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVAllergy.h; path = MHVLib/ThingTypes/MHVAllergy.h; sourceTree = SOURCE_ROOT; };
 		4C191A121EC1033C00B5E545 /* MHVAllergy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVAllergy.m; path = MHVLib/ThingTypes/MHVAllergy.m; sourceTree = SOURCE_ROOT; };
 		4C191A131EC1033C00B5E545 /* MHVAssessment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVAssessment.h; path = MHVLib/ThingTypes/MHVAssessment.h; sourceTree = SOURCE_ROOT; };
@@ -843,10 +859,10 @@
 		5D195D4D1522527100E109AD /* MHVPutThingsTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVPutThingsTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D195D641522780600E109AD /* MHVRemoveThingsTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRemoveThingsTask.h; sourceTree = "<group>"; };
 		5D195D651522780700E109AD /* MHVRemoveThingsTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVRemoveThingsTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D195D7015228C0200E109AD /* MHVVocabSearchText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabSearchText.h; sourceTree = "<group>"; };
-		5D195D7115228C0200E109AD /* MHVVocabSearchText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVVocabSearchText.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D195D801522973300E109AD /* MHVVocabSearchTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabSearchTask.h; sourceTree = "<group>"; };
-		5D195D811522973400E109AD /* MHVVocabSearchTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabSearchTask.m; sourceTree = "<group>"; };
+		5D195D7015228C0200E109AD /* MHVVocabularySearchString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularySearchString.h; sourceTree = "<group>"; };
+		5D195D7115228C0200E109AD /* MHVVocabularySearchString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVVocabularySearchString.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5D195D801522973300E109AD /* MHVVocabularySearchTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularySearchTask.h; sourceTree = "<group>"; };
+		5D195D811522973400E109AD /* MHVVocabularySearchTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularySearchTask.m; sourceTree = "<group>"; };
 		5D1ACC7B19103C73000689FD /* MHVResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVResponse.h; sourceTree = "<group>"; };
 		5D1ACC7C19103C73000689FD /* MHVResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVResponse.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D1ACC7F19104056000689FD /* MHVResponseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVResponseStatus.h; sourceTree = "<group>"; };
@@ -919,14 +935,6 @@
 		5D20D35214F487E600160611 /* MHVPendingThing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVPendingThing.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D20D35514F4882C00160611 /* MHVThingQueryResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingQueryResult.h; sourceTree = "<group>"; };
 		5D20D35614F4883100160611 /* MHVThingQueryResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVThingQueryResult.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D227B85153766E500E12075 /* MHVVocabIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabIdentifier.h; sourceTree = "<group>"; };
-		5D227B86153766E500E12075 /* MHVVocabIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVVocabIdentifier.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D227B87153766E500E12075 /* MHVVocabThing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabThing.h; sourceTree = "<group>"; };
-		5D227B88153766E500E12075 /* MHVVocabThing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVVocabThing.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D227B89153766E500E12075 /* MHVVocabSearchParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabSearchParams.h; sourceTree = "<group>"; };
-		5D227B8A153766E500E12075 /* MHVVocabSearchParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVVocabSearchParams.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D227B8B153766E500E12075 /* MHVVocabCodeSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabCodeSet.h; sourceTree = "<group>"; };
-		5D227B8C153766E500E12075 /* MHVVocabCodeSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabCodeSet.m; sourceTree = "<group>"; };
 		5D25D66E18AC567800B29B6D /* MHVMessageAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMessageAttachment.h; sourceTree = "<group>"; };
 		5D25D66F18AC567800B29B6D /* MHVMessageAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMessageAttachment.m; sourceTree = "<group>"; };
 		5D25D67018AC567800B29B6D /* MHVMessageHeaderThing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMessageHeaderThing.h; sourceTree = "<group>"; };
@@ -1043,9 +1051,6 @@
 		5D8FC3E014E2EDDF000F28EB /* MHVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVCommon.h; sourceTree = "<group>"; };
 		5D925DD515376F21006BAAA8 /* MHVGetVocabTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGetVocabTask.h; sourceTree = "<group>"; };
 		5D925DD615376F21006BAAA8 /* MHVGetVocabTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVGetVocabTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D925DDA15376F8A006BAAA8 /* MHVVocab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocab.h; sourceTree = "<group>"; };
-		5D925DDE15377348006BAAA8 /* MHVVocabParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabParams.h; sourceTree = "<group>"; };
-		5D925DDF15377348006BAAA8 /* MHVVocabParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabParams.m; sourceTree = "<group>"; };
 		5D97B93A1511743C0004B551 /* MHVUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVUser.h; sourceTree = "<group>"; };
 		5D97B93B1511743C0004B551 /* MHVUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVUser.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D97B93F15125A270004B551 /* MHVObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVObjectStore.h; sourceTree = "<group>"; };
@@ -1075,8 +1080,8 @@
 		5D983C0314E984ED00C287B7 /* MHVSecond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSecond.m; sourceTree = "<group>"; };
 		5D983C0614E9850300C287B7 /* MHVMillisecond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMillisecond.h; sourceTree = "<group>"; };
 		5D983C0714E9850400C287B7 /* MHVMillisecond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMillisecond.m; sourceTree = "<group>"; };
-		5D9E83711553000000072A0C /* MHVVocabSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabSearcher.h; sourceTree = "<group>"; };
-		5D9E83721553000000072A0C /* MHVVocabSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabSearcher.m; sourceTree = "<group>"; };
+		5D9E83711553000000072A0C /* MHVVocabularySearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularySearcher.h; sourceTree = "<group>"; };
+		5D9E83721553000000072A0C /* MHVVocabularySearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularySearcher.m; sourceTree = "<group>"; };
 		5DAED4AB18E4BC960048ECBD /* MHVMethodFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMethodFactory.h; sourceTree = "<group>"; };
 		5DAED4AC18E4BC960048ECBD /* MHVMethodFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVMethodFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5DB2E61218D22EA90030972D /* MHVLockTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVLockTable.h; sourceTree = "<group>"; };
@@ -1404,6 +1409,8 @@
 		BA4FBEA61ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVRemoteMonitoringClient.m; sourceTree = "<group>"; };
 		BA9844D11EDF19B20064389A /* MHVActionPlanTasksApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTasksApi.m; sourceTree = "<group>"; };
 		BA9844D31EDF19C60064389A /* MHVActionPlanTasksApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTasksApi.h; sourceTree = "<group>"; };
+		BA9844DA1EE081750064389A /* MHVGoalsRecommendationsApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVGoalsRecommendationsApi.h; sourceTree = "<group>"; };
+		BA9844DB1EE081810064389A /* MHVGoalsRecommendationsApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsRecommendationsApi.m; sourceTree = "<group>"; };
 		BAF50D3C1ECB610900C060D7 /* MHVGoalsApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGoalsApi.h; sourceTree = "<group>"; };
 		BAF50D3D1ECB610900C060D7 /* MHVGoalsApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsApi.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1438,6 +1445,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		438160E31ED4B0D500BB8C94 /* Vocabulary */ = {
+			isa = PBXGroup;
+			children = (
+				438160E41ED4B0D500BB8C94 /* MHVVocabulary.h */,
+				438160E51ED4B0D500BB8C94 /* MHVVocabularyCodeSet.h */,
+				438160E61ED4B0D500BB8C94 /* MHVVocabularyCodeSet.m */,
+				438160E71ED4B0D500BB8C94 /* MHVVocabularyIdentifier.h */,
+				438160E81ED4B0D500BB8C94 /* MHVVocabularyIdentifier.m */,
+				438160E91ED4B0D500BB8C94 /* MHVVocabularyParams.h */,
+				438160EA1ED4B0D500BB8C94 /* MHVVocabularyParams.m */,
+				438160EB1ED4B0D500BB8C94 /* MHVVocabularySearchParams.h */,
+				438160EC1ED4B0D500BB8C94 /* MHVVocabularySearchParams.m */,
+				438160ED1ED4B0D500BB8C94 /* MHVVocabularyCodeItem.h */,
+				438160EE1ED4B0D500BB8C94 /* MHVVocabularyCodeItem.m */,
+				438160FC1ED6269900BB8C94 /* MHVVocabularyKey.h */,
+				438160FD1ED6269900BB8C94 /* MHVVocabularyKey.m */,
+			);
+			path = Vocabulary;
+			sourceTree = "<group>";
+		};
 		4C3973B11EC4B66B0079C28D /* MHVLibTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1473,6 +1500,7 @@
 			isa = PBXGroup;
 			children = (
 				4C76474C1ECA546F003B85B5 /* MHVThingClientTests.m */,
+				438160FA1ED507DD00BB8C94 /* MHVVocabularyClientTests.m */,
 			);
 			name = Clients;
 			sourceTree = "<group>";
@@ -1492,24 +1520,6 @@
 				4C191AF81EC3998800B5E545 /* MHVHttpTask.m */,
 			);
 			path = HTTP;
-			sourceTree = "<group>";
-		};
-		5D227B84153766E500E12075 /* Vocab */ = {
-			isa = PBXGroup;
-			children = (
-				5D925DDA15376F8A006BAAA8 /* MHVVocab.h */,
-				5D227B85153766E500E12075 /* MHVVocabIdentifier.h */,
-				5D227B86153766E500E12075 /* MHVVocabIdentifier.m */,
-				5D227B87153766E500E12075 /* MHVVocabThing.h */,
-				5D227B88153766E500E12075 /* MHVVocabThing.m */,
-				5D227B8B153766E500E12075 /* MHVVocabCodeSet.h */,
-				5D227B8C153766E500E12075 /* MHVVocabCodeSet.m */,
-				5D227B89153766E500E12075 /* MHVVocabSearchParams.h */,
-				5D227B8A153766E500E12075 /* MHVVocabSearchParams.m */,
-				5D925DDE15377348006BAAA8 /* MHVVocabParams.h */,
-				5D925DDF15377348006BAAA8 /* MHVVocabParams.m */,
-			);
-			path = Vocab;
 			sourceTree = "<group>";
 		};
 		5D5299A114DCB3A700D2636E = {
@@ -1566,6 +1576,7 @@
 				5D983BB414E58EDA00C287B7 /* ThingTypes */,
 				A5B384911ECB41C000788619 /* Transport */,
 				5D983BB214E58DF800C287B7 /* Types */,
+				438160E31ED4B0D500BB8C94 /* Vocabulary */,
 				5DE3830114E4447800DFA11D /* Xml */,
 				5DE382F914E338C900DFA11D /* MHVArrayExtensions.h */,
 				5DE382FA14E338C900DFA11D /* MHVArrayExtensions.m */,
@@ -1868,7 +1879,6 @@
 				5D1ACC7B19103C73000689FD /* MHVResponse.h */,
 				5D1ACC7C19103C73000689FD /* MHVResponse.m */,
 				5D7898CA1714E9400015D375 /* ServiceDef */,
-				5D227B84153766E500E12075 /* Vocab */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1921,8 +1931,8 @@
 				5D20D33614F43A1200160611 /* MHVString255.m */,
 				5D20D33914F43A9800160611 /* MHVStringZ512.h */,
 				5D20D33A14F43A9A00160611 /* MHVStringZ512.m */,
-				5D195D7015228C0200E109AD /* MHVVocabSearchText.h */,
-				5D195D7115228C0200E109AD /* MHVVocabSearchText.m */,
+				5D195D7015228C0200E109AD /* MHVVocabularySearchString.h */,
+				5D195D7115228C0200E109AD /* MHVVocabularySearchString.m */,
 				5D983BF014E6039C00C287B7 /* MHVYear.h */,
 				5D983BF114E6039C00C287B7 /* MHVYear.m */,
 			);
@@ -2055,10 +2065,10 @@
 				4C1B3CB71EE1D9A100A57396 /* MHVBlobDownloadRequest.m */,
 				5DB4206B156C959200E1A473 /* MHVThingBlobUploadTask.h */,
 				5DB4206C156C959200E1A473 /* MHVThingBlobUploadTask.m */,
-				5D9E83711553000000072A0C /* MHVVocabSearcher.h */,
-				5D9E83721553000000072A0C /* MHVVocabSearcher.m */,
-				5D195D801522973300E109AD /* MHVVocabSearchTask.h */,
-				5D195D811522973400E109AD /* MHVVocabSearchTask.m */,
+				5D9E83711553000000072A0C /* MHVVocabularySearcher.h */,
+				5D9E83721553000000072A0C /* MHVVocabularySearcher.m */,
+				5D195D801522973300E109AD /* MHVVocabularySearchTask.h */,
+				5D195D811522973400E109AD /* MHVVocabularySearchTask.m */,
 			);
 			path = Methods;
 			sourceTree = "<group>";
@@ -2276,6 +2286,8 @@
 				4C7647481ECA32FE003B85B5 /* MHVThingClient.m */,
 				A5D1ECED1EC0FC0A000E3295 /* MHVThingClientProtocol.h */,
 				BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */,
+				438160D61ED3868700BB8C94 /* MHVVocabularyClient.h */,
+				438160D71ED3868700BB8C94 /* MHVVocabularyClient.m */,
 			);
 			path = Clients;
 			sourceTree = "<group>";
@@ -2446,6 +2458,8 @@
 				BA9844D11EDF19B20064389A /* MHVActionPlanTasksApi.m */,
 				BAF50D3C1ECB610900C060D7 /* MHVGoalsApi.h */,
 				BAF50D3D1ECB610900C060D7 /* MHVGoalsApi.m */,
+				BA9844DA1EE081750064389A /* MHVGoalsRecommendationsApi.h */,
+				BA9844DB1EE081810064389A /* MHVGoalsRecommendationsApi.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2469,6 +2483,7 @@
 				BA0356E51EC5278800BE547D /* MHVActionPlanTasksResponseActionPlanTaskInstance_.h in Headers */,
 				BA03563A1EC1278F00BE547D /* MHVJsonEnums.h in Headers */,
 				5DE382FB14E338C900DFA11D /* MHVArrayExtensions.h in Headers */,
+				438160FE1ED6269900BB8C94 /* MHVVocabularyKey.h in Headers */,
 				A54521561EC9EF0100A17A1B /* MHVConfiguration.h in Headers */,
 				A5D1ED021EC23884000E3295 /* MHVConnectionFactory.h in Headers */,
 				5DE3830C14E4447800DFA11D /* XConverter.h in Headers */,
@@ -2684,8 +2699,8 @@
 				5D195D4E1522527100E109AD /* MHVPutThingsTask.h in Headers */,
 				5D195D661522780800E109AD /* MHVRemoveThingsTask.h in Headers */,
 				BA0356E31EC5278800BE547D /* MHVActionPlanTaskOccurrenceMetrics.h in Headers */,
-				5D195D7215228C0200E109AD /* MHVVocabSearchText.h in Headers */,
-				5D195D821522973500E109AD /* MHVVocabSearchTask.h in Headers */,
+				5D195D7215228C0200E109AD /* MHVVocabularySearchString.h in Headers */,
+				5D195D821522973500E109AD /* MHVVocabularySearchTask.h in Headers */,
 				5D25D67218AC567800B29B6D /* MHVMessageAttachment.h in Headers */,
 				4C191A971EC1033C00B5E545 /* MHVMessage.h in Headers */,
 				BA0356281EC1257F00BE547D /* MHVEnum.h in Headers */,
@@ -2719,19 +2734,14 @@
 				5DC799961535FF4200193A3B /* MHVMethods.h in Headers */,
 				5DC3C43715360123008BBDBF /* MHVGetAuthorizedPeopleResult.h in Headers */,
 				BAF50D3E1ECB610900C060D7 /* MHVGoalsApi.h in Headers */,
-				5D227B8D153766E500E12075 /* MHVVocabIdentifier.h in Headers */,
 				BA03571B1EC5278800BE547D /* MHVSystemThreadingWaitHandle.h in Headers */,
 				BA0357011EC5278800BE547D /* MHVGoalsWrapper.h in Headers */,
 				BA0356E11EC5278800BE547D /* MHVActionPlanTaskInstance.h in Headers */,
 				4C191A7D1EC1033C00B5E545 /* MHVEncounter.h in Headers */,
-				5D227B8F153766E500E12075 /* MHVVocabThing.h in Headers */,
-				5D227B91153766E500E12075 /* MHVVocabSearchParams.h in Headers */,
-				5D227B93153766E500E12075 /* MHVVocabCodeSet.h in Headers */,
+				438160D81ED3868700BB8C94 /* MHVVocabularyClient.h in Headers */,
 				5D925DD715376F21006BAAA8 /* MHVGetVocabTask.h in Headers */,
 				4C191A811EC1033C00B5E545 /* MHVFamilyHistory.h in Headers */,
 				BA0357131EC5278800BE547D /* MHVSleepsSleep.h in Headers */,
-				5D925DDC15376F8A006BAAA8 /* MHVVocab.h in Headers */,
-				5D925DE015377348006BAAA8 /* MHVVocabParams.h in Headers */,
 				5D775C871538DED2000F01AE /* MHVVitalSignResult.h in Headers */,
 				BA0356D51EC5278700BE547D /* MHVActionPlanInstance.h in Headers */,
 				5D8183FD1875F9480073F8E6 /* MHVVolumeValue.h in Headers */,
@@ -2771,7 +2781,7 @@
 				5D591CFC15464FD800EAC934 /* MHVBlobPayload.h in Headers */,
 				5DF90BBF18FC80A5009ABAAB /* MHVBatchThingDownloader.h in Headers */,
 				5D591D2C1547330100EAC934 /* MHVGetPersonalImageTask.h in Headers */,
-				5D9E83731553000000072A0C /* MHVVocabSearcher.h in Headers */,
+				5D9E83731553000000072A0C /* MHVVocabularySearcher.h in Headers */,
 				5DD216211556E18A001C8F31 /* MHVLocalVocabStore.h in Headers */,
 				5D338B6115680895005A6C55 /* MHVCachingObjectStore.h in Headers */,
 				BA0356DB1EC5278700BE547D /* MHVActionPlansResponseActionPlanInstance_.h in Headers */,
@@ -2956,6 +2966,7 @@
 				4C5E80511ED5EA2E00BD7FC0 /* MHVConnectionTests.m in Sources */,
 				4C3973B31EC4B66B0079C28D /* MHVLibTests.m in Sources */,
 				4C2975C71ECDFB63006B3673 /* MHVHttpServiceTests.m in Sources */,
+				438160FB1ED507DD00BB8C94 /* MHVVocabularyClientTests.m in Sources */,
 				4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */,
 				A51203CA1ECF2CB600845680 /* MHVSodaConnectionTests.m in Sources */,
 				4C76474D1ECA546F003B85B5 /* MHVThingClientTests.m in Sources */,
@@ -3007,6 +3018,7 @@
 				5D983BEB14E6035900C287B7 /* MHVDay.m in Sources */,
 				A54521521EC9EC2800A17A1B /* MHVShellAuthService.m in Sources */,
 				5D983BEF14E6038000C287B7 /* MHVMonth.m in Sources */,
+				438160FF1ED6269900BB8C94 /* MHVVocabularyKey.m in Sources */,
 				A51203971ECCB3A100845680 /* MHVPersonClient.m in Sources */,
 				A54220471EC2651500728913 /* MHVConnectionFactoryInternal.m in Sources */,
 				5D983BF314E6039C00C287B7 /* MHVYear.m in Sources */,
@@ -3101,6 +3113,7 @@
 				5D5F3132150ED29F00ED11E7 /* MHVBrowserController.m in Sources */,
 				BA0356031EC1257F00BE547D /* NSArray+MHVEnum.m in Sources */,
 				BA0356EA1EC5278800BE547D /* MHVActionPlanTaskTracking.m in Sources */,
+				438160F81ED4EFC900BB8C94 /* MHVVocabularyCodeItem.m in Sources */,
 				4C191A621EC1033C00B5E545 /* MHVAssessment.m in Sources */,
 				A542205C1EC2698F00728913 /* MHVSodaConnection.m in Sources */,
 				5D5F3161150FAA2800ED11E7 /* HealthVaultRecord.m in Sources */,
@@ -3137,6 +3150,7 @@
 				4C191A9C1EC1033C00B5E545 /* MHVPersonalContactInfo.m in Sources */,
 				5D97B93D1511743C0004B551 /* MHVUser.m in Sources */,
 				5D39F9281513A63500208A7B /* MHVMethodCallTask.m in Sources */,
+				438160F71ED4EFC600BB8C94 /* MHVVocabularySearchParams.m in Sources */,
 				5D39F92C1513AA6000208A7B /* MHVServerResponseStatus.m in Sources */,
 				4C191A8C1EC1033C00B5E545 /* MHVInsurance.m in Sources */,
 				5D39F9301513E41200208A7B /* MHVGetThingsTask.m in Sources */,
@@ -3158,6 +3172,7 @@
 				BA0356441EC130A000BE547D /* NSArray+Utils.m in Sources */,
 				5D195D14151BF01800E109AD /* MHVPhone.m in Sources */,
 				BA0356051EC1257F00BE547D /* NSData+DataModel.m in Sources */,
+				BA9844DC1EE081810064389A /* MHVGoalsRecommendationsApi.m in Sources */,
 				5D195D1C151BF2E200E109AD /* MHVEmailAddress.m in Sources */,
 				4C76474A1ECA32FE003B85B5 /* MHVThingClient.m in Sources */,
 				5D195D20151BF54300E109AD /* MHVEmail.m in Sources */,
@@ -3177,10 +3192,10 @@
 				5D195D671522780800E109AD /* MHVRemoveThingsTask.m in Sources */,
 				5D8183FE1875F9480073F8E6 /* MHVVolumeValue.m in Sources */,
 				4C191A7C1EC1033C00B5E545 /* MHVEmotionalState.m in Sources */,
-				5D195D7315228C0200E109AD /* MHVVocabSearchText.m in Sources */,
+				5D195D7315228C0200E109AD /* MHVVocabularySearchString.m in Sources */,
 				4C1B3CB91EE1D9A100A57396 /* MHVBlobDownloadRequest.m in Sources */,
 				BAC7EA771ECCA47800F3C1AB /* MHVGoalRecommendationInstance.m in Sources */,
-				5D195D831522973500E109AD /* MHVVocabSearchTask.m in Sources */,
+				5D195D831522973500E109AD /* MHVVocabularySearchTask.m in Sources */,
 				4C191AF01EC24C2D00B5E545 /* MHVHttpServiceResponse.m in Sources */,
 				5DB2E69918D271F30030972D /* MHVThingChangeTable.m in Sources */,
 				BA0356D01EC5278700BE547D /* MHVActionPlan.m in Sources */,
@@ -3191,6 +3206,7 @@
 				BA0357141EC5278800BE547D /* MHVSleepsSleep.m in Sources */,
 				4C191AF21EC24C2D00B5E545 /* MHVHttpService.m in Sources */,
 				5D25D67518AC567800B29B6D /* MHVMessageHeaderThing.m in Sources */,
+				438160D91ED3868700BB8C94 /* MHVVocabularyClient.m in Sources */,
 				5DC799651534C97200193A3B /* MHVOneToFive.m in Sources */,
 				5DC7996D1534CB0F00193A3B /* MHVBloodGlucoseMeasurement.m in Sources */,
 				4C191AA41EC1033C00B5E545 /* MHVQuestionAnswer.m in Sources */,
@@ -3201,20 +3217,16 @@
 				5D25D67318AC567800B29B6D /* MHVMessageAttachment.m in Sources */,
 				BA0356F81EC5278800BE547D /* MHVGoalRecommendation.m in Sources */,
 				5DC3C43815360123008BBDBF /* MHVGetAuthorizedPeopleResult.m in Sources */,
-				5D227B8E153766E500E12075 /* MHVVocabIdentifier.m in Sources */,
-				5D227B90153766E500E12075 /* MHVVocabThing.m in Sources */,
 				5DF90BE619008C62009ABAAB /* MHVLabTestResultsGroup.m in Sources */,
 				A51203C71ECE207000845680 /* MHVClientFactory.m in Sources */,
-				5D227B92153766E500E12075 /* MHVVocabSearchParams.m in Sources */,
-				5D227B94153766E500E12075 /* MHVVocabCodeSet.m in Sources */,
 				5D925DD815376F21006BAAA8 /* MHVGetVocabTask.m in Sources */,
-				5D925DE115377348006BAAA8 /* MHVVocabParams.m in Sources */,
 				5DF90BDA19005D5D009ABAAB /* MHVTestResultRangeValue.m in Sources */,
 				5D775C881538DED2000F01AE /* MHVVitalSignResult.m in Sources */,
 				BA0356231EC1257F00BE547D /* MHVModelBase.m in Sources */,
 				5D775C901538E9BA000F01AE /* MHVAssessmentField.m in Sources */,
 				5DB2E6FC18D38E300030972D /* MHVThingChangeManager.m in Sources */,
 				BA03570A1EC5278800BE547D /* MHVObjective.m in Sources */,
+				438160F61ED4EFC200BB8C94 /* MHVVocabularyParams.m in Sources */,
 				4C191A7E1EC1033C00B5E545 /* MHVEncounter.m in Sources */,
 				A54220651EC2735700728913 /* NSError+MHVError.m in Sources */,
 				5DE34C8B15393C62003C24E8 /* MHVDuration.m in Sources */,
@@ -3242,14 +3254,16 @@
 				A5A1BBBA1ECC872A00CE6F64 /* MHVServiceDefinitionRequestParameters.m in Sources */,
 				5D591CFD15464FD800EAC934 /* MHVBlobPayload.m in Sources */,
 				5D591D2D1547330100EAC934 /* MHVGetPersonalImageTask.m in Sources */,
-				5D9E83741553000000072A0C /* MHVVocabSearcher.m in Sources */,
+				5D9E83741553000000072A0C /* MHVVocabularySearcher.m in Sources */,
 				BA0356D81EC5278700BE547D /* MHVActionPlanRangeMetric.m in Sources */,
 				5DD216221556E18A001C8F31 /* MHVLocalVocabStore.m in Sources */,
 				4C191AA81EC1033C00B5E545 /* MHVSleepJournalPM.m in Sources */,
 				5D338B6215680895005A6C55 /* MHVCachingObjectStore.m in Sources */,
+				438160F51ED4EFBE00BB8C94 /* MHVVocabularyIdentifier.m in Sources */,
 				5D1BE476156B427F00718832 /* MHVBlobPutParameters.m in Sources */,
 				4C191AE21EC22B8700B5E545 /* MHVNetworkReachability.m in Sources */,
 				5D1BE47A156B464400718832 /* MHVBeginBlobPutTask.m in Sources */,
+				438160F41ED4EFBA00BB8C94 /* MHVVocabularyCodeSet.m in Sources */,
 				5D18A4A2187361AB000AE3BD /* MHVFlowValue.m in Sources */,
 				5D1BE47E156B483900718832 /* MHVBlobUploadTask.m in Sources */,
 				5DB4206E156C959200E1A473 /* MHVThingBlobUploadTask.m in Sources */,
@@ -3315,6 +3329,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5BE520E8193E7C086A092CDF /* Pods-MHVLibTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3345,6 +3360,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50D6FAE20B77EA0A9CD5D0B4 /* Pods-MHVLibTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

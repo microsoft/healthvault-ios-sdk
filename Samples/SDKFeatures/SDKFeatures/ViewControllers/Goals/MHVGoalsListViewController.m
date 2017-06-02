@@ -62,6 +62,12 @@
     [self loadGoals];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadGoals];
+}
+
 - (void)loadGoals
 {
     [self.statusLabel showBusy];

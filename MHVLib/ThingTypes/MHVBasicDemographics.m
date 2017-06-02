@@ -83,9 +83,9 @@ static NSString *const c_element_lang = @"language";
     return stringFromGender(self.gender);
 }
 
-+ (MHVVocabIdentifier *)vocabForGender
++ (MHVVocabularyIdentifier *)vocabForGender
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"gender-types"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"gender-types"];
 }
 
 - (MHVClientResult *)validate

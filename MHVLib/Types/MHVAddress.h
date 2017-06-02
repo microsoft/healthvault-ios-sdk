@@ -19,7 +19,7 @@
 #import "MHVType.h"
 #import "MHVBaseTypes.h"
 #import "MHVCollection.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVAddress : MHVType
 
@@ -65,9 +65,9 @@
 // Vocabs
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForCountries;
-+ (MHVVocabIdentifier *)vocabForUSStates;
-+ (MHVVocabIdentifier *)vocabForCanadianProvinces;
++ (MHVVocabularyIdentifier *)vocabForCountries;
++ (MHVVocabularyIdentifier *)vocabForUSStates;
++ (MHVVocabularyIdentifier *)vocabForCanadianProvinces;
 
 // -------------------------
 //

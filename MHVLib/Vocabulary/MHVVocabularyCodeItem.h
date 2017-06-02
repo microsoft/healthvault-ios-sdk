@@ -1,5 +1,5 @@
 //
-// MHVVocabThing.h
+// MHVVocabularyCodeItem.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -19,7 +19,7 @@
 #import "MHVType.h"
 #import "MHVCollection.h"
 
-@interface MHVVocabThing : MHVType
+@interface MHVVocabularyCodeItem : MHVType
 
 // -------------------------
 //
@@ -29,7 +29,7 @@
 //
 // (Required) - Vocabulary Code - such as RxNorm or Snomed code
 //
-@property (readwrite, nonatomic, strong) NSString *code;
+@property (readwrite, nonatomic, strong) NSString *codeValue;
 //
 // (Required) - Vocab Display Text - the actual text
 //
@@ -37,12 +37,12 @@
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) NSString *abbreviation;
+@property (readwrite, nonatomic, strong) NSString *abbreviationText;
 //
 // (Optional) - additional information about this vocab entry
 // E.g. RxNorm can contain information about dosages and strengths
 //
-@property (readwrite, nonatomic, strong) NSString *dataXml;
+@property (readwrite, nonatomic, strong) NSString *infoXml;
 
 // -------------------------
 //
@@ -62,7 +62,7 @@
 // Collection of Vocabulary Things
 //
 // -------------------------
-@interface MHVVocabThingCollection : MHVCollection<MHVVocabThing *>
+@interface MHVVocabularyCodeItemCollection : MHVCollection<MHVVocabularyCodeItem *>
 
 - (void)sortByDisplayText;
 - (void)sortByCode;
@@ -76,7 +76,7 @@
 //
 // ------------------------
 - (NSUInteger)indexOfVocabCode:(NSString *)code;
-- (MHVVocabThing *)getThingWithCode:(NSString *)code;
+- (MHVVocabularyCodeItem *)getThingWithCode:(NSString *)code;
 - (NSString *)displayTextForCode:(NSString *)code;
 
 - (NSArray *)displayStrings;

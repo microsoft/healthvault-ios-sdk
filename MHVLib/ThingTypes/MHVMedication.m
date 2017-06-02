@@ -63,29 +63,29 @@ static NSString *const c_element_prescription = @"prescription";
     return (self.name) ? [self.name toString] : c_emptyString;
 }
 
-+ (MHVVocabIdentifier *)vocabForName
++ (MHVVocabularyIdentifier *)vocabForName
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_rxNormFamily andName:@"RxNorm Active Medicines"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_rxNormFamily andName:@"RxNorm Active Medicines"];
 }
 
-+ (MHVVocabIdentifier *)vocabForDoseUnits
++ (MHVVocabularyIdentifier *)vocabForDoseUnits
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-dose-units"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-dose-units"];
 }
 
-+ (MHVVocabIdentifier *)vocabForStrengthUnits
++ (MHVVocabularyIdentifier *)vocabForStrengthUnits
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-strength-unit"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-strength-unit"];
 }
 
-+ (MHVVocabIdentifier *)vocabForRoute
++ (MHVVocabularyIdentifier *)vocabForRoute
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-routes"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-routes"];
 }
 
-+ (MHVVocabIdentifier *)vocabForIsPrescribed
++ (MHVVocabularyIdentifier *)vocabForIsPrescribed
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-prescribed"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"medication-prescribed"];
 }
 
 - (MHVClientResult *)validate

@@ -21,11 +21,11 @@
 
 static NSString* const c_element_vocab = @"vocabulary";
 
-@implementation MHVVocabGetResults
+@implementation MHVVocabularyGetResults
 
 @synthesize vocabs = m_vocabs;
 
--(MHVVocabCodeSet *)firstVocab
+-(MHVVocabularyCodeSet *)firstVocab
 {
     return (m_vocabs) ? [m_vocabs objectAtIndex:0] : nil;
 }
@@ -38,7 +38,7 @@ static NSString* const c_element_vocab = @"vocabulary";
 
 -(void)deserialize:(XReader *)reader
 {
-    m_vocabs = (MHVVocabSetCollection *)[reader readElementArray:c_element_vocab asClass:[MHVVocabCodeSet class] andArrayClass:[MHVVocabSetCollection class]];
+    m_vocabs = (MHVVocabularyCodeSetCollection *)[reader readElementArray:c_element_vocab asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularyCodeSetCollection class]];
 }
 
 @end
@@ -57,25 +57,25 @@ static NSString* const c_element_vocab = @"vocabulary";
     return 2;
 }
 
--(MHVVocabGetResults *) vocabResults
+-(MHVVocabularyGetResults *) vocabResults
 {
-    return (MHVVocabGetResults *) self.result;
+    return (MHVVocabularyGetResults *) self.result;
 }
 
--(MHVVocabCodeSet *)vocabulary
+-(MHVVocabularyCodeSet *)vocabulary
 {
-    MHVVocabGetResults* results = self.vocabResults;
+    MHVVocabularyGetResults* results = self.vocabResults;
     return (results) ? results.firstVocab : nil;
 }
 
--(id)initWithVocabID:(MHVVocabIdentifier *)vocabID andCallback:(MHVTaskCompletion)callback
+-(id)initWithVocabID:(MHVVocabularyIdentifier *)vocabID andCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(vocabID);
     
     self = [super initWithCallback:callback];
     MHVCHECK_SELF;
     
-    m_params = [[MHVVocabParams alloc] initWithVocabID:vocabID];
+    m_params = [[MHVVocabularyParams alloc] initWithVocabID:vocabID];
     MHVCHECK_NOTNULL(m_params);
         
     return self;
@@ -93,7 +93,7 @@ LError:
 
 -(id)deserializeResponseBodyFromReader:(XReader *)reader
 {
-    return [super deserializeResponseBodyFromReader:reader asClass:[MHVVocabGetResults class]];
+    return [super deserializeResponseBodyFromReader:reader asClass:[MHVVocabularyGetResults class]];
 }
 
 @end

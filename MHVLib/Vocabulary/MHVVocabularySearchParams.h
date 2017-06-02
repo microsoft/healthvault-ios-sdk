@@ -1,6 +1,6 @@
 //
-// MHVGoalsListViewController.h
-// SDKFeatures
+// MHVVocabularySearch.h
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -16,13 +16,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVTypeViewController.h"
-#import "MHVMoreFeatures.h"
-#import "MHVFeatureActions.h"
-#import "MHVStatusLabel.h"
+#import "MHVType.h"
+#import "MHVVocabularySearchString.h"
 
-@interface MHVGoalsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface MHVVocabularySearchParams : MHVType
 
-- (id)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric;
+@property (readwrite, nonatomic, strong) MHVVocabularySearchString *text;
+@property (readwrite, nonatomic) NSInteger maxResults;
+
+- (instancetype)initWithText:(NSString *)text;
 
 @end

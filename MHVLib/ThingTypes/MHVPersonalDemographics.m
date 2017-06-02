@@ -50,19 +50,19 @@ static NSString *const c_element_donor = @"organ-donor";
     return (self.name) ? [self.name toString] : c_emptyString;
 }
 
-+ (MHVVocabIdentifier *)vocabForBloodType
++ (MHVVocabularyIdentifier *)vocabForBloodType
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"blood-types"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"blood-types"];
 }
 
-+ (MHVVocabIdentifier *)vocabForEthnicity
++ (MHVVocabularyIdentifier *)vocabForEthnicity
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"ethnicity-types"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"ethnicity-types"];
 }
 
-+ (MHVVocabIdentifier *)vocabForMaritalStatus
++ (MHVVocabularyIdentifier *)vocabForMaritalStatus
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"marital-status"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"marital-status"];
 }
 
 - (MHVClientResult *)validate

@@ -24,7 +24,7 @@
 #import "MHVThingTypes.h"
 #import "MHVAsyncTask.h"
 #import "MHVBlob.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 #import "MHVMethods.h"
 #import "MHVStore.h"
 #import "MHVClients.h"

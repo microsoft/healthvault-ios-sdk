@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 
 @interface MHVMedication : MHVThingDataTyped
@@ -105,12 +105,12 @@
 // Standard Vocabularies
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForName;  // RxNorm active medications
++ (MHVVocabularyIdentifier *)vocabForName;  // RxNorm active medications
 
-+ (MHVVocabIdentifier *)vocabForDoseUnits;
-+ (MHVVocabIdentifier *)vocabForStrengthUnits;
-+ (MHVVocabIdentifier *)vocabForRoute;
-+ (MHVVocabIdentifier *)vocabForIsPrescribed;
++ (MHVVocabularyIdentifier *)vocabForDoseUnits;
++ (MHVVocabularyIdentifier *)vocabForStrengthUnits;
++ (MHVVocabularyIdentifier *)vocabForRoute;
++ (MHVVocabularyIdentifier *)vocabForIsPrescribed;
 
 // -------------------------
 //
