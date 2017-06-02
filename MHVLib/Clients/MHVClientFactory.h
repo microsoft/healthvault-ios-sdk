@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol MHVConnectionProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVSessionCredentialClientProtocol;
+@protocol MHVConnectionProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVSessionCredentialClientProtocol, MHVRemoteMonitoringClientProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (id<MHVPersonClientProtocol>)personClientWithConnection:(id<MHVConnectionProtocol>)connection;
 
 - (id<MHVPlatformClientProtocol>)platformClientWithConnection:(id<MHVConnectionProtocol>)connection;
+
+-(id<MHVRemoteMonitoringClientProtocol>)remoteMonitoringClientWithConnection:(id<MHVConnectionProtocol>)connection;
 
 - (id<MHVThingClientProtocol>)thingClientWithConnection:(id<MHVConnectionProtocol>)connection;
 

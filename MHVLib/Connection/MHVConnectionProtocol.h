@@ -19,9 +19,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MHVSessionCredential, MHVPersonInfo, MHVServiceResponse, MHVMethod;
+@class MHVSessionCredential, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient;
 
-@protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol;
+@protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVRemoteMonitoringClient;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -85,6 +85,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (id<MHVThingClientProtocol> _Nullable)thingClient;
 
+
+/**
+ A client that can be used to access remote monitoring items.
+ 
+ @return An instance conforming to MHVRemoteMonitoringClientProtocol.
+ */
+- (MHVRemoteMonitoringClient *_Nullable)remoteMonitoringClient;
 
 /**
  A client that can be used to access vocabularies.

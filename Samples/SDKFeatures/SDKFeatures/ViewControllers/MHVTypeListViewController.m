@@ -29,9 +29,17 @@
 #import "MHVUIAlert.h"
 #import "MHVFeaturesConfiguration.h"
 
+#import "MHVGoalsListViewController.h"
+#import "MHVGoal.h"
+#import "MHVActionPlansListViewController.h"
+#import "MHVActionPlan.h"
+#import "MHVActionPlanTaskListViewController.h"
+
 @interface MHVTypeListViewController ()
 
-@property (nonatomic, strong) NSArray *classesForTypes;
+@property (nonatomic, strong) NSDictionary *itemTypes;
+@property (nonatomic, strong) NSDictionary *itemViewTypes;
+@property (nonatomic, strong) NSArray *itemList;
 @property (nonatomic, strong) MHVFeatureActions *actions;
 @property (nonatomic, strong) MHVMoreFeatures *features;
 
@@ -45,10 +53,11 @@
 {
     [super viewDidLoad];
 
-    [self.navigationController.navigationBar setTranslucent:FALSE];
+    [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = [self personName];
 
-    self.classesForTypes = [MHVTypeListViewController classesForTypesToDemo];
+    [self setupList];
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
@@ -167,7 +176,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.classesForTypes count];
+    return [self.itemList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -179,7 +188,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MHVCell"];
     }
 
-    NSString *typeName = [[self.classesForTypes objectAtIndex:indexPath.row] XRootElement];
+    NSString *typeName = _itemList[indexPath.row];
     cell.textLabel.text = typeName;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -189,9 +198,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Class selectedCls = [self.classesForTypes objectAtIndex:indexPath.row];
+    NSString *name = _itemList[indexPath.row];
+    Class selectedCls = [self.itemTypes objectForKey:name];
+    Class controllerClass = [self.itemViewTypes objectForKey:name];
 
-    MHVTypeViewController *typeView = [[MHVTypeViewController alloc] initWithTypeClass:selectedCls useMetric:FALSE];
+    id typeView = [[controllerClass alloc] initWithTypeClass:selectedCls useMetric:FALSE];
 
     if (!typeView)
     {
@@ -221,34 +232,57 @@
 //
 // -------------------------------------
 
-+ (NSArray *)classesForTypesToDemo
+- (void)setupList
 {
+    NSMutableDictionary *itemDictionary = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *viewDictionary = [[NSMutableDictionary alloc] init];
     NSMutableArray *typeList = [[NSMutableArray alloc] init];
+    
+    NSArray<Class> *thingTypes = @[[MHVBloodGlucose class],
+                            [MHVBloodPressure class],
+                            [MHVCondition class],
+                            [MHVCholesterol class],
+                            [MHVDietaryIntake class],
+                            [MHVDailyMedicationUsage class],
+                            [MHVImmunization class],
+                            [MHVEmotionalState class],
+                            [MHVExercise class],
+                            [MHVMedication class],
+                            [MHVProcedure class],
+                            [MHVSleepJournalAM class],
+                            [MHVWeight class],
+                            [MHVFile class],
+                            [MHVHeartRate class]];
 
-    [typeList addObject:[MHVBloodGlucose class]];
-    [typeList addObject:[MHVBloodPressure class]];
-    [typeList addObject:[MHVCondition class]];
-    [typeList addObject:[MHVCholesterol class]];
-    [typeList addObject:[MHVDietaryIntake class]];
-    [typeList addObject:[MHVDailyMedicationUsage class]];
-    [typeList addObject:[MHVImmunization class]];
-    [typeList addObject:[MHVEmotionalState class]];
-    [typeList addObject:[MHVExercise class]];
-    [typeList addObject:[MHVMedication class]];
-    [typeList addObject:[MHVProcedure class]];
-    [typeList addObject:[MHVSleepJournalAM class]];
-    [typeList addObject:[MHVWeight class]];
-    [typeList addObject:[MHVFile class]];
-    [typeList addObject:[MHVHeartRate class]];
+    for (int i = 0; i < thingTypes.count; i++) {
+        NSString *name = [thingTypes[i] XRootElement];
+        [typeList addObject:name];
+        [itemDictionary setObject:thingTypes[i] forKey:name];
+        [viewDictionary setObject:[MHVTypeViewController class] forKey:name];
+    }
+    
+    NSString *name = @"action plans [REST]";
+    [typeList addObject:name];
+    [itemDictionary setObject:[MHVActionPlan class] forKey:name];
+    [viewDictionary setObject:[MHVActionPlansListViewController class] forKey:name];
+    
+    name = @"action plan tasks [REST]";
+    [typeList addObject:name];
+    [itemDictionary setObject:[MHVActionPlanTask class] forKey:name];
+    [viewDictionary setObject:[MHVActionPlanTaskListViewController class] forKey:name];
+    
+    name = @"goals [REST]";
+    [typeList addObject:name];
+    [itemDictionary setObject:[MHVGoal class] forKey:name];
+    [viewDictionary setObject:[MHVGoalsListViewController class] forKey:name];
 
-    [typeList sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
-    {
-        MHVThingDataTyped *t1 = (MHVThingDataTyped *)obj1;
-        MHVThingDataTyped *t2 = (MHVThingDataTyped *)obj2;
-        return [[[t1 class] XRootElement] compare:[[t2 class] XRootElement]];
+    [typeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        return [obj1 compare:obj2];
     }];
 
-    return typeList;
+    _itemTypes = itemDictionary;
+    _itemViewTypes = viewDictionary;
+    _itemList = typeList;
 }
 
 - (Class)getSelectedClass
@@ -261,7 +295,8 @@
         return nil;
     }
 
-    return [self.classesForTypes objectAtIndex:selectedRow.row];
+    NSString *typeName = _itemList[selectedRow.row];
+    return [self.itemTypes objectForKey:typeName];
 }
 
 - (BOOL)addStandardFeatures

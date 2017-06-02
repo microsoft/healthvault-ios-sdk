@@ -135,6 +135,26 @@
         return;
     }
     
+    //Give each query a unique name if it isn't already set
+    for (MHVThingQuery *query in queries)
+    {
+        if ([NSString isNilOrEmpty:query.name])
+        {
+            query.name = [[NSUUID UUID] UUIDString];
+        }
+    }
+
+    [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+}
+
+// Internal method that will fetch more pending items if not all results are returned for the query.
+- (void)getThingsWithQueries:(MHVThingQueryCollection *)queries
+                    recordId:(NSUUID *)recordId
+              currentResults:(MHVThingQueryResultCollection *_Nullable)currentResults
+                  completion:(void(^)(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error))completion
+{
+    __block MHVThingQueryResultCollection *results = currentResults;
+    
     MHVMethod *method = [MHVMethod getThings];
     method.recordId = recordId;
     method.parameters = [self bodyForQueryCollection:queries];
@@ -149,13 +169,47 @@
          else
          {
              MHVThingQueryResults *queryResults = [self thingQueryResultsFromResponse:response];
-             if (queryResults.results)
+             if (!queryResults)
              {
-                 completion(queryResults.results, nil);
+                 completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"MHVThingQueryResults could not be extracted from the server response."]);
+                 return;
+             }
+             
+             MHVThingQueryCollection *queriesForPendingThings = [[MHVThingQueryCollection alloc] init];
+             
+             // Check for any Pending things, and build queries to fetch remaining things
+             for (MHVThingQueryResult *result in queryResults.results)
+             {
+                 if (result.hasPendingThings)
+                 {
+                     MHVThingQuery *query = [[MHVThingQuery alloc] initWithPendingThings:result.pendingThings];
+                     query.name = result.name;
+                     [queriesForPendingThings addObject:query];
+                 }
+             }
+             
+             // Merge with existing results if needed
+             if (results)
+             {
+                 [results mergeThingQueryResultCollection:queryResults.results];
              }
              else
              {
-                 completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetThings results could not be extracted."]);
+                 results = queryResults.results;
+             }
+             
+             // If there are queries to get more pending items, repeat; otherwise can call completion
+             if (queriesForPendingThings.count > 0)
+             {
+                 [self getThingsWithQueries:queriesForPendingThings
+                                   recordId:recordId
+                             currentResults:results
+                                 completion:completion];
+                 return;
+             }
+             else
+             {
+                 completion(results, nil);
              }
          }
      }];

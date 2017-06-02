@@ -1,5 +1,5 @@
 //
-// NSString+StringExtensions.m
+// MHVStringExtensions.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -126,6 +126,18 @@ static NSString *kStringFalse = @"false";
 - (NSString *)toStringWithFormat:(NSString *)format
 {
     return [NSString stringWithFormat:format, self];
+}
+
+- (NSString *)capitalizedStringForSelectors
+{
+    if ([self isEqualToString:@""])
+    {
+        return self;
+    }
+    NSRange rangeForFirstChar = NSMakeRange(0, 1);
+    NSString *substringFirstChar = [self substringWithRange:rangeForFirstChar];
+    
+    return [self stringByReplacingCharactersInRange:rangeForFirstChar withString:[substringFirstChar uppercaseString]];
 }
 
 @end
@@ -291,18 +303,6 @@ static NSString *kStringFalse = @"false";
     [self appendXmlElementStart:tag];
     [self appendString:text];
     [self appendXmlElementEnd:tag];
-}
-
-- (NSString *)capitalizedStringForSelectors
-{
-    if ([self isEqualToString:@""])
-    {
-        return self;
-    }
-    NSRange rangeForFirstChar = NSMakeRange(0, 1);
-    NSString *substringFirstChar = [self substringWithRange:rangeForFirstChar];
-    
-    return [self stringByReplacingCharactersInRange:rangeForFirstChar withString:[substringFirstChar uppercaseString]];
 }
 
 @end

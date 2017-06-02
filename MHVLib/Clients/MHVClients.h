@@ -11,6 +11,7 @@
 
 #import "MHVPersonClientProtocol.h"
 #import "MHVPlatformClientProtocol.h"
+#import "MHVRemoteMonitoringClientProtocol.h"
 #import "MHVThingClientProtocol.h"
 #import "MHVVocabularyClientProtocol.h"
 

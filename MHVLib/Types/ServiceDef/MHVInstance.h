@@ -43,6 +43,11 @@
 @property (readwrite, nonatomic, strong) NSURL *healthServiceUrl;
 
 /**
+ A string representing a URL to the HealthVault Rest service.
+ */
+@property (readwrite, nonatomic, strong) NSURL *restServiceUrl;
+
+/**
  A string representing the URL to access the HealthVault Shell.
  */
 @property (readwrite, nonatomic, strong) NSURL *shellUrl;

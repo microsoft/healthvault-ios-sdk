@@ -19,6 +19,7 @@
 #import "MHVClientFactory.h"
 #import "MHVPersonClient.h"
 #import "MHVPlatformClient.h"
+#import "MHVRemoteMonitoringClient.h"
 #import "MHVThingClient.h"
 #import "MHVSessionCredentialClient.h"
 #import "MHVThingClient.h"
@@ -33,6 +34,11 @@
 - (id<MHVPlatformClientProtocol>)platformClientWithConnection:(id<MHVConnectionProtocol>)connection
 {
     return [[MHVPlatformClient alloc] initWithConnection:connection];
+}
+
+-(id<MHVRemoteMonitoringClientProtocol>)remoteMonitoringClientWithConnection:(id<MHVConnectionProtocol>)connection
+{
+    return [[MHVRemoteMonitoringClient alloc] initWithConnection:connection];
 }
 
 - (id<MHVThingClientProtocol>)thingClientWithConnection:(id<MHVConnectionProtocol>)connection

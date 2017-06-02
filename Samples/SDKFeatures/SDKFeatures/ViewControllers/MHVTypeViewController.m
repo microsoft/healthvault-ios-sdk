@@ -100,7 +100,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     {
         [self.moreActions setEnabled:FALSE];
     }
-
+    
     [self getThingsFromHealthVault];
 }
 
@@ -200,8 +200,9 @@ static const NSInteger c_numSecondsInDay = 86400;
     
     //Include Blob metadata, so can show size
     MHVThingQuery *query = [[MHVThingQuery alloc] init];
+    query.maxResults = 500;
     query.view.sections |= MHVThingSection_Blobs;
-    
+
     // Send request to get all things for the type class set for this view controller.
     [connection.thingClient getThingsForThingClass:self.typeClass
                                              query:query
@@ -219,7 +220,7 @@ static const NSInteger c_numSecondsInDay = 86400;
                   
                   [self.thingTable reloadData];
                   
-                  [self.statusLabel clearStatus];
+                  [self.statusLabel showStatus:[NSString stringWithFormat:@"Count: %li", things.count]];
               }
               else
               {

@@ -93,6 +93,15 @@
                                       }];
 }
 
++ (NSError *)MHVNetworkError
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeNetworkError
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"An error occurred with the network operation."
+                                      }];
+}
+
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description
 {
     if (!error)

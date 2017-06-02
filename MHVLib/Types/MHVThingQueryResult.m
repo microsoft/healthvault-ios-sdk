@@ -199,4 +199,33 @@ static NSString *const c_attribute_name = @"name";
     return self;
 }
 
+- (MHVThingQueryResult *)resultWithName:(NSString *)name
+{
+    for (MHVThingQueryResult *result in self)
+    {
+        if ([result.name isEqualToString:name])
+        {
+            return result;
+        }
+    }
+    return nil;
+}
+
+- (void)mergeThingQueryResultCollection:(MHVThingQueryResultCollection *)collection
+{
+    for (MHVThingQueryResult *result in collection)
+    {
+        MHVThingQueryResult *existingResult = [self resultWithName:result.name];
+        if (existingResult)
+        {
+            [existingResult.things addObjectsFromCollection:result.things];
+            [existingResult.pendingThings removeThings:result.things];
+        }
+        else
+        {
+            [self addObject:result];
+        }
+    }
+}
+
 @end

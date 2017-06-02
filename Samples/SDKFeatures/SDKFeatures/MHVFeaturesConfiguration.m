@@ -26,6 +26,7 @@
     config.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"708995a6-4fba-42de-97a8-5feb54e944e8"];
     config.defaultHealthVaultUrl = [[NSURL alloc] initWithString:@"https://platform.healthvault-ppe.com/platform"];
     config.defaultShellUrl = [[NSURL alloc] initWithString:@"https://account.healthvault-ppe.com"];
+    config.restHealthVaultUrl = [[NSURL alloc] initWithString:@"https://data.ppe.microsofthealth.net"];
     
 #if SHOULD_USE_MULTI_RECORD
     config.isMultiRecordApp = YES;

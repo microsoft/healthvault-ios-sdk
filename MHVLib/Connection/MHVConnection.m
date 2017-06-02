@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
+#import "MHVConfiguration.h"
 #import "MHVConnection.h"
 #import "MHVAuthSession.h"
 #import "MHVMethod.h"
@@ -33,6 +34,7 @@
 #import "MHVApplicationCreationInfo.h"
 #import "MHVRestRequest.h"
 #import "MHVHttpServiceResponse.h"
+#import "MHVPersonInfo.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -41,10 +43,12 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 @property (nonatomic, strong) dispatch_queue_t completionQueue;
 @property (nonatomic, strong) NSMutableArray<MHVHttpServiceRequest *> *requests;
+@property (nonatomic, strong) MHVConfiguration *configuration;
 
 // Clients
 @property (nonatomic, strong) id<MHVPlatformClientProtocol> platformClient;
 @property (nonatomic, strong) id<MHVPersonClientProtocol> personClient;
+@property (nonatomic, strong) id<MHVRemoteMonitoringClientProtocol> remoteMonitoringClient;
 @property (nonatomic, strong) id<MHVThingClientProtocol> thingClient;
 
 // Dependencies
@@ -154,6 +158,16 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     return _thingClient;
 }
 
+- (id<MHVRemoteMonitoringClientProtocol> _Nullable)remoteMonitoringClient
+{
+    if (!_remoteMonitoringClient)
+    {
+        _remoteMonitoringClient = [self.clientFactory remoteMonitoringClientWithConnection:self];
+    }
+    
+    return _remoteMonitoringClient;
+}
+
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient
 {
     return nil;
@@ -218,15 +232,17 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     // If no URL is set, build it from serviceInstance
     if (!restRequest.url)
     {
-        [restRequest updateUrlWithServiceUrl:self.serviceInstance.healthServiceUrl];
+        [restRequest updateUrlWithServiceUrl:self.configuration.restHealthVaultUrl];
     }
     
     // Add authorization header
     NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
     if (!restRequest.isAnonymous)
     {
-        headers[@"Authorization"] = self.sessionCredential.token;
+        headers[@"Authorization"] = [NSString stringWithFormat:@"MSH-V1 app-token=%@,offline-person-id=%@,record-id=%@", self.sessionCredential.token, self.personInfo.ID, self.personInfo.selectedRecordID];
     }
+    
+    headers[@"Content-Type"] = @"application/json";
     
     if (restRequest.toFilePath)
     {
@@ -256,7 +272,21 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
             return;
         }
         
-        if (error)
+        if (response.hasError)
+        {
+            if (request.completion)
+            {
+                if (!error)
+                {
+                    error = [NSError error:[NSError MHVNetworkError] withDescription:[NSString stringWithFormat:@"Response:%@(%@) - %@", @(response.statusCode), response.errorText, response.responseAsString]];
+                }
+
+                request.completion(nil, error);
+            }
+
+            return;
+        }
+        else if (error)
         {
             if (request.completion)
             {

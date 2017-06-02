@@ -28,6 +28,7 @@
 + (NSError *)MHVOperationCancelled;
 + (NSError *)MHVUnknownError;
 + (NSError *)MHVNotFound;
++ (NSError *)MHVNetworkError;
 
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description;
 
