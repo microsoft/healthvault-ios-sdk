@@ -104,7 +104,7 @@
         return;
     }
     
-    [self getVocabulariesWithVocabularyKeys:[[MHVVocabularyKeyCollection alloc]initWithArray:@[key]] cultureIsFixed:cultureIsFixed completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error)
+    [self getVocabulariesWithVocabularyKeys:[[MHVVocabularyKeyCollection alloc]initWithArray:@[key]] cultureIsFixed:cultureIsFixed ensureTruncatedValues:ensureTruncatedValues completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error)
     {
         if (error)
         {
