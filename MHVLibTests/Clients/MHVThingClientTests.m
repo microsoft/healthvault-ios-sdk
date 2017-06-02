@@ -372,6 +372,30 @@ describe(@"MHVThingClient", ^
                    });
             });
     
+    context(@"DownloadBlob Data Inline", ^
+            {
+                __block NSData *returnedData;
+                beforeAll(^{
+                    MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] init];
+                    blobPayload.inlineData = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
+                    
+                    [thingClient downloadBlobData:blobPayload
+                                       completion:^(NSData * _Nullable data, NSError * _Nullable error)
+                    {
+                        returnedData = data;
+                    }];
+                });
+                
+                it(@"should return data", ^
+                   {
+                       [[expectFutureValue(returnedData) shouldEventually] beNonNil];
+
+                       NSString *dataString = [[NSString alloc] initWithData:returnedData encoding:NSUTF8StringEncoding];
+                       
+                       [[dataString should] equal:@"123456"];
+                   });
+            });
+    
     context(@"DownloadBlob Errors", ^
             {
                 it(@"should fail if blob payload is nil", ^
