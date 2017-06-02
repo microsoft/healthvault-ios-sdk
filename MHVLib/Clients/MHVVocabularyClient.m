@@ -257,9 +257,9 @@
  * @param completion The completion called when the method execution is complete.
  */
 - (void) getVocabulariesWithKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
-                  andCultureIsFixed:(BOOL)cultureIsFixed
-           andEnsureTruncatedValues:(BOOL)ensureTruncatedValues
-                         completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
+               andCultureIsFixed:(BOOL)cultureIsFixed
+        andEnsureTruncatedValues:(BOOL)ensureTruncatedValues
+                      completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
 {
     MHVMethod *method = [self getVocabularyGetMethodWithKeys:vocabularyKeys withCultureIsFixed:cultureIsFixed];
     
