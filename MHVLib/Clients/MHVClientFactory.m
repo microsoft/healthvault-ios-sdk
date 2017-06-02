@@ -22,7 +22,6 @@
 #import "MHVRemoteMonitoringClient.h"
 #import "MHVThingClient.h"
 #import "MHVSessionCredentialClient.h"
-#import "MHVThingClient.h"
 
 @implementation MHVClientFactory
 
