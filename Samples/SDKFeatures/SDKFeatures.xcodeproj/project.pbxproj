@@ -67,6 +67,10 @@
 		BA9844D01EDF16570064389A /* MHVActionPlanTaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844CF1EDF16570064389A /* MHVActionPlanTaskListViewController.m */; };
 		BA9844D51EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9844D41EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib */; };
 		BA9844D81EDF3D170064389A /* MHVActionPlanTaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844D71EDF3D170064389A /* MHVActionPlanTaskDetailViewController.m */; };
+		BA9844DE1EE081BA0064389A /* MHVGoalsRecommendationsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9844DD1EE081BA0064389A /* MHVGoalsRecommendationsListViewController.xib */; };
+		BA9844E11EE081D30064389A /* MHVGoalsRecommendationsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844E01EE081D30064389A /* MHVGoalsRecommendationsListViewController.m */; };
+		BA9844E31EE08D380064389A /* MHVGoalsRecommendationsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9844E21EE08D380064389A /* MHVGoalsRecommendationsDetailViewController.m */; };
+		BA9844E61EE08D540064389A /* MHVGoalsRecommendationsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA9844E51EE08D540064389A /* MHVGoalsRecommendationsDetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -169,6 +173,12 @@
 		BA9844D41EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVActionPlanTaskDetailViewController.xib; sourceTree = "<group>"; };
 		BA9844D61EDF3CE90064389A /* MHVActionPlanTaskDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTaskDetailViewController.h; sourceTree = "<group>"; };
 		BA9844D71EDF3D170064389A /* MHVActionPlanTaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTaskDetailViewController.m; sourceTree = "<group>"; };
+		BA9844DD1EE081BA0064389A /* MHVGoalsRecommendationsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalsRecommendationsListViewController.xib; sourceTree = "<group>"; };
+		BA9844DF1EE081C60064389A /* MHVGoalsRecommendationsListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVGoalsRecommendationsListViewController.h; sourceTree = "<group>"; };
+		BA9844E01EE081D30064389A /* MHVGoalsRecommendationsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsRecommendationsListViewController.m; sourceTree = "<group>"; };
+		BA9844E21EE08D380064389A /* MHVGoalsRecommendationsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsRecommendationsDetailViewController.m; sourceTree = "<group>"; };
+		BA9844E41EE08D480064389A /* MHVGoalsRecommendationsDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVGoalsRecommendationsDetailViewController.h; sourceTree = "<group>"; };
+		BA9844E51EE08D540064389A /* MHVGoalsRecommendationsDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalsRecommendationsDetailViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +326,7 @@
 				BA0324ED1ED87C5300A641AD /* ActionPlans */,
 				BA9844CB1EDF16010064389A /* ActionPlanTasks */,
 				BA6EF7611ED7376300EF043A /* Goals */,
+				BA9844D91EE081030064389A /* GoalsRecommendations */,
 				4C2975CF1ECF3429006B3673 /* MHVRecordListViewController.swift */,
 				4C2975D01ECF3429006B3673 /* MHVRecordListViewController.xib */,
 				5D09137B166EDB290031F5F9 /* MHVTypeListViewController.h */,
@@ -359,6 +370,20 @@
 			);
 			name = ActionPlanTasks;
 			path = ViewControllers/ActionPlanTasks;
+			sourceTree = "<group>";
+		};
+		BA9844D91EE081030064389A /* GoalsRecommendations */ = {
+			isa = PBXGroup;
+			children = (
+				BA9844E41EE08D480064389A /* MHVGoalsRecommendationsDetailViewController.h */,
+				BA9844E21EE08D380064389A /* MHVGoalsRecommendationsDetailViewController.m */,
+				BA9844E51EE08D540064389A /* MHVGoalsRecommendationsDetailViewController.xib */,
+				BA9844DF1EE081C60064389A /* MHVGoalsRecommendationsListViewController.h */,
+				BA9844E01EE081D30064389A /* MHVGoalsRecommendationsListViewController.m */,
+				BA9844DD1EE081BA0064389A /* MHVGoalsRecommendationsListViewController.xib */,
+			);
+			name = GoalsRecommendations;
+			path = ViewControllers/GoalsRecommendations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -421,12 +446,14 @@
 			files = (
 				5D09134F166ED1980031F5F9 /* InfoPlist.strings in Resources */,
 				5D091357166ED1980031F5F9 /* Default.png in Resources */,
+				BA9844DE1EE081BA0064389A /* MHVGoalsRecommendationsListViewController.xib in Resources */,
 				BA0324F71ED8C88900A641AD /* MHVActionPlanDetailViewController.xib in Resources */,
 				BA9844D51EDF3CD20064389A /* MHVActionPlanTaskDetailViewController.xib in Resources */,
 				BA9844CD1EDF16280064389A /* MHVActionPlanTaskListViewController.xib in Resources */,
 				BA6EF75B1ED6495C00EF043A /* MHVGoalDetailViewController.xib in Resources */,
 				5D091359166ED1980031F5F9 /* Default@2x.png in Resources */,
 				BA0324EF1ED87EFA00A641AD /* MHVActionPlansListViewController.xib in Resources */,
+				BA9844E61EE08D540064389A /* MHVGoalsRecommendationsDetailViewController.xib in Resources */,
 				BA6EF7561ED607AC00EF043A /* MHVGoalsListViewController.xib in Resources */,
 				5D09135B166ED1980031F5F9 /* Default-568h@2x.png in Resources */,
 				5D091361166ED1980031F5F9 /* MHVViewController.xib in Resources */,
@@ -445,6 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA9844E11EE081D30064389A /* MHVGoalsRecommendationsListViewController.m in Sources */,
 				BA0324F21ED87F4400A641AD /* MHVActionPlansListViewController.m in Sources */,
 				5D091351166ED1980031F5F9 /* main.m in Sources */,
 				5D091355166ED1980031F5F9 /* MHVAppDelegate.m in Sources */,
@@ -469,6 +497,7 @@
 				5D789916171626F60015D375 /* MHVMoreFeatures.m in Sources */,
 				4C00119B1EBCC05000BABFBA /* MHVUIAlert.m in Sources */,
 				5D789936171736050015D375 /* MHVMedicationFactory.m in Sources */,
+				BA9844E31EE08D380064389A /* MHVGoalsRecommendationsDetailViewController.m in Sources */,
 				A51203BB1ECCDD3E00845680 /* MHVFeaturesConfiguration.m in Sources */,
 				5D78993A171739FB0015D375 /* MHVConditionFactory.m in Sources */,
 				BA6EF75E1ED649AD00EF043A /* MHVGoalDetailViewController.m in Sources */,

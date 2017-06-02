@@ -1,5 +1,5 @@
 //
-// MHVVocabIdentifier.m
+// MHVVocabularyIdentifier.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,7 +17,7 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabIdentifier.h"
+#import "MHVVocabularyIdentifier.h"
 
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_family = @"family";
@@ -33,13 +33,13 @@ NSString *const c_hl7Family = @"HL7";
 NSString *const c_isoFamily = @"iso";
 NSString *const c_usdaFamily = @"usda";
 
-@interface MHVVocabIdentifier ()
+@interface MHVVocabularyIdentifier ()
 
 @property (nonatomic, strong) NSString *keyString;
 
 @end
 
-@implementation MHVVocabIdentifier
+@implementation MHVVocabularyIdentifier
 
 - (instancetype)initWithFamily:(NSString *)family andName:(NSString *)name
 {
@@ -56,11 +56,28 @@ NSString *const c_usdaFamily = @"usda";
     return self;
 }
 
-- (MHVCodedValue *)codedValueForThing:(MHVVocabThing *)vocabThing
+- (instancetype)initWithFamily:(NSString *)family andName:(NSString *)name andVersion:(NSString *)version
+{
+    MHVCHECK_STRING(family);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(version);
+    
+    self = [super init];
+    if (self)
+    {
+        _family = family;
+        _name = name;
+        _version = version;
+    }
+    
+    return self;
+}
+
+- (MHVCodedValue *)codedValueForThing:(MHVVocabularyCodeItem *)vocabThing
 {
     MHVCHECK_NOTNULL(vocabThing);
 
-    return [[MHVCodedValue alloc] initWithCode:vocabThing.code vocab:self.name vocabFamily:self.family vocabVersion:self.version];
+    return [[MHVCodedValue alloc] initWithCode:vocabThing.codeValue vocab:self.name vocabFamily:self.family vocabVersion:self.version];
 }
 
 - (MHVCodedValue *)codedValueForCode:(NSString *)code
@@ -138,16 +155,27 @@ NSString *const c_usdaFamily = @"usda";
     self.codeValue = [reader readStringElement:c_element_code];
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[MHVVocabularyIdentifier class]])
+    {
+        return FALSE;
+    }
+    
+    MHVVocabularyIdentifier *other = (MHVVocabularyIdentifier *)object;
+    return [self.name isEqualToString:other.name] && [self.family isEqualToString:other.family] && [self.version isEqual:other.version];
+}
+
 @end
 
-@implementation MHVVocabIdentifierCollection
+@implementation MHVVocabularyIdentifierCollection
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.type = [MHVVocabIdentifier class];
+        self.type = [MHVVocabularyIdentifier class];
     }
 
     return self;

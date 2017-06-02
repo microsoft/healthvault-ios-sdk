@@ -89,5 +89,5 @@
 #import "MHVThingQueryResult.h"
 #import "MHVThingQueryResults.h"
 
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 #import "MHVBlob.h"

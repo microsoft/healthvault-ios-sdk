@@ -19,7 +19,7 @@
 #import "MHVUIAlert.h"
 #import "MHVDietaryIntakeFactory.h"
 
-static MHVVocabIdentifier* s_vocabForMeals;
+static MHVVocabularyIdentifier* s_vocabForMeals;
 
 @implementation MHVDietaryIntake (MHVFactoryMethods)
 
@@ -121,7 +121,7 @@ LError:
     return dinner;    
 }
 
-+(MHVVocabIdentifier *)getVocabForMeals
++(MHVVocabularyIdentifier *)getVocabForMeals
 {
     if (s_vocabForMeals == nil)
     {

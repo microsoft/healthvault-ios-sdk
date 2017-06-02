@@ -125,9 +125,9 @@
 // Vocabs
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForActivities;
-+ (MHVVocabIdentifier *)vocabForDetails;
-+ (MHVVocabIdentifier *)vocabForUnits;
++ (MHVVocabularyIdentifier *)vocabForActivities;
++ (MHVVocabularyIdentifier *)vocabForDetails;
++ (MHVVocabularyIdentifier *)vocabForUnits;
 
 
 // -------------------------

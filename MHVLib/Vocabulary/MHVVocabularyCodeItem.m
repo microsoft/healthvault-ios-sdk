@@ -1,5 +1,5 @@
 //
-// MHVVocabThing.m
+// MHVVocabularyCodeItem.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,14 +17,14 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabThing.h"
+#import "MHVVocabularyCodeItem.h"
 
 static const xmlChar *x_element_code = XMLSTRINGCONST("code-value");
 static const xmlChar *x_element_displaytext = XMLSTRINGCONST("display-text");
 static const xmlChar *x_element_abbrv = XMLSTRINGCONST("abbreviation-text");
 static NSString *const c_element_data = @"info-xml";
 
-@implementation MHVVocabThing
+@implementation MHVVocabularyCodeItem
 
 - (NSString *)toString
 {
@@ -45,37 +45,37 @@ static NSString *const c_element_data = @"info-xml";
 {
     MHVVALIDATE_BEGIN;
 
-    MHVVALIDATE_STRING(self.code, MHVClientError_InvalidVocabIdentifier);
+    MHVVALIDATE_STRING(self.codeValue, MHVClientError_InvalidVocabIdentifier);
 
     MHVVALIDATE_SUCCESS;
 }
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_code value:self.code];
+    [writer writeElementXmlName:x_element_code value:self.codeValue];
     [writer writeElementXmlName:x_element_displaytext value:self.displayText];
-    [writer writeElementXmlName:x_element_abbrv value:self.abbreviation];
-    [writer writeRaw:self.dataXml];
+    [writer writeElementXmlName:x_element_abbrv value:self.abbreviationText];
+    [writer writeRaw:self.infoXml];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.code = [reader readStringElementWithXmlName:x_element_code];
+    self.codeValue = [reader readStringElementWithXmlName:x_element_code];
     self.displayText = [reader readStringElementWithXmlName:x_element_displaytext];
-    self.abbreviation = [reader readStringElementWithXmlName:x_element_abbrv];
-    self.dataXml = [reader readElementRaw:c_element_data];
+    self.abbreviationText = [reader readStringElementWithXmlName:x_element_abbrv];
+    self.infoXml = [reader readElementRaw:c_element_data];
 }
 
 @end
 
-@implementation MHVVocabThingCollection
+@implementation MHVVocabularyCodeItemCollection
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.type = [MHVVocabThing class];
+        self.type = [MHVVocabularyCodeItem class];
     }
 
     return self;
@@ -85,8 +85,8 @@ static NSString *const c_element_data = @"info-xml";
 {
     [self sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
     {
-        MHVVocabThing *x = (MHVVocabThing *)obj1;
-        MHVVocabThing *y = (MHVVocabThing *)obj2;
+        MHVVocabularyCodeItem *x = (MHVVocabularyCodeItem *)obj1;
+        MHVVocabularyCodeItem *y = (MHVVocabularyCodeItem *)obj2;
 
         return [x.displayText compare:y.displayText];
     } ];
@@ -96,10 +96,10 @@ static NSString *const c_element_data = @"info-xml";
 {
     [self sortUsingComparator:^NSComparisonResult (id obj1, id obj2)
     {
-        MHVVocabThing *x = (MHVVocabThing *)obj1;
-        MHVVocabThing *y = (MHVVocabThing *)obj2;
+        MHVVocabularyCodeItem *x = (MHVVocabularyCodeItem *)obj1;
+        MHVVocabularyCodeItem *y = (MHVVocabularyCodeItem *)obj2;
 
-        return [x.code compare:y.code];
+        return [x.codeValue compare:y.codeValue];
     }];
 }
 
@@ -107,8 +107,8 @@ static NSString *const c_element_data = @"info-xml";
 {
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
-        MHVVocabThing *thing = [self objectAtIndex:i];
-        if ([thing.code isEqualToString:code])
+        MHVVocabularyCodeItem *thing = [self objectAtIndex:i];
+        if ([thing.codeValue isEqualToString:code])
         {
             return i;
         }
@@ -117,7 +117,7 @@ static NSString *const c_element_data = @"info-xml";
     return NSNotFound;
 }
 
-- (MHVVocabThing *)getThingWithCode:(NSString *)code
+- (MHVVocabularyCodeItem *)getThingWithCode:(NSString *)code
 {
     NSUInteger index = [self indexOfVocabCode:code];
 
@@ -131,7 +131,7 @@ static NSString *const c_element_data = @"info-xml";
 
 - (NSString *)displayTextForCode:(NSString *)code
 {
-    MHVVocabThing *vocabThing = [self getThingWithCode:code];
+    MHVVocabularyCodeItem *vocabThing = [self getThingWithCode:code];
 
     if (!vocabThing)
     {

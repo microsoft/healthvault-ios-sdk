@@ -196,6 +196,29 @@ LError:
     return nil;
 }
 
++(id) newFromString:(NSString *)xml withRoot:(NSString *)root andElementName:(NSString *)name asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
+{
+    MHVCHECK_STRING(xml);
+    MHVCHECK_STRING(root);
+    MHVCHECK_STRING(name);
+    MHVCHECK_NOTNULL(classObj);
+    MHVCHECK_NOTNULL(arrayClassObj);
+
+    XReader *reader = [[XReader alloc] initFromString:xml];
+    MHVCHECK_NOTNULL(reader);
+    @try
+    {
+        return [reader readElementArray:root thingName:name asClass:classObj andArrayClass:arrayClassObj];
+    }
+    @finally
+    {
+        reader = nil;
+    }
+    
+LError:
+    return nil;
+}
+
 +(id) newFromReader:(XReader *)reader withRoot:(NSString *)root asClass:(Class)classObj
 {
     id obj = nil;

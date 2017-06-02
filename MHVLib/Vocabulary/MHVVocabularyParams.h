@@ -1,5 +1,5 @@
 //
-// MHVVocab.h
+// MHVVocabularyParams.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,9 +16,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+#import <Foundation/Foundation.h>
+#import "MHVType.h"
+#import "MHVBaseTypes.h"
+#import "MHVVocabularyIdentifier.h"
 
-#import "MHVVocabIdentifier.h"
-#import "MHVVocabThing.h"
-#import "MHVVocabCodeSet.h"
-#import "MHVVocabParams.h"
-#import "MHVVocabSearchParams.h"
+@interface MHVVocabularyParams : MHVType
+
+@property (readonly, nonatomic, strong) MHVVocabularyIdentifierCollection *vocabIDs;
+@property (readwrite, nonatomic) BOOL fixedCulture;
+
+- (instancetype)initWithVocabID:(MHVVocabularyIdentifier *)vocabID;
+- (instancetype)initWithVocabIDs:(MHVVocabularyIdentifierCollection *)vocabIDs;
+
+@end

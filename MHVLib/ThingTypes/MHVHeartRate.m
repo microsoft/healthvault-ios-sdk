@@ -70,14 +70,14 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
     return [self.when toDateForCalendar:calendar];
 }
 
-+ (MHVVocabIdentifier *)vocabForMeasurementMethod
++ (MHVVocabularyIdentifier *)vocabForMeasurementMethod
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-method"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-method"];
 }
 
-+ (MHVVocabIdentifier *)vocabForMeasurementConditions
++ (MHVVocabularyIdentifier *)vocabForMeasurementConditions
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-conditions"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"heart-rate-measurement-conditions"];
 }
 
 - (NSString *)toString

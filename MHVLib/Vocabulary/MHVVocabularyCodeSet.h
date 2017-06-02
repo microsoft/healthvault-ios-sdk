@@ -18,34 +18,34 @@
 
 #import "MHVType.h"
 #import "MHVBaseTypes.h"
-#import "MHVVocabThing.h"
-#import "MHVVocabIdentifier.h"
+#import "MHVVocabularyCodeItem.h"
+#import "MHVVocabularyIdentifier.h"
 
-@interface MHVVocabCodeSet : MHVType
+@interface MHVVocabularyCodeSet : MHVType
 
 @property (readwrite, nonatomic, strong) NSString *name;
 @property (readwrite, nonatomic, strong) NSString *family;
 @property (readwrite, nonatomic, strong) NSString *version;
-@property (readwrite, nonatomic, strong) MHVVocabThingCollection *things;
+@property (readwrite, nonatomic, strong) MHVVocabularyCodeItemCollection *vocabularyCodeItems;
 @property (readwrite, nonatomic, strong) MHVBool *isTruncated;
 
 @property (readonly, nonatomic) BOOL hasThings;
 
 - (NSArray *)displayStrings;
-- (void)sortThingsByDisplayText;
+- (void)sortVocabularyCodeItemsByDisplayText;
 
-- (MHVVocabIdentifier *)getVocabID;
-
-@end
-
-@interface MHVVocabSetCollection : MHVCollection<MHVVocabCodeSet *>
+- (MHVVocabularyIdentifier *)getVocabularyID;
 
 @end
 
+@interface MHVVocabularyCodeSetCollection : MHVCollection<MHVVocabularyCodeSet *>
 
-@interface MHVVocabSearchResults : MHVType
+@end
 
-@property (readwrite, nonatomic, strong) MHVVocabCodeSet *match;
+
+@interface MHVVocabularySearchResults : MHVType
+
+@property (readwrite, nonatomic, strong) MHVVocabularyCodeSet *match;
 @property (readonly, nonatomic) BOOL hasMatches;
 
 @end

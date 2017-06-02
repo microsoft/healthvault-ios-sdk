@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVCondition : MHVThingDataTyped
 
@@ -69,7 +69,7 @@
 // Standard Vocabs
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForStatus;
++ (MHVVocabularyIdentifier *)vocabForStatus;
 
 // -------------------------
 //

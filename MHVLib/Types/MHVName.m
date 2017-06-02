@@ -115,14 +115,14 @@ static NSString *const c_element_suffix = @"suffix";
     return (self.fullName) ? self.fullName : c_emptyString;
 }
 
-+ (MHVVocabIdentifier *)vocabForTitle
++ (MHVVocabularyIdentifier *)vocabForTitle
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-prefixes"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-prefixes"];
 }
 
-+ (MHVVocabIdentifier *)vocabForSuffix
++ (MHVVocabularyIdentifier *)vocabForSuffix
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-suffixes"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"name-suffixes"];
 }
 
 - (MHVClientResult *)validate

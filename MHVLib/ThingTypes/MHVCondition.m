@@ -56,9 +56,9 @@ static NSString *const c_element_reason = @"stop-reason";
     return (self.name) ? [self.name toString] : c_emptyString;
 }
 
-+ (MHVVocabIdentifier *)vocabForStatus
++ (MHVVocabularyIdentifier *)vocabForStatus
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"condition-occurrence"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"condition-occurrence"];
 }
 
 - (MHVClientResult *)validate

@@ -73,7 +73,7 @@
 // Vocab
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForPersonType;
++ (MHVVocabularyIdentifier *)vocabForPersonType;
 
 // -------------------------
 //

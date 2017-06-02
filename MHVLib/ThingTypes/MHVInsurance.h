@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVInsurance : MHVThingDataTyped
 
@@ -83,7 +83,7 @@
 // Vocabulary
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForCoverage;
++ (MHVVocabularyIdentifier *)vocabForCoverage;
 
 // -------------------------
 //

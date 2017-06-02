@@ -71,29 +71,29 @@ static NSString *const c_element_consent = @"consent";
     return (self.name) ? [self.name toString] : c_emptyString;
 }
 
-+ (MHVVocabIdentifier *)vocabForName
++ (MHVVocabularyIdentifier *)vocabForName
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunizations-common"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunizations-common"];
 }
 
-+ (MHVVocabIdentifier *)vocabForAdverseEvent
++ (MHVVocabularyIdentifier *)vocabForAdverseEvent
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-adverse-effect"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-adverse-effect"];
 }
 
-+ (MHVVocabIdentifier *)vocabForManufacturer
++ (MHVVocabularyIdentifier *)vocabForManufacturer
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hl7Family andName:@"vaccine-manufacturers-mvx"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hl7Family andName:@"vaccine-manufacturers-mvx"];
 }
 
-+ (MHVVocabIdentifier *)vocabForSurface
++ (MHVVocabularyIdentifier *)vocabForSurface
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-anatomic-surface"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-anatomic-surface"];
 }
 
-+ (MHVVocabIdentifier *)vocabForRoute
++ (MHVVocabularyIdentifier *)vocabForRoute
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-routes"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"immunization-routes"];
 }
 
 - (MHVClientResult *)validate

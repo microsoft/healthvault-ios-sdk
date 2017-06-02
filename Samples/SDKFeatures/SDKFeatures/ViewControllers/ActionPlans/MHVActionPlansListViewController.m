@@ -57,6 +57,12 @@
     [self loadActionPlans];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadActionPlans];
+}
+
 - (void)loadActionPlans
 {
     [self.statusLabel showBusy];

@@ -1,5 +1,5 @@
 //
-// MHVPhone.h
+// MHVVocabularyKey.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,11 +17,10 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVBaseTypes.h"
 #import "MHVCollection.h"
-#import "MHVVocabulary.h"
+#import "MHVVocabularyCodeSet.h"
 
-@interface MHVPhone : MHVType
+@interface MHVVocabularyKey : MHVType
 
 // -------------------------
 //
@@ -29,44 +28,47 @@
 //
 // -------------------------
 //
-// (Required) Phone number
-// Note: the SDK does not validate if the phone number is in valid
-// phone number format.
+// (Required) - Vocabulary key name
 //
-@property (readwrite, nonatomic, strong) NSString *number;
+@property (readwrite, nonatomic, strong) NSString *name;
 //
-// (Optional) A description of this number (Cell, Home, Work)
+// (Optional) - The Vocabulary key family
 //
-@property (readwrite, nonatomic, strong) NSString *type;
+@property (readwrite, nonatomic, strong) NSString *family;
+//
+// (Optional) - The Vocabulary version
+//
+@property (readwrite, nonatomic, strong) NSString *version;
+//
+// (Optinal) - The Vocabulary description
+//
+@property (readwrite, nonatomic, strong) NSString *descriptionText;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVBool *isPrimary;
+@property (readwrite, nonatomic, strong) NSString *code;
 
-// -------------------------
-//
-// Initializers
-//
-// -------------------------
-- (instancetype)initWithNumber:(NSString *)number;
+- (instancetype) initWithName:(NSString*)name
+                    andFamily:(NSString*)family
+                   andVersion:(NSString*)version
+                      andCode:(NSString*)code;
+
+- (instancetype) initFromVocabulary:(MHVVocabularyCodeSet *) vocabulary;
 
 // -------------------------
 //
 // Text
 //
 // -------------------------
-
 - (NSString *)toString;
-
-+ (MHVVocabularyIdentifier *)vocabForType;
 
 @end
 
 // -------------------------
 //
-// MHVPhoneCollection
+// Collection of Vocabulary keys
 //
 // -------------------------
-@interface MHVPhoneCollection : MHVCollection<MHVPhone *>
+@interface MHVVocabularyKeyCollection : MHVCollection<MHVVocabularyKey *>
 
 @end
