@@ -36,25 +36,6 @@
     return self;
 }
 
-- (instancetype)initWithURL:(NSURL *)url
-                 httpMethod:(NSString *)httpMethod
-                       body:(NSData *_Nullable)body
-                isAnonymous:(BOOL)isAnonymous
-{
-    MHVASSERT_PARAMETER(url);
-    MHVASSERT_PARAMETER(url);
-    
-    self = [super init];
-    if (self)
-    {
-        _url = url;
-        _httpMethod = httpMethod;
-        _body = body;
-        _isAnonymous = isAnonymous;
-    }
-    return self;
-}
-
 - (void)updateUrlWithServiceUrl:(NSURL *)serviceUrl
 {
     NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:serviceUrl resolvingAgainstBaseURL:YES];

@@ -95,7 +95,7 @@
          {
              if (completion)
              {
-                 id result = [MHVJsonSerializer deserialize:response.responseAsString
+                 id result = [MHVJsonSerializer deserialize:[[NSString alloc] initWithData:response.responseData encoding:NSUTF8StringEncoding]
                                                     toClass:[toClass class]
                                                 shouldCache:YES];
                  

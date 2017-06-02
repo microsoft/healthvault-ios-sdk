@@ -49,6 +49,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSUUID *correlationId;
 
 /**
+ URL for method (ignored for MHVMethodTypeHealthVaultXML type)
+ */
+@property (nonatomic, strong, readonly) NSURL *url;
+
+/**
+ File path for where data should be saved
+ */
+@property (nonatomic, strong, readonly) NSString *filePath;
+
+/**
  Pre-allocates a DOPU package id.
 
  @return An instance of MHVMethod.

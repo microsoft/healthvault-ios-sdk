@@ -40,6 +40,20 @@
     return self;
 }
 
+- (instancetype)initWithURL:(NSURL *)url filePath:(NSString *)filePath isAnonymous:(BOOL)isAnonymous
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _url = url;
+        _filePath = filePath;
+        _isAnonymous = isAnonymous;
+    }
+    
+    return self;
+}
+
 + (MHVMethod *)allocatePackageId;
 {
     return [[MHVMethod alloc] initWithName:@"AllocatePackageId" version:1 isAnonymous:NO];

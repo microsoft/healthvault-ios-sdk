@@ -1,6 +1,6 @@
 //
-//  MHVThingClient.m
-//  MHVLib
+// MHVThingClient.m
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -20,10 +20,13 @@
 #import "MHVThingClient.h"
 #import "MHVCommon.h"
 #import "MHVMethod.h"
+#import "MHVRestRequest.h"
+#import "MHVBlobDownloadRequest.h"
 #import "MHVServiceResponse.h"
 #import "MHVTypes.h"
 #import "NSError+MHVError.h"
 #import "MHVConnectionProtocol.h"
+#import "MHVPersonalImage.h"
 
 @interface MHVThingClient ()
 
@@ -42,18 +45,14 @@
     {
         _connection = connection;
     }
+    
     return self;
 }
 
 - (void)getThingWithThingId:(NSUUID *)thingId
                    recordId:(NSUUID *)recordId
-                 completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion
+                 completion:(void (^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(thingId);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
@@ -71,7 +70,7 @@
     
     [self getThingsWithQuery:[[MHVThingQuery alloc] initWithThingID:[thingId UUIDString]]
                     recordId:recordId
-                  completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
      {
          if (error)
          {
@@ -86,13 +85,8 @@
 
 - (void)getThingsWithQuery:(MHVThingQuery *)query
                   recordId:(NSUUID *)recordId
-                completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
+                completion:(void (^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(query);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
@@ -110,7 +104,7 @@
     
     [self getThingsWithQueries:[[MHVThingQueryCollection alloc] initWithObject:query]
                       recordId:recordId
-                    completion:^(MHVThingQueryResultCollection * _Nullable results, NSError * _Nullable error)
+                    completion:^(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error)
      {
          if (error)
          {
@@ -121,18 +115,12 @@
              completion(results.firstObject.things, nil);
          }
      }];
-    
 }
 
 - (void)getThingsWithQueries:(MHVThingQueryCollection *)queries
                     recordId:(NSUUID *)recordId
-                  completion:(void(^)(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error))completion
+                  completion:(void (^)(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(queries);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
@@ -173,7 +161,7 @@
     method.parameters = [self bodyForQueryCollection:queries];
     
     [self.connection executeHttpServiceOperation:method
-                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
          if (error)
          {
@@ -228,16 +216,11 @@
      }];
 }
 
-- (void)getThingsForThingClass:(Class )thingClass
+- (void)getThingsForThingClass:(Class)thingClass
                          query:(MHVThingQuery *_Nullable)query
                       recordId:(NSUUID *)recordId
-                    completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
+                    completion:(void (^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(thingClass);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
@@ -260,7 +243,7 @@
         return;
     }
     
-    //Add filter to query argument, or create if argument is nil
+    // Add filter to query argument, or create if argument is nil
     if (query)
     {
         [query.filters addObject:filter];
@@ -279,11 +262,6 @@
               recordId:(NSUUID *)recordId
             completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(thing);
     MHVASSERT_PARAMETER(recordId);
     
@@ -293,6 +271,7 @@
         {
             completion([NSError MVHInvalidParameter]);
         }
+        
         return;
     }
     
@@ -305,11 +284,6 @@
                recordId:(NSUUID *)recordId
              completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
     
@@ -319,6 +293,7 @@
         {
             completion([NSError MVHInvalidParameter]);
         }
+        
         return;
     }
     
@@ -332,7 +307,7 @@
     method.parameters = [self bodyForThingCollection:things];
     
     [self.connection executeHttpServiceOperation:method
-                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
          if (completion)
          {
@@ -347,11 +322,6 @@
            recordId:(NSUUID *)recordId
          completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(thing);
     MHVASSERT_PARAMETER(recordId);
     
@@ -361,6 +331,7 @@
         {
             completion([NSError MVHInvalidParameter]);
         }
+        
         return;
     }
     
@@ -373,11 +344,6 @@
             recordId:(NSUUID *)recordId
           completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
     
@@ -387,6 +353,7 @@
         {
             completion([NSError MVHInvalidParameter]);
         }
+        
         return;
     }
     
@@ -400,7 +367,7 @@
     method.parameters = [self bodyForThingCollection:things];
     
     [self.connection executeHttpServiceOperation:method
-                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
          if (completion)
          {
@@ -415,11 +382,6 @@
            recordId:(NSUUID *)recordId
          completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(thing);
     MHVASSERT_PARAMETER(recordId);
     
@@ -429,6 +391,7 @@
         {
             completion([NSError MVHInvalidParameter]);
         }
+        
         return;
     }
     
@@ -441,11 +404,6 @@
             recordId:(NSUUID *)recordId
           completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    if (!recordId)
-    {
-        recordId = self.connection.personInfo.selectedRecordID;
-    }
-    
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
     
@@ -455,6 +413,7 @@
         {
             completion([NSError MVHInvalidParameter]);
         }
+        
         return;
     }
     
@@ -463,7 +422,7 @@
     method.parameters = [self bodyForThingIdsFromThingCollection:things];
     
     [self.connection executeHttpServiceOperation:method
-                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
          if (completion)
          {
@@ -472,11 +431,246 @@
      }];
 }
 
+#pragma mark - Blobs: URL Refresh
+
+- (void)refreshBlobUrlsForThing:(MHVThing *)thing
+                       recordId:(NSUUID *)recordId
+                     completion:(void (^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(thing);
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!thing || !recordId)
+    {
+        if (completion)
+        {
+            completion(nil, [NSError MVHInvalidParameter]);
+        }
+        
+        return;
+    }
+    
+    [self refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThing:thing]
+                          recordId:recordId
+                        completion:^(MHVThingCollection *_Nullable resultThings, NSError *_Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+         }
+         else
+         {
+             // Update the blobs on original thing & return that to the completion
+             thing.blobs = resultThings.firstObject.blobs;
+             
+             completion(thing, nil);
+         }
+     }];
+}
+
+- (void)refreshBlobUrlsForThings:(MHVThingCollection *)things
+                        recordId:(NSUUID *)recordId
+                      completion:(void (^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(things);
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!things || !recordId)
+    {
+        if (completion)
+        {
+            completion(nil, [NSError MVHInvalidParameter]);
+        }
+        
+        return;
+    }
+    
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[things arrayOfThingIDs]];
+    query.view.sections = MHVThingSection_Standard | MHVThingSection_Blobs;
+    
+    [self getThingsWithQuery:query
+                    recordId:recordId
+                  completion:^(MHVThingCollection *_Nullable resultThings, NSError *_Nullable error)
+     {
+         // Update the blobs on original thing collection & return that to the completion
+         for (MHVThing *thing in resultThings)
+         {
+             NSUInteger index = [things indexOfThingID:thing.thingID];
+             if (index != NSNotFound)
+             {
+                 things[index].blobs = thing.blobs;
+             }
+         }
+         
+         if (completion)
+         {
+             completion(things, error);
+         }
+     }];
+}
+
+#pragma mark - Blobs: Download
+
+- (void)downloadBlobData:(MHVBlobPayloadThing *)blobPayloadThing
+              completion:(void (^)(NSData *_Nullable data, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(blobPayloadThing);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!blobPayloadThing)
+    {
+        completion(nil, [NSError MVHInvalidParameter]);
+        return;
+    }
+    
+    // If blob has inline base64 encoded data, can return it immediately
+    if (blobPayloadThing.inlineData)
+    {
+        completion(blobPayloadThing.inlineData, nil);
+        return;
+    }
+    
+    MHVBlobDownloadRequest *request = [[MHVBlobDownloadRequest alloc] initWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
+                                                                       toFilePath:nil];
+    
+    // Download from the URL
+    [self.connection executeHttpServiceOperation:request
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+         }
+         else
+         {
+             completion(response.responseData, nil);
+         }
+     }];
+}
+
+- (void)downloadBlob:(MHVBlobPayloadThing *)blobPayloadThing
+          toFilePath:(NSString *)filePath
+          completion:(void (^)(NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(blobPayloadThing);
+    MHVASSERT_PARAMETER(filePath);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!blobPayloadThing || !filePath)
+    {
+        completion([NSError MVHInvalidParameter]);
+        return;
+    }
+    
+    // If blob has inline base64 encoded data, can write to the desired file and return immediately
+    if (blobPayloadThing.inlineData)
+    {
+        if ([blobPayloadThing.inlineData writeToFile:filePath atomically:YES])
+        {
+            completion(nil);
+        }
+        else
+        {
+            completion([NSError error:[NSError MHVIOError]
+                      withDescription:@"Blob data could not be written to the file path"]);
+        }
+        return;
+    }
+    
+    MHVBlobDownloadRequest *request = [[MHVBlobDownloadRequest alloc] initWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
+                                                                       toFilePath:filePath];
+    
+    // Download from the URL
+    [self.connection executeHttpServiceOperation:request
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
+     {
+         completion(error);
+     }];
+}
+
+- (void)getPersonalImageWithRecordId:(NSUUID *)recordId
+                          completion:(void (^)(UIImage *_Nullable image, NSError *_Nullable error))completion
+{
+    if (!completion)
+    {
+        return;
+    }
+    
+    // Get the personalImage thing, including the blob section
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
+    query.view.sections = MHVThingSection_Blobs;
+    
+    [self.connection.thingClient getThingsWithQuery:query
+                                           recordId:recordId
+                                         completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+     {
+         // Get the defaultBlob from the first thing in the result collection; can be nil if no image has been set
+         MHVThing *thing = [things firstObject];
+         if (!thing)
+         {
+             completion(nil, nil);
+             return;
+         }
+         
+         MHVBlobPayloadThing *blob = [thing.blobs getDefaultBlob];
+         if (!blob)
+         {
+             completion(nil, nil);
+             return;
+         }
+         
+         [self.connection.thingClient downloadBlobData:blob
+                                            completion:^(NSData *_Nullable data, NSError *_Nullable error)
+          {
+              if (error || !data)
+              {
+                  completion(nil, error);
+              }
+              else
+              {
+                  UIImage *personImage = [UIImage imageWithData:data];
+                  if (personImage)
+                  {
+                      completion(personImage, nil);
+                  }
+                  else
+                  {
+                      completion(nil, [NSError error:[NSError MHVUnknownError]
+                                     withDescription:@"Blob data could not be converted to UIImage"]);
+                  }
+              }
+          }];
+     }];
+}
+
 #pragma mark - Internal methods
 
 - (MHVThingQueryResults *)thingQueryResultsFromResponse:(MHVServiceResponse *)response
 {
     XReader *reader = [[XReader alloc] initFromString:response.infoXml];
+    
     return (MHVThingQueryResults *)[NSObject newFromReader:reader withRoot:@"info" asClass:[MHVThingQueryResults class]];
 }
 
@@ -486,7 +680,7 @@
     
     [writer writeStartElement:@"info"];
     
-    for (MHVThingQuery* query in queries)
+    for (MHVThingQuery *query in queries)
     {
         if ([self isValidObject:query])
         {
@@ -541,12 +735,13 @@
 {
     if ([obj respondsToSelector:@selector(validate)])
     {
-        MHVClientResult* validationResult = [obj validate];
+        MHVClientResult *validationResult = [obj validate];
         if (validationResult.isError)
         {
             return NO;
         }
     }
+    
     return YES;
 }
 

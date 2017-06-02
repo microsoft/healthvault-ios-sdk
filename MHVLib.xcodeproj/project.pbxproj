@@ -103,6 +103,8 @@
 		4C191AF61EC3997600B5E545 /* MHVHttpTaskProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191AF51EC3997600B5E545 /* MHVHttpTaskProtocol.h */; };
 		4C191AF91EC3998800B5E545 /* MHVHttpTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191AF71EC3998800B5E545 /* MHVHttpTask.h */; };
 		4C191AFA1EC3998800B5E545 /* MHVHttpTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191AF81EC3998800B5E545 /* MHVHttpTask.m */; };
+		4C1B3CB81EE1D9A100A57396 /* MHVBlobDownloadRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1B3CB61EE1D9A100A57396 /* MHVBlobDownloadRequest.h */; };
+		4C1B3CB91EE1D9A100A57396 /* MHVBlobDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1B3CB71EE1D9A100A57396 /* MHVBlobDownloadRequest.m */; };
 		4C2975C71ECDFB63006B3673 /* MHVHttpServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2975C51ECDFB63006B3673 /* MHVHttpServiceTests.m */; };
 		4C2975C81ECDFB63006B3673 /* MHVHttpTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2975C61ECDFB63006B3673 /* MHVHttpTaskTests.m */; };
 		4C2975EB1ED37AAD006B3673 /* MHVRestRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2975E91ED37AAD006B3673 /* MHVRestRequest.h */; };
@@ -807,6 +809,8 @@
 		4C191AF51EC3997600B5E545 /* MHVHttpTaskProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpTaskProtocol.h; sourceTree = "<group>"; };
 		4C191AF71EC3998800B5E545 /* MHVHttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHttpTask.h; sourceTree = "<group>"; };
 		4C191AF81EC3998800B5E545 /* MHVHttpTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHttpTask.m; sourceTree = "<group>"; };
+		4C1B3CB61EE1D9A100A57396 /* MHVBlobDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBlobDownloadRequest.h; sourceTree = "<group>"; };
+		4C1B3CB71EE1D9A100A57396 /* MHVBlobDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBlobDownloadRequest.m; sourceTree = "<group>"; };
 		4C2975C51ECDFB63006B3673 /* MHVHttpServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHttpServiceTests.m; path = HTTP/MHVHttpServiceTests.m; sourceTree = "<group>"; };
 		4C2975C61ECDFB63006B3673 /* MHVHttpTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHttpTaskTests.m; path = HTTP/MHVHttpTaskTests.m; sourceTree = "<group>"; };
 		4C2975E91ED37AAD006B3673 /* MHVRestRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRestRequest.h; sourceTree = "<group>"; };
@@ -2057,6 +2061,8 @@
 				5D195D651522780700E109AD /* MHVRemoveThingsTask.m */,
 				4C2975E91ED37AAD006B3673 /* MHVRestRequest.h */,
 				4C2975EA1ED37AAD006B3673 /* MHVRestRequest.m */,
+				4C1B3CB61EE1D9A100A57396 /* MHVBlobDownloadRequest.h */,
+				4C1B3CB71EE1D9A100A57396 /* MHVBlobDownloadRequest.m */,
 				5DB4206B156C959200E1A473 /* MHVThingBlobUploadTask.h */,
 				5DB4206C156C959200E1A473 /* MHVThingBlobUploadTask.m */,
 				5D9E83711553000000072A0C /* MHVVocabularySearcher.h */,
@@ -2549,6 +2555,7 @@
 				BA0356E71EC5278800BE547D /* MHVActionPlanTaskTargetEvent.h in Headers */,
 				5D20D2FA14EEFF6D00160611 /* MHVBool.h in Headers */,
 				5D20D2FE14EF3DC300160611 /* MHVThingQuery.h in Headers */,
+				4C1B3CB81EE1D9A100A57396 /* MHVBlobDownloadRequest.h in Headers */,
 				5DF90BAF18F85265009ABAAB /* MHVThingCommitScheduler.h in Headers */,
 				5D20D30714F2E21400160611 /* MHVThingKey.h in Headers */,
 				4C191A611EC1033C00B5E545 /* MHVAssessment.h in Headers */,
@@ -3186,6 +3193,7 @@
 				5D8183FE1875F9480073F8E6 /* MHVVolumeValue.m in Sources */,
 				4C191A7C1EC1033C00B5E545 /* MHVEmotionalState.m in Sources */,
 				5D195D7315228C0200E109AD /* MHVVocabularySearchString.m in Sources */,
+				4C1B3CB91EE1D9A100A57396 /* MHVBlobDownloadRequest.m in Sources */,
 				BAC7EA771ECCA47800F3C1AB /* MHVGoalRecommendationInstance.m in Sources */,
 				5D195D831522973500E109AD /* MHVVocabularySearchTask.m in Sources */,
 				4C191AF01EC24C2D00B5E545 /* MHVHttpServiceResponse.m in Sources */,

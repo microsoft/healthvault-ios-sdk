@@ -31,11 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
                         body:(NSData *_Nullable)body
                  isAnonymous:(BOOL)isAnonymous;
 
-- (instancetype)initWithURL:(NSURL *)url
-                 httpMethod:(NSString *)httpMethod
-                       body:(NSData *_Nullable)body
-                isAnonymous:(BOOL)isAnonymous;
-
 - (void)updateUrlWithServiceUrl:(NSURL *)serviceUrl;
 
 @end
