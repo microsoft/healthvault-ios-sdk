@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVImmunization : MHVThingDataTyped
 
@@ -100,12 +100,12 @@
 // Standard Vocabs
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForName;
++ (MHVVocabularyIdentifier *)vocabForName;
 
-+ (MHVVocabIdentifier *)vocabForManufacturer;
-+ (MHVVocabIdentifier *)vocabForAdverseEvent;
-+ (MHVVocabIdentifier *)vocabForRoute;
-+ (MHVVocabIdentifier *)vocabForSurface;
++ (MHVVocabularyIdentifier *)vocabForManufacturer;
++ (MHVVocabularyIdentifier *)vocabForAdverseEvent;
++ (MHVVocabularyIdentifier *)vocabForRoute;
++ (MHVVocabularyIdentifier *)vocabForSurface;
 
 // -------------------------
 //

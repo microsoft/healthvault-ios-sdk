@@ -21,6 +21,7 @@
 #import "MHVPlatformClient.h"
 #import "MHVRemoteMonitoringClient.h"
 #import "MHVSessionCredentialClient.h"
+#import "MHVVocabularyClient.h"
 #import "MHVThingClient.h"
 
 @implementation MHVClientFactory
@@ -47,7 +48,7 @@
 
 - (id<MHVVocabularyClientProtocol>)vocabularyClientWithConnection:(id<MHVConnectionProtocol>)connection
 {
-    return nil;
+    return [[MHVVocabularyClient alloc] initWithConnection:connection];
 }
 
 - (id<MHVSessionCredentialClientProtocol>)credentialClientWithConnection:(id<MHVConnectionProtocol>)connection

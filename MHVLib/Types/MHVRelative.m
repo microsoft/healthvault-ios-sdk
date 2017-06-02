@@ -66,14 +66,14 @@ static NSString *const c_element_region = @"region-of-origin";
     return (self.relationship) ? [self.relationship toString] : c_emptyString;
 }
 
-+ (MHVVocabIdentifier *)vocabForRelationship
++ (MHVVocabularyIdentifier *)vocabForRelationship
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"personal-relationship"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"personal-relationship"];
 }
 
-+ (MHVVocabIdentifier *)vocabForRegionOfOrigin
++ (MHVVocabularyIdentifier *)vocabForRegionOfOrigin
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"family-history-region-of-origin"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"family-history-region-of-origin"];
 }
 
 - (MHVClientResult *)validate

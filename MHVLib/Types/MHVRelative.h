@@ -21,7 +21,7 @@
 #import "MHVCodableValue.h"
 #import "MHVPerson.h"
 #import "MHVApproxDate.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVRelative : MHVType
 
@@ -72,7 +72,7 @@
 // Vocab
 //
 // -------------------------
-+ (MHVVocabIdentifier *)vocabForRelationship;
-+ (MHVVocabIdentifier *)vocabForRegionOfOrigin;
++ (MHVVocabularyIdentifier *)vocabForRelationship;
++ (MHVVocabularyIdentifier *)vocabForRegionOfOrigin;
 
 @end

@@ -17,12 +17,12 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabSearchTask.h"
+#import "MHVVocabularySearchTask.h"
 
 static NSString* const c_element_vocab = @"vocabulary-key";
 static NSString* const c_element_params = @"text-search-parameters";
 
-@implementation MHVVocabSearchTask
+@implementation MHVVocabularySearchTask
 
 @synthesize vocabID = m_vocabID;
 @synthesize params = m_params;
@@ -37,13 +37,13 @@ static NSString* const c_element_params = @"text-search-parameters";
     return 1;
 }
 
--(MHVVocabCodeSet *)searchResult
+-(MHVVocabularyCodeSet *)searchResult
 {
-    MHVVocabSearchResults* results = (MHVVocabSearchResults *) self.result;
+    MHVVocabularySearchResults* results = (MHVVocabularySearchResults *) self.result;
     return results.hasMatches ? results.match : nil;
 }
 
--(id)initWithVocab:(MHVVocabIdentifier *)vocab searchText:(NSString *)text andCallback:(MHVTaskCompletion)callback
+-(id)initWithVocab:(MHVVocabularyIdentifier *)vocab searchText:(NSString *)text andCallback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(vocab);
     
@@ -52,7 +52,7 @@ static NSString* const c_element_params = @"text-search-parameters";
     
     self.vocabID = vocab;
     
-    m_params = [[MHVVocabSearchParams alloc] initWithText:text];
+    m_params = [[MHVVocabularySearchParams alloc] initWithText:text];
     MHVCHECK_NOTNULL(m_params);
     
     return self;
@@ -73,15 +73,15 @@ LError:
 
 -(id)deserializeResponseBodyFromReader:(XReader *)reader
 {
-    return [super deserializeResponseBodyFromReader:reader asClass:[MHVVocabSearchResults class]];
+    return [super deserializeResponseBodyFromReader:reader asClass:[MHVVocabularySearchResults class]];
 }
 
-+(MHVVocabSearchTask *)searchForText:(NSString *)text inVocabFamily:(NSString *)family vocabName:(NSString *)name callback:(MHVTaskCompletion)callback
++(MHVVocabularySearchTask *)searchForText:(NSString *)text inVocabFamily:(NSString *)family vocabName:(NSString *)name callback:(MHVTaskCompletion)callback
 {
-    MHVVocabIdentifier* vocab = [[MHVVocabIdentifier alloc] initWithFamily:family andName:name];
+    MHVVocabularyIdentifier* vocab = [[MHVVocabularyIdentifier alloc] initWithFamily:family andName:name];
     MHVCHECK_NOTNULL(vocab);
     
-    MHVVocabSearchTask* searchTask = [MHVVocabSearchTask searchForText:text inVocab:vocab callback:callback];
+    MHVVocabularySearchTask* searchTask = [MHVVocabularySearchTask searchForText:text inVocab:vocab callback:callback];
     
     return searchTask;
 
@@ -89,11 +89,11 @@ LError:
     return nil;
 }
 
-+(MHVVocabSearchTask *)searchForText:(NSString *)text inVocab:(MHVVocabIdentifier *)vocab callback:(MHVTaskCompletion)callback
++(MHVVocabularySearchTask *)searchForText:(NSString *)text inVocab:(MHVVocabularyIdentifier *)vocab callback:(MHVTaskCompletion)callback
 {
     MHVCHECK_NOTNULL(vocab);
     
-    MHVVocabSearchTask* searchTask = [[MHVVocabSearchTask alloc] initWithVocab:vocab searchText:text andCallback:callback];
+    MHVVocabularySearchTask* searchTask = [[MHVVocabularySearchTask alloc] initWithVocab:vocab searchText:text andCallback:callback];
     MHVCHECK_NOTNULL(searchTask);
     
     [searchTask start];    
@@ -104,9 +104,9 @@ LError:
     return nil;    
 }
 
-+(MHVVocabSearchTask *)searchMedications:(NSString *)text callback:(MHVTaskCompletion)callback
++(MHVVocabularySearchTask *)searchMedications:(NSString *)text callback:(MHVTaskCompletion)callback
 {
-    return [MHVVocabSearchTask searchForText:text inVocabFamily:@"RxNorm" vocabName:@"RxNorm Active Medicines" callback:callback];
+    return [MHVVocabularySearchTask searchForText:text inVocabFamily:@"RxNorm" vocabName:@"RxNorm Active Medicines" callback:callback];
 }
 
 @end

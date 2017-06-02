@@ -66,19 +66,19 @@ static NSString *const c_element_county = @"county";
     return [self toString];
 }
 
-+ (MHVVocabIdentifier *)vocabForCountries
++ (MHVVocabularyIdentifier *)vocabForCountries
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_isoFamily andName:@"iso3166"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_isoFamily andName:@"iso3166"];
 }
 
-+ (MHVVocabIdentifier *)vocabForUSStates
++ (MHVVocabularyIdentifier *)vocabForUSStates
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"states"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"states"];
 }
 
-+ (MHVVocabIdentifier *)vocabForCanadianProvinces
++ (MHVVocabularyIdentifier *)vocabForCanadianProvinces
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:c_hvFamily andName:@"provinces"];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:c_hvFamily andName:@"provinces"];
 }
 
 - (MHVClientResult *)validate

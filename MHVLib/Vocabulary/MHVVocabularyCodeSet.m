@@ -1,5 +1,5 @@
 //
-// MHVVocabSearchResult.m
+// MHVVocabularySearchResult.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,48 +17,48 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabCodeSet.h"
+#import "MHVVocabularyCodeSet.h"
 
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_family = @"family";
 static NSString *const c_element_version = @"version";
-static NSString *const c_element_thing = @"code-thing";
+static NSString *const c_element_thing = @"code-item";
 static NSString *const c_element_truncated = @"is-vocab-truncated";
 static NSString *const c_element_codeset = @"code-set-result";
 
-@implementation MHVVocabCodeSet
+@implementation MHVVocabularyCodeSet
 
 - (BOOL)hasThings
 {
     return (![NSArray isNilOrEmpty:self.things.toArray]);
 }
 
-- (MHVVocabThingCollection *)things
+- (MHVVocabularyCodeItemCollection *)things
 {
-    if (!_things)
+    if (!_vocabularyCodeItems)
     {
-        _things = [[MHVVocabThingCollection alloc] init];
+        _vocabularyCodeItems = [[MHVVocabularyCodeItemCollection alloc] init];
     }
     
-    return _things;
+    return _vocabularyCodeItems;
 }
 
 - (NSArray *)displayStrings
 {
-    return (self.things) ? [self.things displayStrings] : nil;
+    return (self.vocabularyCodeItems) ? [self.vocabularyCodeItems displayStrings] : nil;
 }
 
-- (void)sortThingsByDisplayText
+- (void)sortVocabularyCodeItemsByDisplayText
 {
-    if (self.things)
+    if (self.vocabularyCodeItems)
     {
-        [self.things sortByDisplayText];
+        [self.vocabularyCodeItems sortByDisplayText];
     }
 }
 
-- (MHVVocabIdentifier *)getVocabID
+- (MHVVocabularyIdentifier *)getVocabularyID
 {
-    return [[MHVVocabIdentifier alloc] initWithFamily:self.family andName:self.name];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:self.family andName:self.name andVersion:self.version];
 }
 
 - (void)serialize:(XWriter *)writer
@@ -75,20 +75,20 @@ static NSString *const c_element_codeset = @"code-set-result";
     self.name = [reader readStringElement:c_element_name];
     self.family = [reader readStringElement:c_element_family];
     self.version = [reader readStringElement:c_element_version];
-    self.things = (MHVVocabThingCollection *)[reader readElementArray:c_element_thing asClass:[MHVVocabThing class] andArrayClass:[MHVVocabThingCollection class]];
+    self.vocabularyCodeItems = (MHVVocabularyCodeItemCollection *)[reader readElementArray:c_element_thing asClass:[MHVVocabularyCodeItem class] andArrayClass:[MHVVocabularyCodeItemCollection class]];
     self.isTruncated = [reader readElement:c_element_truncated asClass:[MHVBool class]];
 }
 
 @end
 
-@implementation MHVVocabSetCollection
+@implementation MHVVocabularyCodeSetCollection
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.type = [MHVVocabCodeSet class];
+        self.type = [MHVVocabularyCodeSet class];
     }
     
     return self;
@@ -96,7 +96,7 @@ static NSString *const c_element_codeset = @"code-set-result";
 
 @end
 
-@implementation MHVVocabSearchResults
+@implementation MHVVocabularySearchResults
 
 - (BOOL)hasMatches
 {
@@ -110,7 +110,7 @@ static NSString *const c_element_codeset = @"code-set-result";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.match = [reader readElement:c_element_codeset asClass:[MHVVocabCodeSet class]];
+    self.match = [reader readElement:c_element_codeset asClass:[MHVVocabularyCodeSet class]];
 }
 
 @end

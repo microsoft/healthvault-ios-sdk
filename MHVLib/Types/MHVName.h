@@ -18,7 +18,7 @@
 
 #import "MHVType.h"
 #import "MHVCodableValue.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVName : MHVType
 
@@ -69,8 +69,8 @@
 // -------------------------
 - (BOOL)buildFullName;
 
-+ (MHVVocabIdentifier *)vocabForTitle;
-+ (MHVVocabIdentifier *)vocabForSuffix;
++ (MHVVocabularyIdentifier *)vocabForTitle;
++ (MHVVocabularyIdentifier *)vocabForSuffix;
 
 // -------------------------
 //

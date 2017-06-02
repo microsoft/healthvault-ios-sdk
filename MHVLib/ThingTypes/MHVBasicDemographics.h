@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 typedef NS_ENUM(NSInteger, MHVGender)
 {
@@ -75,7 +75,7 @@ MHVGender stringToGender(NSString* genderString);
 // Vocab
 //
 //-------------------------
-+(MHVVocabIdentifier *) vocabForGender;
++(MHVVocabularyIdentifier *) vocabForGender;
 
 //-------------------------
 //

@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVObjectStore.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 #import "MHVGetVocabTask.h"
 
 //-------------------------
@@ -48,10 +48,10 @@
 //
 //-------------------------
 
--(BOOL) containsVocabWithID:(MHVVocabIdentifier *) vocabID;
--(MHVVocabCodeSet *) getVocabWithID:(MHVVocabIdentifier *) vocabID;
--(BOOL) putVocab:(MHVVocabCodeSet *) vocab withID:(MHVVocabIdentifier *) vocabID;
--(void) removeVocabWithID:(MHVVocabIdentifier *) vocabID;
+-(BOOL) containsVocabWithID:(MHVVocabularyIdentifier *) vocabID;
+-(MHVVocabularyCodeSet *) getVocabWithID:(MHVVocabularyIdentifier *) vocabID;
+-(BOOL) putVocab:(MHVVocabularyCodeSet *) vocab withID:(MHVVocabularyIdentifier *) vocabID;
+-(void) removeVocabWithID:(MHVVocabularyIdentifier *) vocabID;
 
 //------------
 //
@@ -61,17 +61,17 @@
 // Download the given vocab and save it in the LocalVault
 // Use [[MHVClient current].localVault getVocab] to load it subsequently
 //
--(MHVTask *) downloadVocab:(MHVVocabIdentifier *) vocab withCallback:(MHVTaskCompletion) callback;
--(MHVTask *) downloadVocabs:(MHVVocabIdentifierCollection *) vocabIDs withCallback:(MHVTaskCompletion) callback;
+-(MHVTask *) downloadVocab:(MHVVocabularyIdentifier *) vocab withCallback:(MHVTaskCompletion) callback;
+-(MHVTask *) downloadVocabs:(MHVVocabularyIdentifierCollection *) vocabIDs withCallback:(MHVTaskCompletion) callback;
 
--(void) ensureVocabDownloaded:(MHVVocabIdentifier *) vocab; // default - will check for new vocabs once a month
--(void) ensureVocabDownloaded:(MHVVocabIdentifier *) vocab maxAge:(NSTimeInterval) ageInSeconds;
--(BOOL) ensureVocabsDownloaded:(MHVVocabIdentifierCollection *) vocabIDs maxAge:(NSTimeInterval) ageInSeconds;
+-(void) ensureVocabDownloaded:(MHVVocabularyIdentifier *) vocab; // default - will check for new vocabs once a month
+-(void) ensureVocabDownloaded:(MHVVocabularyIdentifier *) vocab maxAge:(NSTimeInterval) ageInSeconds;
+-(BOOL) ensureVocabsDownloaded:(MHVVocabularyIdentifierCollection *) vocabIDs maxAge:(NSTimeInterval) ageInSeconds;
 
 //
 // Convenience Lookup of codes
 //
--(MHVVocabThing *) getVocabThingForCode:(NSString *) code inVocab:(MHVVocabIdentifier *) vocabID;
--(NSString *) getDisplayTextForCode:(NSString *) code inVocab:(MHVVocabIdentifier *) vocabID;
+-(MHVVocabularyCodeItem *) getVocabThingForCode:(NSString *) code inVocab:(MHVVocabularyIdentifier *) vocabID;
+-(NSString *) getDisplayTextForCode:(NSString *) code inVocab:(MHVVocabularyIdentifier *) vocabID;
 
 @end

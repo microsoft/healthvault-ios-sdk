@@ -32,7 +32,7 @@
 +(MHVThing *) makeDinnerVeggiesFor:(MHVDateTime *) dinnerTime;
 +(MHVThing *) makeDinnerDessertFor:(MHVDateTime *) dinnerTime;
 
-+(MHVVocabIdentifier *) getVocabForMeals;
++(MHVVocabularyIdentifier *) getVocabForMeals;
 
 @end
 

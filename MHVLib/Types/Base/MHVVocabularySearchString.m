@@ -1,5 +1,5 @@
 //
-// MHVVocabSearchText.m
+// MHVVocabularySearchString.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,18 +17,21 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVVocabSearchText.h"
+#import "MHVVocabularySearchString.h"
 
-NSString *MHVVocabMatchTypeToString(MHVVocabMatchType type)
+NSString *MHVSearchModeToString(MHVSearchMode type)
 {
     switch (type)
     {
-        case MHVVocabMatchTypeFullText:
+        case MHVSearchModeFullText:
             return @"FullText";
 
-        case MHVVocabMatchTypePrefix:
+        case MHVSearchModePrefix:
             return @"Prefix";
 
+        case MHVSearchModeContains:
+            return @"Contains";
+            
         default:
             break;
     }
@@ -36,28 +39,33 @@ NSString *MHVVocabMatchTypeToString(MHVVocabMatchType type)
     return c_emptyString;
 }
 
-MHVVocabMatchType MHVVocabMatchTypeFromString(NSString *string)
+MHVSearchMode MHVSearchModeFromString(NSString *string)
 {
     if ([string isEqualToString:@"FullText"])
     {
-        return MHVVocabMatchTypeFullText;
+        return MHVSearchModeFullText;
     }
 
     if ([string isEqualToString:@"Prefix"])
     {
-        return MHVVocabMatchTypePrefix;
+        return MHVSearchModePrefix;
     }
 
-    return MHVVocabMatchTypeNone;
+    if ([string isEqualToString:@"Contains"])
+    {
+        return MHVSearchModeContains;
+    }
+    
+    return MHVSearchModeNone;
 }
 
 static NSString *const c_attribute_matchType = @"search-mode";
 
-@implementation MHVVocabSearchText
+@implementation MHVVocabularySearchString
 
 - (void)serializeAttributes:(XWriter *)writer
 {
-    NSString *matchType = MHVVocabMatchTypeToString(self.matchType);
+    NSString *matchType = MHVSearchModeToString(self.matchType);
 
     [writer writeAttribute:c_attribute_matchType value:matchType];
 }
@@ -69,7 +77,7 @@ static NSString *const c_attribute_matchType = @"search-mode";
     mode = [reader readAttribute:c_attribute_matchType];
     if (![NSString isNilOrEmpty:mode])
     {
-        self.matchType = MHVVocabMatchTypeFromString(mode);
+        self.matchType = MHVSearchModeFromString(mode);
     }
 }
 

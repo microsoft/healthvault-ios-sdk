@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVVocab.h"
+#import "MHVVocabulary.h"
 
 @interface MHVDietaryIntake : MHVThingDataTyped
 //
@@ -88,11 +88,11 @@
 
 // ---------------------
 //
-// MHVVocab
+// MHVVocabulary
 //
 // ---------------------
-+ (MHVVocabIdentifier *)vocabForFood;
-+ (MHVVocabIdentifier *)vocabForMeals;
++ (MHVVocabularyIdentifier *)vocabForFood;
++ (MHVVocabularyIdentifier *)vocabForMeals;
 
 // ---------------------
 //

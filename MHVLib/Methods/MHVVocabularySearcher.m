@@ -1,5 +1,5 @@
 //
-// MHVVocabSearcher.m
+// MHVVocabularySearcher.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,16 +17,16 @@
 // limitations under the License.
 //
 #import "MHVCommon.h"
-#import "MHVVocabSearcher.h"
+#import "MHVVocabularySearcher.h"
 #import "MHVBlock.h"
 
-@interface MHVVocabSearchCache ()
+@interface MHVVocabularySearchCache ()
 
-@property (nonatomic, strong) MHVVocabCodeSet* emptySet;
+@property (nonatomic, strong) MHVVocabularyCodeSet* emptySet;
 
 @end
 
-@implementation MHVVocabSearchCache
+@implementation MHVVocabularySearchCache
 
 - (NSUInteger)maxCachedResults
 {
@@ -68,7 +68,7 @@
     return [self getResultsForSearch:searchText] != nil;
 }
 
-- (MHVVocabCodeSet *)getResultsForSearch:(NSString *)searchText
+- (MHVVocabularyCodeSet *)getResultsForSearch:(NSString *)searchText
 {
     if ([NSString isNilOrEmpty:searchText])
     {
@@ -78,7 +78,7 @@
     return [self.cache objectForKey:[searchText lowercaseString]];
 }
 
-- (void)cacheResults:(MHVVocabCodeSet *)results forSearch:(NSString *)searchText
+- (void)cacheResults:(MHVVocabularyCodeSet *)results forSearch:(NSString *)searchText
 {
     if (!results)
     {
@@ -109,7 +109,7 @@
     {
         if (!self.emptySet)
         {
-            self.emptySet = [[MHVVocabCodeSet alloc] init];
+            self.emptySet = [[MHVVocabularyCodeSet alloc] init];
         }
 
         [self cacheResults:self.emptySet forSearch:searchText];
@@ -123,26 +123,26 @@
 
 @end
 
-@interface MHVVocabSearcher ()
+@interface MHVVocabularySearcher ()
 
-@property (readwrite, nonatomic, strong) MHVVocabSearchCache *vocabSearchCache;
+@property (readwrite, nonatomic, strong) MHVVocabularySearchCache *vocabSearchCache;
 @property (nonatomic, assign) NSUInteger seqNumber;
 
 @end
 
-@implementation MHVVocabSearcher
+@implementation MHVVocabularySearcher
 
-- (MHVVocabSearchCache *)cache
+- (MHVVocabularySearchCache *)cache
 {
     if (!_vocabSearchCache)
     {
-        _vocabSearchCache = [[MHVVocabSearchCache alloc] init];
+        _vocabSearchCache = [[MHVVocabularySearchCache alloc] init];
     }
 
     return _vocabSearchCache;
 }
 
-- (void)setCache:(MHVVocabSearchCache *)cache
+- (void)setCache:(MHVVocabularySearchCache *)cache
 {
     if (cache)
     {
@@ -150,12 +150,12 @@
     }
 }
 
-- (instancetype)initWithVocab:(MHVVocabIdentifier *)vocab
+- (instancetype)initWithVocab:(MHVVocabularyIdentifier *)vocab
 {
     return [self initWithVocab:vocab andMaxResults:25];
 }
 
-- (instancetype)initWithVocab:(MHVVocabIdentifier *)vocab andMaxResults:(int)max
+- (instancetype)initWithVocab:(MHVVocabularyIdentifier *)vocab andMaxResults:(int)max
 {
     MHVCHECK_NOTNULL(vocab);
 
@@ -168,7 +168,7 @@
     return self;
 }
 
-- (MHVVocabSearchTask *)searchFor:(NSString *)text
+- (MHVVocabularySearchTask *)searchFor:(NSString *)text
 {
     NSUInteger seqNumber;
 
@@ -177,7 +177,7 @@
         seqNumber = ++self.seqNumber;
     }
 
-    MHVVocabCodeSet *results = [self.cache getResultsForSearch:text];
+    MHVVocabularyCodeSet *results = [self.cache getResultsForSearch:text];
 
     if (results)
     {
@@ -191,19 +191,19 @@
     //
     [self.cache ensureDummyEntryForSearch:text];
 
-    return [MHVVocabSearchTask searchForText:text inVocab:self.vocab callback:^(MHVTask *task)
+    return [MHVVocabularySearchTask searchForText:text inVocab:self.vocab callback:^(MHVTask *task)
     {
-        [self searchComplete:(MHVVocabSearchTask *)task forString:text seqNumber:seqNumber];
+        [self searchComplete:(MHVVocabularySearchTask *)task forString:text seqNumber:seqNumber];
     }];
 }
 
 #pragma mark - Internal methods
 
-- (void)searchComplete:(MHVVocabSearchTask *)task forString:(NSString *)searchText seqNumber:(NSUInteger)seq
+- (void)searchComplete:(MHVVocabularySearchTask *)task forString:(NSString *)searchText seqNumber:(NSUInteger)seq
 {
     @try
     {
-        MHVVocabCodeSet *results = task.searchResult;
+        MHVVocabularyCodeSet *results = task.searchResult;
         if (results)
         {
             [self.cache cacheResults:results forSearch:searchText];
@@ -220,7 +220,7 @@
     }
 }
 
-- (void)notifySearchComplete:(MHVVocabCodeSet *)results forSearch:(NSString *)searchText seqNumber:(NSUInteger)seq
+- (void)notifySearchComplete:(MHVVocabularyCodeSet *)results forSearch:(NSString *)searchText seqNumber:(NSUInteger)seq
 {
     safeInvokeActionEx (^
     {

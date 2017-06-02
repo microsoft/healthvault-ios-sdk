@@ -1,6 +1,6 @@
 //
-// MHVVocab.h
-// MHVLib
+//  MHVVocabularyClient.h
+//  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,10 +15,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
-#import "MHVVocabIdentifier.h"
-#import "MHVVocabThing.h"
-#import "MHVVocabCodeSet.h"
-#import "MHVVocabParams.h"
-#import "MHVVocabSearchParams.h"
+#import "MHVClient.h"
+#import "MHVVocabularyClientProtocol.h"
+#import "MHVMethod.h"
+
+@protocol MHVConnectionProtocol;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVVocabularyClient : NSObject<MHVVocabularyClientProtocol>
+
+- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
+
+@end
+
+NS_ASSUME_NONNULL_END
