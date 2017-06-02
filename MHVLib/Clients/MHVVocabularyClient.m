@@ -82,6 +82,14 @@
               cultureIsFixed:(BOOL)cultureIsFixed
                   completion:(void(^)(MHVVocabularyCodeSet *_Nullable vocabulary, NSError *_Nullable error))completion
 {
+    [self getVocabularyWithKey:key cultureIsFixed:cultureIsFixed ensureTruncatedValues:NO completion:completion];
+}
+
+- (void)getVocabularyWithKey:(MHVVocabularyKey *)key
+              cultureIsFixed:(BOOL)cultureIsFixed
+       ensureTruncatedValues:(BOOL)ensureTruncatedValues
+                  completion:(void(^)(MHVVocabularyCodeSet *_Nullable vocabulary, NSError *_Nullable error))completion
+{
     MHVASSERT_PARAMETER(key);
     MHVASSERT_PARAMETER(completion);
     
@@ -121,6 +129,14 @@
                            cultureIsFixed:(BOOL)cultureIsFixed
                                completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
 {
+    [self getVocabulariesWithVocabularyKeys:vocabularyKeys cultureIsFixed:cultureIsFixed ensureTruncatedValues:NO completion:completion];
+}
+
+- (void)getVocabulariesWithVocabularyKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+                           cultureIsFixed:(BOOL)cultureIsFixed
+                    ensureTruncatedValues:(BOOL)ensureTruncatedValues
+                               completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
+{
     MHVASSERT_PARAMETER(vocabularyKeys);
     MHVASSERT_PARAMETER(completion);
     
@@ -135,7 +151,7 @@
         return;
     }
     
-    [self getVocabulariesWithKeys:vocabularyKeys andCultureIsFixed:cultureIsFixed andEnsureTruncatedValues:NO completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error) {
+    [self getVocabulariesWithKeys:vocabularyKeys cultureIsFixed:cultureIsFixed ensureTruncatedValues:ensureTruncatedValues completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error) {
         if (error)
         {
             completion(nil, error);
@@ -252,14 +268,14 @@
  * @param vocabularyKeys The keys to get the VocabularyCodeSets for
  * @param cultureIsFixed Is the culture fixed
  * @param ensureTruncatedValues If true the method will execute recursively until all VocabularyCodeSets are
-    returned for each key. If false the method will execute once and if any of the VocabularyCodeSets is larger
-    than the server configured max return count, any VocabularyCodeSets over the max will be omitted.
+          returned for each key. If false the method will execute once and if any of the VocabularyCodeSets is larger
+          than the server configured max return count, any VocabularyCodeSets over the max will be omitted.
  * @param completion The completion called when the method execution is complete.
  */
-- (void) getVocabulariesWithKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
-               andCultureIsFixed:(BOOL)cultureIsFixed
-        andEnsureTruncatedValues:(BOOL)ensureTruncatedValues
-                      completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
+- (void)getVocabulariesWithKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+                 cultureIsFixed:(BOOL)cultureIsFixed
+          ensureTruncatedValues:(BOOL)ensureTruncatedValues
+                     completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
 {
     MHVMethod *method = [self getVocabularyGetMethodWithKeys:vocabularyKeys withCultureIsFixed:cultureIsFixed];
     
@@ -295,7 +311,7 @@
         {
             // 4) If there are truncated vocabs remaining, we recursively call back into this method but this
             //    time we only include the keys which are still truncated
-            [self getVocabulariesWithKeys:truncatedKeys andCultureIsFixed:cultureIsFixed andEnsureTruncatedValues:ensureTruncatedValues completion:^(MHVVocabularyCodeSetCollection * _Nullable truncatedVocabularies, NSError * _Nullable error) {
+            [self getVocabulariesWithKeys:truncatedKeys cultureIsFixed:cultureIsFixed ensureTruncatedValues:ensureTruncatedValues completion:^(MHVVocabularyCodeSetCollection * _Nullable truncatedVocabularies, NSError * _Nullable error) {
                 
                 if (error)
                 {
