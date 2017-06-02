@@ -321,7 +321,7 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 - (void)clearStatus
 {
-    // [self.statusLabel clearStatus];
+    [self.statusLabel clearStatus];
 }
 
 - (MHVThingCollection *)createRandomForDay:(NSDate *)date isMetric:(BOOL)metric

@@ -27,6 +27,7 @@
 #import "NSError+MHVError.h"
 #import "MHVConnectionProtocol.h"
 #import "MHVPersonalImage.h"
+#import "MHVBlobUploadRequest.h"
 
 @interface MHVThingClient ()
 
@@ -665,6 +666,94 @@
      }];
 }
 
+- (void)addBlobSource:(id<MHVBlobSourceProtocol>)blobSource
+              toThing:(MHVThing *)toThing
+                 name:(NSString *_Nullable)name
+          contentType:(NSString *)contentType
+             recordId:(NSUUID *)recordId
+           completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion
+{
+    // Use empty string for name if not specified
+    if (!name)
+    {
+        name = @"";
+    }
+    
+    MHVASSERT_PARAMETER(blobSource);
+    MHVASSERT_PARAMETER(toThing);
+    MHVASSERT_PARAMETER(contentType);
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!blobSource || !toThing || !contentType || !recordId)
+    {
+        completion(nil, [NSError MVHInvalidParameter]);
+        return;
+    }
+
+    // 1. Get the location where to upload a new blob
+    MHVMethod *putMethod = [MHVMethod beginPutBlob];
+    putMethod.recordId = recordId;
+    
+    [self.connection executeHttpServiceOperation:putMethod
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            completion(nil, error);
+            return;
+        }
+        
+        MHVBlobPutParameters *putParams = [self blobPutParametersResultsFromResponse:response];
+
+        if (!putParams.url)
+        {
+            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"Blob upload parameters did not have a URL"]);
+            return;
+        }
+        
+        if (blobSource.length > putParams.maxSize)
+        {
+            completion(nil, [NSError error:[NSError MHVIOError] withDescription:@"Blob size is to large to save to HealthVault"]);
+            return;
+        }
+
+        // 2. Upload the blob to the URL retrieved
+        MHVBlobUploadRequest *uploadRequest = [[MHVBlobUploadRequest alloc] initWithBlobSource:blobSource
+                                                                                destinationURL:[NSURL URLWithString:putParams.url]
+                                                                                     chunkSize:putParams.chunkSize];
+        
+        [self.connection executeHttpServiceOperation:uploadRequest
+                                          completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+         {
+             if (error)
+             {
+                 completion(nil, error);
+                 return;
+             }
+             
+             // 3. Commit and save the blob by attaching it to the Thing
+             MHVBlobPayloadThing *blob = [[MHVBlobPayloadThing alloc] initWithBlobName:name
+                                                                           contentType:contentType
+                                                                                length:blobSource.length
+                                                                                andUrl:putParams.url];
+             [toThing.blobs addOrUpdateBlob:blob];
+             
+             [self updateThing:toThing
+                      recordId:recordId
+                    completion:^(NSError * _Nullable error)
+             {
+                 completion(error == nil ? toThing : nil, error);
+             }];
+         }];
+    }];
+}
+
 #pragma mark - Internal methods
 
 - (MHVThingQueryResults *)thingQueryResultsFromResponse:(MHVServiceResponse *)response
@@ -672,6 +761,12 @@
     XReader *reader = [[XReader alloc] initFromString:response.infoXml];
     
     return (MHVThingQueryResults *)[NSObject newFromReader:reader withRoot:@"info" asClass:[MHVThingQueryResults class]];
+}
+
+- (MHVBlobPutParameters *)blobPutParametersResultsFromResponse:(MHVServiceResponse *)response
+{
+    XReader *reader = [[XReader alloc] initFromString:response.infoXml];
+    return (MHVBlobPutParameters *)[NSObject newFromReader:reader withRoot:@"info" asClass:[MHVBlobPutParameters class]];
 }
 
 - (NSString *)bodyForQueryCollection:(MHVThingQueryCollection *)queries
