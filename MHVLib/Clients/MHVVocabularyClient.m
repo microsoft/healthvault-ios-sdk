@@ -135,35 +135,20 @@
         return;
     }
     
-    XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
-    [writer writeStartElement:@"info"];
-    [writer writeStartElement:@"vocabulary-parameters"];
-    
-    for (MHVVocabularyKey *key in vocabularyKeys)
-    {
-        [writer writeStartElement:@"vocabulary-key"];
-        [key serialize:writer];
-        [writer writeEndElement];
-    }
-    
-    [writer writeElement:@"fixed-culture" boolValue:cultureIsFixed];
-    [writer writeEndElement];   // </vocabulary-parameters>
-    [writer writeEndElement];   // </info>
-    
-    MHVMethod *method = [MHVMethod getVocabulary];
-    method.parameters = [writer newXmlString];
-    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
-    {
+    [self getVocabulariesWithKeys:vocabularyKeys andCultureIsFixed:cultureIsFixed andEnsureTruncatedValues:NO completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error) {
         if (error)
         {
             completion(nil, error);
             return;
         }
         
-        MHVVocabularyCodeSetCollection *vocabularies = (MHVVocabularyCodeSetCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"vocabulary" asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularyCodeSetCollection class]];
+        if (!vocabularyKeys)
+        {
+            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"Error occurred while getting vocabularies"]);
+            return;
+        }
         
         completion(vocabularies, nil);
-        return;
     }];
 }
 
@@ -259,7 +244,136 @@
          completion(vocabularyCodeSet, nil);
          return;
      }];
+}
 
+/**
+ * Gets a MHVVocabularyCodeSetCollection with VocabularyCodeSets for each of the VocabularyKeys provided
+ *
+ * @param vocabularyKeys The keys to get the VocabularyCodeSets for
+ * @param cultureIsFixed Is the culture fixed
+ * @param ensureTruncatedValues If true the method will execute recursively until all VocabularyCodeSets are
+    returned for each key. If false the method will execute once and if any of the VocabularyCodeSets is larger
+    than the server configured max return count, any VocabularyCodeSets over the max will be omitted.
+ * @param completion The completion called when the method execution is complete.
+ */
+- (void) getVocabulariesWithKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+                  andCultureIsFixed:(BOOL)cultureIsFixed
+           andEnsureTruncatedValues:(BOOL)ensureTruncatedValues
+                         completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
+{
+    MHVMethod *method = [self getVocabularyGetMethodWithKeys:vocabularyKeys withCultureIsFixed:cultureIsFixed];
+    
+    // 1) Request all Vocabularies based on the provided VocabularyKeyCollection
+    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) {
+        if (error)
+        {
+            completion(nil, error);
+            return;
+        }
+        
+        MHVVocabularyCodeSetCollection *vocabularies = (MHVVocabularyCodeSetCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"vocabulary" asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularyCodeSetCollection class]];
+        
+        // 2) If we are not interested in truncated values, return the current list as in (no recursion)
+        if (!ensureTruncatedValues)
+        {
+            completion(vocabularies, nil);
+            return;
+        }
+        
+        // 3) If we are interested in resolving truncated properties then we start by filtering all remaining
+        //    truncated vocabs into a new list
+        MHVVocabularyKeyCollection *truncatedKeys = [[MHVVocabularyKeyCollection alloc] init];
+        for (MHVVocabularyCodeSet *vocabulary in vocabularies)
+        {
+            if (vocabulary.isTruncated)
+            {
+                [truncatedKeys addObject:[[MHVVocabularyKey alloc]initFromVocabulary:vocabulary]];
+            }
+        }
+        
+        if ([truncatedKeys count] > 0)
+        {
+            // 4) If there are truncated vocabs remaining, we recursively call back into this method but this
+            //    time we only include the keys which are still truncated
+            [self getVocabulariesWithKeys:truncatedKeys andCultureIsFixed:cultureIsFixed andEnsureTruncatedValues:ensureTruncatedValues completion:^(MHVVocabularyCodeSetCollection * _Nullable truncatedVocabularies, NSError * _Nullable error) {
+                
+                if (error)
+                {
+                    // 5) If at any point we have an error, we notify the completion of the error. This will
+                    //    propigate through all recursive instances of this function call, eventually calling
+                    //    the completion of the original invocation
+                    completion(nil, error);
+                    return;
+                }
+                
+                if (!truncatedVocabularies)
+                {
+                    // 6) If there is an issue parsing a response we generate and error and call through to the
+                    //    completion. If this happens during a recursive call, the error will propigate back up
+                    //    to the original invocation of the method
+                    completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"Error occurred while getting truncated vocabularies"]);
+                    return;
+                }
+                
+                // 7) Here we have to map and copy the newly received MHVVocabularyCodeSets to the existing
+                //    MHVVocabularyCodeSetCollection so the consume gets a single uniform collection
+                for (MHVVocabularyCodeSet *vocab in truncatedVocabularies)
+                {
+                    MHVVocabularyIdentifier *identifier = [vocab getVocabularyID];
+                    
+                    // TODO: Better way to do lookup and copy?
+                    for (MHVVocabularyCodeSet *targetVocab in vocabularies)
+                    {
+                        if ([[targetVocab getVocabularyID] isEqual:identifier])
+                        {
+                            [targetVocab.vocabularyCodeItems addObjectsFromArray:[[vocab vocabularyCodeItems] toArray]];
+                            
+                            // 8) It is important to constantly update the vocab in the main MHVVocabularyCodeSetCollection
+                            // to note whether it is truncated or not. When we receive the final set of vocabs from the
+                            // endpoint the vocab goes from a Truncated to Non-truncated state and we need to track this.
+                            [targetVocab setIsTruncated:vocab.isTruncated];
+                            break;
+                        }
+                    }
+                }
+                
+                // 9) Complete with the current set of vocabularies to the previous caller (which may be a recursive call)
+                completion(vocabularies, nil);
+                return;
+            }];
+        }
+        else
+        {
+            // 10) If there are no more truncated values, return the current list. This will start to unwind
+            //     the recursion.
+            completion(vocabularies, nil);
+            return;
+        }
+    }];
+}
+
+- (MHVMethod *) getVocabularyGetMethodWithKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+                            withCultureIsFixed:(BOOL)cultureIsFixed
+{
+    XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+    [writer writeStartElement:@"info"];
+    [writer writeStartElement:@"vocabulary-parameters"];
+    
+    for (MHVVocabularyKey *key in vocabularyKeys)
+    {
+        [writer writeStartElement:@"vocabulary-key"];
+        [key serialize:writer];
+        [writer writeEndElement];
+    }
+    
+    [writer writeElement:@"fixed-culture" boolValue:cultureIsFixed];
+    [writer writeEndElement];   // </vocabulary-parameters>
+    [writer writeEndElement];   // </info>
+    
+    MHVMethod *method = [MHVMethod getVocabulary];
+    method.parameters = [writer newXmlString];
+    
+    return method;
 }
 
 - (MHVMethod *) getVocabularySearchMethodWithSearchValue:(NSString *)searchValue

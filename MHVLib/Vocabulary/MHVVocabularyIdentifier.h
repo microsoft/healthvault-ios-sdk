@@ -63,6 +63,7 @@ NSString *const c_usdaFamily;
 //
 // -------------------------
 - (instancetype)initWithFamily:(NSString *)family andName:(NSString *)name;
+- (instancetype)initWithFamily:(NSString *)family andName:(NSString *)name andVersion:(NSString*)version;
 
 // -------------------------
 //
@@ -79,6 +80,8 @@ NSString *const c_usdaFamily;
 // Generate a single string representing this vocab identifier
 //
 - (NSString *)toKeyString;
+
+- (BOOL)isEqual:(id)object;
 
 @end
 

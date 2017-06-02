@@ -58,7 +58,7 @@ static NSString *const c_element_codeset = @"code-set-result";
 
 - (MHVVocabularyIdentifier *)getVocabularyID
 {
-    return [[MHVVocabularyIdentifier alloc] initWithFamily:self.family andName:self.name];
+    return [[MHVVocabularyIdentifier alloc] initWithFamily:self.family andName:self.name andVersion:self.version];
 }
 
 - (void)serialize:(XWriter *)writer

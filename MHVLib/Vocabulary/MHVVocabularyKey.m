@@ -26,6 +26,29 @@ static const xmlChar *x_element_description = XMLSTRINGCONST("description");
 
 @implementation MHVVocabularyKey
 
+- (instancetype) initWithName:(NSString*)name
+                    andFamily:(NSString*)family
+                   andVersion:(NSString*)version
+                      andCode:(NSString*)code
+{
+    self = [super init];
+    if (self)
+    {
+        self.name = name;
+        self.family = family;
+        self.version = version;
+        self.code = code;
+    }
+    
+    return self;
+}
+
+- (instancetype) initFromVocabulary:(MHVVocabularyCodeSet *)vocabulary
+{
+    return [self initWithName:vocabulary.name andFamily:vocabulary.family andVersion:vocabulary.version andCode:[vocabulary.vocabularyCodeItems lastObject].codeValue];
+}
+
+
 -(NSString *)toString
 {
     return self.name;
@@ -33,10 +56,10 @@ static const xmlChar *x_element_description = XMLSTRINGCONST("description");
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementXmlName:x_element_code value:self.code];
     [writer writeElementXmlName:x_element_name value:self.name];
     [writer writeElementXmlName:x_element_family value:self.family];
     [writer writeElementXmlName:x_element_version value:self.version];
+    [writer writeElementXmlName:x_element_code value:self.code];
     
     // NOTE: We do not serialize the description field. It is optional
     // and only used for requests, not respones
@@ -44,10 +67,10 @@ static const xmlChar *x_element_description = XMLSTRINGCONST("description");
 
 - (void) deserialize:(XReader *)reader
 {
-    self.code = [reader readStringElementWithXmlName:x_element_code];
     self.name = [reader readStringElementWithXmlName:x_element_name];
     self.family = [reader readStringElementWithXmlName:x_element_family];
     self.version = [reader readStringElementWithXmlName:x_element_version];
+    self.code = [reader readStringElementWithXmlName:x_element_code];
     self.descriptionText = [reader readStringElementWithXmlName:x_element_description];
 }
 

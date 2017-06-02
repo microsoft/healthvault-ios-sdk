@@ -73,7 +73,7 @@ describe(@"MHVVocabularyClient", ^
                        
                        [[method.name should] equal:@"GetVocabulary"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.parameters should]equal:@"<info><vocabulary-parameters><vocabulary-key><code-value>Test code</code-value><name>Test key name</name><family>Test family</family><version>Test version</version></vocabulary-key><fixed-culture>false</fixed-culture></vocabulary-parameters></info>"];
+                       [[method.parameters should]equal:@"<info><vocabulary-parameters><vocabulary-key><name>Test key name</name><family>Test family</family><version>Test version</version><code-value>Test code</code-value></vocabulary-key><fixed-culture>false</fixed-culture></vocabulary-parameters></info>"];
                    });
                 
                 it(@"should get with multiple keys", ^
@@ -101,7 +101,7 @@ describe(@"MHVVocabularyClient", ^
                        
                        [[method.name should] equal:@"GetVocabulary"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.parameters should]equal:@"<info><vocabulary-parameters><vocabulary-key><code-value>Code 1</code-value><name>Name 1</name><family>Family 1</family><version>Version 1</version></vocabulary-key><vocabulary-key><code-value>Code 2</code-value><name>Name 2</name><family>Family 2</family><version>Version 2</version></vocabulary-key><fixed-culture>false</fixed-culture></vocabulary-parameters></info>"];
+                       [[method.parameters should]equal:@"<info><vocabulary-parameters><vocabulary-key><name>Name 1</name><family>Family 1</family><version>Version 1</version><code-value>Code 1</code-value></vocabulary-key><vocabulary-key><name>Name 2</name><family>Family 2</family><version>Version 2</version><code-value>Code 2</code-value></vocabulary-key><fixed-culture>false</fixed-culture></vocabulary-parameters></info>"];
                        
                    });
             });
@@ -145,7 +145,7 @@ describe(@"MHVVocabularyClient", ^
                        
                        [[method.name should]equal:@"SearchVocabulary"];
                        [[theValue(method.isAnonymous) should] beNo];
-                       [[method.parameters should]equal:@"<info><vocabulary-key><code-value>Test code</code-value><name>Test key name</name><family>Test family</family><version>Test version</version></vocabulary-key><text-search-parameters><search-string search-mode=\"Contains\">SearchText</search-string><max-results>25</max-results></text-search-parameters></info>"];
+                       [[method.parameters should]equal:@"<info><vocabulary-key><name>Test key name</name><family>Test family</family><version>Test version</version><code-value>Test code</code-value></vocabulary-key><text-search-parameters><search-string search-mode=\"Contains\">SearchText</search-string><max-results>25</max-results></text-search-parameters></info>"];
                    });
             });
 });

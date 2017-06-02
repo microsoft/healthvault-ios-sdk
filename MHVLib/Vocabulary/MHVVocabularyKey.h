@@ -18,6 +18,7 @@
 
 #import "MHVType.h"
 #import "MHVCollection.h"
+#import "MHVVocabularyCodeSet.h"
 
 @interface MHVVocabularyKey : MHVType
 
@@ -46,6 +47,13 @@
 // (Optional)
 //
 @property (readwrite, nonatomic, strong) NSString *code;
+
+- (instancetype) initWithName:(NSString*)name
+                    andFamily:(NSString*)family
+                   andVersion:(NSString*)version
+                      andCode:(NSString*)code;
+
+- (instancetype) initFromVocabulary:(MHVVocabularyCodeSet *) vocabulary;
 
 // -------------------------
 //

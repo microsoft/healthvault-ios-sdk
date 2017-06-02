@@ -56,6 +56,23 @@ NSString *const c_usdaFamily = @"usda";
     return self;
 }
 
+- (instancetype)initWithFamily:(NSString *)family andName:(NSString *)name andVersion:(NSString *)version
+{
+    MHVCHECK_STRING(family);
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(version);
+    
+    self = [super init];
+    if (self)
+    {
+        _family = family;
+        _name = name;
+        _version = version;
+    }
+    
+    return self;
+}
+
 - (MHVCodedValue *)codedValueForThing:(MHVVocabularyCodeItem *)vocabThing
 {
     MHVCHECK_NOTNULL(vocabThing);
@@ -136,6 +153,17 @@ NSString *const c_usdaFamily = @"usda";
     self.family = [reader readStringElement:c_element_family];
     self.version = [reader readStringElement:c_element_version];
     self.codeValue = [reader readStringElement:c_element_code];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[MHVVocabularyIdentifier class]])
+    {
+        return FALSE;
+    }
+    
+    MHVVocabularyIdentifier *other = (MHVVocabularyIdentifier *)object;
+    return [self.name isEqualToString:other.name] && [self.family isEqualToString:other.family] && [self.version isEqual:other.version];
 }
 
 @end
