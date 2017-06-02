@@ -587,8 +587,15 @@
     // If blob has inline base64 encoded data, can write to the desired file and return immediately
     if (blobPayloadThing.inlineData)
     {
-        [blobPayloadThing.inlineData writeToFile:filePath atomically:YES];
-        completion(nil);
+        if ([blobPayloadThing.inlineData writeToFile:filePath atomically:YES])
+        {
+            completion(nil);
+        }
+        else
+        {
+            completion([NSError error:[NSError MHVIOError]
+                      withDescription:@"Blob data could not be written to the file path"]);
+        }
         return;
     }
     
