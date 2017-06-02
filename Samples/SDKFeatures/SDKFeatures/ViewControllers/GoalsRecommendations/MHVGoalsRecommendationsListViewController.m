@@ -96,7 +96,7 @@
     
     goal.recurrenceMetrics = metrics;
     goal.range = range;
-    goal._id = nil;
+    goal.identifier = nil;
     goal.endDate = nil;
     
     MHVGoalRecommendation *recommendation = [[MHVGoalRecommendation alloc] init];
@@ -175,7 +175,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *recommendationId = self.recommendations[indexPath.row]._id;
+    NSString *recommendationId = self.recommendations[indexPath.row].identifier;
     
     MHVGoalsRecommendationsDetailViewController *typeView = [[MHVGoalsRecommendationsDetailViewController alloc] initWithGoalRecommendationId:recommendationId];
     

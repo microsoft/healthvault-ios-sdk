@@ -135,7 +135,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *goalId = self.goals[indexPath.row]._id;
+    NSString *goalId = self.goals[indexPath.row].identifier;
     
     MHVGoalDetailViewController *typeView = [[MHVGoalDetailViewController alloc] initWithGoalId:goalId];
     

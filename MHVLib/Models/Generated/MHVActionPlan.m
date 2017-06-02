@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"_description": @"description", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"category": @"category", @"objectives": @"objectives", @"associatedTasks": @"associatedTasks" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"descriptionText": @"description", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"category": @"category", @"objectives": @"objectives", @"associatedTasks": @"associatedTasks" }];
 }
  */
 
@@ -61,7 +61,7 @@
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
             @"name": @"name",
-            @"_description": @"description",
+            @"descriptionText": @"description",
             @"imageUrl": @"imageUrl",
             @"thumbnailImageUrl": @"thumbnailImageUrl",
             @"category": @"category",

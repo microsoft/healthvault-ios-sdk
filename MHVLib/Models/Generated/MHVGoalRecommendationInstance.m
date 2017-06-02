@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"_id": @"id", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"acknowledged": @"acknowledged", @"expirationDate": @"expirationDate", @"associatedGoal": @"associatedGoal" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"identifier": @"id", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"acknowledged": @"acknowledged", @"expirationDate": @"expirationDate", @"associatedGoal": @"associatedGoal" }];
 }
  */
 
@@ -60,7 +60,7 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"_id": @"id",
+            @"identifier": @"id",
             @"organizationId": @"organizationId",
             @"organizationName": @"organizationName",
             @"acknowledged": @"acknowledged",

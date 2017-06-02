@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* name;
 /* The description of the range. Allows more detailed information about the range. [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _description;
+@property(strong,nonatomic,nullable) NSString* descriptionText;
 /* The minimum value for the range.              For ranges greater than a specified value with no maximum, specify a minimum but no maximum. [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* minimum;
