@@ -25,6 +25,7 @@
 #import "MHVAllergy.h"
 #import "MHVFile.h"
 #import "MHVRestRequest.h"
+#import "MHVBlobDownloadRequest.h"
 #import "MHVErrorConstants.h"
 #import "Kiwi.h"
 
@@ -85,7 +86,7 @@ describe(@"MHVThingClient", ^
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><group><id>10000000-1000-1000-1000-100000000000</id><format><section>core</section><xml/></format></group></info>"];
+                       [[theValue([method.parameters containsString:@"<id>10000000-1000-1000-1000-100000000000</id><format><section>core</section><xml/></format></group></info>"]) should] beYes];
                    });
   
                 it(@"should get for thing class", ^
@@ -100,8 +101,8 @@ describe(@"MHVThingClient", ^
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><group><filter><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><thing-state>Active</thing-state></filter>"\
-                        "<format><section>core</section><xml/></format></group></info>"];
+                       [[theValue([method.parameters containsString:@"<filter><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><thing-state>Active</thing-state></filter>"\
+                                   "<format><section>core</section><xml/></format></group></info>"]) should] beYes];
                    });
                 
                 it(@"should fail if thing id is nil", ^
@@ -210,8 +211,8 @@ describe(@"MHVThingClient", ^
                    });
                 it(@"should have correct info xml", ^
                    {
-                       [[method.parameters should] equal:@"<info><group><id>AllergyThingKey</id><format><section>core</section>"\
-                        "<section>blobpayload</section><xml/></format></group></info>"];
+                       [[theValue([method.parameters containsString:@"<id>AllergyThingKey</id><format><section>core</section>"\
+                                   "<section>blobpayload</section><xml/></format></group></info>"]) should] beYes];
                    });
             });
     
@@ -272,8 +273,8 @@ describe(@"MHVThingClient", ^
                    });
                 it(@"should have correct info xml", ^
                    {
-                       [[method.parameters should] equal:@"<info><group><id>AllergyThingKey</id><id>FileThingKey</id><format>"\
-                        "<section>core</section><section>blobpayload</section><xml/></format></group></info>"];
+                       [[theValue([method.parameters containsString:@"<id>AllergyThingKey</id><id>FileThingKey</id><format>"\
+                                   "<section>core</section><section>blobpayload</section><xml/></format></group></info>"]) should] beYes];
                    });
             });
 
@@ -308,38 +309,66 @@ describe(@"MHVThingClient", ^
                    });
             });
     
-    context(@"DownloadBlob", ^
+    context(@"DownloadBlob Data", ^
             {
                 beforeAll(^{
                     MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] initWithBlobName:@""
                                                                                          contentType:@"image/jpg"
                                                                                               length:123456
                                                                                               andUrl:@"http://blob.test/path/blob"];
-                    [thingClient downloadBlobData:blobPayload completion:^(NSData * _Nullable data, NSError * _Nullable error) { }];
+                    [thingClient downloadBlobData:blobPayload
+                                       completion:^(NSData * _Nullable data, NSError * _Nullable error) { }];
                 });
                 
-                let(restRequest, ^{
-                    return (MHVRestRequest *)requestedServiceOperation;
+                let(blobDownloadRequest, ^{
+                    return (MHVBlobDownloadRequest *)requestedServiceOperation;
                 });
                 
-                it(@"should be a GET method", ^
-                   {
-                       [[restRequest.httpMethod should] equal:@"GET"];
-                   });
-
                 it(@"should use correct URL", ^
                    {
-                       [[restRequest.url.absoluteString should] equal:@"http://blob.test/path/blob"];
+                       [[blobDownloadRequest.url.absoluteString should] equal:@"http://blob.test/path/blob"];
                    });
 
-                it(@"should have no body", ^
+                it(@"should not have file path", ^
                    {
-                       [[restRequest.body should] beNil];
+                       [[blobDownloadRequest.toFilePath should] beNil];
                    });
-
+                
                 it(@"should be an anonymous request", ^
                    {
-                       [[theValue(restRequest.isAnonymous) should] beYes];
+                       [[theValue(blobDownloadRequest.isAnonymous) should] beYes];
+                   });
+            });
+    
+    context(@"DownloadBlob File", ^
+            {
+                beforeAll(^{
+                    MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] initWithBlobName:@""
+                                                                                         contentType:@"image/jpg"
+                                                                                              length:123456
+                                                                                              andUrl:@"http://blob.test/path/blob"];
+                    [thingClient downloadBlob:blobPayload
+                                   toFilePath:@"//to/path/name.xyz"
+                                   completion:^(NSError * _Nullable error) { }];
+                });
+                
+                let(blobDownloadRequest, ^{
+                    return (MHVBlobDownloadRequest *)requestedServiceOperation;
+                });
+                
+                it(@"should use correct URL", ^
+                   {
+                       [[blobDownloadRequest.url.absoluteString should] equal:@"http://blob.test/path/blob"];
+                   });
+                
+                it(@"should have file path", ^
+                   {
+                       [[blobDownloadRequest.toFilePath should] equal:@"//to/path/name.xyz"];
+                   });
+                
+                it(@"should be an anonymous request", ^
+                   {
+                       [[theValue(blobDownloadRequest.isAnonymous) should] beYes];
                    });
             });
     

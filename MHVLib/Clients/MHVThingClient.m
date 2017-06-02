@@ -21,6 +21,7 @@
 #import "MHVCommon.h"
 #import "MHVMethod.h"
 #import "MHVRestRequest.h"
+#import "MHVBlobDownloadRequest.h"
 #import "MHVServiceResponse.h"
 #import "MHVTypes.h"
 #import "NSError+MHVError.h"
@@ -546,11 +547,8 @@
         return;
     }
     
-    MHVRestRequest *request = [[MHVRestRequest alloc] initWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
-                                                       toFilePath:nil
-                                                       httpMethod:@"GET"
-                                                             body:nil
-                                                      isAnonymous:YES];
+    MHVBlobDownloadRequest *request = [[MHVBlobDownloadRequest alloc] initWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
+                                                                       toFilePath:nil];
     
     // Download from the URL
     [self.connection executeHttpServiceOperation:request
@@ -594,11 +592,8 @@
         return;
     }
     
-    MHVRestRequest *request = [[MHVRestRequest alloc] initWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
-                                                       toFilePath:filePath
-                                                       httpMethod:@"GET"
-                                                             body:nil
-                                                      isAnonymous:YES];
+    MHVBlobDownloadRequest *request = [[MHVBlobDownloadRequest alloc] initWithURL:[NSURL URLWithString:blobPayloadThing.blobUrl]
+                                                                       toFilePath:filePath];
     
     // Download from the URL
     [self.connection executeHttpServiceOperation:request

@@ -33,6 +33,7 @@
 #import "MHVClientFactory.h"
 #import "MHVApplicationCreationInfo.h"
 #import "MHVRestRequest.h"
+#import "MHVBlobDownloadRequest.h"
 #import "MHVHttpServiceResponse.h"
 #import "MHVPersonInfo.h"
 
@@ -185,6 +186,10 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     {
         [self executeRestRequest:request];
     }
+    else if ([request.serviceOperation isKindOfClass:[MHVBlobDownloadRequest class]])
+    {
+        [self executeBlobDownloadRequest:request];
+    }
     else
     {
         NSString *message = [NSString stringWithFormat:@"ServiceOperation not known: %@", NSStringFromClass([request.serviceOperation class])];
@@ -244,20 +249,6 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     
     headers[@"Content-Type"] = @"application/json";
     
-    if (restRequest.toFilePath)
-    {
-        [self.httpService downloadFileWithUrl:restRequest.url
-                                   toFilePath:restRequest.toFilePath
-                                   completion:^(NSError * _Nullable error)
-         {
-             if (request.completion)
-             {
-                 request.completion(nil, error);
-             }
-         }];
-        return;
-    }
-    
     [self.httpService sendRequestForURL:restRequest.url
                              httpMethod:restRequest.httpMethod
                                    body:restRequest.body
@@ -301,7 +292,48 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         }
     }];
 }
-    
+
+- (void)executeBlobDownloadRequest:(MHVHttpServiceRequest *)request
+{
+    MHVBlobDownloadRequest *blobDownloadRequest = request.serviceOperation;
+
+    if (blobDownloadRequest.toFilePath)
+    {
+        //Download to file
+        [self.httpService downloadFileWithUrl:blobDownloadRequest.url
+                                   toFilePath:blobDownloadRequest.toFilePath
+                                   completion:^(NSError * _Nullable error)
+         {
+             if (request.completion)
+             {
+                 request.completion(nil, error);
+             }
+         }];
+    }
+    else
+    {
+        //Download as data
+        [self.httpService sendRequestForURL:blobDownloadRequest.url
+                                 httpMethod:nil
+                                       body:nil
+                                    headers:nil
+                                 completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+         {
+             if (error)
+             {
+                 if (request.completion)
+                 {
+                     request.completion(nil, error);
+                 }
+             }
+             else
+             {
+                 [self parseResponse:response request:request isXML:NO completion:request.completion];
+             }
+         }];
+    }
+}
+
 - (NSString *)messageForMethod:(MHVMethod *)method
 {
     MHVRequestMessageCreator *creator = [[MHVRequestMessageCreator alloc] initWithMethod:method
