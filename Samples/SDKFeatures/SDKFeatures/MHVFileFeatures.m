@@ -129,9 +129,9 @@
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
         {
-            [[UIApplication sharedApplication] openURL:blobUrl options:@{} completionHandler:nil];
-            
             [self.controller clearStatus];
+            
+            [[UIApplication sharedApplication] openURL:blobUrl options:@{} completionHandler:nil];
         }];
     }];
 }
@@ -188,7 +188,6 @@
 {
     [self.connection.thingClient downloadBlob:fileBlob
                                    toFilePath:filePath
-                                     recordId:self.connection.personInfo.selectedRecordID
                                    completion:^(NSError * _Nullable error)
      {
          [self downloadCompleteWithError:error];

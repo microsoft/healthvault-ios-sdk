@@ -24,21 +24,27 @@
 #import "MHVMethod.h"
 #import "MHVAllergy.h"
 #import "MHVFile.h"
+#import "MHVRestRequest.h"
+#import "MHVErrorConstants.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVThingClientTests)
 
 describe(@"MHVThingClient", ^
 {
+    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperation;
+    
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
-    [mockConnection stub:@selector(executeHttpServiceOperation:completion:) andReturn:nil];
+    [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id(NSArray *params)
+    {
+        requestedServiceOperation = params[0];
+        
+        void (^completion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error) = params[1];
+        completion(nil, nil);
+        return nil;
+    }];
     
     NSUUID *recordId = [[NSUUID alloc] initWithUUIDString:@"20000000-2000-2000-2000-200000000000"];
-    
-    let(spyExecuteMethod, ^
-        {
-            return [mockConnection captureArgument:@selector(executeHttpServiceOperation:completion:) atIndex:0];
-        });
     
     let(thingClient, ^
         {
@@ -74,7 +80,7 @@ describe(@"MHVThingClient", ^
                                                recordId:recordId
                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
@@ -89,7 +95,7 @@ describe(@"MHVThingClient", ^
                                                   recordId:recordId
                                                 completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
@@ -98,6 +104,33 @@ describe(@"MHVThingClient", ^
                         "<format><section>core</section><xml/></format></group></info>"];
                    });
                 
+                it(@"should fail if thing id is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient getThingWithThingId:nil
+                                               recordId:recordId
+                                             completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                       {
+                           requestError = error;
+                       }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+                
+                it(@"should fail if record id is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient getThingWithThingId:[[NSUUID alloc] initWithUUIDString:@"10000000-1000-1000-1000-100000000000"]
+                                               recordId:nil
+                                             completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
             });
 
     context(@"PutThings", ^
@@ -108,7 +141,7 @@ describe(@"MHVThingClient", ^
                                           recordId:recordId
                                         completion:^(NSError *error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"PutThings"];
                        [[theValue(method.isAnonymous) should] beNo];
@@ -123,7 +156,7 @@ describe(@"MHVThingClient", ^
                                        recordId:recordId
                                      completion:^(NSError *error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"PutThings"];
                        [[theValue(method.isAnonymous) should] beNo];
@@ -142,7 +175,7 @@ describe(@"MHVThingClient", ^
                                        recordId:recordId
                                      completion:^(NSError *error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"RemoveThings"];
                        [[theValue(method.isAnonymous) should] beNo];
@@ -151,35 +184,180 @@ describe(@"MHVThingClient", ^
                    });
             });
 
-    context(@"RefreshBlobs", ^
+    context(@"RefreshBlobUrlsForThing", ^
             {
-                it(@"should refresh a thing", ^
+                beforeAll(^{
+                    [thingClient refreshBlobUrlsForThing:allergyThing
+                                                recordId:recordId
+                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
+                });
+                
+                let(method, ^{
+                    return (MHVMethod *)requestedServiceOperation;
+                });
+                
+                it(@"should get things", ^
                    {
-                       [thingClient refreshBlobUrlsForThing:allergyThing
-                                                   recordId:recordId
-                                                 completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
-                       
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
-                       
                        [[method.name should] equal:@"GetThings"];
+                   });
+                it(@"should not be anonymous", ^
+                   {
                        [[theValue(method.isAnonymous) should] beNo];
+                   });
+                it(@"should use correct recordId", ^
+                   {
                        [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><group><id>AllergyThingKey</id><format><section>core</section><section>blobpayload</section><xml/></format></group></info>"];
+                   });
+                it(@"should have correct info xml", ^
+                   {
+                       [[method.parameters should] equal:@"<info><group><id>AllergyThingKey</id><format><section>core</section>"\
+                        "<section>blobpayload</section><xml/></format></group></info>"];
+                   });
+            });
+    
+    context(@"RefreshBlobUrlsForThing Errors", ^
+            {
+                it(@"should fail if thing is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient refreshBlobUrlsForThing:nil
+                                                   recordId:recordId
+                                                 completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+                
+                it(@"should fail if record id is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient refreshBlobUrlsForThing:allergyThing
+                                                   recordId:nil
+                                                 completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+            });
+    
+    context(@"RefreshBlobUrlsForThingCollection", ^
+            {
+                beforeAll(^{
+                    [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
+                                                 recordId:recordId
+                                               completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
+                });
+                
+                let(method, ^{
+                    return (MHVMethod *)requestedServiceOperation;
+                });
+                
+                it(@"should get things", ^
+                   {
+                       [[method.name should] equal:@"GetThings"];
+                   });
+                it(@"should not be anonymous", ^
+                   {
+                       [[theValue(method.isAnonymous) should] beNo];
+                   });
+                it(@"should use correct recordId", ^
+                   {
+                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
+                   });
+                it(@"should have correct info xml", ^
+                   {
+                       [[method.parameters should] equal:@"<info><group><id>AllergyThingKey</id><id>FileThingKey</id><format>"\
+                        "<section>core</section><section>blobpayload</section><xml/></format></group></info>"];
+                   });
+            });
+
+    context(@"RefreshBlobUrlsForThingCollection Errors", ^
+            {
+                it(@"should fail if thing collection is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient refreshBlobUrlsForThings:nil
+                                                    recordId:recordId
+                                                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+                
+                it(@"should fail if record id is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient refreshBlobUrlsForThings:allergyThing
+                                                    recordId:nil
+                                                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+            });
+    
+    context(@"DownloadBlob", ^
+            {
+                beforeAll(^{
+                    MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] initWithBlobName:@""
+                                                                                         contentType:@"image/jpg"
+                                                                                              length:123456
+                                                                                              andUrl:@"http://blob.test/path/blob"];
+                    [thingClient downloadBlobData:blobPayload completion:^(NSData * _Nullable data, NSError * _Nullable error) { }];
+                });
+                
+                let(restRequest, ^{
+                    return (MHVRestRequest *)requestedServiceOperation;
+                });
+                
+                it(@"should be a GET method", ^
+                   {
+                       [[restRequest.httpMethod should] equal:@"GET"];
                    });
 
-                it(@"should refresh a thing collection", ^
+                it(@"should use correct URL", ^
                    {
-                       [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
-                                                    recordId:recordId
-                                                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
-                       
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
-                       
-                       [[method.name should] equal:@"GetThings"];
-                       [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><group><id>AllergyThingKey</id><id>FileThingKey</id><format><section>core</section><section>blobpayload</section><xml/></format></group></info>"];
+                       [[restRequest.url.absoluteString should] equal:@"http://blob.test/path/blob"];
                    });
+
+                it(@"should have no body", ^
+                   {
+                       [[restRequest.body should] beNil];
+                   });
+
+                it(@"should be an anonymous request", ^
+                   {
+                       [[theValue(restRequest.isAnonymous) should] beYes];
+                   });
+            });
+    
+    context(@"DownloadBlob Errors", ^
+            {
+                it(@"should fail if blob payload is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient downloadBlobData:nil
+                                          completion:^(NSData * _Nullable data, NSError * _Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+
             });
 });
 
