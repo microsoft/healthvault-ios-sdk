@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"_id": @"id", @"status": @"status", @"startDate": @"startDate", @"endDate": @"endDate", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"name": @"name", @"shortDescription": @"shortDescription", @"longDescription": @"longDescription", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"taskType": @"taskType", @"trackingPolicy": @"trackingPolicy", @"signupName": @"signupName", @"associatedPlanId": @"associatedPlanId", @"associatedObjectiveIds": @"associatedObjectiveIds", @"completionType": @"completionType", @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics", @"scheduledTaskCompletionMetrics": @"scheduledTaskCompletionMetrics" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"identifier": @"id", @"status": @"status", @"startDate": @"startDate", @"endDate": @"endDate", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"name": @"name", @"shortDescription": @"shortDescription", @"longDescription": @"longDescription", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"taskType": @"taskType", @"trackingPolicy": @"trackingPolicy", @"signupName": @"signupName", @"associatedPlanId": @"associatedPlanId", @"associatedObjectiveIds": @"associatedObjectiveIds", @"completionType": @"completionType", @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics", @"scheduledTaskCompletionMetrics": @"scheduledTaskCompletionMetrics" }];
 }
  */
 
@@ -60,7 +60,7 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"_id": @"id",
+            @"identifier": @"id",
             @"status": @"status",
             @"startDate": @"startDate",
             @"endDate": @"endDate",

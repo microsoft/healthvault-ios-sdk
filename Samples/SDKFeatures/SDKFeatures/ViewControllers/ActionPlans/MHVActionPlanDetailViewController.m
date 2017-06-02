@@ -58,12 +58,12 @@
 
 - (IBAction)updatePlan:(id)sender
 {
-    _plan.name = self.nameValue.text;
-    _plan._description = self.descriptionValue.text;
-    _plan.category = self.categoryValue.text;
-    _plan.status = self.statusValue.text;
+    self.plan.name = self.nameValue.text;
+    self.plan.descriptionText = self.descriptionValue.text;
+    self.plan.category = self.categoryValue.text;
+    self.plan.status = self.statusValue.text;
     
-    [self.connection.remoteMonitoringClient putActionPlanWithActionPlan:_plan completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient putActionPlanWithActionPlan:self.plan completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
@@ -80,7 +80,7 @@
 
 - (IBAction)deletePlan:(id)sender
 {
-    [self.connection.remoteMonitoringClient deleteActionPlanWithActionPlanId:_planId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient deleteActionPlanWithActionPlanId:self.planId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
@@ -117,7 +117,7 @@
                 _plan = output;
                 
                 self.nameValue.text = output.name;
-                self.descriptionValue.text = output._description;
+                self.descriptionValue.text = output.descriptionText;
                 self.categoryValue.text = output.category;
                 self.statusValue.text = output.status;
                 

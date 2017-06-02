@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Gets or sets the Id of the task tracking [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _id;
+@property(strong,nonatomic,nullable) NSString* identifier;
 /* Gets or sets the task tracking type [optional]
  */
 @property(strong,nonatomic,nullable) NSString* trackingType;

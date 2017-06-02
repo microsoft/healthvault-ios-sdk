@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"_id": @"id", @"trackingType": @"trackingType", @"timeZoneOffset": @"timeZoneOffset", @"trackingDateTime": @"trackingDateTime", @"creationDateTime": @"creationDateTime", @"trackingStatus": @"trackingStatus", @"occurrenceStart": @"occurrenceStart", @"occurrenceEnd": @"occurrenceEnd", @"completionStart": @"completionStart", @"completionEnd": @"completionEnd", @"taskId": @"taskId", @"feedback": @"feedback", @"evidence": @"evidence" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"identifier": @"id", @"trackingType": @"trackingType", @"timeZoneOffset": @"timeZoneOffset", @"trackingDateTime": @"trackingDateTime", @"creationDateTime": @"creationDateTime", @"trackingStatus": @"trackingStatus", @"occurrenceStart": @"occurrenceStart", @"occurrenceEnd": @"occurrenceEnd", @"completionStart": @"completionStart", @"completionEnd": @"completionEnd", @"taskId": @"taskId", @"feedback": @"feedback", @"evidence": @"evidence" }];
 }
  */
 
@@ -60,7 +60,7 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"_id": @"id",
+            @"identifier": @"id",
             @"trackingType": @"trackingType",
             @"timeZoneOffset": @"timeZoneOffset",
             @"trackingDateTime": @"trackingDateTime",
