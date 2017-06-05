@@ -23,10 +23,20 @@
 + (MHVConfiguration *)configuration
 {
     MHVConfiguration *config = [MHVConfiguration new];
+
     config.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"7c81b435-f091-4444-9534-59eb53da66c9"];
     config.defaultHealthVaultUrl = [[NSURL alloc] initWithString:@"https://platform.healthvault-ppe.com/platform"];
     config.defaultShellUrl = [[NSURL alloc] initWithString:@"https://account.healthvault-ppe.com"];
     config.restHealthVaultUrl = [[NSURL alloc] initWithString:@"https://data.ppe.microsofthealth.net"];
+    config.restVersion = @"1.0-preview";
+
+    /*
+    config.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"34998e3c-ba6e-49da-bd57-55c0817491e0"];
+    config.defaultHealthVaultUrl = [[NSURL alloc] initWithString:@"https://platform.hvazads03.healthvault-test.com/platform"];
+    config.defaultShellUrl = [[NSURL alloc] initWithString:@"https://account.hvazads03.healthvault-test.com"];
+    config.restHealthVaultUrl = [[NSURL alloc] initWithString:@"https://hvc-dev-khvwus01.westus2.cloudapp.azure.com"];
+    config.restVersion = @"1.0-preview";
+    */
     
 #if SHOULD_USE_MULTI_RECORD
     config.isMultiRecordApp = YES;
