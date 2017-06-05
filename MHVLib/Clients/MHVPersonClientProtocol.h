@@ -18,7 +18,7 @@
 
 #import "MHVClientProtocol.h"
 
-@class MHVApplicationSettings, MHVPersonInfo, MHVHealthRecordInfo, MHVGetAuthorizedPeopleSettings, UIImage;
+@class MHVApplicationSettings, MHVPersonInfo, MHVHealthRecordInfo, MHVGetAuthorizedPeopleSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 

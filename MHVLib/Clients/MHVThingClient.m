@@ -65,7 +65,7 @@
     
     if (!thingId || !recordId)
     {
-        completion(nil, [NSError MVHInvalidParameter]);
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
         return;
     }
     
@@ -99,7 +99,7 @@
     
     if (!query || !recordId)
     {
-        completion(nil, [NSError MVHInvalidParameter]);
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
         return;
     }
     
@@ -133,7 +133,7 @@
     
     if (!queries || !recordId)
     {
-        completion(nil, [NSError MVHInvalidParameter]);
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
         return;
     }
     
@@ -233,7 +233,7 @@
     
     if (!thingClass || !recordId)
     {
-        completion(nil, [NSError MVHInvalidParameter]);
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
         return;
     }
     
@@ -270,7 +270,7 @@
     {
         if (completion)
         {
-            completion([NSError MVHInvalidParameter]);
+            completion([NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -292,7 +292,7 @@
     {
         if (completion)
         {
-            completion([NSError MVHInvalidParameter]);
+            completion([NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -330,7 +330,7 @@
     {
         if (completion)
         {
-            completion([NSError MVHInvalidParameter]);
+            completion([NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -352,7 +352,7 @@
     {
         if (completion)
         {
-            completion([NSError MVHInvalidParameter]);
+            completion([NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -390,7 +390,7 @@
     {
         if (completion)
         {
-            completion([NSError MVHInvalidParameter]);
+            completion([NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -412,7 +412,7 @@
     {
         if (completion)
         {
-            completion([NSError MVHInvalidParameter]);
+            completion([NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -451,7 +451,7 @@
     {
         if (completion)
         {
-            completion(nil, [NSError MVHInvalidParameter]);
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -492,7 +492,7 @@
     {
         if (completion)
         {
-            completion(nil, [NSError MVHInvalidParameter]);
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -537,7 +537,7 @@
     
     if (!blobPayloadThing)
     {
-        completion(nil, [NSError MVHInvalidParameter]);
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
         return;
     }
     
@@ -581,7 +581,7 @@
     
     if (!blobPayloadThing || !filePath)
     {
-        completion([NSError MVHInvalidParameter]);
+        completion([NSError MVHRequiredParameterIsNil]);
         return;
     }
     
@@ -692,7 +692,7 @@
     
     if (!blobSource || !toThing || !contentType || !recordId)
     {
-        completion(nil, [NSError MVHInvalidParameter]);
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
         return;
     }
 

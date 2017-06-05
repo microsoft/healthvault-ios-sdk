@@ -39,34 +39,31 @@ describe(@"MHVThingClient", ^
     __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationStep2;
     __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationStep3;
     
-    __block MHVServiceResponse *serviceResponseForBeginPut;
-    __block MHVServiceResponse *serviceResponseForBlobUpload;
+    __block MHVServiceResponse *serviceResponseForStep1;
+    __block MHVServiceResponse *serviceResponseForStep2;
+    __block MHVServiceResponse *serviceResponseForStep3;
     
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
-    [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id(NSArray *params)
+    [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id (NSArray *params)
      {
+         void (^completion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error) = params[1];
+         
          if (!requestedServiceOperationStep1)
          {
              requestedServiceOperationStep1 = params[0];
+             completion(serviceResponseForStep1, nil);
          }
          else if (!requestedServiceOperationStep2)
          {
              requestedServiceOperationStep2 = params[0];
+             completion(serviceResponseForStep2, nil);
          }
          else if (!requestedServiceOperationStep3)
          {
              requestedServiceOperationStep3 = params[0];
+             completion(serviceResponseForStep3, nil);
          }
          
-         void (^completion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error) = params[1];
-         if ([params[0] isKindOfClass:[MHVBlobUploadRequest class]])
-         {
-             completion(serviceResponseForBlobUpload, nil);
-         }
-         else
-         {
-             completion(serviceResponseForBeginPut, nil);
-         }
          return nil;
      }];
     
@@ -98,47 +95,61 @@ describe(@"MHVThingClient", ^
     
     context(@"RefreshBlobUrlsForThing", ^
             {
-                beforeAll(^{
+                __block MHVThing *resultThing;
+                __block NSError *resultError;
+
+                beforeEach(^{
+                    // Mock response for refresh blob url
+                    NSString *refreshBlobXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"648F6C9F-9B07-4272-89F4-19F923D1C65E\"><thing><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id><type-id name=\"File\">bd0403c5-4ae2-4b0e-a8db-1888678e4528</type-id><thing-state>Active</thing-state><flags>0</flags><eff-date>2017-06-02T22:01:52.471</eff-date><data-xml><file><name>FILENAME.JPG</name><size>4491016</size><content-type><text>image/jpeg</text></content-type></file><common /></data-xml><blob-payload><blob><blob-info><name/><content-type>image/jpeg</content-type><hash-info><algorithm>SHA256Block</algorithm><params><block-size>2097152</block-size></params><hash>D4karBmHN0/IYQEMAZg3lyTK62Bi5+rmOf8JtvzPnUo=</hash></hash-info></blob-info><content-length>4491016</content-length><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url></blob></blob-payload></thing></group></wc:info></response>";
+                    
+                    MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[refreshBlobXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                         statusCode:0];
+                    
+                    serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
+                    
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
+                    requestedServiceOperationStep3 = nil;
+                    serviceResponseForStep2 = nil;
+                    serviceResponseForStep3 = nil;
                     
                     [thingClient refreshBlobUrlsForThing:allergyThing
                                                 recordId:recordId
-                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
+                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                    {
+                        resultThing = thing;
+                        resultError = error;
+                    }];
                 });
                 
-                let(method, ^{
-                    return (MHVMethod *)requestedServiceOperationStep1;
-                });
-                
-                it(@"should get things", ^
+                it(@"should be same thing", ^
                    {
-                       [[method.name should] equal:@"GetThings"];
+                       [[expectFutureValue(resultThing.key.thingID) shouldEventually] equal:allergyThing.key.thingID];
                    });
-                it(@"should not be anonymous", ^
+                it(@"should have no error", ^
                    {
-                       [[theValue(method.isAnonymous) should] beNo];
+                       [[expectFutureValue(resultError) shouldEventually] beNil];
                    });
-                it(@"should use correct recordId", ^
+                it(@"should have correct URL for blob", ^
                    {
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                   });
-                it(@"should have correct info xml", ^
-                   {
-                       [[theValue([method.parameters containsString:@"<id>AllergyThingKey</id><format><section>core</section>"\
-                                   "<section>blobpayload</section><xml/></format></group></info>"]) should] beYes];
+                       [[expectFutureValue(resultThing.blobs.getDefaultBlob.blobUrl) shouldEventually] equal:@"https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN"];
                    });
             });
     
     context(@"RefreshBlobUrlsForThing Errors", ^
             {
-                beforeAll(^{
+                beforeEach(^{
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
+                    requestedServiceOperationStep3 = nil;
+                    serviceResponseForStep1 = nil;
+                    serviceResponseForStep2 = nil;
+                    serviceResponseForStep3 = nil;
                 });
                 
                 it(@"should fail if thing is nil", ^
                    {
+                       __block MHVThing *resultThing;
                        __block NSError *requestError;
                        [thingClient refreshBlobUrlsForThing:nil
                                                    recordId:recordId
@@ -147,12 +158,14 @@ describe(@"MHVThingClient", ^
                             requestError = error;
                         }];
                        
-                       [[requestError should] beNonNil];
-                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultThing) shouldEventually] beNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
                 
                 it(@"should fail if record id is nil", ^
                    {
+                       __block MHVThing *resultThing;
                        __block NSError *requestError;
                        [thingClient refreshBlobUrlsForThing:allergyThing
                                                    recordId:nil
@@ -161,54 +174,82 @@ describe(@"MHVThingClient", ^
                             requestError = error;
                         }];
                        
-                       [[requestError should] beNonNil];
-                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultThing) shouldEventually] beNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
     
     context(@"RefreshBlobUrlsForThingCollection", ^
             {
-                beforeAll(^{
+                __block MHVThingCollection *resultThings;
+                __block NSError *resultError;
+
+                beforeEach(^{
+                    // Mock response for refresh blob urls
+                    NSString *refreshBlobXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"648F6C9F-9B07-4272-89F4-19F923D1C65E\"><thing><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id><type-id name=\"File\">bd0403c5-4ae2-4b0e-a8db-1888678e4528</type-id><thing-state>Active</thing-state><flags>0</flags><eff-date>2017-06-02T22:01:52.471</eff-date><data-xml><file><name>FILENAME.JPG</name><size>4491016</size><content-type><text>image/jpeg</text></content-type></file><common /></data-xml><blob-payload><blob><blob-info><name/><content-type>image/jpeg</content-type><hash-info><algorithm>SHA256Block</algorithm><params><block-size>2097152</block-size></params><hash>D4karBmHN0/IYQEMAZg3lyTK62Bi5+rmOf8JtvzPnUo=</hash></hash-info></blob-info><content-length>4491016</content-length><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url></blob></blob-payload></thing>"\
+                    "<thing><thing-id version-stamp=\"FileVersion\">FileThingKey</thing-id><type-id name=\"File\">bd0403c5-4ae2-4b0e-a8db-1888678e4528</type-id><thing-state>Active</thing-state><flags>0</flags><eff-date>2017-06-02T22:01:52.471</eff-date><data-xml><file><name>FILENAME.JPG</name><size>4491016</size><content-type><text>image/jpeg</text></content-type></file><common /></data-xml><blob-payload><blob><blob-info><name/><content-type>image/jpeg</content-type><hash-info><algorithm>SHA256Block</algorithm><params><block-size>2097152</block-size></params><hash>D4karBmHN0/IYQEMAZg3lyTK62Bi5+rmOf8JtvzPnUo=</hash></hash-info></blob-info><content-length>4491016</content-length><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=FILETOKEN</blob-ref-url></blob></blob-payload></thing></group></wc:info></response>";
+                    
+                    MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[refreshBlobXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                            statusCode:0];
+                    
+                    serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
+                    
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
+                    requestedServiceOperationStep3 = nil;
+                    serviceResponseForStep2 = nil;
+                    serviceResponseForStep3 = nil;
                     
                     [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
                                                  recordId:recordId
-                                               completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
+                                               completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+                    {
+                        resultThings = things;
+                        resultError = error;
+                    }];
                 });
                 
-                let(method, ^{
-                    return (MHVMethod *)requestedServiceOperationStep1;
-                });
-                
-                it(@"should get things", ^
+                 it(@"should be 2 things", ^
                    {
-                       [[method.name should] equal:@"GetThings"];
+                       [[expectFutureValue(theValue(resultThings.count)) shouldEventually] equal:@(2)];
                    });
-                it(@"should not be anonymous", ^
+                it(@"should contain things", ^
                    {
-                       [[theValue(method.isAnonymous) should] beNo];
+                       [[expectFutureValue(theValue([resultThings containsThingID:allergyThing.thingID])) shouldEventually] beYes];
+                       [[expectFutureValue(theValue([resultThings containsThingID:fileThing.thingID])) shouldEventually] beYes];
                    });
-                it(@"should use correct recordId", ^
+                it(@"should have no error", ^
                    {
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[expectFutureValue(resultError) shouldEventually] beNil];
                    });
-                it(@"should have correct info xml", ^
+                it(@"should have correct urls for blobs", ^
                    {
-                       [[theValue([method.parameters containsString:@"<id>AllergyThingKey</id><id>FileThingKey</id><format>"\
-                                   "<section>core</section><section>blobpayload</section><xml/></format></group></info>"]) should] beYes];
+                       [[expectFutureValue(theValue([resultThings containsThingID:allergyThing.thingID])) shouldEventually] beYes];
+                       [[expectFutureValue(theValue([resultThings containsThingID:fileThing.thingID])) shouldEventually] beYes];
+                       
+                       MHVThing *resultAllergyThing = [resultThings objectAtIndex:[resultThings indexOfThingID:allergyThing.thingID]];
+                       MHVThing *resultFileThing = [resultThings objectAtIndex:[resultThings indexOfThingID:fileThing.thingID]];
+                       
+                       [[resultAllergyThing.blobs.getDefaultBlob.blobUrl should] equal:@"https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN"];
+                       [[resultFileThing.blobs.getDefaultBlob.blobUrl should] equal:@"https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=FILETOKEN"];
                    });
             });
     
     context(@"RefreshBlobUrlsForThingCollection Errors", ^
             {
-                beforeAll(^{
+                beforeEach(^{
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
+                    requestedServiceOperationStep3 = nil;
+                    serviceResponseForStep1 = nil;
+                    serviceResponseForStep2 = nil;
+                    serviceResponseForStep3 = nil;
                 });
                 
                 it(@"should fail if thing collection is nil", ^
                    {
+                       __block MHVThing *resultThing;
                        __block NSError *requestError;
                        [thingClient refreshBlobUrlsForThings:nil
                                                     recordId:recordId
@@ -217,12 +258,14 @@ describe(@"MHVThingClient", ^
                             requestError = error;
                         }];
                        
-                       [[requestError should] beNonNil];
-                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultThing) shouldEventually] beNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
                 
                 it(@"should fail if record id is nil", ^
                    {
+                       __block MHVThing *resultThing;
                        __block NSError *requestError;
                        [thingClient refreshBlobUrlsForThings:allergyThing
                                                     recordId:nil
@@ -231,92 +274,67 @@ describe(@"MHVThingClient", ^
                             requestError = error;
                         }];
                        
-                       [[requestError should] beNonNil];
-                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultThing) shouldEventually] beNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
     
     context(@"DownloadBlob Data", ^
             {
-                beforeAll(^{
+                __block NSData *resultData;
+                __block NSError *resultError;
+
+                beforeEach(^{
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
+                    requestedServiceOperationStep3 = nil;
+                    serviceResponseForStep2 = nil;
+                    serviceResponseForStep3 = nil;
+                    
+                    MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"1234567890" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                            statusCode:0];
+                    
+                    serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:NO];
                     
                     MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] initWithBlobName:@""
-                                                                                         contentType:@"image/jpg"
-                                                                                              length:123456
+                                                                                         contentType:@"text/text"
+                                                                                              length:10
                                                                                               andUrl:@"http://blob.test/path/blob"];
                     [thingClient downloadBlobData:blobPayload
-                                       completion:^(NSData * _Nullable data, NSError * _Nullable error) { }];
+                                       completion:^(NSData *_Nullable data, NSError *_Nullable error)
+                    {
+                        resultData = data;
+                        resultError = error;
+                    }];
                 });
                 
-                let(blobDownloadRequest, ^{
-                    return (MHVBlobDownloadRequest *)requestedServiceOperationStep1;
-                });
-                
-                it(@"should use correct URL", ^
+                it(@"should have no error", ^
                    {
-                       [[blobDownloadRequest.url.absoluteString should] equal:@"http://blob.test/path/blob"];
+                       [[expectFutureValue(resultError) shouldEventually] beNil];
                    });
-                
-                it(@"should not have file path", ^
+                it(@"should have correct data", ^
                    {
-                       [[blobDownloadRequest.toFilePath should] beNil];
-                   });
-                
-                it(@"should be an anonymous request", ^
-                   {
-                       [[theValue(blobDownloadRequest.isAnonymous) should] beYes];
-                   });
-            });
-    
-    context(@"DownloadBlob File", ^
-            {
-                beforeAll(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    
-                    MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] initWithBlobName:@""
-                                                                                         contentType:@"image/jpg"
-                                                                                              length:123456
-                                                                                              andUrl:@"http://blob.test/path/blob"];
-                    [thingClient downloadBlob:blobPayload
-                                   toFilePath:@"//to/path/name.xyz"
-                                   completion:^(NSError * _Nullable error) { }];
-                });
-                
-                let(blobDownloadRequest, ^{
-                    return (MHVBlobDownloadRequest *)requestedServiceOperationStep1;
-                });
-                
-                it(@"should use correct URL", ^
-                   {
-                       [[blobDownloadRequest.url.absoluteString should] equal:@"http://blob.test/path/blob"];
-                   });
-                
-                it(@"should have file path", ^
-                   {
-                       [[blobDownloadRequest.toFilePath should] equal:@"//to/path/name.xyz"];
-                   });
-                
-                it(@"should be an anonymous request", ^
-                   {
-                       [[theValue(blobDownloadRequest.isAnonymous) should] beYes];
+                       [[expectFutureValue([[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding]) shouldEventually] equal:@"1234567890"];
                    });
             });
     
     context(@"DownloadBlob Data Inline", ^
             {
                 __block NSData *returnedData;
-                beforeAll(^{
+                beforeEach(^{
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
-                    
+                    requestedServiceOperationStep3 = nil;
+                    serviceResponseForStep1 = nil;
+                    serviceResponseForStep2 = nil;
+                    serviceResponseForStep3 = nil;
+                   
                     MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] init];
                     blobPayload.inlineData = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                     
                     [thingClient downloadBlobData:blobPayload
-                                       completion:^(NSData * _Nullable data, NSError * _Nullable error)
+                                       completion:^(NSData *_Nullable data, NSError *_Nullable error)
                      {
                          returnedData = data;
                      }];
@@ -334,119 +352,151 @@ describe(@"MHVThingClient", ^
     
     context(@"DownloadBlob Errors", ^
             {
-                beforeAll(^{
+                beforeEach(^{
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
+                    requestedServiceOperationStep3 = nil;
+                    serviceResponseForStep1 = nil;
+                    serviceResponseForStep2 = nil;
+                    serviceResponseForStep3 = nil;
                 });
                 
                 it(@"should fail if blob payload is nil", ^
                    {
                        __block NSError *requestError;
                        [thingClient downloadBlobData:nil
-                                          completion:^(NSData * _Nullable data, NSError * _Nullable error)
+                                          completion:^(NSData *_Nullable data, NSError *_Nullable error)
                         {
                             requestError = error;
                         }];
                        
-                       [[requestError should] beNonNil];
-                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
-                
             });
-
-    context(@"UploadBlob step 1", ^
+    
+    context(@"AddBlobToThing Errors", ^
             {
-                beforeAll(^{
+                beforeEach(^{
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
-                    
-                    NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
-                    MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
-                    
-                    [thingClient addBlobSource:blobSource
-                                       toThing:fileThing
-                                          name:nil
-                                   contentType:@"text/text"
-                                      recordId:recordId
-                                    completion:^(MHVThing * _Nullable thing, NSError * _Nullable error) { }];
+                    requestedServiceOperationStep3 = nil;
+                    serviceResponseForStep1 = nil;
+                    serviceResponseForStep2 = nil;
+                    serviceResponseForStep3 = nil;
                 });
                 
-                it(@"should begin blob put", ^
+                it(@"should fail if blobSource is nil", ^
                    {
-                       MHVMethod *method = (MHVMethod *)requestedServiceOperationStep1;
+                       __block NSError *requestError;
+                       [thingClient addBlobSource:nil
+                                          toThing:fileThing
+                                             name:nil
+                                      contentType:@"text/text"
+                                         recordId:recordId
+                                       completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
                        
-                       [[method.name should] equal:@"BeginPutBlob"];
-                       [[theValue(method.isAnonymous) should] beNo];
-                       [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+                
+                it(@"should fail if toThing is nil", ^
+                   {
+                       NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
+                       MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
+                       
+                       __block NSError *requestError;
+                       [thingClient addBlobSource:blobSource
+                                          toThing:nil
+                                             name:nil
+                                      contentType:@"text/text"
+                                         recordId:recordId
+                                       completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+                
+                it(@"should fail if contentType is nil", ^
+                   {
+                       NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
+                       MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
+                       
+                       __block NSError *requestError;
+                       [thingClient addBlobSource:blobSource
+                                          toThing:fileThing
+                                             name:nil
+                                      contentType:nil
+                                         recordId:recordId
+                                       completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+                
+                it(@"should fail if recordId is nil", ^
+                   {
+                       NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
+                       MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
+                       
+                       __block NSError *requestError;
+                       [thingClient addBlobSource:blobSource
+                                          toThing:fileThing
+                                             name:nil
+                                      contentType:@"text/text"
+                                         recordId:nil
+                                       completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
-
-    context(@"UploadBlob step 2", ^
+    
+    context(@"AddBlobToThing", ^
             {
-                //Mock response for step 1
-                NSString *xmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.BeginPutBlob\"><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url><blob-chunk-size>123456</blob-chunk-size><max-blob-size>1073741824</max-blob-size><blob-hash-algorithm>SHA256Block</blob-hash-algorithm><blob-hash-parameters><block-size>654321</block-size></blob-hash-parameters></wc:info></response>";
-                
-                MHVHttpServiceResponse *httpResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[xmlResponse dataUsingEncoding:NSUTF8StringEncoding]
-                                                                                                 statusCode:0];
-                
-                serviceResponseForBeginPut = [[MHVServiceResponse alloc] initWithWebResponse:httpResponse isXML:YES];
-                
-                beforeAll(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    
-                    NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
-                    MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
-                    
-                    [thingClient addBlobSource:blobSource
-                                       toThing:fileThing
-                                          name:nil
-                                   contentType:@"text/text"
-                                      recordId:recordId
-                                    completion:^(MHVThing * _Nullable thing, NSError * _Nullable error) { }];
-                });
-                
-                let(blobUploadRequest, ^{
-                    return (MHVBlobUploadRequest *)requestedServiceOperationStep2;
-                });
-                
-                it(@"should use upload to correct URL", ^
-                   {
-                       [[expectFutureValue(requestedServiceOperationStep2) shouldEventually] beNonNil];
-                       
-                       [[blobUploadRequest.destinationURL.absoluteString should] equal:@"https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN"];
-                   });                
-
-                it(@"should include chunk size", ^
-                   {
-                       [[expectFutureValue(requestedServiceOperationStep2) shouldEventually] beNonNil];
-                       
-                       [[theValue(blobUploadRequest.chunkSize) should] equal:@(123456)];
-                   });
-            });
-
-    context(@"UploadBlob step 3", ^
-            {
-                //Mock response for step 1
-                NSString *putXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.BeginPutBlob\"><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url><blob-chunk-size>123456</blob-chunk-size><max-blob-size>1073741824</max-blob-size><blob-hash-algorithm>SHA256Block</blob-hash-algorithm><blob-hash-parameters><block-size>654321</block-size></blob-hash-parameters></wc:info></response>";
-                
-                MHVHttpServiceResponse *putResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[putXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
-                                                                                                 statusCode:0];
-                
-                serviceResponseForBeginPut = [[MHVServiceResponse alloc] initWithWebResponse:putResponse isXML:YES];
-                
-                //Mock response for step 2
-                MHVHttpServiceResponse *uploadResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:nil
-                                                                                                   statusCode:0];
-
-                serviceResponseForBlobUpload = [[MHVServiceResponse alloc] initWithWebResponse:uploadResponse isXML:NO];
-                
                 __block MHVThing *resultThing;
                 
-                beforeAll(^{
+                beforeEach(^{
                     requestedServiceOperationStep1 = nil;
                     requestedServiceOperationStep2 = nil;
+                    requestedServiceOperationStep3 = nil;
                     
+                    // Mock response for get blob upload info with BeginPutBlob
+                    NSString *beginPutXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.BeginPutBlob\"><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url><blob-chunk-size>123456</blob-chunk-size><max-blob-size>1073741824</max-blob-size><blob-hash-algorithm>SHA256Block</blob-hash-algorithm><blob-hash-parameters><block-size>654321</block-size></blob-hash-parameters></wc:info></response>";
+                    
+                    MHVHttpServiceResponse *beginPutResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[beginPutXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                         statusCode:0];
+                    
+                    serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:beginPutResponse isXML:YES];
+                    
+                    // Mock response for uploading data
+                    MHVHttpServiceResponse *uploadResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:nil
+                                                                                                       statusCode:0];
+                    
+                    serviceResponseForStep2 = [[MHVServiceResponse alloc] initWithWebResponse:uploadResponse isXML:NO];
+                    
+                    // Mock response for update thing with PutThings
+                    NSString *putThingsXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.PutThings\">" \
+                    "<thing-id version-stamp=\"11111111-1111-1111-1111-111111111111\">22222222-2222-2222-2222-222222222222</thing-id></wc:info></response>";
+                    
+                    MHVHttpServiceResponse *putThingsResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[putThingsXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                          statusCode:0];
+                    
+                    serviceResponseForStep3 = [[MHVServiceResponse alloc] initWithWebResponse:putThingsResponse isXML:YES];
+                    
+                    // Create data for blob
                     NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                     MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
                     
@@ -455,46 +505,27 @@ describe(@"MHVThingClient", ^
                                           name:nil
                                    contentType:@"text/text"
                                       recordId:recordId
-                                    completion:^(MHVThing * _Nullable thing, NSError * _Nullable error) { }];
+                                    completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                     {
+                         resultThing = thing;
+                     }];
                 });
                 
-                let(blobUpdateThing, ^{
-                    return (MHVMethod *)requestedServiceOperationStep3;
-                });
-                
-                it(@"should PutThings to update thing", ^
+                it(@"should have resultThing", ^
                    {
-                       [[expectFutureValue(requestedServiceOperationStep3) shouldEventually] beNonNil];
-                       
-                       [[blobUpdateThing.name should] equal:@"PutThings"];
+                       [[expectFutureValue(resultThing) shouldEventually] beNonNil];
                    });
-                
-                it(@"should have correct recordId", ^
+                it(@"resultThing should have 1 blob", ^
                    {
-                       [[expectFutureValue(requestedServiceOperationStep3) shouldEventually] beNonNil];
-                       
-                       [[blobUpdateThing.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
+                       [[expectFutureValue(theValue(resultThing.blobs.things.count)) shouldEventually] equal:@(1)];
                    });
-
-                it(@"should have posted blob url", ^
+                it(@"resultThing blob should be correct size", ^
                    {
-                       [[expectFutureValue(requestedServiceOperationStep3) shouldEventually] beNonNil];
-                       
-                       [[theValue([blobUpdateThing.parameters containsString:@"https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN"]) should] beYes];
+                       [[expectFutureValue(theValue(resultThing.blobs.getDefaultBlob.length)) shouldEventually] equal:@(6)];
                    });
-
-                it(@"should have posted correct content length", ^
+                it(@"resultThing blob should have correct content type", ^
                    {
-                       [[expectFutureValue(requestedServiceOperationStep3) shouldEventually] beNonNil];
-                       
-                       [[theValue([blobUpdateThing.parameters containsString:@"<content-length>6</content-length>"]) should] beYes];
-                   });
-
-                it(@"should have posted correct content type", ^
-                   {
-                       [[expectFutureValue(requestedServiceOperationStep3) shouldEventually] beNonNil];
-                       
-                       [[theValue([blobUpdateThing.parameters containsString:@"<content-type><text>content/type</text></content-type>"]) should] beYes];
+                       [[expectFutureValue(resultThing.blobs.getDefaultBlob.contentType) shouldEventually] equal:@"text/text"];
                    });
             });
 });

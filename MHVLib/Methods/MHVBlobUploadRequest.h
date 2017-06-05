@@ -40,6 +40,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign, readonly) NSUInteger chunkSize;
 
+/**
+ * Create blob upload request
+ *
+ * @param blobSource The source data for the blob to be uploaded (file or data in memory)
+ * @param destinationURL URL where the blob is to be uploaded
+ * @param chunkSize The size to use for Chunked uploads of the blob data.  
+ *        If 0, kDefaultBlobChunkSizeInBytes will be used
+ */
 - (instancetype)initWithBlobSource:(id<MHVBlobSourceProtocol>)blobSource
                     destinationURL:(NSURL *)destinationURL
                          chunkSize:(NSUInteger)chunkSize;
