@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43282AE41EE21050009E3301 /* MHVAdvanceDirective.h in Headers */ = {isa = PBXBuildFile; fileRef = 43282AE21EE21050009E3301 /* MHVAdvanceDirective.h */; };
+		43282AE51EE21050009E3301 /* MHVAdvanceDirective.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AE31EE21050009E3301 /* MHVAdvanceDirective.m */; };
+		43282AE91EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AE81EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m */; };
+		43282AEC1EE5FC1B009E3301 /* MHVAerobicProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 43282AEA1EE5FC1B009E3301 /* MHVAerobicProfile.h */; };
+		43282AED1EE5FC1B009E3301 /* MHVAerobicProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AEB1EE5FC1B009E3301 /* MHVAerobicProfile.m */; };
+		43282AF01EE5FDE8009E3301 /* MHVMaxVO2.h in Headers */ = {isa = PBXBuildFile; fileRef = 43282AEE1EE5FDE8009E3301 /* MHVMaxVO2.h */; };
+		43282AF11EE5FDE8009E3301 /* MHVMaxVO2.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AEF1EE5FDE8009E3301 /* MHVMaxVO2.m */; };
+		43282AF41EE60081009E3301 /* MHVHeartrateZoneGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 43282AF21EE60081009E3301 /* MHVHeartrateZoneGroup.h */; };
+		43282AF51EE60081009E3301 /* MHVHeartrateZoneGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AF31EE60081009E3301 /* MHVHeartrateZoneGroup.m */; };
+		43282AF81EE60123009E3301 /* MHVHeartrateZone.h in Headers */ = {isa = PBXBuildFile; fileRef = 43282AF61EE60123009E3301 /* MHVHeartrateZone.h */; };
+		43282AF91EE60123009E3301 /* MHVHeartrateZone.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AF71EE60123009E3301 /* MHVHeartrateZone.m */; };
+		43282AFC1EE601B4009E3301 /* MHVZoneBoundary.h in Headers */ = {isa = PBXBuildFile; fileRef = 43282AFA1EE601B4009E3301 /* MHVZoneBoundary.h */; };
+		43282AFD1EE601B4009E3301 /* MHVZoneBoundary.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AFB1EE601B4009E3301 /* MHVZoneBoundary.m */; };
+		43282AFF1EE60A4F009E3301 /* MHVAerobicProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AFE1EE60A4F009E3301 /* MHVAerobicProfileTests.m */; };
+		43282B041EE61F64009E3301 /* MHVPercentage.h in Headers */ = {isa = PBXBuildFile; fileRef = 43282B021EE61F64009E3301 /* MHVPercentage.h */; };
+		43282B051EE61F64009E3301 /* MHVPercentage.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282B031EE61F64009E3301 /* MHVPercentage.m */; };
 		438160D81ED3868700BB8C94 /* MHVVocabularyClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 438160D61ED3868700BB8C94 /* MHVVocabularyClient.h */; };
 		438160D91ED3868700BB8C94 /* MHVVocabularyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160D71ED3868700BB8C94 /* MHVVocabularyClient.m */; };
 		438160F41ED4EFBA00BB8C94 /* MHVVocabularyCodeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 438160E61ED4B0D500BB8C94 /* MHVVocabularyCodeSet.m */; };
@@ -705,6 +721,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		43282AE21EE21050009E3301 /* MHVAdvanceDirective.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVAdvanceDirective.h; path = MHVLib/ThingTypes/MHVAdvanceDirective.h; sourceTree = SOURCE_ROOT; };
+		43282AE31EE21050009E3301 /* MHVAdvanceDirective.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVAdvanceDirective.m; path = MHVLib/ThingTypes/MHVAdvanceDirective.m; sourceTree = SOURCE_ROOT; };
+		43282AE81EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAdvanceDirectiveTests.m; sourceTree = "<group>"; };
+		43282AEA1EE5FC1B009E3301 /* MHVAerobicProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVAerobicProfile.h; path = MHVLib/ThingTypes/MHVAerobicProfile.h; sourceTree = SOURCE_ROOT; };
+		43282AEB1EE5FC1B009E3301 /* MHVAerobicProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVAerobicProfile.m; path = MHVLib/ThingTypes/MHVAerobicProfile.m; sourceTree = SOURCE_ROOT; };
+		43282AEE1EE5FDE8009E3301 /* MHVMaxVO2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMaxVO2.h; sourceTree = "<group>"; };
+		43282AEF1EE5FDE8009E3301 /* MHVMaxVO2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMaxVO2.m; sourceTree = "<group>"; };
+		43282AF21EE60081009E3301 /* MHVHeartrateZoneGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHeartrateZoneGroup.h; sourceTree = "<group>"; };
+		43282AF31EE60081009E3301 /* MHVHeartrateZoneGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHeartrateZoneGroup.m; sourceTree = "<group>"; };
+		43282AF61EE60123009E3301 /* MHVHeartrateZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHeartrateZone.h; sourceTree = "<group>"; };
+		43282AF71EE60123009E3301 /* MHVHeartrateZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHeartrateZone.m; sourceTree = "<group>"; };
+		43282AFA1EE601B4009E3301 /* MHVZoneBoundary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVZoneBoundary.h; sourceTree = "<group>"; };
+		43282AFB1EE601B4009E3301 /* MHVZoneBoundary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVZoneBoundary.m; sourceTree = "<group>"; };
+		43282AFE1EE60A4F009E3301 /* MHVAerobicProfileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAerobicProfileTests.m; sourceTree = "<group>"; };
+		43282B021EE61F64009E3301 /* MHVPercentage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPercentage.h; sourceTree = "<group>"; };
+		43282B031EE61F64009E3301 /* MHVPercentage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPercentage.m; sourceTree = "<group>"; };
 		438160D61ED3868700BB8C94 /* MHVVocabularyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyClient.h; sourceTree = "<group>"; };
 		438160D71ED3868700BB8C94 /* MHVVocabularyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularyClient.m; sourceTree = "<group>"; };
 		438160E41ED4B0D500BB8C94 /* MHVVocabulary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabulary.h; sourceTree = "<group>"; };
@@ -1441,6 +1473,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43282AE71EE5D9C2009E3301 /* ThingTypes */ = {
+			isa = PBXGroup;
+			children = (
+				43282AE81EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m */,
+				43282AFE1EE60A4F009E3301 /* MHVAerobicProfileTests.m */,
+			);
+			path = ThingTypes;
+			sourceTree = "<group>";
+		};
 		438160E31ED4B0D500BB8C94 /* Vocabulary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1465,11 +1506,12 @@
 			isa = PBXGroup;
 			children = (
 				A575B4241ED488D600AB781C /* Authentication */,
-				A51203C81ECF2CB600845680 /* Connection */,
 				4C76474B1ECA544B003B85B5 /* Clients */,
+				A51203C81ECF2CB600845680 /* Connection */,
 				4C7646BF1EC4E525003B85B5 /* HTTP */,
 				4C3973B41EC4B66B0079C28D /* Info.plist */,
 				4C3973B21EC4B66B0079C28D /* MHVLibTests.m */,
+				43282AE71EE5D9C2009E3301 /* ThingTypes */,
 				4C7646E81EC65803003B85B5 /* XML */,
 			);
 			path = MHVLibTests;
@@ -1787,34 +1829,20 @@
 				5D88C5DF161F4EDF00F74D54 /* MHVFoodEnergyValue.m */,
 				5DC3C43515360123008BBDBF /* MHVGetAuthorizedPeopleResult.h */,
 				5DC3C43615360123008BBDBF /* MHVGetAuthorizedPeopleResult.m */,
-				5D20D31114F2F4EF00160611 /* MHVThing.h */,
-				5D20D31214F2F4F100160611 /* MHVThing.m */,
-				5D20D32914F42E0C00160611 /* MHVThingData.h */,
-				5D20D32A14F42E0F00160611 /* MHVThingData.m */,
-				5D20D32D14F4352200160611 /* MHVThingDataCommon.h */,
-				5D20D32E14F4352500160611 /* MHVThingDataCommon.m */,
-				5D983BD614E5F4BD00C287B7 /* MHVThingDataTyped.h */,
-				5D983BD714E5F4BD00C287B7 /* MHVThingDataTyped.m */,
-				5D20D30914F2E22800160611 /* MHVThingFilter.h */,
-				5D20D30A14F2E22A00160611 /* MHVThingFilter.m */,
-				5D20D30514F2E21000160611 /* MHVThingKey.h */,
-				5D20D30614F2E21200160611 /* MHVThingKey.m */,
-				5D20D2FC14EF3DC000160611 /* MHVThingQuery.h */,
-				5D20D2FD14EF3DC200160611 /* MHVThingQuery.m */,
-				5D20D35514F4882C00160611 /* MHVThingQueryResult.h */,
-				5D20D35614F4883100160611 /* MHVThingQueryResult.m */,
-				5D20D34D14F487B500160611 /* MHVThingQueryResults.h */,
-				5D20D34E14F487BA00160611 /* MHVThingQueryResults.m */,
-				5D20D31914F2FA5400160611 /* MHVThingSection.h */,
-				5D20D31A14F2FA5600160611 /* MHVThingSection.m */,
-				5D20D32114F304E100160611 /* MHVThingState.h */,
-				5D20D32214F304E400160611 /* MHVThingState.m */,
-				5D20D32514F424EA00160611 /* MHVThingType.h */,
-				5D20D32614F424EC00160611 /* MHVThingType.m */,
-				5D20D30D14F2E26400160611 /* MHVThingView.h */,
-				5D20D30E14F2E26600160611 /* MHVThingView.m */,
+				43282AF61EE60123009E3301 /* MHVHeartrateZone.h */,
+				43282AF71EE60123009E3301 /* MHVHeartrateZone.m */,
+				43282AF21EE60081009E3301 /* MHVHeartrateZoneGroup.h */,
+				43282AF31EE60081009E3301 /* MHVHeartrateZoneGroup.m */,
+				5DF90BD319005CA5009ABAAB /* MHVLabTestResultsDetails.h */,
+				5DF90BD419005CA5009ABAAB /* MHVLabTestResultsDetails.m */,
+				5DF90BE319008C62009ABAAB /* MHVLabTestResultsGroup.h */,
+				5DF90BE419008C62009ABAAB /* MHVLabTestResultsGroup.m */,
+				5DF90BDF19006203009ABAAB /* MHVLabTestResultValue.h */,
+				5DF90BE019006203009ABAAB /* MHVLabTestResultValue.m */,
 				5DC799761534EC2D00193A3B /* MHVLengthMeasurement.h */,
 				5DC799771534EC2E00193A3B /* MHVLengthMeasurement.m */,
+				43282AEE1EE5FDE8009E3301 /* MHVMaxVO2.h */,
+				43282AEF1EE5FDE8009E3301 /* MHVMaxVO2.m */,
 				5D195CFD151BBC7C00E109AD /* MHVMeasurement.h */,
 				5D195CFE151BBC7D00E109AD /* MHVMeasurement.m */,
 				5D25D66E18AC567800B29B6D /* MHVMessageAttachment.h */,
@@ -1847,6 +1875,42 @@
 				5D195CF9151B886000E109AD /* MHVRelatedThing.m */,
 				5D1F13271539E9DF00524425 /* MHVRelative.h */,
 				5D1F13281539E9E000524425 /* MHVRelative.m */,
+				5D1ACC7B19103C73000689FD /* MHVResponse.h */,
+				5D1ACC7C19103C73000689FD /* MHVResponse.m */,
+				5D1ACC7F19104056000689FD /* MHVResponseStatus.h */,
+				5D1ACC8019104056000689FD /* MHVResponseStatus.m */,
+				5D1ACC8719104559000689FD /* MHVServerError.h */,
+				5D1ACC8819104559000689FD /* MHVServerError.m */,
+				5DF90BDB19005FF0009ABAAB /* MHVTestResultRange.h */,
+				5DF90BDC19005FF0009ABAAB /* MHVTestResultRange.m */,
+				5DF90BD719005D5D009ABAAB /* MHVTestResultRangeValue.h */,
+				5DF90BD819005D5D009ABAAB /* MHVTestResultRangeValue.m */,
+				5D20D31114F2F4EF00160611 /* MHVThing.h */,
+				5D20D31214F2F4F100160611 /* MHVThing.m */,
+				5D20D32914F42E0C00160611 /* MHVThingData.h */,
+				5D20D32A14F42E0F00160611 /* MHVThingData.m */,
+				5D20D32D14F4352200160611 /* MHVThingDataCommon.h */,
+				5D20D32E14F4352500160611 /* MHVThingDataCommon.m */,
+				5D983BD614E5F4BD00C287B7 /* MHVThingDataTyped.h */,
+				5D983BD714E5F4BD00C287B7 /* MHVThingDataTyped.m */,
+				5D20D30914F2E22800160611 /* MHVThingFilter.h */,
+				5D20D30A14F2E22A00160611 /* MHVThingFilter.m */,
+				5D20D30514F2E21000160611 /* MHVThingKey.h */,
+				5D20D30614F2E21200160611 /* MHVThingKey.m */,
+				5D20D2FC14EF3DC000160611 /* MHVThingQuery.h */,
+				5D20D2FD14EF3DC200160611 /* MHVThingQuery.m */,
+				5D20D35514F4882C00160611 /* MHVThingQueryResult.h */,
+				5D20D35614F4883100160611 /* MHVThingQueryResult.m */,
+				5D20D34D14F487B500160611 /* MHVThingQueryResults.h */,
+				5D20D34E14F487BA00160611 /* MHVThingQueryResults.m */,
+				5D20D31914F2FA5400160611 /* MHVThingSection.h */,
+				5D20D31A14F2FA5600160611 /* MHVThingSection.m */,
+				5D20D32114F304E100160611 /* MHVThingState.h */,
+				5D20D32214F304E400160611 /* MHVThingState.m */,
+				5D20D32514F424EA00160611 /* MHVThingType.h */,
+				5D20D32614F424EC00160611 /* MHVThingType.m */,
+				5D20D30D14F2E26400160611 /* MHVThingView.h */,
+				5D20D30E14F2E26600160611 /* MHVThingView.m */,
 				5DEF154D14E98DCA009D05D5 /* MHVTime.h */,
 				5DEF154E14E98DCA009D05D5 /* MHVTime.m */,
 				5DEF154814E985C5009D05D5 /* MHVType.h */,
@@ -1858,22 +1922,8 @@
 				5D8183FC1875F9480073F8E6 /* MHVVolumeValue.m */,
 				5D20D2E014EDD6C000160611 /* MHVWeightMeasurement.h */,
 				5D20D2E114EDD6C000160611 /* MHVWeightMeasurement.m */,
-				5DF90BD719005D5D009ABAAB /* MHVTestResultRangeValue.h */,
-				5DF90BD819005D5D009ABAAB /* MHVTestResultRangeValue.m */,
-				5DF90BDB19005FF0009ABAAB /* MHVTestResultRange.h */,
-				5DF90BDC19005FF0009ABAAB /* MHVTestResultRange.m */,
-				5DF90BDF19006203009ABAAB /* MHVLabTestResultValue.h */,
-				5DF90BE019006203009ABAAB /* MHVLabTestResultValue.m */,
-				5DF90BD319005CA5009ABAAB /* MHVLabTestResultsDetails.h */,
-				5DF90BD419005CA5009ABAAB /* MHVLabTestResultsDetails.m */,
-				5DF90BE319008C62009ABAAB /* MHVLabTestResultsGroup.h */,
-				5DF90BE419008C62009ABAAB /* MHVLabTestResultsGroup.m */,
-				5D1ACC8719104559000689FD /* MHVServerError.h */,
-				5D1ACC8819104559000689FD /* MHVServerError.m */,
-				5D1ACC7F19104056000689FD /* MHVResponseStatus.h */,
-				5D1ACC8019104056000689FD /* MHVResponseStatus.m */,
-				5D1ACC7B19103C73000689FD /* MHVResponse.h */,
-				5D1ACC7C19103C73000689FD /* MHVResponse.m */,
+				43282AFA1EE601B4009E3301 /* MHVZoneBoundary.h */,
+				43282AFB1EE601B4009E3301 /* MHVZoneBoundary.m */,
 				5D7898CA1714E9400015D375 /* ServiceDef */,
 			);
 			path = Types;
@@ -1931,6 +1981,8 @@
 				5D195D7115228C0200E109AD /* MHVVocabularySearchString.m */,
 				5D983BF014E6039C00C287B7 /* MHVYear.h */,
 				5D983BF114E6039C00C287B7 /* MHVYear.m */,
+				43282B021EE61F64009E3301 /* MHVPercentage.h */,
+				43282B031EE61F64009E3301 /* MHVPercentage.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1938,6 +1990,10 @@
 		5D983BB414E58EDA00C287B7 /* ThingTypes */ = {
 			isa = PBXGroup;
 			children = (
+				43282AE21EE21050009E3301 /* MHVAdvanceDirective.h */,
+				43282AE31EE21050009E3301 /* MHVAdvanceDirective.m */,
+				43282AEA1EE5FC1B009E3301 /* MHVAerobicProfile.h */,
+				43282AEB1EE5FC1B009E3301 /* MHVAerobicProfile.m */,
 				4C191A111EC1033C00B5E545 /* MHVAllergy.h */,
 				4C191A121EC1033C00B5E545 /* MHVAllergy.m */,
 				4C191A131EC1033C00B5E545 /* MHVAssessment.h */,
@@ -2527,6 +2583,7 @@
 				4C191A911EC1033C00B5E545 /* MHVThingTypes.h in Headers */,
 				5DEF154A14E985C5009D05D5 /* MHVType.h in Headers */,
 				BA0356FB1EC5278800BE547D /* MHVGoalRecommendationsResponse.h in Headers */,
+				43282AFC1EE601B4009E3301 /* MHVZoneBoundary.h in Headers */,
 				5DEF154F14E98DCB009D05D5 /* MHVTime.h in Headers */,
 				5DEF155714E9987F009D05D5 /* MHVDateExtensions.h in Headers */,
 				5DEF156714EB0988009D05D5 /* MHVClientResult.h in Headers */,
@@ -2539,6 +2596,7 @@
 				BA0356061EC1257F00BE547D /* NSDate+DataModel.h in Headers */,
 				5D20D2DE14EDD5FE00160611 /* MHVPositiveDouble.h in Headers */,
 				5D20D2E214EDD6C100160611 /* MHVWeightMeasurement.h in Headers */,
+				43282AF01EE5FDE8009E3301 /* MHVMaxVO2.h in Headers */,
 				A5B3849A1ECB4CE400788619 /* MHVAuthSession.h in Headers */,
 				5D20D2E614EDDEF500160611 /* MHVDisplayValue.h in Headers */,
 				5D20D2EE14EEF84400160611 /* MHVInt.h in Headers */,
@@ -2630,6 +2688,7 @@
 				BA0356021EC1257F00BE547D /* NSArray+MHVEnum.h in Headers */,
 				BA0356251EC1257F00BE547D /* MHVDataModelProtocol.h in Headers */,
 				5D5F3166150FAA2800ED11E7 /* HealthVaultService.h in Headers */,
+				43282AF41EE60081009E3301 /* MHVHeartrateZoneGroup.h in Headers */,
 				5D5F3168150FAA2800ED11E7 /* MobilePlatform.h in Headers */,
 				BA4FBEA51ECA5CCD00C8EBF9 /* MHVRemoteMonitoringClient.h in Headers */,
 				5D5F316A150FAA2800ED11E7 /* AuthenticationCheckState.h in Headers */,
@@ -2660,6 +2719,7 @@
 				5D39F92F1513E41200208A7B /* MHVGetThingsTask.h in Headers */,
 				4C191A771EC1033C00B5E545 /* MHVDietaryIntake.h in Headers */,
 				4C191A891EC1033C00B5E545 /* MHVImmunization.h in Headers */,
+				43282B041EE61F64009E3301 /* MHVPercentage.h in Headers */,
 				A545214E1EC9EA2200A17A1B /* MHVShellAuthServiceProtocol.h in Headers */,
 				5D39F937151A3AA200208A7B /* MHVLocalThingStore.h in Headers */,
 				5D39F93B151A718C00208A7B /* MHVLocalRecordStore.h in Headers */,
@@ -2672,6 +2732,7 @@
 				BA03560A1EC1257F00BE547D /* NSNull+DataModel.h in Headers */,
 				BA03570D1EC5278800BE547D /* MHVOnboardingRequest.h in Headers */,
 				5D195CFF151BBC7D00E109AD /* MHVMeasurement.h in Headers */,
+				43282AE41EE21050009E3301 /* MHVAdvanceDirective.h in Headers */,
 				5D195D03151BC72C00E109AD /* MHVApproxMeasurement.h in Headers */,
 				5D195D0F151BEBA100E109AD /* MHVAddress.h in Headers */,
 				5D195D13151BF01800E109AD /* MHVPhone.h in Headers */,
@@ -2679,6 +2740,7 @@
 				5D195D1B151BF2E200E109AD /* MHVEmailAddress.h in Headers */,
 				5D195D1F151BF54300E109AD /* MHVEmail.h in Headers */,
 				A5AC1F5A1EC0F9B00049C24D /* MHVClientProtocol.h in Headers */,
+				43282AEC1EE5FC1B009E3301 /* MHVAerobicProfile.h in Headers */,
 				5D195D23151BF61000E109AD /* MHVContact.h in Headers */,
 				BA0356381EC1278F00BE547D /* MHVJsonCacheService.h in Headers */,
 				5D195D27151BF9F400E109AD /* MHVPerson.h in Headers */,
@@ -2780,6 +2842,7 @@
 				BA0356DB1EC5278700BE547D /* MHVActionPlansResponseActionPlanInstance_.h in Headers */,
 				5D1BE475156B427F00718832 /* MHVBlobPutParameters.h in Headers */,
 				5D1BE479156B464400718832 /* MHVBeginBlobPutTask.h in Headers */,
+				43282AF81EE60123009E3301 /* MHVHeartrateZone.h in Headers */,
 				BA0356081EC1257F00BE547D /* NSDictionary+DataModel.h in Headers */,
 				5D1BE47D156B483900718832 /* MHVBlobUploadTask.h in Headers */,
 				4C191A651EC1033C00B5E545 /* MHVBloodGlucose.h in Headers */,
@@ -2964,7 +3027,9 @@
 				A51203CA1ECF2CB600845680 /* MHVSodaConnectionTests.m in Sources */,
 				4C76474D1ECA546F003B85B5 /* MHVThingClientTests.m in Sources */,
 				4C2975C81ECDFB63006B3673 /* MHVHttpTaskTests.m in Sources */,
+				43282AE91EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m in Sources */,
 				A575B4261ED488F400AB781C /* MHVShellAuthServiceTests.m in Sources */,
+				43282AFF1EE60A4F009E3301 /* MHVAerobicProfileTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2982,6 +3047,7 @@
 				BA0357181EC5278800BE547D /* MHVSystemObject.m in Sources */,
 				BA0357201EC5278800BE547D /* MHVTrackingValidation.m in Sources */,
 				5D76B9DC14DCC85B00BA865F /* MHVExceptionExtensions.m in Sources */,
+				43282B051EE61F64009E3301 /* MHVPercentage.m in Sources */,
 				A53BF8411EC3A48600F018E2 /* MHVApplicationCreationInfo.m in Sources */,
 				5D0DACB414E2FE14002CBE52 /* MHVCore.m in Sources */,
 				BA0356DE1EC5278700BE547D /* MHVActionPlanTask.m in Sources */,
@@ -2997,6 +3063,7 @@
 				BA0356DA1EC5278700BE547D /* MHVActionPlanScheduledTaskCompletionMetrics.m in Sources */,
 				5DE3831514E4447800DFA11D /* XString.m in Sources */,
 				5D2D1C5E14E4A4F400C85B7E /* XWriter.m in Sources */,
+				43282AED1EE5FC1B009E3301 /* MHVAerobicProfile.m in Sources */,
 				BA0356E41EC5278800BE547D /* MHVActionPlanTaskOccurrenceMetrics.m in Sources */,
 				4C191A6A1EC1033C00B5E545 /* MHVCCD.m in Sources */,
 				A54220601EC26BF900728913 /* MHVConnection.m in Sources */,
@@ -3026,6 +3093,7 @@
 				5D983C0514E984EE00C287B7 /* MHVSecond.m in Sources */,
 				5D983C0914E9850500C287B7 /* MHVMillisecond.m in Sources */,
 				5DEF154B14E985C5009D05D5 /* MHVType.m in Sources */,
+				43282AF91EE60123009E3301 /* MHVHeartrateZone.m in Sources */,
 				5DEF155014E98DCB009D05D5 /* MHVTime.m in Sources */,
 				5DEF155814E9987F009D05D5 /* MHVDateExtensions.m in Sources */,
 				5DEF156814EB0988009D05D5 /* MHVClientResult.m in Sources */,
@@ -3058,6 +3126,7 @@
 				5D20D31414F2F4F400160611 /* MHVThing.m in Sources */,
 				5D20D31C14F2FA5900160611 /* MHVThingSection.m in Sources */,
 				5D20D32414F304E700160611 /* MHVThingState.m in Sources */,
+				43282AF11EE5FDE8009E3301 /* MHVMaxVO2.m in Sources */,
 				5DB2E69518D2553B0030972D /* MHVThingChange.m in Sources */,
 				A5B3849F1ECB741200788619 /* MHVHttpServiceRequest.m in Sources */,
 				5D20D32814F424F000160611 /* MHVThingType.m in Sources */,
@@ -3104,6 +3173,7 @@
 				BA03563E1EC1278F00BE547D /* MHVPropertyIntrospection.m in Sources */,
 				5D5F3127150EAD8400ED11E7 /* MHVDirectory.m in Sources */,
 				5D5F3132150ED29F00ED11E7 /* MHVBrowserController.m in Sources */,
+				43282AFD1EE601B4009E3301 /* MHVZoneBoundary.m in Sources */,
 				BA0356031EC1257F00BE547D /* NSArray+MHVEnum.m in Sources */,
 				BA0356EA1EC5278800BE547D /* MHVActionPlanTaskTracking.m in Sources */,
 				438160F81ED4EFC900BB8C94 /* MHVVocabularyCodeItem.m in Sources */,
@@ -3232,6 +3302,7 @@
 				4C191A741EC1033C00B5E545 /* MHVDailyDietaryIntake.m in Sources */,
 				5D1F13321539EF0600524425 /* MHVConditionEntry.m in Sources */,
 				BA0356361EC1278F00BE547D /* MHVJsonCacheItem.m in Sources */,
+				43282AF51EE60081009E3301 /* MHVHeartrateZoneGroup.m in Sources */,
 				BA03571A1EC5278800BE547D /* MHVSystemThreadingCancellationToken.m in Sources */,
 				5D1ACC8219104056000689FD /* MHVResponseStatus.m in Sources */,
 				BA0356F21EC5278800BE547D /* MHVAudit.m in Sources */,
@@ -3277,6 +3348,7 @@
 				4C191A8A1EC1033C00B5E545 /* MHVImmunization.m in Sources */,
 				4C191A761EC1033C00B5E545 /* MHVDailyMedicationUsage.m in Sources */,
 				5D7D05C61639E83800D32AD5 /* MHVDownloadThingsTask.m in Sources */,
+				43282AE51EE21050009E3301 /* MHVAdvanceDirective.m in Sources */,
 				5DDB6D521653FE59001BCB16 /* MHVConcentrationValue.m in Sources */,
 				BA0356E61EC5278800BE547D /* MHVActionPlanTasksResponseActionPlanTaskInstance_.m in Sources */,
 				5D09127B166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m in Sources */,

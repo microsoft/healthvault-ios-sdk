@@ -91,3 +91,9 @@
 
 #import "MHVVocabulary.h"
 #import "MHVBlob.h"
+
+#import "MHVMaxVO2.h"
+#import "MHVHeartrateZoneGroup.h"
+#import "MHVHeartrateZone.h"
+#import "MHVZoneBoundary.h"
+#import "MHVPercentage.h"
