@@ -19,10 +19,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVGoalAddViewController.h"
 #import "MHVGoalsListViewController.h"
-#import "MHVGoalsApi.h"
-#import "MHVConfiguration.h"
-#import "MHVConnection.h"
-#import "MHVGoal.h"
 
 @interface MHVGoalAddViewController ()
 
