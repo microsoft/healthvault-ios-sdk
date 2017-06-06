@@ -35,26 +35,31 @@ SPEC_BEGIN(MHVThingClientBlobTests)
 
 describe(@"MHVThingClient", ^
 {
-    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationStep1;
-    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationStep2;
-    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationStep3;
+    //Operation and response for mocking executeHttpServiceOperation
+    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperation;
+    __block MHVServiceResponse *serviceResponse;
     
-    __block MHVServiceResponse *serviceResponseForStep1;
-    __block MHVServiceResponse *serviceResponseForStep2;
-    __block MHVServiceResponse *serviceResponseForStep3;
+    //Upload blob has additional operations and responses
+    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationForUploadBlob;
+    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationForPutThings;
+    __block MHVServiceResponse *serviceResponseForUploadBlob;
+    __block MHVServiceResponse *serviceResponseForPutThings;
     
+    //Results
     __block MHVThing *resultThing;
     __block MHVThingCollection *resultThings;
     __block NSError *resultError;
     __block NSData *resultData;
 
     beforeEach(^{
-        requestedServiceOperationStep1 = nil;
-        requestedServiceOperationStep2 = nil;
-        requestedServiceOperationStep3 = nil;
-        serviceResponseForStep1 = nil;
-        serviceResponseForStep2 = nil;
-        serviceResponseForStep3 = nil;
+        requestedServiceOperation = nil;
+        requestedServiceOperationForUploadBlob = nil;
+        requestedServiceOperationForPutThings = nil;
+        
+        serviceResponse = nil;
+        serviceResponseForUploadBlob = nil;
+        serviceResponseForPutThings = nil;
+        
         resultThing = nil;
         resultThings = nil;
         resultError = nil;
@@ -66,20 +71,20 @@ describe(@"MHVThingClient", ^
      {
          void (^completion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error) = params[1];
          
-         if (!requestedServiceOperationStep1)
+         if (!requestedServiceOperation)
          {
-             requestedServiceOperationStep1 = params[0];
-             completion(serviceResponseForStep1, nil);
+             requestedServiceOperation = params[0];
+             completion(serviceResponse, nil);
          }
-         else if (!requestedServiceOperationStep2)
+         else if (!requestedServiceOperationForUploadBlob)
          {
-             requestedServiceOperationStep2 = params[0];
-             completion(serviceResponseForStep2, nil);
+             requestedServiceOperationForUploadBlob = params[0];
+             completion(serviceResponseForUploadBlob, nil);
          }
-         else if (!requestedServiceOperationStep3)
+         else if (!requestedServiceOperationForPutThings)
          {
-             requestedServiceOperationStep3 = params[0];
-             completion(serviceResponseForStep3, nil);
+             requestedServiceOperationForPutThings = params[0];
+             completion(serviceResponseForPutThings, nil);
          }
          
          return nil;
@@ -120,7 +125,7 @@ describe(@"MHVThingClient", ^
                     MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[refreshBlobXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
                                                                                                          statusCode:0];
                     
-                    serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
+                    serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
                     
                     [thingClient refreshBlobUrlsForThing:allergyThing
                                                 recordId:recordId
@@ -186,7 +191,7 @@ describe(@"MHVThingClient", ^
                     MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[refreshBlobXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
                                                                                                             statusCode:0];
                     
-                    serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
+                    serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
                     
                     [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
                                                  recordId:recordId
@@ -260,7 +265,7 @@ describe(@"MHVThingClient", ^
                     MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"1234567890" dataUsingEncoding:NSUTF8StringEncoding]
                                                                                                             statusCode:0];
                     
-                    serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:NO];
+                    serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:NO];
                     
                     MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] initWithBlobName:@""
                                                                                          contentType:@"text/text"
@@ -411,13 +416,13 @@ describe(@"MHVThingClient", ^
                     MHVHttpServiceResponse *beginPutResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[beginPutXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
                                                                                                          statusCode:0];
                     
-                    serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:beginPutResponse isXML:YES];
+                    serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:beginPutResponse isXML:YES];
                     
                     // Mock response for uploading data
                     MHVHttpServiceResponse *uploadResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:nil
                                                                                                        statusCode:0];
                     
-                    serviceResponseForStep2 = [[MHVServiceResponse alloc] initWithWebResponse:uploadResponse isXML:NO];
+                    serviceResponseForUploadBlob = [[MHVServiceResponse alloc] initWithWebResponse:uploadResponse isXML:NO];
                     
                     // Mock response for update thing with PutThings
                     NSString *putThingsXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.PutThings\">" \
@@ -426,7 +431,7 @@ describe(@"MHVThingClient", ^
                     MHVHttpServiceResponse *putThingsResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[putThingsXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
                                                                                                           statusCode:0];
                     
-                    serviceResponseForStep3 = [[MHVServiceResponse alloc] initWithWebResponse:putThingsResponse isXML:YES];
+                    serviceResponseForPutThings = [[MHVServiceResponse alloc] initWithWebResponse:putThingsResponse isXML:YES];
                     
                     // Create data for blob
                     NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
