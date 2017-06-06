@@ -34,7 +34,9 @@
 #import "MHVApplicationCreationInfo.h"
 #import "MHVSessionCredential.h"
 #import "MHVPersonInfo.h"
+#import "MHVErrorConstants.h"
 #import "NSError+MHVError.h"
+#import "MHVServiceResponse.h"
 #import "Kiwi.h"
 
 static NSString *const kDefaultSharedSecret = @"TESTSHAREDSECRET";
@@ -70,6 +72,7 @@ describe(@"MHVConnectionTests", ^
     configuration.retryOnInternal500SleepDuration = 1.0;
     configuration.defaultHealthVaultUrl = [NSURL URLWithString:@"https://service.url"];
     configuration.restHealthVaultUrl = [NSURL URLWithString:@"https://rest.url"];
+    configuration.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"99999999-9999-9999-9999-999999999999"];
     
     // Test Connection
     MHVConnection *testConnection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
@@ -83,11 +86,6 @@ describe(@"MHVConnectionTests", ^
     testConnection.serviceInstance.healthServiceUrl = configuration.defaultHealthVaultUrl;
     testConnection.serviceInstance.restServiceUrl = configuration.restHealthVaultUrl;
     
-    beforeEach(^
-               {
-                   testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:kDefaultToken sharedSecret:kDefaultSharedSecret];
-               });
-    
     // Requested values
     __block NSURL *requestedURL;
     __block NSString *requestedHttpMethod;
@@ -97,6 +95,19 @@ describe(@"MHVConnectionTests", ^
     __block NSNumber *requestCount = @(0);
     __block MHVHttpServiceResponse *requestCompletionResponse;
     __block NSError *requestCompletionError;
+    
+    beforeEach(^{
+        requestedURL = nil;
+        requestedHttpMethod = nil;
+        requestedHeaders = nil;
+        requestedBody = nil;
+        
+        requestCount = @(0);
+        requestCompletionResponse = nil;
+        requestCompletionError = nil;
+
+        testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:kDefaultToken sharedSecret:kDefaultSharedSecret];
+    });
     
     [httpService stub:@selector(sendRequestForURL:httpMethod:body:headers:completion:) withBlock:^id(NSArray *params)
      {
@@ -118,13 +129,6 @@ describe(@"MHVConnectionTests", ^
     context(@"MHVMethod getThings", ^
             {
                 beforeEach(^{
-                    requestedURL = nil;
-                    requestedHttpMethod = nil;
-                    requestedHeaders = nil;
-                    requestedBody = nil;
-                    requestCompletionError = nil;
-                    requestCompletionResponse = nil;
-                    
                     MHVMethod *method = [MHVMethod getThings];
                     method.parameters = @"GETTHINGSBODY";
                     [testConnection executeHttpServiceOperation:method
@@ -163,13 +167,6 @@ describe(@"MHVConnectionTests", ^
     context(@"MHVMethod putThings", ^
             {
                 beforeEach(^{
-                    requestedURL = nil;
-                    requestedHttpMethod = nil;
-                    requestedHeaders = nil;
-                    requestedBody = nil;
-                    requestCompletionError = nil;
-                    requestCompletionResponse = nil;
-                    
                     MHVMethod *method = [MHVMethod putThings];
                     method.parameters = @"PUTTHINGSBODY";
                     [testConnection executeHttpServiceOperation:method
@@ -209,39 +206,32 @@ describe(@"MHVConnectionTests", ^
             {
                 __block NSNumber *tokenWasRefreshed;
                 
-                beforeEach(^
-                           {
-                               requestedURL = nil;
-                               requestedHttpMethod = nil;
-                               requestedHeaders = nil;
-                               requestedBody = nil;
-                               requestCompletionResponse = nil;
-                               
-                               //Set error, so request will refresh the token
-                               requestCompletionError = [NSError MHVUnauthorizedError];
-                               
-                               // Mock token refresh method
-                               [credentialClient stub:@selector(getSessionCredentialWithSharedSecret:completion:) withBlock:^id(NSArray *params)
-                                {
-                                    void (^completion)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error) = params[1];
-                                    
-                                    MHVSessionCredential *credential = [[MHVSessionCredential alloc] initWithToken:kRefreshedToken sharedSecret:kDefaultSharedSecret];
-                                    
-                                    //Clear error, so re-issue request won't continue to refresh
-                                    requestCompletionError = nil;
-                                    
-                                    tokenWasRefreshed = @(YES);
-                                    
-                                    completion(credential, nil);
-                                    
-                                    return nil;
-                                }];
-                               
-                               MHVMethod *method = [MHVMethod getThings];
-                               method.parameters = @"GETTHINGSBODY";
-                               [testConnection executeHttpServiceOperation:method
-                                                                completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
-                           });
+                beforeEach(^{
+                    //Set error, so request will refresh the token
+                    requestCompletionError = [NSError MHVUnauthorizedError];
+                    
+                    // Mock token refresh method
+                    [credentialClient stub:@selector(getSessionCredentialWithSharedSecret:completion:) withBlock:^id(NSArray *params)
+                     {
+                         void (^completion)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error) = params[1];
+                         
+                         MHVSessionCredential *credential = [[MHVSessionCredential alloc] initWithToken:kRefreshedToken sharedSecret:kDefaultSharedSecret];
+                         
+                         //Clear error, so re-issue request won't continue to refresh
+                         requestCompletionError = nil;
+                         
+                         tokenWasRefreshed = @(YES);
+                         
+                         completion(credential, nil);
+                         
+                         return nil;
+                     }];
+                    
+                    MHVMethod *method = [MHVMethod getThings];
+                    method.parameters = @"GETTHINGSBODY";
+                    [testConnection executeHttpServiceOperation:method
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
+                });
                 
                 // All tests check tokenWasRefreshed = YES to make sure they happen after the token refesh, and not the initial request
                 it(@"token should have been refreshed", ^
@@ -273,13 +263,6 @@ describe(@"MHVConnectionTests", ^
     context(@"MHVRestRequest not anonymous", ^
             {
                 beforeEach(^{
-                    requestedURL = nil;
-                    requestedHttpMethod = nil;
-                    requestedHeaders = nil;
-                    requestedBody = nil;
-                    requestCompletionResponse = nil;
-                    requestCompletionError = nil;
-                    
                     MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
@@ -326,13 +309,6 @@ describe(@"MHVConnectionTests", ^
     context(@"MHVRestRequest anonymous", ^
             {
                 beforeEach(^{
-                    requestedURL = nil;
-                    requestedHttpMethod = nil;
-                    requestedHeaders = nil;
-                    requestedBody = nil;
-                    requestCompletionResponse = nil;
-                    requestCompletionError = nil;
-                    
                     MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
@@ -380,45 +356,38 @@ describe(@"MHVConnectionTests", ^
             {
                 __block NSNumber *tokenWasRefreshed;
                 
-                beforeEach(^
-                           {
-                               requestedURL = nil;
-                               requestedHttpMethod = nil;
-                               requestedHeaders = nil;
-                               requestedBody = nil;
-                               requestCompletionResponse = nil;
-                               
-                               //Set error, so request will refresh the token
-                               requestCompletionError = [NSError MHVUnauthorizedError];
-                               
-                               // Mock token refresh method
-                               [credentialClient stub:@selector(getSessionCredentialWithSharedSecret:completion:) withBlock:^id(NSArray *params)
-                                {
-                                    void (^completion)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error) = params[1];
-                                    
-                                    MHVSessionCredential *credential = [[MHVSessionCredential alloc] initWithToken:kRefreshedToken sharedSecret:kDefaultSharedSecret];
-                                    
-                                    //Clear error, so re-issue request won't continue to refresh
-                                    requestCompletionError = nil;
-                                    
-                                    tokenWasRefreshed = @(YES);
-                                    
-                                    completion(credential, nil);
-                                    
-                                    return nil;
-                                }];
-                               
-                               MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
-                                                                                       httpMethod:@"METHOD"
-                                                                                       pathParams:nil
-                                                                                      queryParams:@{ @"query1" : @"ABC" }
-                                                                                       formParams:nil
-                                                                                             body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
-                                                                                      isAnonymous:NO];
-                               
-                               [testConnection executeHttpServiceOperation:restRequest
-                                                                completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
-                           });
+                beforeEach(^{
+                    //Set error, so request will refresh the token
+                    requestCompletionError = [NSError MHVUnauthorizedError];
+                    
+                    // Mock token refresh method
+                    [credentialClient stub:@selector(getSessionCredentialWithSharedSecret:completion:) withBlock:^id(NSArray *params)
+                     {
+                         void (^completion)(MHVSessionCredential *_Nullable credential, NSError *_Nullable error) = params[1];
+                         
+                         MHVSessionCredential *credential = [[MHVSessionCredential alloc] initWithToken:kRefreshedToken sharedSecret:kDefaultSharedSecret];
+                         
+                         //Clear error, so re-issue request won't continue to refresh
+                         requestCompletionError = nil;
+                         
+                         tokenWasRefreshed = @(YES);
+                         
+                         completion(credential, nil);
+                         
+                         return nil;
+                     }];
+                    
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
+                                                                            httpMethod:@"METHOD"
+                                                                            pathParams:nil
+                                                                           queryParams:@{ @"query1" : @"ABC" }
+                                                                            formParams:nil
+                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                           isAnonymous:NO];
+                    
+                    [testConnection executeHttpServiceOperation:restRequest
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
+                });
                 
                 // All tests check tokenWasRefreshed = YES to make sure they happen after the token refesh, and not the initial request
                 it(@"token should have been refreshed", ^
@@ -443,12 +412,6 @@ describe(@"MHVConnectionTests", ^
     context(@"MHVMethod reissued for 500 errors", ^
             {
                 beforeEach(^{
-                    requestedURL = nil;
-                    requestedHttpMethod = nil;
-                    requestedHeaders = nil;
-                    requestedBody = nil;
-                    requestCount = @(0);
-                    
                     requestCompletionError = [NSError MHVUnknownError];
                     requestCompletionResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:nil statusCode:500];
                     
@@ -463,6 +426,146 @@ describe(@"MHVConnectionTests", ^
                        [[expectFutureValue(requestCount) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(3)];
                    });
             });
+    
+    context(@"MHVMethod fails if no token", ^
+            {
+                __block NSError *resultError;
+                __block MHVServiceResponse *resultResponse;
+                
+                beforeEach(^{
+                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nil sharedSecret:kDefaultSharedSecret];
+                    
+                    MHVMethod *method = [MHVMethod getThings];
+                    method.parameters = @"GETTHINGSBODY";
+                    [testConnection executeHttpServiceOperation:method
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+                     {
+                         resultResponse = response;
+                         resultError = error;
+                     }];
+                });
+                
+                it(@"Should get no results", ^
+                   {
+                       [[expectFutureValue(resultResponse) shouldEventually] beNil];
+                   });
+                it(@"Should get error", ^
+                   {
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeUnauthorized)];
+                   });
+            });
+    
+    context(@"MHVRestRequest fails if no token", ^
+            {
+                __block NSError *resultError;
+                __block MHVServiceResponse *resultResponse;
+                
+                beforeEach(^{
+                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nil sharedSecret:kDefaultSharedSecret];
+                    
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
+                                                                            httpMethod:@"METHOD"
+                                                                            pathParams:nil
+                                                                           queryParams:@{ @"query1" : @"ABC" }
+                                                                            formParams:nil
+                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                           isAnonymous:NO];
+                    [testConnection executeHttpServiceOperation:restRequest
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+                     {
+                         resultResponse = response;
+                         resultError = error;
+                     }];
+                });
+                
+                it(@"Should get no results", ^
+                   {
+                       [[expectFutureValue(resultResponse) shouldEventually] beNil];
+                   });
+                it(@"Should get error", ^
+                   {
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeUnauthorized)];
+                   });
+            });
+    
+    context(@"MHVMethod succeeds if no token and anonymous", ^
+            {
+                __block NSError *resultError;
+                __block MHVServiceResponse *resultResponse;
+                
+                beforeEach(^{
+                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nil sharedSecret:kDefaultSharedSecret];
+                    
+                    NSString *xmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetServiceDefinition2\">INFOXML</wc:info></response>";
+                    
+                    requestCompletionResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[xmlResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                          statusCode:0];
+                    
+                    //GetServiceDefinition is anonymous
+                    [testConnection executeHttpServiceOperation:[MHVMethod getServiceDefinition]
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+                     {
+                         resultResponse = response;
+                         resultError = error;
+                     }];
+                });
+                
+                it(@"Should get no error", ^
+                   {
+                       [[expectFutureValue(resultError) shouldEventually] beNil];
+                   });
+                it(@"Should get results", ^
+                   {
+                       [[expectFutureValue(resultResponse) shouldEventually] beNonNil];
+                   });
+                it(@"Should get correct results", ^
+                   {
+                       [[expectFutureValue(resultResponse.infoXml) shouldEventually] equal:@"<wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetServiceDefinition2\">INFOXML</wc:info>"];
+                   });
+            });
+    
+    context(@"MHVRestRequest succeeds if no token and anonymous", ^
+            {
+                __block NSError *resultError;
+                __block MHVServiceResponse *resultResponse;
+                
+                beforeEach(^{
+                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nil sharedSecret:kDefaultSharedSecret];
+                    
+                    requestCompletionResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"ABCDEFG" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                          statusCode:0];
+                    
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
+                                                                            httpMethod:@"METHOD"
+                                                                            pathParams:nil
+                                                                           queryParams:@{ @"query1" : @"ABC" }
+                                                                            formParams:nil
+                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                           isAnonymous:YES];
+                    [testConnection executeHttpServiceOperation:restRequest
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+                     {
+                         resultResponse = response;
+                         resultError = error;
+                     }];
+                });
+                
+                it(@"Should get no error", ^
+                   {
+                       [[expectFutureValue(resultError) shouldEventually] beNil];
+                   });
+                it(@"Should get results", ^
+                   {
+                       [[expectFutureValue(resultResponse) shouldEventually] beNonNil];
+                   });
+                it(@"Should get correct results", ^
+                   {
+                       [[expectFutureValue([[NSString alloc] initWithData:resultResponse.responseData encoding:NSUTF8StringEncoding]) shouldEventually] equal:@"ABCDEFG"];
+                   });
+            });
+    
 });
 
 SPEC_END
