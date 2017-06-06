@@ -44,7 +44,9 @@ describe(@"MHVThingClient", ^
     __block MHVServiceResponse *serviceResponseForStep3;
     
     __block MHVThing *resultThing;
+    __block MHVThingCollection *resultThings;
     __block NSError *resultError;
+    __block NSData *resultData;
 
     beforeEach(^{
         requestedServiceOperationStep1 = nil;
@@ -54,7 +56,9 @@ describe(@"MHVThingClient", ^
         serviceResponseForStep2 = nil;
         serviceResponseForStep3 = nil;
         resultThing = nil;
+        resultThings = nil;
         resultError = nil;
+        resultData = nil;
     });
     
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
@@ -174,8 +178,6 @@ describe(@"MHVThingClient", ^
     
     context(@"RefreshBlobUrlsForThingCollection", ^
             {
-                __block MHVThingCollection *resultThings;
-
                 beforeEach(^{
                     // Mock response for refresh blob urls
                     NSString *refreshBlobXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"648F6C9F-9B07-4272-89F4-19F923D1C65E\"><thing><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id><type-id name=\"File\">bd0403c5-4ae2-4b0e-a8db-1888678e4528</type-id><thing-state>Active</thing-state><flags>0</flags><eff-date>2017-06-02T22:01:52.471</eff-date><data-xml><file><name>FILENAME.JPG</name><size>4491016</size><content-type><text>image/jpeg</text></content-type></file><common /></data-xml><blob-payload><blob><blob-info><name/><content-type>image/jpeg</content-type><hash-info><algorithm>SHA256Block</algorithm><params><block-size>2097152</block-size></params><hash>D4karBmHN0/IYQEMAZg3lyTK62Bi5+rmOf8JtvzPnUo=</hash></hash-info></blob-info><content-length>4491016</content-length><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url></blob></blob-payload></thing>"\
@@ -254,8 +256,6 @@ describe(@"MHVThingClient", ^
     
     context(@"DownloadBlob Data", ^
             {
-                __block NSData *resultData;
-
                 beforeEach(^{
                     MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"1234567890" dataUsingEncoding:NSUTF8StringEncoding]
                                                                                                             statusCode:0];
@@ -286,8 +286,6 @@ describe(@"MHVThingClient", ^
     
     context(@"DownloadBlob Data Inline", ^
             {
-                __block NSData *returnedData;
-                
                 beforeEach(^{
                     MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] init];
                     blobPayload.inlineData = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
@@ -295,15 +293,19 @@ describe(@"MHVThingClient", ^
                     [thingClient downloadBlobData:blobPayload
                                        completion:^(NSData *_Nullable data, NSError *_Nullable error)
                      {
-                         returnedData = data;
+                         resultData = data;
                      }];
                 });
                 
+                it(@"should have no error", ^
+                   {
+                       [[expectFutureValue(resultError) shouldEventually] beNil];
+                   });
                 it(@"should return data", ^
                    {
-                       [[expectFutureValue(returnedData) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultData) shouldEventually] beNonNil];
                        
-                       NSString *dataString = [[NSString alloc] initWithData:returnedData encoding:NSUTF8StringEncoding];
+                       NSString *dataString = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
                        
                        [[dataString should] equal:@"123456"];
                    });
