@@ -22,8 +22,9 @@
 #import "MHVMinute.h"
 #import "MHVSecond.h"
 #import "MHVMillisecond.h"
+#import "MHVModelBase.h"
 
-@interface MHVTime : MHVType
+@interface MHVTime : MHVModelBase <XSerializable>
 
 // -------------------------
 //
@@ -67,6 +68,9 @@
 - (BOOL)setWithDate:(NSDate *)date;
 
 - (NSDate *)toDate;
+- (BOOL)isValid;
+- (id) newDeepClone;
+- (MHVClientResult *)validate;
 
 // -------------------------
 //

@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The ID of the plan [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _id;
+@property(strong,nonatomic,nullable) NSString* identifier;
 /* The name of the plan [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;

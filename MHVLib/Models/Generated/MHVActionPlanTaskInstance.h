@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The Id of the task instance [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _id;
+@property(strong,nonatomic,nullable) NSString* identifier;
 /* The status of the task [optional]
  */
 @property(strong,nonatomic,nullable) NSString* status;

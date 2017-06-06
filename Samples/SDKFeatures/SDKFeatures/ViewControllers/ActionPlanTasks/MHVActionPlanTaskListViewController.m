@@ -84,8 +84,8 @@
     frequencyTask.trackingPolicy = policy;
     frequencyTask.completionType = @"Frequency";
     frequencyTask.frequencyTaskCompletionMetrics = metrics;
-    frequencyTask.associatedPlanId = self.plan._id;
-    frequencyTask.associatedObjectiveIds = @[[self.plan.objectives.firstObject _id]];
+    frequencyTask.associatedPlanId = self.plan.identifier;
+    frequencyTask.associatedObjectiveIds = @[[self.plan.objectives.firstObject identifier]];
 
     [self.connection.remoteMonitoringClient actionPlanTasksPostActionPlanTasksWithActionPlanTask:frequencyTask completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
@@ -206,7 +206,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *taskId = self.taskList[indexPath.row]._id;
+    NSString *taskId = self.taskList[indexPath.row].identifier;
     
     
     MHVActionPlanTaskDetailViewController *typeView = [[MHVActionPlanTaskDetailViewController alloc] initWithTaskId:taskId];

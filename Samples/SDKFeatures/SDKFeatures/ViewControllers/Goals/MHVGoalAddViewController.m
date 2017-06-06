@@ -65,7 +65,7 @@
     
     goal.recurrenceMetrics = metrics;
     goal.range = range;
-    goal._id = nil;
+    goal.identifier = nil;
     goal.endDate = nil;
     
     MHVGoalsWrapper *wrapper = [[MHVGoalsWrapper alloc] init];

@@ -98,12 +98,12 @@
     NSNumber *rand = @(arc4random_uniform(100));
     
     MHVObjective *objective = [[MHVObjective alloc] init];
-    objective._description = @"A sample objective which encourages you to get more activity.";
+    objective.descriptionText = @"A sample objective which encourages you to get more activity.";
     objective.name = @"Start doing some fun activities.";
     objective.outcomeName = @"Exercise hours / week";
     objective.outcomeType = @"ExerciseHoursPerWeek";
     objective.state = @"Active";
-    objective._id = [[NSUUID UUID] UUIDString];
+    objective.identifier = [[NSUUID UUID] UUIDString];
     
     MHVActionPlanTrackingPolicy *policy = [[MHVActionPlanTrackingPolicy alloc] init];
     policy.isAutoTrackable = @(NO);
@@ -115,27 +115,49 @@
     metrics.windowType = @"Daily";
     
     MHVActionPlanTask *frequencyTask = [[MHVActionPlanTask alloc] init];
-    NSString *taskName =[NSString stringWithFormat:@"Do a fun activity (plan %@)", rand];
+    NSString *taskName =[NSString stringWithFormat:@"Do a frequent activity (plan %@)", rand];
     frequencyTask.name = taskName;
-    frequencyTask.shortDescription = @"Do an activity to get some exercise.";
+    frequencyTask.shortDescription = @"Do a frequent activity to get some exercise.";
     frequencyTask.longDescription = @"Go for a run, hike a mountain, ride your bike around town, or something else to get moving.";
     frequencyTask.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1rXx2?ver=d68e";
     frequencyTask.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1s2KS?ver=0ad8";
     frequencyTask.taskType = @"Other";
     frequencyTask.signupName = taskName;
-    frequencyTask.associatedObjectiveIds = [[NSArray alloc] initWithObjects:objective._id, nil];
+    frequencyTask.associatedObjectiveIds = [[NSArray alloc] initWithObjects:objective.identifier, nil];
     frequencyTask.trackingPolicy = policy;
     frequencyTask.completionType = @"Frequency";
     frequencyTask.frequencyTaskCompletionMetrics = metrics;
     
+    MHVActionPlanScheduledTaskCompletionMetrics *scheduledMetrics = [[MHVActionPlanScheduledTaskCompletionMetrics alloc] init];
+    scheduledMetrics.reminderState = @"Off";
+    scheduledMetrics.scheduledDays = @[@"Saturday", @"Sunday"];
+    MHVTime *time = [[MHVTime alloc] init];
+    time.hour = 6;
+    time.minute = 30;
+    scheduledMetrics.scheduledTime = time;
+
+    MHVActionPlanTask *scheduledTask = [[MHVActionPlanTask alloc] init];
+    taskName =[NSString stringWithFormat:@"Do a scheduled activity (plan %@)", rand];
+    scheduledTask.name = taskName;
+    scheduledTask.shortDescription = @"Do a scheduled activity to get some exercise.";
+    scheduledTask.longDescription = @"Go for a run, hike a mountain, ride your bike around town, or something else to get moving.";
+    scheduledTask.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1rXx2?ver=d68e";
+    scheduledTask.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1s2KS?ver=0ad8";
+    scheduledTask.taskType = @"Other";
+    scheduledTask.signupName = taskName;
+    scheduledTask.associatedObjectiveIds = [[NSArray alloc] initWithObjects:objective.identifier, nil];
+    scheduledTask.trackingPolicy = policy;
+    scheduledTask.completionType = @"Scheduled";
+    scheduledTask.scheduledTaskCompletionMetrics = scheduledMetrics;
+
     MHVActionPlan *newPlan = [[MHVActionPlan alloc] init];
     newPlan.name = [NSString stringWithFormat:@"My new plan (%@)", rand];
-    newPlan._description = @"A sample activity plan";
+    newPlan.descriptionText = @"A sample activity plan";
     newPlan.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
     newPlan.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
     newPlan.category = @"Activity";
     newPlan.objectives = [[NSArray<MHVObjective> alloc] initWithObjects:objective, nil];
-    newPlan.associatedTasks = [[NSArray<MHVActionPlanTask> alloc] initWithObjects:frequencyTask, nil];
+    newPlan.associatedTasks = [[NSArray<MHVActionPlanTask> alloc] initWithObjects:frequencyTask, scheduledTask, nil];
     
     [self.connection.remoteMonitoringClient createActionPlanWithActionPlan:newPlan completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
@@ -187,7 +209,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *planId = self.actionPlans[indexPath.row]._id;
+    NSString *planId = self.actionPlans[indexPath.row].identifier;
     
     MHVActionPlanDetailViewController *typeView = [[MHVActionPlanDetailViewController alloc] initWithPlanId:planId];
     
