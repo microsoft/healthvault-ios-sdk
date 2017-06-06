@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) id<MHVHttpServiceOperationProtocol> serviceOperation;
 @property (nonatomic, strong, readonly, nullable) MHVRequestCompletion completion;
 @property (nonatomic, assign) NSInteger retryAttempts;
+@property (nonatomic, assign) BOOL hasRefreshedToken;
 
 - (instancetype)initWithServiceOperation:(id<MHVHttpServiceOperationProtocol>)serviceOperation
                               completion:(MHVRequestCompletion _Nullable)completion;

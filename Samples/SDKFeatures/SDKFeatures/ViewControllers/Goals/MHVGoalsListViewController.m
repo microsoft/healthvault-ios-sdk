@@ -17,13 +17,9 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVGoalsApi.h"
 #import "MHVGoalAddViewController.h"
 #import "MHVGoalsListViewController.h"
 #import "MHVGoalDetailViewController.h"
-#import "MHVFeaturesConfiguration.h"
-#import "MHVConfiguration.h"
-#import "MHVConnection.h"
 
 @interface MHVGoalsListViewController ()
 
@@ -58,13 +54,12 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    [self loadGoals];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self loadGoals];
 }
 
@@ -135,7 +130,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *goalId = self.goals[indexPath.row]._id;
+    NSString *goalId = self.goals[indexPath.row].identifier;
     
     MHVGoalDetailViewController *typeView = [[MHVGoalDetailViewController alloc] initWithGoalId:goalId];
     

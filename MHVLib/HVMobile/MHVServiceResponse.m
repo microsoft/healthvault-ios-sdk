@@ -34,13 +34,6 @@
 /// Represents that current token has been expired and should be updated.
 #define RESPONSE_AUTH_SESSION_TOKEN_EXPIRED 65
 
-@interface MHVServiceResponse ()
-
-@property (nonatomic, strong) NSError *error;
-@property (nonatomic, strong) NSString *infoXml;
-
-@end
-
 @implementation MHVServiceResponse
 
 - (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response isXML:(BOOL)isXML
@@ -50,8 +43,6 @@
     if (self)
     {
         _statusCode = (int)response.statusCode;
-        _responseAsData = response.responseAsData;
-        _responseAsString = response.responseAsString;
         
         if (response.hasError)
         {
@@ -71,11 +62,14 @@
                 _error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"Response was not a valid HealthVault response.\n%@",xml]];
             }
         }
+        else
+        {
+            _responseData = response.responseAsData;
+        }
     }
     
     return self;
 }
-
 
 - (BOOL)deserializeXml:(NSString *)xml
 {

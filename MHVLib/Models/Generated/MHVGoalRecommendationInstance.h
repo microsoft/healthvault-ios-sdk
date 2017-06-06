@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The identifier of the recommendation. [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _id;
+@property(strong,nonatomic,nullable) NSString* identifier;
 /* The ID of the organization that manages this recommendation [optional]
  */
 @property(strong,nonatomic,nullable) NSString* organizationId;

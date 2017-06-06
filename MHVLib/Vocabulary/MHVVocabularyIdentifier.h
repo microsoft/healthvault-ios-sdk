@@ -81,7 +81,7 @@ NSString *const c_usdaFamily;
 //
 - (NSString *)toKeyString;
 
-- (BOOL)isEqual:(id)object;
+- (BOOL)isEqual:(id _Nullable)object;
 
 @end
 

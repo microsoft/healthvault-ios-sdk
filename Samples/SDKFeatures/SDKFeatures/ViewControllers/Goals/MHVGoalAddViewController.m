@@ -19,10 +19,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVGoalAddViewController.h"
 #import "MHVGoalsListViewController.h"
-#import "MHVGoalsApi.h"
-#import "MHVConfiguration.h"
-#import "MHVConnection.h"
-#import "MHVGoal.h"
 
 @interface MHVGoalAddViewController ()
 
@@ -65,7 +61,7 @@
     
     goal.recurrenceMetrics = metrics;
     goal.range = range;
-    goal._id = nil;
+    goal.identifier = nil;
     goal.endDate = nil;
     
     MHVGoalsWrapper *wrapper = [[MHVGoalsWrapper alloc] init];

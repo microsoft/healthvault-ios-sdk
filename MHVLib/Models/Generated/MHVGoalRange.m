@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"_description": @"description", @"minimum": @"minimum", @"maximum": @"maximum", @"units": @"units" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"descriptionText": @"description", @"minimum": @"minimum", @"maximum": @"maximum", @"units": @"units" }];
 }
  */
 
@@ -61,7 +61,7 @@
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
             @"name": @"name",
-            @"_description": @"description",
+            @"descriptionText": @"description",
             @"minimum": @"minimum",
             @"maximum": @"maximum",
             @"units": @"units"

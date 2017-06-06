@@ -295,6 +295,57 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
     self.millisecondValue = [reader readElementWithXmlName:x_element_millis asClass:[MHVMillisecond class]];
 }
 
+
+- (void)serializeAttributes:(XWriter *)writer
+{
+}
+
+- (void)deserializeAttributes:(XReader *)reader
+{
+}
+
+- (BOOL)isValid
+{
+    return [self validate] == MHVClientResult_Success;
+}
+
+- (id)newDeepClone
+{
+    NSString* xml = [self toXmlStringWithRoot:@"clone"];
+    MHVCHECK_NOTNULL(xml);
+
+    return [NSObject newFromString:xml withRoot:@"clone" asClass:[self class]];
+
+LError:
+    return nil;
+}
+
++ (NSDictionary *)propertyNameMap
+{
+    static dispatch_once_t once;
+    static NSMutableDictionary *names = nil;
+    dispatch_once(&once, ^{
+        names = [[super propertyNameMap] mutableCopy];
+        [names addEntriesFromDictionary:@{
+                                          @"hour": @"hours",
+                                          @"minute": @"minutes"
+                                          }];
+    });
+    return names;
+}
+
++ (NSDictionary *)objectParametersMap
+{
+    static dispatch_once_t once;
+    static NSMutableDictionary *types = nil;
+    dispatch_once(&once, ^{
+        types = [[super objectParametersMap] mutableCopy];
+        [types addEntriesFromDictionary:@{
+                                          }];
+    });
+    return types;
+}
+
 @end
 
 @implementation MHVTimeCollection

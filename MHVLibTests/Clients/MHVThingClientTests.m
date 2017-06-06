@@ -23,21 +23,29 @@
 #import "MHVConnectionProtocol.h"
 #import "MHVMethod.h"
 #import "MHVAllergy.h"
+#import "MHVFile.h"
+#import "MHVRestRequest.h"
+#import "MHVBlobDownloadRequest.h"
+#import "MHVErrorConstants.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVThingClientTests)
 
 describe(@"MHVThingClient", ^
 {
+    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperation;
+    
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
-    [mockConnection stub:@selector(executeHttpServiceOperation:completion:) andReturn:nil];
+    [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id(NSArray *params)
+    {
+        requestedServiceOperation = params[0];
+        
+        void (^completion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error) = params[1];
+        completion(nil, nil);
+        return nil;
+    }];
     
     NSUUID *recordId = [[NSUUID alloc] initWithUUIDString:@"20000000-2000-2000-2000-200000000000"];
-    
-    let(spyExecuteMethod, ^
-        {
-            return [mockConnection captureArgument:@selector(executeHttpServiceOperation:completion:) atIndex:0];
-        });
     
     let(thingClient, ^
         {
@@ -50,11 +58,21 @@ describe(@"MHVThingClient", ^
             allergy.reaction = [[MHVCodableValue alloc] initWithText:@"Itching"];
             
             MHVThing *thing = [[MHVThing alloc] initWithTypedData:allergy];
-            thing.key = [[MHVThingKey alloc] initWithID:@"ThingKey" andVersion:@"ThingVersion"];
+            thing.key = [[MHVThingKey alloc] initWithID:@"AllergyThingKey" andVersion:@"AllergyVersion"];
             
             return thing;
         });
-    
+
+    let(fileThing, ^
+        {
+            MHVFile *file = [[MHVFile alloc] init];
+            
+            MHVThing *thing = [[MHVThing alloc] initWithTypedData:file];
+            thing.key = [[MHVThingKey alloc] initWithID:@"FileThingKey" andVersion:@"FileVersion"];
+            
+            return thing;
+        });
+
     context(@"GetThings", ^
             {
                 it(@"should get with thing id", ^
@@ -63,12 +81,12 @@ describe(@"MHVThingClient", ^
                                                recordId:recordId
                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><group><id>10000000-1000-1000-1000-100000000000</id><format><section>core</section><xml/></format></group></info>"];
+                       [[theValue([method.parameters containsString:@"<id>10000000-1000-1000-1000-100000000000</id><format><section>core</section><xml/></format></group></info>"]) should] beYes];
                    });
   
                 it(@"should get for thing class", ^
@@ -78,15 +96,42 @@ describe(@"MHVThingClient", ^
                                                   recordId:recordId
                                                 completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"GetThings"];
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><group><filter><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><thing-state>Active</thing-state></filter>"\
-                        "<format><section>core</section><xml/></format></group></info>"];
+                       [[theValue([method.parameters containsString:@"<filter><type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><thing-state>Active</thing-state></filter>"\
+                                   "<format><section>core</section><xml/></format></group></info>"]) should] beYes];
                    });
                 
+                it(@"should fail if thing id is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient getThingWithThingId:nil
+                                               recordId:recordId
+                                             completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                       {
+                           requestError = error;
+                       }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+                
+                it(@"should fail if record id is nil", ^
+                   {
+                       __block NSError *requestError;
+                       [thingClient getThingWithThingId:[[NSUUID alloc] initWithUUIDString:@"10000000-1000-1000-1000-100000000000"]
+                                               recordId:nil
+                                             completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
+                        {
+                            requestError = error;
+                        }];
+                       
+                       [[requestError should] beNonNil];
+                       [[theValue(requestError.code) should] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
             });
 
     context(@"PutThings", ^
@@ -97,7 +142,7 @@ describe(@"MHVThingClient", ^
                                           recordId:recordId
                                         completion:^(NSError *error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"PutThings"];
                        [[theValue(method.isAnonymous) should] beNo];
@@ -112,12 +157,12 @@ describe(@"MHVThingClient", ^
                                        recordId:recordId
                                      completion:^(NSError *error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"PutThings"];
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><thing><thing-id version-stamp=\"ThingVersion\">ThingKey</thing-id>"\
+                       [[method.parameters should] equal:@"<info><thing><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id>"\
                         "<type-id>52bf9104-2c5e-4f1f-a66d-552ebcc53df7</type-id><flags>0</flags><data-xml>"\
                         "<allergy><name><text>Bees</text></name><reaction><text>Itching</text></reaction></allergy><common/></data-xml></thing></info>"];
                    });
@@ -131,12 +176,12 @@ describe(@"MHVThingClient", ^
                                        recordId:recordId
                                      completion:^(NSError *error) { }];
                        
-                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
                        [[method.name should] equal:@"RemoveThings"];
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
-                       [[method.parameters should] equal:@"<info><thing-id version-stamp=\"ThingVersion\">ThingKey</thing-id></info>"];
+                       [[method.parameters should] equal:@"<info><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id></info>"];
                    });
             });
 });

@@ -18,6 +18,7 @@
 
 #import "MHVPersonClient.h"
 #import "MHVConnectionProtocol.h"
+#import "MHVHttpServiceProtocol.h"
 #import "MHVValidator.h"
 #import "MHVMethod.h"
 #import "MHVPersonInfo.h"

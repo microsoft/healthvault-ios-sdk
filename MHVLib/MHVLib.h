@@ -30,3 +30,4 @@
 #import "MHVClients.h"
 #import "MHVConnections.h"
 #import "MHVErrorConstants.h"
+#import "MHVRestApi.h"

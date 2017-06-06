@@ -19,6 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVHttpServiceProtocol.h"
+@class MHVConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,9 +36,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Create MHV HTTP Service using default NSURLSession
 
+ @param configuration MHVConfiguration to use, with properties for creating the NSURLSession
  @return the MHVHttpService
  */
-- (instancetype)init;
+- (instancetype)initWithConfiguration:(MHVConfiguration *)configuration;
+
+- (instancetype)init __unavailable;
++ (instancetype)new __unavailable;
 
 @end
 

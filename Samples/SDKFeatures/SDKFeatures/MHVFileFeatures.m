@@ -20,11 +20,17 @@
 #import "MHVFileFeatures.h"
 #import "MHVTypeViewController.h"
 #import "MHVUIAlert.h"
+#import "MHVSodaConnectionProtocol.h"
+#import "MHVConnectionFactory.h"
+#import "MHVFeaturesConfiguration.h"
+#import "MHVConnectionFactoryProtocol.h"
+#import "MHVTypeListViewController.h"
+#import "MHVThingClientProtocol.h"
+#import "SDKFeatures-Swift.h"
 
 @interface MHVFileFeatures ()
 
-@property (nonatomic, strong) NSData *fileData;
-@property (nonatomic, strong) NSString *fileMediaType;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @end
 
@@ -37,7 +43,7 @@
     {
         __weak __typeof__(self)weakSelf = self;
 
-        [self addFeature:@"View file" andAction:^
+        [self addFeature:@"View file URL in Safari" andAction:^
         {
             [weakSelf viewFileInBrowser];
         }];
@@ -49,6 +55,8 @@
         {
             [weakSelf downloadFile];
         }];
+        
+        _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     }
 
     return self;
@@ -61,7 +69,7 @@
 // Each blob is referenced using a blob Url that is active for a limited duration. So, to get a "live" Url, we must first refresh
 // an thing's blob information
 //
-- (void)processSelectedFile:(MHVHandler)action
+- (void)processSelectedFile:(void(^)(MHVBlobPayloadThing *value))action
 {
     MHVThing *fileThing = [self.controller getSelectedThing];
 
@@ -72,38 +80,61 @@
 
     [self.controller showActivityAndStatus:@"Getting updated File info"];
 
-    [fileThing updateBlobDataFromRecord:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
-    {
-        @try
-        {
-            [task checkSuccess];
+#if SHOULD_USE_LEGACY
+    [self updateBlobsForThingLegacy:fileThing action:action];
+#else
+    [self updateBlobsForThingNew:fileThing action:action];
+#endif
+}
 
-            MHVBlobPayloadThing *fileBlob = [fileThing.blobs getDefaultBlob];
-            action(fileBlob);
-        }
-        @catch (NSException *exception)
-        {
-            [MHVUIAlert showInformationalMessage:[exception descriptionForLog]];
-            [self.controller clearStatus];
-        }
-    }];
+- (void)updateBlobsForThingLegacy:(MHVThing *)thing action:(void(^)(MHVBlobPayloadThing *value))action
+{
+    [thing updateBlobDataFromRecord:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
+     {
+         @try
+         {
+             [task checkSuccess];
+             
+             MHVBlobPayloadThing *fileBlob = [thing.blobs getDefaultBlob];
+             action(fileBlob);
+         }
+         @catch (NSException *exception)
+         {
+             [MHVUIAlert showInformationalMessage:[exception descriptionForLog]];
+             [self.controller clearStatus];
+         }
+     }];
+}
+
+- (void)updateBlobsForThingNew:(MHVThing *)thing action:(void(^)(MHVBlobPayloadThing *value))action
+{
+    [self.connection.thingClient refreshBlobUrlsForThing:thing
+                                                recordId:self.connection.personInfo.selectedRecordID
+                                              completion:^(MHVThing * _Nullable thing, NSError * _Nullable error)
+     {
+         MHVBlobPayloadThing *fileBlob = [thing.blobs getDefaultBlob];
+         action(fileBlob);
+     }];
 }
 
 - (void)viewFileInBrowser
 {
-    [self processSelectedFile:^BOOL(id value)
+    [self processSelectedFile:^(MHVBlobPayloadThing *value)
     {
         MHVBlobPayloadThing *fileBlob = (MHVBlobPayloadThing *)value;
 
         NSURL *blobUrl = [NSURL URLWithString:fileBlob.blobUrl];
         
-        [[UIApplication sharedApplication] openURL:blobUrl options:@{} completionHandler:nil];
-
-        [self.controller clearStatus];
-
-        return TRUE;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+        {
+            [self.controller clearStatus];
+            
+            [[UIApplication sharedApplication] openURL:blobUrl options:@{} completionHandler:nil];
+        }];
     }];
 }
+
+#pragma mark - Download
 
 - (void)downloadFile
 {
@@ -129,31 +160,66 @@
     
     MHVThing *fileThing = [self.controller getSelectedThing];
 
-    [self processSelectedFile:^BOOL (id value)
+    [self.controller showActivityAndStatus:[NSString stringWithFormat:@"Downloading %@", [fileThing.file sizeAsString]]];
+
+    [self processSelectedFile:^(MHVBlobPayloadThing *fileBlob)
     {
-        MHVBlobPayloadThing *fileBlob = (MHVBlobPayloadThing *)value;
+        NSLog(@"Download to path: %@", filePath);
 
-        [self.controller showActivityAndStatus:[NSString stringWithFormat:@"Downloading %@", [fileThing.file sizeAsString]]];
-
-        [fileBlob downloadBlobToFilePath:filePath completion:^(NSError *error)
-        {
-            if (!error)
-            {
-                [MHVUIAlert showInformationalMessage:@"Downloaded into Documents folder."];
-                
-                NSLog(@"Downloaded to path: %@", filePath);
-            }
-            else
-            {
-                [MHVUIAlert showInformationalMessage:error.localizedDescription];
-            }
-
-            [self.controller clearStatus];
-        }];
-
-        return TRUE;
+#if SHOULD_USE_LEGACY
+        [self downloadBlobPayloadLegacy:fileBlob toFilePath:filePath];
+#else
+        [self downloadBlobPayloadNew:fileBlob toFilePath:filePath];
+#endif
     }];
 }
+
+- (void)downloadBlobPayloadLegacy:(MHVBlobPayloadThing *)fileBlob toFilePath:(NSString *)filePath
+{
+    [fileBlob downloadBlobToFilePath:filePath completion:^(NSError *error)
+     {
+         [self downloadCompleteWithError:error filePath:filePath];
+     }];
+}
+
+- (void)downloadBlobPayloadNew:(MHVBlobPayloadThing *)fileBlob toFilePath:(NSString *)filePath
+{
+    [self.connection.thingClient downloadBlob:fileBlob
+                                   toFilePath:filePath
+                                   completion:^(NSError * _Nullable error)
+     {
+         [self downloadCompleteWithError:error filePath:filePath];
+     }];
+}
+
+- (void)downloadCompleteWithError:(NSError *)error filePath:(NSString *)filePath
+{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+     {
+         if (error)
+         {
+             [MHVUIAlert showInformationalMessage:error.localizedDescription];
+         }
+         else
+         {
+             UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+             if (image)
+             {
+                 MHVImageViewController *imageVC = [[MHVImageViewController alloc] initWithNibName:@"MHVImageViewController" bundle:nil image:image];
+                 
+                 [self.controller.navigationController pushViewController:imageVC animated:TRUE];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:@"Downloaded into Documents folder."];
+             }
+         }
+         
+         [self.controller clearStatus];
+     }];
+}
+
+#pragma mark - Upload
 
 - (void)uploadFileWithName:(NSString *)name data:(NSData *)data andMediaType:(NSString *)mediaType
 {
@@ -175,6 +241,8 @@
     //
     // This will first commit the blob and if that is successful, also PUT the associated file thing
     //
+    
+#if SHOULD_USE_LEGACY
     [fileThing uploadBlob:blobSource contentType:mediaType record:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
     {
         @try
@@ -191,13 +259,34 @@
         }
         [self.controller clearStatus];
     }];
+#else
+    //NOTE: Uses nil for name so this blob is the DefaultBlob for the MHVFile which does have the name
+    [self.connection.thingClient addBlobSource:blobSource
+                                       toThing:fileThing
+                                          name:nil
+                                   contentType:mediaType
+                                      recordId:self.connection.personInfo.selectedRecordID
+                                    completion:^(MHVThing *_Nullable thing, NSError * _Nullable error)
+     {
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^
+         {
+             if (error)
+             {
+                 [MHVUIAlert showInformationalMessage:error.localizedDescription];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:@"File uploaded!"];
+                 
+                 [self.controller getThingsFromHealthVault]; // Refresh
+             }
+         }];
+     }];
+#endif
 }
 
 - (void)pickImageForUpload
 {
-    self.fileMediaType = nil;
-    self.fileData = nil;
-
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = (UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeSavedPhotosAlbum);
     picker.delegate = self;
@@ -211,8 +300,8 @@
     // Save selected image data
     //
     UIImage *image = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-    self.fileData = UIImageJPEGRepresentation(image, 0.8);
-    self.fileMediaType = @"image/jpeg";
+    NSData *fileData = UIImageJPEGRepresentation(image, 0.8);
+    NSString *fileMediaType = @"image/jpeg";
 
     //
     // Close the picker and upload the file
@@ -221,7 +310,7 @@
     {
         NSString *fileName = [NSString stringWithFormat:@"Picture_%@.jpg", [[NSDate date] toStringWithFormat:@"yyyyMMdd_HHmmss"]];
 
-        [self uploadFileWithName:fileName data:self.fileData andMediaType:self.fileMediaType];
+        [self uploadFileWithName:fileName data:fileData andMediaType:fileMediaType];
     }];
 }
 

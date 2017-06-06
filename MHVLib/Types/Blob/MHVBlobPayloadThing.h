@@ -43,6 +43,11 @@
 // The Url is valid for a SHORT period of time. See HealthVault service documentation for duration
 //
 @property (readwrite, nonatomic, strong) NSString *blobUrl;
+//
+// Inline data for the blob.
+// This is limited to about 3.5MB of data, use addBlobSource:toThing:... to store more data
+//
+@property (readwrite, nonatomic, strong) NSData *inlineData;
 
 //
 // Convenience properties

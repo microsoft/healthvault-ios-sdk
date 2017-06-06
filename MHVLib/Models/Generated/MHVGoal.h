@@ -40,13 +40,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The unique identifier of a goal instance. [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _id;
+@property(strong,nonatomic,nullable) NSString* identifier;
 /* The name of the goal.              For example, Daily walk goal [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;
 /* The description of the goal. [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _description;
+@property(strong,nonatomic,nullable) NSString* descriptionText;
 /* The start date of the goal in Universal Time Zone(UTC). [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* startDate;

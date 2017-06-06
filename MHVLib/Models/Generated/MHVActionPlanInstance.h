@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The ID of the plan instance [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _id;
+@property(strong,nonatomic,nullable) NSString* identifier;
 /* The status of the plan [optional]
  */
 @property(strong,nonatomic,nullable) NSString* status;
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* name;
 /* The description of the plan, localized [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _description;
+@property(strong,nonatomic,nullable) NSString* descriptionText;
 /* An HTTPS URL to an image for the plan. Suggested resolution is 212x212 with a 25px margin in the image. [optional]
  */
 @property(strong,nonatomic,nullable) NSString* imageUrl;

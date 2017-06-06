@@ -129,7 +129,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     {
         whenString = [thing.effectiveDate toStringWithStyle:NSDateFormatterShortStyle];
     }
-
+    
     cell.textLabel.text = whenString;
 
     NSString *details;
@@ -140,6 +140,12 @@ static const NSInteger c_numSecondsInDay = 86400;
     else
     {
         details = [thing.data.typed detailsString];
+    }
+
+    // If Thing has a blob, include the size
+    if (thing.blobs.getDefaultBlob)
+    {
+        details = [NSString stringWithFormat:@"%@ - Size %0.1f MB", details, thing.blobs.getDefaultBlob.length / 1048576.0];
     }
 
     cell.detailTextLabel.text = details;
@@ -192,9 +198,11 @@ static const NSInteger c_numSecondsInDay = 86400;
     // Get the current HealthVault service connection
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
+    //Include Blob metadata, so can show size
     MHVThingQuery *query = [[MHVThingQuery alloc] init];
     query.maxResults = 500;
-    
+    query.view.sections |= MHVThingSection_Blobs;
+
     // Send request to get all things for the type class set for this view controller.
     [connection.thingClient getThingsForThingClass:self.typeClass
                                              query:query
@@ -313,7 +321,7 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 - (void)clearStatus
 {
-    // [self.statusLabel clearStatus];
+    [self.statusLabel clearStatus];
 }
 
 - (MHVThingCollection *)createRandomForDay:(NSDate *)date isMetric:(BOOL)metric

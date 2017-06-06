@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The unique identifier of the instance of the objective [optional]
  */
-@property(strong,nonatomic,nullable) NSString* _id;
+@property(strong,nonatomic,nullable) NSString* identifier;
 /* The name of the objective [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;
