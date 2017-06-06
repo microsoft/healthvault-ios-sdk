@@ -453,7 +453,7 @@ static NSInteger kInternalServerError = 500;
         if (request.completion)
         {
             request.completion(nil, [NSError error:[NSError MHVUnauthorizedError]
-                                   withDescription:@"The refreshed session authorization is invalid or expired."]);
+                                   withDescription:@"The session authorization was refreshed, but the new authorization is invalid or expired."]);
         }
         return;
     }

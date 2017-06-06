@@ -425,6 +425,11 @@ describe(@"MHVConnectionTests", ^
                    {
                        [[expectFutureValue(requestCount) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(3)];
                    });
+
+                it(@"requestCount should not ever be 4", ^
+                   {
+                       [[expectFutureValue(requestCount) shouldNotEventuallyBeforeTimingOutAfter(10)] equal:@(4)];
+                   });
             });
     
     context(@"MHVMethod fails if no token", ^
