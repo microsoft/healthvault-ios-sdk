@@ -53,6 +53,22 @@ describe(@"MHVVocabularyClient", ^
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.parameters should] beNil];
                    });
+                
+                it(@"should handle caching enabled", ^
+                   {
+                       [vocabularyClient setCacheEnabled:YES];
+                       [vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       [[method.cache shouldNot] beNil];
+                   });
+                
+                it(@"should handle caching disabled", ^
+                   {
+                       [vocabularyClient setCacheEnabled:NO];
+                       [vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       [[method.cache should] beNil];
+                   });
             });
     
     context(@"GetVocabulary", ^
@@ -104,7 +120,30 @@ describe(@"MHVVocabularyClient", ^
                        [[method.parameters should]equal:@"<info><vocabulary-parameters><vocabulary-key><name>Name 1</name><family>Family 1</family><version>Version 1</version><code-value>Code 1</code-value></vocabulary-key><vocabulary-key><name>Name 2</name><family>Family 2</family><version>Version 2</version><code-value>Code 2</code-value></vocabulary-key><fixed-culture>false</fixed-culture></vocabulary-parameters></info>"];
                        
                    });
+                
+                it(@"should handle caching enabled", ^
+                   {
+                       MHVVocabularyKey *testKey = [[MHVVocabularyKey alloc]init];
+                       [vocabularyClient setCacheEnabled:YES];
+                       [vocabularyClient getVocabularyWithKey:testKey cultureIsFixed:NO completion:^(MHVVocabularyCodeSet * _Nullable vocabulary, NSError * _Nullable error) {
+                       }];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       [[method.cache shouldNot] beNil];
+                   });
+                
+                it(@"should handle caching disabled", ^
+                   {
+                       MHVVocabularyKey *testKey = [[MHVVocabularyKey alloc]init];
+                       [vocabularyClient setCacheEnabled:NO];
+                       [vocabularyClient getVocabularyWithKey:testKey cultureIsFixed:NO completion:^(MHVVocabularyCodeSet * _Nullable vocabulary, NSError * _Nullable error) {
+                       }];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       [[method.cache should] beNil];
+                    });
             });
+                        
     context(@"SearchVocabularies", ^
             {
                 it(@"should search without vocabulary key", ^
@@ -146,6 +185,43 @@ describe(@"MHVVocabularyClient", ^
                        [[method.name should]equal:@"SearchVocabulary"];
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.parameters should]equal:@"<info><vocabulary-key><name>Test key name</name><family>Test family</family><version>Test version</version><code-value>Test code</code-value></vocabulary-key><text-search-parameters><search-string search-mode=\"Contains\">SearchText</search-string><max-results>25</max-results></text-search-parameters></info>"];
+                   });
+                
+                it(@"should handle caching enabled when searching without vocabulary key", ^
+                   {
+                       [vocabularyClient setCacheEnabled:YES];
+                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains maxResults:[NSNumber numberWithInteger:10] completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       [[method.cache shouldNot] beNil];
+                   });
+                
+                it(@"should handle caching disabled when searching without vocabulary key", ^
+                   {
+                       [vocabularyClient setCacheEnabled:NO];
+                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains maxResults:[NSNumber numberWithInteger:10] completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       [[method.cache should] beNil];
+                    });
+
+                it(@"should handle caching enabled when searching with vocabulary key", ^
+                   {
+                       MHVVocabularyKey *testKey = [[MHVVocabularyKey alloc]init];
+                       [vocabularyClient setCacheEnabled:YES];
+                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains vocabularyKey:testKey maxResults:nil completion:^(MHVVocabularyCodeSetCollection * _Nullable codeSet, NSError * _Nullable error) {}];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       [[method.cache shouldNot] beNil];
+                   });
+                it(@"should handle caching enabled when searching with vocabulary key", ^
+                   {
+                       MHVVocabularyKey *testKey = [[MHVVocabularyKey alloc]init];
+                       [vocabularyClient setCacheEnabled:NO];
+                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains vocabularyKey:testKey maxResults:nil completion:^(MHVVocabularyCodeSetCollection * _Nullable codeSet, NSError * _Nullable error) {}];
+                       
+                       MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
+                       [[method.cache should] beNil];
                    });
             });
 });

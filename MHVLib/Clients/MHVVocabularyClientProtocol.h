@@ -111,6 +111,19 @@ NS_ASSUME_NONNULL_BEGIN
                              maxResults:(NSNumber *_Nullable)maxResults
                              completion:(void(^)(MHVVocabularyCodeSetCollection *_Nullable codeSet, NSError *_Nullable error))completion;
 
+
+/**
+ * Enables or disables caching of vocabulary responses
+ *
+ * @param cacheEnabled If YES, caching will be enabled for all subsequent calls. If NO, caching will be disabled for all subsequent calls.
+ */
+- (void)setCacheEnabled:(BOOL)cacheEnabled;
+
+/**
+ * Clears any items currently in the vocabulary cache.
+ */
+- (void)clearCache;
+
 @end
 
 NS_ASSUME_NONNULL_END

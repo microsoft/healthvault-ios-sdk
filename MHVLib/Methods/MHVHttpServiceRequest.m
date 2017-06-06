@@ -24,13 +24,6 @@
 - (instancetype)initWithServiceOperation:(id<MHVHttpServiceOperationProtocol>)serviceOperation
                               completion:(MHVRequestCompletion _Nullable)completion
 {
-    return [self initWithServiceOperation:serviceOperation cache:nil completion:completion];
-}
-
-- (instancetype)initWithServiceOperation:(id<MHVHttpServiceOperationProtocol>)serviceOperation
-                                   cache:(NSCache * _Nullable)cache
-                              completion:(MHVRequestCompletion _Nullable)completion
-{
     MHVASSERT_PARAMETER(serviceOperation);
     
     self = [super init];
@@ -39,7 +32,6 @@
     {
         _serviceOperation = serviceOperation;
         _completion = completion;
-        _cache = cache;
         _retryAttempts = 0;
     }
     

@@ -98,32 +98,24 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 - (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol> _Nonnull)operation
                          completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
-    [self executeHttpServiceOperation:operation cache:nil completion:completion];
-}
-
-- (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol> _Nonnull)operation
-                          withCache:(NSCache * _Nullable)cache
-                         completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
-{
     MHVASSERT_PARAMETER(operation);
     
     dispatch_async(self.completionQueue, ^
-    {
-        if (!operation.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
-        {
-            if (completion)
-            {
-                completion(nil, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The connection is not authenticated. You must first call authenticateWithViewController:completion: before this operation can be performed."]);
-            }
-            
-            return;
-        }
-        else
-        {
-            [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation cache:cache completion:completion]];
-        }
-    });
-    
+                   {
+                       if (!operation.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
+                       {
+                           if (completion)
+                           {
+                               completion(nil, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The connection is not authenticated. You must first call authenticateWithViewController:completion: before this operation can be performed."]);
+                           }
+                           
+                           return;
+                       }
+                       else
+                       {
+                           [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation completion:completion]];
+                       }
+                   });
 }
 
 - (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
@@ -214,10 +206,11 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeMethodRequest:(MHVHttpServiceRequest *)request
 {
-    if (request.cache)
+    NSString *cacheKey = [request.serviceOperation getCacheKey];
+    if (request.serviceOperation.cache)
     {
         // Handle returning cached values
-        MHVHttpServiceResponse *cachedResponse = [request.cache objectForKey:request.serviceOperation];
+        MHVHttpServiceResponse *cachedResponse = (MHVHttpServiceResponse*)[request.serviceOperation.cache objectForKey:cacheKey];
         if (cachedResponse)
         {
             [self parseResponse:cachedResponse request:request isXML:YES completion:request.completion];
@@ -251,9 +244,9 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         }
         else
         {
-            if (request.cache)
+            if (request.serviceOperation.cache)
             {
-                [request.cache setObject:response forKey:request.serviceOperation];
+                [request.serviceOperation.cache setObject:response forKey:cacheKey];
             }
             
             [self parseResponse:response request:request isXML:YES completion:request.completion];

@@ -11,6 +11,8 @@
 
 @implementation MHVBlobDownloadRequest
 
+@synthesize cache = _cache;
+
 - (instancetype)initWithURL:(NSURL *)url
                  toFilePath:(NSString *)toFilePath
 {
@@ -25,6 +27,12 @@
         _isAnonymous = YES;
     }
     return self;
+}
+
+- (NSString *)getCacheKey
+{
+    [NSException throwNotImpl];
+    return @"";
 }
 
 @end
