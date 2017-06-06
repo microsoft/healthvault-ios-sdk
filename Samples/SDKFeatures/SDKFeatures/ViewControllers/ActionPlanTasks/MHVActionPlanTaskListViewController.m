@@ -113,15 +113,14 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    [self loadActionPlanTasks];
-    [self loadActionPlan];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self loadActionPlanTasks];
+    [self loadActionPlan];
 }
 
 - (void)loadActionPlanTasks

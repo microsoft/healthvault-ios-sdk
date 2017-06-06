@@ -53,13 +53,12 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    [self loadActionPlans];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self loadActionPlans];
 }
 
