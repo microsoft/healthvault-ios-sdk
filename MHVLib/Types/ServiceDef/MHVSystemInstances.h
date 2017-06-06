@@ -20,11 +20,11 @@
 //
 
 #import "MHVType.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 
 @interface MHVSystemInstances : MHVType
 
 @property (readwrite, nonatomic, strong) NSString *currentInstanceID;
-@property (readwrite, nonatomic, strong) MHVInstanceCollection *instances;
+@property (readwrite, nonatomic, strong) MHVServiceInstanceCollection *instances;
 
 @end

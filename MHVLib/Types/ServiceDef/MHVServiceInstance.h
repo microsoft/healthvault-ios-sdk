@@ -1,5 +1,5 @@
 //
-// MHVInstance.h
+// MHVServiceInstance.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -20,7 +20,7 @@
 
 #import "MHVType.h"
 
-@interface MHVInstance : MHVType
+@interface MHVServiceInstance : MHVType
 
 /**
  A string uniquely identifying the instance.
@@ -54,9 +54,9 @@
 
 @end
 
-@interface MHVInstanceCollection : MHVCollection<MHVInstance *>
+@interface MHVServiceInstanceCollection : MHVCollection<MHVServiceInstance *>
 
-- (MHVInstance *)indexOfInstance:(NSUInteger)index;
+- (MHVServiceInstance *)indexOfInstance:(NSUInteger)index;
 
 - (NSInteger)indexOfInstanceNamed:(NSString *)name;
 - (NSInteger)indexOfInstanceWithID:(NSString *)instanceID;

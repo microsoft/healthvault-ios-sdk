@@ -33,9 +33,9 @@ static NSString *const c_element_instance = @"instance";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.instances = (MHVInstanceCollection *)[reader readElementArray:c_element_instance
-                                                               asClass:[MHVInstance class]
-                                                         andArrayClass:[MHVInstanceCollection class]];
+    self.instances = (MHVServiceInstanceCollection *)[reader readElementArray:c_element_instance
+                                                               asClass:[MHVServiceInstance class]
+                                                         andArrayClass:[MHVServiceInstanceCollection class]];
 }
 
 - (void)serializeAttributes:(XWriter *)writer

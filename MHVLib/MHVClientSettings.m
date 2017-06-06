@@ -141,7 +141,7 @@ static NSString *const c_element_instanceID = @"instanceID";
     self.appData = [reader readElementRaw:c_element_appData];
 }
 
-+ (MHVEnvironmentSettings *)fromInstance:(MHVInstance *)instance
++ (MHVEnvironmentSettings *)fromInstance:(MHVServiceInstance *)instance
 {
     MHVCHECK_NOTNULL(instance);
 

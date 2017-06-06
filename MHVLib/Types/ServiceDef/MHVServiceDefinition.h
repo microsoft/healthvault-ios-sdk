@@ -21,7 +21,7 @@
 #import "MHVType.h"
 #import "MHVPlatformInfo.h"
 #import "MHVShellInfo.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 #import "MHVSystemInstances.h"
 
 @interface MHVServiceDefinition : MHVType

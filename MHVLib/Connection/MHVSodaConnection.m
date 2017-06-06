@@ -25,7 +25,7 @@
 #import "MHVPlatformClientProtocol.h"
 #import "MHVValidator.h"
 #import "MHVShellAuthServiceProtocol.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 #import "MHVConfiguration.h"
 #import "MHVPersonClientProtocol.h"
 #import "MHVPlatformConstants.h"
@@ -274,7 +274,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     }
     
      // Set a temporary service instance for the newApplicationCreationInfo call
-    _serviceInstance = [MHVInstance new];
+    _serviceInstance = [MHVServiceInstance new];
     self.serviceInstance.instanceID = @"1";
     self.serviceInstance.name = @"Default";
     self.serviceInstance.instanceDescription = @"Default HealthVault instance";
@@ -350,7 +350,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
             return;
         }
         
-        MHVInstanceCollection *instances = serviceDefinition.systemInstances.instances;
+        MHVServiceInstanceCollection *instances = serviceDefinition.systemInstances.instances;
         
         NSInteger index = [instances indexOfInstanceWithID:instanceId];
         
@@ -364,7 +364,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
             return;
         }
         
-        MHVInstance *instance = [instances objectAtIndex:index];
+        MHVServiceInstance *instance = [instances objectAtIndex:index];
         
         if(![self.keychainService setXMLObject:instance forKey:kServiceInstanceKey])
         {
