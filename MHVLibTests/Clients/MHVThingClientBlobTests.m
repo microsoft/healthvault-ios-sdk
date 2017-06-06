@@ -43,6 +43,15 @@ describe(@"MHVThingClient", ^
     __block MHVServiceResponse *serviceResponseForStep2;
     __block MHVServiceResponse *serviceResponseForStep3;
     
+    beforeEach(^{
+        requestedServiceOperationStep1 = nil;
+        requestedServiceOperationStep2 = nil;
+        requestedServiceOperationStep3 = nil;
+        serviceResponseForStep1 = nil;
+        serviceResponseForStep2 = nil;
+        serviceResponseForStep3 = nil;
+    });
+    
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
     [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id (NSArray *params)
      {
@@ -107,12 +116,6 @@ describe(@"MHVThingClient", ^
                     
                     serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
                     
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    serviceResponseForStep2 = nil;
-                    serviceResponseForStep3 = nil;
-                    
                     [thingClient refreshBlobUrlsForThing:allergyThing
                                                 recordId:recordId
                                               completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
@@ -138,15 +141,6 @@ describe(@"MHVThingClient", ^
     
     context(@"RefreshBlobUrlsForThing Errors", ^
             {
-                beforeEach(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    serviceResponseForStep1 = nil;
-                    serviceResponseForStep2 = nil;
-                    serviceResponseForStep3 = nil;
-                });
-                
                 it(@"should fail if thing is nil", ^
                    {
                        __block MHVThing *resultThing;
@@ -195,12 +189,6 @@ describe(@"MHVThingClient", ^
                     
                     serviceResponseForStep1 = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
                     
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    serviceResponseForStep2 = nil;
-                    serviceResponseForStep3 = nil;
-                    
                     [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
                                                  recordId:recordId
                                                completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
@@ -238,15 +226,6 @@ describe(@"MHVThingClient", ^
     
     context(@"RefreshBlobUrlsForThingCollection Errors", ^
             {
-                beforeEach(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    serviceResponseForStep1 = nil;
-                    serviceResponseForStep2 = nil;
-                    serviceResponseForStep3 = nil;
-                });
-                
                 it(@"should fail if thing collection is nil", ^
                    {
                        __block MHVThing *resultThing;
@@ -286,12 +265,6 @@ describe(@"MHVThingClient", ^
                 __block NSError *resultError;
 
                 beforeEach(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    serviceResponseForStep2 = nil;
-                    serviceResponseForStep3 = nil;
-                    
                     MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"1234567890" dataUsingEncoding:NSUTF8StringEncoding]
                                                                                                             statusCode:0];
                     
@@ -323,13 +296,6 @@ describe(@"MHVThingClient", ^
             {
                 __block NSData *returnedData;
                 beforeEach(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    serviceResponseForStep1 = nil;
-                    serviceResponseForStep2 = nil;
-                    serviceResponseForStep3 = nil;
-                   
                     MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] init];
                     blobPayload.inlineData = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                     
@@ -352,15 +318,6 @@ describe(@"MHVThingClient", ^
     
     context(@"DownloadBlob Errors", ^
             {
-                beforeEach(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    serviceResponseForStep1 = nil;
-                    serviceResponseForStep2 = nil;
-                    serviceResponseForStep3 = nil;
-                });
-                
                 it(@"should fail if blob payload is nil", ^
                    {
                        __block NSError *requestError;
@@ -377,15 +334,6 @@ describe(@"MHVThingClient", ^
     
     context(@"AddBlobToThing Errors", ^
             {
-                beforeEach(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    serviceResponseForStep1 = nil;
-                    serviceResponseForStep2 = nil;
-                    serviceResponseForStep3 = nil;
-                });
-                
                 it(@"should fail if blobSource is nil", ^
                    {
                        __block NSError *requestError;
@@ -469,10 +417,6 @@ describe(@"MHVThingClient", ^
                 __block MHVThing *resultThing;
                 
                 beforeEach(^{
-                    requestedServiceOperationStep1 = nil;
-                    requestedServiceOperationStep2 = nil;
-                    requestedServiceOperationStep3 = nil;
-                    
                     // Mock response for get blob upload info with BeginPutBlob
                     NSString *beginPutXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.BeginPutBlob\"><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url><blob-chunk-size>123456</blob-chunk-size><max-blob-size>1073741824</max-blob-size><blob-hash-algorithm>SHA256Block</blob-hash-algorithm><blob-hash-parameters><block-size>654321</block-size></blob-hash-parameters></wc:info></response>";
                     
