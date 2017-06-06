@@ -42,7 +42,9 @@
     if (self)
     {
         _connection = connection;
+        _cache = [[NSCache alloc] init];
     }
+    
     return self;
 }
 
@@ -57,7 +59,7 @@
     
     MHVMethod *method = [MHVMethod getVocabulary];
     
-    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse *_Nullable response, NSError  *_Nullable error)
+    [self.connection executeHttpServiceOperation:method cache:self.cache completion:^(MHVServiceResponse *_Nullable response, NSError  *_Nullable error)
     {
         if (error)
         {
@@ -196,7 +198,7 @@
     
     MHVMethod * method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:nil];
     
-    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method cache:self.cache completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (error)
          {
@@ -247,7 +249,7 @@
     
     MHVMethod * method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:vocabularyKey];
     
-    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    [self.connection executeHttpServiceOperation:method cache:self.cache completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
          if (error)
          {
@@ -262,6 +264,7 @@
      }];
 }
 
+#pragma mark - Private
 /**
  * Gets a MHVVocabularyCodeSetCollection with VocabularyCodeSets for each of the VocabularyKeys provided
  *
@@ -280,7 +283,7 @@
     MHVMethod *method = [self getVocabularyGetMethodWithKeys:vocabularyKeys withCultureIsFixed:cultureIsFixed];
     
     // 1) Request all Vocabularies based on the provided VocabularyKeyCollection
-    [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) {
+    [self.connection executeHttpServiceOperation:method cache:self.cache completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) {
         if (error)
         {
             completion(nil, error);

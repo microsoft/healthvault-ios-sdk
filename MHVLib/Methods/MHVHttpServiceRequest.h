@@ -30,10 +30,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) id<MHVHttpServiceOperationProtocol> serviceOperation;
 @property (nonatomic, strong, readonly, nullable) MHVRequestCompletion completion;
 @property (nonatomic, assign) NSInteger retryAttempts;
+@property (nonatomic, readonly) NSCache *cache;
 
 - (instancetype)initWithServiceOperation:(id<MHVHttpServiceOperationProtocol>)serviceOperation
                               completion:(MHVRequestCompletion _Nullable)completion;
 
+- (instancetype)initWithServiceOperation:(id<MHVHttpServiceOperationProtocol>)serviceOperation
+                                   cache:(NSCache *_Nullable)cache
+                              completion:(MHVRequestCompletion _Nullable)completion;
 @end
 
 NS_ASSUME_NONNULL_END

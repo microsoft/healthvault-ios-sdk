@@ -98,6 +98,13 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 - (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol> _Nonnull)operation
                          completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
 {
+    [self executeHttpServiceOperation:operation cache:nil completion:completion];
+}
+
+- (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol> _Nonnull)operation
+                          withCache:(NSCache * _Nullable)cache
+                         completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion
+{
     MHVASSERT_PARAMETER(operation);
     
     dispatch_async(self.completionQueue, ^
@@ -113,7 +120,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         }
         else
         {
-            [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation completion:completion]];
+            [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation cache:cache completion:completion]];
         }
     });
     
@@ -207,6 +214,17 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeMethodRequest:(MHVHttpServiceRequest *)request
 {
+    if (request.cache)
+    {
+        // Handle returning cached values
+        MHVHttpServiceResponse *cachedResponse = [request.cache objectForKey:request.serviceOperation];
+        if (cachedResponse)
+        {
+            [self parseResponse:cachedResponse request:request isXML:YES completion:request.completion];
+            return;
+        }
+    }
+    
     [self.httpService sendRequestForURL:self.serviceInstance.healthServiceUrl
                              httpMethod:nil
                                    body:[[self messageForMethod:request.serviceOperation] dataUsingEncoding:NSUTF8StringEncoding]
@@ -233,6 +251,11 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         }
         else
         {
+            if (request.cache)
+            {
+                [request.cache setObject:response forKey:request.serviceOperation];
+            }
+            
             [self parseResponse:response request:request isXML:YES completion:request.completion];
         }
     }];
@@ -240,6 +263,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeRestRequest:(MHVHttpServiceRequest *)request
 {
+    // TODO: Add cache support
     MHVRestRequest *restRequest = request.serviceOperation;
     
     // If no URL is set, build it from serviceInstance
@@ -303,6 +327,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeBlobDownloadRequest:(MHVHttpServiceRequest *)request
 {
+    // TODO: Add cache support
     MHVBlobDownloadRequest *blobDownloadRequest = request.serviceOperation;
 
     if (blobDownloadRequest.toFilePath)

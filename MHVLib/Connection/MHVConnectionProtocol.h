@@ -56,6 +56,21 @@ NS_ASSUME_NONNULL_BEGIN
                          completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**
+ Makes Web request call to HealthVault service.
+ 
+ @param operation The operation to execute.  Either MHVMethod or MHVRestRequest.
+ MHVMethod class has properties representing the method name, version, parameters, recordId and correlationId.
+ MHVRestRequest class has properties for url, query parameters, etc.
+ 
+ @param cache Optional cache to store responses in. During a request, if the cache contains a response for the
+ requested service operation, the cached result is returned. Otherwise the operation is executed remotely and
+ the response will be added to the cache.
+ */
+- (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol>)operation
+                              cache:(NSCache * _Nullable)cache
+                         completion:(void (^_Nullable)(MHVServiceResponse *_Nullable response, NSError *_Nullable error))completion;
+
+/**
  Authenticates the connection. Calling authenticate will immediately present an authentication user interface if the connection is not authenticated.
 
  @param viewController Optional A view controller used to present a user authentication user interface. If the viewController parameter is nil the authentication flow will be presented from the current window's root view controller.
