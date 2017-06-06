@@ -79,7 +79,6 @@ static NSString *const c_element_discontinuation_nurse_endorsement = @"discontin
     self.discontinuationNurseEndorsement = [reader readElement:c_element_discontinuation_nurse_endorsement asClass:[MHVDateTime class]];
 }
 
-
 + (NSString *)typeID
 {
     return c_typeid;

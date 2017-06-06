@@ -52,12 +52,4 @@
 //
 @property (readwrite, nonatomic, strong) MHVHeartrateZoneGroup *heartrateZoneGroup;
 
-// -------------------------
-//
-// Type Information
-//
-// -------------------------
-+ (NSString *)typeID;
-+ (NSString *)XRootElement;
-
 @end

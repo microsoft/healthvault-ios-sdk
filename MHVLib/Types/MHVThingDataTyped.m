@@ -130,6 +130,12 @@ static MHVTypeSystem *s_typeRegistry;
     [s_typeRegistry addClass:[MHVQuestionAnswer class] forTypeID:[MHVQuestionAnswer typeID]];
 
     [s_typeRegistry addClass:[MHVFile class] forTypeID:[MHVFile typeID]];
+    
+    [s_typeRegistry addClass:[MHVAdvanceDirective class] forTypeID:[MHVAdvanceDirective typeID]];
+    [s_typeRegistry addClass:[MHVAerobicProfile class] forTypeID:[MHVAerobicProfile typeID]];
+    [s_typeRegistry addClass:[MHVAllergicEpisode class] forTypeID:[MHVAllergicEpisode typeID]];
+    [s_typeRegistry addClass:[MHVAppSpecificInformation class] forTypeID:[MHVAppSpecificInformation typeID]];
+    [s_typeRegistry addClass:[MHVAppointment class] forTypeID:[MHVAppointment typeID]];
 }
 
 + (MHVTypeSystem *)current

@@ -118,4 +118,14 @@ MHVDECLARE_GETTOR(MHVPersonalImage, personalImage);
 
 MHVDECLARE_GETTOR(MHVFile, file);
 
+MHVDECLARE_GETTOR(MHVAdvanceDirective, advanceDirective);
+
+MHVDECLARE_GETTOR(MHVAerobicProfile, arobicProfile);
+
+MHVDECLARE_GETTOR(MHVAllergicEpisode, allergicEpisode);
+
+MHVDECLARE_GETTOR(MHVAppSpecificInformation, appSpecificInformation);
+
+MHVDECLARE_GETTOR(MHVAppointment, appointment);
+
 @end

@@ -52,6 +52,11 @@
 #import "MHVMessage.h"
 #import "MHVLabTestResults.h"
 #import "MHVThingRaw.h"
+#import "MHVAdvanceDirective.h"
+#import "MHVAerobicProfile.h"
+#import "MHVAllergicEpisode.h"
+#import "MHVAppSpecificInformation.h"
+#import "MHVAppointment.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
@@ -97,4 +102,9 @@
 
 - (MHVFile *)file;
 
+- (MHVAdvanceDirective *)advanceDirective;
+- (MHVAerobicProfile *)arobicProfile;
+- (MHVAllergicEpisode *)allergicEpisode;
+- (MHVAppSpecificInformation *)appSpecificInformation;
+- (MHVAppointment *)appointment;
 @end

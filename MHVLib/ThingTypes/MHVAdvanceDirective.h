@@ -94,12 +94,4 @@
 //
 @property (readwrite, nonatomic, strong) MHVDateTime *discontinuationNurseEndorsement;
 
-// -------------------------
-//
-// Type Information
-//
-// -------------------------
-+ (NSString *)typeID;
-+ (NSString *)XRootElement;
-
 @end
