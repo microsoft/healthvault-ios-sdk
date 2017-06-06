@@ -20,6 +20,7 @@
 #import "MHVClientProtocol.h"
 
 @class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVBlobPayloadThing;
+@protocol MHVBlobSourceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -186,7 +187,6 @@ NS_ASSUME_NONNULL_BEGIN
  * Download a blob as NSData
  *
  * @param blobPayloadThing The blob to be downloaded
- * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
  *        NSData the data for the blob if successful
  *        NSError object will be nil if there is no error when performing the operation.
@@ -199,7 +199,6 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param blobPayloadThing The blob to be downloaded
  * @param toFilePath The location where the blob file should be saved
- * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
  *        NSError object will be nil if there is no error when performing the operation.
  */
@@ -219,6 +218,28 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getPersonalImageWithRecordId:(NSUUID *)recordId
                           completion:(void(^)(UIImage *_Nullable image, NSError *_Nullable error))completion;
 
+/**
+ * Add a blob to a Thing
+ *
+ * @param blobSource The blob source data to be added to the thing
+ * @param toThing The thing to add the blob
+ * @param name The name of the blob
+ *        If an existing blob on the thing has the same name, it will be updated to the new blobSource
+ * @param contentType The http Content-Type, such as "image/jpeg"
+ *        This will be set on as the Content-Type header when downloading from a blob URL
+ * @param recordId an authorized person's record ID.
+ * @param completion Envoked when the operation completes.
+ *        MHVThing object with the blob added if successful
+ *        NSError object will be nil if there is no error when performing the operation.
+ */
+- (void)addBlobSource:(id<MHVBlobSourceProtocol>)blobSource
+              toThing:(MHVThing *)toThing
+                 name:(NSString *_Nullable)name
+          contentType:(NSString *)contentType
+             recordId:(NSUUID *)recordId
+           completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END
+

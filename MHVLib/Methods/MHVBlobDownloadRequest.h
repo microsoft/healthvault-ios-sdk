@@ -17,6 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly, nullable) NSString      *toFilePath;
 @property (nonatomic, assign, readonly)           BOOL          isAnonymous;
 
+/**
+ * Create blob download request
+ *
+ * @param url Source location for downloading blob
+ * @param toFilePath Destination location where blob data should be saved
+ */
 - (instancetype)initWithURL:(NSURL *)url
                  toFilePath:(NSString *_Nullable)toFilePath;
 

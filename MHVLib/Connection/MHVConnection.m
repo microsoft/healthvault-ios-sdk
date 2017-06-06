@@ -36,6 +36,7 @@
 #import "MHVThingClient.h"
 #import "MHVRestRequest.h"
 #import "MHVBlobDownloadRequest.h"
+#import "MHVBlobUploadRequest.h"
 #import "MHVHttpServiceResponse.h"
 #import "MHVPersonInfo.h"
 
@@ -198,6 +199,10 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     {
         [self executeBlobDownloadRequest:request];
     }
+    else if ([request.serviceOperation isKindOfClass:[MHVBlobUploadRequest class]])
+    {
+        [self executeBlobUploadRequest:request];
+    }
     else
     {
         NSString *message = [NSString stringWithFormat:@"ServiceOperation not known: %@", NSStringFromClass([request.serviceOperation class])];
@@ -340,6 +345,43 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
              }
          }];
     }
+}
+
+
+- (void)executeBlobUploadRequest:(MHVHttpServiceRequest *)request
+{
+    MHVBlobUploadRequest *blobUploadRequest = request.serviceOperation;
+
+    [self.httpService uploadBlobSource:blobUploadRequest.blobSource
+                                 toUrl:blobUploadRequest.destinationURL
+                             chunkSize:blobUploadRequest.chunkSize
+                            completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            if (request.completion)
+            {
+                request.completion(nil, error);
+            }
+            return;
+        }
+        
+        MHVServiceResponse *serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:response isXML:NO];
+        if (serviceResponse.error)
+        {
+            if (request.completion)
+            {
+                request.completion(nil, serviceResponse.error);
+            }
+        }
+        else
+        {
+            if (request.completion)
+            {
+                request.completion(serviceResponse, nil);
+            }
+        }
+    }];
 }
 
 - (NSString *)messageForMethod:(MHVMethod *)method

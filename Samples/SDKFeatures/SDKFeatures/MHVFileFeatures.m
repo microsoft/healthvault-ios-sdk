@@ -26,11 +26,9 @@
 #import "MHVConnectionFactoryProtocol.h"
 #import "MHVTypeListViewController.h"
 #import "MHVThingClientProtocol.h"
+#import "SDKFeatures-Swift.h"
 
 @interface MHVFileFeatures ()
-
-@property (nonatomic, strong) NSData *fileData;
-@property (nonatomic, strong) NSString *fileMediaType;
 
 @property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
@@ -45,7 +43,7 @@
     {
         __weak __typeof__(self)weakSelf = self;
 
-        [self addFeature:@"View file" andAction:^
+        [self addFeature:@"View file URL in Safari" andAction:^
         {
             [weakSelf viewFileInBrowser];
         }];
@@ -180,7 +178,7 @@
 {
     [fileBlob downloadBlobToFilePath:filePath completion:^(NSError *error)
      {
-         [self downloadCompleteWithError:error];
+         [self downloadCompleteWithError:error filePath:filePath];
      }];
 }
 
@@ -190,21 +188,31 @@
                                    toFilePath:filePath
                                    completion:^(NSError * _Nullable error)
      {
-         [self downloadCompleteWithError:error];
+         [self downloadCompleteWithError:error filePath:filePath];
      }];
 }
 
-- (void)downloadCompleteWithError:(NSError *)error
+- (void)downloadCompleteWithError:(NSError *)error filePath:(NSString *)filePath
 {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^
      {
-         if (!error)
+         if (error)
          {
-             [MHVUIAlert showInformationalMessage:@"Downloaded into Documents folder."];
+             [MHVUIAlert showInformationalMessage:error.localizedDescription];
          }
          else
          {
-             [MHVUIAlert showInformationalMessage:error.localizedDescription];
+             UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+             if (image)
+             {
+                 MHVImageViewController *imageVC = [[MHVImageViewController alloc] initWithNibName:@"MHVImageViewController" bundle:nil image:image];
+                 
+                 [self.controller.navigationController pushViewController:imageVC animated:TRUE];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:@"Downloaded into Documents folder."];
+             }
          }
          
          [self.controller clearStatus];
@@ -233,6 +241,8 @@
     //
     // This will first commit the blob and if that is successful, also PUT the associated file thing
     //
+    
+#if SHOULD_USE_LEGACY
     [fileThing uploadBlob:blobSource contentType:mediaType record:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
     {
         @try
@@ -249,13 +259,34 @@
         }
         [self.controller clearStatus];
     }];
+#else
+    //NOTE: Uses nil for name so this blob is the DefaultBlob for the MHVFile which does have the name
+    [self.connection.thingClient addBlobSource:blobSource
+                                       toThing:fileThing
+                                          name:nil
+                                   contentType:mediaType
+                                      recordId:self.connection.personInfo.selectedRecordID
+                                    completion:^(MHVThing *_Nullable thing, NSError * _Nullable error)
+     {
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^
+         {
+             if (error)
+             {
+                 [MHVUIAlert showInformationalMessage:error.localizedDescription];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:@"File uploaded!"];
+                 
+                 [self.controller getThingsFromHealthVault]; // Refresh
+             }
+         }];
+     }];
+#endif
 }
 
 - (void)pickImageForUpload
 {
-    self.fileMediaType = nil;
-    self.fileData = nil;
-
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = (UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeSavedPhotosAlbum);
     picker.delegate = self;
@@ -269,8 +300,8 @@
     // Save selected image data
     //
     UIImage *image = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-    self.fileData = UIImageJPEGRepresentation(image, 0.8);
-    self.fileMediaType = @"image/jpeg";
+    NSData *fileData = UIImageJPEGRepresentation(image, 0.8);
+    NSString *fileMediaType = @"image/jpeg";
 
     //
     // Close the picker and upload the file
@@ -279,7 +310,7 @@
     {
         NSString *fileName = [NSString stringWithFormat:@"Picture_%@.jpg", [[NSDate date] toStringWithFormat:@"yyyyMMdd_HHmmss"]];
 
-        [self uploadFileWithName:fileName data:self.fileData andMediaType:self.fileMediaType];
+        [self uploadFileWithName:fileName data:fileData andMediaType:fileMediaType];
     }];
 }
 

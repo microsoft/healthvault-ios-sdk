@@ -39,6 +39,15 @@
                                       }];
 }
 
++ (NSError *)MVHRequiredParameterIsNil
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeRequiredParameter
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"One or more required parameters is nil."
+                                      }];
+}
+
 + (NSError *)MHVOperationCannotBePerformed
 {
     return [NSError errorWithDomain:kMHVErrorDomain
