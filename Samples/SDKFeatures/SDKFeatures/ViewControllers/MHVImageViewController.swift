@@ -1,5 +1,5 @@
 //
-//  NSError+MHVError.h
+//  MHVImageViewController.swift
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -15,22 +15,32 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import <Foundation/Foundation.h>
+import UIKit
 
-@interface NSError (MHVError)
+class MHVImageViewController: UIViewController {
 
-+ (NSError *)MVHInvalidParameter;
-+ (NSError *)MVHInvalidParameter:(NSString *)message;
-+ (NSError *)MVHRequiredParameterIsNil;
-+ (NSError *)MHVOperationCannotBePerformed;
-+ (NSError *)MHVIOError;
-+ (NSError *)MHVUnauthorizedError;
-+ (NSError *)MHVOperationCancelled;
-+ (NSError *)MHVUnknownError;
-+ (NSError *)MHVNotFound;
-+ (NSError *)MHVNetworkError;
+    @IBOutlet weak var imageView: UIImageView!
+    
+    var image: UIImage?
 
-+ (NSError *)error:(NSError *)error withDescription:(NSString *)description;
+    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, image: UIImage)
+    {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.image = image
+    }
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        self.image = nil
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
 
-@end
+        imageView.image = self.image
+    }
+}

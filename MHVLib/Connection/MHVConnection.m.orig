@@ -216,10 +216,7 @@ static NSInteger kInternalServerError = 500;
 
 - (void)executeMethodRequest:(MHVHttpServiceRequest *)request
 {
-    MHVMethod *method = request.serviceOperation;
-
-    MHVLOG([NSString stringWithFormat:@"Execute Method: %@", method.name]);
-    
+<<<<<<< HEAD
     NSString *cacheKey = [request.serviceOperation getCacheKey];
     if (request.serviceOperation.cache)
     {
@@ -231,6 +228,11 @@ static NSInteger kInternalServerError = 500;
             return;
         }
     }
+=======
+    MHVMethod *method = request.serviceOperation;
+
+    MHVLOG([NSString stringWithFormat:@"Execute Method: %@", method.name]);
+>>>>>>> develop
     
     [self.httpService sendRequestForURL:self.serviceInstance.healthServiceUrl
                              httpMethod:nil
