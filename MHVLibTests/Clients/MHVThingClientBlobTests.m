@@ -43,6 +43,9 @@ describe(@"MHVThingClient", ^
     __block MHVServiceResponse *serviceResponseForStep2;
     __block MHVServiceResponse *serviceResponseForStep3;
     
+    __block MHVThing *resultThing;
+    __block NSError *resultError;
+
     beforeEach(^{
         requestedServiceOperationStep1 = nil;
         requestedServiceOperationStep2 = nil;
@@ -50,6 +53,8 @@ describe(@"MHVThingClient", ^
         serviceResponseForStep1 = nil;
         serviceResponseForStep2 = nil;
         serviceResponseForStep3 = nil;
+        resultThing = nil;
+        resultError = nil;
     });
     
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
@@ -104,9 +109,6 @@ describe(@"MHVThingClient", ^
     
     context(@"RefreshBlobUrlsForThing", ^
             {
-                __block MHVThing *resultThing;
-                __block NSError *resultError;
-
                 beforeEach(^{
                     // Mock response for refresh blob url
                     NSString *refreshBlobXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"648F6C9F-9B07-4272-89F4-19F923D1C65E\"><thing><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id><type-id name=\"File\">bd0403c5-4ae2-4b0e-a8db-1888678e4528</type-id><thing-state>Active</thing-state><flags>0</flags><eff-date>2017-06-02T22:01:52.471</eff-date><data-xml><file><name>FILENAME.JPG</name><size>4491016</size><content-type><text>image/jpeg</text></content-type></file><common /></data-xml><blob-payload><blob><blob-info><name/><content-type>image/jpeg</content-type><hash-info><algorithm>SHA256Block</algorithm><params><block-size>2097152</block-size></params><hash>D4karBmHN0/IYQEMAZg3lyTK62Bi5+rmOf8JtvzPnUo=</hash></hash-info></blob-info><content-length>4491016</content-length><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url></blob></blob-payload></thing></group></wc:info></response>";
@@ -143,41 +145,36 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if thing is nil", ^
                    {
-                       __block MHVThing *resultThing;
-                       __block NSError *requestError;
                        [thingClient refreshBlobUrlsForThing:nil
                                                    recordId:recordId
                                                  completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
                        [[expectFutureValue(resultThing) shouldEventually] beNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
                 
                 it(@"should fail if record id is nil", ^
                    {
-                       __block MHVThing *resultThing;
-                       __block NSError *requestError;
                        [thingClient refreshBlobUrlsForThing:allergyThing
                                                    recordId:nil
                                                  completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
                        [[expectFutureValue(resultThing) shouldEventually] beNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
     
     context(@"RefreshBlobUrlsForThingCollection", ^
             {
                 __block MHVThingCollection *resultThings;
-                __block NSError *resultError;
 
                 beforeEach(^{
                     // Mock response for refresh blob urls
@@ -228,41 +225,36 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if thing collection is nil", ^
                    {
-                       __block MHVThing *resultThing;
-                       __block NSError *requestError;
                        [thingClient refreshBlobUrlsForThings:nil
                                                     recordId:recordId
                                                   completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
                        [[expectFutureValue(resultThing) shouldEventually] beNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
                 
                 it(@"should fail if record id is nil", ^
                    {
-                       __block MHVThing *resultThing;
-                       __block NSError *requestError;
                        [thingClient refreshBlobUrlsForThings:allergyThing
                                                     recordId:nil
                                                   completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
                        [[expectFutureValue(resultThing) shouldEventually] beNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
     
     context(@"DownloadBlob Data", ^
             {
                 __block NSData *resultData;
-                __block NSError *resultError;
 
                 beforeEach(^{
                     MHVHttpServiceResponse *refreshBlobResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"1234567890" dataUsingEncoding:NSUTF8StringEncoding]
@@ -295,6 +287,7 @@ describe(@"MHVThingClient", ^
     context(@"DownloadBlob Data Inline", ^
             {
                 __block NSData *returnedData;
+                
                 beforeEach(^{
                     MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] init];
                     blobPayload.inlineData = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
@@ -320,15 +313,14 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if blob payload is nil", ^
                    {
-                       __block NSError *requestError;
                        [thingClient downloadBlobData:nil
                                           completion:^(NSData *_Nullable data, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
     
@@ -336,7 +328,6 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if blobSource is nil", ^
                    {
-                       __block NSError *requestError;
                        [thingClient addBlobSource:nil
                                           toThing:fileThing
                                              name:nil
@@ -344,11 +335,11 @@ describe(@"MHVThingClient", ^
                                          recordId:recordId
                                        completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
                 
                 it(@"should fail if toThing is nil", ^
@@ -356,7 +347,6 @@ describe(@"MHVThingClient", ^
                        NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                        MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
                        
-                       __block NSError *requestError;
                        [thingClient addBlobSource:blobSource
                                           toThing:nil
                                              name:nil
@@ -364,11 +354,11 @@ describe(@"MHVThingClient", ^
                                          recordId:recordId
                                        completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
                 
                 it(@"should fail if contentType is nil", ^
@@ -376,7 +366,6 @@ describe(@"MHVThingClient", ^
                        NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                        MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
                        
-                       __block NSError *requestError;
                        [thingClient addBlobSource:blobSource
                                           toThing:fileThing
                                              name:nil
@@ -384,11 +373,11 @@ describe(@"MHVThingClient", ^
                                          recordId:recordId
                                        completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
                 
                 it(@"should fail if recordId is nil", ^
@@ -396,7 +385,6 @@ describe(@"MHVThingClient", ^
                        NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                        MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
                        
-                       __block NSError *requestError;
                        [thingClient addBlobSource:blobSource
                                           toThing:fileThing
                                              name:nil
@@ -404,18 +392,16 @@ describe(@"MHVThingClient", ^
                                          recordId:nil
                                        completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
-                            requestError = error;
+                            resultError = error;
                         }];
                        
-                       [[expectFutureValue(requestError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(requestError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
     
     context(@"AddBlobToThing", ^
             {
-                __block MHVThing *resultThing;
-                
                 beforeEach(^{
                     // Mock response for get blob upload info with BeginPutBlob
                     NSString *beginPutXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.BeginPutBlob\"><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url><blob-chunk-size>123456</blob-chunk-size><max-blob-size>1073741824</max-blob-size><blob-hash-algorithm>SHA256Block</blob-hash-algorithm><blob-hash-parameters><block-size>654321</block-size></blob-hash-parameters></wc:info></response>";
