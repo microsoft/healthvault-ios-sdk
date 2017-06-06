@@ -17,13 +17,9 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVGoalsApi.h"
 #import "MHVGoalAddViewController.h"
 #import "MHVGoalsListViewController.h"
 #import "MHVGoalDetailViewController.h"
-#import "MHVFeaturesConfiguration.h"
-#import "MHVConfiguration.h"
-#import "MHVConnection.h"
 
 @interface MHVGoalsListViewController ()
 

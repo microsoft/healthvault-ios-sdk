@@ -260,6 +260,9 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         headers[@"Authorization"] = [NSString stringWithFormat:@"MSH-V1 app-token=%@,offline-person-id=%@,record-id=%@", self.sessionCredential.token, self.personInfo.ID, self.personInfo.selectedRecordID];
     }
     
+    // Add the required REST version header
+    headers[@"x-ms-version"] = self.configuration.restVersion;
+
     headers[@"Content-Type"] = @"application/json";
     
     [self.httpService sendRequestForURL:restRequest.url
