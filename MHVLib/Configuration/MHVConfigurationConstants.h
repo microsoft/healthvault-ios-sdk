@@ -20,7 +20,7 @@
 #define MHVConfigurationConstants_h
 
 /*
- The default number of internal retries.
+ The default number of internal retries for 500 errors.
  */
 static NSInteger const kDefaultRetryOnInternal500Count = 2;
 

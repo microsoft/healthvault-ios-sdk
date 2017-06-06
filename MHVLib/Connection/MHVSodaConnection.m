@@ -280,6 +280,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     self.serviceInstance.instanceDescription = @"Default HealthVault instance";
     self.serviceInstance.healthServiceUrl = [self.configuration.defaultHealthVaultUrl URLByAppendingPathComponent: @"wildcat.ashx"];
     self.serviceInstance.shellUrl = self.configuration.defaultShellUrl;
+    self.serviceInstance.restServiceUrl = self.configuration.restHealthVaultUrl;
     
     [self.platformClient newApplicationCreationInfoWithCompletion:^(MHVApplicationCreationInfo * _Nullable applicationCreationInfo, NSError * _Nullable error)
     {

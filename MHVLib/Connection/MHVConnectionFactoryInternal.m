@@ -63,7 +63,7 @@
         {
             self.connection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
                                                                  clientFactory:[MHVClientFactory new]
-                                                                   httpService:[MHVHttpService new]
+                                                                   httpService:[[MHVHttpService alloc] initWithConfiguration:configuration]
                                                                keychainService:[MHVKeychainService new]
                                                               shellAuthService:[[MHVShellAuthService alloc] initWithConfiguration:configuration authBroker:[MHVBrowserAuthBroker new]]];
         }
