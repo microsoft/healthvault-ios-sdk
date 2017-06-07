@@ -623,9 +623,9 @@
     MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
     query.view.sections = MHVThingSection_Blobs;
     
-    [self.connection.thingClient getThingsWithQuery:query
-                                           recordId:recordId
-                                         completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+    [self getThingsWithQuery:query
+                    recordId:recordId
+                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
      {
          // Get the defaultBlob from the first thing in the result collection; can be nil if no image has been set
          MHVThing *thing = [things firstObject];
@@ -642,8 +642,8 @@
              return;
          }
          
-         [self.connection.thingClient downloadBlobData:blob
-                                            completion:^(NSData *_Nullable data, NSError *_Nullable error)
+         [self downloadBlobData:blob
+                     completion:^(NSData *_Nullable data, NSError *_Nullable error)
           {
               if (error || !data)
               {
