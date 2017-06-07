@@ -21,8 +21,33 @@ import Foundation
 
 class UIMedicationTextField: UITextField
 {
-    
+    // MARK: Properties
     var errorLabel: UILabel?
+    @IBInspectable var shouldBeNumeric:Bool = false
+    @IBInspectable var shouldNotBeEmpty:Bool = false
+
+    
+    // MARK: Validation functions
+    func isValid() -> Bool
+    {
+        var isValidText = true
+        if self.shouldBeNumeric
+        {
+            if !(self.isNumeric())
+            {
+                isValidText = false
+            }
+        }
+        
+        if self.shouldNotBeEmpty
+        {
+            if (self.isEmpty())
+            {
+                isValidText = false
+            }
+        }
+        return isValidText
+    }
     
     func isEmpty() -> Bool
     {
@@ -46,9 +71,10 @@ class UIMedicationTextField: UITextField
         self.layer.borderWidth = 1.0
         let scanner = Scanner(string: self.text!)
         scanner.locale = Locale.current
-        // Set red outline if the text is not empty and not a number
+        // If not a number
         if !(scanner.scanDecimal(nil) && scanner.isAtEnd)
         {
+            // If not empty
             if !(self.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty)
             {
                 self.layer.borderColor = UIColor.red.cgColor
@@ -57,6 +83,7 @@ class UIMedicationTextField: UITextField
             }
         }
         
+        // Its okay if it's empty or if it's a number
         self.layer.borderColor = UIColor.clear.cgColor
         errorLabel?.isHidden = true
         return true

@@ -61,11 +61,6 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
         dosePicker.delegate = self
         nameField.errorLabel = medicationErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
-        
-        nameTableView.delegate = self
-        nameTableView.dataSource = self
-        nameTableView.isScrollEnabled = true
-        nameTableView.isHidden = true
     }
     
     // MARK: UITextField Delegation
@@ -78,12 +73,11 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool
     {
+        // Highlight cells that are invalid, but ignore returned value
         let text = textField as! UIMedicationTextField
-        _ = text.isEmpty()
-        if (textField == doseAmountField)
-        {
-            _ = text.isNumeric()
-        }
+        _ = text.isValid()
+        
+        // Hide autocomplete table when done editing
         nameTableView.isHidden = true
         
         return true
@@ -91,25 +85,13 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,replacementString string: String) -> Bool
     {
-        let substring = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-        if substring.characters.count >= minSearchSize
-        {
-            nameTableView.isHidden = false
-            searcher?.searchForMeds(searchValue: substring, completion:
-                {
-                    autocompleteContents in
-                    DispatchQueue.main.async
-                        {
-                            self.autoComplete = autocompleteContents
-                    }
+         searcher?.showMedList(textField: textField, nameTableView: nameTableView,
+                                                  range: range, string: string, completion:
+            {
+                autocompleteContents in
+                self.autoComplete = autocompleteContents
+                
             })
-            nameTableView.reloadData()
-        }
-        else
-        {
-            nameTableView.isHidden = true
-        }
-        
         return true
     }
     
@@ -172,7 +154,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
     // MARK: Actions
     @IBAction func addMedication(_ sender: UIButton)
     {
-        if(fieldsAreComplete())
+        if(FormSubmission.canSubmit(subviews: self.view.subviews))
         {
             let medication = medicationBuilder!
                 .begin(mhvThing: MHVMedication.newThing())
@@ -187,15 +169,5 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
                     (error: Error?) in
                 })
         }
-    }
-    
-    // MARK: Helper Functions
-    func fieldsAreComplete() -> Bool
-    {
-        if(nameField.isEmpty() || !doseAmountField.isNumeric())
-        {
-            return false
-        }
-        return true
     }
 }

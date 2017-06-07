@@ -20,9 +20,12 @@
 import Foundation
 
 class MedicationBuilder {
+    
+    // MARK: Properties
     var thing: MHVThing?
     var med: MHVMedication?
     
+    // MARK: Builder functions
     func begin(mhvThing: MHVThing) -> MedicationBuilder
     {
         thing = mhvThing

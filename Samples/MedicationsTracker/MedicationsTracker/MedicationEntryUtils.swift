@@ -31,6 +31,25 @@ struct HVUnitTypes
                          "Unit (unt)","Units per milliliter (unt/ml)"]
 }
 
+struct FormSubmission{
+    static func canSubmit(subviews: [UIView]) -> Bool
+    {
+        var fieldsComplete = true
+        for subview in subviews
+        {
+            if let textField = subview as? UIMedicationTextField
+            {
+                if !textField.isValid()
+                {
+                    fieldsComplete = false
+                }
+            }
+        }
+        return fieldsComplete
+    }
+ 
+}
+
 class MedicationVocabSearcher
 {
     let minSearchSize = 3
@@ -48,5 +67,30 @@ class MedicationVocabSearcher
                 let meds = matchedMeds!.firstObject().vocabularyCodeItems
                 completion(meds)
             })
+    }
+    
+    func showMedList(textField: UITextField, nameTableView: UITableView, range: NSRange, string: String,
+                     completion: @escaping(MHVVocabularyCodeItemCollection?) -> Void)
+    {
+        // Get substring and check if we the min size for searching was reached
+        let substring = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        if substring.characters.count >= minSearchSize
+        {
+            // Show autocomplete contents in table view
+            nameTableView.isHidden = false
+            searchForMeds(searchValue: substring, completion:
+                {
+                    autocompleteContents in
+                    DispatchQueue.main.async
+                        {
+                            completion(autocompleteContents)
+                        }
+            })
+            nameTableView.reloadData()
+        }
+        else
+        {
+            nameTableView.isHidden = true
+        }
     }
 }

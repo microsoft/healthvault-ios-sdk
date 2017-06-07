@@ -20,6 +20,8 @@ import UIKit
 
 class MedicationListViewController: UITableViewController
 {
+    // MARK: Properties
+
     var meds: MHVThingCollection?
     var builder = MedicationBuilder.init()
     var searcher = MedicationVocabSearcher.init()
