@@ -389,7 +389,7 @@ describe(@"MHVThingClient", ^
                     
                     serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:getThingsResponse isXML:YES];
                     
-                    // Make a simple blank image so its data will convert to an image
+                    // Make a simple blank image so its data will convert to a UIImage
                     UIGraphicsBeginImageContext(CGSizeMake(50, 100));
                     UIImage *testImage = UIGraphicsGetImageFromCurrentImageContext();
                     UIGraphicsEndImageContext();
@@ -433,7 +433,7 @@ describe(@"MHVThingClient", ^
                     
                     serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:getThingsResponse isXML:YES];
                     
-                    // Mock return data that isn not an image
+                    // Mock return data that is not an image
                     MHVHttpServiceResponse *getImageResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"NotAnImage" dataUsingEncoding:NSUTF8StringEncoding]
                                                                                                          statusCode:0];
                     
