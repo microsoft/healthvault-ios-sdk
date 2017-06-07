@@ -1,5 +1,5 @@
 //
-//  MHVClients.h
+//  MHVThingTypeOrderByProperty.h
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MHVClients_h
-#define MHVClients_h
+#import "MHVType.h"
 
-#import "MHVPersonClientProtocol.h"
-#import "MHVPlatformClientProtocol.h"
-#import "MHVRemoteMonitoringClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVVocabularyClientProtocol.h"
+@protocol MHVItemTypePropertyConverterProtocol;
 
-#endif /* MHVClients_h */
+@interface MHVThingTypeOrderByProperty : MHVType
+
+@property (nonatomic, strong, readonly, nullable) NSString *name;
+
+@property (nonatomic, strong, readonly, nullable) NSString *type;
+
+@property (nonatomic, strong, readonly, nullable) NSString *xpath;
+
+@property (nonatomic, strong, readonly, nullable) id<MHVItemTypePropertyConverterProtocol> converter;
+
+@end
+
+@interface MHVThingTypeOrderByPropertyCollection : MHVCollection<MHVThingTypeOrderByProperty *>
+
+@end

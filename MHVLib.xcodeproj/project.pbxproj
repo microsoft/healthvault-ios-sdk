@@ -540,10 +540,8 @@
 		A560EBEC1EE5D58C00A962D9 /* MHVThingTypeDefinitionRequestParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = A560EBEA1EE5D58C00A962D9 /* MHVThingTypeDefinitionRequestParameters.m */; };
 		A560EBEF1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = A560EBED1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.h */; };
 		A560EBF01EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = A560EBEE1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.m */; };
-		A560EBF31EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = A560EBF11EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.h */; };
-		A560EBF41EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A560EBF21EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.m */; };
-		A560EBF71EE5D86E00A962D9 /* MHVThingTypeProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = A560EBF51EE5D86E00A962D9 /* MHVThingTypeProperty.h */; };
-		A560EBF81EE5D86E00A962D9 /* MHVThingTypeProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A560EBF61EE5D86E00A962D9 /* MHVThingTypeProperty.m */; };
+		A560EBF71EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = A560EBF51EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.h */; };
+		A560EBF81EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A560EBF61EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.m */; };
 		A560EBFB1EE5DA1400A962D9 /* MHVItemTypePropertyConverterProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A560EBFA1EE5DA1400A962D9 /* MHVItemTypePropertyConverterProtocol.h */; };
 		A560EBFE1EE5DAC200A962D9 /* MHVLinearItemTypePropertyConverer.h in Headers */ = {isa = PBXBuildFile; fileRef = A560EBFC1EE5DAC200A962D9 /* MHVLinearItemTypePropertyConverer.h */; };
 		A560EBFF1EE5DAC200A962D9 /* MHVLinearItemTypePropertyConverer.m in Sources */ = {isa = PBXBuildFile; fileRef = A560EBFD1EE5DAC200A962D9 /* MHVLinearItemTypePropertyConverer.m */; };
@@ -571,6 +569,8 @@
 		A5D1ED031EC23884000E3295 /* MHVConnectionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D1ED011EC23884000E3295 /* MHVConnectionFactory.m */; };
 		A5D1ED051EC23987000E3295 /* MHVConnectionFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5D1ED041EC23987000E3295 /* MHVConnectionFactoryProtocol.h */; };
 		A5D1ED071EC239AC000E3295 /* MHVSodaConnectionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5D1ED061EC239AC000E3295 /* MHVSodaConnectionProtocol.h */; };
+		A5FF991F1EE755E600460189 /* MHVThingTypeVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = A5FF991D1EE755E600460189 /* MHVThingTypeVersion.h */; };
+		A5FF99201EE755E600460189 /* MHVThingTypeVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FF991E1EE755E600460189 /* MHVThingTypeVersion.m */; };
 		BA0324F51ED881A000A641AD /* MHVActionPlansApi.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0324F41ED881A000A641AD /* MHVActionPlansApi.m */; };
 		BA0355401EC0BF5400BE547D /* MHVVocabularyClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */; };
 		BA0356001EC1257F00BE547D /* NSArray+DataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355D31EC1257F00BE547D /* NSArray+DataModel.h */; };
@@ -1268,10 +1268,8 @@
 		A560EBEA1EE5D58C00A962D9 /* MHVThingTypeDefinitionRequestParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTypeDefinitionRequestParameters.m; sourceTree = "<group>"; };
 		A560EBED1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTypeVersionInfo.h; sourceTree = "<group>"; };
 		A560EBEE1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTypeVersionInfo.m; sourceTree = "<group>"; };
-		A560EBF11EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTypeOrderByProperties.h; sourceTree = "<group>"; };
-		A560EBF21EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTypeOrderByProperties.m; sourceTree = "<group>"; };
-		A560EBF51EE5D86E00A962D9 /* MHVThingTypeProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTypeProperty.h; sourceTree = "<group>"; };
-		A560EBF61EE5D86E00A962D9 /* MHVThingTypeProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTypeProperty.m; sourceTree = "<group>"; };
+		A560EBF51EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTypeOrderByProperty.h; sourceTree = "<group>"; };
+		A560EBF61EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTypeOrderByProperty.m; sourceTree = "<group>"; };
 		A560EBFA1EE5DA1400A962D9 /* MHVItemTypePropertyConverterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVItemTypePropertyConverterProtocol.h; sourceTree = "<group>"; };
 		A560EBFC1EE5DAC200A962D9 /* MHVLinearItemTypePropertyConverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVLinearItemTypePropertyConverer.h; sourceTree = "<group>"; };
 		A560EBFD1EE5DAC200A962D9 /* MHVLinearItemTypePropertyConverer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVLinearItemTypePropertyConverer.m; sourceTree = "<group>"; };
@@ -1303,6 +1301,8 @@
 		A5D1ED061EC239AC000E3295 /* MHVSodaConnectionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSodaConnectionProtocol.h; sourceTree = "<group>"; };
 		A5DF03EA1ECF70D400D1A3C7 /* MHVClients.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVClients.h; sourceTree = "<group>"; };
 		A5DF03EB1ECF74A800D1A3C7 /* MHVConnections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVConnections.h; sourceTree = "<group>"; };
+		A5FF991D1EE755E600460189 /* MHVThingTypeVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTypeVersion.h; sourceTree = "<group>"; };
+		A5FF991E1EE755E600460189 /* MHVThingTypeVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTypeVersion.m; sourceTree = "<group>"; };
 		BA0324F31ED8818600A641AD /* MHVActionPlansApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlansApi.h; sourceTree = "<group>"; };
 		BA0324F41ED881A000A641AD /* MHVActionPlansApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlansApi.m; sourceTree = "<group>"; };
 		BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyClientProtocol.h; sourceTree = "<group>"; };
@@ -2263,12 +2263,12 @@
 				A560EBE61EE5D56900A962D9 /* MHVThingTypeDefinition.m */,
 				A560EBE91EE5D58C00A962D9 /* MHVThingTypeDefinitionRequestParameters.h */,
 				A560EBEA1EE5D58C00A962D9 /* MHVThingTypeDefinitionRequestParameters.m */,
+				A560EBF51EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.h */,
+				A560EBF61EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.m */,
+				A5FF991D1EE755E600460189 /* MHVThingTypeVersion.h */,
+				A5FF991E1EE755E600460189 /* MHVThingTypeVersion.m */,
 				A560EBED1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.h */,
 				A560EBEE1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.m */,
-				A560EBF11EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.h */,
-				A560EBF21EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.m */,
-				A560EBF51EE5D86E00A962D9 /* MHVThingTypeProperty.h */,
-				A560EBF61EE5D86E00A962D9 /* MHVThingTypeProperty.m */,
 			);
 			name = Definition;
 			path = MHVLib/ThingTypes/Definition;
@@ -2549,6 +2549,7 @@
 				438160FE1ED6269900BB8C94 /* MHVVocabularyKey.h in Headers */,
 				A54521561EC9EF0100A17A1B /* MHVConfiguration.h in Headers */,
 				A5D1ED021EC23884000E3295 /* MHVConnectionFactory.h in Headers */,
+				A5FF991F1EE755E600460189 /* MHVThingTypeVersion.h in Headers */,
 				5DE3830C14E4447800DFA11D /* XConverter.h in Headers */,
 				4C191AF11EC24C2D00B5E545 /* MHVHttpService.h in Headers */,
 				BA03560E1EC1257F00BE547D /* NSSet+DataModel.h in Headers */,
@@ -2582,7 +2583,7 @@
 				4C191A751EC1033C00B5E545 /* MHVDailyMedicationUsage.h in Headers */,
 				5D983BE614E6006400C287B7 /* MHVConstrainedInt.h in Headers */,
 				A51B6C9F1EC4A815003BFBDC /* MHVSessionCredential.h in Headers */,
-				A560EBF71EE5D86E00A962D9 /* MHVThingTypeProperty.h in Headers */,
+				A560EBF71EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.h in Headers */,
 				5D983BEA14E6035900C287B7 /* MHVDay.h in Headers */,
 				5D983BEE14E6038000C287B7 /* MHVMonth.h in Headers */,
 				4C191AA91EC1033C00B5E545 /* MHVVitalSigns.h in Headers */,
@@ -2730,7 +2731,6 @@
 				5D97B94015125A280004B551 /* MHVObjectStore.h in Headers */,
 				5D39F9221513A07800208A7B /* MHVRecordReference.h in Headers */,
 				5D39F9271513A63500208A7B /* MHVMethodCallTask.h in Headers */,
-				A560EBF31EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.h in Headers */,
 				4C191A5F1EC1033C00B5E545 /* MHVAllergy.h in Headers */,
 				5D39F92B1513AA6000208A7B /* MHVServerResponseStatus.h in Headers */,
 				A560EBEF1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.h in Headers */,
@@ -3062,6 +3062,7 @@
 				5D76B9DC14DCC85B00BA865F /* MHVExceptionExtensions.m in Sources */,
 				A53BF8411EC3A48600F018E2 /* MHVApplicationCreationInfo.m in Sources */,
 				5D0DACB414E2FE14002CBE52 /* MHVCore.m in Sources */,
+				A5FF99201EE755E600460189 /* MHVThingTypeVersion.m in Sources */,
 				BA0356DE1EC5278700BE547D /* MHVActionPlanTask.m in Sources */,
 				5DE382FC14E338C900DFA11D /* MHVArrayExtensions.m in Sources */,
 				BA0356111EC1257F00BE547D /* NSString+DataModel.m in Sources */,
@@ -3343,7 +3344,6 @@
 				5D18A4A2187361AB000AE3BD /* MHVFlowValue.m in Sources */,
 				5D1BE47E156B483900718832 /* MHVBlobUploadTask.m in Sources */,
 				5DB4206E156C959200E1A473 /* MHVThingBlobUploadTask.m in Sources */,
-				A560EBF41EE5D81C00A962D9 /* MHVThingTypeOrderByProperties.m in Sources */,
 				BA03560D1EC1257F00BE547D /* NSNumber+DataModel.m in Sources */,
 				BA0356391EC1278F00BE547D /* MHVJsonCacheService.m in Sources */,
 				BA0357021EC5278800BE547D /* MHVGoalsWrapper.m in Sources */,
@@ -3360,7 +3360,7 @@
 				BA0357041EC5278800BE547D /* MHVMicrosoftKhronosCloudCommonErrorsErrorInformation.m in Sources */,
 				5D4A93221635BC49007390B7 /* MHVDictionaryExtensions.m in Sources */,
 				4C191A8A1EC1033C00B5E545 /* MHVImmunization.m in Sources */,
-				A560EBF81EE5D86E00A962D9 /* MHVThingTypeProperty.m in Sources */,
+				A560EBF81EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.m in Sources */,
 				4C191A761EC1033C00B5E545 /* MHVDailyMedicationUsage.m in Sources */,
 				5D7D05C61639E83800D32AD5 /* MHVDownloadThingsTask.m in Sources */,
 				5DDB6D521653FE59001BCB16 /* MHVConcentrationValue.m in Sources */,

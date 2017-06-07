@@ -184,7 +184,7 @@
             {
                 for (MHVThingTypeDefinition *definition in typeDefinitions)
                 {
-                    if ([definition.typeId.UUIDString isEqualToString:typeId])
+                    if ([typeId caseInsensitiveCompare:definition.typeId.UUIDString] == NSOrderedSame)
                     {
                         [definitions setObject:definition forKey:typeId];
                         

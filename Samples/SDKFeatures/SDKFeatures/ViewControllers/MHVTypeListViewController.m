@@ -146,9 +146,9 @@
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
     [connection.platformClient getHealthRecordThingTypeDefinitionsWithTypeIds:@[[MHVBloodPressure typeID], [MHVBloodGlucose typeID]]
-                                                                     sections:MHVThingTypeSectionsVersions
+                                                                     sections:MHVThingTypeSectionsNone
                                                                    imageTypes:nil
-                                                        lastClientRefreshDate:nil
+                                                        lastClientRefreshDate:[NSDate distantPast]
                                                                    completion:^(NSDictionary<NSUUID *,MHVThingTypeDefinition *> * _Nullable definitions, NSError * _Nullable error)
     {
         if (error)

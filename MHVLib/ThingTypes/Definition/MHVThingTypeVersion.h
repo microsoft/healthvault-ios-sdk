@@ -1,5 +1,5 @@
 //
-//  MHVClients.h
+//  MHVThingTypeVersion.h
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MHVClients_h
-#define MHVClients_h
+#import "MHVType.h"
 
-#import "MHVPersonClientProtocol.h"
-#import "MHVPlatformClientProtocol.h"
-#import "MHVRemoteMonitoringClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVVocabularyClientProtocol.h"
+@class MHVThingTypeVersionInfo;
 
-#endif /* MHVClients_h */
+@interface MHVThingTypeVersion : MHVType
+
+@property (nonatomic, strong, readonly, nullable) NSArray<MHVThingTypeVersionInfo *> *versions;
+
+@end
