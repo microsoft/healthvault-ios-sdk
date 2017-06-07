@@ -15,7 +15,9 @@ class MedicationListViewController: UITableViewController {
     
     // MARK: - Business Logic
     func getMedicationsFromHV(completion: @escaping(MHVThingCollection?) -> Void){
-        let query = MHVThingQuery.init(typeID: MHVMedication.typeID())
+        let filter = MHVThingFilter.init(typeID: MHVMedication.typeID())
+        filter!.xpath = "/thing/data-xml/medication[not(date-discontinued)]"
+        let query = MHVThingQuery.init(filter: filter)
         let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: HVFeaturesConfiguration.configuration())
         connection.thingClient()?.getThingsWith(query!, record: connection.personInfo!.selectedRecordID, completion: { (meds: MHVThingCollection?, error: Error?) in
             print("Medications count ", meds?.count() ?? -1)
