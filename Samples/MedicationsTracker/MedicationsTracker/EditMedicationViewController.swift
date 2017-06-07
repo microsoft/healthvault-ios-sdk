@@ -51,8 +51,8 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
          builder: MedicationBuilder, searcher: MedicationVocabSearcher)
     {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        medicationThing = medication
-        medicationBuilder = builder
+        self.medicationThing = medication
+        self.medicationBuilder = builder
         self.searcher = searcher
     }
     
@@ -96,13 +96,16 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
-        searcher?.showMedList(textField: textField, nameTableView: nameTableView,
-                              range: range, string: string, completion:
-            {
-                autocompleteContents in
-                self.autoComplete = autocompleteContents
-                
-        })
+        if textField == nameField
+        {
+            searcher?.showMedList(textField: textField, nameTableView: nameTableView,
+                                  range: range, string: string, completion:
+                {
+                    autocompleteContents in
+                    self.autoComplete = autocompleteContents
+                    
+            })
+        }
         return true
     }
     

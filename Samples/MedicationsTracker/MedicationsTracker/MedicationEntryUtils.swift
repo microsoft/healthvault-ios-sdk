@@ -77,16 +77,15 @@ class MedicationVocabSearcher
         if substring.characters.count >= minSearchSize
         {
             // Show autocomplete contents in table view
-            nameTableView.isHidden = false
             searchForMeds(searchValue: substring, completion:
                 {
                     autocompleteContents in
                     DispatchQueue.main.async
                         {
                             completion(autocompleteContents)
+                            nameTableView.isHidden = autocompleteContents == nil
                         }
             })
-            nameTableView.reloadData()
         }
         else
         {

@@ -54,14 +54,12 @@ class UIMedicationTextField: UITextField
         self.layer.borderWidth = 1.0
         if self.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
         {
-            self.layer.borderColor = UIColor.red.cgColor
-            errorLabel?.isHidden = false
+            showErrorStyle()
             return true
         }
         else
         {
-            self.layer.borderColor = UIColor.clear.cgColor
-            errorLabel?.isHidden = true
+            showNormalStyle()
             return false
         }
     }
@@ -77,16 +75,28 @@ class UIMedicationTextField: UITextField
             // If not empty
             if !(self.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty)
             {
-                self.layer.borderColor = UIColor.red.cgColor
-                errorLabel?.isHidden = false
+                showErrorStyle()
                 return false
             }
         }
         
         // Its okay if it's empty or if it's a number
+        showNormalStyle()
+        return true
+    }
+    
+    // Style functions
+    func showNormalStyle()
+    {
         self.layer.borderColor = UIColor.clear.cgColor
         errorLabel?.isHidden = true
-        return true
+    }
+    
+    func showErrorStyle()
+    {
+        self.layer.borderColor = UIColor.red.cgColor
+        errorLabel?.isHidden = false
+
     }
 
 }
