@@ -13,9 +13,9 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
     //MARK: Properties
     var medicationBuilder: MedicationBuilder?
     let dosePicker = UIPickerView()
-    var dosePickerData = [String]()
-    var autoCompletePosibilties = ["Wand", "Wizard", "Water", "Test"]
+    var dosePickerData = HVUnitTypes.doseUnits
     var autoComplete: MHVVocabularyCodeItemCollection?
+    var searcher: MedicationVocabSearcher?
     let minSearchSize = 3
     
     //MARK: UI Properties
@@ -31,16 +31,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, builder: MedicationBuilder, searcher: MedicationVocabSearcher) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         medicationBuilder = builder
-        searcher.createContentWithVocab(name: "medication-dose-units", family: "wc", version: "1"){ (pickerContents) in
-            DispatchQueue.main.async {
-                self.dosePickerData = pickerContents
-            }
-        }
-        searcher.createContentWithVocab(name: "RxNorm Active Medicines", family: "RxNorm", version: "09AB_091102F"){ autocompleteContents in
-            DispatchQueue.main.async {
-               self.autoCompletePosibilties = autocompleteContents
-            }
-        }
+        self.searcher = searcher
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,7 +41,6 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set pciker and field names
         doseUnitField.inputView = dosePicker
         dosePicker.delegate = self
         nameField.errorLabel = medicationErrorLabel
@@ -84,7 +74,12 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
         let substring = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         if substring.characters.count >= minSearchSize {
             nameTableView.isHidden = false
-            searchAutoCompleteWithSubstring(substring: substring)
+            searcher?.searchForMeds(searchValue: substring, completion: {autocompleteContents in
+                DispatchQueue.main.async {
+                    self.autoComplete = autocompleteContents
+                }
+            })
+            nameTableView.reloadData()
         } else{
             nameTableView.isHidden = true
         }
@@ -147,7 +142,6 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
                 .constructMedication()
             let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: HVFeaturesConfiguration.configuration())
             connection.thingClient()?.createNewThing(medication, record: connection.personInfo!.selectedRecordID, completion: { (error: Error?) in
-                print("adding med")
             })
         }
     }
@@ -158,23 +152,5 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
             return false
         }
         return true
-    }
-    
-    func searchForMeds(searchValue: String, completion: @escaping(MHVVocabularyCodeItemCollection?) -> Void){
-        let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: HVFeaturesConfiguration.configuration())
-        let key = MHVVocabularyKey.init(name: "RxNorm Active Medicines", andFamily: "RxNorm", andVersion: "09AB_091102F", andCode: nil)
-        connection.vocabularyClient()?.searchVocabulary(withSearchValue: searchValue, searchMode: MHVSearchMode.contains, vocabularyKey: key!, maxResults: 25, completion: { (matchedMeds: MHVVocabularyCodeSetCollection?, error: Error?) in
-            let meds = matchedMeds!.firstObject().vocabularyCodeItems
-            completion(meds)
-        })
-    }
-    
-    func searchAutoCompleteWithSubstring(substring: String){
-        searchForMeds(searchValue: substring, completion: {autocompleteContents in
-            DispatchQueue.main.async {
-                self.autoComplete = autocompleteContents
-            }
-        })
-        nameTableView.reloadData()
     }
 }

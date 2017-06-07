@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		ED4136381EE7538B00E15555 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136371EE7538B00E15555 /* AppDelegate.swift */; };
-		ED41363A1EE7538B00E15555 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136391EE7538B00E15555 /* ViewController.swift */; };
 		ED41363D1EE7538B00E15555 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED41363B1EE7538B00E15555 /* Main.storyboard */; };
 		ED41363F1EE7538B00E15555 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED41363E1EE7538B00E15555 /* Assets.xcassets */; };
 		ED4136421EE7538B00E15555 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED4136401EE7538B00E15555 /* LaunchScreen.storyboard */; };
@@ -28,7 +27,7 @@
 		ED4136A01EE75B4600E15555 /* MedicationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136941EE75B4600E15555 /* MedicationBuilder.swift */; };
 		ED4136A11EE75B4600E15555 /* MedicationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136951EE75B4600E15555 /* MedicationListViewController.swift */; };
 		ED4136A21EE75B4600E15555 /* MedicationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED4136961EE75B4600E15555 /* MedicationListViewController.xib */; };
-		ED4136A31EE75B4600E15555 /* PickerContentCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136971EE75B4600E15555 /* PickerContentCreator.swift */; };
+		ED4136A31EE75B4600E15555 /* MedicationEntryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */; };
 		ED4136A41EE75B4600E15555 /* UIMedicationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */; };
 		ED4136A61EE75D7300E15555 /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4136A51EE75D7300E15555 /* libMHVLib.a */; };
 /* End PBXBuildFile section */
@@ -53,7 +52,6 @@
 /* Begin PBXFileReference section */
 		ED4136341EE7538B00E15555 /* MedicationsTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MedicationsTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED4136371EE7538B00E15555 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ED4136391EE7538B00E15555 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ED41363C1EE7538B00E15555 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED41363E1EE7538B00E15555 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED4136411EE7538B00E15555 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -80,7 +78,7 @@
 		ED4136941EE75B4600E15555 /* MedicationBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationBuilder.swift; sourceTree = "<group>"; };
 		ED4136951EE75B4600E15555 /* MedicationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationListViewController.swift; sourceTree = "<group>"; };
 		ED4136961EE75B4600E15555 /* MedicationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicationListViewController.xib; sourceTree = "<group>"; };
-		ED4136971EE75B4600E15555 /* PickerContentCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerContentCreator.swift; sourceTree = "<group>"; };
+		ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationEntryUtils.swift; sourceTree = "<group>"; };
 		ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMedicationTextField.swift; sourceTree = "<group>"; };
 		ED4136A51EE75D7300E15555 /* libMHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMHVLib.a; path = "../../../../Library/Developer/Xcode/DerivedData/MedicationsTracker-bwzgfwgijrzrhbdcdkpzjquiaxza/Build/Products/Debug-iphonesimulator/libMHVLib.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,25 +137,23 @@
 		ED4136361EE7538B00E15555 /* MedicationsTracker */ = {
 			isa = PBXGroup;
 			children = (
+				ED4136A71EE76DBE00E15555 /* Supporting Files */,
 				ED41368D1EE75B4600E15555 /* AddMedicationViewController.swift */,
-				ED41368E1EE75B4600E15555 /* AddMedicationViewController.xib */,
 				ED41368F1EE75B4600E15555 /* EditMedicationViewController.swift */,
-				ED4136901EE75B4600E15555 /* EditMedicationViewController.xib */,
-				ED4136911EE75B4600E15555 /* HVFeaturesConfiguration.swift */,
 				ED4136921EE75B4600E15555 /* HVViewController.swift */,
-				ED4136931EE75B4600E15555 /* HVViewController.xib */,
 				ED4136941EE75B4600E15555 /* MedicationBuilder.swift */,
 				ED4136951EE75B4600E15555 /* MedicationListViewController.swift */,
-				ED4136961EE75B4600E15555 /* MedicationListViewController.xib */,
-				ED4136971EE75B4600E15555 /* PickerContentCreator.swift */,
+				ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */,
 				ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */,
 				ED4136371EE7538B00E15555 /* AppDelegate.swift */,
-				ED4136391EE7538B00E15555 /* ViewController.swift */,
+				ED41368E1EE75B4600E15555 /* AddMedicationViewController.xib */,
+				ED4136901EE75B4600E15555 /* EditMedicationViewController.xib */,
+				ED4136931EE75B4600E15555 /* HVViewController.xib */,
+				ED4136961EE75B4600E15555 /* MedicationListViewController.xib */,
 				ED41363B1EE7538B00E15555 /* Main.storyboard */,
 				ED41363E1EE7538B00E15555 /* Assets.xcassets */,
 				ED4136401EE7538B00E15555 /* LaunchScreen.storyboard */,
 				ED4136431EE7538B00E15555 /* Info.plist */,
-				ED41368C1EE758EA00E15555 /* MedicationsTracker-Bridging-Header.h */,
 			);
 			path = MedicationsTracker;
 			sourceTree = "<group>";
@@ -191,6 +187,15 @@
 				ED4136811EE754D800E15555 /* libMHVLib.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ED4136A71EE76DBE00E15555 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ED41368C1EE758EA00E15555 /* MedicationsTracker-Bridging-Header.h */,
+				ED4136911EE75B4600E15555 /* HVFeaturesConfiguration.swift */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,12 +339,11 @@
 				ED41369E1EE75B4600E15555 /* HVViewController.swift in Sources */,
 				ED4136A11EE75B4600E15555 /* MedicationListViewController.swift in Sources */,
 				ED41369D1EE75B4600E15555 /* HVFeaturesConfiguration.swift in Sources */,
-				ED41363A1EE7538B00E15555 /* ViewController.swift in Sources */,
 				ED4136A41EE75B4600E15555 /* UIMedicationTextField.swift in Sources */,
 				ED4136A01EE75B4600E15555 /* MedicationBuilder.swift in Sources */,
 				ED4136991EE75B4600E15555 /* AddMedicationViewController.swift in Sources */,
 				ED4136381EE7538B00E15555 /* AppDelegate.swift in Sources */,
-				ED4136A31EE75B4600E15555 /* PickerContentCreator.swift in Sources */,
+				ED4136A31EE75B4600E15555 /* MedicationEntryUtils.swift in Sources */,
 				ED41369B1EE75B4600E15555 /* EditMedicationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

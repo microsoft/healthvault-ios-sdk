@@ -8,15 +8,19 @@
 
 import UIKit
 
-class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPickerViewDelegate, UIPickerViewDataSource {
+class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
+    
     //MARK: Properties
     var medicationBuilder: MedicationBuilder?
     var medicationThing: MHVThing?
     let dosePicker = UIPickerView()
     let strengthPicker = UIPickerView()
-    var strengthPickerData = [String]()
-    var dosePickerData = [String]()
-    
+    var strengthPickerData = HVUnitTypes.strengthUnits
+    var dosePickerData = HVUnitTypes.doseUnits
+    var autoComplete: MHVVocabularyCodeItemCollection?
+    var searcher: MedicationVocabSearcher?
+
+
     //MARK: UI Properties
     @IBOutlet weak var nameField: UIMedicationTextField!
     @IBOutlet weak var strengthAmountField: UIMedicationTextField!
@@ -30,23 +34,14 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
     @IBOutlet weak var doseAmountErrorLabel: UILabel!
     @IBOutlet weak var doseUnitErrorLabel: UILabel!
     @IBOutlet weak var howOftenErrorLabel: UILabel!
+    @IBOutlet weak var nameTableView: UITableView!
     
     //Mark: Initializers
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, medication: MHVThing, builder: MedicationBuilder, searcher: MedicationVocabSearcher) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        medicationBuilder = builder
         medicationThing = medication
-        searcher.createContentWithVocab(name: "medication-dose-units", family: "wc", version: "1"){ (pickerContents) in
-            DispatchQueue.main.async {
-                self.dosePickerData = pickerContents
-            }
-        }
-        searcher.createContentWithVocab(name: "medication-strength-unit", family: "wc", version: "1"){ (pickerContents) in
-            DispatchQueue.main.async {
-                self.strengthPickerData = pickerContents
-            }
-            
-        }
+        medicationBuilder = builder
+        self.searcher = searcher
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,6 +57,11 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
         nameField.errorLabel = medicationErrorLabel
         strengthAmountField.errorLabel = strengthAmountErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
+        nameTableView.delegate = self
+        nameTableView.dataSource = self
+        nameTableView.isScrollEnabled = true
+        nameTableView.isHidden = true
+        
         fillTextFieldsWithStoredValues()
     }
     
@@ -80,6 +80,50 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
         }
         return true
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let substring = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        if substring.characters.count >= searcher!.minSearchSize {
+            nameTableView.isHidden = false
+            searcher?.searchForMeds(searchValue: substring, completion: {autocompleteContents in
+                DispatchQueue.main.async {
+                    self.autoComplete = autocompleteContents
+                }
+            })
+            nameTableView.reloadData()
+        } else{
+            nameTableView.isHidden = true
+        }
+        
+        return true
+    }
+    
+    // MARK UITableView
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
+        }
+        
+        cell?.textLabel!.text = autoComplete![UInt(indexPath.row)].displayText
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.autoComplete != nil {
+            return Int(self.autoComplete!.count())
+        } else{
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath)!
+        
+        nameField.text = selectedCell.textLabel!.text!
+        nameTableView.isHidden = true
+    }
+
     
     // MARK: UIPickerView Delegation
     
@@ -123,7 +167,6 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
                 .constructMedication()
             let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: HVFeaturesConfiguration.configuration())
             connection.thingClient()?.update(medication, record: connection.personInfo!.selectedRecordID, completion: { (error: Error?) in
-                print("editing med")
             })
         }
     }
