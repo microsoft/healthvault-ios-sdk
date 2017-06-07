@@ -128,4 +128,6 @@ MHVDECLARE_GETTOR(MHVAppSpecificInformation, appSpecificInformation);
 
 MHVDECLARE_GETTOR(MHVAppointment, appointment);
 
+MHVDECLARE_GETTOR(MHVConcern, concern);
+
 @end

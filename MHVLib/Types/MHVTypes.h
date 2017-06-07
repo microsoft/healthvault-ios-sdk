@@ -97,3 +97,4 @@
 #import "MHVHeartrateZone.h"
 #import "MHVZoneBoundary.h"
 #import "MHVPercentage.h"
+#import "MHVConcern.h"

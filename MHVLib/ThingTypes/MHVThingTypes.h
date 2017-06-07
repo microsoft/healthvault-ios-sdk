@@ -57,6 +57,7 @@
 #import "MHVAllergicEpisode.h"
 #import "MHVAppSpecificInformation.h"
 #import "MHVAppointment.h"
+#import "MHVConcern.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
@@ -107,4 +108,5 @@
 - (MHVAllergicEpisode *)allergicEpisode;
 - (MHVAppSpecificInformation *)appSpecificInformation;
 - (MHVAppointment *)appointment;
+- (MHVConcern *)concern;
 @end
