@@ -130,4 +130,8 @@ MHVDECLARE_GETTOR(MHVAppointment, appointment);
 
 MHVDECLARE_GETTOR(MHVConcern, concern);
 
+MHVDECLARE_GETTOR(MHVExplanationOfBenefits, explanationOfBenefits);
+
+MHVDECLARE_GETTOR(MHVHealthGoal, healthGoal);
+
 @end

@@ -58,6 +58,8 @@
 #import "MHVAppSpecificInformation.h"
 #import "MHVAppointment.h"
 #import "MHVConcern.h"
+#import "MHVExplanationOfBenefits.h"
+#import "MHVHealthGoal.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
@@ -109,4 +111,6 @@
 - (MHVAppSpecificInformation *)appSpecificInformation;
 - (MHVAppointment *)appointment;
 - (MHVConcern *)concern;
+- (MHVExplanationOfBenefits *)explanationOfBenefits;
+- (MHVHealthGoal *)healthGoal;
 @end

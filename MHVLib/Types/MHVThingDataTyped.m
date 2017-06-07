@@ -136,6 +136,8 @@ static MHVTypeSystem *s_typeRegistry;
     [s_typeRegistry addClass:[MHVAllergicEpisode class] forTypeID:[MHVAllergicEpisode typeID]];
     [s_typeRegistry addClass:[MHVAppSpecificInformation class] forTypeID:[MHVAppSpecificInformation typeID]];
     [s_typeRegistry addClass:[MHVAppointment class] forTypeID:[MHVAppointment typeID]];
+    [s_typeRegistry addClass:[MHVExplanationOfBenefits class] forTypeID:[MHVExplanationOfBenefits typeID]];
+    [s_typeRegistry addClass:[MHVHealthGoal class] forTypeID:[MHVHealthGoal typeID]];
 }
 
 + (MHVTypeSystem *)current

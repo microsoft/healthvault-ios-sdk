@@ -27,6 +27,7 @@
 #import <Foundation/Foundation.h>
 
 #import "MHVModelBase.h"
+#import "MHVCollection.h"
 
 
 @protocol MHVGoalRange
