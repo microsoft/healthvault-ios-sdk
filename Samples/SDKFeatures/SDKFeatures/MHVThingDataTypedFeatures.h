@@ -22,12 +22,8 @@
 @class MHVTypeViewController;
 
 @interface MHVThingDataTypedFeatures : MHVFeatureActions
-{
-@private
-    MHVTypeViewController* __weak m_controller; // Weak ref
 
-}
-
-@property (readwrite, nonatomic, weak) MHVTypeViewController* controller; // Weak ref
+@property (nonatomic, weak) MHVTypeViewController* controller;
+@property (nonatomic, strong) Class typeClass;
 
 @end

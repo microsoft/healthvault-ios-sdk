@@ -569,8 +569,6 @@
 		A5D1ED031EC23884000E3295 /* MHVConnectionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D1ED011EC23884000E3295 /* MHVConnectionFactory.m */; };
 		A5D1ED051EC23987000E3295 /* MHVConnectionFactoryProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5D1ED041EC23987000E3295 /* MHVConnectionFactoryProtocol.h */; };
 		A5D1ED071EC239AC000E3295 /* MHVSodaConnectionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A5D1ED061EC239AC000E3295 /* MHVSodaConnectionProtocol.h */; };
-		A5FF991F1EE755E600460189 /* MHVThingTypeVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = A5FF991D1EE755E600460189 /* MHVThingTypeVersion.h */; };
-		A5FF99201EE755E600460189 /* MHVThingTypeVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = A5FF991E1EE755E600460189 /* MHVThingTypeVersion.m */; };
 		BA0324F51ED881A000A641AD /* MHVActionPlansApi.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0324F41ED881A000A641AD /* MHVActionPlansApi.m */; };
 		BA0355401EC0BF5400BE547D /* MHVVocabularyClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */; };
 		BA0356001EC1257F00BE547D /* NSArray+DataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0355D31EC1257F00BE547D /* NSArray+DataModel.h */; };
@@ -1301,8 +1299,7 @@
 		A5D1ED061EC239AC000E3295 /* MHVSodaConnectionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSodaConnectionProtocol.h; sourceTree = "<group>"; };
 		A5DF03EA1ECF70D400D1A3C7 /* MHVClients.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVClients.h; sourceTree = "<group>"; };
 		A5DF03EB1ECF74A800D1A3C7 /* MHVConnections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVConnections.h; sourceTree = "<group>"; };
-		A5FF991D1EE755E600460189 /* MHVThingTypeVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTypeVersion.h; sourceTree = "<group>"; };
-		A5FF991E1EE755E600460189 /* MHVThingTypeVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTypeVersion.m; sourceTree = "<group>"; };
+		A5FF99211EE8483500460189 /* MHVThingTypeDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVThingTypeDefinitions.h; sourceTree = "<group>"; };
 		BA0324F31ED8818600A641AD /* MHVActionPlansApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlansApi.h; sourceTree = "<group>"; };
 		BA0324F41ED881A000A641AD /* MHVActionPlansApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlansApi.m; sourceTree = "<group>"; };
 		BA03553F1EC0BF5400BE547D /* MHVVocabularyClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyClientProtocol.h; sourceTree = "<group>"; };
@@ -2263,10 +2260,9 @@
 				A560EBE61EE5D56900A962D9 /* MHVThingTypeDefinition.m */,
 				A560EBE91EE5D58C00A962D9 /* MHVThingTypeDefinitionRequestParameters.h */,
 				A560EBEA1EE5D58C00A962D9 /* MHVThingTypeDefinitionRequestParameters.m */,
+				A5FF99211EE8483500460189 /* MHVThingTypeDefinitions.h */,
 				A560EBF51EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.h */,
 				A560EBF61EE5D86E00A962D9 /* MHVThingTypeOrderByProperty.m */,
-				A5FF991D1EE755E600460189 /* MHVThingTypeVersion.h */,
-				A5FF991E1EE755E600460189 /* MHVThingTypeVersion.m */,
 				A560EBED1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.h */,
 				A560EBEE1EE5D7DF00A962D9 /* MHVThingTypeVersionInfo.m */,
 			);
@@ -2549,7 +2545,6 @@
 				438160FE1ED6269900BB8C94 /* MHVVocabularyKey.h in Headers */,
 				A54521561EC9EF0100A17A1B /* MHVConfiguration.h in Headers */,
 				A5D1ED021EC23884000E3295 /* MHVConnectionFactory.h in Headers */,
-				A5FF991F1EE755E600460189 /* MHVThingTypeVersion.h in Headers */,
 				5DE3830C14E4447800DFA11D /* XConverter.h in Headers */,
 				4C191AF11EC24C2D00B5E545 /* MHVHttpService.h in Headers */,
 				BA03560E1EC1257F00BE547D /* NSSet+DataModel.h in Headers */,
@@ -3062,7 +3057,6 @@
 				5D76B9DC14DCC85B00BA865F /* MHVExceptionExtensions.m in Sources */,
 				A53BF8411EC3A48600F018E2 /* MHVApplicationCreationInfo.m in Sources */,
 				5D0DACB414E2FE14002CBE52 /* MHVCore.m in Sources */,
-				A5FF99201EE755E600460189 /* MHVThingTypeVersion.m in Sources */,
 				BA0356DE1EC5278700BE547D /* MHVActionPlanTask.m in Sources */,
 				5DE382FC14E338C900DFA11D /* MHVArrayExtensions.m in Sources */,
 				BA0356111EC1257F00BE547D /* NSString+DataModel.m in Sources */,
