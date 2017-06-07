@@ -367,12 +367,7 @@ LError:
 
 -(BOOL) isSuccess:(int) result
 {
-    if (result == WRITER_ERROR)
-    {
-        [XException throwException:XExceptionWriterError];
-    }
-    
-    return TRUE;
+    return (result != WRITER_ERROR);
 }
 
 @end

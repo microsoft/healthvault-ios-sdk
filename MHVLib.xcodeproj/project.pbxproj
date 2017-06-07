@@ -451,8 +451,6 @@
 		5DE382FC14E338C900DFA11D /* MHVArrayExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE382FA14E338C900DFA11D /* MHVArrayExtensions.m */; };
 		5DE3830C14E4447800DFA11D /* XConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830214E4447800DFA11D /* XConverter.h */; };
 		5DE3830D14E4447800DFA11D /* XConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3830314E4447800DFA11D /* XConverter.m */; };
-		5DE3830E14E4447800DFA11D /* XException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830414E4447800DFA11D /* XException.h */; };
-		5DE3830F14E4447800DFA11D /* XException.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE3830514E4447800DFA11D /* XException.m */; };
 		5DE3831014E4447800DFA11D /* XLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830614E4447800DFA11D /* XLib.h */; };
 		5DE3831114E4447800DFA11D /* XNodeType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830714E4447800DFA11D /* XNodeType.h */; };
 		5DE3831214E4447800DFA11D /* XReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE3830814E4447800DFA11D /* XReader.h */; };
@@ -1163,8 +1161,6 @@
 		5DE382FA14E338C900DFA11D /* MHVArrayExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVArrayExtensions.m; sourceTree = "<group>"; };
 		5DE3830214E4447800DFA11D /* XConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XConverter.h; sourceTree = "<group>"; };
 		5DE3830314E4447800DFA11D /* XConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XConverter.m; sourceTree = "<group>"; };
-		5DE3830414E4447800DFA11D /* XException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XException.h; sourceTree = "<group>"; };
-		5DE3830514E4447800DFA11D /* XException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XException.m; sourceTree = "<group>"; };
 		5DE3830614E4447800DFA11D /* XLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLib.h; sourceTree = "<group>"; };
 		5DE3830714E4447800DFA11D /* XNodeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNodeType.h; sourceTree = "<group>"; };
 		5DE3830814E4447800DFA11D /* XReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XReader.h; sourceTree = "<group>"; };
@@ -2154,8 +2150,6 @@
 			children = (
 				5DE3830214E4447800DFA11D /* XConverter.h */,
 				5DE3830314E4447800DFA11D /* XConverter.m */,
-				5DE3830414E4447800DFA11D /* XException.h */,
-				5DE3830514E4447800DFA11D /* XException.m */,
 				5DE3830614E4447800DFA11D /* XLib.h */,
 				5DE3830714E4447800DFA11D /* XNodeType.h */,
 				5DE3830814E4447800DFA11D /* XReader.h */,
@@ -2502,7 +2496,6 @@
 				BA03560E1EC1257F00BE547D /* NSSet+DataModel.h in Headers */,
 				BA0356FF1EC5278800BE547D /* MHVGoalsResponse.h in Headers */,
 				4C2975EE1ED380F8006B3673 /* MHVHttpServiceOperationProtocol.h in Headers */,
-				5DE3830E14E4447800DFA11D /* XException.h in Headers */,
 				4C191AEF1EC24C2D00B5E545 /* MHVHttpServiceResponse.h in Headers */,
 				BA0356F91EC5278800BE547D /* MHVGoalRecommendationInstance.h in Headers */,
 				5DE3831014E4447800DFA11D /* XLib.h in Headers */,
@@ -3011,7 +3004,6 @@
 				A51B6CA01EC4A815003BFBDC /* MHVSessionCredential.m in Sources */,
 				5DE3830D14E4447800DFA11D /* XConverter.m in Sources */,
 				5DB2E73518D7905F0030972D /* MHVWorkerStatus.m in Sources */,
-				5DE3830F14E4447800DFA11D /* XException.m in Sources */,
 				5DE3831314E4447800DFA11D /* XReader.m in Sources */,
 				4C191AA21EC1033C00B5E545 /* MHVProcedure.m in Sources */,
 				BA0356DA1EC5278700BE547D /* MHVActionPlanScheduledTaskCompletionMetrics.m in Sources */,

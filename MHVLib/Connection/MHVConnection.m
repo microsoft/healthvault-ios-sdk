@@ -219,7 +219,8 @@ static NSInteger kInternalServerError = 500;
 {
     MHVMethod *method = request.serviceOperation;
 
-    MHVLOG([NSString stringWithFormat:@"Execute Method: %@", method.name]);
+
+    MHVLOG(@"Execute Method: %@", method.name);
     
     [self.httpService sendRequestForURL:self.serviceInstance.healthServiceUrl
                              httpMethod:nil
@@ -264,7 +265,7 @@ static NSInteger kInternalServerError = 500;
 {
     MHVRestRequest *restRequest = request.serviceOperation;
     
-    MHVLOG([NSString stringWithFormat:@"Execute Request: %@", restRequest.path]);
+    MHVLOG(@"Execute Request: %@", restRequest.path);
 
     // If no URL is set, build it from serviceInstance
     if (!restRequest.url)
@@ -471,7 +472,7 @@ static NSInteger kInternalServerError = 500;
 {
     request.retryAttempts += 1;
     
-    MHVLOG([NSString stringWithFormat:@"500 error from server, retrying in %0.1f seconds", self.configuration.retryOnInternal500SleepDuration]);
+    MHVLOG(@"500 error from server, retrying in %0.1f seconds", self.configuration.retryOnInternal500SleepDuration);
 
     // Dispatch to main queue, so it holds a reference to the internal timer used by performSelector:withObject:afterDelay:
     [[NSOperationQueue mainQueue] addOperationWithBlock:^
@@ -519,7 +520,7 @@ static NSInteger kInternalServerError = 500;
         {
             dispatch_async(self.completionQueue, ^
             {
-                MHVLOG([NSString stringWithFormat:@"Refreshed token, re-issuing %li request(s)", (unsigned long)self.requests.count]);
+                MHVLOG(@"Refreshed token, re-issuing %li request(s)", (unsigned long)self.requests.count);
                 
                 while (self.requests.count > 0)
                 {

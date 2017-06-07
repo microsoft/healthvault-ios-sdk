@@ -19,7 +19,6 @@
 #import "XString.h"
 #import "MHVStringExtensions.h"
 #import "MHVValidator.h"
-#import "XException.h"
 #import <math.h>
 
 @implementation NSString (XExtensions)

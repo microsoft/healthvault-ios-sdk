@@ -116,15 +116,16 @@
     NSInteger currentRequest = (++self.requestCount);
     NSDate *startDate = [NSDate date];
     
-    [Logger write:[NSString stringWithFormat:@"Begin request #%li", (long)currentRequest]];
+    
+    MHVLOG(@"Begin request #%li", (long)currentRequest);
     
     NSURLSessionTask *task = [self.urlSession dataTaskWithRequest:(NSURLRequest *)request
                                                 completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
                               {
                                   NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
                                   
-                                  [Logger write:[NSString stringWithFormat:@"Response for #%li has status code: %li (%0.4f seconds)",
-                                                 (long)currentRequest, (long)statusCode, [[NSDate date] timeIntervalSinceDate:startDate]]];
+                                  MHVLOG(@"Response for #%li has status code: %li (%0.4f seconds)",
+                                                 (long)currentRequest, (long)statusCode, [[NSDate date] timeIntervalSinceDate:startDate]);
                                   
                                   if (error)
                                   {
@@ -283,14 +284,14 @@
                                      chunkOffset:chunkOffset
                                        totalSize:blobSource.length];
     
-    [Logger write:[NSString stringWithFormat:@"Blob upload chunk at offset %li", (long)chunkOffset]];
+    MHVLOG(@"Blob upload chunk at offset %li", (long)chunkOffset);
     NSDate *startDate = [NSDate date];
     NSURLSessionTask *task = [self.urlSession dataTaskWithRequest:(NSURLRequest *)request
                                                 completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
                               {
                                   if (!error)
                                   {
-                                      [Logger write:[NSString stringWithFormat:@"Blob upload chunk size %li in %0.4f seconds", (long)thisChunkSize, [[NSDate date] timeIntervalSinceDate:startDate]]];
+                                      MHVLOG(@"Blob upload chunk size %li in %0.4f seconds", (long)thisChunkSize, [[NSDate date] timeIntervalSinceDate:startDate]);
                                   }
                                   
                                   if (!error && chunkOffset + thisChunkSize < blobSource.length)
@@ -308,7 +309,7 @@
                                   {
                                       if (error)
                                       {
-                                          [Logger write:[NSString stringWithFormat:@"Blob upload error: %@", error.localizedDescription]];
+                                          MHVLOG(@"Blob upload error: %@", error.localizedDescription);
                                           
                                           if (completion)
                                           {
@@ -317,7 +318,7 @@
                                       }
                                       else
                                       {
-                                          [Logger write:[NSString stringWithFormat:@"Blob upload complete"]];
+                                          MHVLOG(@"Blob upload complete");
                                           
                                           if (completion)
                                           {
@@ -406,7 +407,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
          }
          else
          {
-             [Logger write:[NSString stringWithFormat:@"SecTrustEvaluate failed %li", (long)result]];
+             MHVLOG(@"SecTrustEvaluate failed %li", (long)result);
              
              completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
          }

@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "XConverter.h"
+#import "Logger.h"
 
 static int const c_xDateFormatCount = 6;
 static NSString* s_xDateFormats[c_xDateFormatCount] = 
@@ -74,7 +75,8 @@ static NSString* const c_FALSE = @"false";
     int value = 0;
     if (![self tryString:source toInt:&value])
     {
-       [XException throwException:XExceptionTypeConversion reason:@"stringToInt"];       
+        MHVLOG(@"Failed to parse stringToInt: %@", source);
+        return -1;
     }
   
     return value;
@@ -95,7 +97,8 @@ static NSString* const c_FALSE = @"false";
     NSString *result;
     if (![self tryInt:source toString:&result])
     {
-        [XException throwException:XExceptionTypeConversion reason:@"intToString"];
+        MHVLOG(@"Failed to parse intToString: %i", source);
+        return nil;
     }
     
     return result;
@@ -130,7 +133,8 @@ static NSString* const c_FALSE = @"false";
     float value = 0;
     if (![self tryString:source toFloat:&value])
     {
-        [XException throwException:XExceptionTypeConversion reason:@"stringToFloat"];
+        MHVLOG(@"Failed to parse stringToFloat: %@", source);
+        return -1;
     }
     
     return value;
@@ -162,7 +166,8 @@ static NSString* const c_FALSE = @"false";
     NSString *string = nil;
     if (![self tryFloat:source toString:&string])
     {
-        [XException throwException:XExceptionTypeConversion reason:@"floatToString"];
+        MHVLOG(@"Failed to parse floatToString: %f", source);
+        return nil;
     }
     
     return string;    
@@ -197,7 +202,8 @@ static NSString* const c_FALSE = @"false";
     double value = 0;
     if (![self tryString:source toDouble:&value])
     {
-        [XException throwException:XExceptionTypeConversion reason:@"stringToDouble"];
+        MHVLOG(@"Failed to parse stringToDouble: %@", source);
+        return -1;
     }
     
     return value;
@@ -251,7 +257,8 @@ static NSString* const c_FALSE = @"false";
     NSString *string = nil;
     if (![self tryDouble:source toString:&string])
     {
-        [XException throwException:XExceptionTypeConversion reason:@"doubleToString"];
+        MHVLOG(@"Failed to parse doubleToString: %f", source);
+        return nil;
     }
     
     return string;
@@ -293,7 +300,8 @@ static NSString* const c_FALSE = @"false";
     BOOL value = FALSE;
     if (![self tryString:source toBool:&value])
     {
-        [XException throwException:XExceptionTypeConversion reason:@"stringToBool"];
+        MHVLOG(@"Failed to parse stringToBool: %@", source);
+        return NO;
     }
     
     return value;
@@ -354,7 +362,8 @@ static NSString* const c_FALSE = @"false";
     NSDate* date = nil;
     if (![self tryString:source toDate:&date])
     {
-       [XException throwException:XExceptionTypeConversion reason:@"stringToDate"]; 
+        MHVLOG(@"Failed to parse stringToDate: %@", source);
+        return nil;
     }
     
     return date;
@@ -377,7 +386,8 @@ static NSString* const c_FALSE = @"false";
     NSString *string = nil;
     if (![self tryDate:source toString:&string])
     {
-        [XException throwException:XExceptionTypeConversion reason:@"dateToString"]; 
+        MHVLOG(@"Failed to parse dateToString: %@", source.description);
+        return nil;
     }
     
     return string;
@@ -388,7 +398,8 @@ static NSString* const c_FALSE = @"false";
     NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:source];
     if (!uuid)
     {
-        [XException throwException:XExceptionTypeConversion reason:@"stringToUuid"]; 
+        MHVLOG(@"Failed to parse stringToUdid: %@", source);
+        return nil;
     }
     
     return uuid;

@@ -31,13 +31,20 @@
 #	define TraceComponentError(component, s, ... ) {}
 #endif
 
-#define MHVLOG(x, ...) [Logger write:(x, ##__VA_ARGS__)]
+#define MHVLOG(x, ...) [Logger write: x, ##__VA_ARGS__];
 
 /// Implements logging related functionality.
 @interface Logger: NSObject
 
 /// Writes the message to a log.
 /// @param text - text to write.
-+ (void)write: (NSString *)text;
+
+
+/**
+ Writes the message to a log.
+
+ @param format The formatter or string to write.
+ */
++ (void)write:(NSString *)format, ...;
 
 @end 
