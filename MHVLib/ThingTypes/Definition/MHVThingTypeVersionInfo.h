@@ -22,11 +22,30 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+/**
+ Represents the version information for a thing type.
+ */
 @interface MHVThingTypeVersionInfo : MHVType
 
+/**
+ A unique identifier for the versioned thing type.
+ */
 @property (nonatomic, strong, readonly, nullable) NSUUID *versionTypeId;
+
+/**
+ The name for this version of the thing type
+ */
 @property (nonatomic, strong, readonly, nullable) NSString *name;
+
+/**
+ The sequence number for the thing type version. The sequence number starts at one and is incremented for each new version of the type that gets added.
+ */
 @property (nonatomic, assign, readonly) int versionSequence;
+
+/**
+ The set of properties that the thing-type can be ordered by in the result.
+ */
 @property (nonatomic, strong, readonly, nullable) MHVThingTypeOrderByPropertyCollection *orderByProperties;
 
 @end

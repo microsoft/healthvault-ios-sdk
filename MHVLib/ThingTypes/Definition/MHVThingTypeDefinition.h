@@ -20,26 +20,60 @@
 
 @class MHVThingTypeVersionInfoCollection, MHVBool;
 
+
+/**
+ Describes the schema and structure of a thing type.
+ */
 @interface MHVThingTypeDefinition : MHVType
 
+/**
+ A string representing the type name.
+ */
 @property (nonatomic, strong, readonly) NSString *name;
 
+/**
+ A GUID representing the type identifier.
+ */
 @property (nonatomic, strong, readonly) NSUUID *typeId;
 
+/**
+ An XML string representing the definition. *The object will be nil if MHVThingTypeSectionsXsd is not requested.
+ */
 @property (nonatomic, strong, readonly) NSString *xmlSchemaDefinition;
 
+/**
+ A Bool indicating whether or not the thing type can be created. YES if it can be created, NO otherwise. *The object will be nil if MHVThingTypeSectionsCore is not requested.
+ */
 @property (nonatomic, strong, readonly) MHVBool *isCreatable;
 
+/**
+ A Bool indicating whether or not the thing type is immutable. YES if it can be mutated, NO otherwise. *The object will be nil if MHVThingTypeSectionsCore is not requested.
+ */
 @property (nonatomic, strong, readonly) MHVBool *isImmutable;
 
+/**
+ A Bool indicating if only a single instance of the thing type can exist for each health record. YES if it is a singleton, NO otherwise. *The object will be nil if MHVThingTypeSectionsCore is not requested.
+ */
 @property (nonatomic, strong, readonly) MHVBool *isSingletonType;
 
+/**
+ A Bool indicating if the thing type instance can be set to read-only. YES if instances can be set to read-only, NO otherwise. *The object will be nil if MHVThingTypeSectionsCore is not requested.
+ */
 @property (nonatomic, strong, readonly) MHVBool *allowReadOnly;
 
+/**
+ A collection of version information for the thing type. *The object will be nil if MHVThingTypeSectionsVersions is not requested.
+ */
 @property (nonatomic, strong, readonly) MHVThingTypeVersionInfoCollection *versions;
 
+/**
+ A string repersentation of the XPath. *The object will be nil if MHVThingTypeSectionsEffectiveDateXPath is not requested.
+ */
 @property (nonatomic, strong, readonly) NSString *effectiveDateXPath;
 
+/**
+ A string repersentation of the XPath.
+ */
 @property (nonatomic, strong, readonly) NSString *updatedEndDateXPath;
 
 @end

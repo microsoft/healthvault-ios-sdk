@@ -20,14 +20,29 @@
 
 @protocol MHVItemTypePropertyConverterProtocol;
 
+/**
+ The property that the thing-type can be ordered by in the result.
+ */
 @interface MHVThingTypeOrderByProperty : MHVType
 
+/**
+ The name of the property.
+ */
 @property (nonatomic, strong, readonly, nullable) NSString *name;
 
+/**
+ The data type for the property.
+ */
 @property (nonatomic, strong, readonly, nullable) NSString *type;
 
+/**
+ The XPath fot the property
+ */
 @property (nonatomic, strong, readonly, nullable) NSString *xpath;
 
+/**
+ A units conversion to apply to the value of a property of numeric type. When a thing type has multiple versions that store the same data with different units, a conversion between units may be required to ensure that values are ordered correctly across versions.
+ */
 @property (nonatomic, strong, readonly, nullable) id<MHVItemTypePropertyConverterProtocol> converter;
 
 @end
