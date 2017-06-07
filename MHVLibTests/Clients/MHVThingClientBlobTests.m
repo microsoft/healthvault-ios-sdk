@@ -260,7 +260,7 @@ describe(@"MHVThingClient", ^
                 
                 it(@"should fail if record id is nil", ^
                    {
-                       [thingClient refreshBlobUrlsForThings:allergyThing
+                       [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThing:allergyThing]
                                                     recordId:nil
                                                   completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
                         {

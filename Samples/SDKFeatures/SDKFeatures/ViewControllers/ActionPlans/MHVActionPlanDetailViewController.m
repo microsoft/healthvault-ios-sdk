@@ -18,9 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVActionPlanDetailViewController.h"
-#import "MHVActionPlan.h"
-#import "MHVConnection.h"
-#import "MHVActionPlansApi.h"
 
 @interface MHVActionPlanDetailViewController ()
 

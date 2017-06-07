@@ -20,7 +20,7 @@
 #define MHVConfigurationConstants_h
 
 /*
- The default number of internal retries.
+ The default number of internal retries for 500 errors.
  */
 static NSInteger const kDefaultRetryOnInternal500Count = 2;
 
@@ -33,6 +33,11 @@ static NSString *const kDefaultShellUrlString = @"https://account.healthvault.co
  Default URL for Rest API calls
  */
 static NSString *const kDefaultRestUrlString = @"https://data.microsofthealth.net/";
+
+/*
+ Default version header for Rest API calls
+ */
+static NSString *const kDefaultRestVersion = @"1.0-preview";
 
 /*
  Default URL for HealthVault application

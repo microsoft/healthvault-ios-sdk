@@ -23,6 +23,7 @@
 #import "MHVBlobSource.h"
 #import "MHVValidator.h"
 #import "MHVHttpTask.h"
+#import "MHVConfiguration.h"
 #import "NSError+MHVError.h"
 
 @interface MHVHttpService () <NSURLSessionDelegate>
@@ -36,12 +37,21 @@
 
 @implementation MHVHttpService
 
-- (instancetype)init
+- (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
 {
+    MHVASSERT_PARAMETER(configuration);
+
     self = [super init];
     if (self)
     {
-        _urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+        NSURLSessionConfiguration *urlSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        
+        if (configuration)
+        {
+            urlSessionConfiguration.timeoutIntervalForRequest = configuration.requestTimeoutDuration;
+        }
+        
+        _urlSession = [NSURLSession sessionWithConfiguration:urlSessionConfiguration
                                                     delegate:self
                                                delegateQueue:nil];
         

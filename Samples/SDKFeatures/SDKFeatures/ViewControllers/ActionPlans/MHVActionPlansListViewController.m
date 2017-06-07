@@ -19,8 +19,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVActionPlansListViewController.h"
 #import "MHVActionPlanDetailViewController.h"
-#import "MHVConnection.h"
-#import "MHVActionPlansApi.h"
 
 @interface MHVActionPlansListViewController ()
 
@@ -53,13 +51,12 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    [self loadActionPlans];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self loadActionPlans];
 }
 

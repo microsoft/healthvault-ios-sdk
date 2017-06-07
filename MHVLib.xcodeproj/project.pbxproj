@@ -1415,6 +1415,7 @@
 		BA2637581ECF8C200022D060 /* MHVRemoteMonitoringClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRemoteMonitoringClientProtocol.h; sourceTree = "<group>"; };
 		BA4FBEA41ECA5CCC00C8EBF9 /* MHVRemoteMonitoringClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRemoteMonitoringClient.h; sourceTree = "<group>"; };
 		BA4FBEA61ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVRemoteMonitoringClient.m; sourceTree = "<group>"; };
+		BA5802921EE607B200825D3E /* MHVRestApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVRestApi.h; sourceTree = "<group>"; };
 		BA9844D11EDF19B20064389A /* MHVActionPlanTasksApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTasksApi.m; sourceTree = "<group>"; };
 		BA9844D31EDF19C60064389A /* MHVActionPlanTasksApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTasksApi.h; sourceTree = "<group>"; };
 		BA9844DA1EE081750064389A /* MHVGoalsRecommendationsApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVGoalsRecommendationsApi.h; sourceTree = "<group>"; };
@@ -1621,6 +1622,7 @@
 				5DC44B7B14FEA3E600E2E02F /* MHVRandom.m */,
 				5D39F9201513A07700208A7B /* MHVRecordReference.h */,
 				5D39F9311513FFC500208A7B /* MHVRecordReference.m */,
+				BA5802921EE607B200825D3E /* MHVRestApi.h */,
 				5D39F9291513AA5F00208A7B /* MHVServerResponseStatus.h */,
 				5D39F92A1513AA5F00208A7B /* MHVServerResponseStatus.m */,
 				5D76B9D514DCC85B00BA865F /* MHVStringExtensions.h */,
