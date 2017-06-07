@@ -25,7 +25,6 @@ class UIMedicationTextField: UITextField
     var errorLabel: UILabel?
     @IBInspectable var shouldBeNumeric:Bool = false
     @IBInspectable var shouldNotBeEmpty:Bool = false
-
     
     // MARK: Validation functions
     func isValid() -> Bool

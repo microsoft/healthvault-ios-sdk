@@ -18,25 +18,20 @@
 
 import UIKit
 
-class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPickerViewDelegate,
-                                    UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource
+class EditMedicationViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource
 {
     //MARK: Properties
     var medicationBuilder: MedicationBuilder?
     var medicationThing: MHVThing?
-    let dosePicker = UIPickerView()
-    let strengthPicker = UIPickerView()
-    var strengthPickerData = HVUnitTypes.strengthUnits
-    var dosePickerData = HVUnitTypes.doseUnits
     var autoComplete: MHVVocabularyCodeItemCollection?
     var searcher: MedicationVocabSearcher?
     
     //MARK: UI Properties
     @IBOutlet weak var nameField: UIMedicationTextField!
     @IBOutlet weak var strengthAmountField: UIMedicationTextField!
-    @IBOutlet weak var strengthUnitField: UIMedicationTextField!
+    @IBOutlet weak var strengthUnitField: UIPickerTextField!
     @IBOutlet weak var doseAmountField: UIMedicationTextField!
-    @IBOutlet weak var doseUnitField: UIMedicationTextField!
+    @IBOutlet weak var doseUnitField: UIPickerTextField!
     @IBOutlet weak var howOftenField: UIMedicationTextField!
     @IBOutlet weak var medicationErrorLabel: UILabel!
     @IBOutlet weak var strengthAmountErrorLabel: UILabel!
@@ -64,10 +59,8 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        doseUnitField.inputView = dosePicker
-        strengthUnitField.inputView = strengthPicker
-        dosePicker.delegate = self
-        strengthPicker.delegate = self
+        doseUnitField.setup(pickerData: HVUnitTypes.doseUnits)
+        strengthUnitField.setup(pickerData: HVUnitTypes.strengthUnits)
         nameField.errorLabel = medicationErrorLabel
         strengthAmountField.errorLabel = strengthAmountErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
@@ -141,50 +134,6 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
         nameTableView.isHidden = true
     }
     
-    
-    // MARK: UIPickerView Delegation
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int
-    {
-        return 1
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
-    {
-        if pickerView == dosePicker
-        {
-            return dosePickerData.count
-        }
-        else
-        {
-            return strengthPickerData.count
-        }
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
-    {
-        if pickerView == dosePicker
-        {
-            return dosePickerData[row]
-        }
-        else
-        {
-            return strengthPickerData[row]
-        }
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
-    {
-        if pickerView == dosePicker
-        {
-            doseUnitField.text = dosePickerData[row]
-        }
-        else
-        {
-            strengthUnitField.text = strengthPickerData[row]
-        }
-    }
-    
     // MARK: Actions
     @IBAction func addMedication(_ sender: UIButton)
     {
@@ -231,9 +180,9 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
             {
                 doseUnitField.text = dose.displayText
             }
-            if let index = dosePickerData.index(of: doseUnitField.text!)
+            if let index = doseUnitField.pickerData.index(of: doseUnitField.text!)
             {
-                dosePicker.selectRow(index, inComponent: 0, animated: false)
+                doseUnitField.picker.selectRow(index, inComponent: 0, animated: false)
             }
         }
         
@@ -249,9 +198,9 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate,  UIPi
             {
                 strengthUnitField.text = strength.displayText
             }
-            if let index = strengthPickerData.index(of: strengthUnitField.text!)
+            if let index = strengthUnitField.pickerData.index(of: strengthUnitField.text!)
             {
-                strengthPicker.selectRow(index, inComponent: 0, animated: false)
+                strengthUnitField.picker.selectRow(index, inComponent: 0, animated: false)
             }
         }
         

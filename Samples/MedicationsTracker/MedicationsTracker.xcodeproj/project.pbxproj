@@ -30,6 +30,7 @@
 		ED4136A31EE75B4600E15555 /* MedicationEntryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */; };
 		ED4136A41EE75B4600E15555 /* UIMedicationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */; };
 		ED4136A61EE75D7300E15555 /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4136A51EE75D7300E15555 /* libMHVLib.a */; };
+		ED5F66F61EE89C6E001E75D7 /* UIPickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F66F51EE89C6E001E75D7 /* UIPickerTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationEntryUtils.swift; sourceTree = "<group>"; };
 		ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMedicationTextField.swift; sourceTree = "<group>"; };
 		ED4136A51EE75D7300E15555 /* libMHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMHVLib.a; path = "../../../../Library/Developer/Xcode/DerivedData/MedicationsTracker-bwzgfwgijrzrhbdcdkpzjquiaxza/Build/Products/Debug-iphonesimulator/libMHVLib.a"; sourceTree = "<group>"; };
+		ED5F66F51EE89C6E001E75D7 /* UIPickerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPickerTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */,
 				ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */,
 				ED4136371EE7538B00E15555 /* AppDelegate.swift */,
+				ED5F66F51EE89C6E001E75D7 /* UIPickerTextField.swift */,
 				ED41368E1EE75B4600E15555 /* AddMedicationViewController.xib */,
 				ED4136901EE75B4600E15555 /* EditMedicationViewController.xib */,
 				ED4136931EE75B4600E15555 /* HVViewController.xib */,
@@ -339,6 +342,7 @@
 				ED41369E1EE75B4600E15555 /* HVViewController.swift in Sources */,
 				ED4136A11EE75B4600E15555 /* MedicationListViewController.swift in Sources */,
 				ED41369D1EE75B4600E15555 /* HVFeaturesConfiguration.swift in Sources */,
+				ED5F66F61EE89C6E001E75D7 /* UIPickerTextField.swift in Sources */,
 				ED4136A41EE75B4600E15555 /* UIMedicationTextField.swift in Sources */,
 				ED4136A01EE75B4600E15555 /* MedicationBuilder.swift in Sources */,
 				ED4136991EE75B4600E15555 /* AddMedicationViewController.swift in Sources */,
@@ -603,6 +607,7 @@
 				ED41365E1EE7538B00E15555 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ED41365F1EE7538B00E15555 /* Build configuration list for PBXNativeTarget "MedicationsTrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -611,6 +616,7 @@
 				ED4136611EE7538B00E15555 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ED4136621EE7538B00E15555 /* Build configuration list for PBXNativeTarget "MedicationsTrackerUITests" */ = {
 			isa = XCConfigurationList;
@@ -619,6 +625,7 @@
 				ED4136641EE7538B00E15555 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -18,14 +18,12 @@
 
 import UIKit
 
-class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPickerViewDelegate, UIPickerViewDataSource,
+class AddMedicationViewController: UIViewController, UITextFieldDelegate,  
     UITableViewDelegate, UITableViewDataSource
 {
     
     //MARK: Properties
     var medicationBuilder: MedicationBuilder?
-    let dosePicker = UIPickerView()
-    var dosePickerData = HVUnitTypes.doseUnits
     var autoComplete: MHVVocabularyCodeItemCollection?
     var searcher: MedicationVocabSearcher?
     let minSearchSize = 3
@@ -33,7 +31,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
     //MARK: UI Properties
     @IBOutlet weak var nameField: UIMedicationTextField!
     @IBOutlet weak var doseAmountField: UIMedicationTextField!
-    @IBOutlet weak var doseUnitField: UIMedicationTextField!
+    @IBOutlet weak var doseUnitField: UIPickerTextField!
     @IBOutlet weak var medicationErrorLabel: UILabel!
     @IBOutlet weak var doseAmountErrorLabel: UILabel!
     @IBOutlet weak var nameTableView: UITableView!
@@ -56,9 +54,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        doseUnitField.inputView = dosePicker
-        dosePicker.delegate = self
+        doseUnitField.setup(pickerData: HVUnitTypes.doseUnits)
         nameField.errorLabel = medicationErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
     }
@@ -97,28 +93,6 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate,  UIPic
             })
         }
         return true
-    }
-    
-    // MARK: UIPickerView Delegation
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int
-    {
-        return 1
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
-    {
-        return Int(dosePickerData.count)
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
-    {
-        return dosePickerData[row]
-    }
-    
-    func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
-    {
-        doseUnitField.text = dosePickerData[row]
     }
     
     // MARK UITableView
