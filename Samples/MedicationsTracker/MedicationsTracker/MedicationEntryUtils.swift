@@ -2,13 +2,24 @@
 //  PickerContentCreator.swift
 //  MedicationTracker
 //
-//  Created by Kayla Davis on 6/5/17.
-//  Copyright © 2017 Kayla Davis. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 import Foundation
 
-struct HVUnitTypes {
+struct HVUnitTypes
+{
     static let doseUnits = ["Applicatorfuls","Bags", "Bars","Capsules", "Doses", "Dropperfuls",
                      "Drops", "Grams (g)", "Inhalations", "Lozenges","Micrograms (mcg)",
                      "Milligrams (mg)","Milliliters (ml)","Packets", "Pads", "Patches",
@@ -20,17 +31,22 @@ struct HVUnitTypes {
                          "Unit (unt)","Units per milliliter (unt/ml)"]
 }
 
-class MedicationVocabSearcher {
+class MedicationVocabSearcher
+{
     let minSearchSize = 3
 
-    func searchForMeds(searchValue: String, completion: @escaping(MHVVocabularyCodeItemCollection?) -> Void){
+    func searchForMeds(searchValue: String, completion: @escaping(MHVVocabularyCodeItemCollection?) -> Void)
+    {
         let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: HVFeaturesConfiguration.configuration())
-        let key = MHVVocabularyKey.init(name: "RxNorm Active Medicines", andFamily: "RxNorm", andVersion: "09AB_091102F", andCode: nil)
-        connection.vocabularyClient()?.searchVocabulary(withSearchValue: searchValue, searchMode: MHVSearchMode.contains, vocabularyKey: key!, maxResults: 25, completion: { (matchedMeds: MHVVocabularyCodeSetCollection?, error: Error?) in
-            let meds = matchedMeds!.firstObject().vocabularyCodeItems
-            completion(meds)
-        })
+        let key = MHVVocabularyKey.init(name: "RxNorm Active Medicines", andFamily: "RxNorm",
+                                        andVersion: "09AB_091102F", andCode: nil)
+        connection.vocabularyClient()?.searchVocabulary(withSearchValue: searchValue,
+                                                        searchMode: MHVSearchMode.contains, vocabularyKey: key!,
+                                                        maxResults: 25, completion:
+            {
+                (matchedMeds: MHVVocabularyCodeSetCollection?, error: Error?) in
+                let meds = matchedMeds!.firstObject().vocabularyCodeItems
+                completion(meds)
+            })
     }
 }
-
-
