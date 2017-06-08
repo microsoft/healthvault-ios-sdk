@@ -8,6 +8,7 @@
 
 #import "MHVCommon.h"
 #import "MHVBlobDownloadRequest.h"
+#import "Logger.h"
 
 @implementation MHVBlobDownloadRequest
 
@@ -31,7 +32,7 @@
 
 - (NSString *)getCacheKey
 {
-    [NSException throwNotImpl];
+    MHVLOG(@"getCacheKey not implemented for MHVBlobDownloadRequest");
     return @"";
 }
 

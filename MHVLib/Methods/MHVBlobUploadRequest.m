@@ -20,6 +20,7 @@
 #import "MHVBlobUploadRequest.h"
 #import "MHVHttpServiceOperationProtocol.h"
 #import "MHVConfigurationConstants.h"
+#import "Logger.h"
 
 @interface MHVBlobUploadRequest ()
 
@@ -51,7 +52,7 @@
 
 - (NSString *)getCacheKey
 {
-    [NSException throwNotImpl];
+    MHVLOG(@"getCacheKey not implemented for MHVBlobUploadRequest");
     return @"";
 }
 
