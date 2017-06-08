@@ -60,6 +60,11 @@
 #import "MHVConcern.h"
 #import "MHVExplanationOfBenefits.h"
 #import "MHVHealthGoal.h"
+#import "MHVHealthJournalEntry.h"
+#import "MHVInsight.h"
+#import "MHVMedicalDevice.h"
+#import "MHVMenstruation.h"
+#import "MHVPlan.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
@@ -113,4 +118,9 @@
 - (MHVConcern *)concern;
 - (MHVExplanationOfBenefits *)explanationOfBenefits;
 - (MHVHealthGoal *)healthGoal;
+- (MHVHealthJournalEntry *)healthJournalEntry;
+- (MHVInsight *)insight;
+- (MHVMedicalDevice *)medicalDevice;
+- (MHVMenstruation *)menstruation;
+- (MHVPlan *)plan;
 @end

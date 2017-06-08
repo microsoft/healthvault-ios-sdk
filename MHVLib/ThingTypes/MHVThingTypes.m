@@ -134,4 +134,14 @@ MHVDECLARE_GETTOR(MHVExplanationOfBenefits, explanationOfBenefits);
 
 MHVDECLARE_GETTOR(MHVHealthGoal, healthGoal);
 
+MHVDECLARE_GETTOR(MHVHealthJournalEntry, healthJournalEntry);
+
+MHVDECLARE_GETTOR(MHVInsight, insight);
+
+MHVDECLARE_GETTOR(MHVMedicalDevice, medicalDevice);
+
+MHVDECLARE_GETTOR(MHVMenstruation, menstruation);
+
+MHVDECLARE_GETTOR(MHVPlan, plan);
+
 @end

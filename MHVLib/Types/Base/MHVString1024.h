@@ -17,7 +17,6 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
 #import "MHVConstrainedString.h"
 
 @interface MHVStringZ1024 : MHVConstrainedString

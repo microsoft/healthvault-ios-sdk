@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVInsightMessages.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
+#import "MHVInsightMessages.h"
 
-@interface MHVStructuredMeasurement : MHVType
+static NSString *const c_element_regular = @"regular";
+static NSString *const c_elmeent_short = @"short";
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+@implementation MHVInsightMessages
+
+- (void)serialize:(XWriter *)writer
+{
+    [writer writeElement:c_element_regular value:self.regular];
+    [writer writeElement:c_elmeent_short value:self.shortText];
+}
+
+- (void)deserialize:(XReader *)reader
+{
+    self.regular = [reader readStringElement:c_element_regular];
+    self.shortText = [reader readStringElement:c_elmeent_short];
+}
 
 @end

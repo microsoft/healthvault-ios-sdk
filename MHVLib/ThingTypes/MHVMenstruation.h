@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVMenstruation.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
+#import "MHVThing.h"
 
-@interface MHVStructuredMeasurement : MHVType
+@interface MHVMenstruation : MHVThingDataTyped
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+//
+// (Required) The date and time of the menstrual flow.
+//
+@property (readwrite, nonatomic, strong) MHVDateTime *when;
+//
+// (Optional) Indicates whether this instance represents the start of a new menstrual cycle, e.g., the first day of a period.
+//
+@property (readwrite, nonatomic, strong) MHVBool *isNewCycle;
+//
+// (Optional) The amount of discharged fluid (e.g., light, medium, heavy or spotting).
+//
+@property (readwrite, nonatomic, strong) MHVCodableValue *amount;
 
 @end

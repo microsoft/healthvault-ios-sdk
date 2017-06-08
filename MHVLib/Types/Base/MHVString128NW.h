@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVString128NW.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
+#import "MHVConstrainedString.h"
 
-@interface MHVStructuredMeasurement : MHVType
-
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+@interface MHVString128NW : MHVConstrainedString
 
 @end

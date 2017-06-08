@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVInsightAttribution.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,12 +17,12 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
+#import "MHVBool.h"
+#import "MHVStringNZ256.h"
 
-@interface MHVStructuredMeasurement : MHVType
+@interface MHVInsightAttribution : MHVType
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+@property (readwrite, nonatomic, strong) MHVStringNZ256 *name;
+@property (readwrite, nonatomic, strong) MHVBool *attributionRequired;
 
 @end

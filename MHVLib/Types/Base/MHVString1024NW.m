@@ -1,7 +1,6 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVString1024NW.m
 // MHVLib
-//
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,14 +14,35 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
+#import "MHVString1024NW.h"
 
-@interface MHVStructuredMeasurement : MHVType
+@implementation MHVString1024NW
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+- (NSUInteger)maxLength
+{
+    return 1024;
+}
+
+- (BOOL)validateValue:(NSString *)value
+{
+    return ![value containsString:@" "];
+}
+
+@end
+
+@implementation MHVString1024NWCollection
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        self.type = [MHVString1024NW class];
+    }
+    
+    return self;
+}
 
 @end

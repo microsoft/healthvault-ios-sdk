@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVHealthJournalEntry.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVDouble.h"
+#import "MHVThing.h"
+#import "MHVStringNZNW.h"
 #import "MHVCodableValue.h"
 
-@interface MHVStructuredMeasurement : MHVType
+@interface MHVHealthJournalEntry : MHVThingDataTyped
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+// -------------------------
+//
+// Data
+//
+// -------------------------
+//
+// (Required) The date and time associated with the journal entry.
+//
+@property (readwrite, nonatomic, strong) MHVApproxDateTime *when;
+//
+// (Required) The text content of this health journal entry.
+//
+@property (readwrite, nonatomic, strong) MHVStringNZNW *content;
+//
+// (Optional) The category of the health journal entry.
+//
+@property (readwrite, nonatomic, strong) MHVCodableValue *category;
 
 @end

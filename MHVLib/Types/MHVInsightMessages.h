@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVInsightMessages.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,12 +17,10 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
 
-@interface MHVStructuredMeasurement : MHVType
+@interface MHVInsightMessages : MHVType
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+@property (readwrite, nonatomic, strong) NSString *regular;
+@property (readwrite, nonatomic, strong) NSString *shortText;
 
 @end

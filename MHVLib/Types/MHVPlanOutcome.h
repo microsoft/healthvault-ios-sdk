@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVPlanOutcome.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,12 +17,16 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
+#import "MHVStringNZNW.h"
+#import "MHVCollection.h"
 
-@interface MHVStructuredMeasurement : MHVType
+@interface MHVPlanOutcome : MHVType
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+@property (readwrite, nonatomic, strong) MHVStringNZNW *name;
+@property (readwrite, nonatomic, strong) NSString *type;
+
+@end
+
+@interface MHVPlanOutcomeCollection : MHVCollection<MHVPlanOutcome *>
 
 @end

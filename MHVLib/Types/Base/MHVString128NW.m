@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVString128NW.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
+#import "MHVString128NW.h"
 
-@interface MHVStructuredMeasurement : MHVType
+@implementation MHVString128NW
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+- (NSUInteger)maxLength
+{
+    return 128;
+}
+
+- (BOOL)validateValue:(NSString *)value
+{
+    return ![value containsString:@" "];
+}
 
 @end

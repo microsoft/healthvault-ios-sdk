@@ -1,7 +1,6 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVString1024NW.h
 // MHVLib
-//
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,14 +14,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
+#import "MHVConstrainedString.h"
 
-@interface MHVStructuredMeasurement : MHVType
+@interface MHVString1024NW : MHVConstrainedString
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+@end
+
+@interface MHVString1024NWCollection : MHVCollection<MHVString1024NW*>
 
 @end

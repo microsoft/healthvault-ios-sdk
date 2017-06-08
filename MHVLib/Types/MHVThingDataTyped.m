@@ -138,6 +138,11 @@ static MHVTypeSystem *s_typeRegistry;
     [s_typeRegistry addClass:[MHVAppointment class] forTypeID:[MHVAppointment typeID]];
     [s_typeRegistry addClass:[MHVExplanationOfBenefits class] forTypeID:[MHVExplanationOfBenefits typeID]];
     [s_typeRegistry addClass:[MHVHealthGoal class] forTypeID:[MHVHealthGoal typeID]];
+    [s_typeRegistry addClass:[MHVHealthJournalEntry class] forTypeID:[MHVHealthJournalEntry typeID]];
+    [s_typeRegistry addClass:[MHVInsight class] forTypeID:[MHVInsight typeID]];
+    [s_typeRegistry addClass:[MHVMedicalDevice class] forTypeID:[MHVMedicalDevice typeID]];
+    [s_typeRegistry addClass:[MHVMenstruation class] forTypeID:[MHVMenstruation typeID]];
+    [s_typeRegistry addClass:[MHVPlan class] forTypeID:[MHVPlan typeID]];
 }
 
 + (MHVTypeSystem *)current

@@ -1,5 +1,5 @@
 //
-//  MHVStringNZNW.m
+//  MHVPlan.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,18 +16,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MHVThing.h"
 #import "MHVStringNZNW.h"
+#import "MHVPlanObjective.h"
 
-@implementation MHVStringNZNW
+@interface MHVPlan : MHVThingDataTyped
 
-- (NSUInteger)minLength
-{
-    return 1;
-}
-
-- (BOOL)validateValue:(NSString *)value
-{
-    return [value length] > 0 && ![value containsString:@" "];
-}
+//
+// (Required) The localized plan name.
+//
+@property (readwrite, nonatomic, strong) MHVStringNZNW *name;
+//
+// (Optional) The localized plan description.
+//
+@property (readwrite, nonatomic, strong) MHVStringNZNW *descriptionText;
+//
+// (Required) The plan status.
+//
+@property (readwrite, nonatomic, strong) NSString *status;
+//
+// (Required) The plan category.
+//
+@property (readwrite, nonatomic, strong) NSString *category;
+//
+// (Required) The plan objectives.
+//
+@property (readwrite, nonatomic, strong) MHVPlanObjectiveCollection *objectives;
 
 @end

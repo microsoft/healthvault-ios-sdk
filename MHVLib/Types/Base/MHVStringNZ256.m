@@ -1,5 +1,5 @@
 //
-//  MHVStructuredMeasurement.h
+//  MHVStringNZ256.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVDouble.h"
-#import "MHVCodableValue.h"
 
-@interface MHVStructuredMeasurement : MHVType
+#import "MHVStringNZ256.h"
 
-@property (readwrite, nonatomic, strong) MHVDouble *value;
-@property (readwrite, nonatomic, strong) MHVCodableValue *units;
+@implementation MHVStringNZ256
+
+- (NSUInteger)minLength
+{
+    return 1;
+}
+
+- (NSUInteger)maxLength
+{
+    return 256;
+}
 
 @end
