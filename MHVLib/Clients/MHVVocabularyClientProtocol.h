@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Enables or disables caching of vocabulary responses
  *
- * @param cacheEnabled If YES, caching will be enabled for all subsequent calls. If NO, caching will be disabled for all subsequent calls.
+ * @param cacheEnabled If YES (default), caching will be enabled for all subsequent calls. If NO, caching will be disabled for all subsequent calls.
  */
 - (void)setCacheEnabled:(BOOL)cacheEnabled;
 

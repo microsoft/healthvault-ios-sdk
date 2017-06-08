@@ -220,14 +220,13 @@ static NSInteger kInternalServerError = 500;
 
     MHVLOG([NSString stringWithFormat:@"Execute Method: %@", method.name]);
     
-    NSString *cacheKey = [request.serviceOperation getCacheKey];
     if (request.serviceOperation.cache)
     {
         // Handle returning cached values
-        MHVHttpServiceResponse *cachedResponse = (MHVHttpServiceResponse*)[request.serviceOperation.cache objectForKey:cacheKey];
+        MHVServiceResponse *cachedResponse = (MHVServiceResponse*)[request.serviceOperation.cache objectForKey:[request.serviceOperation getCacheKey]];
         if (cachedResponse)
         {
-            [self parseResponse:cachedResponse request:request isXML:YES completion:request.completion];
+            request.completion(cachedResponse, cachedResponse.error);
             return;
         }
     }
@@ -266,10 +265,6 @@ static NSInteger kInternalServerError = 500;
         }
         else
         {
-            if (request.serviceOperation.cache)
-            {
-                [request.serviceOperation.cache setObject:response forKey:cacheKey];
-            }
             
             [self parseResponse:response request:request isXML:YES completion:request.completion];
         }
@@ -481,6 +476,11 @@ static NSInteger kInternalServerError = 500;
 
     if (completion)
     {
+        if (request.serviceOperation.cache)
+        {
+            [request.serviceOperation.cache setObject:serviceResponse forKey:[request.serviceOperation getCacheKey]];
+        }
+        
         completion(serviceResponse, error);
     }
 }
