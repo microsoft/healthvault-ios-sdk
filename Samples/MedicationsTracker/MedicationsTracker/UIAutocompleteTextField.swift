@@ -18,14 +18,17 @@ class UIAutocompleteTextField: UIMedicationTextField, UITableViewDelegate, UITab
     
     func setup()
     {
-        let tableFrame = CGRect.init(x: self.frame.origin.x, y: self.frame.origin.y + self.frame.size.height,
-                            width: self.frame.size.width, height: self.tableHight)
-        self.tableView = UITableView.init(frame: tableFrame)
-        self.tableView?.delegate = self
-        self.tableView?.dataSource = self
-        self.tableView?.isHidden = true
-        self.delegate = self
-        self.superview?.addSubview(self.tableView!)
+        if tableView != nil
+        {
+            let tableFrame = CGRect.init(x: self.frame.origin.x, y: self.frame.origin.y + self.frame.size.height,
+                                         width: self.frame.size.width, height: self.tableHight)
+            self.tableView = UITableView.init(frame: tableFrame)
+            self.tableView?.delegate = self
+            self.tableView?.dataSource = self
+            self.tableView?.isHidden = true
+            self.delegate = self
+            self.superview?.addSubview(self.tableView!)
+        }
     }
     
     // MARK: UITableView Delagation

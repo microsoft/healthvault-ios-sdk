@@ -66,13 +66,14 @@ class MedicationBuilder {
         return true
     }
     
-    func updateFrequencyIfNotNil(frequency: String?) -> Bool
+    func updateFrequencyIfNotNil(amount: String, unit: String?) -> Bool
     {
-        guard let freq = frequency else
+        guard let freqAmount = Double(amount), let freqUnit = unit else
         {
             return false
         }
-        med!.frequency = MHVApproxMeasurement.fromDisplayText(freq)
+        med!.frequency = MHVApproxMeasurement.fromValue(freqAmount, unitsText: freqUnit, unitsCode: freqUnit,
+                                                        unitsVocab: "frequency-units")
         return true
     }
     

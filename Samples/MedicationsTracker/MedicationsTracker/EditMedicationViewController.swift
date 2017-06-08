@@ -30,13 +30,16 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var strengthUnitField: UIPickerTextField!
     @IBOutlet weak var doseAmountField: UIMedicationTextField!
     @IBOutlet weak var doseUnitField: UIPickerTextField!
-    @IBOutlet weak var howOftenField: UIMedicationTextField!
     @IBOutlet weak var medicationErrorLabel: UILabel!
     @IBOutlet weak var strengthAmountErrorLabel: UILabel!
     @IBOutlet weak var strengthUnitErrorLabel: UILabel!
     @IBOutlet weak var doseAmountErrorLabel: UILabel!
     @IBOutlet weak var doseUnitErrorLabel: UILabel!
-    @IBOutlet weak var howOftenErrorLabel: UILabel!
+    @IBOutlet weak var freqAmountErrorLabel: UILabel!
+    @IBOutlet weak var freqUnitErrorLabel: UILabel!
+    @IBOutlet weak var freqAmountField: UIPickerTextField!
+    @IBOutlet weak var freqUnitField: UIPickerTextField!
+
     
     //Mark: Initializers
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, medication: MHVThing,
@@ -56,17 +59,24 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     {
         super.viewDidLoad()
         
-        // Setup custom field types
-        nameField.setup()
-        doseUnitField.setup(pickerData: HVUnitTypes.doseUnits)
-        strengthUnitField.setup(pickerData: HVUnitTypes.strengthUnits)
-        
         // Set error lables where needed
         nameField.errorLabel = medicationErrorLabel
         strengthAmountField.errorLabel = strengthAmountErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
         
         fillTextFieldsWithStoredValues()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Setup custom field types
+        nameField.setup()
+        doseUnitField.setup(pickerData: HVUnitTypes.doseUnits)
+        strengthUnitField.setup(pickerData: HVUnitTypes.strengthUnits)
+        freqAmountField.setup(pickerData: HVUnitTypes.freqAmount)
+        freqUnitField.setup(pickerData: HVUnitTypes.freqUnit)
+        
     }
     
     // MARK: UITextField Delegation
@@ -97,7 +107,7 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
             _ = medToConstruct?.updateNameIfNotNil(name: nameField.text!)
             _ = medToConstruct?.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
             _ = medToConstruct?.updateStrengthIfNotNil(amount: strengthAmountField.text!, unit: strengthUnitField.text!)
-            _ = medToConstruct?.updateFrequencyIfNotNil(frequency: howOftenField.text!)
+            _ = medToConstruct?.updateFrequencyIfNotNil(amount: freqAmountField.text!, unit: freqUnitField.text!)
             
             let medication = medToConstruct?.constructMedication()
 
@@ -106,6 +116,35 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
                 {
                     (error: Error?) in
                 })
+        }
+    }
+    
+    func fillFieldsWithPickers(approxMeasure: MHVApproxMeasurement, amountField: UIMedicationTextField,
+                          unitField: UIPickerTextField)
+    {
+        // Set values if it has a measurement or just show display text
+        if let theMeasure = approxMeasure.measurement
+        {
+            amountField.text = String(theMeasure.value)
+            unitField.text = theMeasure.units.text
+        }
+        else
+        {
+            unitField.text = approxMeasure.displayText
+        }
+        
+        // Set picker rows to selected text
+        if let index = unitField.pickerData.index(of: unitField.text!)
+        {
+            unitField.picker.selectRow(index, inComponent: 0, animated: false)
+        }
+        
+        if let amountPickerField = amountField as? UIPickerTextField
+        {
+            if let index = amountPickerField.pickerData.index(of: amountPickerField.text!)
+            {
+                amountPickerField.picker.selectRow(index, inComponent: 0, animated: false)
+            }
         }
     }
     
@@ -126,43 +165,19 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
         //Display Dose
         if let dose = med.dose
         {
-            if let doseMeasure = dose.measurement
-            {
-                doseAmountField.text = String(doseMeasure.value)
-                doseUnitField.text = doseMeasure.units.text
-            }
-            else
-            {
-                doseUnitField.text = dose.displayText
-            }
-            if let index = doseUnitField.pickerData.index(of: doseUnitField.text!)
-            {
-                doseUnitField.picker.selectRow(index, inComponent: 0, animated: false)
-            }
+            fillFieldsWithPickers(approxMeasure: dose, amountField: doseAmountField, unitField: doseUnitField)
         }
         
         //Display Strength
         if let strength = med.strength
         {
-            if let strengthMeasure = strength.measurement
-            {
-                strengthAmountField.text = String(strengthMeasure.value)
-                strengthUnitField.text = strengthMeasure.units.text
-            }
-            else
-            {
-                strengthUnitField.text = strength.displayText
-            }
-            if let index = strengthUnitField.pickerData.index(of: strengthUnitField.text!)
-            {
-                strengthUnitField.picker.selectRow(index, inComponent: 0, animated: false)
-            }
+            fillFieldsWithPickers(approxMeasure: strength, amountField: strengthAmountField, unitField: strengthUnitField)
         }
         
         //Dispaly Frequency
         if let freq = med.frequency
         {
-            howOftenField.text = freq.displayText
+            fillFieldsWithPickers(approxMeasure: freq, amountField: freqAmountField, unitField: freqUnitField)
         }
     }
     

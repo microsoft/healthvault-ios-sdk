@@ -47,13 +47,18 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
     {
         super.viewDidLoad()
         
+        // Set error lables where needed
+        nameField.errorLabel = medicationErrorLabel
+        doseAmountField.errorLabel = doseAmountErrorLabel
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         // Setup custom field types
         nameField.setup()
         doseUnitField.setup(pickerData: HVUnitTypes.doseUnits)
         
-        // Set error lables where needed
-        nameField.errorLabel = medicationErrorLabel
-        doseAmountField.errorLabel = doseAmountErrorLabel
     }
     
     // MARK: UITextField Delegation

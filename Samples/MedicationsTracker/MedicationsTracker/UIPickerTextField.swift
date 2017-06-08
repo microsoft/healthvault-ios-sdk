@@ -12,14 +12,20 @@ class UIPickerTextField: UIMedicationTextField, UIPickerViewDelegate, UIPickerVi
 {
     // MARK: Properties
     private(set) var pickerData = [String]()
+    private var pickerHasBeenCalled = false
     var picker = UIPickerView()
+    
     
     func setup(pickerData: [String])
     {
-        self.pickerData = pickerData
-        self.picker.dataSource = self
-        self.picker.delegate = self
-        self.inputView = picker
+        if !pickerHasBeenCalled
+        {
+            self.pickerData = pickerData
+            self.picker.dataSource = self
+            self.picker.delegate = self
+            self.inputView = picker
+            self.pickerHasBeenCalled = true;
+        }
     }
     
     // MARK: UIPickerView Delegation
