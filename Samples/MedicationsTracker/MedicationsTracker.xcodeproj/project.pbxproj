@@ -146,22 +146,11 @@
 			isa = PBXGroup;
 			children = (
 				ED4136A71EE76DBE00E15555 /* Supporting Files */,
-				ED41368D1EE75B4600E15555 /* AddMedicationViewController.swift */,
-				ED41368F1EE75B4600E15555 /* EditMedicationViewController.swift */,
-				ED4136921EE75B4600E15555 /* HVViewController.swift */,
-				ED4136941EE75B4600E15555 /* MedicationBuilder.swift */,
-				ED4136951EE75B4600E15555 /* MedicationListViewController.swift */,
-				ED4136971EE75B4600E15555 /* MedicationVocabSearcher.swift */,
+				ED5F67101EEA0884001E75D7 /* Utils */,
+				ED5F670E1EE9E68A001E75D7 /* View Controllers */,
+				ED5F670D1EE9E64A001E75D7 /* Custom Text Fields */,
+				ED5F670F1EE9E6FA001E75D7 /* Xib */,
 				ED4136371EE7538B00E15555 /* AppDelegate.swift */,
-				ED4136981EE75B4600E15555 /* MedicationTextField.swift */,
-				ED5F66F51EE89C6E001E75D7 /* PickerTextField.swift */,
-				ED5F66F71EE8B42B001E75D7 /* AutocompleteTextField.swift */,
-				ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */,
-				ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */,
-				ED41368E1EE75B4600E15555 /* AddMedicationViewController.xib */,
-				ED4136901EE75B4600E15555 /* EditMedicationViewController.xib */,
-				ED4136931EE75B4600E15555 /* HVViewController.xib */,
-				ED4136961EE75B4600E15555 /* MedicationListViewController.xib */,
 				ED41363B1EE7538B00E15555 /* Main.storyboard */,
 				ED41363E1EE7538B00E15555 /* Assets.xcassets */,
 				ED4136401EE7538B00E15555 /* LaunchScreen.storyboard */,
@@ -208,6 +197,49 @@
 				ED4136911EE75B4600E15555 /* HVFeaturesConfiguration.swift */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ED5F670D1EE9E64A001E75D7 /* Custom Text Fields */ = {
+			isa = PBXGroup;
+			children = (
+				ED5F66F51EE89C6E001E75D7 /* PickerTextField.swift */,
+				ED4136981EE75B4600E15555 /* MedicationTextField.swift */,
+				ED5F66F71EE8B42B001E75D7 /* AutocompleteTextField.swift */,
+			);
+			name = "Custom Text Fields";
+			sourceTree = "<group>";
+		};
+		ED5F670E1EE9E68A001E75D7 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ED41368D1EE75B4600E15555 /* AddMedicationViewController.swift */,
+				ED41368F1EE75B4600E15555 /* EditMedicationViewController.swift */,
+				ED4136951EE75B4600E15555 /* MedicationListViewController.swift */,
+				ED4136921EE75B4600E15555 /* HVViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		ED5F670F1EE9E6FA001E75D7 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				ED41368E1EE75B4600E15555 /* AddMedicationViewController.xib */,
+				ED4136901EE75B4600E15555 /* EditMedicationViewController.xib */,
+				ED4136931EE75B4600E15555 /* HVViewController.xib */,
+				ED4136961EE75B4600E15555 /* MedicationListViewController.xib */,
+			);
+			name = Xib;
+			sourceTree = "<group>";
+		};
+		ED5F67101EEA0884001E75D7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				ED4136941EE75B4600E15555 /* MedicationBuilder.swift */,
+				ED4136971EE75B4600E15555 /* MedicationVocabSearcher.swift */,
+				ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */,
+				ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
