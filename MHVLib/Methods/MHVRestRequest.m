@@ -19,8 +19,12 @@
 
 #import "MHVCommon.h"
 #import "MHVRestRequest.h"
+#import "MHVCommon.h"
+#import "Logger.h"
 
 @implementation MHVRestRequest
+
+@synthesize cache = _cache;
 
 - (instancetype)initWithPath:(NSString *)path
                   httpMethod:(NSString *)httpMethod
@@ -61,6 +65,12 @@
     urlComponents.query = [self.queryParams queryString];
     
     _url = urlComponents.URL;
+}
+
+- (NSString *)getCacheKey
+{
+    MHVLOG(@"getCacheKey not implemented for MHVRestRequest");
+    return @"";
 }
 
 @end

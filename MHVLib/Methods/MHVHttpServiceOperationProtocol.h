@@ -26,4 +26,17 @@
  */
 @property (nonatomic, assign, readonly) BOOL isAnonymous;
 
+/**
+ Cache associated with the operation. If not null, when performing the operation
+ the cache will first be checked. If a result is found in the cache, the cached
+ data is returned, otherwise a network call is made and the result is added to the
+ cache
+ */
+@property (nonatomic, readwrite) NSCache *cache;
+
+/**
+ Returns the unique key or hash which should be used to store an operation in a cache.
+ */
+-(NSString *) getCacheKey;
+
 @end

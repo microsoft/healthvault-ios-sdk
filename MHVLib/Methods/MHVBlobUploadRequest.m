@@ -20,6 +20,7 @@
 #import "MHVBlobUploadRequest.h"
 #import "MHVHttpServiceOperationProtocol.h"
 #import "MHVConfigurationConstants.h"
+#import "Logger.h"
 
 @interface MHVBlobUploadRequest ()
 
@@ -28,6 +29,8 @@
 @end
 
 @implementation MHVBlobUploadRequest
+
+@synthesize cache = _cache;
 
 - (instancetype)initWithBlobSource:(id<MHVBlobSourceProtocol>)blobSource
                     destinationURL:(NSURL *)destinationURL
@@ -45,6 +48,12 @@
         _isAnonymous = YES;
     }
     return self;
+}
+
+- (NSString *)getCacheKey
+{
+    MHVLOG(@"getCacheKey not implemented for MHVBlobUploadRequest");
+    return @"";
 }
 
 @end

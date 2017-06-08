@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVVocabularyClient : NSObject<MHVVocabularyClientProtocol>
 
+@property (readonly, nonatomic) NSCache *cache;
+
 - (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
 
 @end
