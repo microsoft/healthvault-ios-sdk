@@ -528,7 +528,7 @@ LError:
     if ([NSString isNilOrEmpty:name] ||
         [NSString isNilOrEmpty:ns])
     {
-        MHVLOG(@"The name (%@) or namespace (%@) paramter is nil.", name, ns);
+        MHVLOG(@"The name (%@) or namespace (%@) parameter is nil.", name, ns);
         return FALSE;
     }
     

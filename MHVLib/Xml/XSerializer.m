@@ -361,14 +361,14 @@ LError:
 {
     if (!self.isTextualNode)
     {
-        MHVLOG(@"Counld not read value into a string because the current node is not textual.");
+        MHVLOG(@"Could not read value into a string because the current node is not textual.");
         return nil;
     }
     
     NSString *value = self.value;
     if (!value)
     {
-        MHVLOG(@"Counld not read value into a string because the value is nil.");
+        MHVLOG(@"Could not read value into a string because the value is nil.");
         return nil;
     }
     [self read];
