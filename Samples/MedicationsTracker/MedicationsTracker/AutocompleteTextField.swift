@@ -1,5 +1,5 @@
 //
-//  UIAutocompleteTextField.swift
+//  AutocompleteTextField.swift
 //  MedicationsTracker
 //
 //  Created by Kayla Davis on 6/7/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UIAutocompleteTextField: UIMedicationTextField, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
+class AutocompleteTextField: MedicationTextField, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
 {
     // MARK: Properties
     var autoComplete: MHVVocabularyCodeItemCollection?
@@ -66,6 +66,12 @@ class UIAutocompleteTextField: UIMedicationTextField, UITableViewDelegate, UITab
     }
     
     // MARK: UITextField Delegation
+    override func resignFirstResponder() -> Bool
+    {
+        self.tableView?.isHidden = true
+        return super.resignFirstResponder()
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,replacementString string: String) -> Bool
     {
         // Get substring and check if we the min size for searching was reached

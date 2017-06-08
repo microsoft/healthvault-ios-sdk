@@ -25,9 +25,9 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
     var medicationBuilder: MedicationBuilder?
     
     //MARK: UI Properties
-    @IBOutlet weak var nameField: UIAutocompleteTextField!
-    @IBOutlet weak var doseAmountField: UIMedicationTextField!
-    @IBOutlet weak var doseUnitField: UIPickerTextField!
+    @IBOutlet weak var nameField: AutocompleteTextField!
+    @IBOutlet weak var doseAmountField: MedicationTextField!
+    @IBOutlet weak var doseUnitField: PickerTextField!
     @IBOutlet weak var medicationErrorLabel: UILabel!
     @IBOutlet weak var doseAmountErrorLabel: UILabel!
     @IBOutlet weak var doseUnitErrorLabel: UILabel!
@@ -48,7 +48,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
     {
         super.viewDidLoad()
         
-        // Set error lables where needed
+        // Set error labels where needed
         nameField.errorLabel = medicationErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
         doseUnitField.errorLabel = doseUnitErrorLabel
@@ -75,11 +75,8 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool
     {
         // Highlight cells that are invalid, but ignore returned value
-        let text = textField as! UIMedicationTextField
+        let text = textField as! MedicationTextField
         _ = text.isValid()
-        
-        // Hide autocomplete table when done editing
-        nameField.tableView?.isHidden = true
         
         return true
     }

@@ -1,5 +1,5 @@
 //
-//  UIPickerTextField.swift
+//  PickerTextField.swift
 //  MedicationsTracker
 //
 //  Created by Kayla Davis on 6/7/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UIPickerTextField: UIMedicationTextField, UIPickerViewDelegate, UIPickerViewDataSource
+class PickerTextField: MedicationTextField, UIPickerViewDelegate, UIPickerViewDataSource
 {
     // MARK: Properties
     private(set) var pickerData = [String]()

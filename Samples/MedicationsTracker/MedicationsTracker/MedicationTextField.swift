@@ -1,5 +1,5 @@
 //
-//  TextFieldExtension.swift
+//  MedicationTextField.swift
 //  MedicationTracker
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -19,7 +19,7 @@
 
 import Foundation
 
-class UIMedicationTextField: UITextField
+class MedicationTextField: UITextField
 {
     // MARK: Properties
     var errorLabel: UILabel?

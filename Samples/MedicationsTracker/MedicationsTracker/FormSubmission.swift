@@ -15,7 +15,7 @@ struct FormSubmission
         var fieldsComplete = true
         for subview in subviews
         {
-            if let textField = subview as? UIMedicationTextField
+            if let textField = subview as? MedicationTextField
             {
                 if !textField.isValid()
                 {

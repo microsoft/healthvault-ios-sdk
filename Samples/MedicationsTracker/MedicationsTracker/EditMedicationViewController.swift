@@ -25,11 +25,11 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     var medicationThing: MHVThing?
     
     //MARK: UI Properties
-    @IBOutlet weak var nameField: UIAutocompleteTextField!
-    @IBOutlet weak var strengthAmountField: UIMedicationTextField!
-    @IBOutlet weak var strengthUnitField: UIPickerTextField!
-    @IBOutlet weak var doseAmountField: UIMedicationTextField!
-    @IBOutlet weak var doseUnitField: UIPickerTextField!
+    @IBOutlet weak var nameField: AutocompleteTextField!
+    @IBOutlet weak var strengthAmountField: MedicationTextField!
+    @IBOutlet weak var strengthUnitField: PickerTextField!
+    @IBOutlet weak var doseAmountField: MedicationTextField!
+    @IBOutlet weak var doseUnitField: PickerTextField!
     @IBOutlet weak var medicationErrorLabel: UILabel!
     @IBOutlet weak var strengthAmountErrorLabel: UILabel!
     @IBOutlet weak var strengthUnitErrorLabel: UILabel!
@@ -37,8 +37,8 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var doseUnitErrorLabel: UILabel!
     @IBOutlet weak var freqAmountErrorLabel: UILabel!
     @IBOutlet weak var freqUnitErrorLabel: UILabel!
-    @IBOutlet weak var freqAmountField: UIPickerTextField!
-    @IBOutlet weak var freqUnitField: UIPickerTextField!
+    @IBOutlet weak var freqAmountField: PickerTextField!
+    @IBOutlet weak var freqUnitField: PickerTextField!
 
     
     //Mark: Initializers
@@ -59,7 +59,7 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     {
         super.viewDidLoad()
         
-        // Set error lables where needed
+        // Set error labels where needed
         nameField.errorLabel = medicationErrorLabel
         strengthAmountField.errorLabel = strengthAmountErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
@@ -91,11 +91,9 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool
     {
         // Highlight cells that are invalid, but ignore returned value
-        let text = textField as! UIMedicationTextField
+        let text = textField as! MedicationTextField
         _ = text.isValid()
         
-        // Hide autocomplete table when done editing
-        nameField.tableView?.isHidden = true
         return true
     }
     
@@ -122,8 +120,8 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     
     // MARK: Helper Functions
 
-    func fillFieldsWithPickers(approxMeasure: MHVApproxMeasurement, amountField: UIMedicationTextField,
-                          unitField: UIPickerTextField)
+    func fillFieldsWithPickers(approxMeasure: MHVApproxMeasurement, amountField: MedicationTextField,
+                          unitField: PickerTextField)
     {
         // Set values if it has a measurement or just show display text
         if let theMeasure = approxMeasure.measurement
@@ -142,7 +140,7 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
             unitField.picker.selectRow(index, inComponent: 0, animated: false)
         }
         
-        if let amountPickerField = amountField as? UIPickerTextField
+        if let amountPickerField = amountField as? PickerTextField
         {
             if let index = amountPickerField.pickerData.index(of: amountPickerField.text!)
             {
