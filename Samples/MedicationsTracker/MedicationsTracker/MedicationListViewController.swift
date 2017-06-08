@@ -24,7 +24,6 @@ class MedicationListViewController: UITableViewController
 
     var meds: MHVThingCollection?
     var builder = MedicationBuilder.init()
-    var searcher = MedicationVocabSearcher.init()
     
     // MARK: - Business Logic
     func getMedicationsFromHV(completion: @escaping(MHVThingCollection?) -> Void)
@@ -45,7 +44,7 @@ class MedicationListViewController: UITableViewController
     func addMed(sender: UIBarButtonItem)
     {
         let addMedController = AddMedicationViewController.init(nibName: "AddMedicationViewController", bundle: nil,
-                                                                builder: builder, searcher: searcher)
+                                                                builder: builder)
         self.navigationController?.pushViewController(addMedController, animated: true)
     }
     
@@ -107,7 +106,7 @@ class MedicationListViewController: UITableViewController
     {
         let editMedController = EditMedicationViewController.init(nibName: "EditMedicationViewController", bundle: nil,
                                                                   medication: meds![UInt(indexPath.row)],
-                                                                  builder: builder, searcher: searcher)
+                                                                  builder: builder)
         self.navigationController?.pushViewController(editMedController, animated: true)
     }
 }

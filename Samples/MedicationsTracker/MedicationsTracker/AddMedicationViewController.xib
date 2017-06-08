@@ -16,7 +16,6 @@
                 <outlet property="doseUnitField" destination="pGL-ah-QHf" id="FOt-Mn-lPw"/>
                 <outlet property="medicationErrorLabel" destination="HGf-QJ-xas" id="7da-3D-XmA"/>
                 <outlet property="nameField" destination="mmL-qi-kM0" id="WPh-I6-B57"/>
-                <outlet property="nameTableView" destination="QS1-Ce-2wC" id="CX0-iv-8ci"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,7 +31,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mmL-qi-kM0" customClass="UIMedicationTextField" customModule="MedicationsTracker" customModuleProvider="target">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mmL-qi-kM0" customClass="UIAutocompleteTextField" customModule="MedicationsTracker" customModuleProvider="target">
                     <rect key="frame" x="16" y="198" width="343" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <nil key="textColor"/>
@@ -60,24 +59,15 @@
                         <action selector="addMedication:" destination="-1" eventType="touchUpInside" id="lCU-E4-Wzg"/>
                     </connections>
                 </button>
-                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QS1-Ce-2wC">
-                    <rect key="frame" x="16" y="227" width="343" height="191"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="WVz-mP-0cG"/>
-                        <outlet property="delegate" destination="-1" id="35H-o3-GPd"/>
-                    </connections>
-                </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dosage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPX-bL-AWE">
-                    <rect key="frame" x="16" y="426" width="75" height="30"/>
+                    <rect key="frame" x="16" y="317" width="75" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDb-Pa-aaz" customClass="UIMedicationTextField" customModule="MedicationsTracker" customModuleProvider="target">
-                    <rect key="frame" x="16" y="464" width="103" height="30"/>
+                    <rect key="frame" x="16" y="355" width="103" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -90,7 +80,7 @@
                     </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pGL-ah-QHf" customClass="UIPickerTextField" customModule="MedicationsTracker" customModuleProvider="target">
-                    <rect key="frame" x="132" y="464" width="227" height="30"/>
+                    <rect key="frame" x="132" y="355" width="227" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -100,7 +90,7 @@
                     </connections>
                 </textField>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Must be a number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enJ-5o-n36">
-                    <rect key="frame" x="16" y="491" width="103" height="21"/>
+                    <rect key="frame" x="16" y="382" width="103" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

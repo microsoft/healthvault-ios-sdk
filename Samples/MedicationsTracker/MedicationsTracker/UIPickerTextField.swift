@@ -14,7 +14,8 @@ class UIPickerTextField: UIMedicationTextField, UIPickerViewDelegate, UIPickerVi
     private(set) var pickerData = [String]()
     var picker = UIPickerView()
     
-    func setup(pickerData: [String]){
+    func setup(pickerData: [String])
+    {
         self.pickerData = pickerData
         self.picker.dataSource = self
         self.picker.delegate = self

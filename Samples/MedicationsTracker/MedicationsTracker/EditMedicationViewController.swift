@@ -18,16 +18,14 @@
 
 import UIKit
 
-class EditMedicationViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource
+class EditMedicationViewController: UIViewController, UITextFieldDelegate
 {
     //MARK: Properties
     var medicationBuilder: MedicationBuilder?
     var medicationThing: MHVThing?
-    var autoComplete: MHVVocabularyCodeItemCollection?
-    var searcher: MedicationVocabSearcher?
     
     //MARK: UI Properties
-    @IBOutlet weak var nameField: UIMedicationTextField!
+    @IBOutlet weak var nameField: UIAutocompleteTextField!
     @IBOutlet weak var strengthAmountField: UIMedicationTextField!
     @IBOutlet weak var strengthUnitField: UIPickerTextField!
     @IBOutlet weak var doseAmountField: UIMedicationTextField!
@@ -39,16 +37,14 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate, UITab
     @IBOutlet weak var doseAmountErrorLabel: UILabel!
     @IBOutlet weak var doseUnitErrorLabel: UILabel!
     @IBOutlet weak var howOftenErrorLabel: UILabel!
-    @IBOutlet weak var nameTableView: UITableView!
     
     //Mark: Initializers
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, medication: MHVThing,
-         builder: MedicationBuilder, searcher: MedicationVocabSearcher)
+         builder: MedicationBuilder)
     {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.medicationThing = medication
         self.medicationBuilder = builder
-        self.searcher = searcher
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -59,8 +55,13 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate, UITab
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        // Setup custom field types
+        nameField.setup()
         doseUnitField.setup(pickerData: HVUnitTypes.doseUnits)
         strengthUnitField.setup(pickerData: HVUnitTypes.strengthUnits)
+        
+        // Set error lables where needed
         nameField.errorLabel = medicationErrorLabel
         strengthAmountField.errorLabel = strengthAmountErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
@@ -83,55 +84,8 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate, UITab
         _ = text.isValid()
         
         // Hide autocomplete table when done editing
-        nameTableView.isHidden = true
+        nameField.tableView?.isHidden = true
         return true
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
-    {
-        if textField == nameField
-        {
-            searcher?.showMedList(textField: textField, nameTableView: nameTableView,
-                                  range: range, string: string, completion:
-                {
-                    autocompleteContents in
-                    self.autoComplete = autocompleteContents
-                    
-            })
-        }
-        return true
-    }
-    
-    // MARK UITableView
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        if cell == nil
-        {
-            cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
-        }
-        
-        cell?.textLabel!.text = autoComplete![UInt(indexPath.row)].displayText
-        return cell!
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        if self.autoComplete != nil
-        {
-            return Int(self.autoComplete!.count())
-        } else
-        {
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {
-        let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath)!
-        
-        nameField.text = selectedCell.textLabel!.text!
-        nameTableView.isHidden = true
     }
     
     // MARK: Actions

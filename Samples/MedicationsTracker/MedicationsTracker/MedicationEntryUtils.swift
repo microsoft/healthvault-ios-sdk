@@ -72,24 +72,6 @@ class MedicationVocabSearcher
     func showMedList(textField: UITextField, nameTableView: UITableView, range: NSRange, string: String,
                      completion: @escaping(MHVVocabularyCodeItemCollection?) -> Void)
     {
-        // Get substring and check if we the min size for searching was reached
-        let substring = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-        if substring.characters.count >= minSearchSize
-        {
-            // Show autocomplete contents in table view
-            searchForMeds(searchValue: substring, completion:
-                {
-                    autocompleteContents in
-                    DispatchQueue.main.async
-                        {
-                            completion(autocompleteContents)
-                            nameTableView.isHidden = autocompleteContents == nil
-                        }
-            })
-        }
-        else
-        {
-            nameTableView.isHidden = true
-        }
+        
     }
 }
