@@ -67,7 +67,8 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
         fillTextFieldsWithStoredValues()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(animated)
         
         // Setup custom field types
@@ -119,6 +120,8 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
         }
     }
     
+    // MARK: Helper Functions
+
     func fillFieldsWithPickers(approxMeasure: MHVApproxMeasurement, amountField: UIMedicationTextField,
                           unitField: UIPickerTextField)
     {
@@ -148,7 +151,6 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
         }
     }
     
-    // MARK: Helper Functions
     func fillTextFieldsWithStoredValues()
     {
         guard let med = medicationThing!.medication() else

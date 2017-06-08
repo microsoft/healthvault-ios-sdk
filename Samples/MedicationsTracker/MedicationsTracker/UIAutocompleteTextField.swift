@@ -13,7 +13,7 @@ class UIAutocompleteTextField: UIMedicationTextField, UITableViewDelegate, UITab
     // MARK: Properties
     var autoComplete: MHVVocabularyCodeItemCollection?
     var tableView: UITableView?
-    var tableHight: CGFloat = 44 * 4
+    var tableHeight: CGFloat = 44 * 4
     var searcher = MedicationVocabSearcher.init()
     
     func setup()
@@ -21,7 +21,7 @@ class UIAutocompleteTextField: UIMedicationTextField, UITableViewDelegate, UITab
         if tableView == nil
         {
             let tableFrame = CGRect.init(x: self.frame.origin.x, y: self.frame.origin.y + self.frame.size.height,
-                                         width: self.frame.size.width, height: self.tableHight)
+                                         width: self.frame.size.width, height: self.tableHeight)
             self.tableView = UITableView.init(frame: tableFrame)
             self.tableView?.delegate = self
             self.tableView?.dataSource = self

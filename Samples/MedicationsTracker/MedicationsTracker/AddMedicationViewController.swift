@@ -54,7 +54,8 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
         doseUnitField.errorLabel = doseUnitErrorLabel
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(animated)
         
         // Setup custom field types
