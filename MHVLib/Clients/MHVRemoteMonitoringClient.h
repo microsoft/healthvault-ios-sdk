@@ -19,6 +19,8 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVRemoteMonitoringClientProtocol.h"
+#import "MHVConnection.h"
+
 @protocol MHVConnectionProtocol;
 
 NS_ASSUME_NONNULL_BEGIN

@@ -18,10 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVGoalDetailViewController.h"
-#import "MHVGoalsApi.h"
-#import "MHVConfiguration.h"
-#import "MHVConnection.h"
-#import "MHVGoal.h"
 
 @interface MHVGoalDetailViewController ()
 

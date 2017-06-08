@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "XReader.h"
+#import "Logger.h"
 
 #define READER_TRUE 1
 #define READER_FALSE 0
@@ -63,7 +64,7 @@ xmlTextReader* XAllocFileReader(NSString *fileName)
 -(void) ensureStartElement;
 -(void) moveToContentType:(enum XNodeType) type;
 -(void) verifyNodeType:(enum XNodeType) type;
--(void) throwInvalidNode:(enum XNodeType) type expectedType:(enum XNodeType) expected;
+-(void) logInvalidNode:(enum XNodeType) type expectedType:(enum XNodeType) expected;
 -(void) close;
 
 -(BOOL) isSuccess:(int) result;
@@ -401,9 +402,6 @@ LError:
     MHVCHECK_STRING(name);
      
     return ([self isStartElement] && [name isEqualToString:self.localName]);
-
-LError:
-    return FALSE;
 }
 
 -(BOOL) isStartElementWithName:(NSString *)name NS:(NSString *) ns
@@ -506,7 +504,7 @@ LError:
 {
     if ([NSString isNilOrEmpty:name])
     {
-        [XException throwException:XExceptionElementMismatch reason:name fromReader:m_reader];
+        MHVLOG(@"Cannot read the start element because the element name parameter is nil or empty.");
         return FALSE;
     }
     
@@ -514,7 +512,7 @@ LError:
      
     if (!self.localName || ![name isEqualToString:self.localName])
     {
-        [XException throwException:XExceptionElementMismatch reason:name fromReader:m_reader];
+        MHVLOG(@"Cannot read the start element because there is a mismatch between the local name (%@) and the name parameter (%@).", self.localName, name);
         return FALSE;
     }
     
@@ -530,9 +528,7 @@ LError:
     if ([NSString isNilOrEmpty:name] ||
         [NSString isNilOrEmpty:ns])
     {
-        [XException throwException:XExceptionElementMismatch
-                            reason:[NSString stringWithFormat:@"%@ %@", name, ns]
-                        fromReader:m_reader];
+        MHVLOG(@"The name (%@) or namespace (%@) parameter is nil.", name, ns);
         return FALSE;
     }
     
@@ -540,17 +536,13 @@ LError:
  
     if (!self.localName || ![name isEqualToString:self.localName])
     {
-        [XException throwException:XExceptionElementMismatch
-                            reason:[NSString stringWithFormat:@"%@ %@", name, ns]
-                        fromReader:m_reader];
+        MHVLOG(@"Cannot read the start element because there is a mismatch between the local name (%@) and the name parameter (%@).", self.localName, name);
         return FALSE;
     }
 
     if (!self.namespaceUri || ![ns isEqualToString:self.namespaceUri])
     {
-        [XException throwException:XExceptionElementMismatch
-                            reason:[NSString stringWithFormat:@"%@ %@", name, ns]
-                        fromReader:m_reader];
+        MHVLOG(@"Cannot read the start element because there is a mismatch between the namespaceUri (%@) and the namespace parameter (%@).", self.namespaceUri, ns);
         return FALSE;
     }
     
@@ -565,7 +557,7 @@ LError:
 {
     if (!xName)
     {
-        [XException throwException:XExceptionElementMismatch xmlReason:xName fromReader:m_reader];
+        MHVLOG(@"Cannot read the start element because the element name parameter is nil.");
         return NO;
     }
     
@@ -574,7 +566,7 @@ LError:
     const xmlChar* rawName = self.localNameRaw;
     if (!rawName || !xmlStrEqual(rawName, xName))
     {
-        [XException throwException:XExceptionElementMismatch xmlReason:xName fromReader:m_reader];
+        MHVLOG(@"Cannot read the start element because there is a mismatch between the local name (%@) and the name parameter (%@).", [NSString newFromXmlString:(xmlChar *)rawName], [NSString newFromXmlString:(xmlChar *)xName]);
         return NO;
     }
     
@@ -602,7 +594,8 @@ LError:
     [self moveToElement];
     if (![self isTextualNode])
     {
-        [XException throwException:XExceptionNotText fromReader:m_reader];
+        MHVLOG(@"Cannot read the element into a string because the node is not text.");
+        return nil;
     }
     NSString * string = [NSString fromXmlStringAndFreeXml:xmlTextReaderReadString(m_reader)];  
     [self read];
@@ -674,7 +667,7 @@ LError:
 {
     if (![self moveToStartElement])
     {
-        [XException throwException:XExceptionNotElement fromReader:m_reader];
+        MHVLOG(@"Could not find start element.");
     }
 }
 
@@ -683,7 +676,7 @@ LError:
     enum XNodeType nodeType = [self moveToContent];
     if (nodeType != type)
     {
-        [self throwInvalidNode:nodeType expectedType:type];
+        [self logInvalidNode:nodeType expectedType:type];
     }
 }
 
@@ -691,15 +684,13 @@ LError:
 {
     if (self.nodeType != type)
     {
-        [self throwInvalidNode:self.nodeType expectedType:type];
+        [self logInvalidNode:self.nodeType expectedType:type];
     }
 }
 
--(void) throwInvalidNode:(enum XNodeType)type expectedType:(enum XNodeType)expected
+-(void) logInvalidNode:(enum XNodeType)type expectedType:(enum XNodeType)expected
 {
-    NSString *message = [NSString stringWithFormat:@"%@ [Expected: %@]", XNodeTypeToString(type), XNodeTypeToString(expected)];
-    
-    [XException throwException:XExceptionInvalidNodeType reason:message fromReader:m_reader];    
+    MHVLOG(@"%@ [Expected: %@]", XNodeTypeToString(type), XNodeTypeToString(expected));
 }
 
 -(void) close
@@ -715,11 +706,6 @@ LError:
 
 -(BOOL) isSuccess:(int) result
 {
-    if (result == READER_FAIL)
-    {
-        [XException throwException:XExceptionReaderError fromReader:m_reader];
-    }
-    
     return (result == READER_TRUE);
 }
 

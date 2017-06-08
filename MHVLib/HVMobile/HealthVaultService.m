@@ -27,6 +27,7 @@
 #import "HealthVaultSettings.h"
 #import "HealthVaultConfig.h"
 #import "MHVCommon.h"
+#import "MHVConfiguration.h"
 #import "MHVClient.h"
 
 @implementation HealthVaultService
@@ -303,7 +304,7 @@
 
 - (BOOL)setupDefaultProviders
 {
-    _httpService = [[MHVHttpService alloc] init];
+    _httpService = [[MHVHttpService alloc] initWithConfiguration:[MHVConfiguration new]];
     MHVCHECK_NOTNULL(_httpService);
     
     _provisioner = [[Provisioner alloc] init];

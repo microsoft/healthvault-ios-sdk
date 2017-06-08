@@ -17,13 +17,9 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVGoalRecommendationInstance.h"
 #import "MHVGoalsRecommendationsListViewController.h"
 #import "MHVGoalsRecommendationsDetailViewController.h"
-#import "MHVConnection.h"
 #import "MHVStatusLabel.h"
-#import "MHVGoalsRecommendationsApi.h"
-#import "MHVGoalRecommendationsResponse.h"
 #import "MHVTypeViewController.h"
 #import "MHVMoreFeatures.h"
 #import "MHVFeatureActions.h"

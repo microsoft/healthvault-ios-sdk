@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVConfiguration.h"
+#import "MHVConfigurationConstants.h"
 #import "MHVConnection.h"
 #import "MHVAuthSession.h"
 #import "MHVMethod.h"
@@ -36,11 +37,16 @@
 #import "MHVThingClient.h"
 #import "MHVRestRequest.h"
 #import "MHVBlobDownloadRequest.h"
+#import "MHVBlobUploadRequest.h"
 #import "MHVHttpServiceResponse.h"
 #import "MHVPersonInfo.h"
+#import "Logger.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
+
+static NSInteger kUnauthorizedServerError = 401;
+static NSInteger kInternalServerError = 500;
 
 @interface MHVConnection ()
 
@@ -101,22 +107,21 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     MHVASSERT_PARAMETER(operation);
     
     dispatch_async(self.completionQueue, ^
-    {
-        if (!operation.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
-        {
-            if (completion)
-            {
-                completion(nil, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The connection is not authenticated. You must first call authenticateWithViewController:completion: before this operation can be performed."]);
-            }
-            
-            return;
-        }
-        else
-        {
-            [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation completion:completion]];
-        }
-    });
-    
+                   {
+                       if (!operation.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
+                       {
+                           if (completion)
+                           {
+                               completion(nil, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The connection is not authenticated. You must first call authenticateWithViewController:completion: before this operation can be performed."]);
+                           }
+                           
+                           return;
+                       }
+                       else
+                       {
+                           [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation completion:completion]];
+                       }
+                   });
 }
 
 - (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
@@ -198,6 +203,10 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
     {
         [self executeBlobDownloadRequest:request];
     }
+    else if ([request.serviceOperation isKindOfClass:[MHVBlobUploadRequest class]])
+    {
+        [self executeBlobUploadRequest:request];
+    }
     else
     {
         NSString *message = [NSString stringWithFormat:@"ServiceOperation not known: %@", NSStringFromClass([request.serviceOperation class])];
@@ -207,15 +216,39 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeMethodRequest:(MHVHttpServiceRequest *)request
 {
+    MHVMethod *method = request.serviceOperation;
+
+
+    MHVLOG(@"Execute Method: %@", method.name);
+    
+    if (request.serviceOperation.cache)
+    {
+        // Handle returning cached values
+        MHVServiceResponse *cachedResponse = (MHVServiceResponse*)[request.serviceOperation.cache objectForKey:[request.serviceOperation getCacheKey]];
+        if (cachedResponse)
+        {
+            request.completion(cachedResponse, cachedResponse.error);
+            return;
+        }
+    }
+    
     [self.httpService sendRequestForURL:self.serviceInstance.healthServiceUrl
                              httpMethod:nil
-                                   body:[[self messageForMethod:request.serviceOperation] dataUsingEncoding:NSUTF8StringEncoding]
-                                headers:[self headersForMethod:request.serviceOperation]
+                                   body:[[self messageForMethod:method] dataUsingEncoding:NSUTF8StringEncoding]
+                                headers:[self headersForMethod:method]
                              completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
     {
         if (error)
         {
-            if (error.code == MHVErrorTypeUnauthorized)
+            if (response.statusCode == kInternalServerError &&
+                request.retryAttempts < self.configuration.retryOnInternal500Count)
+            {
+                //For 500 errors, should retry after a delay
+                [self retryRequest:request];
+                
+                return;
+            }
+            else if (error.code == MHVErrorTypeUnauthorized)
             {
                 [self refreshTokenAndReissueRequest:request];
                 
@@ -233,6 +266,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         }
         else
         {
+            
             [self parseResponse:response request:request isXML:YES completion:request.completion];
         }
     }];
@@ -240,8 +274,11 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeRestRequest:(MHVHttpServiceRequest *)request
 {
+    // TODO: Add cache support
     MHVRestRequest *restRequest = request.serviceOperation;
     
+    MHVLOG(@"Execute Request: %@", restRequest.path);
+
     // If no URL is set, build it from serviceInstance
     if (!restRequest.url)
     {
@@ -255,6 +292,9 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
         headers[@"Authorization"] = [NSString stringWithFormat:@"MSH-V1 app-token=%@,offline-person-id=%@,record-id=%@", self.sessionCredential.token, self.personInfo.ID, self.personInfo.selectedRecordID];
     }
     
+    // Add the required REST version header
+    headers[@"x-ms-version"] = self.configuration.restVersion;
+
     headers[@"Content-Type"] = @"application/json";
     
     [self.httpService sendRequestForURL:restRequest.url
@@ -263,9 +303,18 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
                                 headers:headers
                              completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
     {
-        // If unauthorized, refresh token and retry request
-        if (error.code == MHVErrorTypeUnauthorized || response.statusCode == 401)
+        if (response.statusCode == kInternalServerError &&
+            request.retryAttempts < self.configuration.retryOnInternal500Count)
         {
+            //For 500 errors, should retry after a delay
+            [self retryRequest:request];
+            
+            return;
+        }
+        else if (error.code == MHVErrorTypeUnauthorized ||
+                 response.statusCode == kUnauthorizedServerError)
+        {
+            // If unauthorized, refresh token and retry request
             [self refreshTokenAndReissueRequest:request];
             
             return;
@@ -303,6 +352,7 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)executeBlobDownloadRequest:(MHVHttpServiceRequest *)request
 {
+    // TODO: Add cache support
     MHVBlobDownloadRequest *blobDownloadRequest = request.serviceOperation;
 
     if (blobDownloadRequest.toFilePath)
@@ -340,6 +390,43 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
              }
          }];
     }
+}
+
+
+- (void)executeBlobUploadRequest:(MHVHttpServiceRequest *)request
+{
+    MHVBlobUploadRequest *blobUploadRequest = request.serviceOperation;
+
+    [self.httpService uploadBlobSource:blobUploadRequest.blobSource
+                                 toUrl:blobUploadRequest.destinationURL
+                             chunkSize:blobUploadRequest.chunkSize
+                            completion:^(MHVHttpServiceResponse * _Nullable response, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            if (request.completion)
+            {
+                request.completion(nil, error);
+            }
+            return;
+        }
+        
+        MHVServiceResponse *serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:response isXML:NO];
+        if (serviceResponse.error)
+        {
+            if (request.completion)
+            {
+                request.completion(nil, serviceResponse.error);
+            }
+        }
+        else
+        {
+            if (request.completion)
+            {
+                request.completion(serviceResponse, nil);
+            }
+        }
+    }];
 }
 
 - (NSString *)messageForMethod:(MHVMethod *)method
@@ -390,8 +477,28 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
     if (completion)
     {
+        if (request.serviceOperation.cache)
+        {
+            [request.serviceOperation.cache setObject:serviceResponse forKey:[request.serviceOperation getCacheKey]];
+        }
+        
         completion(serviceResponse, error);
     }
+}
+
+- (void)retryRequest:(MHVHttpServiceRequest *)request
+{
+    request.retryAttempts += 1;
+    
+    MHVLOG(@"500 error from server, retrying in %0.1f seconds", self.configuration.retryOnInternal500SleepDuration);
+
+    // Dispatch to main queue, so it holds a reference to the internal timer used by performSelector:withObject:afterDelay:
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+    {
+        [self performSelector:@selector(executeHttpServiceRequest:)
+                   withObject:request
+                   afterDelay:self.configuration.retryOnInternal500SleepDuration];
+    }];
 }
 
 - (void)refreshSessionCredentialWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
@@ -402,6 +509,20 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
 
 - (void)refreshTokenAndReissueRequest:(MHVHttpServiceRequest *)request
 {
+    // If it already refreshed the token for this request, don't retry since refreshing again won't fix the problem
+    if (request.hasRefreshedToken)
+    {
+        MHVLOG(@"The refreshed session authorization is invalid or expired.");
+        
+        if (request.completion)
+        {
+            request.completion(nil, [NSError error:[NSError MHVUnauthorizedError]
+                                   withDescription:@"The session authorization was refreshed, but the new authorization is invalid or expired."]);
+        }
+        return;
+    }
+    request.hasRefreshedToken = YES;
+    
     dispatch_async(self.completionQueue, ^
     {
         [self.requests addObject:request];
@@ -411,10 +532,14 @@ static NSString *const kResponseIdContextKey = @"WC_ResponseId";
             return;
         }
         
+        MHVLOG(@"Refreshing Credentials");
+        
         [self refreshSessionCredentialWithCompletion:^(NSError * _Nullable error)
         {
             dispatch_async(self.completionQueue, ^
             {
+                MHVLOG(@"Refreshed token, re-issuing %li request(s)", (unsigned long)self.requests.count);
+                
                 while (self.requests.count > 0)
                 {
                     MHVHttpServiceRequest *request = [self.requests firstObject];

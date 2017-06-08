@@ -202,10 +202,10 @@ NSString* const XExceptionNotSerializable;
 
 @end
 
-void throwWriterError(void);
+void logWriterError(void);
 
 #define MHVCHECK_XWRITE(condition) \
     if (!(condition)) \
     { \
-        throwWriterError(); \
+        logWriterError(); \
     }

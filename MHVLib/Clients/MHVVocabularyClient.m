@@ -27,6 +27,7 @@
 @interface MHVVocabularyClient ()
 
 @property (nonatomic, weak) id<MHVConnectionProtocol> connection;
+@property (nonatomic, readwrite) BOOL cacheEnabled;
 
 @end
 
@@ -42,7 +43,10 @@
     if (self)
     {
         _connection = connection;
+        _cache = [[NSCache alloc] init];
+        _cacheEnabled = YES;
     }
+    
     return self;
 }
 
@@ -56,6 +60,7 @@
     }
     
     MHVMethod *method = [MHVMethod getVocabulary];
+    [self applyCachingIfEnabledForMethod:method];
     
     [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse *_Nullable response, NSError  *_Nullable error)
     {
@@ -194,7 +199,8 @@
         return;
     }
     
-    MHVMethod * method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:nil];
+    MHVMethod *method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:nil];
+    [self applyCachingIfEnabledForMethod:method];
     
     [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
@@ -246,6 +252,7 @@
     }
     
     MHVMethod * method = [self getVocabularySearchMethodWithSearchValue:searchValue andSearchMode:searchMode andMaxResults:maxResults andVocabularyKey:vocabularyKey];
+    [self applyCachingIfEnabledForMethod:method];
     
     [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
      {
@@ -262,6 +269,24 @@
      }];
 }
 
+- (void)setCacheEnabled:(BOOL)cacheEnabled
+{
+    _cacheEnabled = cacheEnabled;
+}
+
+- (void)clearCache
+{
+    [self.cache removeAllObjects];
+}
+
+#pragma mark - Private
+- (void)applyCachingIfEnabledForMethod:(MHVMethod *)method
+{
+    if (self.cacheEnabled)
+    {
+        method.cache = self.cache;
+    }
+}
 /**
  * Gets a MHVVocabularyCodeSetCollection with VocabularyCodeSets for each of the VocabularyKeys provided
  *
@@ -278,6 +303,7 @@
                      completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
 {
     MHVMethod *method = [self getVocabularyGetMethodWithKeys:vocabularyKeys withCultureIsFixed:cultureIsFixed];
+    [self applyCachingIfEnabledForMethod:method];
     
     // 1) Request all Vocabularies based on the provided VocabularyKeyCollection
     [self.connection executeHttpServiceOperation:method completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) {

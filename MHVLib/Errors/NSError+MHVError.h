@@ -22,6 +22,7 @@
 
 + (NSError *)MVHInvalidParameter;
 + (NSError *)MVHInvalidParameter:(NSString *)message;
++ (NSError *)MVHRequiredParameterIsNil;
 + (NSError *)MHVOperationCannotBePerformed;
 + (NSError *)MHVIOError;
 + (NSError *)MHVUnauthorizedError;

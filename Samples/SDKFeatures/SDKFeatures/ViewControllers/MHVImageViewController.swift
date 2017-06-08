@@ -1,5 +1,5 @@
 //
-//  MHVVocabularyClient.h
+//  MHVImageViewController.swift
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -15,21 +15,32 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "MHVClient.h"
-#import "MHVVocabularyClientProtocol.h"
-#import "MHVMethod.h"
+import UIKit
 
-@protocol MHVConnectionProtocol;
+class MHVImageViewController: UIViewController {
 
-NS_ASSUME_NONNULL_BEGIN
+    @IBOutlet weak var imageView: UIImageView!
+    
+    var image: UIImage?
 
-@interface MHVVocabularyClient : NSObject<MHVVocabularyClientProtocol>
+    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, image: UIImage)
+    {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.image = image
+    }
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        self.image = nil
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
 
-@property (readonly, nonatomic) NSCache *cache;
-
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
-
-@end
-
-NS_ASSUME_NONNULL_END
+        imageView.image = self.image
+    }
+}

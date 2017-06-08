@@ -42,6 +42,11 @@
 @property (nonatomic, strong) NSURL *restHealthVaultUrl;
 
 /**
+ Gets the version string to send with requests to the Rest HealthVault service
+ */
+@property (nonatomic, strong) NSString *restVersion;
+
+/**
  Gets the application's unique identifier.
  
  @note This property corresponds to the "HV_ApplicationId" configuration value when reading from web.config.

@@ -18,9 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVActionPlanTaskDetailViewController.h"
-#import "MHVActionPlanTaskInstance.h"
-#import "MHVActionPlanTasksApi.h"
-#import "MHVConnection.h"
 
 @interface MHVActionPlanTaskDetailViewController ()
 

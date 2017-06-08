@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "XSerializer.h"
+#import "Logger.h"
 
 NSString* const XExceptionNotSerializable = @"X_NotSerializable";
 
@@ -360,13 +361,15 @@ LError:
 {
     if (!self.isTextualNode)
     {
-        [XException throwException:XExceptionNotText fromReader:m_reader];
+        MHVLOG(@"Could not read value into a string because the current node is not textual.");
+        return nil;
     }
     
     NSString *value = self.value;
     if (!value)
     {
-        [XException throwException:XExceptionNotText fromReader:m_reader];
+        MHVLOG(@"Could not read value into a string because the value is nil.");
+        return nil;
     }
     [self read];
     return value;
@@ -612,9 +615,11 @@ LError:
 {
     if (![self isStartElementWithName:name])
     {
-        [XException throwException:XExceptionElementMismatch reason:name fromReader:m_reader];
+        MHVLOG(@"Cannot read the start element because there is a mismatch between the local name (%@) and the name parameter (%@).", self.localName, name);
+        return;
     }
-    return [self readElementContentIntoObject:content];
+    
+    [self readElementContentIntoObject:content];
 }
 
 -(id) readElement:(NSString *)name asClass:(Class)classObj
@@ -864,7 +869,8 @@ LError:
 {
     if (![self isStartElementWithXmlName:xName])
     {
-        [XException throwException:XExceptionElementMismatch xmlReason:xName fromReader:m_reader];
+        MHVLOG(@"The start element (%@) does not match the name (%@).", self.localName,  [NSString newFromXmlString:(xmlChar *)xName]);
+        return;
     }
     
     return [self readElementContentIntoObject:content];
@@ -1058,9 +1064,9 @@ LError:
 @end
 
 
-void throwWriterError(void)
+void logWriterError(void)
 {
-    [XException throwException:XExceptionWriterError reason:c_emptyString]; 
+    MHVLOG(@"An unknown error has occured while attempting to serialize an object.");
 }
 
 @implementation XWriter (XSerializer)
@@ -1103,9 +1109,9 @@ void throwWriterError(void)
 
 -(void) writeElementRequired:(NSString *)name content:(id<XSerializable>)content
 {
-    if (content == nil)
+    if (!content)
     {
-        [XException throwException:XExceptionRequiredDataMissing reason:name];
+        MHVLOG(@"Failed to write element (%@) because the content is nil.", name);
     }
     
     MHVCHECK_XWRITE([self writeStartElement:name]);
@@ -1134,7 +1140,7 @@ void throwWriterError(void)
 {
     if ([NSArray isNilOrEmpty:array])
     {
-        [XException throwException:XExceptionRequiredDataMissing reason:name];
+        MHVLOG(@"Failed to write element array (%@) because the required array is nil", name);
     }
     
     for (id obj in array)
