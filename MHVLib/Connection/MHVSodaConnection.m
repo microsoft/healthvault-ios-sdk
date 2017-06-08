@@ -338,8 +338,9 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 - (void)setServiceInstanceWithInstanceId:(NSString *)instanceId
                               completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    [self.platformClient getServiceDefinitionWithWithResponseSections:MHVServiceInfoSectionsTopology
-                                                           completion:^(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error)
+    [self.platformClient getServiceDefinitionWithWithLastUpdatedTime:nil
+                                                    responseSections:MHVServiceInfoSectionsTopology
+                                                          completion:^(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error)
     {
         if (error)
         {

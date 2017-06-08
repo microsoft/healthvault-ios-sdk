@@ -82,7 +82,7 @@ describe(@"MHVConnectionTests", ^
                                                                     shellAuthService:authService];
     
     // Set service and credential for tests
-    testConnection.serviceInstance = [[MHVInstance alloc] init];
+    testConnection.serviceInstance = [[MHVServiceInstance alloc] init];
     testConnection.serviceInstance.healthServiceUrl = configuration.defaultHealthVaultUrl;
     testConnection.serviceInstance.restServiceUrl = configuration.restHealthVaultUrl;
     

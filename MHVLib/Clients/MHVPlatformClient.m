@@ -107,38 +107,44 @@
     }];
 }
 
-- (void)getServiceDefinitionWithCompletion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
-{
-    [self getServiceDefinitionWithWithParameters:nil
-                                      completion:completion];
-}
-
-- (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
-                                         completion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
-{
-    NSString *parameters = [self parametersForInfoSections:MHVServiceInfoSectionsNone lastUpdatedTime:lastUpdatedTime];
-    
-    [self getServiceDefinitionWithWithParameters:parameters
-                                      completion:completion];
-}
-
-- (void)getServiceDefinitionWithWithResponseSections:(MHVServiceInfoSections)responseSections
-                                          completion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
-{
-    NSString *parameters = [self parametersForInfoSections:responseSections lastUpdatedTime:nil];
-    
-    [self getServiceDefinitionWithWithParameters:parameters
-                                      completion:completion];
-}
-
 - (void)getServiceDefinitionWithWithLastUpdatedTime:(NSDate *)lastUpdatedTime
                                    responseSections:(MHVServiceInfoSections)responseSections
                                          completion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion;
 {
     NSString *parameters = [self parametersForInfoSections:responseSections lastUpdatedTime:lastUpdatedTime];
     
-    [self getServiceDefinitionWithWithParameters:parameters
-                                      completion:completion];
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    MHVMethod *method = [MHVMethod getServiceDefinition];
+    method.parameters = parameters;
+    
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            completion(nil, error);
+            
+            return;
+        }
+        
+        MHVServiceDefinition *definition = (MHVServiceDefinition *)[XSerializer newFromString:response.infoXml withRoot:@"info" asClass:[MHVServiceDefinition class]];
+        
+        if (!definition)
+        {
+            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetServiceDefinition response is invalid."]);
+            
+            return;
+        }
+        
+        completion(definition, nil);
+        
+    }];
 }
 
 - (void)getHealthRecordThingTypeDefinitionsWithTypeIds:(NSArray<NSString *> *_Nullable)typeIds
@@ -242,6 +248,21 @@
 - (void)removeApplicationAuthorizationWithRecordId:(NSUUID *)recordId
                                         completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!recordId)
+    {
+        completion([NSError error:[NSError MVHInvalidParameter] withDescription:@"recordId is a required parameter."]);
+        
+        return;
+    }
+    
     MHVMethod *method = [MHVMethod removeApplicationRecordAuthorization];
     method.recordId = recordId;
     
@@ -256,43 +277,6 @@
 }
 
 #pragma mark - Private
-
-- (void)getServiceDefinitionWithWithParameters:(NSString *)parameters
-                                    completion:(void(^)(MHVServiceDefinition *_Nullable serviceDefinition, NSError *_Nullable error))completion
-{
-    MHVASSERT_PARAMETER(completion);
-    
-    if (!completion)
-    {
-        return;
-    }
-    
-    MHVMethod *method = [MHVMethod getServiceDefinition];
-    method.parameters = parameters;
-    
-    [self.connection executeHttpServiceOperation:method
-                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
-    {
-        if (error)
-        {
-            completion(nil, error);
-            
-            return;
-        }
-        
-        MHVServiceDefinition *definition = (MHVServiceDefinition *)[XSerializer newFromString:response.infoXml withRoot:@"info" asClass:[MHVServiceDefinition class]];
-        
-        if (!definition)
-        {
-            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetServiceDefinition response is invalid."]);
-            
-            return;
-        }
-        
-        completion(definition, nil);
-    
-    }];
-}
 
 - (NSString *)parametersForInfoSections:(MHVServiceInfoSections)infoSections lastUpdatedTime:(NSDate *)lastUpdatedTime
 {

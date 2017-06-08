@@ -134,7 +134,7 @@
 /// Authorizes more records.
 /// @param target - callback handler.
 /// @param authCompleted - method that is called when the authentication process is complete.
-/// @param shellAuthRequire - method that is called when the application needs to perform authorization.
+/// @param shellAuthRequired - method that is called when the application needs to perform authorization.
 /// Applications should call SaveSettings in both of the handlers.
 - (void)   authorizeRecords:(NSObject *)target
     authenticationCompleted:(SEL)authCompleted
@@ -160,7 +160,6 @@
 - (void)saveSettings;
 
 /// Loads the last-saved configuration from isolated storage.
-/// @param name - the filename to use.
 - (void)loadSettings;
 
 //
