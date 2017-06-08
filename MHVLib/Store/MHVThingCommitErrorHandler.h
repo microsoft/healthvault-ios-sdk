@@ -35,7 +35,6 @@
 -(BOOL) shouldCreateNewThingForConflict:(MHVThingChange *) change onException:(id) ex;
 
 -(BOOL) isThingKeyNotFoundException:(id) ex;
--(BOOL) isSerializationException:(id) ex;
 -(BOOL) isAccessDeniedException:(id) ex;
 -(BOOL) isClientException:(id) ex;
 
