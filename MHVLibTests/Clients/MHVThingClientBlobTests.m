@@ -40,9 +40,9 @@ describe(@"MHVThingClient", ^
     __block MHVServiceResponse *serviceResponse;
     
     //Upload blob has additional operations and responses
-    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationForUploadBlob;
+    __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationForBlob;
     __block id<MHVHttpServiceOperationProtocol> requestedServiceOperationForPutThings;
-    __block MHVServiceResponse *serviceResponseForUploadBlob;
+    __block MHVServiceResponse *serviceResponseForBlob;
     __block MHVServiceResponse *serviceResponseForPutThings;
     
     //Results
@@ -50,22 +50,8 @@ describe(@"MHVThingClient", ^
     __block MHVThingCollection *resultThings;
     __block NSError *resultError;
     __block NSData *resultData;
+    __block UIImage *resultImage;
 
-    beforeEach(^{
-        requestedServiceOperation = nil;
-        requestedServiceOperationForUploadBlob = nil;
-        requestedServiceOperationForPutThings = nil;
-        
-        serviceResponse = nil;
-        serviceResponseForUploadBlob = nil;
-        serviceResponseForPutThings = nil;
-        
-        resultThing = nil;
-        resultThings = nil;
-        resultError = nil;
-        resultData = nil;
-    });
-    
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
     [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id (NSArray *params)
      {
@@ -76,10 +62,10 @@ describe(@"MHVThingClient", ^
              requestedServiceOperation = params[0];
              completion(serviceResponse, nil);
          }
-         else if (!requestedServiceOperationForUploadBlob)
+         else if (!requestedServiceOperationForBlob)
          {
-             requestedServiceOperationForUploadBlob = params[0];
-             completion(serviceResponseForUploadBlob, nil);
+             requestedServiceOperationForBlob = params[0];
+             completion(serviceResponseForBlob, nil);
          }
          else if (!requestedServiceOperationForPutThings)
          {
@@ -115,6 +101,34 @@ describe(@"MHVThingClient", ^
             
             return thing;
         });
+    
+    let(filePath, ^
+        {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *path = [[paths firstObject] stringByAppendingPathComponent:@"test.file"];
+            
+            NSLog(@"File Path: %@", path);
+            
+            return path;
+        });
+    
+    beforeEach(^{
+        requestedServiceOperation = nil;
+        requestedServiceOperationForBlob = nil;
+        requestedServiceOperationForPutThings = nil;
+        
+        serviceResponse = nil;
+        serviceResponseForBlob = nil;
+        serviceResponseForPutThings = nil;
+        
+        resultThing = nil;
+        resultThings = nil;
+        resultError = nil;
+        resultData = nil;
+        resultImage = nil;
+        
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+    });
     
     context(@"RefreshBlobUrlsForThing", ^
             {
@@ -246,7 +260,7 @@ describe(@"MHVThingClient", ^
                 
                 it(@"should fail if record id is nil", ^
                    {
-                       [thingClient refreshBlobUrlsForThings:allergyThing
+                       [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThing:allergyThing]
                                                     recordId:nil
                                                   completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
                         {
@@ -258,6 +272,8 @@ describe(@"MHVThingClient", ^
                        [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
+    
+#pragma mark - Download Blob Data
     
     context(@"DownloadBlob Data", ^
             {
@@ -330,6 +346,122 @@ describe(@"MHVThingClient", ^
                        [[expectFutureValue(theValue(resultError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
+    
+#pragma mark - Download person image
+
+    context(@"DownloadPersonImage With No Image", ^
+            {
+                beforeEach(^{
+                    // Mock response for thing query for MHVPersonalImage
+                    NSString *getThingsXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"C18AF075-6DA4-46AF-ADFB-5FF2F6AAD4DF\"><filtered>true</filtered></group></wc:info></response>";
+                    
+                    MHVHttpServiceResponse *getThingsResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[getThingsXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                         statusCode:0];
+                    
+                    serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:getThingsResponse isXML:YES];
+                    
+                    [thingClient getPersonalImageWithRecordId:recordId
+                                                   completion:^(UIImage * _Nullable image, NSError * _Nullable error)
+                     {
+                         resultImage = image;
+                         resultError = error;
+                     }];
+                });
+                
+                it(@"should have no error", ^
+                   {
+                       [[expectFutureValue(resultError) shouldEventually] beNil];
+                   });
+                it(@"should return no image", ^
+                   {
+                       [[expectFutureValue(resultImage) shouldEventually] beNil];
+                   });
+            });
+
+    context(@"DownloadPersonImage With Image", ^
+            {
+                beforeEach(^{
+                    // Mock response for thing query for MHVPersonalImage
+                    NSString *getThingsXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"648F6C9F-9B07-4272-89F4-19F923D1C65E\"><thing><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id><type-id name=\"File\">bd0403c5-4ae2-4b0e-a8db-1888678e4528</type-id><thing-state>Active</thing-state><flags>0</flags><eff-date>2017-06-02T22:01:52.471</eff-date><data-xml><file><name>FILENAME.JPG</name><size>4491016</size><content-type><text>image/jpeg</text></content-type></file><common /></data-xml><blob-payload><blob><blob-info><name/><content-type>image/jpeg</content-type><hash-info><algorithm>SHA256Block</algorithm><params><block-size>2097152</block-size></params><hash>D4karBmHN0/IYQEMAZg3lyTK62Bi5+rmOf8JtvzPnUo=</hash></hash-info></blob-info><content-length>4491016</content-length><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url></blob></blob-payload></thing></group></wc:info></response>";
+                    
+                    MHVHttpServiceResponse *getThingsResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[getThingsXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                          statusCode:0];
+                    
+                    serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:getThingsResponse isXML:YES];
+                    
+                    // Make a simple blank image so its data will convert to a UIImage
+                    UIGraphicsBeginImageContext(CGSizeMake(50, 100));
+                    UIImage *testImage = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+
+                    MHVHttpServiceResponse *getImageResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:UIImagePNGRepresentation(testImage)
+                                                                                                          statusCode:0];
+
+                    serviceResponseForBlob = [[MHVServiceResponse alloc] initWithWebResponse:getImageResponse isXML:NO];
+
+                    [thingClient getPersonalImageWithRecordId:recordId
+                                                   completion:^(UIImage * _Nullable image, NSError * _Nullable error)
+                     {
+                         resultImage = image;
+                         resultError = error;
+                     }];
+                });
+                
+                it(@"should have no error", ^
+                   {
+                       [[expectFutureValue(resultError) shouldEventually] beNil];
+                   });
+                it(@"should return image", ^
+                   {
+                       [[expectFutureValue(resultImage) shouldEventually] beNonNil];
+                   });
+                it(@"should return correct image size", ^
+                   {
+                       [[expectFutureValue(theValue(resultImage.size.width)) shouldEventually] equal:@(50)];
+                       [[expectFutureValue(theValue(resultImage.size.height)) shouldEventually] equal:@(100)];
+                   });
+            });
+
+    context(@"DownloadPersonImage With Invalid Data", ^
+            {
+                beforeEach(^{
+                    // Mock response for thing query for MHVPersonalImage
+                    NSString *getThingsXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"648F6C9F-9B07-4272-89F4-19F923D1C65E\"><thing><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id><type-id name=\"File\">bd0403c5-4ae2-4b0e-a8db-1888678e4528</type-id><thing-state>Active</thing-state><flags>0</flags><eff-date>2017-06-02T22:01:52.471</eff-date><data-xml><file><name>FILENAME.JPG</name><size>4491016</size><content-type><text>image/jpeg</text></content-type></file><common /></data-xml><blob-payload><blob><blob-info><name/><content-type>image/jpeg</content-type><hash-info><algorithm>SHA256Block</algorithm><params><block-size>2097152</block-size></params><hash>D4karBmHN0/IYQEMAZg3lyTK62Bi5+rmOf8JtvzPnUo=</hash></hash-info></blob-info><content-length>4491016</content-length><blob-ref-url>https://platform.healthvault-ppe.com/streaming/wildcatblob.ashx?blob-ref-token=TOKEN</blob-ref-url></blob></blob-payload></thing></group></wc:info></response>";
+                    
+                    MHVHttpServiceResponse *getThingsResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[getThingsXmlResponse dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                          statusCode:0];
+                    
+                    serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:getThingsResponse isXML:YES];
+                    
+                    // Mock return data that is not an image
+                    MHVHttpServiceResponse *getImageResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"NotAnImage" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                         statusCode:0];
+                    
+                    serviceResponseForBlob = [[MHVServiceResponse alloc] initWithWebResponse:getImageResponse isXML:NO];
+                    
+                    [thingClient getPersonalImageWithRecordId:recordId
+                                                   completion:^(UIImage * _Nullable image, NSError * _Nullable error)
+                     {
+                         resultImage = image;
+                         resultError = error;
+                     }];
+                });
+                
+                it(@"should have error", ^
+                   {
+                       [[expectFutureValue(resultError) shouldEventually] beNonNil];
+                   });
+                it(@"should have error description", ^
+                   {
+                       [[expectFutureValue(resultError.localizedDescription) shouldEventually] equal:@"Blob data could not be converted to UIImage"];
+                   });
+                it(@"should return no image", ^
+                   {
+                       [[expectFutureValue(resultImage) shouldEventually] beNil];
+                   });
+            });
+
+#pragma mark - AddBlobToThing
     
     context(@"AddBlobToThing Errors", ^
             {
@@ -422,7 +554,7 @@ describe(@"MHVThingClient", ^
                     MHVHttpServiceResponse *uploadResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:nil
                                                                                                        statusCode:0];
                     
-                    serviceResponseForUploadBlob = [[MHVServiceResponse alloc] initWithWebResponse:uploadResponse isXML:NO];
+                    serviceResponseForBlob = [[MHVServiceResponse alloc] initWithWebResponse:uploadResponse isXML:NO];
                     
                     // Mock response for update thing with PutThings
                     NSString *putThingsXmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.PutThings\">" \

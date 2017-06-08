@@ -26,6 +26,8 @@
 
 @implementation MHVMethod
 
+@synthesize cache = _cache;
+
 - (instancetype)initWithName:(NSString *)name version:(int)version isAnonymous:(BOOL)isAnonymous
 {
     self = [super init];
@@ -52,6 +54,11 @@
     }
     
     return self;
+}
+
+- (NSString *)getCacheKey
+{
+    return (self.parameters != nil) ? [self.name stringByAppendingString:self.parameters] : self.name;
 }
 
 + (MHVMethod *)allocatePackageId;

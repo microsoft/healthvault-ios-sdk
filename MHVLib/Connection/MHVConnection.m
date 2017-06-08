@@ -107,22 +107,21 @@ static NSInteger kInternalServerError = 500;
     MHVASSERT_PARAMETER(operation);
     
     dispatch_async(self.completionQueue, ^
-    {
-        if (!operation.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
-        {
-            if (completion)
-            {
-                completion(nil, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The connection is not authenticated. You must first call authenticateWithViewController:completion: before this operation can be performed."]);
-            }
-            
-            return;
-        }
-        else
-        {
-            [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation completion:completion]];
-        }
-    });
-    
+                   {
+                       if (!operation.isAnonymous && [NSString isNilOrEmpty:self.sessionCredential.token])
+                       {
+                           if (completion)
+                           {
+                               completion(nil, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The connection is not authenticated. You must first call authenticateWithViewController:completion: before this operation can be performed."]);
+                           }
+                           
+                           return;
+                       }
+                       else
+                       {
+                           [self executeHttpServiceRequest:[[MHVHttpServiceRequest alloc] initWithServiceOperation:operation completion:completion]];
+                       }
+                   });
 }
 
 - (void)getPersonInfoWithCompletion:(void (^_Nonnull)(MHVPersonInfo *_Nullable, NSError *_Nullable error))completion;
@@ -221,6 +220,17 @@ static NSInteger kInternalServerError = 500;
 
     MHVLOG([NSString stringWithFormat:@"Execute Method: %@", method.name]);
     
+    if (request.serviceOperation.cache)
+    {
+        // Handle returning cached values
+        MHVServiceResponse *cachedResponse = (MHVServiceResponse*)[request.serviceOperation.cache objectForKey:[request.serviceOperation getCacheKey]];
+        if (cachedResponse)
+        {
+            request.completion(cachedResponse, cachedResponse.error);
+            return;
+        }
+    }
+    
     [self.httpService sendRequestForURL:self.serviceInstance.healthServiceUrl
                              httpMethod:nil
                                    body:[[self messageForMethod:method] dataUsingEncoding:NSUTF8StringEncoding]
@@ -255,6 +265,7 @@ static NSInteger kInternalServerError = 500;
         }
         else
         {
+            
             [self parseResponse:response request:request isXML:YES completion:request.completion];
         }
     }];
@@ -262,6 +273,7 @@ static NSInteger kInternalServerError = 500;
 
 - (void)executeRestRequest:(MHVHttpServiceRequest *)request
 {
+    // TODO: Add cache support
     MHVRestRequest *restRequest = request.serviceOperation;
     
     MHVLOG([NSString stringWithFormat:@"Execute Request: %@", restRequest.path]);
@@ -339,6 +351,7 @@ static NSInteger kInternalServerError = 500;
 
 - (void)executeBlobDownloadRequest:(MHVHttpServiceRequest *)request
 {
+    // TODO: Add cache support
     MHVBlobDownloadRequest *blobDownloadRequest = request.serviceOperation;
 
     if (blobDownloadRequest.toFilePath)
@@ -463,6 +476,11 @@ static NSInteger kInternalServerError = 500;
 
     if (completion)
     {
+        if (request.serviceOperation.cache)
+        {
+            [request.serviceOperation.cache setObject:serviceResponse forKey:[request.serviceOperation getCacheKey]];
+        }
+        
         completion(serviceResponse, error);
     }
 }
