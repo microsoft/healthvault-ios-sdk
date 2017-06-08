@@ -59,6 +59,8 @@ class MedicationVocabSearcher
         let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: HVFeaturesConfiguration.configuration())
         let key = MHVVocabularyKey.init(name: "RxNorm Active Medicines", andFamily: "RxNorm",
                                         andVersion: "09AB_091102F", andCode: nil)
+        
+        //TODO: handle autocomplete suggestions coming in out of order
         connection.vocabularyClient()?.searchVocabulary(withSearchValue: searchValue,
                                                         searchMode: MHVSearchMode.contains, vocabularyKey: key!,
                                                         maxResults: 25, completion:
@@ -67,11 +69,5 @@ class MedicationVocabSearcher
                 let meds = matchedMeds!.firstObject().vocabularyCodeItems
                 completion(meds)
             })
-    }
-    
-    func showMedList(textField: UITextField, nameTableView: UITableView, range: NSRange, string: String,
-                     completion: @escaping(MHVVocabularyCodeItemCollection?) -> Void)
-    {
-        
     }
 }

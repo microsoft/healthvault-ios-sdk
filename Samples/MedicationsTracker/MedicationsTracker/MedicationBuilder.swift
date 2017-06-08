@@ -22,53 +22,58 @@ import Foundation
 class MedicationBuilder {
     
     // MARK: Properties
-    var thing: MHVThing?
-    var med: MHVMedication?
+    private var thing: MHVThing?
+    private var med: MHVMedication?
     
     // MARK: Builder functions
-    func begin(mhvThing: MHVThing) -> MedicationBuilder
+    func buildMedication(mhvThing: MHVThing) -> MedicationBuilder
     {
         thing = mhvThing
         med = mhvThing.medication()
         return self
     }
     
-    func setName(name: String) -> MedicationBuilder
+    func updateNameIfNotNil(name: String?) -> Bool
     {
-        med!.name = MHVCodableValue.fromText(name)
-        return self
+        guard let medName = name else
+        {
+            return false
+        }
+        
+        med!.name = MHVCodableValue.fromText(medName)
+        return true
     }
     
-    func setStrengthIfNotNil(amount: String, unit: String?) -> MedicationBuilder
+    func updateStrengthIfNotNil(amount: String, unit: String?) -> Bool
     {
         guard let strengthAmount = Double(amount), let strengthUnit = unit else
         {
-            return self
+            return false
         }
         med!.strength = MHVApproxMeasurement.fromValue(strengthAmount, unitsText: strengthUnit,
                                                        unitsCode: strengthUnit, unitsVocab: "medication-strength-unit")
-        return self
+        return true
     }
     
-    func setDoseIfNotNil(amount: String, unit: String?) -> MedicationBuilder
+    func updateDoseIfNotNil(amount: String, unit: String?) -> Bool
     {
         guard let doseAmount = Double(amount), let doseUnit = unit else
         {
-            return self
+            return false
         }
         med!.dose = MHVApproxMeasurement.fromValue(doseAmount, unitsText: doseUnit,
                                                    unitsCode: doseUnit, unitsVocab: "medication-dose-units")
-        return self
+        return true
     }
     
-    func setFrequencyIfNotNil(frequency: String?) -> MedicationBuilder
+    func updateFrequencyIfNotNil(frequency: String?) -> Bool
     {
         guard let freq = frequency else
         {
-            return self
+            return false
         }
         med!.frequency = MHVApproxMeasurement.fromDisplayText(freq)
-        return self
+        return true
     }
     
     func constructMedication() -> MHVThing

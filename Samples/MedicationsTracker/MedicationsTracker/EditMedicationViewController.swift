@@ -93,15 +93,16 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     {
         if(FormSubmission.canSubmit(subviews: self.view.subviews))
         {
-            let medication = medicationBuilder!
-                .begin(mhvThing: medicationThing!)
-                .setName(name: nameField.text!)
-                .setStrengthIfNotNil(amount: strengthAmountField.text!, unit: strengthUnitField.text!)
-                .setDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
-                .setFrequencyIfNotNil(frequency: howOftenField.text!)
-                .constructMedication()
+            let medToConstruct = medicationBuilder?.buildMedication(mhvThing: medicationThing!)
+            _ = medToConstruct?.updateNameIfNotNil(name: nameField.text!)
+            _ = medToConstruct?.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
+            _ = medToConstruct?.updateStrengthIfNotNil(amount: strengthAmountField.text!, unit: strengthUnitField.text!)
+            _ = medToConstruct?.updateFrequencyIfNotNil(frequency: howOftenField.text!)
+            
+            let medication = medToConstruct?.constructMedication()
+
             let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: HVFeaturesConfiguration.configuration())
-            connection.thingClient()?.update(medication, record: connection.personInfo!.selectedRecordID, completion:
+            connection.thingClient()?.update(medication!, record: connection.personInfo!.selectedRecordID, completion:
                 {
                     (error: Error?) in
                 })

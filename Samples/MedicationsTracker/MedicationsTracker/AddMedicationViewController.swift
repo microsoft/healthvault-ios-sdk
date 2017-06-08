@@ -81,15 +81,16 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
     {
         if(FormSubmission.canSubmit(subviews: self.view.subviews))
         {
-            let medication = medicationBuilder!
-                .begin(mhvThing: MHVMedication.newThing())
-                .setName(name: nameField.text!)
-                .setDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
-                .constructMedication()
+            let medicationToConstruct = medicationBuilder?.buildMedication(mhvThing: MHVMedication.newThing())
+            _ = medicationToConstruct?.updateNameIfNotNil(name: nameField.text!)
+            _ = medicationToConstruct?.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
+            
+            let medication = medicationToConstruct?.constructMedication()
+            
             let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(
                 with: HVFeaturesConfiguration.configuration())
             connection.thingClient()?.createNewThing(
-                medication, record: connection.personInfo!.selectedRecordID, completion:
+                medication!, record: connection.personInfo!.selectedRecordID, completion:
                 {
                     (error: Error?) in
                 })
