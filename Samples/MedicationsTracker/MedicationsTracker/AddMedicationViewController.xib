@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="doseAmountErrorLabel" destination="enJ-5o-n36" id="gEg-JZ-mra"/>
                 <outlet property="doseAmountField" destination="zDb-Pa-aaz" id="bpJ-XX-XPN"/>
+                <outlet property="doseUnitErrorLabel" destination="Uop-aL-aHF" id="X3t-yL-zRl"/>
                 <outlet property="doseUnitField" destination="pGL-ah-QHf" id="FOt-Mn-lPw"/>
                 <outlet property="medicationErrorLabel" destination="HGf-QJ-xas" id="7da-3D-XmA"/>
                 <outlet property="nameField" destination="mmL-qi-kM0" id="WPh-I6-B57"/>
@@ -91,6 +92,13 @@
                 </textField>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Must be a number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enJ-5o-n36">
                     <rect key="frame" x="16" y="382" width="103" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please pick a unit value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uop-aL-aHF">
+                    <rect key="frame" x="132" y="382" width="156" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

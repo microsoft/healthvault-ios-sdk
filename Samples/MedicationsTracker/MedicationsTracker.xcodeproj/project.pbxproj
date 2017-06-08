@@ -27,11 +27,13 @@
 		ED4136A01EE75B4600E15555 /* MedicationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136941EE75B4600E15555 /* MedicationBuilder.swift */; };
 		ED4136A11EE75B4600E15555 /* MedicationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136951EE75B4600E15555 /* MedicationListViewController.swift */; };
 		ED4136A21EE75B4600E15555 /* MedicationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED4136961EE75B4600E15555 /* MedicationListViewController.xib */; };
-		ED4136A31EE75B4600E15555 /* MedicationEntryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */; };
+		ED4136A31EE75B4600E15555 /* MedicationVocabSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136971EE75B4600E15555 /* MedicationVocabSearcher.swift */; };
 		ED4136A41EE75B4600E15555 /* UIMedicationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */; };
 		ED4136A61EE75D7300E15555 /* libMHVLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4136A51EE75D7300E15555 /* libMHVLib.a */; };
 		ED5F66F61EE89C6E001E75D7 /* UIPickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F66F51EE89C6E001E75D7 /* UIPickerTextField.swift */; };
 		ED5F66F81EE8B42B001E75D7 /* UIAutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F66F71EE8B42B001E75D7 /* UIAutocompleteTextField.swift */; };
+		ED5F670A1EE9DA11001E75D7 /* FormSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */; };
+		ED5F670C1EE9DA48001E75D7 /* HVUnitTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,11 +82,13 @@
 		ED4136941EE75B4600E15555 /* MedicationBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationBuilder.swift; sourceTree = "<group>"; };
 		ED4136951EE75B4600E15555 /* MedicationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationListViewController.swift; sourceTree = "<group>"; };
 		ED4136961EE75B4600E15555 /* MedicationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MedicationListViewController.xib; sourceTree = "<group>"; };
-		ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationEntryUtils.swift; sourceTree = "<group>"; };
+		ED4136971EE75B4600E15555 /* MedicationVocabSearcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationVocabSearcher.swift; sourceTree = "<group>"; };
 		ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIMedicationTextField.swift; sourceTree = "<group>"; };
 		ED4136A51EE75D7300E15555 /* libMHVLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMHVLib.a; path = "../../../../Library/Developer/Xcode/DerivedData/MedicationsTracker-bwzgfwgijrzrhbdcdkpzjquiaxza/Build/Products/Debug-iphonesimulator/libMHVLib.a"; sourceTree = "<group>"; };
 		ED5F66F51EE89C6E001E75D7 /* UIPickerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPickerTextField.swift; sourceTree = "<group>"; };
 		ED5F66F71EE8B42B001E75D7 /* UIAutocompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAutocompleteTextField.swift; sourceTree = "<group>"; };
+		ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSubmission.swift; sourceTree = "<group>"; };
+		ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HVUnitTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,11 +151,13 @@
 				ED4136921EE75B4600E15555 /* HVViewController.swift */,
 				ED4136941EE75B4600E15555 /* MedicationBuilder.swift */,
 				ED4136951EE75B4600E15555 /* MedicationListViewController.swift */,
-				ED4136971EE75B4600E15555 /* MedicationEntryUtils.swift */,
+				ED4136971EE75B4600E15555 /* MedicationVocabSearcher.swift */,
 				ED4136981EE75B4600E15555 /* UIMedicationTextField.swift */,
 				ED4136371EE7538B00E15555 /* AppDelegate.swift */,
 				ED5F66F51EE89C6E001E75D7 /* UIPickerTextField.swift */,
 				ED5F66F71EE8B42B001E75D7 /* UIAutocompleteTextField.swift */,
+				ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */,
+				ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */,
 				ED41368E1EE75B4600E15555 /* AddMedicationViewController.xib */,
 				ED4136901EE75B4600E15555 /* EditMedicationViewController.xib */,
 				ED4136931EE75B4600E15555 /* HVViewController.xib */,
@@ -346,13 +352,15 @@
 				ED4136A11EE75B4600E15555 /* MedicationListViewController.swift in Sources */,
 				ED41369D1EE75B4600E15555 /* HVFeaturesConfiguration.swift in Sources */,
 				ED5F66F61EE89C6E001E75D7 /* UIPickerTextField.swift in Sources */,
+				ED5F670C1EE9DA48001E75D7 /* HVUnitTypes.swift in Sources */,
 				ED5F66F81EE8B42B001E75D7 /* UIAutocompleteTextField.swift in Sources */,
 				ED4136A41EE75B4600E15555 /* UIMedicationTextField.swift in Sources */,
 				ED4136A01EE75B4600E15555 /* MedicationBuilder.swift in Sources */,
 				ED4136991EE75B4600E15555 /* AddMedicationViewController.swift in Sources */,
 				ED4136381EE7538B00E15555 /* AppDelegate.swift in Sources */,
-				ED4136A31EE75B4600E15555 /* MedicationEntryUtils.swift in Sources */,
+				ED4136A31EE75B4600E15555 /* MedicationVocabSearcher.swift in Sources */,
 				ED41369B1EE75B4600E15555 /* EditMedicationViewController.swift in Sources */,
+				ED5F670A1EE9DA11001E75D7 /* FormSubmission.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

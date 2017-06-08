@@ -18,7 +18,7 @@ class UIAutocompleteTextField: UIMedicationTextField, UITableViewDelegate, UITab
     
     func setup()
     {
-        if tableView != nil
+        if tableView == nil
         {
             let tableFrame = CGRect.init(x: self.frame.origin.x, y: self.frame.origin.y + self.frame.size.height,
                                          width: self.frame.size.width, height: self.tableHight)

@@ -30,6 +30,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var doseUnitField: UIPickerTextField!
     @IBOutlet weak var medicationErrorLabel: UILabel!
     @IBOutlet weak var doseAmountErrorLabel: UILabel!
+    @IBOutlet weak var doseUnitErrorLabel: UILabel!
     
     //Mark: Initializers
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, builder: MedicationBuilder)
@@ -50,6 +51,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
         // Set error lables where needed
         nameField.errorLabel = medicationErrorLabel
         doseAmountField.errorLabel = doseAmountErrorLabel
+        doseUnitField.errorLabel = doseUnitErrorLabel
     }
     
     override func viewWillAppear(_ animated: Bool) {
