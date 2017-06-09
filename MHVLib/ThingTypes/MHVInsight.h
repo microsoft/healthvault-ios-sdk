@@ -17,9 +17,9 @@
 // limitations under the License.
 
 #import "MHVThing.h"
-#import "MHVString128NW.h"
+#import "MHVString128.h"
 #import "MHVCollection.h"
-#import "MHVString1024NW.h"
+#import "MHVString1024.h"
 #import "MHVStructuredInsightValue.h"
 #import "MHVInsightMessages.h"
 #import "MHVInsightAttribution.h"
@@ -29,11 +29,11 @@
 //
 // (Required) Unique id of this insight instance.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *raisedInsightId;
+@property (readwrite, nonatomic, strong) MHVString128 *raisedInsightId;
 //
 // (Required) Id of the catalog item for this insight.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *catalogId;
+@property (readwrite, nonatomic, strong) MHVString128 *catalogId;
 //
 // (Required) The date and time the insight was created.
 //
@@ -45,31 +45,31 @@
 //
 // (Optional) Shows what does this Insight impact. For example sleep or activity etc.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *channel;
+@property (readwrite, nonatomic, strong) MHVString128 *channel;
 //
 // (Optional) Represents the algorithm class used to create this Insight.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *algoClass;
+@property (readwrite, nonatomic, strong) MHVString128 *algoClass;
 //
 // (Optional) Represents which way the Insight is trending. For example positive, negative or neutral.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *directionality;
+@property (readwrite, nonatomic, strong) MHVString128 *directionality;
 //
 // (Optional) Represents the aggregation time span of the data. For example, data is aggregated weekly or daily.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *timeSpanPivot;
+@property (readwrite, nonatomic, strong) MHVString128 *timeSpanPivot;
 //
 // (Optional) Represents how the user was compared for deriving this Insight. Example with themselves or people similar to the user.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *comparisonPivot;
+@property (readwrite, nonatomic, strong) MHVString128 *comparisonPivot;
 //
 // (Optional) Represents the tone of the Insight, like better or worse.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *tonePivot;
+@property (readwrite, nonatomic, strong) MHVString128 *tonePivot;
 //
 // (Optional) Represents the scope of the Insight. For example, for a specific event or event types.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *scopePivot;
+@property (readwrite, nonatomic, strong) MHVString128 *scopePivot;
 //
 // (Optional) Represents a list of data types used as input to the insight calculation.
 //
@@ -89,7 +89,7 @@
 //
 // (Optional) Where was this insight generated.
 //
-@property (readwrite, nonatomic, strong) MHVString128NW *origin;
+@property (readwrite, nonatomic, strong) MHVString128 *origin;
 //
 // (Optional) Tags associated with this insight. Can be used by clients for grouping, filtering etc.
 //

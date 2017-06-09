@@ -143,6 +143,8 @@ static MHVTypeSystem *s_typeRegistry;
     [s_typeRegistry addClass:[MHVMedicalDevice class] forTypeID:[MHVMedicalDevice typeID]];
     [s_typeRegistry addClass:[MHVMenstruation class] forTypeID:[MHVMenstruation typeID]];
     [s_typeRegistry addClass:[MHVPlan class] forTypeID:[MHVPlan typeID]];
+    [s_typeRegistry addClass:[MHVPregnancy class] forTypeID:[MHVPregnancy typeID]];
+    [s_typeRegistry addClass:[MHVTaskThing class] forTypeID:[MHVTaskThing typeID]];
 }
 
 + (MHVTypeSystem *)current

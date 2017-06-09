@@ -144,4 +144,8 @@ MHVDECLARE_GETTOR(MHVMenstruation, menstruation);
 
 MHVDECLARE_GETTOR(MHVPlan, plan);
 
+MHVDECLARE_GETTOR(MHVPregnancy, pregnancy);
+
+MHVDECLARE_GETTOR(MHVTaskThing, task);
+
 @end

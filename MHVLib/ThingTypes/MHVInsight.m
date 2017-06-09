@@ -71,17 +71,17 @@ static NSString *const c_element_attribution = @"attribution";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.raisedInsightId = [reader readElement:c_element_raised_insight_id asClass:[MHVString128NW class]];
-    self.catalogId = [reader readElement:c_element_catalog_id asClass:[MHVString128NW class]];
+    self.raisedInsightId = [reader readElement:c_element_raised_insight_id asClass:[MHVString128 class]];
+    self.catalogId = [reader readElement:c_element_catalog_id asClass:[MHVString128 class]];
     self.when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
     self.expirationDate = [reader readElement:c_element_expiration_date asClass:[MHVDateTime class]];
-    self.channel = [reader readElement:c_element_channel asClass:[MHVString128NW class]];
-    self.catalogId = [reader readElement:c_element_algo_class asClass:[MHVString128NW class]];
-    self.directionality = [reader readElement:c_element_directionality asClass:[MHVString128NW class]];
-    self.timeSpanPivot = [reader readElement:c_element_time_span_pivot asClass:[MHVString128NW class]];
-    self.comparisonPivot = [reader readElement:c_element_comparison_pivot asClass:[MHVString128NW class]];
-    self.tonePivot = [reader readElement:c_element_tone_pivot asClass:[MHVString128NW class]];
-    self.scopePivot = [reader readElement:c_element_scope_pivot asClass:[MHVString128NW class]];
+    self.channel = [reader readElement:c_element_channel asClass:[MHVString128 class]];
+    self.catalogId = [reader readElement:c_element_algo_class asClass:[MHVString128 class]];
+    self.directionality = [reader readElement:c_element_directionality asClass:[MHVString128 class]];
+    self.timeSpanPivot = [reader readElement:c_element_time_span_pivot asClass:[MHVString128 class]];
+    self.comparisonPivot = [reader readElement:c_element_comparison_pivot asClass:[MHVString128 class]];
+    self.tonePivot = [reader readElement:c_element_tone_pivot asClass:[MHVString128 class]];
+    self.scopePivot = [reader readElement:c_element_scope_pivot asClass:[MHVString128 class]];
     self.dataUsedPivot = (MHVStringCollection *)[reader readElementArray:c_element_data_used_pivot asClass:[MHVString class] andArrayClass:[MHVStringCollection class]];
     self.annotation = [reader readStringElement:c_element_annotation];
     self.strength = [reader readElement:c_element_strength asClass:[MHVPositiveDouble class]];

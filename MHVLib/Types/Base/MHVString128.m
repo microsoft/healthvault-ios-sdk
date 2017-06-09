@@ -20,7 +20,7 @@
 
 @implementation MHVString128
 
-- (NSUInteger)maxLength
+- (NSUInteger)minLength
 {
     return 1;
 }
@@ -33,7 +33,7 @@
 @end
 
 
-@implementation MHVString128
+@implementation MHVString128NW
 
 - (BOOL)validateValue:(NSString *)value
 {

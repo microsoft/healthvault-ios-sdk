@@ -71,10 +71,8 @@
 		43FD08B81EE8B18300A67AD2 /* MHVHealthJournalEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08B61EE8B18300A67AD2 /* MHVHealthJournalEntry.m */; };
 		43FD08BB1EE8B3FA00A67AD2 /* MHVInsight.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08B91EE8B3FA00A67AD2 /* MHVInsight.h */; };
 		43FD08BC1EE8B3FA00A67AD2 /* MHVInsight.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08BA1EE8B3FA00A67AD2 /* MHVInsight.m */; };
-		43FD08BF1EE8B59100A67AD2 /* MHVString128NW.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08BD1EE8B59100A67AD2 /* MHVString128NW.h */; };
-		43FD08C01EE8B59100A67AD2 /* MHVString128NW.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08BE1EE8B59100A67AD2 /* MHVString128NW.m */; };
-		43FD08C31EE8B7F100A67AD2 /* MHVString1024NW.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08C11EE8B7F100A67AD2 /* MHVString1024NW.h */; };
-		43FD08C41EE8B7F100A67AD2 /* MHVString1024NW.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08C21EE8B7F100A67AD2 /* MHVString1024NW.m */; };
+		43FD08BF1EE8B59100A67AD2 /* MHVString128.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08BD1EE8B59100A67AD2 /* MHVString128.h */; };
+		43FD08C01EE8B59100A67AD2 /* MHVString128.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08BE1EE8B59100A67AD2 /* MHVString128.m */; };
 		43FD08C71EE8B91000A67AD2 /* MHVStructuredInsightValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08C51EE8B91000A67AD2 /* MHVStructuredInsightValue.h */; };
 		43FD08C81EE8B91000A67AD2 /* MHVStructuredInsightValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08C61EE8B91000A67AD2 /* MHVStructuredInsightValue.m */; };
 		43FD08CB1EE8BB9800A67AD2 /* MHVInsightMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08C91EE8BB9800A67AD2 /* MHVInsightMessages.h */; };
@@ -95,6 +93,28 @@
 		43FD08E81EE8D28100A67AD2 /* MHVPlanObjective.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08E61EE8D28100A67AD2 /* MHVPlanObjective.m */; };
 		43FD08EB1EE8D38200A67AD2 /* MHVPlanOutcome.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08E91EE8D38200A67AD2 /* MHVPlanOutcome.h */; };
 		43FD08EC1EE8D38200A67AD2 /* MHVPlanOutcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08EA1EE8D38200A67AD2 /* MHVPlanOutcome.m */; };
+		43FD08EF1EE9003900A67AD2 /* MHVPregnancy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08ED1EE9003900A67AD2 /* MHVPregnancy.h */; };
+		43FD08F01EE9003900A67AD2 /* MHVPregnancy.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08EE1EE9003900A67AD2 /* MHVPregnancy.m */; };
+		43FD08F31EE9C4BA00A67AD2 /* MHVDelivery.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08F11EE9C4BA00A67AD2 /* MHVDelivery.h */; };
+		43FD08F41EE9C4BA00A67AD2 /* MHVDelivery.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08F21EE9C4BA00A67AD2 /* MHVDelivery.m */; };
+		43FD08F71EE9C58700A67AD2 /* MHVBaby.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08F51EE9C58700A67AD2 /* MHVBaby.h */; };
+		43FD08F81EE9C58700A67AD2 /* MHVBaby.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08F61EE9C58700A67AD2 /* MHVBaby.m */; };
+		43FD08FA1EE9ED7100A67AD2 /* MHVPregnancyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08F91EE9ED7100A67AD2 /* MHVPregnancyTests.m */; };
+		43FD08FD1EEA02CF00A67AD2 /* MHVTaskThing.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08FB1EEA02CF00A67AD2 /* MHVTaskThing.h */; };
+		43FD08FE1EEA02CF00A67AD2 /* MHVTaskThing.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD08FC1EEA02CF00A67AD2 /* MHVTaskThing.m */; };
+		43FD09011EEA0D9E00A67AD2 /* MHVTaskSchedule.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD08FF1EEA0D9D00A67AD2 /* MHVTaskSchedule.h */; };
+		43FD09021EEA0D9E00A67AD2 /* MHVTaskSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD09001EEA0D9E00A67AD2 /* MHVTaskSchedule.m */; };
+		43FD09051EEA14CE00A67AD2 /* MHVTaskTrackingPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD09031EEA14CE00A67AD2 /* MHVTaskTrackingPolicy.h */; };
+		43FD09061EEA14CF00A67AD2 /* MHVTaskTrackingPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD09041EEA14CE00A67AD2 /* MHVTaskTrackingPolicy.m */; };
+		43FD09091EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD09071EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.h */; };
+		43FD090A1EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD09081EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.m */; };
+		43FD090D1EEA162C00A67AD2 /* MHVTaskRangeMetrics.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD090B1EEA162C00A67AD2 /* MHVTaskRangeMetrics.h */; };
+		43FD090E1EEA162C00A67AD2 /* MHVTaskRangeMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD090C1EEA162C00A67AD2 /* MHVTaskRangeMetrics.m */; };
+		43FD09111EEA18C200A67AD2 /* MHVTaskCompletionMetrics.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD090F1EEA18C200A67AD2 /* MHVTaskCompletionMetrics.h */; };
+		43FD09121EEA18C200A67AD2 /* MHVTaskCompletionMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD09101EEA18C200A67AD2 /* MHVTaskCompletionMetrics.m */; };
+		43FD09151EEA1A6A00A67AD2 /* MHVTaskTargetEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FD09131EEA1A6900A67AD2 /* MHVTaskTargetEvents.h */; };
+		43FD09161EEA1A6A00A67AD2 /* MHVTaskTargetEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FD09141EEA1A6A00A67AD2 /* MHVTaskTargetEvents.m */; };
+		43FE58891EEA23BA00F6BB4E /* MHVTaskThingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FE58881EEA23BA00F6BB4E /* MHVTaskThingTests.m */; };
 		4C191A5F1EC1033C00B5E545 /* MHVAllergy.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A111EC1033C00B5E545 /* MHVAllergy.h */; };
 		4C191A601EC1033C00B5E545 /* MHVAllergy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C191A121EC1033C00B5E545 /* MHVAllergy.m */; };
 		4C191A611EC1033C00B5E545 /* MHVAssessment.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C191A131EC1033C00B5E545 /* MHVAssessment.h */; };
@@ -859,10 +879,8 @@
 		43FD08B61EE8B18300A67AD2 /* MHVHealthJournalEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVHealthJournalEntry.m; path = MHVLib/ThingTypes/MHVHealthJournalEntry.m; sourceTree = SOURCE_ROOT; };
 		43FD08B91EE8B3FA00A67AD2 /* MHVInsight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVInsight.h; path = MHVLib/ThingTypes/MHVInsight.h; sourceTree = SOURCE_ROOT; };
 		43FD08BA1EE8B3FA00A67AD2 /* MHVInsight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVInsight.m; path = MHVLib/ThingTypes/MHVInsight.m; sourceTree = SOURCE_ROOT; };
-		43FD08BD1EE8B59100A67AD2 /* MHVString128NW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVString128NW.h; sourceTree = "<group>"; };
-		43FD08BE1EE8B59100A67AD2 /* MHVString128NW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVString128NW.m; sourceTree = "<group>"; };
-		43FD08C11EE8B7F100A67AD2 /* MHVString1024NW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVString1024NW.h; sourceTree = "<group>"; };
-		43FD08C21EE8B7F100A67AD2 /* MHVString1024NW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVString1024NW.m; sourceTree = "<group>"; };
+		43FD08BD1EE8B59100A67AD2 /* MHVString128.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVString128.h; sourceTree = "<group>"; };
+		43FD08BE1EE8B59100A67AD2 /* MHVString128.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVString128.m; sourceTree = "<group>"; };
 		43FD08C51EE8B91000A67AD2 /* MHVStructuredInsightValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVStructuredInsightValue.h; sourceTree = "<group>"; };
 		43FD08C61EE8B91000A67AD2 /* MHVStructuredInsightValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVStructuredInsightValue.m; sourceTree = "<group>"; };
 		43FD08C91EE8BB9800A67AD2 /* MHVInsightMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVInsightMessages.h; sourceTree = "<group>"; };
@@ -883,6 +901,28 @@
 		43FD08E61EE8D28100A67AD2 /* MHVPlanObjective.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPlanObjective.m; sourceTree = "<group>"; };
 		43FD08E91EE8D38200A67AD2 /* MHVPlanOutcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPlanOutcome.h; sourceTree = "<group>"; };
 		43FD08EA1EE8D38200A67AD2 /* MHVPlanOutcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPlanOutcome.m; sourceTree = "<group>"; };
+		43FD08ED1EE9003900A67AD2 /* MHVPregnancy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVPregnancy.h; path = MHVLib/ThingTypes/MHVPregnancy.h; sourceTree = SOURCE_ROOT; };
+		43FD08EE1EE9003900A67AD2 /* MHVPregnancy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVPregnancy.m; path = MHVLib/ThingTypes/MHVPregnancy.m; sourceTree = SOURCE_ROOT; };
+		43FD08F11EE9C4BA00A67AD2 /* MHVDelivery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDelivery.h; sourceTree = "<group>"; };
+		43FD08F21EE9C4BA00A67AD2 /* MHVDelivery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVDelivery.m; sourceTree = "<group>"; };
+		43FD08F51EE9C58700A67AD2 /* MHVBaby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBaby.h; sourceTree = "<group>"; };
+		43FD08F61EE9C58700A67AD2 /* MHVBaby.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBaby.m; sourceTree = "<group>"; };
+		43FD08F91EE9ED7100A67AD2 /* MHVPregnancyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPregnancyTests.m; sourceTree = "<group>"; };
+		43FD08FB1EEA02CF00A67AD2 /* MHVTaskThing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVTaskThing.h; path = MHVLib/ThingTypes/MHVTaskThing.h; sourceTree = SOURCE_ROOT; };
+		43FD08FC1EEA02CF00A67AD2 /* MHVTaskThing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVTaskThing.m; path = MHVLib/ThingTypes/MHVTaskThing.m; sourceTree = SOURCE_ROOT; };
+		43FD08FF1EEA0D9D00A67AD2 /* MHVTaskSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTaskSchedule.h; sourceTree = "<group>"; };
+		43FD09001EEA0D9E00A67AD2 /* MHVTaskSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskSchedule.m; sourceTree = "<group>"; };
+		43FD09031EEA14CE00A67AD2 /* MHVTaskTrackingPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTaskTrackingPolicy.h; sourceTree = "<group>"; };
+		43FD09041EEA14CE00A67AD2 /* MHVTaskTrackingPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTrackingPolicy.m; sourceTree = "<group>"; };
+		43FD09071EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTaskOccurrenceMetrics.h; sourceTree = "<group>"; };
+		43FD09081EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskOccurrenceMetrics.m; sourceTree = "<group>"; };
+		43FD090B1EEA162C00A67AD2 /* MHVTaskRangeMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTaskRangeMetrics.h; sourceTree = "<group>"; };
+		43FD090C1EEA162C00A67AD2 /* MHVTaskRangeMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskRangeMetrics.m; sourceTree = "<group>"; };
+		43FD090F1EEA18C200A67AD2 /* MHVTaskCompletionMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTaskCompletionMetrics.h; sourceTree = "<group>"; };
+		43FD09101EEA18C200A67AD2 /* MHVTaskCompletionMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskCompletionMetrics.m; sourceTree = "<group>"; };
+		43FD09131EEA1A6900A67AD2 /* MHVTaskTargetEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTaskTargetEvents.h; sourceTree = "<group>"; };
+		43FD09141EEA1A6A00A67AD2 /* MHVTaskTargetEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTargetEvents.m; sourceTree = "<group>"; };
+		43FE58881EEA23BA00F6BB4E /* MHVTaskThingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskThingTests.m; sourceTree = "<group>"; };
 		4C191A111EC1033C00B5E545 /* MHVAllergy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVAllergy.h; path = MHVLib/ThingTypes/MHVAllergy.h; sourceTree = SOURCE_ROOT; };
 		4C191A121EC1033C00B5E545 /* MHVAllergy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVAllergy.m; path = MHVLib/ThingTypes/MHVAllergy.m; sourceTree = SOURCE_ROOT; };
 		4C191A131EC1033C00B5E545 /* MHVAssessment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVAssessment.h; path = MHVLib/ThingTypes/MHVAssessment.h; sourceTree = SOURCE_ROOT; };
@@ -1623,6 +1663,8 @@
 				43FD08B31EE7FECA00A67AD2 /* MHVHealthGoalTests.m */,
 				43FD08D91EE8C79200A67AD2 /* MHVMedicalDeviceTests.m */,
 				43FD08DF1EE8CF5800A67AD2 /* MHVMenstruationTests.m */,
+				43FD08F91EE9ED7100A67AD2 /* MHVPregnancyTests.m */,
+				43FE58881EEA23BA00F6BB4E /* MHVTaskThingTests.m */,
 			);
 			path = ThingTypes;
 			sourceTree = "<group>";
@@ -2097,6 +2139,22 @@
 				43FD08E61EE8D28100A67AD2 /* MHVPlanObjective.m */,
 				43FD08E91EE8D38200A67AD2 /* MHVPlanOutcome.h */,
 				43FD08EA1EE8D38200A67AD2 /* MHVPlanOutcome.m */,
+				43FD08F11EE9C4BA00A67AD2 /* MHVDelivery.h */,
+				43FD08F21EE9C4BA00A67AD2 /* MHVDelivery.m */,
+				43FD08F51EE9C58700A67AD2 /* MHVBaby.h */,
+				43FD08F61EE9C58700A67AD2 /* MHVBaby.m */,
+				43FD08FF1EEA0D9D00A67AD2 /* MHVTaskSchedule.h */,
+				43FD09001EEA0D9E00A67AD2 /* MHVTaskSchedule.m */,
+				43FD09031EEA14CE00A67AD2 /* MHVTaskTrackingPolicy.h */,
+				43FD09041EEA14CE00A67AD2 /* MHVTaskTrackingPolicy.m */,
+				43FD09071EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.h */,
+				43FD09081EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.m */,
+				43FD090B1EEA162C00A67AD2 /* MHVTaskRangeMetrics.h */,
+				43FD090C1EEA162C00A67AD2 /* MHVTaskRangeMetrics.m */,
+				43FD090F1EEA18C200A67AD2 /* MHVTaskCompletionMetrics.h */,
+				43FD09101EEA18C200A67AD2 /* MHVTaskCompletionMetrics.m */,
+				43FD09131EEA1A6900A67AD2 /* MHVTaskTargetEvents.h */,
+				43FD09141EEA1A6A00A67AD2 /* MHVTaskTargetEvents.m */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2157,10 +2215,8 @@
 				43282B031EE61F64009E3301 /* MHVPercentage.m */,
 				4355D0E41EE7CCA7004B90F0 /* MHVStringNZNW.h */,
 				4355D0E51EE7CCA7004B90F0 /* MHVStringNZNW.m */,
-				43FD08BD1EE8B59100A67AD2 /* MHVString128NW.h */,
-				43FD08BE1EE8B59100A67AD2 /* MHVString128NW.m */,
-				43FD08C11EE8B7F100A67AD2 /* MHVString1024NW.h */,
-				43FD08C21EE8B7F100A67AD2 /* MHVString1024NW.m */,
+				43FD08BD1EE8B59100A67AD2 /* MHVString128.h */,
+				43FD08BE1EE8B59100A67AD2 /* MHVString128.m */,
 				43FD08D11EE8BCC700A67AD2 /* MHVStringNZ256.h */,
 				43FD08D21EE8BCC700A67AD2 /* MHVStringNZ256.m */,
 			);
@@ -2275,6 +2331,10 @@
 				43FD08DC1EE8CAB000A67AD2 /* MHVMenstruation.m */,
 				43FD08E11EE8D0C200A67AD2 /* MHVPlan.h */,
 				43FD08E21EE8D0C200A67AD2 /* MHVPlan.m */,
+				43FD08ED1EE9003900A67AD2 /* MHVPregnancy.h */,
+				43FD08EE1EE9003900A67AD2 /* MHVPregnancy.m */,
+				43FD08FB1EEA02CF00A67AD2 /* MHVTaskThing.h */,
+				43FD08FC1EEA02CF00A67AD2 /* MHVTaskThing.m */,
 			);
 			name = ThingTypes;
 			path = ItemTypes;
@@ -2783,6 +2843,7 @@
 				5D983BEE14E6038000C287B7 /* MHVMonth.h in Headers */,
 				4C191AA91EC1033C00B5E545 /* MHVVitalSigns.h in Headers */,
 				5D983BF214E6039C00C287B7 /* MHVYear.h in Headers */,
+				43FD08F71EE9C58700A67AD2 /* MHVBaby.h in Headers */,
 				5D983BF614E6070600C287B7 /* MHVDate.h in Headers */,
 				43FD08E71EE8D28100A67AD2 /* MHVPlanObjective.h in Headers */,
 				A51B6C9B1EC4A806003BFBDC /* MHVSessionCredentialClient.h in Headers */,
@@ -2828,11 +2889,13 @@
 				5D20D30F14F2E26900160611 /* MHVThingView.h in Headers */,
 				5DB2E69818D271F30030972D /* MHVThingChangeTable.h in Headers */,
 				5D20D31314F2F4F400160611 /* MHVThing.h in Headers */,
+				43FD08FD1EEA02CF00A67AD2 /* MHVTaskThing.h in Headers */,
 				5D20D31B14F2FA5900160611 /* MHVThingSection.h in Headers */,
 				BA0357051EC5278800BE547D /* MHVMicrosoftKhronosCloudCommonErrorsErrorResponse.h in Headers */,
 				4C191AF61EC3997600B5E545 /* MHVHttpTaskProtocol.h in Headers */,
 				5D20D32314F304E700160611 /* MHVThingState.h in Headers */,
 				4C191A6F1EC1033C00B5E545 /* MHVCholesterol.h in Headers */,
+				43FD09051EEA14CE00A67AD2 /* MHVTaskTrackingPolicy.h in Headers */,
 				A54521471EC9D71D00A17A1B /* MHVBrowserAuthBrokerProtocol.h in Headers */,
 				5D20D32714F424F000160611 /* MHVThingType.h in Headers */,
 				5D20D32B14F42E1300160611 /* MHVThingData.h in Headers */,
@@ -2841,10 +2904,12 @@
 				4C191A951EC1033C00B5E545 /* MHVMedication.h in Headers */,
 				5DAED4AD18E4BC970048ECBD /* MHVMethodFactory.h in Headers */,
 				5D20D32F14F4352A00160611 /* MHVThingDataCommon.h in Headers */,
+				43FD09111EEA18C200A67AD2 /* MHVTaskCompletionMetrics.h in Headers */,
 				BA0357191EC5278800BE547D /* MHVSystemThreadingCancellationToken.h in Headers */,
 				BA0355401EC0BF5400BE547D /* MHVVocabularyClientProtocol.h in Headers */,
 				5D20D33314F4366200160611 /* MHVConstrainedString.h in Headers */,
 				5D20D33714F43A1400160611 /* MHVString255.h in Headers */,
+				43FD090D1EEA162C00A67AD2 /* MHVTaskRangeMetrics.h in Headers */,
 				BA0356FD1EC5278800BE547D /* MHVGoalRecurrenceMetrics.h in Headers */,
 				4C191A631EC1033C00B5E545 /* MHVBasicDemographics.h in Headers */,
 				4C191A711EC1033C00B5E545 /* MHVCondition.h in Headers */,
@@ -2955,12 +3020,12 @@
 				BA03570D1EC5278800BE547D /* MHVOnboardingRequest.h in Headers */,
 				5D195CFF151BBC7D00E109AD /* MHVMeasurement.h in Headers */,
 				43282AE41EE21050009E3301 /* MHVAdvanceDirective.h in Headers */,
+				43FD08F31EE9C4BA00A67AD2 /* MHVDelivery.h in Headers */,
 				5D195D03151BC72C00E109AD /* MHVApproxMeasurement.h in Headers */,
 				5D195D0F151BEBA100E109AD /* MHVAddress.h in Headers */,
 				5D195D13151BF01800E109AD /* MHVPhone.h in Headers */,
 				4C191A7B1EC1033C00B5E545 /* MHVEmotionalState.h in Headers */,
 				5D195D1B151BF2E200E109AD /* MHVEmailAddress.h in Headers */,
-				43FD08C31EE8B7F100A67AD2 /* MHVString1024NW.h in Headers */,
 				5D195D1F151BF54300E109AD /* MHVEmail.h in Headers */,
 				A5AC1F5A1EC0F9B00049C24D /* MHVClientProtocol.h in Headers */,
 				43282AEC1EE5FC1B009E3301 /* MHVAerobicProfile.h in Headers */,
@@ -2975,6 +3040,7 @@
 				A5A1BBA51ECB9F5700CE6F64 /* MHVPlatformClient.h in Headers */,
 				4C191A9B1EC1033C00B5E545 /* MHVPersonalContactInfo.h in Headers */,
 				43FD08CF1EE8BC5E00A67AD2 /* MHVInsightAttribution.h in Headers */,
+				43FD08EF1EE9003900A67AD2 /* MHVPregnancy.h in Headers */,
 				A53BF8401EC3A48600F018E2 /* MHVApplicationCreationInfo.h in Headers */,
 				5D195D4E1522527100E109AD /* MHVPutThingsTask.h in Headers */,
 				5D195D661522780800E109AD /* MHVRemoveThingsTask.h in Headers */,
@@ -3009,7 +3075,7 @@
 				BA0356101EC1257F00BE547D /* NSString+DataModel.h in Headers */,
 				4C191A791EC1033C00B5E545 /* MHVEmergencyOrProviderContact.h in Headers */,
 				BA0356F11EC5278800BE547D /* MHVAudit.h in Headers */,
-				43FD08BF1EE8B59100A67AD2 /* MHVString128NW.h in Headers */,
+				43FD08BF1EE8B59100A67AD2 /* MHVString128.h in Headers */,
 				5DC799781534EC2E00193A3B /* MHVLengthMeasurement.h in Headers */,
 				5DC799921535FEE300193A3B /* MHVGetAuthorizedPeopleTask.h in Headers */,
 				BA0356001EC1257F00BE547D /* NSArray+DataModel.h in Headers */,
@@ -3024,10 +3090,12 @@
 				438160D81ED3868700BB8C94 /* MHVVocabularyClient.h in Headers */,
 				5D925DD715376F21006BAAA8 /* MHVGetVocabTask.h in Headers */,
 				43282B081EE75B75009E3301 /* MHVAllergicEpisode.h in Headers */,
+				43FD09091EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.h in Headers */,
 				4C191A811EC1033C00B5E545 /* MHVFamilyHistory.h in Headers */,
 				BA0357131EC5278800BE547D /* MHVSleepsSleep.h in Headers */,
 				5D775C871538DED2000F01AE /* MHVVitalSignResult.h in Headers */,
 				BA0356D51EC5278700BE547D /* MHVActionPlanInstance.h in Headers */,
+				43FD09151EEA1A6A00A67AD2 /* MHVTaskTargetEvents.h in Headers */,
 				5D8183FD1875F9480073F8E6 /* MHVVolumeValue.h in Headers */,
 				5DB2E69418D2553B0030972D /* MHVThingChange.h in Headers */,
 				5DB2E73418D7905F0030972D /* MHVWorkerStatus.h in Headers */,
@@ -3087,6 +3155,7 @@
 				4C7647491ECA32FE003B85B5 /* MHVThingClient.h in Headers */,
 				5DF91081158D09930027E0A8 /* MHVNonNegativeDouble.h in Headers */,
 				A5D1ED051EC23987000E3295 /* MHVConnectionFactoryProtocol.h in Headers */,
+				43FD09011EEA0D9E00A67AD2 /* MHVTaskSchedule.h in Headers */,
 				5DF90BD519005CA5009ABAAB /* MHVLabTestResultsDetails.h in Headers */,
 				5D88C5E0161F4EDF00F74D54 /* MHVFoodEnergyValue.h in Headers */,
 				BA0356DD1EC5278700BE547D /* MHVActionPlanTask.h in Headers */,
@@ -3265,8 +3334,10 @@
 				4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */,
 				4355D0D31EE764FE004B90F0 /* MHVAppSpecificInformationTests.m in Sources */,
 				43FD08DA1EE8C79200A67AD2 /* MHVMedicalDeviceTests.m in Sources */,
+				43FE58891EEA23BA00F6BB4E /* MHVTaskThingTests.m in Sources */,
 				4355D0CD1EE75F4C004B90F0 /* MHVAllergicEpisodeTests.m in Sources */,
 				A51203CA1ECF2CB600845680 /* MHVSodaConnectionTests.m in Sources */,
+				43FD08FA1EE9ED7100A67AD2 /* MHVPregnancyTests.m in Sources */,
 				4C76474D1ECA546F003B85B5 /* MHVThingClientTests.m in Sources */,
 				4C2975C81ECDFB63006B3673 /* MHVHttpTaskTests.m in Sources */,
 				43FD089A1EE7DDB600A67AD2 /* MHVExplanationOfBenefitsTests.m in Sources */,
@@ -3283,7 +3354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C191AA01EC1033C00B5E545 /* MHVPersonalImage.m in Sources */,
-				43FD08C01EE8B59100A67AD2 /* MHVString128NW.m in Sources */,
+				43FD08C01EE8B59100A67AD2 /* MHVString128.m in Sources */,
 				5D76B9D414DCC84C00BA865F /* MHVValidator.m in Sources */,
 				A57A80C11EC4FB7900DDD636 /* MHVServiceResponse.m in Sources */,
 				5D1ACC8A19104559000689FD /* MHVServerError.m in Sources */,
@@ -3303,6 +3374,7 @@
 				4C191A7A1EC1033C00B5E545 /* MHVEmergencyOrProviderContact.m in Sources */,
 				A51B6CA01EC4A815003BFBDC /* MHVSessionCredential.m in Sources */,
 				5DE3830D14E4447800DFA11D /* XConverter.m in Sources */,
+				43FD08F01EE9003900A67AD2 /* MHVPregnancy.m in Sources */,
 				5DB2E73518D7905F0030972D /* MHVWorkerStatus.m in Sources */,
 				5DE3830F14E4447800DFA11D /* XException.m in Sources */,
 				5DE3831314E4447800DFA11D /* XReader.m in Sources */,
@@ -3332,6 +3404,7 @@
 				A51203971ECCB3A100845680 /* MHVPersonClient.m in Sources */,
 				A54220471EC2651500728913 /* MHVConnectionFactoryInternal.m in Sources */,
 				5D983BF314E6039C00C287B7 /* MHVYear.m in Sources */,
+				43FD09121EEA18C200A67AD2 /* MHVTaskCompletionMetrics.m in Sources */,
 				A53BF83A1EC3681500F018E2 /* MHVKeychainService.m in Sources */,
 				BA0357061EC5278800BE547D /* MHVMicrosoftKhronosCloudCommonErrorsErrorResponse.m in Sources */,
 				5D983BF714E6070600C287B7 /* MHVDate.m in Sources */,
@@ -3373,6 +3446,7 @@
 				4355D0EF1EE7D732004B90F0 /* MHVEOBService.m in Sources */,
 				5D20D30814F2E21400160611 /* MHVThingKey.m in Sources */,
 				4355D0E31EE7C9A7004B90F0 /* MHVExplanationOfBenefits.m in Sources */,
+				43FD09021EEA0D9E00A67AD2 /* MHVTaskSchedule.m in Sources */,
 				5D1ACC7E19103C73000689FD /* MHVResponse.m in Sources */,
 				5D20D30C14F2E22C00160611 /* MHVThingFilter.m in Sources */,
 				4C191A901EC1033C00B5E545 /* MHVThingTestExtensions.m in Sources */,
@@ -3480,6 +3554,7 @@
 				4C191A8C1EC1033C00B5E545 /* MHVInsurance.m in Sources */,
 				5D39F9301513E41200208A7B /* MHVGetThingsTask.m in Sources */,
 				4C191A641EC1033C00B5E545 /* MHVBasicDemographics.m in Sources */,
+				43FD08F41EE9C4BA00A67AD2 /* MHVDelivery.m in Sources */,
 				5D39F9321513FFC600208A7B /* MHVRecordReference.m in Sources */,
 				5D39F938151A3AA200208A7B /* MHVLocalThingStore.m in Sources */,
 				5D39F93C151A718C00208A7B /* MHVLocalRecordStore.m in Sources */,
@@ -3496,6 +3571,7 @@
 				4C191A701EC1033C00B5E545 /* MHVCholesterol.m in Sources */,
 				4C191A701EC1033C00B5E545 /* MHVCholesterol.m in Sources */,
 				BA0356441EC130A000BE547D /* NSArray+Utils.m in Sources */,
+				43FD09161EEA1A6A00A67AD2 /* MHVTaskTargetEvents.m in Sources */,
 				5D195D14151BF01800E109AD /* MHVPhone.m in Sources */,
 				BA0356051EC1257F00BE547D /* NSData+DataModel.m in Sources */,
 				BA9844DC1EE081810064389A /* MHVGoalsRecommendationsApi.m in Sources */,
@@ -3522,8 +3598,10 @@
 				5D195D7315228C0200E109AD /* MHVVocabularySearchString.m in Sources */,
 				4C1B3CB91EE1D9A100A57396 /* MHVBlobDownloadRequest.m in Sources */,
 				BAC7EA771ECCA47800F3C1AB /* MHVGoalRecommendationInstance.m in Sources */,
+				43FD09061EEA14CF00A67AD2 /* MHVTaskTrackingPolicy.m in Sources */,
 				5D195D831522973500E109AD /* MHVVocabularySearchTask.m in Sources */,
 				4C191AF01EC24C2D00B5E545 /* MHVHttpServiceResponse.m in Sources */,
+				43FD090E1EEA162C00A67AD2 /* MHVTaskRangeMetrics.m in Sources */,
 				5DB2E69918D271F30030972D /* MHVThingChangeTable.m in Sources */,
 				BA0356D01EC5278700BE547D /* MHVActionPlan.m in Sources */,
 				43FD08BC1EE8B3FA00A67AD2 /* MHVInsight.m in Sources */,
@@ -3552,7 +3630,6 @@
 				5D925DD815376F21006BAAA8 /* MHVGetVocabTask.m in Sources */,
 				5DF90BDA19005D5D009ABAAB /* MHVTestResultRangeValue.m in Sources */,
 				5D775C881538DED2000F01AE /* MHVVitalSignResult.m in Sources */,
-				43FD08C41EE8B7F100A67AD2 /* MHVString1024NW.m in Sources */,
 				BA0356231EC1257F00BE547D /* MHVModelBase.m in Sources */,
 				5D775C901538E9BA000F01AE /* MHVAssessmentField.m in Sources */,
 				5DB2E6FC18D38E300030972D /* MHVThingChangeManager.m in Sources */,
@@ -3602,6 +3679,7 @@
 				5D18A4A2187361AB000AE3BD /* MHVFlowValue.m in Sources */,
 				5D1BE47E156B483900718832 /* MHVBlobUploadTask.m in Sources */,
 				5DB4206E156C959200E1A473 /* MHVThingBlobUploadTask.m in Sources */,
+				43FD090A1EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.m in Sources */,
 				BA03560D1EC1257F00BE547D /* NSNumber+DataModel.m in Sources */,
 				BA0356391EC1278F00BE547D /* MHVJsonCacheService.m in Sources */,
 				BA0357021EC5278800BE547D /* MHVGoalsWrapper.m in Sources */,
@@ -3612,11 +3690,13 @@
 				5DF91082158D09930027E0A8 /* MHVNonNegativeDouble.m in Sources */,
 				4355D0EB1EE7D19D004B90F0 /* MHVClaimAmounts.m in Sources */,
 				BA0356D61EC5278700BE547D /* MHVActionPlanInstance.m in Sources */,
+				43FD08F81EE9C58700A67AD2 /* MHVBaby.m in Sources */,
 				4C191AAA1EC1033C00B5E545 /* MHVVitalSigns.m in Sources */,
 				BA03560B1EC1257F00BE547D /* NSNull+DataModel.m in Sources */,
 				5D88C5E1161F4EDF00F74D54 /* MHVFoodEnergyValue.m in Sources */,
 				5D88C5E5161F4F1700F74D54 /* MHVNutritionFact.m in Sources */,
 				BA0357041EC5278800BE547D /* MHVMicrosoftKhronosCloudCommonErrorsErrorInformation.m in Sources */,
+				43FD08FE1EEA02CF00A67AD2 /* MHVTaskThing.m in Sources */,
 				5D4A93221635BC49007390B7 /* MHVDictionaryExtensions.m in Sources */,
 				4C191A8A1EC1033C00B5E545 /* MHVImmunization.m in Sources */,
 				4C191A761EC1033C00B5E545 /* MHVDailyMedicationUsage.m in Sources */,

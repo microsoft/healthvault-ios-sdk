@@ -65,6 +65,8 @@
 #import "MHVMedicalDevice.h"
 #import "MHVMenstruation.h"
 #import "MHVPlan.h"
+#import "MHVPregnancy.h"
+#import "MHVTaskThing.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
@@ -123,4 +125,6 @@
 - (MHVMedicalDevice *)medicalDevice;
 - (MHVMenstruation *)menstruation;
 - (MHVPlan *)plan;
+- (MHVPregnancy *)pregnancy;
+- (MHVTaskThing *)task;
 @end

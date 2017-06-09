@@ -417,3 +417,19 @@
 }
 
 @end
+
+@implementation MHVUUIDCollection
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        self.type = [NSUUID class];
+    }
+    
+    return self;
+}
+
+@end

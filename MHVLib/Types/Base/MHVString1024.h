@@ -22,3 +22,12 @@
 @interface MHVStringZ1024 : MHVConstrainedString
 
 @end
+
+@interface MHVString1024NW : MHVStringZ1024
+
+@end
+
+@interface MHVString1024NWCollection : MHVCollection<MHVString1024NW*>
+
+@end
+

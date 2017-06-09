@@ -1,5 +1,5 @@
 //
-//  MHVTaskType.h
+//  MHVTaskThing.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,9 +16,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #import "MHVThing.h"
+#import "MHVDateTime.h"
+#import "MHVTaskSchedule.h"
+#import "MHVString128.h"
+#import "MHVTaskTrackingPolicy.h"
 
-@interface MHVTaskType : MHVThingDataTyped
+@interface MHVTaskThing : MHVThingDataTyped
+
+//
+// (Required) The date the user started performing this task as part of their plan.
+//
+@property (readwrite, nonatomic, strong) MHVDateTime *dateStarted;
+//
+// (Required) The task name.
+//
+@property (readwrite, nonatomic, strong) MHVStringNZNW *name;
+//
+// (Required) A brief description of the task.
+//
+@property (readwrite, nonatomic, strong) MHVString128 *shortDescription;
+//
+// (Required) A more detailed description of the task.
+//
+@property (readwrite, nonatomic, strong) MHVStringNZNW *longDescription;
+//
+// (Optional) Whether the user should receive a reminder at the task's scheduled time.
+//
+@property (readwrite, nonatomic, strong) MHVBool *isReminderEnabled;
+//
+// (Required) The task status.
+//
+@property (readwrite, nonatomic, strong) NSString *status;
+//
+// (Optional) For a task whose completion is tied to recording a specific health measurement or other piece of data, this indicates the item type to be recorded.
+//
+@property (readwrite, nonatomic, strong) NSUUID *taskType;
+//
+// (Optional) The schedule of when the task is to be performed.
+//
+@property (readwrite, nonatomic, strong) MHVTaskScheduleCollection *schedules;
+//
+// (Optional) The rules for tracking task completion.
+//
+@property (readwrite, nonatomic, strong) MHVTaskTrackingPolicy *trackingPolicy;
+//
+// (Optional) The plan objectives that completion of this task counts towards.
+//
+@property (readwrite, nonatomic, strong) MHVCollection<NSUUID*> *associatedObjectiveIds;
 
 @end

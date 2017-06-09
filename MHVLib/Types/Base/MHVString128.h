@@ -1,5 +1,5 @@
 //
-//  MHVString128NW.h
+//  MHVString128.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -18,6 +18,11 @@
 
 #import "MHVConstrainedString.h"
 
-@interface MHVString128NW : MHVConstrainedString
+@interface MHVString128 : MHVConstrainedString
+
+@end
+
+
+@interface MHVString128NW : MHVString128
 
 @end

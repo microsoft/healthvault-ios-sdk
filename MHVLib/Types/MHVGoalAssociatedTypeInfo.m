@@ -16,7 +16,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #import "MHVGoalAssociatedTypeInfo.h"
 
 static NSString *const c_element_thing_type_version_id = @"thing-type-version-id";
@@ -34,7 +33,7 @@ static NSString *const c_element_thing_type_display_xpath = @"thing-type_display
 
 - (void) deserialize:(XReader *)reader
 {
-    self.thingTypeVersionId = [reader readElement:c_element_thing_type_version_id asClass:[NSUUID class]];
+    self.thingTypeVersionId = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_thing_type_version_id]];
     self.thingTypeValueXPath = [reader readElement:c_element_thing_type_value_xpath asClass:[NSString class]];
     self.thingTypeDisplayXPath = [reader readElement:c_element_thing_type_value_xpath asClass:[NSString class]];
 }
