@@ -36,7 +36,7 @@
 
 +(MHVThingDataTypedFeatures *)moreFeatures
 {
-    return nil;
+    return [MHVThingDataTypedFeatures new];
 }
 
 @end

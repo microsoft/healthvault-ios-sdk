@@ -36,14 +36,16 @@
 
 @implementation Logger
 
-+ (void)initialize {
++ (void)initialize
+{
 	
 	// set up appropriate logging mechanism
 	[Logger setLoggingMethod];
 }
 
 
-+ (void)setLoggingMethod {
++ (void)setLoggingMethod
+{
 	
 #if (TARGET_IPHONE_SIMULATOR == 0 ) // real device
 	
@@ -52,7 +54,8 @@
 #endif
 }
 
-+ (NSString*)createNameForLogWithName: (NSString *)name {
++ (NSString*)createNameForLogWithName:(NSString *)name
+{
 	
 	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString* documentsDirectory = nil;
@@ -76,7 +79,8 @@
 }
 
 /// Redirects stderr stream to log file in Document directory
-+ (void)redirectConsoleLogToDocumentFolder {
++ (void)redirectConsoleLogToDocumentFolder
+{
 	
 	NSString *logErrFile = [self createNameForLogWithName: @"stderr"];
 	NSString *logOutFile = [self createNameForLogWithName: @"stdout"];
@@ -85,9 +89,14 @@
 	freopen([logOutFile cStringUsingEncoding: NSASCIIStringEncoding], "a+", stdout);
 }
 
-+ (void)write: (NSString *)text {
-	
-	NSLog(@"%@", text);
++ (void)write:(NSString *)format, ...
+{
+    va_list ap;
+    va_start(ap, format);
+    NSString *msg = [[NSString alloc] initWithFormat:format arguments:ap];
+    va_end(ap);
+    
+    NSLog(@"%@", msg);
 }
 
 @end

@@ -18,9 +18,66 @@
 //
 
 #import "MHVThingDataTypedFeatures.h"
+#import "MHVTypeViewController.h"
+#import "MHVUIAlert.h"
+
+@interface MHVThingDataTypedFeatures ()
+
+@property (nonatomic, strong) id<MHVConnectionProtocol> connection;
+
+@end
 
 @implementation MHVThingDataTypedFeatures
 
-@synthesize controller = m_controller;
+- (instancetype)initWithTitle:(NSString *)title
+{
+    self = [super initWithTitle:title];
+    
+    if (self)
+    {
+        __weak __typeof__(self)weakSelf = self;
+        
+        [self addFeature:@"View XSD Schema" andAction:^
+        {
+            [weakSelf fetchAndDisplaySchema];
+        }];
+        
+        _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    }
+    
+    return self;
+}
+
+- (void)fetchAndDisplaySchema
+{
+    [self.controller.statusLabel showBusy];
+    
+    __block NSString *typeId = [self.typeClass typeID];
+    
+    [self.connection.platformClient getHealthRecordThingTypeDefinitionsWithTypeIds:@[typeId]
+                                                                          sections:MHVThingTypeSectionsXsd
+                                                                        imageTypes:nil
+                                                             lastClientRefreshDate:nil
+                                                                        completion:^(NSDictionary<NSString *,MHVThingTypeDefinition *> * _Nullable definitions, NSError * _Nullable error)
+     {
+         [self.controller.statusLabel clearStatus];
+         
+         NSString *displayString;
+         
+         if (error)
+         {
+             displayString = error.localizedDescription;
+         }
+         else
+         {
+             MHVThingTypeDefinition *definition = [definitions objectForKey:typeId];
+             
+             displayString = definition.xmlSchemaDefinition;
+         }
+         
+         [MHVUIAlert showInformationalMessage:displayString];
+         
+     }];
+}
 
 @end

@@ -443,7 +443,7 @@ static NSString *const c_environmentFileName = @"environment.xml";
     }
 }
 
-- (void)makeEnvironmentWithInstance:(MHVInstance *)instance
+- (void)makeEnvironmentWithInstance:(MHVServiceInstance *)instance
 {
     @synchronized(self)
     {
@@ -615,7 +615,7 @@ static NSString *const c_environmentFileName = @"environment.xml";
         [MHVClientException throwExceptionWithError:MHVMAKE_ERROR(MHVClientError_UnknownServiceInstance)];
     }
     
-    MHVInstance *instance = (MHVInstance *)[self.serviceDef.systemInstances.instances objectAtIndex:index];
+    MHVServiceInstance *instance = (MHVServiceInstance *)[self.serviceDef.systemInstances.instances objectAtIndex:index];
     
     [self makeEnvironmentWithInstance:instance];
     [self saveState];

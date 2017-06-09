@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import "XSerializableType.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 
 //
 // MHVEnvironmentSettings is used by MHVClientSettings (see below)
@@ -64,7 +64,7 @@
 @property (readonly, nonatomic) BOOL hasName;
 @property (readonly, nonatomic) BOOL hasInstanceID;
 
-+ (MHVEnvironmentSettings *)fromInstance:(MHVInstance *)instance;
++ (MHVEnvironmentSettings *)fromInstance:(MHVServiceInstance *)instance;
 
 // -------------------------
 //

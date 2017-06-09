@@ -19,7 +19,6 @@
 //
 #import "MHVCommon.h"
 #import "MHVThingCommitErrorHandler.h"
-#import "XException.h"
 
 @implementation MHVThingCommitErrorHandler
 
@@ -59,7 +58,6 @@ LError:
 -(BOOL)shouldRetryChange:(MHVThingChange *)change onException:(id)ex
 {
     if ([self isClientException:ex] ||
-        [self isSerializationException:ex] ||
         ![self isHttpException:ex]
         )
     {
@@ -94,11 +92,6 @@ LError:
     }
 
     return FALSE;
-}
-
--(BOOL)isSerializationException:(id)ex
-{
-    return ([ex isKindOfClass:[XException class]]);
 }
 
 -(BOOL)isAccessDeniedException:(id)ex

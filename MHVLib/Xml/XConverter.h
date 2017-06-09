@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
-#import "XException.h"
 
 @interface XConverter : NSObject
 {

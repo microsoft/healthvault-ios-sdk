@@ -31,3 +31,4 @@
 #import "MHVConnections.h"
 #import "MHVErrorConstants.h"
 #import "MHVRestApi.h"
+#import "MHVThingTypeDefinitions.h"
