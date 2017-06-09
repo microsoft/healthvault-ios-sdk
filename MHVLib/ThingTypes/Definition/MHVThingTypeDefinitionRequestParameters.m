@@ -87,7 +87,7 @@ static NSString *const c_element_image_type = @"image-type";
         [writer writeElement:c_element_image_type value:imageType];
     }
     
-    // Write the last clietn refresh date (if not nil)
+    // Write the last client refresh date (if not nil)
     if (self.lastClientRefreshDate)
     {
         [writer writeElement:c_element_last_client_refresh dateValue:self.lastClientRefreshDate];
