@@ -79,7 +79,3 @@
 - (MHVStringCollection *)selectStringsNotFoundInSet:(NSArray *)testSet;
 
 @end
-
-@interface MHVUUIDCollection : MHVCollection<NSUUID *>
-
-@end

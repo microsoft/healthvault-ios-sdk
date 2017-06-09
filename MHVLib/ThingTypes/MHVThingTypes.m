@@ -148,4 +148,10 @@ MHVDECLARE_GETTOR(MHVPregnancy, pregnancy);
 
 MHVDECLARE_GETTOR(MHVTaskThing, task);
 
+MHVDECLARE_GETTOR(MHVTaskTrackingEntry, taskTrackingEntry);
+
+MHVDECLARE_GETTOR(MHVAsthmaInhaler, asthmaInhaler);
+
+MHVDECLARE_GETTOR(MHVAsthmaInhalerUsage, asthmaInhalerUsage);
+
 @end

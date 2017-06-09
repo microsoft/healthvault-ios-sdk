@@ -18,6 +18,8 @@
 
 #import "MHVType.h"
 #import "MHVBool.h"
+#import "MHVTrackingSourceTypes.h"
+#import "MHVTrackingTriggerTypes.h"
 #import "MHVTaskOccurrenceMetrics.h"
 #import "MHVTaskCompletionMetrics.h"
 #import "MHVTaskTargetEvents.h"
@@ -25,10 +27,10 @@
 @interface MHVTaskTrackingPolicy : MHVType
 
 @property (readwrite, nonatomic, strong) MHVBool *isAutoTrackable;
-@property (readwrite, nonatomic, strong) MHVStringCollection *sourceTypes;
-@property (readwrite, nonatomic, strong) MHVStringCollection *triggerTypes;
+@property (readwrite, nonatomic, strong) MHVTrackingSourceTypes *sourceTypes;
+@property (readwrite, nonatomic, strong) MHVTrackingTriggerTypes *triggerTypes;
 @property (readwrite, nonatomic, strong) MHVTaskOccurrenceMetrics *occurrenceMetrics;
 @property (readwrite, nonatomic, strong) MHVTaskCompletionMetrics *completionMetrics;
-@property (readwrite, nonatomic, strong) MHVTaskTargetEventsCollection *targetEvents;
+@property (readwrite, nonatomic, strong) MHVTaskTargetEvents *targetEvents;
 
 @end

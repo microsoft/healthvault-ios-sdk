@@ -21,6 +21,7 @@
 #import "MHVTaskSchedule.h"
 #import "MHVString128.h"
 #import "MHVTaskTrackingPolicy.h"
+#import "MHVUUID.h"
 
 @interface MHVTaskThing : MHVThingDataTyped
 
@@ -55,7 +56,7 @@
 //
 // (Optional) The schedule of when the task is to be performed.
 //
-@property (readwrite, nonatomic, strong) MHVTaskScheduleCollection *schedules;
+@property (readwrite, nonatomic, strong) MHVTaskSchedules *schedules;
 //
 // (Optional) The rules for tracking task completion.
 //
@@ -63,6 +64,6 @@
 //
 // (Optional) The plan objectives that completion of this task counts towards.
 //
-@property (readwrite, nonatomic, strong) MHVCollection<NSUUID*> *associatedObjectiveIds;
+@property (readwrite, nonatomic, strong) MHVUUID *associatedObjectiveIds;
 
 @end

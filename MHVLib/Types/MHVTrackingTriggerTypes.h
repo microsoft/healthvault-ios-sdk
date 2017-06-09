@@ -1,5 +1,5 @@
 //
-//  MHVTaskTargetEvents.h
+//  MHVTrackingTriggerTypes.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -18,23 +18,9 @@
 
 #import "MHVType.h"
 #import "MHVCollection.h"
-#import "MHVStringNZNW.h"
-#import "MHVBool.h"
 
-@interface MHVTaskTargetEvent : MHVType
+@interface MHVTrackingTriggerTypes : MHVType
 
-@property (readwrite, nonatomic, strong) MHVStringNZNW *elementXPath;
-@property (readwrite, nonatomic, strong) MHVBool *isNegated;
-@property (readwrite, nonatomic, strong) MHVStringCollection *elementValues;
-
-@end
-
-@interface MHVTaskTargetEventCollection : MHVCollection<MHVTaskTargetEvent *>
-
-@end
-
-@interface MHVTaskTargetEvents : MHVType
-
-@property (readwrite, nonatomic, strong) MHVTaskTargetEventCollection *targetEvent;
+@property (readwrite, nonatomic, strong) MHVStringCollection *triggerType;
 
 @end

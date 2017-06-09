@@ -30,7 +30,7 @@ static NSString *const c_element_status = @"status";
 static NSString *const c_element_type = @"type";
 static NSString *const c_element_schedules = @"schedules";
 static NSString *const c_element_tracking_policy = @"tracking-policy";
-static NSString *const c_element_associated_object_ids = @"associated-object-ids";
+static NSString *const c_element_associated_objective_ids = @"associated-objective-ids";
 
 @implementation MHVTaskThing
 
@@ -43,9 +43,9 @@ static NSString *const c_element_associated_object_ids = @"associated-object-ids
     [writer writeElement:c_element_is_reminder_enabled content:self.isReminderEnabled];
     [writer writeElement:c_element_status value:self.status];
     [writer writeElement:c_element_type value:self.taskType.UUIDString];
-    [writer writeElementArray:c_element_schedules elements:self.schedules.toArray];
+    [writer writeElement:c_element_schedules content:self.schedules];
     [writer writeElement:c_element_tracking_policy content:self.trackingPolicy];
-    [writer writeElementArray:c_element_associated_object_ids elements:self.associatedObjectiveIds.toArray];
+    [writer writeElement:c_element_associated_objective_ids content:self.associatedObjectiveIds];
 }
 
 -(void)deserialize:(XReader *)reader
@@ -57,9 +57,9 @@ static NSString *const c_element_associated_object_ids = @"associated-object-ids
     self.isReminderEnabled = [reader readElement:c_element_is_reminder_enabled asClass:[MHVBool class]];
     self.status = [reader readStringElement:c_element_status];
     self.taskType = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_type]];
-    self.schedules = (MHVTaskScheduleCollection *)[reader readElementArray:c_element_schedules asClass:[MHVTaskSchedule class] andArrayClass:[MHVTaskScheduleCollection class]];
+    self.schedules = [reader readElement:c_element_schedules asClass:[MHVTaskSchedules class]];
     self.trackingPolicy = [reader readElement:c_element_tracking_policy asClass:[MHVTaskTrackingPolicy class]];
-    self.associatedObjectiveIds = (MHVCollection<NSUUID *>*)[reader readElementArray:c_element_associated_object_ids asClass:[NSUUID class] andArrayClass:[MHVCollection class]];
+    self.associatedObjectiveIds = [reader readElement:c_element_associated_objective_ids asClass:[MHVUUID class]];
 }
 
 + (NSString *)typeID

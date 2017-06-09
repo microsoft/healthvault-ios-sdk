@@ -67,6 +67,10 @@
 #import "MHVPlan.h"
 #import "MHVPregnancy.h"
 #import "MHVTaskThing.h"
+#import "MHVTaskTrackingEntry.h"
+#import "MHVAsthmaInhaler.h"
+#import "MHVAsthmaInhalerUsage.h"
+#import "MHVBodyComposition.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
@@ -127,4 +131,8 @@
 - (MHVPlan *)plan;
 - (MHVPregnancy *)pregnancy;
 - (MHVTaskThing *)task;
+- (MHVTaskTrackingEntry *)taskTrackingEntry;
+- (MHVAsthmaInhaler *)asthmaInhaler;
+- (MHVAsthmaInhalerUsage *)asthmaInhalerUsage;
+- (MHVBodyComposition *)bodyComposition;
 @end

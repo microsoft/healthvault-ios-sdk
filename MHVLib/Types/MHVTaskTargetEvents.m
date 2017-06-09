@@ -22,7 +22,7 @@ static NSString *const c_element_element_xpath = @"element-xpath";
 static NSString *const c_element_is_negated = @"is-negated";
 static NSString *const c_element_element_values = @"element-values";
 
-@implementation MHVTaskTargetEvents
+@implementation MHVTaskTargetEvent
 
 - (void)serialize:(XWriter *)writer
 {
@@ -40,14 +40,30 @@ static NSString *const c_element_element_values = @"element-values";
 
 @end
 
-@implementation MHVTaskTargetEventsCollection
+static NSString *const c_element_target_event = @"target-event";
+
+@implementation MHVTaskTargetEvents
+
+- (void)serialize:(XWriter *)writer
+{
+    [writer writeElementArray:c_element_target_event elements:self.targetEvent.toArray];
+}
+
+- (void) deserialize:(XReader *)reader
+{
+    self.targetEvent = (MHVTaskTargetEventCollection *)[reader readElementArray:c_element_target_event asClass:[MHVTaskTargetEvent class] andArrayClass:[MHVTaskTargetEventCollection class]];
+}
+
+@end
+
+@implementation MHVTaskTargetEventCollection
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.type = [MHVTaskTargetEvents class];
+        self.type = [MHVTaskTargetEvent class];
     }
     
     return self;

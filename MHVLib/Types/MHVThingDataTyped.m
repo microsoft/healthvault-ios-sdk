@@ -145,6 +145,10 @@ static MHVTypeSystem *s_typeRegistry;
     [s_typeRegistry addClass:[MHVPlan class] forTypeID:[MHVPlan typeID]];
     [s_typeRegistry addClass:[MHVPregnancy class] forTypeID:[MHVPregnancy typeID]];
     [s_typeRegistry addClass:[MHVTaskThing class] forTypeID:[MHVTaskThing typeID]];
+    [s_typeRegistry addClass:[MHVTaskTrackingEntry class] forTypeID:[MHVTaskTrackingEntry typeID]];
+    [s_typeRegistry addClass:[MHVAsthmaInhaler class] forTypeID:[MHVAsthmaInhaler typeID]];
+    [s_typeRegistry addClass:[MHVAsthmaInhalerUsage class] forTypeID:[MHVAsthmaInhalerUsage typeID]];
+    [s_typeRegistry addClass:[MHVBodyComposition class] forTypeID:[MHVBodyComposition typeID]];
 }
 
 + (MHVTypeSystem *)current

@@ -1,5 +1,5 @@
 //
-//  MHVTaskTargetEvents.h
+//  MHVAlert.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,24 +17,16 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVCollection.h"
-#import "MHVStringNZNW.h"
-#import "MHVBool.h"
+#import "MHVDow.h"
+#import "MHVTime.h"
 
-@interface MHVTaskTargetEvent : MHVType
+@interface MHVAlert : MHVType
 
-@property (readwrite, nonatomic, strong) MHVStringNZNW *elementXPath;
-@property (readwrite, nonatomic, strong) MHVBool *isNegated;
-@property (readwrite, nonatomic, strong) MHVStringCollection *elementValues;
+@property (readwrite, nonatomic, strong) MHVDow *dow;
+@property (readwrite, nonatomic, strong) MHVTime *time;
 
 @end
 
-@interface MHVTaskTargetEventCollection : MHVCollection<MHVTaskTargetEvent *>
-
-@end
-
-@interface MHVTaskTargetEvents : MHVType
-
-@property (readwrite, nonatomic, strong) MHVTaskTargetEventCollection *targetEvent;
+@interface MHVAlertCollection : MHVCollection<MHVAlert *>
 
 @end

@@ -30,21 +30,21 @@ NSString *const c_element_target_events = @"target-events";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_is_auto_trackable content:self.isAutoTrackable];
-    [writer writeElementArray:c_element_source_types elements:self.sourceTypes.toArray];
-    [writer writeElementArray:c_element_trigger_types elements:self.triggerTypes.toArray];
+    [writer writeElement:c_element_source_types content:self.sourceTypes];
+    [writer writeElement:c_element_trigger_types content:self.triggerTypes];
     [writer writeElement:c_element_occurrence_metrics content:self.occurrenceMetrics];
     [writer writeElement:c_element_completion_metrics content:self.completionMetrics];
-    [writer writeElementArray:c_element_target_events elements:self.targetEvents.toArray];
+    [writer writeElement:c_element_target_events content:self.targetEvents];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.isAutoTrackable = [reader readElement:c_element_is_auto_trackable asClass:[MHVBool class]];
-    self.sourceTypes = [reader readStringElementArray:c_element_source_types];
-    self.triggerTypes = [reader readStringElementArray:c_element_trigger_types];
+    self.sourceTypes = [reader readElement:c_element_source_types asClass:[MHVTrackingSourceTypes class]];
+    self.triggerTypes = [reader readElement:c_element_trigger_types asClass:[MHVTrackingTriggerTypes class]];
     self.occurrenceMetrics = [reader readElement:c_element_occurrence_metrics asClass:[MHVTaskOccurrenceMetrics class]];
     self.completionMetrics = [reader readElement:c_element_completion_metrics asClass:[MHVTaskCompletionMetrics class]];
-    self.targetEvents = (MHVTaskTargetEventsCollection *)[reader readElementArray:c_element_target_events asClass:[MHVTaskTargetEvents class] andArrayClass:[MHVTaskTargetEventsCollection class]];
+    self.targetEvents = [reader readElement:c_element_target_events asClass:[MHVTaskTargetEvents class]];
 }
 
 @end

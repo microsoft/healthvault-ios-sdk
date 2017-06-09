@@ -1,5 +1,5 @@
 //
-//  MHVTaskTargetEvents.h
+//  MHVUUID.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,25 +16,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVCollection.h"
-#import "MHVStringNZNW.h"
-#import "MHVBool.h"
+#import "MHVUUID.h"
 
-@interface MHVTaskTargetEvent : MHVType
+static NSString *const c_element_id = @"id";
 
-@property (readwrite, nonatomic, strong) MHVStringNZNW *elementXPath;
-@property (readwrite, nonatomic, strong) MHVBool *isNegated;
-@property (readwrite, nonatomic, strong) MHVStringCollection *elementValues;
+@implementation MHVUUID
 
-@end
+- (void)serialize:(XWriter *)writer
+{
+    [writer writeElementArray:c_element_id elements:self.identifier];
+}
 
-@interface MHVTaskTargetEventCollection : MHVCollection<MHVTaskTargetEvent *>
-
-@end
-
-@interface MHVTaskTargetEvents : MHVType
-
-@property (readwrite, nonatomic, strong) MHVTaskTargetEventCollection *targetEvent;
+- (void)deserialize:(XReader *)reader
+{
+    self.identifier = [reader readUUIDElementArray:c_element_id];
+}
 
 @end

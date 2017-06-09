@@ -55,6 +55,23 @@ static NSString *const c_element_adherence_window_in_minutes = @"adherence-windo
 
 @end
 
+static NSString *const c_element_schedule = @"schedule";
+
+@implementation MHVTaskSchedules
+
+- (void)serialize:(XWriter *)writer
+{
+    [writer writeElementArray:c_element_schedule elements:self.schedule.toArray];
+}
+
+- (void)deserialize:(XReader *)reader
+{
+    self.schedule = (MHVTaskScheduleCollection *)[reader readElementArray:c_element_schedule asClass:[MHVTaskSchedule class] andArrayClass:[MHVTaskScheduleCollection class]];
+}
+
+@end
+
+
 @implementation MHVTaskScheduleCollection
 
 - (instancetype)init

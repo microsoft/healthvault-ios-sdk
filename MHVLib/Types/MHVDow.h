@@ -1,5 +1,5 @@
 //
-//  MHVTaskTargetEvents.h
+//  MHVDow.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,25 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVCollection.h"
-#import "MHVStringNZNW.h"
-#import "MHVBool.h"
+#import "MHVConstrainedInt.h"
 
-@interface MHVTaskTargetEvent : MHVType
-
-@property (readwrite, nonatomic, strong) MHVStringNZNW *elementXPath;
-@property (readwrite, nonatomic, strong) MHVBool *isNegated;
-@property (readwrite, nonatomic, strong) MHVStringCollection *elementValues;
-
-@end
-
-@interface MHVTaskTargetEventCollection : MHVCollection<MHVTaskTargetEvent *>
-
-@end
-
-@interface MHVTaskTargetEvents : MHVType
-
-@property (readwrite, nonatomic, strong) MHVTaskTargetEventCollection *targetEvent;
+//1 = Sunday 2 = Monday 3 = Tuesday 4 = Wednesday 5 = Thursday 6 = Friday 7 = Saturday
+@interface MHVDow : MHVConstrainedInt
 
 @end
