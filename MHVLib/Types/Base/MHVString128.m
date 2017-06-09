@@ -1,5 +1,5 @@
 //
-//  MHVString128NW.m
+//  MHVString128.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,14 +16,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVString128NW.h"
+#import "MHVString128.h"
 
-@implementation MHVString128NW
+@implementation MHVString128
+
+- (NSUInteger)maxLength
+{
+    return 1;
+}
 
 - (NSUInteger)maxLength
 {
     return 128;
 }
+
+@end
+
+
+@implementation MHVString128
 
 - (BOOL)validateValue:(NSString *)value
 {

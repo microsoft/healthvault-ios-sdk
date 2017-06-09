@@ -1,6 +1,7 @@
 //
-//  MHVString1024NW.h
+//  MHVTaskType.h
 // MHVLib
+//
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +15,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
-#import "MHVConstrainedString.h"
 
-@interface MHVString1024NW : MHVConstrainedString
+#import "MHVThing.h"
 
-@end
-
-@interface MHVString1024NWCollection : MHVCollection<MHVString1024NW*>
+@interface MHVTaskType : MHVThingDataTyped
 
 @end

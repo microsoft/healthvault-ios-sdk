@@ -1,0 +1,13 @@
+//
+//  MHVPregnancy.h
+//  MHVLib
+//
+//  Created by Andrew Butler on 6/7/17.
+//  Copyright © 2017 Microsoft Corporation. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface MHVPregnancy : NSObject
+
+@end
