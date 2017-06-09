@@ -29,26 +29,20 @@ class MedicationBuilderTests: XCTestCase
     func testUpdateNameGivenString()
     {
         let med = "Advil"
-        //when
         let didUpdate = builder?.updateNameIfNotNil(name: med)
-        //then
         XCTAssertEqual(didUpdate, true, "Update should succeeded")
         XCTAssertEqual(builder?.med?.name.text, med, "The name should have been \(med)")
     }
     
     func testUpdateNameGivenEmptyString()
     {
-        //when
         let didUpdate = builder?.updateNameIfNotNil(name: "")
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
     func testUpdateNameGivenNil()
     {
-        //when
         let didUpdate = builder?.updateNameIfNotNil(name: nil)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
 
     }
@@ -56,9 +50,7 @@ class MedicationBuilderTests: XCTestCase
     // Strength tests
     func testUpdateStrengthGivenAmountAndUnit()
     {
-        //when
         let didUpdate = builder?.updateStrengthIfNotNil(amount: "500", unit: "mg")
-        //then
         XCTAssertEqual(didUpdate, true, "Update should succeeded")
         XCTAssertEqual(builder?.med?.strength.displayText, "500 mg", "The strength should have been '500 mg'")
     }
@@ -67,9 +59,7 @@ class MedicationBuilderTests: XCTestCase
     {
         let amount = "100"
         let unit: String? = nil
-        //when
         let didUpdate = builder?.updateStrengthIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -77,9 +67,7 @@ class MedicationBuilderTests: XCTestCase
     {
         let amount = "100"
         let unit = ""
-        //when
         let didUpdate = builder?.updateStrengthIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -88,9 +76,7 @@ class MedicationBuilderTests: XCTestCase
         let amount = ""
         let unit: String? = nil
         
-        //when
         let didUpdate = builder?.updateStrengthIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -105,9 +91,7 @@ class MedicationBuilderTests: XCTestCase
     // Dose test
     func testUpdateDoseGivenAmountAndUnit()
     {
-        //when
         let didUpdate = builder?.updateDoseIfNotNil(amount: "2", unit: "Tablets")
-        //then
         XCTAssertEqual(didUpdate, true, "Update should succeeded")
         XCTAssertEqual(builder?.med?.dose.displayText, "2 Tablets", "The dose should have been '2 Tablets'")
     }
@@ -116,9 +100,7 @@ class MedicationBuilderTests: XCTestCase
     {
         let amount = "100"
         let unit: String? = nil
-        //when
         let didUpdate = builder?.updateDoseIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -126,9 +108,7 @@ class MedicationBuilderTests: XCTestCase
     {
         let amount = "5"
         let unit = ""
-        //when
         let didUpdate = builder?.updateDoseIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -137,9 +117,7 @@ class MedicationBuilderTests: XCTestCase
         let amount = ""
         let unit: String? = nil
         
-        //when
         let didUpdate = builder?.updateDoseIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -154,9 +132,7 @@ class MedicationBuilderTests: XCTestCase
     // Freq test
     func testUpdateFrequencyGivenAmountAndUnit()
     {
-        //when
         let didUpdate = builder?.updateFrequencyIfNotNil(amount: "2", unit: "times per week")
-        //then
         XCTAssertEqual(didUpdate, true, "Update should succeeded")
         XCTAssertEqual(builder?.med?.frequency.displayText, "2 times per week", "The freq should have been '2 times per week'")
     }
@@ -165,9 +141,7 @@ class MedicationBuilderTests: XCTestCase
     {
         let amount = "100"
         let unit: String? = nil
-        //when
         let didUpdate = builder?.updateFrequencyIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -175,9 +149,7 @@ class MedicationBuilderTests: XCTestCase
     {
         let amount = "5"
         let unit = ""
-        //when
         let didUpdate = builder?.updateFrequencyIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -186,9 +158,7 @@ class MedicationBuilderTests: XCTestCase
         let amount = ""
         let unit: String? = nil
         
-        //when
         let didUpdate = builder?.updateFrequencyIfNotNil(amount: amount, unit: unit)
-        //then
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
     }
     
@@ -198,6 +168,14 @@ class MedicationBuilderTests: XCTestCase
         let unit = "times a day"
         let didUpdate = builder?.updateFrequencyIfNotNil(amount: amount, unit: unit)
         XCTAssertEqual(didUpdate, false, "Update should have failed to update and returned false")
+    }
+    
+    func testConstructMedication()
+    {
+        let constructedThing = builder?.constructMedication()
+        
+        XCTAssertTrue(constructedThing! === builder?.thing!)
+
     }
 
     

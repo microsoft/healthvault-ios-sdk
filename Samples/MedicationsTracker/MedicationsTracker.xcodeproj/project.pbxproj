@@ -11,7 +11,6 @@
 		ED41363D1EE7538B00E15555 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED41363B1EE7538B00E15555 /* Main.storyboard */; };
 		ED41363F1EE7538B00E15555 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED41363E1EE7538B00E15555 /* Assets.xcassets */; };
 		ED4136421EE7538B00E15555 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED4136401EE7538B00E15555 /* LaunchScreen.storyboard */; };
-		ED41364D1EE7538B00E15555 /* MedicationsTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41364C1EE7538B00E15555 /* MedicationsTrackerTests.swift */; };
 		ED4136581EE7538B00E15555 /* MedicationsTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4136571EE7538B00E15555 /* MedicationsTrackerUITests.swift */; };
 		ED4136841EE754E900E15555 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4136831EE754E900E15555 /* libxml2.2.tbd */; };
 		ED4136861EE754EE00E15555 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4136851EE754EE00E15555 /* Security.framework */; };
@@ -35,6 +34,8 @@
 		ED5F670A1EE9DA11001E75D7 /* FormSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */; };
 		ED5F670C1EE9DA48001E75D7 /* HVUnitTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */; };
 		ED5F67121EEA0929001E75D7 /* MedicationBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */; };
+		ED5F671A1EEB38B6001E75D7 /* FormSubmssionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67191EEB38B6001E75D7 /* FormSubmssionTests.swift */; };
+		ED5F671C1EEB472C001E75D7 /* MedicationTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F671B1EEB472C001E75D7 /* MedicationTextFieldTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +63,6 @@
 		ED4136411EE7538B00E15555 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED4136431EE7538B00E15555 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED4136481EE7538B00E15555 /* MedicationsTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MedicationsTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED41364C1EE7538B00E15555 /* MedicationsTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationsTrackerTests.swift; sourceTree = "<group>"; };
 		ED41364E1EE7538B00E15555 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED4136531EE7538B00E15555 /* MedicationsTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MedicationsTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED4136571EE7538B00E15555 /* MedicationsTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationsTrackerUITests.swift; sourceTree = "<group>"; };
@@ -91,6 +91,8 @@
 		ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSubmission.swift; sourceTree = "<group>"; };
 		ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HVUnitTypes.swift; sourceTree = "<group>"; };
 		ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationBuilderTests.swift; sourceTree = "<group>"; };
+		ED5F67191EEB38B6001E75D7 /* FormSubmssionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSubmssionTests.swift; sourceTree = "<group>"; };
+		ED5F671B1EEB472C001E75D7 /* MedicationTextFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationTextFieldTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,9 +166,10 @@
 		ED41364B1EE7538B00E15555 /* MedicationsTrackerTests */ = {
 			isa = PBXGroup;
 			children = (
-				ED41364C1EE7538B00E15555 /* MedicationsTrackerTests.swift */,
-				ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */,
 				ED41364E1EE7538B00E15555 /* Info.plist */,
+				ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */,
+				ED5F67191EEB38B6001E75D7 /* FormSubmssionTests.swift */,
+				ED5F671B1EEB472C001E75D7 /* MedicationTextFieldTests.swift */,
 			);
 			path = MedicationsTrackerTests;
 			sourceTree = "<group>";
@@ -403,8 +406,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED5F671A1EEB38B6001E75D7 /* FormSubmssionTests.swift in Sources */,
 				ED5F67121EEA0929001E75D7 /* MedicationBuilderTests.swift in Sources */,
-				ED41364D1EE7538B00E15555 /* MedicationsTrackerTests.swift in Sources */,
+				ED5F671C1EEB472C001E75D7 /* MedicationTextFieldTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
