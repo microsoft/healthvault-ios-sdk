@@ -26,7 +26,7 @@
 #import "MHVRequestMessageCreatorProtocol.h"
 #import "MHVRequestMessageCreator.h"
 #import "MHVHttpServiceProtocol.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 #import "NSError+MHVError.h"
 #import "MHVErrorConstants.h"
 #import "MHVServiceResponse.h"

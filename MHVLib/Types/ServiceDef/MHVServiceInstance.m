@@ -1,5 +1,5 @@
 //
-// MHVInstance.m
+// MHVServiceInstance.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -19,7 +19,7 @@
 //
 
 #import "MHVCommon.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 
 static const xmlChar *x_element_id = XMLSTRINGCONST("id");
 static const xmlChar *x_element_name = XMLSTRINGCONST("name");
@@ -27,7 +27,7 @@ static const xmlChar *x_element_description = XMLSTRINGCONST("description");
 static const xmlChar *x_element_platform = XMLSTRINGCONST("platform-url");
 static const xmlChar *x_element_shell = XMLSTRINGCONST("shell-url");
 
-@implementation MHVInstance
+@implementation MHVServiceInstance
 
 - (void)deserialize:(XReader *)reader
 {
@@ -49,29 +49,29 @@ static const xmlChar *x_element_shell = XMLSTRINGCONST("shell-url");
 
 @end
 
-@implementation MHVInstanceCollection
+@implementation MHVServiceInstanceCollection
 
 - (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.type = [MHVInstance class];
+        self.type = [MHVServiceInstance class];
     }
 
     return self;
 }
 
-- (MHVInstance *)indexOfInstance:(NSUInteger)index
+- (MHVServiceInstance *)indexOfInstance:(NSUInteger)index
 {
-    return (MHVInstance *)[self objectAtIndex:index];
+    return (MHVServiceInstance *)[self objectAtIndex:index];
 }
 
 - (NSInteger)indexOfInstanceNamed:(NSString *)name
 {
     return [self indexOfMatchingObject:^BOOL (id value)
     {
-        return [((MHVInstance *)value).name isEqualToString:name];
+        return [((MHVServiceInstance *)value).name isEqualToString:name];
     }];
 }
 
@@ -79,7 +79,7 @@ static const xmlChar *x_element_shell = XMLSTRINGCONST("shell-url");
 {
     return [self indexOfMatchingObject:^BOOL (id value)
     {
-        return [((MHVInstance *)value).instanceID isEqualToString:instanceID];
+        return [((MHVServiceInstance *)value).instanceID isEqualToString:instanceID];
     }];
 }
 

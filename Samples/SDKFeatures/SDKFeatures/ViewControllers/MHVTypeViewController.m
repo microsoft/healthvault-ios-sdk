@@ -47,6 +47,7 @@ static const NSInteger c_numSecondsInDay = 86400;
         if (_moreFeatures)
         {
             _moreFeatures.controller = self;
+            _moreFeatures.typeClass = _typeClass;
         }
     }
 

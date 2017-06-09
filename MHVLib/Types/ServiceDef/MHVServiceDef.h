@@ -20,5 +20,5 @@
 #import "MHVServiceDefinition.h"
 #import "MHVConfigurationEntry.h"
 #import "MHVShellInfo.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 #import "MHVSystemInstances.h"
