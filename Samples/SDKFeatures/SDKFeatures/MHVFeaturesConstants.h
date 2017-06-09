@@ -19,8 +19,6 @@
 #ifndef MHVFeaturesConstants_h
 #define MHVFeaturesConstants_h
 
-#define SHOULD_USE_LEGACY 0
-
 #define SHOULD_USE_MULTI_RECORD 1
 
 #endif /* MHVFeaturesConstants_h */

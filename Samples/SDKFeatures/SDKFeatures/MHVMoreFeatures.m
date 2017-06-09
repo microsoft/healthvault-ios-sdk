@@ -34,14 +34,6 @@
              //
              // REMOVE RECORD AUTHORIZATION.
              //
-#if SHOULD_USE_LEGACY
-             [[MHVClient current].user removeAuthForRecord:[MHVClient current].currentRecord withCallback:^(MHVTask *task) {
-                 
-                 [[MHVClient current] resetProvisioning];  // Removes local state
-                 
-                 [self.listController.navigationController popToRootViewControllerAnimated:YES];
-             }];
-#else
              id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
              
              [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error)
@@ -51,7 +43,6 @@
                      [self.listController.navigationController popToRootViewControllerAnimated:YES];
                  }];
              }];
-#endif
          }
      }];
 }
@@ -60,40 +51,6 @@
 {
     [self.listController.statusLabel showBusy];
     
-#if SHOULD_USE_LEGACY
-    //
-    // LAUNCH the GetServiceDefinition task
-    //
-    [[[MHVGetServiceDefinitionTask alloc] initWithCallback:^(MHVTask *task) {
-        //
-        // Verify success. This will throw if there was a failure
-        // You can also detect failure by checking task.hasError
-        //
-        [task checkSuccess];  
-        
-        MHVServiceDefinition* serviceDef = ((MHVGetServiceDefinitionTask *) task).serviceDef;
-        // 
-        // Show some sample information to the user
-        //
-        MHVConfigurationEntry* configEntry = [serviceDef.platform.config objectAtIndex:0];
-        MHVConfigurationEntry* configEntry2 = [serviceDef.platform.config objectAtIndex:1];
-        NSMutableString* output = [[NSMutableString alloc] init];
-        
-        [output appendLines:17, @"Some data from ServiceDefinition",
-                               @"[PlatformUrl]", serviceDef.platform.url,
-                               @"[PlatformVersion]", serviceDef.platform.version,
-                               @"[ShellUrl]", serviceDef.shell.url,
-                               @"[ShellRedirect]", serviceDef.shell.redirectUrl,
-                               @"[Example Config Entries]",
-                               configEntry.key, @"==", configEntry.value, @"==========",
-                               configEntry2.key, @"==", configEntry2.value];
-        
-        [MHVUIAlert showInformationalMessage:output];
-        
-        [self.listController.statusLabel clearStatus];
-        
-    }] start];  // NOTE: Make sure you always call start
-#else
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
     [connection.platformClient getServiceDefinitionWithWithLastUpdatedTime:nil
@@ -125,7 +82,6 @@
         
         [self.listController.statusLabel clearStatus];
     }];
-#endif
 }
 
 - (void)authorizeAdditionalRecords

@@ -34,22 +34,14 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (!self.starting && ![MHVClient current].isProvisioned)
+    
+    if (!self.starting)
     {
         [self startApp];
     }
 }
 
 - (void)startApp
-{
-#if SHOULD_USE_LEGACY
-    [self startAppLegacy];
-#else
-    [self startAppNew];
-#endif
-}
-
-- (void)startAppNew
 {
     self.starting = YES;
     
@@ -84,32 +76,9 @@
      }];
 }
 
-- (void)startAppLegacy
-{
-    self.starting = YES;
-    
-    // Startup the HealthVault Client
-    // This will automatically ensure that application instance is correctly provisioned to access the user's HealthVault record
-    // Look at ClientSettings.xml
-    //
-    [[MHVClient current] startWithParentController:self andStartedCallback:^(id sender)
-     {
-         self.starting = NO;
-         
-         if ([MHVClient current].provisionStatus == MHVAppProvisionSuccess)
-         {
-             [self showTypeList];
-         }
-         else
-         {
-             [self startupFailed];
-         }
-     }];
-}
-
 - (void)startupFailed
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[MHVClient current].settings.appName
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"]
                                                                              message:NSLocalizedString(@"Provisioning not completed. Retry?", @"Message for retrying provisioning")
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     

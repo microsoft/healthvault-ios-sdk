@@ -41,7 +41,7 @@
 
 @property (nonatomic, strong) NSDictionary *itemTypes;
 @property (nonatomic, strong) NSDictionary *itemViewTypes;
-@property (nonatomic, strong) NSArray *itemList;
+@property (nonatomic, strong) NSArray<NSArray<NSString *> *> *itemSections;
 @property (nonatomic, strong) MHVFeatureActions *actions;
 @property (nonatomic, strong) MHVMoreFeatures *features;
 
@@ -81,20 +81,6 @@
 
 - (NSString *)personName
 {
-#if SHOULD_USE_LEGACY
-    return [self personNameLegacy];
-#else
-    return [self personNameNew];
-#endif
-}
-
-- (NSString *)personNameLegacy
-{
-    return [MHVClient current].currentRecord.name;
-}
-
-- (NSString *)personNameNew
-{
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
     NSUInteger index = [connection.personInfo.records indexOfRecordID:connection.personInfo.selectedRecordID];
@@ -110,39 +96,6 @@
 
 - (void)downloadPersonImage
 {
-#if SHOULD_USE_LEGACY
-    [self downloadPersonalImageLegacy];
-#else
-    [self downloadPersonalImageNew];
-#endif
-}
-
-- (void)downloadPersonalImageLegacy
-{
-    [[MHVClient current].currentRecord downloadPersonalImageWithCallback:^(MHVTask *task)
-     {
-         @try
-         {
-             [task checkSuccess];
-             
-             if (task.result)
-             {
-                 UIImage *image = [UIImage imageWithData:task.result];
-                 
-                 if (image)
-                 {
-                     [self setTitleViewImage:image];
-                 }
-             }
-         }
-         @catch (NSException *exception)
-         {
-         }
-     }];
-}
-
-- (void)downloadPersonalImageNew
-{
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
     [connection.platformClient getHealthRecordThingTypeDefinitionsWithTypeIds:@[[MHVWeight typeID]]
@@ -156,11 +109,11 @@
     [connection.thingClient getPersonalImageWithRecordId:connection.personInfo.selectedRecordID
                                               completion:^(UIImage * _Nullable image, NSError * _Nullable error)
      {
-        if (image)
-        {
-            [self setTitleViewImage:image];
-        }
-    }];
+         if (image)
+         {
+             [self setTitleViewImage:image];
+         }
+     }];
 }
 
 - (void)setTitleViewImage:(UIImage *)image
@@ -184,9 +137,53 @@
 //
 // -------------------------------------
 
+- (UILabel *)labelForHeaderInSection:(NSInteger)section
+{
+    NSString *title;
+    if (section == 0)
+    {
+        title = @"Thing Types";
+    }
+    else if (section == 1)
+    {
+        title = @"Remote Monitoring Types";
+    }
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
+    label.textColor = UIColor.blackColor;
+    label.text = title;
+    [label sizeToFit];
+    
+    return label;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return [self labelForHeaderInSection:section].bounds.size.height;
+}
+
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *label = [self labelForHeaderInSection:section];
+    
+    label.frame = CGRectOffset(label.frame, 15, 0);
+    
+    UIView *containerView = [[UIView alloc] init];
+    containerView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:0.95];
+    [containerView addSubview:label];
+    
+    return containerView;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.itemSections.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.itemList count];
+    return [self.itemSections[section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -198,7 +195,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MHVCell"];
     }
 
-    NSString *typeName = _itemList[indexPath.row];
+    NSString *typeName = self.itemSections[indexPath.section][indexPath.row];
     cell.textLabel.text = typeName;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -208,7 +205,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *name = _itemList[indexPath.row];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSString *name = self.itemSections[indexPath.section][indexPath.row];
     Class selectedCls = [self.itemTypes objectForKey:name];
     Class controllerClass = [self.itemViewTypes objectForKey:name];
 
@@ -246,58 +245,69 @@
 {
     NSMutableDictionary *itemDictionary = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *viewDictionary = [[NSMutableDictionary alloc] init];
-    NSMutableArray *typeList = [[NSMutableArray alloc] init];
+    NSMutableArray<NSString *> *hvTypeList = [[NSMutableArray alloc] init];
+    NSMutableArray<NSString *> *restTypeList = [[NSMutableArray alloc] init];
     
+    //HealthVault Thing Types
     NSArray<Class> *thingTypes = @[[MHVBloodGlucose class],
-                            [MHVBloodPressure class],
-                            [MHVCondition class],
-                            [MHVCholesterol class],
-                            [MHVDietaryIntake class],
-                            [MHVDailyMedicationUsage class],
-                            [MHVImmunization class],
-                            [MHVEmotionalState class],
-                            [MHVExercise class],
-                            [MHVMedication class],
-                            [MHVProcedure class],
-                            [MHVSleepJournalAM class],
-                            [MHVWeight class],
-                            [MHVFile class],
-                            [MHVHeartRate class]];
-
-    for (int i = 0; i < thingTypes.count; i++) {
+                                   [MHVBloodPressure class],
+                                   [MHVCondition class],
+                                   [MHVCholesterol class],
+                                   [MHVDietaryIntake class],
+                                   [MHVDailyMedicationUsage class],
+                                   [MHVImmunization class],
+                                   [MHVEmotionalState class],
+                                   [MHVExercise class],
+                                   [MHVMedication class],
+                                   [MHVProcedure class],
+                                   [MHVSleepJournalAM class],
+                                   [MHVWeight class],
+                                   [MHVFile class],
+                                   [MHVHeartRate class]];
+    
+    for (int i = 0; i < thingTypes.count; i++)
+    {
         NSString *name = [thingTypes[i] XRootElement];
-        [typeList addObject:name];
+        
+        [hvTypeList addObject:name];
         [itemDictionary setObject:thingTypes[i] forKey:name];
         [viewDictionary setObject:[MHVTypeViewController class] forKey:name];
     }
     
+    //Action Plan Types
     NSString *name = @"action plans [REST]";
-    [typeList addObject:name];
+    [restTypeList addObject:name];
     [itemDictionary setObject:[MHVActionPlan class] forKey:name];
     [viewDictionary setObject:[MHVActionPlansListViewController class] forKey:name];
     
     name = @"action plan tasks [REST]";
-    [typeList addObject:name];
+    [restTypeList addObject:name];
     [itemDictionary setObject:[MHVActionPlanTask class] forKey:name];
     [viewDictionary setObject:[MHVActionPlanTaskListViewController class] forKey:name];
     
     name = @"goals [REST]";
-    [typeList addObject:name];
+    [restTypeList addObject:name];
     [itemDictionary setObject:[MHVGoal class] forKey:name];
     [viewDictionary setObject:[MHVGoalsListViewController class] forKey:name];
     
     name = @"goal recommendations [REST]";
-    [typeList addObject:name];
+    [restTypeList addObject:name];
     [itemDictionary setObject:[MHVGoalRecommendation class] forKey:name];
     [viewDictionary setObject:[MHVGoalsRecommendationsListViewController class] forKey:name];
 
-    [typeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+    [hvTypeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2)
+    {
+        return [obj1 compare:obj2];
+    }];
+
+    [restTypeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2)
+    {
         return [obj1 compare:obj2];
     }];
 
     _itemTypes = itemDictionary;
     _itemViewTypes = viewDictionary;
-    _itemList = typeList;
+    _itemSections = @[hvTypeList, restTypeList];
 }
 
 - (Class)getSelectedClass
@@ -310,7 +320,7 @@
         return nil;
     }
 
-    NSString *typeName = _itemList[selectedRow.row];
+    NSString *typeName = self.itemSections[selectedRow.section][selectedRow.row];
     return [self.itemTypes objectForKey:typeName];
 }
 
