@@ -36,6 +36,7 @@
 		ED5F67121EEA0929001E75D7 /* MedicationBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */; };
 		ED5F671A1EEB38B6001E75D7 /* FormSubmssionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67191EEB38B6001E75D7 /* FormSubmssionTests.swift */; };
 		ED5F671C1EEB472C001E75D7 /* MedicationTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F671B1EEB472C001E75D7 /* MedicationTextFieldTests.swift */; };
+		ED5F671E1EEB5228001E75D7 /* EditMedicationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F671D1EEB5228001E75D7 /* EditMedicationViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationBuilderTests.swift; sourceTree = "<group>"; };
 		ED5F67191EEB38B6001E75D7 /* FormSubmssionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSubmssionTests.swift; sourceTree = "<group>"; };
 		ED5F671B1EEB472C001E75D7 /* MedicationTextFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationTextFieldTests.swift; sourceTree = "<group>"; };
+		ED5F671D1EEB5228001E75D7 /* EditMedicationViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMedicationViewControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */,
 				ED5F67191EEB38B6001E75D7 /* FormSubmssionTests.swift */,
 				ED5F671B1EEB472C001E75D7 /* MedicationTextFieldTests.swift */,
+				ED5F671D1EEB5228001E75D7 /* EditMedicationViewControllerTests.swift */,
 			);
 			path = MedicationsTrackerTests;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				ED5F671A1EEB38B6001E75D7 /* FormSubmssionTests.swift in Sources */,
 				ED5F67121EEA0929001E75D7 /* MedicationBuilderTests.swift in Sources */,
 				ED5F671C1EEB472C001E75D7 /* MedicationTextFieldTests.swift in Sources */,
+				ED5F671E1EEB5228001E75D7 /* EditMedicationViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
