@@ -184,15 +184,6 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 - (void)getThingsFromHealthVault
 {
-#if SHOULD_USE_LEGACY
-    [self getThingsFromHealthVaultLegacy];
-#else
-    [self getThingsFromHealthVaultNew];
-#endif
-}
-
-- (void)getThingsFromHealthVaultNew
-{
     [self.statusLabel showBusy];
     
     // Get the current HealthVault service connection
@@ -202,7 +193,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     MHVThingQuery *query = [[MHVThingQuery alloc] init];
     query.maxResults = 500;
     query.view.sections |= MHVThingSection_Blobs;
-
+    
     // Send request to get all things for the type class set for this view controller.
     [connection.thingClient getThingsForThingClass:self.typeClass
                                              query:query
@@ -228,16 +219,6 @@ static const NSInteger c_numSecondsInDay = 86400;
               }
           }];
      }];
-}
-
-- (void)getThingsFromHealthVaultLegacy
-{
-    [self.statusLabel showBusy];
-    
-    [[MHVClient current].currentRecord getThingsForClass:self.typeClass callback:^(MHVTask *task)
-    {        
-        [self getThingsLegacyCompleted:task];
-    }];
 }
 
 - (void)addRandomData:(BOOL)isMetric
@@ -268,48 +249,31 @@ static const NSInteger c_numSecondsInDay = 86400;
      {
          if (selectedYes)
          {
-#if SHOULD_USE_LEGACY
-             [self removeThingLegacy:selectedThing];
-#else
-             [self removeThingNew:selectedThing];
-#endif
+             // Get the current HealthVault service connection
+             id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+             
+             // Send request to remove the selected thing
+             [connection.thingClient removeThing:selectedThing
+                                        recordId:connection.personInfo.selectedRecordID
+                                      completion:^(NSError * _Nullable error)
+              {
+                  // Completion will be called on arbitrary thread.
+                  // Dispatch to main thread to refresh the table or show error
+                  [[NSOperationQueue mainQueue] addOperationWithBlock:^
+                   {
+                       if (error)
+                       {
+                           [MHVUIAlert showInformationalMessage:error.description];
+                           [self.statusLabel showStatus:@"Failed"];
+                       }
+                       else
+                       {
+                           [self.statusLabel showStatus:@"Done"];
+                           [self refreshView];
+                       }
+                   }];
+              }];
          }
-     }];
-}
-
-- (void)removeThingLegacy:(MHVThing *)thing
-{
-    [[MHVClient current].currentRecord removeThingWithKey:thing.key callback:^(MHVTask *task)
-    {
-        [self removeThingLegacyCompleted:task];
-    }];
-}
-
-- (void)removeThingNew:(MHVThing *)thing
-{
-    // Get the current HealthVault service connection
-    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
-    
-    // Send request to remove the selected thing
-    [connection.thingClient removeThing:thing
-                               recordId:connection.personInfo.selectedRecordID
-                             completion:^(NSError * _Nullable error)
-     {
-         // Completion will be called on arbitrary thread.
-         // Dispatch to main thread to refresh the table or show error
-         [[NSOperationQueue mainQueue] addOperationWithBlock:^
-          {
-              if (error)
-              {
-                  [MHVUIAlert showInformationalMessage:error.description];
-                  [self.statusLabel showStatus:@"Failed"];
-              }
-              else
-              {
-                  [self.statusLabel showStatus:@"Done"];
-                  [self refreshView];
-              }
-          }];
      }];
 }
 
@@ -335,54 +299,6 @@ static const NSInteger c_numSecondsInDay = 86400;
 }
 
 - (void)addRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
-{
-#if SHOULD_USE_LEGACY
-    [self addLegacyRandomForDaysFrom:start to:end isMetric:metric];
-#else
-    [self addNewRandomForDaysFrom:start to:end isMetric:metric];
-#endif
-
-}
-
-- (void)addLegacyRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
-{
-    MHVThingCollection *things = [self createRandomForDay:start isMetric:metric];
-
-    if (things.count < 1)
-    {
-        [MHVUIAlert showInformationalMessage:@"Not Supported!"];
-        return;
-    }
-
-    //
-    // PUT IT INTO HEALTHVAULT
-    //
-    [[MHVClient current].currentRecord putThings:things callback:^(MHVTask *task)
-    {
-        //
-        // Update the UI
-        //
-        if (![self putThingsLegacyCompleted:task forDate:start])
-        {
-            return;
-        }
-
-        //
-        // Create another thing, unless we've completed the requested data range
-        //
-        NSDate *nextDate = [self getNextDayAfter:start endDate:end];
-        if (nextDate)
-        {
-            [self addLegacyRandomForDaysFrom:nextDate to:end isMetric:metric];
-        }
-        else
-        {
-            [self.statusLabel showStatus:@"Done"];
-        }
-    }];
-}
-
-- (void)addNewRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
 {
     MHVThingCollection *things = [self createRandomForDay:start isMetric:metric];
     
@@ -414,7 +330,7 @@ static const NSInteger c_numSecondsInDay = 86400;
                   NSDate *nextDate = [self getNextDayAfter:start endDate:end];
                   if (nextDate)
                   {
-                      [self addNewRandomForDaysFrom:nextDate to:end isMetric:metric];
+                      [self addRandomForDaysFrom:nextDate to:end isMetric:metric];
                   }
                   else
                   {
@@ -426,46 +342,7 @@ static const NSInteger c_numSecondsInDay = 86400;
      }];
 }
 
-- (BOOL)getThingsLegacyCompleted:(MHVTask *)task
-{
-    @try
-    {
-        self.things = ((MHVGetThingsTask *)task).thingsRetrieved;
-
-        [self.statusLabel showStatus:[NSString stringWithFormat:@"%li things", (long)self.things.count]];
-
-        [self.thingTable reloadData];
-
-        return TRUE;
-    }
-    @catch (NSException *exception)
-    {
-        [MHVUIAlert showInformationalMessage:exception.description];
-        [self.statusLabel showStatus:@"Failed"];
-    }
-
-    return FALSE;
-}
-
-- (BOOL)putThingsLegacyCompleted:(MHVTask *)task forDate:(NSDate *)date
-{
-    @try
-    {
-        [task checkSuccess];
-        [self.statusLabel showStatus:@"%@ added", [date toString]];
-        [self refreshView];
-
-        return TRUE;
-    }
-    @catch (NSException *exception)
-    {
-        [MHVUIAlert showInformationalMessage:exception.detailedDescription];
-    }
-
-    return FALSE;
-}
-
-- (BOOL)removeThingLegacyCompleted:(MHVTask *)task
+- (BOOL)removeThingCompleted:(MHVTask *)task
 {
     @try
     {
