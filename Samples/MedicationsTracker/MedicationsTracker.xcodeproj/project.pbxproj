@@ -34,6 +34,7 @@
 		ED5F66F81EE8B42B001E75D7 /* AutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F66F71EE8B42B001E75D7 /* AutocompleteTextField.swift */; };
 		ED5F670A1EE9DA11001E75D7 /* FormSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */; };
 		ED5F670C1EE9DA48001E75D7 /* HVUnitTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */; };
+		ED5F67121EEA0929001E75D7 /* MedicationBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		ED5F66F71EE8B42B001E75D7 /* AutocompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTextField.swift; sourceTree = "<group>"; };
 		ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSubmission.swift; sourceTree = "<group>"; };
 		ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HVUnitTypes.swift; sourceTree = "<group>"; };
+		ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationBuilderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				ED41364C1EE7538B00E15555 /* MedicationsTrackerTests.swift */,
+				ED5F67111EEA0929001E75D7 /* MedicationBuilderTests.swift */,
 				ED41364E1EE7538B00E15555 /* Info.plist */,
 			);
 			path = MedicationsTrackerTests;
@@ -400,6 +403,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED5F67121EEA0929001E75D7 /* MedicationBuilderTests.swift in Sources */,
 				ED41364D1EE7538B00E15555 /* MedicationsTrackerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,10 +587,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				HEADER_SEARCH_PATHS = (
+					"../../MHVLib/**",
+					"$(SDK_DIR)/usr/include/libxml2/**",
+				);
 				INFOPLIST_FILE = MedicationsTrackerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Microsoft.MedicationsTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MedicationsTracker/MedicationsTracker-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MedicationsTracker.app/MedicationsTracker";
 			};
@@ -597,10 +606,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				HEADER_SEARCH_PATHS = (
+					"../../MHVLib/**",
+					"$(SDK_DIR)/usr/include/libxml2/**",
+				);
 				INFOPLIST_FILE = MedicationsTrackerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Microsoft.MedicationsTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MedicationsTracker/MedicationsTracker-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MedicationsTracker.app/MedicationsTracker";
 			};

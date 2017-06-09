@@ -22,8 +22,8 @@ import Foundation
 class MedicationBuilder {
     
     // MARK: Properties
-    private var thing: MHVThing?
-    private var med: MHVMedication?
+    private(set) var thing: MHVThing?
+    private(set) var med: MHVMedication?
     
     // MARK: Builder functions
     func buildMedication(mhvThing: MHVThing) -> MedicationBuilder
@@ -35,7 +35,7 @@ class MedicationBuilder {
     
     func updateNameIfNotNil(name: String?) -> Bool
     {
-        guard let medName = name else
+        guard let medName = name, !(name?.isEmpty)! else
         {
             return false
         }
@@ -46,7 +46,7 @@ class MedicationBuilder {
     
     func updateStrengthIfNotNil(amount: String, unit: String?) -> Bool
     {
-        guard let strengthAmount = Double(amount), let strengthUnit = unit else
+        guard let strengthAmount = Double(amount), let strengthUnit = unit, !(strengthUnit.isEmpty) else
         {
             return false
         }
@@ -57,7 +57,7 @@ class MedicationBuilder {
     
     func updateDoseIfNotNil(amount: String, unit: String?) -> Bool
     {
-        guard let doseAmount = Double(amount), let doseUnit = unit else
+        guard let doseAmount = Double(amount), let doseUnit = unit, !(doseUnit.isEmpty) else
         {
             return false
         }
@@ -68,7 +68,7 @@ class MedicationBuilder {
     
     func updateFrequencyIfNotNil(amount: String, unit: String?) -> Bool
     {
-        guard let freqAmount = Double(amount), let freqUnit = unit else
+        guard let freqAmount = Double(amount), let freqUnit = unit, !(freqUnit.isEmpty) else
         {
             return false
         }
