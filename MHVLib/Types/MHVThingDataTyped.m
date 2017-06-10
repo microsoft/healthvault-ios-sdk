@@ -149,6 +149,8 @@ static MHVTypeSystem *s_typeRegistry;
     [s_typeRegistry addClass:[MHVAsthmaInhaler class] forTypeID:[MHVAsthmaInhaler typeID]];
     [s_typeRegistry addClass:[MHVAsthmaInhalerUsage class] forTypeID:[MHVAsthmaInhalerUsage typeID]];
     [s_typeRegistry addClass:[MHVBodyComposition class] forTypeID:[MHVBodyComposition typeID]];
+    [s_typeRegistry addClass:[MHVBodyDimension class] forTypeID:[MHVBodyDimension typeID]];
+    [s_typeRegistry addClass:[MHVMedicalImageStudy class] forTypeID:[MHVMedicalImageStudy typeID]];
 }
 
 + (MHVTypeSystem *)current

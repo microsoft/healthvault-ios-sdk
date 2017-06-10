@@ -37,7 +37,7 @@ describe(@"MHVAsthmaInhalerUsage", ^
                                 [[inhalerUsage.strength.description should] equal:@"Micrograms (mcg)"];
                                 [[inhalerUsage.deviceId.description should] equal:@"9C4C77CF-1DF0-4c41-BD3D-EC9232B5BC8A"];
                                 [[inhalerUsage.dosePurpose.description should] equal:@"prevention"];
-                                [[theValue(inhalerUsage.doseCoue) should] equal:theValue(3)];
+                                [[theValue(inhalerUsage.doseCount) should] equal:theValue(3)];
                             });
                      });
              

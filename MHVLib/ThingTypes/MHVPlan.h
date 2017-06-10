@@ -41,6 +41,6 @@
 //
 // (Required) The plan objectives.
 //
-@property (readwrite, nonatomic, strong) MHVPlanObjectiveCollection *objectives;
+@property (readwrite, nonatomic, strong) MHVPlanObjectiveList *objectives;
 
 @end

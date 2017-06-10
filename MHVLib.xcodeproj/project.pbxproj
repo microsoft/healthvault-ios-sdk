@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		431525EC1EEB60A500837A32 /* MHVBodyDimension.h in Headers */ = {isa = PBXBuildFile; fileRef = 431525EA1EEB60A500837A32 /* MHVBodyDimension.h */; };
+		431525ED1EEB60A500837A32 /* MHVBodyDimension.m in Sources */ = {isa = PBXBuildFile; fileRef = 431525EB1EEB60A500837A32 /* MHVBodyDimension.m */; };
+		431525EF1EEB622D00837A32 /* MHVBodyDimensionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 431525EE1EEB622D00837A32 /* MHVBodyDimensionTests.m */; };
+		431525F21EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 431525F01EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.h */; };
+		431525F31EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 431525F11EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.m */; };
+		431525F61EEB64B800837A32 /* MHVMedicalImageStudySeries.h in Headers */ = {isa = PBXBuildFile; fileRef = 431525F41EEB64B800837A32 /* MHVMedicalImageStudySeries.h */; };
+		431525F71EEB64B800837A32 /* MHVMedicalImageStudySeries.m in Sources */ = {isa = PBXBuildFile; fileRef = 431525F51EEB64B800837A32 /* MHVMedicalImageStudySeries.m */; };
+		431525FA1EEB675300837A32 /* MHVMedicalImageStudy.h in Headers */ = {isa = PBXBuildFile; fileRef = 431525F81EEB675300837A32 /* MHVMedicalImageStudy.h */; };
+		431525FB1EEB675300837A32 /* MHVMedicalImageStudy.m in Sources */ = {isa = PBXBuildFile; fileRef = 431525F91EEB675300837A32 /* MHVMedicalImageStudy.m */; };
+		431525FD1EEB6AA800837A32 /* MHVMedicalImageStudyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 431525FC1EEB6AA800837A32 /* MHVMedicalImageStudyTests.m */; };
+		431525FF1EEB6F5600837A32 /* MHVPlanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 431525FE1EEB6F5600837A32 /* MHVPlanTests.m */; };
 		43282AE41EE21050009E3301 /* MHVAdvanceDirective.h in Headers */ = {isa = PBXBuildFile; fileRef = 43282AE21EE21050009E3301 /* MHVAdvanceDirective.h */; };
 		43282AE51EE21050009E3301 /* MHVAdvanceDirective.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AE31EE21050009E3301 /* MHVAdvanceDirective.m */; };
 		43282AE91EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 43282AE81EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m */; };
@@ -845,6 +856,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		431525EA1EEB60A500837A32 /* MHVBodyDimension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVBodyDimension.h; path = MHVLib/ThingTypes/MHVBodyDimension.h; sourceTree = SOURCE_ROOT; };
+		431525EB1EEB60A500837A32 /* MHVBodyDimension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVBodyDimension.m; path = MHVLib/ThingTypes/MHVBodyDimension.m; sourceTree = SOURCE_ROOT; };
+		431525EE1EEB622D00837A32 /* MHVBodyDimensionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBodyDimensionTests.m; sourceTree = "<group>"; };
+		431525F01EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMedicalImageStudySeriesImage.h; sourceTree = "<group>"; };
+		431525F11EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMedicalImageStudySeriesImage.m; sourceTree = "<group>"; };
+		431525F41EEB64B800837A32 /* MHVMedicalImageStudySeries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMedicalImageStudySeries.h; sourceTree = "<group>"; };
+		431525F51EEB64B800837A32 /* MHVMedicalImageStudySeries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMedicalImageStudySeries.m; sourceTree = "<group>"; };
+		431525F81EEB675300837A32 /* MHVMedicalImageStudy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVMedicalImageStudy.h; path = MHVLib/Types/MHVMedicalImageStudy.h; sourceTree = SOURCE_ROOT; };
+		431525F91EEB675300837A32 /* MHVMedicalImageStudy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVMedicalImageStudy.m; path = MHVLib/Types/MHVMedicalImageStudy.m; sourceTree = SOURCE_ROOT; };
+		431525FC1EEB6AA800837A32 /* MHVMedicalImageStudyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMedicalImageStudyTests.m; sourceTree = "<group>"; };
+		431525FE1EEB6F5600837A32 /* MHVPlanTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPlanTests.m; sourceTree = "<group>"; };
 		43282AE21EE21050009E3301 /* MHVAdvanceDirective.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHVAdvanceDirective.h; path = MHVLib/ThingTypes/MHVAdvanceDirective.h; sourceTree = SOURCE_ROOT; };
 		43282AE31EE21050009E3301 /* MHVAdvanceDirective.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHVAdvanceDirective.m; path = MHVLib/ThingTypes/MHVAdvanceDirective.m; sourceTree = SOURCE_ROOT; };
 		43282AE81EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAdvanceDirectiveTests.m; sourceTree = "<group>"; };
@@ -1742,6 +1764,9 @@
 				43FE58AC1EEB532400F6BB4E /* MHVAsthmaInhalerTests.m */,
 				43FE58B21EEB591100F6BB4E /* MHVAsthmaInhalerUsageTests.m */,
 				43FE58BC1EEB5CF200F6BB4E /* MHVBodyCompositionTests.m */,
+				431525EE1EEB622D00837A32 /* MHVBodyDimensionTests.m */,
+				431525FC1EEB6AA800837A32 /* MHVMedicalImageStudyTests.m */,
+				431525FE1EEB6F5600837A32 /* MHVPlanTests.m */,
 			);
 			path = ThingTypes;
 			sourceTree = "<group>";
@@ -2241,11 +2266,15 @@
 				43FE58921EEB3B9B00F6BB4E /* MHVTrackingTriggerTypes.h */,
 				43FE58931EEB3B9B00F6BB4E /* MHVTrackingTriggerTypes.m */,
 				43FE58A41EEB4E6E00F6BB4E /* MHVAlert.h */,
+				431525F41EEB64B800837A32 /* MHVMedicalImageStudySeries.h */,
+				431525F51EEB64B800837A32 /* MHVMedicalImageStudySeries.m */,
 				43FE58A51EEB4E6E00F6BB4E /* MHVAlert.m */,
 				43FE58A81EEB4EC900F6BB4E /* MHVDow.h */,
 				43FE58A91EEB4EC900F6BB4E /* MHVDow.m */,
 				43FE58B41EEB5A6800F6BB4E /* MHVBodyCompositionValue.h */,
 				43FE58B51EEB5A6800F6BB4E /* MHVBodyCompositionValue.m */,
+				431525F01EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.h */,
+				431525F11EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.m */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2323,6 +2352,8 @@
 				43282AE21EE21050009E3301 /* MHVAdvanceDirective.h */,
 				43282AE31EE21050009E3301 /* MHVAdvanceDirective.m */,
 				43282AEA1EE5FC1B009E3301 /* MHVAerobicProfile.h */,
+				431525EA1EEB60A500837A32 /* MHVBodyDimension.h */,
+				431525EB1EEB60A500837A32 /* MHVBodyDimension.m */,
 				43282AEB1EE5FC1B009E3301 /* MHVAerobicProfile.m */,
 				43282B061EE75B75009E3301 /* MHVAllergicEpisode.h */,
 				43282B071EE75B75009E3301 /* MHVAllergicEpisode.m */,
@@ -2437,6 +2468,8 @@
 				43FE58AF1EEB56E900F6BB4E /* MHVAsthmaInhalerUsage.m */,
 				43FE58B81EEB5B5E00F6BB4E /* MHVBodyComposition.h */,
 				43FE58B91EEB5B5E00F6BB4E /* MHVBodyComposition.m */,
+				431525F81EEB675300837A32 /* MHVMedicalImageStudy.h */,
+				431525F91EEB675300837A32 /* MHVMedicalImageStudy.m */,
 			);
 			name = ThingTypes;
 			path = ItemTypes;
@@ -2975,6 +3008,7 @@
 				5D983BF214E6039C00C287B7 /* MHVYear.h in Headers */,
 				43FD08F71EE9C58700A67AD2 /* MHVBaby.h in Headers */,
 				5D983BF614E6070600C287B7 /* MHVDate.h in Headers */,
+				431525F21EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.h in Headers */,
 				43FD08E71EE8D28100A67AD2 /* MHVPlanObjective.h in Headers */,
 				A51B6C9B1EC4A806003BFBDC /* MHVSessionCredentialClient.h in Headers */,
 				5D983BF914E60D1D00C287B7 /* MHVBaseTypes.h in Headers */,
@@ -3129,6 +3163,7 @@
 				5D5F3184150FAE5300ED11E7 /* MHVAppProvisionController.h in Headers */,
 				5D5F318C150FDD4A00ED11E7 /* MHVBlock.h in Headers */,
 				BA0356F71EC5278800BE547D /* MHVGoalRecommendation.h in Headers */,
+				431525EC1EEB60A500837A32 /* MHVBodyDimension.h in Headers */,
 				BA0356CF1EC5278700BE547D /* MHVActionPlan.h in Headers */,
 				5D97B93C1511743C0004B551 /* MHVUser.h in Headers */,
 				BA03563D1EC1278F00BE547D /* MHVPropertyIntrospection.h in Headers */,
@@ -3222,6 +3257,7 @@
 				43FE58981EEB403E00F6BB4E /* MHVUUID.h in Headers */,
 				5DC799961535FF4200193A3B /* MHVMethods.h in Headers */,
 				5DC3C43715360123008BBDBF /* MHVGetAuthorizedPeopleResult.h in Headers */,
+				431525F61EEB64B800837A32 /* MHVMedicalImageStudySeries.h in Headers */,
 				BAF50D3E1ECB610900C060D7 /* MHVGoalsApi.h in Headers */,
 				BA03571B1EC5278800BE547D /* MHVSystemThreadingWaitHandle.h in Headers */,
 				BA0357011EC5278800BE547D /* MHVGoalsWrapper.h in Headers */,
@@ -3317,6 +3353,7 @@
 				5D7898CD1714E9930015D375 /* MHVPlatformInfo.h in Headers */,
 				5D7898DF1714EEAA0015D375 /* MHVConfigurationEntry.h in Headers */,
 				5D7898F91715DD3A0015D375 /* MHVShellInfo.h in Headers */,
+				431525FA1EEB675300837A32 /* MHVMedicalImageStudy.h in Headers */,
 				5D7899021715E37E0015D375 /* MHVServiceDefinition.h in Headers */,
 				5D78990617160DFF0015D375 /* MHVGetServiceDefinitionTask.h in Headers */,
 				A560EBE21EE5C6E300A962D9 /* MHVLocation.h in Headers */,
@@ -3473,6 +3510,7 @@
 				4355D0D91EE76A87004B90F0 /* MHVAppointmentTests.m in Sources */,
 				43FE58AD1EEB532400F6BB4E /* MHVAsthmaInhalerTests.m in Sources */,
 				4C2975C71ECDFB63006B3673 /* MHVHttpServiceTests.m in Sources */,
+				431525FD1EEB6AA800837A32 /* MHVMedicalImageStudyTests.m in Sources */,
 				438160FB1ED507DD00BB8C94 /* MHVVocabularyClientTests.m in Sources */,
 				4355D0DF1EE77EE2004B90F0 /* MHVConcernsTests.m in Sources */,
 				4C7646EA1EC6581C003B85B5 /* MHVXmlTests.m in Sources */,
@@ -3483,6 +3521,7 @@
 				4355D0CD1EE75F4C004B90F0 /* MHVAllergicEpisodeTests.m in Sources */,
 				A5FF99231EE8586400460189 /* MHVPlatformClientTests.m in Sources */,
 				A51203CA1ECF2CB600845680 /* MHVSodaConnectionTests.m in Sources */,
+				431525FF1EEB6F5600837A32 /* MHVPlanTests.m in Sources */,
 				43FE589F1EEB4B5600F6BB4E /* MHVTaskTrackingEntryTests.m in Sources */,
 				43FD08FA1EE9ED7100A67AD2 /* MHVPregnancyTests.m in Sources */,
 				4C76474D1ECA546F003B85B5 /* MHVThingClientTests.m in Sources */,
@@ -3493,6 +3532,7 @@
 				43FD08E01EE8CF5800A67AD2 /* MHVMenstruationTests.m in Sources */,
 				43282AE91EE5D9D3009E3301 /* MHVAdvanceDirectiveTests.m in Sources */,
 				A575B4261ED488F400AB781C /* MHVShellAuthServiceTests.m in Sources */,
+				431525EF1EEB622D00837A32 /* MHVBodyDimensionTests.m in Sources */,
 				43282AFF1EE60A4F009E3301 /* MHVAerobicProfileTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3572,6 +3612,7 @@
 				5DEF154B14E985C5009D05D5 /* MHVType.m in Sources */,
 				43282AF91EE60123009E3301 /* MHVHeartrateZone.m in Sources */,
 				5DEF155014E98DCB009D05D5 /* MHVTime.m in Sources */,
+				431525FB1EEB675300837A32 /* MHVMedicalImageStudy.m in Sources */,
 				5DEF155814E9987F009D05D5 /* MHVDateExtensions.m in Sources */,
 				5DEF156814EB0988009D05D5 /* MHVClientResult.m in Sources */,
 				5DEF156C14EB180F009D05D5 /* MHVDateTime.m in Sources */,
@@ -3635,6 +3676,7 @@
 				4C191A8E1EC1033C00B5E545 /* MHVThingRaw.m in Sources */,
 				43FE58951EEB3B9B00F6BB4E /* MHVTrackingTriggerTypes.m in Sources */,
 				4C191A681EC1033C00B5E545 /* MHVBloodPressure.m in Sources */,
+				431525F31EEB63D800837A32 /* MHVMedicalImageStudySeriesImage.m in Sources */,
 				5DD0B80B14F81DDE00AAD54F /* XSerializableType.m in Sources */,
 				5DC44B7D14FEA3E600E2E02F /* MHVRandom.m in Sources */,
 				A5D1ED031EC23884000E3295 /* MHVConnectionFactory.m in Sources */,
@@ -3687,6 +3729,7 @@
 				BA0356071EC1257F00BE547D /* NSDate+DataModel.m in Sources */,
 				5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */,
 				BA0356271EC1257F00BE547D /* MHVDynamicEnum.m in Sources */,
+				431525ED1EEB60A500837A32 /* MHVBodyDimension.m in Sources */,
 				5D5F3175150FAA2800ED11E7 /* Logger.m in Sources */,
 				BA0356131EC1257F00BE547D /* NSUUID+DataModel.m in Sources */,
 				BA0357221EC5278800BE547D /* MHVWeeklyAdherenceSummary.m in Sources */,
@@ -3841,6 +3884,7 @@
 				5D1BE47E156B483900718832 /* MHVBlobUploadTask.m in Sources */,
 				5DB4206E156C959200E1A473 /* MHVThingBlobUploadTask.m in Sources */,
 				43FD090A1EEA159600A67AD2 /* MHVTaskOccurrenceMetrics.m in Sources */,
+				431525F71EEB64B800837A32 /* MHVMedicalImageStudySeries.m in Sources */,
 				43FE58BB1EEB5B5E00F6BB4E /* MHVBodyComposition.m in Sources */,
 				BA03560D1EC1257F00BE547D /* NSNumber+DataModel.m in Sources */,
 				BA0356391EC1278F00BE547D /* MHVJsonCacheService.m in Sources */,

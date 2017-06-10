@@ -48,8 +48,8 @@ static NSString *const c_element_recurrence = @"recurrence";
 {
     self.name = [reader readElement:c_element_name asClass:[MHVCodableValue class]];
     self.descriptionText = [reader readStringElement:c_element_description];
-    self.startDate = [reader readElement:c_element_start_date asClass:[MHVDateTime class]];
-    self.endDate = [reader readElement:c_element_end_date asClass:[MHVDateTime class]];
+    self.startDate = [reader readElement:c_element_start_date asClass:[MHVApproxDateTime class]];
+    self.endDate = [reader readElement:c_element_end_date asClass:[MHVApproxDateTime class]];
     self.associatedTypeInfo = [reader readElement:c_element_associated_type_info asClass:[MHVGoalAssociatedTypeInfo class]];
     self.targetRange = [reader readElement:c_element_target_range asClass:[MHVGoalRangeType class]];
     self.goalAdditionalRanges = (MHVGoalRangeTypeCollection *)[reader readElementArray:c_element_goal_additional_ranges asClass:[MHVGoalRangeType class] andArrayClass:[MHVGoalRangeTypeCollection class]];

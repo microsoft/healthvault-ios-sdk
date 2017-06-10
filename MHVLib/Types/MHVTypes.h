@@ -128,3 +128,5 @@
 #import "MHVAlert.h"
 #import "MHVDow.h"
 #import "MHVBodyCompositionValue.h"
+#import "MHVMedicalImageStudySeriesImage.h"
+#import "MHVMedicalImageStudySeries.h"

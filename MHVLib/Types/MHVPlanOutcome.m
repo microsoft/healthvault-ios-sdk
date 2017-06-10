@@ -37,6 +37,22 @@ static NSString *const c_element_type = @"type";
 
 @end
 
+static NSString *const c_element_outcome = @"outcome";
+
+@implementation MHVPlanOutcomeList
+
+- (void)serialize:(XWriter *)writer
+{
+    [writer writeElementArray:c_element_outcome elements:self.outcome.toArray];
+}
+
+- (void)deserialize:(XReader *)reader
+{
+    self.outcome = (MHVPlanOutcomeCollection *)[reader readElementArray:c_element_outcome asClass:[MHVPlanOutcome class] andArrayClass:[MHVPlanOutcomeCollection class]];
+}
+
+@end
+
 @implementation MHVPlanOutcomeCollection
 
 - (instancetype)init

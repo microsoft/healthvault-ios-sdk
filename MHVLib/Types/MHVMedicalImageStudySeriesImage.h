@@ -1,5 +1,5 @@
 //
-//  MHVPlanObjective.h
+//  MHVMedicalImageStudySeriesImage.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -18,24 +18,14 @@
 
 #import "MHVType.h"
 #import "MHVStringNZNW.h"
-#import "MHVPlanOutcome.h"
 
-@interface MHVPlanObjective : MHVType
+@interface MHVMedicalImageStudySeriesImage : MHVType
 
-@property (readwrite, nonatomic, strong) NSUUID *identifier;
-@property (readwrite, nonatomic, strong) MHVStringNZNW *name;
-@property (readwrite, nonatomic, strong) MHVStringNZNW *descriptionText;
-@property (readwrite, nonatomic, strong) NSString *state;
-@property (readwrite, nonatomic, strong) MHVPlanOutcomeList *outcomes;
+@property (readwrite, nonatomic, strong) MHVStringNZNW *imageBlobName;
+@property (readwrite, nonatomic, strong) MHVStringNZNW *imagePreviewBlobName;
 
 @end
 
-@interface MHVPlanObjectiveCollection : MHVCollection<MHVPlanObjective *>
-
-@end
-
-@interface MHVPlanObjectiveList : MHVType
-
-@property (readwrite, nonatomic, strong) MHVPlanObjectiveCollection *objective;
+@interface MHVMedicalImageStudySeriesImageCollection : MHVCollection<MHVMedicalImageStudySeriesImage *>
 
 @end

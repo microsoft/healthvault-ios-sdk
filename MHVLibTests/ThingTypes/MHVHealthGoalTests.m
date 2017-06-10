@@ -24,18 +24,38 @@ SPEC_BEGIN(MHVHealthGoalTests)
 
 describe(@"MHVHealthGoal", ^
 {
+    NSString *objectDefinition = @"<health-goal><name><text>walking-step-count</text><code><value>walk</value><family>wc</family><type>goal-type</type><version>1</version></code></name><description>sample goal</description><start-date><structured><date><y>2017</y><m>6</m><d>9</d></date><time><h>7</h><m>0</m><s>0</s><f>0</f></time></structured></start-date><target-range><name><text>range</text></name><minimum><display>6000 count</display><structured><value>6000</value><units><text>Count</text><code><value>Count</value><family>wc</family><type>exercise-units</type><version>1</version></code></units></structured></minimum></target-range><recurrence><interval><text>Day</text><code><value>day</value><family>wc</family><type>recurrence-intervals</type><version>1</version></code></interval><times-in-interval>1</times-in-interval></recurrence></health-goal>";
+    
     context(@"Deserialize", ^
             {
                 it(@"should deserialize correclty", ^
                    {
-                      // TODO: implement (there was no sample data available on developer.healthvault.com
+                       MHVHealthGoal *goal = (MHVHealthGoal*)[XReader newFromString:objectDefinition withRoot:[MHVHealthGoal XRootElement] asClass:[MHVHealthGoal class]];
+                       
+                       [[goal.name.description should] equal:@"walking-step-count"];
+                       [[goal.descriptionText.description should] equal:@"sample goal"];
+                       [[goal.startDate.description should] equal:@"06/09/17 07:00 AM"];
+                       [[goal.endDate.description should] beNil];
+                       [[goal.targetRange.name.description should] equal:@"range"];
+                       [[goal.targetRange.minimum.dispaly.description should] equal:@"6000 count"];
+                       [[goal.recurrence.interval.description should] equal:@"Day"];
+                       [[theValue(goal.recurrence.timesInInterval.value) should] equal:theValue(1)];
                    });
             });
     context(@"Serialize", ^
             {
                 it(@"should serialize correclty", ^
                    {
-                      // TODO: implement (there was no sample data available on developer.healthvault.com
+                      MHVHealthGoal *goal = (MHVHealthGoal*)[XReader newFromString:objectDefinition withRoot:[MHVHealthGoal XRootElement] asClass:[MHVHealthGoal class]];
+                       
+                       XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+                       [writer writeStartElement:[MHVHealthGoal XRootElement]];
+                       [goal serialize:writer];
+                       [writer writeEndElement];
+                       
+                       NSString *result = [writer newXmlString];
+                       
+                       [[result should] equal:objectDefinition];
                    });
             });
 });

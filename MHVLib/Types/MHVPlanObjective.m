@@ -32,7 +32,7 @@ static NSString *const c_element_outcomes = @"outcomes";
     [writer writeElement:c_element_name content:self.name];
     [writer writeElement:c_element_description content:self.descriptionText];
     [writer writeElement:c_element_state value:self.state];
-    [writer writeElementArray:c_element_outcomes elements:self.outcomes.toArray];
+    [writer writeElement:c_element_outcomes content:self.outcomes];
 }
 
 - (void)deserialize:(XReader *)reader
@@ -41,7 +41,23 @@ static NSString *const c_element_outcomes = @"outcomes";
     self.name = [reader readElement:c_element_name asClass:[MHVStringNZNW class]];
     self.descriptionText = [reader readElement:c_element_description asClass:[MHVStringNZNW class]];
     self.state = [reader readStringElement:c_element_state];
-    self.outcomes = (MHVPlanOutcomeCollection *)[reader readElementArray:c_element_outcomes asClass:[MHVPlanOutcome class] andArrayClass:[MHVPlanOutcomeCollection class]];
+    self.outcomes = [reader readElement:c_element_outcomes asClass:[MHVPlanOutcomeList class]];
+}
+
+@end
+
+static NSString *const c_element_objective = @"objective";
+
+@implementation MHVPlanObjectiveList
+
+- (void)serialize:(XWriter *)writer
+{
+    [writer writeElementArray:c_element_objective elements:self.objective.toArray];
+}
+
+- (void)deserialize:(XReader *)reader
+{
+    self.objective = (MHVPlanObjectiveCollection *)[reader readElementArray:c_element_objective asClass:[MHVPlanObjective class] andArrayClass:[MHVPlanObjectiveCollection class]];
 }
 
 @end

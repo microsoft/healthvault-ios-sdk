@@ -154,4 +154,10 @@ MHVDECLARE_GETTOR(MHVAsthmaInhaler, asthmaInhaler);
 
 MHVDECLARE_GETTOR(MHVAsthmaInhalerUsage, asthmaInhalerUsage);
 
+MHVDECLARE_GETTOR(MHVBodyComposition, bodyComposition);
+
+MHVDECLARE_GETTOR(MHVBodyDimension, bodyDimension);
+
+MHVDECLARE_GETTOR(MHVMedicalImageStudy, medicalImageStudy);
+
 @end

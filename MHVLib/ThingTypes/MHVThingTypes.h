@@ -71,6 +71,8 @@
 #import "MHVAsthmaInhaler.h"
 #import "MHVAsthmaInhalerUsage.h"
 #import "MHVBodyComposition.h"
+#import "MHVBodyDimension.h"
+#import "MHVMedicalImageStudy.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
@@ -135,4 +137,6 @@
 - (MHVAsthmaInhaler *)asthmaInhaler;
 - (MHVAsthmaInhalerUsage *)asthmaInhalerUsage;
 - (MHVBodyComposition *)bodyComposition;
+- (MHVBodyDimension *)bodyDimension;
+- (MHVMedicalImageStudy *)medicalImageStudy;
 @end

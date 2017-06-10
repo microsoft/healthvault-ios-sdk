@@ -31,7 +31,7 @@ static NSString *const c_element_percent_value = @"percent-value";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.massValue = [reader readElement:c_element_mass_value asClass:[MHVWeight class]];
+    self.massValue = [reader readElement:c_element_mass_value asClass:[MHVWeightMeasurement class]];
     self.percentValue = [reader readElement:c_element_percent_value asClass:[MHVPercentage class]];
 }
 

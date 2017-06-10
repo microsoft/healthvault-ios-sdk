@@ -16,13 +16,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #import "MHVType.h"
-#import "MHVWeight.h"
+#import "MHVWeightMeasurement.h"
+#import "MHVPercentage.h"
 
 @interface MHVBodyCompositionValue : MHVType
 
-@property (readwrite, nonatomic, strong) MHVWeight *massValue;
+@property (readwrite, nonatomic, strong) MHVWeightMeasurement *massValue;
 @property (readwrite, nonatomic, strong) MHVPercentage *percentValue;
 
 @end

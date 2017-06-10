@@ -1,8 +1,6 @@
 //
-//  MHVPlanOutcome.h
+//  MHVBodyDimension.h
 // MHVLib
-//
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,23 +14,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVStringNZNW.h"
-#import "MHVCollection.h"
+#import "MHVThing.h"
+#import "MHVLengthMeasurement.h"
+#import "MHVApproxDateTime.h"
 
-@interface MHVPlanOutcome : MHVType
+@interface MHVBodyDimension : MHVThingDataTyped
 
-@property (readwrite, nonatomic, strong) MHVStringNZNW *name;
-@property (readwrite, nonatomic, strong) NSString *type;
-
-@end
-
-@interface MHVPlanOutcomeCollection : MHVCollection<MHVPlanOutcome *>
-
-@end
-
-@interface MHVPlanOutcomeList : MHVType
-
-@property (readwrite, nonatomic, strong) MHVPlanOutcomeCollection *outcome;
+//
+// (Required) The date and time of the measurement.
+//
+@property (readwrite, nonatomic, strong) MHVApproxDateTime *when;
+//
+// (Required) The name of the measurement.
+//
+@property (readwrite, nonatomic, strong) MHVCodableValue *measurementName;
+//
+// (Required) The value of the measurement.
+//
+@property (readwrite, nonatomic, strong) MHVLengthMeasurement *value;
 
 @end
