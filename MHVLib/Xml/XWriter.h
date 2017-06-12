@@ -1,15 +1,15 @@
 //
-//  XWriter.h
-//  MHVLib
+// XWriter.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,53 +24,48 @@
 #import "XConverter.h"
 
 @interface XWriter : NSObject
-{
-    xmlBufferPtr m_buffer;
-    xmlTextWriterPtr m_writer;
-    XConverter *m_converter;
-}
 
-@property (readonly, nonatomic) xmlTextWriterPtr writer;
+@property (readonly, nonatomic, assign) xmlTextWriterPtr writer;
 @property (readonly, nonatomic, strong) XConverter *converter;
 @property (readwrite, nonatomic, strong) id context;
 
 //
 // Designated constructor
 //
--(id) initWithWriter:(xmlTextWriterPtr) writer buffer:(xmlBufferPtr) buffer andConverter:(XConverter *) converter;
--(id) initWithWriter:(xmlTextWriterPtr) writer buffer:(xmlBufferPtr) buffer;
--(id) initWithBufferSize:(size_t) size;
--(id) initWithBufferSize:(size_t) size andConverter:(XConverter *) converter;
--(id) initFromFile:(NSString *) filePath;
--(id) initFromFile:(NSString *)filePath andConverter:(XConverter *) converter;
+- (instancetype)initWithWriter:(xmlTextWriterPtr)writer buffer:(xmlBufferPtr)buffer andConverter:(XConverter *)converter;
+- (instancetype)initWithWriter:(xmlTextWriterPtr)writer buffer:(xmlBufferPtr)buffer;
+- (instancetype)initWithBufferSize:(size_t)size;
+- (instancetype)initWithBufferSize:(size_t)size andConverter:(XConverter *)converter;
+- (instancetype)initFromFile:(NSString *)filePath;
+- (instancetype)initFromFile:(NSString *)filePath andConverter:(XConverter *)converter;
 
--(BOOL) flush;
+- (BOOL)flush;
 
--(BOOL) writeStartDocument;
--(BOOL) writeEndDocument;
+- (BOOL)writeStartDocument;
+- (BOOL)writeEndDocument;
 
--(BOOL) writeAttribute:(NSString *) name value:(NSString *) value;
--(BOOL) writeAttribute:(NSString *)name prefix:(NSString*) prefix NS:(NSString *) ns value:(NSString *)value;
--(BOOL) writeAttributeXmlName:(const xmlChar *) xmlName value:(NSString *) value;
--(BOOL) writeAttributeXmlName:(const xmlChar *)xmlName prefix:(const xmlChar *) xmlPrefix NS:(const xmlChar *) xmlNs value:(NSString *)value;
+- (BOOL)writeAttribute:(NSString *)name value:(NSString *)value;
+- (BOOL)writeAttribute:(NSString *)name prefix:(NSString *)prefix NS:(NSString *)ns value:(NSString *)value;
+- (BOOL)writeAttributeXmlName:(const xmlChar *)xmlName value:(NSString *)value;
+- (BOOL)writeAttributeXmlName:(const xmlChar *)xmlName prefix:(const xmlChar *)xmlPrefix NS:(const xmlChar *)xmlNs value:(NSString *)value;
 
--(BOOL) writeStartElement:(NSString *) name;
--(BOOL) writeStartElement:(NSString *) name prefix:(NSString*) prefix NS:(NSString *) ns;
--(BOOL) writeStartElementXmlName:(const xmlChar *) xmlName;
--(BOOL) writeStartElementXmlName:(const xmlChar *) xmlName prefix:(const xmlChar *) xmlPrefix NS:(const xmlChar *) xmlNs;
--(BOOL) writeEndElement;
+- (BOOL)writeStartElement:(NSString *)name;
+- (BOOL)writeStartElement:(NSString *)name prefix:(NSString *)prefix NS:(NSString *)ns;
+- (BOOL)writeStartElementXmlName:(const xmlChar *)xmlName;
+- (BOOL)writeStartElementXmlName:(const xmlChar *)xmlName prefix:(const xmlChar *)xmlPrefix NS:(const xmlChar *)xmlNs;
+- (BOOL)writeEndElement;
 
--(BOOL) writeString:(NSString *) value;
--(BOOL) writeRaw:(NSString*) xml;
+- (BOOL)writeString:(NSString *)value;
+- (BOOL)writeRaw:(NSString *)xml;
 
--(xmlChar *) getXml;
--(size_t) getLength;
+- (xmlChar *)getXml;
+- (size_t)getLength;
 
--(NSString *) newXmlString;
+- (NSString *)newXmlString;
 
 @end
 
 // 0 for default size
 xmlBufferPtr XAllocBuffer(size_t size);
 xmlTextWriterPtr XAllocTextWriter(xmlBufferPtr buffer);
-xmlTextWriterPtr XAllocFileWriter(NSString* filePath);
+xmlTextWriterPtr XAllocFileWriter(NSString *filePath);

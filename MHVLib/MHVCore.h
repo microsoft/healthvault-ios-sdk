@@ -42,12 +42,6 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight);
 // --------------------------------------
 @interface NSObject (MHVExtensions)
 
-- (void)safeInvoke:(SEL)sel;
-- (void)safeInvoke:(SEL)sel withParam:(id)param;
-
-- (void)invokeOnMainThread:(SEL)aSelector;
-- (void)invokeOnMainThread:(SEL)aSelector withObject:(id)obj;
-
 - (void)log;
 - (NSString *)descriptionForLog;
 

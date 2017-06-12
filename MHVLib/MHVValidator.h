@@ -17,7 +17,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
-#import "MHVExceptionExtensions.h"
 #import "MHVClientResult.h"
 
 @class MHVCollection;
@@ -94,7 +93,7 @@ while(NO)
 
 #define MHVCHECK_OOM(obj) if (obj == nil) \
                          { \
-                            [NSException throwOutOfMemory]; \
+                            return 0; \
                          }
 
 #define MHVCHECK_SUCCESS(methodCall) if (!methodCall) { \

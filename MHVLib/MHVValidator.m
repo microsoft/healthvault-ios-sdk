@@ -18,7 +18,6 @@
 
 #import "MHVValidator.h"
 #import "MHVStringExtensions.h"
-#import "MHVExceptionExtensions.h"
 #import "MHVType.h"
 #import "MHVCollection.h"
 

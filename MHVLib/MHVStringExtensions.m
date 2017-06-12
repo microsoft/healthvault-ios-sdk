@@ -79,9 +79,6 @@ static NSString *kStringFalse = @"false";
     BOOL result = [scanner scanFloat:pValue];
 
     return result;
-
-   LError:
-    return FALSE;
 }
 
 - (BOOL)parseDouble:(double *)pValue
@@ -94,9 +91,6 @@ static NSString *kStringFalse = @"false";
     BOOL result = [scanner scanDouble:pValue];
 
     return result;
-
-   LError:
-    return FALSE;
 }
 
 - (BOOL)parseInt:(int *)pValue
@@ -108,9 +102,6 @@ static NSString *kStringFalse = @"false";
 
     BOOL result = [scanner scanInt:pValue];
     return result;
-
-   LError:
-    return FALSE;
 }
 
 - (NSString *)urlEncode

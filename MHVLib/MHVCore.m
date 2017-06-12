@@ -78,52 +78,6 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight)
 
 @implementation NSObject (MHVExtensions)
 
-- (void)safeInvoke:(SEL)sel
-{
-    if ([self respondsToSelector:sel])
-    {
-        @try
-        {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [self performSelector:sel];
-#pragma clang diagnostic pop
-        }
-        @catch (id ex)
-        {
-            [ex log];
-        }
-    }
-}
-
-- (void)safeInvoke:(SEL)sel withParam:(id)param
-{
-    if ([self respondsToSelector:sel])
-    {
-        @try
-        {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [self performSelector:sel withObject:param];
-#pragma clang diagnostic pop
-        }
-        @catch (id ex)
-        {
-            [ex log];
-        }
-    }
-}
-
-- (void)invokeOnMainThread:(SEL)aSelector
-{
-    [self performSelectorOnMainThread:aSelector withObject:nil waitUntilDone:FALSE];
-}
-
-- (void)invokeOnMainThread:(SEL)aSelector withObject:(id)obj
-{
-    [self performSelectorOnMainThread:aSelector withObject:obj waitUntilDone:FALSE];
-}
-
 - (void)log
 {
     @try

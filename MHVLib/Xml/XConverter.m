@@ -1,15 +1,15 @@
 //
-//  XConvert.m
-//  MHVLib
+// XConvert.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@
 #import "Logger.h"
 
 static int const c_xDateFormatCount = 6;
-static NSString* s_xDateFormats[c_xDateFormatCount] = 
+static NSString *s_xDateFormats[c_xDateFormatCount] =
 {
     @"yyyy'-'MM'-'dd'T'HHmmss'Z'",          // Zulu form
     @"yyyy'-'MM'-'dd'T'HHmmss.SSS'Z'",      // Zulu form
@@ -31,149 +31,154 @@ static NSString* s_xDateFormats[c_xDateFormatCount] =
     @"yy'-'MM'-'dd"
 };
 
-static NSString* const c_POSITIVEINF = @"INF";
-static NSString* const c_NEGATIVEINF = @"-INF";
-static NSString* const c_TRUE = @"true";
-static NSString* const c_FALSE = @"false";
+static NSString *const c_POSITIVEINF = @"INF";
+static NSString *const c_NEGATIVEINF = @"-INF";
+static NSString *const c_TRUE = @"true";
+static NSString *const c_FALSE = @"false";
 
-@interface XConverter (MHVPrivate)
+@interface XConverter ()
 
--(NSDateFormatter *) ensureDateFormatter;
--(NSDateFormatter *) ensureDateParser;
--(NSDateFormatter *) ensureUtcDateParser;
--(NSCalendar *) ensureGregorianCalendar;
--(NSLocale *) ensureLocale; 
-
--(NSDate *) stringToDateWithWithDaylightSavings:(NSString *)source inTimeZone:(NSTimeZone *) tz;
+@property (nonatomic, strong) NSDateFormatter *parser;
+@property (nonatomic, strong) NSDateFormatter *utcParser;
+@property (nonatomic, strong) NSDateFormatter *formatter;
+@property (nonatomic, strong) NSCalendar *calendar;
+@property (nonatomic, strong) NSLocale *dateLocale;
+@property (nonatomic, strong) NSMutableString *stringBuffer;
 
 @end
 
 @implementation XConverter
 
--(id) init
+- (instancetype)init
 {
     self = [super init];
-    MHVCHECK_SELF;
+    if (self)
+    {
+        _stringBuffer = [[NSMutableString alloc] init];
+        MHVCHECK_NOTNULL(_stringBuffer);
+    }
 
-    m_stringBuffer = [[NSMutableString alloc] init];
-    MHVCHECK_NOTNULL(m_stringBuffer);
-    
     return self;
 }
 
-
--(BOOL) tryString:(NSString *)source toInt:(int *)result
+- (BOOL)tryString:(NSString *)source toInt:(int *)result
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
- 
+
     return [source parseInt:result];
 }
 
--(int) stringToInt:(NSString *)source
+- (int)stringToInt:(NSString *)source
 {
     int value = 0;
+
     if (![self tryString:source toInt:&value])
     {
         MHVLOG(@"Failed to parse stringToInt: %@", source);
         return -1;
     }
-  
+
     return value;
 }
 
--(BOOL) tryInt:(int)source toString:(NSString **)result
+- (BOOL)tryInt:(int)source toString:(NSString **)result
 {
     MHVCHECK_NOTNULL(result);
-    
+
     *result = [NSString stringWithFormat:@"%d", source];
     MHVCHECK_STRING(*result);
-    
+
     return TRUE;
 }
 
--(NSString *) intToString:(int)source
+- (NSString *)intToString:(int)source
 {
     NSString *result;
+
     if (![self tryInt:source toString:&result])
     {
         MHVLOG(@"Failed to parse intToString: %i", source);
         return nil;
     }
-    
+
     return result;
 }
 
--(BOOL) tryString:(NSString *) source toFloat:(float *) result
+- (BOOL)tryString:(NSString *)source toFloat:(float *)result
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
-    
-    if ([source parseFloat: result])
+
+    if ([source parseFloat:result])
     {
         return TRUE;
     }
-    
+
     if ([source isEqualToString:c_NEGATIVEINF])
     {
         *result = -INFINITY;
         return TRUE;
     }
+
     if ([source isEqualToString:c_POSITIVEINF])
     {
         *result = INFINITY;
         return TRUE;
     }
-        
+
     return FALSE;
 }
 
--(float) stringToFloat:(NSString *) source
+- (float)stringToFloat:(NSString *)source
 {
     float value = 0;
+
     if (![self tryString:source toFloat:&value])
     {
         MHVLOG(@"Failed to parse stringToFloat: %@", source);
         return -1;
     }
-    
+
     return value;
 }
 
--(BOOL) tryFloat:(float) source toString:(NSString **) result
+- (BOOL)tryFloat:(float)source toString:(NSString **)result
 {
     MHVCHECK_NOTNULL(result);
-    
+
     if (source == -INFINITY)
     {
         *result = c_NEGATIVEINF;
         return TRUE;
     }
+
     if (source == INFINITY)
     {
         *result = c_POSITIVEINF;
         return TRUE;
     }
-    
+
     *result = [NSString stringWithFormat:@"%f", source];
     MHVCHECK_STRING(*result);
-    
+
     return TRUE;
 }
 
--(NSString *) floatToString:(float) source
+- (NSString *)floatToString:(float)source
 {
     NSString *string = nil;
+
     if (![self tryFloat:source toString:&string])
     {
         MHVLOG(@"Failed to parse floatToString: %f", source);
         return nil;
     }
-    
-    return string;    
+
+    return string;
 }
 
--(BOOL) tryString:(NSString *)source toDouble:(double *)result
+- (BOOL)tryString:(NSString *)source toDouble:(double *)result
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
@@ -182,51 +187,54 @@ static NSString* const c_FALSE = @"false";
     {
         return TRUE;
     }
-    
+
     if ([source isEqualToString:c_NEGATIVEINF])
     {
         *result = -INFINITY;
         return TRUE;
     }
+
     if ([source isEqualToString:c_POSITIVEINF])
     {
         *result = INFINITY;
         return TRUE;
     }
-    
+
     return FALSE;
 }
 
--(double) stringToDouble:(NSString *)source
+- (double)stringToDouble:(NSString *)source
 {
     double value = 0;
+
     if (![self tryString:source toDouble:&value])
     {
         MHVLOG(@"Failed to parse stringToDouble: %@", source);
         return -1;
     }
-    
+
     return value;
 }
 
--(BOOL) tryDouble:(double)source toString:(NSString **)result
+- (BOOL)tryDouble:(double)source toString:(NSString **)result
 {
     MHVCHECK_NOTNULL(result);
-    
+
     if (source == -INFINITY)
     {
         *result = c_NEGATIVEINF;
         return TRUE;
     }
+
     if (source == INFINITY)
     {
         *result = c_POSITIVEINF;
         return TRUE;
     }
-    
+
     [self tryDoubleRoundtrip:source toString:result];
     MHVCHECK_STRING(*result);
-    
+
     return TRUE;
 }
 
@@ -234,56 +242,58 @@ static NSString* const c_FALSE = @"false";
 // We have to do this to prevent loss of precision in doubles during serialization
 // http://msdn.microsoft.com/en-us/library/dwhawy9k.aspx#RFormatString
 //
--(BOOL)tryDoubleRoundtrip:(double)source toString:(NSString **)result
+- (BOOL)tryDoubleRoundtrip:(double)source toString:(NSString **)result
 {
-    NSString* asString = [NSString stringWithFormat:@"%.15g", source];
+    NSString *asString = [NSString stringWithFormat:@"%.15g", source];
+
     MHVCHECK_NOTNULL(asString);
-    
+
     double parsedBack = [self stringToDouble:asString];
     if (parsedBack == source)
     {
         *result = asString;
     }
-    else 
+    else
     {
         *result = [NSString stringWithFormat:@"%.17g", source];
     }
-    
-    return (*result != nil);
+
+    return *result != nil;
 }
 
--(NSString *) doubleToString:(double)source
+- (NSString *)doubleToString:(double)source
 {
     NSString *string = nil;
+
     if (![self tryDouble:source toString:&string])
     {
         MHVLOG(@"Failed to parse doubleToString: %f", source);
         return nil;
     }
-    
+
     return string;
 }
 
--(BOOL) tryString:(NSString *) source toBool:(BOOL *) result
+- (BOOL)tryString:(NSString *)source toBool:(BOOL *)result
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
-    
-    MHVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
-    
-    if ([m_stringBuffer isEqualToString:c_TRUE])
+
+    MHVCHECK_SUCCESS([self.stringBuffer setStringAndVerify:source]);
+
+    if ([self.stringBuffer isEqualToString:c_TRUE])
     {
         *result = TRUE;
     }
-    else if ([m_stringBuffer isEqualToString:c_FALSE])
+    else if ([self.stringBuffer isEqualToString:c_FALSE])
     {
         *result =  FALSE;
     }
-    else if ([m_stringBuffer isEqualToString:@"1"])
+    else if ([self.stringBuffer isEqualToString:@"1"])
     {
         *result =  TRUE;
     }
-    else if ([m_stringBuffer isEqualToString:@"0"])
+    else if ([self.stringBuffer isEqualToString:@"0"])
     {
         *result =  FALSE;
     }
@@ -291,184 +301,187 @@ static NSString* const c_FALSE = @"false";
     {
         return NO;
     }
-    
+
     return TRUE;
 }
 
--(BOOL) stringToBool:(NSString *)source
+- (BOOL)stringToBool:(NSString *)source
 {
     BOOL value = FALSE;
+
     if (![self tryString:source toBool:&value])
     {
         MHVLOG(@"Failed to parse stringToBool: %@", source);
         return NO;
     }
-    
+
     return value;
 }
 
--(NSString *) boolToString:(BOOL)source
+- (NSString *)boolToString:(BOOL)source
 {
     return source ? c_TRUE : c_FALSE;
 }
 
--(BOOL) tryString:(NSString *)source toDate:(NSDate **)result
+- (BOOL)tryString:(NSString *)source toDate:(NSDate **)result
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
-    
+
     //
     // Since NSDateFormatter is otherwise incapable of parsing xsd:datetime
     // ISO 8601 expresses UTC/GMT offsets as "2001-10-26T21:32:52+02:00"
     // DateFormatter does not like the : in the +02:00
     // So, we simply whack all : in the string, and change our dateformat strings accordingly
-    // 
+    //
     // Use a mutable string, so we don't have to keep allocating new strings
     //
-    MHVCHECK_SUCCESS([m_stringBuffer setStringAndVerify:source]);
-    [m_stringBuffer replaceOccurrencesOfString:@":"
-                                    withString:@""
-                                       options:0
-                                         range:NSMakeRange(0, m_stringBuffer.length)];
-    
-    NSDateFormatter* parser = [self ensureDateParser];
+    MHVCHECK_SUCCESS([self.stringBuffer setStringAndVerify:source]);
+    [self.stringBuffer replaceOccurrencesOfString:@":"
+     withString:@""
+     options:0
+     range:NSMakeRange(0, self.stringBuffer.length)];
+
+    NSDateFormatter *parser = [self ensureDateParser];
     for (int i = 0; i < c_xDateFormatCount; ++i)
     {
         NSString *format = s_xDateFormats[i];
-        
+
         [parser setDateFormat:format];
-        *result = [parser dateFromString:m_stringBuffer];
+        *result = [parser dateFromString:self.stringBuffer];
         if (*result)
         {
             return TRUE;
         }
     }
-    
-    NSTimeZone* tz = parser.timeZone;
+
+    NSTimeZone *tz = parser.timeZone;
     if (tz.isDaylightSavingTime)
     {
-        *result = [self stringToDateWithWithDaylightSavings:m_stringBuffer inTimeZone:tz];
+        *result = [self stringToDateWithWithDaylightSavings:self.stringBuffer inTimeZone:tz];
         if (*result)
         {
             return TRUE;
         }
     }
-    
+
     return FALSE;
 }
 
--(NSDate *) stringToDate:(NSString *)source
+- (NSDate *)stringToDate:(NSString *)source
 {
-    NSDate* date = nil;
+    NSDate *date = nil;
+
     if (![self tryString:source toDate:&date])
     {
         MHVLOG(@"Failed to parse stringToDate: %@", source);
         return nil;
     }
-    
+
     return date;
 }
 
--(BOOL) tryDate:(NSDate *) source toString:(NSString **)result
+- (BOOL)tryDate:(NSDate *)source toString:(NSString **)result
 {
     MHVCHECK_NOTNULL(source);
     MHVCHECK_NOTNULL(result);
-    
-    NSDateFormatter* formatter = [self ensureDateFormatter];
+
+    NSDateFormatter *formatter = [self ensureDateFormatter];
     *result = [formatter stringFromDate:source];
     MHVCHECK_STRING(*result);
-    
+
     return TRUE;
 }
 
--(NSString *) dateToString:(NSDate *)source
+- (NSString *)dateToString:(NSDate *)source
 {
     NSString *string = nil;
+
     if (![self tryDate:source toString:&string])
     {
         MHVLOG(@"Failed to parse dateToString: %@", source.description);
         return nil;
     }
-    
+
     return string;
 }
 
--(NSUUID *) stringToUuid:(NSString *)source
+- (NSUUID *)stringToUuid:(NSString *)source
 {
     NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:source];
+
     if (!uuid)
     {
         MHVLOG(@"Failed to parse stringToUdid: %@", source);
         return nil;
     }
-    
+
     return uuid;
 }
 
--(NSString *) uuidToString:(NSUUID *)uuid
+- (NSString *)uuidToString:(NSUUID *)uuid
 {
     return [uuid UUIDString];
 }
 
-@end
+#pragma mark - Internal methods
 
-@implementation XConverter (MHVPrivate)
-
--(NSDateFormatter *)ensureDateFormatter
+- (NSDateFormatter *)ensureDateFormatter
 {
-    if (!m_formatter)
+    if (!self.formatter)
     {
-        m_formatter = [NSDateFormatter newZuluFormatter]; // always emit Zulu form
-        MHVCHECK_OOM(m_formatter);
-        [m_formatter setLocale:[self ensureLocale]];
+        self.formatter = [NSDateFormatter newZuluFormatter]; // always emit Zulu form
+        MHVCHECK_OOM(self.formatter);
+        [self.formatter setLocale:[self ensureLocale]];
     }
-    
-    return m_formatter;    
+
+    return self.formatter;
 }
 
--(NSDateFormatter *)ensureDateParser
+- (NSDateFormatter *)ensureDateParser
 {
-    if (!m_parser)
+    if (!self.parser)
     {
-        m_parser = [[NSDateFormatter alloc] init];
-        MHVCHECK_OOM(m_parser);
-        [m_parser setLocale:[self ensureLocale]];
+        self.parser = [[NSDateFormatter alloc] init];
+        MHVCHECK_OOM(self.parser);
+        [self.parser setLocale:[self ensureLocale]];
     }
-    
-    return m_parser;    
+
+    return self.parser;
 }
 
--(NSDateFormatter *)ensureUtcDateParser
+- (NSDateFormatter *)ensureUtcDateParser
 {
-    if (!m_utcParser)
+    if (!self.utcParser)
     {
-        m_utcParser = [NSDateFormatter newUtcFormatter];
-        MHVCHECK_OOM(m_utcParser);
-        [m_utcParser setLocale:[self ensureLocale]];
+        self.utcParser = [NSDateFormatter newUtcFormatter];
+        MHVCHECK_OOM(self.utcParser);
+        [self.utcParser setLocale:[self ensureLocale]];
     }
-    
-    return m_utcParser;
+
+    return self.utcParser;
 }
 
--(NSCalendar *)ensureGregorianCalendar
+- (NSCalendar *)ensureGregorianCalendar
 {
-    if (!m_calendar)
+    if (!self.calendar)
     {
-        m_calendar = [NSCalendar newGregorian];
-        MHVCHECK_OOM(m_calendar);
+        self.calendar = [NSCalendar newGregorian];
+        MHVCHECK_OOM(self.calendar);
     }
-    return m_calendar;
+
+    return self.calendar;
 }
 
--(NSLocale *)ensureLocale
+- (NSLocale *)ensureLocale
 {
-    if (!m_dateLocale)
+    if (!self.dateLocale)
     {
-        m_dateLocale = [NSDateFormatter newCultureNeutralLocale];
-        MHVCHECK_OOM(m_dateLocale);
+        self.dateLocale = [NSDateFormatter newCultureNeutralLocale];
+        MHVCHECK_OOM(self.dateLocale);
     }
-    
-    return m_dateLocale;
+
+    return self.dateLocale;
 }
 
 //
@@ -477,37 +490,38 @@ static NSString* const c_FALSE = @"false";
 //
 // This means that you can end up with dates that never "existed" in some time zones because of Daylight
 // Savings Time
-//    E.g. the local time 2014:03-09'T'02:30:00 is legal in India.
-//    But that particular time never existed in USA local time.
-//    Daylight savings went from 1.00 AM to 3.00 AM, skipping 2.00 am entirely.
+// E.g. the local time 2014:03-09'T'02:30:00 is legal in India.
+// But that particular time never existed in USA local time.
+// Daylight savings went from 1.00 AM to 3.00 AM, skipping 2.00 am entirely.
 //
 // DateTimeFormatter, when running with local time zone, helpfully decides that since such dates do not exist, it must not return them.
 // So we have to do this workaround
 //
--(NSDate *)stringToDateWithWithDaylightSavings:(NSString *)source inTimeZone:(NSTimeZone *)tz
+- (NSDate *)stringToDateWithWithDaylightSavings:(NSString *)source inTimeZone:(NSTimeZone *)tz
 {
-    NSDateFormatter* parser = [self ensureUtcDateParser];
-    NSCalendar* calendar = [self ensureGregorianCalendar];
+    NSDateFormatter *parser = [self ensureUtcDateParser];
+    NSCalendar *calendar = [self ensureGregorianCalendar];
+
     for (int i = 0; i < c_xDateFormatCount; ++i)
     {
         NSString *format = s_xDateFormats[i];
         [parser setDateFormat:format];
-        
-        NSDate* utcDate = [parser dateFromString:source];
+
+        NSDate *utcDate = [parser dateFromString:source];
         if (utcDate)
         {
             NSTimeInterval daylightSavingsOffset = [tz daylightSavingTimeOffset];
             utcDate = [utcDate dateByAddingTimeInterval:daylightSavingsOffset];
-            
-            NSDateComponents* components = [NSCalendar utcComponentsFromDate:utcDate];
+
+            NSDateComponents *components = [NSCalendar utcComponentsFromDate:utcDate];
             [components setCalendar:calendar];
             [components setTimeZone:tz];
-            
-            NSDate* localDate = [components date];
+
+            NSDate *localDate = [components date];
             return localDate;
         }
     }
-    
+
     return nil;
 }
 

@@ -52,7 +52,7 @@
         {
             [weakSelf pickImageForUpload];
         }];
-        [self addFeature:@"Download file" andAction:^
+        [self addFeature:@"Download and view file" andAction:^
         {
             [weakSelf downloadFile];
         }];

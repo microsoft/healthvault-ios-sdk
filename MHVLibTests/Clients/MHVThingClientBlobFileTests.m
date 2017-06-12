@@ -167,7 +167,8 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if blob payload is nil", ^
                    {
-                       [thingClient downloadBlob:nil
+                       MHVBlobPayloadThing *nilBlob = nil;
+                       [thingClient downloadBlob:nilBlob
                                       toFilePath:filePath
                                       completion:^(NSError *_Nullable error)
                         {
@@ -182,8 +183,9 @@ describe(@"MHVThingClient", ^
                    {
                        MHVBlobPayloadThing *blobPayload = [[MHVBlobPayloadThing alloc] init];
 
+                       NSString *nilFilePath = nil;
                        [thingClient downloadBlob:blobPayload
-                                      toFilePath:nil
+                                      toFilePath:nilFilePath
                                       completion:^(NSError *_Nullable error)
                         {
                             resultError = error;
