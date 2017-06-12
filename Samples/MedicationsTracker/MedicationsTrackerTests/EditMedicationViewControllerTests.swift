@@ -40,11 +40,7 @@ class EditMedicationViewControllerTests: XCTestCase
                                                               medication: medThing!,
                                                               builder: MedicationBuilder())
         med?.name = MHVCodableValue.fromText("Advil")
-        editViewController?.nameField = AutocompleteTextField()
-        editViewController?.strengthAmountField = MedicationTextField()
-        editViewController?.strengthUnitField = PickerTextField()
-        editViewController?.doseAmountField = MedicationTextField()
-        editViewController?.doseUnitField = PickerTextField()
+        editViewController?.view.setNeedsLayout()
         
         medField = MedicationTextField()
         pickerField = PickerTextField()

@@ -35,7 +35,7 @@ class MedicationBuilder {
     
     func updateNameIfNotNil(name: String?) -> Bool
     {
-        guard let medName = name, !(name?.isEmpty)! else
+        guard let medName = name, !(medName.isEmpty) else
         {
             return false
         }
