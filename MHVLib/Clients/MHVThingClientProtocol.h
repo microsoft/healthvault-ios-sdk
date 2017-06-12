@@ -219,6 +219,20 @@ NS_ASSUME_NONNULL_BEGIN
                           completion:(void(^)(UIImage *_Nullable image, NSError *_Nullable error))completion;
 
 /**
+ * Sets the personal image for a record
+ *
+ * @param imageData NSData for the image
+ * @param contentType Http content type, such as @"image/jpg" @"image/png"
+ * @param recordId The record ID to set the personal image
+ * @param completion Envoked when the operation completes.
+ *        NSError object will be nil if there is no error when performing the operation.
+ */
+- (void)setPersonalImage:(NSData *)imageData
+             contentType:(NSString *)contentType
+                recordId:(NSUUID *)recordId
+              completion:(void (^_Nullable)(NSError *_Nullable error))completion;
+
+/**
  * Add a blob to a Thing
  *
  * @param blobSource The blob source data to be added to the thing

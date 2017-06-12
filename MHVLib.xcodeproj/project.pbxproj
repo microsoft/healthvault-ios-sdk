@@ -125,6 +125,7 @@
 		4C7647491ECA32FE003B85B5 /* MHVThingClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7647471ECA32FE003B85B5 /* MHVThingClient.h */; };
 		4C76474A1ECA32FE003B85B5 /* MHVThingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7647481ECA32FE003B85B5 /* MHVThingClient.m */; };
 		4C76474D1ECA546F003B85B5 /* MHVThingClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76474C1ECA546F003B85B5 /* MHVThingClientTests.m */; };
+		4C8340321EEEE2930097233E /* MHVThingTypeDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = A5FF99211EE8483500460189 /* MHVThingTypeDefinitions.h */; };
 		5D09127A166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D091278166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.h */; };
 		5D09127B166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D091279166EB7A60031F5F9 /* MHVRemoveRecordAuthTask.m */; };
 		5D0B4BE6151A80A4000849D0 /* MHVApproxDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0B4BE4151A80A4000849D0 /* MHVApproxDateTime.h */; };
@@ -171,10 +172,6 @@
 		5D1B7BF0154642F600854881 /* MHVBlobHashInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B7BEE154642F600854881 /* MHVBlobHashInfo.m */; };
 		5D1BE475156B427F00718832 /* MHVBlobPutParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1BE473156B427F00718832 /* MHVBlobPutParameters.h */; };
 		5D1BE476156B427F00718832 /* MHVBlobPutParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BE474156B427F00718832 /* MHVBlobPutParameters.m */; };
-		5D1BE479156B464400718832 /* MHVBeginBlobPutTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1BE477156B464400718832 /* MHVBeginBlobPutTask.h */; };
-		5D1BE47A156B464400718832 /* MHVBeginBlobPutTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BE478156B464400718832 /* MHVBeginBlobPutTask.m */; };
-		5D1BE47D156B483900718832 /* MHVBlobUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1BE47B156B483800718832 /* MHVBlobUploadTask.h */; };
-		5D1BE47E156B483900718832 /* MHVBlobUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BE47C156B483900718832 /* MHVBlobUploadTask.m */; };
 		5D1F13291539E9E000524425 /* MHVRelative.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F13271539E9DF00524425 /* MHVRelative.h */; };
 		5D1F132A1539E9E000524425 /* MHVRelative.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F13281539E9E000524425 /* MHVRelative.m */; };
 		5D1F13311539EF0600524425 /* MHVConditionEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D1F132F1539EF0600524425 /* MHVConditionEntry.h */; };
@@ -398,8 +395,6 @@
 		5DB2E73918D8B6F00030972D /* MHVSynchronizedType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB2E73718D8B6F00030972D /* MHVSynchronizedType.m */; };
 		5DB2E74D18DA3F870030972D /* MHVSynchronizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB2E74B18DA3F870030972D /* MHVSynchronizationManager.h */; };
 		5DB2E74E18DA3F870030972D /* MHVSynchronizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB2E74C18DA3F870030972D /* MHVSynchronizationManager.m */; };
-		5DB4206D156C959200E1A473 /* MHVThingBlobUploadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB4206B156C959200E1A473 /* MHVThingBlobUploadTask.h */; };
-		5DB4206E156C959200E1A473 /* MHVThingBlobUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB4206C156C959200E1A473 /* MHVThingBlobUploadTask.m */; };
 		5DC3C43715360123008BBDBF /* MHVGetAuthorizedPeopleResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC3C43515360123008BBDBF /* MHVGetAuthorizedPeopleResult.h */; };
 		5DC3C43815360123008BBDBF /* MHVGetAuthorizedPeopleResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC3C43615360123008BBDBF /* MHVGetAuthorizedPeopleResult.m */; };
 		5DC44B7C14FEA3E600E2E02F /* MHVRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC44B7A14FEA3E600E2E02F /* MHVRandom.h */; };
@@ -893,10 +888,6 @@
 		5D1B7BEE154642F600854881 /* MHVBlobHashInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobHashInfo.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D1BE473156B427F00718832 /* MHVBlobPutParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBlobPutParameters.h; sourceTree = "<group>"; };
 		5D1BE474156B427F00718832 /* MHVBlobPutParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobPutParameters.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D1BE477156B464400718832 /* MHVBeginBlobPutTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVBeginBlobPutTask.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		5D1BE478156B464400718832 /* MHVBeginBlobPutTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBeginBlobPutTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D1BE47B156B483800718832 /* MHVBlobUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MHVBlobUploadTask.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		5D1BE47C156B483900718832 /* MHVBlobUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobUploadTask.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D1F13271539E9DF00524425 /* MHVRelative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRelative.h; sourceTree = "<group>"; };
 		5D1F13281539E9E000524425 /* MHVRelative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVRelative.m; sourceTree = "<group>"; };
 		5D1F132F1539EF0600524425 /* MHVConditionEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVConditionEntry.h; sourceTree = "<group>"; };
@@ -1123,8 +1114,6 @@
 		5DB2E73718D8B6F00030972D /* MHVSynchronizedType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVSynchronizedType.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5DB2E74B18DA3F870030972D /* MHVSynchronizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSynchronizationManager.h; sourceTree = "<group>"; };
 		5DB2E74C18DA3F870030972D /* MHVSynchronizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVSynchronizationManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5DB4206B156C959200E1A473 /* MHVThingBlobUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingBlobUploadTask.h; sourceTree = "<group>"; };
-		5DB4206C156C959200E1A473 /* MHVThingBlobUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingBlobUploadTask.m; sourceTree = "<group>"; };
 		5DC3C43515360123008BBDBF /* MHVGetAuthorizedPeopleResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGetAuthorizedPeopleResult.h; sourceTree = "<group>"; };
 		5DC3C43615360123008BBDBF /* MHVGetAuthorizedPeopleResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVGetAuthorizedPeopleResult.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5DC44B7A14FEA3E600E2E02F /* MHVRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRandom.h; sourceTree = "<group>"; };
@@ -2072,10 +2061,6 @@
 			isa = PBXGroup;
 			children = (
 				4C2975ED1ED380F8006B3673 /* MHVHttpServiceOperationProtocol.h */,
-				5D1BE477156B464400718832 /* MHVBeginBlobPutTask.h */,
-				5D1BE478156B464400718832 /* MHVBeginBlobPutTask.m */,
-				5D1BE47B156B483800718832 /* MHVBlobUploadTask.h */,
-				5D1BE47C156B483900718832 /* MHVBlobUploadTask.m */,
 				5DC799901535FEE300193A3B /* MHVGetAuthorizedPeopleTask.h */,
 				5DC799911535FEE300193A3B /* MHVGetAuthorizedPeopleTask.m */,
 				5D591D2A1547330100EAC934 /* MHVGetPersonalImageTask.h */,
@@ -2107,8 +2092,6 @@
 				4C1B3CB71EE1D9A100A57396 /* MHVBlobDownloadRequest.m */,
 				4C5E80701EE0E2DB00BD7FC0 /* MHVBlobUploadRequest.h */,
 				4C5E80711EE0E2DB00BD7FC0 /* MHVBlobUploadRequest.m */,
-				5DB4206B156C959200E1A473 /* MHVThingBlobUploadTask.h */,
-				5DB4206C156C959200E1A473 /* MHVThingBlobUploadTask.m */,
 				5D9E83711553000000072A0C /* MHVVocabularySearcher.h */,
 				5D9E83721553000000072A0C /* MHVVocabularySearcher.m */,
 				5D195D801522973300E109AD /* MHVVocabularySearchTask.h */,
@@ -2540,6 +2523,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8340321EEEE2930097233E /* MHVThingTypeDefinitions.h in Headers */,
 				5D76B9D314DCC84C00BA865F /* MHVValidator.h in Headers */,
 				5D76B9D914DCC85B00BA865F /* MHVStringExtensions.h in Headers */,
 				4C191AA31EC1033C00B5E545 /* MHVQuestionAnswer.h in Headers */,
@@ -2862,12 +2846,9 @@
 				BA0356DB1EC5278700BE547D /* MHVActionPlansResponseActionPlanInstance_.h in Headers */,
 				4C5E80721EE0E2DB00BD7FC0 /* MHVBlobUploadRequest.h in Headers */,
 				5D1BE475156B427F00718832 /* MHVBlobPutParameters.h in Headers */,
-				5D1BE479156B464400718832 /* MHVBeginBlobPutTask.h in Headers */,
 				BA0356081EC1257F00BE547D /* NSDictionary+DataModel.h in Headers */,
-				5D1BE47D156B483900718832 /* MHVBlobUploadTask.h in Headers */,
 				4C191A651EC1033C00B5E545 /* MHVBloodGlucose.h in Headers */,
 				5DF44784156BC54000532EAA /* MHVBlob.h in Headers */,
-				5DB4206D156C959200E1A473 /* MHVThingBlobUploadTask.h in Headers */,
 				5DC8D505156D9FFF00CA119A /* MHVBlobSource.h in Headers */,
 				5D74847E157A7C5E001A7713 /* MHVStoredQuery.h in Headers */,
 				4C7647491ECA32FE003B85B5 /* MHVThingClient.h in Headers */,
@@ -3346,11 +3327,8 @@
 				438160F51ED4EFBE00BB8C94 /* MHVVocabularyIdentifier.m in Sources */,
 				5D1BE476156B427F00718832 /* MHVBlobPutParameters.m in Sources */,
 				4C191AE21EC22B8700B5E545 /* MHVNetworkReachability.m in Sources */,
-				5D1BE47A156B464400718832 /* MHVBeginBlobPutTask.m in Sources */,
 				438160F41ED4EFBA00BB8C94 /* MHVVocabularyCodeSet.m in Sources */,
 				5D18A4A2187361AB000AE3BD /* MHVFlowValue.m in Sources */,
-				5D1BE47E156B483900718832 /* MHVBlobUploadTask.m in Sources */,
-				5DB4206E156C959200E1A473 /* MHVThingBlobUploadTask.m in Sources */,
 				BA03560D1EC1257F00BE547D /* NSNumber+DataModel.m in Sources */,
 				BA0356391EC1278F00BE547D /* MHVJsonCacheService.m in Sources */,
 				BA0357021EC5278800BE547D /* MHVGoalsWrapper.m in Sources */,

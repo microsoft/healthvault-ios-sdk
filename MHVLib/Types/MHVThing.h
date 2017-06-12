@@ -188,34 +188,6 @@ enum MHVThingFlags
 - (BOOL)isVersion:(NSString *)version;
 - (BOOL)isType:(NSString *)typeID;
 
-// -------------------------
-//
-// Blob
-//
-// -------------------------
-//
-// Refreshes information about blobs associated with this thing
-//
-- (MHVTask *)updateBlobDataFromRecord:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback;
-//
-// Upload data into the default blob and put the thing...
-//
-- (MHVThingBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data
-                          contentType:(NSString *)contentType
-                               record:(MHVRecordReference *)record
-                          andCallback:(MHVTaskCompletion)callback;
-- (MHVThingBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data
-                          forBlobName:(NSString *)name
-                          contentType:(NSString *)contentType
-                               record:(MHVRecordReference *)record
-                          andCallback:(MHVTaskCompletion)callback;
-
-- (MHVThingBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSourceProtocol>)data
-                                 forBlobName:(NSString *)name
-                                 contentType:(NSString *)contentType
-                                      record:(MHVRecordReference *)record
-                                 andCallback:(MHVTaskCompletion)callback;
-
 @end
 
 // -------------------------

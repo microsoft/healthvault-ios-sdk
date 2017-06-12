@@ -64,6 +64,13 @@
     self.tableView.delegate = self;
 
     [self addStandardFeatures];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadPersonImage) name:kPersonalImageUpdateNotification object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated

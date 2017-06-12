@@ -5,3 +5,4 @@
 #import "MHVLib.h"
 #import "MHVFeaturesConfiguration.h"
 #import "MHVTypeListViewController.h"
+#import "MHVFeaturesConstants.h"
