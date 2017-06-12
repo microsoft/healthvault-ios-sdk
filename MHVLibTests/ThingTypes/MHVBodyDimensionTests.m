@@ -34,7 +34,7 @@ describe(@"MHVBodyDimension", ^
                                 
                                 [[bodyDimension.when.description should] equal:@"01/01/05 06:00 AM"];
                                 [[bodyDimension.measurementName.description should] equal:@"Left bicep size"];
-                                [[theValue(bodyDimension.value.display.value) should] equal:theValue(0.14999999999999999)];
+                                [[theValue(bodyDimension.value.display.value) should] beBetween:theValue(0.14999) and:theValue(0.15001)];
                             });
                      });
              
