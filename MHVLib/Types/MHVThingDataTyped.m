@@ -130,6 +130,27 @@ static MHVTypeSystem *s_typeRegistry;
     [s_typeRegistry addClass:[MHVQuestionAnswer class] forTypeID:[MHVQuestionAnswer typeID]];
 
     [s_typeRegistry addClass:[MHVFile class] forTypeID:[MHVFile typeID]];
+    
+    [s_typeRegistry addClass:[MHVAdvanceDirective class] forTypeID:[MHVAdvanceDirective typeID]];
+    [s_typeRegistry addClass:[MHVAerobicProfile class] forTypeID:[MHVAerobicProfile typeID]];
+    [s_typeRegistry addClass:[MHVAllergicEpisode class] forTypeID:[MHVAllergicEpisode typeID]];
+    [s_typeRegistry addClass:[MHVAppSpecificInformation class] forTypeID:[MHVAppSpecificInformation typeID]];
+    [s_typeRegistry addClass:[MHVAppointment class] forTypeID:[MHVAppointment typeID]];
+    [s_typeRegistry addClass:[MHVExplanationOfBenefits class] forTypeID:[MHVExplanationOfBenefits typeID]];
+    [s_typeRegistry addClass:[MHVHealthGoal class] forTypeID:[MHVHealthGoal typeID]];
+    [s_typeRegistry addClass:[MHVHealthJournalEntry class] forTypeID:[MHVHealthJournalEntry typeID]];
+    [s_typeRegistry addClass:[MHVInsight class] forTypeID:[MHVInsight typeID]];
+    [s_typeRegistry addClass:[MHVMedicalDevice class] forTypeID:[MHVMedicalDevice typeID]];
+    [s_typeRegistry addClass:[MHVMenstruation class] forTypeID:[MHVMenstruation typeID]];
+    [s_typeRegistry addClass:[MHVPlan class] forTypeID:[MHVPlan typeID]];
+    [s_typeRegistry addClass:[MHVPregnancy class] forTypeID:[MHVPregnancy typeID]];
+    [s_typeRegistry addClass:[MHVTaskThing class] forTypeID:[MHVTaskThing typeID]];
+    [s_typeRegistry addClass:[MHVTaskTrackingEntry class] forTypeID:[MHVTaskTrackingEntry typeID]];
+    [s_typeRegistry addClass:[MHVAsthmaInhaler class] forTypeID:[MHVAsthmaInhaler typeID]];
+    [s_typeRegistry addClass:[MHVAsthmaInhalerUsage class] forTypeID:[MHVAsthmaInhalerUsage typeID]];
+    [s_typeRegistry addClass:[MHVBodyComposition class] forTypeID:[MHVBodyComposition typeID]];
+    [s_typeRegistry addClass:[MHVBodyDimension class] forTypeID:[MHVBodyDimension typeID]];
+    [s_typeRegistry addClass:[MHVMedicalImageStudy class] forTypeID:[MHVMedicalImageStudy typeID]];
 }
 
 + (MHVTypeSystem *)current
