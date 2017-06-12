@@ -122,6 +122,20 @@
     return day;
 }
 
+- (NSString *)dateToUtcString
+{
+    
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    NSLocale* locale = [NSDateFormatter newCultureNeutralLocale];
+    [formatter setLocale:locale];
+    
+    [formatter setDateFormat: @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    [formatter setTimeZone: [NSTimeZone timeZoneWithAbbreviation: @"UTC"]];
+    NSString *utcDateString = [formatter stringFromDate:self];
+    
+    return utcDateString;
+}
+
 @end
 
 

@@ -36,6 +36,10 @@ const NSUInteger NSAllCalendarUnits;
 - (NSDate *)toStartOfDay;
 - (NSDate *)toEndOfDay;
 
+/// Converts date to UTC formatted string.
+/// @returns UTC formatted string.
+- (NSString *)dateToUtcString;
+
 @end
 
 

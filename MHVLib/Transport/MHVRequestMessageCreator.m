@@ -17,8 +17,8 @@
 // limitations under the License.
 
 #import "MHVRequestMessageCreator.h"
-#import "DateTimeUtils.h"
-#import "MobilePlatform.h"
+#import "MHVDateExtensions.h"
+#import "MHVMobilePlatform.h"
 #import "MHVCommon.h"
 #import "MHVMethod.h"
 #import "MHVValidator.h"
@@ -124,11 +124,11 @@
 //    //TODO : Ask the OneSDK team about missing language and country headers.
 //    [header appendXmlElement:@"language" text:self.language];
 //    [header appendXmlElement:@"country" text:self.country];
-    [header appendXmlElement:@"msg-time" text:[DateTimeUtils dateToUtcString:self.messageTime]];
+    [header appendXmlElement:@"msg-time" text:[self.messageTime dateToUtcString]];
     [header appendXmlElementStart:@"msg-ttl"];
     [header appendFormat:@"%ld", (long)self.configuration.requestTimeToLiveDuration];
     [header appendXmlElementEnd:@"msg-ttl"];
-    [header appendXmlElement:@"version" text:[MobilePlatform platformAbbreviationAndVersion]];
+    [header appendXmlElement:@"version" text:[MHVMobilePlatform platformAbbreviationAndVersion]];
 }
 
 - (void)writeAuthSessionHeader:(NSMutableString *)header
@@ -166,7 +166,7 @@
     }
     
     [header appendXmlElementStart:@"info-hash"];
-    [header appendFormat:@"<hash-data algName=\"SHA256\">%@</hash-data>", [MobilePlatform computeSha256Hash:body]];
+    [header appendFormat:@"<hash-data algName=\"SHA256\">%@</hash-data>", [MHVMobilePlatform computeSha256Hash:body]];
     [header appendXmlElementEnd:@"info-hash"];
 }
 
@@ -177,7 +177,7 @@
         NSData *decodedKey = [[NSData alloc] initWithBase64EncodedString:self.sharedSecret options:0];
         
         [xml appendXmlElementStart:@"auth"];
-        [xml appendFormat:@"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [MobilePlatform computeSha256Hmac:decodedKey data:header]];
+        [xml appendFormat:@"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [MHVMobilePlatform computeSha256Hmac:decodedKey data:header]];
         [xml appendXmlElementEnd:@"auth"];
     }
 }

@@ -17,12 +17,11 @@
 // limitations under the License.
 
 
-#import "MobilePlatform.h"
+#import "MHVMobilePlatform.h"
 #import <CommonCrypto/CommonHMAC.h>
-#import "Base64.h"
 
 
-@implementation MobilePlatform
+@implementation MHVMobilePlatform
 
 
 + (NSString *)platformAbbreviationAndVersion {
@@ -43,7 +42,7 @@
 	uint8_t digest[CC_SHA256_DIGEST_LENGTH] = {0};
 	CC_SHA256(keyData.bytes, (uint)keyData.length, digest);
 
-	NSString *base64String = [Base64 encodeBase64WithData: [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH]];
+    NSString *base64String = [[NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH] base64EncodedStringWithOptions:kNilOptions];
 
 	return base64String;
 }
@@ -61,7 +60,7 @@
 
 	NSData *hmac = [[NSData alloc] initWithBytes: cHMAC length: sizeof(cHMAC)];
 
-	NSString *base64String = [Base64 encodeBase64WithData: hmac];
+	NSString *base64String = [hmac base64EncodedStringWithOptions:kNilOptions];
 
 	return base64String;
 }

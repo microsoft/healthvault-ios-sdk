@@ -23,5 +23,4 @@
 #import "MHVValidator.h"
 #import "MHVExceptionExtensions.h"
 #import "MHVDateExtensions.h"
-#import "MHVClientException.h"
 #import "MHVServerResponseStatus.h"

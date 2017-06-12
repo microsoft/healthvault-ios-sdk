@@ -1,5 +1,5 @@
 //
-//  MobilePlatform.h
+//  MHVMobilePlatform.h
 //  HealthVault Mobile Library for iPhone
 //
 // Copyright 2017 Microsoft Corp.
@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 
 /// Implements the platform-specific methods used by the HealthVaultService class.
-@interface MobilePlatform : NSObject
+@interface MHVMobilePlatform : NSObject
 
 /// Gets a name and version for this platform/library combination.
 + (NSString *)platformAbbreviationAndVersion;

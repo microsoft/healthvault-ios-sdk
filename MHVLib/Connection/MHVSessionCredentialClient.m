@@ -20,8 +20,8 @@
 #import "MHVConnectionProtocol.h"
 #import "MHVValidator.h"
 #import "MHVMethod.h"
-#import "DateTimeUtils.h"
-#import "MobilePlatform.h"
+#import "MHVDateExtensions.h"
+#import "MHVMobilePlatform.h"
 #import "MHVSessionCredential.h"
 #import "MHVServiceResponse.h"
 #import "MHVConfiguration.h"
@@ -99,7 +99,7 @@
 
 - (NSString *)infoSectionWithSharedSecret:(NSString *)sharedSecret
 {
-    NSString *msgTimeString = [DateTimeUtils dateToUtcString:[NSDate date]];
+    NSString *msgTimeString = [[NSDate date] dateToUtcString];
     
     NSMutableString *stringToSign = [NSMutableString new];
     
@@ -110,7 +110,7 @@
     [stringToSign appendString:@"</content>"];
     
     NSData *keyData = [[NSData alloc] initWithBase64EncodedString:sharedSecret options:0];
-    NSString *hmac = [MobilePlatform computeSha256Hmac:keyData data:stringToSign];
+    NSString *hmac = [MHVMobilePlatform computeSha256Hmac:keyData data:stringToSign];
     
     NSMutableString *xml = [NSMutableString new];
     [xml appendString:@"<info>"];

@@ -229,7 +229,6 @@
 		5D2D1C5D14E4A4F400C85B7E /* XWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D2D1C5B14E4A4F400C85B7E /* XWriter.h */; };
 		5D2D1C5E14E4A4F400C85B7E /* XWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D1C5C14E4A4F400C85B7E /* XWriter.m */; };
 		5D2D1C6114E4AC9B00C85B7E /* XNodeType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D1C6014E4AC9B00C85B7E /* XNodeType.m */; };
-		5D311729150FE26600B8F3D7 /* MHVBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D311728150FE26600B8F3D7 /* MHVBlock.m */; };
 		5D362B55152F8541006CC30C /* MHVPrescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D362B53152F84E2006CC30C /* MHVPrescription.h */; };
 		5D362B56152F8542006CC30C /* MHVPrescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D362B54152F84FA006CC30C /* MHVPrescription.m */; };
 		5D39F9221513A07800208A7B /* MHVRecordReference.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D39F9201513A07700208A7B /* MHVRecordReference.h */; };
@@ -245,19 +244,10 @@
 		5D591CFD15464FD800EAC934 /* MHVBlobPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D591CFB15464FD800EAC934 /* MHVBlobPayload.m */; };
 		5D5F3112150E95E700ED11E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5F3111150E95E700ED11E7 /* UIKit.framework */; };
 		5D5F311F150E9A3E00ED11E7 /* MHVCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3118150E9A3B00ED11E7 /* MHVCommon.c */; };
-		5D5F3120150E9A3E00ED11E7 /* MHVClientSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3119150E9A3C00ED11E7 /* MHVClientSettings.h */; };
-		5D5F3121150E9A3E00ED11E7 /* MHVClientSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F311A150E9A3D00ED11E7 /* MHVClientSettings.m */; };
 		5D5F3131150ED29F00ED11E7 /* MHVBrowserController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F312E150ED29F00ED11E7 /* MHVBrowserController.h */; };
 		5D5F3132150ED29F00ED11E7 /* MHVBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F312F150ED29F00ED11E7 /* MHVBrowserController.m */; };
-		5D5F315F150FAA2800ED11E7 /* HealthVaultConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F313B150FAA2800ED11E7 /* HealthVaultConfig.h */; };
-		5D5F3168150FAA2800ED11E7 /* MobilePlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3144150FAA2800ED11E7 /* MobilePlatform.h */; };
-		5D5F3169150FAA2800ED11E7 /* MobilePlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3145150FAA2800ED11E7 /* MobilePlatform.m */; };
-		5D5F316E150FAA2800ED11E7 /* HealthVaultSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F314C150FAA2800ED11E7 /* HealthVaultSettings.h */; };
-		5D5F316F150FAA2800ED11E7 /* HealthVaultSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F314D150FAA2800ED11E7 /* HealthVaultSettings.m */; };
-		5D5F3170150FAA2800ED11E7 /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F314F150FAA2800ED11E7 /* Base64.h */; };
-		5D5F3171150FAA2800ED11E7 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3150150FAA2800ED11E7 /* Base64.m */; };
-		5D5F3172150FAA2800ED11E7 /* DateTimeUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3151150FAA2800ED11E7 /* DateTimeUtils.h */; };
-		5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3152150FAA2800ED11E7 /* DateTimeUtils.m */; };
+		5D5F3168150FAA2800ED11E7 /* MHVMobilePlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3144150FAA2800ED11E7 /* MHVMobilePlatform.h */; };
+		5D5F3169150FAA2800ED11E7 /* MHVMobilePlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3145150FAA2800ED11E7 /* MHVMobilePlatform.m */; };
 		5D5F3174150FAA2800ED11E7 /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F3153150FAA2800ED11E7 /* Logger.h */; };
 		5D5F3175150FAA2800ED11E7 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F3154150FAA2800ED11E7 /* Logger.m */; };
 		5D5F318C150FDD4A00ED11E7 /* MHVBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D5F318B150FDD4700ED11E7 /* MHVBlock.h */; };
@@ -299,14 +289,11 @@
 		5D8FC3E114E2EDDF000F28EB /* MHVCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D8FC3E014E2EDDF000F28EB /* MHVCommon.h */; };
 		5D97B93C1511743C0004B551 /* MHVUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D97B93A1511743C0004B551 /* MHVUser.h */; };
 		5D97B93D1511743C0004B551 /* MHVUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97B93B1511743C0004B551 /* MHVUser.m */; };
-		5D97B94015125A280004B551 /* MHVObjectStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D97B93F15125A270004B551 /* MHVObjectStore.h */; };
 		5D983BD014E5BF6700C287B7 /* XSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BCF14E5BF6700C287B7 /* XSerializer.h */; };
 		5D983BD314E5CA3300C287B7 /* XSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BD214E5CA3300C287B7 /* XSerializer.m */; };
 		5D983BD514E5E87000C287B7 /* MHVTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BD414E5E87000C287B7 /* MHVTypes.h */; };
 		5D983BD814E5F4BD00C287B7 /* MHVThingDataTyped.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BD614E5F4BD00C287B7 /* MHVThingDataTyped.h */; };
 		5D983BD914E5F4BD00C287B7 /* MHVThingDataTyped.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BD714E5F4BD00C287B7 /* MHVThingDataTyped.m */; };
-		5D983BE214E5FE2B00C287B7 /* MHVClientException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BE014E5FE2A00C287B7 /* MHVClientException.h */; };
-		5D983BE314E5FE2B00C287B7 /* MHVClientException.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BE114E5FE2A00C287B7 /* MHVClientException.m */; };
 		5D983BE614E6006400C287B7 /* MHVConstrainedInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BE414E6006400C287B7 /* MHVConstrainedInt.h */; };
 		5D983BE714E6006400C287B7 /* MHVConstrainedInt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D983BE514E6006400C287B7 /* MHVConstrainedInt.m */; };
 		5D983BEA14E6035900C287B7 /* MHVDay.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D983BE814E6035900C287B7 /* MHVDay.h */; };
@@ -847,7 +834,6 @@
 		5D2D1C5B14E4A4F400C85B7E /* XWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWriter.h; sourceTree = "<group>"; };
 		5D2D1C5C14E4A4F400C85B7E /* XWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWriter.m; sourceTree = "<group>"; };
 		5D2D1C6014E4AC9B00C85B7E /* XNodeType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNodeType.m; sourceTree = "<group>"; };
-		5D311728150FE26600B8F3D7 /* MHVBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBlock.m; sourceTree = "<group>"; };
 		5D362B53152F84E2006CC30C /* MHVPrescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPrescription.h; sourceTree = "<group>"; };
 		5D362B54152F84FA006CC30C /* MHVPrescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPrescription.m; sourceTree = "<group>"; };
 		5D39F9201513A07700208A7B /* MHVRecordReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRecordReference.h; sourceTree = "<group>"; };
@@ -865,19 +851,10 @@
 		5D591CFB15464FD800EAC934 /* MHVBlobPayload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBlobPayload.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D5F3111150E95E700ED11E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5D5F3118150E9A3B00ED11E7 /* MHVCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MHVCommon.c; sourceTree = "<group>"; };
-		5D5F3119150E9A3C00ED11E7 /* MHVClientSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVClientSettings.h; sourceTree = "<group>"; };
-		5D5F311A150E9A3D00ED11E7 /* MHVClientSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVClientSettings.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5D5F312E150ED29F00ED11E7 /* MHVBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBrowserController.h; sourceTree = "<group>"; };
 		5D5F312F150ED29F00ED11E7 /* MHVBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVBrowserController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D5F313B150FAA2800ED11E7 /* HealthVaultConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthVaultConfig.h; sourceTree = "<group>"; };
-		5D5F3144150FAA2800ED11E7 /* MobilePlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobilePlatform.h; sourceTree = "<group>"; };
-		5D5F3145150FAA2800ED11E7 /* MobilePlatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobilePlatform.m; sourceTree = "<group>"; };
-		5D5F314C150FAA2800ED11E7 /* HealthVaultSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthVaultSettings.h; sourceTree = "<group>"; };
-		5D5F314D150FAA2800ED11E7 /* HealthVaultSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthVaultSettings.m; sourceTree = "<group>"; };
-		5D5F314F150FAA2800ED11E7 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
-		5D5F3150150FAA2800ED11E7 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
-		5D5F3151150FAA2800ED11E7 /* DateTimeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimeUtils.h; sourceTree = "<group>"; };
-		5D5F3152150FAA2800ED11E7 /* DateTimeUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimeUtils.m; sourceTree = "<group>"; };
+		5D5F3144150FAA2800ED11E7 /* MHVMobilePlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMobilePlatform.h; sourceTree = "<group>"; };
+		5D5F3145150FAA2800ED11E7 /* MHVMobilePlatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMobilePlatform.m; sourceTree = "<group>"; };
 		5D5F3153150FAA2800ED11E7 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		5D5F3154150FAA2800ED11E7 /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
 		5D5F318B150FDD4700ED11E7 /* MHVBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBlock.h; sourceTree = "<group>"; };
@@ -920,14 +897,11 @@
 		5D8FC3E014E2EDDF000F28EB /* MHVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVCommon.h; sourceTree = "<group>"; };
 		5D97B93A1511743C0004B551 /* MHVUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVUser.h; sourceTree = "<group>"; };
 		5D97B93B1511743C0004B551 /* MHVUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MHVUser.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5D97B93F15125A270004B551 /* MHVObjectStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVObjectStore.h; sourceTree = "<group>"; };
 		5D983BCF14E5BF6700C287B7 /* XSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = XSerializer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5D983BD214E5CA3300C287B7 /* XSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XSerializer.m; sourceTree = "<group>"; };
 		5D983BD414E5E87000C287B7 /* MHVTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTypes.h; sourceTree = "<group>"; };
 		5D983BD614E5F4BD00C287B7 /* MHVThingDataTyped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingDataTyped.h; sourceTree = "<group>"; };
 		5D983BD714E5F4BD00C287B7 /* MHVThingDataTyped.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingDataTyped.m; sourceTree = "<group>"; };
-		5D983BE014E5FE2A00C287B7 /* MHVClientException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVClientException.h; sourceTree = "<group>"; };
-		5D983BE114E5FE2A00C287B7 /* MHVClientException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVClientException.m; sourceTree = "<group>"; };
 		5D983BE414E6006400C287B7 /* MHVConstrainedInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVConstrainedInt.h; sourceTree = "<group>"; };
 		5D983BE514E6006400C287B7 /* MHVConstrainedInt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVConstrainedInt.m; sourceTree = "<group>"; };
 		5D983BE814E6035900C287B7 /* MHVDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDay.h; sourceTree = "<group>"; };
@@ -1402,13 +1376,8 @@
 				5DE382F914E338C900DFA11D /* MHVArrayExtensions.h */,
 				5DE382FA14E338C900DFA11D /* MHVArrayExtensions.m */,
 				5D5F318B150FDD4700ED11E7 /* MHVBlock.h */,
-				5D311728150FE26600B8F3D7 /* MHVBlock.m */,
-				5D983BE014E5FE2A00C287B7 /* MHVClientException.h */,
-				5D983BE114E5FE2A00C287B7 /* MHVClientException.m */,
 				5DEF156514EB0985009D05D5 /* MHVClientResult.h */,
 				5DEF156614EB0986009D05D5 /* MHVClientResult.m */,
-				5D5F3119150E9A3C00ED11E7 /* MHVClientSettings.h */,
-				5D5F311A150E9A3D00ED11E7 /* MHVClientSettings.m */,
 				5D5F3118150E9A3B00ED11E7 /* MHVCommon.c */,
 				5D8FC3E014E2EDDF000F28EB /* MHVCommon.h */,
 				5D0DACB114E2FE14002CBE52 /* MHVCore.h */,
@@ -1420,7 +1389,6 @@
 				5D76B9D714DCC85B00BA865F /* MHVExceptionExtensions.h */,
 				5D76B9D814DCC85B00BA865F /* MHVExceptionExtensions.m */,
 				5D76B9E814DCC9CF00BA865F /* MHVLib.h */,
-				5D97B93F15125A270004B551 /* MHVObjectStore.h */,
 				BA03564D1EC236B600BE547D /* MHVPersistedDataService.h */,
 				BA0356451EC2338500BE547D /* MHVQueuedDictionary.h */,
 				BA0356461EC2338500BE547D /* MHVQueuedDictionary.m */,
@@ -1473,36 +1441,21 @@
 		5D5F3138150FAA2600ED11E7 /* HVMobile */ = {
 			isa = PBXGroup;
 			children = (
-				5D5F313B150FAA2800ED11E7 /* HealthVaultConfig.h */,
 				5DE57A241511573500829CC2 /* Localizable.strings */,
 				5DF90BCD19005044009ABAAB /* MHVCryptographer.h */,
 				5DF90BCE19005044009ABAAB /* MHVCryptographer.m */,
 				A57A80BE1EC4FB7900DDD636 /* MHVServiceResponse.h */,
 				A57A80BF1EC4FB7900DDD636 /* MHVServiceResponse.m */,
-				5D5F3144150FAA2800ED11E7 /* MobilePlatform.h */,
-				5D5F3145150FAA2800ED11E7 /* MobilePlatform.m */,
-				5D5F314B150FAA2800ED11E7 /* Settings */,
+				5D5F3144150FAA2800ED11E7 /* MHVMobilePlatform.h */,
+				5D5F3145150FAA2800ED11E7 /* MHVMobilePlatform.m */,
 				5D5F314E150FAA2800ED11E7 /* Support */,
 			);
 			path = HVMobile;
 			sourceTree = "<group>";
 		};
-		5D5F314B150FAA2800ED11E7 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				5D5F314C150FAA2800ED11E7 /* HealthVaultSettings.h */,
-				5D5F314D150FAA2800ED11E7 /* HealthVaultSettings.m */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		5D5F314E150FAA2800ED11E7 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				5D5F314F150FAA2800ED11E7 /* Base64.h */,
-				5D5F3150150FAA2800ED11E7 /* Base64.m */,
-				5D5F3151150FAA2800ED11E7 /* DateTimeUtils.h */,
-				5D5F3152150FAA2800ED11E7 /* DateTimeUtils.m */,
 				5D5F3153150FAA2800ED11E7 /* Logger.h */,
 				5D5F3154150FAA2800ED11E7 /* Logger.m */,
 			);
@@ -2264,7 +2217,6 @@
 				5D1ACC8119104056000689FD /* MHVResponseStatus.h in Headers */,
 				4C191A8D1EC1033C00B5E545 /* MHVThingRaw.h in Headers */,
 				BA0357031EC5278800BE547D /* MHVMicrosoftKhronosCloudCommonErrorsErrorInformation.h in Headers */,
-				5D983BE214E5FE2B00C287B7 /* MHVClientException.h in Headers */,
 				4C191A751EC1033C00B5E545 /* MHVDailyMedicationUsage.h in Headers */,
 				5D983BE614E6006400C287B7 /* MHVConstrainedInt.h in Headers */,
 				A51B6C9F1EC4A815003BFBDC /* MHVSessionCredential.h in Headers */,
@@ -2360,24 +2312,19 @@
 				5DF90BDD19005FF0009ABAAB /* MHVTestResultRange.h in Headers */,
 				A54220431EC24FF200728913 /* MHVConnectionProtocol.h in Headers */,
 				A53BF83C1EC3686400F018E2 /* MHVKeychainServiceProtocol.h in Headers */,
-				5D5F3120150E9A3E00ED11E7 /* MHVClientSettings.h in Headers */,
 				BA0357211EC5278800BE547D /* MHVWeeklyAdherenceSummary.h in Headers */,
 				BA0356D31EC5278700BE547D /* MHVActionPlanFrequencyTaskCompletionMetrics.h in Headers */,
 				A51203C61ECE207000845680 /* MHVClientFactory.h in Headers */,
 				5D5F3131150ED29F00ED11E7 /* MHVBrowserController.h in Headers */,
 				A560EBE71EE5D56900A962D9 /* MHVThingTypeDefinition.h in Headers */,
-				5D5F315F150FAA2800ED11E7 /* HealthVaultConfig.h in Headers */,
 				BA0356401EC128B600BE547D /* MHVJsonEnumProtocol.h in Headers */,
 				BA0356021EC1257F00BE547D /* NSArray+MHVEnum.h in Headers */,
 				BA0356251EC1257F00BE547D /* MHVDataModelProtocol.h in Headers */,
-				5D5F3168150FAA2800ED11E7 /* MobilePlatform.h in Headers */,
+				5D5F3168150FAA2800ED11E7 /* MHVMobilePlatform.h in Headers */,
 				BA4FBEA51ECA5CCD00C8EBF9 /* MHVRemoteMonitoringClient.h in Headers */,
 				A57A80C41EC51EC600DDD636 /* MHVCollection.h in Headers */,
 				BA0356F31EC5278800BE547D /* MHVGoal.h in Headers */,
-				5D5F316E150FAA2800ED11E7 /* HealthVaultSettings.h in Headers */,
-				5D5F3170150FAA2800ED11E7 /* Base64.h in Headers */,
 				BA03560C1EC1257F00BE547D /* NSNumber+DataModel.h in Headers */,
-				5D5F3172150FAA2800ED11E7 /* DateTimeUtils.h in Headers */,
 				5D5F3174150FAA2800ED11E7 /* Logger.h in Headers */,
 				5DF90BCF19005044009ABAAB /* MHVCryptographer.h in Headers */,
 				A560EBDE1EE5C13D00A962D9 /* MHVServiceInstance.h in Headers */,
@@ -2388,7 +2335,6 @@
 				BA0356CF1EC5278700BE547D /* MHVActionPlan.h in Headers */,
 				5D97B93C1511743C0004B551 /* MHVUser.h in Headers */,
 				BA03563D1EC1278F00BE547D /* MHVPropertyIntrospection.h in Headers */,
-				5D97B94015125A280004B551 /* MHVObjectStore.h in Headers */,
 				5D39F9221513A07800208A7B /* MHVRecordReference.h in Headers */,
 				4C191A5F1EC1033C00B5E545 /* MHVAllergy.h in Headers */,
 				5D39F92B1513AA6000208A7B /* MHVServerResponseStatus.h in Headers */,
@@ -2717,7 +2663,6 @@
 				4C191A921EC1033C00B5E545 /* MHVThingTypes.m in Sources */,
 				5D983BD914E5F4BD00C287B7 /* MHVThingDataTyped.m in Sources */,
 				4C191A6C1EC1033C00B5E545 /* MHVCCR.m in Sources */,
-				5D983BE314E5FE2B00C287B7 /* MHVClientException.m in Sources */,
 				5D983BE714E6006400C287B7 /* MHVConstrainedInt.m in Sources */,
 				5D983BEB14E6035900C287B7 /* MHVDay.m in Sources */,
 				A54521521EC9EC2800A17A1B /* MHVShellAuthService.m in Sources */,
@@ -2798,7 +2743,6 @@
 				4C191A721EC1033C00B5E545 /* MHVCondition.m in Sources */,
 				BA0356D41EC5278700BE547D /* MHVActionPlanFrequencyTaskCompletionMetrics.m in Sources */,
 				5D5F311F150E9A3E00ED11E7 /* MHVCommon.c in Sources */,
-				5D5F3121150E9A3E00ED11E7 /* MHVClientSettings.m in Sources */,
 				A5A1BBA61ECB9F5700CE6F64 /* MHVPlatformClient.m in Sources */,
 				4C191A821EC1033C00B5E545 /* MHVFamilyHistory.m in Sources */,
 				BA03563E1EC1278F00BE547D /* MHVPropertyIntrospection.m in Sources */,
@@ -2809,10 +2753,8 @@
 				4C191A621EC1033C00B5E545 /* MHVAssessment.m in Sources */,
 				A542205C1EC2698F00728913 /* MHVSodaConnection.m in Sources */,
 				A560EBE81EE5D56900A962D9 /* MHVThingTypeDefinition.m in Sources */,
-				5D5F3169150FAA2800ED11E7 /* MobilePlatform.m in Sources */,
-				5D5F316F150FAA2800ED11E7 /* HealthVaultSettings.m in Sources */,
+				5D5F3169150FAA2800ED11E7 /* MHVMobilePlatform.m in Sources */,
 				BA4FBEA71ECA5CE600C8EBF9 /* MHVRemoteMonitoringClient.m in Sources */,
-				5D5F3171150FAA2800ED11E7 /* Base64.m in Sources */,
 				BA03570C1EC5278800BE547D /* MHVObjectiveAdherenceSummary.m in Sources */,
 				BA03570E1EC5278800BE547D /* MHVOnboardingRequest.m in Sources */,
 				4C191A881EC1033C00B5E545 /* MHVHeight.m in Sources */,
@@ -2820,14 +2762,12 @@
 				BA9844D21EDF19B20064389A /* MHVActionPlanTasksApi.m in Sources */,
 				BA0324F51ED881A000A641AD /* MHVActionPlansApi.m in Sources */,
 				BA0356071EC1257F00BE547D /* NSDate+DataModel.m in Sources */,
-				5D5F3173150FAA2800ED11E7 /* DateTimeUtils.m in Sources */,
 				BA0356271EC1257F00BE547D /* MHVDynamicEnum.m in Sources */,
 				5D5F3175150FAA2800ED11E7 /* Logger.m in Sources */,
 				BA0356131EC1257F00BE547D /* NSUUID+DataModel.m in Sources */,
 				BA0357221EC5278800BE547D /* MHVWeeklyAdherenceSummary.m in Sources */,
 				BA0356F41EC5278800BE547D /* MHVGoal.m in Sources */,
 				A51B6C9C1EC4A806003BFBDC /* MHVSessionCredentialClient.m in Sources */,
-				5D311729150FE26600B8F3D7 /* MHVBlock.m in Sources */,
 				A545214B1EC9E5BF00A17A1B /* MHVBrowserAuthBroker.m in Sources */,
 				BA03560F1EC1257F00BE547D /* NSSet+DataModel.m in Sources */,
 				BA03571C1EC5278800BE547D /* MHVSystemThreadingWaitHandle.m in Sources */,
