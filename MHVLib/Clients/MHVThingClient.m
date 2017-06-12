@@ -684,6 +684,19 @@
         }
         return;
     }
+    
+    if (![contentType isEqualToString:@"image/jpg"] &&
+        ![contentType isEqualToString:@"image/jpeg"] &&
+        ![contentType isEqualToString:@"image/png"] &&
+        ![contentType isEqualToString:@"image/gif"])
+    {
+        if (completion)
+        {
+            completion([NSError error:[NSError MVHInvalidParameter]
+                      withDescription:@"Personal image must be a standard image content-type"]);
+        }
+        return;
+    }
 
     // Get the personalImage thing, including the blob section
     MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
