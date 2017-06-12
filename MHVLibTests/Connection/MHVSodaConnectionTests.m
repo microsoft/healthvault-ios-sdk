@@ -27,7 +27,7 @@
 #import "MHVHttpServiceProtocol.h"
 #import "MHVKeychainServiceProtocol.h"
 #import "MHVShellAuthServiceProtocol.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 #import "MHVSessionCredential.h"
 #import "MHVPlatformClientProtocol.h"
 #import "MHVApplicationCreationInfo.h"
@@ -35,7 +35,7 @@
 #import "Kiwi.h"
 #import "MHVServiceDefinition.h"
 #import "MHVSystemInstances.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 #import "MHVPersonClientProtocol.h"
 #import "MHVPersonInfo.h"
 #import "NSError+MHVError.h"
@@ -99,7 +99,7 @@ describe(@"MHVSodaConnection", ^
     __block BOOL didDeleteApplicationCreationInfo;
     __block BOOL didDeleteSessionCredential;
     __block BOOL didDeletePersonInfo;
-    __block MHVInstance *serviceInstanceFromKeychain;
+    __block MHVServiceInstance *serviceInstanceFromKeychain;
     __block MHVApplicationCreationInfo *appCreationInfoFromKeychain;
     __block MHVSessionCredential *sessionCredentialFromKeychain;
     __block MHVPersonInfo *personInfoFromKeychain;
@@ -151,9 +151,9 @@ describe(@"MHVSodaConnection", ^
         additionalAuthError = nil;
         serviceDefinition = [MHVServiceDefinition new];
         serviceDefinition.systemInstances = [MHVSystemInstances new];
-        MHVInstance *testInstance = [MHVInstance new];
+        MHVServiceInstance *testInstance = [MHVServiceInstance new];
         testInstance.instanceID = kDefaultInstanceId;
-        serviceDefinition.systemInstances.instances = [[MHVInstanceCollection alloc] initWithObject:testInstance];
+        serviceDefinition.systemInstances.instances = [[MHVServiceInstanceCollection alloc] initWithObject:testInstance];
         serviceDefinitionError = nil;
         credential = [[MHVSessionCredential alloc]initWithToken:kDefaultToken sharedSecret:kDefaultSharedSecret];
         credentialError = nil;
@@ -286,9 +286,9 @@ describe(@"MHVSodaConnection", ^
      }];
     
     // Mock the getServiceDefinitionWithWithResponseSections call
-    [(id)platformClient stub:@selector(getServiceDefinitionWithWithResponseSections:completion:) withBlock:^id(NSArray *params)
+    [(id)platformClient stub:@selector(getServiceDefinitionWithWithLastUpdatedTime:responseSections:completion:) withBlock:^id(NSArray *params)
     {
-        void (^serviceDefBlk)(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error) = params[1];
+        void (^serviceDefBlk)(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error) = params[2];
         serviceDefBlk(serviceDefinition, serviceDefinitionError);
         return nil;
     }];

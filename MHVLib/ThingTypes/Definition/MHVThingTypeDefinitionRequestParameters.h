@@ -1,5 +1,5 @@
 //
-//  MHVClients.h
+//  MHVThingTypeDefinitionRequestParameters.h
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,13 +16,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MHVClients_h
-#define MHVClients_h
+#import "MHVType.h"
+#import "MHVThingConstants.h"
 
-#import "MHVPersonClientProtocol.h"
-#import "MHVPlatformClientProtocol.h"
-#import "MHVRemoteMonitoringClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVVocabularyClientProtocol.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#endif /* MHVClients_h */
+@interface MHVThingTypeDefinitionRequestParameters : MHVType
+
+- (instancetype)initWithTypeIds:(NSArray<NSString *> *_Nullable)typeIds
+                       sections:(MHVThingTypeSections)sections
+                     imageTypes:(NSArray<NSString *> *_Nullable)imageTypes
+          lastClientRefreshDate:(NSDate *_Nullable)lastClientRefreshDate;
+
+@end
+
+NS_ASSUME_NONNULL_END

@@ -30,7 +30,7 @@
 #import "MHVKeychainServiceProtocol.h"
 #import "MHVShellAuthServiceProtocol.h"
 #import "MHVConfiguration.h"
-#import "MHVInstance.h"
+#import "MHVServiceInstance.h"
 #import "MHVSessionCredential.h"
 #import "Kiwi.h"
 
@@ -60,7 +60,7 @@ describe(@"MHVThingClient", ^
                                                                     shellAuthService:authService];
     
     // Set serviceInstance for tests
-    testConnection.serviceInstance = [[MHVInstance alloc] init];
+    testConnection.serviceInstance = [[MHVServiceInstance alloc] init];
     testConnection.serviceInstance.healthServiceUrl = [NSURL URLWithString:@"https://test.url"];
     
     // Mock the download task which downloads to a temporary file

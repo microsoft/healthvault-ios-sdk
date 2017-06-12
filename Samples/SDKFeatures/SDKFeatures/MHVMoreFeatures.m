@@ -53,7 +53,9 @@
     
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    [connection.platformClient getServiceDefinitionWithCompletion:^(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error)
+    [connection.platformClient getServiceDefinitionWithWithLastUpdatedTime:nil
+                                                          responseSections:MHVServiceInfoSectionsAll
+                                                                completion:^(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error)
     {
         if (error)
         {

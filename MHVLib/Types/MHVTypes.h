@@ -62,6 +62,7 @@
 #import "MHVPrescription.h"
 #import "MHVMessageHeaderThing.h"
 #import "MHVMessageAttachment.h"
+#import "MHVLocation.h"
 
 #import "MHVTestResultRangeValue.h"
 #import "MHVTestResultRange.h"

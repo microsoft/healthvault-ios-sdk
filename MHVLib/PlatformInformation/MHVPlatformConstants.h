@@ -21,6 +21,9 @@
 
 typedef NS_ENUM(NSUInteger, MHVServiceInfoSections)
 {
+    // No service info sections.
+    MHVServiceInfoSectionsNone = 0,
+    
     // Corresponds to ServiceInfo.HealthServiceUrl, ServiceInfo.Version, and ServiceInfo.ConfigurationValues.
     MHVServiceInfoSectionsPlatform = 0x1,
     
