@@ -1,5 +1,5 @@
 //
-// MHVActionPlanTaskInstance.m
+// MHVActionPlanTaskInstanceV2.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanTaskInstance.h"
+#import "MHVActionPlanTaskInstanceV2.h"
 
-@implementation MHVActionPlanTaskInstance
+@implementation MHVActionPlanTaskInstanceV2
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"identifier": @"id", @"status": @"status", @"startDate": @"startDate", @"endDate": @"endDate", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"name": @"name", @"shortDescription": @"shortDescription", @"longDescription": @"longDescription", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"taskType": @"taskType", @"trackingPolicy": @"trackingPolicy", @"signupName": @"signupName", @"associatedPlanId": @"associatedPlanId", @"associatedObjectiveIds": @"associatedObjectiveIds", @"completionType": @"completionType", @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics", @"scheduledTaskCompletionMetrics": @"scheduledTaskCompletionMetrics" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"identifier": @"id", @"status": @"status", @"startDate": @"startDate", @"endDate": @"endDate", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"name": @"name", @"shortDescription": @"shortDescription", @"longDescription": @"longDescription", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"taskType": @"taskType", @"trackingPolicy": @"trackingPolicy", @"signupName": @"signupName", @"associatedPlanId": @"associatedPlanId", @"associatedObjectiveIds": @"associatedObjectiveIds", @"completionType": @"completionType", @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics", @"schedules": @"schedules" }];
 }
  */
 
@@ -78,7 +78,7 @@
             @"associatedObjectiveIds": @"associatedObjectiveIds",
             @"completionType": @"completionType",
             @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics",
-            @"scheduledTaskCompletionMetrics": @"scheduledTaskCompletionMetrics"
+            @"schedules": @"schedules"
         }];
     });
     return names;
@@ -95,9 +95,9 @@
             
               @"trackingPolicy": [MHVActionPlanTrackingPolicy class],
 
-              @"frequencyTaskCompletionMetrics": [MHVActionPlanFrequencyTaskCompletionMetrics class],
+              @"frequencyTaskCompletionMetrics": [MHVActionPlanFrequencyTaskCompletionMetricsV2 class],
 
-              @"scheduledTaskCompletionMetrics": [MHVActionPlanScheduledTaskCompletionMetrics class]
+              @"schedules": [MHVScheduleV2 class]
         }];
     });
     return types;

@@ -1,5 +1,5 @@
 //
-// MHVSleepResponse.m
+// MHVActionPlanTaskV2.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVSleepResponse.h"
+#import "MHVActionPlanTaskV2.h"
 
-@implementation MHVSleepResponse
+@implementation MHVActionPlanTaskV2
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"sleepActivities": @"sleepActivities", @"nextLink": @"nextLink" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"shortDescription": @"shortDescription", @"longDescription": @"longDescription", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"taskType": @"taskType", @"trackingPolicy": @"trackingPolicy", @"signupName": @"signupName", @"associatedPlanId": @"associatedPlanId", @"associatedObjectiveIds": @"associatedObjectiveIds", @"completionType": @"completionType", @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics", @"schedules": @"schedules" }];
 }
  */
 
@@ -60,8 +60,19 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"sleepActivities": @"sleepActivities",
-            @"nextLink": @"nextLink"
+            @"name": @"name",
+            @"shortDescription": @"shortDescription",
+            @"longDescription": @"longDescription",
+            @"imageUrl": @"imageUrl",
+            @"thumbnailImageUrl": @"thumbnailImageUrl",
+            @"taskType": @"taskType",
+            @"trackingPolicy": @"trackingPolicy",
+            @"signupName": @"signupName",
+            @"associatedPlanId": @"associatedPlanId",
+            @"associatedObjectiveIds": @"associatedObjectiveIds",
+            @"completionType": @"completionType",
+            @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics",
+            @"schedules": @"schedules"
         }];
     });
     return names;
@@ -76,7 +87,11 @@
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
             
-              @"sleepActivities": [MHVSleepsSleep class],
+              @"trackingPolicy": [MHVActionPlanTrackingPolicy class],
+
+              @"frequencyTaskCompletionMetrics": [MHVActionPlanFrequencyTaskCompletionMetricsV2 class],
+
+              @"schedules": [MHVScheduleV2 class]
         }];
     });
     return types;

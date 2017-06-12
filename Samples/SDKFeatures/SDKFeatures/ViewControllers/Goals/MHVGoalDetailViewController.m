@@ -54,7 +54,7 @@
 
 - (IBAction)deleteGoal:(id)sender
 {
-    [self.connection.remoteMonitoringClient deleteGoalWithGoalId:_goalId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalsDeleteWithGoalId:self.goalId completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
@@ -80,7 +80,7 @@
     self.goal.range.name = @"range";
     self.goal.range.units = self.unitsValue.text;
     
-    [self.connection.remoteMonitoringClient putGoalWithGoal:_goal completion:^(MHVGoal * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalsReplaceWithGoal:self.goal completion:^(MHVGoal * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
@@ -113,24 +113,23 @@
     MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
     self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     
-    [self.connection.remoteMonitoringClient getGoalByIdWithGoalId:_goalId completion:^(MHVGoal *response, NSError *error)
-     {
+    [self.connection.remoteMonitoringClient goalsGetByIdWithGoalId:self.goalId completion:^(MHVGoal * _Nullable output, NSError * _Nullable error) {
          [[NSOperationQueue mainQueue] addOperationWithBlock:^
           {
               if (!error)
               {
-                  self.nameValue.text = response.name;
-                  self.typeValue.text = response.goalType;
-                  self.startDate.text = response.startDate.toString;
+                  self.nameValue.text = output.name;
+                  self.typeValue.text = output.goalType;
+                  self.startDate.text = output.startDate.toString;
                   
-                  if (response.range)
+                  if (output.range)
                   {
-                      self.unitsValue.text = response.range.units;
-                      self.maxValue.text = [response.range.maximum stringValue];
-                      self.minValue.text = [response.range.minimum stringValue];
+                      self.unitsValue.text = output.range.units;
+                      self.maxValue.text = [output.range.maximum stringValue];
+                      self.minValue.text = [output.range.minimum stringValue];
                   }
                   
-                  self.goal = response;
+                  self.goal = output;
                   
                   [self.statusLabel clearStatus];
               }

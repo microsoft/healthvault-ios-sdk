@@ -1,5 +1,5 @@
 //
-// MHVActionPlansResponseActionPlanInstance_.m
+// MHVErrorInformation.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlansResponseActionPlanInstance_.h"
+#import "MHVErrorInformation.h"
 
-@implementation MHVActionPlansResponseActionPlanInstance_
+@implementation MHVErrorInformation
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"plans": @"plans", @"nextLink": @"nextLink" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"code": @"code", @"message": @"message", @"target": @"target", @"details": @"details", @"innererror": @"innererror", @"exception": @"exception" }];
 }
  */
 
@@ -60,8 +60,12 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"plans": @"plans",
-            @"nextLink": @"nextLink"
+            @"code": @"code",
+            @"message": @"message",
+            @"target": @"target",
+            @"details": @"details",
+            @"innererror": @"innererror",
+            @"exception": @"exception"
         }];
     });
     return names;
@@ -76,7 +80,9 @@
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
             
-              @"plans": [MHVActionPlanInstance class],
+              @"details": [MHVErrorInformation class],
+
+              @"innererror": [MHVErrorInformation class],
         }];
     });
     return types;

@@ -75,6 +75,8 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
+            
+              @"actionPlanTask": [MHVActionPlanTaskV2 class],
         }];
     });
     return types;

@@ -1,5 +1,5 @@
 //
-// MHVActionPlanTasksResponseActionPlanTaskInstance_.m
+// MHVActionPlanInstanceV2.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanTasksResponseActionPlanTaskInstance_.h"
+#import "MHVActionPlanInstanceV2.h"
 
-@implementation MHVActionPlanTasksResponseActionPlanTaskInstance_
+@implementation MHVActionPlanInstanceV2
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"tasks": @"tasks", @"nextLink": @"nextLink" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"identifier": @"id", @"status": @"status", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"associatedTasks": @"associatedTasks", @"name": @"name", @"descriptionText": @"description", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"category": @"category", @"objectives": @"objectives" }];
 }
  */
 
@@ -60,8 +60,17 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"tasks": @"tasks",
-            @"nextLink": @"nextLink"
+            @"identifier": @"id",
+            @"status": @"status",
+            @"organizationId": @"organizationId",
+            @"organizationName": @"organizationName",
+            @"associatedTasks": @"associatedTasks",
+            @"name": @"name",
+            @"descriptionText": @"description",
+            @"imageUrl": @"imageUrl",
+            @"thumbnailImageUrl": @"thumbnailImageUrl",
+            @"category": @"category",
+            @"objectives": @"objectives"
         }];
     });
     return names;
@@ -76,7 +85,9 @@
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
             
-              @"tasks": [MHVActionPlanTaskInstance class],
+              @"associatedTasks": [MHVActionPlanTaskInstanceV2 class],
+
+              @"objectives": [MHVObjective class]
         }];
     });
     return types;
