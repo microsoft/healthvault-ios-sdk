@@ -31,3 +31,28 @@
 }
 
 @end
+
+@implementation MHVString1024NW
+
+- (BOOL)validateValue:(NSString *)value
+{
+    return ![value containsString:@" "];
+}
+
+@end
+
+@implementation MHVString1024NWCollection
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        self.type = [MHVString1024NW class];
+    }
+    
+    return self;
+}
+
+@end
+

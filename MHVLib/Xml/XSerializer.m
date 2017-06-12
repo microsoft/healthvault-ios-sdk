@@ -692,6 +692,23 @@ LError:
     return elements;
 }
 
+-(NSMutableArray<NSUUID *> *) readUUIDElementArray:(NSString *)name
+{
+    NSMutableArray<NSUUID *> *elements = nil;
+    while ([self isStartElementWithName:name])
+    {
+        if (elements == nil)
+        {
+            elements = [[NSMutableArray<NSUUID *> alloc] init];
+            MHVCHECK_OOM(elements);
+        }
+        
+        [elements addObject:[[NSUUID alloc] initWithUUIDString:[self readStringElement:name]]];
+    }
+    
+    return elements;
+}
+
 -(NSMutableArray *)readRawElementArray:(NSString *)name
 {
     NSMutableArray* elements = nil;
