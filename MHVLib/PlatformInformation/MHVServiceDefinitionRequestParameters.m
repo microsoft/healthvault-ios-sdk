@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVServiceDefinitionRequestParameters.h"
-#import "DateTimeUtils.h"
 
 static const xmlChar *x_element_updated_date = XMLSTRINGCONST("updated-date");
 static NSString *const c_element_response_sections = @"response-sections";

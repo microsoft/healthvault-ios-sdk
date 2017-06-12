@@ -16,7 +16,6 @@
 
 #import "MHVCommon.h"
 #import "MHVAllergy.h"
-#import "MHVClient.h"
 
 static NSString *const c_typeid = @"52bf9104-2c5e-4f1f-a66d-552ebcc53df7";
 static NSString *const c_typename = @"allergy";

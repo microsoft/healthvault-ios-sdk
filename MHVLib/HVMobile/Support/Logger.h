@@ -17,7 +17,13 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "HealthVaultConfig.h"
+
+#ifndef __OPTIMIZE__
+    /// If TRUE then the library traces all requests, responses and other debug information to a console.
+    #define HEALTH_VAULT_TRACE_ENABLED 1
+#else
+    #define HEALTH_VAULT_TRACE_ENABLED 0
+#endif
 
 #if HEALTH_VAULT_TRACE_ENABLED
 #	define TraceMessage(s, ... ) [Logger write: [NSString stringWithFormat: @"[%s, line = %d] %@", __func__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__]]]

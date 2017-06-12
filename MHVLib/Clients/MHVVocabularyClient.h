@@ -16,9 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVClient.h"
 #import "MHVVocabularyClientProtocol.h"
-#import "MHVMethod.h"
 
 @protocol MHVConnectionProtocol;
 

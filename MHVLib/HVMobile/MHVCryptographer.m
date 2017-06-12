@@ -19,18 +19,18 @@
 //
 #import "MHVCommon.h"
 #import "MHVCryptographer.h"
-#import "MobilePlatform.h"
+#import "MHVMobilePlatform.h"
 
 @implementation MHVCryptographer
 
 -(NSString *)computeSha256Hash: (NSString *)data
 {
-    return [MobilePlatform computeSha256Hash:data];
+    return [MHVMobilePlatform computeSha256Hash:data];
 }
 
 -(NSString *)computeSha256Hmac: (NSData *)key data:(NSString *)data
 {
-    return [MobilePlatform computeSha256Hmac:key data:data];
+    return [MHVMobilePlatform computeSha256Hmac:key data:data];
 }
 
 @end

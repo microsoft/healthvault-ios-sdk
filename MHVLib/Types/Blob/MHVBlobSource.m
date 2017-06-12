@@ -18,7 +18,6 @@
 //
 #import "MHVCommon.h"
 #import "MHVBlobSource.h"
-#import "MHVDirectory.h"
 
 // ------------------------------
 //
@@ -99,7 +98,7 @@
         _file = [NSFileHandle fileHandleForReadingAtPath:filePath];
         MHVCHECK_NOTNULL(_file);
 
-        _size = [[NSFileManager defaultManager] sizeOfFileAtPath:filePath];
+        _size = (long)[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil].fileSize;
     }
 
     return self;

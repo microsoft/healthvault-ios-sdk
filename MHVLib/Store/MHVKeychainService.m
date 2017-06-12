@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVCommon.h"
-#import "MHVClient.h"
 #import "MHVKeychainService.h"
 #import <Security/Security.h>
 #import "XSerializer.h"

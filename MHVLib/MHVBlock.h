@@ -30,11 +30,3 @@ typedef BOOL (^MHVHandler) (id value);
 typedef BOOL (^MHVFilter) (id value);
 typedef id (^MHVFunc) (id value);
 typedef id (^MHVFactory) (id key);
-
-
-void safeInvokeAction(MHVAction action);
-void safeInvokeActionInMainThread(MHVAction action);
-void safeInvokeActionEx(MHVAction action, BOOL useMainThread);
-BOOL safeInvokePredicate(MHVPredicate predicate);
-void safeInvokeNotify(MHVNotify notify, id sender);
-BOOL safeInvokeHandler(MHVHandler handler, id value);

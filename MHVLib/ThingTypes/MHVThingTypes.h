@@ -52,6 +52,7 @@
 #import "MHVMessage.h"
 #import "MHVLabTestResults.h"
 #import "MHVThingRaw.h"
+#import "MHVServiceDefinition.h"
 #import "MHVAdvanceDirective.h"
 #import "MHVAerobicProfile.h"
 #import "MHVAllergicEpisode.h"

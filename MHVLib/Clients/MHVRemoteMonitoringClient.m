@@ -20,7 +20,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVCommon.h"
 #import "MHVRemoteMonitoringClient.h"
-#import "MHVClient.h"
 #import "MHVJsonSerializer.h"
 #import "MHVConnectionProtocol.h"
 #import "MHVRestRequest.h"

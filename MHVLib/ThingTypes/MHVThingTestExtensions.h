@@ -18,7 +18,6 @@
 //
 #import <Foundation/Foundation.h>
 #import "MHVThingTypes.h"
-#import "MHVSynchronizedStore.h"
 
 // --------------------------
 //
@@ -227,8 +226,3 @@ NSString *pickRandomDrug(void);
 + (MHVThing *)createRandomForDate:(MHVDate *)date forDrug:(NSString *)drug;
 @end
 
-@interface MHVTestSynchronizedStore : MHVSynchronizedStore
-
-@property (readwrite, nonatomic) double failureProbability;
-
-@end

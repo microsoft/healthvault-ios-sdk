@@ -18,8 +18,6 @@
 
 #import "MHVCommon.h"
 #import "MHVCondition.h"
-#import "MHVClient.h"
-#import "MHVLocalVocabStore.h"
 
 static NSString *const c_typeid = @"7ea7a1f9-880b-4bd4-b593-f5660f20eda8";
 static NSString *const c_typename = @"condition";
