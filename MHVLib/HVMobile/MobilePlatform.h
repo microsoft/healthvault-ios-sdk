@@ -19,9 +19,7 @@
 #import <Foundation/Foundation.h>
 
 /// Implements the platform-specific methods used by the HealthVaultService class.
-@interface MobilePlatform : NSObject {
-
-}
+@interface MobilePlatform : NSObject
 
 /// Gets a name and version for this platform/library combination.
 + (NSString *)platformAbbreviationAndVersion;

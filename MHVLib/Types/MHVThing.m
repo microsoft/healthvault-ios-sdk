@@ -18,7 +18,6 @@
 
 #import "MHVCommon.h"
 #import "MHVThing.h"
-#import "MHVClient.h"
 
 static NSString* const c_element_state = @"thing-state";
 

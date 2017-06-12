@@ -343,25 +343,6 @@ static const NSInteger c_numSecondsInDay = 86400;
      }];
 }
 
-- (BOOL)removeThingCompleted:(MHVTask *)task
-{
-    @try
-    {
-        [task checkSuccess];
-        [self.statusLabel showStatus:@"Done"];
-        [self refreshView];
-
-        return TRUE;
-    }
-    @catch (NSException *exception)
-    {
-        [MHVUIAlert showInformationalMessage:exception.description];
-        [self.statusLabel showStatus:@"Failed"];
-    }
-
-    return FALSE;
-}
-
 - (NSDate *)getNextDayAfter:(NSDate *)current endDate:(NSDate *)end
 {
     if ([end timeIntervalSinceDate:current] > c_numSecondsInDay)  // 1 day

@@ -19,8 +19,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVRecordReference.h"
 #import "MHVCollection.h"
-#import "HealthVaultRecord.h"
-#import "MHVGetPersonalImageTask.h"
 
 // -------------------------
 //
@@ -54,20 +52,6 @@
 //
 @property (readwrite, nonatomic, strong) NSString *authStatus;
 
-// -------------------------
-//
-// Initializers
-//
-// -------------------------
-- (instancetype)initWithRecord:(HealthVaultRecord *)record;
-
-// -------------------------
-//
-// Methods
-//
-// -------------------------
-- (MHVGetPersonalImageTask *)downloadPersonalImageWithCallback:(MHVTaskCompletion)callback;
-
 @end
 
 // -------------------------
@@ -76,8 +60,6 @@
 //
 // -------------------------
 @interface MHVRecordCollection : MHVCollection<MHVRecord *>
-
-- (instancetype)initWithRecordArray:(NSArray *)records;
 
 - (NSInteger)indexOfRecordID:(NSUUID *)recordID;
 

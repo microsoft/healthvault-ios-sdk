@@ -25,12 +25,9 @@
 #import "MHVThingData.h"
 #import "MHVBlobPayload.h"
 #import "MHVBlobSource.h"
-#import "MHVAsyncTask.h"
 #import "MHVApproxDateTime.h"
-#import "MHVHttpServiceProtocol.h"
 
 @class MHVRecordReference;
-@class MHVThingBlobUploadTask;
 
 enum MHVThingFlags
 {

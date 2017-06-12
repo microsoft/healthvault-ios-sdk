@@ -62,14 +62,6 @@
 // -------------------------
 - (instancetype)initWithBlobName:(NSString *)name contentType:(NSString *)contentType length:(NSInteger)length andUrl:(NSString *)blobUrl;
 
-// -------------------------
-//
-// Methods
-//
-// -------------------------
-- (void)downloadBlobToFilePath:(NSString *)filePath completion:(void (^)(NSError *error))completion;
-- (void)downloadBlobDataWithCompletion:(void (^)(NSData *data, NSError *error))completion;
-
 @end
 
 @interface MHVBlobPayloadThingCollection : MHVCollection<MHVBlobPayloadThing *>

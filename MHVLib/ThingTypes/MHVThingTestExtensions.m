@@ -952,19 +952,3 @@ LError:
 }
 
 @end
-
-@implementation MHVTestSynchronizedStore : MHVSynchronizedStore
-
-@synthesize failureProbability;
-
-- (MHVThing *)getLocalThingWithKey:(MHVThingKey *)key
-{
-    if ([MHVRandom randomDouble] < self.failureProbability)
-    {
-        return nil;
-    }
-    
-    return [super getLocalThingWithKey:key];
-}
-
-@end

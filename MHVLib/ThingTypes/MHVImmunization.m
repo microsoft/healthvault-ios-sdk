@@ -18,7 +18,6 @@
 
 #import "MHVCommon.h"
 #import "MHVImmunization.h"
-#import "MHVClient.h"
 
 static NSString *const c_typeid = @"cd3587b5-b6e1-4565-ab3b-1c3ad45eb04f";
 static NSString *const c_typename = @"immunization";

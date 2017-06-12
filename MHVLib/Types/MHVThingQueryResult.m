@@ -18,8 +18,6 @@
 
 #import "MHVCommon.h"
 #import "MHVThingQueryResult.h"
-#import "MHVGetThingsTask.h"
-#import "MHVClient.h"
 
 static NSString *const c_element_thing = @"thing";
 static NSString *const c_element_pending = @"unprocessed-thing-key-info";
@@ -52,45 +50,6 @@ static NSString *const c_attribute_name = @"name";
     return self.thingCount + self.pendingCount;
 }
 
-- (MHVTask *)getPendingThingsForRecord:(MHVRecordReference *)record withCallback:(MHVTaskCompletion)callback
-{
-    return [self getPendingThingsForRecord:record thingView:nil withCallback:callback];
-}
-
-- (MHVTask *)getPendingThingsForRecord:(MHVRecordReference *)record thingView:(MHVThingView *)view withCallback:(MHVTaskCompletion)callback
-{
-    MHVTask *task = [self createTaskToGetPendingThingsForRecord:record thingView:view withCallback:callback];
-    
-    if (task)
-    {
-        [task start];
-    }
-    
-    return task;
-}
-
-- (MHVTask *)createTaskToGetPendingThingsForRecord:(MHVRecordReference *)record withCallback:(MHVTaskCompletion)callback
-{
-    return [self createTaskToGetPendingThingsForRecord:record thingView:nil withCallback:callback];
-}
-
-- (MHVTask *)createTaskToGetPendingThingsForRecord:(MHVRecordReference *)record thingView:(MHVThingView *)view withCallback:(MHVTaskCompletion)callback
-{
-    MHVCHECK_NOTNULL(record);
-    
-    if (!self.hasPendingThings)
-    {
-        return nil;
-    }
-    
-    MHVTask *task = [[MHVTask alloc] initWithCallback:callback];
-    MHVCHECK_NOTNULL(task);
-    
-    MHVCHECK_SUCCESS([self nextGetPendingThings:self.pendingThings forRecord:record thingView:view andParentTask:task]);
-    
-    return task;
-}
-
 - (void)serializeAttributes:(XWriter *)writer
 {
     [writer writeAttribute:c_attribute_name value:self.name];
@@ -118,62 +77,6 @@ static NSString *const c_attribute_name = @"name";
 }
 
 #pragma mark - Internal methods
-
-- (MHVGetThingsTask *)newGetTaskFor:(MHVPendingThingCollection *)pendingThings forRecord:(MHVRecordReference *)record thingView:(MHVThingView *)view
-{
-    MHVThingQuery *pendingQuery = [[MHVThingQuery alloc] initWithPendingThings:pendingThings];
-    
-    MHVCHECK_NOTNULL(pendingQuery);
-    if (view)
-    {
-        pendingQuery.view = view;
-    }
-    
-    MHVGetThingsTask *getPendingTask = [[MHVClient current].methodFactory newGetThingsForRecord:record query:pendingQuery andCallback:^(MHVTask *task) {
-        [self getThingsComplete:task forRecord:record thingView:view];
-    }];
-    
-    return getPendingTask;
-}
-
-- (BOOL)nextGetPendingThings:(MHVPendingThingCollection *)pendingThings forRecord:(MHVRecordReference *)record thingView:(MHVThingView *)view andParentTask:(MHVTask *)parentTask
-{
-    MHVGetThingsTask *getPendingTask = [self newGetTaskFor:pendingThings forRecord:record thingView:view];
-    
-    MHVCHECK_NOTNULL(getPendingTask);
-    
-    [parentTask setNextTask:getPendingTask];
-    
-    return TRUE;
-}
-
-- (void)getThingsComplete:(MHVTask *)task forRecord:(MHVRecordReference *)record thingView:(MHVThingView *)view
-{
-    MHVGetThingsTask *getThings = (MHVGetThingsTask *)task;
-    MHVThingQueryResult *result = getThings.queryResults.firstResult;
-    
-    if (result.hasThings)
-    {
-        //
-        // Append things to this query result's thing list
-        //
-        [self appendFoundThings:result.things];
-    }
-    
-    if (!result.hasPendingThings)
-    {
-        // No more pending things!
-        // We can clear the pending things in this query
-        self.pendingThings = nil;
-        return;
-    }
-    
-    //
-    // The pending thing query did not return all the things we had requested... MORE pending things!
-    // So we have to issue another query
-    //
-    [self nextGetPendingThings:result.pendingThings forRecord:record thingView:view andParentTask:task.parent];
-}
 
 - (void)appendFoundThings:(MHVThingCollection *)things
 {

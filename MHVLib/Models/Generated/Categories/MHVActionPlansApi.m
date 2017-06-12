@@ -26,7 +26,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVRemoteMonitoringClient.h"
-#import "MHVClient.h"
 #import "MHVJsonSerializer.h"
 #import "MHVActionPlansApi.h"
 #import "MHVActionPlan.h"

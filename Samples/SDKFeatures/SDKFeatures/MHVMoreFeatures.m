@@ -18,6 +18,7 @@
 //
 
 #import "MHVMoreFeatures.h"
+#import "MHVLib.h"
 #import "MHVTypeListViewController.h"
 #import "MHVUIAlert.h"
 

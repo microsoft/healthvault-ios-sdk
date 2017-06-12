@@ -27,39 +27,6 @@ static NSString* const c_element_auth_action = @"app-record-auth-action";
 
 @implementation MHVRecord
 
-- (instancetype)initWithRecord:(HealthVaultRecord *)record
-{
-    MHVASSERT_PARAMETER(record);
-
-    self = [super init];
-    
-    if (self)
-    {
-        self.ID = record.recordId;
-        self.personID = record.personId;
-        self.name = record.recordName;
-        self.displayName = record.displayName;
-        self.relationship = record.relationship;
-        self.authStatus = record.authStatus;
-    }
-
-    return self;
-}
-
-- (MHVGetPersonalImageTask *)downloadPersonalImageWithCallback:(MHVTaskCompletion)callback
-{
-    MHVGetPersonalImageTask *task = [[MHVGetPersonalImageTask alloc] initWithRecord:self andCallback:callback];
-
-    if (task)
-    {
-        [task start];
-        
-        return task;
-    }
-
-    return nil;
-}
-
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
@@ -112,29 +79,13 @@ static NSString* const c_element_auth_action = @"app-record-auth-action";
 
 - (instancetype)init
 {
-    return [self initWithRecordArray:nil];
-}
-
-- (instancetype)initWithRecordArray:(NSArray *)records
-{
-    self = [super init];
-
+    self = [super init];    
     if (self)
     {
         _inner = [NSMutableArray new];
         
         self.type = [MHVRecord class];
-        
-        if (records)
-        {
-            for (HealthVaultRecord *record in records)
-            {
-                MHVRecord *hvRecord = [[MHVRecord alloc] initWithRecord:record];
-                [self addObject:hvRecord];
-            }
-        }
     }
-
     return self;
 }
 

@@ -49,15 +49,6 @@
 @property (readonly, nonatomic) NSUInteger pendingCount;
 @property (readonly, nonatomic) NSUInteger resultCount;
 
-//
-// If the query result has pending things, get them and ADD them to the things collection
-//
-- (MHVTask *)getPendingThingsForRecord:(MHVRecordReference *)record withCallback:(MHVTaskCompletion)callback;
-- (MHVTask *)getPendingThingsForRecord:(MHVRecordReference *)record thingView:(MHVThingView *)view withCallback:(MHVTaskCompletion)callback;
-
-- (MHVTask *)createTaskToGetPendingThingsForRecord:(MHVRecordReference *)record withCallback:(MHVTaskCompletion)callback;
-- (MHVTask *)createTaskToGetPendingThingsForRecord:(MHVRecordReference *)record thingView:(MHVThingView *)view withCallback:(MHVTaskCompletion)callback;
-
 @end
 
 @interface MHVThingQueryResultCollection : MHVCollection<MHVThingQueryResult *>
