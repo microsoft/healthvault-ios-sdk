@@ -118,4 +118,46 @@ MHVDECLARE_GETTOR(MHVPersonalImage, personalImage);
 
 MHVDECLARE_GETTOR(MHVFile, file);
 
+MHVDECLARE_GETTOR(MHVAdvanceDirective, advanceDirective);
+
+MHVDECLARE_GETTOR(MHVAerobicProfile, arobicProfile);
+
+MHVDECLARE_GETTOR(MHVAllergicEpisode, allergicEpisode);
+
+MHVDECLARE_GETTOR(MHVAppSpecificInformation, appSpecificInformation);
+
+MHVDECLARE_GETTOR(MHVAppointment, appointment);
+
+MHVDECLARE_GETTOR(MHVConcern, concern);
+
+MHVDECLARE_GETTOR(MHVExplanationOfBenefits, explanationOfBenefits);
+
+MHVDECLARE_GETTOR(MHVHealthGoal, healthGoal);
+
+MHVDECLARE_GETTOR(MHVHealthJournalEntry, healthJournalEntry);
+
+MHVDECLARE_GETTOR(MHVInsight, insight);
+
+MHVDECLARE_GETTOR(MHVMedicalDevice, medicalDevice);
+
+MHVDECLARE_GETTOR(MHVMenstruation, menstruation);
+
+MHVDECLARE_GETTOR(MHVPlan, plan);
+
+MHVDECLARE_GETTOR(MHVPregnancy, pregnancy);
+
+MHVDECLARE_GETTOR(MHVTaskThing, task);
+
+MHVDECLARE_GETTOR(MHVTaskTrackingEntry, taskTrackingEntry);
+
+MHVDECLARE_GETTOR(MHVAsthmaInhaler, asthmaInhaler);
+
+MHVDECLARE_GETTOR(MHVAsthmaInhalerUsage, asthmaInhalerUsage);
+
+MHVDECLARE_GETTOR(MHVBodyComposition, bodyComposition);
+
+MHVDECLARE_GETTOR(MHVBodyDimension, bodyDimension);
+
+MHVDECLARE_GETTOR(MHVMedicalImageStudy, medicalImageStudy);
+
 @end

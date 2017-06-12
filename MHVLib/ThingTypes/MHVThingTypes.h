@@ -52,6 +52,27 @@
 #import "MHVMessage.h"
 #import "MHVLabTestResults.h"
 #import "MHVThingRaw.h"
+#import "MHVAdvanceDirective.h"
+#import "MHVAerobicProfile.h"
+#import "MHVAllergicEpisode.h"
+#import "MHVAppSpecificInformation.h"
+#import "MHVAppointment.h"
+#import "MHVConcern.h"
+#import "MHVExplanationOfBenefits.h"
+#import "MHVHealthGoal.h"
+#import "MHVHealthJournalEntry.h"
+#import "MHVInsight.h"
+#import "MHVMedicalDevice.h"
+#import "MHVMenstruation.h"
+#import "MHVPlan.h"
+#import "MHVPregnancy.h"
+#import "MHVTaskThing.h"
+#import "MHVTaskTrackingEntry.h"
+#import "MHVAsthmaInhaler.h"
+#import "MHVAsthmaInhalerUsage.h"
+#import "MHVBodyComposition.h"
+#import "MHVBodyDimension.h"
+#import "MHVMedicalImageStudy.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
@@ -97,4 +118,25 @@
 
 - (MHVFile *)file;
 
+- (MHVAdvanceDirective *)advanceDirective;
+- (MHVAerobicProfile *)arobicProfile;
+- (MHVAllergicEpisode *)allergicEpisode;
+- (MHVAppSpecificInformation *)appSpecificInformation;
+- (MHVAppointment *)appointment;
+- (MHVConcern *)concern;
+- (MHVExplanationOfBenefits *)explanationOfBenefits;
+- (MHVHealthGoal *)healthGoal;
+- (MHVHealthJournalEntry *)healthJournalEntry;
+- (MHVInsight *)insight;
+- (MHVMedicalDevice *)medicalDevice;
+- (MHVMenstruation *)menstruation;
+- (MHVPlan *)plan;
+- (MHVPregnancy *)pregnancy;
+- (MHVTaskThing *)task;
+- (MHVTaskTrackingEntry *)taskTrackingEntry;
+- (MHVAsthmaInhaler *)asthmaInhaler;
+- (MHVAsthmaInhalerUsage *)asthmaInhalerUsage;
+- (MHVBodyComposition *)bodyComposition;
+- (MHVBodyDimension *)bodyDimension;
+- (MHVMedicalImageStudy *)medicalImageStudy;
 @end
