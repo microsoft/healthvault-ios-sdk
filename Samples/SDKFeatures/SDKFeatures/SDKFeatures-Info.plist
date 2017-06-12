@@ -26,6 +26,8 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Upload selected images to HealthVault</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Upload photos to HealthVault</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

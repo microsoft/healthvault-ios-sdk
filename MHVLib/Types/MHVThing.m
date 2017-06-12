@@ -19,7 +19,6 @@
 #import "MHVCommon.h"
 #import "MHVThing.h"
 #import "MHVClient.h"
-#import "MHVThingBlobUploadTask.h"
 
 static NSString* const c_element_state = @"thing-state";
 
@@ -280,80 +279,6 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
     }
     
     return NO;
-}
-
-// ------------------------
-//
-// Blob - Helper methods
-//
-// ------------------------
-- (MHVTask *)updateBlobDataFromRecord:(MHVRecordReference *)record andCallback:(MHVTaskCompletion)callback
-{
-    if (!record)
-    {
-        MHVASSERT_PARAMETER(record);
-        return nil;
-    }
-    
-    if (self.key)
-    {
-        //
-        // We'll query for the latest blob information for this thing
-        //
-        MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingKey:self.key];
-        MHVCHECK_NOTNULL(query);
-        query.view.sections = MHVThingSection_Blobs;  // Blob data only
-        
-        MHVGetThingsTask *getThingsTask = [[MHVClient current].methodFactory newGetThingsForRecord:record query:query andCallback:^(MHVTask *task)
-                                         {
-                                             MHVThing *blobThing = ((MHVGetThingsTask *)task).firstThingRetrieved;
-                                             self.blobs = blobThing.blobs;
-                                         }];
-        MHVCHECK_NOTNULL(getThingsTask);
-        
-        MHVTask *getBlobTask = [[MHVTask alloc] initWithCallback:callback andChildTask:getThingsTask];
-        MHVCHECK_NOTNULL(getBlobTask);
-        
-        [getBlobTask start];
-        
-        return getBlobTask;
-    }
-    
-    return nil;
-}
-
-- (MHVThingBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data
-                          contentType:(NSString *)contentType
-                               record:(MHVRecordReference *)record
-                          andCallback:(MHVTaskCompletion)callback
-{
-    return [self uploadBlob:data forBlobName:c_emptyString contentType:contentType record:record andCallback:callback];
-}
-
-- (MHVThingBlobUploadTask *)uploadBlob:(id<MHVBlobSourceProtocol>)data
-                          forBlobName:(NSString *)name
-                          contentType:(NSString *)contentType
-                               record:(MHVRecordReference *)record
-                          andCallback:(MHVTaskCompletion)callback
-{
-    MHVThingBlobUploadTask *task = [self newUploadBlobTask:data forBlobName:name contentType:contentType record:record andCallback:callback];
-    
-    [task start];
-    
-    return task;
-}
-
-- (MHVThingBlobUploadTask *)newUploadBlobTask:(id<MHVBlobSourceProtocol>)data
-                                 forBlobName:(NSString *)name
-                                 contentType:(NSString *)contentType
-                                      record:(MHVRecordReference *)record
-                                 andCallback:(MHVTaskCompletion)callback
-{
-    MHVBlobInfo *blobInfo = [[MHVBlobInfo alloc] initWithName:name andContentType:contentType];
-    
-    MHVThingBlobUploadTask *task = [[MHVThingBlobUploadTask alloc] initWithSource:data blobInfo:blobInfo forThing:self record:record andCallback:callback];
-    
-    return task;
 }
 
 - (MHVThing *)shallowClone
