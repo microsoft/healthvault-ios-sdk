@@ -286,9 +286,9 @@ describe(@"MHVSodaConnection", ^
      }];
     
     // Mock the getServiceDefinitionWithWithResponseSections call
-    [(id)platformClient stub:@selector(getServiceDefinitionWithWithResponseSections:completion:) withBlock:^id(NSArray *params)
+    [(id)platformClient stub:@selector(getServiceDefinitionWithWithLastUpdatedTime:responseSections:completion:) withBlock:^id(NSArray *params)
     {
-        void (^serviceDefBlk)(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error) = params[1];
+        void (^serviceDefBlk)(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error) = params[2];
         serviceDefBlk(serviceDefinition, serviceDefinitionError);
         return nil;
     }];

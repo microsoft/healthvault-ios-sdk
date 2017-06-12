@@ -69,7 +69,7 @@ class MedicationTextField: UITextField
         let scanner = Scanner(string: self.text!)
         scanner.locale = Locale.current
         // If not a number
-        if !(scanner.scanDecimal(nil) && scanner.isAtEnd)
+        if !(scanner.scanDouble(nil) && scanner.isAtEnd)
         {
             // If not empty
             if !(self.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty)

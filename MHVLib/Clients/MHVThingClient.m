@@ -28,6 +28,7 @@
 #import "MHVConnectionProtocol.h"
 #import "MHVPersonalImage.h"
 #import "MHVBlobUploadRequest.h"
+#import "Logger.h"
 
 @interface MHVThingClient ()
 
@@ -663,6 +664,70 @@
                   }
               }
           }];
+     }];
+}
+
+- (void)setPersonalImage:(NSData *)imageData
+             contentType:(NSString *)contentType
+                recordId:(NSUUID *)recordId
+              completion:(void (^_Nullable)(NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(imageData);
+    MHVASSERT_PARAMETER(contentType);
+    MHVASSERT_PARAMETER(recordId);
+    
+    if (!imageData || !contentType || !recordId)
+    {
+        if (completion)
+        {
+            completion([NSError MVHRequiredParameterIsNil]);
+        }
+        return;
+    }
+    
+    if (![contentType isEqualToString:@"image/jpg"] &&
+        ![contentType isEqualToString:@"image/jpeg"] &&
+        ![contentType isEqualToString:@"image/png"] &&
+        ![contentType isEqualToString:@"image/gif"])
+    {
+        if (completion)
+        {
+            completion([NSError error:[NSError MVHInvalidParameter]
+                      withDescription:@"Personal image must be a standard image content-type"]);
+        }
+        return;
+    }
+
+    // Get the personalImage thing, including the blob section
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
+    query.view.sections = MHVThingSection_Blobs;
+    
+    [self getThingsWithQuery:query
+                    recordId:recordId
+                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+     {
+         // Get the first thing in the result collection; can be nil if no personal image has been set
+         MHVThing *thing = [things firstObject];
+         if (!thing)
+         {
+             MHVLOG(@"No current personal image");
+             thing = [MHVPersonalImage newThing];
+         }
+         
+         MHVBlobMemorySource *memorySource = [[MHVBlobMemorySource alloc] initWithData:imageData];
+         
+         [self addBlobSource:memorySource
+                     toThing:thing
+                        name:@""
+                 contentType:contentType
+                    recordId:recordId
+                  completion:^(MHVThing * _Nullable thing, NSError * _Nullable error)
+         {
+             if (completion)
+             {
+                 completion(error);
+             }
+         }];
      }];
 }
 

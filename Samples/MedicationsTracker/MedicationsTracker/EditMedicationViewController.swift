@@ -126,7 +126,9 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
         // Set values if it has a measurement or just show display text
         if let theMeasure = approxMeasure.measurement
         {
-            amountField.text = String(theMeasure.value)
+            let amount = NumberFormatter.localizedString(from: NSNumber(value: theMeasure.value),
+                                                      number: NumberFormatter.Style.decimal)
+            amountField.text = amount
             unitField.text = theMeasure.units.text
         }
         else

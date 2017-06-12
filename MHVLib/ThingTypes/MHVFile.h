@@ -19,7 +19,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVTypes.h"
-#import "MHVThingBlobUploadTask.h"
 
 @interface MHVFile : MHVThingDataTyped
 

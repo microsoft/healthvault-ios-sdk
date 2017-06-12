@@ -31,6 +31,7 @@
 @interface MHVFileFeatures ()
 
 @property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
+@property (nonatomic, assign) BOOL isPickingPersonalImage;
 
 @end
 
@@ -55,6 +56,10 @@
         {
             [weakSelf downloadFile];
         }];
+        [self addFeature:@"Update personal image" andAction:^
+         {
+             [weakSelf pickImageFoPersonalImage];
+         }];
         
         _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     }
@@ -80,33 +85,10 @@
 
     [self.controller showActivityAndStatus:@"Getting updated File info"];
 
-#if SHOULD_USE_LEGACY
-    [self updateBlobsForThingLegacy:fileThing action:action];
-#else
-    [self updateBlobsForThingNew:fileThing action:action];
-#endif
+    [self updateBlobsForThing:fileThing action:action];
 }
 
-- (void)updateBlobsForThingLegacy:(MHVThing *)thing action:(void(^)(MHVBlobPayloadThing *value))action
-{
-    [thing updateBlobDataFromRecord:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
-     {
-         @try
-         {
-             [task checkSuccess];
-             
-             MHVBlobPayloadThing *fileBlob = [thing.blobs getDefaultBlob];
-             action(fileBlob);
-         }
-         @catch (NSException *exception)
-         {
-             [MHVUIAlert showInformationalMessage:[exception descriptionForLog]];
-             [self.controller clearStatus];
-         }
-     }];
-}
-
-- (void)updateBlobsForThingNew:(MHVThing *)thing action:(void(^)(MHVBlobPayloadThing *value))action
+- (void)updateBlobsForThing:(MHVThing *)thing action:(void(^)(MHVBlobPayloadThing *value))action
 {
     [self.connection.thingClient refreshBlobUrlsForThing:thing
                                                 recordId:self.connection.personInfo.selectedRecordID
@@ -166,23 +148,11 @@
     {
         NSLog(@"Download to path: %@", filePath);
 
-#if SHOULD_USE_LEGACY
-        [self downloadBlobPayloadLegacy:fileBlob toFilePath:filePath];
-#else
-        [self downloadBlobPayloadNew:fileBlob toFilePath:filePath];
-#endif
+        [self downloadBlobPayload:fileBlob toFilePath:filePath];
     }];
 }
 
-- (void)downloadBlobPayloadLegacy:(MHVBlobPayloadThing *)fileBlob toFilePath:(NSString *)filePath
-{
-    [fileBlob downloadBlobToFilePath:filePath completion:^(NSError *error)
-     {
-         [self downloadCompleteWithError:error filePath:filePath];
-     }];
-}
-
-- (void)downloadBlobPayloadNew:(MHVBlobPayloadThing *)fileBlob toFilePath:(NSString *)filePath
+- (void)downloadBlobPayload:(MHVBlobPayloadThing *)fileBlob toFilePath:(NSString *)filePath
 {
     [self.connection.thingClient downloadBlob:fileBlob
                                    toFilePath:filePath
@@ -242,24 +212,6 @@
     // This will first commit the blob and if that is successful, also PUT the associated file thing
     //
     
-#if SHOULD_USE_LEGACY
-    [fileThing uploadBlob:blobSource contentType:mediaType record:[MHVClient current].currentRecord andCallback:^(MHVTask *task)
-    {
-        @try
-        {
-            [task checkSuccess];
-
-            [MHVUIAlert showInformationalMessage:@"File uploaded!"];
-
-            [self.controller getThingsFromHealthVault]; // Refresh
-        }
-        @catch (id exception)
-        {
-            [MHVUIAlert showInformationalMessage:[exception descriptionForLog]];
-        }
-        [self.controller clearStatus];
-    }];
-#else
     //NOTE: Uses nil for name so this blob is the DefaultBlob for the MHVFile which does have the name
     [self.connection.thingClient addBlobSource:blobSource
                                        toThing:fileThing
@@ -282,15 +234,51 @@
              }
          }];
      }];
-#endif
+}
+
+- (void)updatePersonalImage:(NSData *)data contentType:(NSString *)contentType
+{
+    [self.controller showActivityAndStatus:@"Uploading image. Please wait..."];
+
+    [self.connection.thingClient setPersonalImage:data
+                                      contentType:contentType
+                                         recordId:self.connection.personInfo.selectedRecordID
+                                       completion:^(NSError * _Nullable error)
+    {
+        if (error)
+        {
+            [MHVUIAlert showInformationalMessage:error.localizedDescription];
+        }
+        else
+        {
+            [MHVUIAlert showInformationalMessage:@"Personal image updated!"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPersonalImageUpdateNotification
+                                                                object:self.connection.personInfo.selectedRecordID];
+        }
+    }];
 }
 
 - (void)pickImageForUpload
 {
+    self.isPickingPersonalImage = NO;
+
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = (UIImagePickerControllerSourceTypePhotoLibrary | UIImagePickerControllerSourceTypeSavedPhotosAlbum);
     picker.delegate = self;
 
+    [self.controller presentViewController:picker animated:TRUE completion:nil];
+}
+
+- (void)pickImageFoPersonalImage
+{
+    self.isPickingPersonalImage = YES;
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    picker.delegate = self;
+    
     [self.controller presentViewController:picker animated:TRUE completion:nil];
 }
 
@@ -300,6 +288,18 @@
     // Save selected image data
     //
     UIImage *image = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    if (self.isPickingPersonalImage)
+    {
+        // Size image to be 200 pixels wide & preserve aspect ratio
+        CGSize newSize = CGSizeMake(200, (image.size.height / image.size.width) * 200);
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, NO, 1.0);
+        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    
     NSData *fileData = UIImageJPEGRepresentation(image, 0.8);
     NSString *fileMediaType = @"image/jpeg";
 
@@ -308,9 +308,16 @@
     //
     [picker dismissViewControllerAnimated:TRUE completion:^
     {
-        NSString *fileName = [NSString stringWithFormat:@"Picture_%@.jpg", [[NSDate date] toStringWithFormat:@"yyyyMMdd_HHmmss"]];
-
-        [self uploadFileWithName:fileName data:fileData andMediaType:fileMediaType];
+        if (self.isPickingPersonalImage)
+        {
+            [self updatePersonalImage:fileData contentType:fileMediaType];
+        }
+        else
+        {
+            NSString *fileName = [NSString stringWithFormat:@"Picture_%@.jpg", [[NSDate date] toStringWithFormat:@"yyyyMMdd_HHmmss"]];
+            
+            [self uploadFileWithName:fileName data:fileData andMediaType:fileMediaType];
+        }
     }];
 }
 
