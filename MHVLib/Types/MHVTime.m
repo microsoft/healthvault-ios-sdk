@@ -315,9 +315,6 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
     MHVCHECK_NOTNULL(xml);
 
     return [NSObject newFromString:xml withRoot:@"clone" asClass:[self class]];
-
-LError:
-    return nil;
 }
 
 + (NSDictionary *)propertyNameMap

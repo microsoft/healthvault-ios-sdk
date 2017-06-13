@@ -37,6 +37,8 @@
 #import "MHVErrorConstants.h"
 #import "NSError+MHVError.h"
 #import "MHVServiceResponse.h"
+#import "MHVServiceInstance.h"
+#import "MHVHttpServiceResponse.h"
 #import "Kiwi.h"
 
 static NSString *const kDefaultSharedSecret = @"TESTSHAREDSECRET";
@@ -438,7 +440,8 @@ describe(@"MHVConnectionTests", ^
                 __block MHVServiceResponse *resultResponse;
                 
                 beforeEach(^{
-                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nil sharedSecret:kDefaultSharedSecret];
+                    NSString *nilToken = nil;
+                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nilToken sharedSecret:kDefaultSharedSecret];
                     
                     MHVMethod *method = [MHVMethod getThings];
                     method.parameters = @"GETTHINGSBODY";
@@ -467,7 +470,8 @@ describe(@"MHVConnectionTests", ^
                 __block MHVServiceResponse *resultResponse;
                 
                 beforeEach(^{
-                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nil sharedSecret:kDefaultSharedSecret];
+                    NSString *nilToken = nil;
+                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nilToken sharedSecret:kDefaultSharedSecret];
                     
                     MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
                                                                             httpMethod:@"METHOD"
@@ -501,7 +505,8 @@ describe(@"MHVConnectionTests", ^
                 __block MHVServiceResponse *resultResponse;
                 
                 beforeEach(^{
-                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nil sharedSecret:kDefaultSharedSecret];
+                    NSString *nilToken = nil;
+                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nilToken sharedSecret:kDefaultSharedSecret];
                     
                     NSString *xmlResponse = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetServiceDefinition2\">INFOXML</wc:info></response>";
                     
@@ -537,7 +542,8 @@ describe(@"MHVConnectionTests", ^
                 __block MHVServiceResponse *resultResponse;
                 
                 beforeEach(^{
-                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nil sharedSecret:kDefaultSharedSecret];
+                    NSString *nilToken = nil;
+                    testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nilToken sharedSecret:kDefaultSharedSecret];
                     
                     requestCompletionResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"ABCDEFG" dataUsingEncoding:NSUTF8StringEncoding]
                                                                                           statusCode:0];

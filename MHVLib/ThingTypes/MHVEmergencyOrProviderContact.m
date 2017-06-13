@@ -57,8 +57,6 @@ static NSString *const c_typename = @"person";
 - (void)deserialize:(XReader *)reader
 {
     MHVPerson *person = [[MHVPerson alloc] init];
-
-    MHVCHECK_OOM(person);
     self.person = person;
 
     [person deserialize:reader];

@@ -1,15 +1,15 @@
 //
-//  XSerializableType.m
-//  MHVLib
+// XSerializableType.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,38 +21,29 @@
 
 @implementation XSerializableType
 
--(void) serializeAttributes:(XWriter *)writer
-{
-    
-}
-
--(void) serialize:(XWriter *)writer
+- (void)serializeAttributes:(XWriter *)writer
 {
 }
 
--(void) deserializeAttributes:(XReader *)reader
-{
-    
-}
-
--(void) deserialize:(XReader *)reader
+- (void)serialize:(XWriter *)writer
 {
 }
 
--(id)deepCopy
+- (void)deserializeAttributes:(XReader *)reader
 {
-    return [self newDeepClone];
 }
 
--(id) newDeepClone
+- (void)deserialize:(XReader *)reader
 {
-    NSString* xml = [self toXmlStringWithRoot:@"clone"];
+}
+
+- (id)newDeepCopy
+{
+    NSString *xml = [self toXmlStringWithRoot:@"clone"];
+
     MHVCHECK_NOTNULL(xml);
-    
+
     return [NSObject newFromString:xml withRoot:@"clone" asClass:[self class]];
-    
-LError:
-    return nil;
 }
 
 @end

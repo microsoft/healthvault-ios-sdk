@@ -51,9 +51,6 @@ static const xmlChar *x_element_orderedBy = XMLSTRINGCONST("ordered-by");
     }
 
     return allGroups;
-
-   LError:
-    return nil;
 }
 
 - (MHVClientResult *)validate

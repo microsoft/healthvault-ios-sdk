@@ -88,7 +88,10 @@ static NSString *const c_element_common = @"common";
             self.typed = [self deserializeRaw:reader];
         }
         
-        MHVCHECK_OOM(self.typed);
+        if (!self.typed)
+        {
+            return;
+        }
     }
     
     if ([reader isStartElementWithName:c_element_common])

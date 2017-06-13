@@ -946,9 +946,6 @@ NSString *pickRandomDrug(void)
     diet.cholesterol = [MHVWeightMeasurement fromMillgrams:[MHVRandom randomIntInRangeMin:1 max:50]];
     
     return thing;
-    
-LError:
-    return nil;
 }
 
 @end

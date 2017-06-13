@@ -29,6 +29,7 @@
 #import "MHVBlobUploadRequest.h"
 #import "MHVErrorConstants.h"
 #import "MHVServiceResponse.h"
+#import "MHVHttpServiceResponse.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVThingClientBlobTests)
@@ -168,7 +169,8 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if thing is nil", ^
                    {
-                       [thingClient refreshBlobUrlsForThing:nil
+                       MHVThing *nilThing = nil;
+                       [thingClient refreshBlobUrlsForThing:nilThing
                                                    recordId:recordId
                                                  completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
@@ -182,8 +184,9 @@ describe(@"MHVThingClient", ^
                 
                 it(@"should fail if record id is nil", ^
                    {
+                       NSUUID *nilRecordId = nil;
                        [thingClient refreshBlobUrlsForThing:allergyThing
-                                                   recordId:nil
+                                                   recordId:nilRecordId
                                                  completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
                             resultError = error;
@@ -246,7 +249,8 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if thing collection is nil", ^
                    {
-                       [thingClient refreshBlobUrlsForThings:nil
+                       MHVThingCollection *nilThings = nil;
+                       [thingClient refreshBlobUrlsForThings:nilThings
                                                     recordId:recordId
                                                   completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
                         {
@@ -260,8 +264,9 @@ describe(@"MHVThingClient", ^
                 
                 it(@"should fail if record id is nil", ^
                    {
+                       NSUUID *nilRecordId = nil;
                        [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThing:allergyThing]
-                                                    recordId:nil
+                                                    recordId:nilRecordId
                                                   completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
                         {
                             resultError = error;
@@ -336,7 +341,8 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if blob payload is nil", ^
                    {
-                       [thingClient downloadBlobData:nil
+                       MHVBlobPayloadThing *nilBlob = nil;
+                       [thingClient downloadBlobData:nilBlob
                                           completion:^(NSData *_Nullable data, NSError *_Nullable error)
                         {
                             resultError = error;
@@ -467,7 +473,8 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if blobSource is nil", ^
                    {
-                       [thingClient addBlobSource:nil
+                       id<MHVBlobSourceProtocol> nilBlobSource = nil;
+                       [thingClient addBlobSource:nilBlobSource
                                           toThing:fileThing
                                              name:nil
                                       contentType:@"text/text"
@@ -486,8 +493,9 @@ describe(@"MHVThingClient", ^
                        NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                        MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
                        
+                       MHVThing *nilThing = nil;
                        [thingClient addBlobSource:blobSource
-                                          toThing:nil
+                                          toThing:nilThing
                                              name:nil
                                       contentType:@"text/text"
                                          recordId:recordId
@@ -505,10 +513,11 @@ describe(@"MHVThingClient", ^
                        NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                        MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
                        
+                       NSString *nilContentType = nil;
                        [thingClient addBlobSource:blobSource
                                           toThing:fileThing
                                              name:nil
-                                      contentType:nil
+                                      contentType:nilContentType
                                          recordId:recordId
                                        completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
@@ -524,11 +533,12 @@ describe(@"MHVThingClient", ^
                        NSData *data = [@"123456" dataUsingEncoding:NSUTF8StringEncoding];
                        MHVBlobMemorySource *blobSource = [[MHVBlobMemorySource alloc] initWithData:data];
                        
+                       NSUUID *nilRecordId = nil;
                        [thingClient addBlobSource:blobSource
                                           toThing:fileThing
                                              name:nil
                                       contentType:@"text/text"
-                                         recordId:nil
+                                         recordId:nilRecordId
                                        completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
                             resultError = error;
