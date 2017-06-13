@@ -108,10 +108,10 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlan The instance of the plan to create. 
 ///
-///  @returns MHVActionPlansResponseActionPlanInstanceV2_*
+///  @returns MHVActionPlanInstanceV2*
 ///
 - (void)actionPlansCreateWithActionPlan:(MHVActionPlanV2* _Nonnull)actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstanceV2_* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlan' is set
     if (actionPlan == nil)
@@ -140,7 +140,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
+                     resultClass:[MHVActionPlanInstanceV2 class]
                       completion:completion];
 }
 

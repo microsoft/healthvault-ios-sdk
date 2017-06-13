@@ -81,7 +81,7 @@
     frequencyTask.associatedPlanId = self.plan.identifier;
     frequencyTask.associatedObjectiveIds = @[[self.plan.objectives.firstObject identifier]];
     
-    [self.connection.remoteMonitoringClient actionPlanTasksCreateWithActionPlanTask:frequencyTask completion:^(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksCreateWithActionPlanTask:frequencyTask completion:^(MHVActionPlanTaskInstanceV2* _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
