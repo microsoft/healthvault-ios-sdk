@@ -1,15 +1,15 @@
 //
-//  XmlReader.m
-//  MHVLib
+// XmlReader.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,433 +25,386 @@
 #define READER_FAIL -1
 
 
-xmlTextReader* XAllocBufferReader(NSData *buffer)
+xmlTextReader *XAllocBufferReader(NSData *buffer)
 {
     if (!buffer)
     {
         return nil;
     }
+
     return xmlReaderForMemory([buffer bytes], (int)[buffer length], nil, nil, 0);
 }
 
-xmlTextReader* XAllocStringReader(NSString *string)
+xmlTextReader *XAllocStringReader(NSString *string)
 {
     if (!string)
     {
         return nil;
     }
-    
+
     return xmlReaderForDoc([string toXmlStringConst], nil, nil, 0);
 }
 
-xmlTextReader* XAllocFileReader(NSString *fileName)
+xmlTextReader *XAllocFileReader(NSString *fileName)
 {
     if ([NSString isNilOrEmpty:fileName])
     {
         return nil;
     }
-    
+
     return xmlNewTextReaderFilename([fileName UTF8String]); // further error checking delegated
 }
 
-//
-// PRIVATE METHOD DECLARATIONS
-//
-@interface XReader (XPrivate)
+@interface XReader ()
 
--(id) initWithCreatedReader:(xmlTextReader *) reader;
--(id) initWithCreatedReader:(xmlTextReader *) reader withConverter:(XConverter *) converter;
--(void) ensureStartElement;
--(void) moveToContentType:(enum XNodeType) type;
--(void) verifyNodeType:(enum XNodeType) type;
--(void) logInvalidNode:(enum XNodeType) type expectedType:(enum XNodeType) expected;
--(void) close;
-
--(BOOL) isSuccess:(int) result;
+@property (nonatomic, assign) XNodeType nodeType;
+@property (nonatomic, strong) NSString *localName;
+@property (nonatomic, strong) NSString *namespaceUri;
+@property (nonatomic, strong) NSString *value;
 
 @end
 
-//------------
+// ------------
 //
 // XReader
 //
-//------------
+// ------------
 
 @implementation XReader
-
-@synthesize context = m_context;
 
 //
 // PROPERTIES
 //
 
--(xmlTextReader *) reader
+- (int)depth
 {
-    return m_reader;
+    return xmlTextReaderDepth(self.reader);
 }
 
--(XConverter *) converter
+- (XNodeType)nodeType
 {
-    return m_converter;
-}
-
--(int) depth
-{
-    return xmlTextReaderDepth(m_reader);
-}
-
--(enum XNodeType)nodeType 
-{
-    if (m_nodeType == XUnknown)
+    if (_nodeType == XUnknown)
     {
-        int type = xmlTextReaderNodeType(m_reader);
+        int type = xmlTextReaderNodeType(self.reader);
         if (type < 0)
         {
-            [NSException throwException:NSInternalInconsistencyException];
+            MHVLOG(@"Could not find node type.");
         }
-        
-        m_nodeType = (enum XNodeType) type;
+
+        _nodeType = (XNodeType)type;
     }
-    
-    return m_nodeType;
+
+    return _nodeType;
 }
 
--(NSString*) nodeTypeString
+- (NSString *)nodeTypeString
 {
-    return XNodeTypeToString(self.nodeType);    
+    return XNodeTypeToString(self.nodeType);
 }
 
--(BOOL) isEmptyElement
+- (BOOL)isEmptyElement
 {
-    return xmlTextReaderIsEmptyElement(m_reader);
+    return xmlTextReaderIsEmptyElement(self.reader);
 }
 
--(BOOL) hasEndTag
+- (BOOL)hasEndTag
 {
-    return (![self isEmptyElement]);
+    return ![self isEmptyElement];
 }
 
--(BOOL) isTextualNode
+- (BOOL)isTextualNode
 {
     return XIsTextualNodeType(self.nodeType);
 }
 
--(const xmlChar*) name
+- (const xmlChar *)name
 {
-    return xmlTextReaderConstName(m_reader);
+    return xmlTextReaderConstName(self.reader);
 }
 
--(NSString*) localName
+- (NSString *)localName
 {
-    if (m_localName == nil)
+    if (_localName == nil)
     {
-        m_localName = [NSString fromConstXmlString: xmlTextReaderConstLocalName(m_reader)];
+        _localName = [NSString fromConstXmlString:xmlTextReaderConstLocalName(self.reader)];
     }
-    
-    return m_localName;
+
+    return _localName;
 }
 
--(const xmlChar*) localNameRaw
+- (const xmlChar *)localNameRaw
 {
-    return xmlTextReaderConstLocalName(m_reader);
+    return xmlTextReaderConstLocalName(self.reader);
 }
 
--(const xmlChar*) prefix
+- (const xmlChar *)prefix
 {
-    return xmlTextReaderConstPrefix(m_reader);
+    return xmlTextReaderConstPrefix(self.reader);
 }
 
--(NSString *) namespaceUri
+- (NSString *)namespaceUri
 {
-    if (m_ns == nil)
+    if (_namespaceUri == nil)
     {
-        m_ns = [NSString fromConstXmlString: xmlTextReaderConstNamespaceUri(m_reader)];
+        _namespaceUri = [NSString fromConstXmlString:xmlTextReaderConstNamespaceUri(self.reader)];
     }
-    
-    return m_ns;
+
+    return _namespaceUri;
 }
 
--(const xmlChar *) namespaceUriRaw
+- (const xmlChar *)namespaceUriRaw
 {
-    return xmlTextReaderConstNamespaceUri(m_reader);
+    return xmlTextReaderConstNamespaceUri(self.reader);
 }
 
--(BOOL) hasValue
+- (BOOL)hasValue
 {
-    return [self isSuccess:xmlTextReaderHasValue(m_reader)];
+    return [self isSuccess:xmlTextReaderHasValue(self.reader)];
 }
 
--(NSString *) value
+- (NSString *)value
 {
-    if (m_value == nil)
+    if (_value == nil)
     {
-        m_value = [NSString fromConstXmlString:xmlTextReaderConstValue(m_reader)];
+        _value = [NSString fromConstXmlString:xmlTextReaderConstValue(self.reader)];
     }
-    
-    return m_value;
+
+    return _value;
 }
 
--(const xmlChar *) valueRaw
+- (const xmlChar *)valueRaw
 {
-    return xmlTextReaderConstValue(m_reader);
+    return xmlTextReaderConstValue(self.reader);
 }
 
--(BOOL) hasAttributes
+- (BOOL)hasAttributes
 {
-    return xmlTextReaderHasAttributes(m_reader);
+    return xmlTextReaderHasAttributes(self.reader);
 }
 
--(int) attributeCount
+- (int)attributeCount
 {
-    return xmlTextReaderAttributeCount(m_reader);
+    return xmlTextReaderAttributeCount(self.reader);
 }
 
--(id) initWithReader:(xmlTextReader *)reader
+- (instancetype)initWithReader:(xmlTextReader *)reader
 {
     return [self initWithReader:reader andConverter:nil];
 }
 
--(id)initWithReader:(xmlTextReader *)reader andConverter:(XConverter *)converter
+- (instancetype)initWithReader:(xmlTextReader *)reader andConverter:(XConverter *)converter
 {
     MHVCHECK_NOTNULL(reader);
-    
+
     self = [super init];
-    MHVCHECK_SELF;
-    
-    if (converter)
+    if (self)
     {
-        m_converter = converter;
+        if (converter)
+        {
+            _converter = converter;
+        }
+        else
+        {
+            _converter = [[XConverter alloc] init];
+            MHVCHECK_NOTNULL(_converter);
+        }
+        
+        _reader = reader;
     }
-    else
-    {
-        m_converter = [[XConverter alloc] init];
-        MHVCHECK_NOTNULL(m_converter);        
-    }
-    
-    m_reader = reader;  // C pointer. Weak ref
-    
     return self;
-    
-LError:
-    MHVALLOC_FAIL;
-    
 }
 
--(id) initFromMemory:(NSData *)buffer
+- (instancetype)initFromMemory:(NSData *)buffer
 {
     return [self initFromMemory:buffer withConverter:nil];
 }
 
--(id)initFromMemory:(NSData *)buffer withConverter:(XConverter *)converter
+- (instancetype)initFromMemory:(NSData *)buffer withConverter:(XConverter *)converter
 {
     return [self initWithCreatedReader:XAllocBufferReader(buffer) withConverter:converter];
 }
 
--(id) initFromString:(NSString *)string
+- (instancetype)initFromString:(NSString *)string
 {
     return [self initFromString:string withConverter:nil];
 }
 
--(id)initFromString:(NSString *)string withConverter:(XConverter *)converter
+- (instancetype)initFromString:(NSString *)string withConverter:(XConverter *)converter
 {
     return [self initWithCreatedReader:XAllocStringReader(string) withConverter:converter];
 }
 
--(id) initFromFile:(NSString *)fileName
+- (instancetype)initFromFile:(NSString *)fileName
 {
     return [self initFromFile:fileName withConverter:nil];
 }
 
--(id)initFromFile:(NSString *)fileName withConverter:(XConverter *)converter
+- (instancetype)initFromFile:(NSString *)fileName withConverter:(XConverter *)converter
 {
     return [self initWithCreatedReader:XAllocFileReader(fileName) withConverter:converter];
 }
 
--(id) init
+- (instancetype)init
 {
     // This will force an error, since you shouldn't call init directly
     return [self initWithReader:nil];
 }
 
--(void) dealloc
+- (void)dealloc
 {
     [self close];
-    
 }
 
--(void) clear
+- (void)clear
 {
-    m_nodeType = XUnknown;
-    //
-    // Ownership of these variables is with the outer autorelease pool
-    // We only hold on to them for caching. NOT RETAINED
-    //
-    m_localName = nil;
-    m_ns = nil;
-    m_value = nil;
+    _nodeType = XUnknown;
+    _localName = nil;
+    _namespaceUri = nil;
+    _value = nil;
 }
 
--(NSString *) getAttribute:(NSString *)name
+- (NSString *)getAttribute:(NSString *)name
 {
     MHVCHECK_STRING(name);
-     
-    xmlChar *xmlName = [name toXmlString]; // The string is auto-released. Delegate null checking to reader
-    MHVCHECK_NOTNULL(xmlName);
-    
-    return [NSString fromXmlStringAndFreeXml: xmlTextReaderGetAttribute(m_reader, xmlName)];
 
-LError:
-    return nil;
-}
-
--(NSString *) getAttributeAt:(int)index
-{
-    return [NSString fromXmlStringAndFreeXml: xmlTextReaderGetAttributeNo(m_reader, index)];
-}
-
--(NSString *) getAttribute:(NSString *)name NS:(NSString *)ns
-{
-    MHVCHECK_STRING(name);
-    MHVCHECK_STRING(ns);
-    
-    // These strings are auto released. 
-    xmlChar *xmlName = [name toXmlString]; 
-    xmlChar *xmlNs = [ns toXmlString];  
-    
-    MHVCHECK_NOTNULL(xmlName);
-    MHVCHECK_NOTNULL(xmlNs);
-    
-    return [NSString fromXmlStringAndFreeXml: xmlTextReaderGetAttributeNs(m_reader, xmlName, xmlNs)];
-
-LError:
-    return nil;
-}
-
--(BOOL) moveToAttributeAt:(int)index
-{
-    [self clear];
-    return [self isSuccess:xmlTextReaderMoveToAttributeNo(m_reader, index)];
-}
-
--(BOOL) moveToAttribute:(NSString *)name
-{
-    MHVCHECK_STRING(name);
-    
-    [self clear];
-    
     xmlChar *xmlName = [name toXmlString];
     MHVCHECK_NOTNULL(xmlName);
-    
-    return [self isSuccess:xmlTextReaderMoveToAttribute(m_reader, xmlName)];
 
-LError:
-    return FALSE;
+    return [NSString fromXmlStringAndFreeXml:xmlTextReaderGetAttribute(self.reader, xmlName)];
 }
 
--(BOOL)moveToAttributeWithXmlName:(const xmlChar *)xmlName
+- (NSString *)getAttributeAt:(int)index
 {
-    [self clear];
-    return [self isSuccess:xmlTextReaderMoveToAttribute(m_reader, xmlName)];
+    return [NSString fromXmlStringAndFreeXml:xmlTextReaderGetAttributeNo(self.reader, index)];
 }
 
--(BOOL) moveToAttribute:(NSString *)name NS:(NSString *)ns
+- (NSString *)getAttribute:(NSString *)name NS:(NSString *)ns
 {
     MHVCHECK_STRING(name);
     MHVCHECK_STRING(ns);
-    
-    [self clear];
-    
-    // These strings are auto released. 
-    xmlChar *xmlName = [name toXmlString]; 
-    xmlChar *xmlNs = [ns toXmlString];  
+
+    xmlChar *xmlName = [name toXmlString];
+    xmlChar *xmlNs = [ns toXmlString];
 
     MHVCHECK_NOTNULL(xmlName);
     MHVCHECK_NOTNULL(xmlNs);
 
-    return [self isSuccess:xmlTextReaderMoveToAttributeNs(m_reader, xmlName, xmlNs)];
-
-LError:
-    return FALSE;
+    return [NSString fromXmlStringAndFreeXml:xmlTextReaderGetAttributeNs(self.reader, xmlName, xmlNs)];
 }
 
--(BOOL)moveToAttributeWithXmlName:(const xmlChar *)xmlName andXmlNs:(const xmlChar *)xmlNs
+- (BOOL)moveToAttributeAt:(int)index
 {
     [self clear];
-    return [self isSuccess:xmlTextReaderMoveToAttributeNs(m_reader, xmlName, xmlNs)];
+    return [self isSuccess:xmlTextReaderMoveToAttributeNo(self.reader, index)];
 }
 
--(BOOL) moveToFirstAttribute
-{
-    [self clear];
-    return [self isSuccess:xmlTextReaderMoveToFirstAttribute(m_reader)]; 
-}
-
--(BOOL) moveToNextAttribute
-{
-    [self clear];
-    return [self isSuccess:xmlTextReaderMoveToNextAttribute(m_reader)];
-}
-
--(BOOL) isStartElement
-{
-    return ([self moveToContent] == XElement);
-}
-
--(BOOL) isStartElementWithName:(NSString *)name
+- (BOOL)moveToAttribute:(NSString *)name
 {
     MHVCHECK_STRING(name);
-     
-    return ([self isStartElement] && [name isEqualToString:self.localName]);
+
+    [self clear];
+
+    xmlChar *xmlName = [name toXmlString];
+    MHVCHECK_NOTNULL(xmlName);
+
+    return [self isSuccess:xmlTextReaderMoveToAttribute(self.reader, xmlName)];
 }
 
--(BOOL) isStartElementWithName:(NSString *)name NS:(NSString *) ns
+- (BOOL)moveToAttributeWithXmlName:(const xmlChar *)xmlName
+{
+    [self clear];
+    return [self isSuccess:xmlTextReaderMoveToAttribute(self.reader, xmlName)];
+}
+
+- (BOOL)moveToAttribute:(NSString *)name NS:(NSString *)ns
 {
     MHVCHECK_STRING(name);
     MHVCHECK_STRING(ns);
-    
+
+    [self clear];
+
+    xmlChar *xmlName = [name toXmlString];
+    xmlChar *xmlNs = [ns toXmlString];
+
+    MHVCHECK_NOTNULL(xmlName);
+    MHVCHECK_NOTNULL(xmlNs);
+
+    return [self isSuccess:xmlTextReaderMoveToAttributeNs(self.reader, xmlName, xmlNs)];
+}
+
+- (BOOL)moveToAttributeWithXmlName:(const xmlChar *)xmlName andXmlNs:(const xmlChar *)xmlNs
+{
+    [self clear];
+    return [self isSuccess:xmlTextReaderMoveToAttributeNs(self.reader, xmlName, xmlNs)];
+}
+
+- (BOOL)moveToFirstAttribute
+{
+    [self clear];
+    return [self isSuccess:xmlTextReaderMoveToFirstAttribute(self.reader)];
+}
+
+- (BOOL)moveToNextAttribute
+{
+    [self clear];
+    return [self isSuccess:xmlTextReaderMoveToNextAttribute(self.reader)];
+}
+
+- (BOOL)isStartElement
+{
+    return [self moveToContent] == XElement;
+}
+
+- (BOOL)isStartElementWithName:(NSString *)name
+{
+    MHVCHECK_STRING(name);
+
+    return [self isStartElement] && [name isEqualToString:self.localName];
+}
+
+- (BOOL)isStartElementWithName:(NSString *)name NS:(NSString *)ns
+{
+    MHVCHECK_STRING(name);
+    MHVCHECK_STRING(ns);
+
     if (![self isStartElement])
     {
         return FALSE;
     }
-    
+
     if (!self.localName || !self.namespaceUri)
     {
         return FALSE;
     }
-    
-    return (([name isEqualToString:self.localName]) && [ns isEqualToString:self.namespaceUri]);
 
-LError:
-    return FALSE;
+    return ([name isEqualToString:self.localName]) && [ns isEqualToString:self.namespaceUri];
 }
 
--(BOOL)isStartElementWithXmlName:(const xmlChar *)name
+- (BOOL)isStartElementWithXmlName:(const xmlChar *)name
 {
     MHVCHECK_NOTNULL(name);
-    
+
     if (![self isStartElement])
     {
         return FALSE;
     }
 
-    const xmlChar* rawName = self.localNameRaw;
-    
-    return (rawName && xmlStrEqual(rawName, name));
+    const xmlChar *rawName = self.localNameRaw;
 
-LError:
-    return FALSE;
+    return rawName && xmlStrEqual(rawName, name);
 }
 
--(enum XNodeType) moveToContent
+- (XNodeType)moveToContent
 {
-    enum XNodeType type;
-    
+    XNodeType type;
+
     BOOL loop = YES;
+
     while (loop)
     {
         loop = NO;
         type = self.nodeType;
-        switch(type)
+        switch (type)
         {
             case XElement:
             case XText:
@@ -461,69 +414,70 @@ LError:
             case XEndElement:
             case XEndEntity:
                 break;
-                
+
             case XAttribute:
                 [self moveToElement];
                 break;
-                
+
             default:
                 if ([self read])
                 {
                     loop = YES;
                 }
+
                 break;
         }
     }
-    
+
     return type;
 }
 
--(BOOL) moveToElement
+- (BOOL)moveToElement
 {
     [self clear];
-    return [self isSuccess:xmlTextReaderMoveToElement(m_reader)];
+    return [self isSuccess:xmlTextReaderMoveToElement(self.reader)];
 }
 
--(BOOL) moveToStartElement
+- (BOOL)moveToStartElement
 {
-    return ([self moveToContent] == XElement);
+    return [self moveToContent] == XElement;
 }
 
--(BOOL) readStartElement
+- (BOOL)readStartElement
 {
     [self ensureStartElement];
-    
+
     BOOL hasEndTag = ![self isEmptyElement];
-    
+
     [self read];
-    
+
     return hasEndTag;
 }
 
--(BOOL) readStartElementWithName:(NSString *)name
+- (BOOL)readStartElementWithName:(NSString *)name
 {
     if ([NSString isNilOrEmpty:name])
     {
         MHVLOG(@"Cannot read the start element because the element name parameter is nil or empty.");
         return FALSE;
     }
-    
+
     [self ensureStartElement];
-     
+
     if (!self.localName || ![name isEqualToString:self.localName])
     {
         MHVLOG(@"Cannot read the start element because there is a mismatch between the local name (%@) and the name parameter (%@).", self.localName, name);
         return FALSE;
     }
-    
+
     BOOL hasEndTag = ![self isEmptyElement];
-    
+
     [self read];
-    
+
     return hasEndTag;
 }
 
--(BOOL) readStartElementWithName:(NSString *)name NS:(NSString *)ns
+- (BOOL)readStartElementWithName:(NSString *)name NS:(NSString *)ns
 {
     if ([NSString isNilOrEmpty:name] ||
         [NSString isNilOrEmpty:ns])
@@ -531,9 +485,9 @@ LError:
         MHVLOG(@"The name (%@) or namespace (%@) parameter is nil.", name, ns);
         return FALSE;
     }
-    
+
     [self ensureStartElement];
- 
+
     if (!self.localName || ![name isEqualToString:self.localName])
     {
         MHVLOG(@"Cannot read the start element because there is a mismatch between the local name (%@) and the name parameter (%@).", self.localName, name);
@@ -545,51 +499,51 @@ LError:
         MHVLOG(@"Cannot read the start element because there is a mismatch between the namespaceUri (%@) and the namespace parameter (%@).", self.namespaceUri, ns);
         return FALSE;
     }
-    
+
     BOOL hasEndTag = ![self isEmptyElement];
-    
+
     [self read];
-    
+
     return hasEndTag;
 }
 
--(BOOL)readStartElementWithXmlName:(const xmlChar *)xName
+- (BOOL)readStartElementWithXmlName:(const xmlChar *)xName
 {
     if (!xName)
     {
         MHVLOG(@"Cannot read the start element because the element name parameter is nil.");
         return NO;
     }
-    
+
     [self ensureStartElement];
- 
-    const xmlChar* rawName = self.localNameRaw;
+
+    const xmlChar *rawName = self.localNameRaw;
     if (!rawName || !xmlStrEqual(rawName, xName))
     {
         MHVLOG(@"Cannot read the start element because there is a mismatch between the local name (%@) and the name parameter (%@).", [NSString newFromXmlString:(xmlChar *)rawName], [NSString newFromXmlString:(xmlChar *)xName]);
         return NO;
     }
-    
+
     BOOL hasEndTag = ![self isEmptyElement];
-    
+
     [self read];
-    
+
     return hasEndTag;
 }
 
--(void) readEndElement
+- (void)readEndElement
 {
     [self moveToContentType:XEndElement];
     [self read];
 }
 
--(BOOL) read
+- (BOOL)read
 {
     [self clear];
-    return [self isSuccess:xmlTextReaderRead(m_reader)];
+    return [self isSuccess:xmlTextReaderRead(self.reader)];
 }
 
--(NSString *) readString
+- (NSString *)readString
 {
     [self moveToElement];
     if (![self isTextualNode])
@@ -597,58 +551,54 @@ LError:
         MHVLOG(@"Cannot read the element into a string because the node is not text.");
         return nil;
     }
-    NSString * string = [NSString fromXmlStringAndFreeXml:xmlTextReaderReadString(m_reader)];  
+
+    NSString *string = [NSString fromXmlStringAndFreeXml:xmlTextReaderReadString(self.reader)];
     [self read];
     return string;
 }
 
--(NSString *) readElementString
+- (NSString *)readElementString
 {
     [self ensureStartElement];
-    
+
     if ([self isEmptyElement])
     {
         [self read];
         return c_emptyString;
     }
-    
+
     [self read];
     NSString *str = [self readString];
     [self verifyNodeType:XEndElement];
     [self read];
-    
+
     return str;
 }
 
--(NSString *) readInnerXml
+- (NSString *)readInnerXml
 {
-    return [NSString fromXmlStringAndFreeXml:xmlTextReaderReadInnerXml(m_reader)];
+    return [NSString fromXmlStringAndFreeXml:xmlTextReaderReadInnerXml(self.reader)];
 }
 
--(NSString *)readOuterXml
+- (NSString *)readOuterXml
 {
-    return [NSString fromXmlStringAndFreeXml:xmlTextReaderReadOuterXml(m_reader)];
+    return [NSString fromXmlStringAndFreeXml:xmlTextReaderReadOuterXml(self.reader)];
 }
 
--(BOOL) skip
+- (BOOL)skip
 {
     [self clear];
-    return [self isSuccess:xmlTextReaderNext(m_reader)];
+    return [self isSuccess:xmlTextReaderNext(self.reader)];
 }
 
-@end
+#pragma mark - Internal methods
 
-//
-// PRIVATE METHODS
-//
-@implementation XReader (XPrivate)
-
--(id) initWithCreatedReader:(xmlTextReader *)reader
+- (instancetype)initWithCreatedReader:(xmlTextReader *)reader
 {
     return [self initWithCreatedReader:reader withConverter:nil];
 }
 
--(id)initWithCreatedReader:(xmlTextReader *)reader withConverter:(XConverter *)converter
+- (instancetype)initWithCreatedReader:(xmlTextReader *)reader withConverter:(XConverter *)converter
 {
     self = [self initWithReader:reader andConverter:converter];
     if (!self)
@@ -657,13 +607,14 @@ LError:
         {
             xmlFreeTextReader(reader);
         }
+
         return nil;
     }
-    
+
     return self;
 }
 
--(void) ensureStartElement
+- (void)ensureStartElement
 {
     if (![self moveToStartElement])
     {
@@ -671,16 +622,17 @@ LError:
     }
 }
 
--(void) moveToContentType:(enum XNodeType)type
+- (void)moveToContentType:(XNodeType)type
 {
-    enum XNodeType nodeType = [self moveToContent];
+    XNodeType nodeType = [self moveToContent];
+
     if (nodeType != type)
     {
         [self logInvalidNode:nodeType expectedType:type];
     }
 }
 
--(void) verifyNodeType:(enum XNodeType)type
+- (void)verifyNodeType:(XNodeType)type
 {
     if (self.nodeType != type)
     {
@@ -688,26 +640,25 @@ LError:
     }
 }
 
--(void) logInvalidNode:(enum XNodeType)type expectedType:(enum XNodeType)expected
+- (void)logInvalidNode:(XNodeType)type expectedType:(XNodeType)expected
 {
     MHVLOG(@"%@ [Expected: %@]", XNodeTypeToString(type), XNodeTypeToString(expected));
 }
 
--(void) close
+- (void)close
 {
     [self clear];
-    if (m_reader)
+    if (self.reader)
     {
-        xmlTextReaderClose(m_reader);
-        xmlFreeTextReader(m_reader);
-        m_reader = nil;
+        xmlTextReaderClose(self.reader);
+        xmlFreeTextReader(self.reader);
+        _reader = nil;
     }
 }
 
--(BOOL) isSuccess:(int) result
+- (BOOL)isSuccess:(int)result
 {
-    return (result == READER_TRUE);
+    return result == READER_TRUE;
 }
 
 @end
-

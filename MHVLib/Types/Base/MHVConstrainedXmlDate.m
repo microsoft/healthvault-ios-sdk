@@ -46,9 +46,6 @@ static NSString *const c_maxDatePrefix = @"9999";
     }
 
     return self;
-
-   LError:
-    MHVALLOC_FAIL;
 }
 
 - (NSString *)description

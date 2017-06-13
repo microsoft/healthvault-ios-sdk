@@ -156,10 +156,10 @@ static NSString *kEnumNSCodingKey = @"value";
 
 - (NSString *)jsonRepresentationWithObjectParameters:(NSObject*)format
 {
-    //Can mark exceptions with kMSHEnumSerializeAsNumber
+    //Can mark exceptions with kEnumSerializeAsNumber
     if (format && [format isKindOfClass:[NSString class]])
     {
-        if ([(NSString *)format isEqualToString:kMSHEnumSerializeAsNumber])
+        if ([(NSString *)format isEqualToString:kEnumSerializeAsNumber])
         {
             return [NSString stringWithFormat:@"%li", (long)[self integerValue]];
         }

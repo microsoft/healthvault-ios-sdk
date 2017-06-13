@@ -22,8 +22,7 @@
 
 @required
 /*!
- * @brief Return the class given a dictionary, primarily for MHVUserEvent types where the exact type must be determined from the data,
- *        ie Home Feed shows all events, this allows mapping odata.type in the dictionary for deserializing to KHRunEvent, MHVSleepEvent, etc.
+ * @brief Return the class given a dictionary, primarily for classes where the exact type must be determined from the data,
  */
 + (Class)classForObject:(NSDictionary *)object;
 

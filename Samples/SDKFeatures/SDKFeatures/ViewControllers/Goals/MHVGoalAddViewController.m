@@ -70,7 +70,7 @@
     MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
     _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     
-    [self.connection.remoteMonitoringClient createGoalsWithGoalsWrapper:wrapper completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalsCreateWithGoalsWrapper:wrapper completion:^(MHVGoalsResponse * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
            if (!error)
            {

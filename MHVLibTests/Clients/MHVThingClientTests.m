@@ -108,7 +108,8 @@ describe(@"MHVThingClient", ^
                 it(@"should fail if thing id is nil", ^
                    {
                        __block NSError *requestError;
-                       [thingClient getThingWithThingId:nil
+                       NSUUID *nilThingId = nil;
+                       [thingClient getThingWithThingId:nilThingId
                                                recordId:recordId
                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                        {
@@ -122,8 +123,9 @@ describe(@"MHVThingClient", ^
                 it(@"should fail if record id is nil", ^
                    {
                        __block NSError *requestError;
+                       NSUUID *nilRecordId = nil;
                        [thingClient getThingWithThingId:[[NSUUID alloc] initWithUUIDString:@"10000000-1000-1000-1000-100000000000"]
-                                               recordId:nil
+                                               recordId:nilRecordId
                                              completion:^(MHVThing *_Nullable thing, NSError *_Nullable error)
                         {
                             requestError = error;

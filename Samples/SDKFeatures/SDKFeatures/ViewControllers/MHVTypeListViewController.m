@@ -30,11 +30,8 @@
 #import "MHVFeaturesConfiguration.h"
 
 #import "MHVGoalsListViewController.h"
-#import "MHVGoal.h"
 #import "MHVActionPlansListViewController.h"
-#import "MHVActionPlan.h"
 #import "MHVActionPlanTaskListViewController.h"
-#import "MHVGoalRecommendation.h"
 #import "MHVGoalsRecommendationsListViewController.h"
 
 @interface MHVTypeListViewController ()
@@ -64,13 +61,6 @@
     self.tableView.delegate = self;
 
     [self addStandardFeatures];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadPersonImage) name:kPersonalImageUpdateNotification object:nil];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -282,22 +272,22 @@
     }
     
     //Action Plan Types
-    NSString *name = @"action plans [REST]";
+    NSString *name = @"action plans";
     [restTypeList addObject:name];
-    [itemDictionary setObject:[MHVActionPlan class] forKey:name];
+    [itemDictionary setObject:[MHVActionPlanV2 class] forKey:name];
     [viewDictionary setObject:[MHVActionPlansListViewController class] forKey:name];
     
-    name = @"action plan tasks [REST]";
+    name = @"action plan tasks";
     [restTypeList addObject:name];
-    [itemDictionary setObject:[MHVActionPlanTask class] forKey:name];
+    [itemDictionary setObject:[MHVActionPlanTaskV2 class] forKey:name];
     [viewDictionary setObject:[MHVActionPlanTaskListViewController class] forKey:name];
     
-    name = @"goals [REST]";
+    name = @"goals";
     [restTypeList addObject:name];
     [itemDictionary setObject:[MHVGoal class] forKey:name];
     [viewDictionary setObject:[MHVGoalsListViewController class] forKey:name];
     
-    name = @"goal recommendations [REST]";
+    name = @"goal recommendations";
     [restTypeList addObject:name];
     [itemDictionary setObject:[MHVGoalRecommendation class] forKey:name];
     [viewDictionary setObject:[MHVGoalsRecommendationsListViewController class] forKey:name];

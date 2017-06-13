@@ -70,14 +70,12 @@
     MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
     self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     
-    [self.connection.remoteMonitoringClient getActiveGoalsWithTypes:nil windowTypes:nil
-                                                     completion:^(MHVGoalsResponse *response, NSError *error)
-     {
+    [self.connection.remoteMonitoringClient goalsGetActiveWithTypes:nil windowTypes:nil completion:^(MHVGoalsResponse * _Nullable output, NSError * _Nullable error) {
          [[NSOperationQueue mainQueue] addOperationWithBlock:^
           {
             if (!error)
             {
-                self.goals = response.goals;
+                self.goals = output.goals;
                 [self.tableView reloadData];
                 [self.statusLabel clearStatus];
             }
