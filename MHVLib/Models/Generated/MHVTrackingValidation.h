@@ -26,6 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MHVActionPlanTaskV2.h"
 #import "MHVModelBase.h"
 
 
@@ -36,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVTrackingValidation : MHVModelBase
 
+/* Gets or sets the action plan task. [optional]
+ */
+@property(strong,nonatomic,nullable) MHVActionPlanTaskV2* actionPlanTask;
 /* Gets or sets the XML thing document. [optional]
  */
 @property(strong,nonatomic,nullable) NSString* xmlThingDocument;

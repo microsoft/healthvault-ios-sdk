@@ -1,5 +1,5 @@
 //
-// MHVSleepResponse.h
+// MHVActionPlansResponseActionPlanInstanceV2_.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,20 +26,20 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVSleepsSleep.h"
+#import "MHVActionPlanInstanceV2.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVSleepResponse
+@protocol MHVActionPlansResponseActionPlanInstanceV2_
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVSleepResponse : MHVModelBase
+@interface MHVActionPlansResponseActionPlanInstanceV2_ : MHVModelBase
 
-/* The collection of summaries [optional]
+/* The collection of action plans [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVSleepsSleep>* sleepActivities;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanInstanceV2>* plans;
 /* The URI for the next page of data [optional]
  */
 @property(strong,nonatomic,nullable) NSString* nextLink;

@@ -1,5 +1,5 @@
 //
-// MHVMicrosoftKhronosCloudCommonErrorsErrorInformation.h
+// MHVErrorResponse.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,30 +26,19 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVMicrosoftKhronosCloudCommonErrorsErrorInformation.h"
-#import "MHVSystemObject.h"
+#import "MHVErrorInformation.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVMicrosoftKhronosCloudCommonErrorsErrorInformation
+@protocol MHVErrorResponse
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVMicrosoftKhronosCloudCommonErrorsErrorInformation : MHVModelBase
+@interface MHVErrorResponse : MHVModelBase
 
 
-@property(strong,nonatomic,nullable) NSString* code;
-
-@property(strong,nonatomic,nullable) NSString* message;
-
-@property(strong,nonatomic,nullable) NSString* target;
-
-@property(strong,nonatomic,nullable) NSArray<MHVMicrosoftKhronosCloudCommonErrorsErrorInformation>* details;
-
-@property(strong,nonatomic,nullable) MHVMicrosoftKhronosCloudCommonErrorsErrorInformation* innererror;
-
-@property(strong,nonatomic,nullable) MHVSystemObject* exception;
+@property(strong,nonatomic,nullable) MHVErrorInformation* error;
 
 @end
 

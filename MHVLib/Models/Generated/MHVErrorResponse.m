@@ -1,5 +1,5 @@
 //
-// MHVActionPlanFrequencyTaskCompletionMetrics.m
+// MHVErrorResponse.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanFrequencyTaskCompletionMetrics.h"
+#import "MHVErrorResponse.h"
 
-@implementation MHVActionPlanFrequencyTaskCompletionMetrics
+@implementation MHVErrorResponse
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"windowType": @"windowType", @"occurrenceCount": @"occurrenceCount", @"reminderState": @"reminderState", @"scheduledDays": @"scheduledDays" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"error": @"error" }];
 }
  */
 
@@ -60,10 +60,7 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"windowType": @"windowType",
-            @"occurrenceCount": @"occurrenceCount",
-            @"reminderState": @"reminderState",
-            @"scheduledDays": @"scheduledDays"
+            @"error": @"error"
         }];
     });
     return names;
@@ -77,7 +74,9 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-                    }];
+            
+              @"error": [MHVErrorInformation class]
+        }];
     });
     return types;
 }

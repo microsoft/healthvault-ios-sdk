@@ -1,5 +1,5 @@
 //
-// MHVSystemThreadingWaitHandle.h
+// MHVScheduleV2.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,22 +26,26 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVMicrosoftWin32SafeHandlesSafeWaitHandle.h"
-#import "MHVSystemObject.h"
+#import "MHVTime.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVSystemThreadingWaitHandle
+@protocol MHVScheduleV2
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVSystemThreadingWaitHandle : MHVModelBase
+@interface MHVScheduleV2 : MHVModelBase
 
-
-@property(strong,nonatomic,nullable) MHVSystemObject* handle;
-
-@property(strong,nonatomic,nullable) MHVMicrosoftWin32SafeHandlesSafeWaitHandle* safeWaitHandle;
+/* The reminder state of the task [optional]
+ */
+@property(strong,nonatomic,nullable) NSString* reminderState;
+/* The days that this will show for the user              Expected values: { 'Unknown', 'Everyday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' } [optional]
+ */
+@property(strong,nonatomic,nullable) NSArray<NSString*>* scheduledDays;
+/* The time at which this task is scheduled [optional]
+ */
+@property(strong,nonatomic,nullable) MHVTime* scheduledTime;
 
 @end
 

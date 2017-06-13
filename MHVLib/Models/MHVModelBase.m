@@ -197,36 +197,44 @@ Class classFromProperty(objc_property_t property);
                 {
                     Class propertyClass = [MHVModelBase classFromProperty:properties[i]];
                     
-                    if (dictionary[propertyNameInDictionary] && propertyClass)
+                    if (dictionary[propertyNameInDictionary])
                     {
-                        id value = nil;
-                        
-                        //objectParameters is array object type, or date formatter
-                        id objectParameters = propertyParametersCache[propertyName];
-                        
-                        //Not actually using this for anything yet, but could be useful...
-                        //Try to predict the array object type from the property name.  mapPoints -> MHVMapPoint
-                        if (propertyClass == [NSArray class] && !objectParameters)
+                        if (propertyClass)
                         {
-                            objectParameters = [MHVModelBase predictObjectClassFromPropertyName:propertyName];
-                            
-                            @synchronized (propertyParametersCache)
-                            {
-                                if (!objectParameters)
-                                {
-                                    objectParameters = [NSString class];
-                                }
+                            id value = nil;
 
-                                propertyParametersCache[propertyName] = objectParameters;
+                            //objectParameters is array object type, or date formatter
+                            id objectParameters = propertyParametersCache[propertyName];
+                            
+                            //Not actually using this for anything yet, but could be useful...
+                            //Try to predict the array object type from the property name.  mapPoints -> MHVMapPoint
+                            if (propertyClass == [NSArray class] && !objectParameters)
+                            {
+                                objectParameters = [MHVModelBase predictObjectClassFromPropertyName:propertyName];
+
+                                @synchronized (propertyParametersCache)
+                                {
+                                    if (!objectParameters)
+                                    {
+                                        objectParameters = [NSString class];
+                                    }
+
+                                    propertyParametersCache[propertyName] = objectParameters;
+                                }
+                            }
+
+                            //All property type classes must implement, objectParameters ignored except for arrays and dates
+                            value = [[propertyClass alloc] initWithObject:dictionary[propertyNameInDictionary]
+                                                         objectParameters:objectParameters];
+                            if (value)
+                            {
+                                [object setValue:value forKey:propertyName];
                             }
                         }
-                        
-                        //All property type classes must implement, objectParameters ignored except for arrays and dates
-                        value = [[propertyClass alloc] initWithObject:dictionary[propertyNameInDictionary]
-                                                     objectParameters:objectParameters];
-                        if (value)
+                        else
                         {
-                            [object setValue:value forKey:propertyName];
+                            // for base types (int, long, etc)
+                            [object setValue:dictionary[propertyNameInDictionary] forKey:propertyName];
                         }
                     }
                 }

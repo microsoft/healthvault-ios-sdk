@@ -99,7 +99,7 @@
     recommendation.expirationDate = [NSDate dateWithTimeInterval:60*60*24*14 sinceDate:[NSDate date]];
     recommendation.associatedGoal = goal;
     
-    [self.connection.remoteMonitoringClient addGoalRecommendationWithGoalRecommendation:recommendation completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalRecommendationsCreateWithGoalRecommendation:recommendation completion:^(MHVGoalRecommendation * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
@@ -119,7 +119,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient getGoalRecommendationsWithGoalTypes:nil goalWindowTypes:nil completion:^(MHVGoalRecommendationsResponse * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalRecommendationsGetWithGoalTypes:nil goalWindowTypes:nil completion:^(MHVGoalRecommendationsResponse * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)

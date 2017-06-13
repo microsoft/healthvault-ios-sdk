@@ -74,7 +74,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient getGoalRecommendationByIdWithGoalRecommendationId:self.recommendationId completion:^(MHVGoalRecommendationInstance * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalRecommendationsGetByIdWithGoalRecommendationId:self.recommendationId completion:^(MHVGoalRecommendationInstance * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
@@ -110,7 +110,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient acknowledgeGoalRecommendationWithGoalRecommendationId:self.recommendationId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalRecommendationsAcknowledgeWithGoalRecommendationId:self.recommendationId completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
@@ -130,7 +130,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient deleteGoalRecommendationWithGoalRecommendationId:self.recommendationId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalRecommendationsDeleteWithGoalRecommendationId:self.recommendationId completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)

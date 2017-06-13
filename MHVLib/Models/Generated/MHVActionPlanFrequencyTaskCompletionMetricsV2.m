@@ -1,5 +1,5 @@
 //
-// MHVSystemThreadingWaitHandle.m
+// MHVActionPlanFrequencyTaskCompletionMetricsV2.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVSystemThreadingWaitHandle.h"
+#import "MHVActionPlanFrequencyTaskCompletionMetricsV2.h"
 
-@implementation MHVSystemThreadingWaitHandle
+@implementation MHVActionPlanFrequencyTaskCompletionMetricsV2
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"handle": @"handle", @"safeWaitHandle": @"safeWaitHandle" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"windowType": @"windowType", @"occurrenceCount": @"occurrenceCount" }];
 }
  */
 
@@ -60,8 +60,8 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"handle": @"handle",
-            @"safeWaitHandle": @"safeWaitHandle"
+            @"windowType": @"windowType",
+            @"occurrenceCount": @"occurrenceCount"
         }];
     });
     return names;
@@ -75,11 +75,7 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"handle": [MHVSystemObject class],
-
-              @"safeWaitHandle": [MHVMicrosoftWin32SafeHandlesSafeWaitHandle class]
-        }];
+                    }];
     });
     return types;
 }

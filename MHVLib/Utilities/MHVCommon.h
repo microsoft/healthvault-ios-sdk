@@ -20,5 +20,5 @@
 #import "MHVStringExtensions.h"
 #import "MHVArrayExtensions.h"
 #import "MHVDictionaryExtensions.h"
-#import "MHVValidator.h" 
+#import "MHVValidator.h"
 #import "MHVDateExtensions.h"

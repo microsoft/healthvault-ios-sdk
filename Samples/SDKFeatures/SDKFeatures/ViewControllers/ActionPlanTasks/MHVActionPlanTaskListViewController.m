@@ -22,8 +22,8 @@
 
 @interface MHVActionPlanTaskListViewController ()
 
-@property (nonatomic, strong) NSArray<MHVActionPlanTaskInstance *> *taskList;
-@property (nonatomic, strong) MHVActionPlanInstance *plan;
+@property (nonatomic, strong) NSArray<MHVActionPlanTaskInstanceV2 *> *taskList;
+@property (nonatomic, strong) MHVActionPlanInstanceV2 *plan;
 @property (nonatomic, strong) MHVConnection *connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -62,13 +62,11 @@
     MHVActionPlanTrackingPolicy *policy = [[MHVActionPlanTrackingPolicy alloc] init];
     policy.isAutoTrackable = @(NO);
 
-    MHVActionPlanFrequencyTaskCompletionMetrics *metrics = [[MHVActionPlanFrequencyTaskCompletionMetrics alloc] init];
-    metrics.reminderState = @"Off";
-    metrics.scheduledDays = @[@"Monday", @"Wednesday", @"Friday"];
+    MHVActionPlanFrequencyTaskCompletionMetricsV2 *metrics = [[MHVActionPlanFrequencyTaskCompletionMetricsV2 alloc] init];
     metrics.occurrenceCount = @(1);
     metrics.windowType = @"Daily";
 
-    MHVActionPlanTask *frequencyTask = [[MHVActionPlanTask alloc] init];
+    MHVActionPlanTaskV2 *frequencyTask = [[MHVActionPlanTaskV2 alloc] init];
     NSString *taskName =[NSString stringWithFormat:@"My new task #%@", rand];
     frequencyTask.name = taskName;
     frequencyTask.shortDescription = @"Do an activity to get some exercise.";
@@ -82,8 +80,8 @@
     frequencyTask.frequencyTaskCompletionMetrics = metrics;
     frequencyTask.associatedPlanId = self.plan.identifier;
     frequencyTask.associatedObjectiveIds = @[[self.plan.objectives.firstObject identifier]];
-
-    [self.connection.remoteMonitoringClient actionPlanTasksPostActionPlanTasksWithActionPlanTask:frequencyTask completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    
+    [self.connection.remoteMonitoringClient actionPlanTasksCreateWithActionPlanTask:frequencyTask completion:^(MHVActionPlanTaskInstanceV2 * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
@@ -123,7 +121,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient actionPlanTasksGetActionPlanTasksWithActionPlanTaskStatus:@"InProgress" maxPageSize:nil completion:^(MHVActionPlanTasksResponseActionPlanTaskInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksGetWithActionPlanTaskStatus:@"InProgress" maxPageSize:nil completion:^(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
@@ -144,7 +142,7 @@
 
 - (void)loadActionPlan
 {
-    [self.connection.remoteMonitoringClient getActionPlansWithMaxPageSize:@(10) completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlansGetWithMaxPageSize:@(10) completion:^(MHVActionPlansResponseActionPlanInstanceV2_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
