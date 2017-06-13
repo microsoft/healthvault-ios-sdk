@@ -19,7 +19,8 @@
 
 import Foundation
 
-class MedicationBuilder {
+class MedicationBuilder
+{
     
     // MARK: Properties
     private(set) var thing: MHVThing?

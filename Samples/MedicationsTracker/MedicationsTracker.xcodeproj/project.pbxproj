@@ -37,6 +37,10 @@
 		ED5F671A1EEB38B6001E75D7 /* FormSubmssionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67191EEB38B6001E75D7 /* FormSubmssionTests.swift */; };
 		ED5F671C1EEB472C001E75D7 /* MedicationTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F671B1EEB472C001E75D7 /* MedicationTextFieldTests.swift */; };
 		ED5F671E1EEB5228001E75D7 /* EditMedicationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F671D1EEB5228001E75D7 /* EditMedicationViewControllerTests.swift */; };
+		ED5F67201EEF6314001E75D7 /* WizardPageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F671F1EEF6314001E75D7 /* WizardPageProtocol.swift */; };
+		ED5F67221EEF6442001E75D7 /* ActionPlanBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67211EEF6442001E75D7 /* ActionPlanBuilder.swift */; };
+		ED5F67241EEF6495001E75D7 /* Transitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67231EEF6495001E75D7 /* Transitioner.swift */; };
+		ED5F67261EF0525F001E75D7 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67251EF0525F001E75D7 /* StateController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +99,10 @@
 		ED5F67191EEB38B6001E75D7 /* FormSubmssionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSubmssionTests.swift; sourceTree = "<group>"; };
 		ED5F671B1EEB472C001E75D7 /* MedicationTextFieldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationTextFieldTests.swift; sourceTree = "<group>"; };
 		ED5F671D1EEB5228001E75D7 /* EditMedicationViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMedicationViewControllerTests.swift; sourceTree = "<group>"; };
+		ED5F671F1EEF6314001E75D7 /* WizardPageProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WizardPageProtocol.swift; sourceTree = "<group>"; };
+		ED5F67211EEF6442001E75D7 /* ActionPlanBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPlanBuilder.swift; sourceTree = "<group>"; };
+		ED5F67231EEF6495001E75D7 /* Transitioner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitioner.swift; sourceTree = "<group>"; };
+		ED5F67251EF0525F001E75D7 /* StateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +255,10 @@
 				ED4136971EE75B4600E15555 /* MedicationVocabSearcher.swift */,
 				ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */,
 				ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */,
+				ED5F671F1EEF6314001E75D7 /* WizardPageProtocol.swift */,
+				ED5F67211EEF6442001E75D7 /* ActionPlanBuilder.swift */,
+				ED5F67231EEF6495001E75D7 /* Transitioner.swift */,
+				ED5F67251EF0525F001E75D7 /* StateController.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -392,11 +404,15 @@
 				ED41369E1EE75B4600E15555 /* HVViewController.swift in Sources */,
 				ED4136A11EE75B4600E15555 /* MedicationListViewController.swift in Sources */,
 				ED41369D1EE75B4600E15555 /* HVFeaturesConfiguration.swift in Sources */,
+				ED5F67221EEF6442001E75D7 /* ActionPlanBuilder.swift in Sources */,
 				ED5F66F61EE89C6E001E75D7 /* PickerTextField.swift in Sources */,
 				ED5F670C1EE9DA48001E75D7 /* HVUnitTypes.swift in Sources */,
 				ED5F66F81EE8B42B001E75D7 /* AutocompleteTextField.swift in Sources */,
+				ED5F67261EF0525F001E75D7 /* StateController.swift in Sources */,
 				ED4136A41EE75B4600E15555 /* MedicationTextField.swift in Sources */,
+				ED5F67201EEF6314001E75D7 /* WizardPageProtocol.swift in Sources */,
 				ED4136A01EE75B4600E15555 /* MedicationBuilder.swift in Sources */,
+				ED5F67241EEF6495001E75D7 /* Transitioner.swift in Sources */,
 				ED4136991EE75B4600E15555 /* AddMedicationViewController.swift in Sources */,
 				ED4136381EE7538B00E15555 /* AppDelegate.swift in Sources */,
 				ED4136A31EE75B4600E15555 /* MedicationVocabSearcher.swift in Sources */,
