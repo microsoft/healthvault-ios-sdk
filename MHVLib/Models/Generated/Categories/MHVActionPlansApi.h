@@ -43,14 +43,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param actionPlanId The instance of the plan that the objective belongs to.
 /// @param objectiveId The instance of the objective to delete.
 /// 
-///  code:200 message:"OK",
 ///  code:204 message:"NoContent",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return 
 - (void)actionPlanObjectivesDeleteWithActionPlanId:(NSString* )actionPlanId
     objectiveId:(NSString* )objectiveId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
 
 /// Post an action plan instance
@@ -58,13 +57,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlan The instance of the plan to create.
 /// 
-///  code:200 message:"OK",
 ///  code:201 message:"Created",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return MHVActionPlansResponseActionPlanInstanceV2_*
 - (void)actionPlansCreateWithActionPlan:(MHVActionPlanV2* )actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstanceV2_* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Delete an action plan instance
@@ -72,13 +70,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanId The instance of the plan to delete.
 /// 
-///  code:200 message:"OK",
 ///  code:204 message:"NoContent",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return 
 - (void)actionPlansDeleteWithActionPlanId:(NSString* )actionPlanId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
 
 /// Get a collection of action plans

@@ -69,7 +69,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient actionPlanTasksDeleteWithActionPlanTaskId:self.taskId completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksDeleteWithActionPlanTaskId:self.taskId completion:^(NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {

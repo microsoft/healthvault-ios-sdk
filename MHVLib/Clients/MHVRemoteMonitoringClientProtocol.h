@@ -24,16 +24,36 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MHVRemoteMonitoringClientProtocol <NSObject>
 
 /**
- * Performs request
+ * Performs a request
  *
  * @param path Request url.
  * @param httpMethod Request method, "GET", "POST", "PATCH", etc
  * @param pathParams Request path parameters.  Values in {brackets} in the path will be replaced by values from this dictionary
  *        pathParams { @"date" : @"2017-05-23" } with path @"endDate={date}" would result in @"endDate=2017-05-23"
  * @param queryParams Request query parameters dictionary
- * @param formParams Request form parameters.
  * @param body Request body.
- * @param toClass the class the response should be deserialized to.
+ * @param resultClass the class the response should be deserialized to.
+ * @param completion The block will be executed when the request completed.
+ *
+ * @return The created session task.
+ */
+- (void)requestWithPathAndResultClass:(NSString *)path
+             httpMethod:(NSString *)httpMethod
+             pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
+            queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
+                   body:(NSData *_Nullable)body
+            resultClass:(Class)resultClass
+             completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion;
+
+/**
+ * Performs a request and does not expect a response object
+ *
+ * @param path Request url.
+ * @param httpMethod Request method, "DELETE", etc.
+ * @param pathParams Request path parameters.  Values in {brackets} in the path will be replaced by values from this dictionary
+ *        pathParams { @"date" : @"2017-05-23" } with path @"endDate={date}" would result in @"endDate=2017-05-23"
+ * @param queryParams Request query parameters dictionary
+ * @param body Request body.
  * @param completion The block will be executed when the request completed.
  *
  * @return The created session task.
@@ -42,10 +62,8 @@ NS_ASSUME_NONNULL_BEGIN
              httpMethod:(NSString *)httpMethod
              pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
             queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-             formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
                    body:(NSData *_Nullable)body
-                toClass:(Class)toClass
-             completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion;
+             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 @end
 

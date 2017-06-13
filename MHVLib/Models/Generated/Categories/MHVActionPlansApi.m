@@ -49,11 +49,11 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 ///
 ///  @param objectiveId The instance of the objective to delete. 
 ///
-///  @returns NSObject*
+///  @returns void
 ///
 - (void)actionPlanObjectivesDeleteWithActionPlanId:(NSString* _Nonnull)actionPlanId
     objectiveId:(NSString* _Nonnull)objectiveId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanId' is set
     if (actionPlanId == nil)
@@ -63,7 +63,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
         {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"actionPlanId"] };
             NSError* error = [NSError errorWithDomain:kMHVActionPlansApiErrorDomain code:kMHVActionPlansApiMissingParamErrorCode userInfo:userInfo];
-            completion(nil, error);
+            completion(error);
         }
     }
 
@@ -75,7 +75,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
         {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"objectiveId"] };
             NSError* error = [NSError errorWithDomain:kMHVActionPlansApiErrorDomain code:kMHVActionPlansApiMissingParamErrorCode userInfo:userInfo];
-            completion(nil, error);
+            completion(error);
         }
     }
 
@@ -94,15 +94,12 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[NSObject class]
                       completion:completion];
 }
 
@@ -111,10 +108,10 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlan The instance of the plan to create. 
 ///
-///  @returns NSObject*
+///  @returns MHVActionPlansResponseActionPlanInstanceV2_*
 ///
 - (void)actionPlansCreateWithActionPlan:(MHVActionPlanV2* _Nonnull)actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstanceV2_* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlan' is set
     if (actionPlan == nil)
@@ -135,17 +132,15 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlan];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPath:resourcePath
+    [self requestWithPathAndResultClass:resourcePath
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanInstanceV2 class]
+                     resultClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
                       completion:completion];
 }
 
@@ -154,10 +149,10 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanId The instance of the plan to delete. 
 ///
-///  @returns NSObject*
+///  @returns void
 ///
 - (void)actionPlansDeleteWithActionPlanId:(NSString* _Nonnull)actionPlanId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanId' is set
     if (actionPlanId == nil)
@@ -167,7 +162,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
         {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"actionPlanId"] };
             NSError* error = [NSError errorWithDomain:kMHVActionPlansApiErrorDomain code:kMHVActionPlansApiMissingParamErrorCode userInfo:userInfo];
-            completion(nil, error);
+            completion(error);
         }
     }
 
@@ -182,15 +177,12 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[NSObject class]
                       completion:completion];
 }
 
@@ -215,15 +207,13 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     }
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
-    [self requestWithPath:resourcePath
+    [self requestWithPathAndResultClass:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
+                     resultClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
                       completion:completion];
 }
 
@@ -312,15 +302,13 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     }
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
-    [self requestWithPath:resourcePath
+    [self requestWithPathAndResultClass:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanAdherenceSummary class]
+                     resultClass:[MHVActionPlanAdherenceSummary class]
                       completion:completion];
 }
 
@@ -357,15 +345,13 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
-    [self requestWithPath:resourcePath
+    [self requestWithPathAndResultClass:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanInstanceV2 class]
+                     resultClass:[MHVActionPlanInstanceV2 class]
                       completion:completion];
 }
 
@@ -398,17 +384,15 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlan];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPath:resourcePath
+    [self requestWithPathAndResultClass:resourcePath
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
+                     resultClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
                       completion:completion];
 }
 
@@ -441,17 +425,15 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlan];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPath:resourcePath
+    [self requestWithPathAndResultClass:resourcePath
                       httpMethod:@"PATCH"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
+                     resultClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
                       completion:completion];
 }
 

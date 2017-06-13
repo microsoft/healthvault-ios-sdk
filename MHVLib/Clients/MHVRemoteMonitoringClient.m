@@ -48,13 +48,12 @@
     return self;
 }
 
-- (void)requestWithPath:(NSString *_Nonnull)path
+- (void)requestWithPathAndResultClass:(NSString *_Nonnull)path
              httpMethod:(NSString *_Nonnull)httpMethod
              pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
             queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-             formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
                    body:(NSData *_Nullable)body
-                toClass:(Class)toClass
+            resultClass:(Class)resultClass
              completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(path);
@@ -76,7 +75,6 @@
                                                             httpMethod:httpMethod
                                                             pathParams:pathParams
                                                            queryParams:queryParams
-                                                            formParams:formParams
                                                                   body:body
                                                            isAnonymous:NO];
     
@@ -95,10 +93,59 @@
              if (completion)
              {
                  id result = [MHVJsonSerializer deserialize:[[NSString alloc] initWithData:response.responseData encoding:NSUTF8StringEncoding]
-                                                    toClass:[toClass class]
+                                                    toClass:[resultClass class]
                                                 shouldCache:YES];
                  
                  completion(result, nil);
+             }
+         }
+     }];
+}
+
+- (void)requestWithPath:(NSString *)path
+             httpMethod:(NSString *)httpMethod
+             pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
+            queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
+                   body:(NSData *_Nullable)body
+             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+{
+    MHVASSERT_PARAMETER(path);
+    MHVASSERT_PARAMETER(httpMethod);
+    
+    if (pathParams != nil)
+    {
+        NSMutableString *queryPath = [path mutableCopy];
+        
+        [pathParams enumerateKeysAndObjectsUsingBlock:^(id _Nonnull key, id _Nonnull obj, BOOL *_Nonnull stop)
+         {
+             [queryPath replaceCharactersInRange:[queryPath rangeOfString:[NSString stringWithFormat:@"{%@}", key]] withString:obj];
+         }];
+        
+        path = queryPath;
+    }
+    
+    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:path
+                                                            httpMethod:httpMethod
+                                                            pathParams:pathParams
+                                                           queryParams:queryParams
+                                                                  body:body
+                                                           isAnonymous:NO];
+    
+    [self.connection executeHttpServiceOperation:restRequest
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
+     {
+         if (error)
+         {
+             if (completion)
+             {
+                 completion(error);
+             }
+         }
+         else
+         {
+             if (completion)
+             {
+                 completion(nil);
              }
          }
      }];

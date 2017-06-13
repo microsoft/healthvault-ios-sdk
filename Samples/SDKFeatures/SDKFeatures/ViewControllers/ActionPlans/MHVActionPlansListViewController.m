@@ -154,7 +154,7 @@
     newPlan.objectives = [[NSArray<MHVObjective> alloc] initWithObjects:objective, nil];
     newPlan.associatedTasks = [[NSArray<MHVActionPlanTaskV2> alloc] initWithObjects:frequencyTask, scheduledTask, nil];
     
-    [self.connection.remoteMonitoringClient actionPlansCreateWithActionPlan:newPlan completion:^(MHVActionPlanInstanceV2 * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlansCreateWithActionPlan:newPlan completion:^(MHVActionPlansResponseActionPlanInstanceV2_* _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
