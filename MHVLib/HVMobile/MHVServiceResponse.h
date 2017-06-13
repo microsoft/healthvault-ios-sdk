@@ -44,13 +44,13 @@ typedef NS_ENUM (NSInteger, MHVServerStatusCode)
     MHVServerStatusCodeTypeIDNotFound = 19,
     MHVServerStatusCodeDuplicateCredentialFound = 22,
     MHVServerStatusCodeInvalidRecordState = 37,
-    MHVServerStatusCodeRequestTimedOut = 0x31,
-    MHVServerStatusCodeVersionStampMismatch = 0x3d,
+    MHVServerStatusCodeRequestTimedOut = 49,
+    MHVServerStatusCodeVersionStampMismatch = 61,
     
     /// 65 = Token has been expired and should be updated.
-    MHVServerStatusCodeAuthSessionTokenExpired = 0x41, //65
-    MHVServerStatusCodeRecordQuotaExceeded = 0x44,
-    MHVServerStatusCodeApplicationLimitExceeded = 0x5d,
+    MHVServerStatusCodeAuthSessionTokenExpired = 65,
+    MHVServerStatusCodeRecordQuotaExceeded = 68,
+    MHVServerStatusCodeApplicationLimitExceeded = 93,
     MHVServerStatusCodeVocabAccessDenied = 130,
     MHVServerStatusCodeInvalidAge = 157,
     MHVServerStatusCodeInvalidIPAddress = 158,
