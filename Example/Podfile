@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'healthvault-ios-sdk_Example' do
+  pod 'healthvault-ios-sdk', :path => '../'
+
+  target 'healthvault-ios-sdk_Tests' do
+    inherit! :search_paths
+
+    pod 'Kiwi'
+  end
+end

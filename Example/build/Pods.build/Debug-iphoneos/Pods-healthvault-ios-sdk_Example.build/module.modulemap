@@ -1,0 +1,6 @@
+framework module Pods_healthvault_ios_sdk_Example {
+  umbrella header "Pods-healthvault-ios-sdk_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
