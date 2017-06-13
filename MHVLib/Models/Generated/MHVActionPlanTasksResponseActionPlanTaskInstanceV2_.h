@@ -1,5 +1,5 @@
 //
-// MHVMicrosoftKhronosCloudCommonErrorsErrorResponse.h
+// MHVActionPlanTasksResponseActionPlanTaskInstanceV2_.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,19 +26,23 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVMicrosoftKhronosCloudCommonErrorsErrorInformation.h"
+#import "MHVActionPlanTaskInstanceV2.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVMicrosoftKhronosCloudCommonErrorsErrorResponse
+@protocol MHVActionPlanTasksResponseActionPlanTaskInstanceV2_
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVMicrosoftKhronosCloudCommonErrorsErrorResponse : MHVModelBase
+@interface MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ : MHVModelBase
 
-
-@property(strong,nonatomic,nullable) MHVMicrosoftKhronosCloudCommonErrorsErrorInformation* error;
+/* The collection of tasks [optional]
+ */
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskInstanceV2>* tasks;
+/* The URI for the next page of data [optional]
+ */
+@property(strong,nonatomic,nullable) NSString* nextLink;
 
 @end
 

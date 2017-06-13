@@ -1,5 +1,5 @@
 //
-// MHVAudit.h
+// MHVErrorInformation.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,28 +26,29 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MHVErrorInformation.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVAudit
+@protocol MHVErrorInformation
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVAudit : MHVModelBase
+@interface MHVErrorInformation : MHVModelBase
 
-/* Gets or sets when the change was made [optional]
- */
-@property(strong,nonatomic,nullable) NSDate* timestamp;
-/* Gets or sets who made the change [optional]
- */
-@property(strong,nonatomic,nullable) NSString* personId;
-/* Gets or sets which application that made the change [optional]
- */
-@property(strong,nonatomic,nullable) NSString* applicationId;
-/* Gets or sets the audit action for the change [optional]
- */
-@property(strong,nonatomic,nullable) NSString* auditAction;
+
+@property(strong,nonatomic,nullable) NSString* code;
+
+@property(strong,nonatomic,nullable) NSString* message;
+
+@property(strong,nonatomic,nullable) NSString* target;
+
+@property(strong,nonatomic,nullable) NSArray<MHVErrorInformation>* details;
+
+@property(strong,nonatomic,nullable) MHVErrorInformation* innererror;
+
+@property(strong,nonatomic,nullable) NSObject* exception;
 
 @end
 

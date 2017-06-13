@@ -1,5 +1,5 @@
 //
-// MHVActionPlanTaskInstance.h
+// MHVActionPlanTaskV2.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,37 +26,19 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVActionPlanFrequencyTaskCompletionMetrics.h"
-#import "MHVActionPlanScheduledTaskCompletionMetrics.h"
+#import "MHVActionPlanFrequencyTaskCompletionMetricsV2.h"
 #import "MHVActionPlanTrackingPolicy.h"
+#import "MHVScheduleV2.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVActionPlanTaskInstance
+@protocol MHVActionPlanTaskV2
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVActionPlanTaskInstance : MHVModelBase
+@interface MHVActionPlanTaskV2 : MHVModelBase
 
-/* The Id of the task instance [optional]
- */
-@property(strong,nonatomic,nullable) NSString* identifier;
-/* The status of the task [optional]
- */
-@property(strong,nonatomic,nullable) NSString* status;
-/* The date that the task was started. Read-only [optional]
- */
-@property(strong,nonatomic,nullable) NSDate* startDate;
-/* The date that the task was ended. Read-only [optional]
- */
-@property(strong,nonatomic,nullable) NSDate* endDate;
-/* The ID of the organization that owns this task. Read-only [optional]
- */
-@property(strong,nonatomic,nullable) NSString* organizationId;
-/* The name of the organization that owns this task. Read-only [optional]
- */
-@property(strong,nonatomic,nullable) NSString* organizationName;
 /* The friendly name of the task [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;
@@ -92,10 +74,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* completionType;
 /* Completion metrics for frequency based tasks [optional]
  */
-@property(strong,nonatomic,nullable) MHVActionPlanFrequencyTaskCompletionMetrics* frequencyTaskCompletionMetrics;
-/* Completion metrics for schedule based tasks [optional]
+@property(strong,nonatomic,nullable) MHVActionPlanFrequencyTaskCompletionMetricsV2* frequencyTaskCompletionMetrics;
+/* Schedules for when a task should be completed. [optional]
  */
-@property(strong,nonatomic,nullable) MHVActionPlanScheduledTaskCompletionMetrics* scheduledTaskCompletionMetrics;
+@property(strong,nonatomic,nullable) NSArray<MHVScheduleV2>* schedules;
 
 @end
 

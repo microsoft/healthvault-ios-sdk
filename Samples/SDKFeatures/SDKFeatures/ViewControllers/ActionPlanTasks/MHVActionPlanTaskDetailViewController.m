@@ -22,7 +22,7 @@
 @interface MHVActionPlanTaskDetailViewController ()
 
 @property (nonatomic, strong) NSString *taskId;
-@property (nonatomic, strong) MHVActionPlanTaskInstance *task;
+@property (nonatomic, strong) MHVActionPlanTaskInstanceV2 *task;
 @property (nonatomic, strong) MHVConnection *connection;
 
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
@@ -57,7 +57,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.task = [[MHVActionPlanTaskInstance alloc] init];
+    self.task = [[MHVActionPlanTaskInstanceV2 alloc] init];
     
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = @"Task Details";
@@ -69,7 +69,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient actionPlanTasksDeleteActionPlanTasksByIdWithActionPlanTaskId:self.taskId completion:^(MHVSystemObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksDeleteWithActionPlanTaskId:self.taskId completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
@@ -89,7 +89,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient actionPlanTasksGetActionPlanTaskByIdWithActionPlanTaskId:self.taskId completion:^(MHVActionPlanTaskInstance * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksGetByIdWithActionPlanTaskId:self.taskId completion:^(MHVActionPlanTaskInstanceV2 * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
@@ -119,7 +119,7 @@
     self.task.status = self.statusValue.text;
     self.task.shortDescription = self.shortDescriptionValue.text;
     
-    [self.connection.remoteMonitoringClient actionPlanTasksPatchActionPlanTasksWithActionPlanTask:self.task completion:^(MHVActionPlanTasksResponseActionPlanTaskInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksUpdateWithActionPlanTask:self.task completion:^(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {

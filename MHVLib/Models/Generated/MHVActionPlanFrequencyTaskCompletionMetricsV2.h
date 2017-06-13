@@ -1,5 +1,5 @@
 //
-// MHVActionPlanFrequencyTaskCompletionMetrics.h
+// MHVActionPlanFrequencyTaskCompletionMetricsV2.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -29,12 +29,12 @@
 #import "MHVModelBase.h"
 
 
-@protocol MHVActionPlanFrequencyTaskCompletionMetrics
+@protocol MHVActionPlanFrequencyTaskCompletionMetricsV2
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVActionPlanFrequencyTaskCompletionMetrics : MHVModelBase
+@interface MHVActionPlanFrequencyTaskCompletionMetricsV2 : MHVModelBase
 
 /* The window in which the occurrences must be completed [optional]
  */
@@ -42,12 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 /* The number of times the Task has to be completed [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* occurrenceCount;
-/* The reminder state of the task [optional]
- */
-@property(strong,nonatomic,nullable) NSString* reminderState;
-/* The days that this will show for the user              Expected values: { 'Unknown', 'Everyday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' } [optional]
- */
-@property(strong,nonatomic,nullable) NSArray<NSString*>* scheduledDays;
 
 @end
 

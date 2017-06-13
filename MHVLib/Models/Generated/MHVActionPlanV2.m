@@ -1,5 +1,5 @@
 //
-// MHVOnboardingRequest.m
+// MHVActionPlanV2.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVOnboardingRequest.h"
+#import "MHVActionPlanV2.h"
 
-@implementation MHVOnboardingRequest
+@implementation MHVActionPlanV2
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"friendlyName": @"friendlyName", @"applicationPatientId": @"applicationPatientId", @"secretQuestion": @"secretQuestion", @"secretAnswer": @"secretAnswer", @"firstName": @"firstName", @"lastName": @"lastName", @"email": @"email", @"zipCode": @"zipCode", @"state": @"state", @"country": @"country", @"birthday": @"birthday", @"gender": @"gender", @"weight": @"weight", @"height": @"height", @"actionPlanTemplateIds": @"actionPlanTemplateIds", @"conditions": @"conditions" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"descriptionText": @"description", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"category": @"category", @"objectives": @"objectives", @"associatedTasks": @"associatedTasks" }];
 }
  */
 
@@ -60,22 +60,13 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"friendlyName": @"friendlyName",
-            @"applicationPatientId": @"applicationPatientId",
-            @"secretQuestion": @"secretQuestion",
-            @"secretAnswer": @"secretAnswer",
-            @"firstName": @"firstName",
-            @"lastName": @"lastName",
-            @"email": @"email",
-            @"zipCode": @"zipCode",
-            @"state": @"state",
-            @"country": @"country",
-            @"birthday": @"birthday",
-            @"gender": @"gender",
-            @"weight": @"weight",
-            @"height": @"height",
-            @"actionPlanTemplateIds": @"actionPlanTemplateIds",
-            @"conditions": @"conditions"
+            @"name": @"name",
+            @"descriptionText": @"description",
+            @"imageUrl": @"imageUrl",
+            @"thumbnailImageUrl": @"thumbnailImageUrl",
+            @"category": @"category",
+            @"objectives": @"objectives",
+            @"associatedTasks": @"associatedTasks"
         }];
     });
     return names;
@@ -89,7 +80,11 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-                    }];
+            
+              @"objectives": [MHVObjective class],
+
+              @"associatedTasks": [MHVActionPlanTaskV2 class]
+        }];
     });
     return types;
 }

@@ -1,5 +1,5 @@
 //
-// MHVSleepsSleepSummary.m
+// MHVActionPlansResponseActionPlanInstanceV2_.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVSleepsSleepSummary.h"
+#import "MHVActionPlansResponseActionPlanInstanceV2_.h"
 
-@implementation MHVSleepsSleepSummary
+@implementation MHVActionPlansResponseActionPlanInstanceV2_
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"bedtime": @"bedtime", @"fallAsleepDuration": @"fallAsleepDuration", @"wakeupTime": @"wakeupTime", @"sleepDuration": @"sleepDuration" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"plans": @"plans", @"nextLink": @"nextLink" }];
 }
  */
 
@@ -60,10 +60,8 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"bedtime": @"bedtime",
-            @"fallAsleepDuration": @"fallAsleepDuration",
-            @"wakeupTime": @"wakeupTime",
-            @"sleepDuration": @"sleepDuration"
+            @"plans": @"plans",
+            @"nextLink": @"nextLink"
         }];
     });
     return names;
@@ -77,7 +75,9 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-                    }];
+            
+              @"plans": [MHVActionPlanInstanceV2 class],
+        }];
     });
     return types;
 }

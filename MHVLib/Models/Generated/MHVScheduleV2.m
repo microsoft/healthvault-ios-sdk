@@ -1,5 +1,5 @@
 //
-// MHVActionPlanInstance.m
+// MHVScheduleV2.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanInstance.h"
+#import "MHVScheduleV2.h"
 
-@implementation MHVActionPlanInstance
+@implementation MHVScheduleV2
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"identifier": @"id", @"status": @"status", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"associatedTasks": @"associatedTasks", @"name": @"name", @"descriptionText": @"description", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"category": @"category", @"objectives": @"objectives" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"reminderState": @"reminderState", @"scheduledDays": @"scheduledDays", @"scheduledTime": @"scheduledTime" }];
 }
  */
 
@@ -60,17 +60,9 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"identifier": @"id",
-            @"status": @"status",
-            @"organizationId": @"organizationId",
-            @"organizationName": @"organizationName",
-            @"associatedTasks": @"associatedTasks",
-            @"name": @"name",
-            @"descriptionText": @"description",
-            @"imageUrl": @"imageUrl",
-            @"thumbnailImageUrl": @"thumbnailImageUrl",
-            @"category": @"category",
-            @"objectives": @"objectives"
+            @"reminderState": @"reminderState",
+            @"scheduledDays": @"scheduledDays",
+            @"scheduledTime": @"scheduledTime"
         }];
     });
     return names;
@@ -85,9 +77,7 @@
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
             
-              @"associatedTasks": [MHVActionPlanTaskInstance class],
-
-              @"objectives": [MHVObjective class]
+              @"scheduledTime": [MHVTime class]
         }];
     });
     return types;

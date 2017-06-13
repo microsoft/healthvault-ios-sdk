@@ -37,7 +37,7 @@ static NSString *const kDefaultRestUrlString = @"https://data.microsofthealth.ne
 /*
  Default version header for Rest API calls
  */
-static NSString *const kDefaultRestVersion = @"1.0-preview";
+static NSString *const kDefaultRestVersion = @"1.0-preview2";
 
 /*
  Default URL for HealthVault application
