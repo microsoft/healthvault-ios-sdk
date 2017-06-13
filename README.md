@@ -1,36 +1,40 @@
+# healthvault-ios-sdk
+
+[![CI Status](https://microsofthealth.visualstudio.com/_apis/public/build/definitions/f8da5110-49b1-4e9f-9022-2f58b6124ff9/194/badge)]
+[![Version](https://img.shields.io/cocoapods/v/healthvault-ios-sdk.svg?style=flat)](http://cocoapods.org/pods/healthvault-ios-sdk)
+[![License](https://img.shields.io/cocoapods/l/healthvault-ios-sdk.svg?style=flat)](http://cocoapods.org/pods/healthvault-ios-sdk)
+[![Platform](https://img.shields.io/cocoapods/p/healthvault-ios-sdk.svg?style=flat)](http://cocoapods.org/pods/healthvault-ios-sdk)
+
 # About
-MHVLib is a static iOS library you use to build applications for Microsoft HealthVault.  MHVLib was originally developed for and is actively used by the [Microsoft HealthVault for iPhone app](https://itunes.apple.com/us/app/microsoft-healthvault/id546835834?mt=8).
+**healthvault-ios-sdk** is a static iOS library you use to build applications that leverage the Microsoft HealthVault platform. **healthvault-ios-sdk** is actively used by the [Microsoft HealthVault for iPhone app](https://itunes.apple.com/us/app/microsoft-healthvault/id546835834?mt=8).
 
-MHVLib introduces a rich new HealthVault iOS client programming model.  It includes built in serialization of most HealthVault data types, and built in support for HealthVault methods. You no longer need to manually parse or create XML. 
+**healthvault-ios-sdk** introduces a rich new HealthVault iOS client programming model. It includes built in serialization of most HealthVault data types, and built in support for HealthVault methods.
 
-HealthVault data types are automatically serialized/deserialized from their native XML into Objective-C objects. These objects include programming model to assist with data manipulation. MHVLib also supplies support for local HealthVault data storage, and in the future, synchronization. 
+HealthVault data types are automatically serialized/deserialized from their native XML into Objective-C objects. These objects include programming model to assist with data manipulation. 
 
+## Example
 
-# 64 Bit Support
-The latest iOS SDK version supports both 32 and 64 bit applications.
+The example project demonstrates how to:
 
+* Authenticate with HealthVault
+* View, create, update and delete most core HealthVault types, including blood pressure, medication, conditions, procedures, immunizations, blood glucose, exercise and diet.
+* manage files - view, download and upload files in HealthVault.
+* de-authorize your application from HealthVault.
 
-# Sample Code
-See MHVLib/Samples/HelloHealthVault for sample code. 
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## HelloHealthVault
-* Samples/HelloHealthVault.xcworkspace
+## Requirements
 
-The HelloHealthVault sample demonstrates how to add, remove, update and query Health information to and from HealthVault. 
-To run the sample, make sure you load the WORKSPACE - (HelloHealthVault.xcworkspace) -  so that dependencies and libraries are correctly pulled in. 
+## Installation
 
-HelloHealthVault uses a pre-defined HealthVault application.
-You can create your own applications using the HealthVault Application Configuration Center.
+healthvault-ios-sdk is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
 
-## SDK Features Sample App
+```ruby
+pod "healthvault-ios-sdk"
+```
 
-* Samples/SDKFeatures.xcworkspace
-
-The rich SDKFeatures sample demonstrates how to view, create, update and delete most core HealthVault types, including blood pressure, medication, conditions, procedures, immunizations, blood glucose, exercise and diet. It also shows you how to manage files - view, download and upload files in HealthVault. 
-
-SDKFeatures also demonstrates how to de-authorize your application from HealthVault. 
-
-# Using MHVLib with your Project
+## Using MHVLib with your Project
 
 You should link MHVLib as a static library into your project.
  
@@ -84,34 +88,10 @@ Add the following flags within the "Header Search Paths" section:
     * Add Relative Path to the MHVLib directory. E.g. HealthVault samples use the path:
       * ../../MHVLib/**       [Note: Xcode may add the ** for you by default - i.e. search all subdirectories of the path]
       * OR: ../HVMobile_VNext/**
-#### ClientSettings.xml
-  * MHVLib loads settings from ClientSettings.xml. Please add ClientSettings.xml to your project. 
-  * You can leverage the one included with the HelloHealthVault sample.
 
-```XML
-<?xml version="1.0" encoding="utf-8" ?>
-<clientSettings>
-    <!--
-        HealthVault Application ID
-     This is the app ID for the default sample Hello World application. 
-     Create your own application athttp://config.healthvault-ppe.com
-     -->
-	<masterAppID>cf36aef7-5d87-4688-88b2-f9b57c086d7d</masterAppID>
-    <!--Application name -->
-    <appName>Hello Healthvault</appName>
-    <!--
-        Url for HealthVault service calls - set up for Pre-Production below
-     -->
-	<serviceUrl>https://platform.healthvault-ppe.com/platform/wildcat.ashx</serviceUrl>
-    <!--
-        HealthVault Shell - used during app provisioning on the device
-     -->
-	<shellUrl>https://account.healthvault-ppe.com</shellUrl>
-</clientSettings>
-```
 
 # Contribute
-Contributions to HVMobile_VNext are welcome.  Here is how you can contribute:
+Contributions to **healthvault-ios-sdk** are welcome.  Here is how you can contribute:
 
 * [Submit bugs](https://github.com/Microsoft/HVMobile_VNext/issues) and help us verify fixes
 * [Submit pull requests](https://github.com/Microsoft/HVMobile_VNext/pulls) for bug fixes and features
