@@ -56,9 +56,6 @@ static MHVVocabularyIdentifier* s_vocabForMeals;
     [things addObject:[MHVDietaryIntake makeDinnerDessertFor:dinnerTime]];
 
     return things;
-
-LError:
-    return nil;
 }
 
 +(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date

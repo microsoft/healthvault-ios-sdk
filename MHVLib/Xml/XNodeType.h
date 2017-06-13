@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-enum XNodeType 
+typedef NS_ENUM(NSInteger, XNodeType)
 {
     XUnknown = 0,
     XElement = 1,
@@ -40,5 +40,5 @@ enum XNodeType
     XmlDeclaration = 17
 };
 
-NSString* XNodeTypeToString(enum XNodeType type);
-BOOL XIsTextualNodeType(enum XNodeType type);
+NSString* XNodeTypeToString(XNodeType type);
+BOOL XIsTextualNodeType(XNodeType type);

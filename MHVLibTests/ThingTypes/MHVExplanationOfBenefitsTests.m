@@ -40,7 +40,7 @@ describe(@"MHVExplanationOfBenefits", ^
                                 [[eob.submittedBy.description should] equal:@"General Family Practice"];
                                 [[eob.provider.description should] equal:@"Darryl Doctor"];
                                 [[eob.currency.description should] equal:@"US Dollar"];
-                                [[theValue(eob.claimTotals.chargedAmount.value) should] equal:theValue(360)];
+                                [[theValue(eob.claimTotals.chargedAmount.value) should] equal:theValue(360.5)];
                                 [[theValue(eob.services.count) should] equal:theValue(3)];
                             });
                      });

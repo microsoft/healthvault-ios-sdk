@@ -22,18 +22,6 @@
 #import "NSError+MHVError.h"
 #import "MHVHttpServiceResponse.h"
 
-/// OK status
-#define RESPONSE_OK  0;
-
-/// App does not exist, app is invalid, app is not active or calling IP is invalid.
-#define RESPONSE_INVALID_APPLICATION 6
-
-/// Represents security problem for current app.
-#define RESPONSE_ACCESS_DENIED 8
-
-/// Represents that current token has been expired and should be updated.
-#define RESPONSE_AUTH_SESSION_TOKEN_EXPIRED 65
-
 @implementation MHVServiceResponse
 
 - (instancetype)initWithWebResponse:(MHVHttpServiceResponse *)response isXML:(BOOL)isXML
@@ -84,7 +72,7 @@
     
     if (status)
     {
-        if (status.code == RESPONSE_AUTH_SESSION_TOKEN_EXPIRED)
+        if (status.code == MHVServerStatusCodeAuthSessionTokenExpired)
         {
             self.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"The Authorization token has expired."];
         }

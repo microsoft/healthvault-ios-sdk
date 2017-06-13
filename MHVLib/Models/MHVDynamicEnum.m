@@ -26,7 +26,7 @@ static NSArray<NSString *> *prefixList = nil;
 
 + (void)initialize
 {
-    prefixList = @[@"KHR", @"MSH"];
+    prefixList = @[@"MHV"];
 }
 
 - (NSDictionary *)enumMap
@@ -54,9 +54,9 @@ static NSArray<NSString *> *prefixList = nil;
 {
     MHVASSERT_TRUE(![[self stripPrefix:NSStringFromClass([self class])] isEqualToString:NSStringFromClass([self class])], @"Prefix on dynamic enum class not recognized!");
     
-    // TODO: Enums are allowed to have an optional prefix of 'KHR'/'MSH', this is to get around a strange apple
+    // TODO: Enums are allowed to have an optional prefix of 'MHV', this is to get around a strange apple
     // bug where enum names collide with private library methods. Because of this we strip the the prefix
-    // if it exists. We should go through and standardize all of the enums to use the KHR/MSH prefix.
+    // if it exists. 
     NSString *selectorName = [self stripPrefix:NSStringFromSelector(selector)];
     
     if (selectorName.length > 0 && ![selectorName isEqualToString:@"enumMap"])

@@ -21,7 +21,7 @@
 
 #import "MHVJsonEnumProtocol.h"
 
-static NSString *kMSHEnumSerializeAsNumber = @"SerializeAsNumber";
+static NSString *kEnumSerializeAsNumber = @"SerializeAsNumber";
 
 @interface MHVEnum : NSObject<MHVJsonEnumProtocol, NSCopying, NSCoding>
 

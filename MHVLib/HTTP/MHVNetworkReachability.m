@@ -40,9 +40,6 @@ BOOL MHVIsHostNetworkReachable(NSString* hostName)
     return ((networkFlags & kSCNetworkFlagsReachable) != 0 &&
             (networkFlags & kSCNetworkFlagsConnectionRequired) == 0
             );
-    
-LError:
-    return FALSE;
 }
 
 static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info)
@@ -93,7 +90,7 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     MHVCHECK_SELF;
     
     m_hostName = hostName;
-
+    
     const char* szHostName = [hostName cStringUsingEncoding:NSUTF8StringEncoding]; // buffer is owned by NSString
     MHVCHECK_NOTNULL(szHostName);
     
@@ -143,9 +140,6 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     m_isMonitoring = TRUE;
     
     return TRUE;
-    
-LError:
-    return FALSE;
 }
 
 -(BOOL)stopMonitoring
@@ -161,9 +155,6 @@ LError:
     m_isMonitoring = FALSE;
     
     return TRUE;
-    
-LError:
-    return FALSE;
 }
 
 -(void)broadcastStatusChange:(SCNetworkConnectionFlags)flags
@@ -185,19 +176,17 @@ LError:
 
 -(void)addObserver:(id)notificationObserver selector:(SEL)notificationSelector
 {
-    [[NSNotificationCenter defaultCenter]
-     addObserver:notificationObserver
-     selector:notificationSelector
-     name:MHVHostReachabilityNotificationName
-     object:self];
+    [[NSNotificationCenter defaultCenter] addObserver:notificationObserver
+                                             selector:notificationSelector
+                                                 name:MHVHostReachabilityNotificationName
+                                               object:self];
 }
 
 -(void)removeObserver:(id)notificationObserver
 {
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:notificationObserver
-     name:MHVHostReachabilityNotificationName
-     object:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:notificationObserver
+                                                    name:MHVHostReachabilityNotificationName
+                                                  object:self];
 }
 
 @end
@@ -219,7 +208,7 @@ LError:
     }
     
     return SCNetworkReachabilityUnscheduleFromRunLoop(m_hostRef, runLoop, kCFRunLoopDefaultMode);
-
+    
 }
 
 @end

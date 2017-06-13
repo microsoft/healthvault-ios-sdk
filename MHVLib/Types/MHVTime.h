@@ -69,7 +69,7 @@
 
 - (NSDate *)toDate;
 - (BOOL)isValid;
-- (id) newDeepClone;
+- (id)newDeepClone;
 - (MHVClientResult *)validate;
 
 // -------------------------

@@ -18,7 +18,7 @@
 
 #include "XNodeType.h"
 
-NSString* XNodeTypeToString(enum XNodeType type)
+NSString* XNodeTypeToString(XNodeType type)
 {
     switch (type) 
     {
@@ -50,7 +50,7 @@ NSString* XNodeTypeToString(enum XNodeType type)
     return @"Unknown";
 }
 
-BOOL XIsTextualNodeType(enum XNodeType type)
+BOOL XIsTextualNodeType(XNodeType type)
 {
     switch(type)
     {

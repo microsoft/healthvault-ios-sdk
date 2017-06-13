@@ -20,6 +20,43 @@
 
 @class MHVHttpServiceResponse;
 
+typedef NS_ENUM (NSInteger, MHVServerStatusCode)
+{
+    MHVServerStatusCodeOK = 0,
+    MHVServerStatusCodeFailed = 1,
+    MHVServerStatusCodeBadHttp = 2,
+    MHVServerStatusCodeInvalidXml = 3,
+    MHVServerStatusCodeInvalidRequestIntegrity = 4,
+    MHVServerStatusCodeBadMethod = 5,
+    
+    /// 6 = App does not exist, app is invalid, app is not active or calling IP is invalid.
+    MHVServerStatusCodeInvalidApp = 6,
+    MHVServerStatusCodeCredentialTokenExpired = 7,
+    
+    /// 8 = Security problem for current app.
+    MHVServerStatusCodeInvalidToken = 8,
+    MHVServerStatusCodeInvalidPerson = 9,
+    MHVServerStatusCodeInvalidRecord = 10,
+    MHVServerStatusCodeAccessDenied = 11,
+    MHVServerStatusCodeInvalidThing = 13,
+    MHVServerStatusCodeInvalidFilter = 15,
+    MHVServerStatusCodeInvalidApplicationAuthorization = 18,
+    MHVServerStatusCodeTypeIDNotFound = 19,
+    MHVServerStatusCodeDuplicateCredentialFound = 22,
+    MHVServerStatusCodeInvalidRecordState = 37,
+    MHVServerStatusCodeRequestTimedOut = 49,
+    MHVServerStatusCodeVersionStampMismatch = 61,
+    
+    /// 65 = Token has been expired and should be updated.
+    MHVServerStatusCodeAuthSessionTokenExpired = 65,
+    MHVServerStatusCodeRecordQuotaExceeded = 68,
+    MHVServerStatusCodeApplicationLimitExceeded = 93,
+    MHVServerStatusCodeVocabAccessDenied = 130,
+    MHVServerStatusCodeInvalidAge = 157,
+    MHVServerStatusCodeInvalidIPAddress = 158,
+    MHVServerStatusCodeMaxRecordsExceeded = 160
+};
+
 @interface MHVServiceResponse : NSObject
 
 // Gets the http response code...
