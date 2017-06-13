@@ -13,4 +13,7 @@
 #ifdef __OBJC__
     @import UIKit;
     @import Foundation;
+
+    #import "MHVFeaturesConstants.h"
+    #import "MHVFeaturesConfiguration.h"
 #endif

@@ -1,22 +1,36 @@
 {
   "name": "healthvault-ios-sdk",
-  "version": "0.1.0",
+  "version": "3.0.0.0",
   "summary": "A short description of healthvault-ios-sdk.",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/namalu/healthvault-ios-sdk",
+  "homepage": "https://github.com/Microsoft/healthvault-ios-sdk",
   "license": {
-    "type": "MIT",
+    "type": "APACHE",
     "file": "LICENSE"
   },
   "authors": {
     "namalu": "namalu@microsoft.com"
   },
   "source": {
-    "git": "https://github.com/namalu/healthvault-ios-sdk.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/Microsoft/healthvault-ios-sdk.git",
+    "tag": "3.0.0.0"
   },
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "healthvault-ios-sdk/Classes/**/*"
+  "source_files": "healthvault-ios-sdk/Classes/**/*",
+  "requires_arc": true,
+  "libraries": "xml2",
+  "xcconfig": {
+    "HEADER_SEARCH_PATHS": "$(SDKROOT)/usr/include/libxml2",
+    "OTHER_LDFLAGS": "-lxml2",
+    "GCC_NO_COMMON_BLOCKS": "NO"
+  },
+  "frameworks": [
+    "UIKit",
+    "Security",
+    "MobileCoreServices",
+    "SystemConfiguration"
+  ],
+  "public_header_files": "Pod/Classes/MHVLib.h"
 }

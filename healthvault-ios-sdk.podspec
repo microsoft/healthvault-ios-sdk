@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'healthvault-ios-sdk'
-  s.version          = '0.1.0'
+  s.version          = '3.0.0.0'
   s.summary          = 'A short description of healthvault-ios-sdk.'
 
 # This description is used to generate tags and improve search results.
@@ -21,22 +21,26 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/namalu/healthvault-ios-sdk'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.homepage         = 'https://github.com/Microsoft/healthvault-ios-sdk'
+  s.license          = { :type => 'APACHE', :file => 'LICENSE' }
   s.author           = { 'namalu' => 'namalu@microsoft.com' }
-  s.source           = { :git => 'https://github.com/namalu/healthvault-ios-sdk.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => 'https://github.com/Microsoft/healthvault-ios-sdk.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'healthvault-ios-sdk/Classes/**/*'
-  
+
+    s.requires_arc     = true
+    s.libraries        = "xml2"
+    s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2', 'GCC_NO_COMMON_BLOCKS' => 'NO'}
+
+    s.frameworks = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
+
   # s.resource_bundles = {
   #   'healthvault-ios-sdk' => ['healthvault-ios-sdk/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.public_header_files = 'Pod/Classes/MHVLib.h'
+  # s.frameworks = 'UIKit'
+
 end
