@@ -15,7 +15,6 @@
 
 #import "MHVViewController.h"
 #import "MHVTypeListViewController.h"
-#import "healthvault_ios_sdk_Example-Swift.h"
 
 @interface MHVViewController ()
 

@@ -235,7 +235,7 @@
 		A5DF65101EF0527B009F5968 /* MHVUIAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVUIAlert.m; sourceTree = "<group>"; };
 		A5DF65111EF0527B009F5968 /* MHVWeightFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVWeightFactory.h; sourceTree = "<group>"; };
 		A5DF65121EF0527B009F5968 /* MHVWeightFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVWeightFactory.m; sourceTree = "<group>"; };
-		A5DF65131EF0527B009F5968 /* healthvault-ios-sdk-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "healthvault-ios-sdk-Bridging-Header.h"; sourceTree = "<group>"; };
+		A5DF65131EF0527B009F5968 /* healthvault_ios_sdk_Example-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "healthvault_ios_sdk_Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		A5DF652F1EF052DD009F5968 /* MHVShellAuthServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVShellAuthServiceTests.m; sourceTree = "<group>"; };
 		A5DF65311EF052DD009F5968 /* MHVThingClientBlobFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingClientBlobFileTests.m; sourceTree = "<group>"; };
 		A5DF65321EF052DD009F5968 /* MHVThingClientBlobTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingClientBlobTests.m; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 				A5DF65101EF0527B009F5968 /* MHVUIAlert.m */,
 				A5DF65111EF0527B009F5968 /* MHVWeightFactory.h */,
 				A5DF65121EF0527B009F5968 /* MHVWeightFactory.m */,
-				A5DF65131EF0527B009F5968 /* healthvault-ios-sdk-Bridging-Header.h */,
+				A5DF65131EF0527B009F5968 /* healthvault_ios_sdk_Example-Bridging-Header.h */,
 				A5DF649A1EF051FA009F5968 /* ViewControllers */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -1029,7 +1029,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "healthvault-ios-sdk/healthvault-ios-sdk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "healthvault-ios-sdk/healthvault_ios_sdk_Example-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1046,7 +1046,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "healthvault-ios-sdk/healthvault-ios-sdk-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "healthvault-ios-sdk/healthvault_ios_sdk_Example-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};

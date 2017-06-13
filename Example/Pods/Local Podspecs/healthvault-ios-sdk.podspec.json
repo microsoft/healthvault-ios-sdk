@@ -16,21 +16,19 @@
     "tag": "3.0.0.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "10.0"
   },
   "source_files": "healthvault-ios-sdk/Classes/**/*",
   "requires_arc": true,
   "libraries": "xml2",
   "xcconfig": {
-    "HEADER_SEARCH_PATHS": "$(SDKROOT)/usr/include/libxml2",
-    "OTHER_LDFLAGS": "-lxml2",
-    "GCC_NO_COMMON_BLOCKS": "NO"
+    "HEADER_SEARCH_PATHS": "$(inherited) $(SDKROOT)/usr/include/libxml2",
+    "OTHER_LDFLAGS": "-lxml2"
   },
   "frameworks": [
     "UIKit",
     "Security",
     "MobileCoreServices",
     "SystemConfiguration"
-  ],
-  "public_header_files": "Pod/Classes/MHVLib.h"
+  ]
 }
