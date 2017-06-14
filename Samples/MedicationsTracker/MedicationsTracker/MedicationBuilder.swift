@@ -78,6 +78,17 @@ class MedicationBuilder
         return true
     }
     
+    func updateTaskConnection(taskThingId: String) -> Bool
+    {
+        let relatedThing = MHVRelatedThing.init()
+        relatedThing.thingID = taskThingId
+        relatedThing.relationship = "TaskID"
+        
+        thing?.data.common.relatedThings.add(relatedThing)
+        
+        return true
+    }
+    
     func constructMedication() -> MHVThing
     {
         return thing!

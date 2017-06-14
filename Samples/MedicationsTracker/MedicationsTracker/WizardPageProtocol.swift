@@ -25,5 +25,6 @@ protocol WizardPageProtocol
      * @param medBuilder: Builds the medication object as data is entered
      * @param actionPlanBuilder: Builds the action plan object as data is entered
      */
-    init(transitioner: Transitioner, medBuilder: MedicationBuilder, actionPlanBuilder: ActionPlanTaskBuilder)
+    init(transitioner: Transitioner, medBuilder: MedicationBuilder, actionPlan: ActionPlan,
+         actionPlanTaskBuilder: ActionPlanTaskBuilder)
 }

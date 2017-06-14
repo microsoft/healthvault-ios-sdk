@@ -41,9 +41,7 @@
 		ED5F67221EEF6442001E75D7 /* ActionPlanTaskBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67211EEF6442001E75D7 /* ActionPlanTaskBuilder.swift */; };
 		ED5F67241EEF6495001E75D7 /* Transitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67231EEF6495001E75D7 /* Transitioner.swift */; };
 		ED5F67261EF0525F001E75D7 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67251EF0525F001E75D7 /* StateController.swift */; };
-		ED5F67391EF055F8001E75D7 /* CreateActionPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F67371EF055F8001E75D7 /* CreateActionPlanViewController.swift */; };
-		ED5F673A1EF055F8001E75D7 /* CreateActionPlanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED5F67381EF055F8001E75D7 /* CreateActionPlanViewController.xib */; };
-		ED5F673C1EF05DAD001E75D7 /* ActionPlanCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F673B1EF05DAD001E75D7 /* ActionPlanCreator.swift */; };
+		ED5F673C1EF05DAD001E75D7 /* ActionPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5F673B1EF05DAD001E75D7 /* ActionPlan.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,9 +104,7 @@
 		ED5F67211EEF6442001E75D7 /* ActionPlanTaskBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPlanTaskBuilder.swift; sourceTree = "<group>"; };
 		ED5F67231EEF6495001E75D7 /* Transitioner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitioner.swift; sourceTree = "<group>"; };
 		ED5F67251EF0525F001E75D7 /* StateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
-		ED5F67371EF055F8001E75D7 /* CreateActionPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateActionPlanViewController.swift; sourceTree = "<group>"; };
-		ED5F67381EF055F8001E75D7 /* CreateActionPlanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateActionPlanViewController.xib; sourceTree = "<group>"; };
-		ED5F673B1EF05DAD001E75D7 /* ActionPlanCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPlanCreator.swift; sourceTree = "<group>"; };
+		ED5F673B1EF05DAD001E75D7 /* ActionPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPlan.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,7 +235,6 @@
 				ED41368F1EE75B4600E15555 /* EditMedicationViewController.swift */,
 				ED4136951EE75B4600E15555 /* MedicationListViewController.swift */,
 				ED4136921EE75B4600E15555 /* HVViewController.swift */,
-				ED5F67371EF055F8001E75D7 /* CreateActionPlanViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -247,7 +242,6 @@
 		ED5F670F1EE9E6FA001E75D7 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				ED5F67381EF055F8001E75D7 /* CreateActionPlanViewController.xib */,
 				ED41368E1EE75B4600E15555 /* AddMedicationViewController.xib */,
 				ED4136901EE75B4600E15555 /* EditMedicationViewController.xib */,
 				ED4136931EE75B4600E15555 /* HVViewController.xib */,
@@ -259,12 +253,12 @@
 		ED5F67101EEA0884001E75D7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				ED4136941EE75B4600E15555 /* MedicationBuilder.swift */,
 				ED4136971EE75B4600E15555 /* MedicationVocabSearcher.swift */,
 				ED5F67091EE9DA11001E75D7 /* FormSubmission.swift */,
 				ED5F670B1EE9DA48001E75D7 /* HVUnitTypes.swift */,
 				ED5F671F1EEF6314001E75D7 /* WizardPageProtocol.swift */,
-				ED5F673B1EF05DAD001E75D7 /* ActionPlanCreator.swift */,
+				ED4136941EE75B4600E15555 /* MedicationBuilder.swift */,
+				ED5F673B1EF05DAD001E75D7 /* ActionPlan.swift */,
 				ED5F67211EEF6442001E75D7 /* ActionPlanTaskBuilder.swift */,
 				ED5F67231EEF6495001E75D7 /* Transitioner.swift */,
 				ED5F67251EF0525F001E75D7 /* StateController.swift */,
@@ -382,7 +376,6 @@
 				ED4136421EE7538B00E15555 /* LaunchScreen.storyboard in Resources */,
 				ED41369A1EE75B4600E15555 /* AddMedicationViewController.xib in Resources */,
 				ED41369F1EE75B4600E15555 /* HVViewController.xib in Resources */,
-				ED5F673A1EF055F8001E75D7 /* CreateActionPlanViewController.xib in Resources */,
 				ED41363F1EE7538B00E15555 /* Assets.xcassets in Resources */,
 				ED41369C1EE75B4600E15555 /* EditMedicationViewController.xib in Resources */,
 				ED41363D1EE7538B00E15555 /* Main.storyboard in Resources */,
@@ -414,7 +407,6 @@
 				ED41369E1EE75B4600E15555 /* HVViewController.swift in Sources */,
 				ED4136A11EE75B4600E15555 /* MedicationListViewController.swift in Sources */,
 				ED41369D1EE75B4600E15555 /* HVFeaturesConfiguration.swift in Sources */,
-				ED5F67391EF055F8001E75D7 /* CreateActionPlanViewController.swift in Sources */,
 				ED5F67221EEF6442001E75D7 /* ActionPlanTaskBuilder.swift in Sources */,
 				ED5F66F61EE89C6E001E75D7 /* PickerTextField.swift in Sources */,
 				ED5F670C1EE9DA48001E75D7 /* HVUnitTypes.swift in Sources */,
@@ -429,7 +421,7 @@
 				ED4136A31EE75B4600E15555 /* MedicationVocabSearcher.swift in Sources */,
 				ED41369B1EE75B4600E15555 /* EditMedicationViewController.swift in Sources */,
 				ED5F670A1EE9DA11001E75D7 /* FormSubmission.swift in Sources */,
-				ED5F673C1EF05DAD001E75D7 /* ActionPlanCreator.swift in Sources */,
+				ED5F673C1EF05DAD001E75D7 /* ActionPlan.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
