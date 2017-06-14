@@ -33,7 +33,7 @@ struct Transitioner
      * Sets the next view controller and defines what the 'next' button does on-click
      * @param: nextView: The view to transition to
      */
-    func setNext(nextView: ViewController)
+    func setNext(nextView: UIViewController)
     {
         
     }

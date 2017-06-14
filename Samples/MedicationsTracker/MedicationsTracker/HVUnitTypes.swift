@@ -35,3 +35,39 @@ struct HVUnitTypes
     
     static let freqUnit = ["times per day", "times per week", "times per month"]
 }
+
+enum ActionPlanWindowType: String
+{
+    case Unknown = "Unknown"
+    case None = "None"
+    case Daily = "Daily"
+    case Weekly = "Weekly"
+}
+
+enum ReminderState: String
+{
+    case Unknown = "Unknown"
+    case Off = "Off"
+    case Ontime = "OnTime"
+    case FiveMin = "Before5Minutes"
+    case TenMin = "Before10Minutes"
+    case FiveteenMin = "Before15Minutes"
+    case ThirtyMin = "Before30Minutes"
+    case OneHour = "Before1Hour"
+    case TwoHour = "Before2Hours"
+    case FourHour = "Before4Hours"
+    case EightHour = "Before8Hours"
+}
+
+enum ScheduledDays: String
+{
+    case Unknown = "Unknown"
+    case Everyday = "Everyday"
+    case Sun = "Sunday"
+    case Mon = "Monday"
+    case Tues = "Tuesday"
+    case Wed = "Wednesday"
+    case Thurs = "Thursday"
+    case Fri = "Friday"
+    case Sat = "Saturday"
+}
