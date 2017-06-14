@@ -146,9 +146,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:200 message:"OK",
 ///  code:0 message:"Error"
 ///
-/// @return MHVActionPlansResponseActionPlanInstanceV2_*
+/// @return MHVActionPlanInstanceV2*
 - (void)actionPlansUpdateWithActionPlan:(MHVActionPlanInstanceV2* )actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstanceV2_* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
 
 
