@@ -46,7 +46,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// 
 ///  @param goalsWrapper The collection of goal instances to create. 
 ///
-///  @returns NSObject*
+///  @returns MHVGoalsResponse*
 ///
 - (void)goalsCreateWithGoalsWrapper:(MHVGoalsWrapper* _Nonnull)goalsWrapper
     completion:(void(^_Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion
@@ -70,7 +70,6 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -78,9 +77,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoalsResponse class]
+                     resultClass:[MHVGoalsResponse class]
                       completion:completion];
 }
 
@@ -89,10 +87,10 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// 
 ///  @param goalId The identifier of the goal to delete. 
 ///
-///  @returns NSObject*
+///  @returns void
 ///
 - (void)goalsDeleteWithGoalId:(NSString* _Nonnull)goalId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
     // verify the required parameter 'goalId' is set
     if (goalId == nil)
@@ -102,7 +100,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
         {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"goalId"] };
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
-            completion(nil, error);
+            completion(error);
         }
     }
 
@@ -117,15 +115,12 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[NSObject class]
                       completion:completion];
 }
 
@@ -171,15 +166,13 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     }
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoalsResponse class]
+                     resultClass:[MHVGoalsResponse class]
                       completion:completion];
 }
 
@@ -211,15 +204,13 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     }
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoalsResponse class]
+                     resultClass:[MHVGoalsResponse class]
                       completion:completion];
 }
 
@@ -256,15 +247,13 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoal class]
+                     resultClass:[MHVGoal class]
                       completion:completion];
 }
 
@@ -297,7 +286,6 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:goal];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -305,9 +293,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoal class]
+                     resultClass:[MHVGoal class]
                       completion:completion];
 }
 
@@ -340,7 +327,6 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -348,9 +334,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"PATCH"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoalsResponse class]
+                     resultClass:[MHVGoalsResponse class]
                       completion:completion];
 }
 

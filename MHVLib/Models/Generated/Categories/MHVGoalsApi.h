@@ -41,11 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalsWrapper The collection of goal instances to create.
 /// 
-///  code:200 message:"OK",
 ///  code:201 message:"Created",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return MHVGoalsResponse*
 - (void)goalsCreateWithGoalsWrapper:(MHVGoalsWrapper* )goalsWrapper
     completion:(void(^_Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion;
 
@@ -55,13 +54,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalId The identifier of the goal to delete.
 /// 
-///  code:200 message:"OK",
 ///  code:204 message:"NoContent",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return 
 - (void)goalsDeleteWithGoalId:(NSString* )goalId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
 
 /// Get a collection of all goals

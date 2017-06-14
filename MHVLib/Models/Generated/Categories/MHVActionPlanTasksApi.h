@@ -43,11 +43,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanTask 
 /// 
-///  code:200 message:"OK",
 ///  code:201 message:"Created",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return MHVActionPlanTaskInstanceV2*
 - (void)actionPlanTasksCreateWithActionPlanTask:(MHVActionPlanTaskV2* )actionPlanTask
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
@@ -57,13 +56,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanTaskId 
 /// 
-///  code:200 message:"OK",
 ///  code:204 message:"NoContent",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return 
 - (void)actionPlanTasksDeleteWithActionPlanTaskId:(NSString* )actionPlanTaskId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
 
 /// Get a collection of task definitions
@@ -115,9 +113,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:200 message:"OK",
 ///  code:0 message:"Error"
 ///
-/// @return MHVActionPlanTasksResponseActionPlanTaskInstanceV2_*
+/// @return MHVActionPlanTaskInstanceV2*
 - (void)actionPlanTasksUpdateWithActionPlanTask:(MHVActionPlanTaskInstanceV2* )actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// 

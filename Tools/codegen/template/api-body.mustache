@@ -70,33 +70,28 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
     {{/queryParams}}
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     {{#bodyParam}}
     NSString *json = [MHVJsonSerializer serialize:{{paramName}}];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
     {{/bodyParam}}
-    {{^bodyParam}}
-    {{#formParams}}
-    {{#notFile}}
-    if ({{paramName}})
-    {
-        formParams[@"{{baseName}}"] = {{paramName}};
-    }
-    {{/notFile}}
-    {{#isFile}}
-    localVarFiles[@"{{paramName}}"] = {{paramName}};
-    {{/isFile}}
-    {{/formParams}}
-    {{/bodyParam}}
 
+    {{#returnBaseType}}
     [self requestWithPath:resourcePath
                       httpMethod:@"{{httpMethod}}"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[{{{returnBaseType}}} class]
+                     resultClass:[{{{returnBaseType}}} class]
                       completion:completion];
+    {{/returnBaseType}}
+    {{^returnBaseType}}
+    [self requestWithPath:resourcePath
+                      httpMethod:@"{{httpMethod}}"
+                      pathParams:pathParams
+                     queryParams:queryParams
+                            body:bodyParam
+                      completion:completion];
+    {{/returnBaseType}}
 }
 
 {{/operation}}

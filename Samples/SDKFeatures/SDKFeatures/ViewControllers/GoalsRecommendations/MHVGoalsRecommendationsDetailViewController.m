@@ -110,7 +110,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient goalRecommendationsAcknowledgeWithGoalRecommendationId:self.recommendationId completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalRecommendationsAcknowledgeWithGoalRecommendationId:self.recommendationId completion:^(NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
@@ -130,7 +130,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient goalRecommendationsDeleteWithGoalRecommendationId:self.recommendationId completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalRecommendationsDeleteWithGoalRecommendationId:self.recommendationId completion:^(NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
