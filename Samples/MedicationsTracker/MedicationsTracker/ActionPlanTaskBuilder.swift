@@ -25,7 +25,7 @@ class ActionPlanTaskBuilder
     {
         let takeMed = "Take \(med.name.text)"
         
-        // Set up tasks
+        // Set up task basics
         actionPlanTask = MHVActionPlanTaskV2.init()
         actionPlanTask!.name = takeMed
         if (med.dose.displayText ?? "").isEmpty
@@ -41,7 +41,6 @@ class ActionPlanTaskBuilder
         actionPlanTask!.taskType = "Other"
         actionPlanTask!.imageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE13a3S?ver=884e"
         actionPlanTask!.thumbnailImageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE12EQP?ver=cba6"
-        actionPlanTask!.data.common.relatedthing
         actionPlanTask!.trackingPolicy = createTrackingPolicy(med.name.text)
         
         return self
@@ -76,13 +75,18 @@ class ActionPlanTaskBuilder
     {
         let trackingPolicy = MHVActionPlanTrackingPolicy.init()
         let targetEvent = MHVActionPlanTaskTargetEvent.init()
+        let occurenceMetrics = MHVActionPlanTaskOccurrenceMetrics.init()
         
         targetEvent.elementXPath = "/thing/data-xml/medication/name/text"
         targetEvent.elementValues =  [medName]
         targetEvent.isNegated = false
         
+        occurenceMetrics.evaluateTargets = false
+        occurenceMetrics.targets = nil
+        
         trackingPolicy.isAutoTrackable = true
         trackingPolicy.targetEvents = [targetEvent]
+        trackingPolicy.occurrenceMetrics = occurenceMetrics
         
         return trackingPolicy
 

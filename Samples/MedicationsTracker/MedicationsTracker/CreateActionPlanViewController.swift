@@ -20,9 +20,7 @@ class CreateActionPlanViewController: UIViewController
     }
     
     func createActionPlan()
-    {
-        _ = actionPlanTaskBuilder?.buildActionPlanTask(med: MHVMedication)
-        
+    {         
         let actionPlan = actionPlanTaskBuilder?.constructActionPlanTask()
 
     }
