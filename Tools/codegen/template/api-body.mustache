@@ -76,7 +76,7 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
     {{/bodyParam}}
 
     {{#returnBaseType}}
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"{{httpMethod}}"
                       pathParams:pathParams
                      queryParams:queryParams

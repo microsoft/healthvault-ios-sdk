@@ -75,7 +75,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:actionPlanTask];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -155,7 +155,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -198,7 +198,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -239,7 +239,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:actionPlanTask];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -280,7 +280,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:actionPlanTask];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"PATCH"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -321,7 +321,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:trackingValidation];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams

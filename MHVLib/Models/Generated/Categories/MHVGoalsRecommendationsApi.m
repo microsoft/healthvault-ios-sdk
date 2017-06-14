@@ -115,7 +115,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:goalRecommendation];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -195,7 +195,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -238,7 +238,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams

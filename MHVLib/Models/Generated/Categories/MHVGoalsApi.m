@@ -73,7 +73,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -167,7 +167,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -205,7 +205,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -248,7 +248,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -289,7 +289,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:goal];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
@@ -330,7 +330,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPathAndResultClass:resourcePath
+    [self requestWithPath:resourcePath
                       httpMethod:@"PATCH"
                       pathParams:pathParams
                      queryParams:queryParams

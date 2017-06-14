@@ -48,7 +48,7 @@
     return self;
 }
 
-- (void)requestWithPathAndResultClass:(NSString *_Nonnull)path
+- (void)requestWithPath:(NSString *_Nonnull)path
              httpMethod:(NSString *_Nonnull)httpMethod
              pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
             queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
