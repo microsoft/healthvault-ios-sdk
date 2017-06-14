@@ -59,17 +59,7 @@
     MHVASSERT_PARAMETER(path);
     MHVASSERT_PARAMETER(httpMethod);
     
-    if (pathParams != nil)
-    {
-        NSMutableString *queryPath = [path mutableCopy];
-        
-        [pathParams enumerateKeysAndObjectsUsingBlock:^(id _Nonnull key, id _Nonnull obj, BOOL *_Nonnull stop)
-         {
-             [queryPath replaceCharactersInRange:[queryPath rangeOfString:[NSString stringWithFormat:@"{%@}", key]] withString:obj];
-         }];
-        
-        path = queryPath;
-    }
+    path = [self updatePath:path pathParams:pathParams];
     
     MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:path
                                                             httpMethod:httpMethod
@@ -112,6 +102,29 @@
     MHVASSERT_PARAMETER(path);
     MHVASSERT_PARAMETER(httpMethod);
     
+    path = [self updatePath:path pathParams:pathParams];
+    
+    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:path
+                                                            httpMethod:httpMethod
+                                                            pathParams:pathParams
+                                                           queryParams:queryParams
+                                                                  body:body
+                                                           isAnonymous:NO];
+    
+    [self.connection executeHttpServiceOperation:restRequest
+                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
+     {
+         if (completion)
+         {
+             completion(error);
+         }
+     }];
+}
+
+
+- (NSString *)updatePath:(NSString *)path
+             pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
+{
     if (pathParams != nil)
     {
         NSMutableString *queryPath = [path mutableCopy];
@@ -124,31 +137,7 @@
         path = queryPath;
     }
     
-    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:path
-                                                            httpMethod:httpMethod
-                                                            pathParams:pathParams
-                                                           queryParams:queryParams
-                                                                  body:body
-                                                           isAnonymous:NO];
-    
-    [self.connection executeHttpServiceOperation:restRequest
-                                      completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
-     {
-         if (error)
-         {
-             if (completion)
-             {
-                 completion(error);
-             }
-         }
-         else
-         {
-             if (completion)
-             {
-                 completion(nil);
-             }
-         }
-     }];
+    return path;
 }
 
 @end;

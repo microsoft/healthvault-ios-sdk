@@ -119,7 +119,7 @@
     self.task.status = self.statusValue.text;
     self.task.shortDescription = self.shortDescriptionValue.text;
     
-    [self.connection.remoteMonitoringClient actionPlanTasksUpdateWithActionPlanTask:self.task completion:^(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksUpdateWithActionPlanTask:self.task completion:^(MHVActionPlanTaskInstanceV2 * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
