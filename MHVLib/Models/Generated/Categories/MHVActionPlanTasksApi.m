@@ -212,10 +212,10 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTask  
 ///
-///  @returns MHVActionPlanTasksResponseActionPlanTaskInstanceV2_*
+///  @returns MHVActionPlanTaskInstanceV2*
 ///
 - (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstanceV2* _Nonnull)actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanTask' is set
     if (actionPlanTask == nil)
@@ -244,7 +244,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ class]
+                     resultClass:[MHVActionPlanTaskInstanceV2 class]
                       completion:completion];
 }
 
