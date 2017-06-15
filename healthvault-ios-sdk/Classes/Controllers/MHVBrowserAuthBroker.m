@@ -20,13 +20,14 @@
 #import "NSError+MHVError.h"
 #import "MHVValidator.h"
 
-typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nullable error);
-
 @interface MHVBrowserAuthBroker ()
 
 @property (nonatomic, strong) MHVSignInCompletion completion;
 @property (nonatomic, strong) dispatch_queue_t authQueue;
 @property (nonatomic, strong) NSURL *endUrl;
+@property (nonatomic, strong) NSURL *startUrl;
+
+@property (nonatomic, strong) MHVBrowserController *browserController;
 
 @end
 
@@ -47,7 +48,7 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
 - (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
                               startUrl:(NSURL *)startUrl
                                 endUrl:(NSURL *)endUrl
-                            completion:(void (^)(NSURL *_Nullable successUrl, NSError *_Nullable error))completion
+                            completion:(MHVSignInCompletion)completion
 {
     MHVASSERT_PARAMETER(startUrl);
     MHVASSERT_PARAMETER(endUrl);
@@ -63,15 +64,17 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
                        if (!startUrl || !endUrl)
                        {
                            completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"One or more required parameters are missing."]);
+                           return;
                        }
                        
                        if (self.completion)
                        {
                            completion(nil, [NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Trying to call sign in while another sign in attempt is in progress."]);
+                           return;
                        }
                        
                        self.completion = completion;
-                       self.target = startUrl;
+                       self.startUrl = startUrl;
                        self.endUrl = endUrl;
                        
                        [self showAuthenticationControllerFromViewController:viewController];
@@ -91,7 +94,12 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
             vc = [[[UIApplication sharedApplication] keyWindow] rootViewController];
         }
         
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
+        if (!self.browserController)
+        {
+            self.browserController = [[MHVBrowserController alloc] initWithAuthBroker:self];
+        }
+        
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.browserController];
         
         [vc presentViewController:navigationController animated:YES completion:nil];
     }];
@@ -99,77 +107,71 @@ typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nulla
 
 - (void)completeWithSuccessUrl:(NSURL *)successUrl error:(NSError *)error
 {
-    [self dismissViewControllerAnimated:YES completion:^
+    [self.browserController dismissViewControllerAnimated:YES completion:^
      {
          dispatch_async(self.authQueue, ^
                         {
-                            self.target = nil;
+                            self.startUrl = nil;
                             self.endUrl = nil;
-                            self.completion(successUrl, error);
-                            self.completion = nil;
+                            self.browserController = nil;
+                            
+                            if (self.completion)
+                            {
+                                self.completion(successUrl, error);
+                                self.completion = nil;
+                            }
                         });
      }];
 }
 
-#pragma mark - Overrides
-
-- (void)viewWillDisappear: (BOOL)animated
+- (void)userCancelled
 {
-    // Overriding default behavior of MHVBrowserController
-    [super viewWillDisappear:animated];
+    [self completeWithSuccessUrl:nil
+                           error:[NSError error:[NSError MHVOperationCancelled] withDescription:@"The operation has been cancelled by the user."]];
 }
 
-- (void)abort
-{
-    // Overriding default behavior of MHVBrowserController
-}
+#pragma mark - WKWebViewDelegate
 
-- (void)cancelButtonPressed:(id)sender
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler;
 {
-    [self completeWithSuccessUrl:nil error:[NSError error:[NSError MHVOperationCancelled] withDescription:@"The operation has been cancelled by the user."]];
-}
-
-#pragma mark - UIWebViewDelegate
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    [super webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
-    
-    NSLog(@"App Provisioning Current Url %@", [[request URL] absoluteString]);
-    
-    NSURL* url = [request URL];
+    NSURL *url = [navigationAction.request URL];
+    WKNavigationActionPolicy actionResult = WKNavigationActionPolicyAllow;
     
     if ([self didReachEndUrl:url])
-    {        
+    {
         [self completeWithSuccessUrl:url error:nil];
         
-        [[NSURLCache sharedURLCache] removeAllCachedResponses];
-        [[NSHTTPCookieStorage sharedHTTPCookieStorage] removeCookiesSinceDate:[NSDate distantPast]];
+        actionResult = WKNavigationActionPolicyCancel;
     }
-    
-    return YES;
+
+    if (decisionHandler)
+    {
+        decisionHandler(actionResult);
+    }
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error;
 {
-    [super webView:webView didFailLoadWithError:error];
-    
-    if([error code] == -999)
+    if ([error code] == NSURLErrorCancelled)
     {
-        return;   
+        return;
     }
     
     [self completeWithSuccessUrl:nil error:error];
-    
 }
 
 - (BOOL)didReachEndUrl:(NSURL *)url
 {
+    if (!self.endUrl)
+    {
+        return NO;
+    }
+    
     NSString *urlString = [url absoluteString];
     
     NSRange authSuccess = [urlString rangeOfString:[self.endUrl absoluteString] options:NSCaseInsensitiveSearch];
     
-    return (authSuccess.length > 0);
+    return (authSuccess.location != NSNotFound);
 }
 
 

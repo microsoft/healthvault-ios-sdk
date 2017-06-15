@@ -17,17 +17,35 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-
+#import <WebKit/WebKit.h>
 @class UIViewController;
+
+typedef void (^MHVSignInCompletion)(NSURL *_Nullable successUrl, NSError *_Nullable error);
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol MHVBrowserAuthBrokerProtocol <NSObject>
+@protocol MHVBrowserAuthBrokerProtocol <NSObject, WKNavigationDelegate>
 
+@property (nonatomic, strong, readonly) NSURL *startUrl;
+
+/**
+ * Authenticates with the view controller as the parent view controller
+ *
+ * @param viewController the view controller to use as the parent when presenting the authentication browser, 
+ *        if nil the current key window's root view controller is used
+ * @param startUrl Starting URL for the authentication
+ * @param endUrl End URL that indicates the authentication succeeded
+ * @param completion Envoked when the operation completes. NSURL if success, or NSError if the authentication failed.
+ */
 - (void)authenticateWithViewController:(UIViewController *_Nullable)viewController
                               startUrl:(NSURL *)startUrl
                                 endUrl:(NSURL *)endUrl
-                            completion:(void (^)(NSURL *_Nullable successUrl, NSError *_Nullable error))completion;
+                            completion:(MHVSignInCompletion)completion;
+
+/**
+ * Cancel the authentication.  The completion passed to authenticateWithViewController:... will be called with an error
+ */
+- (void)userCancelled;
 
 @end
 

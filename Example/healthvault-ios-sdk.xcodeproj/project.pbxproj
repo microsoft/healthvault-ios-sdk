@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C8340C41EF31AA40097233E /* MHVBrowserAuthBrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8340C31EF31AA40097233E /* MHVBrowserAuthBrokerTests.m */; };
 		4C9DC867EC28E0AB74E00107 /* Pods_healthvault_ios_sdk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -122,6 +123,7 @@
 
 /* Begin PBXFileReference section */
 		1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C8340C31EF31AA40097233E /* MHVBrowserAuthBrokerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBrowserAuthBrokerTests.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* healthvault-ios-sdk_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "healthvault-ios-sdk_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -300,6 +302,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C8340C21EF31AA40097233E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4C8340C31EF31AA40097233E /* MHVBrowserAuthBrokerTests.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +429,7 @@
 				A5DF652E1EF052DD009F5968 /* Authentication */,
 				A5DF65301EF052DD009F5968 /* Clients */,
 				A5DF65351EF052DD009F5968 /* Connection */,
+				4C8340C21EF31AA40097233E /* Controllers */,
 				A5DF65381EF052DD009F5968 /* HTTP */,
 				A5DF653B1EF052DD009F5968 /* MHVLibTests.m */,
 				A5DF653C1EF052DD009F5968 /* MHVPlatformClientTests.m */,
@@ -665,6 +676,7 @@
 				ORGANIZATIONNAME = namalu;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
+						DevelopmentTeam = UBF8T346G9;
 						LastSwiftMigration = 0830;
 					};
 					6003F5AD195388D20070C39A = {
@@ -890,6 +902,7 @@
 				A5DF65801EF0535A009F5968 /* MHVAppointmentTests.m in Sources */,
 				A5DF65761EF05338009F5968 /* MHVVocabularyClientTests.m in Sources */,
 				A5DF657A1EF05345009F5968 /* MHVPlatformClientTests.m in Sources */,
+				4C8340C41EF31AA40097233E /* MHVBrowserAuthBrokerTests.m in Sources */,
 				A5DF65741EF05333009F5968 /* MHVThingClientBlobTests.m in Sources */,
 				A5DF65731EF05330009F5968 /* MHVThingClientBlobFileTests.m in Sources */,
 				A5DF65771EF0533D009F5968 /* MHVConnectionTests.m in Sources */,
@@ -1025,6 +1038,7 @@
 			baseConfigurationReference = D8FE05E531FFE778B9984522 /* Pods-healthvault-ios-sdk_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "healthvault-ios-sdk/healthvault-ios-sdk-Prefix.pch";
 				INFOPLIST_FILE = "healthvault-ios-sdk/healthvault-ios-sdk-Info.plist";
@@ -1042,6 +1056,7 @@
 			baseConfigurationReference = B3A8DCF4594CD372C82292F5 /* Pods-healthvault-ios-sdk_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "healthvault-ios-sdk/healthvault-ios-sdk-Prefix.pch";
 				INFOPLIST_FILE = "healthvault-ios-sdk/healthvault-ios-sdk-Info.plist";

@@ -1,15 +1,15 @@
 //
-//  MHVBrowserController.m
-//  MHVLib
+// MHVBrowserController.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,87 +18,42 @@
 
 #import "MHVCommon.h"
 #import "MHVBrowserController.h"
-#import <QuartzCore/QuartzCore.h>
+#import "MHVBrowserAuthBrokerProtocol.h"
+#import <WebKit/WebKit.h>
 
-#define RGBColor(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#define RGBColor(r, g, b) [UIColor colorWithRed:r / 255.0 green: g / 255.0 blue: b / 255.0 alpha : 1]
+#define MHVCOLOR RGBColor(0, 130, 114)
 
-#define MHVBLUE RGBColor(0, 176, 240)
+static NSString *kLoadingKeyPath = @"loading";
+static CGFloat kAnimationTime = 0.15;
+
 
 @interface MHVBrowserController ()
 
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, weak) id<MHVBrowserAuthBrokerProtocol> authBroker;
+@property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
 
 @end
 
 @implementation MHVBrowserController
 
+- (instancetype)initWithAuthBroker:(id<MHVBrowserAuthBrokerProtocol>)authBroker
+{
+    self = [super init];
+    if (self)
+    {
+        _authBroker = authBroker;
+        
+        MHVASSERT_TRUE(_authBroker.startUrl);
+    }
+
+    return self;
+}
+
 - (void)dealloc
 {
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
-}
-
-- (BOOL)start
-{
-    if (self.target)
-    {
-        return [self navigateTo:self.target];
-    }
-    
-    [self abort];
-    
-    return NO;
-}
-
-- (BOOL)stop
-{
-    if (self.webView)
-    {
-        [self.webView stopLoading];
-    }
-    
-    return YES;
-}
-
-- (BOOL)navigateTo:(NSURL *)url
-{
-    MHVASSERT_PARAMETER(url);
-    
-    if (!url)
-    {
-        return NO;
-    }
-    
-    NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
-    
-    [self.webView loadRequest:request];
-    
-    return YES;
-}
-
-- (void)abort
-{
-    [self stop];
-    [self.navigationController popViewControllerAnimated:TRUE];
-}
-
-
-#pragma mark - UIWebViewDelegate
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    [self showActivitySpinner];
- 	return YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    [self hideActivitySpinner];
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    [self hideActivitySpinner];
+    [self stopObserving];
 }
 
 #pragma mark - View lifecycle
@@ -106,78 +61,60 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self createBrowser];    
+
+    self.view.backgroundColor = [UIColor whiteColor];
+
+    [self createBrowser];
     [self addCancelButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self start];
-}
-
-- (void)viewWillDisappear: (BOOL)animated 
-{
-    [self stop];
-	[super viewWillDisappear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    switch (interfaceOrientation) 
-    {
-        case UIInterfaceOrientationLandscapeLeft:
-        case UIInterfaceOrientationLandscapeRight:
-            return FALSE;
-            
-        default:
-            break;
-    }
     
-    return TRUE;
+    if (self.authBroker.startUrl)
+    {
+        [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:self.authBroker.startUrl]];
+    }
+    else
+    {
+        MHVASSERT_MESSAGE(@"authBroker startUrl is nil");
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [self.webView stopLoading];
 }
 
 - (void)createBrowser
 {
-    UIView* superView = super.view;
-    CGRect frame = superView.frame;
-    frame.origin.x = 0;
-    frame.origin.y = 0;
-    
-    self.webView = [[UIWebView alloc] initWithFrame:frame];
-    
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+    configuration.websiteDataStore = [WKWebsiteDataStore nonPersistentDataStore];
+    configuration.dataDetectorTypes = WKDataDetectorTypeNone;
+
+    self.webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.webView.delegate = self;
-    
-    [superView addSubview:self.webView];
+    self.webView.navigationDelegate = self.authBroker;
+    self.webView.opaque = NO;
+    self.webView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:self.webView];
+
+    [self startObserving];
 }
 
 - (void)addCancelButton
 {
-    self.navigationItem.hidesBackButton = TRUE;
-    
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
-    
-    self.navigationItem.leftBarButtonItem = cancelButton;
-}
+    self.navigationItem.hidesBackButton = YES;
 
-- (void)showActivitySpinner
-{    
-    //
-    // Find any existing indicators already in place
-    //
-    if (!self.activityView)
-    {
-        self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        [self.activityView setColor:MHVBLUE];
-        self.activityView.center = self.webView.center;
-        self.activityView.hidesWhenStopped = TRUE;
-        
-        [self.webView addSubview:self.activityView];
-    }
-    
-    [self.activityView startAnimating];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                          target:self
+                                                                                          action:@selector(cancelButtonPressed:)];
+    self.navigationItem.leftBarButtonItem.tintColor = MHVCOLOR;
 }
 
 - (void)cancelButtonPressed:(id)sender
@@ -186,10 +123,32 @@
     {
         [self.webView goBack];
     }
-    else 
+    else
     {
-        [self.navigationController popViewControllerAnimated:TRUE];
+        [self.authBroker userCancelled];
     }
+}
+
+#pragma mark - Activity spinner
+
+- (void)showActivitySpinner
+{
+    if (!self.activityView)
+    {
+        self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        self.activityView.color = MHVCOLOR;
+        self.activityView.center = self.view.center;
+        self.activityView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                              UIViewAutoresizingFlexibleRightMargin |
+                                              UIViewAutoresizingFlexibleTopMargin |
+                                              UIViewAutoresizingFlexibleBottomMargin);
+
+        self.activityView.hidesWhenStopped = YES;
+
+        [self.view addSubview:self.activityView];
+    }
+
+    [self.activityView startAnimating];
 }
 
 - (void)hideActivitySpinner
@@ -197,6 +156,49 @@
     if (self.activityView)
     {
         [self.activityView stopAnimating];
+    }
+}
+
+#pragma mark - KVO on webView.loading to show spinner
+
+- (void)startObserving
+{
+    [self.webView addObserver:self forKeyPath:kLoadingKeyPath options:kNilOptions context:nil];
+}
+
+- (void)stopObserving
+{
+    [self.webView removeObserver:self forKeyPath:kLoadingKeyPath];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (object == self.webView && [keyPath isEqual:kLoadingKeyPath])
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+        {
+            if (self.webView.loading)
+            {
+                [UIView animateWithDuration:kAnimationTime animations:^
+                {
+                    self.webView.alpha = 0.0;
+                }];
+                
+                [self showActivitySpinner];
+            }
+            else
+            {
+                [UIView animateWithDuration:kAnimationTime animations:^
+                 {
+                     self.webView.alpha = 1.0;
+                 }];
+                
+                [self hideActivitySpinner];
+            }
+        }];
     }
 }
 

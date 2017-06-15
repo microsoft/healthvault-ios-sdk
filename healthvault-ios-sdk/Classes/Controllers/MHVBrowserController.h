@@ -17,14 +17,19 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+@class MHVBrowserAuthBroker;
+@protocol MHVBrowserAuthBrokerProtocol;
 
-@interface MHVBrowserController : UIViewController <UIWebViewDelegate>
+@interface MHVBrowserController : UIViewController
 
-@property (nonatomic, strong, readwrite) NSURL* target;
+/**
+ * Create a browser view controller
+ *
+ * @param authBroker the authentication handler, authBroker expects to be the WKNavigationDelegate for a WKWebView
+ */
+- (instancetype)initWithAuthBroker:(id<MHVBrowserAuthBrokerProtocol>)authBroker;
 
-- (BOOL)start;
-- (BOOL)stop;
-
-- (void)abort;
+- (instancetype)init __unavailable;
++ (instancetype)new __unavailable;
 
 @end

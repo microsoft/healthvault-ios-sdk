@@ -18,7 +18,8 @@
 
 #import "MHVBrowserController.h"
 #import "MHVBrowserAuthBrokerProtocol.h"
+#import <WebKit/WebKit.h>
 
-@interface MHVBrowserAuthBroker : MHVBrowserController<MHVBrowserAuthBrokerProtocol>
+@interface MHVBrowserAuthBroker : NSObject <MHVBrowserAuthBrokerProtocol>
 
 @end
