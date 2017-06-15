@@ -18,77 +18,132 @@
 
 import Foundation
 
+enum ActionPlanError: Error
+{
+    case CreationFailure
+}
+
 class ActionPlan
 {
-    var actionPlanInstance: MHVActionPlanInstanceV2?
+    private var connection: MHVSodaConnectionProtocol
     
-    func getOrCreateActionPlan()
+    init(connection: MHVSodaConnectionProtocol)
     {
-        let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(
-            with: HVFeaturesConfiguration.configuration())
-        
-        // Get action plan
-        findActionPlan(connection: connection, completion:
-            {
-                (actionPlan) in self.actionPlanInstance = actionPlan
-            })
-        
-        // If the action plan is nil create one
-        if self.actionPlanInstance == nil
-        {
-            let actionPlan = MHVActionPlanV2.init()
-            actionPlan.name = "Medication"
-            actionPlan.descriptionText = "Track your medication"
-            actionPlan.category = "Health"
-            actionPlan.imageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE137sA?ver=e6fc"
-            actionPlan.thumbnailImageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE137sA?ver=e6fc"
-            
-            // Setup objective
-            let objective = MHVObjective.init()
-            objective.name = "Take your medication"
-            objective.outcomeName = "Medication trends per week"
-            objective.outcomeType = "Other"
-            actionPlan.objectives = [objective]
-            
-            connection.remoteMonitoringClient()?.actionPlansCreate(withActionPlan: actionPlan, completion:
-                {
-                    (actionPlanInstance: MHVActionPlanInstanceV2?, error: Error?) in
-                        self.actionPlanInstance = actionPlanInstance
-            })
-
-        }
+        self.connection = connection
     }
     
+    func getOrCreateActionPlan(completion: @escaping(MHVActionPlanInstanceV2?, Error?) -> Void)
+    {
+        // Get action plan
+        findActionPlan(connection: connection)
+            {
+                (actionPlan, error) in
+                // Check for errors in finding the plan
+                guard error == nil else
+                {
+                    completion(nil, error)
+                    return
+                }
+                
+                // Check for data
+                if actionPlan == nil
+                {
+                    self.createMedicationPlan
+                        {
+                            (newActionPlan, error) in
+                            // Check for errors in creating a plan
+                            guard error == nil else
+                            {
+                                completion(nil, error)
+                                return
+                            }
+                            
+                            completion(newActionPlan!, nil)
+                        }
+                }
+                else
+                {
+                    completion(actionPlan!, nil)
+                }
+            }
+    }
     
-    func createAndAttachAssociatedTask(task: MHVActionPlanTaskV2, completion: @escaping(MHVActionPlanTaskInstanceV2?) -> Void)
+    func createMedicationPlan(completion: @escaping(MHVActionPlanInstanceV2?, Error?) -> Void)
+    {
+        let actionPlan = MHVActionPlanV2.init()
+        actionPlan.name = "Medication"
+        actionPlan.descriptionText = "Track your medication"
+        actionPlan.category = "Health"
+        actionPlan.imageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE137sA?ver=e6fc"
+        actionPlan.thumbnailImageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE137sA?ver=e6fc"
+        
+        let objective = MHVObjective.init()
+        objective.name = "Take your medication"
+        objective.outcomeName = "Medication trends per week"
+        objective.outcomeType = "Other"
+        actionPlan.objectives = [objective]
+        
+        connection.remoteMonitoringClient()?.actionPlansCreate(withActionPlan: actionPlan, completion:
+            {
+                (actionPlanInstance: MHVActionPlanInstanceV2?, error: Error?) in
+                // Check for errors in action plan creation
+                guard error == nil else
+                {
+                    completion(nil, error)
+                    return
+                }
+                
+                completion(actionPlanInstance, nil)
+        })
+    }
+    
+    func createAndAttachAssociatedTask(task: MHVActionPlanTaskV2, plan: MHVActionPlanInstanceV2,
+                                       completion: @escaping(MHVActionPlanTaskInstanceV2?, Error?) -> Void)
     {
         let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(
             with: HVFeaturesConfiguration.configuration())
         
         connection.remoteMonitoringClient()?.actionPlanTasksCreate(withActionPlanTask: task, completion:
             { (taskInstance: MHVActionPlanTaskInstanceV2?, error: Error?) in
-                self.actionPlanInstance?.associatedTasks?.append(taskInstance!)
-                completion(taskInstance)
+                // Check for errors in task creation
+                guard error == nil else
+                {
+                    completion(nil, error)
+                    return
+                }
+                
+                plan.associatedTasks?.append(taskInstance!)
+                completion(taskInstance, nil)
             })
     }
     
-    private func findActionPlan(connection: MHVSodaConnectionProtocol, completion: @escaping(MHVActionPlanInstanceV2?) -> Void)
+    private func findActionPlan(connection: MHVSodaConnectionProtocol,
+                                completion: @escaping(MHVActionPlanInstanceV2?, Error?) -> Void)
     {
         let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(
             with: HVFeaturesConfiguration.configuration())
         
+        let appId = HVFeaturesConfiguration.configuration().masterApplicationId.uuidString
+        
         // Iterate though current action plans, until you find one that matches the app id
         connection.remoteMonitoringClient()?.actionPlansGet(withMaxPageSize: 1000, completion:
             { (actionPlans: MHVActionPlansResponseActionPlanInstanceV2_?, error: Error?) in
-                let plans = actionPlans?.plans as! [MHVActionPlanInstanceV2]
-                for actionPlan in plans
+                // Check for errors in plans get
+                guard error == nil else
                 {
-                    if actionPlan.organizationId == HVFeaturesConfiguration.configuration().masterApplicationId.uuidString
-                    {
-                        completion(actionPlan)
-                    }
+                    completion(nil, error)
+                    return
                 }
-                completion(nil)
+                
+                let plans = actionPlans?.plans as? [MHVActionPlanInstanceV2]
+                plans?.forEach
+                    { actionPlan in
+                        if actionPlan.organizationId == appId
+                        {
+                            completion(actionPlan, nil)
+                            return
+                        }
+                    }
             })
     }
 }

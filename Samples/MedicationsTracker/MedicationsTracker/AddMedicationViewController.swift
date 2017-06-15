@@ -81,8 +81,8 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
         return true
     }
     
-    func makeTestPlanAndTask(medbuild: MedicationBuilder){
-        let ap = ActionPlan.init()
+    func makeTestPlanAndTask(medbuild: MedicationBuilder, connection: MHVSodaConnectionProtocol){
+        let ap = ActionPlan.init(connection: connection)
         let ataskbulder = ActionPlanTaskBuilder.init()
         let time = MHVTime.init(hour: 11, minute: 30, second: 0)
         
@@ -107,15 +107,16 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
     {
         if(FormSubmission.canSubmit(subviews: self.view.subviews))
         {
+            let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(
+                with: HVFeaturesConfiguration.configuration())
+
             let medicationToConstruct = medicationBuilder?.buildMedication(mhvThing: MHVMedication.newThing())
             _ = medicationToConstruct?.updateNameIfNotNil(name: nameField.text!)
             _ = medicationToConstruct?.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
             
-            makeTestPlanAndTask(medbuild: medicationBuilder!)
+            makeTestPlanAndTask(medbuild: medicationBuilder!, connection: connection)
             let medication = medicationToConstruct?.constructMedication()
             
-            let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(
-                with: HVFeaturesConfiguration.configuration())
             connection.thingClient()?.createNewThing(
                 medication!, record: connection.personInfo!.selectedRecordID, completion:
                 {

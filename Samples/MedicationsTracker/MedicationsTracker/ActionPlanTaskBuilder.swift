@@ -19,66 +19,111 @@ import Foundation
 
 class ActionPlanTaskBuilder
 {
-    private(set) var actionPlanTask: MHVActionPlanTaskV2?
+    let actionPlanTask =  MHVActionPlanTaskV2.init()
     
-    func buildActionPlanTask(med: MHVMedication) -> ActionPlanTaskBuilder
+    func updateMedicationTask(med: MHVMedication) -> Bool
     {
         let takeMed = "Take \(med.name.text)"
         
         // Set up task basics
-        actionPlanTask = MHVActionPlanTaskV2.init()
-        actionPlanTask!.name = takeMed
+        actionPlanTask.name = takeMed
         if (med.dose.displayText ?? "").isEmpty
         {
-            actionPlanTask?.signupName = takeMed
+            actionPlanTask.signupName = takeMed
         }
         else
         {
-             actionPlanTask?.signupName =  "Take \(med.dose.displayText) of \(med.name)"
+             actionPlanTask.signupName =  "Take \(med.dose.displayText) of \(med.name)"
         }
-        actionPlanTask!.shortDescription = "Remember to take your medication"
-        actionPlanTask!.longDescription = "Taking your medication on time can help maintain your health"
-        actionPlanTask!.taskType = "Other"
-        actionPlanTask!.imageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE13a3S?ver=884e"
-        actionPlanTask!.thumbnailImageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE12EQP?ver=cba6"
-        actionPlanTask!.trackingPolicy = createTrackingPolicy(med.name.text)
+        actionPlanTask.shortDescription = "Remember to take your medication"
+        actionPlanTask.longDescription = "Taking your medication on time can help maintain your health"
+        actionPlanTask.taskType = "Other"
+        actionPlanTask.imageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE13a3S?ver=884e"
+        actionPlanTask.thumbnailImageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE12EQP?ver=cba6"
+        actionPlanTask.trackingPolicy = createMedTrackingPolicy(med.name.text)
         
-        return self
+        return true
     }
     
-    func updateFrequencyMetric(windowType: String) -> Bool
+    func updateTimeSlotTask(med: MHVMedication) -> Bool
+    {
+        ///
+        /// TODO: Change these values for the new task type
+        ///
+        let takeMed = "Take \(med.name.text)"
+        
+        // Set up task basics
+        actionPlanTask.name = takeMed
+        if (med.dose.displayText ?? "").isEmpty
+        {
+            actionPlanTask.signupName = takeMed
+        }
+        else
+        {
+            actionPlanTask.signupName =  "Take \(med.dose.displayText) of \(med.name)"
+        }
+        actionPlanTask.shortDescription = "Remember to take your medication"
+        actionPlanTask.longDescription = "Taking your medication on time can help maintain your health"
+        actionPlanTask.taskType = "Other"
+        actionPlanTask.imageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE13a3S?ver=884e"
+        actionPlanTask.thumbnailImageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE12EQP?ver=cba6"
+        actionPlanTask.trackingPolicy = createMedTrackingPolicy(med.name.text)
+        
+        return true
+    }
+    
+    func updateFrequencyMetric(windowType: ActionPlanWindowType) -> Bool
     {
         let freqMetric = MHVActionPlanFrequencyTaskCompletionMetricsV2.init()
-        freqMetric.windowType = windowType
+        freqMetric.windowType = windowType.rawValue
         
-        actionPlanTask!.frequencyTaskCompletionMetrics = freqMetric
+        actionPlanTask.frequencyTaskCompletionMetrics = freqMetric
         return true
     }
     
-    func updateSchedule(schedules: [MHVScheduleV2], reminderState: String, scheduledDays: [String], time: MHVTime) -> Bool
+    func updateSchedule(schedules: [MHVScheduleV2], reminderState: ReminderState,
+                        scheduledDays: [ScheduledDays], time: MHVTime) -> Bool
     {
         let schedule = MHVScheduleV2.init()
-        schedule.reminderState = reminderState
-        schedule.scheduledDays = scheduledDays
+        schedule.reminderState = reminderState.rawValue
+        schedule.scheduledDays = scheduledDays.map{$0.rawValue}
         schedule.scheduledTime = time
         
-        actionPlanTask!.schedules =  schedules + [schedule]
+        actionPlanTask.schedules =  schedules + [schedule]
         return true
     }
     
-    func constructActionPlanTask() -> MHVActionPlanTaskV2
+    func constructActionPlanTask() -> (MHVActionPlanTaskV2, contructedProperly: Bool)
     {
-        return actionPlanTask!
+        guard actionPlanTask.taskType != nil, actionPlanTask.frequencyTaskCompletionMetrics?.windowType != nil,
+            let sched = actionPlanTask.schedules, !sched.isEmpty else
+        {
+            return(actionPlanTask, false)
+        }
+        
+        return (actionPlanTask, true)
     }
     
-    private func createTrackingPolicy(_ medName: String) -> MHVActionPlanTrackingPolicy
+    private func createMedTrackingPolicy(_ medName: String) -> MHVActionPlanTrackingPolicy
+    {
+        let (tracking, target, _) = createTrackingPolicy()
+        
+        // Set the med name specifically as the target
+        target.elementValues =  [medName]
+        tracking.targetEvents = [target]
+        
+        return tracking
+
+    }
+    
+    private func createTrackingPolicy() -> (trackingPolicy: MHVActionPlanTrackingPolicy,
+        targetEvent: MHVActionPlanTaskTargetEvent, occurenceMetrics: MHVActionPlanTaskOccurrenceMetrics)
     {
         let trackingPolicy = MHVActionPlanTrackingPolicy.init()
         let targetEvent = MHVActionPlanTaskTargetEvent.init()
         let occurenceMetrics = MHVActionPlanTaskOccurrenceMetrics.init()
         
         targetEvent.elementXPath = "/thing/data-xml/medication/name/text"
-        targetEvent.elementValues =  [medName]
         targetEvent.isNegated = false
         
         occurenceMetrics.evaluateTargets = false
@@ -88,8 +133,7 @@ class ActionPlanTaskBuilder
         trackingPolicy.targetEvents = [targetEvent]
         trackingPolicy.occurrenceMetrics = occurenceMetrics
         
-        return trackingPolicy
-
+        return (trackingPolicy, targetEvent, occurenceMetrics)
     }
     
 }
