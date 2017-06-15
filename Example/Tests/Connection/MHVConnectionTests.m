@@ -269,7 +269,6 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
-                                                                            formParams:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:NO];
                     
@@ -315,7 +314,6 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
-                                                                            formParams:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:YES];
                     
@@ -383,7 +381,6 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
-                                                                            formParams:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:NO];
                     
@@ -477,7 +474,6 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
-                                                                            formParams:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:NO];
                     [testConnection executeHttpServiceOperation:restRequest
@@ -552,7 +548,6 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
-                                                                            formParams:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:YES];
                     [testConnection executeHttpServiceOperation:restRequest

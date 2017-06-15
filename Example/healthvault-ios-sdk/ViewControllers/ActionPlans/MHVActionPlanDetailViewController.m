@@ -60,7 +60,7 @@
     self.plan.category = self.categoryValue.text;
     self.plan.status = self.statusValue.text;
     
-    [self.connection.remoteMonitoringClient actionPlansReplaceWithActionPlan:self.plan completion:^(MHVActionPlansResponseActionPlanInstanceV2_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlansReplaceWithActionPlan:self.plan completion:^(MHVActionPlanInstanceV2 * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
