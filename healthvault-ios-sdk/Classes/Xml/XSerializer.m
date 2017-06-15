@@ -20,8 +20,6 @@
 #import "XSerializer.h"
 #import "Logger.h"
 
-NSString *const XExceptionNotSerializable = @"X_NotSerializable";
-
 @implementation XSerializer
 
 + (NSString *)serializeToString:(id)obj withRoot:(NSString *)root

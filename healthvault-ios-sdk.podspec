@@ -26,13 +26,14 @@ TODO: Add long description of the pod here.
   s.author           = { 'namalu' => 'namalu@microsoft.com' }
   s.source           = { :git => 'https://github.com/Microsoft/healthvault-ios-sdk.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '8.0'
 
   s.source_files = 'healthvault-ios-sdk/Classes/**/*'
 
-    s.requires_arc     = true
-    s.libraries        = "xml2"
-    s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(inherited) $(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2' }
+  s.requires_arc     = true
+  s.libraries        = "xml2"
+  s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(inherited) $(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2' }
+#s.public_header_files = 'Pod/Classes/Headers/Public/*.h'
 
     s.frameworks = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
 
@@ -40,7 +41,6 @@ TODO: Add long description of the pod here.
   #   'healthvault-ios-sdk' => ['healthvault-ios-sdk/Assets/*.png']
   # }
 
-  #s.public_header_files = 'Pod/Classes/MHVLib.h'
   # s.frameworks = 'UIKit'
 
 end

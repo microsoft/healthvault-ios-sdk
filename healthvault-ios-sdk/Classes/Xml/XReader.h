@@ -17,19 +17,15 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import <libxml/tree.h>
-#import <libxml/xmlreader.h>
 #import "MHVStringExtensions.h"
 #import "XNodeType.h"
 #import "XString.h"
 #import "XConverter.h"
 
-
 @interface XReader : NSObject
 
 @property (readwrite, nonatomic, strong) id context;
 
-@property (readonly, nonatomic) xmlTextReader *reader;
 @property (readonly, nonatomic, strong) XConverter *converter;
 
 @property (readonly, nonatomic) int depth;
@@ -57,8 +53,6 @@
 @property (readonly, nonatomic) int attributeCount;
 
 // Designated
-- (instancetype)initWithReader:(xmlTextReader *)reader andConverter:(XConverter *)converter;
-- (instancetype)initWithReader:(xmlTextReader *)reader;
 - (instancetype)initFromFile:(NSString *)fileName;
 - (instancetype)initFromFile:(NSString *)fileName withConverter:(XConverter *)converter;
 - (instancetype)initFromMemory:(NSData *)buffer;
@@ -107,7 +101,3 @@
 - (BOOL)skip;
 
 @end
-
-xmlTextReader *XAllocBufferReader(NSData *buffer);
-xmlTextReader *XAllocStringReader(NSString *string);
-xmlTextReader *XAllocFileReader(NSString *fileName);

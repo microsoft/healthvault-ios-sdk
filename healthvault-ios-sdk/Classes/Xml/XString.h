@@ -17,7 +17,8 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import <libxml/xmlreader.h>
+
+typedef unsigned char xmlChar;
 
 //
 // Extensions to NSString for xmlChar* support

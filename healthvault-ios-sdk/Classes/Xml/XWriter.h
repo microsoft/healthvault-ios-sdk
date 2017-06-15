@@ -17,23 +17,15 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import <libxml/xmlwriter.h>
-#import <libxml/xmlreader.h>
 #import "XNodeType.h"
 #import "XString.h"
 #import "XConverter.h"
 
 @interface XWriter : NSObject
 
-@property (readonly, nonatomic, assign) xmlTextWriterPtr writer;
 @property (readonly, nonatomic, strong) XConverter *converter;
 @property (readwrite, nonatomic, strong) id context;
 
-//
-// Designated constructor
-//
-- (instancetype)initWithWriter:(xmlTextWriterPtr)writer buffer:(xmlBufferPtr)buffer andConverter:(XConverter *)converter;
-- (instancetype)initWithWriter:(xmlTextWriterPtr)writer buffer:(xmlBufferPtr)buffer;
 - (instancetype)initWithBufferSize:(size_t)size;
 - (instancetype)initWithBufferSize:(size_t)size andConverter:(XConverter *)converter;
 - (instancetype)initFromFile:(NSString *)filePath;
@@ -64,8 +56,3 @@
 - (NSString *)newXmlString;
 
 @end
-
-// 0 for default size
-xmlBufferPtr XAllocBuffer(size_t size);
-xmlTextWriterPtr XAllocTextWriter(xmlBufferPtr buffer);
-xmlTextWriterPtr XAllocFileWriter(NSString *filePath);

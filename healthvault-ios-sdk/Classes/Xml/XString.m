@@ -20,6 +20,7 @@
 #import "MHVStringExtensions.h"
 #import "MHVValidator.h"
 #import <math.h>
+#import <libxml/xmlreader.h>
 
 @implementation NSString (XExtensions)
 

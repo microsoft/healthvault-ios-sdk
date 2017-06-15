@@ -21,16 +21,16 @@
 #import "MHVNonNegativeDouble.h"
 #import "MHVDisplayValue.h"
 
-NSString *const c_element_mmolPL;
-NSString *const c_element_display;
+extern NSString *const c_element_mmolPL;
+extern NSString *const c_element_display;
 
-NSString *const c_mmolPlUnits;
-NSString *const c_mmolUnitsCode;
-NSString *const c_mgDLUnits;
-NSString *const c_mgDLUnitsCode;
+extern NSString *const c_mmolPlUnits;
+extern NSString *const c_mmolUnitsCode;
+extern NSString *const c_mgDLUnits;
+extern NSString *const c_mgDLUnitsCode;
 
-const xmlChar *x_element_mmolPL;
-const xmlChar *x_element_display;
+extern const xmlChar *x_element_mmolPL;
+extern const xmlChar *x_element_display;
 
 //
 // Concentration values, stored in mmol/Liter

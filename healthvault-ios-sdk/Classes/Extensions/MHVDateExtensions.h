@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-const NSUInteger NSAllCalendarUnits;
+extern const NSUInteger NSAllCalendarUnits;
 
 @interface NSDate (MHVExtensions)
 

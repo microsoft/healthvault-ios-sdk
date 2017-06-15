@@ -22,9 +22,6 @@
 #import "XReader.h"
 #import "XWriter.h"
 
-
-NSString *const XExceptionNotSerializable;
-
 @protocol XSerializable <NSObject>
 
 - (void)deserialize:(XReader *)reader;

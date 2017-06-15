@@ -16,6 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <libxml/tree.h>
+#import <libxml/xmlreader.h>
 #import "MHVCommon.h"
 #import "XReader.h"
 #import "Logger.h"
@@ -57,6 +59,7 @@ xmlTextReader *XAllocFileReader(NSString *fileName)
 
 @interface XReader ()
 
+@property (readonly, nonatomic) xmlTextReader *reader;
 @property (nonatomic, assign) XNodeType nodeType;
 @property (nonatomic, strong) NSString *localName;
 @property (nonatomic, strong) NSString *namespaceUri;

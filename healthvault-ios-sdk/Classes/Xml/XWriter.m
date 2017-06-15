@@ -16,6 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <libxml/xmlwriter.h>
+#import <libxml/xmlreader.h>
 #import "MHVCommon.h"
 #import "MHVStringExtensions.h"
 #import "XWriter.h"
@@ -56,6 +58,7 @@ xmlTextWriterPtr XAllocFileWriter(NSString *filePath)
 // ---------------------
 @interface XWriter ()
 
+@property (readonly, nonatomic, assign) xmlTextWriterPtr writer;
 @property (nonatomic, assign) xmlBufferPtr buffer;
 
 @end

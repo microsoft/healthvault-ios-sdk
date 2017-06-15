@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-NSString *const c_emptyString;
+extern NSString *const c_emptyString;
 
 // ---------------------------------
 //

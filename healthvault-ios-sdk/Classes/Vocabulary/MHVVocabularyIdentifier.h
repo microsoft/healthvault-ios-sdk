@@ -21,13 +21,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString *const c_rxNormFamily;
-NSString *const c_snomedFamily;
-NSString *const c_hvFamily;
-NSString *const c_icdFamily;
-NSString *const c_hl7Family;
-NSString *const c_isoFamily;
-NSString *const c_usdaFamily;
+extern NSString *const c_rxNormFamily;
+extern NSString *const c_snomedFamily;
+extern NSString *const c_hvFamily;
+extern NSString *const c_icdFamily;
+extern NSString *const c_hl7Family;
+extern NSString *const c_isoFamily;
+extern NSString *const c_usdaFamily;
 
 @interface MHVVocabularyIdentifier : MHVType
 
