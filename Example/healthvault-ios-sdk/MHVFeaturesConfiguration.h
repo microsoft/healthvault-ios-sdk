@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import <healthvault_ios_sdk/MHVConfiguration.h>
 
 @interface MHVFeaturesConfiguration : NSObject
 

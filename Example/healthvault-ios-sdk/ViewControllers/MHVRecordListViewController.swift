@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import healthvault_ios_sdk
 
 class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
@@ -60,7 +61,7 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
             {
                 cell?.textLabel?.text = record.displayName;
                 
-                self.loadImage(cell: cell, recordId: record.id)
+                self.loadImage(cell, recordId: record.id)
             }
         }
         

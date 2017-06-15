@@ -1,6 +1,0 @@
-framework module healthvault_ios_sdk {
-  umbrella header "healthvault-ios-sdk-umbrella.h"
-
-  export *
-  module * { export * }
-}

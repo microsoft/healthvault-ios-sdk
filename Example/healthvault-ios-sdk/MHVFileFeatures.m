@@ -22,6 +22,7 @@
 #import "MHVUIAlert.h"
 #import "MHVFeaturesConfiguration.h"
 #import "MHVTypeListViewController.h"
+#import "healthvault_ios_sdk_Example-Swift.h"
 
 @interface MHVFileFeatures ()
 
