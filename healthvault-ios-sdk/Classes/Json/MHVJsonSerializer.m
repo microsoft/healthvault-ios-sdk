@@ -94,7 +94,7 @@ static NSInteger kJSONCacheMaxItems = 25;
     if(shouldCache)
     {
         //See if the same data has already been deserialized into the same type of object
-        jsonHash = [encodedData MD5];
+        jsonHash = [encodedData SHA512];
         id cachedObject = [jsonCacheService objectForKey:jsonHash itemClass:toClass];
         if (cachedObject)
         {

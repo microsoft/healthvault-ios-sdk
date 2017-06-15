@@ -29,7 +29,7 @@ static NSString *const c_element_more = @"more-results";
 {
     [writer writeStartElement:c_element_results];
 
-    [writer writeElementArray:c_element_results thingName:c_element_person elements:self.persons];
+    [writer writeElementArray:c_element_results thingName:c_element_person elements:self.persons.toArray];
     [writer writeElement:c_element_more content:self.moreResults];
 
     [writer writeEndElement];
@@ -39,7 +39,9 @@ static NSString *const c_element_more = @"more-results";
 {
     [reader  readStartElementWithName:c_element_results];
 
-    self.persons = [reader readElementArray:c_element_person asClass:[MHVPersonInfo class]];
+    self.persons = (MHVPersonInfoCollection *)[reader readElementArray:c_element_person
+                                                               asClass:[MHVPersonInfo class]
+                                                         andArrayClass:[MHVPersonInfoCollection class]];
     self.moreResults = [reader readElement:c_element_more asClass:[MHVBool class]];
 
     [reader readEndElement];

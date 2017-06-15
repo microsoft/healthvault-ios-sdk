@@ -36,6 +36,7 @@
 
 @interface MHVTypeListViewController ()
 
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 @property (nonatomic, strong) NSDictionary *itemTypes;
 @property (nonatomic, strong) NSDictionary *itemViewTypes;
 @property (nonatomic, strong) NSArray<NSArray<NSString *> *> *itemSections;
@@ -51,22 +52,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = [self personName];
-
+    
     [self setupList];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-
+    
     [self addStandardFeatures];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    
     // Load image after view has appeared to avoid flickering if image set while view is animating
     if (!self.hasLoadedPersonImage)
     {
@@ -78,33 +81,21 @@
 
 - (NSString *)personName
 {
-    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
-    
-    NSUInteger index = [connection.personInfo.records indexOfRecordID:connection.personInfo.selectedRecordID];
+    NSUInteger index = [self.connection.personInfo.records indexOfRecordID:self.connection.personInfo.selectedRecordID];
     if (index != NSNotFound)
     {
-        return connection.personInfo.records[index].displayName;
+        return self.connection.personInfo.records[index].displayName;
     }
     else
     {
-        return connection.personInfo.name;
+        return self.connection.personInfo.name;
     }
 }
 
 - (void)downloadPersonImage
 {
-    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
-    
-    [connection.platformClient getHealthRecordThingTypeDefinitionsWithTypeIds:@[[MHVWeight typeID]]
-                                                                     sections:MHVThingTypeSectionsAll
-                                                                   imageTypes:nil
-                                                        lastClientRefreshDate:nil
-                                                                   completion:^(NSDictionary<NSString *,MHVThingTypeDefinition *> * _Nullable definitions, NSError * _Nullable error) {
-                                                                       //
-                                                                   }];
-    
-    [connection.thingClient getPersonalImageWithRecordId:connection.personInfo.selectedRecordID
-                                              completion:^(UIImage * _Nullable image, NSError * _Nullable error)
+    [self.connection.thingClient getPersonalImageWithRecordId:self.connection.personInfo.selectedRecordID
+                                                   completion:^(UIImage * _Nullable image, NSError * _Nullable error)
      {
          if (image)
          {
@@ -186,17 +177,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MHVCell"];
-
+    
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MHVCell"];
     }
-
+    
     NSString *typeName = self.itemSections[indexPath.section][indexPath.row];
     cell.textLabel.text = typeName;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-
+    
     return cell;
 }
 
@@ -207,17 +198,17 @@
     NSString *name = self.itemSections[indexPath.section][indexPath.row];
     Class selectedCls = [self.itemTypes objectForKey:name];
     Class controllerClass = [self.itemViewTypes objectForKey:name];
-
+    
     id typeView = [[controllerClass alloc] initWithTypeClass:selectedCls useMetric:FALSE];
-
+    
     if (!typeView)
     {
         [MHVUIAlert showInformationalMessage:@"Could not create MHVTypeViewController"];
         return;
     }
-
+    
     [self.navigationController pushViewController:typeView animated:TRUE];
-
+    
     return;
 }
 
@@ -291,17 +282,17 @@
     [restTypeList addObject:name];
     [itemDictionary setObject:[MHVGoalRecommendation class] forKey:name];
     [viewDictionary setObject:[MHVGoalsRecommendationsListViewController class] forKey:name];
-
+    
     [hvTypeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2)
-    {
-        return [obj1 compare:obj2];
-    }];
-
+     {
+         return [obj1 compare:obj2];
+     }];
+    
     [restTypeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2)
-    {
-        return [obj1 compare:obj2];
-    }];
-
+     {
+         return [obj1 compare:obj2];
+     }];
+    
     _itemTypes = itemDictionary;
     _itemViewTypes = viewDictionary;
     _itemSections = @[hvTypeList, restTypeList];
@@ -310,13 +301,13 @@
 - (Class)getSelectedClass
 {
     NSIndexPath *selectedRow = self.tableView.indexPathForSelectedRow;
-
+    
     if (!selectedRow || selectedRow.row == NSNotFound)
     {
         [MHVUIAlert showInformationalMessage:@"Please select a data type"];
         return nil;
     }
-
+    
     NSString *typeName = self.itemSections[selectedRow.section][selectedRow.row];
     return [self.itemTypes objectForKey:typeName];
 }
@@ -326,27 +317,42 @@
     self.features = [[MHVMoreFeatures alloc] init];
     MHVCHECK_NOTNULL(self.features);
     self.features.listController = self;
-
+    
     __weak __typeof__(self.features)weakFeatures = self.features;
-
+    
     self.actions = [[MHVFeatureActions alloc] init];
     MHVCHECK_NOTNULL(self.actions);
-
+    
     [self.actions addFeature:@"Disconnect app" andAction:^
-    {
-        [weakFeatures disconnectApp];
-    }];
-
+     {
+         [weakFeatures disconnectApp];
+     }];
+    
     [self.actions addFeature:@"GetServiceDefintion" andAction:^
-    {
-        [weakFeatures getServiceDefinition];
-    }];
+     {
+         [weakFeatures getServiceDefinition];
+     }];
+    
+    [self.actions addFeature:@"Demo ApplicationSettings" andAction:^
+     {
+         [weakFeatures demonstrateApplicationSettings];
+     }];
+    
+    [self.actions addFeature:@"GetPersonInfo" andAction:^
+     {
+         [weakFeatures getPersonInfo];
+     }];
+    
+    [self.actions addFeature:@"GetAuthorizedRecords" andAction:^
+     {
+         [weakFeatures getAuthorizedRecords];
+     }];
     
     [self.actions addFeature:@"Authorize records" andAction:^
-    {
+     {
          [weakFeatures authorizeAdditionalRecords];
-    }];
-
+     }];
+    
     return TRUE;
 }
 

@@ -20,12 +20,13 @@
 #import "MHVBaseTypes.h"
 #import "MHVType.h"
 #import "MHVRecord.h"
+#import "MHVApplicationSettings.h"
 
 @interface MHVPersonInfo : MHVType
 
 @property (readwrite, nonatomic, strong) NSUUID *ID;
 @property (readwrite, nonatomic, strong) NSString *name;
-@property (readwrite, nonatomic, strong) NSString *appSettingsXml;
+@property (readwrite, nonatomic, strong) MHVApplicationSettings *applicationSettings;
 @property (readwrite, nonatomic, strong) NSUUID *selectedRecordID;
 @property (readwrite, nonatomic, strong) MHVBool *moreRecords;
 @property (readwrite, nonatomic, strong) MHVRecordCollection *records;
@@ -34,5 +35,9 @@
 @property (readwrite, nonatomic, strong) NSString *preferredUICultureXml;
 
 @property (readonly, nonatomic) BOOL hasRecords;
+
+@end
+
+@interface MHVPersonInfoCollection : MHVCollection<MHVPersonInfo *>
 
 @end

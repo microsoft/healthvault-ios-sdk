@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C54C8161EF342F100CAECFC /* MHVPersonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */; };
 		4C9DC867EC28E0AB74E00107 /* Pods_healthvault_ios_sdk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -122,6 +123,7 @@
 
 /* Begin PBXFileReference section */
 		1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonClientTests.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* healthvault-ios-sdk_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "healthvault-ios-sdk_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -550,6 +552,7 @@
 		A5DF65301EF052DD009F5968 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */,
 				A5DF65311EF052DD009F5968 /* MHVThingClientBlobFileTests.m */,
 				A5DF65321EF052DD009F5968 /* MHVThingClientBlobTests.m */,
 				A5DF65331EF052DD009F5968 /* MHVThingClientTests.m */,
@@ -880,6 +883,7 @@
 				A5DF657D1EF0535A009F5968 /* MHVAdvanceDirectiveTests.m in Sources */,
 				A5DF658A1EF0535A009F5968 /* MHVMedicalImageStudyTests.m in Sources */,
 				A5DF658D1EF0535A009F5968 /* MHVPregnancyTests.m in Sources */,
+				4C54C8161EF342F100CAECFC /* MHVPersonClientTests.m in Sources */,
 				A5DF65821EF0535A009F5968 /* MHVAsthmaInhalerTests.m in Sources */,
 				A5DF658E1EF0535A009F5968 /* MHVTaskThingTests.m in Sources */,
 				A5DF65831EF0535A009F5968 /* MHVAsthmaInhalerUsageTests.m in Sources */,
