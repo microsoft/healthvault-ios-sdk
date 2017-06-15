@@ -48,7 +48,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTask  
 ///
-///  @returns NSObject*
+///  @returns MHVActionPlanTaskInstanceV2*
 ///
 - (void)actionPlanTasksCreateWithActionPlanTask:(MHVActionPlanTaskV2* _Nonnull)actionPlanTask
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion
@@ -72,7 +72,6 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlanTask];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -80,9 +79,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanTaskInstanceV2 class]
+                     resultClass:[MHVActionPlanTaskInstanceV2 class]
                       completion:completion];
 }
 
@@ -91,10 +89,10 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTaskId  
 ///
-///  @returns NSObject*
+///  @returns void
 ///
 - (void)actionPlanTasksDeleteWithActionPlanTaskId:(NSString* _Nonnull)actionPlanTaskId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanTaskId' is set
     if (actionPlanTaskId == nil)
@@ -104,7 +102,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
         {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"actionPlanTaskId"] };
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
-            completion(nil, error);
+            completion(error);
         }
     }
 
@@ -119,15 +117,12 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[NSObject class]
                       completion:completion];
 }
 
@@ -159,15 +154,13 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     }
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ class]
+                     resultClass:[MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ class]
                       completion:completion];
 }
 
@@ -204,15 +197,13 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanTaskInstanceV2 class]
+                     resultClass:[MHVActionPlanTaskInstanceV2 class]
                       completion:completion];
 }
 
@@ -221,10 +212,10 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTask  
 ///
-///  @returns MHVActionPlanTasksResponseActionPlanTaskInstanceV2_*
+///  @returns MHVActionPlanTaskInstanceV2*
 ///
 - (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstanceV2* _Nonnull)actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanTask' is set
     if (actionPlanTask == nil)
@@ -245,7 +236,6 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlanTask];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -253,9 +243,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ class]
+                     resultClass:[MHVActionPlanTaskInstanceV2 class]
                       completion:completion];
 }
 
@@ -264,10 +253,10 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTask  
 ///
-///  @returns MHVActionPlanTasksResponseActionPlanTaskInstanceV2_*
+///  @returns MHVActionPlanTaskInstanceV2*
 ///
 - (void)actionPlanTasksUpdateWithActionPlanTask:(MHVActionPlanTaskInstanceV2* _Nonnull)actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanTask' is set
     if (actionPlanTask == nil)
@@ -288,7 +277,6 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:actionPlanTask];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -296,9 +284,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       httpMethod:@"PATCH"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ class]
+                     resultClass:[MHVActionPlanTaskInstanceV2 class]
                       completion:completion];
 }
 
@@ -331,7 +318,6 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:trackingValidation];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -339,9 +325,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_ class]
+                     resultClass:[MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_ class]
                       completion:completion];
 }
 

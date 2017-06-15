@@ -28,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly)           NSString      *httpMethod;
 @property (nonatomic, strong, readonly, nullable) NSDictionary  *pathParams;
 @property (nonatomic, strong, readonly, nullable) NSDictionary  *queryParams;
-@property (nonatomic, strong, readonly, nullable) NSDictionary  *formParams;
 @property (nonatomic, strong, readonly, nullable) id            body;
 @property (nonatomic, assign, readonly)           BOOL          isAnonymous;
 
@@ -38,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
                   httpMethod:(NSString *)httpMethod
                   pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
                  queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-                  formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
                         body:(NSData *_Nullable)body
                  isAnonymous:(BOOL)isAnonymous;
 

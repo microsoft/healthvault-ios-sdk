@@ -30,7 +30,6 @@
                   httpMethod:(NSString *)httpMethod
                   pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
                  queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-                  formParams:(NSDictionary<NSString *, NSString *> *_Nullable)formParams
                         body:(NSData *_Nullable)body
                  isAnonymous:(BOOL)isAnonymous
 {
@@ -44,7 +43,6 @@
         _httpMethod = httpMethod;
         _pathParams = pathParams;
         _queryParams = queryParams;
-        _formParams = formParams;
         _body = body;
         _isAnonymous = isAnonymous;
     }

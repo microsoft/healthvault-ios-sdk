@@ -46,10 +46,10 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// 
 ///  @param goalRecommendationId The identifier of the goal recommendation to acknowledge. 
 ///
-///  @returns NSObject*
+///  @returns void
 ///
 - (void)goalRecommendationsAcknowledgeWithGoalRecommendationId:(NSString* _Nonnull)goalRecommendationId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
     // verify the required parameter 'goalRecommendationId' is set
     if (goalRecommendationId == nil)
@@ -59,7 +59,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
         {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"goalRecommendationId"] };
             NSError* error = [NSError errorWithDomain:kMHVGoalsRecommendationsApiErrorDomain code:kMHVGoalsRecommendationsApiMissingParamErrorCode userInfo:userInfo];
-            completion(nil, error);
+            completion(error);
         }
     }
 
@@ -74,15 +74,12 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[NSObject class]
                       completion:completion];
 }
 
@@ -91,10 +88,10 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// 
 ///  @param goalRecommendation The instance of the goal recommendation to create. 
 ///
-///  @returns NSObject*
+///  @returns MHVGoalRecommendationInstance*
 ///
 - (void)goalRecommendationsCreateWithGoalRecommendation:(MHVGoalRecommendation* _Nonnull)goalRecommendation
-    completion:(void(^_Nonnull)(MHVGoalRecommendation* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVGoalRecommendationInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'goalRecommendation' is set
     if (goalRecommendation == nil)
@@ -115,7 +112,6 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
     NSString *json = [MHVJsonSerializer serialize:goalRecommendation];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -123,9 +119,8 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoalRecommendation class]
+                     resultClass:[MHVGoalRecommendationInstance class]
                       completion:completion];
 }
 
@@ -134,10 +129,10 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// 
 ///  @param goalRecommendationId The identifier of the goal recommendation to delete. 
 ///
-///  @returns NSObject*
+///  @returns void
 ///
 - (void)goalRecommendationsDeleteWithGoalRecommendationId:(NSString* _Nonnull)goalRecommendationId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
     // verify the required parameter 'goalRecommendationId' is set
     if (goalRecommendationId == nil)
@@ -147,7 +142,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
         {
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"goalRecommendationId"] };
             NSError* error = [NSError errorWithDomain:kMHVGoalsRecommendationsApiErrorDomain code:kMHVGoalsRecommendationsApiMissingParamErrorCode userInfo:userInfo];
-            completion(nil, error);
+            completion(error);
         }
     }
 
@@ -162,15 +157,12 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[NSObject class]
                       completion:completion];
 }
 
@@ -202,15 +194,13 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     }
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoalRecommendationsResponse class]
+                     resultClass:[MHVGoalRecommendationsResponse class]
                       completion:completion];
 }
 
@@ -247,15 +237,13 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
 
     NSData *bodyParam = nil;
-    NSMutableDictionary *formParams = [[NSMutableDictionary alloc] init];
 
     [self requestWithPath:resourcePath
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
-                      formParams:formParams
                             body:bodyParam
-                         toClass:[MHVGoalRecommendationInstance class]
+                     resultClass:[MHVGoalRecommendationInstance class]
                       completion:completion];
 }
 

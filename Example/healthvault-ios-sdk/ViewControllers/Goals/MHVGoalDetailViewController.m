@@ -54,7 +54,7 @@
 
 - (IBAction)deleteGoal:(id)sender
 {
-    [self.connection.remoteMonitoringClient goalsDeleteWithGoalId:self.goalId completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient goalsDeleteWithGoalId:self.goalId completion:^(NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {

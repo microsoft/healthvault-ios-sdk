@@ -41,13 +41,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalRecommendationId The identifier of the goal recommendation to acknowledge.
 /// 
-///  code:200 message:"OK",
 ///  code:204 message:"NoContent",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return 
 - (void)goalRecommendationsAcknowledgeWithGoalRecommendationId:(NSString* )goalRecommendationId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
 
 /// Post a goal recommendation instance
@@ -55,13 +54,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalRecommendation The instance of the goal recommendation to create.
 /// 
-///  code:200 message:"OK",
 ///  code:201 message:"Created",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return MHVGoalRecommendationInstance*
 - (void)goalRecommendationsCreateWithGoalRecommendation:(MHVGoalRecommendation* )goalRecommendation
-    completion:(void(^_Nonnull)(MHVGoalRecommendation* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVGoalRecommendationInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Delete a goal recommendation instance
@@ -69,13 +67,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalRecommendationId The identifier of the goal recommendation to delete.
 /// 
-///  code:200 message:"OK",
 ///  code:204 message:"NoContent",
 ///  code:0 message:"Error"
 ///
-/// @return NSObject*
+/// @return 
 - (void)goalRecommendationsDeleteWithGoalRecommendationId:(NSString* )goalRecommendationId
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
 
 /// Get a collection of all goal recommendations
