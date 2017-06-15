@@ -19,7 +19,8 @@
 
 import Foundation
 
-class MedicationBuilder {
+class MedicationBuilder
+{
     
     // MARK: Properties
     private(set) var thing: MHVThing?
@@ -74,6 +75,17 @@ class MedicationBuilder {
         }
         med!.frequency = MHVApproxMeasurement.fromValue(freqAmount, unitsText: freqUnit, unitsCode: freqUnit,
                                                         unitsVocab: "frequency-units")
+        return true
+    }
+    
+    func updateTaskConnection(taskThingId: String) -> Bool
+    {
+        let relatedThing = MHVRelatedThing.init()
+        relatedThing.thingID = taskThingId
+        relatedThing.relationship = "TaskID"
+        
+        thing?.data.common.relatedThings.add(relatedThing)
+        
         return true
     }
     
