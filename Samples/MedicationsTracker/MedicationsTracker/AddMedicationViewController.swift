@@ -81,6 +81,27 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
         return true
     }
     
+    func makeTestPlanAndTask(medbuild: MedicationBuilder){
+        let ap = ActionPlan.init()
+        let ataskbulder = ActionPlanTaskBuilder.init()
+        let time = MHVTime.init(hour: 11, minute: 30, second: 0)
+        
+        // build task
+        let atask = ataskbulder.buildActionPlanTask(med: (medicationBuilder?.med)!)
+        _ = atask.updateFrequencyMetric(windowType: "Daily")
+        _ = atask.updateSchedule(schedules: atask.actionPlanTask?.schedules as! [MHVScheduleV2],
+                                 reminderState: "OnTime", scheduledDays: ["Everyday"], time: time!)
+        
+        //get action plan and attach a task to it's accociated tasks
+        ap.getOrCreateActionPlan()
+        ap.createAndAttachAssociatedTask(task: atask.constructActionPlanTask()) {
+            (taskInstance) in
+            // attach task's thing ID to medicatio
+            _ = medbuild.updateTaskConnection(taskThingId: (taskInstance?.identifier)!,
+                                              relationshipType: TaskRelationship.MedTask)
+        }
+    }
+    
     // MARK: Actions
     @IBAction func addMedication(_ sender: UIButton)
     {
@@ -90,6 +111,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
             _ = medicationToConstruct?.updateNameIfNotNil(name: nameField.text!)
             _ = medicationToConstruct?.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
             
+            makeTestPlanAndTask(medbuild: medicationBuilder!)
             let medication = medicationToConstruct?.constructMedication()
             
             let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(

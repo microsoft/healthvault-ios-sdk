@@ -36,6 +36,12 @@ struct HVUnitTypes
     static let freqUnit: Array<String> = ["times per day", "times per week", "times per month"]
 }
 
+enum TaskRelationship: String
+{
+    case MedTask = "MedTask"
+    case TimeTask = "TimeTask"
+}
+
 enum ActionPlanWindowType: String
 {
     case Unknown = "Unknown"
@@ -48,10 +54,10 @@ enum ReminderState: String
 {
     case Unknown = "Unknown"
     case Off = "Off"
-    case Ontime = "OnTime"
+    case OnTime = "OnTime"
     case FiveMin = "Before5Minutes"
     case TenMin = "Before10Minutes"
-    case FiveteenMin = "Before15Minutes"
+    case FifteenMin = "Before15Minutes"
     case ThirtyMin = "Before30Minutes"
     case OneHour = "Before1Hour"
     case TwoHour = "Before2Hours"
