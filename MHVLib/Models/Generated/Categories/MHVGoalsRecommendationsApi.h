@@ -57,9 +57,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:201 message:"Created",
 ///  code:0 message:"Error"
 ///
-/// @return MHVGoalRecommendation*
+/// @return MHVGoalRecommendationInstance*
 - (void)goalRecommendationsCreateWithGoalRecommendation:(MHVGoalRecommendation* )goalRecommendation
-    completion:(void(^_Nonnull)(MHVGoalRecommendation* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVGoalRecommendationInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Delete a goal recommendation instance

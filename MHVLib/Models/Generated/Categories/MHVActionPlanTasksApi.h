@@ -100,9 +100,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///  code:200 message:"OK",
 ///  code:0 message:"Error"
 ///
-/// @return MHVActionPlanTasksResponseActionPlanTaskInstanceV2_*
+/// @return MHVActionPlanTaskInstanceV2*
 - (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstanceV2* )actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Patch an update for an action plan task

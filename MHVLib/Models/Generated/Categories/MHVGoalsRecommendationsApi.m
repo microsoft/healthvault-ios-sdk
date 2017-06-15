@@ -88,10 +88,10 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// 
 ///  @param goalRecommendation The instance of the goal recommendation to create. 
 ///
-///  @returns MHVGoalRecommendation*
+///  @returns MHVGoalRecommendationInstance*
 ///
 - (void)goalRecommendationsCreateWithGoalRecommendation:(MHVGoalRecommendation* _Nonnull)goalRecommendation
-    completion:(void(^_Nonnull)(MHVGoalRecommendation* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVGoalRecommendationInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'goalRecommendation' is set
     if (goalRecommendation == nil)
@@ -120,7 +120,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVGoalRecommendation class]
+                     resultClass:[MHVGoalRecommendationInstance class]
                       completion:completion];
 }
 
