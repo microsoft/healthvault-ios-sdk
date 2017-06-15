@@ -1,0 +1,1140 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C9DC867EC28E0AB74E00107 /* Pods_healthvault_ios_sdk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */; };
+		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
+		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
+		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
+		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
+		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
+		6003F59E195388D20070C39A /* MHVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* MHVAppDelegate.m */; };
+		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
+		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
+		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
+		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
+		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
+		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
+		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		A52EBA351EF0653500A174CE /* MHVThingTestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */; };
+		A56404FC1EF2E9E6002D870B /* MHVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A56404FB1EF2E9E6002D870B /* MHVViewController.xib */; };
+		A5DF64C61EF051FA009F5968 /* MHVActionPlanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF649D1EF051FA009F5968 /* MHVActionPlanDetailViewController.m */; };
+		A5DF64C71EF051FA009F5968 /* MHVActionPlanDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF649E1EF051FA009F5968 /* MHVActionPlanDetailViewController.xib */; };
+		A5DF64C81EF051FA009F5968 /* MHVActionPlansListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64A01EF051FA009F5968 /* MHVActionPlansListViewController.m */; };
+		A5DF64C91EF051FA009F5968 /* MHVActionPlansListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64A11EF051FA009F5968 /* MHVActionPlansListViewController.xib */; };
+		A5DF64CA1EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64A41EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.m */; };
+		A5DF64CB1EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64A51EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.xib */; };
+		A5DF64CC1EF051FA009F5968 /* MHVActionPlanTaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64A71EF051FA009F5968 /* MHVActionPlanTaskListViewController.m */; };
+		A5DF64CD1EF051FA009F5968 /* MHVActionPlanTaskListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64A81EF051FA009F5968 /* MHVActionPlanTaskListViewController.xib */; };
+		A5DF64CE1EF051FA009F5968 /* MHVGoalAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64AB1EF051FA009F5968 /* MHVGoalAddViewController.m */; };
+		A5DF64CF1EF051FA009F5968 /* MHVGoalAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64AC1EF051FA009F5968 /* MHVGoalAddViewController.xib */; };
+		A5DF64D01EF051FA009F5968 /* MHVGoalDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64AE1EF051FA009F5968 /* MHVGoalDetailViewController.m */; };
+		A5DF64D11EF051FA009F5968 /* MHVGoalDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64AF1EF051FA009F5968 /* MHVGoalDetailViewController.xib */; };
+		A5DF64D21EF051FA009F5968 /* MHVGoalsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64B11EF051FA009F5968 /* MHVGoalsListViewController.m */; };
+		A5DF64D31EF051FA009F5968 /* MHVGoalsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64B21EF051FA009F5968 /* MHVGoalsListViewController.xib */; };
+		A5DF64D41EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64B51EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.m */; };
+		A5DF64D51EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64B61EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.xib */; };
+		A5DF64D61EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64B81EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.m */; };
+		A5DF64D71EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64B91EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.xib */; };
+		A5DF64D81EF051FA009F5968 /* MHVImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64BA1EF051FA009F5968 /* MHVImageViewController.swift */; };
+		A5DF64D91EF051FA009F5968 /* MHVImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64BB1EF051FA009F5968 /* MHVImageViewController.xib */; };
+		A5DF64DA1EF051FA009F5968 /* MHVRecordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64BC1EF051FA009F5968 /* MHVRecordListViewController.swift */; };
+		A5DF64DB1EF051FA009F5968 /* MHVRecordListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64BD1EF051FA009F5968 /* MHVRecordListViewController.xib */; };
+		A5DF64DC1EF051FA009F5968 /* MHVTypeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64BF1EF051FA009F5968 /* MHVTypeListViewController.m */; };
+		A5DF64DD1EF051FA009F5968 /* MHVTypeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64C01EF051FA009F5968 /* MHVTypeListViewController.xib */; };
+		A5DF64DE1EF051FA009F5968 /* MHVTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64C21EF051FA009F5968 /* MHVTypeViewController.m */; };
+		A5DF64DF1EF051FA009F5968 /* MHVTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64C31EF051FA009F5968 /* MHVTypeViewController.xib */; };
+		A5DF64E01EF051FA009F5968 /* MHVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64C51EF051FA009F5968 /* MHVViewController.m */; };
+		A5DF65141EF0527B009F5968 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64E11EF0527B009F5968 /* Default-568h@2x.png */; };
+		A5DF65151EF0527B009F5968 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64E21EF0527B009F5968 /* Default.png */; };
+		A5DF65161EF0527B009F5968 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64E31EF0527B009F5968 /* Default@2x.png */; };
+		A5DF65171EF0527B009F5968 /* MHVBloodGlucoseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64E51EF0527B009F5968 /* MHVBloodGlucoseFactory.m */; };
+		A5DF65181EF0527B009F5968 /* MHVBloodPressureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64E71EF0527B009F5968 /* MHVBloodPressureFactory.m */; };
+		A5DF65191EF0527B009F5968 /* MHVCholesterolFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64E91EF0527B009F5968 /* MHVCholesterolFactory.m */; };
+		A5DF651A1EF0527B009F5968 /* MHVConditionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64EB1EF0527B009F5968 /* MHVConditionFactory.m */; };
+		A5DF651B1EF0527B009F5968 /* MHVDietaryIntakeFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64ED1EF0527B009F5968 /* MHVDietaryIntakeFactory.m */; };
+		A5DF651C1EF0527B009F5968 /* MHVEmotionalStateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64EF1EF0527B009F5968 /* MHVEmotionalStateFactory.m */; };
+		A5DF651D1EF0527B009F5968 /* MHVExerciseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64F11EF0527B009F5968 /* MHVExerciseFactory.m */; };
+		A5DF651E1EF0527B009F5968 /* MHVFeatureActions.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64F31EF0527B009F5968 /* MHVFeatureActions.m */; };
+		A5DF651F1EF0527B009F5968 /* MHVFeaturesConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64F51EF0527B009F5968 /* MHVFeaturesConfiguration.m */; };
+		A5DF65201EF0527B009F5968 /* MHVFileFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64F81EF0527B009F5968 /* MHVFileFactory.m */; };
+		A5DF65211EF0527B009F5968 /* MHVFileFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64FA1EF0527B009F5968 /* MHVFileFeatures.m */; };
+		A5DF65221EF0527B009F5968 /* MHVHeartRateFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64FC1EF0527B009F5968 /* MHVHeartRateFactory.m */; };
+		A5DF65231EF0527B009F5968 /* MHVImmunizationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64FE1EF0527B009F5968 /* MHVImmunizationFactory.m */; };
+		A5DF65241EF0527B009F5968 /* MHVMedicationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65001EF0527B009F5968 /* MHVMedicationFactory.m */; };
+		A5DF65251EF0527B009F5968 /* MHVMedicationUsageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65021EF0527B009F5968 /* MHVMedicationUsageFactory.m */; };
+		A5DF65261EF0527B009F5968 /* MHVMoreFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65041EF0527B009F5968 /* MHVMoreFeatures.m */; };
+		A5DF65271EF0527B009F5968 /* MHVProcedureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65061EF0527B009F5968 /* MHVProcedureFactory.m */; };
+		A5DF65281EF0527B009F5968 /* MHVSleepJournalAMFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65081EF0527B009F5968 /* MHVSleepJournalAMFactory.m */; };
+		A5DF65291EF0527B009F5968 /* MHVStatusLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF650A1EF0527B009F5968 /* MHVStatusLabel.m */; };
+		A5DF652A1EF0527B009F5968 /* MHVThingDataTypedFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF650C1EF0527B009F5968 /* MHVThingDataTypedFactory.m */; };
+		A5DF652B1EF0527B009F5968 /* MHVThingDataTypedFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF650E1EF0527B009F5968 /* MHVThingDataTypedFeatures.m */; };
+		A5DF652C1EF0527B009F5968 /* MHVUIAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65101EF0527B009F5968 /* MHVUIAlert.m */; };
+		A5DF652D1EF0527B009F5968 /* MHVWeightFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65121EF0527B009F5968 /* MHVWeightFactory.m */; };
+		A5DF65721EF05327009F5968 /* MHVShellAuthServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF652F1EF052DD009F5968 /* MHVShellAuthServiceTests.m */; };
+		A5DF65731EF05330009F5968 /* MHVThingClientBlobFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65311EF052DD009F5968 /* MHVThingClientBlobFileTests.m */; };
+		A5DF65741EF05333009F5968 /* MHVThingClientBlobTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65321EF052DD009F5968 /* MHVThingClientBlobTests.m */; };
+		A5DF65751EF05335009F5968 /* MHVThingClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65331EF052DD009F5968 /* MHVThingClientTests.m */; };
+		A5DF65761EF05338009F5968 /* MHVVocabularyClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65341EF052DD009F5968 /* MHVVocabularyClientTests.m */; };
+		A5DF65771EF0533D009F5968 /* MHVConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65361EF052DD009F5968 /* MHVConnectionTests.m */; };
+		A5DF65781EF05340009F5968 /* MHVSodaConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65371EF052DD009F5968 /* MHVSodaConnectionTests.m */; };
+		A5DF65791EF05342009F5968 /* MHVLibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF653B1EF052DD009F5968 /* MHVLibTests.m */; };
+		A5DF657A1EF05345009F5968 /* MHVPlatformClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF653C1EF052DD009F5968 /* MHVPlatformClientTests.m */; };
+		A5DF657B1EF0534A009F5968 /* MHVHttpServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65391EF052DD009F5968 /* MHVHttpServiceTests.m */; };
+		A5DF657C1EF0534C009F5968 /* MHVHttpTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF653A1EF052DD009F5968 /* MHVHttpTaskTests.m */; };
+		A5DF657D1EF0535A009F5968 /* MHVAdvanceDirectiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF653E1EF052DD009F5968 /* MHVAdvanceDirectiveTests.m */; };
+		A5DF657E1EF0535A009F5968 /* MHVAerobicProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF653F1EF052DD009F5968 /* MHVAerobicProfileTests.m */; };
+		A5DF657F1EF0535A009F5968 /* MHVAllergicEpisodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65401EF052DD009F5968 /* MHVAllergicEpisodeTests.m */; };
+		A5DF65801EF0535A009F5968 /* MHVAppointmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65411EF052DD009F5968 /* MHVAppointmentTests.m */; };
+		A5DF65811EF0535A009F5968 /* MHVAppSpecificInformationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65421EF052DD009F5968 /* MHVAppSpecificInformationTests.m */; };
+		A5DF65821EF0535A009F5968 /* MHVAsthmaInhalerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65431EF052DD009F5968 /* MHVAsthmaInhalerTests.m */; };
+		A5DF65831EF0535A009F5968 /* MHVAsthmaInhalerUsageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65441EF052DD009F5968 /* MHVAsthmaInhalerUsageTests.m */; };
+		A5DF65841EF0535A009F5968 /* MHVBodyCompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65451EF052DD009F5968 /* MHVBodyCompositionTests.m */; };
+		A5DF65851EF0535A009F5968 /* MHVBodyDimensionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65461EF052DD009F5968 /* MHVBodyDimensionTests.m */; };
+		A5DF65861EF0535A009F5968 /* MHVConcernsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65471EF052DD009F5968 /* MHVConcernsTests.m */; };
+		A5DF65871EF0535A009F5968 /* MHVExplanationOfBenefitsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65481EF052DD009F5968 /* MHVExplanationOfBenefitsTests.m */; };
+		A5DF65881EF0535A009F5968 /* MHVHealthGoalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65491EF052DD009F5968 /* MHVHealthGoalTests.m */; };
+		A5DF65891EF0535A009F5968 /* MHVMedicalDeviceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF654A1EF052DD009F5968 /* MHVMedicalDeviceTests.m */; };
+		A5DF658A1EF0535A009F5968 /* MHVMedicalImageStudyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF654B1EF052DD009F5968 /* MHVMedicalImageStudyTests.m */; };
+		A5DF658B1EF0535A009F5968 /* MHVMenstruationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF654C1EF052DD009F5968 /* MHVMenstruationTests.m */; };
+		A5DF658C1EF0535A009F5968 /* MHVPlanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF654D1EF052DD009F5968 /* MHVPlanTests.m */; };
+		A5DF658D1EF0535A009F5968 /* MHVPregnancyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF654E1EF052DD009F5968 /* MHVPregnancyTests.m */; };
+		A5DF658E1EF0535A009F5968 /* MHVTaskThingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF654F1EF052DD009F5968 /* MHVTaskThingTests.m */; };
+		A5DF658F1EF0535A009F5968 /* MHVTaskTrackingEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */; };
+		A5DF65901EF05362009F5968 /* MHVXmlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65521EF052DD009F5968 /* MHVXmlTests.m */; };
+		EC63189E52528368EEFB7FEE /* Pods_healthvault_ios_sdk_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6003F5B3195388D20070C39A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6003F582195388D10070C39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6003F589195388D20070C39A;
+			remoteInfo = "healthvault-ios-sdk";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6003F58A195388D20070C39A /* healthvault-ios-sdk_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "healthvault-ios-sdk_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6003F595195388D20070C39A /* healthvault-ios-sdk-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "healthvault-ios-sdk-Info.plist"; sourceTree = "<group>"; };
+		6003F597195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6003F599195388D20070C39A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6003F59B195388D20070C39A /* healthvault-ios-sdk-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "healthvault-ios-sdk-Prefix.pch"; sourceTree = "<group>"; };
+		6003F59C195388D20070C39A /* MHVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVAppDelegate.h; sourceTree = "<group>"; };
+		6003F59D195388D20070C39A /* MHVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVAppDelegate.m; sourceTree = "<group>"; };
+		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6003F5AE195388D20070C39A /* healthvault-ios-sdk_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "healthvault-ios-sdk_Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
+		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
+		6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		84D76BC48F47675888A0209E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8A19E89C4AE57AE6FCF1D704 /* Pods-healthvault-ios-sdk_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Tests/Pods-healthvault-ios-sdk_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		A52EBA331EF0653500A174CE /* MHVThingTestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTestExtensions.h; sourceTree = "<group>"; };
+		A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTestExtensions.m; sourceTree = "<group>"; };
+		A56404FB1EF2E9E6002D870B /* MHVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVViewController.xib; sourceTree = "<group>"; };
+		A5DF64981EF05196009F5968 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		A5DF649C1EF051FA009F5968 /* MHVActionPlanDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanDetailViewController.h; sourceTree = "<group>"; };
+		A5DF649D1EF051FA009F5968 /* MHVActionPlanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanDetailViewController.m; sourceTree = "<group>"; };
+		A5DF649E1EF051FA009F5968 /* MHVActionPlanDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVActionPlanDetailViewController.xib; sourceTree = "<group>"; };
+		A5DF649F1EF051FA009F5968 /* MHVActionPlansListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVActionPlansListViewController.h; sourceTree = "<group>"; };
+		A5DF64A01EF051FA009F5968 /* MHVActionPlansListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlansListViewController.m; sourceTree = "<group>"; };
+		A5DF64A11EF051FA009F5968 /* MHVActionPlansListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVActionPlansListViewController.xib; sourceTree = "<group>"; };
+		A5DF64A31EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTaskDetailViewController.h; sourceTree = "<group>"; };
+		A5DF64A41EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTaskDetailViewController.m; sourceTree = "<group>"; };
+		A5DF64A51EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVActionPlanTaskDetailViewController.xib; sourceTree = "<group>"; };
+		A5DF64A61EF051FA009F5968 /* MHVActionPlanTaskListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTaskListViewController.h; sourceTree = "<group>"; };
+		A5DF64A71EF051FA009F5968 /* MHVActionPlanTaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTaskListViewController.m; sourceTree = "<group>"; };
+		A5DF64A81EF051FA009F5968 /* MHVActionPlanTaskListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVActionPlanTaskListViewController.xib; sourceTree = "<group>"; };
+		A5DF64AA1EF051FA009F5968 /* MHVGoalAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGoalAddViewController.h; sourceTree = "<group>"; };
+		A5DF64AB1EF051FA009F5968 /* MHVGoalAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalAddViewController.m; sourceTree = "<group>"; };
+		A5DF64AC1EF051FA009F5968 /* MHVGoalAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalAddViewController.xib; sourceTree = "<group>"; };
+		A5DF64AD1EF051FA009F5968 /* MHVGoalDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGoalDetailViewController.h; sourceTree = "<group>"; };
+		A5DF64AE1EF051FA009F5968 /* MHVGoalDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalDetailViewController.m; sourceTree = "<group>"; };
+		A5DF64AF1EF051FA009F5968 /* MHVGoalDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalDetailViewController.xib; sourceTree = "<group>"; };
+		A5DF64B01EF051FA009F5968 /* MHVGoalsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGoalsListViewController.h; sourceTree = "<group>"; };
+		A5DF64B11EF051FA009F5968 /* MHVGoalsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsListViewController.m; sourceTree = "<group>"; };
+		A5DF64B21EF051FA009F5968 /* MHVGoalsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalsListViewController.xib; sourceTree = "<group>"; };
+		A5DF64B41EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGoalsRecommendationsDetailViewController.h; sourceTree = "<group>"; };
+		A5DF64B51EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsRecommendationsDetailViewController.m; sourceTree = "<group>"; };
+		A5DF64B61EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalsRecommendationsDetailViewController.xib; sourceTree = "<group>"; };
+		A5DF64B71EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVGoalsRecommendationsListViewController.h; sourceTree = "<group>"; };
+		A5DF64B81EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVGoalsRecommendationsListViewController.m; sourceTree = "<group>"; };
+		A5DF64B91EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVGoalsRecommendationsListViewController.xib; sourceTree = "<group>"; };
+		A5DF64BA1EF051FA009F5968 /* MHVImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MHVImageViewController.swift; sourceTree = "<group>"; };
+		A5DF64BB1EF051FA009F5968 /* MHVImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVImageViewController.xib; sourceTree = "<group>"; };
+		A5DF64BC1EF051FA009F5968 /* MHVRecordListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MHVRecordListViewController.swift; sourceTree = "<group>"; };
+		A5DF64BD1EF051FA009F5968 /* MHVRecordListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVRecordListViewController.xib; sourceTree = "<group>"; };
+		A5DF64BE1EF051FA009F5968 /* MHVTypeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTypeListViewController.h; sourceTree = "<group>"; };
+		A5DF64BF1EF051FA009F5968 /* MHVTypeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTypeListViewController.m; sourceTree = "<group>"; };
+		A5DF64C01EF051FA009F5968 /* MHVTypeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVTypeListViewController.xib; sourceTree = "<group>"; };
+		A5DF64C11EF051FA009F5968 /* MHVTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVTypeViewController.h; sourceTree = "<group>"; };
+		A5DF64C21EF051FA009F5968 /* MHVTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTypeViewController.m; sourceTree = "<group>"; };
+		A5DF64C31EF051FA009F5968 /* MHVTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVTypeViewController.xib; sourceTree = "<group>"; };
+		A5DF64C41EF051FA009F5968 /* MHVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVViewController.h; sourceTree = "<group>"; };
+		A5DF64C51EF051FA009F5968 /* MHVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVViewController.m; sourceTree = "<group>"; };
+		A5DF64E11EF0527B009F5968 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A5DF64E21EF0527B009F5968 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A5DF64E31EF0527B009F5968 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A5DF64E41EF0527B009F5968 /* MHVBloodGlucoseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBloodGlucoseFactory.h; sourceTree = "<group>"; };
+		A5DF64E51EF0527B009F5968 /* MHVBloodGlucoseFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBloodGlucoseFactory.m; sourceTree = "<group>"; };
+		A5DF64E61EF0527B009F5968 /* MHVBloodPressureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBloodPressureFactory.h; sourceTree = "<group>"; };
+		A5DF64E71EF0527B009F5968 /* MHVBloodPressureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBloodPressureFactory.m; sourceTree = "<group>"; };
+		A5DF64E81EF0527B009F5968 /* MHVCholesterolFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVCholesterolFactory.h; sourceTree = "<group>"; };
+		A5DF64E91EF0527B009F5968 /* MHVCholesterolFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVCholesterolFactory.m; sourceTree = "<group>"; };
+		A5DF64EA1EF0527B009F5968 /* MHVConditionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVConditionFactory.h; sourceTree = "<group>"; };
+		A5DF64EB1EF0527B009F5968 /* MHVConditionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVConditionFactory.m; sourceTree = "<group>"; };
+		A5DF64EC1EF0527B009F5968 /* MHVDietaryIntakeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVDietaryIntakeFactory.h; sourceTree = "<group>"; };
+		A5DF64ED1EF0527B009F5968 /* MHVDietaryIntakeFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVDietaryIntakeFactory.m; sourceTree = "<group>"; };
+		A5DF64EE1EF0527B009F5968 /* MHVEmotionalStateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVEmotionalStateFactory.h; sourceTree = "<group>"; };
+		A5DF64EF1EF0527B009F5968 /* MHVEmotionalStateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVEmotionalStateFactory.m; sourceTree = "<group>"; };
+		A5DF64F01EF0527B009F5968 /* MHVExerciseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVExerciseFactory.h; sourceTree = "<group>"; };
+		A5DF64F11EF0527B009F5968 /* MHVExerciseFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVExerciseFactory.m; sourceTree = "<group>"; };
+		A5DF64F21EF0527B009F5968 /* MHVFeatureActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFeatureActions.h; sourceTree = "<group>"; };
+		A5DF64F31EF0527B009F5968 /* MHVFeatureActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFeatureActions.m; sourceTree = "<group>"; };
+		A5DF64F41EF0527B009F5968 /* MHVFeaturesConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFeaturesConfiguration.h; sourceTree = "<group>"; };
+		A5DF64F51EF0527B009F5968 /* MHVFeaturesConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFeaturesConfiguration.m; sourceTree = "<group>"; };
+		A5DF64F61EF0527B009F5968 /* MHVFeaturesConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFeaturesConstants.h; sourceTree = "<group>"; };
+		A5DF64F71EF0527B009F5968 /* MHVFileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFileFactory.h; sourceTree = "<group>"; };
+		A5DF64F81EF0527B009F5968 /* MHVFileFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFileFactory.m; sourceTree = "<group>"; };
+		A5DF64F91EF0527B009F5968 /* MHVFileFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVFileFeatures.h; sourceTree = "<group>"; };
+		A5DF64FA1EF0527B009F5968 /* MHVFileFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVFileFeatures.m; sourceTree = "<group>"; };
+		A5DF64FB1EF0527B009F5968 /* MHVHeartRateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVHeartRateFactory.h; sourceTree = "<group>"; };
+		A5DF64FC1EF0527B009F5968 /* MHVHeartRateFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHeartRateFactory.m; sourceTree = "<group>"; };
+		A5DF64FD1EF0527B009F5968 /* MHVImmunizationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVImmunizationFactory.h; sourceTree = "<group>"; };
+		A5DF64FE1EF0527B009F5968 /* MHVImmunizationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVImmunizationFactory.m; sourceTree = "<group>"; };
+		A5DF64FF1EF0527B009F5968 /* MHVMedicationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMedicationFactory.h; sourceTree = "<group>"; };
+		A5DF65001EF0527B009F5968 /* MHVMedicationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMedicationFactory.m; sourceTree = "<group>"; };
+		A5DF65011EF0527B009F5968 /* MHVMedicationUsageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMedicationUsageFactory.h; sourceTree = "<group>"; };
+		A5DF65021EF0527B009F5968 /* MHVMedicationUsageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMedicationUsageFactory.m; sourceTree = "<group>"; };
+		A5DF65031EF0527B009F5968 /* MHVMoreFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMoreFeatures.h; sourceTree = "<group>"; };
+		A5DF65041EF0527B009F5968 /* MHVMoreFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMoreFeatures.m; sourceTree = "<group>"; };
+		A5DF65051EF0527B009F5968 /* MHVProcedureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVProcedureFactory.h; sourceTree = "<group>"; };
+		A5DF65061EF0527B009F5968 /* MHVProcedureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVProcedureFactory.m; sourceTree = "<group>"; };
+		A5DF65071EF0527B009F5968 /* MHVSleepJournalAMFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVSleepJournalAMFactory.h; sourceTree = "<group>"; };
+		A5DF65081EF0527B009F5968 /* MHVSleepJournalAMFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSleepJournalAMFactory.m; sourceTree = "<group>"; };
+		A5DF65091EF0527B009F5968 /* MHVStatusLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVStatusLabel.h; sourceTree = "<group>"; };
+		A5DF650A1EF0527B009F5968 /* MHVStatusLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVStatusLabel.m; sourceTree = "<group>"; };
+		A5DF650B1EF0527B009F5968 /* MHVThingDataTypedFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingDataTypedFactory.h; sourceTree = "<group>"; };
+		A5DF650C1EF0527B009F5968 /* MHVThingDataTypedFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingDataTypedFactory.m; sourceTree = "<group>"; };
+		A5DF650D1EF0527B009F5968 /* MHVThingDataTypedFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingDataTypedFeatures.h; sourceTree = "<group>"; };
+		A5DF650E1EF0527B009F5968 /* MHVThingDataTypedFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingDataTypedFeatures.m; sourceTree = "<group>"; };
+		A5DF650F1EF0527B009F5968 /* MHVUIAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVUIAlert.h; sourceTree = "<group>"; };
+		A5DF65101EF0527B009F5968 /* MHVUIAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVUIAlert.m; sourceTree = "<group>"; };
+		A5DF65111EF0527B009F5968 /* MHVWeightFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVWeightFactory.h; sourceTree = "<group>"; };
+		A5DF65121EF0527B009F5968 /* MHVWeightFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVWeightFactory.m; sourceTree = "<group>"; };
+		A5DF65131EF0527B009F5968 /* healthvault_ios_sdk_Example-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "healthvault_ios_sdk_Example-Bridging-Header.h"; sourceTree = "<group>"; };
+		A5DF652F1EF052DD009F5968 /* MHVShellAuthServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVShellAuthServiceTests.m; sourceTree = "<group>"; };
+		A5DF65311EF052DD009F5968 /* MHVThingClientBlobFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingClientBlobFileTests.m; sourceTree = "<group>"; };
+		A5DF65321EF052DD009F5968 /* MHVThingClientBlobTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingClientBlobTests.m; sourceTree = "<group>"; };
+		A5DF65331EF052DD009F5968 /* MHVThingClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingClientTests.m; sourceTree = "<group>"; };
+		A5DF65341EF052DD009F5968 /* MHVVocabularyClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVVocabularyClientTests.m; sourceTree = "<group>"; };
+		A5DF65361EF052DD009F5968 /* MHVConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVConnectionTests.m; sourceTree = "<group>"; };
+		A5DF65371EF052DD009F5968 /* MHVSodaConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVSodaConnectionTests.m; sourceTree = "<group>"; };
+		A5DF65391EF052DD009F5968 /* MHVHttpServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHttpServiceTests.m; sourceTree = "<group>"; };
+		A5DF653A1EF052DD009F5968 /* MHVHttpTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHttpTaskTests.m; sourceTree = "<group>"; };
+		A5DF653B1EF052DD009F5968 /* MHVLibTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVLibTests.m; sourceTree = "<group>"; };
+		A5DF653C1EF052DD009F5968 /* MHVPlatformClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPlatformClientTests.m; sourceTree = "<group>"; };
+		A5DF653E1EF052DD009F5968 /* MHVAdvanceDirectiveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAdvanceDirectiveTests.m; sourceTree = "<group>"; };
+		A5DF653F1EF052DD009F5968 /* MHVAerobicProfileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAerobicProfileTests.m; sourceTree = "<group>"; };
+		A5DF65401EF052DD009F5968 /* MHVAllergicEpisodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAllergicEpisodeTests.m; sourceTree = "<group>"; };
+		A5DF65411EF052DD009F5968 /* MHVAppointmentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAppointmentTests.m; sourceTree = "<group>"; };
+		A5DF65421EF052DD009F5968 /* MHVAppSpecificInformationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAppSpecificInformationTests.m; sourceTree = "<group>"; };
+		A5DF65431EF052DD009F5968 /* MHVAsthmaInhalerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAsthmaInhalerTests.m; sourceTree = "<group>"; };
+		A5DF65441EF052DD009F5968 /* MHVAsthmaInhalerUsageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVAsthmaInhalerUsageTests.m; sourceTree = "<group>"; };
+		A5DF65451EF052DD009F5968 /* MHVBodyCompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBodyCompositionTests.m; sourceTree = "<group>"; };
+		A5DF65461EF052DD009F5968 /* MHVBodyDimensionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBodyDimensionTests.m; sourceTree = "<group>"; };
+		A5DF65471EF052DD009F5968 /* MHVConcernsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVConcernsTests.m; sourceTree = "<group>"; };
+		A5DF65481EF052DD009F5968 /* MHVExplanationOfBenefitsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVExplanationOfBenefitsTests.m; sourceTree = "<group>"; };
+		A5DF65491EF052DD009F5968 /* MHVHealthGoalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVHealthGoalTests.m; sourceTree = "<group>"; };
+		A5DF654A1EF052DD009F5968 /* MHVMedicalDeviceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMedicalDeviceTests.m; sourceTree = "<group>"; };
+		A5DF654B1EF052DD009F5968 /* MHVMedicalImageStudyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMedicalImageStudyTests.m; sourceTree = "<group>"; };
+		A5DF654C1EF052DD009F5968 /* MHVMenstruationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMenstruationTests.m; sourceTree = "<group>"; };
+		A5DF654D1EF052DD009F5968 /* MHVPlanTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPlanTests.m; sourceTree = "<group>"; };
+		A5DF654E1EF052DD009F5968 /* MHVPregnancyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPregnancyTests.m; sourceTree = "<group>"; };
+		A5DF654F1EF052DD009F5968 /* MHVTaskThingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskThingTests.m; sourceTree = "<group>"; };
+		A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTrackingEntryTests.m; sourceTree = "<group>"; };
+		A5DF65521EF052DD009F5968 /* MHVXmlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVXmlTests.m; sourceTree = "<group>"; };
+		B3A8DCF4594CD372C82292F5 /* Pods-healthvault-ios-sdk_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example.release.xcconfig"; sourceTree = "<group>"; };
+		BF0D690093BB4DB140DF6A2E /* healthvault-ios-sdk.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "healthvault-ios-sdk.podspec"; path = "../healthvault-ios-sdk.podspec"; sourceTree = "<group>"; };
+		D8FE05E531FFE778B9984522 /* Pods-healthvault-ios-sdk_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		FBE8ECF9045A7D4F1E2252CA /* Pods-healthvault-ios-sdk_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Tests/Pods-healthvault-ios-sdk_Tests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6003F587195388D20070C39A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
+				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
+				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
+				4C9DC867EC28E0AB74E00107 /* Pods_healthvault_ios_sdk_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6003F5AB195388D20070C39A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
+				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
+				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
+				EC63189E52528368EEFB7FEE /* Pods_healthvault_ios_sdk_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6003F581195388D10070C39A = {
+			isa = PBXGroup;
+			children = (
+				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
+				6003F593195388D20070C39A /* Example for healthvault-ios-sdk */,
+				6003F5B5195388D20070C39A /* Tests */,
+				6003F58C195388D20070C39A /* Frameworks */,
+				6003F58B195388D20070C39A /* Products */,
+				95B2C45DC40F4086FFF78A72 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		6003F58B195388D20070C39A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6003F58A195388D20070C39A /* healthvault-ios-sdk_Example.app */,
+				6003F5AE195388D20070C39A /* healthvault-ios-sdk_Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6003F58C195388D20070C39A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6003F58D195388D20070C39A /* Foundation.framework */,
+				6003F58F195388D20070C39A /* CoreGraphics.framework */,
+				6003F591195388D20070C39A /* UIKit.framework */,
+				6003F5AF195388D20070C39A /* XCTest.framework */,
+				6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */,
+				1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6003F593195388D20070C39A /* Example for healthvault-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				6003F5A8195388D20070C39A /* Images.xcassets */,
+				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
+				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
+				6003F59C195388D20070C39A /* MHVAppDelegate.h */,
+				6003F59D195388D20070C39A /* MHVAppDelegate.m */,
+				A5DF64E41EF0527B009F5968 /* MHVBloodGlucoseFactory.h */,
+				A5DF64E51EF0527B009F5968 /* MHVBloodGlucoseFactory.m */,
+				A5DF64E61EF0527B009F5968 /* MHVBloodPressureFactory.h */,
+				A5DF64E71EF0527B009F5968 /* MHVBloodPressureFactory.m */,
+				A5DF64E81EF0527B009F5968 /* MHVCholesterolFactory.h */,
+				A5DF64E91EF0527B009F5968 /* MHVCholesterolFactory.m */,
+				A5DF64EA1EF0527B009F5968 /* MHVConditionFactory.h */,
+				A5DF64EB1EF0527B009F5968 /* MHVConditionFactory.m */,
+				A5DF64EC1EF0527B009F5968 /* MHVDietaryIntakeFactory.h */,
+				A5DF64ED1EF0527B009F5968 /* MHVDietaryIntakeFactory.m */,
+				A5DF64EE1EF0527B009F5968 /* MHVEmotionalStateFactory.h */,
+				A5DF64EF1EF0527B009F5968 /* MHVEmotionalStateFactory.m */,
+				A5DF64F01EF0527B009F5968 /* MHVExerciseFactory.h */,
+				A5DF64F11EF0527B009F5968 /* MHVExerciseFactory.m */,
+				A5DF64F21EF0527B009F5968 /* MHVFeatureActions.h */,
+				A5DF64F31EF0527B009F5968 /* MHVFeatureActions.m */,
+				A5DF64F41EF0527B009F5968 /* MHVFeaturesConfiguration.h */,
+				A5DF64F51EF0527B009F5968 /* MHVFeaturesConfiguration.m */,
+				A5DF64F61EF0527B009F5968 /* MHVFeaturesConstants.h */,
+				A5DF64F71EF0527B009F5968 /* MHVFileFactory.h */,
+				A5DF64F81EF0527B009F5968 /* MHVFileFactory.m */,
+				A5DF64F91EF0527B009F5968 /* MHVFileFeatures.h */,
+				A5DF64FA1EF0527B009F5968 /* MHVFileFeatures.m */,
+				A5DF64FB1EF0527B009F5968 /* MHVHeartRateFactory.h */,
+				A5DF64FC1EF0527B009F5968 /* MHVHeartRateFactory.m */,
+				A5DF64FD1EF0527B009F5968 /* MHVImmunizationFactory.h */,
+				A5DF64FE1EF0527B009F5968 /* MHVImmunizationFactory.m */,
+				A5DF64FF1EF0527B009F5968 /* MHVMedicationFactory.h */,
+				A5DF65001EF0527B009F5968 /* MHVMedicationFactory.m */,
+				A5DF65011EF0527B009F5968 /* MHVMedicationUsageFactory.h */,
+				A5DF65021EF0527B009F5968 /* MHVMedicationUsageFactory.m */,
+				A5DF65031EF0527B009F5968 /* MHVMoreFeatures.h */,
+				A5DF65041EF0527B009F5968 /* MHVMoreFeatures.m */,
+				A5DF65051EF0527B009F5968 /* MHVProcedureFactory.h */,
+				A5DF65061EF0527B009F5968 /* MHVProcedureFactory.m */,
+				A5DF65071EF0527B009F5968 /* MHVSleepJournalAMFactory.h */,
+				A5DF65081EF0527B009F5968 /* MHVSleepJournalAMFactory.m */,
+				A5DF65091EF0527B009F5968 /* MHVStatusLabel.h */,
+				A5DF650A1EF0527B009F5968 /* MHVStatusLabel.m */,
+				A5DF650B1EF0527B009F5968 /* MHVThingDataTypedFactory.h */,
+				A5DF650C1EF0527B009F5968 /* MHVThingDataTypedFactory.m */,
+				A5DF650D1EF0527B009F5968 /* MHVThingDataTypedFeatures.h */,
+				A5DF650E1EF0527B009F5968 /* MHVThingDataTypedFeatures.m */,
+				A52EBA331EF0653500A174CE /* MHVThingTestExtensions.h */,
+				A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */,
+				A5DF650F1EF0527B009F5968 /* MHVUIAlert.h */,
+				A5DF65101EF0527B009F5968 /* MHVUIAlert.m */,
+				A5DF65111EF0527B009F5968 /* MHVWeightFactory.h */,
+				A5DF65121EF0527B009F5968 /* MHVWeightFactory.m */,
+				A5DF65131EF0527B009F5968 /* healthvault_ios_sdk_Example-Bridging-Header.h */,
+				A5DF649A1EF051FA009F5968 /* ViewControllers */,
+				6003F594195388D20070C39A /* Supporting Files */,
+			);
+			name = "Example for healthvault-ios-sdk";
+			path = "healthvault-ios-sdk";
+			sourceTree = "<group>";
+		};
+		6003F594195388D20070C39A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF64E11EF0527B009F5968 /* Default-568h@2x.png */,
+				A5DF64E21EF0527B009F5968 /* Default.png */,
+				A5DF64E31EF0527B009F5968 /* Default@2x.png */,
+				6003F595195388D20070C39A /* healthvault-ios-sdk-Info.plist */,
+				6003F59B195388D20070C39A /* healthvault-ios-sdk-Prefix.pch */,
+				6003F596195388D20070C39A /* InfoPlist.strings */,
+				6003F599195388D20070C39A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6003F5B5195388D20070C39A /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF652E1EF052DD009F5968 /* Authentication */,
+				A5DF65301EF052DD009F5968 /* Clients */,
+				A5DF65351EF052DD009F5968 /* Connection */,
+				A5DF65381EF052DD009F5968 /* HTTP */,
+				A5DF653B1EF052DD009F5968 /* MHVLibTests.m */,
+				A5DF653C1EF052DD009F5968 /* MHVPlatformClientTests.m */,
+				A5DF653D1EF052DD009F5968 /* ThingTypes */,
+				A5DF65511EF052DD009F5968 /* XML */,
+				6003F5B6195388D20070C39A /* Supporting Files */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		6003F5B6195388D20070C39A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6003F5B7195388D20070C39A /* Tests-Info.plist */,
+				6003F5B8195388D20070C39A /* InfoPlist.strings */,
+				606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		60FF7A9C1954A5C5007DD14C /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				BF0D690093BB4DB140DF6A2E /* healthvault-ios-sdk.podspec */,
+				84D76BC48F47675888A0209E /* README.md */,
+				A5DF64981EF05196009F5968 /* LICENSE */,
+			);
+			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		95B2C45DC40F4086FFF78A72 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D8FE05E531FFE778B9984522 /* Pods-healthvault-ios-sdk_Example.debug.xcconfig */,
+				B3A8DCF4594CD372C82292F5 /* Pods-healthvault-ios-sdk_Example.release.xcconfig */,
+				8A19E89C4AE57AE6FCF1D704 /* Pods-healthvault-ios-sdk_Tests.debug.xcconfig */,
+				FBE8ECF9045A7D4F1E2252CA /* Pods-healthvault-ios-sdk_Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A5DF649A1EF051FA009F5968 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF649B1EF051FA009F5968 /* ActionPlans */,
+				A5DF64A21EF051FA009F5968 /* ActionPlanTasks */,
+				A5DF64A91EF051FA009F5968 /* Goals */,
+				A5DF64B31EF051FA009F5968 /* GoalsRecommendations */,
+				A5DF64BA1EF051FA009F5968 /* MHVImageViewController.swift */,
+				A5DF64BB1EF051FA009F5968 /* MHVImageViewController.xib */,
+				A5DF64BC1EF051FA009F5968 /* MHVRecordListViewController.swift */,
+				A5DF64BD1EF051FA009F5968 /* MHVRecordListViewController.xib */,
+				A5DF64BE1EF051FA009F5968 /* MHVTypeListViewController.h */,
+				A5DF64BF1EF051FA009F5968 /* MHVTypeListViewController.m */,
+				A5DF64C01EF051FA009F5968 /* MHVTypeListViewController.xib */,
+				A5DF64C11EF051FA009F5968 /* MHVTypeViewController.h */,
+				A5DF64C21EF051FA009F5968 /* MHVTypeViewController.m */,
+				A5DF64C31EF051FA009F5968 /* MHVTypeViewController.xib */,
+				A5DF64C41EF051FA009F5968 /* MHVViewController.h */,
+				A5DF64C51EF051FA009F5968 /* MHVViewController.m */,
+				A56404FB1EF2E9E6002D870B /* MHVViewController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A5DF649B1EF051FA009F5968 /* ActionPlans */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF649C1EF051FA009F5968 /* MHVActionPlanDetailViewController.h */,
+				A5DF649D1EF051FA009F5968 /* MHVActionPlanDetailViewController.m */,
+				A5DF649E1EF051FA009F5968 /* MHVActionPlanDetailViewController.xib */,
+				A5DF649F1EF051FA009F5968 /* MHVActionPlansListViewController.h */,
+				A5DF64A01EF051FA009F5968 /* MHVActionPlansListViewController.m */,
+				A5DF64A11EF051FA009F5968 /* MHVActionPlansListViewController.xib */,
+			);
+			path = ActionPlans;
+			sourceTree = "<group>";
+		};
+		A5DF64A21EF051FA009F5968 /* ActionPlanTasks */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF64A31EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.h */,
+				A5DF64A41EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.m */,
+				A5DF64A51EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.xib */,
+				A5DF64A61EF051FA009F5968 /* MHVActionPlanTaskListViewController.h */,
+				A5DF64A71EF051FA009F5968 /* MHVActionPlanTaskListViewController.m */,
+				A5DF64A81EF051FA009F5968 /* MHVActionPlanTaskListViewController.xib */,
+			);
+			path = ActionPlanTasks;
+			sourceTree = "<group>";
+		};
+		A5DF64A91EF051FA009F5968 /* Goals */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF64AA1EF051FA009F5968 /* MHVGoalAddViewController.h */,
+				A5DF64AB1EF051FA009F5968 /* MHVGoalAddViewController.m */,
+				A5DF64AC1EF051FA009F5968 /* MHVGoalAddViewController.xib */,
+				A5DF64AD1EF051FA009F5968 /* MHVGoalDetailViewController.h */,
+				A5DF64AE1EF051FA009F5968 /* MHVGoalDetailViewController.m */,
+				A5DF64AF1EF051FA009F5968 /* MHVGoalDetailViewController.xib */,
+				A5DF64B01EF051FA009F5968 /* MHVGoalsListViewController.h */,
+				A5DF64B11EF051FA009F5968 /* MHVGoalsListViewController.m */,
+				A5DF64B21EF051FA009F5968 /* MHVGoalsListViewController.xib */,
+			);
+			path = Goals;
+			sourceTree = "<group>";
+		};
+		A5DF64B31EF051FA009F5968 /* GoalsRecommendations */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF64B41EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.h */,
+				A5DF64B51EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.m */,
+				A5DF64B61EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.xib */,
+				A5DF64B71EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.h */,
+				A5DF64B81EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.m */,
+				A5DF64B91EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.xib */,
+			);
+			path = GoalsRecommendations;
+			sourceTree = "<group>";
+		};
+		A5DF652E1EF052DD009F5968 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF652F1EF052DD009F5968 /* MHVShellAuthServiceTests.m */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		A5DF65301EF052DD009F5968 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF65311EF052DD009F5968 /* MHVThingClientBlobFileTests.m */,
+				A5DF65321EF052DD009F5968 /* MHVThingClientBlobTests.m */,
+				A5DF65331EF052DD009F5968 /* MHVThingClientTests.m */,
+				A5DF65341EF052DD009F5968 /* MHVVocabularyClientTests.m */,
+			);
+			path = Clients;
+			sourceTree = "<group>";
+		};
+		A5DF65351EF052DD009F5968 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF65361EF052DD009F5968 /* MHVConnectionTests.m */,
+				A5DF65371EF052DD009F5968 /* MHVSodaConnectionTests.m */,
+			);
+			path = Connection;
+			sourceTree = "<group>";
+		};
+		A5DF65381EF052DD009F5968 /* HTTP */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF65391EF052DD009F5968 /* MHVHttpServiceTests.m */,
+				A5DF653A1EF052DD009F5968 /* MHVHttpTaskTests.m */,
+			);
+			path = HTTP;
+			sourceTree = "<group>";
+		};
+		A5DF653D1EF052DD009F5968 /* ThingTypes */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF653E1EF052DD009F5968 /* MHVAdvanceDirectiveTests.m */,
+				A5DF653F1EF052DD009F5968 /* MHVAerobicProfileTests.m */,
+				A5DF65401EF052DD009F5968 /* MHVAllergicEpisodeTests.m */,
+				A5DF65411EF052DD009F5968 /* MHVAppointmentTests.m */,
+				A5DF65421EF052DD009F5968 /* MHVAppSpecificInformationTests.m */,
+				A5DF65431EF052DD009F5968 /* MHVAsthmaInhalerTests.m */,
+				A5DF65441EF052DD009F5968 /* MHVAsthmaInhalerUsageTests.m */,
+				A5DF65451EF052DD009F5968 /* MHVBodyCompositionTests.m */,
+				A5DF65461EF052DD009F5968 /* MHVBodyDimensionTests.m */,
+				A5DF65471EF052DD009F5968 /* MHVConcernsTests.m */,
+				A5DF65481EF052DD009F5968 /* MHVExplanationOfBenefitsTests.m */,
+				A5DF65491EF052DD009F5968 /* MHVHealthGoalTests.m */,
+				A5DF654A1EF052DD009F5968 /* MHVMedicalDeviceTests.m */,
+				A5DF654B1EF052DD009F5968 /* MHVMedicalImageStudyTests.m */,
+				A5DF654C1EF052DD009F5968 /* MHVMenstruationTests.m */,
+				A5DF654D1EF052DD009F5968 /* MHVPlanTests.m */,
+				A5DF654E1EF052DD009F5968 /* MHVPregnancyTests.m */,
+				A5DF654F1EF052DD009F5968 /* MHVTaskThingTests.m */,
+				A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */,
+			);
+			path = ThingTypes;
+			sourceTree = "<group>";
+		};
+		A5DF65511EF052DD009F5968 /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				A5DF65521EF052DD009F5968 /* MHVXmlTests.m */,
+			);
+			path = XML;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6003F589195388D20070C39A /* healthvault-ios-sdk_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "healthvault-ios-sdk_Example" */;
+			buildPhases = (
+				138547A6A3B710A421E2EDF6 /* [CP] Check Pods Manifest.lock */,
+				6003F586195388D20070C39A /* Sources */,
+				6003F587195388D20070C39A /* Frameworks */,
+				6003F588195388D20070C39A /* Resources */,
+				211869A455E8B6611E81595C /* [CP] Embed Pods Frameworks */,
+				D20BEA24CDB382AA4D9103E7 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "healthvault-ios-sdk_Example";
+			productName = "healthvault-ios-sdk";
+			productReference = 6003F58A195388D20070C39A /* healthvault-ios-sdk_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6003F5AD195388D20070C39A /* healthvault-ios-sdk_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "healthvault-ios-sdk_Tests" */;
+			buildPhases = (
+				2BF26383F62563B7F5E23455 /* [CP] Check Pods Manifest.lock */,
+				6003F5AA195388D20070C39A /* Sources */,
+				6003F5AB195388D20070C39A /* Frameworks */,
+				6003F5AC195388D20070C39A /* Resources */,
+				8075D4D89F78DC0756A84A20 /* [CP] Embed Pods Frameworks */,
+				5BB528A57811C7B45356E951 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6003F5B4195388D20070C39A /* PBXTargetDependency */,
+			);
+			name = "healthvault-ios-sdk_Tests";
+			productName = "healthvault-ios-sdkTests";
+			productReference = 6003F5AE195388D20070C39A /* healthvault-ios-sdk_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6003F582195388D10070C39A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MHV;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = namalu;
+				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						LastSwiftMigration = 0830;
+					};
+					6003F5AD195388D20070C39A = {
+						TestTargetID = 6003F589195388D20070C39A;
+					};
+				};
+			};
+			buildConfigurationList = 6003F585195388D10070C39A /* Build configuration list for PBXProject "healthvault-ios-sdk" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6003F581195388D10070C39A;
+			productRefGroup = 6003F58B195388D20070C39A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6003F589195388D20070C39A /* healthvault-ios-sdk_Example */,
+				6003F5AD195388D20070C39A /* healthvault-ios-sdk_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6003F588195388D20070C39A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				A5DF64CF1EF051FA009F5968 /* MHVGoalAddViewController.xib in Resources */,
+				A5DF64D51EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.xib in Resources */,
+				A5DF64CD1EF051FA009F5968 /* MHVActionPlanTaskListViewController.xib in Resources */,
+				A5DF64D11EF051FA009F5968 /* MHVGoalDetailViewController.xib in Resources */,
+				A5DF64DD1EF051FA009F5968 /* MHVTypeListViewController.xib in Resources */,
+				A5DF64D91EF051FA009F5968 /* MHVImageViewController.xib in Resources */,
+				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				A5DF64DB1EF051FA009F5968 /* MHVRecordListViewController.xib in Resources */,
+				A5DF64C91EF051FA009F5968 /* MHVActionPlansListViewController.xib in Resources */,
+				A5DF65151EF0527B009F5968 /* Default.png in Resources */,
+				A5DF65161EF0527B009F5968 /* Default@2x.png in Resources */,
+				A56404FC1EF2E9E6002D870B /* MHVViewController.xib in Resources */,
+				A5DF65141EF0527B009F5968 /* Default-568h@2x.png in Resources */,
+				A5DF64DF1EF051FA009F5968 /* MHVTypeViewController.xib in Resources */,
+				A5DF64D71EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.xib in Resources */,
+				A5DF64D31EF051FA009F5968 /* MHVGoalsListViewController.xib in Resources */,
+				A5DF64CB1EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.xib in Resources */,
+				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				A5DF64C71EF051FA009F5968 /* MHVActionPlanDetailViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6003F5AC195388D20070C39A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		138547A6A3B710A421E2EDF6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		211869A455E8B6611E81595C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2BF26383F62563B7F5E23455 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5BB528A57811C7B45356E951 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-healthvault-ios-sdk_Tests/Pods-healthvault-ios-sdk_Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8075D4D89F78DC0756A84A20 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-healthvault-ios-sdk_Tests/Pods-healthvault-ios-sdk_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D20BEA24CDB382AA4D9103E7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6003F586195388D20070C39A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5DF652D1EF0527B009F5968 /* MHVWeightFactory.m in Sources */,
+				A5DF65171EF0527B009F5968 /* MHVBloodGlucoseFactory.m in Sources */,
+				A5DF64C61EF051FA009F5968 /* MHVActionPlanDetailViewController.m in Sources */,
+				6003F59E195388D20070C39A /* MHVAppDelegate.m in Sources */,
+				A5DF65231EF0527B009F5968 /* MHVImmunizationFactory.m in Sources */,
+				A5DF64CE1EF051FA009F5968 /* MHVGoalAddViewController.m in Sources */,
+				A5DF65291EF0527B009F5968 /* MHVStatusLabel.m in Sources */,
+				A5DF64CC1EF051FA009F5968 /* MHVActionPlanTaskListViewController.m in Sources */,
+				A5DF65211EF0527B009F5968 /* MHVFileFeatures.m in Sources */,
+				A5DF65261EF0527B009F5968 /* MHVMoreFeatures.m in Sources */,
+				A5DF64D81EF051FA009F5968 /* MHVImageViewController.swift in Sources */,
+				A5DF65281EF0527B009F5968 /* MHVSleepJournalAMFactory.m in Sources */,
+				A5DF65221EF0527B009F5968 /* MHVHeartRateFactory.m in Sources */,
+				A5DF64C81EF051FA009F5968 /* MHVActionPlansListViewController.m in Sources */,
+				A52EBA351EF0653500A174CE /* MHVThingTestExtensions.m in Sources */,
+				A5DF65251EF0527B009F5968 /* MHVMedicationUsageFactory.m in Sources */,
+				A5DF64D61EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.m in Sources */,
+				A5DF65191EF0527B009F5968 /* MHVCholesterolFactory.m in Sources */,
+				A5DF652C1EF0527B009F5968 /* MHVUIAlert.m in Sources */,
+				A5DF65181EF0527B009F5968 /* MHVBloodPressureFactory.m in Sources */,
+				A5DF651C1EF0527B009F5968 /* MHVEmotionalStateFactory.m in Sources */,
+				A5DF64D01EF051FA009F5968 /* MHVGoalDetailViewController.m in Sources */,
+				A5DF652B1EF0527B009F5968 /* MHVThingDataTypedFeatures.m in Sources */,
+				A5DF65271EF0527B009F5968 /* MHVProcedureFactory.m in Sources */,
+				A5DF64E01EF051FA009F5968 /* MHVViewController.m in Sources */,
+				A5DF64DC1EF051FA009F5968 /* MHVTypeListViewController.m in Sources */,
+				A5DF65241EF0527B009F5968 /* MHVMedicationFactory.m in Sources */,
+				A5DF64DA1EF051FA009F5968 /* MHVRecordListViewController.swift in Sources */,
+				A5DF651A1EF0527B009F5968 /* MHVConditionFactory.m in Sources */,
+				A5DF651F1EF0527B009F5968 /* MHVFeaturesConfiguration.m in Sources */,
+				6003F59A195388D20070C39A /* main.m in Sources */,
+				A5DF651D1EF0527B009F5968 /* MHVExerciseFactory.m in Sources */,
+				A5DF65201EF0527B009F5968 /* MHVFileFactory.m in Sources */,
+				A5DF652A1EF0527B009F5968 /* MHVThingDataTypedFactory.m in Sources */,
+				A5DF651B1EF0527B009F5968 /* MHVDietaryIntakeFactory.m in Sources */,
+				A5DF651E1EF0527B009F5968 /* MHVFeatureActions.m in Sources */,
+				A5DF64D41EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.m in Sources */,
+				A5DF64CA1EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.m in Sources */,
+				A5DF64DE1EF051FA009F5968 /* MHVTypeViewController.m in Sources */,
+				A5DF64D21EF051FA009F5968 /* MHVGoalsListViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6003F5AA195388D20070C39A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5DF65901EF05362009F5968 /* MHVXmlTests.m in Sources */,
+				A5DF657E1EF0535A009F5968 /* MHVAerobicProfileTests.m in Sources */,
+				A5DF657D1EF0535A009F5968 /* MHVAdvanceDirectiveTests.m in Sources */,
+				A5DF658A1EF0535A009F5968 /* MHVMedicalImageStudyTests.m in Sources */,
+				A5DF658D1EF0535A009F5968 /* MHVPregnancyTests.m in Sources */,
+				A5DF65821EF0535A009F5968 /* MHVAsthmaInhalerTests.m in Sources */,
+				A5DF658E1EF0535A009F5968 /* MHVTaskThingTests.m in Sources */,
+				A5DF65831EF0535A009F5968 /* MHVAsthmaInhalerUsageTests.m in Sources */,
+				A5DF65861EF0535A009F5968 /* MHVConcernsTests.m in Sources */,
+				A5DF65841EF0535A009F5968 /* MHVBodyCompositionTests.m in Sources */,
+				A5DF65781EF05340009F5968 /* MHVSodaConnectionTests.m in Sources */,
+				A5DF658F1EF0535A009F5968 /* MHVTaskTrackingEntryTests.m in Sources */,
+				A5DF65801EF0535A009F5968 /* MHVAppointmentTests.m in Sources */,
+				A5DF65761EF05338009F5968 /* MHVVocabularyClientTests.m in Sources */,
+				A5DF657A1EF05345009F5968 /* MHVPlatformClientTests.m in Sources */,
+				A5DF65741EF05333009F5968 /* MHVThingClientBlobTests.m in Sources */,
+				A5DF65731EF05330009F5968 /* MHVThingClientBlobFileTests.m in Sources */,
+				A5DF65771EF0533D009F5968 /* MHVConnectionTests.m in Sources */,
+				A5DF65791EF05342009F5968 /* MHVLibTests.m in Sources */,
+				A5DF657B1EF0534A009F5968 /* MHVHttpServiceTests.m in Sources */,
+				A5DF65721EF05327009F5968 /* MHVShellAuthServiceTests.m in Sources */,
+				A5DF65811EF0535A009F5968 /* MHVAppSpecificInformationTests.m in Sources */,
+				A5DF658B1EF0535A009F5968 /* MHVMenstruationTests.m in Sources */,
+				A5DF65851EF0535A009F5968 /* MHVBodyDimensionTests.m in Sources */,
+				A5DF65871EF0535A009F5968 /* MHVExplanationOfBenefitsTests.m in Sources */,
+				A5DF65751EF05335009F5968 /* MHVThingClientTests.m in Sources */,
+				A5DF658C1EF0535A009F5968 /* MHVPlanTests.m in Sources */,
+				A5DF657F1EF0535A009F5968 /* MHVAllergicEpisodeTests.m in Sources */,
+				A5DF65881EF0535A009F5968 /* MHVHealthGoalTests.m in Sources */,
+				A5DF657C1EF0534C009F5968 /* MHVHttpTaskTests.m in Sources */,
+				A5DF65891EF0535A009F5968 /* MHVMedicalDeviceTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6003F5B4195388D20070C39A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6003F589195388D20070C39A /* healthvault-ios-sdk_Example */;
+			targetProxy = 6003F5B3195388D20070C39A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6003F596195388D20070C39A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6003F597195388D20070C39A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		6003F5B8195388D20070C39A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6003F5B9195388D20070C39A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				71719F9E1E33DC2100824A3D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6003F5BD195388D20070C39A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6003F5BE195388D20070C39A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6003F5C0195388D20070C39A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D8FE05E531FFE778B9984522 /* Pods-healthvault-ios-sdk_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "healthvault-ios-sdk/healthvault-ios-sdk-Prefix.pch";
+				INFOPLIST_FILE = "healthvault-ios-sdk/healthvault-ios-sdk-Info.plist";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "healthvault-ios-sdk/healthvault_ios_sdk_Example-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6003F5C1195388D20070C39A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3A8DCF4594CD372C82292F5 /* Pods-healthvault-ios-sdk_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "healthvault-ios-sdk/healthvault-ios-sdk-Prefix.pch";
+				INFOPLIST_FILE = "healthvault-ios-sdk/healthvault-ios-sdk-Info.plist";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "healthvault-ios-sdk/healthvault_ios_sdk_Example-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		6003F5C3195388D20070C39A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A19E89C4AE57AE6FCF1D704 /* Pods-healthvault-ios-sdk_Tests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Tests/Tests-Info.plist";
+				KEEP_PRIVATE_EXTERNS = NO;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/healthvault-ios-sdk_Example.app/healthvault-ios-sdk_Example";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		6003F5C4195388D20070C39A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBE8ECF9045A7D4F1E2252CA /* Pods-healthvault-ios-sdk_Tests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
+				INFOPLIST_FILE = "Tests/Tests-Info.plist";
+				KEEP_PRIVATE_EXTERNS = NO;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/healthvault-ios-sdk_Example.app/healthvault-ios-sdk_Example";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6003F585195388D10070C39A /* Build configuration list for PBXProject "healthvault-ios-sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6003F5BD195388D20070C39A /* Debug */,
+				6003F5BE195388D20070C39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "healthvault-ios-sdk_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6003F5C0195388D20070C39A /* Debug */,
+				6003F5C1195388D20070C39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "healthvault-ios-sdk_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6003F5C3195388D20070C39A /* Debug */,
+				6003F5C4195388D20070C39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6003F582195388D10070C39A /* Project object */;
+}
