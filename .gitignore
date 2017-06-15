@@ -5,6 +5,8 @@ xcuserdata/
 Tools/codegen/output
 Tools/codegen/KHV*
 
+Example/Pods/
+
 Samples/Demos/Health2.0/HelloHealthVault/HelloHealthVault/Code.txt
 
 *.xccheckout
