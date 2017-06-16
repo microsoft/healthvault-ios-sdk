@@ -43,10 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param actionPlanId The instance of the plan that the objective belongs to.
 /// @param objectiveId The instance of the objective to delete.
 /// 
-///  code:204 message:"NoContent",
-///  code:0 message:"Error"
-///
-/// @return 
 - (void)actionPlanObjectivesDeleteWithActionPlanId:(NSString* )actionPlanId
     objectiveId:(NSString* )objectiveId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
@@ -57,10 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlan The instance of the plan to create.
 /// 
-///  code:201 message:"Created",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanInstanceV2*
 - (void)actionPlansCreateWithActionPlan:(MHVActionPlanV2* )actionPlan
     completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
@@ -70,10 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanId The instance of the plan to delete.
 /// 
-///  code:204 message:"NoContent",
-///  code:0 message:"Error"
-///
-/// @return 
 - (void)actionPlansDeleteWithActionPlanId:(NSString* )actionPlanId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
@@ -83,10 +71,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlansResponseActionPlanInstanceV2_*
 - (void)actionPlansGetWithMaxPageSize:(NSNumber* _Nullable)maxPageSize
     completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstanceV2_* _Nullable output, NSError* _Nullable error))completion;
 
@@ -100,10 +84,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param objectiveId The objective to filter the report to. (optional)
 /// @param taskId The task to filter the report to. (optional)
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanAdherenceSummary*
 - (void)actionPlansGetAdherenceWithStartTime:(NSDate* )startTime
     endTime:(NSDate* )endTime
     actionPlanId:(NSString* )actionPlanId
@@ -117,10 +97,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanId The action plan to update.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanInstanceV2*
 - (void)actionPlansGetByIdWithActionPlanId:(NSString* )actionPlanId
     completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
@@ -130,10 +106,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlan The instance of the plan to update. The entire plan will be replaced with this version.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanInstanceV2*
 - (void)actionPlansReplaceWithActionPlan:(MHVActionPlanInstanceV2* )actionPlan
     completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
@@ -143,10 +115,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlan The instance of the plan to update. Only the fields present in the passed in model will be updated. All other fields and colelctions              will be left, as is, unless invalid.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanInstanceV2*
 - (void)actionPlansUpdateWithActionPlan:(MHVActionPlanInstanceV2* )actionPlan
     completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 

@@ -2,8 +2,9 @@
 xcuserdata
 xcuserdata/
 *.xcuserstate
-Tools/codegen/output
-Tools/codegen/KHV*
+healthvault-ios-sdk/Tools/codegen/output
+healthvault-ios-sdk/Tools/codegen/KHV*
+
 
 Example/Pods/
 
