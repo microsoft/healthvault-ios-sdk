@@ -187,6 +187,7 @@ static CGFloat kAnimationTime = 0.15;
         {
             if (self.webView.loading)
             {
+                self.webView.userInteractionEnabled = NO;
                 [UIView animateWithDuration:kAnimationTime animations:^
                 {
                     self.webView.alpha = 0.0;
@@ -196,6 +197,7 @@ static CGFloat kAnimationTime = 0.15;
             }
             else
             {
+                self.webView.userInteractionEnabled = YES;
                 [UIView animateWithDuration:kAnimationTime animations:^
                  {
                      self.webView.alpha = 1.0;
