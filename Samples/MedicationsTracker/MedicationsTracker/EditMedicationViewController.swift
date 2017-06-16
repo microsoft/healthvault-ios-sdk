@@ -21,8 +21,8 @@ import UIKit
 class EditMedicationViewController: UIViewController, UITextFieldDelegate
 {
     //MARK: Properties
-    var medicationBuilder: MedicationBuilder?
-    var medicationThing: MHVThing?
+    var medicationBuilder: MedicationBuilder
+    var medicationThing: MHVThing
     
     //MARK: UI Properties
     @IBOutlet weak var nameField: AutocompleteTextField!
@@ -45,13 +45,15 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, medication: MHVThing,
          builder: MedicationBuilder)
     {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.medicationThing = medication
         self.medicationBuilder = builder
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     required init?(coder aDecoder: NSCoder)
     {
+        self.medicationThing = MHVMedication.newThing()
+        self.medicationBuilder = MedicationBuilder.init()
         super.init(coder: aDecoder)
     }
     
@@ -102,16 +104,25 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     {
         if(FormSubmission.canSubmit(subviews: self.view.subviews))
         {
-            let medToConstruct = medicationBuilder?.buildMedication(mhvThing: medicationThing!)
-            _ = medToConstruct?.updateNameIfNotNil(name: nameField.text!)
-            _ = medToConstruct?.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
-            _ = medToConstruct?.updateStrengthIfNotNil(amount: strengthAmountField.text!, unit: strengthUnitField.text!)
-            _ = medToConstruct?.updateFrequencyIfNotNil(amount: freqAmountField.text!, unit: freqUnitField.text!)
+            guard medicationBuilder.buildMedication(mhvThing: medicationThing),
+                medicationBuilder.updateNameIfNotNil(name: nameField.text!) else
+            {
+                // This is considered an error, buble it up to the UI
+                return
+            }
+            _ = medicationBuilder.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
+            _ = medicationBuilder.updateStrengthIfNotNil(amount: strengthAmountField.text!, unit: strengthUnitField.text!)
+            _ = medicationBuilder.updateFrequencyIfNotNil(amount: freqAmountField.text!, unit: freqUnitField.text!)
             
-            let medication = medToConstruct?.constructMedication()
-
+            let (medication, contructedProperly) = medicationBuilder.constructMedication()
+            guard contructedProperly else
+            {
+                // This is an error, bubble up to user
+                return
+            }
+                
             let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(with: HVFeaturesConfiguration.configuration())
-            connection.thingClient()?.update(medication!, record: connection.personInfo!.selectedRecordID, completion:
+            connection.thingClient()?.update(medication, record: connection.personInfo!.selectedRecordID, completion:
                 {
                     (error: Error?) in
                 })
@@ -153,7 +164,7 @@ class EditMedicationViewController: UIViewController, UITextFieldDelegate
     
     func fillTextFieldsWithStoredValues()
     {
-        guard let med = medicationThing!.medication() else
+        guard let med = medicationThing.medication() else
         {
             return
         }

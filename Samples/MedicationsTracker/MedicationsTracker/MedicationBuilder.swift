@@ -27,16 +27,16 @@ class MedicationBuilder
     private(set) var med: MHVMedication?
     
     // MARK: Builder functions
-    func buildMedication(mhvThing: MHVThing) -> MedicationBuilder
+    func buildMedication(mhvThing: MHVThing) -> Bool
     {
         thing = mhvThing
         med = mhvThing.medication()
-        return self
+        return true
     }
     
     func updateNameIfNotNil(name: String?) -> Bool
     {
-        guard let medName = name, !(medName.isEmpty) else
+        guard let medName = name, !(medName.isEmpty), med != nil else
         {
             return false
         }
@@ -47,7 +47,7 @@ class MedicationBuilder
     
     func updateStrengthIfNotNil(amount: String, unit: String?) -> Bool
     {
-        guard let strengthAmount = Double(amount), let strengthUnit = unit, !(strengthUnit.isEmpty) else
+        guard let strengthAmount = Double(amount), let strengthUnit = unit, !(strengthUnit.isEmpty), med != nil else
         {
             return false
         }
@@ -58,7 +58,7 @@ class MedicationBuilder
     
     func updateDoseIfNotNil(amount: String, unit: String?) -> Bool
     {
-        guard let doseAmount = Double(amount), let doseUnit = unit, !(doseUnit.isEmpty) else
+        guard let doseAmount = Double(amount), let doseUnit = unit, !(doseUnit.isEmpty), med != nil else
         {
             return false
         }
@@ -69,7 +69,7 @@ class MedicationBuilder
     
     func updateFrequencyIfNotNil(amount: String, unit: String?) -> Bool
     {
-        guard let freqAmount = Double(amount), let freqUnit = unit, !(freqUnit.isEmpty) else
+        guard let freqAmount = Double(amount), let freqUnit = unit, !(freqUnit.isEmpty), med != nil else
         {
             return false
         }
@@ -89,8 +89,12 @@ class MedicationBuilder
         return true
     }
     
-    func constructMedication() -> MHVThing
+    func constructMedication() -> (MHVThing, contructedProperly: Bool)
     {
-        return thing!
+        guard med != nil, let medName = med?.name.text, !medName.isEmpty else
+        {
+            return (thing!, false)
+        }
+        return (thing!, true)
     }
 }

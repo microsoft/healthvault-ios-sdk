@@ -45,29 +45,18 @@ class ActionPlanTaskBuilder
         return true
     }
     
-    func updateTimeSlotTask(med: MHVMedication) -> Bool
+    func updateTimeSlotTask(time: MHVTime) -> Bool
     {
-        ///
-        /// TODO: Change these values for the new task type
-        ///
-        let takeMed = "Take \(med.name.text)"
-        
+        let (trackingPolicy, _ , _) = createTrackingPolicy()
         // Set up task basics
-        actionPlanTask.name = takeMed
-        if (med.dose.displayText ?? "").isEmpty
-        {
-            actionPlanTask.signupName = takeMed
-        }
-        else
-        {
-            actionPlanTask.signupName =  "Take \(med.dose.displayText) of \(med.name)"
-        }
+        actionPlanTask.name = time.toString() // later with format
+        actionPlanTask.signupName =  "Medications"
         actionPlanTask.shortDescription = "Remember to take your medication"
         actionPlanTask.longDescription = "Taking your medication on time can help maintain your health"
         actionPlanTask.taskType = "Other"
         actionPlanTask.imageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE13a3S?ver=884e"
         actionPlanTask.thumbnailImageUrl = "http://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE12EQP?ver=cba6"
-        actionPlanTask.trackingPolicy = createMedTrackingPolicy(med.name.text)
+        actionPlanTask.trackingPolicy = trackingPolicy
         
         return true
     }
@@ -109,6 +98,7 @@ class ActionPlanTaskBuilder
         let (tracking, target, _) = createTrackingPolicy()
         
         // Set the med name specifically as the target
+        target.elementXPath = "/thing/data-xml/medication/name/text"
         target.elementValues =  [medName]
         tracking.targetEvents = [target]
         
@@ -123,7 +113,7 @@ class ActionPlanTaskBuilder
         let targetEvent = MHVActionPlanTaskTargetEvent.init()
         let occurenceMetrics = MHVActionPlanTaskOccurrenceMetrics.init()
         
-        targetEvent.elementXPath = "/thing/data-xml/medication/name/text"
+        targetEvent.elementXPath = "/thing/data-xml/medication/"
         targetEvent.isNegated = false
         
         occurenceMetrics.evaluateTargets = false

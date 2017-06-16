@@ -22,7 +22,7 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
 {
     
     //MARK: Properties
-    var medicationBuilder: MedicationBuilder?
+    var medicationBuilder: MedicationBuilder
     
     //MARK: UI Properties
     @IBOutlet weak var nameField: AutocompleteTextField!
@@ -35,12 +35,13 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
     //Mark: Initializers
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, builder: MedicationBuilder)
     {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.medicationBuilder = builder
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     required init?(coder aDecoder: NSCoder)
     {
+        self.medicationBuilder = MedicationBuilder.init()
         super.init(coder: aDecoder)
     }
     
@@ -81,25 +82,36 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
         return true
     }
     
-    func makeTestPlanAndTask(medbuild: MedicationBuilder, connection: MHVSodaConnectionProtocol){
+    func makeTestPlanAndTask(medbuild: MedicationBuilder, connection: MHVSodaConnectionProtocol){ //temp
         let ap = ActionPlan.init(connection: connection)
         let ataskbulder = ActionPlanTaskBuilder.init()
         let time = MHVTime.init(hour: 11, minute: 30, second: 0)
         
         // build task
-        let atask = ataskbulder.buildActionPlanTask(med: (medicationBuilder?.med)!)
-        _ = atask.updateFrequencyMetric(windowType: "Daily")
-        _ = atask.updateSchedule(schedules: atask.actionPlanTask?.schedules as! [MHVScheduleV2],
-                                 reminderState: "OnTime", scheduledDays: ["Everyday"], time: time!)
+        _ = ataskbulder.updateMedicationTask(med: (medicationBuilder.med)!)
+        _ = ataskbulder.updateFrequencyMetric(windowType: ActionPlanWindowType.Daily)
+        _ = ataskbulder.updateSchedule(schedules: (ataskbulder.actionPlanTask.schedules as? [MHVScheduleV2] ?? [MHVScheduleV2]()),
+                                 reminderState: ReminderState.OnTime, scheduledDays: [ScheduledDays.Everyday], time: time!)
         
         //get action plan and attach a task to it's accociated tasks
-        ap.getOrCreateActionPlan()
-        ap.createAndAttachAssociatedTask(task: atask.constructActionPlanTask()) {
-            (taskInstance) in
-            // attach task's thing ID to medicatio
-            _ = medbuild.updateTaskConnection(taskThingId: (taskInstance?.identifier)!,
-                                              relationshipType: TaskRelationship.MedTask)
-        }
+        ap.getOrCreateActionPlan
+            {
+                (actionPlanInstance, error) in
+                guard error == nil else
+                {
+                    // bubble up error to ui
+                    return
+                }
+                
+                let (task, _ ) = ataskbulder.constructActionPlanTask()
+                ap.createAndAttachAssociatedTask(task: task, plan: actionPlanInstance!)
+                {
+                    (taskInstance, error) in
+                    // attach task's thing ID to medicatio
+                    _ = medbuild.updateTaskConnection(taskThingId: (taskInstance?.identifier)!,
+                                                      relationshipType: TaskRelationship.MedTask)
+                }
+            }
     }
     
     // MARK: Actions
@@ -109,19 +121,28 @@ class AddMedicationViewController: UIViewController, UITextFieldDelegate
         {
             let connection = MHVConnectionFactory.current().getOrCreateSodaConnection(
                 with: HVFeaturesConfiguration.configuration())
+            
+            guard medicationBuilder.buildMedication(mhvThing:  MHVMedication.newThing()),
+                medicationBuilder.updateNameIfNotNil(name: nameField.text!) else
+            {
+                // This is considered an error, bubble it up to the UI
+                return
+            }
 
-            let medicationToConstruct = medicationBuilder?.buildMedication(mhvThing: MHVMedication.newThing())
-            _ = medicationToConstruct?.updateNameIfNotNil(name: nameField.text!)
-            _ = medicationToConstruct?.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
+            _ = medicationBuilder.updateDoseIfNotNil(amount: doseAmountField.text!, unit: doseUnitField.text!)
             
-            makeTestPlanAndTask(medbuild: medicationBuilder!, connection: connection)
-            let medication = medicationToConstruct?.constructMedication()
+            makeTestPlanAndTask(medbuild: medicationBuilder, connection: connection) // temp
+            let (medication, contructedProperly) = medicationBuilder.constructMedication()
+            guard contructedProperly else
+            {
+                // This is an error, bubble up to user
+                return
+            }
             
-            connection.thingClient()?.createNewThing(
-                medication!, record: connection.personInfo!.selectedRecordID, completion:
+            connection.thingClient()?.createNewThing(medication,  record: connection.personInfo!.selectedRecordID)
                 {
                     (error: Error?) in
-                })
+                }
         }
     }
 }
