@@ -19,6 +19,7 @@
 #import "MHVCommon.h"
 #import "MHVBrowserController.h"
 #import "MHVBrowserAuthBrokerProtocol.h"
+#import "MHVViewExtensions.h"
 #import <WebKit/WebKit.h>
 
 #define RGBColor(r, g, b) [UIColor colorWithRed:r / 255.0 green: g / 255.0 blue: b / 255.0 alpha : 1]
@@ -98,11 +99,13 @@ static CGFloat kAnimationTime = 0.15;
     configuration.dataDetectorTypes = WKDataDetectorTypeNone;
 
     self.webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:configuration];
-    self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.webView.navigationDelegate = self.authBroker;
     self.webView.opaque = NO;
     self.webView.backgroundColor = [UIColor clearColor];
+    self.webView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.webView];
+    
+    [self.view addConstraints:[self.webView constraintsToFillView:self.view]];
 
     [self startObserving];
 }
@@ -137,15 +140,11 @@ static CGFloat kAnimationTime = 0.15;
     {
         self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         self.activityView.color = MHVCOLOR;
-        self.activityView.center = self.view.center;
-        self.activityView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-                                              UIViewAutoresizingFlexibleRightMargin |
-                                              UIViewAutoresizingFlexibleTopMargin |
-                                              UIViewAutoresizingFlexibleBottomMargin);
-
+        self.activityView.translatesAutoresizingMaskIntoConstraints = NO;
         self.activityView.hidesWhenStopped = YES;
 
         [self.view addSubview:self.activityView];
+        [self.view addConstraints:[self.activityView constraintsToCenterInView:self.view]];
     }
 
     [self.activityView startAnimating];
@@ -163,12 +162,18 @@ static CGFloat kAnimationTime = 0.15;
 
 - (void)startObserving
 {
-    [self.webView addObserver:self forKeyPath:kLoadingKeyPath options:kNilOptions context:nil];
+    if (self.webView)
+    {
+        [self.webView addObserver:self forKeyPath:kLoadingKeyPath options:kNilOptions context:nil];
+    }
 }
 
 - (void)stopObserving
 {
-    [self.webView removeObserver:self forKeyPath:kLoadingKeyPath];
+    if (self.webView)
+    {
+        [self.webView removeObserver:self forKeyPath:kLoadingKeyPath];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath

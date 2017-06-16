@@ -70,7 +70,7 @@
 
 SPEC_BEGIN(MHVBrowserAuthBrokerTests)
 
-describe(@"MHVBrowserAuthBrokerTests", ^
+describe(@"MHVBrowserAuthBroker", ^
 {
     __block MHVBrowserAuthBroker *authBroker;
     __block UIViewController *presentedViewController;
@@ -115,7 +115,7 @@ describe(@"MHVBrowserAuthBrokerTests", ^
         returnedNavigationPolicy = -1;
     });
     
-    context(@"authenticateWithViewController", ^{
+    context(@"when authenticateWithViewController is called", ^{
         beforeEach(^{
             [authBroker authenticateWithViewController:(UIViewController *)mockVC
                                               startUrl:[NSURL URLWithString:@"https://start.url"]
@@ -133,7 +133,7 @@ describe(@"MHVBrowserAuthBrokerTests", ^
         });
     });
     
-    context(@"userCancelled", ^{
+    context(@"when authenticateWithViewController is called and user cancels", ^{
         beforeEach(^{
             presentedViewControllerAction = ^(void)
             {
@@ -165,8 +165,8 @@ describe(@"MHVBrowserAuthBrokerTests", ^
         });
     });
     
-    context(@"invalid arguments", ^{
-        context(@"nil start url", ^{
+    context(@"when authenticateWithViewController is called", ^{
+        context(@"with invalid argument nil start url", ^{
             beforeEach(^{
                 NSURL *nilUrl = nil;
                 
@@ -199,7 +199,7 @@ describe(@"MHVBrowserAuthBrokerTests", ^
             });
         });
         
-        context(@"nil end url", ^{
+        context(@"with invalid argument nil end url", ^{
             beforeEach(^{
                 NSURL *nilUrl = nil;
                 
@@ -233,7 +233,7 @@ describe(@"MHVBrowserAuthBrokerTests", ^
         });
     });
     
-    context(@"navigation to end url", ^{
+    context(@"when authentication navigates to end url", ^{
         beforeEach(^{
             presentedViewControllerAction = ^(void)
             {
@@ -272,7 +272,7 @@ describe(@"MHVBrowserAuthBrokerTests", ^
         });
     });
     
-    context(@"navigation to intermediate url", ^{
+    context(@"when authentication navigates to intermediate url", ^{
         
         beforeEach(^{
             presentedViewControllerAction = ^(void)
@@ -311,7 +311,7 @@ describe(@"MHVBrowserAuthBrokerTests", ^
         });
     });
     
-    context(@"WKNavigationDelegate failure", ^{
+    context(@"when authenticateWithViewController is called and didFailNavigation", ^{
         beforeEach(^{
             presentedViewControllerAction = ^(void)
             {
@@ -338,6 +338,71 @@ describe(@"MHVBrowserAuthBrokerTests", ^
         it(@"should have correct error values", ^{
             [[expectFutureValue(theValue(returnedError.code)) shouldEventually] equal:theValue(12345)];
             [[expectFutureValue(returnedError.domain) shouldEventually] equal:@"test"];
+        });
+        it(@"should not have a successUrl", ^{
+            [[expectFutureValue(returnedSuccessUrl) shouldEventually] beNil];
+        });
+    });
+
+    context(@"when authenticateWithViewController is called and didFailProvisionalNavigation", ^{
+        beforeEach(^{
+            presentedViewControllerAction = ^(void)
+            {
+                [authBroker webView:nilWebView didFailProvisionalNavigation:nil withError:[NSError errorWithDomain:@"test" code:12345 userInfo:nil]];
+            };
+            
+            [authBroker authenticateWithViewController:(UIViewController *)mockVC
+                                              startUrl:[NSURL URLWithString:@"https://start.url"]
+                                                endUrl:[NSURL URLWithString:@"https://end.url"]
+                                            completion:^(NSURL *_Nullable successUrl, NSError *_Nullable error)
+             {
+                 returnedSuccessUrl = successUrl;
+                 returnedError = error;
+             }];
+        });
+        
+        it(@"should have presented a view controller", ^{
+            [[expectFutureValue(presentedViewController) shouldEventually] beNonNil];
+            [[expectFutureValue(presentedViewController) shouldEventually] beKindOfClass:[UIViewController class]];
+        });
+        it(@"should have an error", ^{
+            [[expectFutureValue(returnedError) shouldEventually] beNonNil];
+        });
+        it(@"should have correct error values", ^{
+            [[expectFutureValue(theValue(returnedError.code)) shouldEventually] equal:theValue(12345)];
+            [[expectFutureValue(returnedError.domain) shouldEventually] equal:@"test"];
+        });
+        it(@"should not have a successUrl", ^{
+            [[expectFutureValue(returnedSuccessUrl) shouldEventually] beNil];
+        });
+    });
+    
+    context(@"when authenticateWithViewController is called and webViewWebContentProcessDidTerminate", ^{
+        beforeEach(^{
+            presentedViewControllerAction = ^(void)
+            {
+                [authBroker webViewWebContentProcessDidTerminate:nilWebView];
+            };
+            
+            [authBroker authenticateWithViewController:(UIViewController *)mockVC
+                                              startUrl:[NSURL URLWithString:@"https://start.url"]
+                                                endUrl:[NSURL URLWithString:@"https://end.url"]
+                                            completion:^(NSURL *_Nullable successUrl, NSError *_Nullable error)
+             {
+                 returnedSuccessUrl = successUrl;
+                 returnedError = error;
+             }];
+        });
+        
+        it(@"should have presented a view controller", ^{
+            [[expectFutureValue(presentedViewController) shouldEventually] beNonNil];
+            [[expectFutureValue(presentedViewController) shouldEventually] beKindOfClass:[UIViewController class]];
+        });
+        it(@"should have an error", ^{
+            [[expectFutureValue(returnedError) shouldEventually] beNonNil];
+        });
+        it(@"should have correct error values", ^{
+            [[expectFutureValue(theValue(returnedError.code)) shouldEventually] equal:theValue(MHVErrorTypeOperationCancelled)];
         });
         it(@"should not have a successUrl", ^{
             [[expectFutureValue(returnedSuccessUrl) shouldEventually] beNil];
