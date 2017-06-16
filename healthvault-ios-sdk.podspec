@@ -8,22 +8,17 @@
 
 Pod::Spec.new do |s|
   s.name             = 'healthvault-ios-sdk'
-  s.version          = '3.0.0.0'
-  s.summary          = 'A short description of healthvault-ios-sdk.'
+  s.version          = '3.0-preview'
+  s.summary          = 'An iOS library you can use to build applications that leverage the Microsoft HealthVault platform'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+The healthvault-ios-sdk simplifies developing apps that use the Microsoft HealthVault platform. It handles authenticating users, managing credentials, and serializing data types.
                        DESC
 
   s.homepage         = 'https://github.com/Microsoft/healthvault-ios-sdk'
   s.license          = { :type => 'APACHE', :file => 'LICENSE' }
-  s.author           = { 'namalu' => 'namalu@microsoft.com' }
+  s.author           = { 'Microsoft' => 'hvtech@microsoft.com' }
   s.source           = { :git => 'https://github.com/Microsoft/healthvault-ios-sdk.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
@@ -40,7 +35,5 @@ TODO: Add long description of the pod here.
   # s.resource_bundles = {
   #   'healthvault-ios-sdk' => ['healthvault-ios-sdk/Assets/*.png']
   # }
-
-  # s.frameworks = 'UIKit'
 
 end
