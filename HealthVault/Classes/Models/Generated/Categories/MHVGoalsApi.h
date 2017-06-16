@@ -41,10 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalsWrapper The collection of goal instances to create.
 /// 
-///  code:201 message:"Created",
-///  code:0 message:"Error"
-///
-/// @return MHVGoalsResponse*
 - (void)goalsCreateWithGoalsWrapper:(MHVGoalsWrapper* )goalsWrapper
     completion:(void(^_Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion;
 
@@ -54,10 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalId The identifier of the goal to delete.
 /// 
-///  code:204 message:"NoContent",
-///  code:0 message:"Error"
-///
-/// @return 
 - (void)goalsDeleteWithGoalId:(NSString* )goalId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
@@ -70,10 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param startDate The start date for date range filter. (optional)
 /// @param endDate The end date for date range filter. (optional)
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVGoalsResponse*
 - (void)goalsGetWithTypes:(NSString* _Nullable)types
     windowTypes:(NSString* _Nullable)windowTypes
     startDate:(NSDate* _Nullable)startDate
@@ -87,10 +75,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param types The goal types(e.g Steps, CaloriesBurned) filter. (optional)
 /// @param windowTypes The goal window types(e.g Daily, Weekly) filter. (optional)
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVGoalsResponse*
 - (void)goalsGetActiveWithTypes:(NSString* _Nullable)types
     windowTypes:(NSString* _Nullable)windowTypes
     completion:(void(^_Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion;
@@ -101,10 +85,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalId The goal identifier.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVGoal*
 - (void)goalsGetByIdWithGoalId:(NSString* )goalId
     completion:(void(^_Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error))completion;
 
@@ -114,10 +94,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goal The instance of the goal to update. The entire goal will be replaced with this version.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVGoal*
 - (void)goalsReplaceWithGoal:(MHVGoal* )goal
     completion:(void(^_Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error))completion;
 
@@ -127,10 +103,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalsWrapper The collection of goal instances to update. Only the fields present in the passed in model will be updated. All other fields and colelctions              will be left, as is, unless invalid.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVGoalsResponse*
 - (void)goalsUpdateWithGoalsWrapper:(MHVGoalsWrapper* )goalsWrapper
     completion:(void(^_Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion;
 

@@ -34,8 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @param body Request body.
  * @param resultClass the class the response should be deserialized to.
  * @param completion The block will be executed when the request completed.
- *
- * @return The created session task.
  */
 - (void)requestWithPath:(NSString *)path
              httpMethod:(NSString *)httpMethod
@@ -55,8 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @param queryParams Request query parameters dictionary
  * @param body Request body.
  * @param completion The block will be executed when the request completed.
- *
- * @return The created session task.
  */
 - (void)requestWithPath:(NSString *)path
              httpMethod:(NSString *)httpMethod

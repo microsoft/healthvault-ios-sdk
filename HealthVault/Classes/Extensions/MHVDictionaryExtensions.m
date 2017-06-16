@@ -19,6 +19,7 @@
 #import "MHVCommon.h"
 #import "MHVDictionaryExtensions.h"
 #import "MHVStringExtensions.h"
+#import "NSDate+DataModel.h"
 
 @implementation NSDictionary (MHVDictionaryExtensions)
 
@@ -82,7 +83,18 @@
         {
             [query appendString:@"&"];
         }
-        [query appendFormat:@"%@=%@", key, [[self[key] description] urlEncode]];
+        
+        if ([self[key] isKindOfClass:[NSDate class]])
+        {
+            NSDateFormatter *formatter = [NSDateFormatter new];
+            [formatter setDateFormat: kISODateWithTimeZoneFormatterString];
+            NSString *strDate = [formatter stringFromDate: self[key]];
+            [query appendFormat:@"%@=%@", key, [strDate urlEncode]];
+        }
+        else
+        {
+            [query appendFormat:@"%@=%@", key, [[self[key] description] urlEncode]];
+        }
     }
     return query;
 }
