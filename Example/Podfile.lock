@@ -8,7 +8,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   healthvault-ios-sdk:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   healthvault-ios-sdk: 1b1098a49d2f905ad6a5cd42dc599f5ae17c2212

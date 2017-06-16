@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C54C81B1EF41F2600CAECFC /* MHVPersonalImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */; };
+		4C54C81C1EF41F2600CAECFC /* MHVPersonalImageFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */; };
 		4C9DC867EC28E0AB74E00107 /* Pods_healthvault_ios_sdk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -122,6 +124,10 @@
 
 /* Begin PBXFileReference section */
 		1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C54C8171EF41F2600CAECFC /* MHVPersonalImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonalImageFactory.h; sourceTree = "<group>"; };
+		4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonalImageFactory.m; sourceTree = "<group>"; };
+		4C54C8191EF41F2600CAECFC /* MHVPersonalImageFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonalImageFeatures.h; sourceTree = "<group>"; };
+		4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonalImageFeatures.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* healthvault-ios-sdk_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "healthvault-ios-sdk_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -337,6 +343,7 @@
 		6003F593195388D20070C39A /* Example for healthvault-ios-sdk */ = {
 			isa = PBXGroup;
 			children = (
+				A5DF65131EF0527B009F5968 /* healthvault_ios_sdk_Example-Bridging-Header.h */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -375,6 +382,10 @@
 				A5DF65021EF0527B009F5968 /* MHVMedicationUsageFactory.m */,
 				A5DF65031EF0527B009F5968 /* MHVMoreFeatures.h */,
 				A5DF65041EF0527B009F5968 /* MHVMoreFeatures.m */,
+				4C54C8171EF41F2600CAECFC /* MHVPersonalImageFactory.h */,
+				4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */,
+				4C54C8191EF41F2600CAECFC /* MHVPersonalImageFeatures.h */,
+				4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */,
 				A5DF65051EF0527B009F5968 /* MHVProcedureFactory.h */,
 				A5DF65061EF0527B009F5968 /* MHVProcedureFactory.m */,
 				A5DF65071EF0527B009F5968 /* MHVSleepJournalAMFactory.h */,
@@ -391,9 +402,8 @@
 				A5DF65101EF0527B009F5968 /* MHVUIAlert.m */,
 				A5DF65111EF0527B009F5968 /* MHVWeightFactory.h */,
 				A5DF65121EF0527B009F5968 /* MHVWeightFactory.m */,
-				A5DF65131EF0527B009F5968 /* healthvault_ios_sdk_Example-Bridging-Header.h */,
-				A5DF649A1EF051FA009F5968 /* ViewControllers */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				A5DF649A1EF051FA009F5968 /* ViewControllers */,
 			);
 			name = "Example for healthvault-ios-sdk";
 			path = "healthvault-ios-sdk";
@@ -839,6 +849,7 @@
 				A5DF65211EF0527B009F5968 /* MHVFileFeatures.m in Sources */,
 				A5DF65261EF0527B009F5968 /* MHVMoreFeatures.m in Sources */,
 				A5DF64D81EF051FA009F5968 /* MHVImageViewController.swift in Sources */,
+				4C54C81B1EF41F2600CAECFC /* MHVPersonalImageFactory.m in Sources */,
 				A5DF65281EF0527B009F5968 /* MHVSleepJournalAMFactory.m in Sources */,
 				A5DF65221EF0527B009F5968 /* MHVHeartRateFactory.m in Sources */,
 				A5DF64C81EF051FA009F5968 /* MHVActionPlansListViewController.m in Sources */,
@@ -857,6 +868,7 @@
 				A5DF65241EF0527B009F5968 /* MHVMedicationFactory.m in Sources */,
 				A5DF64DA1EF051FA009F5968 /* MHVRecordListViewController.swift in Sources */,
 				A5DF651A1EF0527B009F5968 /* MHVConditionFactory.m in Sources */,
+				4C54C81C1EF41F2600CAECFC /* MHVPersonalImageFeatures.m in Sources */,
 				A5DF651F1EF0527B009F5968 /* MHVFeaturesConfiguration.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				A5DF651D1EF0527B009F5968 /* MHVExerciseFactory.m in Sources */,

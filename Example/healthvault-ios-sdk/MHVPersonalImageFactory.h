@@ -1,7 +1,6 @@
 //
-//  MHVFeatureActions.h
+//  MHVPersonalImageFactory.h
 //  SDKFeatures
-//
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +16,8 @@
 // limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+#import "MHVPersonalImage.h"
 
-@interface MHVFeatureActions : NSObject
-
-- (instancetype)initWithTitle:(NSString *)title;
-
-- (BOOL)addFeature:(NSString *)title andAction:(MHVAction)action;
-
-- (void)showWithViewController:(UIViewController *)viewController;
+@interface MHVPersonalImage (Factory)
 
 @end

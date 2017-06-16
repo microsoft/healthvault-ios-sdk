@@ -1,5 +1,5 @@
 //
-//  MHVFeatureActions.h
+//  MHVPersonalImageFeatures.h
 //  SDKFeatures
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,14 +17,8 @@
 // limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+#import "MHVThingDataTypedFeatures.h"
 
-@interface MHVFeatureActions : NSObject
-
-- (instancetype)initWithTitle:(NSString *)title;
-
-- (BOOL)addFeature:(NSString *)title andAction:(MHVAction)action;
-
-- (void)showWithViewController:(UIViewController *)viewController;
+@interface MHVPersonalImageFeatures : MHVThingDataTypedFeatures<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
