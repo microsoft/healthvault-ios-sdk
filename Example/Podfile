@@ -1,3 +1,6 @@
+install! 'cocoapods',
+  :share_schemes_for_development_pods => true
+
 use_frameworks!
 
   target 'healthvault-ios-sdk_Example' do
