@@ -52,9 +52,6 @@
 		A5DF64DE1EF051FA009F5968 /* MHVTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64C21EF051FA009F5968 /* MHVTypeViewController.m */; };
 		A5DF64DF1EF051FA009F5968 /* MHVTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64C31EF051FA009F5968 /* MHVTypeViewController.xib */; };
 		A5DF64E01EF051FA009F5968 /* MHVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64C51EF051FA009F5968 /* MHVViewController.m */; };
-		A5DF65141EF0527B009F5968 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64E11EF0527B009F5968 /* Default-568h@2x.png */; };
-		A5DF65151EF0527B009F5968 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64E21EF0527B009F5968 /* Default.png */; };
-		A5DF65161EF0527B009F5968 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5DF64E31EF0527B009F5968 /* Default@2x.png */; };
 		A5DF65171EF0527B009F5968 /* MHVBloodGlucoseFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64E51EF0527B009F5968 /* MHVBloodGlucoseFactory.m */; };
 		A5DF65181EF0527B009F5968 /* MHVBloodPressureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64E71EF0527B009F5968 /* MHVBloodPressureFactory.m */; };
 		A5DF65191EF0527B009F5968 /* MHVCholesterolFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64E91EF0527B009F5968 /* MHVCholesterolFactory.m */; };
@@ -192,9 +189,6 @@
 		A5DF64C31EF051FA009F5968 /* MHVTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVTypeViewController.xib; sourceTree = "<group>"; };
 		A5DF64C41EF051FA009F5968 /* MHVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVViewController.h; sourceTree = "<group>"; };
 		A5DF64C51EF051FA009F5968 /* MHVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVViewController.m; sourceTree = "<group>"; };
-		A5DF64E11EF0527B009F5968 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		A5DF64E21EF0527B009F5968 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		A5DF64E31EF0527B009F5968 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		A5DF64E41EF0527B009F5968 /* MHVBloodGlucoseFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBloodGlucoseFactory.h; sourceTree = "<group>"; };
 		A5DF64E51EF0527B009F5968 /* MHVBloodGlucoseFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBloodGlucoseFactory.m; sourceTree = "<group>"; };
 		A5DF64E61EF0527B009F5968 /* MHVBloodPressureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVBloodPressureFactory.h; sourceTree = "<group>"; };
@@ -412,9 +406,6 @@
 		6003F594195388D20070C39A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A5DF64E11EF0527B009F5968 /* Default-568h@2x.png */,
-				A5DF64E21EF0527B009F5968 /* Default.png */,
-				A5DF64E31EF0527B009F5968 /* Default@2x.png */,
 				6003F595195388D20070C39A /* healthvault-ios-sdk-Info.plist */,
 				6003F59B195388D20070C39A /* healthvault-ios-sdk-Prefix.pch */,
 				6003F596195388D20070C39A /* InfoPlist.strings */,
@@ -717,10 +708,7 @@
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				A5DF64DB1EF051FA009F5968 /* MHVRecordListViewController.xib in Resources */,
 				A5DF64C91EF051FA009F5968 /* MHVActionPlansListViewController.xib in Resources */,
-				A5DF65151EF0527B009F5968 /* Default.png in Resources */,
-				A5DF65161EF0527B009F5968 /* Default@2x.png in Resources */,
 				A56404FC1EF2E9E6002D870B /* MHVViewController.xib in Resources */,
-				A5DF65141EF0527B009F5968 /* Default-568h@2x.png in Resources */,
 				A5DF64DF1EF051FA009F5968 /* MHVTypeViewController.xib in Resources */,
 				A5DF64D71EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.xib in Resources */,
 				A5DF64D31EF051FA009F5968 /* MHVGoalsListViewController.xib in Resources */,

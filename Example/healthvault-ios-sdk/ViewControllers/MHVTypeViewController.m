@@ -21,6 +21,10 @@
 
 @interface MHVTypeViewController ()
 
+@property (nonatomic, strong) IBOutlet MHVStatusLabel *statusLabel;
+@property (nonatomic, strong) IBOutlet UITableView *thingTable;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *moreActions;
+
 @property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 @property (nonatomic, strong) MHVThingCollection *things;
 @property (nonatomic, strong) Class typeClass;

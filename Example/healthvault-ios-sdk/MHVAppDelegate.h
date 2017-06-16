@@ -21,12 +21,7 @@
 @class MHVViewController;
 
 @interface MHVAppDelegate : UIResponder <UIApplicationDelegate>
-{
-@private
-    UINavigationController* m_navController;
-}
-@property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) UINavigationController *navigationController;
+@property (strong, nonatomic) UIWindow *window;
 
 @end

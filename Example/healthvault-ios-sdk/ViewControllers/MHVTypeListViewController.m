@@ -36,6 +36,10 @@
 
 @interface MHVTypeListViewController ()
 
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *moreButton;
+@property (nonatomic, strong) IBOutlet MHVStatusLabel *statusLabel;
+
 @property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 @property (nonatomic, strong) NSDictionary *itemTypes;
 @property (nonatomic, strong) NSDictionary *itemViewTypes;

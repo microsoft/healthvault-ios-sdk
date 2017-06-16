@@ -45,7 +45,7 @@
 {
     self.starting = YES;
     
-    // New authentication and setup flow.
+    // Authentication and setup flow.
     // Consumers will create a configuration and override the default properties
     // Using the connection factory, create a connection.
     // Then authenticate the connection.
