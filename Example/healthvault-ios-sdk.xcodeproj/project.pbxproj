@@ -23,6 +23,7 @@
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		A52EBA351EF0653500A174CE /* MHVThingTestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */; };
 		A56404FC1EF2E9E6002D870B /* MHVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A56404FB1EF2E9E6002D870B /* MHVViewController.xib */; };
+		A5937CE51EF4359C00B5F047 /* HealthVault.podspec in Resources */ = {isa = PBXBuildFile; fileRef = A5937CE41EF4359C00B5F047 /* HealthVault.podspec */; };
 		A5DF64C61EF051FA009F5968 /* MHVActionPlanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF649D1EF051FA009F5968 /* MHVActionPlanDetailViewController.m */; };
 		A5DF64C71EF051FA009F5968 /* MHVActionPlanDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5DF649E1EF051FA009F5968 /* MHVActionPlanDetailViewController.xib */; };
 		A5DF64C81EF051FA009F5968 /* MHVActionPlansListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF64A01EF051FA009F5968 /* MHVActionPlansListViewController.m */; };
@@ -146,6 +147,7 @@
 		A52EBA331EF0653500A174CE /* MHVThingTestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTestExtensions.h; sourceTree = "<group>"; };
 		A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTestExtensions.m; sourceTree = "<group>"; };
 		A56404FB1EF2E9E6002D870B /* MHVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVViewController.xib; sourceTree = "<group>"; };
+		A5937CE41EF4359C00B5F047 /* HealthVault.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HealthVault.podspec; path = ../HealthVault.podspec; sourceTree = "<group>"; };
 		A5DF64981EF05196009F5968 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A5DF649C1EF051FA009F5968 /* MHVActionPlanDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanDetailViewController.h; sourceTree = "<group>"; };
 		A5DF649D1EF051FA009F5968 /* MHVActionPlanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanDetailViewController.m; sourceTree = "<group>"; };
@@ -269,7 +271,6 @@
 		A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTrackingEntryTests.m; sourceTree = "<group>"; };
 		A5DF65521EF052DD009F5968 /* MHVXmlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVXmlTests.m; sourceTree = "<group>"; };
 		B3A8DCF4594CD372C82292F5 /* Pods-healthvault-ios-sdk_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example.release.xcconfig"; sourceTree = "<group>"; };
-		BF0D690093BB4DB140DF6A2E /* healthvault-ios-sdk.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "healthvault-ios-sdk.podspec"; path = "../healthvault-ios-sdk.podspec"; sourceTree = "<group>"; };
 		D8FE05E531FFE778B9984522 /* Pods-healthvault-ios-sdk_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		FBE8ECF9045A7D4F1E2252CA /* Pods-healthvault-ios-sdk_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Tests/Pods-healthvault-ios-sdk_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -442,7 +443,7 @@
 		60FF7A9C1954A5C5007DD14C /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				BF0D690093BB4DB140DF6A2E /* healthvault-ios-sdk.podspec */,
+				A5937CE41EF4359C00B5F047 /* HealthVault.podspec */,
 				84D76BC48F47675888A0209E /* README.md */,
 				A5DF64981EF05196009F5968 /* LICENSE */,
 			);
@@ -717,6 +718,7 @@
 				A5DF64CB1EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.xib in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				A5DF64C71EF051FA009F5968 /* MHVActionPlanDetailViewController.xib in Resources */,
+				A5937CE51EF4359C00B5F047 /* HealthVault.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

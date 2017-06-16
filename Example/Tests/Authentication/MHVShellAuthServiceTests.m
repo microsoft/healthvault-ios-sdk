@@ -27,7 +27,7 @@
 
 @class UIViewController;
 
-static NSString *const kDefaultShellUrlString = @"https://testshellurl.com";
+static NSString *const kDefaultShellUrlStringTest = @"https://testshellurl.com";
 static NSString *const kDefaultAppIdGuid = @"20000000-2000-2000-2000-200000000000";
 static NSString *const kDefaultToken = @"TESTTOKEN";
 static NSString *const kDefaultInstanceIdGuid = @"30000000-3000-3000-3000-300000000000";
@@ -67,7 +67,7 @@ describe(@"MHVShellAuthService", ^
         authService = [[MHVShellAuthService alloc] initWithConfiguration:config
                                                               authBroker:authBroker];
         viewController = (UIViewController *)[NSObject new];
-        shellUrl = [[NSURL alloc]initWithString:kDefaultShellUrlString];
+        shellUrl = [[NSURL alloc]initWithString:kDefaultShellUrlStringTest];
         appId = [[NSUUID alloc] initWithUUIDString:kDefaultAppIdGuid];
         token = kDefaultToken;
         appInstanceId = [[NSUUID alloc] initWithUUIDString:kDefaultInstanceIdGuid];
