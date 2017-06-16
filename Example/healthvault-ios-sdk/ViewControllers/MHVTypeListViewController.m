@@ -108,10 +108,13 @@
     [self.connection.thingClient getPersonalImageWithRecordId:self.connection.personInfo.selectedRecordID
                                                    completion:^(UIImage * _Nullable image, NSError * _Nullable error)
      {
-         if (image)
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
-             [self setTitleViewImage:image];
-         }
+             if (image)
+             {
+                 [self setTitleViewImage:image];
+             }
+         }];
      }];
 }
 
