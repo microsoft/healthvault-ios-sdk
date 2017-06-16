@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HealthVault'
-  s.version          = '3.0.1-preview'
+  s.version          = '3.0.2-preview'
   s.summary          = 'An iOS library you can use to build applications that leverage the Microsoft HealthVault platform'
 
 
@@ -28,7 +28,7 @@ The healthvault-ios-sdk simplifies developing apps that use the Microsoft Health
   s.requires_arc     = true
   s.libraries        = "xml2"
   s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(inherited) $(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2' }
-  s.public_header_files = 'Pod/Classes/Headers/Public/*.h'
+  #s.public_header_files = 'HealthVault/Classes/Headers/Public/*.h'
 
     s.frameworks = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
 
