@@ -1,19 +1,19 @@
 PODS:
-  - healthvault-ios-sdk (3.0.0.0)
+  - HealthVault (3.0.1-preview)
   - Kiwi (2.4.0)
 
 DEPENDENCIES:
-  - healthvault-ios-sdk (from `../`)
+  - HealthVault (from `../`)
   - Kiwi
 
 EXTERNAL SOURCES:
-  healthvault-ios-sdk:
+  HealthVault:
     :path: "../"
 
 SPEC CHECKSUMS:
-  healthvault-ios-sdk: 1b1098a49d2f905ad6a5cd42dc599f5ae17c2212
+  HealthVault: 463164a47dc2411ca4c4a30053e99b77652619fb
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
 
-PODFILE CHECKSUM: 2b7f82c09e5ac68edbc8d26288d729da088634fd
+PODFILE CHECKSUM: 3720fe9c261606412cc20de913363e4affd31820
 
 COCOAPODS: 1.2.1
