@@ -132,7 +132,7 @@
              NSMutableString *result = [NSMutableString new];
              [result appendFormat:@"Name: %@\n\n", person.name];
              [result appendFormat:@"ID: %@...\n\n", [person.ID.UUIDString substringToIndex:7]];
-             [result appendFormat:@"AppSettingsXml: %@", person.applicationSettings.xmlSettings];
+             [result appendFormat:@"AppSettingsXml: %@", person.applicationSettings];
              
              [MHVUIAlert showInformationalMessage:result];
          }

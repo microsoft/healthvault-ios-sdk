@@ -18,7 +18,7 @@
 
 #import "MHVClientProtocol.h"
 
-@class MHVPersonInfo, MHVPersonInfoCollection, MHVGetAuthorizedPeopleResult, MHVRecord, MHVRecordCollection, MHVGetAuthorizedPeopleSettings;
+@class MHVPersonInfo, MHVPersonInfoCollection, MHVRecordCollection;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Gets information about people authorized for an application.
  *
  * @param completion Envoked when the operation completes.
- *        NSArray of MHVPersonInfo objects representing people authorized for the application.
+ *        MHVPersonInfoCollection of MHVPersonInfo objects representing people authorized for the application.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getAuthorizedPeopleWithCompletion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion;
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param authorizationsCreatedSince Get authorized people whose authorization was created after date
  * @param completion Envoked when the operation completes. 
- *        MHVGetAuthorizedPeopleResult containing an array of MHVPersonInfo objects representing people authorized for the application, and a moreResults flag.
+ *        MHVPersonInfoCollection array of MHVPersonInfo objects representing people authorized for the application.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getAuthorizedPeopleWithAuthorizationsCreatedSince:(NSDate *)authorizationsCreatedSince

@@ -405,7 +405,7 @@ describe(@"MHVPersonClient", ^
                 it(@"should have person info", ^
                    {
                        [[expectFutureValue(returnedPersonInfo.name) shouldEventually] equal:@"TestName"];
-                       [[expectFutureValue(returnedPersonInfo.applicationSettings.xmlSettings) shouldEventually] equal:@"<data>0000</data>"];
+                       [[expectFutureValue(returnedPersonInfo.applicationSettings) shouldEventually] equal:@"<data>0000</data>"];
                    });
             });
     

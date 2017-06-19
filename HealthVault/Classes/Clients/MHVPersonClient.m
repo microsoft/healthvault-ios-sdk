@@ -350,14 +350,16 @@
 
 - (NSString *)bodyForSetApplicationSettings:(MHVApplicationSettings *)applicationSettings
 {
+    if (![self isValidObject:applicationSettings])
+    {
+        return nil;
+    }
+    
     XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
     
     [writer writeStartElement:@"info"];
 
-    if ([self isValidObject:applicationSettings])
-    {
-        [XSerializer serialize:applicationSettings withRoot:@"app-settings" toWriter:writer];
-    }
+    [XSerializer serialize:applicationSettings withRoot:@"app-settings" toWriter:writer];
 
     [writer writeEndElement];
 
@@ -366,14 +368,16 @@
 
 - (NSString *)bodyForGetAuthorizedPeopleSettings:(MHVGetAuthorizedPeopleSettings *)authorizedPeopleSettings
 {
+    if (![self isValidObject:authorizedPeopleSettings])
+    {
+        return nil;
+    }
+    
     XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
     
     [writer writeStartElement:@"info"];
     
-    if ([self isValidObject:authorizedPeopleSettings])
-    {
-        [XSerializer serialize:authorizedPeopleSettings withRoot:@"parameters" toWriter:writer];
-    }
+    [XSerializer serialize:authorizedPeopleSettings withRoot:@"parameters" toWriter:writer];
     
     [writer writeEndElement];
     
