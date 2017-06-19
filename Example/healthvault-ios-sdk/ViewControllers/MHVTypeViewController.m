@@ -21,6 +21,11 @@
 
 @interface MHVTypeViewController ()
 
+@property (nonatomic, strong) IBOutlet MHVStatusLabel *statusLabel;
+@property (nonatomic, strong) IBOutlet UITableView *thingTable;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *moreActions;
+
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 @property (nonatomic, strong) MHVThingCollection *things;
 @property (nonatomic, strong) Class typeClass;
 @property (nonatomic, assign) BOOL useMetric;
@@ -40,6 +45,8 @@ static const NSInteger c_numSecondsInDay = 86400;
     self = [super init];
     if (self)
     {
+        _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+        
         _typeClass = typeClass;
         _useMetric = metric;
         
@@ -50,7 +57,7 @@ static const NSInteger c_numSecondsInDay = 86400;
             _moreFeatures.typeClass = _typeClass;
         }
     }
-
+    
     return self;
 }
 
@@ -68,22 +75,22 @@ static const NSInteger c_numSecondsInDay = 86400;
 {
     if (self.moreFeatures)
     {
-        [self.moreFeatures showFrom:self.moreActions];
+        [self.moreFeatures showWithViewController:self];
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     if (!self.typeClass)
     {
         [self.navigationController popViewControllerAnimated:TRUE];
         return;
     }
-
+    
     self.thingTable.dataSource = self;
-
+    
     //
     // When you click add, we add new things with random, but plausible data
     //
@@ -95,7 +102,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     //
     self.maxDaysOffsetRandomData = 0; // 90;
     self.createMultiple = FALSE;
-
+    
     self.navigationItem.title = [self.typeClass XRootElement]; // Every MHVThingDataTyped implements this..
     if (!self.moreFeatures)
     {
@@ -118,12 +125,12 @@ static const NSInteger c_numSecondsInDay = 86400;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.thingTable dequeueReusableCellWithIdentifier:@"MHVThing"];
-
+    
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MHVThing"];
     }
-
+    
     MHVThing *thing = self.things[indexPath.row];
     NSString *whenString = [thing.data.typed dateString];
     if ([NSString isNilOrEmpty:whenString])
@@ -132,7 +139,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     }
     
     cell.textLabel.text = whenString;
-
+    
     NSString *details;
     if (self.useMetric)
     {
@@ -142,15 +149,16 @@ static const NSInteger c_numSecondsInDay = 86400;
     {
         details = [thing.data.typed detailsString];
     }
-
+    
     // If Thing has a blob, include the size
     if (thing.blobs.getDefaultBlob)
     {
-        details = [NSString stringWithFormat:@"%@ - Size %0.1f MB", details, thing.blobs.getDefaultBlob.length / 1048576.0];
+        details = [NSString stringWithFormat:@"%@ - Size %0.2f MB", details, thing.blobs.getDefaultBlob.length / 1048576.0];
     }
-
+    
     cell.detailTextLabel.text = details;
-
+    cell.detailTextLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    
     return cell;
 }
 
@@ -171,7 +179,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     {
         return nil;
     }
-
+    
     NSIndexPath *selectedRow = self.thingTable.indexPathForSelectedRow;
     if (!selectedRow ||
         selectedRow.row == NSNotFound ||
@@ -179,7 +187,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     {
         return nil;
     }
-
+    
     return self.things[selectedRow.row];
 }
 
@@ -187,19 +195,16 @@ static const NSInteger c_numSecondsInDay = 86400;
 {
     [self.statusLabel showBusy];
     
-    // Get the current HealthVault service connection
-    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
-    
     //Include Blob metadata, so can show size
     MHVThingQuery *query = [[MHVThingQuery alloc] init];
     query.maxResults = 500;
     query.view.sections |= MHVThingSection_Blobs;
     
     // Send request to get all things for the type class set for this view controller.
-    [connection.thingClient getThingsForThingClass:self.typeClass
-                                             query:query
-                                          recordId:connection.personInfo.selectedRecordID
-                                        completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+    [self.connection.thingClient getThingsForThingClass:self.typeClass
+                                                  query:query
+                                               recordId:self.connection.personInfo.selectedRecordID
+                                             completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
      {
          // Completion will be called on arbitrary thread.
          // Dispatch to main thread to refresh the table or show error
@@ -227,36 +232,33 @@ static const NSInteger c_numSecondsInDay = 86400;
     NSDate *end = [NSDate date];
     NSTimeInterval interval = -(c_numSecondsInDay * self.maxDaysOffsetRandomData);
     NSDate *date = [end dateByAddingTimeInterval:interval];
-
+    
     if (!self.createMultiple)
     {
         end = date;
     }
-
+    
     [self addRandomForDaysFrom:date to:end isMetric:isMetric];
 }
 
 - (void)removeCurrentThing
 {
     MHVThing *selectedThing = [self getSelectedThing];
-
+    
     if (!selectedThing)
     {
         return;
     }
-
+    
     [MHVUIAlert showYesNoPromptWithMessage:@"Permanently delete this thing?"
                                 completion:^(BOOL selectedYes)
      {
          if (selectedYes)
          {
-             // Get the current HealthVault service connection
-             id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
-             
              // Send request to remove the selected thing
-             [connection.thingClient removeThing:selectedThing
-                                        recordId:connection.personInfo.selectedRecordID
-                                      completion:^(NSError * _Nullable error)
+             [self.connection.thingClient removeThing:selectedThing
+                                             recordId:self.connection.personInfo.selectedRecordID
+                                           completion:^(NSError * _Nullable error)
               {
                   // Completion will be called on arbitrary thread.
                   // Dispatch to main thread to refresh the table or show error
@@ -295,7 +297,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     {
         return [self.typeClass createRandomMetricForDay:date];
     }
-
+    
     return [self.typeClass createRandomForDay:date];
 }
 
@@ -309,13 +311,10 @@ static const NSInteger c_numSecondsInDay = 86400;
         return;
     }
     
-    // Get the current HealthVault service connection
-    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
-    
     // Send request to create new thing objects
-    [connection.thingClient createNewThings:things
-                                   recordId:connection.personInfo.selectedRecordID
-                                 completion:^(NSError * _Nullable error)
+    [self.connection.thingClient createNewThings:things
+                                        recordId:self.connection.personInfo.selectedRecordID
+                                      completion:^(NSError * _Nullable error)
      {
          // Completion will be called on arbitrary thread.
          // Dispatch to main thread to refresh the table or show error
@@ -350,7 +349,7 @@ static const NSInteger c_numSecondsInDay = 86400;
         // Poor man's next day.. to be 100% accurate, you should use NSDateComponents
         return [NSDate dateWithTimeInterval:c_numSecondsInDay sinceDate:current];
     }
-
+    
     return nil;
 }
 

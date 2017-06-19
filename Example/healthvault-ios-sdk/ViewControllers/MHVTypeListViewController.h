@@ -24,15 +24,6 @@
 
 @interface MHVTypeListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *moreButton;
-@property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
-
-- (IBAction)moreFeatures:(id)sender;
-
-//
-// Class for the thing currently selected in the TableView
-//
-- (Class)getSelectedClass;
+@property (readonly, nonatomic, strong) IBOutlet MHVStatusLabel *statusLabel;
 
 @end

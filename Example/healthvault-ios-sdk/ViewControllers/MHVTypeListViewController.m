@@ -36,6 +36,10 @@
 
 @interface MHVTypeListViewController ()
 
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *moreButton;
+@property (nonatomic, strong) IBOutlet MHVStatusLabel *statusLabel;
+
 @property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 @property (nonatomic, strong) NSDictionary *itemTypes;
 @property (nonatomic, strong) NSDictionary *itemViewTypes;
@@ -64,6 +68,13 @@
     self.tableView.delegate = self;
     
     [self addStandardFeatures];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadPersonImage) name:kPersonalImageUpdateNotification object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -97,10 +108,13 @@
     [self.connection.thingClient getPersonalImageWithRecordId:self.connection.personInfo.selectedRecordID
                                                    completion:^(UIImage * _Nullable image, NSError * _Nullable error)
      {
-         if (image)
+         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
-             [self setTitleViewImage:image];
-         }
+             if (image)
+             {
+                 [self setTitleViewImage:image];
+             }
+         }];
      }];
 }
 
@@ -220,7 +234,7 @@
 
 - (IBAction)moreFeatures:(id)sender
 {
-    [self.actions showFrom:self.moreButton];
+    [self.actions showWithViewController:self];
 }
 
 // -------------------------------------
@@ -251,6 +265,7 @@
                                    [MHVSleepJournalAM class],
                                    [MHVWeight class],
                                    [MHVFile class],
+                                   [MHVPersonalImage class],
                                    [MHVHeartRate class]];
     
     for (int i = 0; i < thingTypes.count; i++)

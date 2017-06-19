@@ -23,8 +23,7 @@
 
 @interface MHVFeatureActions ()<UIActionSheetDelegate>
 
-@property (nonatomic, strong) UIActionSheet *actionSheet;
-@property (nonatomic, strong) NSMutableArray<MHVAction> *actions;
+@property (nonatomic, strong) UIAlertController *alertController;
 
 @end
 
@@ -38,22 +37,14 @@
 - (instancetype)initWithTitle:(NSString *)title
 {
     self = [super init];
-    
-    
-    if (!title)
+    if (self)
     {
-        title = @"Try MORE Features";
+        if (!title)
+        {
+            title = @"Try Features";
+        }
+        _alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     }
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:title
-                                               delegate:self
-                                      cancelButtonTitle:@"Cancel"
-                                 destructiveButtonTitle:nil
-                                      otherButtonTitles:nil];
-    
-    _actionSheet.delegate = self;
-    
-    _actions = [NSMutableArray new];
-    
     return self;
 }
 
@@ -61,34 +52,23 @@
 {
     MHVASSERT_PARAMETER(action);
     
-    [self.actionSheet addButtonWithTitle:title];
-    [self.actions addObject:action];
+    [self.alertController addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull alertAction)
+    {
+        action();
+    }]];
     
     return YES;
 }
 
-- (void)showFrom:(UIBarButtonItem *)button
+- (void)showWithViewController:(UIViewController *)viewController
 {
-    [self.actionSheet showFromBarButtonItem:button animated:true];
-}
-
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
+    // Make sure it has a final Cancel action
+    if (![[self.alertController.actions lastObject].title isEqualToString:@"Cancel"])
     {
-        return;  // Cancel
+        [self.alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     }
-    @try
-    {
-        MHVAction action = (MHVAction) [self.actions objectAtIndex:buttonIndex - 1];
-        action();
-    }
-    @catch (NSException *exception)
-    {
-        [MHVUIAlert showInformationalMessage:exception.description];
-    }
+    
+    [viewController presentViewController:self.alertController animated:YES completion:nil];
 }
 
 @end

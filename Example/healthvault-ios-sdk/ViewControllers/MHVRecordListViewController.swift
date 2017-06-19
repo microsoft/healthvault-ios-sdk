@@ -34,6 +34,28 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
         
         // Do any additional setup after loading the view.
         self.navigationItem.title = NSLocalizedString("Select Person", comment: "Title to select person to view");
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(personalImageUpdated),
+                                               name: NSNotification.Name(rawValue: kPersonalImageUpdateNotification),
+                                               object: nil)
+    }
+    
+    deinit
+    {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func personalImageUpdated(notification: Notification)
+    {
+        OperationQueue.main.addOperation
+            {
+                if let recordId = notification.object as? NSUUID
+                {
+                    self.cache .removeObject(forKey: recordId)
+                    self.tableView .reloadData()
+                }
+        }
     }
     
     // MARK: UITableViewDelegate and UITableViewDataSource
