@@ -1,6 +1,6 @@
 //
-//  MHVFeaturesConfiguration.h
-//  SDKFeatures
+// MHVApplicationSettings.m
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,11 +15,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import <Foundation/Foundation.h>
 
-@interface MHVFeaturesConfiguration : NSObject
+#import "MHVCommon.h"
+#import "MHVApplicationSettings.h"
 
-+ (MHVConfiguration *)configuration;
+@implementation MHVApplicationSettings
+
+- (void)serialize:(XWriter *)writer
+{
+    [writer writeRaw:self.xmlSettings];
+}
+
+- (void)deserialize:(XReader *)reader
+{
+    self.xmlSettings = [reader readOuterXml];
+}
 
 @end

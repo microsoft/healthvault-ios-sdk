@@ -18,7 +18,7 @@
 //
 
 import UIKit
-import healthvault_ios_sdk
+import HealthVault
 
 class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {

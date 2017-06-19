@@ -1,6 +1,6 @@
 //
-//  MHVFeaturesConfiguration.h
-//  SDKFeatures
+// MHVGetAuthorizedPeopleSettings.h
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,11 +15,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import <Foundation/Foundation.h>
+#import "MHVType.h"
 
-@interface MHVFeaturesConfiguration : NSObject
+@interface MHVGetAuthorizedPeopleSettings : MHVType
 
-+ (MHVConfiguration *)configuration;
+@property (readwrite, nonatomic, strong) NSDate *authorizationsCreatedSince;
+@property (readwrite, nonatomic, assign) int batchSize;
+@property (readwrite, nonatomic, strong) NSUUID *startingPersonId;
 
 @end

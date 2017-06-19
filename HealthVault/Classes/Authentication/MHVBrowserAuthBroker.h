@@ -1,8 +1,8 @@
 //
-//  MHVFeaturesConfiguration.h
-//  SDKFeatures
+//  MHVBrowserAuthBroker.h
+//  MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import "MHVBrowserController.h"
+#import "MHVBrowserAuthBrokerProtocol.h"
+#import <WebKit/WebKit.h>
 
-@interface MHVFeaturesConfiguration : NSObject
-
-+ (MHVConfiguration *)configuration;
+@interface MHVBrowserAuthBroker : NSObject <MHVBrowserAuthBrokerProtocol>
 
 @end
