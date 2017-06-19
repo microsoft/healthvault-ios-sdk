@@ -25,6 +25,6 @@
 
 - (BOOL)addFeature:(NSString *)title andAction:(MHVAction)action;
 
-- (void)showFrom:(UIBarButtonItem *)button;
+- (void)showWithViewController:(UIViewController *)viewController;
 
 @end

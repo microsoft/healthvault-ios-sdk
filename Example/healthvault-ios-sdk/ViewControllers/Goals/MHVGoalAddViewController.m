@@ -39,6 +39,13 @@
 
 @implementation MHVGoalAddViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveGoal:)];
+}
+
 - (IBAction)saveGoal:(id)sender
 {
     MHVGoalRecurrenceMetrics *metrics = [[MHVGoalRecurrenceMetrics alloc] init];

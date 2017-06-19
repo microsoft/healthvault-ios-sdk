@@ -91,11 +91,7 @@ double mmolPerLToMgDL(double mmolPerL, double molarWeight)
 
 - (NSString *)descriptionForLog
 {
-    if ([self respondsToSelector:@selector(detailedDescription)])
-    {
-        return [self performSelector:@selector(detailedDescription)];
-    }
-    else if ([self respondsToSelector:@selector(description)])
+    if ([self respondsToSelector:@selector(description)])
     {
         return [self description];
     }

@@ -1,5 +1,5 @@
 //
-//  MHVAppDelegate.h
+//  MHVPersonalImageFeatures.h
 //  SDKFeatures
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -15,13 +15,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import <UIKit/UIKit.h>
+#import "MHVThingDataTypedFeatures.h"
 
-@class MHVViewController;
-
-@interface MHVAppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
+@interface MHVPersonalImageFeatures : MHVThingDataTypedFeatures<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
