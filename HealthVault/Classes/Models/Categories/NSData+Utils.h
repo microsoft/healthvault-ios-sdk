@@ -21,7 +21,6 @@
 
 @interface NSData (Utils)
 
-- (NSString *)MD5;
 - (NSString *)SHA512;
 - (NSString *)hexadecimalString;
 

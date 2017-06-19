@@ -26,6 +26,9 @@
 #import "MHVServiceResponse.h"
 #import "NSError+MHVError.h"
 #import "MHVGetAuthorizedPeopleResult.h"
+#import "MHVGetAuthorizedPeopleSettings.h"
+#import "MHVApplicationSettings.h"
+#import "Logger.h"
 
 @interface MHVPersonClient ()
 
@@ -51,18 +54,7 @@
     return self;
 }
 
-- (void)getApplicationSettingsWithCompletion:(void(^)(MHVApplicationSettings *_Nullable settings, NSError *_Nullable error))completion
-{
-    
-}
-
-- (void)setApplicationSettingsWithRequestParameters:(NSString *)requestParameters
-                                         completion:(void(^_Nullable)(NSError *_Nullable error))completion
-{
-    
-}
-
-- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
+- (void)getApplicationSettingsWithCompletion:(void(^)(NSString *_Nullable settings, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
     
@@ -71,55 +63,355 @@
         return;
     }
     
-    MHVMethod *method = [MHVMethod getAuthorizedPeople];
-    method.parameters = @"<info><parameters></parameters></info>";
+    MHVMethod *method = [MHVMethod getApplicationSettings];
     
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
-    {
-        if (error)
-        {
-            completion(nil, error);
-            
-            return;
-        }
-        
-        MHVGetAuthorizedPeopleResult *peopleResult = (MHVGetAuthorizedPeopleResult *)[XSerializer newFromString:response.infoXml withRoot:@"info" asClass:[MHVGetAuthorizedPeopleResult class]];
-       
-        if (!peopleResult)
-        {
-            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetAuthorizedPeople response is invalid."]);
-            
-            return;
-        }
-        
-        if (peopleResult.persons.count < 1)
-        {
-            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetAuthorizedPeople response has no authorized people."]);
-            
-            return;
-        }
-        
-        completion(peopleResult.persons, nil);
-        
-    }];
+     {
+         if (error)
+         {
+             completion(nil, error);
+             
+             return;
+         }
+         
+         MHVApplicationSettings *applicationSettings;
+         
+         XReader *reader = [[XReader alloc] initFromString:response.infoXml];
+         
+         if ([reader readStartElementWithName:@"info"])
+         {
+             applicationSettings = (MHVApplicationSettings *)[reader readElement:@"app-settings" asClass:[MHVApplicationSettings class]];
+         }
+         
+         if (!applicationSettings)
+         {
+             completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetApplicationSettings response is invalid."]);
+             
+             return;
+         }
+         
+         completion(applicationSettings.xmlSettings, nil);
+     }];
 }
 
-- (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *_Nonnull)settings
-                             completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion
+- (void)setApplicationSettings:(NSString *_Nullable)settings
+                    completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
+    MHVApplicationSettings *applicationSettings = [MHVApplicationSettings new];
+    applicationSettings.xmlSettings = settings;
+
+    if (![self isValidObject:applicationSettings])
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"settings is not valid"]);
+        }
+        return;
+    }
     
+    MHVMethod *method = [MHVMethod setApplicationSettings];
+    method.parameters = [self bodyForSetApplicationSettings:applicationSettings];
+    
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         if (completion)
+         {
+             completion(error);
+         }
+     }];
+}
+
+- (void)getAuthorizedPeopleWithCompletion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion;
+{
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+
+    [self getAuthorizedPeopleWithSettings:[MHVGetAuthorizedPeopleSettings new]
+                              personInfos:nil
+                               completion:completion];
+}
+
+- (void)getAuthorizedPeopleWithAuthorizationsCreatedSince:(NSDate *)authorizationsCreatedSince
+                                               completion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(authorizationsCreatedSince);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+
+    if (!authorizationsCreatedSince)
+    {
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
+        return;
+    }
+
+    MHVGetAuthorizedPeopleSettings *settings = [MHVGetAuthorizedPeopleSettings new];
+    settings.authorizationsCreatedSince = authorizationsCreatedSince;
+    
+    [self getAuthorizedPeopleWithSettings:settings
+                              personInfos:nil
+                               completion:completion];
+}
+
+- (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *)settings
+                            personInfos:(MHVPersonInfoCollection *_Nullable)personInfos
+                             completion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(settings);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!settings)
+    {
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
+        return;
+    }
+    
+    if (![self isValidObject:settings])
+    {
+        completion(nil, [NSError MVHInvalidParameter:@"settings object is not valid"]);
+        return;
+    }
+    
+    [self getAuthorizedPeopleWithParameters:[self bodyForGetAuthorizedPeopleSettings:settings]
+                                 completion:^(MHVGetAuthorizedPeopleResult *_Nullable authorizedPeople, NSError *_Nullable error)
+     {
+         //If error, return
+         if (error)
+         {
+             completion(nil, error);
+             return;
+         }
+         
+         //Add to the personInfos array
+         MHVPersonInfoCollection *personInfosResult = personInfos;
+         if (!personInfosResult)
+         {
+             personInfosResult = authorizedPeople.persons;
+         }
+         else
+         {
+             [personInfosResult addObjectsFromCollection:authorizedPeople.persons];
+         }
+         
+         //If more results flag is set, need to recurse; otherwise done
+         if (authorizedPeople.moreResults.value)
+         {
+             MHVGetAuthorizedPeopleSettings *nextSettings = [MHVGetAuthorizedPeopleSettings new];
+             nextSettings.startingPersonId = [authorizedPeople.persons lastObject].ID;
+             
+             [self getAuthorizedPeopleWithSettings:nextSettings
+                                       personInfos:personInfosResult
+                                        completion:completion];
+         }
+         else
+         {
+             completion(personInfosResult, nil);
+         }
+     }];
 }
 
 - (void)getPersonInfoWithCompletion:(void(^)(MHVPersonInfo *_Nullable person, NSError *_Nullable error))completion
 {
+    MHVASSERT_PARAMETER(completion);
     
+    if (!completion)
+    {
+        return;
+    }
+    
+    [self.connection executeHttpServiceOperation:[MHVMethod getPersonInfo]
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+             
+             return;
+         }
+         
+         MHVPersonInfo *personInfo;
+         
+         XReader *reader = [[XReader alloc] initFromString:response.infoXml];
+         
+         if ([reader readStartElementWithName:@"info"])
+         {
+             personInfo = (MHVPersonInfo *)[reader readElement:@"person-info" asClass:[MHVPersonInfo class]];
+         }
+         
+         if (!personInfo)
+         {
+             completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetPersonInfo response is invalid."]);
+             
+             return;
+         }
+
+         completion(personInfo, nil);
+     }];
 }
 
 - (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
-                               completion:(void(^)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion
+                               completion:(void(^)(MHVRecordCollection *_Nullable records, NSError *_Nullable error))completion
 {
+    MHVASSERT_PARAMETER(recordIds);
+    MHVASSERT_PARAMETER(completion);
     
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!recordIds)
+    {
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
+        return;
+    }
+    
+    MHVMethod *method = [MHVMethod getAuthorizedRecords];
+    method.parameters = [self bodyForGetAuthorizedRecords:recordIds];
+    
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+             
+             return;
+         }
+         
+         MHVRecordCollection *healthRecords = (MHVRecordCollection *)[XSerializer newFromString:response.infoXml
+                                                                                       withRoot:@"info"
+                                                                                 andElementName:@"record"
+                                                                                        asClass:[MHVRecord class]
+                                                                                  andArrayClass:[MHVRecordCollection class]];
+         
+         if (healthRecords.count != recordIds.count)
+         {
+             MHVLOG(@"Warning: %li records requested, %li results", recordIds.count, healthRecords.count);
+         }
+         
+         completion(healthRecords, nil);
+     }];
+}
+
+#pragma mark - Helpers
+
+- (void)getAuthorizedPeopleWithParameters:(NSString *_Nonnull)parameters
+                               completion:(void(^)(MHVGetAuthorizedPeopleResult *_Nullable authorizedPeople, NSError *_Nullable error))completion
+{
+    MHVMethod *method = [MHVMethod getAuthorizedPeople];
+    method.parameters = parameters;
+    
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+             
+             return;
+         }
+         
+         MHVGetAuthorizedPeopleResult *peopleResult = (MHVGetAuthorizedPeopleResult *)[XSerializer newFromString:response.infoXml
+                                                                                                        withRoot:@"info"
+                                                                                                         asClass:[MHVGetAuthorizedPeopleResult class]];
+         
+         if (!peopleResult)
+         {
+             completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetAuthorizedPeople response is invalid."]);
+             
+             return;
+         }
+         
+         if (peopleResult.persons.count < 1)
+         {
+             completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The GetAuthorizedPeople response has no authorized people."]);
+             
+             return;
+         }
+         
+         completion(peopleResult, nil);
+     }];
+}
+
+- (NSString *)bodyForSetApplicationSettings:(MHVApplicationSettings *)applicationSettings
+{
+    if (![self isValidObject:applicationSettings])
+    {
+        return nil;
+    }
+    
+    XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+    
+    [writer writeStartElement:@"info"];
+
+    [XSerializer serialize:applicationSettings withRoot:@"app-settings" toWriter:writer];
+
+    [writer writeEndElement];
+
+    return [writer newXmlString];
+}
+
+- (NSString *)bodyForGetAuthorizedPeopleSettings:(MHVGetAuthorizedPeopleSettings *)authorizedPeopleSettings
+{
+    if (![self isValidObject:authorizedPeopleSettings])
+    {
+        return nil;
+    }
+    
+    XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+    
+    [writer writeStartElement:@"info"];
+    
+    [XSerializer serialize:authorizedPeopleSettings withRoot:@"parameters" toWriter:writer];
+    
+    [writer writeEndElement];
+    
+    return [writer newXmlString];
+}
+
+- (NSString *)bodyForGetAuthorizedRecords:(NSArray<NSUUID *> *)recordIds
+{
+    XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+    
+    [writer writeStartElement:@"info"];
+    
+    for (NSUUID *uuid in recordIds)
+    {
+        [XSerializer serialize:[[MHVString alloc] initWith:uuid.UUIDString] withRoot:@"id" toWriter:writer];
+    }
+
+    [writer writeEndElement];
+    
+    return [writer newXmlString];
+}
+
+- (BOOL)isValidObject:(id)obj
+{
+    if ([obj respondsToSelector:@selector(validate)])
+    {
+        MHVClientResult *validationResult = [obj validate];
+        if (validationResult.isError)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 @end

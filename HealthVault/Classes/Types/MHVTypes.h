@@ -82,6 +82,7 @@
 #import "MHVThing.h"
 #import "MHVRecord.h"
 #import "MHVPersonInfo.h"
+#import "MHVApplicationSettings.h"
 
 #import "MHVThingView.h"
 #import "MHVThingFilter.h"

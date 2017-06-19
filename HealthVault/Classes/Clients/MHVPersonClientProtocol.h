@@ -18,38 +18,71 @@
 
 #import "MHVClientProtocol.h"
 
-@class MHVApplicationSettings, MHVPersonInfo, MHVHealthRecordInfo, MHVGetAuthorizedPeopleSettings;
+@class MHVPersonInfo, MHVPersonInfoCollection, MHVRecordCollection;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVPersonClientProtocol <MHVClientProtocol>
 
-- (void)getApplicationSettingsWithCompletion:(void(^)(MHVApplicationSettings *_Nullable settings, NSError *_Nullable error))completion;
+/**
+ * Gets the application settings for the current application.
+ * The appSettingsXml will also be set on the MHVPersonInfo in getPersonInfoWithCompletion
+ *
+ * @param completion Envoked when the operation completes.
+ *        NSString application settings.
+ *        NSError object will be nil if there is no error when performing the operation.
+ */
+- (void)getApplicationSettingsWithCompletion:(void(^)(NSString *_Nullable settings, NSError *_Nullable error))completion;
 
-- (void)setApplicationSettingsWithRequestParameters:(NSString *)requestParameters
-                                         completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+/**
+ * Sets the application settings for the current application.
+ *
+ * @param settings will not be processed by HealthVault, but must be valid XML
+ * @param completion Envoked when the operation completes.
+ *        NSError object will be nil if there is no error when performing the operation.
+ */
+- (void)setApplicationSettings:(NSString *_Nullable)settings
+                    completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 /**
  * Gets information about people authorized for an application.
  *
- * @param completion Envoked when the operation completes. NSArray<MHVPersonInfo *> an array of MHVPersonInfo objects representing people authorized for the application. NSError object will be nil if there is no error when performing the operation.
+ * @param completion Envoked when the operation completes.
+ *        MHVPersonInfoCollection of MHVPersonInfo objects representing people authorized for the application.
+ *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
-
+- (void)getAuthorizedPeopleWithCompletion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion;
 
 /**
- * Gets information about people authorized for an application.
+ * Gets information about people authorized for an application whose authorization was created after a date.
  *
- * @param settings The MHVGetAuthorizedPeopleSettings object used to configure the results returned by this method.
- * @param completion Envoked when the operation completes. NSArray<MHVPersonInfo *> an array of MHVPersonInfo objects representing people authorized for the application. NSError object will be nil if there is no error when performing the operation.
+ * @param authorizationsCreatedSince Get authorized people whose authorization was created after date
+ * @param completion Envoked when the operation completes. 
+ *        MHVPersonInfoCollection array of MHVPersonInfo objects representing people authorized for the application.
+ *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *_Nonnull)settings
-                             completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
+- (void)getAuthorizedPeopleWithAuthorizationsCreatedSince:(NSDate *)authorizationsCreatedSince
+                                               completion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion;
 
+/**
+ * Gets information about current person for an application.
+ *
+ * @param completion Envoked when the operation completes.
+ *        MHVPersonInfo for the current person
+ *        NSError object will be nil if there is no error when performing the operation.
+ */
 - (void)getPersonInfoWithCompletion:(void(^)(MHVPersonInfo *_Nullable person, NSError *_Nullable error))completion;
 
+/**
+ * Gets all the records that the user has authorized the application use.
+ *
+ * @param recordIds Array of recordIds to retrieve recordInfo
+ * @param completion Envoked when the operation completes.
+ *        MHVRecordCollection the records for the IDs if successful
+ *        NSError object will be nil if there is no error when performing the operation.
+ */
 - (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
-                               completion:(void(^)(NSArray<MHVHealthRecordInfo *> *_Nullable records, NSError *_Nullable error))completion;
+                               completion:(void(^)(MHVRecordCollection *_Nullable records, NSError *_Nullable error))completion;
 
 @end
 

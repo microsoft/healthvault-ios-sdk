@@ -29,11 +29,32 @@ static NSString *const c_element_groups = @"groups";
 static NSString *const c_element_culture = @"preferred-culture";
 static NSString *const c_element_uiculture = @"preferred-uiculture";
 
+@interface MHVPersonInfo ()
+
+@property (readwrite, nonatomic, strong) MHVApplicationSettings *applicationSettingsInternal;
+
+@end
+
 @implementation MHVPersonInfo
 
 - (BOOL)hasRecords
 {
     return !([MHVCollection isNilOrEmpty:self.records]);
+}
+
+- (NSString *)applicationSettings
+{
+    return self.applicationSettingsInternal.xmlSettings;
+}
+
+- (void)setApplicationSettings:(NSString *)applicationSettings
+{
+    if (!self.applicationSettingsInternal)
+    {
+        self.applicationSettingsInternal = [MHVApplicationSettings new];
+    }
+    
+    self.applicationSettingsInternal.xmlSettings = applicationSettings;
 }
 
 - (MHVClientResult *)validate
@@ -50,7 +71,7 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
 {
     [writer writeElement:c_element_id value:self.ID.UUIDString];
     [writer writeElement:c_element_name value:self.name];
-    [writer writeRaw:self.appSettingsXml];
+    [writer writeElement:c_element_settings content:self.applicationSettingsInternal];
     [writer writeElement:c_element_selectedID value:self.selectedRecordID.UUIDString];
     [writer writeElement:c_element_more content:self.moreRecords];
     [writer writeElementArray:c_element_record elements:self.records.toArray];
@@ -63,7 +84,7 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
 {
     self.ID = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_id]];
     self.name = [reader readStringElement:c_element_name];
-    self.appSettingsXml = [reader readElementRaw:c_element_settings];
+    self.applicationSettingsInternal = [reader readElement:c_element_settings asClass:[MHVApplicationSettings class]];
     self.selectedRecordID = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_selectedID]];
     self.moreRecords = [reader readElement:c_element_more asClass:[MHVBool class]];
     self.records = (MHVRecordCollection *)[reader readElementArray:c_element_record asClass:[MHVRecord class] andArrayClass:[MHVRecordCollection class]];
@@ -84,6 +105,20 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
     {
         record.personID = self.ID;
     }
+}
+
+@end
+
+@implementation MHVPersonInfoCollection
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        self.type = [MHVPersonInfo class];
+    }
+    return self;
 }
 
 @end

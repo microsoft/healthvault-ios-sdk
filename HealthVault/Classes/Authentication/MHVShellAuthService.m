@@ -229,15 +229,21 @@ static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
         {
             queryString = [queryString stringByAppendingString:@"&aib=true"];
         }
-        
-        CFRelease(tokenEncoded);
-        CFRelease(instanceEncoded);
     }
     else
     {
         queryString = [NSString stringWithFormat:kAuthorizeRecordsArgs, appId, isMultiRecord];
     }
-    
+
+    if (tokenEncoded)
+    {
+        CFRelease(tokenEncoded);
+    }
+    if (instanceEncoded)
+    {
+        CFRelease(instanceEncoded);
+    }
+
     CFStringRef queryStringEncoded = CreateHVUrlEncode((__bridge CFStringRef)queryString);
     
     NSString *urlString = [NSString stringWithFormat:queryFormat, shellUrl, (__bridge NSString *)queryStringEncoded];

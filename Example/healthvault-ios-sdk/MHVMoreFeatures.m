@@ -37,12 +37,12 @@
              id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
              
              [connection deauthorizeApplicationWithCompletion:^(NSError * _Nullable error)
-             {
-                 [[NSOperationQueue mainQueue] addOperationWithBlock:^
-                 {
-                     [self.listController.navigationController popToRootViewControllerAnimated:YES];
-                 }];
-             }];
+              {
+                  [[NSOperationQueue mainQueue] addOperationWithBlock:^
+                   {
+                       [self.listController.navigationController popToRootViewControllerAnimated:YES];
+                   }];
+              }];
          }
      }];
 }
@@ -56,6 +56,102 @@
     [connection.platformClient getServiceDefinitionWithWithLastUpdatedTime:nil
                                                           responseSections:MHVServiceInfoSectionsAll
                                                                 completion:^(MHVServiceDefinition * _Nullable serviceDefinition, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             [MHVUIAlert showInformationalMessage:error.localizedDescription];
+         }
+         else
+         {
+             MHVConfigurationEntry* configEntry = [serviceDefinition.platform.config objectAtIndex:0];
+             MHVConfigurationEntry* configEntry2 = [serviceDefinition.platform.config objectAtIndex:1];
+             NSMutableString* output = [[NSMutableString alloc] init];
+             
+             [output appendLines:17, @"Some data from ServiceDefinition",
+              @"[PlatformUrl]", serviceDefinition.platform.url,
+              @"[PlatformVersion]", serviceDefinition.platform.version,
+              @"[ShellUrl]", serviceDefinition.shell.url,
+              @"[ShellRedirect]", serviceDefinition.shell.redirectUrl,
+              @"[Example Config Entries]",
+              configEntry.key, @"==", configEntry.value, @"==========",
+              configEntry2.key, @"==", configEntry2.value];
+             
+             [MHVUIAlert showInformationalMessage:output];
+         }
+         
+         
+         [self.listController.statusLabel clearStatus];
+     }];
+}
+
+- (void)demonstrateApplicationSettings
+{
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    NSString *appSettings = [NSString stringWithFormat:@"<date>%@</date>", [NSDate date]];
+    
+    [connection.personClient setApplicationSettings:appSettings
+                                         completion:^(NSError * _Nullable errorForSet)
+     {
+         if (errorForSet)
+         {
+             [MHVUIAlert showInformationalMessage:errorForSet.localizedDescription];
+             return;
+         }
+         
+         [connection.personClient getApplicationSettingsWithCompletion:^(NSString *_Nullable settings, NSError * _Nullable errorForGet)
+          {
+              if (errorForGet)
+              {
+                  [MHVUIAlert showInformationalMessage:errorForGet.localizedDescription];
+              }
+              else
+              {
+                  NSMutableString *result = [NSMutableString new];
+                  [result appendFormat:@"Wrote: %@\n\n", appSettings];
+                  [result appendFormat:@"Read: %@", settings];
+                  
+                  [MHVUIAlert showInformationalMessage:result];
+              }
+          }];
+     }];
+}
+
+- (void)getPersonInfo
+{
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection.personClient getPersonInfoWithCompletion:^(MHVPersonInfo * _Nullable person, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             [MHVUIAlert showInformationalMessage:error.localizedDescription];
+         }
+         else
+         {
+             NSMutableString *result = [NSMutableString new];
+             [result appendFormat:@"Name: %@\n\n", person.name];
+             [result appendFormat:@"ID: %@...\n\n", [person.ID.UUIDString substringToIndex:7]];
+             [result appendFormat:@"AppSettingsXml: %@", person.applicationSettings];
+             
+             [MHVUIAlert showInformationalMessage:result];
+         }
+     }];
+}
+
+- (void)getAuthorizedRecords
+{
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    NSMutableArray *recordIds = [NSMutableArray new];
+    
+    for (MHVRecord *record in connection.personInfo.records)
+    {
+        [recordIds addObject:record.ID];
+    }
+    
+    [connection.personClient getAuthorizedRecordsWithRecordIds:recordIds
+                                                    completion:^(MHVRecordCollection *_Nullable records, NSError * _Nullable error)
     {
         if (error)
         {
@@ -63,24 +159,45 @@
         }
         else
         {
-            MHVConfigurationEntry* configEntry = [serviceDefinition.platform.config objectAtIndex:0];
-            MHVConfigurationEntry* configEntry2 = [serviceDefinition.platform.config objectAtIndex:1];
-            NSMutableString* output = [[NSMutableString alloc] init];
+            NSMutableString *result = [NSMutableString new];
+            [result appendFormat:@"%li Record(s):\n", records.count];
             
-            [output appendLines:17, @"Some data from ServiceDefinition",
-             @"[PlatformUrl]", serviceDefinition.platform.url,
-             @"[PlatformVersion]", serviceDefinition.platform.version,
-             @"[ShellUrl]", serviceDefinition.shell.url,
-             @"[ShellRedirect]", serviceDefinition.shell.redirectUrl,
-             @"[Example Config Entries]",
-             configEntry.key, @"==", configEntry.value, @"==========",
-             configEntry2.key, @"==", configEntry2.value];
+            for (MHVRecord *record in records)
+            {
+                [result appendString:@"\n"];
+                [result appendFormat:@"Name: %@\n", record.name];
+                [result appendFormat:@"ID: %@...\n", [record.ID.UUIDString substringToIndex:7]];
+            }
             
-            [MHVUIAlert showInformationalMessage:output];
+            [MHVUIAlert showInformationalMessage:result];
         }
-        
-        
-        [self.listController.statusLabel clearStatus];
+    }];
+}
+
+- (void)getAuthorizedPeople
+{
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection.personClient getAuthorizedPeopleWithCompletion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            [MHVUIAlert showInformationalMessage:error.localizedDescription];
+        }
+        else
+        {
+            NSMutableString *result = [NSMutableString new];
+            [result appendFormat:@"%li Authorized People:\n", personInfos.count];
+            
+            for (MHVPersonInfo *info in personInfos)
+            {
+                [result appendString:@"\n"];
+                [result appendFormat:@"Name: %@\n", info.name];
+                [result appendFormat:@"ID: %@...\n", [info.ID.UUIDString substringToIndex:7]];
+            }
+            
+            [MHVUIAlert showInformationalMessage:result];
+        }
     }];
 }
 
@@ -90,20 +207,20 @@
     
     [connection authorizeAdditionalRecordsWithViewController:self.listController
                                                   completion:^(NSError * _Nullable error)
-    {
-        if (error)
-        {
+     {
+         if (error)
+         {
              [MHVUIAlert showInformationalMessage:error.localizedDescription];
-        }
-        else
-        {
-            // Popping to the root view controller will reload to the updated list of authorized records
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^
-            {
-                [self.listController.navigationController popToRootViewControllerAnimated:YES];
-            }];
-        }
-    }];
+         }
+         else
+         {
+             // Popping to the root view controller will reload to the updated list of authorized records
+             [[NSOperationQueue mainQueue] addOperationWithBlock:^
+              {
+                  [self.listController.navigationController popToRootViewControllerAnimated:YES];
+              }];
+         }
+     }];
 }
 
 @end

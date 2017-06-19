@@ -256,6 +256,7 @@ static NSInteger kInternalServerError = 500;
             }
             else
             {
+                MHVLOG(@"Execute %@ Method Error: %@", method.name, error.localizedDescription);
                 if (request.completion)
                 {
                     request.completion(nil, error);

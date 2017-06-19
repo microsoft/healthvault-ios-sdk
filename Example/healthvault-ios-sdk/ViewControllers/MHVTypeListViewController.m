@@ -348,7 +348,26 @@
          [weakFeatures getServiceDefinition];
      }];
     
+    [self.actions addFeature:@"Demo ApplicationSettings" andAction:^
+     {
+         [weakFeatures demonstrateApplicationSettings];
+     }];
     
+    [self.actions addFeature:@"GetPersonInfo" andAction:^
+     {
+         [weakFeatures getPersonInfo];
+     }];
+    
+    [self.actions addFeature:@"GetAuthorizedRecords" andAction:^
+     {
+         [weakFeatures getAuthorizedRecords];
+     }];
+
+    [self.actions addFeature:@"GetAuthorizedPeople" andAction:^
+     {
+         [weakFeatures getAuthorizedPeople];
+     }];
+
     [self.actions addFeature:@"Authorize records" andAction:^
      {
          [weakFeatures authorizeAdditionalRecords];

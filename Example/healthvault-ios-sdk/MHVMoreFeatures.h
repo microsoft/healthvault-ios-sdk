@@ -37,6 +37,26 @@
 - (void)getServiceDefinition;
 
 //
+// Demonstrate application settings, sets current date as custom XML and then gets & displays
+//
+- (void)demonstrateApplicationSettings;
+
+//
+// Get the personInfo
+//
+- (void)getPersonInfo;
+
+//
+// Get the authorized records
+//
+- (void)getAuthorizedRecords;
+
+//
+// Get the authorized people
+//
+- (void)getAuthorizedPeople;
+
+//
 // Authorize Additional Records;
 //
 - (void)authorizeAdditionalRecords;

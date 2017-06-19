@@ -74,6 +74,7 @@
 #import "MHVBodyComposition.h"
 #import "MHVBodyDimension.h"
 #import "MHVMedicalImageStudy.h"
+#import "MHVGetAuthorizedPeopleSettings.h"
 
 @interface MHVThing (MHVTypedExtensions)
 
