@@ -46,7 +46,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 ///
 /// Post a new action plan task
 /// 
-///  @param actionPlanTask  
+///  @param actionPlanTask The action plan task to create. 
 ///
 ///  @returns MHVActionPlanTaskInstanceV2*
 ///
@@ -87,7 +87,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 ///
 /// Delete a task by id
 /// 
-///  @param actionPlanTaskId  
+///  @param actionPlanTaskId The unique identifer of the task. 
 ///
 ///  @returns void
 ///
@@ -167,7 +167,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 ///
 /// Get a task by id
 /// 
-///  @param actionPlanTaskId  
+///  @param actionPlanTaskId The unique identifer of the task. 
 ///
 ///  @returns MHVActionPlanTaskInstanceV2*
 ///
@@ -210,7 +210,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 ///
 /// Put an update for an action plan task
 /// 
-///  @param actionPlanTask  
+///  @param actionPlanTask The updated action plan task. 
 ///
 ///  @returns MHVActionPlanTaskInstanceV2*
 ///
@@ -251,7 +251,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 ///
 /// Patch an update for an action plan task
 /// 
-///  @param actionPlanTask  
+///  @param actionPlanTask The updated task 
 ///
 ///  @returns MHVActionPlanTaskInstanceV2*
 ///
@@ -290,9 +290,9 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 }
 
 ///
+/// Validate tracking for an action plan task
 /// 
-/// 
-///  @param trackingValidation  
+///  @param trackingValidation The tracking validation information. 
 ///
 ///  @returns MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_*
 ///

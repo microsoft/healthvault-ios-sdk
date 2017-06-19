@@ -13,8 +13,8 @@
 #ifdef __OBJC__
     @import UIKit;
     @import Foundation;
+    @import HealthVault;
 
-    #import <healthvault_ios_sdk/MHVLib.h>
     #import "MHVFeaturesConstants.h"
     #import "MHVFeaturesConfiguration.h"
 #endif
