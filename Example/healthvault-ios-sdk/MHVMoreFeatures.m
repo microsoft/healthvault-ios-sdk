@@ -88,10 +88,10 @@
 {
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    MHVApplicationSettings *appSettings = [MHVApplicationSettings new];
-    appSettings.xmlSettings = [NSString stringWithFormat:@"<date>%@</date>", [NSDate date]];
+    NSString *appSettings = [NSString stringWithFormat:@"<date>%@</date>", [NSDate date]];
     
-    [connection.personClient setApplicationSettings:appSettings completion:^(NSError * _Nullable errorForSet)
+    [connection.personClient setApplicationSettings:appSettings
+                                         completion:^(NSError * _Nullable errorForSet)
      {
          if (errorForSet)
          {
@@ -99,7 +99,7 @@
              return;
          }
          
-         [connection.personClient getApplicationSettingsWithCompletion:^(MHVApplicationSettings * _Nullable settings, NSError * _Nullable errorForGet)
+         [connection.personClient getApplicationSettingsWithCompletion:^(NSString *_Nullable settings, NSError * _Nullable errorForGet)
           {
               if (errorForGet)
               {
@@ -108,8 +108,8 @@
               else
               {
                   NSMutableString *result = [NSMutableString new];
-                  [result appendFormat:@"Wrote: %@\n\n", appSettings.xmlSettings];
-                  [result appendFormat:@"Read: %@", settings.xmlSettings];
+                  [result appendFormat:@"Wrote: %@\n\n", appSettings];
+                  [result appendFormat:@"Read: %@", settings];
                   
                   [MHVUIAlert showInformationalMessage:result];
               }
@@ -178,7 +178,7 @@
 {
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    [connection.personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> * _Nullable personInfos, NSError * _Nullable error)
+    [connection.personClient getAuthorizedPeopleWithCompletion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError * _Nullable error)
     {
         if (error)
         {

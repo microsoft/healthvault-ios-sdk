@@ -28,7 +28,10 @@ static NSString *const c_element_startingPersonId = @"person-id-cursor";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_authorizationsCreatedSince dateValue:self.authorizationsCreatedSince];
-    [writer writeElement:c_element_batchSize intValue:self.batchSize];
+    if (self.batchSize > 0)
+    {
+        [writer writeElement:c_element_batchSize intValue:self.batchSize];
+    }
     [writer writeElement:c_element_authorizationsCreatedSince value:self.startingPersonId.UUIDString];
 }
 

@@ -312,9 +312,9 @@ describe(@"MHVSodaConnection", ^
     // Mock the getAuthorizedPeopleWithCompletion call
     [(id)personClient stub:@selector(getAuthorizedPeopleWithCompletion:) withBlock:^id(NSArray *params)
     {
-        void (^peopleBlk)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error) = params[0];
+        void (^peopleBlk)(MHVPersonInfoCollection *_Nullable personInfos, NSError * _Nullable error) = params[0];
         
-        peopleBlk(personInfo ? @[personInfo] : nil, authorizedPeopleError);
+        peopleBlk(personInfo ? [[MHVPersonInfoCollection alloc] initWithObject:personInfo] : nil, authorizedPeopleError);
         
         return nil;
     }];
