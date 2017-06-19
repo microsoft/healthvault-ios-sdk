@@ -1,0 +1,34 @@
+{
+  "name": "HealthVault",
+  "version": "3.0.2-preview",
+  "summary": "An iOS library you can use to build applications that leverage the Microsoft HealthVault platform",
+  "description": "The healthvault-ios-sdk simplifies developing apps that use the Microsoft HealthVault platform. It handles authenticating users, managing credentials, and serializing data types.",
+  "homepage": "https://github.com/Microsoft/healthvault-ios-sdk",
+  "license": {
+    "type": "APACHE",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Microsoft": "hvtech@microsoft.com"
+  },
+  "source": {
+    "git": "https://github.com/Microsoft/healthvault-ios-sdk.git",
+    "tag": "3.0.2-preview"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "HealthVault/Classes/**/*",
+  "requires_arc": true,
+  "libraries": "xml2",
+  "xcconfig": {
+    "HEADER_SEARCH_PATHS": "$(inherited) $(SDKROOT)/usr/include/libxml2",
+    "OTHER_LDFLAGS": "-lxml2"
+  },
+  "frameworks": [
+    "UIKit",
+    "Security",
+    "MobileCoreServices",
+    "SystemConfiguration"
+  ]
+}

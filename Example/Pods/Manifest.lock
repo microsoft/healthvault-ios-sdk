@@ -8,7 +8,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   HealthVault:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   HealthVault: faf6368bac3448800fd2fa1176e30afa3123f750
