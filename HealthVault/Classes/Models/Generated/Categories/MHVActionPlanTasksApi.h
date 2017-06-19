@@ -41,12 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Post a new action plan task
 /// 
 ///
-/// @param actionPlanTask 
+/// @param actionPlanTask The action plan task to create.
 /// 
-///  code:201 message:"Created",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanTaskInstanceV2*
 - (void)actionPlanTasksCreateWithActionPlanTask:(MHVActionPlanTaskV2* )actionPlanTask
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
@@ -54,12 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Delete a task by id
 /// 
 ///
-/// @param actionPlanTaskId 
+/// @param actionPlanTaskId The unique identifer of the task.
 /// 
-///  code:204 message:"NoContent",
-///  code:0 message:"Error"
-///
-/// @return 
 - (void)actionPlanTasksDeleteWithActionPlanTaskId:(NSString* )actionPlanTaskId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
@@ -70,10 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param actionPlanTaskStatus  (optional)
 /// @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanTasksResponseActionPlanTaskInstanceV2_*
 - (void)actionPlanTasksGetWithActionPlanTaskStatus:(NSString* _Nullable)actionPlanTaskStatus
     maxPageSize:(NSNumber* _Nullable)maxPageSize
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_* _Nullable output, NSError* _Nullable error))completion;
@@ -82,12 +70,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Get a task by id
 /// 
 ///
-/// @param actionPlanTaskId 
+/// @param actionPlanTaskId The unique identifer of the task.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanTaskInstanceV2*
 - (void)actionPlanTasksGetByIdWithActionPlanTaskId:(NSString* )actionPlanTaskId
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
@@ -95,12 +79,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Put an update for an action plan task
 /// 
 ///
-/// @param actionPlanTask 
+/// @param actionPlanTask The updated action plan task.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanTaskInstanceV2*
 - (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstanceV2* )actionPlanTask
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
@@ -108,25 +88,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// Patch an update for an action plan task
 /// 
 ///
-/// @param actionPlanTask 
+/// @param actionPlanTask The updated task
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanTaskInstanceV2*
 - (void)actionPlanTasksUpdateWithActionPlanTask:(MHVActionPlanTaskInstanceV2* )actionPlanTask
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
 
 
-/// 
+/// Validate tracking for an action plan task
 /// 
 ///
-/// @param trackingValidation 
+/// @param trackingValidation The tracking validation information.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_*
 - (void)actionPlanTasksValidateTrackingWithTrackingValidation:(MHVTrackingValidation* )trackingValidation
     completion:(void(^_Nonnull)(MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_* _Nullable output, NSError* _Nullable error))completion;
 

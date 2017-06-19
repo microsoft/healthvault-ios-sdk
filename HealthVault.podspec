@@ -7,40 +7,33 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'healthvault-ios-sdk'
-  s.version          = '3.0.0.0'
-  s.summary          = 'A short description of healthvault-ios-sdk.'
+  s.name             = 'HealthVault'
+  s.version          = '3.0.2-preview'
+  s.summary          = 'An iOS library you can use to build applications that leverage the Microsoft HealthVault platform'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+The healthvault-ios-sdk simplifies developing apps that use the Microsoft HealthVault platform. It handles authenticating users, managing credentials, and serializing data types.
                        DESC
 
   s.homepage         = 'https://github.com/Microsoft/healthvault-ios-sdk'
   s.license          = { :type => 'APACHE', :file => 'LICENSE' }
-  s.author           = { 'namalu' => 'namalu@microsoft.com' }
+  s.author           = { 'Microsoft' => 'hvtech@microsoft.com' }
   s.source           = { :git => 'https://github.com/Microsoft/healthvault-ios-sdk.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'healthvault-ios-sdk/Classes/**/*'
+  s.source_files = 'HealthVault/Classes/**/*'
 
   s.requires_arc     = true
   s.libraries        = "xml2"
   s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(inherited) $(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2' }
-#s.public_header_files = 'Pod/Classes/Headers/Public/*.h'
+  #s.public_header_files = 'HealthVault/Classes/Headers/Public/*.h'
 
     s.frameworks = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
 
   # s.resource_bundles = {
   #   'healthvault-ios-sdk' => ['healthvault-ios-sdk/Assets/*.png']
   # }
-
-  # s.frameworks = 'UIKit'
 
 end

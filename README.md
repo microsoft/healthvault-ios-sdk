@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/healthvault-ios-sdk.svg?style=flat)](http://cocoapods.org/pods/healthvault-ios-sdk)
 
 # About
-**healthvault-ios-sdk** is a static iOS library you use to build applications that leverage the Microsoft HealthVault platform. **healthvault-ios-sdk** is actively used by the [Microsoft HealthVault for iPhone app](https://itunes.apple.com/us/app/microsoft-healthvault/id546835834?mt=8).
+**healthvault-ios-sdk** is an iOS library you can use to build applications that leverage the Microsoft HealthVault platform. **healthvault-ios-sdk** is actively used by the [Microsoft HealthVault for iPhone app](https://itunes.apple.com/us/app/microsoft-healthvault/id546835834?mt=8).
 
 **healthvault-ios-sdk** introduces a rich new HealthVault iOS client programming model. It includes built in serialization of most HealthVault data types, and built in support for HealthVault methods.
 

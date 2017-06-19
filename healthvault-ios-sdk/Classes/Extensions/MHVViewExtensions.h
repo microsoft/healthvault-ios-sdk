@@ -1,6 +1,6 @@
 //
-//  MHVFeaturesConfiguration.h
-//  SDKFeatures
+// MHVViewExtensions.h
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -16,10 +16,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface MHVFeaturesConfiguration : NSObject
+@interface UIView (MHVViewExtensions)
 
-+ (MHVConfiguration *)configuration;
+- (NSArray<NSLayoutConstraint *> *)constraintsToFillView:(UIView *)fillView;
+- (NSArray<NSLayoutConstraint *> *)constraintsToCenterInView:(UIView *)centerInView;
 
 @end

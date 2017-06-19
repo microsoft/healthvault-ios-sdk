@@ -41,10 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalRecommendationId The identifier of the goal recommendation to acknowledge.
 /// 
-///  code:204 message:"NoContent",
-///  code:0 message:"Error"
-///
-/// @return 
 - (void)goalRecommendationsAcknowledgeWithGoalRecommendationId:(NSString* )goalRecommendationId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
@@ -54,10 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalRecommendation The instance of the goal recommendation to create.
 /// 
-///  code:201 message:"Created",
-///  code:0 message:"Error"
-///
-/// @return MHVGoalRecommendationInstance*
 - (void)goalRecommendationsCreateWithGoalRecommendation:(MHVGoalRecommendation* )goalRecommendation
     completion:(void(^_Nonnull)(MHVGoalRecommendationInstance* _Nullable output, NSError* _Nullable error))completion;
 
@@ -67,10 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalRecommendationId The identifier of the goal recommendation to delete.
 /// 
-///  code:204 message:"NoContent",
-///  code:0 message:"Error"
-///
-/// @return 
 - (void)goalRecommendationsDeleteWithGoalRecommendationId:(NSString* )goalRecommendationId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion;
 
@@ -81,10 +69,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param goalTypes The goal types(e.g Steps, CaloriesBurned) filter. (optional)
 /// @param goalWindowTypes The goal window types(e.g Daily, Weekly) filter. (optional)
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVGoalRecommendationsResponse*
 - (void)goalRecommendationsGetWithGoalTypes:(NSString* _Nullable)goalTypes
     goalWindowTypes:(NSString* _Nullable)goalWindowTypes
     completion:(void(^_Nonnull)(MHVGoalRecommendationsResponse* _Nullable output, NSError* _Nullable error))completion;
@@ -95,10 +79,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param goalRecommendationId The goal recommendation identifier.
 /// 
-///  code:200 message:"OK",
-///  code:0 message:"Error"
-///
-/// @return MHVGoalRecommendationInstance*
 - (void)goalRecommendationsGetByIdWithGoalRecommendationId:(NSString* )goalRecommendationId
     completion:(void(^_Nonnull)(MHVGoalRecommendationInstance* _Nullable output, NSError* _Nullable error))completion;
 

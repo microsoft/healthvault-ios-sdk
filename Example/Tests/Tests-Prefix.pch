@@ -3,7 +3,6 @@
 #ifdef __OBJC__
 
     @import Kiwi;
-
-    #import <healthvault_ios_sdk/MHVLib.h>
+    @import HealthVault;
 
 #endif
