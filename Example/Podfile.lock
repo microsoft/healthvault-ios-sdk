@@ -1,5 +1,5 @@
 PODS:
-  - HealthVault (3.0.1-preview)
+  - HealthVault (3.0.2-preview)
   - Kiwi (2.4.0)
 
 DEPENDENCIES:
@@ -8,10 +8,10 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   HealthVault:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
-  HealthVault: 463164a47dc2411ca4c4a30053e99b77652619fb
+  HealthVault: faf6368bac3448800fd2fa1176e30afa3123f750
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
 
 PODFILE CHECKSUM: 3720fe9c261606412cc20de913363e4affd31820
