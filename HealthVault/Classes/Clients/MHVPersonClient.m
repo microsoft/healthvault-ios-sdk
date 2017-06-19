@@ -122,7 +122,7 @@
      }];
 }
 
-- (void)getAuthorizedPeopleWithCompletion:(void(^)(MHVGetAuthorizedPeopleResult *_Nullable authorizedPeople, NSError *_Nullable error))completion;
+- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 {
     MHVASSERT_PARAMETER(completion);
     
@@ -130,13 +130,14 @@
     {
         return;
     }
-    
-    [self getAuthorizedPeopleWithParameters:@"<info><parameters></parameters></info>"
-                                 completion:completion];
+
+    [self getAuthorizedPeopleWithSettings:[MHVGetAuthorizedPeopleSettings new]
+                              personInfos:nil
+                               completion:completion];
 }
 
 - (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *)settings
-                             completion:(void(^)(MHVGetAuthorizedPeopleResult *_Nullable authorizedPeople, NSError *_Nullable error))completion
+                             completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(settings);
     MHVASSERT_PARAMETER(completion);
@@ -152,8 +153,65 @@
         return;
     }
 
+    [self getAuthorizedPeopleWithSettings:settings
+                              personInfos:nil
+                               completion:completion];
+}
+
+- (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *)settings
+                            personInfos:(NSArray<MHVPersonInfo *> *_Nullable)personInfos
+                             completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(settings);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    if (!settings)
+    {
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
+        return;
+    }
+    
     [self getAuthorizedPeopleWithParameters:[self bodyForGetAuthorizedPeopleSettings:settings]
-                                 completion:completion];
+                                 completion:^(MHVGetAuthorizedPeopleResult * _Nullable authorizedPeople, NSError * _Nullable error)
+     {
+         //If error, return the personInfos so far and the error
+         if (error)
+         {
+             completion(personInfos, error);
+             return;
+         }
+         
+         //Add to the personInfos array
+         NSArray *personInfosResult;
+         if (!personInfos)
+         {
+             personInfosResult = authorizedPeople.persons.toArray;
+         }
+         else
+         {
+             personInfosResult = [personInfos arrayByAddingObjectsFromArray:authorizedPeople.persons.toArray];
+         }
+         
+         //If more results flag is set, need to recurse; otherwise done
+         if (authorizedPeople.moreResults.value)
+         {
+             MHVGetAuthorizedPeopleSettings *nextSettings = [MHVGetAuthorizedPeopleSettings new];
+             nextSettings.startingPersonId = [authorizedPeople.persons lastObject].ID;
+             
+             [self getAuthorizedPeopleWithSettings:nextSettings
+                                       personInfos:personInfosResult
+                                        completion:completion];
+         }
+         else
+         {
+             completion(personInfosResult, nil);
+         }
+     }];
 }
 
 - (void)getPersonInfoWithCompletion:(void(^)(MHVPersonInfo *_Nullable person, NSError *_Nullable error))completion

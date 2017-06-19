@@ -20,8 +20,8 @@
 #import "MHVGetAuthorizedPeopleSettings.h"
 
 static NSString *const c_element_authorizationsCreatedSince = @"authorizations-created-since";
-static NSString *const c_element_batchSize = @"batch-size";
-static NSString *const c_element_startingPersonId = @"starting-person-id";
+static NSString *const c_element_batchSize = @"num-results";
+static NSString *const c_element_startingPersonId = @"person-id-cursor";
 
 @implementation MHVGetAuthorizedPeopleSettings
 

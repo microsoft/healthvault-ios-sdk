@@ -48,10 +48,10 @@ NS_ASSUME_NONNULL_BEGIN
  * Gets information about people authorized for an application.
  *
  * @param completion Envoked when the operation completes.
- *        MHVGetAuthorizedPeopleResult containing an array of MHVPersonInfo objects representing people authorized for the application, and a moreResults flag.
+ *        NSArray of MHVPersonInfo objects representing people authorized for the application.
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)getAuthorizedPeopleWithCompletion:(void(^)(MHVGetAuthorizedPeopleResult *_Nullable authorizedPeople, NSError *_Nullable error))completion;
+- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 
 /**
  * Gets information about people authorized for an application.
@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *)settings
-                             completion:(void(^)(MHVGetAuthorizedPeopleResult *_Nullable authorizedPeople, NSError *_Nullable error))completion;
+                             completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 
 /**
  * Gets information about current person for an application.

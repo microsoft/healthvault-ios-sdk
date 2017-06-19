@@ -33,7 +33,6 @@
 #import "MHVSessionCredentialClientProtocol.h"
 #import "MHVAuthSession.h"
 #import "MHVClientFactory.h"
-#import "MHVGetAuthorizedPeopleResult.h"
 
 static NSString *const kServiceInstanceKey = @"ServiceInstance";
 static NSString *const kApplicationCreationInfoKey = @"ApplicationCreationInfo";
@@ -426,7 +425,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 
 - (void)getAuthorizedPersonInfoWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    [self.personClient getAuthorizedPeopleWithCompletion:^(MHVGetAuthorizedPeopleResult *_Nullable authorizedPeople, NSError * _Nullable error)
+    [self.personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
     {
          if (error)
          {
@@ -438,7 +437,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
              return;
          }
          
-        MHVPersonInfo *personInfo = [authorizedPeople.persons firstObject];
+        MHVPersonInfo *personInfo = [personInfos firstObject];
          
         if (!personInfo.selectedRecordID ||
             [personInfo.selectedRecordID isEqual:[[NSUUID alloc] initWithUUIDString:kBlankUUID]])

@@ -362,7 +362,12 @@
      {
          [weakFeatures getAuthorizedRecords];
      }];
-    
+
+    [self.actions addFeature:@"GetAuthorizedPeople" andAction:^
+     {
+         [weakFeatures getAuthorizedPeople];
+     }];
+
     [self.actions addFeature:@"Authorize records" andAction:^
      {
          [weakFeatures authorizeAdditionalRecords];

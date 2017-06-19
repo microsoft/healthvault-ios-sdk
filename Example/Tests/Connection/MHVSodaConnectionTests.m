@@ -41,7 +41,6 @@
 #import "NSError+MHVError.h"
 #import "MHVErrorConstants.h"
 #import "MHVRecord.h"
-#import "MHVGetAuthorizedPeopleResult.h"
 
 static NSString *const kDefaultInstanceId = @"TESTINSTANCE1";
 static NSString *const kDefaultSharedSecret = @"TESTSHAREDSECRET";
@@ -313,17 +312,10 @@ describe(@"MHVSodaConnection", ^
     // Mock the getAuthorizedPeopleWithCompletion call
     [(id)personClient stub:@selector(getAuthorizedPeopleWithCompletion:) withBlock:^id(NSArray *params)
     {
-        void (^peopleBlk)(MHVGetAuthorizedPeopleResult *_Nullable authorizedPeople, NSError * _Nullable error) = params[0];
+        void (^peopleBlk)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error) = params[0];
         
-        MHVGetAuthorizedPeopleResult *authorizedPeople = [MHVGetAuthorizedPeopleResult new];
-        authorizedPeople.persons = [NSMutableArray new];
+        peopleBlk(personInfo ? @[personInfo] : nil, authorizedPeopleError);
         
-        if (personInfo)
-        {
-            [authorizedPeople.persons addObject:personInfo];
-        }
-        
-        peopleBlk(authorizedPeople, authorizedPeopleError);
         return nil;
     }];
     
@@ -1100,7 +1092,7 @@ describe(@"MHVSodaConnection", ^
                 
                 it(@"should forward the error to the caller", ^
                    {
-                       [[expectFutureValue(expectedError) shouldEventuallyBeforeTimingOutAfter(3)] beNonNil];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
                        [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeUnknown)];
                        [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
                    });
@@ -1125,7 +1117,7 @@ describe(@"MHVSodaConnection", ^
                 
                 it(@"should forward the error to the caller", ^
                    {
-                       [[expectFutureValue(expectedError) shouldEventuallyBeforeTimingOutAfter(3)] beNonNil];
+                       [[expectFutureValue(expectedError) shouldEventually] beNonNil];
                        [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeIOError)];
                        [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:errorMessage];
                    });

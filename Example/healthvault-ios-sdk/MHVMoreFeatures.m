@@ -20,7 +20,6 @@
 #import "MHVMoreFeatures.h"
 #import "MHVTypeListViewController.h"
 #import "MHVUIAlert.h"
-#import "MHVGetAuthorizedPeopleResult.h"
 
 @implementation MHVMoreFeatures
 
@@ -168,6 +167,33 @@
                 [result appendString:@"\n"];
                 [result appendFormat:@"Name: %@\n", record.name];
                 [result appendFormat:@"ID: %@...\n", [record.ID.UUIDString substringToIndex:7]];
+            }
+            
+            [MHVUIAlert showInformationalMessage:result];
+        }
+    }];
+}
+
+- (void)getAuthorizedPeople
+{
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection.personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> * _Nullable personInfos, NSError * _Nullable error)
+    {
+        if (error)
+        {
+            [MHVUIAlert showInformationalMessage:error.localizedDescription];
+        }
+        else
+        {
+            NSMutableString *result = [NSMutableString new];
+            [result appendFormat:@"%li Authorized People:\n", personInfos.count];
+            
+            for (MHVPersonInfo *info in personInfos)
+            {
+                [result appendString:@"\n"];
+                [result appendFormat:@"Name: %@\n", info.name];
+                [result appendFormat:@"ID: %@...\n", [info.ID.UUIDString substringToIndex:7]];
             }
             
             [MHVUIAlert showInformationalMessage:result];

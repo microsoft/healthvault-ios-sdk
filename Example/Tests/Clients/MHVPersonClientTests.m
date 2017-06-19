@@ -27,7 +27,6 @@
 #import "MHVHttpServiceResponse.h"
 #import "MHVErrorConstants.h"
 #import "MHVPersonInfo.h"
-#import "MHVGetAuthorizedPeopleResult.h"
 #import "MHVGetAuthorizedPeopleSettings.h"
 #import "Kiwi.h"
 
@@ -38,16 +37,29 @@ SPEC_BEGIN(MHVPersonClientTests)
 describe(@"MHVPersonClient", ^
 {
     __block NSString *responseString;
+    __block NSString *secondResponseString;
     __block MHVApplicationSettings *returnedSettings;
     __block MHVPersonInfo *returnedPersonInfo;
-    __block MHVGetAuthorizedPeopleResult *returnedAuthorizedPeople;
+    __block NSArray<MHVPersonInfo *> *_Nullable returnedPersonInfos;
     __block MHVRecordCollection *returnedRecords;
     __block NSError *returnedError;
     
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
     [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id(NSArray *params)
      {
-         MHVHttpServiceResponse *httpServiceResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[responseString dataUsingEncoding:NSUTF8StringEncoding]
+         NSData *responseData;
+         if (responseString)
+         {
+             responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+             responseString = nil;
+         }
+         else if (secondResponseString)
+         {
+             responseData = [secondResponseString dataUsingEncoding:NSUTF8StringEncoding];
+             secondResponseString = nil;
+         }
+         
+         MHVHttpServiceResponse *httpServiceResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:responseData
                                                                                                  statusCode:0];
          
          MHVServiceResponse *serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:httpServiceResponse isXML:YES];
@@ -66,13 +78,16 @@ describe(@"MHVPersonClient", ^
     beforeEach(^{
         returnedSettings = nil;
         returnedPersonInfo = nil;
+        returnedPersonInfos = nil;
         returnedRecords = nil;
         returnedError = nil;
+        responseString = nil;
+        secondResponseString = nil;
     });
     
 #pragma mark - GetApplicationSettings
     
-    context(@"GetApplicationSettings success", ^
+    context(@"when getApplicationSettingsWithCompletion has successful response", ^
             {
                 beforeEach(^{
                     // Mock response for GetApplicationSettings
@@ -99,7 +114,7 @@ describe(@"MHVPersonClient", ^
                    });
             });
     
-    context(@"GetApplicationSettings error response", ^
+    context(@"when getApplicationSettingsWithCompletion has error response", ^
             {
                 beforeEach(^{
                     // Mock response for GetApplicationSettings
@@ -124,7 +139,7 @@ describe(@"MHVPersonClient", ^
     
 #pragma mark - SetApplicationSettings
     
-    context(@"SetApplicationSettings success", ^
+    context(@"when setApplicationSettings has successful respones", ^
             {
                 beforeEach(^{
                     // Mock response for SetApplicationSettings
@@ -146,7 +161,7 @@ describe(@"MHVPersonClient", ^
                    });
             });
     
-    context(@"SetApplicationSettings error response", ^
+    context(@"when setApplicationSettings has error response", ^
             {
                 beforeEach(^{
                     // Mock response for GetApplicationSettings
@@ -168,7 +183,7 @@ describe(@"MHVPersonClient", ^
                    });
             });
     
-    context(@"SetApplicationSettings parameter error", ^
+    context(@"when setApplicationSettings has parameter error", ^
             {
                 beforeEach(^{
                     MHVApplicationSettings *nilAppSettings = nil;
@@ -191,15 +206,15 @@ describe(@"MHVPersonClient", ^
     
 #pragma mark - GetAuthorizedPeople
     
-    context(@"GetAuthorizedPeople success", ^
+    context(@"when getAuthorizedPeopleWithCompletion has successful response", ^
             {
                 beforeEach(^{
                     // Mock response for GetPersonInfo
                     responseString = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetAuthorizedPeople\"><response-results><person-info><person-id>5370f5ce-de91-4fff-b830-90c40d483941</person-id><name>Mike B</name><record id=\"4c4c84fd-b5d0-48ff-8038-17c8f1b084d5\" record-custodian=\"true\" rel-type=\"1\" rel-name=\"Self\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Mike B\" state=\"Active\" date-created=\"2015-10-09T15:28:42.397Z\" max-size-bytes=\"4294967296\" size-bytes=\"30065480\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793271\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.333Z\" latest-operation-sequence-number=\"860\" record-app-auth-created-date=\"2017-06-13T00:24:30.333Z\">Mike B</record><record id=\"8698144d-c29a-46c2-a20c-baa9c847140d\" record-custodian=\"true\" rel-type=\"2\" rel-name=\"Other\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test\" state=\"Active\" date-created=\"2017-04-28T20:44:46.537Z\" max-size-bytes=\"4294967296\" size-bytes=\"31586376\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793272\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.4Z\" latest-operation-sequence-number=\"146\" record-app-auth-created-date=\"2017-06-13T00:24:30.4Z\">Test SubPerson</record><record id=\"432f684f-26f9-4e25-a9fe-5375ddaa0bc0\" record-custodian=\"true\" rel-type=\"13\" rel-name=\"Pet\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test2\" state=\"Active\" date-created=\"2017-06-06T15:23:40.533Z\" max-size-bytes=\"4294967296\" size-bytes=\"57470\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793273\" location-country=\"US\" location-state-province=\"WA\" date-updated=\"2017-06-13T00:24:30.46Z\" latest-operation-sequence-number=\"14\" record-app-auth-created-date=\"2017-06-13T00:24:30.46Z\">Test2 Test2</record><preferred-culture><language>en-US</language></preferred-culture><preferred-uiculture><language>en-US</language></preferred-uiculture><location><country>US</country></location></person-info><more-results>false</more-results></response-results></wc:info></response>";
                     
-                    [personClient getAuthorizedPeopleWithCompletion:^(MHVGetAuthorizedPeopleResult * _Nullable authorizedPeople, NSError * _Nullable error)
+                    [personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
                      {
-                         returnedAuthorizedPeople = authorizedPeople;
+                         returnedPersonInfos = personInfos;
                          returnedError = error;
                      }];
                 });
@@ -210,29 +225,29 @@ describe(@"MHVPersonClient", ^
                    });
                 it(@"should have authorized people", ^
                    {
-                       [[expectFutureValue(returnedAuthorizedPeople) shouldEventually] beNonNil];
+                       [[expectFutureValue(returnedPersonInfos) shouldEventually] beNonNil];
                    });
                 it(@"should have 1 authorized people", ^
                    {
-                       [[expectFutureValue(theValue(returnedAuthorizedPeople.persons.count)) shouldEventually] equal:@(1)];
+                       [[expectFutureValue(theValue(returnedPersonInfos.count)) shouldEventually] equal:@(1)];
                    });
                 it(@"should have correct authorized name", ^
                    {
-                       [[expectFutureValue(theValue(returnedAuthorizedPeople.persons.count)) shouldEventually] equal:@(1)];
+                       [[expectFutureValue(theValue(returnedPersonInfos.count)) shouldEventually] equal:@(1)];
                        
-                       [[[returnedAuthorizedPeople.persons objectAtIndex:0].name should] equal:@"Mike B"];
+                       [[[returnedPersonInfos objectAtIndex:0].name should] equal:@"Mike B"];
                    });
             });
     
-    context(@"GetAuthorizedPeople error response", ^
+    context(@"when getAuthorizedPeopleWithCompletion has error response", ^
             {
                 beforeEach(^{
                     // Mock response for GetApplicationSettings
                     responseString = kHealthVaultErrorXml;
                     
-                    [personClient getAuthorizedPeopleWithCompletion:^(MHVGetAuthorizedPeopleResult * _Nullable authorizedPeople, NSError * _Nullable error)
+                    [personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
                      {
-                         returnedAuthorizedPeople = authorizedPeople;
+                         returnedPersonInfos = personInfos;
                          returnedError = error;
                      }];
                 });
@@ -243,20 +258,20 @@ describe(@"MHVPersonClient", ^
                    });
                 it(@"should not have authorized people", ^
                    {
-                       [[expectFutureValue(returnedAuthorizedPeople) shouldEventually] beNil];
+                       [[expectFutureValue(returnedPersonInfos) shouldEventually] beNil];
                    });
             });
 
-    context(@"GetAuthorizedPeopleSettings success", ^
+    context(@"when getAuthorizedPeopleWithSettings has successful response", ^
             {
                 beforeEach(^{
                     // Mock response for GetPersonInfo
                     responseString = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetAuthorizedPeople\"><response-results><person-info><person-id>5370f5ce-de91-4fff-b830-90c40d483941</person-id><name>Mike B</name><record id=\"4c4c84fd-b5d0-48ff-8038-17c8f1b084d5\" record-custodian=\"true\" rel-type=\"1\" rel-name=\"Self\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Mike B\" state=\"Active\" date-created=\"2015-10-09T15:28:42.397Z\" max-size-bytes=\"4294967296\" size-bytes=\"30065480\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793271\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.333Z\" latest-operation-sequence-number=\"860\" record-app-auth-created-date=\"2017-06-13T00:24:30.333Z\">Mike B</record><record id=\"8698144d-c29a-46c2-a20c-baa9c847140d\" record-custodian=\"true\" rel-type=\"2\" rel-name=\"Other\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test\" state=\"Active\" date-created=\"2017-04-28T20:44:46.537Z\" max-size-bytes=\"4294967296\" size-bytes=\"31586376\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793272\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.4Z\" latest-operation-sequence-number=\"146\" record-app-auth-created-date=\"2017-06-13T00:24:30.4Z\">Test SubPerson</record><record id=\"432f684f-26f9-4e25-a9fe-5375ddaa0bc0\" record-custodian=\"true\" rel-type=\"13\" rel-name=\"Pet\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test2\" state=\"Active\" date-created=\"2017-06-06T15:23:40.533Z\" max-size-bytes=\"4294967296\" size-bytes=\"57470\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793273\" location-country=\"US\" location-state-province=\"WA\" date-updated=\"2017-06-13T00:24:30.46Z\" latest-operation-sequence-number=\"14\" record-app-auth-created-date=\"2017-06-13T00:24:30.46Z\">Test2 Test2</record><preferred-culture><language>en-US</language></preferred-culture><preferred-uiculture><language>en-US</language></preferred-uiculture><location><country>US</country></location></person-info><more-results>false</more-results></response-results></wc:info></response>";
                     
                     [personClient getAuthorizedPeopleWithSettings:[MHVGetAuthorizedPeopleSettings new]
-                                                       completion:^(MHVGetAuthorizedPeopleResult * _Nullable authorizedPeople, NSError * _Nullable error)
+                                                       completion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
                      {
-                         returnedAuthorizedPeople = authorizedPeople;
+                         returnedPersonInfos = personInfos;
                          returnedError = error;
                      }];
                 });
@@ -267,30 +282,74 @@ describe(@"MHVPersonClient", ^
                    });
                 it(@"should have authorized people", ^
                    {
-                       [[expectFutureValue(returnedAuthorizedPeople) shouldEventually] beNonNil];
+                       [[expectFutureValue(returnedPersonInfos) shouldEventually] beNonNil];
                    });
                 it(@"should have 1 authorized people", ^
                    {
-                       [[expectFutureValue(theValue(returnedAuthorizedPeople.persons.count)) shouldEventually] equal:@(1)];
+                       [[expectFutureValue(theValue(returnedPersonInfos.count)) shouldEventually] equal:@(1)];
                    });
                 it(@"should have correct authorized name", ^
                    {
-                       [[expectFutureValue(theValue(returnedAuthorizedPeople.persons.count)) shouldEventually] equal:@(1)];
+                       [[expectFutureValue(theValue(returnedPersonInfos.count)) shouldEventually] equal:@(1)];
                        
-                       [[[returnedAuthorizedPeople.persons objectAtIndex:0].name should] equal:@"Mike B"];
+                       [[[returnedPersonInfos objectAtIndex:0].name should] equal:@"Mike B"];
                    });
             });
-    
-    context(@"GetAuthorizedPeopleSettings error response", ^
+
+    context(@"when getAuthorizedPeopleWithCompletion has successful response with more results flag", ^
+            {
+                beforeEach(^{
+                    // Mock response for GetAuthorizedPeople, has <more-results>true</more-results>
+                    responseString = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetAuthorizedPeople\"><response-results><person-info><person-id>11111111-1111-1111-1111-111111111111</person-id><name>Mike B</name><record id=\"11111111-1111-1111-1111-111111111111\" record-custodian=\"true\" rel-type=\"1\" rel-name=\"Self\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Mike B\" state=\"Active\" date-created=\"2015-10-09T15:28:42.397Z\" max-size-bytes=\"4294967296\" size-bytes=\"30065480\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793271\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.333Z\" latest-operation-sequence-number=\"860\" record-app-auth-created-date=\"2017-06-13T00:24:30.333Z\">Mike B</record><record id=\"8698144d-c29a-46c2-a20c-baa9c847140d\" record-custodian=\"true\" rel-type=\"2\" rel-name=\"Other\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test\" state=\"Active\" date-created=\"2017-04-28T20:44:46.537Z\" max-size-bytes=\"4294967296\" size-bytes=\"31586376\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793272\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.4Z\" latest-operation-sequence-number=\"146\" record-app-auth-created-date=\"2017-06-13T00:24:30.4Z\">Test SubPerson</record><record id=\"432f684f-26f9-4e25-a9fe-5375ddaa0bc0\" record-custodian=\"true\" rel-type=\"13\" rel-name=\"Pet\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test2\" state=\"Active\" date-created=\"2017-06-06T15:23:40.533Z\" max-size-bytes=\"4294967296\" size-bytes=\"57470\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793273\" location-country=\"US\" location-state-province=\"WA\" date-updated=\"2017-06-13T00:24:30.46Z\" latest-operation-sequence-number=\"14\" record-app-auth-created-date=\"2017-06-13T00:24:30.46Z\">Test2 Test2</record><preferred-culture><language>en-US</language></preferred-culture><preferred-uiculture><language>en-US</language></preferred-uiculture><location><country>US</country></location></person-info><more-results>true</more-results></response-results></wc:info></response>";
+                    
+                    // Mock 2nd response for GetAuthorizedPeople, has <more-results>false</more-results>
+                    secondResponseString = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetAuthorizedPeople\"><response-results><person-info><person-id>22222222-2222-2222-2222-222222222222</person-id><name>Mike C</name><record id=\"22222222-2222-2222-2222-222222222222\" record-custodian=\"true\" rel-type=\"1\" rel-name=\"Self\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Mike C\" state=\"Active\" date-created=\"2015-10-09T15:28:42.397Z\" max-size-bytes=\"4294967296\" size-bytes=\"30065480\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793271\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.333Z\" latest-operation-sequence-number=\"860\" record-app-auth-created-date=\"2017-06-13T00:24:30.333Z\">Mike C</record><record id=\"8698144d-c29a-46c2-a20c-baa9c847140d\" record-custodian=\"true\" rel-type=\"2\" rel-name=\"Other\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test\" state=\"Active\" date-created=\"2017-04-28T20:44:46.537Z\" max-size-bytes=\"4294967296\" size-bytes=\"31586376\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793272\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.4Z\" latest-operation-sequence-number=\"146\" record-app-auth-created-date=\"2017-06-13T00:24:30.4Z\">Test SubPerson</record><record id=\"432f684f-26f9-4e25-a9fe-5375ddaa0bc0\" record-custodian=\"true\" rel-type=\"13\" rel-name=\"Pet\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test2\" state=\"Active\" date-created=\"2017-06-06T15:23:40.533Z\" max-size-bytes=\"4294967296\" size-bytes=\"57470\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793273\" location-country=\"US\" location-state-province=\"WA\" date-updated=\"2017-06-13T00:24:30.46Z\" latest-operation-sequence-number=\"14\" record-app-auth-created-date=\"2017-06-13T00:24:30.46Z\">Test2 Test2</record><preferred-culture><language>en-US</language></preferred-culture><preferred-uiculture><language>en-US</language></preferred-uiculture><location><country>US</country></location></person-info><more-results>false</more-results></response-results></wc:info></response>";
+                    
+                    [personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
+                     {
+                         returnedPersonInfos = personInfos;
+                         returnedError = error;
+                     }];
+                });
+                
+                it(@"should not have errors", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNil];
+                   });
+                it(@"should have authorized people", ^
+                   {
+                       [[expectFutureValue(returnedPersonInfos) shouldEventually] beNonNil];
+                   });
+                it(@"should have 2 authorized people", ^
+                   {
+                       [[expectFutureValue(theValue(returnedPersonInfos.count)) shouldEventually] equal:@(2)];
+                   });
+                it(@"should have correct authorized names", ^
+                   {
+                       [[expectFutureValue(theValue(returnedPersonInfos.count)) shouldEventually] equal:@(2)];
+                       
+                       [[returnedPersonInfos[0].name should] equal:@"Mike B"];
+                       [[returnedPersonInfos[1].name should] equal:@"Mike C"];
+                   });
+                it(@"should have correct authorized IDs", ^
+                   {
+                       [[expectFutureValue(theValue(returnedPersonInfos.count)) shouldEventually] equal:@(2)];
+                       
+                       [[returnedPersonInfos[0].ID.UUIDString should] equal:@"11111111-1111-1111-1111-111111111111"];
+                       [[returnedPersonInfos[1].ID.UUIDString should] equal:@"22222222-2222-2222-2222-222222222222"];
+                   });
+            });
+
+    context(@"when getAuthorizedPeopleWithSettings has error response", ^
             {
                 beforeEach(^{
                     // Mock response for GetApplicationSettings
                     responseString = kHealthVaultErrorXml;
                     
                     [personClient getAuthorizedPeopleWithSettings:[MHVGetAuthorizedPeopleSettings new]
-                                                       completion:^(MHVGetAuthorizedPeopleResult * _Nullable authorizedPeople, NSError * _Nullable error)
+                                                       completion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
                      {
-                         returnedAuthorizedPeople = authorizedPeople;
+                         returnedPersonInfos = personInfos;
                          returnedError = error;
                      }];
                 });
@@ -301,11 +360,11 @@ describe(@"MHVPersonClient", ^
                    });
                 it(@"should not have authorized people", ^
                    {
-                       [[expectFutureValue(returnedAuthorizedPeople) shouldEventually] beNil];
+                       [[expectFutureValue(returnedPersonInfos) shouldEventually] beNil];
                    });
             });
 
-    context(@"GetAuthorizedPeopleSettings parameter error", ^
+    context(@"when getAuthorizedPeopleWithSettings has parameter error", ^
             {
                 beforeEach(^{
                     // Mock response for GetApplicationSettings
@@ -314,9 +373,9 @@ describe(@"MHVPersonClient", ^
                     MHVGetAuthorizedPeopleSettings *nilSettings = nil;
                     
                     [personClient getAuthorizedPeopleWithSettings:nilSettings
-                                                       completion:^(MHVGetAuthorizedPeopleResult * _Nullable authorizedPeople, NSError * _Nullable error)
+                                                       completion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
                      {
-                         returnedAuthorizedPeople = authorizedPeople;
+                         returnedPersonInfos = personInfos;
                          returnedError = error;
                      }];
                 });
@@ -331,13 +390,13 @@ describe(@"MHVPersonClient", ^
                    });
                 it(@"should not have authorized people", ^
                    {
-                       [[expectFutureValue(returnedAuthorizedPeople) shouldEventually] beNil];
+                       [[expectFutureValue(returnedPersonInfos) shouldEventually] beNil];
                    });
             });
 
 #pragma mark - GetPersonInfo
     
-    context(@"GetPersonInfo success", ^
+    context(@"when getPersonInfoWithCompletion has successful response", ^
             {
                 beforeEach(^{
                     // Mock response for GetPersonInfo
@@ -365,7 +424,7 @@ describe(@"MHVPersonClient", ^
                    });
             });
     
-    context(@"GetPersonInfo error response", ^
+    context(@"when getPersonInfoWithCompletion has error response", ^
             {
                 beforeEach(^{
                     // Mock response for GetPersonInfo
@@ -390,7 +449,7 @@ describe(@"MHVPersonClient", ^
     
 #pragma mark - GetAuthorizedRecords
     
-    context(@"GetAuthorizedRecords success", ^
+    context(@"when getAuthorizedRecordsWithRecordIds has successful response", ^
             {
                 beforeEach(^{
                     // Mock response for GetPersonInfo
@@ -420,7 +479,7 @@ describe(@"MHVPersonClient", ^
                    });
             });
     
-    context(@"GetAuthorizedRecords error response", ^
+    context(@"when getAuthorizedRecordsWithRecordIds has error response", ^
             {
                 beforeEach(^{
                     // Mock response for GetPersonInfo
@@ -446,7 +505,7 @@ describe(@"MHVPersonClient", ^
                    });
             });
     
-    context(@"GetAuthorizedRecords parameter error", ^
+    context(@"when getAuthorizedRecordsWithRecordIds has parameter error", ^
             {
                 beforeEach(^{
                     NSArray *nilArray = nil;
@@ -473,4 +532,4 @@ describe(@"MHVPersonClient", ^
             });
 });
     
-    SPEC_END
+SPEC_END
