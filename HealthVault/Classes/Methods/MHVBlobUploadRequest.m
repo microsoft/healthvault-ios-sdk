@@ -20,7 +20,7 @@
 #import "MHVBlobUploadRequest.h"
 #import "MHVHttpServiceOperationProtocol.h"
 #import "MHVConfigurationConstants.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 @interface MHVBlobUploadRequest ()
 

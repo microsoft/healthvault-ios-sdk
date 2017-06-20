@@ -17,30 +17,15 @@
 // limitations under the License.
 
 
-#import "Logger.h"
+#import "MHVLogger.h"
 
-@interface Logger(PrivateMethods)
-
-/// Implements logic to set up the correct logging mechanism: console, file, no logging
-+ (void)setLoggingMethod;
-
-/// Redirects stderr stream to log file in Document directory
-+ (void)redirectConsoleLogToDocumentFolder;
-
-/// Creates a new name for the log file. File format is [appLog yyyy'-'MM'-'dd' 'HH'.'mm'.'ss"]
-/// @param name - name of file.
-/// @returns path to log file.
-+ (NSString*)createNameForLogWithName: (NSString*)name;
-
-@end
-
-@implementation Logger
+@implementation MHVLogger
 
 + (void)initialize
 {
 	
 	// set up appropriate logging mechanism
-	[Logger setLoggingMethod];
+	[MHVLogger setLoggingMethod];
 }
 
 
@@ -54,7 +39,7 @@
 #endif
 }
 
-+ (NSString*)createNameForLogWithName:(NSString *)name
++ (NSString *)createNameForLogWithName:(NSString *)name
 {
 	
 	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

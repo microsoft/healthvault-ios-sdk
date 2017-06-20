@@ -28,7 +28,7 @@
 #import "MHVGetAuthorizedPeopleResult.h"
 #import "MHVGetAuthorizedPeopleSettings.h"
 #import "MHVApplicationSettings.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 @interface MHVPersonClient ()
 

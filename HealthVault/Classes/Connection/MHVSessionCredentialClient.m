@@ -21,23 +21,25 @@
 #import "MHVValidator.h"
 #import "MHVMethod.h"
 #import "MHVDateExtensions.h"
-#import "MHVMobilePlatform.h"
 #import "MHVSessionCredential.h"
 #import "MHVServiceResponse.h"
 #import "MHVConfiguration.h"
 #import "XSerializer.h"
 #import "NSError+MHVError.h"
 #import "MHVStringExtensions.h"
+#import "MHVCryptographer.h"
 
 @interface MHVSessionCredentialClient ()
 
 @property (nonatomic, weak) id<MHVConnectionProtocol> connection;
+@property (nonatomic, strong) MHVCryptographer *cryptographer;
 
 @end
 
 @implementation MHVSessionCredentialClient
 
 - (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
+                     cryptographer:(MHVCryptographer *)cryptographer
 {
     MHVASSERT_PARAMETER(connection);
     
@@ -46,6 +48,7 @@
     if (self)
     {
         _connection = connection;
+        _cryptographer = cryptographer;
     }
     
     return self;
@@ -110,7 +113,7 @@
     [stringToSign appendString:@"</content>"];
     
     NSData *keyData = [[NSData alloc] initWithBase64EncodedString:sharedSecret options:0];
-    NSString *hmac = [MHVMobilePlatform computeSha256Hmac:keyData data:stringToSign];
+    NSString *hmac = [self.cryptographer computeSha256Hmac:keyData data:stringToSign];
     
     NSMutableString *xml = [NSMutableString new];
     [xml appendString:@"<info>"];

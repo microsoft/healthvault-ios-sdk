@@ -5,7 +5,7 @@ use_frameworks!
 
   target 'healthvault-ios-sdk_Example' do
     platform :ios, '8.0'
-    pod ‘HealthVault’, :path => '../'
+    pod 'HealthVault', :path => '../'
 
   target 'healthvault-ios-sdk_Tests' do
     platform :ios, '8.0'

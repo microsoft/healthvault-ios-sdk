@@ -18,12 +18,13 @@
 
 #import "MHVRequestMessageCreator.h"
 #import "MHVDateExtensions.h"
-#import "MHVMobilePlatform.h"
+#import "MHVCryptographer.h"
 #import "MHVCommon.h"
 #import "MHVMethod.h"
 #import "MHVValidator.h"
 #import "MHVConfiguration.h"
 #import "MHVAuthSession.h"
+#import "MHVClientInfo.h"
 
 @interface MHVRequestMessageCreator ()
 
@@ -33,6 +34,7 @@
 @property (nonatomic, strong) MHVConfiguration *configuration;
 @property (nonatomic, strong) NSUUID *appId;
 @property (nonatomic, strong) NSDate *messageTime;
+@property (nonatomic, strong) MHVCryptographer *cryptographer;
 
 @end
 
@@ -44,11 +46,13 @@
                  configuration:(MHVConfiguration *)configuration
                          appId:(NSUUID *)appId
                    messageTime:(NSDate *)messageTime
+                 cryptographer:(MHVCryptographer *)cryptographer
 {
     MHVASSERT_PARAMETER(method);
     MHVASSERT_PARAMETER(authSession);
     MHVASSERT_PARAMETER(configuration);
     MHVASSERT_PARAMETER(messageTime);
+    MHVASSERT_PARAMETER(cryptographer);
     
     self = [super init];
     
@@ -60,7 +64,7 @@
         _configuration = configuration;
         _appId = appId;
         _messageTime = messageTime;
-        
+        _cryptographer = cryptographer;
     }
     
     return self;
@@ -121,14 +125,11 @@
 
 - (void)writeStandardHeaders:(NSMutableString *)header
 {
-//    //TODO : Ask the OneSDK team about missing language and country headers.
-//    [header appendXmlElement:@"language" text:self.language];
-//    [header appendXmlElement:@"country" text:self.country];
     [header appendXmlElement:@"msg-time" text:[self.messageTime dateToUtcString]];
     [header appendXmlElementStart:@"msg-ttl"];
     [header appendFormat:@"%ld", (long)self.configuration.requestTimeToLiveDuration];
     [header appendXmlElementEnd:@"msg-ttl"];
-    [header appendXmlElement:@"version" text:[MHVMobilePlatform platformAbbreviationAndVersion]];
+    [header appendXmlElement:@"version" text:[MHVClientInfo telemetryInfo]];
 }
 
 - (void)writeAuthSessionHeader:(NSMutableString *)header
@@ -166,7 +167,7 @@
     }
     
     [header appendXmlElementStart:@"info-hash"];
-    [header appendFormat:@"<hash-data algName=\"SHA256\">%@</hash-data>", [MHVMobilePlatform computeSha256Hash:body]];
+    [header appendFormat:@"<hash-data algName=\"SHA256\">%@</hash-data>", [self.cryptographer computeSha256Hash:body]];
     [header appendXmlElementEnd:@"info-hash"];
 }
 
@@ -177,7 +178,7 @@
         NSData *decodedKey = [[NSData alloc] initWithBase64EncodedString:self.sharedSecret options:0];
         
         [xml appendXmlElementStart:@"auth"];
-        [xml appendFormat:@"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [MHVMobilePlatform computeSha256Hmac:decodedKey data:header]];
+        [xml appendFormat:@"<hmac-data algName=\"HMACSHA256\">%@</hmac-data>", [self.cryptographer computeSha256Hmac:decodedKey data:header]];
         [xml appendXmlElementEnd:@"auth"];
     }
 }

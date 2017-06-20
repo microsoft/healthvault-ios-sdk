@@ -20,7 +20,7 @@
 #import "MHVCommon.h"
 #import "MHVRestRequest.h"
 #import "MHVCommon.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 @implementation MHVRestRequest
 

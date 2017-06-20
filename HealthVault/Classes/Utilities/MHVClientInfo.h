@@ -1,8 +1,8 @@
 //
-//  MHVCryptographer.m
-//  MHVLib
+// MHVClientInfo.h
+// MHVLib
 //
-// Copyright 2017 Microsoft Corp.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,22 +15,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-//
-#import "MHVCommon.h"
-#import "MHVCryptographer.h"
-#import "MHVMobilePlatform.h"
 
-@implementation MHVCryptographer
+#import <Foundation/Foundation.h>
 
--(NSString *)computeSha256Hash: (NSString *)data
-{
-    return [MHVMobilePlatform computeSha256Hash:data];
-}
+@interface MHVClientInfo : NSObject
 
--(NSString *)computeSha256Hmac: (NSData *)key data:(NSString *)data
-{
-    return [MHVMobilePlatform computeSha256Hmac:key data:data];
-}
++ (NSString *)telemetryInfo;
 
 @end

@@ -20,7 +20,7 @@
 #import <libxml/xmlreader.h>
 #import "MHVCommon.h"
 #import "XReader.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 #define READER_TRUE 1
 #define READER_FALSE 0

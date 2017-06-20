@@ -28,7 +28,7 @@
 #import "MHVConnectionProtocol.h"
 #import "MHVPersonalImage.h"
 #import "MHVBlobUploadRequest.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 @interface MHVThingClient ()
 
