@@ -60,36 +60,36 @@ NS_ASSUME_NONNULL_BEGIN
 /* The friendly name of the task [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;
-/* The short description of the task [optional]
+/* The short description of the task 
  */
-@property(strong,nonatomic,nullable) NSString* shortDescription;
-/* The detailed description of the task [optional]
+@property(strong,nonatomic) NSString* shortDescription;
+/* The detailed description of the task 
  */
-@property(strong,nonatomic,nullable) NSString* longDescription;
-/* The image URL of the task. Suggested resolution is 200 x 200 [optional]
+@property(strong,nonatomic) NSString* longDescription;
+/* The image URL of the task. Suggested resolution is 200 x 200 
  */
-@property(strong,nonatomic,nullable) NSString* imageUrl;
-/* The thumbnail image URL of the task. Suggested resolution is 90 x 90 [optional]
+@property(strong,nonatomic) NSString* imageUrl;
+/* The thumbnail image URL of the task. Suggested resolution is 90 x 90 
  */
-@property(strong,nonatomic,nullable) NSString* thumbnailImageUrl;
-/* The type of the task, used to choose the UI editor for the task [optional]
+@property(strong,nonatomic) NSString* thumbnailImageUrl;
+/* The type of the task, used to choose the UI editor for the task 
  */
-@property(strong,nonatomic,nullable) NSString* taskType;
-/* The tracking policy [optional]
+@property(strong,nonatomic) NSString* taskType;
+/* The tracking policy 
  */
-@property(strong,nonatomic,nullable) MHVActionPlanTrackingPolicy* trackingPolicy;
-/* The text shown during task signup. [optional]
+@property(strong,nonatomic) MHVActionPlanTrackingPolicy* trackingPolicy;
+/* The text shown during task signup. 
  */
-@property(strong,nonatomic,nullable) NSString* signupName;
+@property(strong,nonatomic) NSString* signupName;
 /* The ID of the associated plan. This is not needed when adding a task as part of a new plan [optional]
  */
 @property(strong,nonatomic,nullable) NSString* associatedPlanId;
-/* The list of objective IDs the task is associated with [optional]
+/* The list of objective IDs the task is associated with 
  */
-@property(strong,nonatomic,nullable) NSArray<NSString*>* associatedObjectiveIds;
-/* The Completion Type of the Task [optional]
+@property(strong,nonatomic) NSArray<NSString*>* associatedObjectiveIds;
+/* The Completion Type of the Task 
  */
-@property(strong,nonatomic,nullable) NSString* completionType;
+@property(strong,nonatomic) NSString* completionType;
 /* Completion metrics for frequency based tasks [optional]
  */
 @property(strong,nonatomic,nullable) MHVActionPlanFrequencyTaskCompletionMetricsV2* frequencyTaskCompletionMetrics;
