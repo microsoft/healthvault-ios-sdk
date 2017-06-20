@@ -63,6 +63,16 @@ describe(@"MHVThingClient", ^
             return thing;
         });
 
+    let(invalidThing, ^
+        {
+            MHVAllergy *allergy = [[MHVAllergy alloc] init];
+            
+            MHVThing *thing = [[MHVThing alloc] initWithTypedData:allergy];
+            thing.key = [[MHVThingKey alloc] initWithID:@"InvalidThingKey" andVersion:@"Version"];
+            
+            return thing;
+        });
+
     let(fileThing, ^
         {
             MHVFile *file = [[MHVFile alloc] init];
@@ -184,6 +194,58 @@ describe(@"MHVThingClient", ^
                        [[theValue(method.isAnonymous) should] beNo];
                        [[method.recordId.UUIDString should] equal:@"20000000-2000-2000-2000-200000000000"];
                        [[method.parameters should] equal:@"<info><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id></info>"];
+                   });
+            });
+    
+#pragma mark - Invalid Things
+    
+    context(@"createNewThing called with invalid Thing", ^
+            {
+                __block NSError *returnedError;
+                
+                beforeEach(^{
+                    returnedError = nil;
+                    
+                    [thingClient createNewThing:invalidThing
+                                       recordId:recordId
+                                     completion:^(NSError *error)
+                     {
+                         returnedError = error;
+                     }];
+                });
+                
+                it(@"should have error", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNonNil];
+                   });
+                it(@"should have RequiredParameter error code", ^
+                   {
+                       [[expectFutureValue(theValue(returnedError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
+                   });
+            });
+    
+    context(@"updateThing called with invalid Thing", ^
+            {
+                __block NSError *returnedError;
+                
+                beforeEach(^{
+                    returnedError = nil;
+                    
+                    [thingClient updateThing:invalidThing
+                                    recordId:recordId
+                                  completion:^(NSError *error)
+                     {
+                         returnedError = error;
+                     }];
+                });
+                
+                it(@"should have error", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNonNil];
+                   });
+                it(@"should have RequiredParameter error code", ^
+                   {
+                       [[expectFutureValue(theValue(returnedError.code)) shouldEventually] equal:@(MHVErrorTypeRequiredParameter)];
                    });
             });
 });

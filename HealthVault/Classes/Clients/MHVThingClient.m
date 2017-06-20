@@ -302,6 +302,17 @@
     for (MHVThing *thing in things)
     {
         [thing prepareForNew];
+
+        //Check if thing is valid
+        if (![self isValidObject:thing])
+        {
+            if (completion)
+            {
+                completion([NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
+            }
+            
+            return;
+        }
     }
     
     MHVMethod *method = [MHVMethod putThings];
@@ -362,6 +373,17 @@
     for (MHVThing *thing in things)
     {
         [thing prepareForUpdate];
+
+        //Check if thing is valid
+        if (![self isValidObject:thing])
+        {
+            if (completion)
+            {
+                completion([NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
+            }
+            
+            return;
+        }
     }
     
     MHVMethod *method = [MHVMethod putThings];
