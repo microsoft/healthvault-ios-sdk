@@ -37,9 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVScheduleV2 : MHVModelBase
 
-/* The reminder state of the task [optional]
+/* The reminder state of the task 
  */
-@property(strong,nonatomic,nullable) NSString* reminderState;
+@property(strong,nonatomic) NSString* reminderState;
 /* The days that this will show for the user              Expected values: { 'Unknown', 'Everyday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' } [optional]
  */
 @property(strong,nonatomic,nullable) NSArray<NSString*>* scheduledDays;

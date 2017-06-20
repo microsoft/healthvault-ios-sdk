@@ -36,24 +36,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVObjective : MHVModelBase
 
-/* The unique identifier of the instance of the objective [optional]
+/* The unique identifier of the instance of the objective 
  */
-@property(strong,nonatomic,nullable) NSString* identifier;
+@property(strong,nonatomic) NSString* identifier;
 /* The name of the objective [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;
-/* The description of the objective [optional]
+/* The description of the objective 
  */
-@property(strong,nonatomic,nullable) NSString* descriptionText;
-/* The state of the objective [optional]
+@property(strong,nonatomic) NSString* descriptionText;
+/* The state of the objective 
  */
-@property(strong,nonatomic,nullable) NSString* state;
+@property(strong,nonatomic) NSString* state;
 /* Gets or sets the name of the outcome [optional]
  */
 @property(strong,nonatomic,nullable) NSString* outcomeName;
-/* Gets or sets the type of the outcome [optional]
+/* Gets or sets the type of the outcome 
  */
-@property(strong,nonatomic,nullable) NSString* outcomeType;
+@property(strong,nonatomic) NSString* outcomeType;
 
 @end
 
