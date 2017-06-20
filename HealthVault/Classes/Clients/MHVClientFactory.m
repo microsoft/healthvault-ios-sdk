@@ -23,6 +23,7 @@
 #import "MHVThingClient.h"
 #import "MHVSessionCredentialClient.h"
 #import "MHVVocabularyClient.h"
+#import "MHVCryptographer.h"
 
 @implementation MHVClientFactory
 
@@ -53,7 +54,8 @@
 
 - (id<MHVSessionCredentialClientProtocol>)credentialClientWithConnection:(id<MHVConnectionProtocol>)connection
 {
-    return [[MHVSessionCredentialClient alloc] initWithConnection:connection];
+    return [[MHVSessionCredentialClient alloc] initWithConnection:connection
+                                                    cryptographer:[MHVCryptographer new]];
 }
 
 @end

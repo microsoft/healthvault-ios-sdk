@@ -1,5 +1,5 @@
 //
-//  Logger.h
+//  MHVLogger.h
 //  HealthVault Mobile Library for iOS
 //
 // Copyright 2017 Microsoft Corp.
@@ -26,8 +26,8 @@
 #endif
 
 #if HEALTH_VAULT_TRACE_ENABLED
-#	define TraceMessage(s, ... ) [Logger write: [NSString stringWithFormat: @"[%s, line = %d] %@", __func__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__]]]
-#	define TraceComponentEvent(component, code, s, ... ) [Logger write: [NSString stringWithFormat: @"[%@, code = %d]: %@", component, code, [NSString stringWithFormat:(s), ##__VA_ARGS__]]]
+#	define TraceMessage(s, ... ) [MHVLogger write: [NSString stringWithFormat: @"[%s, line = %d] %@", __func__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__]]]
+#	define TraceComponentEvent(component, code, s, ... ) [MHVLogger write: [NSString stringWithFormat: @"[%@, code = %d]: %@", component, code, [NSString stringWithFormat:(s), ##__VA_ARGS__]]]
 #	define TraceComponentMessage(component, s, ... ) TraceComponentEvent(component, 0, s, ##__VA_ARGS__)
 #	define TraceComponentError(component, s, ... ) TraceComponentEvent(component, -1, s, ##__VA_ARGS__)
 #else
@@ -37,10 +37,10 @@
 #	define TraceComponentError(component, s, ... ) {}
 #endif
 
-#define MHVLOG(x, ...) [Logger write: x, ##__VA_ARGS__];
+#define MHVLOG(x, ...) [MHVLogger write: x, ##__VA_ARGS__];
 
 /// Implements logging related functionality.
-@interface Logger: NSObject
+@interface MHVLogger: NSObject
 
 /// Writes the message to a log.
 /// @param text - text to write.

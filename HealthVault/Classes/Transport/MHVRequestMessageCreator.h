@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVRequestMessageCreatorProtocol.h"
 
-@class MHVMethod, MHVAuthSession, MHVConfiguration;
+@class MHVMethod, MHVAuthSession, MHVConfiguration, MHVCryptographer;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,7 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
                    authSession:(MHVAuthSession *)authSession
                  configuration:(MHVConfiguration *)configuration
                          appId:(NSUUID *)appId
-                   messageTime:(NSDate *)messageTime;
+                   messageTime:(NSDate *)messageTime
+                 cryptographer:(MHVCryptographer *)cryptographer;
 
 @end
 

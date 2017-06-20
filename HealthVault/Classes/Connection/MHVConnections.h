@@ -22,5 +22,6 @@
 #import "MHVConnectionFactory.h"
 #import "MHVConnectionFactoryProtocol.h"
 #import "MHVSodaConnectionProtocol.h"
+#import "MHVConfiguration.h"
 
 #endif /* MHVConnections_h */

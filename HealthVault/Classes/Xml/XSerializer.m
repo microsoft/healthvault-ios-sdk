@@ -18,7 +18,7 @@
 
 #import "MHVCommon.h"
 #import "XSerializer.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 @implementation XSerializer
 

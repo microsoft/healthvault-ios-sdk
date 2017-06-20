@@ -19,7 +19,7 @@
 
 #import "MHVHttpService.h"
 #import "MHVHttpServiceResponse.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 #import "MHVBlobSource.h"
 #import "MHVValidator.h"
 #import "MHVHttpTask.h"

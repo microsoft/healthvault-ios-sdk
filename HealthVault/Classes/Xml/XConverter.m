@@ -18,7 +18,7 @@
 
 #import "MHVCommon.h"
 #import "XConverter.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 static int const c_xDateFormatCount = 6;
 static NSString *s_xDateFormats[c_xDateFormatCount] =

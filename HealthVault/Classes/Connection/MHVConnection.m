@@ -40,7 +40,9 @@
 #import "MHVBlobUploadRequest.h"
 #import "MHVHttpServiceResponse.h"
 #import "MHVPersonInfo.h"
-#import "Logger.h"
+#import "MHVLogger.h"
+#import "MHVCryptographer.h"
+#import "MHVClientInfo.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -296,8 +298,11 @@ static NSInteger kInternalServerError = 500;
     // Add the required REST version header
     headers[@"x-ms-version"] = self.configuration.restVersion;
 
-    headers[@"Content-Type"] = @"application/json";
+    // Add sdk version telemetry header
+    headers[@"version"] = [MHVClientInfo telemetryInfo];
     
+    headers[@"Content-Type"] = @"application/json";
+
     [self.httpService sendRequestForURL:restRequest.url
                              httpMethod:restRequest.httpMethod
                                    body:restRequest.body
@@ -437,7 +442,8 @@ static NSInteger kInternalServerError = 500;
                                                                              authSession:[self authSession]
                                                                            configuration:self.configuration
                                                                                    appId:self.applicationId
-                                                                             messageTime:[NSDate date]];
+                                                                             messageTime:[NSDate date]
+                                                                           cryptographer:[MHVCryptographer new]];
     
     return creator.xmlString;
 }

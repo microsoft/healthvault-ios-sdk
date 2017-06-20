@@ -19,7 +19,7 @@
 #import "MHVBrowserAuthBroker.h"
 #import "NSError+MHVError.h"
 #import "MHVValidator.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 @interface MHVBrowserAuthBroker ()
 

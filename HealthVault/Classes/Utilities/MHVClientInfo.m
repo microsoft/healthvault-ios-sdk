@@ -1,6 +1,6 @@
 //
-//  MHVSessionCredentialClient.h
-//  MHVLib
+// MHVClientInfo.m
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -16,19 +16,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
-#import "MHVSessionCredentialClientProtocol.h"
+#import "MHVClientInfo.h"
 
-@protocol MHVConnectionProtocol;
-@class MHVCryptographer;
+static NSString *const kTelemetryVersionFormat = @"%@/%@ %@";
+static NSString *const kTelemetrySdkIdentifier = @"HV-Native-Ios";
 
-NS_ASSUME_NONNULL_BEGIN
+@implementation MHVClientInfo
 
-@interface MHVSessionCredentialClient : NSObject<MHVSessionCredentialClientProtocol>
-
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-                     cryptographer:(MHVCryptographer *)cryptographer;
++ (NSString *)telemetryInfo
+{
+    NSString *sdkVersion = [[[NSBundle bundleForClass:[self class]] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
+    
+    return [NSString stringWithFormat:kTelemetryVersionFormat, kTelemetrySdkIdentifier, sdkVersion, osVersion];
+}
 
 @end
-
-NS_ASSUME_NONNULL_END

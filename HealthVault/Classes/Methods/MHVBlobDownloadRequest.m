@@ -19,7 +19,7 @@
 
 #import "MHVCommon.h"
 #import "MHVBlobDownloadRequest.h"
-#import "Logger.h"
+#import "MHVLogger.h"
 
 @implementation MHVBlobDownloadRequest
 
