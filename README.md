@@ -41,21 +41,18 @@ github "Microsoft/healthvault-ios-sdk"
 
 and then follow the steps described in the [Carthage documentation](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
 
-### Manual Linking
- 
-You can link to the **healthvault-ios-sdk** without using CocoaPods or Carthage, but you will need to resolve dependencies manually by linking these 4 frameworks (in addition to the HealthVault.Framework) in the ‘Build Phases’ tab of the desired target:
+## Setup
 
-* libxml2.2.tbd
-* Security.Framework
-* MobileCoreServices.Framework
-* SystemConfiguration.Framework
-
+### Objective-C
 
 ```objective-C
-//
-// Include HealthVault Library
-//
-#import <HealthVault/HealthVault.h>
+@import HealthVault;
+```
+
+### Swift
+
+```swift
+import HealthVault
 ```
 
 # Contribute
