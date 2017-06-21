@@ -45,7 +45,7 @@ and then follow the steps described in the [Carthage documentation](https://gith
 
 ### Objective-C
 
-```objective-C
+```objectivec
 @import HealthVault;
 ```
 
