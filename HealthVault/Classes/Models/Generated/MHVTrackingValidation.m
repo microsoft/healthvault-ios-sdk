@@ -76,7 +76,7 @@
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
             
-              @"actionPlanTask": [MHVActionPlanTaskV2 class],
+              @"actionPlanTask": [MHVActionPlanTask class],
         }];
     });
     return types;

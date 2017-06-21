@@ -26,10 +26,10 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVRemoteMonitoringClient.h"
-#import "MHVActionPlanTaskInstanceV2.h"
+#import "MHVActionPlanTask.h"
+#import "MHVActionPlanTaskInstance.h"
 #import "MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_.h"
-#import "MHVActionPlanTaskV2.h"
-#import "MHVActionPlanTasksResponseActionPlanTaskInstanceV2_.h"
+#import "MHVActionPlanTasksResponseActionPlanTaskInstance_.h"
 #import "MHVErrorResponse.h"
 #import "MHVTrackingValidation.h"
 
@@ -43,8 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanTask The action plan task to create.
 /// 
-- (void)actionPlanTasksCreateWithActionPlanTask:(MHVActionPlanTaskV2* )actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+- (void)actionPlanTasksCreateWithActionPlanTask:(MHVActionPlanTask* )actionPlanTask
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Delete a task by id
@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 
 - (void)actionPlanTasksGetWithActionPlanTaskStatus:(NSString* _Nullable)actionPlanTaskStatus
     maxPageSize:(NSNumber* _Nullable)maxPageSize
-    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstance_* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Get a task by id
@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param actionPlanTaskId The unique identifer of the task.
 /// 
 - (void)actionPlanTasksGetByIdWithActionPlanTaskId:(NSString* )actionPlanTaskId
-    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Put an update for an action plan task
@@ -81,8 +81,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanTask The updated action plan task.
 /// 
-- (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstanceV2* )actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+- (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstance* )actionPlanTask
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Patch an update for an action plan task
@@ -90,8 +90,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanTask The updated task
 /// 
-- (void)actionPlanTasksUpdateWithActionPlanTask:(MHVActionPlanTaskInstanceV2* )actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+- (void)actionPlanTasksUpdateWithActionPlanTask:(MHVActionPlanTaskInstance* )actionPlanTask
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Validate tracking for an action plan task

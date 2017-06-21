@@ -22,7 +22,7 @@
 
 @interface MHVActionPlansListViewController ()
 
-@property (nonatomic, strong) NSArray<MHVActionPlanInstanceV2 *> *actionPlans;
+@property (nonatomic, strong) NSArray<MHVActionPlanInstance *> *actionPlans;
 @property (nonatomic, strong) MHVConnection *connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -67,7 +67,7 @@
     MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
     _connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     
-    [self.connection.remoteMonitoringClient actionPlansGetWithMaxPageSize:@(10) completion:^(MHVActionPlansResponseActionPlanInstanceV2_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlansGetWithMaxPageSize:@(10) completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
             if (!error)
@@ -105,11 +105,11 @@
     MHVActionPlanTrackingPolicy *policy = [[MHVActionPlanTrackingPolicy alloc] init];
     policy.isAutoTrackable = @(NO);
     
-    MHVActionPlanFrequencyTaskCompletionMetricsV2 *metrics = [[MHVActionPlanFrequencyTaskCompletionMetricsV2 alloc] init];
+    MHVActionPlanFrequencyTaskCompletionMetrics *metrics = [[MHVActionPlanFrequencyTaskCompletionMetrics alloc] init];
     metrics.occurrenceCount = @(1);
     metrics.windowType = @"Daily";
     
-    MHVActionPlanTaskV2 *frequencyTask = [[MHVActionPlanTaskV2 alloc] init];
+    MHVActionPlanTask *frequencyTask = [[MHVActionPlanTask alloc] init];
     NSString *taskName =[NSString stringWithFormat:@"Do a frequent activity (plan %@)", rand];
     frequencyTask.name = taskName;
     frequencyTask.shortDescription = @"Do a frequent activity to get some exercise.";
@@ -123,7 +123,7 @@
     frequencyTask.completionType = @"Frequency";
     frequencyTask.frequencyTaskCompletionMetrics = metrics;
     
-    MHVScheduleV2 *schedule = [[MHVScheduleV2 alloc] init];
+    MHVSchedule *schedule = [[MHVSchedule alloc] init];
     schedule.reminderState = @"Off";
     schedule.scheduledDays = @[@"Saturday", @"Sunday"];
     MHVTime *time = [[MHVTime alloc] init];
@@ -131,7 +131,7 @@
     time.minute = 30;
     schedule.scheduledTime = time;
 
-    MHVActionPlanTaskV2 *scheduledTask = [[MHVActionPlanTaskV2 alloc] init];
+    MHVActionPlanTask *scheduledTask = [[MHVActionPlanTask alloc] init];
     taskName =[NSString stringWithFormat:@"Do a scheduled activity (plan %@)", rand];
     scheduledTask.name = taskName;
     scheduledTask.shortDescription = @"Do a scheduled activity to get some exercise.";
@@ -143,18 +143,18 @@
     scheduledTask.associatedObjectiveIds = [[NSArray alloc] initWithObjects:objective.identifier, nil];
     scheduledTask.trackingPolicy = policy;
     scheduledTask.completionType = @"Scheduled";
-    scheduledTask.schedules = [[NSArray<MHVScheduleV2> alloc] initWithObjects:schedule, nil];
+    scheduledTask.schedules = [[NSArray<MHVSchedule> alloc] initWithObjects:schedule, nil];
 
-    MHVActionPlanV2 *newPlan = [[MHVActionPlanV2 alloc] init];
+    MHVActionPlan *newPlan = [[MHVActionPlan alloc] init];
     newPlan.name = [NSString stringWithFormat:@"My new plan (%@)", rand];
     newPlan.descriptionText = @"A sample activity plan";
     newPlan.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
     newPlan.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
     newPlan.category = @"Activity";
     newPlan.objectives = [[NSArray<MHVObjective> alloc] initWithObjects:objective, nil];
-    newPlan.associatedTasks = [[NSArray<MHVActionPlanTaskV2> alloc] initWithObjects:frequencyTask, scheduledTask, nil];
+    newPlan.associatedTasks = [[NSArray<MHVActionPlanTask> alloc] initWithObjects:frequencyTask, scheduledTask, nil];
     
-    [self.connection.remoteMonitoringClient actionPlansCreateWithActionPlan:newPlan completion:^(MHVActionPlanInstanceV2* _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlansCreateWithActionPlan:newPlan completion:^(MHVActionPlanInstance* _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)

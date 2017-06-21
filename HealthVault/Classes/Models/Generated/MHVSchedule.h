@@ -1,5 +1,5 @@
 //
-// MHVScheduleV2.h
+// MHVSchedule.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -30,17 +30,17 @@
 #import "MHVModelBase.h"
 
 
-@protocol MHVScheduleV2
+@protocol MHVSchedule
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVScheduleV2 : MHVModelBase
+@interface MHVSchedule : MHVModelBase
 
 /* The reminder state of the task [optional]
  */
 @property(strong,nonatomic,nullable) NSString* reminderState;
-/* The days that this will show for the user              Expected values: { 'Unknown', 'Everyday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' } [optional]
+/* The days that this will show for the user  Expected values: { 'Unknown', 'Everyday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' } [optional]
  */
 @property(strong,nonatomic,nullable) NSArray<NSString*>* scheduledDays;
 /* The time at which this task is scheduled [optional]

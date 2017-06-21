@@ -1,5 +1,5 @@
 //
-// MHVActionPlanFrequencyTaskCompletionMetricsV2.m
+// MHVActionPlanTask.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanFrequencyTaskCompletionMetricsV2.h"
+#import "MHVActionPlanTask.h"
 
-@implementation MHVActionPlanFrequencyTaskCompletionMetricsV2
+@implementation MHVActionPlanTask
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"windowType": @"windowType", @"occurrenceCount": @"occurrenceCount" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"shortDescription": @"shortDescription", @"longDescription": @"longDescription", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"taskType": @"taskType", @"trackingPolicy": @"trackingPolicy", @"signupName": @"signupName", @"associatedPlanId": @"associatedPlanId", @"associatedObjectiveIds": @"associatedObjectiveIds", @"completionType": @"completionType", @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics", @"schedules": @"schedules" }];
 }
  */
 
@@ -60,8 +60,19 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"windowType": @"windowType",
-            @"occurrenceCount": @"occurrenceCount"
+            @"name": @"name",
+            @"shortDescription": @"shortDescription",
+            @"longDescription": @"longDescription",
+            @"imageUrl": @"imageUrl",
+            @"thumbnailImageUrl": @"thumbnailImageUrl",
+            @"taskType": @"taskType",
+            @"trackingPolicy": @"trackingPolicy",
+            @"signupName": @"signupName",
+            @"associatedPlanId": @"associatedPlanId",
+            @"associatedObjectiveIds": @"associatedObjectiveIds",
+            @"completionType": @"completionType",
+            @"frequencyTaskCompletionMetrics": @"frequencyTaskCompletionMetrics",
+            @"schedules": @"schedules"
         }];
     });
     return names;
@@ -75,7 +86,13 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-                    }];
+            
+              @"trackingPolicy": [MHVActionPlanTrackingPolicy class],
+
+              @"frequencyTaskCompletionMetrics": [MHVActionPlanFrequencyTaskCompletionMetrics class],
+
+              @"schedules": [MHVSchedule class]
+        }];
     });
     return types;
 }

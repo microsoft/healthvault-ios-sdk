@@ -1,5 +1,5 @@
 //
-// MHVActionPlanInstanceV2.h
+// MHVActionPlan.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,33 +26,18 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVActionPlanTaskInstanceV2.h"
+#import "MHVActionPlanTask.h"
 #import "MHVObjective.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVActionPlanInstanceV2
+@protocol MHVActionPlan
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVActionPlanInstanceV2 : MHVModelBase
+@interface MHVActionPlan : MHVModelBase
 
-/* The ID of the plan instance [optional]
- */
-@property(strong,nonatomic,nullable) NSString* identifier;
-/* The status of the plan [optional]
- */
-@property(strong,nonatomic,nullable) NSString* status;
-/* The ID of the organization that manages this plan. Read-only [optional]
- */
-@property(strong,nonatomic,nullable) NSString* organizationId;
-/* The name of the organization that manages this plan. Read-only [optional]
- */
-@property(strong,nonatomic,nullable) NSString* organizationName;
-/* The Task instances associated with this plan [optional]
- */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskInstanceV2>* associatedTasks;
 /* The name of the plan, localized [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;
@@ -71,6 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 /* The Collection of objectives for the plan [optional]
  */
 @property(strong,nonatomic,nullable) NSArray<MHVObjective>* objectives;
+/* The Tasks associated with this plan [optional]
+ */
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTask>* associatedTasks;
 
 @end
 

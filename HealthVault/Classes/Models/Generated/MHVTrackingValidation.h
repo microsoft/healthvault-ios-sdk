@@ -26,7 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVActionPlanTaskV2.h"
+#import "MHVActionPlanTask.h"
 #import "MHVModelBase.h"
 
 
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Gets or sets the action plan task. [optional]
  */
-@property(strong,nonatomic,nullable) MHVActionPlanTaskV2* actionPlanTask;
+@property(strong,nonatomic,nullable) MHVActionPlanTask* actionPlanTask;
 /* Gets or sets the XML thing document. [optional]
  */
 @property(strong,nonatomic,nullable) NSString* xmlThingDocument;

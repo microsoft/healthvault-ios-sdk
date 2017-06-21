@@ -28,10 +28,10 @@
 #import "MHVRemoteMonitoringClient.h"
 #import "MHVJsonSerializer.h"
 #import "MHVActionPlanTasksApi.h"
-#import "MHVActionPlanTaskInstanceV2.h"
+#import "MHVActionPlanTask.h"
+#import "MHVActionPlanTaskInstance.h"
 #import "MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_.h"
-#import "MHVActionPlanTaskV2.h"
-#import "MHVActionPlanTasksResponseActionPlanTaskInstanceV2_.h"
+#import "MHVActionPlanTasksResponseActionPlanTaskInstance_.h"
 #import "MHVErrorResponse.h"
 #import "MHVTrackingValidation.h"
 
@@ -48,10 +48,10 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTask The action plan task to create. 
 ///
-///  @returns MHVActionPlanTaskInstanceV2*
+///  @returns MHVActionPlanTaskInstance*
 ///
-- (void)actionPlanTasksCreateWithActionPlanTask:(MHVActionPlanTaskV2* _Nonnull)actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion
+- (void)actionPlanTasksCreateWithActionPlanTask:(MHVActionPlanTask* _Nonnull)actionPlanTask
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanTask' is set
     if (actionPlanTask == nil)
@@ -80,7 +80,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanTaskInstanceV2 class]
+                     resultClass:[MHVActionPlanTaskInstance class]
                       completion:completion];
 }
 
@@ -133,11 +133,11 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 ///
 ///  @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
 ///
-///  @returns MHVActionPlanTasksResponseActionPlanTaskInstanceV2_*
+///  @returns MHVActionPlanTasksResponseActionPlanTaskInstance_*
 ///
 - (void)actionPlanTasksGetWithActionPlanTaskStatus:(NSString* _Nullable)actionPlanTaskStatus
     maxPageSize:(NSNumber* _Nullable)maxPageSize
-    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstanceV2_* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstance_* _Nullable output, NSError* _Nullable error))completion
 {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
 
@@ -160,7 +160,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanTasksResponseActionPlanTaskInstanceV2_ class]
+                     resultClass:[MHVActionPlanTasksResponseActionPlanTaskInstance_ class]
                       completion:completion];
 }
 
@@ -169,10 +169,10 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTaskId The unique identifer of the task. 
 ///
-///  @returns MHVActionPlanTaskInstanceV2*
+///  @returns MHVActionPlanTaskInstance*
 ///
 - (void)actionPlanTasksGetByIdWithActionPlanTaskId:(NSString* _Nonnull)actionPlanTaskId
-    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanTaskId' is set
     if (actionPlanTaskId == nil)
@@ -203,7 +203,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanTaskInstanceV2 class]
+                     resultClass:[MHVActionPlanTaskInstance class]
                       completion:completion];
 }
 
@@ -212,10 +212,10 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTask The updated action plan task. 
 ///
-///  @returns MHVActionPlanTaskInstanceV2*
+///  @returns MHVActionPlanTaskInstance*
 ///
-- (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstanceV2* _Nonnull)actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion
+- (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstance* _Nonnull)actionPlanTask
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanTask' is set
     if (actionPlanTask == nil)
@@ -244,7 +244,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanTaskInstanceV2 class]
+                     resultClass:[MHVActionPlanTaskInstance class]
                       completion:completion];
 }
 
@@ -253,10 +253,10 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTask The updated task 
 ///
-///  @returns MHVActionPlanTaskInstanceV2*
+///  @returns MHVActionPlanTaskInstance*
 ///
-- (void)actionPlanTasksUpdateWithActionPlanTask:(MHVActionPlanTaskInstanceV2* _Nonnull)actionPlanTask
-    completion:(void(^_Nonnull)(MHVActionPlanTaskInstanceV2* _Nullable output, NSError* _Nullable error))completion
+- (void)actionPlanTasksUpdateWithActionPlanTask:(MHVActionPlanTaskInstance* _Nonnull)actionPlanTask
+    completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanTask' is set
     if (actionPlanTask == nil)
@@ -285,7 +285,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanTaskInstanceV2 class]
+                     resultClass:[MHVActionPlanTaskInstance class]
                       completion:completion];
 }
 
