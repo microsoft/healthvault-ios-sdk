@@ -30,5 +30,10 @@
     "Security",
     "MobileCoreServices",
     "SystemConfiguration"
-  ]
+  ],
+  "dependencies": {
+    "EncryptedCoreData": [
+      "~> 3.1"
+    ]
+  }
 }

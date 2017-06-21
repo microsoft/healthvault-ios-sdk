@@ -36,4 +36,6 @@ The healthvault-ios-sdk simplifies developing apps that use the Microsoft Health
   #   'healthvault-ios-sdk' => ['healthvault-ios-sdk/Assets/*.png']
   # }
 
+  s.dependency 'EncryptedCoreData', '~> 3.1'
+
 end
