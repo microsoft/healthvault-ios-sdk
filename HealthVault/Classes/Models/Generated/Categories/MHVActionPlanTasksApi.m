@@ -129,7 +129,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 ///
 /// Get a collection of task definitions
 /// 
-///  @param actionPlanTaskStatus  (optional)
+///  @param actionPlanTaskStatus An optional status used to filter the results. (optional)
 ///
 ///  @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
 ///

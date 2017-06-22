@@ -2,8 +2,8 @@
 xcuserdata
 xcuserdata/
 *.xcuserstate
-healthvault-ios-sdk/Tools/codegen/output
-healthvault-ios-sdk/Tools/codegen/KHV*
+HealthVault/Tools/codegen/output
+HealthVault/Tools/codegen/KHV*
 
 Samples/Demos/Health2.0/HelloHealthVault/HelloHealthVault/Code.txt
 

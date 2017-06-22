@@ -44,18 +44,18 @@ NS_ASSUME_NONNULL_BEGIN
 /* The description of the plan, localized [optional]
  */
 @property(strong,nonatomic,nullable) NSString* descriptionText;
-/* An HTTPS URL to an image for the plan. Suggested resolution is 212x212 with a 25px margin in the image. [optional]
+/* An HTTPS URL to an image for the plan. Suggested resolution is 212x212 with a 25px margin in the image. 
  */
-@property(strong,nonatomic,nullable) NSString* imageUrl;
-/* An HTTPS URL to a thumbnail image for the plan. Suggested resolution is 212x212 with a 25px margin in the image. [optional]
+@property(strong,nonatomic) NSString* imageUrl;
+/* An HTTPS URL to a thumbnail image for the plan. Suggested resolution is 212x212 with a 25px margin in the image. 
  */
-@property(strong,nonatomic,nullable) NSString* thumbnailImageUrl;
-/* The category of the plan [optional]
+@property(strong,nonatomic) NSString* thumbnailImageUrl;
+/* The category of the plan 
  */
-@property(strong,nonatomic,nullable) NSString* category;
-/* The Collection of objectives for the plan [optional]
+@property(strong,nonatomic) NSString* category;
+/* The Collection of objectives for the plan 
  */
-@property(strong,nonatomic,nullable) NSArray<MHVObjective>* objectives;
+@property(strong,nonatomic) NSArray<MHVObjective>* objectives;
 /* The Tasks associated with this plan [optional]
  */
 @property(strong,nonatomic,nullable) NSArray<MHVActionPlanTask>* associatedTasks;
