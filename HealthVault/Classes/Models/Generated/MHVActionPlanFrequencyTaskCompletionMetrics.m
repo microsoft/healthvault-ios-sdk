@@ -1,5 +1,5 @@
 //
-// MHVActionPlansResponseActionPlanInstanceV2_.m
+// MHVActionPlanFrequencyTaskCompletionMetrics.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlansResponseActionPlanInstanceV2_.h"
+#import "MHVActionPlanFrequencyTaskCompletionMetrics.h"
 
-@implementation MHVActionPlansResponseActionPlanInstanceV2_
+@implementation MHVActionPlanFrequencyTaskCompletionMetrics
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"plans": @"plans", @"nextLink": @"nextLink" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"windowType": @"windowType", @"occurrenceCount": @"occurrenceCount" }];
 }
  */
 
@@ -60,8 +60,8 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"plans": @"plans",
-            @"nextLink": @"nextLink"
+            @"windowType": @"windowType",
+            @"occurrenceCount": @"occurrenceCount"
         }];
     });
     return names;
@@ -75,9 +75,7 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"plans": [MHVActionPlanInstanceV2 class],
-        }];
+                    }];
     });
     return types;
 }

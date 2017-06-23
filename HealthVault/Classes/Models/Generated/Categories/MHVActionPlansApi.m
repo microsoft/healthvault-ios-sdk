@@ -28,10 +28,10 @@
 #import "MHVRemoteMonitoringClient.h"
 #import "MHVJsonSerializer.h"
 #import "MHVActionPlansApi.h"
+#import "MHVActionPlan.h"
 #import "MHVActionPlanAdherenceSummary.h"
-#import "MHVActionPlanInstanceV2.h"
-#import "MHVActionPlanV2.h"
-#import "MHVActionPlansResponseActionPlanInstanceV2_.h"
+#import "MHVActionPlanInstance.h"
+#import "MHVActionPlansResponseActionPlanInstance_.h"
 #import "MHVErrorResponse.h"
 
 
@@ -108,10 +108,10 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlan The instance of the plan to create. 
 ///
-///  @returns MHVActionPlanInstanceV2*
+///  @returns MHVActionPlanInstance*
 ///
-- (void)actionPlansCreateWithActionPlan:(MHVActionPlanV2* _Nonnull)actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion
+- (void)actionPlansCreateWithActionPlan:(MHVActionPlan* _Nonnull)actionPlan
+    completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlan' is set
     if (actionPlan == nil)
@@ -140,7 +140,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanInstanceV2 class]
+                     resultClass:[MHVActionPlanInstance class]
                       completion:completion];
 }
 
@@ -191,10 +191,10 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// 
 ///  @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
 ///
-///  @returns MHVActionPlansResponseActionPlanInstanceV2_*
+///  @returns MHVActionPlansResponseActionPlanInstance_*
 ///
 - (void)actionPlansGetWithMaxPageSize:(NSNumber* _Nullable)maxPageSize
-    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstanceV2_* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstance_* _Nullable output, NSError* _Nullable error))completion
 {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlans"];
 
@@ -213,7 +213,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlansResponseActionPlanInstanceV2_ class]
+                     resultClass:[MHVActionPlansResponseActionPlanInstance_ class]
                       completion:completion];
 }
 
@@ -317,10 +317,10 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanId The action plan to update. 
 ///
-///  @returns MHVActionPlanInstanceV2*
+///  @returns MHVActionPlanInstance*
 ///
 - (void)actionPlansGetByIdWithActionPlanId:(NSString* _Nonnull)actionPlanId
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlanId' is set
     if (actionPlanId == nil)
@@ -351,7 +351,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanInstanceV2 class]
+                     resultClass:[MHVActionPlanInstance class]
                       completion:completion];
 }
 
@@ -360,10 +360,10 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlan The instance of the plan to update. The entire plan will be replaced with this version. 
 ///
-///  @returns MHVActionPlanInstanceV2*
+///  @returns MHVActionPlanInstance*
 ///
-- (void)actionPlansReplaceWithActionPlan:(MHVActionPlanInstanceV2* _Nonnull)actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion
+- (void)actionPlansReplaceWithActionPlan:(MHVActionPlanInstance* _Nonnull)actionPlan
+    completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlan' is set
     if (actionPlan == nil)
@@ -392,7 +392,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanInstanceV2 class]
+                     resultClass:[MHVActionPlanInstance class]
                       completion:completion];
 }
 
@@ -401,10 +401,10 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlan The instance of the plan to update. Only the fields present in the passed in model will be updated. All other fields and colelctions              will be left, as is, unless invalid. 
 ///
-///  @returns MHVActionPlanInstanceV2*
+///  @returns MHVActionPlanInstance*
 ///
-- (void)actionPlansUpdateWithActionPlan:(MHVActionPlanInstanceV2* _Nonnull)actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion
+- (void)actionPlansUpdateWithActionPlan:(MHVActionPlanInstance* _Nonnull)actionPlan
+    completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'actionPlan' is set
     if (actionPlan == nil)
@@ -433,7 +433,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[MHVActionPlanInstanceV2 class]
+                     resultClass:[MHVActionPlanInstance class]
                       completion:completion];
 }
 

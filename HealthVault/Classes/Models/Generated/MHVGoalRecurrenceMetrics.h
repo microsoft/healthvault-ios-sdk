@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* Specifies the recurrence window of the goal [optional]
  */
 @property(strong,nonatomic,nullable) NSString* windowType;
-/* Specifies the number of times the goal's target is intended to be achieved in given window              For example, the goal \"walk 5000 steps, 4 times per week\" would be represented as: a window of a \"week\", an occurrence count of 4, and a goal target of 5000. [optional]
+/* Specifies the number of times the goal's target is intended to be achieved in given window  For example, the goal \"walk 5000 steps, 4 times per week\" would be represented as: a window of a \"week\", an occurrence count of 4, and a goal target of 5000. [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* occurrenceCount;
 

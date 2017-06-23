@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* The unique identifier of a goal instance. [optional]
  */
 @property(strong,nonatomic,nullable) NSString* identifier;
-/* The name of the goal.              For example, Daily walk goal [optional]
+/* The name of the goal.  For example, Daily walk goal [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;
 /* The description of the goal. [optional]
@@ -50,16 +50,16 @@ NS_ASSUME_NONNULL_BEGIN
 /* The start date of the goal in Universal Time Zone(UTC). [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* startDate;
-/* The end date of the goal in Universal Time Zone(UTC).               If the end date is in the future, this is the target date. [optional]
+/* The end date of the goal in Universal Time Zone(UTC).   If the end date is in the future, this is the target date. [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* endDate;
 /* Specifies the type of data related to this goal. [optional]
  */
 @property(strong,nonatomic,nullable) NSString* goalType;
-/* The goal recurrence metrics.              For example, A goal can be defined on a weekly interval, meaning the target is intended to be achieved every week. Walking 50000 steps in a week. [optional]
+/* The goal recurrence metrics.  For example, A goal can be defined on a weekly interval, meaning the target is intended to be achieved every week. Walking 50000 steps in a week. [optional]
  */
 @property(strong,nonatomic,nullable) MHVGoalRecurrenceMetrics* recurrenceMetrics;
-/* The primary range of achievement for the goal.               For example, the ideal weight or daily steps target. [optional]
+/* The primary range of achievement for the goal.   For example, the ideal weight or daily steps target. [optional]
  */
 @property(strong,nonatomic,nullable) MHVGoalRange* range;
 /* Other ranges of achievement for the goal. [optional]

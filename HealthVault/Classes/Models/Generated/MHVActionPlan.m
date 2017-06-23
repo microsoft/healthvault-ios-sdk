@@ -1,5 +1,5 @@
 //
-// MHVActionPlanTasksResponseActionPlanTaskInstanceV2_.m
+// MHVActionPlan.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanTasksResponseActionPlanTaskInstanceV2_.h"
+#import "MHVActionPlan.h"
 
-@implementation MHVActionPlanTasksResponseActionPlanTaskInstanceV2_
+@implementation MHVActionPlan
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"tasks": @"tasks", @"nextLink": @"nextLink" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"descriptionText": @"description", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"category": @"category", @"objectives": @"objectives", @"associatedTasks": @"associatedTasks" }];
 }
  */
 
@@ -60,8 +60,13 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"tasks": @"tasks",
-            @"nextLink": @"nextLink"
+            @"name": @"name",
+            @"descriptionText": @"description",
+            @"imageUrl": @"imageUrl",
+            @"thumbnailImageUrl": @"thumbnailImageUrl",
+            @"category": @"category",
+            @"objectives": @"objectives",
+            @"associatedTasks": @"associatedTasks"
         }];
     });
     return names;
@@ -76,7 +81,9 @@
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
             
-              @"tasks": [MHVActionPlanTaskInstanceV2 class],
+              @"objectives": [MHVObjective class],
+
+              @"associatedTasks": [MHVActionPlanTask class]
         }];
     });
     return types;

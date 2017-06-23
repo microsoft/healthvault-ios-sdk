@@ -1,5 +1,5 @@
 //
-// MHVActionPlanFrequencyTaskCompletionMetricsV2.h
+// MHVActionPlanTasksResponseActionPlanTaskInstance_.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,22 +26,23 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MHVActionPlanTaskInstance.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVActionPlanFrequencyTaskCompletionMetricsV2
+@protocol MHVActionPlanTasksResponseActionPlanTaskInstance_
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVActionPlanFrequencyTaskCompletionMetricsV2 : MHVModelBase
+@interface MHVActionPlanTasksResponseActionPlanTaskInstance_ : MHVModelBase
 
-/* The window in which the occurrences must be completed [optional]
+/* The collection of tasks [optional]
  */
-@property(strong,nonatomic,nullable) NSString* windowType;
-/* The number of times the Task has to be completed [optional]
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskInstance>* tasks;
+/* The URI for the next page of data [optional]
  */
-@property(strong,nonatomic,nullable) NSNumber* occurrenceCount;
+@property(strong,nonatomic,nullable) NSString* nextLink;
 
 @end
 

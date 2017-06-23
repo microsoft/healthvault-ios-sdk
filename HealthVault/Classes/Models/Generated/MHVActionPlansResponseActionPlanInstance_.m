@@ -1,5 +1,5 @@
 //
-// MHVActionPlanInstanceV2.m
+// MHVActionPlansResponseActionPlanInstance_.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanInstanceV2.h"
+#import "MHVActionPlansResponseActionPlanInstance_.h"
 
-@implementation MHVActionPlanInstanceV2
+@implementation MHVActionPlansResponseActionPlanInstance_
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"identifier": @"id", @"status": @"status", @"organizationId": @"organizationId", @"organizationName": @"organizationName", @"associatedTasks": @"associatedTasks", @"name": @"name", @"descriptionText": @"description", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"category": @"category", @"objectives": @"objectives" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"plans": @"plans", @"nextLink": @"nextLink" }];
 }
  */
 
@@ -60,17 +60,8 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"identifier": @"id",
-            @"status": @"status",
-            @"organizationId": @"organizationId",
-            @"organizationName": @"organizationName",
-            @"associatedTasks": @"associatedTasks",
-            @"name": @"name",
-            @"descriptionText": @"description",
-            @"imageUrl": @"imageUrl",
-            @"thumbnailImageUrl": @"thumbnailImageUrl",
-            @"category": @"category",
-            @"objectives": @"objectives"
+            @"plans": @"plans",
+            @"nextLink": @"nextLink"
         }];
     });
     return names;
@@ -85,9 +76,7 @@
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
             
-              @"associatedTasks": [MHVActionPlanTaskInstanceV2 class],
-
-              @"objectives": [MHVObjective class]
+              @"plans": [MHVActionPlanInstance class],
         }];
     });
     return types;

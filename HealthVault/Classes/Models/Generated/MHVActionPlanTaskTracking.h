@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* Gets or sets the task tracking type [optional]
  */
 @property(strong,nonatomic,nullable) NSString* trackingType;
-/* Gets or sets the timezone offset of the task tracking,               if a task is local time based, it should be set as null [optional]
+/* Gets or sets the timezone offset of the task tracking,   if a task is local time based, it should be set as null [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* timeZoneOffset;
 /* Gets or sets the task tracking time [optional]
@@ -55,10 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
 /* Gets or sets the task tracking status [optional]
  */
 @property(strong,nonatomic,nullable) NSString* trackingStatus;
-/* Gets or sets the start time of the occurrence window,              it is null for Completion and OutOfWindow tracking [optional]
+/* Gets or sets the start time of the occurrence window,  it is null for Completion and OutOfWindow tracking [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* occurrenceStart;
-/* Gets or sets the end time of the occurrence window,              it is null for Completion and OutOfWindow tracking [optional]
+/* Gets or sets the end time of the occurrence window,  it is null for Completion and OutOfWindow tracking [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* occurrenceEnd;
 /* Gets or sets the start time of the completion window [optional]

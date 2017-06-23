@@ -42,10 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 /* The description of the range. Allows more detailed information about the range. [optional]
  */
 @property(strong,nonatomic,nullable) NSString* descriptionText;
-/* The minimum value for the range.              For ranges greater than a specified value with no maximum, specify a minimum but no maximum. [optional]
+/* The minimum value for the range.  For ranges greater than a specified value with no maximum, specify a minimum but no maximum. [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* minimum;
-/* The maximum value for the range.              For ranges less than a specified value with no minimum, specify a maximum but no minimum. [optional]
+/* The maximum value for the range.  For ranges less than a specified value with no minimum, specify a maximum but no minimum. [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* maximum;
 /* The units of the range. [optional]

@@ -1,5 +1,5 @@
 //
-// MHVActionPlanV2.m
+// MHVSchedule.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanV2.h"
+#import "MHVSchedule.h"
 
-@implementation MHVActionPlanV2
+@implementation MHVSchedule
 
 + (BOOL)shouldValidateProperties
 {
@@ -49,7 +49,7 @@
  * This method is used by `JSONModel`.
 
 + (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"name": @"name", @"descriptionText": @"description", @"imageUrl": @"imageUrl", @"thumbnailImageUrl": @"thumbnailImageUrl", @"category": @"category", @"objectives": @"objectives", @"associatedTasks": @"associatedTasks" }];
+  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"reminderState": @"reminderState", @"scheduledDays": @"scheduledDays", @"scheduledTime": @"scheduledTime" }];
 }
  */
 
@@ -60,13 +60,9 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"name": @"name",
-            @"descriptionText": @"description",
-            @"imageUrl": @"imageUrl",
-            @"thumbnailImageUrl": @"thumbnailImageUrl",
-            @"category": @"category",
-            @"objectives": @"objectives",
-            @"associatedTasks": @"associatedTasks"
+            @"reminderState": @"reminderState",
+            @"scheduledDays": @"scheduledDays",
+            @"scheduledTime": @"scheduledTime"
         }];
     });
     return names;
@@ -81,9 +77,7 @@
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
             
-              @"objectives": [MHVObjective class],
-
-              @"associatedTasks": [MHVActionPlanTaskV2 class]
+              @"scheduledTime": [MHVTime class]
         }];
     });
     return types;
