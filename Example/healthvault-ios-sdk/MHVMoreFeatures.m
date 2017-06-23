@@ -201,6 +201,36 @@
     }];
 }
 
+- (void)getRecordOperations
+{
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    [connection.thingClient getRecordOperations:1
+                                          recordId:connection.personInfo.selectedRecordID
+                                        completion:^(MHVGetRecordOperationsResult * _Nullable result, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             [MHVUIAlert showInformationalMessage:error.localizedDescription];
+         }
+         else
+         {
+             NSMutableString *string = [NSMutableString new];
+             [string appendFormat:@"%li Operations:\n", result.operations.count];
+
+             MHVRecordOperation *operation = result.operations.lastObject;
+             [string appendString:@"Last\n"];
+             [string appendFormat:@"Operation: %@\n", operation.operation];
+             [string appendFormat:@"ID: %@...\n", [operation.thingId substringToIndex:7]];
+             
+             MHVThing *thing = [[MHVThing alloc] initWithType:operation.typeId];
+             [string appendFormat:@"Type: %@\n", NSStringFromClass([thing.data.typed class])];
+             
+             [MHVUIAlert showInformationalMessage:string];
+         }
+     }];
+}
+
 - (void)authorizeAdditionalRecords
 {
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];

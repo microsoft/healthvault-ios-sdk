@@ -841,6 +841,41 @@
     }];
 }
 
+- (void)getRecordOperations:(NSUInteger)sequenceNumber
+                   recordId:(NSUUID *)recordId
+                 completion:(void (^)(MHVGetRecordOperationsResult *_Nullable result, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(recordId);
+    MHVASSERT_PARAMETER(completion);
+    
+    if (!completion || !recordId)
+    {
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
+        return;
+    }
+
+    MHVMethod *method = [MHVMethod getRecordOperations];
+    method.recordId = recordId;
+    method.parameters = [NSString stringWithFormat:@"<info><record-operation-sequence-number>%li</record-operation-sequence-number></info>", sequenceNumber];
+    
+    [self.connection executeHttpServiceOperation:method
+                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             completion(nil, error);
+             return;
+         }
+         
+         XReader *reader = [[XReader alloc] initFromString:response.infoXml];
+         
+         MHVGetRecordOperationsResult *result = (MHVGetRecordOperationsResult *)[NSObject newFromReader:reader
+                                                                                               withRoot:@"info"
+                                                                                                asClass:[MHVGetRecordOperationsResult class]];
+         completion(result, nil);
+     }];
+}
+
 #pragma mark - Internal methods
 
 - (MHVThingQueryResults *)thingQueryResultsFromResponse:(MHVServiceResponse *)response

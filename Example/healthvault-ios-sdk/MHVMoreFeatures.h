@@ -57,6 +57,11 @@
 - (void)getAuthorizedPeople;
 
 //
+// Get the record operations
+//
+- (void)getRecordOperations;
+
+//
 // Authorize Additional Records;
 //
 - (void)authorizeAdditionalRecords;

@@ -368,6 +368,11 @@
          [weakFeatures getAuthorizedPeople];
      }];
 
+    [self.actions addFeature:@"GetRecordOperations:1" andAction:^
+     {
+         [weakFeatures getRecordOperations];
+     }];
+    
     [self.actions addFeature:@"Authorize records" andAction:^
      {
          [weakFeatures authorizeAdditionalRecords];

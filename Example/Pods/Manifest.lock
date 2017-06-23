@@ -11,8 +11,10 @@ PODS:
     - SQLCipher/common
 
 DEPENDENCIES:
+  - EncryptedCoreData
   - HealthVault (from `../`)
   - Kiwi
+  - SQLCipher
 
 EXTERNAL SOURCES:
   HealthVault:
@@ -24,6 +26,6 @@ SPEC CHECKSUMS:
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   SQLCipher: 43d12c0eb9c57fb438749618fc3ce0065509a559
 
-PODFILE CHECKSUM: 1053c938225ba455019c25c66b81f8226476ad80
+PODFILE CHECKSUM: d53aa670fc56b0d750eeaf66c3f94ce397513ec2
 
 COCOAPODS: 1.2.1

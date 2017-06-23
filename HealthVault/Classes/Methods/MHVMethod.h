@@ -347,6 +347,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (MHVMethod *)updateExternalId;
 
+/**
+ Get record operations
+ 
+ @return An instance of MHVMethod.
+ */
++ (MHVMethod *)getRecordOperations;
+
 @end
 
 NS_ASSUME_NONNULL_END

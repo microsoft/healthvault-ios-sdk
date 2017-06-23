@@ -266,4 +266,9 @@
     return [[MHVMethod alloc] initWithName:@"UpdateExternalId" version:1 isAnonymous:NO];
 }
 
++ (MHVMethod *)getRecordOperations
+{
+    return [[MHVMethod alloc] initWithName:@"GetRecordOperations" version:1 isAnonymous:NO];
+}
+
 @end
