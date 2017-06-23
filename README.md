@@ -6,92 +6,57 @@
 [![Platform](https://img.shields.io/cocoapods/p/healthvault-ios-sdk.svg?style=flat)](http://cocoapods.org/pods/healthvault-ios-sdk)
 
 # About
-**healthvault-ios-sdk** is an iOS library you can use to build applications that leverage the Microsoft HealthVault platform. **healthvault-ios-sdk** is actively used by the [Microsoft HealthVault for iPhone app](https://itunes.apple.com/us/app/microsoft-healthvault/id546835834?mt=8).
 
-**healthvault-ios-sdk** introduces a rich new HealthVault iOS client programming model. It includes built in serialization of most HealthVault data types, and built in support for HealthVault methods.
+**healthvault-ios-sdk** is an iOS framework you can use to build applications that leverage the Microsoft HealthVault platform. **healthvault-ios-sdk** is actively used by the [Microsoft HealthVault for iPhone app](https://itunes.apple.com/us/app/microsoft-healthvault/id546835834?mt=8).
 
-HealthVault data types are automatically serialized/deserialized from their native XML into Objective-C objects. These objects include programming model to assist with data manipulation. 
+HealthVault data types are automatically serialized/deserialized into Objective-C objects. These objects include programming model to assist with data manipulation. 
 
 ## Example
 
 The example project demonstrates how to:
 
-* Authenticate with HealthVault
+* Authenticate with HealthVault.
 * View, create, update and delete most core HealthVault types, including blood pressure, medication, conditions, procedures, immunizations, blood glucose, exercise and diet.
 * manage files - view, download and upload files in HealthVault.
 * de-authorize your application from HealthVault.
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
-
 ## Installation
 
-healthvault-ios-sdk is available through [CocoaPods](http://cocoapods.org). To install
+### Using CocoaPods
+
+The healthvault-ios-sdk is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
 pod "healthvault-ios-sdk"
 ```
 
-## Using MHVLib with your Project
+### Using Carthage
 
-You should link MHVLib as a static library into your project.
- 
-1. Make sure you are using Xcode workspaces. If not, create a new workspace and add your project to it.
-2. Add MHVLib.xcodeproj to your Workspace
+Add this line to your Cartfile:
 
-
-## iOS Framework Dependencies
-* libxml2.2.dylib OR libxml2.2.tbd (depending on your XCODE version)   [This is part of the core iOS SDK]
-* Security.Framework
-* MobileCoreServices.Framework
-* SystemConfiguration.Framework
-
-
-## Header Files
-
-```objective-C
-//
-// Include HealthVault Library
-//
-#import "MHVLib.h"
+```ruby
+github "Microsoft/healthvault-ios-sdk"
 ```
 
-## Update Build Targets
+and then follow the steps described in the [Carthage documentation](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
 
-Make the following changes to your project Target: 
+## Setup
 
-### Build Phases
-* Link Binary With Libraries
-* Add libMHVLib.a  [This is the HealthVault Library. You should see it listed under "Workspace"]
-* Add libxml2.2.dylib OR libxml2.2.tbd (depending on your XCODE version)    [This is part of the core iOS SDK]
-* Security.Framework
-* SystemConfiguration.Framework
-* MobileCoreServices.Framework
+### Objective-C
 
-### Build Settings
+```objectivec
+@import HealthVault;
+```
 
-* Architectures
-  * Set your Architectures to Standard architectures (armv7, arm64) - $(ARCHS_STANDARD)
-  * Build Active Architectures Only — NO
-  * Set Code Generation -> No Common Blocks to NO
+### Swift
 
-#### Linking
-Add the following flags under the "Other Linker Flags" section:
-  * ObjC
-
-#### Search Paths
-Add the following flags within the "Header Search Paths" section:
-  * $(SDK_DIR)/usr/include/libxml2/**
-  * User Header Search Paths: 
-    * Add Relative Path to the MHVLib directory. E.g. HealthVault samples use the path:
-      * ../../MHVLib/**       [Note: Xcode may add the ** for you by default - i.e. search all subdirectories of the path]
-      * OR: ../HVMobile_VNext/**
-
+```swift
+import HealthVault
+```
 
 # Contribute
-Contributions to **healthvault-ios-sdk** are welcome.  Here is how you can contribute:
+Contributions to the **healthvault-ios-sdk** are welcome.  Here is how you can contribute:
 
 * [Submit bugs](https://github.com/Microsoft/HVMobile_VNext/issues) and help us verify fixes
 * [Submit pull requests](https://github.com/Microsoft/HVMobile_VNext/pulls) for bug fixes and features

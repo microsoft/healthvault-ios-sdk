@@ -1,7 +1,3 @@
-#
-# Be sure to run `pod lib lint healthvault-ios-sdk.podspec' to ensure this is a
-# valid spec before submitting.
-#
 # Any lines starting with a # are optional, but their use is encouraged
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
@@ -9,11 +5,11 @@
 Pod::Spec.new do |s|
   s.name             = 'HealthVault'
   s.version          = '3.0.2-preview'
-  s.summary          = 'An iOS library you can use to build applications that leverage the Microsoft HealthVault platform'
+  s.summary          = 'An iOS framework you can use to build applications that leverage the Microsoft HealthVault platform'
 
 
   s.description      = <<-DESC
-The healthvault-ios-sdk simplifies developing apps that use the Microsoft HealthVault platform. It handles authenticating users, managing credentials, and serializing data types.
+The healthvault-ios-sdk framework simplifies developing apps that use the Microsoft HealthVault platform. It handles authenticating users, managing credentials, serializing data types and much more.
                        DESC
 
   s.homepage         = 'https://github.com/Microsoft/healthvault-ios-sdk'
@@ -28,13 +24,7 @@ The healthvault-ios-sdk simplifies developing apps that use the Microsoft Health
   s.requires_arc     = true
   s.libraries        = "xml2"
   s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(inherited) $(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2' }
-  #s.public_header_files = 'HealthVault/Classes/Headers/Public/*.h'
-
-    s.frameworks = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
-
-  # s.resource_bundles = {
-  #   'healthvault-ios-sdk' => ['healthvault-ios-sdk/Assets/*.png']
-  # }
+  s.frameworks       = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
 
   s.dependency 'EncryptedCoreData', '~> 3.1'
 
