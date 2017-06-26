@@ -92,5 +92,77 @@
     });
     return types;
 }
+@end
+@implementation MHVActionPlanInstanceStatusEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Archived": @"Archived",
+        @"Recommended": @"Recommended",
+        @"InProgress": @"InProgress",
+        @"Completed": @"Completed",
+        @"Template": @"Template",
+    };
+}
+
++(MHVActionPlanInstanceStatusEnum *) Unknown
+{
+    return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanInstanceStatusEnum *) Archived
+{
+    return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Archived"];
+}
++(MHVActionPlanInstanceStatusEnum *) Recommended
+{
+    return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Recommended"];
+}
++(MHVActionPlanInstanceStatusEnum *) InProgress
+{
+    return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"InProgress"];
+}
++(MHVActionPlanInstanceStatusEnum *) Completed
+{
+    return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Completed"];
+}
++(MHVActionPlanInstanceStatusEnum *) Template
+{
+    return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Template"];
+}
+@end
+@implementation MHVActionPlanInstanceCategoryEnum
+
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Health": @"Health",
+        @"Sleep": @"Sleep",
+        @"Activity": @"Activity",
+        @"Stress": @"Stress",
+    };
+}
+
++(MHVActionPlanInstanceCategoryEnum *) Unknown
+{
+    return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanInstanceCategoryEnum *) Health
+{
+    return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Health"];
+}
++(MHVActionPlanInstanceCategoryEnum *) Sleep
+{
+    return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Sleep"];
+}
++(MHVActionPlanInstanceCategoryEnum *) Activity
+{
+    return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Activity"];
+}
++(MHVActionPlanInstanceCategoryEnum *) Stress
+{
+    return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Stress"];
+}
 @end

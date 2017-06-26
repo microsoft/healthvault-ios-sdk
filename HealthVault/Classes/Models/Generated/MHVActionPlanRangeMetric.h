@@ -27,12 +27,18 @@
 #import <Foundation/Foundation.h>
 
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanRangeMetric
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVActionPlanRangeMetricValueTypeEnum : MHVEnum
++(MHVActionPlanRangeMetricValueTypeEnum *) Unknown;
++(MHVActionPlanRangeMetricValueTypeEnum *) MinutesToMidnight;
+@end
 
 @interface MHVActionPlanRangeMetric : MHVModelBase
 
@@ -41,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* propertyName;
 /* Gets or sets the Value Type of the Metric [optional]
  */
-@property(strong,nonatomic,nullable) NSString* valueType;
+@property(strong,nonatomic,nullable) MHVActionPlanRangeMetricValueTypeEnum* valueType;
 /* Gets or sets the Max value of the target [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* maxTarget;

@@ -92,5 +92,43 @@
     });
     return types;
 }
+@end
+@implementation MHVGoalGoalTypeEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Steps": @"Steps",
+        @"CaloriesBurned": @"CaloriesBurned",
+        @"Weight": @"Weight",
+        @"BloodPressureSystolic": @"BloodPressureSystolic",
+        @"BloodPressureDiastolic": @"BloodPressureDiastolic",
+    };
+}
+
++(MHVGoalGoalTypeEnum *) Unknown
+{
+    return [[MHVGoalGoalTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVGoalGoalTypeEnum *) Steps
+{
+    return [[MHVGoalGoalTypeEnum alloc] initWithString:@"Steps"];
+}
++(MHVGoalGoalTypeEnum *) CaloriesBurned
+{
+    return [[MHVGoalGoalTypeEnum alloc] initWithString:@"CaloriesBurned"];
+}
++(MHVGoalGoalTypeEnum *) Weight
+{
+    return [[MHVGoalGoalTypeEnum alloc] initWithString:@"Weight"];
+}
++(MHVGoalGoalTypeEnum *) BloodPressureSystolic
+{
+    return [[MHVGoalGoalTypeEnum alloc] initWithString:@"BloodPressureSystolic"];
+}
++(MHVGoalGoalTypeEnum *) BloodPressureDiastolic
+{
+    return [[MHVGoalGoalTypeEnum alloc] initWithString:@"BloodPressureDiastolic"];
+}
 @end

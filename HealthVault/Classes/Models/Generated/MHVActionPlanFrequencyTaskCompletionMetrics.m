@@ -79,5 +79,33 @@
     });
     return types;
 }
+@end
+@implementation MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"None": @"None",
+        @"Daily": @"Daily",
+        @"Weekly": @"Weekly",
+    };
+}
+
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *) Unknown
+{
+    return [[MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *) None
+{
+    return [[MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum alloc] initWithString:@"None"];
+}
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *) Daily
+{
+    return [[MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum alloc] initWithString:@"Daily"];
+}
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *) Weekly
+{
+    return [[MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum alloc] initWithString:@"Weekly"];
+}
 @end

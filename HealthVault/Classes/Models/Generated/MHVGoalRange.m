@@ -82,5 +82,38 @@
     });
     return types;
 }
+@end
+@implementation MHVGoalRangeUnitsEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Kilograms": @"Kilograms",
+        @"Count": @"Count",
+        @"Calories": @"Calories",
+        @"MillimetersOfMercury": @"MillimetersOfMercury",
+    };
+}
+
++(MHVGoalRangeUnitsEnum *) Unknown
+{
+    return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"Unknown"];
+}
++(MHVGoalRangeUnitsEnum *) Kilograms
+{
+    return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"Kilograms"];
+}
++(MHVGoalRangeUnitsEnum *) Count
+{
+    return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"Count"];
+}
++(MHVGoalRangeUnitsEnum *) Calories
+{
+    return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"Calories"];
+}
++(MHVGoalRangeUnitsEnum *) MillimetersOfMercury
+{
+    return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"MillimetersOfMercury"];
+}
 @end

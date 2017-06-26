@@ -28,12 +28,20 @@
 
 #import "MHVWeeklyAdherenceSummary.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanTaskAdherenceSummary
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVActionPlanTaskAdherenceSummaryWindowTypeEnum : MHVEnum
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Unknown;
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) None;
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Daily;
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Weekly;
+@end
 
 @interface MHVActionPlanTaskAdherenceSummary : MHVModelBase
 
@@ -45,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* name;
 /* The recurrence type of the schedule window [optional]
  */
-@property(strong,nonatomic,nullable) NSString* windowType;
+@property(strong,nonatomic,nullable) MHVActionPlanTaskAdherenceSummaryWindowTypeEnum* windowType;
 /* The starting date of the task or the start date requested, whichever is later. [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* startDate;

@@ -90,7 +90,55 @@
     });
     return types;
 }
-
 {{/model}}
 @end
+{{#model}}
+{{#vars}}
+{{#isEnum}}
+{{#isContainer}}
+{{#items}}
+
+@implementation {{classname}}{{enumName}}
+
+-(NSDictionary *)enumMap
+{
+    return @{
+        {{#_enum}}
+        @"{{.}}": @"{{.}}",
+        {{/_enum}}
+    };
+}
+
+{{#_enum}}
++({{classname}}{{enumName}} *) {{.}}
+{
+    return [[{{classname}}{{enumName}} alloc] initWithString:@"{{.}}"];
+}
+{{/_enum}}
+@end
+{{/items}}
+{{/isContainer}}
+{{^isContainer}}
+@implementation {{classname}}{{enumName}}
+
+-(NSDictionary *)enumMap
+{
+    return @{
+        {{#_enum}}
+        @"{{.}}": @"{{.}}",
+        {{/_enum}}
+    };
+}
+
+{{#_enum}}
++({{classname}}{{enumName}} *) {{.}}
+{
+    return [[{{classname}}{{enumName}} alloc] initWithString:@"{{.}}"];
+}
+{{/_enum}}
+@end
+{{/isContainer}}
+{{/isEnum}}
+{{/vars}}
+{{/model}}
 {{/models}}

@@ -57,8 +57,8 @@
 {
     self.plan.name = self.nameValue.text;
     self.plan.descriptionText = self.descriptionValue.text;
-    self.plan.category = self.categoryValue.text;
-    self.plan.status = self.statusValue.text;
+    self.plan.category = [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:self.categoryValue.text];
+    self.plan.status = [[MHVActionPlanInstanceStatusEnum alloc] initWithString:self.statusValue.text];
     
     [self.connection.remoteMonitoringClient actionPlansReplaceWithActionPlan:self.plan completion:^(MHVActionPlanInstance * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
@@ -115,8 +115,8 @@
                 
                 self.nameValue.text = output.name;
                 self.descriptionValue.text = output.descriptionText;
-                self.categoryValue.text = output.category;
-                self.statusValue.text = output.status;
+                self.categoryValue.text = output.category.stringValue;
+                self.statusValue.text = output.status.stringValue;
                 
                 [self.statusLabel clearStatus];
             }

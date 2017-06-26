@@ -88,5 +88,38 @@
     });
     return types;
 }
+@end
+@implementation MHVActionPlanCategoryEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Health": @"Health",
+        @"Sleep": @"Sleep",
+        @"Activity": @"Activity",
+        @"Stress": @"Stress",
+    };
+}
+
++(MHVActionPlanCategoryEnum *) Unknown
+{
+    return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanCategoryEnum *) Health
+{
+    return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Health"];
+}
++(MHVActionPlanCategoryEnum *) Sleep
+{
+    return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Sleep"];
+}
++(MHVActionPlanCategoryEnum *) Activity
+{
+    return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Activity"];
+}
++(MHVActionPlanCategoryEnum *) Stress
+{
+    return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Stress"];
+}
 @end

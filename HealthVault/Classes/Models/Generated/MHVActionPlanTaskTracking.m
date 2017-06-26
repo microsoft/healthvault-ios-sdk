@@ -92,5 +92,57 @@
     });
     return types;
 }
+@end
+@implementation MHVActionPlanTaskTrackingTrackingTypeEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Manual": @"Manual",
+        @"Auto": @"Auto",
+    };
+}
+
++(MHVActionPlanTaskTrackingTrackingTypeEnum *) Unknown
+{
+    return [[MHVActionPlanTaskTrackingTrackingTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanTaskTrackingTrackingTypeEnum *) Manual
+{
+    return [[MHVActionPlanTaskTrackingTrackingTypeEnum alloc] initWithString:@"Manual"];
+}
++(MHVActionPlanTaskTrackingTrackingTypeEnum *) Auto
+{
+    return [[MHVActionPlanTaskTrackingTrackingTypeEnum alloc] initWithString:@"Auto"];
+}
+@end
+@implementation MHVActionPlanTaskTrackingTrackingStatusEnum
+
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Occurrence": @"Occurrence",
+        @"Completion": @"Completion",
+        @"OutOfWindow": @"OutOfWindow",
+    };
+}
+
++(MHVActionPlanTaskTrackingTrackingStatusEnum *) Unknown
+{
+    return [[MHVActionPlanTaskTrackingTrackingStatusEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanTaskTrackingTrackingStatusEnum *) Occurrence
+{
+    return [[MHVActionPlanTaskTrackingTrackingStatusEnum alloc] initWithString:@"Occurrence"];
+}
++(MHVActionPlanTaskTrackingTrackingStatusEnum *) Completion
+{
+    return [[MHVActionPlanTaskTrackingTrackingStatusEnum alloc] initWithString:@"Completion"];
+}
++(MHVActionPlanTaskTrackingTrackingStatusEnum *) OutOfWindow
+{
+    return [[MHVActionPlanTaskTrackingTrackingStatusEnum alloc] initWithString:@"OutOfWindow"];
+}
 @end

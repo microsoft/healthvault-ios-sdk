@@ -78,7 +78,7 @@
     self.goal.range.maximum = [formatter numberFromString:self.maxValue.text];
     self.goal.range.minimum = [formatter numberFromString:self.minValue.text];
     self.goal.range.name = @"range";
-    self.goal.range.units = self.unitsValue.text;
+    self.goal.range.units = [[MHVGoalRangeUnitsEnum alloc] initWithString:self.unitsValue.text];
     
     [self.connection.remoteMonitoringClient goalsReplaceWithGoal:self.goal completion:^(MHVGoal * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
@@ -119,12 +119,12 @@
               if (!error)
               {
                   self.nameValue.text = output.name;
-                  self.typeValue.text = output.goalType;
+                  self.typeValue.text = output.goalType.stringValue;
                   self.startDate.text = output.startDate.toString;
                   
                   if (output.range)
                   {
-                      self.unitsValue.text = output.range.units;
+                      self.unitsValue.text = output.range.units.stringValue;
                       self.maxValue.text = [output.range.maximum stringValue];
                       self.minValue.text = [output.range.minimum stringValue];
                   }

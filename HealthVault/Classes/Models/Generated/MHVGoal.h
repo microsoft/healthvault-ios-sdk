@@ -29,12 +29,22 @@
 #import "MHVGoalRange.h"
 #import "MHVGoalRecurrenceMetrics.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVGoal
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVGoalGoalTypeEnum : MHVEnum
++(MHVGoalGoalTypeEnum *) Unknown;
++(MHVGoalGoalTypeEnum *) Steps;
++(MHVGoalGoalTypeEnum *) CaloriesBurned;
++(MHVGoalGoalTypeEnum *) Weight;
++(MHVGoalGoalTypeEnum *) BloodPressureSystolic;
++(MHVGoalGoalTypeEnum *) BloodPressureDiastolic;
+@end
 
 @interface MHVGoal : MHVModelBase
 
@@ -55,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSDate* endDate;
 /* Specifies the type of data related to this goal. [optional]
  */
-@property(strong,nonatomic,nullable) NSString* goalType;
+@property(strong,nonatomic,nullable) MHVGoalGoalTypeEnum* goalType;
 /* The goal recurrence metrics.  For example, A goal can be defined on a weekly interval, meaning the target is intended to be achieved every week. Walking 50000 steps in a week. [optional]
  */
 @property(strong,nonatomic,nullable) MHVGoalRecurrenceMetrics* recurrenceMetrics;

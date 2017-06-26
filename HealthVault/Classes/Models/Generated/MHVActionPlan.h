@@ -29,12 +29,21 @@
 #import "MHVActionPlanTask.h"
 #import "MHVObjective.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlan
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVActionPlanCategoryEnum : MHVEnum
++(MHVActionPlanCategoryEnum *) Unknown;
++(MHVActionPlanCategoryEnum *) Health;
++(MHVActionPlanCategoryEnum *) Sleep;
++(MHVActionPlanCategoryEnum *) Activity;
++(MHVActionPlanCategoryEnum *) Stress;
+@end
 
 @interface MHVActionPlan : MHVModelBase
 
@@ -52,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSString* thumbnailImageUrl;
 /* The category of the plan 
  */
-@property(strong,nonatomic) NSString* category;
+@property(strong,nonatomic) MHVActionPlanCategoryEnum* category;
 /* The Collection of objectives for the plan 
  */
 @property(strong,nonatomic) NSArray<MHVObjective>* objectives;

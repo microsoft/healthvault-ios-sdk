@@ -27,12 +27,14 @@
 #import <Foundation/Foundation.h>
 
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanTaskTrackingEvidence
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface MHVActionPlanTaskTrackingEvidence : MHVModelBase
 

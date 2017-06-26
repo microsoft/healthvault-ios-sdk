@@ -96,5 +96,52 @@
     });
     return types;
 }
+@end
+@implementation MHVActionPlanTaskTaskTypeEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"BloodPressure": @"BloodPressure",
+        @"Other": @"Other",
+    };
+}
+
++(MHVActionPlanTaskTaskTypeEnum *) Unknown
+{
+    return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanTaskTaskTypeEnum *) BloodPressure
+{
+    return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"BloodPressure"];
+}
++(MHVActionPlanTaskTaskTypeEnum *) Other
+{
+    return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"Other"];
+}
+@end
+@implementation MHVActionPlanTaskCompletionTypeEnum
+
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Frequency": @"Frequency",
+        @"Scheduled": @"Scheduled",
+    };
+}
+
++(MHVActionPlanTaskCompletionTypeEnum *) Unknown
+{
+    return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanTaskCompletionTypeEnum *) Frequency
+{
+    return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Frequency"];
+}
++(MHVActionPlanTaskCompletionTypeEnum *) Scheduled
+{
+    return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Scheduled"];
+}
 @end

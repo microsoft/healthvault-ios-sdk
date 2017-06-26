@@ -79,5 +79,33 @@
     });
     return types;
 }
+@end
+@implementation MHVGoalRecurrenceMetricsWindowTypeEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Daily": @"Daily",
+        @"Weekly": @"Weekly",
+        @"Monthly": @"Monthly",
+    };
+}
+
++(MHVGoalRecurrenceMetricsWindowTypeEnum *) Unknown
+{
+    return [[MHVGoalRecurrenceMetricsWindowTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVGoalRecurrenceMetricsWindowTypeEnum *) Daily
+{
+    return [[MHVGoalRecurrenceMetricsWindowTypeEnum alloc] initWithString:@"Daily"];
+}
++(MHVGoalRecurrenceMetricsWindowTypeEnum *) Weekly
+{
+    return [[MHVGoalRecurrenceMetricsWindowTypeEnum alloc] initWithString:@"Weekly"];
+}
++(MHVGoalRecurrenceMetricsWindowTypeEnum *) Monthly
+{
+    return [[MHVGoalRecurrenceMetricsWindowTypeEnum alloc] initWithString:@"Monthly"];
+}
 @end

@@ -30,12 +30,24 @@
 #import "MHVActionPlanTrackingPolicy.h"
 #import "MHVSchedule.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanTask
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVActionPlanTaskTaskTypeEnum : MHVEnum
++(MHVActionPlanTaskTaskTypeEnum *) Unknown;
++(MHVActionPlanTaskTaskTypeEnum *) BloodPressure;
++(MHVActionPlanTaskTaskTypeEnum *) Other;
+@end
+@interface MHVActionPlanTaskCompletionTypeEnum : MHVEnum
++(MHVActionPlanTaskCompletionTypeEnum *) Unknown;
++(MHVActionPlanTaskCompletionTypeEnum *) Frequency;
++(MHVActionPlanTaskCompletionTypeEnum *) Scheduled;
+@end
 
 @interface MHVActionPlanTask : MHVModelBase
 
@@ -56,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSString* thumbnailImageUrl;
 /* The type of the task, used to choose the UI editor for the task 
  */
-@property(strong,nonatomic) NSString* taskType;
+@property(strong,nonatomic) MHVActionPlanTaskTaskTypeEnum* taskType;
 /* The tracking policy 
  */
 @property(strong,nonatomic) MHVActionPlanTrackingPolicy* trackingPolicy;
@@ -71,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSArray<NSString*>* associatedObjectiveIds;
 /* The Completion Type of the Task 
  */
-@property(strong,nonatomic) NSString* completionType;
+@property(strong,nonatomic) MHVActionPlanTaskCompletionTypeEnum* completionType;
 /* Completion metrics for frequency based tasks [optional]
  */
 @property(strong,nonatomic,nullable) MHVActionPlanFrequencyTaskCompletionMetrics* frequencyTaskCompletionMetrics;

@@ -28,6 +28,7 @@
 
 #import "MHVTime.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVSchedule
@@ -35,14 +36,39 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface MHVScheduleReminderStateEnum : MHVEnum
++(MHVScheduleReminderStateEnum *) Unknown;
++(MHVScheduleReminderStateEnum *) Off;
++(MHVScheduleReminderStateEnum *) OnTime;
++(MHVScheduleReminderStateEnum *) Before5Minutes;
++(MHVScheduleReminderStateEnum *) Before10Minutes;
++(MHVScheduleReminderStateEnum *) Before15Minutes;
++(MHVScheduleReminderStateEnum *) Before30Minutes;
++(MHVScheduleReminderStateEnum *) Before1Hour;
++(MHVScheduleReminderStateEnum *) Before2Hours;
++(MHVScheduleReminderStateEnum *) Before4Hours;
++(MHVScheduleReminderStateEnum *) Before8Hours;
+@end
+@interface MHVScheduleScheduledDaysEnum : MHVEnum
++(MHVScheduleScheduledDaysEnum *) Unknown;
++(MHVScheduleScheduledDaysEnum *) Everyday;
++(MHVScheduleScheduledDaysEnum *) Sunday;
++(MHVScheduleScheduledDaysEnum *) Monday;
++(MHVScheduleScheduledDaysEnum *) Tuesday;
++(MHVScheduleScheduledDaysEnum *) Wednesday;
++(MHVScheduleScheduledDaysEnum *) Thursday;
++(MHVScheduleScheduledDaysEnum *) Friday;
++(MHVScheduleScheduledDaysEnum *) Saturday;
+@end
+
 @interface MHVSchedule : MHVModelBase
 
 /* The reminder state of the task 
  */
-@property(strong,nonatomic) NSString* reminderState;
+@property(strong,nonatomic) MHVScheduleReminderStateEnum* reminderState;
 /* The days that this will show for the user  Expected values: { 'Unknown', 'Everyday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' } [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<NSString*>* scheduledDays;
+@property(strong,nonatomic,nullable) NSArray<MHVScheduleScheduledDaysEnum*>* scheduledDays;
 /* The time at which this task is scheduled [optional]
  */
 @property(strong,nonatomic,nullable) MHVTime* scheduledTime;

@@ -28,12 +28,25 @@
 
 #import "MHVActionPlanTaskTrackingEvidence.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanTaskTracking
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVActionPlanTaskTrackingTrackingTypeEnum : MHVEnum
++(MHVActionPlanTaskTrackingTrackingTypeEnum *) Unknown;
++(MHVActionPlanTaskTrackingTrackingTypeEnum *) Manual;
++(MHVActionPlanTaskTrackingTrackingTypeEnum *) Auto;
+@end
+@interface MHVActionPlanTaskTrackingTrackingStatusEnum : MHVEnum
++(MHVActionPlanTaskTrackingTrackingStatusEnum *) Unknown;
++(MHVActionPlanTaskTrackingTrackingStatusEnum *) Occurrence;
++(MHVActionPlanTaskTrackingTrackingStatusEnum *) Completion;
++(MHVActionPlanTaskTrackingTrackingStatusEnum *) OutOfWindow;
+@end
 
 @interface MHVActionPlanTaskTracking : MHVModelBase
 
@@ -42,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* identifier;
 /* Gets or sets the task tracking type [optional]
  */
-@property(strong,nonatomic,nullable) NSString* trackingType;
+@property(strong,nonatomic,nullable) MHVActionPlanTaskTrackingTrackingTypeEnum* trackingType;
 /* Gets or sets the timezone offset of the task tracking,   if a task is local time based, it should be set as null [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* timeZoneOffset;
@@ -54,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSDate* creationDateTime;
 /* Gets or sets the task tracking status [optional]
  */
-@property(strong,nonatomic,nullable) NSString* trackingStatus;
+@property(strong,nonatomic,nullable) MHVActionPlanTaskTrackingTrackingStatusEnum* trackingStatus;
 /* Gets or sets the start time of the occurrence window,  it is null for Completion and OutOfWindow tracking [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* occurrenceStart;
