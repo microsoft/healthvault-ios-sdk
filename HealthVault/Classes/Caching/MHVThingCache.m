@@ -11,4 +11,10 @@
 
 @implementation MHVThingCache
 
+#ifdef THING_CACHE
+- (void)thingCache
+{
+}
+#endif
+
 @end

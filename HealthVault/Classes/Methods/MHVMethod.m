@@ -161,6 +161,11 @@
     return [[MHVMethod alloc] initWithName:@"GetPersonInfo" version:1 isAnonymous:NO];
 }
 
++ (MHVMethod *)getRecordOperations
+{
+    return [[MHVMethod alloc] initWithName:@"GetRecordOperations" version:1 isAnonymous:NO];
+}
+
 + (MHVMethod *)getServiceDefinition;
 {
     return [[MHVMethod alloc] initWithName:@"GetServiceDefinition" version:2 isAnonymous:YES];
@@ -264,11 +269,6 @@
 + (MHVMethod *)updateExternalId
 {
     return [[MHVMethod alloc] initWithName:@"UpdateExternalId" version:1 isAnonymous:NO];
-}
-
-+ (MHVMethod *)getRecordOperations
-{
-    return [[MHVMethod alloc] initWithName:@"GetRecordOperations" version:1 isAnonymous:NO];
 }
 
 @end

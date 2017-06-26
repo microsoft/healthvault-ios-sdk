@@ -1,5 +1,5 @@
 //
-// MHVActionPlanTaskInstanceV2.m
+// MHVActionPlanTaskInstance.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -24,9 +24,9 @@
 */
 
 
-#import "MHVActionPlanTaskInstanceV2.h"
+#import "MHVActionPlanTaskInstance.h"
 
-@implementation MHVActionPlanTaskInstanceV2
+@implementation MHVActionPlanTaskInstance
 
 + (BOOL)shouldValidateProperties
 {
@@ -95,9 +95,9 @@
             
               @"trackingPolicy": [MHVActionPlanTrackingPolicy class],
 
-              @"frequencyTaskCompletionMetrics": [MHVActionPlanFrequencyTaskCompletionMetricsV2 class],
+              @"frequencyTaskCompletionMetrics": [MHVActionPlanFrequencyTaskCompletionMetrics class],
 
-              @"schedules": [MHVScheduleV2 class]
+              @"schedules": [MHVSchedule class]
         }];
     });
     return types;

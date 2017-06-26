@@ -1,5 +1,5 @@
 //
-// MHVActionPlansResponseActionPlanInstanceV2_.h
+// MHVActionPlansResponseActionPlanInstance_.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -26,20 +26,20 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MHVActionPlanInstanceV2.h"
+#import "MHVActionPlanInstance.h"
 #import "MHVModelBase.h"
 
 
-@protocol MHVActionPlansResponseActionPlanInstanceV2_
+@protocol MHVActionPlansResponseActionPlanInstance_
 @end
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MHVActionPlansResponseActionPlanInstanceV2_ : MHVModelBase
+@interface MHVActionPlansResponseActionPlanInstance_ : MHVModelBase
 
 /* The collection of action plans [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanInstanceV2>* plans;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanInstance>* plans;
 /* The URI for the next page of data [optional]
  */
 @property(strong,nonatomic,nullable) NSString* nextLink;

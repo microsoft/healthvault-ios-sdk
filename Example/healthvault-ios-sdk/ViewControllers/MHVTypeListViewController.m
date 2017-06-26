@@ -280,12 +280,12 @@
     //Action Plan Types
     NSString *name = @"action plans";
     [restTypeList addObject:name];
-    [itemDictionary setObject:[MHVActionPlanV2 class] forKey:name];
+    [itemDictionary setObject:[MHVActionPlan class] forKey:name];
     [viewDictionary setObject:[MHVActionPlansListViewController class] forKey:name];
     
     name = @"action plan tasks";
     [restTypeList addObject:name];
-    [itemDictionary setObject:[MHVActionPlanTaskV2 class] forKey:name];
+    [itemDictionary setObject:[MHVActionPlanTask class] forKey:name];
     [viewDictionary setObject:[MHVActionPlanTaskListViewController class] forKey:name];
     
     name = @"goals";

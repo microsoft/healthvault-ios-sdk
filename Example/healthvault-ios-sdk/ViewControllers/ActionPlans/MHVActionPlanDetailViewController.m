@@ -22,7 +22,7 @@
 @interface MHVActionPlanDetailViewController ()
 
 @property (nonatomic, strong) NSString *planId;
-@property (nonatomic, strong) MHVActionPlanInstanceV2 *plan;
+@property (nonatomic, strong) MHVActionPlanInstance *plan;
 @property (nonatomic, strong) MHVConnection *connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -60,7 +60,7 @@
     self.plan.category = self.categoryValue.text;
     self.plan.status = self.statusValue.text;
     
-    [self.connection.remoteMonitoringClient actionPlansReplaceWithActionPlan:self.plan completion:^(MHVActionPlanInstanceV2 * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlansReplaceWithActionPlan:self.plan completion:^(MHVActionPlanInstance * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {
@@ -95,7 +95,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.plan = [[MHVActionPlanInstanceV2 alloc] init];
+    self.plan = [[MHVActionPlanInstance alloc] init];
     
     [self.navigationController.navigationBar setTranslucent:NO];
     self.navigationItem.title = @"Plan Details";
@@ -107,7 +107,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient actionPlansGetByIdWithActionPlanId:self.planId completion:^(MHVActionPlanInstanceV2 * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlansGetByIdWithActionPlanId:self.planId completion:^(MHVActionPlanInstance * _Nullable output, NSError * _Nullable error) {
         [[ NSOperationQueue mainQueue] addOperationWithBlock:^
         {
             if (!error) {

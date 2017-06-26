@@ -26,10 +26,10 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVRemoteMonitoringClient.h"
+#import "MHVActionPlan.h"
 #import "MHVActionPlanAdherenceSummary.h"
-#import "MHVActionPlanInstanceV2.h"
-#import "MHVActionPlanV2.h"
-#import "MHVActionPlansResponseActionPlanInstanceV2_.h"
+#import "MHVActionPlanInstance.h"
+#import "MHVActionPlansResponseActionPlanInstance_.h"
 #import "MHVErrorResponse.h"
 
 
@@ -53,8 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlan The instance of the plan to create.
 /// 
-- (void)actionPlansCreateWithActionPlan:(MHVActionPlanV2* )actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+- (void)actionPlansCreateWithActionPlan:(MHVActionPlan* )actionPlan
+    completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Delete an action plan instance
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
 /// 
 - (void)actionPlansGetWithMaxPageSize:(NSNumber* _Nullable)maxPageSize
-    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstanceV2_* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstance_* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Gets adherence information for an action plan.
@@ -98,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param actionPlanId The action plan to update.
 /// 
 - (void)actionPlansGetByIdWithActionPlanId:(NSString* )actionPlanId
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Update/Replace a complete action plan instance with no merge.
@@ -106,8 +106,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlan The instance of the plan to update. The entire plan will be replaced with this version.
 /// 
-- (void)actionPlansReplaceWithActionPlan:(MHVActionPlanInstanceV2* )actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+- (void)actionPlansReplaceWithActionPlan:(MHVActionPlanInstance* )actionPlan
+    completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Update an action plan instance with merge
@@ -115,8 +115,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlan The instance of the plan to update. Only the fields present in the passed in model will be updated. All other fields and colelctions              will be left, as is, unless invalid.
 /// 
-- (void)actionPlansUpdateWithActionPlan:(MHVActionPlanInstanceV2* )actionPlan
-    completion:(void(^_Nonnull)(MHVActionPlanInstanceV2* _Nullable output, NSError* _Nullable error))completion;
+- (void)actionPlansUpdateWithActionPlan:(MHVActionPlanInstance* )actionPlan
+    completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion;
 
 
 

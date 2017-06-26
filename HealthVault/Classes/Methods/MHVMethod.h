@@ -200,6 +200,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (MHVMethod *)getPersonInfo;
 
 /**
+ Get record operations
+ 
+ @return An instance of MHVMethod.
+ */
++ (MHVMethod *)getRecordOperations;
+
+/**
  Gets generic service information about the HealthVault service - Anonymous.
  
  @return An instance of MHVMethod.
@@ -346,13 +353,6 @@ NS_ASSUME_NONNULL_BEGIN
  @return An instance of MHVMethod.
  */
 + (MHVMethod *)updateExternalId;
-
-/**
- Get record operations
- 
- @return An instance of MHVMethod.
- */
-+ (MHVMethod *)getRecordOperations;
 
 @end
 
