@@ -1,8 +1,8 @@
 //
-// MHVDynamicEnum.h
-// MHVLib
+//  MHVOperationBase.h
+//  MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,12 +15,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "MHVEnum.h"
 
-@interface MHVDynamicEnum : MHVEnum
+#import <Foundation/Foundation.h>
 
-+ (NSDictionary *)enumMap;
-+ (NSDictionary *)aliasMap;
+typedef id(^MHVResultOperationBlock)(id input);
+
+@interface MHVOperationBase : NSOperation
+
+-(void)startOperation;
+-(void)cancelOperation;
+-(void)finishOperation;
 
 @end

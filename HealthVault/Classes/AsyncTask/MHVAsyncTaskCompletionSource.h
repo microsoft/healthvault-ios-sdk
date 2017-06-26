@@ -1,8 +1,8 @@
 //
-// MHVDynamicEnum.h
-// MHVLib
+//  MHVAsyncTaskCompletionSource.h
+//  MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,12 +15,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "MHVEnum.h"
+#import <Foundation/Foundation.h>
+#import "MHVAsyncTaskOperation.h"
 
-@interface MHVDynamicEnum : MHVEnum
+@interface MHVAsyncTaskCompletionSource : NSObject
 
-+ (NSDictionary *)enumMap;
-+ (NSDictionary *)aliasMap;
+@property (nonatomic, strong)   MHVAsyncTaskFinishBlock     finish;
+
+@property (nonatomic, strong)   MHVAsyncTaskCancelBlock     cancel;
 
 @end

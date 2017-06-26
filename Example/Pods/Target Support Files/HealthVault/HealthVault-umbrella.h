@@ -10,6 +10,14 @@
 #endif
 #endif
 
+#import "MHVAsyncBlockOperation.h"
+#import "MHVAsyncOperation.h"
+#import "MHVAsyncTask.h"
+#import "MHVAsyncTaskCompletionSource.h"
+#import "MHVAsyncTaskOperation.h"
+#import "MHVAsyncTaskResult.h"
+#import "MHVOperationBase.h"
+#import "MHVOperationEnums.h"
 #import "MHVBrowserAuthBroker.h"
 #import "MHVBrowserAuthBrokerProtocol.h"
 #import "MHVBrowserController.h"
