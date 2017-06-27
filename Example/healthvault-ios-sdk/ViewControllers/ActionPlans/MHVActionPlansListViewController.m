@@ -98,8 +98,8 @@
     objective.descriptionText = @"A sample objective which encourages you to get more activity.";
     objective.name = @"Start doing some fun activities.";
     objective.outcomeName = @"Exercise hours / week";
-    objective.outcomeType = MHVObjectiveOutcomeTypeEnum.ExerciseHoursPerWeek;
-    objective.state = MHVObjectiveStateEnum.Active;
+    objective.outcomeType = MHVObjectiveOutcomeTypeEnum.MHVExerciseHoursPerWeek;
+    objective.state = MHVObjectiveStateEnum.MHVActive;
     objective.identifier = [[NSUUID UUID] UUIDString];
     
     MHVActionPlanTrackingPolicy *policy = [[MHVActionPlanTrackingPolicy alloc] init];
@@ -107,7 +107,7 @@
     
     MHVActionPlanFrequencyTaskCompletionMetrics *metrics = [[MHVActionPlanFrequencyTaskCompletionMetrics alloc] init];
     metrics.occurrenceCount = @(1);
-    metrics.windowType = MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum.Daily;
+    metrics.windowType = MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum.MHVDaily;
     
     MHVActionPlanTask *frequencyTask = [[MHVActionPlanTask alloc] init];
     NSString *taskName =[NSString stringWithFormat:@"Do a frequent activity (plan %@)", rand];
@@ -116,16 +116,16 @@
     frequencyTask.longDescription = @"Go for a run, hike a mountain, ride your bike around town, or something else to get moving.";
     frequencyTask.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1rXx2?ver=d68e";
     frequencyTask.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1s2KS?ver=0ad8";
-    frequencyTask.taskType = MHVActionPlanTaskTaskTypeEnum.Other;
+    frequencyTask.taskType = MHVActionPlanTaskTaskTypeEnum.MHVOther;
     frequencyTask.signupName = taskName;
     frequencyTask.associatedObjectiveIds = [[NSArray alloc] initWithObjects:objective.identifier, nil];
     frequencyTask.trackingPolicy = policy;
-    frequencyTask.completionType = MHVActionPlanTaskCompletionTypeEnum.Frequency;
+    frequencyTask.completionType = MHVActionPlanTaskCompletionTypeEnum.MHVFrequency;
     frequencyTask.frequencyTaskCompletionMetrics = metrics;
     
     MHVSchedule *schedule = [[MHVSchedule alloc] init];
-    schedule.reminderState = MHVScheduleReminderStateEnum.Off;
-    schedule.scheduledDays = @[MHVScheduleScheduledDaysEnum.Saturday, MHVScheduleScheduledDaysEnum.Sunday];
+    schedule.reminderState = MHVScheduleReminderStateEnum.MHVOff;
+    schedule.scheduledDays = @[MHVScheduleScheduledDaysEnum.MHVSaturday, MHVScheduleScheduledDaysEnum.MHVSunday];
     MHVTime *time = [[MHVTime alloc] init];
     time.hour = 6;
     time.minute = 30;
@@ -138,11 +138,11 @@
     scheduledTask.longDescription = @"Go for a run, hike a mountain, ride your bike around town, or something else to get moving.";
     scheduledTask.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1rXx2?ver=d68e";
     scheduledTask.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1s2KS?ver=0ad8";
-    scheduledTask.taskType = MHVActionPlanTaskTaskTypeEnum.Other;
+    scheduledTask.taskType = MHVActionPlanTaskTaskTypeEnum.MHVOther;
     scheduledTask.signupName = taskName;
     scheduledTask.associatedObjectiveIds = [[NSArray alloc] initWithObjects:objective.identifier, nil];
     scheduledTask.trackingPolicy = policy;
-    scheduledTask.completionType = MHVActionPlanTaskCompletionTypeEnum.Scheduled;
+    scheduledTask.completionType = MHVActionPlanTaskCompletionTypeEnum.MHVScheduled;
     scheduledTask.schedules = [[NSArray<MHVSchedule> alloc] initWithObjects:schedule, nil];
 
     MHVActionPlan *newPlan = [[MHVActionPlan alloc] init];
@@ -150,7 +150,7 @@
     newPlan.descriptionText = @"A sample activity plan";
     newPlan.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
     newPlan.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE10omP?ver=59cf";
-    newPlan.category = MHVActionPlanCategoryEnum.Activity;
+    newPlan.category = MHVActionPlanCategoryEnum.MHVActivity;
     newPlan.objectives = [[NSArray<MHVObjective> alloc] initWithObjects:objective, nil];
     newPlan.associatedTasks = [[NSArray<MHVActionPlanTask> alloc] initWithObjects:frequencyTask, scheduledTask, nil];
     

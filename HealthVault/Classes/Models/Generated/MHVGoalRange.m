@@ -96,23 +96,23 @@
     };
 }
 
-+(MHVGoalRangeUnitsEnum *) Unknown
++(MHVGoalRangeUnitsEnum *)MHVUnknown
 {
     return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVGoalRangeUnitsEnum *) Kilograms
++(MHVGoalRangeUnitsEnum *)MHVKilograms
 {
     return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"Kilograms"];
 }
-+(MHVGoalRangeUnitsEnum *) Count
++(MHVGoalRangeUnitsEnum *)MHVCount
 {
     return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"Count"];
 }
-+(MHVGoalRangeUnitsEnum *) Calories
++(MHVGoalRangeUnitsEnum *)MHVCalories
 {
     return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"Calories"];
 }
-+(MHVGoalRangeUnitsEnum *) MillimetersOfMercury
++(MHVGoalRangeUnitsEnum *)MHVMillimetersOfMercury
 {
     return [[MHVGoalRangeUnitsEnum alloc] initWithString:@"MillimetersOfMercury"];
 }

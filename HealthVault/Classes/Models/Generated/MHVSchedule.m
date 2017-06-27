@@ -102,47 +102,47 @@
     };
 }
 
-+(MHVScheduleReminderStateEnum *) Unknown
++(MHVScheduleReminderStateEnum *)MHVUnknown
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVScheduleReminderStateEnum *) Off
++(MHVScheduleReminderStateEnum *)MHVOff
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Off"];
 }
-+(MHVScheduleReminderStateEnum *) OnTime
++(MHVScheduleReminderStateEnum *)MHVOnTime
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"OnTime"];
 }
-+(MHVScheduleReminderStateEnum *) Before5Minutes
++(MHVScheduleReminderStateEnum *)MHVBefore5Minutes
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before5Minutes"];
 }
-+(MHVScheduleReminderStateEnum *) Before10Minutes
++(MHVScheduleReminderStateEnum *)MHVBefore10Minutes
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before10Minutes"];
 }
-+(MHVScheduleReminderStateEnum *) Before15Minutes
++(MHVScheduleReminderStateEnum *)MHVBefore15Minutes
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before15Minutes"];
 }
-+(MHVScheduleReminderStateEnum *) Before30Minutes
++(MHVScheduleReminderStateEnum *)MHVBefore30Minutes
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before30Minutes"];
 }
-+(MHVScheduleReminderStateEnum *) Before1Hour
++(MHVScheduleReminderStateEnum *)MHVBefore1Hour
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before1Hour"];
 }
-+(MHVScheduleReminderStateEnum *) Before2Hours
++(MHVScheduleReminderStateEnum *)MHVBefore2Hours
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before2Hours"];
 }
-+(MHVScheduleReminderStateEnum *) Before4Hours
++(MHVScheduleReminderStateEnum *)MHVBefore4Hours
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before4Hours"];
 }
-+(MHVScheduleReminderStateEnum *) Before8Hours
++(MHVScheduleReminderStateEnum *)MHVBefore8Hours
 {
     return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before8Hours"];
 }
@@ -165,39 +165,39 @@
     };
 }
 
-+(MHVScheduleScheduledDaysEnum *) Unknown
++(MHVScheduleScheduledDaysEnum *)MHVUnknown
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVScheduleScheduledDaysEnum *) Everyday
++(MHVScheduleScheduledDaysEnum *)MHVEveryday
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Everyday"];
 }
-+(MHVScheduleScheduledDaysEnum *) Sunday
++(MHVScheduleScheduledDaysEnum *)MHVSunday
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Sunday"];
 }
-+(MHVScheduleScheduledDaysEnum *) Monday
++(MHVScheduleScheduledDaysEnum *)MHVMonday
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Monday"];
 }
-+(MHVScheduleScheduledDaysEnum *) Tuesday
++(MHVScheduleScheduledDaysEnum *)MHVTuesday
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Tuesday"];
 }
-+(MHVScheduleScheduledDaysEnum *) Wednesday
++(MHVScheduleScheduledDaysEnum *)MHVWednesday
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Wednesday"];
 }
-+(MHVScheduleScheduledDaysEnum *) Thursday
++(MHVScheduleScheduledDaysEnum *)MHVThursday
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Thursday"];
 }
-+(MHVScheduleScheduledDaysEnum *) Friday
++(MHVScheduleScheduledDaysEnum *)MHVFriday
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Friday"];
 }
-+(MHVScheduleScheduledDaysEnum *) Saturday
++(MHVScheduleScheduledDaysEnum *)MHVSaturday
 {
     return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Saturday"];
 }

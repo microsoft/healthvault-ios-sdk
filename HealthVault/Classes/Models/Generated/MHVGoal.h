@@ -38,12 +38,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVGoalGoalTypeEnum : MHVEnum
-+(MHVGoalGoalTypeEnum *) Unknown;
-+(MHVGoalGoalTypeEnum *) Steps;
-+(MHVGoalGoalTypeEnum *) CaloriesBurned;
-+(MHVGoalGoalTypeEnum *) Weight;
-+(MHVGoalGoalTypeEnum *) BloodPressureSystolic;
-+(MHVGoalGoalTypeEnum *) BloodPressureDiastolic;
++(MHVGoalGoalTypeEnum *)MHVUnknown;
++(MHVGoalGoalTypeEnum *)MHVSteps;
++(MHVGoalGoalTypeEnum *)MHVCaloriesBurned;
++(MHVGoalGoalTypeEnum *)MHVWeight;
++(MHVGoalGoalTypeEnum *)MHVBloodPressureSystolic;
++(MHVGoalGoalTypeEnum *)MHVBloodPressureDiastolic;
 @end
 
 @interface MHVGoal : MHVModelBase

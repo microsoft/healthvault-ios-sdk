@@ -98,19 +98,19 @@
     };
 }
 
-+(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Unknown
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *)MHVUnknown
 {
     return [[MHVActionPlanTaskAdherenceSummaryWindowTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) None
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *)MHVNone
 {
     return [[MHVActionPlanTaskAdherenceSummaryWindowTypeEnum alloc] initWithString:@"None"];
 }
-+(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Daily
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *)MHVDaily
 {
     return [[MHVActionPlanTaskAdherenceSummaryWindowTypeEnum alloc] initWithString:@"Daily"];
 }
-+(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Weekly
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *)MHVWeekly
 {
     return [[MHVActionPlanTaskAdherenceSummaryWindowTypeEnum alloc] initWithString:@"Weekly"];
 }

@@ -37,10 +37,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanTaskAdherenceSummaryWindowTypeEnum : MHVEnum
-+(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Unknown;
-+(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) None;
-+(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Daily;
-+(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *) Weekly;
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *)MHVUnknown;
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *)MHVNone;
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *)MHVDaily;
++(MHVActionPlanTaskAdherenceSummaryWindowTypeEnum *)MHVWeekly;
 @end
 
 @interface MHVActionPlanTaskAdherenceSummary : MHVModelBase

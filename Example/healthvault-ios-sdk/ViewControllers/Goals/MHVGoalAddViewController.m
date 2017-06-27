@@ -50,7 +50,7 @@
 {
     MHVGoalRecurrenceMetrics *metrics = [[MHVGoalRecurrenceMetrics alloc] init];
     metrics.occurrenceCount = [NSNumber numberWithInt:1];
-    metrics.windowType = MHVGoalRecurrenceMetricsWindowTypeEnum.Daily;
+    metrics.windowType = MHVGoalRecurrenceMetricsWindowTypeEnum.MHVDaily;
     
     MHVGoalRange *range = [[MHVGoalRange alloc] init];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];

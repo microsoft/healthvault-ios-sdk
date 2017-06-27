@@ -110,7 +110,7 @@
 }
 
 {{#_enum}}
-+({{classname}}{{enumName}} *) {{.}}
++({{classname}}{{enumName}} *)MHV{{.}}
 {
     return [[{{classname}}{{enumName}} alloc] initWithString:@"{{.}}"];
 }
@@ -131,7 +131,7 @@
 }
 
 {{#_enum}}
-+({{classname}}{{enumName}} *) {{.}}
++({{classname}}{{enumName}} *)MHV{{.}}
 {
     return [[{{classname}}{{enumName}} alloc] initWithString:@"{{.}}"];
 }

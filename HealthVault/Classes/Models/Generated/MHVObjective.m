@@ -95,15 +95,15 @@
     };
 }
 
-+(MHVObjectiveStateEnum *) Unknown
++(MHVObjectiveStateEnum *)MHVUnknown
 {
     return [[MHVObjectiveStateEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVObjectiveStateEnum *) Inactive
++(MHVObjectiveStateEnum *)MHVInactive
 {
     return [[MHVObjectiveStateEnum alloc] initWithString:@"Inactive"];
 }
-+(MHVObjectiveStateEnum *) Active
++(MHVObjectiveStateEnum *)MHVActive
 {
     return [[MHVObjectiveStateEnum alloc] initWithString:@"Active"];
 }
@@ -123,31 +123,31 @@
     };
 }
 
-+(MHVObjectiveOutcomeTypeEnum *) Unknown
++(MHVObjectiveOutcomeTypeEnum *)MHVUnknown
 {
     return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVObjectiveOutcomeTypeEnum *) StepsPerDay
++(MHVObjectiveOutcomeTypeEnum *)MHVStepsPerDay
 {
     return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"StepsPerDay"];
 }
-+(MHVObjectiveOutcomeTypeEnum *) CaloriesPerDay
++(MHVObjectiveOutcomeTypeEnum *)MHVCaloriesPerDay
 {
     return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"CaloriesPerDay"];
 }
-+(MHVObjectiveOutcomeTypeEnum *) ExerciseHoursPerWeek
++(MHVObjectiveOutcomeTypeEnum *)MHVExerciseHoursPerWeek
 {
     return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"ExerciseHoursPerWeek"];
 }
-+(MHVObjectiveOutcomeTypeEnum *) SleepHoursPerNight
++(MHVObjectiveOutcomeTypeEnum *)MHVSleepHoursPerNight
 {
     return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"SleepHoursPerNight"];
 }
-+(MHVObjectiveOutcomeTypeEnum *) MinutesToFallAsleepPerNight
++(MHVObjectiveOutcomeTypeEnum *)MHVMinutesToFallAsleepPerNight
 {
     return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"MinutesToFallAsleepPerNight"];
 }
-+(MHVObjectiveOutcomeTypeEnum *) Other
++(MHVObjectiveOutcomeTypeEnum *)MHVOther
 {
     return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"Other"];
 }

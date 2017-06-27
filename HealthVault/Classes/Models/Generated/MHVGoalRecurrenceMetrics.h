@@ -36,10 +36,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVGoalRecurrenceMetricsWindowTypeEnum : MHVEnum
-+(MHVGoalRecurrenceMetricsWindowTypeEnum *) Unknown;
-+(MHVGoalRecurrenceMetricsWindowTypeEnum *) Daily;
-+(MHVGoalRecurrenceMetricsWindowTypeEnum *) Weekly;
-+(MHVGoalRecurrenceMetricsWindowTypeEnum *) Monthly;
++(MHVGoalRecurrenceMetricsWindowTypeEnum *)MHVUnknown;
++(MHVGoalRecurrenceMetricsWindowTypeEnum *)MHVDaily;
++(MHVGoalRecurrenceMetricsWindowTypeEnum *)MHVWeekly;
++(MHVGoalRecurrenceMetricsWindowTypeEnum *)MHVMonthly;
 @end
 
 @interface MHVGoalRecurrenceMetrics : MHVModelBase

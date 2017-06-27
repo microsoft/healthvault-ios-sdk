@@ -38,11 +38,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanCategoryEnum : MHVEnum
-+(MHVActionPlanCategoryEnum *) Unknown;
-+(MHVActionPlanCategoryEnum *) Health;
-+(MHVActionPlanCategoryEnum *) Sleep;
-+(MHVActionPlanCategoryEnum *) Activity;
-+(MHVActionPlanCategoryEnum *) Stress;
++(MHVActionPlanCategoryEnum *)MHVUnknown;
++(MHVActionPlanCategoryEnum *)MHVHealth;
++(MHVActionPlanCategoryEnum *)MHVSleep;
++(MHVActionPlanCategoryEnum *)MHVActivity;
++(MHVActionPlanCategoryEnum *)MHVStress;
 @end
 
 @interface MHVActionPlan : MHVModelBase

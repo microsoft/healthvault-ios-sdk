@@ -36,11 +36,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVGoalRangeUnitsEnum : MHVEnum
-+(MHVGoalRangeUnitsEnum *) Unknown;
-+(MHVGoalRangeUnitsEnum *) Kilograms;
-+(MHVGoalRangeUnitsEnum *) Count;
-+(MHVGoalRangeUnitsEnum *) Calories;
-+(MHVGoalRangeUnitsEnum *) MillimetersOfMercury;
++(MHVGoalRangeUnitsEnum *)MHVUnknown;
++(MHVGoalRangeUnitsEnum *)MHVKilograms;
++(MHVGoalRangeUnitsEnum *)MHVCount;
++(MHVGoalRangeUnitsEnum *)MHVCalories;
++(MHVGoalRangeUnitsEnum *)MHVMillimetersOfMercury;
 @end
 
 @interface MHVGoalRange : MHVModelBase

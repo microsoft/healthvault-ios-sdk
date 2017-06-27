@@ -39,14 +39,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanTaskTaskTypeEnum : MHVEnum
-+(MHVActionPlanTaskTaskTypeEnum *) Unknown;
-+(MHVActionPlanTaskTaskTypeEnum *) BloodPressure;
-+(MHVActionPlanTaskTaskTypeEnum *) Other;
++(MHVActionPlanTaskTaskTypeEnum *)MHVUnknown;
++(MHVActionPlanTaskTaskTypeEnum *)MHVBloodPressure;
++(MHVActionPlanTaskTaskTypeEnum *)MHVOther;
 @end
 @interface MHVActionPlanTaskCompletionTypeEnum : MHVEnum
-+(MHVActionPlanTaskCompletionTypeEnum *) Unknown;
-+(MHVActionPlanTaskCompletionTypeEnum *) Frequency;
-+(MHVActionPlanTaskCompletionTypeEnum *) Scheduled;
++(MHVActionPlanTaskCompletionTypeEnum *)MHVUnknown;
++(MHVActionPlanTaskCompletionTypeEnum *)MHVFrequency;
++(MHVActionPlanTaskCompletionTypeEnum *)MHVScheduled;
 @end
 
 @interface MHVActionPlanTask : MHVModelBase

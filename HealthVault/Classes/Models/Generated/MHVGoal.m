@@ -107,27 +107,27 @@
     };
 }
 
-+(MHVGoalGoalTypeEnum *) Unknown
++(MHVGoalGoalTypeEnum *)MHVUnknown
 {
     return [[MHVGoalGoalTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVGoalGoalTypeEnum *) Steps
++(MHVGoalGoalTypeEnum *)MHVSteps
 {
     return [[MHVGoalGoalTypeEnum alloc] initWithString:@"Steps"];
 }
-+(MHVGoalGoalTypeEnum *) CaloriesBurned
++(MHVGoalGoalTypeEnum *)MHVCaloriesBurned
 {
     return [[MHVGoalGoalTypeEnum alloc] initWithString:@"CaloriesBurned"];
 }
-+(MHVGoalGoalTypeEnum *) Weight
++(MHVGoalGoalTypeEnum *)MHVWeight
 {
     return [[MHVGoalGoalTypeEnum alloc] initWithString:@"Weight"];
 }
-+(MHVGoalGoalTypeEnum *) BloodPressureSystolic
++(MHVGoalGoalTypeEnum *)MHVBloodPressureSystolic
 {
     return [[MHVGoalGoalTypeEnum alloc] initWithString:@"BloodPressureSystolic"];
 }
-+(MHVGoalGoalTypeEnum *) BloodPressureDiastolic
++(MHVGoalGoalTypeEnum *)MHVBloodPressureDiastolic
 {
     return [[MHVGoalGoalTypeEnum alloc] initWithString:@"BloodPressureDiastolic"];
 }

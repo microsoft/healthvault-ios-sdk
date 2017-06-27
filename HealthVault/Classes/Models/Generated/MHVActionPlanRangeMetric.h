@@ -36,8 +36,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanRangeMetricValueTypeEnum : MHVEnum
-+(MHVActionPlanRangeMetricValueTypeEnum *) Unknown;
-+(MHVActionPlanRangeMetricValueTypeEnum *) MinutesToMidnight;
++(MHVActionPlanRangeMetricValueTypeEnum *)MHVUnknown;
++(MHVActionPlanRangeMetricValueTypeEnum *)MHVMinutesToMidnight;
 @end
 
 @interface MHVActionPlanRangeMetric : MHVModelBase

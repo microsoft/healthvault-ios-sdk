@@ -93,11 +93,11 @@
     };
 }
 
-+(MHVActionPlanRangeMetricValueTypeEnum *) Unknown
++(MHVActionPlanRangeMetricValueTypeEnum *)MHVUnknown
 {
     return [[MHVActionPlanRangeMetricValueTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanRangeMetricValueTypeEnum *) MinutesToMidnight
++(MHVActionPlanRangeMetricValueTypeEnum *)MHVMinutesToMidnight
 {
     return [[MHVActionPlanRangeMetricValueTypeEnum alloc] initWithString:@"MinutesToMidnight"];
 }

@@ -37,28 +37,28 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVScheduleReminderStateEnum : MHVEnum
-+(MHVScheduleReminderStateEnum *) Unknown;
-+(MHVScheduleReminderStateEnum *) Off;
-+(MHVScheduleReminderStateEnum *) OnTime;
-+(MHVScheduleReminderStateEnum *) Before5Minutes;
-+(MHVScheduleReminderStateEnum *) Before10Minutes;
-+(MHVScheduleReminderStateEnum *) Before15Minutes;
-+(MHVScheduleReminderStateEnum *) Before30Minutes;
-+(MHVScheduleReminderStateEnum *) Before1Hour;
-+(MHVScheduleReminderStateEnum *) Before2Hours;
-+(MHVScheduleReminderStateEnum *) Before4Hours;
-+(MHVScheduleReminderStateEnum *) Before8Hours;
++(MHVScheduleReminderStateEnum *)MHVUnknown;
++(MHVScheduleReminderStateEnum *)MHVOff;
++(MHVScheduleReminderStateEnum *)MHVOnTime;
++(MHVScheduleReminderStateEnum *)MHVBefore5Minutes;
++(MHVScheduleReminderStateEnum *)MHVBefore10Minutes;
++(MHVScheduleReminderStateEnum *)MHVBefore15Minutes;
++(MHVScheduleReminderStateEnum *)MHVBefore30Minutes;
++(MHVScheduleReminderStateEnum *)MHVBefore1Hour;
++(MHVScheduleReminderStateEnum *)MHVBefore2Hours;
++(MHVScheduleReminderStateEnum *)MHVBefore4Hours;
++(MHVScheduleReminderStateEnum *)MHVBefore8Hours;
 @end
 @interface MHVScheduleScheduledDaysEnum : MHVEnum
-+(MHVScheduleScheduledDaysEnum *) Unknown;
-+(MHVScheduleScheduledDaysEnum *) Everyday;
-+(MHVScheduleScheduledDaysEnum *) Sunday;
-+(MHVScheduleScheduledDaysEnum *) Monday;
-+(MHVScheduleScheduledDaysEnum *) Tuesday;
-+(MHVScheduleScheduledDaysEnum *) Wednesday;
-+(MHVScheduleScheduledDaysEnum *) Thursday;
-+(MHVScheduleScheduledDaysEnum *) Friday;
-+(MHVScheduleScheduledDaysEnum *) Saturday;
++(MHVScheduleScheduledDaysEnum *)MHVUnknown;
++(MHVScheduleScheduledDaysEnum *)MHVEveryday;
++(MHVScheduleScheduledDaysEnum *)MHVSunday;
++(MHVScheduleScheduledDaysEnum *)MHVMonday;
++(MHVScheduleScheduledDaysEnum *)MHVTuesday;
++(MHVScheduleScheduledDaysEnum *)MHVWednesday;
++(MHVScheduleScheduledDaysEnum *)MHVThursday;
++(MHVScheduleScheduledDaysEnum *)MHVFriday;
++(MHVScheduleScheduledDaysEnum *)MHVSaturday;
 @end
 
 @interface MHVSchedule : MHVModelBase

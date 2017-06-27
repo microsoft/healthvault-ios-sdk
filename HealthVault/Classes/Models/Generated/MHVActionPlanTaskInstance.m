@@ -117,27 +117,27 @@
     };
 }
 
-+(MHVActionPlanTaskInstanceStatusEnum *) Unknown
++(MHVActionPlanTaskInstanceStatusEnum *)MHVUnknown
 {
     return [[MHVActionPlanTaskInstanceStatusEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanTaskInstanceStatusEnum *) Archived
++(MHVActionPlanTaskInstanceStatusEnum *)MHVArchived
 {
     return [[MHVActionPlanTaskInstanceStatusEnum alloc] initWithString:@"Archived"];
 }
-+(MHVActionPlanTaskInstanceStatusEnum *) InProgress
++(MHVActionPlanTaskInstanceStatusEnum *)MHVInProgress
 {
     return [[MHVActionPlanTaskInstanceStatusEnum alloc] initWithString:@"InProgress"];
 }
-+(MHVActionPlanTaskInstanceStatusEnum *) Recommended
++(MHVActionPlanTaskInstanceStatusEnum *)MHVRecommended
 {
     return [[MHVActionPlanTaskInstanceStatusEnum alloc] initWithString:@"Recommended"];
 }
-+(MHVActionPlanTaskInstanceStatusEnum *) Completed
++(MHVActionPlanTaskInstanceStatusEnum *)MHVCompleted
 {
     return [[MHVActionPlanTaskInstanceStatusEnum alloc] initWithString:@"Completed"];
 }
-+(MHVActionPlanTaskInstanceStatusEnum *) Template
++(MHVActionPlanTaskInstanceStatusEnum *)MHVTemplate
 {
     return [[MHVActionPlanTaskInstanceStatusEnum alloc] initWithString:@"Template"];
 }
@@ -153,15 +153,15 @@
     };
 }
 
-+(MHVActionPlanTaskInstanceTaskTypeEnum *) Unknown
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVUnknown
 {
     return [[MHVActionPlanTaskInstanceTaskTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanTaskInstanceTaskTypeEnum *) BloodPressure
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVBloodPressure
 {
     return [[MHVActionPlanTaskInstanceTaskTypeEnum alloc] initWithString:@"BloodPressure"];
 }
-+(MHVActionPlanTaskInstanceTaskTypeEnum *) Other
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVOther
 {
     return [[MHVActionPlanTaskInstanceTaskTypeEnum alloc] initWithString:@"Other"];
 }
@@ -177,15 +177,15 @@
     };
 }
 
-+(MHVActionPlanTaskInstanceCompletionTypeEnum *) Unknown
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVUnknown
 {
     return [[MHVActionPlanTaskInstanceCompletionTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanTaskInstanceCompletionTypeEnum *) Frequency
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVFrequency
 {
     return [[MHVActionPlanTaskInstanceCompletionTypeEnum alloc] initWithString:@"Frequency"];
 }
-+(MHVActionPlanTaskInstanceCompletionTypeEnum *) Scheduled
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVScheduled
 {
     return [[MHVActionPlanTaskInstanceCompletionTypeEnum alloc] initWithString:@"Scheduled"];
 }

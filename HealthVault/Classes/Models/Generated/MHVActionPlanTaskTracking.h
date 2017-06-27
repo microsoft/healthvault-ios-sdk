@@ -37,15 +37,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanTaskTrackingTrackingTypeEnum : MHVEnum
-+(MHVActionPlanTaskTrackingTrackingTypeEnum *) Unknown;
-+(MHVActionPlanTaskTrackingTrackingTypeEnum *) Manual;
-+(MHVActionPlanTaskTrackingTrackingTypeEnum *) Auto;
++(MHVActionPlanTaskTrackingTrackingTypeEnum *)MHVUnknown;
++(MHVActionPlanTaskTrackingTrackingTypeEnum *)MHVManual;
++(MHVActionPlanTaskTrackingTrackingTypeEnum *)MHVAuto;
 @end
 @interface MHVActionPlanTaskTrackingTrackingStatusEnum : MHVEnum
-+(MHVActionPlanTaskTrackingTrackingStatusEnum *) Unknown;
-+(MHVActionPlanTaskTrackingTrackingStatusEnum *) Occurrence;
-+(MHVActionPlanTaskTrackingTrackingStatusEnum *) Completion;
-+(MHVActionPlanTaskTrackingTrackingStatusEnum *) OutOfWindow;
++(MHVActionPlanTaskTrackingTrackingStatusEnum *)MHVUnknown;
++(MHVActionPlanTaskTrackingTrackingStatusEnum *)MHVOccurrence;
++(MHVActionPlanTaskTrackingTrackingStatusEnum *)MHVCompletion;
++(MHVActionPlanTaskTrackingTrackingStatusEnum *)MHVOutOfWindow;
 @end
 
 @interface MHVActionPlanTaskTracking : MHVModelBase

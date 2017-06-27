@@ -24,12 +24,12 @@ NS_ASSUME_NONNULL_BEGIN
 {{#isEnum}}
 @interface {{classname}}{{enumName}} : MHVEnum
 {{#_enum}}
-+({{classname}}{{enumName}} *) {{.}};
++({{classname}}{{enumName}} *)MHV{{.}};
 {{/_enum}}
 {{#isContainer}}
 {{#items}}
 {{#_enum}}
-+({{classname}}{{enumName}} *) {{.}};
++({{classname}}{{enumName}} *)MHV{{.}};
 {{/_enum}}
 {{/items}}
 {{/isContainer}}

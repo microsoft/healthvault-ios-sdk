@@ -108,15 +108,15 @@
     };
 }
 
-+(MHVActionPlanTaskTaskTypeEnum *) Unknown
++(MHVActionPlanTaskTaskTypeEnum *)MHVUnknown
 {
     return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanTaskTaskTypeEnum *) BloodPressure
++(MHVActionPlanTaskTaskTypeEnum *)MHVBloodPressure
 {
     return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"BloodPressure"];
 }
-+(MHVActionPlanTaskTaskTypeEnum *) Other
++(MHVActionPlanTaskTaskTypeEnum *)MHVOther
 {
     return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"Other"];
 }
@@ -132,15 +132,15 @@
     };
 }
 
-+(MHVActionPlanTaskCompletionTypeEnum *) Unknown
++(MHVActionPlanTaskCompletionTypeEnum *)MHVUnknown
 {
     return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanTaskCompletionTypeEnum *) Frequency
++(MHVActionPlanTaskCompletionTypeEnum *)MHVFrequency
 {
     return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Frequency"];
 }
-+(MHVActionPlanTaskCompletionTypeEnum *) Scheduled
++(MHVActionPlanTaskCompletionTypeEnum *)MHVScheduled
 {
     return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Scheduled"];
 }

@@ -104,15 +104,15 @@
     };
 }
 
-+(MHVActionPlanTaskTrackingTrackingTypeEnum *) Unknown
++(MHVActionPlanTaskTrackingTrackingTypeEnum *)MHVUnknown
 {
     return [[MHVActionPlanTaskTrackingTrackingTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanTaskTrackingTrackingTypeEnum *) Manual
++(MHVActionPlanTaskTrackingTrackingTypeEnum *)MHVManual
 {
     return [[MHVActionPlanTaskTrackingTrackingTypeEnum alloc] initWithString:@"Manual"];
 }
-+(MHVActionPlanTaskTrackingTrackingTypeEnum *) Auto
++(MHVActionPlanTaskTrackingTrackingTypeEnum *)MHVAuto
 {
     return [[MHVActionPlanTaskTrackingTrackingTypeEnum alloc] initWithString:@"Auto"];
 }
@@ -129,19 +129,19 @@
     };
 }
 
-+(MHVActionPlanTaskTrackingTrackingStatusEnum *) Unknown
++(MHVActionPlanTaskTrackingTrackingStatusEnum *)MHVUnknown
 {
     return [[MHVActionPlanTaskTrackingTrackingStatusEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanTaskTrackingTrackingStatusEnum *) Occurrence
++(MHVActionPlanTaskTrackingTrackingStatusEnum *)MHVOccurrence
 {
     return [[MHVActionPlanTaskTrackingTrackingStatusEnum alloc] initWithString:@"Occurrence"];
 }
-+(MHVActionPlanTaskTrackingTrackingStatusEnum *) Completion
++(MHVActionPlanTaskTrackingTrackingStatusEnum *)MHVCompletion
 {
     return [[MHVActionPlanTaskTrackingTrackingStatusEnum alloc] initWithString:@"Completion"];
 }
-+(MHVActionPlanTaskTrackingTrackingStatusEnum *) OutOfWindow
++(MHVActionPlanTaskTrackingTrackingStatusEnum *)MHVOutOfWindow
 {
     return [[MHVActionPlanTaskTrackingTrackingStatusEnum alloc] initWithString:@"OutOfWindow"];
 }

@@ -107,27 +107,27 @@
     };
 }
 
-+(MHVActionPlanInstanceStatusEnum *) Unknown
++(MHVActionPlanInstanceStatusEnum *)MHVUnknown
 {
     return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanInstanceStatusEnum *) Archived
++(MHVActionPlanInstanceStatusEnum *)MHVArchived
 {
     return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Archived"];
 }
-+(MHVActionPlanInstanceStatusEnum *) Recommended
++(MHVActionPlanInstanceStatusEnum *)MHVRecommended
 {
     return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Recommended"];
 }
-+(MHVActionPlanInstanceStatusEnum *) InProgress
++(MHVActionPlanInstanceStatusEnum *)MHVInProgress
 {
     return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"InProgress"];
 }
-+(MHVActionPlanInstanceStatusEnum *) Completed
++(MHVActionPlanInstanceStatusEnum *)MHVCompleted
 {
     return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Completed"];
 }
-+(MHVActionPlanInstanceStatusEnum *) Template
++(MHVActionPlanInstanceStatusEnum *)MHVTemplate
 {
     return [[MHVActionPlanInstanceStatusEnum alloc] initWithString:@"Template"];
 }
@@ -145,23 +145,23 @@
     };
 }
 
-+(MHVActionPlanInstanceCategoryEnum *) Unknown
++(MHVActionPlanInstanceCategoryEnum *)MHVUnknown
 {
     return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanInstanceCategoryEnum *) Health
++(MHVActionPlanInstanceCategoryEnum *)MHVHealth
 {
     return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Health"];
 }
-+(MHVActionPlanInstanceCategoryEnum *) Sleep
++(MHVActionPlanInstanceCategoryEnum *)MHVSleep
 {
     return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Sleep"];
 }
-+(MHVActionPlanInstanceCategoryEnum *) Activity
++(MHVActionPlanInstanceCategoryEnum *)MHVActivity
 {
     return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Activity"];
 }
-+(MHVActionPlanInstanceCategoryEnum *) Stress
++(MHVActionPlanInstanceCategoryEnum *)MHVStress
 {
     return [[MHVActionPlanInstanceCategoryEnum alloc] initWithString:@"Stress"];
 }

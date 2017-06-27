@@ -36,10 +36,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum : MHVEnum
-+(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *) Unknown;
-+(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *) None;
-+(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *) Daily;
-+(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *) Weekly;
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *)MHVUnknown;
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *)MHVNone;
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *)MHVDaily;
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *)MHVWeekly;
 @end
 
 @interface MHVActionPlanFrequencyTaskCompletionMetrics : MHVModelBase

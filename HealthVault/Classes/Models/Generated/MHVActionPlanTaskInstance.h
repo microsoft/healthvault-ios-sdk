@@ -39,22 +39,22 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanTaskInstanceStatusEnum : MHVEnum
-+(MHVActionPlanTaskInstanceStatusEnum *) Unknown;
-+(MHVActionPlanTaskInstanceStatusEnum *) Archived;
-+(MHVActionPlanTaskInstanceStatusEnum *) InProgress;
-+(MHVActionPlanTaskInstanceStatusEnum *) Recommended;
-+(MHVActionPlanTaskInstanceStatusEnum *) Completed;
-+(MHVActionPlanTaskInstanceStatusEnum *) Template;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVUnknown;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVArchived;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVInProgress;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVRecommended;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVCompleted;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVTemplate;
 @end
 @interface MHVActionPlanTaskInstanceTaskTypeEnum : MHVEnum
-+(MHVActionPlanTaskInstanceTaskTypeEnum *) Unknown;
-+(MHVActionPlanTaskInstanceTaskTypeEnum *) BloodPressure;
-+(MHVActionPlanTaskInstanceTaskTypeEnum *) Other;
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVUnknown;
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVBloodPressure;
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVOther;
 @end
 @interface MHVActionPlanTaskInstanceCompletionTypeEnum : MHVEnum
-+(MHVActionPlanTaskInstanceCompletionTypeEnum *) Unknown;
-+(MHVActionPlanTaskInstanceCompletionTypeEnum *) Frequency;
-+(MHVActionPlanTaskInstanceCompletionTypeEnum *) Scheduled;
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVUnknown;
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVFrequency;
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVScheduled;
 @end
 
 @interface MHVActionPlanTaskInstance : MHVModelBase

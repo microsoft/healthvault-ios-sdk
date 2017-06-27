@@ -102,23 +102,23 @@
     };
 }
 
-+(MHVActionPlanCategoryEnum *) Unknown
++(MHVActionPlanCategoryEnum *)MHVUnknown
 {
     return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVActionPlanCategoryEnum *) Health
++(MHVActionPlanCategoryEnum *)MHVHealth
 {
     return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Health"];
 }
-+(MHVActionPlanCategoryEnum *) Sleep
++(MHVActionPlanCategoryEnum *)MHVSleep
 {
     return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Sleep"];
 }
-+(MHVActionPlanCategoryEnum *) Activity
++(MHVActionPlanCategoryEnum *)MHVActivity
 {
     return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Activity"];
 }
-+(MHVActionPlanCategoryEnum *) Stress
++(MHVActionPlanCategoryEnum *)MHVStress
 {
     return [[MHVActionPlanCategoryEnum alloc] initWithString:@"Stress"];
 }

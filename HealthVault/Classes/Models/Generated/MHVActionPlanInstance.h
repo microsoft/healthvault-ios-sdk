@@ -38,19 +38,19 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanInstanceStatusEnum : MHVEnum
-+(MHVActionPlanInstanceStatusEnum *) Unknown;
-+(MHVActionPlanInstanceStatusEnum *) Archived;
-+(MHVActionPlanInstanceStatusEnum *) Recommended;
-+(MHVActionPlanInstanceStatusEnum *) InProgress;
-+(MHVActionPlanInstanceStatusEnum *) Completed;
-+(MHVActionPlanInstanceStatusEnum *) Template;
++(MHVActionPlanInstanceStatusEnum *)MHVUnknown;
++(MHVActionPlanInstanceStatusEnum *)MHVArchived;
++(MHVActionPlanInstanceStatusEnum *)MHVRecommended;
++(MHVActionPlanInstanceStatusEnum *)MHVInProgress;
++(MHVActionPlanInstanceStatusEnum *)MHVCompleted;
++(MHVActionPlanInstanceStatusEnum *)MHVTemplate;
 @end
 @interface MHVActionPlanInstanceCategoryEnum : MHVEnum
-+(MHVActionPlanInstanceCategoryEnum *) Unknown;
-+(MHVActionPlanInstanceCategoryEnum *) Health;
-+(MHVActionPlanInstanceCategoryEnum *) Sleep;
-+(MHVActionPlanInstanceCategoryEnum *) Activity;
-+(MHVActionPlanInstanceCategoryEnum *) Stress;
++(MHVActionPlanInstanceCategoryEnum *)MHVUnknown;
++(MHVActionPlanInstanceCategoryEnum *)MHVHealth;
++(MHVActionPlanInstanceCategoryEnum *)MHVSleep;
++(MHVActionPlanInstanceCategoryEnum *)MHVActivity;
++(MHVActionPlanInstanceCategoryEnum *)MHVStress;
 @end
 
 @interface MHVActionPlanInstance : MHVModelBase

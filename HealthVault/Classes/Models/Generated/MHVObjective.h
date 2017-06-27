@@ -36,18 +36,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVObjectiveStateEnum : MHVEnum
-+(MHVObjectiveStateEnum *) Unknown;
-+(MHVObjectiveStateEnum *) Inactive;
-+(MHVObjectiveStateEnum *) Active;
++(MHVObjectiveStateEnum *)MHVUnknown;
++(MHVObjectiveStateEnum *)MHVInactive;
++(MHVObjectiveStateEnum *)MHVActive;
 @end
 @interface MHVObjectiveOutcomeTypeEnum : MHVEnum
-+(MHVObjectiveOutcomeTypeEnum *) Unknown;
-+(MHVObjectiveOutcomeTypeEnum *) StepsPerDay;
-+(MHVObjectiveOutcomeTypeEnum *) CaloriesPerDay;
-+(MHVObjectiveOutcomeTypeEnum *) ExerciseHoursPerWeek;
-+(MHVObjectiveOutcomeTypeEnum *) SleepHoursPerNight;
-+(MHVObjectiveOutcomeTypeEnum *) MinutesToFallAsleepPerNight;
-+(MHVObjectiveOutcomeTypeEnum *) Other;
++(MHVObjectiveOutcomeTypeEnum *)MHVUnknown;
++(MHVObjectiveOutcomeTypeEnum *)MHVStepsPerDay;
++(MHVObjectiveOutcomeTypeEnum *)MHVCaloriesPerDay;
++(MHVObjectiveOutcomeTypeEnum *)MHVExerciseHoursPerWeek;
++(MHVObjectiveOutcomeTypeEnum *)MHVSleepHoursPerNight;
++(MHVObjectiveOutcomeTypeEnum *)MHVMinutesToFallAsleepPerNight;
++(MHVObjectiveOutcomeTypeEnum *)MHVOther;
 @end
 
 @interface MHVObjective : MHVModelBase

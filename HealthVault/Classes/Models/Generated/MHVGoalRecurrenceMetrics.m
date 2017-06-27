@@ -92,19 +92,19 @@
     };
 }
 
-+(MHVGoalRecurrenceMetricsWindowTypeEnum *) Unknown
++(MHVGoalRecurrenceMetricsWindowTypeEnum *)MHVUnknown
 {
     return [[MHVGoalRecurrenceMetricsWindowTypeEnum alloc] initWithString:@"Unknown"];
 }
-+(MHVGoalRecurrenceMetricsWindowTypeEnum *) Daily
++(MHVGoalRecurrenceMetricsWindowTypeEnum *)MHVDaily
 {
     return [[MHVGoalRecurrenceMetricsWindowTypeEnum alloc] initWithString:@"Daily"];
 }
-+(MHVGoalRecurrenceMetricsWindowTypeEnum *) Weekly
++(MHVGoalRecurrenceMetricsWindowTypeEnum *)MHVWeekly
 {
     return [[MHVGoalRecurrenceMetricsWindowTypeEnum alloc] initWithString:@"Weekly"];
 }
-+(MHVGoalRecurrenceMetricsWindowTypeEnum *) Monthly
++(MHVGoalRecurrenceMetricsWindowTypeEnum *)MHVMonthly
 {
     return [[MHVGoalRecurrenceMetricsWindowTypeEnum alloc] initWithString:@"Monthly"];
 }
