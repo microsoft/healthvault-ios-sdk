@@ -1,5 +1,5 @@
 //
-// MSHDynamicEnum.m
+// MHVDynamicEnum.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -41,7 +41,7 @@ static NSArray<NSString *> *prefixList = nil;
 
 + (NSDictionary *)enumMap
 {
-    NSAssert(NO, @"MSHDynamicEnum subclasses must implement");
+    NSAssert(NO, @"MHVDynamicEnum subclasses must implement");
     return nil;
 }
 

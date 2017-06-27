@@ -5,7 +5,9 @@ use_frameworks!
 
   target 'healthvault-ios-sdk_Example' do
     platform :ios, '8.0'
-    pod 'HealthVault', :path => '../'
+    pod 'HealthVault/OfflineThingCache', :path => '../'
+    pod 'EncryptedCoreData', :inhibit_warnings => true
+    pod 'SQLCipher', :inhibit_warnings => true
 
   target 'healthvault-ios-sdk_Tests' do
     platform :ios, '8.0'
