@@ -27,12 +27,28 @@
 #import <Foundation/Foundation.h>
 
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVObjective
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVObjectiveStateEnum : MHVEnum
++(MHVObjectiveStateEnum *)MHVUnknown;
++(MHVObjectiveStateEnum *)MHVInactive;
++(MHVObjectiveStateEnum *)MHVActive;
+@end
+@interface MHVObjectiveOutcomeTypeEnum : MHVEnum
++(MHVObjectiveOutcomeTypeEnum *)MHVUnknown;
++(MHVObjectiveOutcomeTypeEnum *)MHVStepsPerDay;
++(MHVObjectiveOutcomeTypeEnum *)MHVCaloriesPerDay;
++(MHVObjectiveOutcomeTypeEnum *)MHVExerciseHoursPerWeek;
++(MHVObjectiveOutcomeTypeEnum *)MHVSleepHoursPerNight;
++(MHVObjectiveOutcomeTypeEnum *)MHVMinutesToFallAsleepPerNight;
++(MHVObjectiveOutcomeTypeEnum *)MHVOther;
+@end
 
 @interface MHVObjective : MHVModelBase
 
@@ -47,13 +63,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSString* descriptionText;
 /* The state of the objective 
  */
-@property(strong,nonatomic) NSString* state;
+@property(strong,nonatomic) MHVObjectiveStateEnum* state;
 /* Gets or sets the name of the outcome [optional]
  */
 @property(strong,nonatomic,nullable) NSString* outcomeName;
 /* Gets or sets the type of the outcome 
  */
-@property(strong,nonatomic) NSString* outcomeType;
+@property(strong,nonatomic) MHVObjectiveOutcomeTypeEnum* outcomeType;
 
 @end
 

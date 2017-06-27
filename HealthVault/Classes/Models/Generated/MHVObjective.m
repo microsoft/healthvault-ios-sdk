@@ -83,5 +83,72 @@
     });
     return types;
 }
+@end
+@implementation MHVObjectiveStateEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Inactive": @"Inactive",
+        @"Active": @"Active",
+    };
+}
+
++(MHVObjectiveStateEnum *)MHVUnknown
+{
+    return [[MHVObjectiveStateEnum alloc] initWithString:@"Unknown"];
+}
++(MHVObjectiveStateEnum *)MHVInactive
+{
+    return [[MHVObjectiveStateEnum alloc] initWithString:@"Inactive"];
+}
++(MHVObjectiveStateEnum *)MHVActive
+{
+    return [[MHVObjectiveStateEnum alloc] initWithString:@"Active"];
+}
+@end
+@implementation MHVObjectiveOutcomeTypeEnum
+
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"StepsPerDay": @"StepsPerDay",
+        @"CaloriesPerDay": @"CaloriesPerDay",
+        @"ExerciseHoursPerWeek": @"ExerciseHoursPerWeek",
+        @"SleepHoursPerNight": @"SleepHoursPerNight",
+        @"MinutesToFallAsleepPerNight": @"MinutesToFallAsleepPerNight",
+        @"Other": @"Other",
+    };
+}
+
++(MHVObjectiveOutcomeTypeEnum *)MHVUnknown
+{
+    return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVObjectiveOutcomeTypeEnum *)MHVStepsPerDay
+{
+    return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"StepsPerDay"];
+}
++(MHVObjectiveOutcomeTypeEnum *)MHVCaloriesPerDay
+{
+    return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"CaloriesPerDay"];
+}
++(MHVObjectiveOutcomeTypeEnum *)MHVExerciseHoursPerWeek
+{
+    return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"ExerciseHoursPerWeek"];
+}
++(MHVObjectiveOutcomeTypeEnum *)MHVSleepHoursPerNight
+{
+    return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"SleepHoursPerNight"];
+}
++(MHVObjectiveOutcomeTypeEnum *)MHVMinutesToFallAsleepPerNight
+{
+    return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"MinutesToFallAsleepPerNight"];
+}
++(MHVObjectiveOutcomeTypeEnum *)MHVOther
+{
+    return [[MHVObjectiveOutcomeTypeEnum alloc] initWithString:@"Other"];
+}
 @end

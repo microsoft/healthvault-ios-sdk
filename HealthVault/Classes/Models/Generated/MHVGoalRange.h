@@ -27,12 +27,21 @@
 #import <Foundation/Foundation.h>
 
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVGoalRange
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVGoalRangeUnitsEnum : MHVEnum
++(MHVGoalRangeUnitsEnum *)MHVUnknown;
++(MHVGoalRangeUnitsEnum *)MHVKilograms;
++(MHVGoalRangeUnitsEnum *)MHVCount;
++(MHVGoalRangeUnitsEnum *)MHVCalories;
++(MHVGoalRangeUnitsEnum *)MHVMillimetersOfMercury;
+@end
 
 @interface MHVGoalRange : MHVModelBase
 
@@ -50,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSNumber* maximum;
 /* The units of the range. [optional]
  */
-@property(strong,nonatomic,nullable) NSString* units;
+@property(strong,nonatomic,nullable) MHVGoalRangeUnitsEnum* units;
 
 @end
 

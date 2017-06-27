@@ -96,7 +96,7 @@
              {
                  self.task = output;
                  self.nameValue.text = output.name;
-                 self.statusValue.text = output.status;
+                 self.statusValue.text = output.status.stringValue;
                  self.shortDescriptionValue.text = output.shortDescription;
                  self.startDate.text = output.startDate.toString;
                  
@@ -116,7 +116,7 @@
     [self.statusLabel showBusy];
     
     self.task.name = self.nameValue.text;
-    self.task.status = self.statusValue.text;
+    self.task.status = [[MHVActionPlanTaskInstanceStatusEnum alloc] initWithString:self.statusValue.text];
     self.task.shortDescription = self.shortDescriptionValue.text;
     
     [self.connection.remoteMonitoringClient actionPlanTasksUpdateWithActionPlanTask:self.task completion:^(MHVActionPlanTaskInstance * _Nullable output, NSError * _Nullable error) {
