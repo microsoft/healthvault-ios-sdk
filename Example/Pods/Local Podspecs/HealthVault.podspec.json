@@ -1,8 +1,8 @@
 {
   "name": "HealthVault",
   "version": "3.0.2-preview",
-  "summary": "An iOS library you can use to build applications that leverage the Microsoft HealthVault platform",
-  "description": "The healthvault-ios-sdk simplifies developing apps that use the Microsoft HealthVault platform. It handles authenticating users, managing credentials, and serializing data types.",
+  "summary": "An iOS framework you can use to build applications that leverage the Microsoft HealthVault platform",
+  "description": "The healthvault-ios-sdk framework simplifies developing apps that use the Microsoft HealthVault platform. It handles authenticating users, managing credentials, serializing data types and much more.",
   "homepage": "https://github.com/Microsoft/healthvault-ios-sdk",
   "license": {
     "type": "APACHE",
@@ -19,6 +19,7 @@
     "ios": "8.0"
   },
   "source_files": "HealthVault/Classes/**/*",
+  "exclude_files": "HealthVault/Classes/Caching/**/*.{h,m}",
   "requires_arc": true,
   "libraries": "xml2",
   "xcconfig": {
@@ -30,5 +31,18 @@
     "Security",
     "MobileCoreServices",
     "SystemConfiguration"
+  ],
+  "subspecs": [
+    {
+      "name": "OfflineThingCache",
+      "source_files": "HealthVault/Classes/**/*",
+      "frameworks": "CoreData",
+      "compiler_flags": "-D THING_CACHE=1",
+      "dependencies": {
+        "EncryptedCoreData": [
+          "~> 3.1"
+        ]
+      }
+    }
   ]
 }
