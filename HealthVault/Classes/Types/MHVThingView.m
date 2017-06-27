@@ -68,40 +68,28 @@ static NSString *const c_element_versions = @"type-version-format";
 
 - (void)serialize:(XWriter *)writer
 {
-    @try
+    MHVStringCollection *sections = [self createStringsFromSections];
+    [writer writeElementArray:c_element_section elements:sections.toArray];
+    if (self.sections & MHVThingSection_Data)
     {
-        MHVStringCollection *sections = [self createStringsFromSections];
-        [writer writeElementArray:c_element_section elements:sections.toArray];
-        if (self.sections & MHVThingSection_Data)
-        {
-            [writer writeEmptyElement:c_element_xml];
-        }
-
-        [writer writeElementArray:c_element_xml elements:self.transforms.toArray];
-        [writer writeElementArray:c_element_versions elements:self.typeVersions.toArray];
+        [writer writeEmptyElement:c_element_xml];
     }
-    @catch (id exception)
-    {
-    }
+    
+    [writer writeElementArray:c_element_xml elements:self.transforms.toArray];
+    [writer writeElementArray:c_element_versions elements:self.typeVersions.toArray];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    @try
+    MHVStringCollection *sections = [reader readStringElementArray:c_element_section];
+    self.transforms = [reader readStringElementArray:c_element_xml];
+    self.typeVersions = [reader readStringElementArray:c_element_versions];
+    
+    self.sections = [self stringsToSections:sections];
+    if ([self.transforms containsString:c_emptyString])
     {
-        MHVStringCollection *sections = [reader readStringElementArray:c_element_section];
-        self.transforms = [reader readStringElementArray:c_element_xml];
-        self.typeVersions = [reader readStringElementArray:c_element_versions];
-
-        self.sections = [self stringsToSections:sections];
-        if ([self.transforms containsString:c_emptyString])
-        {
-            self.sections |= MHVThingSection_Data;
-            [self.transforms removeString:c_emptyString];
-        }
-    }
-    @catch (id exception)
-    {
+        self.sections |= MHVThingSection_Data;
+        [self.transforms removeString:c_emptyString];
     }
 }
 

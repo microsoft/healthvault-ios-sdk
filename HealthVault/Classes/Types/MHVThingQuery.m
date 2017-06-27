@@ -16,13 +16,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVThingQuery.h"
+#import "MHVStringExtensions.h"
+#import "MHVValidator.h"
 #import "MHVType.h"
 #import "MHVPendingThing.h"
 
 static NSString *const c_attribute_name = @"name";
-static NSString *const c_attribute_max = @"max";
 static NSString *const c_attribute_maxfull = @"max-full";
 static NSString *const c_element_id = @"id";
 static NSString *const c_element_key = @"key";
@@ -37,68 +37,16 @@ static NSString *const c_element_view = @"format";
 @property (readwrite, nonatomic, strong) MHVStringCollection *clientIDs;
 @property (readwrite, nonatomic, strong) MHVThingFilterCollection *filters;
 @property (readwrite, nonatomic, strong) MHVInt *max;
-@property (readwrite, nonatomic, strong) MHVInt *maxFull;
 
 @end
 
 @implementation MHVThingQuery
 
-- (void)setView:(MHVThingView *)view
-{
-    MHVASSERT(view != nil);
-    if (view)
-    {
-        _view = view;
-    }
-}
-
-- (int)maxResults
-{
-    return (self.max) ? self.max.value : -1;
-}
-
-- (void)setMaxResults:(int)maxResultsValue
-{
-    if (maxResultsValue >= 0)
-    {
-        if (!self.max)
-        {
-            self.max = [[MHVInt alloc] init];
-        }
-        
-        self.max.value = maxResultsValue;
-    }
-    else
-    {
-        self.max = nil;
-    }
-}
-
-- (int)maxFullResults
-{
-    return (self.maxFull) ? self.maxFull.value : -1;
-}
-
-- (void)setMaxFullResults:(int)maxFullResultsValue
-{
-    if (maxFullResultsValue >= 0)
-    {
-        if (!self.maxFull)
-        {
-            self.maxFull = [[MHVInt alloc] init];
-        }
-        
-        self.maxFull.value = maxFullResultsValue;
-    }
-    else
-    {
-        self.maxFull = nil;
-    }
-}
 
 - (instancetype)init
 {
     self = [super init];
+    
     if (self)
     {
         _view = [[MHVThingView alloc] init];
@@ -106,21 +54,11 @@ static NSString *const c_element_view = @"format";
         _keys = [[MHVThingKeyCollection alloc] init];
         _clientIDs = [[MHVStringCollection alloc] init];
         _filters = [[MHVThingFilterCollection alloc] init];
-        
-        MHVCHECK_TRUE(_view && _thingIDs && _keys && _filters);
     }
+    
     return self;
 }
 
-- (instancetype)initWithTypeID:(NSString *)typeID
-{
-    MHVCHECK_STRING(typeID);
-    
-    MHVThingFilter *filter = [[MHVThingFilter alloc] initWithTypeID:typeID];
-    self = [self initWithFilter:filter];
-    
-    return self;
-}
 
 - (instancetype)initWithFilter:(MHVThingFilter *)filter
 {
@@ -151,14 +89,14 @@ static NSString *const c_element_view = @"format";
     return self;
 }
 
-- (instancetype)initWithThingIDs:(NSArray *)ids
+- (instancetype)initWithThingIDs:(MHVStringCollection *)ids
 {
     MHVCHECK_NOTNULL(ids);
     
     self = [self init];
     if (self)
     {
-        [_thingIDs addObjectsFromArray:ids];
+        _thingIDs = ids;
     }
     return self;
 }
@@ -176,77 +114,48 @@ static NSString *const c_element_view = @"format";
     return self;
 }
 
-- (instancetype)initWithThingKeys:(NSArray *)keys
+- (instancetype)initWithThingKeys:(MHVThingKeyCollection *)keys
 {
     MHVCHECK_NOTNULL(keys);
     
     self = [self init];
     if (self)
     {
-        [_keys addObjectsFromArray:keys];
+        _keys = keys;
     }
     return self;
 }
 
-- (instancetype)initWithPendingThings:(MHVCollection *)pendingThings
+- (void)setView:(MHVThingView *)view
 {
-    MHVCHECK_NOTNULL(pendingThings);
+    MHVASSERT_PARAMETER(view);
     
-    self = [self init];
-    if (self)
+    if (view)
     {
-        for (MHVPendingThing *thing in pendingThings)
-        {
-            [_keys addObject:thing.key];
-        }
+        _view = view;
     }
-    return self;
 }
 
-- (instancetype)initWithThingKey:(MHVThingKey *)key andType:(NSString *)typeID
+- (int)maxResults
 {
-    self = [self init];
-    if (self)
-    {
-        [_keys addObject:key];
-        if (![NSString isNilOrEmpty:typeID])
-        {
-            [self.view.typeVersions addObject:typeID];
-        }
-    }
-    return self;
+    return (self.max != nil) ? self.max.value : -1;
 }
 
-- (instancetype)initWithThingID:(NSString *)thingID andType:(NSString *)typeID
+- (void)setMaxResults:(int)maxResultsValue
 {
-    MHVCHECK_STRING(thingID);
-    
-    self = [self init];
-    if (self)
+    if (maxResultsValue >= 0)
     {
-        [_thingIDs addObject:thingID];
-        if (![NSString isNilOrEmpty:typeID])
+        if (!self.max)
         {
-            [self.view.typeVersions addObject:typeID];
+            self.max = [[MHVInt alloc] init];
         }
+        
+        self.max.value = maxResultsValue;
     }
-    return self;
-}
-
-- (instancetype)initWithClientID:(NSString *)clientID andType:(NSString *)typeID
-{
-    MHVCHECK_STRING(clientID);
-    
-    self = [self init];
-    if (self)
+    else
     {
-        [_clientIDs addObject:clientID];
-        if (![NSString isNilOrEmpty:typeID])
-        {
-            [self.view.typeVersions addObject:typeID];
-        }
+        self.max = nil;
     }
-    return self;
 }
 
 - (MHVClientResult *)validate
@@ -260,7 +169,6 @@ static NSString *const c_element_view = @"format";
     MHVVALIDATE_ARRAYOPTIONAL(self.filters, MHVClientError_InvalidThingQuery);
     
     MHVVALIDATE_OPTIONAL(self.max);
-    MHVVALIDATE_OPTIONAL(self.maxFull);
     
     MHVVALIDATE_SUCCESS;
 }
@@ -268,14 +176,10 @@ static NSString *const c_element_view = @"format";
 - (void)serializeAttributes:(XWriter *)writer
 {
     [writer writeAttribute:c_attribute_name value:self.name];
+
     if (self.max)
     {
-        [writer writeAttribute:c_attribute_max intValue:self.max.value];
-    }
-    
-    if (self.maxFull)
-    {
-        [writer writeAttribute:c_attribute_maxfull intValue:self.maxFull.value];
+        [writer writeAttribute:c_attribute_maxfull intValue:self.max.value];
     }
 }
 
@@ -306,14 +210,10 @@ static NSString *const c_element_view = @"format";
     self.name = [reader readAttribute:c_attribute_name];
     
     int intValue;
-    if ([reader readIntAttribute:c_attribute_max intValue:&intValue])
-    {
-        self.maxResults = intValue;
-    }
     
     if ([reader readIntAttribute:c_attribute_maxfull intValue:&intValue])
     {
-        self.maxFullResults = intValue;
+        self.maxResults = intValue;
     }
 }
 
