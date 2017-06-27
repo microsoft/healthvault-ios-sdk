@@ -19,6 +19,7 @@
     "ios": "8.0"
   },
   "source_files": "HealthVault/Classes/**/*",
+  "exclude_files": "HealthVault/Classes/Caching/**/*.{h,m}",
   "requires_arc": true,
   "libraries": "xml2",
   "xcconfig": {
@@ -30,5 +31,18 @@
     "Security",
     "MobileCoreServices",
     "SystemConfiguration"
+  ],
+  "subspecs": [
+    {
+      "name": "OfflineThingCache",
+      "source_files": "HealthVault/Classes/**/*",
+      "frameworks": "CoreData",
+      "compiler_flags": "-D THING_CACHE=1",
+      "dependencies": {
+        "EncryptedCoreData": [
+          "~> 3.1"
+        ]
+      }
+    }
   ]
 }

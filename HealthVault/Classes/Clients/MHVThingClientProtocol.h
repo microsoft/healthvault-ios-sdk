@@ -19,7 +19,7 @@
 #import <UIKit/UIKit.h>
 #import "MHVClientProtocol.h"
 
-@class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVBlobPayloadThing;
+@class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVBlobPayloadThing, MHVGetRecordOperationsResult;
 @protocol MHVBlobSourceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -252,6 +252,20 @@ NS_ASSUME_NONNULL_BEGIN
           contentType:(NSString *)contentType
              recordId:(NSUUID *)recordId
            completion:(void(^)(MHVThing *_Nullable thing, NSError *_Nullable error))completion;
+
+/**
+ * Get the record operations that have happened since a sequence number
+ *
+ * @param sequenceNumber Retrieve all record operations that have happened after this sequence number.
+ *        1 for the number will retrieve all operations since the account was created
+ * @param recordId an authorized person's record ID.
+ * @param completion Envoked when the operation completes.
+ *        MHVGetRecordOperationsResult with all the operations and the latest sequence number
+ *        NSError object will be nil if there is no error when performing the operation.
+ */
+ - (void)getRecordOperations:(NSUInteger)sequenceNumber
+                   recordId:(NSUUID *)recordId
+                 completion:(void (^)(MHVGetRecordOperationsResult *_Nullable result, NSError *_Nullable error))completion;
 
 @end
 

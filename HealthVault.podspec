@@ -20,10 +20,17 @@ The healthvault-ios-sdk framework simplifies developing apps that use the Micros
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'HealthVault/Classes/**/*'
+  s.exclude_files = 'HealthVault/Classes/Caching/**/*.{h,m}'
 
   s.requires_arc     = true
   s.libraries        = "xml2"
   s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(inherited) $(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2' }
   s.frameworks       = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
 
+  s.subspec 'OfflineThingCache' do |ss|
+    ss.source_files = 'HealthVault/Classes/**/*'
+    ss.frameworks = 'CoreData'
+    ss.compiler_flags = '-D THING_CACHE=1'
+    ss.dependency 'EncryptedCoreData', '~> 3.1'
+  end
 end

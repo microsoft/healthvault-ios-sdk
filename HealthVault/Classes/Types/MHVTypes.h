@@ -131,3 +131,5 @@
 #import "MHVBodyCompositionValue.h"
 #import "MHVMedicalImageStudySeriesImage.h"
 #import "MHVMedicalImageStudySeries.h"
+#import "MHVGetRecordOperationsResult.h"
+#import "MHVRecordOperation.h"
