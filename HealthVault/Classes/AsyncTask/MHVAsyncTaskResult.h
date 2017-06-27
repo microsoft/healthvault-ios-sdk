@@ -1,8 +1,8 @@
 //
-// MHVDynamicEnum.h
-// MHVLib
+//  MHVAsyncTaskResult.h
+//  MHVLib
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,12 +15,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#import "MHVEnum.h"
+#import <Foundation/Foundation.h>
 
-@interface MHVDynamicEnum : MHVEnum
+@interface MHVAsyncTaskResult<__covariant T> : NSObject
 
-+ (NSDictionary *)enumMap;
-+ (NSDictionary *)aliasMap;
+- (instancetype)initWithError:(NSError *)error;
+- (instancetype)initWithResult:(T)result;
+
++ (instancetype)withError:(NSError *)error;
++ (instancetype)withResult:(T)result;
+
+@property (nonatomic, strong)   NSError     *error;
+@property (nonatomic, strong)   T           result;
 
 @end
