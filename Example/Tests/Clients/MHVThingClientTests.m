@@ -49,7 +49,8 @@ describe(@"MHVThingClient", ^
     
     let(thingClient, ^
         {
-            return [[MHVThingClient alloc] initWithConnection:mockConnection];
+            return [[MHVThingClient alloc] initWithConnection:mockConnection
+                                                        cache:nil];
         });
     
     let(allergyThing, ^

@@ -79,7 +79,8 @@ describe(@"MHVThingClient", ^
     
     let(thingClient, ^
         {
-            return [[MHVThingClient alloc] initWithConnection:testConnection];
+            return [[MHVThingClient alloc] initWithConnection:testConnection
+                                                        cache:nil];
         });
     
     let(filePath, ^
