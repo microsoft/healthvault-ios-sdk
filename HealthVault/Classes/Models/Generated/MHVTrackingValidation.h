@@ -28,12 +28,14 @@
 
 #import "MHVActionPlanTask.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVTrackingValidation
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface MHVTrackingValidation : MHVModelBase
 

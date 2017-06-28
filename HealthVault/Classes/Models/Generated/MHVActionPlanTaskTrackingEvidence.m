@@ -79,5 +79,4 @@
     });
     return types;
 }
-
 @end

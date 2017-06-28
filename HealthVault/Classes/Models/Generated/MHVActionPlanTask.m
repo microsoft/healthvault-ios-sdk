@@ -96,5 +96,52 @@
     });
     return types;
 }
+@end
+@implementation MHVActionPlanTaskTaskTypeEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"BloodPressure": @"BloodPressure",
+        @"Other": @"Other",
+    };
+}
+
++(MHVActionPlanTaskTaskTypeEnum *)MHVUnknown
+{
+    return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanTaskTaskTypeEnum *)MHVBloodPressure
+{
+    return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"BloodPressure"];
+}
++(MHVActionPlanTaskTaskTypeEnum *)MHVOther
+{
+    return [[MHVActionPlanTaskTaskTypeEnum alloc] initWithString:@"Other"];
+}
+@end
+@implementation MHVActionPlanTaskCompletionTypeEnum
+
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Frequency": @"Frequency",
+        @"Scheduled": @"Scheduled",
+    };
+}
+
++(MHVActionPlanTaskCompletionTypeEnum *)MHVUnknown
+{
+    return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanTaskCompletionTypeEnum *)MHVFrequency
+{
+    return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Frequency"];
+}
++(MHVActionPlanTaskCompletionTypeEnum *)MHVScheduled
+{
+    return [[MHVActionPlanTaskCompletionTypeEnum alloc] initWithString:@"Scheduled"];
+}
 @end

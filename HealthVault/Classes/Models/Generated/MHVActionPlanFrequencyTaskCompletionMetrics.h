@@ -27,6 +27,7 @@
 #import <Foundation/Foundation.h>
 
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanFrequencyTaskCompletionMetrics
@@ -34,11 +35,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum : MHVEnum
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *)MHVUnknown;
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *)MHVNone;
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *)MHVDaily;
++(MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum *)MHVWeekly;
+@end
+
 @interface MHVActionPlanFrequencyTaskCompletionMetrics : MHVModelBase
 
 /* The window in which the occurrences must be completed [optional]
  */
-@property(strong,nonatomic,nullable) NSString* windowType;
+@property(strong,nonatomic,nullable) MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum* windowType;
 /* The number of times the Task has to be completed [optional]
  */
 @property(strong,nonatomic,nullable) NSNumber* occurrenceCount;

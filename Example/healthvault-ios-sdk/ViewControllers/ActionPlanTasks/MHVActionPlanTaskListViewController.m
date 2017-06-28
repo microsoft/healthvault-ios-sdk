@@ -64,7 +64,7 @@
 
     MHVActionPlanFrequencyTaskCompletionMetrics *metrics = [[MHVActionPlanFrequencyTaskCompletionMetrics alloc] init];
     metrics.occurrenceCount = @(1);
-    metrics.windowType = @"Daily";
+    metrics.windowType = MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum.MHVDaily;
 
     MHVActionPlanTask *frequencyTask = [[MHVActionPlanTask alloc] init];
     NSString *taskName =[NSString stringWithFormat:@"My new task #%@", rand];
@@ -73,10 +73,10 @@
     frequencyTask.longDescription = @"Go for a run, hike a mountain, ride your bike around town, or something else to get moving.";
     frequencyTask.imageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1rXx2?ver=d68e";
     frequencyTask.thumbnailImageUrl = @"https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1s2KS?ver=0ad8";
-    frequencyTask.taskType = @"Other";
+    frequencyTask.taskType = MHVActionPlanTaskTaskTypeEnum.MHVOther;
     frequencyTask.signupName = taskName;
     frequencyTask.trackingPolicy = policy;
-    frequencyTask.completionType = @"Frequency";
+    frequencyTask.completionType = MHVActionPlanTaskCompletionTypeEnum.MHVFrequency;
     frequencyTask.frequencyTaskCompletionMetrics = metrics;
     frequencyTask.associatedPlanId = self.plan.identifier;
     frequencyTask.associatedObjectiveIds = @[[self.plan.objectives.firstObject identifier]];

@@ -28,12 +28,14 @@
 
 #import "MHVActionPlanRangeMetric.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanTaskOccurrenceMetrics
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface MHVActionPlanTaskOccurrenceMetrics : MHVModelBase
 

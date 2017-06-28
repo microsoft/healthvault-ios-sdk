@@ -80,7 +80,7 @@
              if (!error)
              {
                  self.nameValue.text = output.associatedGoal.name;
-                 self.typeValue.text = output.associatedGoal.goalType;
+                 self.typeValue.text = output.associatedGoal.goalType.stringValue;
                  self.startDate.text = output.associatedGoal.startDate.toString;
                  
                  self.expirationDate.text = output.expirationDate.toString;
@@ -88,7 +88,7 @@
                  
                  if (output.associatedGoal.range)
                  {
-                     self.unitsValue.text = output.associatedGoal.range.units;
+                     self.unitsValue.text = output.associatedGoal.range.units.stringValue;
                      self.maxValue.text = [output.associatedGoal.range.maximum stringValue];
                      self.minValue.text = [output.associatedGoal.range.minimum stringValue];
                  }

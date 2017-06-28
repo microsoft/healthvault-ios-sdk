@@ -82,5 +82,23 @@
     });
     return types;
 }
+@end
+@implementation MHVActionPlanRangeMetricValueTypeEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"MinutesToMidnight": @"MinutesToMidnight",
+    };
+}
+
++(MHVActionPlanRangeMetricValueTypeEnum *)MHVUnknown
+{
+    return [[MHVActionPlanRangeMetricValueTypeEnum alloc] initWithString:@"Unknown"];
+}
++(MHVActionPlanRangeMetricValueTypeEnum *)MHVMinutesToMidnight
+{
+    return [[MHVActionPlanRangeMetricValueTypeEnum alloc] initWithString:@"MinutesToMidnight"];
+}
 @end

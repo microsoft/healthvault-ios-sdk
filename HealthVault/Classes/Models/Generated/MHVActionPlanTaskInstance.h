@@ -30,12 +30,32 @@
 #import "MHVActionPlanTrackingPolicy.h"
 #import "MHVSchedule.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanTaskInstance
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVActionPlanTaskInstanceStatusEnum : MHVEnum
++(MHVActionPlanTaskInstanceStatusEnum *)MHVUnknown;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVArchived;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVInProgress;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVRecommended;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVCompleted;
++(MHVActionPlanTaskInstanceStatusEnum *)MHVTemplate;
+@end
+@interface MHVActionPlanTaskInstanceTaskTypeEnum : MHVEnum
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVUnknown;
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVBloodPressure;
++(MHVActionPlanTaskInstanceTaskTypeEnum *)MHVOther;
+@end
+@interface MHVActionPlanTaskInstanceCompletionTypeEnum : MHVEnum
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVUnknown;
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVFrequency;
++(MHVActionPlanTaskInstanceCompletionTypeEnum *)MHVScheduled;
+@end
 
 @interface MHVActionPlanTaskInstance : MHVModelBase
 
@@ -44,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* identifier;
 /* The status of the task [optional]
  */
-@property(strong,nonatomic,nullable) NSString* status;
+@property(strong,nonatomic,nullable) MHVActionPlanTaskInstanceStatusEnum* status;
 /* The date that the task was started. Read-only [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* startDate;
@@ -74,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSString* thumbnailImageUrl;
 /* The type of the task, used to choose the UI editor for the task 
  */
-@property(strong,nonatomic) NSString* taskType;
+@property(strong,nonatomic) MHVActionPlanTaskInstanceTaskTypeEnum* taskType;
 /* The tracking policy 
  */
 @property(strong,nonatomic) MHVActionPlanTrackingPolicy* trackingPolicy;
@@ -89,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSArray<NSString*>* associatedObjectiveIds;
 /* The Completion Type of the Task 
  */
-@property(strong,nonatomic) NSString* completionType;
+@property(strong,nonatomic) MHVActionPlanTaskInstanceCompletionTypeEnum* completionType;
 /* Completion metrics for frequency based tasks [optional]
  */
 @property(strong,nonatomic,nullable) MHVActionPlanFrequencyTaskCompletionMetrics* frequencyTaskCompletionMetrics;

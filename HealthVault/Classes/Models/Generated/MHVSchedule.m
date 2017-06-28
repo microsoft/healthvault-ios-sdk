@@ -82,5 +82,123 @@
     });
     return types;
 }
+@end
+@implementation MHVScheduleReminderStateEnum
 
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Off": @"Off",
+        @"OnTime": @"OnTime",
+        @"Before5Minutes": @"Before5Minutes",
+        @"Before10Minutes": @"Before10Minutes",
+        @"Before15Minutes": @"Before15Minutes",
+        @"Before30Minutes": @"Before30Minutes",
+        @"Before1Hour": @"Before1Hour",
+        @"Before2Hours": @"Before2Hours",
+        @"Before4Hours": @"Before4Hours",
+        @"Before8Hours": @"Before8Hours",
+    };
+}
+
++(MHVScheduleReminderStateEnum *)MHVUnknown
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Unknown"];
+}
++(MHVScheduleReminderStateEnum *)MHVOff
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Off"];
+}
++(MHVScheduleReminderStateEnum *)MHVOnTime
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"OnTime"];
+}
++(MHVScheduleReminderStateEnum *)MHVBefore5Minutes
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before5Minutes"];
+}
++(MHVScheduleReminderStateEnum *)MHVBefore10Minutes
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before10Minutes"];
+}
++(MHVScheduleReminderStateEnum *)MHVBefore15Minutes
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before15Minutes"];
+}
++(MHVScheduleReminderStateEnum *)MHVBefore30Minutes
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before30Minutes"];
+}
++(MHVScheduleReminderStateEnum *)MHVBefore1Hour
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before1Hour"];
+}
++(MHVScheduleReminderStateEnum *)MHVBefore2Hours
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before2Hours"];
+}
++(MHVScheduleReminderStateEnum *)MHVBefore4Hours
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before4Hours"];
+}
++(MHVScheduleReminderStateEnum *)MHVBefore8Hours
+{
+    return [[MHVScheduleReminderStateEnum alloc] initWithString:@"Before8Hours"];
+}
+@end
+
+@implementation MHVScheduleScheduledDaysEnum
+
+-(NSDictionary *)enumMap
+{
+    return @{
+        @"Unknown": @"Unknown",
+        @"Everyday": @"Everyday",
+        @"Sunday": @"Sunday",
+        @"Monday": @"Monday",
+        @"Tuesday": @"Tuesday",
+        @"Wednesday": @"Wednesday",
+        @"Thursday": @"Thursday",
+        @"Friday": @"Friday",
+        @"Saturday": @"Saturday",
+    };
+}
+
++(MHVScheduleScheduledDaysEnum *)MHVUnknown
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Unknown"];
+}
++(MHVScheduleScheduledDaysEnum *)MHVEveryday
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Everyday"];
+}
++(MHVScheduleScheduledDaysEnum *)MHVSunday
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Sunday"];
+}
++(MHVScheduleScheduledDaysEnum *)MHVMonday
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Monday"];
+}
++(MHVScheduleScheduledDaysEnum *)MHVTuesday
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Tuesday"];
+}
++(MHVScheduleScheduledDaysEnum *)MHVWednesday
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Wednesday"];
+}
++(MHVScheduleScheduledDaysEnum *)MHVThursday
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Thursday"];
+}
++(MHVScheduleScheduledDaysEnum *)MHVFriday
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Friday"];
+}
++(MHVScheduleScheduledDaysEnum *)MHVSaturday
+{
+    return [[MHVScheduleScheduledDaysEnum alloc] initWithString:@"Saturday"];
+}
 @end

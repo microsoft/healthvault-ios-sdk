@@ -81,5 +81,4 @@
     });
     return types;
 }
-
 @end

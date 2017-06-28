@@ -27,12 +27,14 @@
 #import <Foundation/Foundation.h>
 
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVWeeklyAdherenceSummary
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface MHVWeeklyAdherenceSummary : MHVModelBase
 

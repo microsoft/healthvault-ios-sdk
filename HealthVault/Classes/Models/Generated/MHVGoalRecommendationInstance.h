@@ -28,12 +28,14 @@
 
 #import "MHVGoal.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVGoalRecommendationInstance
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface MHVGoalRecommendationInstance : MHVModelBase
 
