@@ -29,12 +29,29 @@
 #import "MHVActionPlanTaskInstance.h"
 #import "MHVObjective.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVActionPlanInstance
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVActionPlanInstanceStatusEnum : MHVEnum
++(MHVActionPlanInstanceStatusEnum *)MHVUnknown;
++(MHVActionPlanInstanceStatusEnum *)MHVArchived;
++(MHVActionPlanInstanceStatusEnum *)MHVRecommended;
++(MHVActionPlanInstanceStatusEnum *)MHVInProgress;
++(MHVActionPlanInstanceStatusEnum *)MHVCompleted;
++(MHVActionPlanInstanceStatusEnum *)MHVTemplate;
+@end
+@interface MHVActionPlanInstanceCategoryEnum : MHVEnum
++(MHVActionPlanInstanceCategoryEnum *)MHVUnknown;
++(MHVActionPlanInstanceCategoryEnum *)MHVHealth;
++(MHVActionPlanInstanceCategoryEnum *)MHVSleep;
++(MHVActionPlanInstanceCategoryEnum *)MHVActivity;
++(MHVActionPlanInstanceCategoryEnum *)MHVStress;
+@end
 
 @interface MHVActionPlanInstance : MHVModelBase
 
@@ -43,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* identifier;
 /* The status of the plan [optional]
  */
-@property(strong,nonatomic,nullable) NSString* status;
+@property(strong,nonatomic,nullable) MHVActionPlanInstanceStatusEnum* status;
 /* The ID of the organization that manages this plan. Read-only [optional]
  */
 @property(strong,nonatomic,nullable) NSString* organizationId;
@@ -67,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) NSString* thumbnailImageUrl;
 /* The category of the plan 
  */
-@property(strong,nonatomic) NSString* category;
+@property(strong,nonatomic) MHVActionPlanInstanceCategoryEnum* category;
 /* The Collection of objectives for the plan 
  */
 @property(strong,nonatomic) NSArray<MHVObjective>* objectives;

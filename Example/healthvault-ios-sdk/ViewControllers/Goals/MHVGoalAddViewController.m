@@ -50,7 +50,7 @@
 {
     MHVGoalRecurrenceMetrics *metrics = [[MHVGoalRecurrenceMetrics alloc] init];
     metrics.occurrenceCount = [NSNumber numberWithInt:1];
-    metrics.windowType = @"Daily";
+    metrics.windowType = MHVGoalRecurrenceMetricsWindowTypeEnum.MHVDaily;
     
     MHVGoalRange *range = [[MHVGoalRange alloc] init];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
@@ -58,12 +58,12 @@
     range.maximum = [formatter numberFromString:self.maxValue.text];
     range.minimum = [formatter numberFromString:self.minValue.text];
     range.name = @"range";
-    range.units = self.unitsValue.text;
+    range.units = [[MHVGoalRangeUnitsEnum alloc] initWithString:self.unitsValue.text];
     
     
     MHVGoal *goal = [[MHVGoal alloc] init];
     goal.name = self.nameValue.text;
-    goal.goalType = self.typeValue.text;
+    goal.goalType = [[MHVGoalGoalTypeEnum alloc] initWithString:self.typeValue.text];
     goal.startDate = [[NSDate alloc] init];
     
     goal.recurrenceMetrics = metrics;

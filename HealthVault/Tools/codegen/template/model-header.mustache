@@ -9,6 +9,7 @@
 {{#imports}}#import "{{import}}.h"
 {{/imports}}
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 {{newline}}
 {{#models}}
 {{#model}}
@@ -18,12 +19,31 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+{{#model}}
+{{#vars}}
+{{#isEnum}}
+@interface {{classname}}{{enumName}} : MHVEnum
+{{#_enum}}
++({{classname}}{{enumName}} *)MHV{{.}};
+{{/_enum}}
+{{#isContainer}}
+{{#items}}
+{{#_enum}}
++({{classname}}{{enumName}} *)MHV{{.}};
+{{/_enum}}
+{{/items}}
+{{/isContainer}}
+@end
+{{/isEnum}}
+{{/vars}}
+{{/model}}
+
 @interface {{classname}} : MHVModelBase
 
 {{#vars}}
 {{#description}}/* {{{description}}} {{^required}}[optional]{{/required}}
  */{{/description}}
-@property(strong,nonatomic{{^required}},nullable{{/required}}) {{{ datatype }}} {{name}};
+@property(strong,nonatomic{{^required}},nullable{{/required}}) {{#isEnum}}{{#isContainer}}NSArray<{{/isContainer}}{{classname}}{{enumName}}{{#isContainer}}*>{{/isContainer}}*{{/isEnum}}{{^isEnum}}{{{ datatype }}}{{/isEnum}} {{name}};
 {{/vars}}
 
 @end

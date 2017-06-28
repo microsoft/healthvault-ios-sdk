@@ -76,18 +76,18 @@
     
     MHVGoalRecurrenceMetrics *metrics = [[MHVGoalRecurrenceMetrics alloc] init];
     metrics.occurrenceCount = @(1);
-    metrics.windowType = @"Daily";
+    metrics.windowType = MHVGoalRecurrenceMetricsWindowTypeEnum.MHVDaily;
     
     MHVGoalRange *range = [[MHVGoalRange alloc] init];
     range.maximum = @(120);
     range.minimum = @(70);
     range.name = @"range";
-    range.units = @"Kilograms";
+    range.units = MHVGoalRangeUnitsEnum.MHVKilograms;
     
     
     MHVGoal *goal = [[MHVGoal alloc] init];
     goal.name = @"New goal recommendation";
-    goal.goalType = @"Weight";
+    goal.goalType = MHVGoalGoalTypeEnum.MHVWeight;
     goal.startDate = [NSDate date];
     
     goal.recurrenceMetrics = metrics;

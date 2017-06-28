@@ -28,12 +28,14 @@
 
 #import "MHVActionPlanTaskAdherenceSummary.h"
 #import "MHVModelBase.h"
+#import "MHVEnum.h"
 
 
 @protocol MHVObjectiveAdherenceSummary
 @end
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface MHVObjectiveAdherenceSummary : MHVModelBase
 
