@@ -34,10 +34,18 @@ static NSString *const c_element_udateMin = @"updated-date-min";
 static NSString *const c_element_udateMax = @"updated-date-max";
 static NSString *const c_element_xpath = @"xpath";
 
-@implementation MHVTypeFilter
+@interface MHVThingFilter ()
+
+@property (readwrite, nonatomic, strong)  MHVStringCollection *typeIDs;
+
+@end
+
+@implementation MHVThingFilter
 
 - (void)serialize:(XWriter *)writer
 {
+    [writer writeElementArray:c_element_typeID elements:self.typeIDs.toArray];
+    
     if (self.state != MHVThingStateNone)
     {
         [writer writeElement:c_element_state value:MHVThingStateToString(self.state)];
@@ -58,6 +66,8 @@ static NSString *const c_element_xpath = @"xpath";
 
 - (void)deserialize:(XReader *)reader
 {
+    self.typeIDs = [reader readStringElementArray:c_element_typeID];
+    
     NSString *state = [reader readStringElement:c_element_state];
     
     if (state)
@@ -77,16 +87,6 @@ static NSString *const c_element_xpath = @"xpath";
     self.updateDateMax = [reader readDateElement:c_element_udateMax];
     self.xpath = [reader readStringElement:c_element_xpath];
 }
-
-@end
-
-@interface MHVThingFilter ()
-
-@property (readwrite, nonatomic, strong)  MHVStringCollection *typeIDs;
-
-@end
-
-@implementation MHVThingFilter
 
 - (MHVStringCollection *)typeIDs
 {
@@ -127,18 +127,6 @@ static NSString *const c_element_xpath = @"xpath";
     MHVCHECK_NOTNULL(typeID);
     
     return [self initWithTypeID:typeID];
-}
-
-- (void)serialize:(XWriter *)writer
-{
-    [writer writeElementArray:c_element_typeID elements:self.typeIDs.toArray];
-    [super serialize:writer];
-}
-
-- (void)deserialize:(XReader *)reader
-{
-    self.typeIDs = [reader readStringElementArray:c_element_typeID];
-    [super deserialize:reader];
 }
 
 @end

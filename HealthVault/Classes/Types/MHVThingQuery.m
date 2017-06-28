@@ -77,6 +77,19 @@ static NSString *const c_element_view = @"format";
     return self;
 }
 
+- (instancetype)initWithFilters:(MHVThingFilterCollection *)filters
+{
+    MHVCHECK_NOTNULL(filters);
+    
+    self = [self init];
+    
+    if (self)
+    {
+        _filters = filters;
+    }
+    return self;
+}
+
 - (instancetype)initWithThingID:(NSString *)thingID
 {
     MHVCHECK_STRING(thingID);

@@ -77,6 +77,14 @@
 - (instancetype)initWithFilter:(MHVThingFilter *)filter;
 
 /**
+ Initializes a new query with the given Thing filter collection.
+ 
+ @param filters The collection of MHVThingFilters to be applied to the request.
+ @return A new instance of MHVThingQuery.
+ */
+- (instancetype)initWithFilters:(MHVThingFilterCollection *)filters;
+
+/**
  Initializes a new query and adds the given Thing Key to the keys collection.
 
  @param key The MHVThingKey for the item to be fetched.

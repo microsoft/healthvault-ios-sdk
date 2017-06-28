@@ -25,7 +25,7 @@
  A object used to determines which Things are returned in a given query. All properties are optional.
  @note Each option is logically ANDed with the other options in the filter.
  */
-@interface MHVTypeFilter : MHVType
+@interface MHVThingFilter : MHVType
 
 /**
  Only Things with the specified state will be returned.
@@ -92,10 +92,6 @@
  */
 @property (readwrite, nonatomic, strong) NSString *xpath;
 
-@end
-
-@interface MHVThingFilter : MHVTypeFilter
-
 /**
  Only Things that are of the given Type Id(s) contained in the collection will be returned.
  @note The Type Ids in this collection are logically ORed.
@@ -107,6 +103,6 @@
 
 @end
 
-@interface MHVThingFilterCollection : MHVCollection<MHVTypeFilter *>
+@interface MHVThingFilterCollection : MHVCollection<MHVThingFilter *>
 
 @end

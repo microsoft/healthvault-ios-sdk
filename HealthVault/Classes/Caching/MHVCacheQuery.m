@@ -84,7 +84,17 @@ static NSString *const kPredicateVariable = @"predicateVariable";
     // If the query is nil we cannot create a predicate
     if (!query)
     {
-        _error = [NSError error:[NSError MHVInvalidThingQuery] withDescription:@"MHVThingCacheQuery was initialized with a nil query parameter"];
+        _error = [NSError error:[NSError MHVInvalidThingQuery] withDescription:@"MHVThingCacheQuery was initialized with a nil query parameter."];
+        return NO;
+    }
+    
+    // Ensure only one collection has elements
+    NSUInteger colletionCounter = (query.thingIDs.count > 0) ? 1 : 0;
+    colletionCounter += (query.keys.count > 0) ? 1 : 0;
+    colletionCounter += (query.clientIDs.count > 0) ? 1 : 0;
+    if (colletionCounter > 1)
+    {
+        _error = [NSError error:[NSError MHVInvalidThingQuery] withDescription:@"thingIDs, keys, and clientIDs are mutually exclusive. Only one of these collections can contain elements for a given query."];
         return NO;
     }
     
@@ -98,7 +108,9 @@ static NSString *const kPredicateVariable = @"predicateVariable";
     }
     
     // The cache only supports MHVThingSection_Standard section
-    if (query.view.sections | MHVThingSection_Standard)
+    if (query.view.sections != MHVThingSection_Standard &&
+        query.view.sections != MHVThingSection_Data &&
+        query.view.sections != MHVThingSection_Core)
     {
         return NO;
     }
@@ -118,112 +130,14 @@ static NSString *const kPredicateVariable = @"predicateVariable";
 
 - (void)setPredicateWithQuery:(MHVThingQuery *)query
 {
-    if (![self canCreateWithQuery:query])
+    _canQueryCache = [self canCreateWithQuery:query];
+    
+    if (!self.canQueryCache)
     {
-        _canQueryCache = [self canCreateWithQuery:query];
         return;
     }
     
     _predicate = [self predicateForObject:query];
-    
-//    //Create (thingId == X OR thingID == Y) part of the predicate
-//    NSMutableArray<NSPredicate *> *thingIdPredicates = [NSMutableArray new];
-//    
-//    for (NSString *thingId in query.thingIDs)
-//    {
-//        NSPredicate *predicate = [MHVPredicate predicateWithKeyPath:@"thingId"
-//                                                           variable:thingId
-//                                                               type:NSEqualToPredicateOperatorType];
-//        
-//        if (predicate)
-//        {
-//            [thingIdPredicates addObject:predicate];
-//        }
-//    }
-//    
-//    if (thingIdsWhere.count > 0)
-//    {
-//        //Join all the thingId strings with OR
-//        [where addObject:[NSString stringWithFormat:@"(%@)", [thingIdsWhere componentsJoinedByString:@" OR "]]];
-//    }
-//    
-//    //Create ((thingId == X AND version == Y) OR ...) part of the predicate
-//    NSMutableArray<NSString *> *thingKeysWhere = [NSMutableArray new];
-//    for (MHVThingKey *thingKey in query.keys)
-//    {
-//        [thingKeysWhere addObject:[NSString stringWithFormat:@"(thingId == '%@' AND version == '%@')", thingKey.thingID, thingKey.version]];
-//    }
-//    if (thingKeysWhere.count > 0)
-//    {
-//        //Join all the thingId strings with OR
-//        [where addObject:[NSString stringWithFormat:@"(%@)", [thingKeysWhere componentsJoinedByString:@" OR "]]];
-//    }
-//    
-//    //Create (createDate >= 2000-01-01...) part of the predicate
-//    for (MHVThingFilter *filter in query.filters)
-//    {
-//        NSMutableArray<NSString *> *filterWhere = [NSMutableArray new];
-//        
-//        //Create (typeId == X OR typeId == Y) part of the predicate
-//        NSMutableArray<NSString *> *typeIdsWhere = [NSMutableArray new];
-//        for (NSString *typeId in filter.typeIDs)
-//        {
-//            [typeIdsWhere addObject:[NSString stringWithFormat:@"typeId == '%@'", typeId]];
-//        }
-//        if (typeIdsWhere.count > 0)
-//        {
-//            //Join all the typeId strings with OR to the filter
-//            [filterWhere addObject:[NSString stringWithFormat:@"(%@)", [typeIdsWhere componentsJoinedByString:@" OR "]]];
-//        }
-//        
-//        //Add date and other filters
-//        if (filter.effectiveDateMin)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"effectiveDate >= '%@'", filter.effectiveDateMin]];
-//        }
-//        if (filter.effectiveDateMax)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"effectiveDate <= '%@'", filter.effectiveDateMin]];
-//        }
-//        if (filter.createDateMin)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"createDate >= '%@'", filter.createDateMin]];
-//        }
-//        if (filter.createDateMax)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"createDate <= '%@'", filter.createDateMax]];
-//        }
-//        if (filter.updateDateMin)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"updateDate >= '%@'", filter.updateDateMin]];
-//        }
-//        if (filter.updateDateMax)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"updateDate <= '%@'", filter.updateDateMax]];
-//        }
-//        if (filter.createdByAppID)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"createdByAppID == '%@'", filter.createdByAppID]];
-//        }
-//        if (filter.createdByPersonID)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"createdByPersonID == '%@'", filter.createdByPersonID]];
-//        }
-//        if (filter.updatedByAppID)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"updatedByAppID == '%@'", filter.updatedByAppID]];
-//        }
-//        if (filter.updatedByPersonID)
-//        {
-//            [filterWhere addObject:[NSString stringWithFormat:@"updatedByPersonID == '%@'", filter.updatedByPersonID]];
-//        }
-//        
-//        //Join all the where strings with AND
-//        [where addObject:[NSString stringWithFormat:@"(%@)", [filterWhere componentsJoinedByString:@" AND "]]];
-//    }
-//    
-//    //Join all the predicate parts with AND
-//    return [NSPredicate predicateWithFormat:[where componentsJoinedByString:@" AND "]];
 }
 
 - (NSPredicate *)predicateWithPropertyName:(NSString *)propertyName
@@ -299,7 +213,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
             
             if ([propertyName isEqualToString:@"maxResults"])
             {
-                _fetchLimit = (NSUInteger)value;
+                _fetchLimit = ((NSNumber *)value).integerValue;
                 
                 continue;
             }
@@ -319,15 +233,29 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                 propertyClass = NSClassFromString(typeClassName);
             }
             
-            
-            if ([propertyClass isSubclassOfClass:[MHVCollection class]])
+            if (propertyClass == [MHVThingFilterCollection class] || propertyClass == [MHVThingKeyCollection class])
+            {
+                NSMutableArray<NSPredicate *> *subPredicates = [NSMutableArray new];
+                
+                for (MHVType *type in value)
+                {
+                    NSPredicate *subPredicate = [self predicateForObject:type];
+                    
+                    if (subPredicate)
+                    {
+                        [subPredicates addObject:subPredicate];
+                    }
+                }
+                
+                if (subPredicates.count > 0)
+                {
+                    predicate = [NSCompoundPredicate orPredicateWithSubpredicates:subPredicates];
+                }
+            }
+            else if ([propertyClass isSubclassOfClass:[MHVCollection class]])
             {
                 predicate = [self predicateWithPropertyName:propertyName
                                                   variables:value];
-            }
-            else if ([propertyClass isKindOfClass:[MHVThingFilter class]])
-            {
-                predicate = [self predicateForObject:value];
             }
             else
             {

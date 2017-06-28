@@ -528,7 +528,7 @@
         return;
     }
     
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[things arrayOfThingIDs]];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[things thingIDs]];
     query.view.sections = MHVThingSection_Standard | MHVThingSection_Blobs;
     
     [self getThingsWithQuery:query

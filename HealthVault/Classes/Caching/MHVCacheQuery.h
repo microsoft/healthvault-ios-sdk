@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MHVCacheQuery : NSObject
 
 @property (nonatomic, assign, readonly) BOOL canQueryCache;
-@property (nonatomic, assign, readonly) NSUInteger fetchLimit;
+@property (nonatomic, assign, readonly) NSInteger fetchLimit;
 @property (nonatomic, strong, readonly, nullable) NSPredicate *predicate;
 @property (nonatomic, strong, readonly, nullable) NSError *error;
 

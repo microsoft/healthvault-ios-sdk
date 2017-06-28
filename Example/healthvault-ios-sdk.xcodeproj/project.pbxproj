@@ -26,6 +26,7 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		A52EBA351EF0653500A174CE /* MHVThingTestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */; };
+		A5385ACF1F040D05000D03C5 /* MHVCacheQueryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5385ACE1F040D05000D03C5 /* MHVCacheQueryTests.m */; };
 		A56404FC1EF2E9E6002D870B /* MHVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A56404FB1EF2E9E6002D870B /* MHVViewController.xib */; };
 		A5937CE51EF4359C00B5F047 /* HealthVault.podspec in Resources */ = {isa = PBXBuildFile; fileRef = A5937CE41EF4359C00B5F047 /* HealthVault.podspec */; };
 		A5DF64C61EF051FA009F5968 /* MHVActionPlanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF649D1EF051FA009F5968 /* MHVActionPlanDetailViewController.m */; };
@@ -153,6 +154,7 @@
 		8A19E89C4AE57AE6FCF1D704 /* Pods-healthvault-ios-sdk_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Tests/Pods-healthvault-ios-sdk_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		A52EBA331EF0653500A174CE /* MHVThingTestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTestExtensions.h; sourceTree = "<group>"; };
 		A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTestExtensions.m; sourceTree = "<group>"; };
+		A5385ACE1F040D05000D03C5 /* MHVCacheQueryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVCacheQueryTests.m; sourceTree = "<group>"; };
 		A56404FB1EF2E9E6002D870B /* MHVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVViewController.xib; sourceTree = "<group>"; };
 		A5937CE41EF4359C00B5F047 /* HealthVault.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HealthVault.podspec; path = ../HealthVault.podspec; sourceTree = "<group>"; };
 		A5DF64981EF05196009F5968 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				A5DF652E1EF052DD009F5968 /* Authentication */,
+				A5385ACD1F040CE2000D03C5 /* Caching */,
 				A5DF65301EF052DD009F5968 /* Clients */,
 				A5DF65351EF052DD009F5968 /* Connection */,
 				A5DF65381EF052DD009F5968 /* HTTP */,
@@ -464,6 +467,14 @@
 				FBE8ECF9045A7D4F1E2252CA /* Pods-healthvault-ios-sdk_Tests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A5385ACD1F040CE2000D03C5 /* Caching */ = {
+			isa = PBXGroup;
+			children = (
+				A5385ACE1F040D05000D03C5 /* MHVCacheQueryTests.m */,
+			);
+			path = Caching;
 			sourceTree = "<group>";
 		};
 		A5DF649A1EF051FA009F5968 /* ViewControllers */ = {
@@ -885,6 +896,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5DF65901EF05362009F5968 /* MHVXmlTests.m in Sources */,
+				A5385ACF1F040D05000D03C5 /* MHVCacheQueryTests.m in Sources */,
 				A5DF657E1EF0535A009F5968 /* MHVAerobicProfileTests.m in Sources */,
 				A5DF657D1EF0535A009F5968 /* MHVAdvanceDirectiveTests.m in Sources */,
 				A5DF658A1EF0535A009F5968 /* MHVMedicalImageStudyTests.m in Sources */,
