@@ -20,13 +20,14 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVThingClientProtocol.h"
-@protocol MHVConnectionProtocol;
+@protocol MHVConnectionProtocol, MHVThingCacheProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVThingClient : NSObject<MHVThingClientProtocol>
 
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection;
+- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
+                             cache:(id<MHVThingCacheProtocol> _Nullable)cache;
 
 @end
 

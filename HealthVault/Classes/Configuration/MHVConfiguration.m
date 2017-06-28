@@ -18,6 +18,9 @@
 
 #import "MHVConfiguration.h"
 #import "MHVConfigurationConstants.h"
+#ifdef THING_CACHE
+#import "MHVThingCacheConfiguration.h"
+#endif
 
 @implementation MHVConfiguration
 
@@ -37,6 +40,11 @@
         self.retryOnInternal500Count = kDefaultRetryOnInternal500Count;
         self.retryOnInternal500SleepDuration = kDefaultRetryOnInternal500SleepDurationInSeconds;
         self.inlineBlobHashBlockSize = kDefaultBlobChunkSizeInBytes;
+        
+#ifdef THING_CACHE
+        self.cacheConfiguration = [MHVThingCacheConfiguration new];
+        self.cacheConfiguration.maxCacheValidSeconds = kDefaultMaxCacheValidSeconds;
+#endif
     }
     
     return self;

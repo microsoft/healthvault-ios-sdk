@@ -1,8 +1,8 @@
 //
-//  MHVNetworkReachability.h
-//  MHVLib
+// MHVNetworkReachability.h
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,42 +20,34 @@
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "MHVCore.h"
-
-BOOL MHVIsHostNetworkReachable(NSString* hostName);
+#import "MHVNetworkStatusProtocol.h"
 
 MHVDECLARE_NOTIFICATION(MHVHostReachabilityNotificationName);
 
-@interface MHVHostReachability : NSObject
-{
-@private
-    NSString* m_hostName;
-    SCNetworkReachabilityRef m_hostRef;
-    SCNetworkReachabilityFlags m_status;
-    BOOL m_isMonitoring;
-}
+@interface MHVHostReachability : NSObject <MHVNetworkStatusProtocol>
 
--(id) initWithHostName:(NSString *) hostName;
--(id) initWithUrl:(NSURL *) url;
+- (instancetype)initWithHostName:(NSString *)hostName;
+- (instancetype)initWithUrl:(NSURL *)url;
 
-@property(readonly, nonatomic, strong) NSString* hostName;
-@property(readonly, nonatomic) SCNetworkReachabilityFlags status;
-@property(readonly, nonatomic) BOOL isReachable;
-@property(readwrite, nonatomic) BOOL isMonitoring;
+@property (readonly, nonatomic, strong) NSString *hostName;
+@property (readonly, nonatomic) SCNetworkReachabilityFlags status;
+@property (readonly, nonatomic) BOOL isReachable;
+@property (readwrite, nonatomic) BOOL isMonitoring;
 //
 // Returns 0 if no status detectable
 //
--(BOOL) refreshStatus;
+- (BOOL)refreshStatus;
 
--(BOOL) startMonitoring;
--(BOOL) stopMonitoring;
+- (BOOL)startMonitoring;
+- (BOOL)stopMonitoring;
 //
 // Uses [NSNotificationCenter] to broadcast changes. You are passed a reference to the MHVHostReachability that changed
 //
--(void) broadcastStatusChange:(SCNetworkConnectionFlags) flags;
+- (void)broadcastStatusChange:(SCNetworkConnectionFlags)flags;
 //
 // Subscribe to network status changes (via) NSNotificationCenter
 //
--(void)addObserver:(id)notificationObserver selector:(SEL)notificationSelector;
--(void)removeObserver:(id)notificationObserver;
+- (void)addObserver:(id)notificationObserver selector:(SEL)notificationSelector;
+- (void)removeObserver:(id)notificationObserver;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  MHVClients.h
+//  MHVCachedThing+Cache.h
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -15,15 +15,29 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#ifndef MHVClients_h
-#define MHVClients_h
+#import "MHVCachedThing+CoreDataClass.h"
+@class MHVThing;
 
-#import "MHVPersonClientProtocol.h"
-#import "MHVPlatformClientProtocol.h"
-#import "MHVRemoteMonitoringClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVThingCacheProtocol.h"
-#import "MHVVocabularyClientProtocol.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#endif /* MHVClients_h */
+@interface MHVCachedThing (Cache)
+
+/**
+ Fill the MHVCachedThing with data from a MHVThing
+
+ @param thing The thing to be stored
+ */
+- (void)populateWithThing:(MHVThing *)thing;
+
+/**
+ Convert MHVCachedThing back into a MHVThing
+
+ @return the MHVThing result
+ */
+- (MHVThing *_Nullable)toThing;
+
+@end
+
+NS_ASSUME_NONNULL_END

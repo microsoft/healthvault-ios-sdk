@@ -251,6 +251,7 @@
     NSMutableArray<NSString *> *restTypeList = [[NSMutableArray alloc] init];
     
     //HealthVault Thing Types
+    //NOTE: if any new types are added here, they should also be added in MHVFeaturesConfiguration
     NSArray<Class> *thingTypes = @[[MHVBloodGlucose class],
                                    [MHVBloodPressure class],
                                    [MHVCondition class],

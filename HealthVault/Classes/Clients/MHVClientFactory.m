@@ -24,6 +24,12 @@
 #import "MHVSessionCredentialClient.h"
 #import "MHVVocabularyClient.h"
 #import "MHVCryptographer.h"
+#import "MHVThingCache.h"
+#import "MHVThingCacheDatabase.h"
+#import "MHVKeychainService.h"
+#import "MHVNetworkReachability.h"
+#import "MHVConfiguration.h"
+#import "MHVThingCacheConfiguration.h"
 
 @implementation MHVClientFactory
 
@@ -44,7 +50,28 @@
 
 - (id<MHVThingClientProtocol>)thingClientWithConnection:(id<MHVConnectionProtocol>)connection
 {
-    return [[MHVThingClient alloc] initWithConnection:connection];
+#ifdef THING_CACHE
+    //Use database from configuration, or create MHVThingCacheDatabase
+    id<MHVThingCacheDatabaseProtocol> database;
+    if (connection.configuration.cacheConfiguration.database)
+    {
+        database = connection.configuration.cacheConfiguration.database;
+    }
+    else
+    {
+        database = [[MHVThingCacheDatabase alloc] initWithKeychainService:[MHVKeychainService new]];
+    }
+    
+    MHVHostReachability *networkStatus = [[MHVHostReachability alloc] initWithUrl:connection.configuration.defaultHealthVaultUrl];
+    
+    MHVThingCache *thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
+                                                                  connection:connection
+                                                               networkStatus:networkStatus];
+    
+    return [[MHVThingClient alloc] initWithConnection:connection cache:thingCache];
+#else
+    return [[MHVThingClient alloc] initWithConnection:connection cache:nil];
+#endif
 }
 
 - (id<MHVVocabularyClientProtocol>)vocabularyClientWithConnection:(id<MHVConnectionProtocol>)connection

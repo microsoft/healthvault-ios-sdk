@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="MHVRecordObject" representedClassName="MHVRecordObject" syncable="YES" codeGenerationType="class">
+        <attribute name="recordId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="things" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MHVThingObject" inverseName="record" inverseEntity="MHVThingObject" syncable="YES"/>
+    </entity>
+    <entity name="MHVThingObject" representedClassName="MHVThingObject" syncable="YES" codeGenerationType="class">
+        <attribute name="thingId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="xmlString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVRecordObject" inverseName="things" inverseEntity="MHVRecordObject" syncable="YES"/>
+        <relationship name="thingType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVThingTypeObject" inverseName="things" inverseEntity="MHVThingTypeObject" syncable="YES"/>
+    </entity>
+    <entity name="MHVThingTypeObject" representedClassName="MHVThingTypeObject" syncable="YES" codeGenerationType="class">
+        <attribute name="lastUpdated" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="thingTypeId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="things" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MHVThingObject" inverseName="thingType" inverseEntity="MHVThingObject" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="MHVRecordObject" positionX="-389" positionY="-217" width="128" height="73"/>
+        <element name="MHVThingObject" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="MHVThingTypeObject" positionX="-443" positionY="47" width="128" height="90"/>
+    </elements>
+</model>

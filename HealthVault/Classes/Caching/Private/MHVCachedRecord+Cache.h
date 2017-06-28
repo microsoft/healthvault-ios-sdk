@@ -1,5 +1,5 @@
 //
-//  MHVClients.h
+//  MHVCachedRecord+Cache.h
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -15,15 +15,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#ifndef MHVClients_h
-#define MHVClients_h
+#import "MHVCachedRecord+CoreDataClass.h"
+#import "MHVThingCacheDatabaseProtocol.h"
+@class MHVCachedThing;
 
-#import "MHVPersonClientProtocol.h"
-#import "MHVPlatformClientProtocol.h"
-#import "MHVRemoteMonitoringClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVThingCacheProtocol.h"
-#import "MHVVocabularyClientProtocol.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#endif /* MHVClients_h */
+@interface MHVCachedRecord (Cache) 
+
+/**
+ Find a thing in a record
+
+ @param thingId The thingId to find
+ @return the thing
+ */
+- (MHVCachedThing *_Nullable)findThingWithThingId:(NSString *)thingId;
+
+@end
+
+NS_ASSUME_NONNULL_END

@@ -18,8 +18,9 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "HealthVault/Classes/**/*",
+  "source_files": "HealthVault/Classes/**/*.{h,m}",
   "exclude_files": "HealthVault/Classes/Caching/**/*.{h,m}",
+  "private_header_files": "**/Private/**/*.h",
   "requires_arc": true,
   "libraries": "xml2",
   "xcconfig": {
@@ -35,7 +36,9 @@
   "subspecs": [
     {
       "name": "OfflineThingCache",
-      "source_files": "HealthVault/Classes/**/*",
+      "source_files": "HealthVault/Classes/**/*.{h,m,xcdatamodeld}",
+      "resources": "HealthVault/Assets/**/*",
+      "private_header_files": "**/Private/**/*.h",
       "frameworks": "CoreData",
       "compiler_flags": "-D THING_CACHE=1",
       "dependencies": {

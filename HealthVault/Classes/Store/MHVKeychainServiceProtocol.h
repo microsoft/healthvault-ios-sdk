@@ -66,6 +66,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)removeObjectForKey:(NSString *)key;
 
+/**
+ Generate a very long random password, suitable for using as Cache database encryption key
+ 
+ @return The random string.
+ */
+- (NSString *)generateRandomPassword;
+
 @end
 
 NS_ASSUME_NONNULL_END

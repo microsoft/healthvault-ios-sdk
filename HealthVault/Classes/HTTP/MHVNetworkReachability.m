@@ -1,8 +1,8 @@
 //
-//  MHVNetworkReachability.m
-//  MHVLib
+// MHVNetworkReachability.m
+// MHVLib
 //
-//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,33 +22,13 @@
 
 MHVDEFINE_NOTIFICATION(MHVHostReachabilityNotificationName);
 
-BOOL MHVIsHostNetworkReachable(NSString* hostName)
-{
-    MHVCHECK_NOTNULL(hostName);
-    
-    const char* szHostName = [hostName cStringUsingEncoding:NSUTF8StringEncoding]; // buffer is owned by NSString
-    MHVCHECK_NOTNULL(szHostName);
-    
-    SCNetworkReachabilityRef hostRef = SCNetworkReachabilityCreateWithName(NULL, szHostName);
-    SCNetworkReachabilityFlags networkFlags;
-    
-    BOOL result = SCNetworkReachabilityGetFlags(hostRef, &networkFlags);
-    CFRelease(hostRef);
-    
-    MHVCHECK_TRUE(result);
-    
-    return ((networkFlags & kSCNetworkFlagsReachable) != 0 &&
-            (networkFlags & kSCNetworkFlagsConnectionRequired) == 0
-            );
-}
-
-static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info)
+static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info)
 {
     @try
     {
         if (info)
         {
-            MHVHostReachability* host = (__bridge MHVHostReachability *) info;
+            MHVHostReachability *host = (__bridge MHVHostReachability *)info;
             [host broadcastStatusChange:flags];
         }
     }
@@ -58,66 +38,66 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     }
 }
 
-@interface MHVHostReachability (MHVPrivate)
+@interface MHVHostReachability ()
 
--(BOOL) enableNotifications:(BOOL) enable;
--(BOOL) enableCallback:(BOOL) enable;
+@property (nonatomic, assign) SCNetworkReachabilityRef hostRef;
+@property (nonatomic, assign) SCNetworkReachabilityFlags status;
 
 @end
 
 @implementation MHVHostReachability
 
-@synthesize hostName = m_hostName;
-@synthesize status = m_status;
--(BOOL)isReachable
+- (BOOL)hasNetworkConnection
 {
-    return ((m_status & kSCNetworkFlagsReachable) != 0 &&
-            (m_status & kSCNetworkFlagsConnectionRequired) == 0
-            );
+    return [self isReachable];
 }
-@synthesize isMonitoring = m_isMonitoring;
 
--(id)initWithUrl:(NSURL *)url
+- (BOOL)isReachable
+{
+    return ((self.status & kSCNetworkFlagsReachable) != 0 &&
+            (self.status & kSCNetworkFlagsConnectionRequired) == 0);
+}
+
+- (instancetype)initWithUrl:(NSURL *)url
 {
     return [self initWithHostName:url.host];
 }
 
--(id)initWithHostName:(NSString *)hostName
+- (id)initWithHostName:(NSString *)hostName
 {
     MHVCHECK_STRING(hostName);
     
     self = [super init];
-    MHVCHECK_SELF;
-    
-    m_hostName = hostName;
-    
-    const char* szHostName = [hostName cStringUsingEncoding:NSUTF8StringEncoding]; // buffer is owned by NSString
-    MHVCHECK_NOTNULL(szHostName);
-    
-    m_hostRef = SCNetworkReachabilityCreateWithName(NULL, szHostName);
-    MHVCHECK_NOTNULL(m_hostRef);
-    
-    m_status = kSCNetworkFlagsReachable; // Assume the best
-    m_isMonitoring = FALSE;
-    
+    if (self)
+    {
+        _hostName = hostName;
+        
+        const char *szHostName = [hostName cStringUsingEncoding:NSUTF8StringEncoding]; // buffer is owned by NSString
+        
+        _hostRef = SCNetworkReachabilityCreateWithName(NULL, szHostName);
+        _status = kSCNetworkFlagsReachable; // Assume the best
+        _isMonitoring = FALSE;
+        
+        [self startMonitoring];
+    }
     return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
     [self stopMonitoring];
     
-    if (m_hostRef)
+    if (self.hostRef)
     {
-        CFRelease(m_hostRef);
+        CFRelease(self.hostRef);
     }
-    
 }
 
--(BOOL)refreshStatus
+- (BOOL)refreshStatus
 {
     SCNetworkReachabilityFlags status = 0;
-    if (!SCNetworkReachabilityGetFlags(m_hostRef, &status))
+    
+    if (!SCNetworkReachabilityGetFlags(self.hostRef, &status))
     {
         return FALSE;
     }
@@ -125,9 +105,9 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     return TRUE;
 }
 
--(BOOL)startMonitoring
+- (BOOL)startMonitoring
 {
-    if (m_isMonitoring)
+    if (self.isMonitoring)
     {
         return TRUE;
     }
@@ -137,14 +117,14 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     MHVCHECK_SUCCESS([self enableCallback:TRUE]);
     MHVCHECK_SUCCESS([self enableNotifications:TRUE]);
     
-    m_isMonitoring = TRUE;
+    self.isMonitoring = TRUE;
     
     return TRUE;
 }
 
--(BOOL)stopMonitoring
+- (BOOL)stopMonitoring
 {
-    if (!m_isMonitoring)
+    if (!self.isMonitoring)
     {
         return TRUE;
     }
@@ -152,29 +132,28 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
     MHVCHECK_SUCCESS([self enableNotifications:FALSE]);
     MHVCHECK_SUCCESS([self enableCallback:FALSE]);
     
-    m_isMonitoring = FALSE;
+    self.isMonitoring = FALSE;
     
     return TRUE;
 }
 
--(void)broadcastStatusChange:(SCNetworkConnectionFlags)flags
+- (void)broadcastStatusChange:(SCNetworkConnectionFlags)flags
 {
     BOOL shouldNotify = FALSE;
+    
     @synchronized(self)
     {
-        shouldNotify = (flags != 0 && m_status != flags);
-        m_status = flags;
+        shouldNotify = (flags != 0 && self.status != flags);
+        self.status = flags;
     }
     if (shouldNotify)
     {
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName: MHVHostReachabilityNotificationName
-         object:self
-         ];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MHVHostReachabilityNotificationName
+                                                            object:self];
     }
 }
 
--(void)addObserver:(id)notificationObserver selector:(SEL)notificationSelector
+- (void)addObserver:(id)notificationObserver selector:(SEL)notificationSelector
 {
     [[NSNotificationCenter defaultCenter] addObserver:notificationObserver
                                              selector:notificationSelector
@@ -182,33 +161,34 @@ static void HostReachabilityStatusChanged(SCNetworkReachabilityRef target, SCNet
                                                object:self];
 }
 
--(void)removeObserver:(id)notificationObserver
+- (void)removeObserver:(id)notificationObserver
 {
     [[NSNotificationCenter defaultCenter] removeObserver:notificationObserver
                                                     name:MHVHostReachabilityNotificationName
                                                   object:self];
 }
 
-@end
+#pragma mark - Private methods
 
-@implementation MHVHostReachability (MHVPrivate)
-
--(BOOL)enableCallback:(BOOL)enable
+- (BOOL)enableCallback:(BOOL)enable
 {
-    SCNetworkReachabilityContext context = {0, (__bridge void *)(self), NULL, NULL, NULL};
-    return (SCNetworkReachabilitySetCallback(m_hostRef, (enable) ? HostReachabilityStatusChanged : NULL, &context));
+    SCNetworkReachabilityContext context = {
+        0, (__bridge void *)(self), NULL, NULL, NULL
+    };
+    
+    return SCNetworkReachabilitySetCallback(self.hostRef, (enable) ? HostReachabilityStatusChanged : NULL, &context);
 }
 
--(BOOL)enableNotifications:(BOOL)enable
+- (BOOL)enableNotifications:(BOOL)enable
 {
     CFRunLoopRef runLoop = [[NSRunLoop currentRunLoop] getCFRunLoop];
+    
     if (enable)
     {
-        return SCNetworkReachabilityScheduleWithRunLoop(m_hostRef, runLoop, kCFRunLoopDefaultMode);
+        return SCNetworkReachabilityScheduleWithRunLoop(self.hostRef, runLoop, kCFRunLoopDefaultMode);
     }
     
-    return SCNetworkReachabilityUnscheduleFromRunLoop(m_hostRef, runLoop, kCFRunLoopDefaultMode);
-    
+    return SCNetworkReachabilityUnscheduleFromRunLoop(self.hostRef, runLoop, kCFRunLoopDefaultMode);
 }
 
 @end

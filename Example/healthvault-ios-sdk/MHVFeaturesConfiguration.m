@@ -29,6 +29,23 @@
     config.defaultShellUrl = [[NSURL alloc] initWithString:@"https://account.healthvault-ppe.com"];
     config.restHealthVaultUrl = [[NSURL alloc] initWithString:@"https://data.ppe.microsofthealth.net"];
     config.restVersion = @"1.0-preview2";
+    
+    config.cacheConfiguration.cacheTypeIds = @[[MHVBloodGlucose typeID],
+                                               [MHVBloodPressure typeID],
+                                               [MHVCondition typeID],
+                                               [MHVCholesterol typeID],
+                                               [MHVDietaryIntake typeID],
+                                               [MHVDailyMedicationUsage typeID],
+                                               [MHVImmunization typeID],
+                                               [MHVEmotionalState typeID],
+                                               [MHVExercise typeID],
+                                               [MHVMedication typeID],
+                                               [MHVProcedure typeID],
+                                               [MHVSleepJournalAM typeID],
+                                               [MHVWeight typeID],
+                                               [MHVFile typeID],
+                                               [MHVPersonalImage typeID],
+                                               [MHVHeartRate typeID]];
 
     /*
     config.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"34998e3c-ba6e-49da-bd57-55c0817491e0"];

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="MHVCachedRecord" representedClassName="MHVCachedRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="lastOperationSequenceNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastSyncDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="recordId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="things" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MHVCachedThing" inverseName="record" inverseEntity="MHVCachedThing" syncable="YES"/>
+    </entity>
+    <entity name="MHVCachedThing" representedClassName="MHVCachedThing" syncable="YES" codeGenerationType="class">
+        <attribute name="createDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="createdByAppId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="createdByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="effectiveDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="thingId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="thingType" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="updatedByAppId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="updatedByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="xmlString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="things" inverseEntity="MHVCachedRecord" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="105"/>
+        <element name="MHVCachedThing" positionX="-63" positionY="-18" width="128" height="223"/>
+    </elements>
+</model>

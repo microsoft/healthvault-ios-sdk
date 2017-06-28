@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MHVSessionCredential, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient;
+@class MHVSessionCredential, MHVConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient;
 
 @protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVRemoteMonitoringClient;
 
@@ -39,6 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
  The credential object for the current session.
  */
 @property (nonatomic, strong, readonly, nullable) MHVSessionCredential *sessionCredential;
+
+/**
+ The configuration object for the current session.
+ */
+@property (nonatomic, strong, readonly) MHVConfiguration *configuration;
 
 /**
  The person info for the current session.

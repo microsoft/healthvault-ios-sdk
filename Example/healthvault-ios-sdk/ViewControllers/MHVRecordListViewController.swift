@@ -138,6 +138,11 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
             return
         }
         
+        if let cache = self.connection.thingClient()?.cache
+        {
+            cache .startSyncing(forRecord: record.id, completion: nil)
+        }
+        
         personInfo.selectedRecordID = record.id
         
         let typeListController = MHVTypeListViewController.init()

@@ -34,10 +34,14 @@ static NSString *const c_element_record_operation = @"record-operation";
 - (void)deserialize:(XReader *)reader
 {
     self.latestRecordOperationSequenceNumber = [reader readIntElement:c_element_latest_sequence];
-    self.operations = (MHVRecordOperationCollection *)[reader readElementArray:c_element_operations
-                                                                     thingName:c_element_record_operation
-                                                                       asClass:[MHVRecordOperation class]
-                                                                 andArrayClass:[MHVRecordOperationCollection class]];
+    
+    if ([reader isStartElementWithName:c_element_operations])
+    {
+        self.operations = (MHVRecordOperationCollection *)[reader readElementArray:c_element_operations
+                                                                         thingName:c_element_record_operation
+                                                                           asClass:[MHVRecordOperation class]
+                                                                     andArrayClass:[MHVRecordOperationCollection class]];
+    }
 }
 
 @end

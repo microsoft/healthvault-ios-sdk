@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVConnection : NSObject<MHVConnectionProtocol>
 
-@property (nonatomic, strong, readonly) MHVConfiguration *configuration;
 @property (nonatomic, strong, nullable) MHVServiceInstance *serviceInstance;
 @property (nonatomic, strong, readonly, nullable) MHVPersonInfo *personInfo;
 

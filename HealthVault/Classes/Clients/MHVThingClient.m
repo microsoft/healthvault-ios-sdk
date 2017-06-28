@@ -29,16 +29,19 @@
 #import "MHVPersonalImage.h"
 #import "MHVBlobUploadRequest.h"
 #import "MHVLogger.h"
+#import "MHVThingCacheProtocol.h"
 
 @interface MHVThingClient ()
 
 @property (nonatomic, weak) id<MHVConnectionProtocol>     connection;
+@property (nonatomic, strong) id<MHVThingCacheProtocol>   cache;
 
 @end
 
 @implementation MHVThingClient
 
 - (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
+                             cache:(id<MHVThingCacheProtocol> _Nullable)cache
 {
     MHVASSERT_PARAMETER(connection);
     
@@ -46,6 +49,7 @@
     if (self)
     {
         _connection = connection;
+        _cache = cache;
     }
     
     return self;
@@ -146,8 +150,34 @@
             query.name = [[NSUUID UUID] UUIDString];
         }
     }
-
+    
+#ifdef THING_CACHE
+    // Check for cached results for the GetThings queries
+    if (self.cache)
+    {
+        [self.cache cachedResultsForQueries:queries
+                                   recordId:recordId
+                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection)
+         {
+             if (resultCollection)
+             {
+                 completion(resultCollection, nil);
+             }
+             else
+             {
+                 [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+             }
+         }];
+    }
+    else
+    {
+        [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+    }
+    
+#else
+    // No caching
     [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+#endif
 }
 
 // Internal method that will fetch more pending items if not all results are returned for the query.

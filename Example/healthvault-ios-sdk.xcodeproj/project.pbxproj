@@ -428,9 +428,9 @@
 				A5DF65381EF052DD009F5968 /* HTTP */,
 				A5DF653B1EF052DD009F5968 /* MHVLibTests.m */,
 				A5DF653C1EF052DD009F5968 /* MHVPlatformClientTests.m */,
+				6003F5B6195388D20070C39A /* Supporting Files */,
 				A5DF653D1EF052DD009F5968 /* ThingTypes */,
 				A5DF65511EF052DD009F5968 /* XML */,
-				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -675,6 +675,11 @@
 					6003F589195388D20070C39A = {
 						DevelopmentTeam = UBF8T346G9;
 						LastSwiftMigration = 0830;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;

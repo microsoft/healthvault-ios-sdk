@@ -35,6 +35,17 @@
     return YES;
 }
 
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
+{
+    // If background fetch is enabled, tell the cache to sync the latest data from HealthVault
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    if (connection)
+    {
+        [connection.thingClient.cache syncWithCompletionHandler:completionHandler];
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

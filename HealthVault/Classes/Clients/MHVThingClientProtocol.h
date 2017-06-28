@@ -20,11 +20,13 @@
 #import "MHVClientProtocol.h"
 
 @class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVBlobPayloadThing, MHVGetRecordOperationsResult;
-@protocol MHVBlobSourceProtocol;
+@protocol MHVThingCacheProtocol, MHVBlobSourceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVThingClientProtocol <NSObject>
+
+@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
 
 /**
  * Gets the an individual thing by its ID

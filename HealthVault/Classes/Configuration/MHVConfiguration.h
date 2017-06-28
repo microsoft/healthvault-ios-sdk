@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+@class MHVThingCacheConfiguration;
 
 @interface MHVConfiguration : NSObject
 
@@ -107,5 +108,10 @@
  @note This property corresponds to the "HV_IsMRA" configuration value when reading from web.config.
  */
 @property (nonatomic, assign) BOOL isMultiRecordApp;
+
+/**
+ Configuration for caching
+ */
+@property (nonatomic, strong) MHVThingCacheConfiguration *cacheConfiguration;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  MHVClients.h
+//  MHVThingCacheDatabase.h
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -15,15 +15,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#ifndef MHVClients_h
-#define MHVClients_h
+#import <Foundation/Foundation.h>
+#import "MHVThingCacheDatabaseProtocol.h"
+@protocol MHVKeychainServiceProtocol;
 
-#import "MHVPersonClientProtocol.h"
-#import "MHVPlatformClientProtocol.h"
-#import "MHVRemoteMonitoringClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVThingCacheProtocol.h"
-#import "MHVVocabularyClientProtocol.h"
+@interface MHVThingCacheDatabase : NSObject <MHVThingCacheDatabaseProtocol>
 
-#endif /* MHVClients_h */
+- (instancetype)initWithKeychainService:(id<MHVKeychainServiceProtocol>)keychainService;
+
+@end
