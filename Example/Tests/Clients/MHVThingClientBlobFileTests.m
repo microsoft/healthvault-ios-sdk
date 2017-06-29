@@ -54,6 +54,7 @@ describe(@"MHVThingClient", ^
     
     // Test Connection
     MHVConnection *testConnection = [[MHVSodaConnection alloc] initWithConfiguration:[MHVConfiguration new]
+                                                                  cacheConfiguration:nil
                                                                        clientFactory:clientFactory
                                                                          httpService:httpService
                                                                      keychainService:keychainService

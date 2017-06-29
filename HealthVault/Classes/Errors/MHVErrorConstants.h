@@ -30,7 +30,8 @@ typedef NS_ENUM(NSUInteger, MHVErrorType)
     MHVErrorTypeOperationCancelled,
     MHVErrorTypeUnknown,
     MHVErrorTypeNotFound,
-    MHVErrorTypeNetworkError
+    MHVErrorTypeNetworkError,
+    MHVErrorTypeInvalidThingQuery
 };
 
 #endif /* MHVErrorConstants_h */

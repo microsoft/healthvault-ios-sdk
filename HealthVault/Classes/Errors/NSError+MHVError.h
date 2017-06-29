@@ -30,6 +30,7 @@
 + (NSError *)MHVUnknownError;
 + (NSError *)MHVNotFound;
 + (NSError *)MHVNetworkError;
++ (NSError *)MHVInvalidThingQuery;
 
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description;
 

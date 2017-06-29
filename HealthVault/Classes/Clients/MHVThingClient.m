@@ -216,7 +216,14 @@
              {
                  if (result.hasPendingThings)
                  {
-                     MHVThingQuery *query = [[MHVThingQuery alloc] initWithPendingThings:result.pendingThings];
+                     MHVThingKeyCollection *keys = [MHVThingKeyCollection new];
+                     
+                     for (MHVPendingThing *thing in result.pendingThings)
+                     {
+                         [keys addObject:thing.key];
+                     }
+                     
+                     MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingKeys:keys];
                      query.name = result.name;
                      [queriesForPendingThings addObject:query];
                  }
@@ -552,7 +559,7 @@
         return;
     }
     
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[things arrayOfThingIDs]];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[things thingIDs]];
     query.view.sections = MHVThingSection_Standard | MHVThingSection_Blobs;
     
     [self getThingsWithQuery:query
@@ -674,7 +681,8 @@
     }
     
     // Get the personalImage thing, including the blob section
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
+    MHVThingFilter *filter = [[MHVThingFilter alloc] initWithTypeID:MHVPersonalImage.typeID];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithFilter:filter];
     query.view.sections = MHVThingSection_Blobs;
     
     [self getThingsWithQuery:query
@@ -752,7 +760,8 @@
     }
 
     // Get the personalImage thing, including the blob section
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithTypeID:MHVPersonalImage.typeID];
+    MHVThingFilter *filter = [[MHVThingFilter alloc] initWithTypeID:MHVPersonalImage.typeID];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithFilter:filter];
     query.view.sections = MHVThingSection_Blobs;
     
     [self getThingsWithQuery:query

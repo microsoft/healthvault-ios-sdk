@@ -431,7 +431,7 @@ typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nul
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
 
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:thingIds];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[[MHVStringCollection alloc] initWithArray:thingIds]];
     
     __weak __typeof__(self)weakSelf = self;
     
