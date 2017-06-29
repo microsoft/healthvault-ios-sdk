@@ -2,8 +2,19 @@
 //  MHVCacheQueryTests.m
 //  healthvault-ios-sdk
 //
-//  Created by Nathan Malubay on 6/28/17.
-//  Copyright © 2017 namalu. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 //
 
 #import <XCTest/XCTest.h>
@@ -198,7 +209,7 @@ describe(@"MHVCacheQuery", ^
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
         
-        it(@"should have a vaild predicate", ^
+        it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
                [[cacheQuery.predicate.predicateFormat should] equal:@"TRUEPREDICATE"];
@@ -230,7 +241,7 @@ describe(@"MHVCacheQuery", ^
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
         
-        it(@"should have a vaild predicate", ^
+        it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
                [[cacheQuery.predicate.predicateFormat should] equal:@"effectiveDate >=[c] CAST(-978307200.000000, \"NSDate\") AND effectiveDate <=[c] CAST(-946771200.000000, \"NSDate\") AND createdByAppID ==[c] \"TEST_APP_ID\" AND createdByPersonID ==[c] \"TEST_PERSON_ID\""];
@@ -270,7 +281,7 @@ describe(@"MHVCacheQuery", ^
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
         
-        it(@"should have a vaild predicate", ^
+        it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
                [[cacheQuery.predicate.predicateFormat should] equal:@"(effectiveDate >=[c] CAST(-978307200.000000, \"NSDate\") AND effectiveDate <=[c] CAST(-946771200.000000, \"NSDate\") AND createdByAppID ==[c] \"TEST_APP_ID_1\" AND createdByPersonID ==[c] \"TEST_PERSON_ID_1\") OR (updatedByAppID ==[c] \"TEST_APP_ID_2\" AND updatedByPersonID ==[c] \"TEST_PERSON_ID_2\" AND updateDate >=[c] CAST(-978307200.000000, \"NSDate\") AND updateDate <=[c] CAST(-946771200.000000, \"NSDate\"))"];
@@ -296,7 +307,7 @@ describe(@"MHVCacheQuery", ^
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
         
-        it(@"should have a vaild predicate", ^
+        it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
                [[cacheQuery.predicate.predicateFormat should] equal:@"thingId ==[c] \"TEST_THING_ID\""];
@@ -324,7 +335,7 @@ describe(@"MHVCacheQuery", ^
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
         
-        it(@"should have a vaild predicate", ^
+        it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
                [[cacheQuery.predicate.predicateFormat should] equal:@"thingId ==[c] \"TEST_THING_ID_1\" OR thingId ==[c] \"TEST_THING_ID_2\" OR thingId ==[c] \"TEST_THING_ID_3\""];
@@ -352,7 +363,7 @@ describe(@"MHVCacheQuery", ^
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
         
-        it(@"should have a vaild predicate", ^
+        it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
                [[cacheQuery.predicate.predicateFormat should] equal:@"thingId ==[c] \"TEST_THING_ID\" AND version ==[c] \"1.1.1.1\""];
@@ -384,7 +395,7 @@ describe(@"MHVCacheQuery", ^
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
         
-        it(@"should have a vaild predicate", ^
+        it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
                [[cacheQuery.predicate.predicateFormat should] equal:@"(thingId ==[c] \"TEST_THING_ID_1\" AND version ==[c] \"1.1.1.1\") OR (thingId ==[c] \"TEST_THING_ID_2\" AND version ==[c] \"2.2.2.2\") OR (thingId ==[c] \"TEST_THING_ID_3\" AND version ==[c] \"3.3.3.3\")"];
@@ -429,7 +440,7 @@ describe(@"MHVCacheQuery", ^
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
         
-        it(@"should have a vaild predicate", ^
+        it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
                [[cacheQuery.predicate.predicateFormat should] equal:@"((thingId ==[c] \"TEST_THING_ID_1\" AND version ==[c] \"1.1.1.1\") OR (thingId ==[c] \"TEST_THING_ID_2\" AND version ==[c] \"2.2.2.2\") OR (thingId ==[c] \"TEST_THING_ID_3\" AND version ==[c] \"3.3.3.3\")) AND ((effectiveDate >=[c] CAST(-978307200.000000, \"NSDate\") AND effectiveDate <=[c] CAST(-946771200.000000, \"NSDate\") AND createdByAppID ==[c] \"TEST_APP_ID_1\" AND createdByPersonID ==[c] \"TEST_PERSON_ID_1\") OR ((typeId ==[c] \"TEST_TYPE_ID_1\" OR typeId ==[c] \"TEST_TYPE_ID_2\") AND createDate >=[c] CAST(-978307200.000000, \"NSDate\") AND createDate <=[c] CAST(-946771200.000000, \"NSDate\")))"];
