@@ -77,9 +77,9 @@ NS_ASSUME_NONNULL_BEGIN
 /* The name of the organization that owns this task. Read-only [optional]
  */
 @property(strong,nonatomic,nullable) NSString* organizationName;
-/* The friendly name of the task [optional]
+/* The friendly name of the task 
  */
-@property(strong,nonatomic,nullable) NSString* name;
+@property(strong,nonatomic) NSString* name;
 /* The short description of the task 
  */
 @property(strong,nonatomic) NSString* shortDescription;
@@ -98,12 +98,12 @@ NS_ASSUME_NONNULL_BEGIN
 /* The tracking policy 
  */
 @property(strong,nonatomic) MHVActionPlanTrackingPolicy* trackingPolicy;
-/* The text shown during task signup. 
+/* The text shown during task signup. [optional]
  */
-@property(strong,nonatomic) NSString* signupName;
-/* The ID of the associated plan. This is not needed when adding a task as part of a new plan [optional]
+@property(strong,nonatomic,nullable) NSString* signupName;
+/* The ID of the associated plan. This is not needed when adding a task as part of a new plan 
  */
-@property(strong,nonatomic,nullable) NSString* associatedPlanId;
+@property(strong,nonatomic) NSString* associatedPlanId;
 /* The list of objective IDs the task is associated with 
  */
 @property(strong,nonatomic) NSArray<NSString*>* associatedObjectiveIds;
