@@ -123,6 +123,7 @@ describe(@"MHVSodaConnection", ^
     [(id)clientFactory stub:@selector(platformClientWithConnection:) andReturn:platformClient];
     [(id)clientFactory stub:@selector(credentialClientWithConnection:) andReturn:credentialClient];
     [(id)clientFactory stub:@selector(personClientWithConnection:) andReturn:personClient];
+    [(id)clientFactory stub:@selector(thingClientWithConnection:) andReturn:nil];
     
     beforeEach(^
     {

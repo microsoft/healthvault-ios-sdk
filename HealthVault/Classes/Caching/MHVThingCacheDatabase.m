@@ -384,6 +384,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              cachedRecord.isValid = NO;
              cachedRecord.lastSyncDate = [NSDate dateWithTimeIntervalSince1970:0];
              cachedRecord.lastOperationSequenceNumber = 0;
+             cachedRecord.things = [NSSet new];
              
              error = [self saveContext];
          }];

@@ -64,9 +64,4 @@ static NSTimeInterval const kDefaultRequestTimeoutDurationInSeconds = 30;
  */
 static NSInteger const kDefaultBlobChunkSizeInBytes = 1 << 21; // 2Mb.
 
-/*
- The sync time in seconds
- */
-static NSInteger const kDefaultSyncIntervalSeconds = 60*60; // 1 hour
-
 #endif /* MHVConfigurationConstants_h */
