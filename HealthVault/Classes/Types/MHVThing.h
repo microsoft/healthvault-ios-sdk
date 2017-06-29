@@ -206,7 +206,7 @@ enum MHVThingFlags
 - (NSUInteger)indexOfTypeID:(NSString *)typeID;
 - (MHVThing *)firstThingOfType:(NSString *)typeID;
 
-- (NSArray<NSString *> *)arrayOfThingIDs;
+- (MHVStringCollection *)thingIDs;
 
 - (MHVClientResult *)validate;
 

@@ -111,6 +111,15 @@
                                       }];
 }
 
++ (NSError *)MHVInvalidThingQuery
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeInvalidThingQuery
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"The MHVThingQuery is in an invalid state."
+                                      }];
+}
+
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description
 {
     if (!error)
