@@ -18,6 +18,7 @@
 //
 
 #import "MHVThingCacheDatabase.h"
+#import <Security/Security.h>
 #import "MHVCommon.h"
 #import "MHVThingCacheDatabase+CoreDataModel.h"
 #import "MHVKeychainServiceProtocol.h"
@@ -25,6 +26,7 @@
 #import "EncryptedStore.h"
 #import "MHVThingTypes.h"
 #import "MHVThingCacheDatabase+CoreDataModel.h"
+#import "NSError+MHVError.h"
 #import "MHVCachedThing+Cache.h"
 #import "MHVCachedRecord+Cache.h"
 
@@ -32,35 +34,44 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 @interface MHVThingCacheDatabase ()
 
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic, strong) NSManagedObjectModel *objectModel;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSURL *databaseUrl;
-@property (nonatomic, strong) NSObject *lockObject;
-@property (nonatomic, assign) BOOL deleted;
+@property (nonatomic, strong) NSPersistentStoreCoordinator      *persistentStoreCoordinator;
+@property (nonatomic, strong) NSManagedObjectModel              *objectModel;
+@property (nonatomic, strong) NSManagedObjectContext            *managedObjectContext;
+@property (nonatomic, strong) NSURL                             *databaseUrl;
+@property (nonatomic, strong) NSObject                          *lockObject;
+@property (nonatomic, assign) BOOL                              deleted;
 
-@property (nonatomic, strong) id<MHVKeychainServiceProtocol> keychainService;
+@property (nonatomic, strong) id<MHVKeychainServiceProtocol>    keychainService;
+@property (nonatomic, strong) NSFileManager                     *fileManager;
 
 @end
 
 @implementation MHVThingCacheDatabase
 
 - (instancetype)initWithKeychainService:(id<MHVKeychainServiceProtocol>)keychainService
+                            fileManager:(NSFileManager *)fileManager
 {
+    MHVASSERT_PARAMETER(keychainService);
+    MHVASSERT_PARAMETER(fileManager);
+    
     self = [super init];
     if (self)
     {
         _keychainService = keychainService;
+        _fileManager = fileManager;
         _lockObject = [NSObject new];
     }
     return self;
 }
 
-- (void)deleteDatabase
+- (NSError *_Nullable)deleteDatabase
 {
+    NSError *error = nil;
+    
     @synchronized (self.lockObject)
     {
-        [[NSFileManager defaultManager] removeItemAtURL:self.databaseUrl error:nil];
+        [self.fileManager removeItemAtURL:self.databaseUrl
+                                    error:&error];
         
         [self.keychainService setString:nil forKey:kMHVCachePasswordKey];
         
@@ -71,17 +82,19 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         
         _deleted = YES;
     }
+    
+    return error;
 }
 
 #pragma mark - Create Objects
 
 - (MHVCachedThing *)newThingForRecord:(MHVCachedRecord *)record
 {
-    if (self.deleted)
+    if (self.deleted || !record)
     {
         return nil;
     }
-
+    
     __block MHVCachedThing *thing;
     
     [self.managedObjectContext performBlockAndWait:^
@@ -96,11 +109,11 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (MHVCachedRecord *)newRecord:(NSString *)recordId
 {
-    if (self.deleted)
+    if (self.deleted || !recordId)
     {
         return nil;
     }
-
+    
     __block MHVCachedRecord *record;
     
     [self.managedObjectContext performBlockAndWait:^
@@ -110,6 +123,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          record.recordId = recordId;
          record.lastOperationSequenceNumber = 0;
          record.lastSyncDate = [NSDate dateWithTimeIntervalSince1970:0];
+         record.isValid = YES;
          
          [self saveContext];
      }];
@@ -122,12 +136,12 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 - (void)deleteRecord:(NSString *)recordId
 {
     MHVASSERT_PARAMETER(recordId);
-
+    
     if (self.deleted || !recordId)
     {
         return;
     }
-
+    
     [self.managedObjectContext performBlockAndWait:^
      {
          MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
@@ -139,16 +153,23 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
      }];
 }
 
-- (void)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId
+- (NSError *_Nullable)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId
 {
     MHVASSERT_PARAMETER(thingIds);
     MHVASSERT_PARAMETER(recordId);
     
-    if (self.deleted || !thingIds || !recordId || thingIds.count == 0)
+    if (self.deleted || !thingIds || thingIds.count == 0)
     {
-        return;
+        return nil;
     }
-
+    
+    if (!recordId)
+    {
+        return [NSError MVHRequiredParameterIsNil];
+    }
+    
+    __block NSError *error;
+    
     [self.managedObjectContext performBlockAndWait:^
      {
          NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedThing"];
@@ -169,20 +190,34 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              [self.managedObjectContext deleteObject:record];
          }
          
-         [self saveContext];
+         error = [self saveContext];
      }];
+    
+    return error;
 }
 
 - (void)addOrUpdateThings:(MHVThingCollection *)things
                  recordId:(NSString *)recordId
        lastSequenceNumber:(NSInteger)lastSequenceNumber
-               completion:(void (^)(BOOL success))completion
+               completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion
 {
     MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
     
-    if (self.deleted || !record)
+    if (self.deleted)
     {
-        completion(NO);
+        if (completion)
+        {
+            completion(0, nil);
+        }
+        return;
+    }
+    
+    if (!record)
+    {
+        if (completion)
+        {
+            completion(0, [NSError MVHRequiredParameterIsNil]);
+        }
         return;
     }
     
@@ -203,12 +238,26 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          //Sync complete, update record with date and sequence number
          record.lastOperationSequenceNumber = lastSequenceNumber;
          record.lastSyncDate = [NSDate date];
+         record.isValid = YES;
          
-         [self saveContext];
+         NSError *error = [self saveContext];
          
-         MHVLOG(@"Record %@ updated %li things", [recordId substringToIndex:4], things.count);
+         MHVLOG(@"ThingCacheDatabase: Cache record updated %li things", things.count);
          
-         completion(YES);
+         if (error)
+         {
+             if (completion)
+             {
+                 completion(0, error);
+             }
+         }
+         else
+         {
+             if (completion)
+             {
+                 completion(things.count, nil);
+             }
+         }
      }];
 }
 
@@ -224,7 +273,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         }
         return;
     }
-
+    
     [self.managedObjectContext performBlock:^
      {
          NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedRecord"];
@@ -233,10 +282,13 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
          if (!results && error)
          {
-             MHVLOG(@"Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
+             MHVLOG(@"ThingCacheDatabase: Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
          }
          
-         completion(results);
+         if (completion)
+         {
+             completion(results);
+         }
      }];
 }
 
@@ -253,14 +305,12 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
      {
          NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedRecord"];
          request.predicate = [NSPredicate predicateWithFormat:@"recordId == %@", recordId];
-         request.includesPropertyValues = YES;
-         request.returnsObjectsAsFaults = NO;
          
          NSError *error = nil;
          NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
          if (error)
          {
-             MHVLOG(@"Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
+             MHVLOG(@"ThingCacheDatabase: Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
          }
          record = results.firstObject;
          [record awakeFromFetch];
@@ -307,8 +357,53 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     return sequenceNumber;
 }
 
-- (void)updateRecord:(id<MHVCachedRecord>)record lastSyncDate:(NSDate *)lastSyncDate sequenceNumber:(NSNumber *)sequenceNumber
+- (BOOL)isCacheValidForRecord:(id<MHVCachedRecord>)record
 {
+    __block NSInteger isValid;
+    
+    // Make sure properties are retrieved with the correct context
+    [self.managedObjectContext performBlockAndWait:^
+     {
+         isValid = ((MHVCachedRecord *)record).isValid;
+     }];
+    return isValid;
+}
+
+- (void)setCacheInvalidForRecordId:(NSString *)recordId
+{
+    MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
+    
+    if (record)
+    {
+        __block NSError *error;
+        
+        [self.managedObjectContext performBlockAndWait:^
+         {
+             MHVCachedRecord *cachedRecord = (MHVCachedRecord *)record;
+             
+             cachedRecord.isValid = NO;
+             cachedRecord.lastSyncDate = [NSDate dateWithTimeIntervalSince1970:0];
+             cachedRecord.lastOperationSequenceNumber = 0;
+             cachedRecord.things = [NSSet new];
+             
+             error = [self saveContext];
+         }];
+        
+        if (error)
+        {
+            MHVLOG(@"Error setting record as invalid %@", error);
+            
+            // If can't set record as invalid, something is wrong
+            // Delete database and reset so will not be returning invalid data
+            [self deleteDatabase];
+        }
+    }
+}
+
+- (NSError *_Nullable)updateRecord:(id<MHVCachedRecord>)record lastSyncDate:(NSDate *)lastSyncDate sequenceNumber:(NSNumber *)sequenceNumber
+{
+    __block NSError *error = nil;
+    
     // Make sure properties are updated with the correct context
     [self.managedObjectContext performBlockAndWait:^
      {
@@ -323,8 +418,12 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              cachedRecord.lastOperationSequenceNumber = sequenceNumber.integerValue;
          }
          
-         [self saveContext];
+         cachedRecord.isValid = YES;
+         
+         error = [self saveContext];
      }];
+    
+    return error;
 }
 
 #pragma mark - Core Data
@@ -339,12 +438,15 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     __block NSError *error = nil;
     
     [self.managedObjectContext performBlockAndWait:^
-    {
-        if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error])
-        {
-            MHVLOG(@"Error: %@", error.localizedDescription);
-        }
-    }];
+     {
+         if ([self.managedObjectContext hasChanges])
+         {
+             if (![self.managedObjectContext save:&error])
+             {
+                 MHVLOG(@"ThingCacheDatabase: Error saving to database: %@", error.localizedDescription);
+             }
+         }
+     }];
     
     return error;
 }
@@ -357,12 +459,12 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         {
             return nil;
         }
-
+        
         if (!_databaseUrl)
         {
-            NSURL *applicationSupportURL = [[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
+            NSURL *applicationSupportURL = [[self.fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
             
-            [[NSFileManager defaultManager] createDirectoryAtURL:applicationSupportURL withIntermediateDirectories:YES attributes:nil error:nil];
+            [self.fileManager createDirectoryAtURL:applicationSupportURL withIntermediateDirectories:YES attributes:nil error:nil];
             
             _databaseUrl = [applicationSupportURL URLByAppendingPathComponent:@"mhvcache.db"];
         }
@@ -381,13 +483,11 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         
         if (!_persistentStoreCoordinator)
         {
-            MHVLOG(@"DB Path: %@", self.databaseUrl);
-            
             //If new database, create password
-            if (![[NSFileManager defaultManager] fileExistsAtPath:self.databaseUrl.path])
+            if (![self.fileManager fileExistsAtPath:self.databaseUrl.path])
             {
                 //Generate a new password and store in the keychain
-                [self.keychainService setString:[self.keychainService generateRandomPassword]
+                [self.keychainService setString:[self generateRandomPassword]
                                          forKey:kMHVCachePasswordKey];
             }
             
@@ -397,6 +497,15 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                                                                                  }
                                                             managedObjectModel:[self objectModel]];
             [self saveContext];
+            
+            // Mark database as protected, and that it should not be backed up
+            [self.fileManager setAttributes:@{ NSFileProtectionKey : NSFileProtectionCompleteUntilFirstUserAuthentication }
+                               ofItemAtPath:self.databaseUrl.path
+                                      error:nil];
+            
+            [self.databaseUrl setResourceValue:@(YES)
+                                        forKey:NSURLIsExcludedFromBackupKey
+                                         error:nil];
         }
         return _persistentStoreCoordinator;
     }
@@ -444,5 +553,19 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     }
 }
 
+- (NSString *)generateRandomPassword
+{
+    NSMutableData *data = [NSMutableData dataWithLength:256];
+    int result = SecRandomCopyBytes(kSecRandomDefault, data.length, data.mutableBytes);
+    
+    NSString *string = [data base64EncodedStringWithOptions:kNilOptions];
+    if (string.length == 0 || result != errSecSuccess)
+    {
+        //In case random key failed, backup by returning a UUID string so there is always a key
+        MHVASSERT_MESSAGE(@"Random key failed!");
+        return [NSUUID new].UUIDString;
+    }
+    return string;
+}
 
 @end

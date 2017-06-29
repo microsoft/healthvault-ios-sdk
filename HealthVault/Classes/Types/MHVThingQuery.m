@@ -16,13 +16,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVThingQuery.h"
+#import "MHVStringExtensions.h"
+#import "MHVValidator.h"
 #import "MHVType.h"
 #import "MHVPendingThing.h"
 
 static NSString *const c_attribute_name = @"name";
-static NSString *const c_attribute_max = @"max";
 static NSString *const c_attribute_maxfull = @"max-full";
 static NSString *const c_element_id = @"id";
 static NSString *const c_element_key = @"key";
@@ -37,15 +37,113 @@ static NSString *const c_element_view = @"format";
 @property (readwrite, nonatomic, strong) MHVStringCollection *clientIDs;
 @property (readwrite, nonatomic, strong) MHVThingFilterCollection *filters;
 @property (readwrite, nonatomic, strong) MHVInt *max;
-@property (readwrite, nonatomic, strong) MHVInt *maxFull;
 
 @end
 
 @implementation MHVThingQuery
 
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _view = [[MHVThingView alloc] init];
+        _thingIDs = [[MHVStringCollection alloc] init];
+        _keys = [[MHVThingKeyCollection alloc] init];
+        _clientIDs = [[MHVStringCollection alloc] init];
+        _filters = [[MHVThingFilterCollection alloc] init];
+        _shouldUseCachedResults = YES;
+    }
+    
+    return self;
+}
+
+
+- (instancetype)initWithFilter:(MHVThingFilter *)filter
+{
+    MHVCHECK_NOTNULL(filter);
+    
+    self = [self init];
+    if (self)
+    {
+        [_filters addObject:filter];
+        
+        if (![MHVCollection isNilOrEmpty:filter.typeIDs])
+        {
+            [_view.typeVersions addObjectsFromArray:filter.typeIDs.toArray];
+        }
+    }
+    return self;
+}
+
+- (instancetype)initWithFilters:(MHVThingFilterCollection *)filters
+{
+    MHVCHECK_NOTNULL(filters);
+    
+    self = [self init];
+    
+    if (self)
+    {
+        _filters = filters;
+    }
+    return self;
+}
+
+- (instancetype)initWithThingID:(NSString *)thingID
+{
+    MHVCHECK_STRING(thingID);
+    
+    self = [self init];
+    if (self)
+    {
+        [_thingIDs addObject:thingID];
+    }
+    return self;
+}
+
+- (instancetype)initWithThingIDs:(MHVStringCollection *)ids
+{
+    MHVCHECK_NOTNULL(ids);
+    
+    self = [self init];
+    if (self)
+    {
+        _thingIDs = ids;
+    }
+    return self;
+}
+
+- (instancetype)initWithThingKey:(MHVThingKey *)key
+{
+    MHVCHECK_NOTNULL(key);
+    
+    self = [self init];
+    if (self)
+    {
+        [_keys addObject:key];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithThingKeys:(MHVThingKeyCollection *)keys
+{
+    MHVCHECK_NOTNULL(keys);
+    
+    self = [self init];
+    if (self)
+    {
+        _keys = keys;
+    }
+    return self;
+}
+
 - (void)setView:(MHVThingView *)view
 {
-    MHVASSERT(view != nil);
+    MHVASSERT_PARAMETER(view);
+    
     if (view)
     {
         _view = view;
@@ -54,7 +152,7 @@ static NSString *const c_element_view = @"format";
 
 - (int)maxResults
 {
-    return (self.max) ? self.max.value : -1;
+    return (self.max != nil) ? self.max.value : -1;
 }
 
 - (void)setMaxResults:(int)maxResultsValue
@@ -74,181 +172,6 @@ static NSString *const c_element_view = @"format";
     }
 }
 
-- (int)maxFullResults
-{
-    return (self.maxFull) ? self.maxFull.value : -1;
-}
-
-- (void)setMaxFullResults:(int)maxFullResultsValue
-{
-    if (maxFullResultsValue >= 0)
-    {
-        if (!self.maxFull)
-        {
-            self.maxFull = [[MHVInt alloc] init];
-        }
-        
-        self.maxFull.value = maxFullResultsValue;
-    }
-    else
-    {
-        self.maxFull = nil;
-    }
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        _view = [[MHVThingView alloc] init];
-        _thingIDs = [[MHVStringCollection alloc] init];
-        _keys = [[MHVThingKeyCollection alloc] init];
-        _clientIDs = [[MHVStringCollection alloc] init];
-        _filters = [[MHVThingFilterCollection alloc] init];
-        
-        MHVCHECK_TRUE(_view && _thingIDs && _keys && _filters);
-    }
-    return self;
-}
-
-- (instancetype)initWithTypeID:(NSString *)typeID
-{
-    MHVCHECK_STRING(typeID);
-    
-    MHVThingFilter *filter = [[MHVThingFilter alloc] initWithTypeID:typeID];
-    self = [self initWithFilter:filter];
-    
-    return self;
-}
-
-- (instancetype)initWithFilter:(MHVThingFilter *)filter
-{
-    MHVCHECK_NOTNULL(filter);
-    
-    self = [self init];
-    if (self)
-    {
-        [_filters addObject:filter];
-        
-        if (![MHVCollection isNilOrEmpty:filter.typeIDs])
-        {
-            [_view.typeVersions addObjectsFromArray:filter.typeIDs.toArray];
-        }
-    }
-    return self;
-}
-
-- (instancetype)initWithThingID:(NSString *)thingID
-{
-    MHVCHECK_STRING(thingID);
-    
-    self = [self init];
-    if (self)
-    {
-        [_thingIDs addObject:thingID];
-    }
-    return self;
-}
-
-- (instancetype)initWithThingIDs:(NSArray *)ids
-{
-    MHVCHECK_NOTNULL(ids);
-    
-    self = [self init];
-    if (self)
-    {
-        [_thingIDs addObjectsFromArray:ids];
-    }
-    return self;
-}
-
-- (instancetype)initWithThingKey:(MHVThingKey *)key
-{
-    MHVCHECK_NOTNULL(key);
-    
-    self = [self init];
-    if (self)
-    {
-        [_keys addObject:key];
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithThingKeys:(NSArray *)keys
-{
-    MHVCHECK_NOTNULL(keys);
-    
-    self = [self init];
-    if (self)
-    {
-        [_keys addObjectsFromArray:keys];
-    }
-    return self;
-}
-
-- (instancetype)initWithPendingThings:(MHVCollection *)pendingThings
-{
-    MHVCHECK_NOTNULL(pendingThings);
-    
-    self = [self init];
-    if (self)
-    {
-        for (MHVPendingThing *thing in pendingThings)
-        {
-            [_keys addObject:thing.key];
-        }
-    }
-    return self;
-}
-
-- (instancetype)initWithThingKey:(MHVThingKey *)key andType:(NSString *)typeID
-{
-    self = [self init];
-    if (self)
-    {
-        [_keys addObject:key];
-        if (![NSString isNilOrEmpty:typeID])
-        {
-            [self.view.typeVersions addObject:typeID];
-        }
-    }
-    return self;
-}
-
-- (instancetype)initWithThingID:(NSString *)thingID andType:(NSString *)typeID
-{
-    MHVCHECK_STRING(thingID);
-    
-    self = [self init];
-    if (self)
-    {
-        [_thingIDs addObject:thingID];
-        if (![NSString isNilOrEmpty:typeID])
-        {
-            [self.view.typeVersions addObject:typeID];
-        }
-    }
-    return self;
-}
-
-- (instancetype)initWithClientID:(NSString *)clientID andType:(NSString *)typeID
-{
-    MHVCHECK_STRING(clientID);
-    
-    self = [self init];
-    if (self)
-    {
-        [_clientIDs addObject:clientID];
-        if (![NSString isNilOrEmpty:typeID])
-        {
-            [self.view.typeVersions addObject:typeID];
-        }
-    }
-    return self;
-}
-
 - (MHVClientResult *)validate
 {
     MHVVALIDATE_BEGIN;
@@ -260,7 +183,6 @@ static NSString *const c_element_view = @"format";
     MHVVALIDATE_ARRAYOPTIONAL(self.filters, MHVClientError_InvalidThingQuery);
     
     MHVVALIDATE_OPTIONAL(self.max);
-    MHVVALIDATE_OPTIONAL(self.maxFull);
     
     MHVVALIDATE_SUCCESS;
 }
@@ -268,14 +190,10 @@ static NSString *const c_element_view = @"format";
 - (void)serializeAttributes:(XWriter *)writer
 {
     [writer writeAttribute:c_attribute_name value:self.name];
+
     if (self.max)
     {
-        [writer writeAttribute:c_attribute_max intValue:self.max.value];
-    }
-    
-    if (self.maxFull)
-    {
-        [writer writeAttribute:c_attribute_maxfull intValue:self.maxFull.value];
+        [writer writeAttribute:c_attribute_maxfull intValue:self.max.value];
     }
 }
 
@@ -306,14 +224,10 @@ static NSString *const c_element_view = @"format";
     self.name = [reader readAttribute:c_attribute_name];
     
     int intValue;
-    if ([reader readIntAttribute:c_attribute_max intValue:&intValue])
-    {
-        self.maxResults = intValue;
-    }
     
     if ([reader readIntAttribute:c_attribute_maxfull intValue:&intValue])
     {
-        self.maxFullResults = intValue;
+        self.maxResults = intValue;
     }
 }
 

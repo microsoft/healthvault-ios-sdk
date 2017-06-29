@@ -18,7 +18,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVBlock.h"
+
+typedef BOOL (^MHVFilter) (id value);
 
 //
 // Collections allow objects of a particular type only

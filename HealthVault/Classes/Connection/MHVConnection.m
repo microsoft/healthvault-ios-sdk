@@ -35,6 +35,7 @@
 #import "MHVApplicationCreationInfo.h"
 #import "MHVValidator.h"
 #import "MHVThingClient.h"
+#import "MHVThingCacheProtocol.h"
 #import "MHVRestRequest.h"
 #import "MHVBlobDownloadRequest.h"
 #import "MHVBlobUploadRequest.h"
@@ -43,6 +44,7 @@
 #import "MHVLogger.h"
 #import "MHVCryptographer.h"
 #import "MHVClientInfo.h"
+#import "MHVThingCacheConfiguration.h"
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -73,8 +75,10 @@ static NSInteger kInternalServerError = 500;
 
 @dynamic sessionCredential;
 @dynamic personInfo;
+@synthesize cacheConfiguration = _cacheConfiguration;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
+                   cacheConfiguration:(MHVThingCacheConfiguration *_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
 {
@@ -87,6 +91,7 @@ static NSInteger kInternalServerError = 500;
     if (self)
     {
         _configuration = configuration;
+        _cacheConfiguration = cacheConfiguration;
         _clientFactory = clientFactory;
         _httpService = httpService;
         _requests = [NSMutableArray new];
@@ -101,6 +106,18 @@ static NSInteger kInternalServerError = 500;
 - (NSUUID *_Nullable)applicationId;
 {
     return nil;
+}
+
+- (void)setCacheConfiguration:(MHVThingCacheConfiguration *)cacheConfiguration
+{
+    if (self.personInfo)
+    {
+        MHVASSERT_MESSAGE(@"cacheConfiguration must be set before calling to authenticateWithViewController");
+    }
+    else
+    {
+        _cacheConfiguration = cacheConfiguration;
+    }
 }
 
 - (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol> _Nonnull)operation
@@ -570,6 +587,45 @@ static NSInteger kInternalServerError = 500;
             });
         }];
     });
+}
+
+- (void)syncDataTypes:(MHVSyncDataTypes)dataTypes options:(MHVSyncOptions)options completion:(void(^_Nullable)(NSInteger syncedItemCount, NSError *_Nullable error))completion
+{
+    if (!self.personInfo)
+    {
+        if (completion)
+        {
+            completion(0, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"User has not authenticated, can not sync cache"]);
+        }
+        return;
+    }
+    
+#ifdef THING_CACHE
+    if (dataTypes & MHVSyncDataTypesThings)
+    {
+        [self.thingClient.cache syncWithCompletionHandler:^(NSInteger syncedItemCount, NSError *_Nullable error)
+        {
+            if (completion)
+            {
+                completion(syncedItemCount, error);
+            }
+        }];
+    }
+#endif
+}
+
+- (void)startCaches
+{
+#ifdef THING_CACHE
+    [self.thingClient.cache startCache];
+#endif
+}
+
+- (void)clearAllCachedData
+{
+#ifdef THING_CACHE
+    [self.thingClient.cache clearAllCachedData];
+#endif
 }
 
 - (MHVAuthSession *)authSession

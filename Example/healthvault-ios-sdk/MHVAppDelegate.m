@@ -19,6 +19,8 @@
 
 #import "MHVAppDelegate.h"
 #import "MHVViewController.h"
+#import "MHVConnectionProtocol.h"
+#import "MHVSodaConnectionProtocol.h"
 
 @implementation MHVAppDelegate
 
@@ -42,7 +44,30 @@
     
     if (connection)
     {
-        [connection.thingClient.cache syncWithCompletionHandler:completionHandler];
+        MHVLOG(@"Background Fetch Beginning");
+        
+        [connection syncDataTypes:MHVSyncDataTypesAll options:MHVSyncOptionsBackground completion:^(NSInteger syncedItemCount, NSError *error)
+         {
+             UIBackgroundFetchResult result = UIBackgroundFetchResultNoData;
+             if (error)
+             {
+                 MHVLOG(@"performFetchWithCompletionHandler: Error %@", error.localizedDescription);
+                 
+                 result = UIBackgroundFetchResultFailed;
+             }
+             else if (syncedItemCount > 0)
+             {
+                 result = UIBackgroundFetchResultNewData;
+             }
+             
+             MHVLOG(@"Background Fetch Complete");
+             
+             completionHandler(result);
+         }];
+    }
+    else
+    {
+        completionHandler(UIBackgroundFetchResultNoData);
     }
 }
 

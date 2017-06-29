@@ -49,8 +49,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Delete the current database
- */
-- (void)deleteDatabase;
+
+ @return NSError for any errors deleting the database
+*/
+- (NSError *_Nullable)deleteDatabase;
 
 /**
  Delete a record from the current database
@@ -66,8 +68,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param thingIds the IDs of the things to be deleted
  @param recordId the RecordId of the owner of the things
  @note This operation is synchronous
+ @return error for any save errors
  */
-- (void)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId;
+- (NSError *_Nullable)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId;
 
 /**
  Update or create things in the cache database for a Thing collection
@@ -80,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addOrUpdateThings:(MHVThingCollection *)things
                  recordId:(NSString *)recordId
        lastSequenceNumber:(NSInteger)lastSequenceNumber
-               completion:(void (^)(BOOL success))completion;
+               completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion;
 
 /**
  Fetch all cached records
@@ -123,13 +126,30 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)lastSequenceNumberFromRecord:(id<MHVCachedRecord>)record;
 
 /**
+ Determine if the cache is valid for a record
+ 
+ @param record The record
+ @return BOOL if cache is valid
+ */
+- (BOOL)isCacheValidForRecord:(id<MHVCachedRecord>)record;
+
+/**
+ Set the cache info for a record to be invalid
+ Setting to invalid will reset the sequence number to 0 so all data will be re-synced
+
+ @param recordId The record
+ */
+- (void)setCacheInvalidForRecordId:(NSString *)recordId;
+
+/**
  Update a record with a new date and/or sequence number
 
  @param record The record
  @param lastSyncDate NSDate to update, should not update date on the record if nil
  @param sequenceNumber NSNumber sequence number, should not update number on the record if nil
+ @return NSError if any error occurred
  */
-- (void)updateRecord:(id<MHVCachedRecord>)record lastSyncDate:(NSDate *_Nullable)lastSyncDate sequenceNumber:(NSNumber *_Nullable)sequenceNumber;
+- (NSError *_Nullable)updateRecord:(id<MHVCachedRecord>)record lastSyncDate:(NSDate *_Nullable)lastSyncDate sequenceNumber:(NSNumber *_Nullable)sequenceNumber;
 
 @end
 

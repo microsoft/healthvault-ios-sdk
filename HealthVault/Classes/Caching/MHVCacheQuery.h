@@ -1,8 +1,8 @@
 //
-// MHVBlock.h
-// MHVLib
+//  MHVCacheQuery.h
+//  healthvault-ios-sdk
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,18 +15,23 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
 #import <Foundation/Foundation.h>
 
-// --------------------------------------
-//
-// Standard Lambda definitions
-//
-// --------------------------------------
-typedef void (^MHVAction) (void);
-typedef BOOL (^MHVPredicate) (void);
-typedef void (^MHVNotify) (id sender);
-typedef BOOL (^MHVHandler) (id value);
-typedef BOOL (^MHVFilter) (id value);
-typedef id (^MHVFunc) (id value);
-typedef id (^MHVFactory) (id key);
+@class MHVThingQuery;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface MHVCacheQuery : NSObject
+
+@property (nonatomic, assign, readonly) BOOL canQueryCache;
+@property (nonatomic, assign, readonly) NSInteger fetchLimit;
+@property (nonatomic, strong, readonly, nullable) NSPredicate *predicate;
+@property (nonatomic, strong, readonly, nullable) NSError *error;
+
+- (instancetype)initWithQuery:(MHVThingQuery *)query;
+
+@end
+
+NS_ASSUME_NONNULL_END

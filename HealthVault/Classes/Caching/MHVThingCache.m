@@ -24,26 +24,26 @@
 #import "MHVClients.h"
 #import "MHVCommon.h"
 #import "MHVLogger.h"
+#import "NSError+MHVError.h"
 #import "MHVTypes.h"
 #import "MHVThingTypes.h"
 #import "MHVThingCacheDatabase+CoreDataModel.h"
 #import "MHVAsyncTask.h"
 #import "MHVAsyncTaskResult.h"
-#import "MHVNetworkStatusProtocol.h"
 
-typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult result);
+typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 
 @interface MHVThingCache ()
 
 @property (nonatomic, weak)   id<MHVConnectionProtocol>                             connection;
 @property (nonatomic, strong) MHVThingCacheConfiguration                            *cacheConfiguration;
 @property (nonatomic, strong) id<MHVThingCacheDatabaseProtocol>                     database;
-@property (nonatomic, strong) id<MHVNetworkStatusProtocol>                          networkStatus;
 
 @property (nonatomic, strong) NSSet<NSString *>                                     *syncTypes;
 
-@property (nonatomic, strong) NSMutableArray<MHVBackgroundFetchResultCompletion>    *syncCompletionHandlers;
+@property (nonatomic, strong) NSMutableArray<MHVSyncResultCompletion>               *syncCompletionHandlers;
 @property (nonatomic, strong) NSNumber                                              *isSyncing;
+@property (nonatomic, strong) NSTimer                                               *syncTimer;
 
 @end
 
@@ -51,21 +51,18 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
 
 - (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
                            connection:(id<MHVConnectionProtocol>)connection
-                        networkStatus:(id<MHVNetworkStatusProtocol>)networkStatus
 {
     MHVASSERT_PARAMETER(database);
     MHVASSERT_PARAMETER(connection);
-    MHVASSERT_PARAMETER(networkStatus);
-    MHVASSERT_PARAMETER(connection.configuration.cacheConfiguration);
-    MHVASSERT_PARAMETER(connection.configuration.cacheConfiguration.cacheTypeIds);
+    MHVASSERT_PARAMETER(connection.cacheConfiguration);
+    MHVASSERT_PARAMETER(connection.cacheConfiguration.cacheTypeIds);
 
     self = [super init];
     if (self)
     {
         _database = database;
         _connection = connection;
-        _cacheConfiguration = connection.configuration.cacheConfiguration;
-        _networkStatus = networkStatus;
+        _cacheConfiguration = connection.cacheConfiguration;
         
         _isSyncing = @(NO);
         _syncCompletionHandlers = [NSMutableArray new];
@@ -74,130 +71,148 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
         {
             _syncTypes = [[NSSet alloc] initWithArray:_cacheConfiguration.cacheTypeIds];
         }
-        
-        //Start a sync so cache will get updated when app launched & user authenticated
-        [self syncWithCompletionHandler:^(UIBackgroundFetchResult result) { }];
     }
     return self;
 }
 
-- (void)deauthorizedApplication
+- (void)startCache
 {
-    [self.database deleteDatabase];
+    self.syncTimer = [NSTimer scheduledTimerWithTimeInterval:_cacheConfiguration.syncIntervalSeconds
+                                                      target:self
+                                                    selector:@selector(syncTimerAction)
+                                                    userInfo:nil
+                                                     repeats:YES];
+    
+    [self prepareCacheForRecords:self.connection.personInfo.records completion:^(NSError * _Nullable error)
+     {
+         if (error)
+         {
+             MHVLOG(@"ThingCache: Error preparing cache: %@", error.localizedDescription);
+         }
+         
+         //Start a sync so cache will get updated when app launched & user authenticated
+         [self syncWithCompletionHandler:^(NSInteger syncedItemCount, NSError *error)
+          {
+              if (error)
+              {
+                  MHVLOG(@"ThingCache: Error performing sync: %@", error.localizedDescription);
+              }
+          }];
+     }];
+}
+
+- (NSError *_Nullable)clearAllCachedData
+{
+    NSError *error = [self.database deleteDatabase];
+    if (error)
+    {
+        MHVLOG(@"ThingCache: Error deleting database: %@", error.localizedDescription);
+    }
 
     @synchronized (self.syncCompletionHandlers)
     {
         [self.syncCompletionHandlers removeAllObjects];
     }
+    
+    if (self.syncTimer.isValid)
+    {
+        [self.syncTimer invalidate];
+    }
+    
+    return error;
 }
 
 #pragma mark - Cached Results
 
 - (void)cachedResultsForQueries:(MHVThingQueryCollection *)queries
                        recordId:(NSUUID *)recordId
-                     completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection))completion;
+                     completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error))completion;
 {
     id<MHVCachedRecord> record = [self.database fetchCachedRecord:recordId.UUIDString];
     if (!record)
     {
-        completion(nil);
+        completion(nil, [NSError error:[NSError MHVNotFound] withDescription:@"recordId not found in cache database"]);
+        return;
+    }
+    
+    if (![self.database isCacheValidForRecord:record])
+    {
+        completion(nil, nil);
         return;
     }
 
-    // If offline, dates don't apply & always use cached data
-    if (self.networkStatus.hasNetworkConnection)
-    {
-        // Check if it's been too long since the last sync
-        NSDate *lastSyncDate = [self.database lastSyncDateFromRecord:record];
-        if (fabs([lastSyncDate timeIntervalSinceNow]) > self.cacheConfiguration.maxCacheValidSeconds)
-        {
-            MHVLOG(@"Cache data is too old");
-            
-            //Start a sync so cache will get updated
-            [self syncWithCompletionHandler:^(UIBackgroundFetchResult result) { }];
-            
-            completion(nil);
-            return;
-        }
-    }
-    
     //TODO...use cache
-    completion(nil);
+    completion(nil, nil);
 }
 
 #pragma mark - Syncing
 
-- (void)startSyncingForRecordId:(NSUUID *)recordId completion:(void (^_Nullable)(BOOL success))completion
+- (void)syncTimerAction
 {
-    MHVASSERT_PARAMETER(recordId);
+    MHVLOG(@"ThingCache: Timer triggered sync");
     
-    if (!recordId)
+    [self syncWithCompletionHandler:^(NSInteger syncedItemCount, NSError *_Nullable error)
     {
-        if (completion)
+        if (error)
         {
-            completion(NO);
+            MHVLOG(@"ThingCache: Error performing sync: %@", error.localizedDescription);
         }
-        return;
-    }
-    
-    id<MHVCachedRecord> record = [self.database fetchCachedRecord:recordId.UUIDString];
-    if (!record)
-    {
-        MHVLOG(@"Record not found, adding new Sync record %@", [recordId.UUIDString substringToIndex:4]);
-        
-        record = [self.database newRecord:recordId.UUIDString];
-    
-        // Start syncing the new record; or if a sync is in progress it will wait until that completes before syncing the record
-        [self runBlockWhenNotSyncing:^(UIBackgroundFetchResult result)
-         {
-             [self syncRecords:@[record] completion:^(UIBackgroundFetchResult result)
-              {
-                  if (completion)
-                  {
-                      completion(result != UIBackgroundFetchResultFailed);
-                  }
-              }];
-         }];
-    }
-    else
-    {
-        if (completion)
-        {
-            completion(YES);
-        }
-    }
+    }];
 }
 
-- (void)stopSyncingForRecordId:(NSUUID *)recordId
-{
-    MHVASSERT_PARAMETER(recordId);
+- (void)prepareCacheForRecords:(MHVRecordCollection *)records completion:(void (^)(NSError *_Nullable error))completion
+{    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^
+                   {
+                       for (MHVRecord *record in records)
+                       {
+                           NSString *recordId = record.ID.UUIDString;
+                           
+                           id<MHVCachedRecord> record = [self.database fetchCachedRecord:recordId];
+                           if (!record)
+                           {
+                               MHVLOG(@"ThingCache: Cache Record not found, adding new Sync record");
+                               
+                               record = [self.database newRecord:recordId];
+                               
+                               if (!record)
+                               {
+                                   if (completion)
+                                   {
+                                       completion([NSError error:[NSError MHVOperationCannotBePerformed]
+                                                 withDescription:@"Record could not be created in Cache database"]);
+                                   }
+                                   return;
+                               }
+                           }
+                       }
 
-    if (!recordId)
-    {
-        return;
-    }
-    [self.database deleteRecord:recordId.UUIDString];
+                       completion(nil);
+                   });
 }
 
-- (void)syncWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
+- (void)syncWithCompletionHandler:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion
 {
-    MHVASSERT_PARAMETER(completionHandler);
+    MHVASSERT_PARAMETER(completion);
 
     [self.database fetchCachedRecords:^(NSArray<id<MHVCachedRecord>> *_Nullable records)
      {
          if (records.count == 0)
          {
-             MHVLOG(@"No Records to sync, done");
-             completionHandler(UIBackgroundFetchResultNoData);
+             MHVLOG(@"ThingCache: No Records to sync, done");
+             if (completion)
+             {
+                 completion(0, nil);
+             }
              return;
          }
          
-         [self syncRecords:records completion:completionHandler];
+         [self syncRecords:records completion:completion];
      }];
 }
 
 - (void)syncRecords:(NSArray<id<MHVCachedRecord>> *_Nullable)records
-         completion:(void (^)(UIBackgroundFetchResult result))completion
+         completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
 
@@ -207,7 +222,7 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
     {
         if (self.isSyncing.boolValue)
         {
-            MHVLOG(@"Sync is already in progress!");
+            MHVLOG(@"ThingCache: Sync is already in progress!");
             
             return;
         }
@@ -217,7 +232,7 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
     
     NSMutableArray<MHVAsyncTask *> *tasks = [NSMutableArray new];
     
-    MHVLOG(@"%li Records to sync", records.count);
+    MHVLOG(@"ThingCache: %li Records to sync", records.count);
     
     // Create array of tasks, one sync process for each Record
     for (id<MHVCachedRecord> record in records)
@@ -236,9 +251,16 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
                                     {
                                         [self syncRecordOperations:result
                                                           recordId:[self.database recordIdFromRecord:record]
-                                                        completion:^(UIBackgroundFetchResult result)
+                                                        completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
                                          {
-                                             finish([MHVAsyncTaskResult withResult:@(result)]);
+                                             if (error)
+                                             {
+                                                 finish([MHVAsyncTaskResult withError:error]);
+                                             }
+                                             else
+                                             {
+                                                 finish([MHVAsyncTaskResult withResult:@(syncedItemCount)]);
+                                             }
                                          }];
                                     }
                                 }];
@@ -248,36 +270,34 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
     // Wait for all sync processes to complete, then merge the results
     [MHVAsyncTask waitForAll:tasks beforeBlock:^id(NSArray<MHVAsyncTaskResult *> *taskResults)
     {
-        UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultNoData;
+        NSError *error;
+        NSInteger syncedItemTotal = 0;
         
         for (MHVAsyncTaskResult<NSNumber *> *result in taskResults)
         {
             if (result.error)
             {
-                fetchResult = UIBackgroundFetchResultFailed;
+                error = result.error;
             }
-            else if (fetchResult == UIBackgroundFetchResultNoData &&
-                     result.result.integerValue == UIBackgroundFetchResultNewData)
+            else
             {
-                fetchResult = UIBackgroundFetchResultNewData;
+                syncedItemTotal += result.result.integerValue;
             }
         }
         
-        MHVLOG(@"Completed syncing with result %li", fetchResult);
-
         // Done, turn off syncing flag and call completions
         @synchronized (self.isSyncing)
         {
             self.isSyncing = @(NO);
         }
         
-        [self performSyncCompletionsWithResult:fetchResult];
+        [self performSyncCompletionsWithSyncedCount:syncedItemTotal error:error];
         
         return nil;
     }];
 }
 
-- (void)runBlockWhenNotSyncing:(MHVBackgroundFetchResultCompletion)completion
+- (void)runBlockWhenNotSyncing:(MHVSyncResultCompletion)completion
 {
     MHVASSERT_PARAMETER(completion);
     if (!completion)
@@ -294,10 +314,10 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
         }
     }
 
-    completion(UIBackgroundFetchResultNoData);
+    completion(0, nil);
 }
 
-- (void)addSyncCompletion:(MHVBackgroundFetchResultCompletion)completion
+- (void)addSyncCompletion:(MHVSyncResultCompletion)completion
 {
     MHVASSERT_PARAMETER(completion);
     if (!completion)
@@ -311,13 +331,13 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
     }
 }
 
-- (void)performSyncCompletionsWithResult:(UIBackgroundFetchResult)result
+- (void)performSyncCompletionsWithSyncedCount:(NSInteger)syncedItemCount error:(NSError *_Nullable)error
 {
     @synchronized (self.syncCompletionHandlers)
     {
-        for (MHVBackgroundFetchResultCompletion completion in self.syncCompletionHandlers)
+        for (MHVSyncResultCompletion completion in self.syncCompletionHandlers)
         {
-            completion(result);
+            completion(syncedItemCount, error);
         }
         
         [self.syncCompletionHandlers removeAllObjects];
@@ -326,7 +346,7 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
 
 - (void)syncRecordOperations:(MHVGetRecordOperationsResult *)recordOperations
                     recordId:(NSString *)recordId
-                  completion:(void (^)(UIBackgroundFetchResult result))completion
+                  completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(recordOperations);
     MHVASSERT_PARAMETER(recordId);
@@ -351,42 +371,69 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
     
     if (removeThingIds.count == 0 && syncThingIds.count == 0)
     {
-        MHVLOG(@"Record %@ has no changes", [recordId substringToIndex:4]);
+        MHVLOG(@"ThingCache: Cache record has no changes");
         
         //Synced with no changes, update lastSyncDate
         id<MHVCachedRecord> record = [self.database fetchCachedRecord:recordId];
+        NSError *error = nil;
         if (record)
         {
-            [self.database updateRecord:record lastSyncDate:[NSDate date] sequenceNumber:nil];
+            error = [self.database updateRecord:record
+                                   lastSyncDate:[NSDate date]
+                                 sequenceNumber:nil];
+        }
+        else
+        {
+            error = [NSError error:[NSError MHVNotFound] withDescription:@"Record not found to update cache database"];
         }
 
-        completion(UIBackgroundFetchResultNoData);
+        if (completion)
+        {
+            completion(0, error);
+        }
     }
     else
     {
-        MHVLOG(@"Record %@ has %li deletes and %li changes", [recordId substringToIndex:4], removeThingIds.count, syncThingIds.count);
+        MHVLOG(@"ThingCache: Cache record has %li deletes and %li changes", removeThingIds.count, syncThingIds.count);
         
         //Remove any deleted things from this record
-        [self.database deleteThingIds:removeThingIds.allObjects recordId:recordId];
+        NSError *error = [self.database deleteThingIds:removeThingIds.allObjects recordId:recordId];
         
-        //Sync to add/update things
-        [self syncThingIds:syncThingIds.allObjects
-                  recordId:recordId
-        lastSequenceNumber:recordOperations.latestRecordOperationSequenceNumber
-                completion:completion];
+        if (!error)
+        {
+            //Sync to add/update things
+            [self syncThingIds:syncThingIds.allObjects
+                      recordId:recordId
+            lastSequenceNumber:recordOperations.latestRecordOperationSequenceNumber
+                    completion:completion];
+        }
+        else
+        {
+            if (error)
+            {
+                [self.database setCacheInvalidForRecordId:recordId];
+            }
+            
+            if (completion)
+            {
+                completion(0, error);
+            }
+        }
     }
 }
 
 - (void)syncThingIds:(NSArray<NSString *> *)thingIds
             recordId:(NSString *)recordId
   lastSequenceNumber:(NSInteger)lastSequenceNumber
-          completion:(void (^)(UIBackgroundFetchResult result))completion
+          completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(thingIds);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
 
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:thingIds];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[[MHVStringCollection alloc] initWithArray:thingIds]];
+    
+    __weak __typeof__(self)weakSelf = self;
     
     [self.connection.thingClient getThingsWithQuery:query
                                            recordId:[[NSUUID alloc] initWithUUIDString:recordId]
@@ -394,14 +441,28 @@ typedef void (^MHVBackgroundFetchResultCompletion)(UIBackgroundFetchResult resul
      {
          if (error)
          {
-             completion(UIBackgroundFetchResultFailed);
+             if (completion)
+             {
+                 completion(0, error);
+             }
          }
          else
          {
-             [self.database addOrUpdateThings:things recordId:recordId lastSequenceNumber:lastSequenceNumber completion:^(BOOL success)
-             {
-                 completion(success ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultFailed);
-             }];
+             [weakSelf.database addOrUpdateThings:things
+                                         recordId:recordId
+                               lastSequenceNumber:lastSequenceNumber
+                                       completion:^(NSInteger updateItemCount, NSError * _Nullable error)
+              {
+                  if (error)
+                  {
+                      [weakSelf.database setCacheInvalidForRecordId:recordId];
+                  }
+                  
+                  if (completion)
+                  {
+                      completion(updateItemCount, error);
+                  }
+              }];
          }
      }];
 }

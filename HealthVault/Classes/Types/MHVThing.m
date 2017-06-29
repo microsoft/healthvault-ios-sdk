@@ -523,15 +523,16 @@ static NSString *const c_element_thing = @"thing";
     return nil;
 }
 
-- (NSArray<NSString *> *)arrayOfThingIDs
+- (MHVStringCollection *)thingIDs
 {
-    NSMutableArray<NSString *> *idArray = [[NSMutableArray alloc] init];
+    MHVStringCollection *collection = [MHVStringCollection new];
+    
     for (MHVThing *thing in self)
     {
-        [idArray addObject:thing.thingID];
+        [collection addObject:thing.thingID];
     }
     
-    return idArray;
+    return collection;
 }
 
 - (MHVClientResult *)validate

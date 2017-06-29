@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVThingCacheProtocol.h"
 
-@protocol MHVThingCacheDatabaseProtocol, MHVConnectionProtocol;
+@protocol MHVThingCacheDatabaseProtocol, MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
 @interface MHVThingCache : NSObject <MHVThingCacheProtocol>
 
@@ -29,11 +29,9 @@
  
  @param database The Database for the cache
  @param connection The connection object for the current authenticated person
- @param networkStatus To determine whether there is a network connection
  @return The cache object
  */
 - (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
-                           connection:(id<MHVConnectionProtocol>)connection
-                        networkStatus:(id<MHVNetworkStatusProtocol>)networkStatus;
+                           connection:(id<MHVConnectionProtocol>)connection;
 
 @end

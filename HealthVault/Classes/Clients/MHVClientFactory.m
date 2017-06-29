@@ -27,7 +27,6 @@
 #import "MHVThingCache.h"
 #import "MHVThingCacheDatabase.h"
 #import "MHVKeychainService.h"
-#import "MHVNetworkReachability.h"
 #import "MHVConfiguration.h"
 #import "MHVThingCacheConfiguration.h"
 
@@ -53,21 +52,19 @@
 #ifdef THING_CACHE
     //Use database from configuration, or create MHVThingCacheDatabase
     id<MHVThingCacheDatabaseProtocol> database;
-    if (connection.configuration.cacheConfiguration.database)
+    if (connection.cacheConfiguration.database)
     {
-        database = connection.configuration.cacheConfiguration.database;
+        database = connection.cacheConfiguration.database;
     }
     else
     {
-        database = [[MHVThingCacheDatabase alloc] initWithKeychainService:[MHVKeychainService new]];
+        database = [[MHVThingCacheDatabase alloc] initWithKeychainService:[MHVKeychainService new]
+                                                              fileManager:[NSFileManager defaultManager]];
     }
     
-    MHVHostReachability *networkStatus = [[MHVHostReachability alloc] initWithUrl:connection.configuration.defaultHealthVaultUrl];
-    
     MHVThingCache *thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                  connection:connection
-                                                               networkStatus:networkStatus];
-    
+                                                                  connection:connection];
+        
     return [[MHVThingClient alloc] initWithConnection:connection cache:thingCache];
 #else
     return [[MHVThingClient alloc] initWithConnection:connection cache:nil];

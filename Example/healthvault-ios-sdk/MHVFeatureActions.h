@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^MHVAction) (void);
+
 @interface MHVFeatureActions : NSObject
 
 - (instancetype)initWithTitle:(NSString *)title;

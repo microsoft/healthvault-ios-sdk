@@ -25,6 +25,16 @@ static NSString *const c_attribute_name = @"name";
 
 @implementation MHVThingQueryResult
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _isCachedResult = NO;
+    }
+    return self;
+}
+
 - (BOOL)hasThings
 {
     return !([MHVCollection isNilOrEmpty:self.things]);
