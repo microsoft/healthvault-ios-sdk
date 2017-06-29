@@ -510,7 +510,7 @@ describe(@"MHVCacheQuery", ^
                 
                 it(@"should set the canQueryCache property to NO", ^
                    {
-                       [[theValue(cacheQuery.canQueryCache) should] beTrue];
+                       [[theValue(cacheQuery.canQueryCache) should] beFalse];
                    });
             });
 });
