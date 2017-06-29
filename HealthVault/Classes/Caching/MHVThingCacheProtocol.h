@@ -19,16 +19,22 @@
 
 #import <Foundation/Foundation.h>
 @class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingCollection, MHVHostReachability;
-@protocol MHVConnectionProtocol, MHVNetworkStatusProtocol;
+@protocol MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVThingCacheProtocol <NSObject>
 
 /**
- The application has been deauthorized.  All data for the caching should be deleted
+ Start the cache processes.  This should be called after the user has authenticated
  */
-- (void)deauthorizedApplication;
+- (void)startCache;
+
+/**
+ Remove all cached data, for example if the app has been deauthorized
+ @return NSError if any error occurred
+ */
+- (NSError *_Nullable)clearAllCachedData;
 
 /**
  Retrieve the cached results for a query collection
@@ -39,22 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)cachedResultsForQueries:(MHVThingQueryCollection *)queries
                        recordId:(NSUUID *)recordId
-                     completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection))completion;
-
-/**
- Indicate a record should be added to the sync process
- 
- @param recordId The record to be synced
- @param completion Envoked when the first sync for the record is complete
- */
-- (void)startSyncingForRecordId:(NSUUID *)recordId completion:(void (^_Nullable)(BOOL success))completion;
-
-/**
- Indicate a record should be removed to the sync process
- 
- @param recordId The record to be removed
- */
-- (void)stopSyncingForRecordId:(NSUUID *)recordId;
+                     completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error))completion;
 
 /**
  Sync the HealthVault database
@@ -63,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param completionHandler The callback to indicate the results of background syncing
  */
-- (void)syncWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler;
+- (void)syncWithCompletionHandler:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completionHandler;
 
 @end
 

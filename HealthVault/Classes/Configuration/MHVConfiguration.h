@@ -109,9 +109,4 @@
  */
 @property (nonatomic, assign) BOOL isMultiRecordApp;
 
-/**
- Configuration for caching
- */
-@property (nonatomic, strong) MHVThingCacheConfiguration *cacheConfiguration;
-
 @end

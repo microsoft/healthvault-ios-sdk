@@ -62,6 +62,7 @@
         if (!self.connection)
         {
             self.connection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
+                                                            cacheConfiguration:nil
                                                                  clientFactory:[MHVClientFactory new]
                                                                    httpService:[[MHVHttpService alloc] initWithConfiguration:configuration]
                                                                keychainService:[MHVKeychainService new]

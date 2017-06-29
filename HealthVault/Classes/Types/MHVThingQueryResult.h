@@ -41,6 +41,10 @@
 //
 @property (readwrite, nonatomic, strong) NSString *name;
 //
+// Indicates whether the query result is from the cache
+//
+@property (readwrite, nonatomic, assign) BOOL isCachedResult;
+//
 // Convenience properties
 //
 @property (readonly, nonatomic) BOOL hasThings;

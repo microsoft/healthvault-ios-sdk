@@ -23,6 +23,7 @@
 
 @interface MHVThingCacheDatabase : NSObject <MHVThingCacheDatabaseProtocol>
 
-- (instancetype)initWithKeychainService:(id<MHVKeychainServiceProtocol>)keychainService;
+- (instancetype)initWithKeychainService:(id<MHVKeychainServiceProtocol>)keychainService
+                            fileManager:(NSFileManager *)fileManager;
 
 @end

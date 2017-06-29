@@ -31,10 +31,9 @@
 @property (nonatomic, strong) NSArray<NSString *> *cacheTypeIds;
 
 /**
- If the last time the cache was updated is older than this number, 
- the cache is not used and the request is sent to HealthVault
+ A timer will sync the database with this time interval while the app is active
  */
-@property (nonatomic, assign) NSInteger maxCacheValidSeconds;
+@property (nonatomic, assign) NSInteger syncIntervalSeconds;
 
 /**
  Database to use for caching, if nil MHVThingCacheDatabase will be used

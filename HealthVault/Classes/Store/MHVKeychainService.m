@@ -127,21 +127,6 @@ static NSString *const kKeychainRoot = @"root";
     return error == errSecSuccess || error == errSecItemNotFound;
 }
 
-- (NSString *)generateRandomPassword
-{
-    NSMutableData *data = [NSMutableData dataWithLength:256];
-    int result = SecRandomCopyBytes(kSecRandomDefault, data.length, data.mutableBytes);
-    
-    NSString *string = [data base64EncodedStringWithOptions:kNilOptions];
-    if (string.length == 0 || result != errSecSuccess)
-    {
-        //In case random key failed, backup by returning a UUID string so there is always a key
-        MHVASSERT_MESSAGE(@"Random key failed!");
-        return [NSUUID new].UUIDString;
-    }
-    return string;
-}
-
 #pragma mark - Private
 
 - (BOOL)dataExistsForKey:(NSString *)key

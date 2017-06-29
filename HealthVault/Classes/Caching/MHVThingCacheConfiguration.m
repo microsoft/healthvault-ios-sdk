@@ -18,7 +18,19 @@
 //
 
 #import "MHVThingCacheConfiguration.h"
+#import "MHVConfigurationConstants.h"
 
 @implementation MHVThingCacheConfiguration
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _cacheTypeIds = @[];
+        _syncIntervalSeconds = kDefaultSyncIntervalSeconds;
+    }
+    return self;
+}
 
 @end

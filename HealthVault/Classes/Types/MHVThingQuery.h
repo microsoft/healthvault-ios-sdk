@@ -44,7 +44,7 @@
 
 @property (readwrite, nonatomic) int maxResults;
 @property (readwrite, nonatomic) int maxFullResults;
-@property (readwrite, nonatomic) BOOL ignoreCache;
+@property (readwrite, nonatomic) BOOL shouldUseCachedResults;
 
 - (instancetype)initWithTypeID:(NSString *)typeID;
 - (instancetype)initWithFilter:(MHVThingFilter *)filter;

@@ -53,6 +53,26 @@
     
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
+    MHVThingCacheConfiguration *cacheConfig = [MHVThingCacheConfiguration new];
+    cacheConfig.cacheTypeIds = @[[MHVBloodGlucose typeID],
+                                               [MHVBloodPressure typeID],
+                                               [MHVCondition typeID],
+                                               [MHVCholesterol typeID],
+                                               [MHVDietaryIntake typeID],
+                                               [MHVDailyMedicationUsage typeID],
+                                               [MHVImmunization typeID],
+                                               [MHVEmotionalState typeID],
+                                               [MHVExercise typeID],
+                                               [MHVMedication typeID],
+                                               [MHVProcedure typeID],
+                                               [MHVSleepJournalAM typeID],
+                                               [MHVWeight typeID],
+                                               [MHVFile typeID],
+                                               [MHVPersonalImage typeID],
+                                               [MHVHeartRate typeID]];
+    
+    connection.cacheConfiguration = cacheConfig;
+        
     [connection authenticateWithViewController:self
                                     completion:^(NSError *_Nullable error)
      {

@@ -157,14 +157,15 @@
     {
         [self.cache cachedResultsForQueries:queries
                                    recordId:recordId
-                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection)
+                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
          {
-             if (resultCollection)
+             if (resultCollection || error)
              {
-                 completion(resultCollection, nil);
+                 completion(resultCollection, error);
              }
              else
              {
+                 //No resultCollection or error, query HealthVault
                  [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
              }
          }];
