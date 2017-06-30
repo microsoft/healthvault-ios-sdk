@@ -23,36 +23,40 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol MHVCachedRecord
-
-// id<MHVCachedRecord> are treated as opaque objects by MHVThingCache.
-// MHVThingCacheDatabaseProtocol methods perform all Record actions needed by the MHVThingCache
-
-@end
-
 @protocol MHVThingCacheDatabaseProtocol <NSObject>
 
 /**
- Create a new cache record given a recordId
+ Initialize and setup database if needed.
+ This is called after a user has authenticated, and may be called after deleteDatabase
+ when signing out and signing in again
 
- @param recordId The record ID
- @return the cache record
+ @return Error if there was an error
  */
-- (id<MHVCachedRecord>)newRecord:(NSString *)recordId;
-
-/**
- Saves changes to the database
-
- @return error for any save errors
- */
-- (NSError *_Nullable)saveContext;
+- (NSError *_Nullable)setupDatabase;
 
 /**
  Delete the current database
-
+ 
  @return NSError for any errors deleting the database
-*/
+ */
 - (NSError *_Nullable)deleteDatabase;
+
+/**
+ Determine if a record exists
+ 
+ @param recordId the RecordID to find
+ @return CachedRecord matching the ID or nil
+ @note This operation is synchronous
+ */
+- (BOOL)hasRecordId:(NSString *)recordId;
+
+/**
+ Create a new database record given a recordId if it does not exist
+
+ @param recordId The record ID
+ @return Error if there was an error 
+ */
+- (NSError *_Nullable)newRecordForRecordId:(NSString *)recordId;
 
 /**
  Delete a record from the current database
@@ -60,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId id of the record to be deleted
  @note This operation is synchronous
  */
-- (void)deleteRecord:(NSString *)recordId;
+- (NSError *_Nullable)deleteRecord:(NSString *)recordId;
 
 /**
  Delete Things given an array of IDs
@@ -90,54 +94,37 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param completion Envoked with the array of records
  */
-- (void)fetchCachedRecords:(void(^)(NSArray<id<MHVCachedRecord>> *_Nullable records))completion;
-
-/**
- Retrieve a CachedRecord given a recordId
-
- @param recordId the RecordID to find
- @return CachedRecord matching the ID or nil
- @note This operation is synchronous
- */
-- (id<MHVCachedRecord> _Nullable)fetchCachedRecord:(NSString *)recordId;
-
-/**
- Get the recordId from an id<MHVCachedRecord> object
-
- @param record The record
- @return recordId for the record
- */
-- (NSString *_Nullable)recordIdFromRecord:(id<MHVCachedRecord>)record;
+- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion;
 
 /**
  Get the last sync date from an id<MHVCachedRecord> object
  
- @param record The record
+ @param recordId The record ID
  @return NSDate of the last sync
  */
-- (NSDate *_Nullable)lastSyncDateFromRecord:(id<MHVCachedRecord>)record;
+- (NSDate *_Nullable)lastSyncDateFromRecordId:(NSString *)recordId;
 
 /**
  Get the last sync date from an id<MHVCachedRecord> object
 
- @param record The record
+ @param recordId The record ID
  @return NSInteger for last sequence number
  */
-- (NSInteger)lastSequenceNumberFromRecord:(id<MHVCachedRecord>)record;
+- (NSInteger)lastSequenceNumberFromRecordId:(NSString *)recordId;
 
 /**
  Determine if the cache is valid for a record
  
- @param record The record
+ @param recordId The record ID
  @return BOOL if cache is valid
  */
-- (BOOL)isCacheValidForRecord:(id<MHVCachedRecord>)record;
+- (BOOL)isCacheValidForRecordId:(NSString *)recordId;
 
 /**
  Set the cache info for a record to be invalid
  Setting to invalid will reset the sequence number to 0 so all data will be re-synced
 
- @param recordId The record
+ @param recordId The record ID
  */
 - (void)setCacheInvalidForRecordId:(NSString *)recordId;
 
@@ -149,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param sequenceNumber NSNumber sequence number, should not update number on the record if nil
  @return NSError if any error occurred
  */
-- (NSError *_Nullable)updateRecord:(id<MHVCachedRecord>)record lastSyncDate:(NSDate *_Nullable)lastSyncDate sequenceNumber:(NSNumber *_Nullable)sequenceNumber;
+- (NSError *_Nullable)updateRecordId:(NSString *)record lastSyncDate:(NSDate *_Nullable)lastSyncDate sequenceNumber:(NSNumber *_Nullable)sequenceNumber;
 
 @end
 

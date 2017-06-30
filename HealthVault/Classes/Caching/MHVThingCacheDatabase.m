@@ -35,7 +35,6 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 @interface MHVThingCacheDatabase ()
 
 @property (nonatomic, strong) NSPersistentStoreCoordinator      *persistentStoreCoordinator;
-@property (nonatomic, strong) NSManagedObjectModel              *objectModel;
 @property (nonatomic, strong) NSManagedObjectContext            *managedObjectContext;
 @property (nonatomic, strong) NSURL                             *databaseUrl;
 @property (nonatomic, strong) NSObject                          *lockObject;
@@ -73,10 +72,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         [self.fileManager removeItemAtURL:self.databaseUrl
                                     error:&error];
         
-        [self.keychainService setString:nil forKey:kMHVCachePasswordKey];
+        [self.keychainService removeObjectForKey:kMHVCachePasswordKey];
         
         _persistentStoreCoordinator = nil;
-        _objectModel = nil;
         _managedObjectContext = nil;
         _databaseUrl = nil;
         
@@ -90,110 +88,151 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (MHVCachedThing *)newThingForRecord:(MHVCachedRecord *)record
 {
-    if (self.deleted || !record)
+    @synchronized (self.lockObject)
     {
-        return nil;
+        if (self.deleted || !record)
+        {
+            return nil;
+        }
+        
+        __block MHVCachedThing *thing;
+        
+        [self.managedObjectContext performBlockAndWait:^
+         {
+             thing = [NSEntityDescription insertNewObjectForEntityForName:@"MHVCachedThing"
+                                                   inManagedObjectContext:self.managedObjectContext];
+             thing.record = record;
+         }];
+        
+        return thing;
     }
-    
-    __block MHVCachedThing *thing;
-    
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         thing = [NSEntityDescription insertNewObjectForEntityForName:@"MHVCachedThing"
-                                               inManagedObjectContext:self.managedObjectContext];
-         thing.record = record;
-     }];
-    
-    return thing;
 }
 
-- (MHVCachedRecord *)newRecord:(NSString *)recordId
+- (NSError *_Nullable)newRecordForRecordId:(NSString *)recordId
 {
-    if (self.deleted || !recordId)
+    @synchronized (self.lockObject)
     {
-        return nil;
+        if (self.deleted)
+        {
+            return [NSError MHVCacheDeleted];
+        }
+        
+        if ([NSString isNilOrEmpty:recordId])
+        {
+            return [NSError MVHRequiredParameterIsNil];
+        }
+        
+        __block NSError *error;
+        
+        [self.managedObjectContext performBlockAndWait:^
+         {
+             MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
+             if (record)
+             {
+                 error = [NSError MHVCacheError:@"Record already exists"];
+             }
+             else
+             {
+                 // Create new record
+                 record = [NSEntityDescription insertNewObjectForEntityForName:@"MHVCachedRecord"
+                                                        inManagedObjectContext:self.managedObjectContext];
+                 record.recordId = recordId;
+                 record.lastOperationSequenceNumber = 0;
+                 record.lastSyncDate = nil;
+                 record.isValid = YES;
+                 
+                 error = [self saveContext];
+             }
+         }];
+        
+        return error;
     }
-    
-    __block MHVCachedRecord *record;
-    
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         record = [NSEntityDescription insertNewObjectForEntityForName:@"MHVCachedRecord"
-                                                inManagedObjectContext:self.managedObjectContext];
-         record.recordId = recordId;
-         record.lastOperationSequenceNumber = 0;
-         record.lastSyncDate = [NSDate dateWithTimeIntervalSince1970:0];
-         record.isValid = YES;
-         
-         [self saveContext];
-     }];
-    
-    return record;
 }
 
 #pragma mark - Delete
 
-- (void)deleteRecord:(NSString *)recordId
+- (NSError *_Nullable)deleteRecord:(NSString *)recordId
 {
-    MHVASSERT_PARAMETER(recordId);
-    
-    if (self.deleted || !recordId)
+    @synchronized (self.lockObject)
     {
-        return;
-    }
-    
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
-         if (record)
+        MHVASSERT_PARAMETER(recordId);
+        
+        if (self.deleted)
+        {
+            return [NSError MHVCacheDeleted];
+        }
+        
+        if ([NSString isNilOrEmpty:recordId])
+        {
+            return [NSError MVHRequiredParameterIsNil];
+        }
+        
+        __block NSError *error;
+        
+        [self.managedObjectContext performBlockAndWait:^
          {
-             [self.managedObjectContext deleteObject:record];
-             [self saveContext];
-         }
-     }];
+             MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
+             if (record)
+             {
+                 [self.managedObjectContext deleteObject:record];
+                 error = [self saveContext];
+             }
+         }];
+        
+        return error;
+    }
 }
 
 - (NSError *_Nullable)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId
 {
-    MHVASSERT_PARAMETER(thingIds);
-    MHVASSERT_PARAMETER(recordId);
-    
-    if (self.deleted || !thingIds || thingIds.count == 0)
+    @synchronized (self.lockObject)
     {
-        return nil;
-    }
-    
-    if (!recordId)
-    {
-        return [NSError MVHRequiredParameterIsNil];
-    }
-    
-    __block NSError *error;
-    
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedThing"];
-         
-         NSMutableArray<NSString *> *where = [NSMutableArray new];
-         for (NSString *thingId in thingIds)
+        MHVASSERT_PARAMETER(thingIds);
+        MHVASSERT_PARAMETER(recordId);
+        
+        if (self.deleted)
+        {
+            return [NSError MHVCacheDeleted];
+        }
+        
+        if ([NSArray isNilOrEmpty:thingIds])
+        {
+            //Nothing to delete
+            return nil;
+        }
+        
+        if ([NSString isNilOrEmpty:recordId])
+        {
+            return [NSError MVHRequiredParameterIsNil];
+        }
+        
+        __block NSError *error;
+        
+        [self.managedObjectContext performBlockAndWait:^
          {
-             [where addObject:thingId];
-         }
-         
-         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"thingId IN %@ AND record.recordId = %@", where, recordId];
-         [fetchRequest setPredicate:predicate];
-         
-         NSError *error = nil;
-         NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-         for (MHVCachedRecord *record in fetchedObjects)
-         {
-             [self.managedObjectContext deleteObject:record];
-         }
-         
-         error = [self saveContext];
-     }];
-    
-    return error;
+             NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedThing"];
+             
+             NSMutableArray<NSString *> *where = [NSMutableArray new];
+             for (NSString *thingId in thingIds)
+             {
+                 [where addObject:thingId];
+             }
+             
+             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"thingId IN %@ AND record.recordId = %@", where, recordId];
+             [fetchRequest setPredicate:predicate];
+             
+             NSError *error = nil;
+             NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+             for (MHVCachedRecord *record in fetchedObjects)
+             {
+                 [self.managedObjectContext deleteObject:record];
+             }
+             
+             error = [self saveContext];
+         }];
+        
+        return error;
+    }
 }
 
 - (void)addOrUpdateThings:(MHVThingCollection *)things
@@ -201,99 +240,153 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
        lastSequenceNumber:(NSInteger)lastSequenceNumber
                completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion
 {
-    MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
-    
-    if (self.deleted)
+    @synchronized (self.lockObject)
     {
-        if (completion)
+        if (self.deleted)
         {
-            completion(0, nil);
+            if (completion)
+            {
+                completion(0, [NSError MHVCacheDeleted]);
+            }
+            return;
         }
-        return;
-    }
-    
-    if (!record)
-    {
-        if (completion)
+
+        if ([NSString isNilOrEmpty:recordId])
         {
-            completion(0, [NSError MVHRequiredParameterIsNil]);
+            if (completion)
+            {
+                completion(0, [NSError MVHRequiredParameterIsNil]);
+            }
+            return;
         }
-        return;
-    }
-    
-    [self.managedObjectContext performBlock:^
-     {
-         for (MHVThing *thing in things)
+
+        if ([MHVCollection isNilOrEmpty:things])
+        {
+            //No things to add or update
+            if (completion)
+            {
+                completion(0, nil);
+            }
+            return;
+        }
+        
+        [self.managedObjectContext performBlock:^
          {
-             MHVCachedThing *cachedThing = [record findThingWithThingId:thing.thingID];
-             if (!cachedThing)
+             MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
+             if (!record)
              {
-                 //Not found, need to create...
-                 cachedThing = [self newThingForRecord:record];
+                 if (completion)
+                 {
+                     completion(0, [NSError MHVCacheError:@"Record could not be found"]);
+                 }
+                 return;
              }
              
-             [cachedThing populateWithThing:thing];
-         }
-         
-         //Sync complete, update record with date and sequence number
-         record.lastOperationSequenceNumber = lastSequenceNumber;
-         record.lastSyncDate = [NSDate date];
-         record.isValid = YES;
-         
-         NSError *error = [self saveContext];
-         
-         MHVLOG(@"ThingCacheDatabase: Cache record updated %li things", things.count);
-         
-         if (error)
-         {
-             if (completion)
+             for (MHVThing *thing in things)
              {
-                 completion(0, error);
+                 MHVCachedThing *cachedThing = [record findThingWithThingId:thing.thingID];
+                 if (!cachedThing)
+                 {
+                     //Not found, need to create...
+                     cachedThing = [self newThingForRecord:record];
+                     if (!cachedThing)
+                     {
+                         if (completion)
+                         {
+                             completion(0, [NSError MHVCacheError:@"New cache thing could not be created"]);
+                         }
+                         return;
+                     }
+                 }
+                 
+                 [cachedThing populateWithThing:thing];
              }
-         }
-         else
-         {
-             if (completion)
+             
+             //Sync complete, update record with date and sequence number
+             record.lastOperationSequenceNumber = lastSequenceNumber;
+             record.lastSyncDate = [NSDate date];
+             record.isValid = YES;
+             
+             NSError *error = [self saveContext];
+             
+             MHVLOG(@"ThingCacheDatabase: Cache record updated %li things", things.count);
+             
+             if (error)
              {
-                 completion(things.count, nil);
+                 if (completion)
+                 {
+                     completion(0, error);
+                 }
              }
-         }
-     }];
+             else
+             {
+                 if (completion)
+                 {
+                     completion(things.count, nil);
+                 }
+             }
+         }];
+    }
 }
 
-- (void)fetchCachedRecords:(void(^)(NSArray<id<MHVCachedRecord>> *_Nullable records))completion
+- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion
 {
-    MHVASSERT_PARAMETER(completion);
-    
-    if (self.deleted)
+    @synchronized (self.lockObject)
     {
-        if (completion)
+        MHVASSERT_PARAMETER(completion);
+        
+        if (self.deleted)
         {
-            completion(nil);
+            if (completion)
+            {
+                completion(nil, [NSError MHVCacheDeleted]);
+            }
+            return;
         }
-        return;
+        
+        [self.managedObjectContext performBlock:^
+         {
+             NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedRecord"];
+             
+             NSError *error = nil;
+             NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
+             if (error)
+             {
+                 MHVLOG(@"ThingCacheDatabase: Error fetching objects: %@", error);
+                 
+                 if (completion)
+                 {
+                     completion(nil, error);
+                 }
+                 return;
+             }
+             
+             NSMutableArray<NSString *> *recordIds = [NSMutableArray new];
+             
+             for (MHVCachedRecord *record in results)
+             {
+                 if (record.recordId)
+                 {
+                     [recordIds addObject:record.recordId];
+                 }
+             }
+             
+             if (recordIds.count == 0)
+             {
+                 error = [NSError MHVCacheError:@"No records could be found"];
+             }
+             
+             if (completion)
+             {
+                 completion(recordIds, error);
+             }
+         }];
     }
-    
-    [self.managedObjectContext performBlock:^
-     {
-         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedRecord"];
-         
-         NSError *error = nil;
-         NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
-         if (!results && error)
-         {
-             MHVLOG(@"ThingCacheDatabase: Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
-         }
-         
-         if (completion)
-         {
-             completion(results);
-         }
-     }];
 }
 
 - (MHVCachedRecord *)fetchCachedRecord:(NSString *)recordId
 {
+    // Callers are using @synchronized (self.lockObject)
     __block MHVCachedRecord *record;
     
     if (self.deleted)
@@ -321,118 +414,172 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 #pragma mark - <MHVCachedRecord> properties
 
-- (NSString *)recordIdFromRecord:(id<MHVCachedRecord>)record
+- (BOOL)hasRecordId:(NSString *)recordId
 {
-    __block NSString *recordId;
-    
-    // Make sure properties are retrieved with the correct context
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         recordId = ((MHVCachedRecord *)record).recordId;
-     }];
-    return recordId;
+    @synchronized (self.lockObject)
+    {
+        if (self.deleted)
+        {
+            return NO;
+        }
+        
+        __block BOOL hasRecord = NO;
+        
+        [self.managedObjectContext performBlockAndWait:^
+         {
+             MHVCachedRecord *record = [self fetchCachedRecord:recordId];
+             hasRecord = (record != nil);
+         }];
+        return hasRecord;
+    }
 }
 
-- (NSDate *)lastSyncDateFromRecord:(id<MHVCachedRecord>)record
+- (NSDate *)lastSyncDateFromRecordId:(NSString *)recordId
 {
-    __block NSDate *date;
-    
-    // Make sure properties are retrieved with the correct context
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         date = ((MHVCachedRecord *)record).lastSyncDate;
-     }];
-    return date;
+    @synchronized (self.lockObject)
+    {
+        if (self.deleted)
+        {
+            return nil;
+        }
+        
+        __block NSDate *date = nil;
+        
+        [self.managedObjectContext performBlockAndWait:^
+         {
+             MHVCachedRecord *record = [self fetchCachedRecord:recordId];
+             date = record.lastSyncDate;
+         }];
+        return date;
+    }
 }
 
-- (NSInteger)lastSequenceNumberFromRecord:(id<MHVCachedRecord>)record
+- (NSInteger)lastSequenceNumberFromRecordId:(NSString *)recordId
 {
-    __block NSInteger sequenceNumber;
-    
-    // Make sure properties are retrieved with the correct context
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         sequenceNumber = ((MHVCachedRecord *)record).lastOperationSequenceNumber;
-     }];
-    return sequenceNumber;
+    @synchronized (self.lockObject)
+    {
+        if (self.deleted)
+        {
+            return 0;
+        }
+        
+        __block NSInteger sequenceNumber = 0;
+        
+        [self.managedObjectContext performBlockAndWait:^
+         {
+             MHVCachedRecord *record = [self fetchCachedRecord:recordId];
+             sequenceNumber = record.lastOperationSequenceNumber;
+         }];
+        return sequenceNumber;
+    }
 }
 
-- (BOOL)isCacheValidForRecord:(id<MHVCachedRecord>)record
+- (BOOL)isCacheValidForRecordId:(NSString *)recordId
 {
-    __block NSInteger isValid;
-    
-    // Make sure properties are retrieved with the correct context
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         isValid = ((MHVCachedRecord *)record).isValid;
-     }];
-    return isValid;
+    @synchronized (self.lockObject)
+    {
+        if (self.deleted)
+        {
+            return NO;
+        }
+        
+        __block NSInteger isValid = NO;
+        
+        [self.managedObjectContext performBlockAndWait:^
+         {
+             MHVCachedRecord *record = [self fetchCachedRecord:recordId];
+             isValid = record.isValid;
+         }];
+        return isValid;
+    }
 }
 
 - (void)setCacheInvalidForRecordId:(NSString *)recordId
 {
-    MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
+    __block NSError *error;
     
-    if (record)
+    @synchronized (self.lockObject)
     {
-        __block NSError *error;
-        
-        [self.managedObjectContext performBlockAndWait:^
-         {
-             MHVCachedRecord *cachedRecord = (MHVCachedRecord *)record;
-             
-             cachedRecord.isValid = NO;
-             cachedRecord.lastSyncDate = [NSDate dateWithTimeIntervalSince1970:0];
-             cachedRecord.lastOperationSequenceNumber = 0;
-             cachedRecord.things = [NSSet new];
-             
-             error = [self saveContext];
-         }];
-        
-        if (error)
+        if (self.deleted)
         {
-            MHVLOG(@"Error setting record as invalid %@", error);
-            
-            // If can't set record as invalid, something is wrong
-            // Delete database and reset so will not be returning invalid data
-            [self deleteDatabase];
+            return;
         }
+        
+        MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
+        if (record)
+        {
+            [self.managedObjectContext performBlockAndWait:^
+             {
+                 MHVCachedRecord *cachedRecord = (MHVCachedRecord *)record;
+                 
+                 cachedRecord.isValid = NO;
+                 cachedRecord.lastSyncDate = nil;
+                 cachedRecord.lastOperationSequenceNumber = 0;
+                 cachedRecord.things = [NSSet new];
+                 
+                 error = [self saveContext];
+             }];
+        }
+    }
+
+    if (error)
+    {
+        MHVLOG(@"ThingCacheDatabase: Error setting record as invalid %@", error);
+        
+        // If can't set record as invalid, something is wrong
+        // Delete database and reset so will not be returning invalid data
+        [self deleteDatabase];
     }
 }
 
-- (NSError *_Nullable)updateRecord:(id<MHVCachedRecord>)record lastSyncDate:(NSDate *)lastSyncDate sequenceNumber:(NSNumber *)sequenceNumber
+- (NSError *_Nullable)updateRecordId:(NSString *)recordId lastSyncDate:(NSDate *)lastSyncDate sequenceNumber:(NSNumber *)sequenceNumber
 {
-    __block NSError *error = nil;
-    
-    // Make sure properties are updated with the correct context
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         MHVCachedRecord *cachedRecord = (MHVCachedRecord *)record;
-         
-         if (lastSyncDate)
+    @synchronized (self.lockObject)
+    {
+        if (self.deleted)
+        {
+            return [NSError MHVCacheDeleted];
+        }
+        
+        __block NSError *error;
+        
+        // Make sure properties are updated with the correct context
+        [self.managedObjectContext performBlockAndWait:^
          {
-             cachedRecord.lastSyncDate = lastSyncDate;
-         }
-         if (sequenceNumber)
-         {
-             cachedRecord.lastOperationSequenceNumber = sequenceNumber.integerValue;
-         }
-         
-         cachedRecord.isValid = YES;
-         
-         error = [self saveContext];
-     }];
-    
-    return error;
+             MHVCachedRecord *cachedRecord = [self fetchCachedRecord:recordId];
+             if (!cachedRecord)
+             {
+                 error = [NSError MHVCacheError:@"Record could not be found"];
+             }
+             else
+             {
+                 if (lastSyncDate)
+                 {
+                     cachedRecord.lastSyncDate = lastSyncDate;
+                 }
+                 if (sequenceNumber >= 0)
+                 {
+                     cachedRecord.lastOperationSequenceNumber = sequenceNumber.integerValue;
+                 }
+                 
+                 cachedRecord.isValid = YES;
+                 
+                 error = [self saveContext];
+             }
+         }];
+        
+        return error;
+    }
 }
 
 #pragma mark - Core Data
 
 - (NSError *)saveContext
 {
+    // Callers are using @synchronized (self.lockObject)
     if (self.deleted)
     {
-        return nil;
+        return [NSError MHVCacheDeleted];
     }
     
     __block NSError *error = nil;
@@ -451,106 +598,91 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     return error;
 }
 
-- (NSURL *)databaseUrl
+- (NSError *)setupDatabase
 {
-    @synchronized(self.lockObject)
+    NSError *error;
+    
+    @synchronized (self.lockObject)
     {
-        if (self.deleted)
+        // Check if database already exists
+        if (self.managedObjectContext && !self.deleted)
         {
             return nil;
         }
         
-        if (!_databaseUrl)
+        //Setup database URL
+        NSURL *applicationSupportURL = [[self.fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
+        
+        [self.fileManager createDirectoryAtURL:applicationSupportURL withIntermediateDirectories:YES attributes:nil error:nil];
+        
+        self.databaseUrl = [applicationSupportURL URLByAppendingPathComponent:@"mhvcache.db"];
+        
+        //If new database, create password
+        if (![self.fileManager fileExistsAtPath:self.databaseUrl.path])
         {
-            NSURL *applicationSupportURL = [[self.fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-            
-            [self.fileManager createDirectoryAtURL:applicationSupportURL withIntermediateDirectories:YES attributes:nil error:nil];
-            
-            _databaseUrl = [applicationSupportURL URLByAppendingPathComponent:@"mhvcache.db"];
-        }
-        return _databaseUrl;
-    }
-}
-
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    @synchronized(self.lockObject)
-    {
-        if (self.deleted)
-        {
-            return nil;
+            //Generate a new password and store in the keychain
+            [self.keychainService setString:[self generateRandomPassword]
+                                     forKey:kMHVCachePasswordKey];
         }
         
-        if (!_persistentStoreCoordinator)
+        // Object Model
+        NSBundle *bundle = [NSBundle bundleForClass:[MHVCachedThing class]];
+        NSURL *modelURL = [bundle URLForResource:@"MHVThingCacheDatabase" withExtension:@"momd"];
+        
+        NSManagedObjectModel *objectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+        if (!objectModel)
         {
-            //If new database, create password
-            if (![self.fileManager fileExistsAtPath:self.databaseUrl.path])
-            {
-                //Generate a new password and store in the keychain
-                [self.keychainService setString:[self generateRandomPassword]
-                                         forKey:kMHVCachePasswordKey];
-            }
-            
-            _persistentStoreCoordinator = [EncryptedStore makeStoreWithOptions:@{
+            objectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+        }
+        
+        if (!objectModel)
+        {
+            return [NSError MHVCacheError:@"Could not create database object model"];
+        }
+        
+        // PersistentSoreCoordinator
+        self.persistentStoreCoordinator = [EncryptedStore makeStoreWithOptions:@{
                                                                                  EncryptedStorePassphraseKey : [self.keychainService stringForKey:kMHVCachePasswordKey],
                                                                                  EncryptedStoreDatabaseLocation : self.databaseUrl,
                                                                                  }
-                                                            managedObjectModel:[self objectModel]];
-            [self saveContext];
-            
-            // Mark database as protected, and that it should not be backed up
-            [self.fileManager setAttributes:@{ NSFileProtectionKey : NSFileProtectionCompleteUntilFirstUserAuthentication }
-                               ofItemAtPath:self.databaseUrl.path
-                                      error:nil];
-            
-            [self.databaseUrl setResourceValue:@(YES)
-                                        forKey:NSURLIsExcludedFromBackupKey
-                                         error:nil];
-        }
-        return _persistentStoreCoordinator;
-    }
-}
-
-- (NSManagedObjectModel *)objectModel
-{
-    @synchronized(self.lockObject)
-    {
-        if (self.deleted)
+                                                            managedObjectModel:objectModel];
+        if (!self.persistentStoreCoordinator)
         {
-            return nil;
+            return [NSError MHVCacheError:@"Could not create database storage"];
         }
         
-        if (!_objectModel)
+        // Mark database as protected, and that it should not be backed up
+        [self.fileManager setAttributes:@{ NSFileProtectionKey : NSFileProtectionCompleteUntilFirstUserAuthentication }
+                           ofItemAtPath:self.databaseUrl.path
+                                  error:&error];
+        if (error)
         {
-            NSBundle *bundle = [NSBundle bundleForClass:[MHVCachedThing class]];
-            NSURL *modelURL = [bundle URLForResource:@"MHVThingCacheDatabase" withExtension:@"momd"];
-            
-            _objectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-            if(!_objectModel)
-            {
-                _objectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-            }
-        }
-        return _objectModel;
-    }
-}
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    @synchronized(self.lockObject)
-    {
-        if (self.deleted)
-        {
-            return nil;
+            return error;
         }
         
-        if (!_managedObjectContext)
+        [self.databaseUrl setResourceValue:@(YES)
+                                    forKey:NSURLIsExcludedFromBackupKey
+                                     error:&error];
+        if (error)
         {
-            _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-            _managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator;
+            return error;
         }
-        return _managedObjectContext;
+        
+        // NSManagedObjectContext
+        self.managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        self.managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator;
+        
+        if (!self.managedObjectContext)
+        {
+            return [NSError MHVCacheError:@"Could not create database managed object context"];
+        }
+
+        self.deleted = NO;
     }
+    
+    error = [self saveContext];
+    
+    return error;
 }
 
 - (NSString *)generateRandomPassword

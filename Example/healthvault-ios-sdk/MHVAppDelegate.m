@@ -46,23 +46,16 @@
     {
         MHVLOG(@"Background Fetch Beginning");
         
-        [connection syncDataTypes:MHVSyncDataTypesAll options:MHVSyncOptionsBackground completion:^(NSInteger syncedItemCount, NSError *error)
+        [connection performBackgroundTasks:^(MHVBackgroundTaskResult *taskResult)
          {
-             UIBackgroundFetchResult result = UIBackgroundFetchResultNoData;
-             if (error)
+             if (taskResult.error)
              {
-                 MHVLOG(@"performFetchWithCompletionHandler: Error %@", error.localizedDescription);
-                 
-                 result = UIBackgroundFetchResultFailed;
-             }
-             else if (syncedItemCount > 0)
-             {
-                 result = UIBackgroundFetchResultNewData;
+                 MHVLOG(@"performFetchWithCompletionHandler: Error %@", taskResult.error.localizedDescription);
              }
              
              MHVLOG(@"Background Fetch Complete");
              
-             completionHandler(result);
+             completionHandler(taskResult.backgroundFetchResult);
          }];
     }
     else

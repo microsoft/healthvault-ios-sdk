@@ -26,8 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVThingClientProtocol <NSObject>
 
-@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
-
 /**
  * Gets the an individual thing by its ID
  *
