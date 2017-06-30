@@ -18,9 +18,6 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "HealthVault/Classes/**/*.{h,m}",
-  "exclude_files": "HealthVault/Classes/Caching/**/*.{h,m}",
-  "private_header_files": "**/Private/**/*.h",
   "requires_arc": true,
   "libraries": "xml2",
   "xcconfig": {
@@ -33,12 +30,31 @@
     "MobileCoreServices",
     "SystemConfiguration"
   ],
+  "default_subspecs": "OfflineThingCache",
   "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "HealthVault/Classes/**/*.{h,m}",
+      "exclude_files": "HealthVault/Classes/Caching/**/*.{h,m}",
+      "private_header_files": "**/Private/**/*.h"
+    },
     {
       "name": "OfflineThingCache",
       "source_files": "HealthVault/Classes/**/*.{h,m,xcdatamodeld}",
       "resources": "HealthVault/Assets/**/*",
       "private_header_files": "**/Private/**/*.h",
+      "frameworks": "CoreData",
+      "compiler_flags": "-D THING_CACHE=1",
+      "dependencies": {
+        "EncryptedCoreData": [
+          "~> 3.1"
+        ]
+      }
+    },
+    {
+      "name": "Tests",
+      "source_files": "HealthVault/Classes/**/*.{h,m,xcdatamodeld}",
+      "resources": "HealthVault/Assets/**/*",
       "frameworks": "CoreData",
       "compiler_flags": "-D THING_CACHE=1",
       "dependencies": {

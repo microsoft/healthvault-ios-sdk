@@ -19,20 +19,33 @@ The healthvault-ios-sdk framework simplifies developing apps that use the Micros
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'HealthVault/Classes/**/*.{h,m}'
-  s.exclude_files = 'HealthVault/Classes/Caching/**/*.{h,m}'
-  s.private_header_files = '**/Private/**/*.h'
-
   s.requires_arc     = true
   s.libraries        = "xml2"
   s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(inherited) $(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2' }
   s.frameworks       = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
+
+  s.default_subspec = 'OfflineThingCache'
+
+  s.subspec 'Core' do |ss|
+    ss.source_files = 'HealthVault/Classes/**/*.{h,m}'
+    ss.exclude_files = 'HealthVault/Classes/Caching/**/*.{h,m}'
+    ss.private_header_files = '**/Private/**/*.h'
+  end
 
   s.subspec 'OfflineThingCache' do |ss|
     ss.source_files = 'HealthVault/Classes/**/*.{h,m,xcdatamodeld}'
     ss.resources    = 'HealthVault/Assets/**/*'
     ss.private_header_files = '**/Private/**/*.h'
     
+    ss.frameworks = 'CoreData'
+    ss.compiler_flags = '-D THING_CACHE=1'
+    ss.dependency 'EncryptedCoreData', '~> 3.1'
+  end
+
+  s.subspec 'Tests' do |ss|
+    ss.source_files = 'HealthVault/Classes/**/*.{h,m,xcdatamodeld}'
+    ss.resources    = 'HealthVault/Assets/**/*'
+
     ss.frameworks = 'CoreData'
     ss.compiler_flags = '-D THING_CACHE=1'
     ss.dependency 'EncryptedCoreData', '~> 3.1'
