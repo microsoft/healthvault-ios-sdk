@@ -21,7 +21,7 @@
 
 @implementation MHVInstant
 
-- (NSString*)getDateFormatString
+- (NSString*)dateFormatString
 {
     return @"yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'";
 }

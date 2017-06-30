@@ -21,7 +21,7 @@
 
 @implementation MHVDateTimeDuration
 
-- (NSString*)getDateFormatString
+- (NSString*)dateFormatString
 {
     return @"HH:mm:ss";
 }

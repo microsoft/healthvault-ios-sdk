@@ -23,8 +23,6 @@
 
 @property (nonatomic, strong) NSDate* date;
 
-- (NSString*)getDateFormatString;
-
-- (instancetype)initWithObject:(id)object objectParameters:(NSObject *)parameters;
+- (NSString*)dateFormatString;
 
 @end

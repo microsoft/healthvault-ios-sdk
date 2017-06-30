@@ -21,7 +21,7 @@
 
 @implementation MHVLocalDateTime
 
-- (NSString*)getDateFormatString
+- (NSString*)dateFormatString
 {
     return @"yyyy-MM-dd'T'HH:mm:ss";
 }

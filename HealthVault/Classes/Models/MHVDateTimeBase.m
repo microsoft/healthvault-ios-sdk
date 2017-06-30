@@ -24,18 +24,21 @@
 - (instancetype)initWithObject:(id)object objectParameters:(NSObject *)parameters
 {
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:[self getDateFormatString]];
+    [dateFormatter setDateFormat:[self dateFormatString]];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     
     self = [super init];
     if (self)
     {
-        self.date = [dateFormatter dateFromString:object];
+        if ([object isKindOfClass:[NSString class]])
+        {
+            self.date = [dateFormatter dateFromString:object];
+        }
     }
     return self;
 }
 
-- (NSString*)getDateFormatString
+- (NSString*)dateFormatString
 {
     return @"yyyy-MM-dd'T'HH:mm";
 }
@@ -43,7 +46,7 @@
 - (NSString*)description
 {
     NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat: self.getDateFormatString];
+    [formatter setDateFormat: self.dateFormatString];
     [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     return [formatter stringFromDate:self.date];
 }

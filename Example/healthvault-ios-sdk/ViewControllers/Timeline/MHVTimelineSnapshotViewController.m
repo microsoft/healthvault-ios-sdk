@@ -40,8 +40,11 @@
 {
     self = [super init];
     
-    MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
-    self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
+    if (self)
+    {
+        MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
+        self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
+    }
     
     return self;
 }
