@@ -1,6 +1,6 @@
 //
-//  MHVThingClient.h
-//  MHVLib
+// MHVTimelineSnapshotViewController.h
+// SDKFeatures
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,22 +15,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-
 
 #import <Foundation/Foundation.h>
-#import "MHVThingClientProtocol.h"
-@protocol MHVConnectionProtocol, MHVThingCacheProtocol;
 
-NS_ASSUME_NONNULL_BEGIN
+@interface MHVTimelineSnapshotViewController : UIViewController
 
-@interface MHVThingClient : NSObject<MHVThingClientProtocol>
-
-@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
-
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-                             cache:(id<MHVThingCacheProtocol> _Nullable)cache;
+- (id)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric;
 
 @end
-
-NS_ASSUME_NONNULL_END

@@ -206,8 +206,6 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
             return;
         }
         
-        [self clearAllCachedData];
-                
         if (self.serviceInstance &&
             self.applicationCreationInfo &&
             self.sessionCredential &&
@@ -259,11 +257,6 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
         if (completion)
         {
             completion(error);
-        }
-        
-        if (!error)
-        {
-            [self startCaches];
         }
         
         self.isAuthUpdating = NO;
@@ -465,7 +458,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
             return;
         }
         
-        _personInfo = personInfo;
+        self.personInfo = personInfo;
         
         if (completion)
         {

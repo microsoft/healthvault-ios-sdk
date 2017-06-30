@@ -19,21 +19,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MHVSessionCredential, MHVConfiguration, MHVThingCacheConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient;
+@class MHVSessionCredential, MHVConfiguration, MHVThingCacheConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient, MHVBackgroundTaskResult;
 
 @protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVRemoteMonitoringClient;
-
-typedef NS_ENUM(NSInteger, MHVSyncDataTypes)
-{
-    MHVSyncDataTypesThings = 0x1,
-    MHVSyncDataTypesAll = (MHVSyncDataTypesThings),
-};
-
-typedef NS_ENUM(NSInteger, MHVSyncOptions)
-{
-    MHVSyncOptionsBackground = 0x1,
-    MHVSyncOptionsForeground = 0x2,
-};
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -119,23 +107,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient;
 
 /**
- Sync cached data
+ Perform background tasks.  
+ This should be called in application:performFetchWithCompletionHandler:
 
- @param dataTypes Data types to be synced
- @param options Sync options
- @param completion Envoked when the sync process is complete, with count of items synced and any errors that occurred
+ @param completion Envoked when the sync process is complete
  */
-- (void)syncDataTypes:(MHVSyncDataTypes)dataTypes options:(MHVSyncOptions)options completion:(void(^_Nullable)(NSInteger syncedItemCount, NSError *_Nullable error))completion;
-
-/**
- Start all the Cache processes.  Should be called after user is authenticated
- */
-- (void)startCaches;
-
-/**
- Remove all Cached data.  Should be called after a user is deauthorized
- */
-- (void)clearAllCachedData;
+- (void)performBackgroundTasks:(void(^_Nullable)(MHVBackgroundTaskResult *taskResult))completion;
 
 @end
 

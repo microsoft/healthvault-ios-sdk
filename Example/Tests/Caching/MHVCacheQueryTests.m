@@ -18,6 +18,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "MHVCacheQuery.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVCacheQueryTests)

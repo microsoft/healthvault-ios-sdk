@@ -34,8 +34,6 @@
 #import "MHVClientFactory.h"
 #import "MHVApplicationCreationInfo.h"
 #import "MHVValidator.h"
-#import "MHVThingClient.h"
-#import "MHVThingCacheProtocol.h"
 #import "MHVRestRequest.h"
 #import "MHVBlobDownloadRequest.h"
 #import "MHVBlobUploadRequest.h"
@@ -45,6 +43,11 @@
 #import "MHVCryptographer.h"
 #import "MHVClientInfo.h"
 #import "MHVThingCacheConfiguration.h"
+#import "MHVBackgroundTaskResult.h"
+#ifdef THING_CACHE
+#import "MHVThingClient.h"
+#import "MHVThingCacheProtocol.h"
+#endif
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -106,18 +109,6 @@ static NSInteger kInternalServerError = 500;
 - (NSUUID *_Nullable)applicationId;
 {
     return nil;
-}
-
-- (void)setCacheConfiguration:(MHVThingCacheConfiguration *)cacheConfiguration
-{
-    if (self.personInfo)
-    {
-        MHVASSERT_MESSAGE(@"cacheConfiguration must be set before calling to authenticateWithViewController");
-    }
-    else
-    {
-        _cacheConfiguration = cacheConfiguration;
-    }
 }
 
 - (void)executeHttpServiceOperation:(id<MHVHttpServiceOperationProtocol> _Nonnull)operation
@@ -589,42 +580,36 @@ static NSInteger kInternalServerError = 500;
     });
 }
 
-- (void)syncDataTypes:(MHVSyncDataTypes)dataTypes options:(MHVSyncOptions)options completion:(void(^_Nullable)(NSInteger syncedItemCount, NSError *_Nullable error))completion
+- (void)performBackgroundTasks:(void(^_Nullable)(MHVBackgroundTaskResult *taskResult))completion
 {
+#ifdef THING_CACHE
     if (!self.personInfo)
     {
         if (completion)
         {
-            completion(0, [NSError error:[NSError MHVUnauthorizedError] withDescription:@"User has not authenticated, can not sync cache"]);
+            MHVBackgroundTaskResult *result = [MHVBackgroundTaskResult new];
+            result.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"User has not authenticated, can not sync cache"];
+            completion(result);
         }
         return;
     }
     
-#ifdef THING_CACHE
-    if (dataTypes & MHVSyncDataTypesThings)
+    [((MHVThingClient *)self.thingClient).cache syncWithOptions:MHVCacheOptionsBackground completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+     {
+         if (completion)
+         {
+             MHVBackgroundTaskResult *result = [MHVBackgroundTaskResult new];
+             result.thingCacheUpdateCount = syncedItemCount;
+             result.error = error;
+             
+             completion(result);
+         }
+     }];
+#else
+    if (completion)
     {
-        [self.thingClient.cache syncWithCompletionHandler:^(NSInteger syncedItemCount, NSError *_Nullable error)
-        {
-            if (completion)
-            {
-                completion(syncedItemCount, error);
-            }
-        }];
+        completion([MHVBackgroundTaskResult new]);
     }
-#endif
-}
-
-- (void)startCaches
-{
-#ifdef THING_CACHE
-    [self.thingClient.cache startCache];
-#endif
-}
-
-- (void)clearAllCachedData
-{
-#ifdef THING_CACHE
-    [self.thingClient.cache clearAllCachedData];
 #endif
 }
 

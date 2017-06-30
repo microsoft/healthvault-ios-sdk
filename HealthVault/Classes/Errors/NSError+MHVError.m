@@ -120,6 +120,33 @@
                                       }];
 }
 
++ (NSError *)MHVCacheNotReady
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeCacheNotReady
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"The Cache has not been synced for this record."
+                                      }];
+}
+
++ (NSError *)MHVCacheDeleted
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeCacheDeleted
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"The Cache database has been deleted."
+                                      }];
+}
+
++ (NSError *)MHVCacheError:(NSString *)errorDescription
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeCacheError
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : errorDescription ? errorDescription : @"Cache database error"
+                                      }];
+}
+
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description
 {
     if (!error)

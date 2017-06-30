@@ -1,6 +1,6 @@
 //
-//  MHVThingClient.h
-//  MHVLib
+// MHVDateTimeDuration.m
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,22 +15,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-
 
 #import <Foundation/Foundation.h>
-#import "MHVThingClientProtocol.h"
-@protocol MHVConnectionProtocol, MHVThingCacheProtocol;
+#import "MHVDateTimeDuration.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@implementation MHVDateTimeDuration
 
-@interface MHVThingClient : NSObject<MHVThingClientProtocol>
-
-@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
-
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-                             cache:(id<MHVThingCacheProtocol> _Nullable)cache;
+- (NSString*)dateFormatString
+{
+    return @"HH:mm:ss";
+}
 
 @end
-
-NS_ASSUME_NONNULL_END

@@ -25,6 +25,7 @@
 #import "MHVShellAuthService.h"
 #import "MHVBrowserAuthBroker.h"
 #import "MHVClientFactory.h"
+#import "MHVThingCacheConfiguration.h"
 
 @interface MHVConnectionFactoryInternal ()
 
@@ -62,7 +63,7 @@
         if (!self.connection)
         {
             self.connection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
-                                                            cacheConfiguration:nil
+                                                            cacheConfiguration:[MHVThingCacheConfiguration new]
                                                                  clientFactory:[MHVClientFactory new]
                                                                    httpService:[[MHVHttpService alloc] initWithConfiguration:configuration]
                                                                keychainService:[MHVKeychainService new]

@@ -25,6 +25,7 @@
 #import "MHVServiceResponse.h"
 #import "MHVTypes.h"
 #import "NSError+MHVError.h"
+#import "MHVErrorConstants.h"
 #import "MHVConnectionProtocol.h"
 #import "MHVPersonalImage.h"
 #import "MHVBlobUploadRequest.h"
@@ -159,9 +160,14 @@
                                    recordId:recordId
                                  completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
          {
-             if (resultCollection || error)
+             // If error is because cache not ready or deleted, send request to HealthVault
+             if (error && error.code != MHVErrorTypeCacheNotReady && error.code != MHVErrorTypeCacheDeleted)
              {
-                 completion(resultCollection, error);
+                 completion(nil, error);
+             }
+             else if (resultCollection)
+             {
+                 completion(resultCollection, nil);
              }
              else
              {

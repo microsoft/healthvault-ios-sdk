@@ -20,6 +20,7 @@
 #import "MHVDictionaryExtensions.h"
 #import "MHVStringExtensions.h"
 #import "NSDate+DataModel.h"
+#import "MHVDateTimeBase.h"
 
 @implementation NSDictionary (MHVDictionaryExtensions)
 

@@ -18,6 +18,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MHVCacheConstants.h"
 @class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingCollection, MHVHostReachability;
 @protocol MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
@@ -52,9 +53,10 @@ NS_ASSUME_NONNULL_BEGIN
  This should be called by your UIApplicationDelegate's application:performFetchWithCompletionHandler: method.
  You will also need to add "Background fetch" to your app's "Background modes" capabilities
  
- @param completionHandler The callback to indicate the results of background syncing
+ @param options Any options set for the sync process
+ @param completion The callback to indicate the results of background syncing
  */
-- (void)syncWithCompletionHandler:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completionHandler;
+- (void)syncWithOptions:(MHVCacheOptions)options completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion;
 
 @end
 
