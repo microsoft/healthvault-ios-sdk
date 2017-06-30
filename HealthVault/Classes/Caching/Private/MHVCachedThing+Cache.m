@@ -29,12 +29,12 @@
     self.thingType = thing.type.typeID;
     
     self.createDate = thing.created.when;
-    self.createdByAppId = thing.created.appID;
-    //self.createdByPersonId;
+    self.createdByAppId = thing.created.appID.UUIDString;
+    self.createdByPersonId = thing.created.personID.UUIDString;
     self.effectiveDate = thing.effectiveDate;
     self.updateDate = thing.updated.when;
-    self.updatedByAppId = thing.updated.appID;
-    //self.updatedByPersonId;
+    self.updatedByAppId = thing.updated.appID.UUIDString;
+    self.updatedByPersonId = thing.updated.personID.UUIDString;
     
     self.xmlString = [thing toXmlString];
 }

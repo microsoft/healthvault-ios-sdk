@@ -29,6 +29,7 @@
 #import "NSError+MHVError.h"
 #import "MHVCachedThing+Cache.h"
 #import "MHVCachedRecord+Cache.h"
+#import "MHVCacheQuery.h"
 
 static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
@@ -235,6 +236,96 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     }
 }
 
+- (void)cachedResultsForQuery:(MHVThingQuery *)query
+                     recordId:(NSString *)recordId
+                   completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion
+{
+    NSDate *startDate = [NSDate date];
+    
+    if (!completion)
+    {
+        return;
+    }
+    
+    MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
+    
+    if (self.deleted)
+    {
+        completion(nil, nil);
+        return;
+    }
+    
+    if (!record)
+    {
+        completion(nil, [NSError MVHRequiredParameterIsNil]);
+        return;
+    }
+    
+    MHVCacheQuery *cacheQuery = [[MHVCacheQuery alloc] initWithQuery:query];
+    
+    if (cacheQuery.error)
+    {
+        completion(nil, cacheQuery.error);
+        return;
+    }
+    
+    if (!cacheQuery.canQueryCache)
+    {
+        completion(nil, nil);
+        return;
+    }
+    
+    [self.managedObjectContext performBlock:^
+     {
+         NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"record.recordId ==[c] %@", recordId],
+                                                                                               cacheQuery.predicate]];
+         
+         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedThing"];
+         fetchRequest.predicate = predicate;
+         
+         NSError *error;
+         NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+
+         //NSSet<MHVCachedThing *> *filteredThings = [record.things filteredSetUsingPredicate:predicate];
+         
+         NSArray<MHVCachedThing *> *sortedThings = [fetchedObjects sortedArrayUsingComparator:^NSComparisonResult(MHVCachedThing *_Nonnull thing1, MHVCachedThing *_Nonnull thing2)
+                                                    {
+                                                        return [thing1.updateDate compareDescending:thing2.updateDate];
+                                                    }];
+         
+         if (cacheQuery.fetchLimit > 0 && sortedThings.count > cacheQuery.fetchLimit)
+         {
+             sortedThings = [sortedThings subarrayWithRange:NSMakeRange(0, cacheQuery.fetchLimit)];
+         }
+         
+         MHVThingCollection *thingCollection = [[MHVThingCollection alloc] init];
+         
+         for (MHVCachedThing *cachedThing in sortedThings)
+         {
+             MHVThing *thing = [cachedThing toThing];
+             if (thing)
+             {
+                 [thingCollection addObject:thing];
+             }
+             else
+             {
+                 completion(nil, [NSError MHVCacheError:@"Could not convert database object back to a Thing"]);
+                 return;
+             }
+         }
+         
+         MHVThingQueryResult *queryResult = [MHVThingQueryResult new];
+         queryResult.things = thingCollection;
+         queryResult.name = query.name;
+         
+         NSDate *endDate = [NSDate date];
+
+         MHVLOG(@"ThingCacheDatabase: Returning %li cached things in %0.4f seconds", queryResult.things.count, [endDate timeIntervalSinceDate:startDate]);
+         
+         completion(queryResult, nil);
+     }];
+}
+
 - (void)addOrUpdateThings:(MHVThingCollection *)things
                  recordId:(NSString *)recordId
        lastSequenceNumber:(NSInteger)lastSequenceNumber
@@ -250,7 +341,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
             }
             return;
         }
-
+        
         if ([NSString isNilOrEmpty:recordId])
         {
             if (completion)
@@ -259,7 +350,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
             }
             return;
         }
-
+        
         if ([MHVCollection isNilOrEmpty:things])
         {
             //No things to add or update
@@ -521,7 +612,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              }];
         }
     }
-
+    
     if (error)
     {
         MHVLOG(@"ThingCacheDatabase: Error setting record as invalid %@", error);
@@ -676,7 +767,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         {
             return [NSError MHVCacheError:@"Could not create database managed object context"];
         }
-
+        
         self.deleted = NO;
     }
     

@@ -58,7 +58,7 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
     MHVASSERT_PARAMETER(connection);
     MHVASSERT_PARAMETER(connection.cacheConfiguration);
     MHVASSERT_PARAMETER(connection.cacheConfiguration.cacheTypeIds);
-
+    
     self = [super init];
     if (self)
     {
@@ -113,7 +113,7 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
     {
         MHVLOG(@"ThingCache: Error deleting database: %@", error.localizedDescription);
     }
-
+    
     @synchronized (self.syncCompletionHandlers)
     {
         [self.syncCompletionHandlers removeAllObjects];
@@ -133,41 +133,86 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
                        recordId:(NSUUID *)recordId
                      completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error))completion;
 {
-    
+    if (!completion)
+    {
+        return;
+    }
+
     if (![self.database hasRecordId:recordId.UUIDString])
     {
-        if (completion)
-        {
             completion(nil, [NSError error:[NSError MHVCacheNotReady] withDescription:@"recordId not found in cache database"]);
-        }
         return;
     }
     
     if (![self.database isCacheValidForRecordId:recordId.UUIDString])
     {
-        if (completion)
-        {
             completion(nil, [NSError MHVCacheError:@"Cache is not valid for record"]);
-        }
         return;
     }
-
+    
+    
     // If last sync date isn't set, cache isn't populated yet
     if (![self.database lastSyncDateFromRecordId:recordId.UUIDString])
     {
         MHVLOG(@"ThingCache: ThingQuery before Cache is populated");
-        if (completion)
-        {
             completion(nil, [NSError MHVCacheNotReady]);
-        }
         return;
     }
 
-    //TODO...use cache
-    if (completion)
+    NSMutableArray<MHVAsyncTask *> *tasks = [NSMutableArray new];
+    
+    // Make array of tasks to get results from the database
+    for (MHVThingQuery *query in queries)
     {
-        completion(nil, nil);
+        [tasks addObject:[[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
+                          {
+                              [self.database cachedResultsForQuery:query
+                                                          recordId:recordId.UUIDString
+                                                        completion:^(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error)
+                               {
+                                   if (error)
+                                   {
+                                       finish([MHVAsyncTaskResult withError:error]);
+                                   }
+                                   else
+                                   {
+                                       finish([MHVAsyncTaskResult withResult:queryResult]);
+                                   }
+                               }];
+                          }]];
     }
+    
+    // Run them in a sequence
+    [MHVAsyncTask startSequenceOfTasks:tasks];
+    
+    // When all results have been retrieved, build MHVThingQueryResultCollection
+    [MHVAsyncTask waitForAll:tasks beforeBlock:^id(NSArray<MHVAsyncTaskResult *> *taskResults)
+     {
+         MHVThingQueryResultCollection *resultCollection = [MHVThingQueryResultCollection new];
+         for (MHVAsyncTaskResult *taskResult in taskResults)
+         {
+             if (taskResult.error)
+             {
+                 completion(nil, taskResult.error);
+                 
+                 return nil;
+             }
+             
+             [resultCollection addObject:taskResult.result];
+         }
+         
+         if (resultCollection.count != queries.count)
+         {
+             //No error, but results not equal to queries (not all quaries are cacheable?), don't return partial results
+             completion(nil, nil);
+         }
+         else
+         {
+             completion(resultCollection, nil);
+         }
+         
+         return nil;
+     }];
 }
 
 #pragma mark - Syncing
@@ -295,7 +340,7 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
             completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
-
+    
     [self addSyncCompletion:completion];
     
     @synchronized (self.isSyncing)

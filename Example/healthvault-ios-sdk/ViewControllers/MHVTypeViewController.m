@@ -195,10 +195,14 @@ static const NSInteger c_numSecondsInDay = 86400;
 {
     [self.statusLabel showBusy];
     
-    //Include Blob metadata, so can show size
     MHVThingQuery *query = [[MHVThingQuery alloc] init];
     query.maxResults = 500;
-    query.view.sections |= MHVThingSection_Blobs;
+
+    //Include Blob metadata, so can show size for Files
+    if (self.typeClass == [MHVFile class])
+    {
+        query.view.sections |= MHVThingSection_Blobs;
+    }
     
     // Send request to get all things for the type class set for this view controller.
     [self.connection.thingClient getThingsForThingClass:self.typeClass

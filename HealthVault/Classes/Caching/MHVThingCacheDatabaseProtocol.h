@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-@class MHVThingCollection;
+@class MHVThingCollection, MHVThingQuery, MHVThingQueryResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -88,6 +88,17 @@ NS_ASSUME_NONNULL_BEGIN
                  recordId:(NSString *)recordId
        lastSequenceNumber:(NSInteger)lastSequenceNumber
                completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion;
+
+/**
+ Retrieve things for a query
+
+ @param query The GetThings query
+ @param recordId the owner record of the Things
+ @param completion Envoked with the MHVThingQueryResult
+ */
+- (void)cachedResultsForQuery:(MHVThingQuery *)query
+                     recordId:(NSString *)recordId
+                   completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion;
 
 /**
  Fetch all cached records
