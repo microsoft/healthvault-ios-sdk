@@ -110,6 +110,8 @@
 		A5DF658E1EF0535A009F5968 /* MHVTaskThingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF654F1EF052DD009F5968 /* MHVTaskThingTests.m */; };
 		A5DF658F1EF0535A009F5968 /* MHVTaskTrackingEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */; };
 		A5DF65901EF05362009F5968 /* MHVXmlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65521EF052DD009F5968 /* MHVXmlTests.m */; };
+		BA774D9D1F0571B80036228C /* MHVTimelineSnapshotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA774D9C1F0571B80036228C /* MHVTimelineSnapshotViewController.xib */; };
+		BA774DA01F0571E70036228C /* MHVTimelineSnapshotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA774D9F1F0571E70036228C /* MHVTimelineSnapshotViewController.m */; };
 		EC63189E52528368EEFB7FEE /* Pods_healthvault_ios_sdk_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -277,6 +279,9 @@
 		A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTrackingEntryTests.m; sourceTree = "<group>"; };
 		A5DF65521EF052DD009F5968 /* MHVXmlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVXmlTests.m; sourceTree = "<group>"; };
 		B3A8DCF4594CD372C82292F5 /* Pods-healthvault-ios-sdk_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example.release.xcconfig"; sourceTree = "<group>"; };
+		BA774D9C1F0571B80036228C /* MHVTimelineSnapshotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVTimelineSnapshotViewController.xib; sourceTree = "<group>"; };
+		BA774D9E1F0571D70036228C /* MHVTimelineSnapshotViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVTimelineSnapshotViewController.h; sourceTree = "<group>"; };
+		BA774D9F1F0571E70036228C /* MHVTimelineSnapshotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTimelineSnapshotViewController.m; sourceTree = "<group>"; };
 		D8FE05E531FFE778B9984522 /* Pods-healthvault-ios-sdk_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		FBE8ECF9045A7D4F1E2252CA /* Pods-healthvault-ios-sdk_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Tests/Pods-healthvault-ios-sdk_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -484,6 +489,7 @@
 				A5DF64A21EF051FA009F5968 /* ActionPlanTasks */,
 				A5DF64A91EF051FA009F5968 /* Goals */,
 				A5DF64B31EF051FA009F5968 /* GoalsRecommendations */,
+				BA774D9B1F0570E50036228C /* Timeline */,
 				A5DF64BA1EF051FA009F5968 /* MHVImageViewController.swift */,
 				A5DF64BB1EF051FA009F5968 /* MHVImageViewController.xib */,
 				A5DF64BC1EF051FA009F5968 /* MHVRecordListViewController.swift */,
@@ -629,6 +635,16 @@
 			path = XML;
 			sourceTree = "<group>";
 		};
+		BA774D9B1F0570E50036228C /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				BA774D9E1F0571D70036228C /* MHVTimelineSnapshotViewController.h */,
+				BA774D9F1F0571E70036228C /* MHVTimelineSnapshotViewController.m */,
+				BA774D9C1F0571B80036228C /* MHVTimelineSnapshotViewController.xib */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -732,6 +748,7 @@
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				A5DF64DB1EF051FA009F5968 /* MHVRecordListViewController.xib in Resources */,
 				A5DF64C91EF051FA009F5968 /* MHVActionPlansListViewController.xib in Resources */,
+				BA774D9D1F0571B80036228C /* MHVTimelineSnapshotViewController.xib in Resources */,
 				A56404FC1EF2E9E6002D870B /* MHVViewController.xib in Resources */,
 				A5DF64DF1EF051FA009F5968 /* MHVTypeViewController.xib in Resources */,
 				A5DF64D71EF051FA009F5968 /* MHVGoalsRecommendationsListViewController.xib in Resources */,
@@ -888,6 +905,7 @@
 				A5DF65201EF0527B009F5968 /* MHVFileFactory.m in Sources */,
 				A5DF652A1EF0527B009F5968 /* MHVThingDataTypedFactory.m in Sources */,
 				A5DF651B1EF0527B009F5968 /* MHVDietaryIntakeFactory.m in Sources */,
+				BA774DA01F0571E70036228C /* MHVTimelineSnapshotViewController.m in Sources */,
 				A5DF651E1EF0527B009F5968 /* MHVFeatureActions.m in Sources */,
 				A5DF64D41EF051FA009F5968 /* MHVGoalsRecommendationsDetailViewController.m in Sources */,
 				A5DF64CA1EF051FA009F5968 /* MHVActionPlanTaskDetailViewController.m in Sources */,

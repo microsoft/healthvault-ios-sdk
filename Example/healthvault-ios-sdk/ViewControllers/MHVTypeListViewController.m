@@ -33,6 +33,7 @@
 #import "MHVActionPlansListViewController.h"
 #import "MHVActionPlanTaskListViewController.h"
 #import "MHVGoalsRecommendationsListViewController.h"
+#import "MHVTimelineSnapshotViewController.h"
 
 @interface MHVTypeListViewController ()
 
@@ -288,6 +289,11 @@
     [restTypeList addObject:name];
     [itemDictionary setObject:[MHVGoalRecommendation class] forKey:name];
     [viewDictionary setObject:[MHVGoalsRecommendationsListViewController class] forKey:name];
+    
+    name = @"timeline";
+    [restTypeList addObject:name];
+    [itemDictionary setObject:[MHVTimelineSnapshot class] forKey:name];
+    [viewDictionary setObject:[MHVTimelineSnapshotViewController class] forKey:name];
     
     [hvTypeList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2)
      {

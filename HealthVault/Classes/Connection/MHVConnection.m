@@ -34,8 +34,6 @@
 #import "MHVClientFactory.h"
 #import "MHVApplicationCreationInfo.h"
 #import "MHVValidator.h"
-#import "MHVThingClient.h"
-#import "MHVThingCacheProtocol.h"
 #import "MHVRestRequest.h"
 #import "MHVBlobDownloadRequest.h"
 #import "MHVBlobUploadRequest.h"
@@ -46,6 +44,10 @@
 #import "MHVClientInfo.h"
 #import "MHVThingCacheConfiguration.h"
 #import "MHVBackgroundTaskResult.h"
+#ifdef THING_CACHE
+#import "MHVThingClient.h"
+#import "MHVThingCacheProtocol.h"
+#endif
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";

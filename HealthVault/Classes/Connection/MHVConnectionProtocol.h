@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MHVCacheConstants.h"
 
 @class MHVSessionCredential, MHVConfiguration, MHVThingCacheConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient, MHVBackgroundTaskResult;
 
