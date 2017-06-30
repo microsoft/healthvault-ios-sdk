@@ -174,7 +174,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                                       rightExpression:[NSExpression expressionForVariable:kPredicateVariable]
                                       modifier:NSDirectPredicateModifier
                                       type:operator.unsignedIntegerValue
-                                      options:NSCaseInsensitivePredicateOption];
+                                      options:0];
     
     return [predicateTemplate predicateWithSubstitutionVariables:@{
                                                                    kPredicateVariable : variable
