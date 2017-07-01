@@ -215,6 +215,102 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
      }];
 }
 
+- (void)addThings:(MHVThingCollection *)things
+         recordId:(NSUUID *)recordId
+       completion:(void (^)(NSError * _Nullable))completion
+{
+    __weak __typeof__(self)weakSelf = self;
+
+    [self fillThingsMetadata:things created:YES updated:YES];
+
+    [self.database addOrUpdateThings:things
+                            recordId:recordId.UUIDString
+                  lastSequenceNumber:-1
+                          completion:^(NSInteger updateItemCount, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             MHVLOG(@"ThingCache: Error adding things: %@", error);
+             [weakSelf.database setCacheInvalidForRecordId:recordId.UUIDString];
+         }
+         
+         if (completion)
+         {
+             completion(error);
+         }
+     }];
+}
+
+- (void)updateThings:(MHVThingCollection *)things
+            recordId:(NSUUID *)recordId
+          completion:(void (^)(NSError * _Nullable))completion
+{
+    __weak __typeof__(self)weakSelf = self;
+    
+    [self fillThingsMetadata:things created:NO updated:YES];
+
+    [self.database addOrUpdateThings:things
+                            recordId:recordId.UUIDString
+                  lastSequenceNumber:-1
+                          completion:^(NSInteger updateItemCount, NSError * _Nullable error)
+     {
+         if (error)
+         {
+             MHVLOG(@"ThingCache: Error updating things: %@", error);
+             [weakSelf.database setCacheInvalidForRecordId:recordId.UUIDString];
+         }
+         
+         if (completion)
+         {
+             completion(error);
+         }
+     }];
+}
+
+- (void)deleteThings:(MHVThingCollection *)things
+            recordId:(NSUUID *)recordId
+          completion:(void(^)(NSError *_Nullable error))completion
+{
+    NSError *error = [self.database deleteThingIds:things.thingIDs.toArray
+                                          recordId:recordId.UUIDString];
+    
+    if (error)
+    {
+        MHVLOG(@"ThingCache: Error deleting things: %@", error);
+        [self.database setCacheInvalidForRecordId:recordId.UUIDString];
+    }
+
+    if (completion)
+    {
+        completion(error);
+    }
+}
+
+- (void)fillThingsMetadata:(MHVThingCollection *)things created:(BOOL)created updated:(BOOL)updated
+{
+    for (MHVThing *thing in things)
+    {
+        NSDate *date = [NSDate date];
+        if (created)
+        {
+            thing.created = [MHVAudit new];
+            thing.created.when = date;
+            thing.created.personID = self.connection.personInfo.ID;
+            thing.created.appID = self.connection.applicationId;
+        }
+        
+        if (updated)
+        {
+            thing.updated = [MHVAudit new];
+            thing.updated.when = date;
+            thing.updated.personID = self.connection.personInfo.ID;
+            thing.created.appID = self.connection.applicationId;
+        }
+        
+        thing.effectiveDate = date;
+    }
+}
+
 #pragma mark - Syncing
 
 - (void)startSyncTimer

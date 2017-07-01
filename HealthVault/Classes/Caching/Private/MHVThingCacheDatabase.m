@@ -219,7 +219,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                  [where addObject:thingId];
              }
              
-             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"thingId IN %@ AND record.recordId = %@", where, recordId];
+             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"thingId IN %@ AND record.recordId == %@", where, recordId];
              [fetchRequest setPredicate:predicate];
              
              NSError *error = nil;
@@ -277,17 +277,16 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     
     [self.managedObjectContext performBlock:^
      {
-         NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"record.recordId ==[c] %@", recordId],
+         NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"record.recordId == %@", recordId],
                                                                                                cacheQuery.predicate]];
          
          NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedThing"];
          fetchRequest.predicate = predicate;
+         fetchRequest.propertiesToFetch = @[@"xmlString"];
          
          NSError *error;
          NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 
-         //NSSet<MHVCachedThing *> *filteredThings = [record.things filteredSetUsingPredicate:predicate];
-         
          NSArray<MHVCachedThing *> *sortedThings = [fetchedObjects sortedArrayUsingComparator:^NSComparisonResult(MHVCachedThing *_Nonnull thing1, MHVCachedThing *_Nonnull thing2)
                                                     {
                                                         return [thing1.updateDate compareDescending:thing2.updateDate];
@@ -394,9 +393,13 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              }
              
              //Sync complete, update record with date and sequence number
-             record.lastOperationSequenceNumber = lastSequenceNumber;
-             record.lastSyncDate = [NSDate date];
-             record.isValid = YES;
+             //Will be < 0 for PutThing that shouldn't update the sync info
+             if (lastSequenceNumber >= 0)
+             {
+                 record.lastOperationSequenceNumber = lastSequenceNumber;
+                 record.lastSyncDate = [NSDate date];
+                 record.isValid = YES;
+             }
              
              NSError *error = [self saveContext];
              

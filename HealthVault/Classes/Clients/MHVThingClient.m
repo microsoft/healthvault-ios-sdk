@@ -366,6 +366,39 @@
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
+         MHVThingKeyCollection *keys = [self thingKeyResultsFromResponse:response];
+         
+         if (keys.count != things.count)
+         {
+             if (completion)
+             {
+                 completion([NSError error:[NSError MHVUnknownError]
+                           withDescription:@"Mismatch between added Thing count and Thing Keys"]);
+             }
+             return;
+         }
+         
+         // Set Key on the added things
+         for (NSInteger i = 0; i < things.count; i++)
+         {
+             things[i].key = keys[i];
+         }
+
+#ifdef THING_CACHE
+         if (!error && self.cache)
+         {
+             [self.cache addThings:things
+                          recordId:recordId
+                        completion:^(NSError * _Nullable error)
+              {
+                  if (completion)
+                  {
+                      completion(error);
+                  }
+              }];
+             return;
+         }
+#endif
          if (completion)
          {
              completion(error);
@@ -437,6 +470,21 @@
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
+#ifdef THING_CACHE
+         if (!error && self.cache)
+         {
+             [self.cache updateThings:things
+                             recordId:recordId
+                           completion:^(NSError * _Nullable error)
+              {
+                  if (completion)
+                  {
+                      completion(error);
+                  }
+              }];
+             return;
+         }
+#endif
          if (completion)
          {
              completion(error);
@@ -492,6 +540,21 @@
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
+#ifdef THING_CACHE
+         if (!error && self.cache)
+         {
+             [self.cache deleteThings:things
+                             recordId:recordId
+                           completion:^(NSError * _Nullable error)
+              {
+                  if (completion)
+                  {
+                      completion(error);
+                  }
+              }];
+             return;
+         }
+#endif
          if (completion)
          {
              completion(error);
@@ -928,13 +991,25 @@
 {
     XReader *reader = [[XReader alloc] initFromString:response.infoXml];
     
-    return (MHVThingQueryResults *)[NSObject newFromReader:reader withRoot:@"info" asClass:[MHVThingQueryResults class]];
+    return (MHVThingQueryResults *)[NSObject newFromReader:reader
+                                                  withRoot:@"info"
+                                                   asClass:[MHVThingQueryResults class]];
+}
+
+- (MHVThingKeyCollection *)thingKeyResultsFromResponse:(MHVServiceResponse *)response
+{
+    XReader *reader = [[XReader alloc] initFromString:response.infoXml];
+    return (MHVThingKeyCollection *)[NSObject newFromReader:reader
+                                                   withRoot:@"info"
+                                                    asClass:[MHVThingKeyCollection class]];
 }
 
 - (MHVBlobPutParameters *)blobPutParametersResultsFromResponse:(MHVServiceResponse *)response
 {
     XReader *reader = [[XReader alloc] initFromString:response.infoXml];
-    return (MHVBlobPutParameters *)[NSObject newFromReader:reader withRoot:@"info" asClass:[MHVBlobPutParameters class]];
+    return (MHVBlobPutParameters *)[NSObject newFromReader:reader
+                                                  withRoot:@"info"
+                                                   asClass:[MHVBlobPutParameters class]];
 }
 
 - (NSString *)bodyForQueryCollection:(MHVThingQueryCollection *)queries

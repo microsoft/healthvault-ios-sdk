@@ -28,13 +28,14 @@
     self.version = thing.key.version;
     self.thingType = thing.type.typeID;
     
-    self.createDate = thing.created.when;
-    self.createdByAppId = thing.created.appID.UUIDString;
-    self.createdByPersonId = thing.created.personID.UUIDString;
-    self.effectiveDate = thing.effectiveDate;
-    self.updateDate = thing.updated.when;
-    self.updatedByAppId = thing.updated.appID.UUIDString;
-    self.updatedByPersonId = thing.updated.personID.UUIDString;
+    // Don't overwrite existing data with nil
+    self.createDate = thing.created.when ?: self.createDate;
+    self.createdByAppId = thing.created.appID.UUIDString ?: self.createdByAppId;
+    self.createdByPersonId = thing.created.personID.UUIDString ?: self.createdByPersonId;
+    self.updateDate = thing.updated.when ?: self.updateDate;
+    self.updatedByAppId = thing.updated.appID.UUIDString ?: self.updatedByAppId;
+    self.updatedByPersonId = thing.updated.personID.UUIDString ?: self.updatedByPersonId;
+    self.effectiveDate = thing.effectiveDate ?: self.effectiveDate;
     
     self.xmlString = [thing toXmlString];
 }

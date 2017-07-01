@@ -48,6 +48,18 @@ NS_ASSUME_NONNULL_BEGIN
                        recordId:(NSUUID *)recordId
                      completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error))completion;
 
+- (void)addThings:(MHVThingCollection *)things
+         recordId:(NSUUID *)recordId
+       completion:(void(^)(NSError *_Nullable error))completion;
+
+- (void)updateThings:(MHVThingCollection *)things
+            recordId:(NSUUID *)recordId
+          completion:(void(^)(NSError *_Nullable error))completion;
+
+- (void)deleteThings:(MHVThingCollection *)things
+            recordId:(NSUUID *)recordId
+          completion:(void(^)(NSError *_Nullable error))completion;
+
 /**
  Sync the HealthVault database
  This should be called by your UIApplicationDelegate's application:performFetchWithCompletionHandler: method.
