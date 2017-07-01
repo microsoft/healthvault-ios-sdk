@@ -42,7 +42,7 @@
     // If background fetch is enabled, tell the cache to sync the latest data from HealthVault
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    if (connection && connection.personInfo)
+    if (connection)
     {
         MHVLOG(@"Background Fetch Beginning");
         
