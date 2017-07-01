@@ -71,6 +71,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                      };
     
     kIgnoreMap = @{
+                   @"shouldUseCachedResults" : @"ignore",
                    @"view" : @"ignore",
                    };
 }
@@ -96,6 +97,11 @@ static NSString *const kPredicateVariable = @"predicateVariable";
     if (!query)
     {
         _error = [NSError error:[NSError MHVInvalidThingQuery] withDescription:@"MHVThingCacheQuery was initialized with a nil query parameter."];
+        return NO;
+    }
+    
+    if (!query.shouldUseCachedResults)
+    {
         return NO;
     }
     

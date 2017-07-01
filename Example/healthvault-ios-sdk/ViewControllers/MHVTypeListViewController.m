@@ -251,23 +251,14 @@
     NSMutableArray<NSString *> *hvTypeList = [[NSMutableArray alloc] init];
     NSMutableArray<NSString *> *restTypeList = [[NSMutableArray alloc] init];
     
-    //HealthVault Thing Types
-    NSArray<Class> *thingTypes = @[[MHVBloodGlucose class],
-                                   [MHVBloodPressure class],
-                                   [MHVCondition class],
-                                   [MHVCholesterol class],
-                                   [MHVDietaryIntake class],
-                                   [MHVDailyMedicationUsage class],
-                                   [MHVImmunization class],
-                                   [MHVEmotionalState class],
-                                   [MHVExercise class],
-                                   [MHVMedication class],
-                                   [MHVProcedure class],
-                                   [MHVSleepJournalAM class],
-                                   [MHVWeight class],
-                                   [MHVFile class],
-                                   [MHVPersonalImage class],
-                                   [MHVHeartRate class]];
+    NSMutableArray<Class> *thingTypes = [NSMutableArray new];
+    
+    //HealthVault Thing Types from cached types
+    for (NSString *typeId in self.connection.cacheConfiguration.cacheTypeIds)
+    {
+        MHVThing *thing = [[MHVThing alloc] initWithType:typeId];
+        [thingTypes addObject:[thing.data.typed class]];
+    }
     
     for (int i = 0; i < thingTypes.count; i++)
     {

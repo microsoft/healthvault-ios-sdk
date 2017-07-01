@@ -1,5 +1,5 @@
 //
-//  MHVThingClient.h
+//  MHVCachedRecord+Cache.m
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,20 +17,21 @@
 // limitations under the License.
 //
 
+#import "MHVCachedRecord+Cache.h"
+#import "MHVCachedThing+CoreDataClass.h"
 
-#import <Foundation/Foundation.h>
-#import "MHVThingClientProtocol.h"
-@protocol MHVConnectionProtocol, MHVThingCacheProtocol;
+@implementation MHVCachedRecord (Cache)
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface MHVThingClient : NSObject<MHVThingClientProtocol>
-
-@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
-
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-                             cache:(id<MHVThingCacheProtocol> _Nullable)cache;
+- (MHVCachedThing *)findThingWithThingId:(NSString *)thingId
+{
+    for (MHVCachedThing *cachedThing in self.things)
+    {
+        if ([cachedThing.thingId isEqualToString:thingId])
+        {
+            return cachedThing;
+        }
+    }
+    return nil;
+}
 
 @end
-
-NS_ASSUME_NONNULL_END

@@ -1,5 +1,5 @@
 //
-//  MHVThingClient.h
+//  MHVThingCache.h
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,20 +17,21 @@
 // limitations under the License.
 //
 
-
 #import <Foundation/Foundation.h>
-#import "MHVThingClientProtocol.h"
-@protocol MHVConnectionProtocol, MHVThingCacheProtocol;
+#import "MHVThingCacheProtocol.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@protocol MHVThingCacheDatabaseProtocol, MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
-@interface MHVThingClient : NSObject<MHVThingClientProtocol>
+@interface MHVThingCache : NSObject <MHVThingCacheProtocol>
 
-@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
-
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-                             cache:(id<MHVThingCacheProtocol> _Nullable)cache;
+/**
+ Create the Thing Cache
+ 
+ @param database The Database for the cache
+ @param connection The connection object for the current authenticated person
+ @return The cache object
+ */
+- (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
+                           connection:(id<MHVConnectionProtocol>)connection;
 
 @end
-
-NS_ASSUME_NONNULL_END

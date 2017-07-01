@@ -20,7 +20,7 @@
 #import "MHVConnection.h"
 #import "MHVSodaConnectionProtocol.h"
 
-@class MHVConfiguration, MHVClientFactory;
+@class MHVConfiguration, MHVThingCacheConfiguration, MHVClientFactory;
 
 @protocol MHVSessionCredentialClientProtocol, MHVHttpServiceProtocol, MHVKeychainServiceProtocol, MHVShellAuthServiceProtocol;
 
@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MHVSodaConnection : MHVConnection<MHVSodaConnectionProtocol>
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
+                   cacheConfiguration:(MHVThingCacheConfiguration *_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
                       keychainService:(id<MHVKeychainServiceProtocol>)keychainService

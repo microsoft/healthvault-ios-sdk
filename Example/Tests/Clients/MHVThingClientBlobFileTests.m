@@ -54,6 +54,7 @@ describe(@"MHVThingClient", ^
     
     // Test Connection
     MHVConnection *testConnection = [[MHVSodaConnection alloc] initWithConfiguration:[MHVConfiguration new]
+                                                                  cacheConfiguration:nil
                                                                        clientFactory:clientFactory
                                                                          httpService:httpService
                                                                      keychainService:keychainService
@@ -79,7 +80,8 @@ describe(@"MHVThingClient", ^
     
     let(thingClient, ^
         {
-            return [[MHVThingClient alloc] initWithConnection:testConnection];
+            return [[MHVThingClient alloc] initWithConnection:testConnection
+                                                        cache:nil];
         });
     
     let(filePath, ^

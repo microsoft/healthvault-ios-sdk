@@ -1,5 +1,5 @@
 //
-//  MHVThingClient.h
+//  MHVThingCacheDatabase.h
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,20 +17,13 @@
 // limitations under the License.
 //
 
-
 #import <Foundation/Foundation.h>
-#import "MHVThingClientProtocol.h"
-@protocol MHVConnectionProtocol, MHVThingCacheProtocol;
+#import "MHVThingCacheDatabaseProtocol.h"
+@protocol MHVKeychainServiceProtocol;
 
-NS_ASSUME_NONNULL_BEGIN
+@interface MHVThingCacheDatabase : NSObject <MHVThingCacheDatabaseProtocol>
 
-@interface MHVThingClient : NSObject<MHVThingClientProtocol>
-
-@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
-
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-                             cache:(id<MHVThingCacheProtocol> _Nullable)cache;
+- (instancetype)initWithKeychainService:(id<MHVKeychainServiceProtocol>)keychainService
+                            fileManager:(NSFileManager *)fileManager;
 
 @end
-
-NS_ASSUME_NONNULL_END

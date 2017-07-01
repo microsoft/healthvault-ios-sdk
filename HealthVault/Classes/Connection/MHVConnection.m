@@ -34,7 +34,6 @@
 #import "MHVClientFactory.h"
 #import "MHVApplicationCreationInfo.h"
 #import "MHVValidator.h"
-#import "MHVThingClient.h"
 #import "MHVRestRequest.h"
 #import "MHVBlobDownloadRequest.h"
 #import "MHVBlobUploadRequest.h"
@@ -43,6 +42,12 @@
 #import "MHVLogger.h"
 #import "MHVCryptographer.h"
 #import "MHVClientInfo.h"
+#import "MHVThingCacheConfiguration.h"
+#import "MHVBackgroundTaskResult.h"
+#ifdef THING_CACHE
+#import "MHVThingClient.h"
+#import "MHVThingCacheProtocol.h"
+#endif
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
 static NSString *const kResponseIdContextKey = @"WC_ResponseId";
@@ -73,8 +78,10 @@ static NSInteger kInternalServerError = 500;
 
 @dynamic sessionCredential;
 @dynamic personInfo;
+@synthesize cacheConfiguration = _cacheConfiguration;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
+                   cacheConfiguration:(MHVThingCacheConfiguration *_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
 {
@@ -87,6 +94,7 @@ static NSInteger kInternalServerError = 500;
     if (self)
     {
         _configuration = configuration;
+        _cacheConfiguration = cacheConfiguration;
         _clientFactory = clientFactory;
         _httpService = httpService;
         _requests = [NSMutableArray new];
@@ -570,6 +578,39 @@ static NSInteger kInternalServerError = 500;
             });
         }];
     });
+}
+
+- (void)performBackgroundTasks:(void(^_Nullable)(MHVBackgroundTaskResult *taskResult))completion
+{
+#ifdef THING_CACHE
+    if (!self.personInfo)
+    {
+        if (completion)
+        {
+            MHVBackgroundTaskResult *result = [MHVBackgroundTaskResult new];
+            result.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"User has not authenticated, can not sync cache"];
+            completion(result);
+        }
+        return;
+    }
+    
+    [((MHVThingClient *)self.thingClient).cache syncWithOptions:MHVCacheOptionsBackground completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+     {
+         if (completion)
+         {
+             MHVBackgroundTaskResult *result = [MHVBackgroundTaskResult new];
+             result.thingCacheUpdateCount = syncedItemCount;
+             result.error = error;
+             
+             completion(result);
+         }
+     }];
+#else
+    if (completion)
+    {
+        completion([MHVBackgroundTaskResult new]);
+    }
+#endif
 }
 
 - (MHVAuthSession *)authSession

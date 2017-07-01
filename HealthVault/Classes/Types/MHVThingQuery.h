@@ -69,6 +69,11 @@
 @property (readwrite, nonatomic) int maxResults;
 
 /**
+ Flag to indicate if the query should used the Thing cache for results
+ */
+@property (readwrite, nonatomic) BOOL shouldUseCachedResults;
+
+/**
  Initializes a new query and adds the given Thing Filter to the filters collection.
 
  @param filter The MHVThingFilter to be applied to the request.

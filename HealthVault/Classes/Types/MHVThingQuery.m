@@ -54,6 +54,7 @@ static NSString *const c_element_view = @"format";
         _keys = [[MHVThingKeyCollection alloc] init];
         _clientIDs = [[MHVStringCollection alloc] init];
         _filters = [[MHVThingFilterCollection alloc] init];
+        _shouldUseCachedResults = YES;
     }
     
     return self;

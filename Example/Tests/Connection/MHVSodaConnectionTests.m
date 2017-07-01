@@ -123,12 +123,14 @@ describe(@"MHVSodaConnection", ^
     [(id)clientFactory stub:@selector(platformClientWithConnection:) andReturn:platformClient];
     [(id)clientFactory stub:@selector(credentialClientWithConnection:) andReturn:credentialClient];
     [(id)clientFactory stub:@selector(personClientWithConnection:) andReturn:personClient];
+    [(id)clientFactory stub:@selector(thingClientWithConnection:) andReturn:nil];
     
     beforeEach(^
     {
         // Setup the default state and create a new instance of the connection
         // The default values setup the authentication flow to a passing state
         connection = [[MHVSodaConnection alloc] initWithConfiguration:config
+                                                   cacheConfiguration:nil
                                                         clientFactory:clientFactory
                                                           httpService:httpservice
                                                       keychainService:keychainService

@@ -1,6 +1,6 @@
 //
-//  MHVThingClient.h
-//  MHVLib
+// MHVBackgroundTaskResult.h
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -17,20 +17,14 @@
 // limitations under the License.
 //
 
-
 #import <Foundation/Foundation.h>
-#import "MHVThingClientProtocol.h"
-@protocol MHVConnectionProtocol, MHVThingCacheProtocol;
 
-NS_ASSUME_NONNULL_BEGIN
+@interface MHVBackgroundTaskResult : NSObject
 
-@interface MHVThingClient : NSObject<MHVThingClientProtocol>
+@property (nonatomic, assign, readonly) UIBackgroundFetchResult backgroundFetchResult;
 
-@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
+@property (nonatomic, assign) NSInteger thingCacheUpdateCount;
 
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-                             cache:(id<MHVThingCacheProtocol> _Nullable)cache;
+@property (nonatomic, strong) NSError *error;
 
 @end
-
-NS_ASSUME_NONNULL_END

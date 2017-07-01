@@ -31,6 +31,9 @@
 + (NSError *)MHVNotFound;
 + (NSError *)MHVNetworkError;
 + (NSError *)MHVInvalidThingQuery;
++ (NSError *)MHVCacheNotReady;
++ (NSError *)MHVCacheDeleted;
++ (NSError *)MHVCacheError:(NSString *)errorDescription;
 
 + (NSError *)error:(NSError *)error withDescription:(NSString *)description;
 

@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MHVSessionCredential, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient;
+@class MHVSessionCredential, MHVConfiguration, MHVThingCacheConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient, MHVBackgroundTaskResult;
 
 @protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVRemoteMonitoringClient;
 
@@ -39,6 +39,12 @@ NS_ASSUME_NONNULL_BEGIN
  The credential object for the current session.
  */
 @property (nonatomic, strong, readonly, nullable) MHVSessionCredential *sessionCredential;
+
+/**
+ The cache configuration object.
+ It must be set before calling authenticateWithViewController.
+ */
+@property (nonatomic, strong) MHVThingCacheConfiguration *cacheConfiguration;
 
 /**
  The person info for the current session.
@@ -99,6 +105,14 @@ NS_ASSUME_NONNULL_BEGIN
  @return An instance conforming to MHVVocabularyClientProtocol.
  */
 - (id<MHVVocabularyClientProtocol> _Nullable)vocabularyClient;
+
+/**
+ Perform background tasks.  
+ This should be called in application:performFetchWithCompletionHandler:
+
+ @param completion Envoked when the sync process is complete
+ */
+- (void)performBackgroundTasks:(void(^_Nullable)(MHVBackgroundTaskResult *taskResult))completion;
 
 @end
 

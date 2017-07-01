@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+@class MHVThingCacheConfiguration;
 
 @interface MHVConfiguration : NSObject
 

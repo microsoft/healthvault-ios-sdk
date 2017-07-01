@@ -18,6 +18,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "MHVCacheQuery.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVCacheQueryTests)
@@ -497,6 +498,22 @@ describe(@"MHVCacheQuery", ^
                [[theValue(cacheQuery.canQueryCache) should] beTrue];
            });
     });
+
+    context(@"when the shouldUseCachedResults property is set on the thing query", ^
+            {
+                beforeEach(^
+                           {
+                               MHVThingQuery *thingQuery = [[MHVThingQuery alloc] initWithThingID:@"TEST_THING_ID"];
+                               thingQuery.shouldUseCachedResults = NO;
+                               
+                               cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
+                           });
+                
+                it(@"should set the canQueryCache property to NO", ^
+                   {
+                       [[theValue(cacheQuery.canQueryCache) should] beFalse];
+                   });
+            });
 });
 
 SPEC_END

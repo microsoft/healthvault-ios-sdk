@@ -1,5 +1,5 @@
 //
-//  MHVThingClient.h
+//  MHVThingCacheConfiguration.m
 //  MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,20 +17,22 @@
 // limitations under the License.
 //
 
+#import "MHVThingCacheConfiguration.h"
+#import "MHVConfigurationConstants.h"
 
-#import <Foundation/Foundation.h>
-#import "MHVThingClientProtocol.h"
-@protocol MHVConnectionProtocol, MHVThingCacheProtocol;
+static NSInteger const kDefaultSyncIntervalSeconds = 60*60; // 1 hour
 
-NS_ASSUME_NONNULL_BEGIN
+@implementation MHVThingCacheConfiguration
 
-@interface MHVThingClient : NSObject<MHVThingClientProtocol>
-
-@property (readonly, nonatomic, strong) id<MHVThingCacheProtocol>   cache;
-
-- (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
-                             cache:(id<MHVThingCacheProtocol> _Nullable)cache;
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _cacheTypeIds = @[];
+        _syncIntervalSeconds = kDefaultSyncIntervalSeconds;
+    }
+    return self;
+}
 
 @end
-
-NS_ASSUME_NONNULL_END

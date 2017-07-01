@@ -20,7 +20,7 @@
 #import "MHVClientProtocol.h"
 
 @class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVBlobPayloadThing, MHVGetRecordOperationsResult;
-@protocol MHVBlobSourceProtocol;
+@protocol MHVThingCacheProtocol, MHVBlobSourceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 

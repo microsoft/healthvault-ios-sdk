@@ -1,8 +1,8 @@
 //
-//  MHVClients.h
-//  MHVLib
+//  MHVCacheConstants.h
+//  healthvault-ios-sdk
 //
-// Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,15 +15,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-#ifndef MHVClients_h
-#define MHVClients_h
+#ifndef MHVCacheConstants_h
+#define MHVCacheConstants_h
 
-#import "MHVPersonClientProtocol.h"
-#import "MHVPlatformClientProtocol.h"
-#import "MHVRemoteMonitoringClientProtocol.h"
-#import "MHVThingClientProtocol.h"
-#import "MHVThingCacheProtocol.h"
-#import "MHVVocabularyClientProtocol.h"
+typedef NS_ENUM(NSInteger, MHVCacheOptions)
+{
+    MHVCacheOptionsBackground = 1<<1,
+    MHVCacheOptionsForeground = 1<<2,
+    MHVCacheOptionsTimer = 1<<3,
+};
 
-#endif /* MHVClients_h */
+#endif /* MHVCacheConstants_h */

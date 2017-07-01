@@ -25,20 +25,24 @@
 #import "MHVServiceResponse.h"
 #import "MHVTypes.h"
 #import "NSError+MHVError.h"
+#import "MHVErrorConstants.h"
 #import "MHVConnectionProtocol.h"
 #import "MHVPersonalImage.h"
 #import "MHVBlobUploadRequest.h"
 #import "MHVLogger.h"
+#import "MHVThingCacheProtocol.h"
 
 @interface MHVThingClient ()
 
 @property (nonatomic, weak) id<MHVConnectionProtocol>     connection;
+@property (nonatomic, strong) id<MHVThingCacheProtocol>   cache;
 
 @end
 
 @implementation MHVThingClient
 
 - (instancetype)initWithConnection:(id<MHVConnectionProtocol>)connection
+                             cache:(id<MHVThingCacheProtocol> _Nullable)cache
 {
     MHVASSERT_PARAMETER(connection);
     
@@ -46,6 +50,7 @@
     if (self)
     {
         _connection = connection;
+        _cache = cache;
     }
     
     return self;
@@ -146,8 +151,40 @@
             query.name = [[NSUUID UUID] UUIDString];
         }
     }
-
+    
+#ifdef THING_CACHE
+    // Check for cached results for the GetThings queries
+    if (self.cache)
+    {
+        [self.cache cachedResultsForQueries:queries
+                                   recordId:recordId
+                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
+         {
+             // If error is because cache not ready or deleted, send request to HealthVault
+             if (error && error.code != MHVErrorTypeCacheNotReady && error.code != MHVErrorTypeCacheDeleted)
+             {
+                 completion(nil, error);
+             }
+             else if (resultCollection)
+             {
+                 completion(resultCollection, nil);
+             }
+             else
+             {
+                 //No resultCollection or error, query HealthVault
+                 [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+             }
+         }];
+    }
+    else
+    {
+        [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+    }
+    
+#else
+    // No caching
     [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+#endif
 }
 
 // Internal method that will fetch more pending items if not all results are returned for the query.

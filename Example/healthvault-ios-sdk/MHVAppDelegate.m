@@ -19,6 +19,8 @@
 
 #import "MHVAppDelegate.h"
 #import "MHVViewController.h"
+#import "MHVConnectionProtocol.h"
+#import "MHVSodaConnectionProtocol.h"
 
 @implementation MHVAppDelegate
 
@@ -33,6 +35,33 @@
 
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
+{
+    // If background fetch is enabled, tell the cache to sync the latest data from HealthVault
+    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
+    
+    if (connection)
+    {
+        MHVLOG(@"Background Fetch Beginning");
+        
+        [connection performBackgroundTasks:^(MHVBackgroundTaskResult *taskResult)
+         {
+             if (taskResult.error)
+             {
+                 MHVLOG(@"performFetchWithCompletionHandler: Error %@", taskResult.error.localizedDescription);
+             }
+             
+             MHVLOG(@"Background Fetch Complete");
+             
+             completionHandler(taskResult.backgroundFetchResult);
+         }];
+    }
+    else
+    {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
