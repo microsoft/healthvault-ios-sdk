@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
  Perform background tasks.  
  This should be called in application:performFetchWithCompletionHandler:
 
- @param completion Envoked when the sync process is complete
+ @param completion Envoked when the tasks are complete
  */
 - (void)performBackgroundTasks:(void(^_Nullable)(MHVConnectionTaskResult *taskResult))completion;
 
@@ -118,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
  Perform foreground tasks.
  This should be called in applicationDidBecomeActive:
  
- @param completion Envoked when the sync process is complete
+ @param completion Envoked when the tasks are complete
  */
 - (void)performForegroundTasks:(void(^_Nullable)(MHVConnectionTaskResult *taskResult))completion;
 

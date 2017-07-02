@@ -66,11 +66,13 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId the RecordId of the owner of the things
  @param completion Envoked when the operation is complete
  */
-- (void)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId
+- (void)deleteThingIds:(NSArray<NSString *> *)thingIds
+              recordId:(NSString *)recordId
             completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Update or create things in the cache database for a Thing collection
+ If the thingId is found, it will be updated; if not it will be added
 
  @param things collection of Things to be added or updated
  @param recordId the owner record of the Things
@@ -101,13 +103,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion;
 
 /**
- Retrieve information about a cached record
+ Retrieve sync information about a cached record
 
  @param recordId The record ID
  @param completion Envoked with the results or error
  */
-- (void)dataForRecordId:(NSString *)recordId
-             completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion;
+- (void)syncDataForRecordId:(NSString *)recordId
+                 completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion;
 
 /**
  Update a record with a new date and/or sequence number

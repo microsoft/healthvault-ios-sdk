@@ -24,17 +24,19 @@
 
 - (void)populateWithThing:(MHVThing *)thing
 {
-    self.thingId = thing.key.thingID;
-    self.version = thing.key.version;
-    self.typeId = thing.type.typeID;
+    self.thingId = [thing.key.thingID lowercaseString];
+    self.version = [thing.key.version lowercaseString];
+    self.typeId = [thing.type.typeID lowercaseString];
     
     // Don't overwrite existing data with nil
     self.createDate = thing.created.when ?: self.createDate;
-    self.createdByAppId = thing.created.appID.UUIDString ?: self.createdByAppId;
-    self.createdByPersonId = thing.created.personID.UUIDString ?: self.createdByPersonId;
+    self.createdByAppId = [thing.created.appID.UUIDString lowercaseString] ?: self.createdByAppId;
+    self.createdByPersonId = [thing.created.personID.UUIDString lowercaseString] ?: self.createdByPersonId;
+    
     self.updateDate = thing.updated.when ?: self.updateDate;
-    self.updatedByAppId = thing.updated.appID.UUIDString ?: self.updatedByAppId;
-    self.updatedByPersonId = thing.updated.personID.UUIDString ?: self.updatedByPersonId;
+    self.updatedByAppId = [thing.updated.appID.UUIDString lowercaseString] ?: self.updatedByAppId;
+    self.updatedByPersonId = [thing.updated.personID.UUIDString lowercaseString] ?: self.updatedByPersonId;
+    
     self.effectiveDate = thing.effectiveDate ?: self.effectiveDate;
     
     self.xmlString = [thing toXmlString];

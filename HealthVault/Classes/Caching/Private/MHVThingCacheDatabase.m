@@ -155,7 +155,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                      }
                      return;
                  }
-                 record.recordId = recordId;
+                 record.recordId = [recordId lowercaseString];
                  record.lastOperationSequenceNumber = 0;
                  record.lastSyncDate = nil;
                  record.isValid = YES;
@@ -272,7 +272,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              [where addObject:thingId];
          }
          
-         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"thingId IN %@ AND record.recordId = %@", where, recordId];
+         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"thingId IN %@ AND record.recordId == %@", where, [recordId lowercaseString]];
          [fetchRequest setPredicate:predicate];
          
          NSError *error = nil;
@@ -342,7 +342,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     [self.managedObjectContext performBlock:^
      {
          //Create query to filter & order Things
-         NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"record.recordId == %@", recordId],
+         NSCompoundPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[[NSPredicate predicateWithFormat:@"record.recordId == %@", [recordId lowercaseString]],
                                                                                                cacheQuery.predicate]];
          
          NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedThing"];
@@ -566,7 +566,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     [self.managedObjectContext performBlockAndWait:^
      {
          NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedRecord"];
-         request.predicate = [NSPredicate predicateWithFormat:@"recordId == %@", recordId];
+         request.predicate = [NSPredicate predicateWithFormat:@"recordId == %@", [recordId lowercaseString]];
          
          NSError *error = nil;
          NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
@@ -581,10 +581,10 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     return record;
 }
 
-#pragma mark - <MHVCachedRecord> properties
+#pragma mark - Properties
 
-- (void)dataForRecordId:(NSString *)recordId
-             completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion
+- (void)syncDataForRecordId:(NSString *)recordId
+                 completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion
 {
     if (!completion)
     {

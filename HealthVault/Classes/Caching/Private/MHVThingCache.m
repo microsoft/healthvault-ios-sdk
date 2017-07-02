@@ -144,8 +144,8 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
         return;
     }
     
-    [self.database dataForRecordId:recordId.UUIDString
-                        completion:^(NSDate * _Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError * _Nullable error)
+    [self.database syncDataForRecordId:recordId.UUIDString
+                            completion:^(NSDate * _Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError * _Nullable error)
      {
          if (error)
          {
@@ -442,8 +442,8 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
     {
         [tasks addObject:[[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
                           {
-                              [self.database dataForRecordId:recordId
-                                                  completion:^(NSDate * _Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError * _Nullable error)
+                              [self.database syncDataForRecordId:recordId
+                                                      completion:^(NSDate * _Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError * _Nullable error)
                                {
                                    // If the cache last sync time is still valid, don't need to sync yet
                                    if (!lastSyncDate || fabs([lastSyncDate timeIntervalSinceNow]) >= self.cacheConfiguration.syncIntervalSeconds)
