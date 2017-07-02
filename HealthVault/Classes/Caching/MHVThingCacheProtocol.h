@@ -27,17 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MHVThingCacheProtocol <NSObject>
 
 /**
- Start the cache processes.  This should be called after the user has authenticated
- */
-- (void)startCache;
-
-/**
- Remove all cached data, for example if the app has been deauthorized
- @return NSError if any error occurred
- */
-- (NSError *_Nullable)clearAllCachedData;
-
-/**
  Retrieve the cached results for a query collection
  
  @param queries The collection of queries for things

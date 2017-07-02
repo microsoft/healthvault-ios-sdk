@@ -19,7 +19,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MHVSessionCredential, MHVConfiguration, MHVThingCacheConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient, MHVBackgroundTaskResult;
+@class MHVSessionCredential, MHVConfiguration, MHVThingCacheConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient, MHVConnectionTaskResult;
 
 @protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVRemoteMonitoringClient;
 
@@ -112,7 +112,15 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param completion Envoked when the sync process is complete
  */
-- (void)performBackgroundTasks:(void(^_Nullable)(MHVBackgroundTaskResult *taskResult))completion;
+- (void)performBackgroundTasks:(void(^_Nullable)(MHVConnectionTaskResult *taskResult))completion;
+
+/**
+ Perform foreground tasks.
+ This should be called in applicationDidBecomeActive:
+ 
+ @param completion Envoked when the sync process is complete
+ */
+- (void)performForegroundTasks:(void(^_Nullable)(MHVConnectionTaskResult *taskResult))completion;
 
 @end
 

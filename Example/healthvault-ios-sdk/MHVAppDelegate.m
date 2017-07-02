@@ -19,8 +19,6 @@
 
 #import "MHVAppDelegate.h"
 #import "MHVViewController.h"
-#import "MHVConnectionProtocol.h"
-#import "MHVSodaConnectionProtocol.h"
 
 @implementation MHVAppDelegate
 
@@ -46,7 +44,7 @@
     {
         MHVLOG(@"Background Fetch Beginning");
         
-        [connection performBackgroundTasks:^(MHVBackgroundTaskResult *taskResult)
+        [connection performBackgroundTasks:^(MHVConnectionTaskResult *taskResult)
          {
              if (taskResult.error)
              {
@@ -88,9 +86,9 @@
     // App becoming active is a good time to sync
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    if (connection && connection.personInfo)
+    if (connection)
     {
-        [connection performBackgroundTasks:^(MHVBackgroundTaskResult *taskResult)
+        [connection performForegroundTasks:^(MHVConnectionTaskResult *taskResult)
          {
              if (taskResult.error)
              {

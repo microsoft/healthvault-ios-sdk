@@ -15,7 +15,7 @@
         <attribute name="createdByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="effectiveDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="thingId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="thingType" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="typeId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="updatedByAppId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="updatedByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>

@@ -31,6 +31,7 @@
 @property (nonatomic, assign) BOOL useMetric;
 @property (nonatomic, assign) NSInteger maxDaysOffsetRandomData;  // Create new data for a day with max this offset from today. (1)
 @property (nonatomic, assign) BOOL createMultiple;                // Whether to create one or multiple random things
+@property (nonatomic, assign) BOOL useCache;
 
 @property (nonatomic, strong) MHVThingDataTypedFeatures* moreFeatures;
 
@@ -49,6 +50,7 @@ static const NSInteger c_numSecondsInDay = 86400;
         
         _typeClass = typeClass;
         _useMetric = metric;
+        _useCache = YES;
         
         _moreFeatures = [typeClass moreFeatures];
         if (_moreFeatures)
@@ -195,8 +197,16 @@ static const NSInteger c_numSecondsInDay = 86400;
 {
     [self.statusLabel showBusy];
     
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+
+    NSDate *startDate = [NSDate date];
+    
     MHVThingQuery *query = [[MHVThingQuery alloc] init];
     query.maxResults = 500;
+    query.shouldUseCachedResults = self.useCache;
 
     //Include Blob metadata, so can show size for Files
     if (self.typeClass == [MHVFile class])
@@ -222,13 +232,31 @@ static const NSInteger c_numSecondsInDay = 86400;
                   [self.thingTable reloadData];
                   
                   [self.statusLabel showStatus:[NSString stringWithFormat:@"Count: %li", things.count]];
+
+                  NSDate *endDate = [NSDate date];
+                  
+                  // Show duration and data source as right button item.
+                  NSString *message = [NSString stringWithFormat:@"%@%0.3f", things.isCachedResult ? @"📱" : @"☁️", [endDate timeIntervalSinceDate:startDate]];
+                  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:message
+                                                                                            style:UIBarButtonItemStylePlain
+                                                                                           target:self
+                                                                                           action:@selector(reloadData:)];
               }
               else
               {
+                  self.navigationItem.rightBarButtonItem = nil;
+
                   [self.statusLabel showStatus:@"Failed"];
               }
           }];
      }];
+}
+
+- (void)reloadData:(id)sender
+{
+    self.useCache = !self.useCache;
+    
+    [self refreshView];
 }
 
 - (void)addRandomData:(BOOL)isMetric

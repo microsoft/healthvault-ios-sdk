@@ -38,7 +38,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                      @"thingIDs" : @"thingId",
                      @"thingID" : @"thingId",
                      @"version" : @"version",
-                     @"typeIDs" : @"thingType",
+                     @"typeIDs" : @"typeId",
                      @"clientIDs" : @"clientId",
                      @"effectiveDateMin" : @"effectiveDate",
                      @"effectiveDateMax" : @"effectiveDate",

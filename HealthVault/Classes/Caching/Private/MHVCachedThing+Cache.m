@@ -26,7 +26,7 @@
 {
     self.thingId = thing.key.thingID;
     self.version = thing.key.version;
-    self.thingType = thing.type.typeID;
+    self.typeId = thing.type.typeID;
     
     // Don't overwrite existing data with nil
     self.createDate = thing.created.when ?: self.createDate;

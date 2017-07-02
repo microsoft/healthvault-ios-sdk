@@ -1,5 +1,5 @@
 //
-// MHVBackgroundTaskResult.m
+// MHVConnectionTaskResult.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -18,9 +18,9 @@
 //
 
 
-#import "MHVBackgroundTaskResult.h"
+#import "MHVConnectionTaskResult.h"
 
-@implementation MHVBackgroundTaskResult
+@implementation MHVConnectionTaskResult
 
 - (UIBackgroundFetchResult)backgroundFetchResult
 {

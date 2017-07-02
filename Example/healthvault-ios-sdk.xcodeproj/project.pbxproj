@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C46EA981F05900900638955 /* MHVThingCacheDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46EA961F05900900638955 /* MHVThingCacheDatabaseTests.m */; };
-		4C46EA991F05900900638955 /* MHVThingCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46EA971F05900900638955 /* MHVThingCacheTests.m */; };
 		4C54C8161EF342F100CAECFC /* MHVPersonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */; };
 		4C54C81B1EF41F2600CAECFC /* MHVPersonalImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */; };
 		4C54C81C1EF41F2600CAECFC /* MHVPersonalImageFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */; };
@@ -129,8 +127,6 @@
 
 /* Begin PBXFileReference section */
 		1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C46EA961F05900900638955 /* MHVThingCacheDatabaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheDatabaseTests.m; sourceTree = "<group>"; };
-		4C46EA971F05900900638955 /* MHVThingCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheTests.m; sourceTree = "<group>"; };
 		4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonClientTests.m; sourceTree = "<group>"; };
 		4C54C8171EF41F2600CAECFC /* MHVPersonalImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonalImageFactory.h; sourceTree = "<group>"; };
 		4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonalImageFactory.m; sourceTree = "<group>"; };
@@ -482,8 +478,6 @@
 			isa = PBXGroup;
 			children = (
 				A5385ACE1F040D05000D03C5 /* MHVCacheQueryTests.m */,
-				4C46EA961F05900900638955 /* MHVThingCacheDatabaseTests.m */,
-				4C46EA971F05900900638955 /* MHVThingCacheTests.m */,
 			);
 			path = Caching;
 			sourceTree = "<group>";
@@ -956,10 +950,8 @@
 				A5DF658C1EF0535A009F5968 /* MHVPlanTests.m in Sources */,
 				A5DF657F1EF0535A009F5968 /* MHVAllergicEpisodeTests.m in Sources */,
 				A5DF65881EF0535A009F5968 /* MHVHealthGoalTests.m in Sources */,
-				4C46EA981F05900900638955 /* MHVThingCacheDatabaseTests.m in Sources */,
 				A5DF657C1EF0534C009F5968 /* MHVHttpTaskTests.m in Sources */,
 				A5DF65891EF0535A009F5968 /* MHVMedicalDeviceTests.m in Sources */,
-				4C46EA991F05900900638955 /* MHVThingCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

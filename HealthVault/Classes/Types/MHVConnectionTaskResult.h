@@ -1,5 +1,5 @@
 //
-// MHVBackgroundTaskResult.h
+// MHVConnectionTaskResult.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MHVBackgroundTaskResult : NSObject
+@interface MHVConnectionTaskResult : NSObject
 
 @property (nonatomic, assign, readonly) UIBackgroundFetchResult backgroundFetchResult;
 

@@ -30,51 +30,44 @@ NS_ASSUME_NONNULL_BEGIN
  This is called after a user has authenticated, and may be called after deleteDatabase
  when signing out and signing in again
 
- @return Error if there was an error
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)setupDatabase;
+- (void)setupDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Delete the current database
  
- @return NSError for any errors deleting the database
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)deleteDatabase;
+- (void)deleteDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Determine if a record exists
- 
- @param recordId the RecordID to find
- @return CachedRecord matching the ID or nil
- @note This operation is synchronous
- */
-- (BOOL)hasRecordId:(NSString *)recordId;
+ Ensure records exist for an array of recordIds, creating if needed.
 
-/**
- Create a new database record given a recordId if it does not exist
-
- @param recordId The record ID
- @return Error if there was an error 
+ @param recordIds The record IDs
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)newRecordForRecordId:(NSString *)recordId;
+- (void)setupRecordIds:(NSArray<NSString *> *)recordIds
+            completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Delete a record from the current database
 
  @param recordId id of the record to be deleted
- @note This operation is synchronous
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)deleteRecord:(NSString *)recordId;
+- (void)deleteRecord:(NSString *)recordId
+          completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Delete Things given an array of IDs
 
  @param thingIds the IDs of the things to be deleted
  @param recordId the RecordId of the owner of the things
- @note This operation is synchronous
- @return error for any save errors
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId;
+- (void)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId
+            completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Update or create things in the cache database for a Thing collection
@@ -108,46 +101,26 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion;
 
 /**
- Get the last sync date from an id<MHVCachedRecord> object
- 
- @param recordId The record ID
- @return NSDate of the last sync
- */
-- (NSDate *_Nullable)lastSyncDateFromRecordId:(NSString *)recordId;
-
-/**
- Get the last sync date from an id<MHVCachedRecord> object
+ Retrieve information about a cached record
 
  @param recordId The record ID
- @return NSInteger for last sequence number
+ @param completion Envoked with the results or error
  */
-- (NSInteger)lastSequenceNumberFromRecordId:(NSString *)recordId;
-
-/**
- Determine if the cache is valid for a record
- 
- @param recordId The record ID
- @return BOOL if cache is valid
- */
-- (BOOL)isCacheValidForRecordId:(NSString *)recordId;
-
-/**
- Set the cache info for a record to be invalid
- Setting to invalid will reset the sequence number to 0 so all data will be re-synced
-
- @param recordId The record ID
- */
-- (void)setCacheInvalidForRecordId:(NSString *)recordId;
+- (void)dataForRecordId:(NSString *)recordId
+             completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion;
 
 /**
  Update a record with a new date and/or sequence number
 
- @param record The record
+ @param recordId The record
  @param lastSyncDate NSDate to update, should not update date on the record if nil
  @param sequenceNumber NSNumber sequence number, should not update number on the record if nil
- @return NSError if any error occurred
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)updateRecordId:(NSString *)record lastSyncDate:(NSDate *_Nullable)lastSyncDate sequenceNumber:(NSNumber *_Nullable)sequenceNumber;
+- (void)updateRecordId:(NSString *)recordId
+          lastSyncDate:(NSDate *_Nullable)lastSyncDate
+        sequenceNumber:(NSNumber *_Nullable)sequenceNumber
+            completion:(void (^)(NSError *_Nullable error))completion;
 
 @end
 
