@@ -24,6 +24,7 @@
 
 - (MHVCachedThing *)findThingWithThingId:(NSString *)thingId
 {
+#ifdef THING_CACHE
     for (MHVCachedThing *cachedThing in self.things)
     {
         if ([cachedThing.thingId isEqualToString:thingId])
@@ -31,6 +32,7 @@
             return cachedThing;
         }
     }
+#endif
     return nil;
 }
 
