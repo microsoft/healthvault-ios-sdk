@@ -29,21 +29,21 @@ NS_ASSUME_NONNULL_BEGIN
  Initialize and setup database if needed.
  This is called after a user has authenticated, and may be called after deleteDatabase
  when signing out and signing in again
-
+ 
  @param completion Envoked when the operation is complete
  */
 - (void)setupDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Delete the current database
+ Delete all contents and resets the current database
  
  @param completion Envoked when the operation is complete
  */
-- (void)deleteDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
+- (void)resetDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Ensure records exist for an array of recordIds, creating if needed.
-
+ 
  @param recordIds The record IDs
  @param completion Envoked when the operation is complete
  */
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Delete a record from the current database
-
+ 
  @param recordId id of the record to be deleted
  @param completion Envoked when the operation is complete
  */
@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Delete Things given an array of IDs
-
+ 
  @param thingIds the IDs of the things to be deleted
  @param recordId the RecordId of the owner of the things
  @param completion Envoked when the operation is complete
@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Update or create things in the cache database for a Thing collection
  If the thingId is found, it will be updated; if not it will be added
-
+ 
  @param things collection of Things to be added or updated
  @param recordId the owner record of the Things
  @param lastSequenceNumber the new sequence number to use after updating
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Retrieve things for a query
-
+ 
  @param query The GetThings query
  @param recordId the owner record of the Things
  @param completion Envoked with the MHVThingQueryResult
@@ -97,23 +97,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Fetch all cached records
-
+ 
  @param completion Envoked with the array of records
  */
 - (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion;
 
 /**
- Retrieve sync information about a cached record
-
+ Retrieve status information about a cached record
+ 
  @param recordId The record ID
  @param completion Envoked with the results or error
  */
-- (void)syncDataForRecordId:(NSString *)recordId
-                 completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion;
+- (void)cacheStatusForRecordId:(NSString *)recordId
+                    completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion;
 
 /**
  Update a record with a new date and/or sequence number
-
+ 
  @param recordId The record
  @param lastSyncDate NSDate to update, should not update date on the record if nil
  @param sequenceNumber NSNumber sequence number, should not update number on the record if nil

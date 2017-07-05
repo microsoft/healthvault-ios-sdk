@@ -39,7 +39,6 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 @property (nonatomic, strong) NSManagedObjectContext            *managedObjectContext;
 @property (nonatomic, strong) NSURL                             *databaseUrl;
 @property (nonatomic, strong) NSObject                          *lockObject;
-@property (nonatomic, assign) BOOL                              deleted;
 
 @property (nonatomic, strong) id<MHVKeychainServiceProtocol>    keychainService;
 @property (nonatomic, strong) NSFileManager                     *fileManager;
@@ -64,7 +63,16 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     return self;
 }
 
-- (void)deleteDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
+- (BOOL)isDatabaseReady
+{
+    @synchronized (self.lockObject)
+    {
+        return (self.persistentStoreCoordinator != nil &&
+                self.managedObjectContext != nil);
+    }
+}
+
+- (void)resetDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 {
     NSError *error = nil;
     
@@ -79,12 +87,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         _managedObjectContext = nil;
         _databaseUrl = nil;
         
-        _deleted = YES;
-    }
-    
-    if (completion)
-    {
-        completion(error);
+        [self openDatabaseWithCompletion:completion];
     }
     return;
 }
@@ -93,12 +96,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (MHVCachedThing *)newThingForRecord:(MHVCachedRecord *)record
 {
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady || !record)
     {
-        if (self.deleted || !record)
-        {
-            return nil;
-        }
+        return nil;
     }
     
     __block MHVCachedThing *thing;
@@ -116,16 +116,13 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 - (void)setupRecordIds:(NSArray<NSString *> *)recordIds
             completion:(void (^)(NSError *_Nullable error))completion
 {
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
+        if (completion)
         {
-            if (completion)
-            {
-                completion([NSError MHVCacheDeleted]);
-            }
-            return;
+            completion([NSError MHVCacheDeleted]);
         }
+        return;
     }
     
     if ([NSArray isNilOrEmpty:recordIds])
@@ -171,7 +168,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                  }
              }
          }
-
+         
          if (completion)
          {
              completion(nil);
@@ -186,17 +183,15 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 {
     MHVASSERT_PARAMETER(recordId);
     
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
+        if (completion)
         {
-            if (completion)
-            {
-                completion([NSError MHVCacheDeleted]);
-            }
-            return;
+            completion([NSError MHVCacheDeleted]);
         }
+        return;
     }
+    
     if ([NSString isNilOrEmpty:recordId])
     {
         if (completion)
@@ -216,7 +211,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              [self.managedObjectContext deleteObject:record];
              error = [self saveContext];
          }
-
+         
          if (completion)
          {
              completion(error);
@@ -232,17 +227,15 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     MHVASSERT_PARAMETER(thingIds);
     MHVASSERT_PARAMETER(recordId);
     
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
+        if (completion)
         {
-            if (completion)
-            {
-                completion([NSError MHVCacheDeleted]);
-            }
-            return;
+            completion([NSError MHVCacheDeleted]);
         }
+        return;
     }
+    
     if ([NSArray isNilOrEmpty:thingIds])
     {
         //Nothing to delete
@@ -290,7 +283,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              [self setCacheInvalidForRecordId:recordId
                                    completion:nil];
          }
-
+         
          if (completion)
          {
              completion(error);
@@ -310,15 +303,12 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         return;
     }
     
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
-        {
-            completion(nil, nil);
-            return;
-        }
+        completion(nil, nil);
+        return;
     }
-
+    
     if (!recordId)
     {
         completion(nil, [NSError MVHRequiredParameterIsNil]);
@@ -327,15 +317,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     
     MHVCacheQuery *cacheQuery = [[MHVCacheQuery alloc] initWithQuery:query];
     
-    if (cacheQuery.error)
-    {
-        completion(nil, cacheQuery.error);
-        return;
-    }
-    
     if (!cacheQuery.canQueryCache)
     {
-        completion(nil, nil);
+        completion(nil, cacheQuery.error);
         return;
     }
     
@@ -355,10 +339,10 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          NSArray<MHVCachedThing *> *fetchedThings = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
          if (error)
          {
-             completion(nil, [NSError MHVCacheError:@"Could fetch things from cache database"]);
+             completion(nil, [NSError MHVCacheError:@"Could not fetch things from cache database"]);
              return;
          }
-
+         
          MHVThingCollection *thingCollection = [[MHVThingCollection alloc] init];
          thingCollection.isCachedResult = YES;
          
@@ -383,7 +367,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          queryResult.isCachedResult = YES;
          
          NSDate *endDate = [NSDate date];
-
+         
          MHVLOG(@"ThingCacheDatabase: Returning %li cached things in %0.4f seconds", queryResult.things.count, [endDate timeIntervalSinceDate:startDate]);
          
          completion(queryResult, nil);
@@ -395,16 +379,13 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
        lastSequenceNumber:(NSInteger)lastSequenceNumber
                completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion
 {
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
+        if (completion)
         {
-            if (completion)
-            {
-                completion(0, [NSError MHVCacheDeleted]);
-            }
-            return;
+            completion(0, [NSError MHVCacheDeleted]);
         }
+        return;
     }
     
     if ([NSString isNilOrEmpty:recordId])
@@ -477,7 +458,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              MHVLOG(@"ThingCacheDatabase: Setting record as invalid, error updating %@", error);
              [self setCacheInvalidForRecordId:recordId
                                    completion:nil];
-
+             
              if (completion)
              {
                  completion(0, error);
@@ -499,16 +480,13 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 {
     MHVASSERT_PARAMETER(completion);
     
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
+        if (completion)
         {
-            if (completion)
-            {
-                completion(nil, [NSError MHVCacheDeleted]);
-            }
-            return;
+            completion(nil, [NSError MHVCacheDeleted]);
         }
+        return;
     }
     
     [self.managedObjectContext performBlock:^
@@ -553,12 +531,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (MHVCachedRecord *)fetchCachedRecord:(NSString *)recordId
 {
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
-        {
-            return nil;
-        }
+        return nil;
     }
     
     __block MHVCachedRecord *record;
@@ -583,27 +558,24 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 #pragma mark - Properties
 
-- (void)syncDataForRecordId:(NSString *)recordId
-                 completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion
+- (void)cacheStatusForRecordId:(NSString *)recordId
+                    completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion
 {
     if (!completion)
     {
         return;
     }
-
-    @synchronized (self.lockObject)
+    
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
-        {
-            completion(nil, 0, NO, [NSError MHVCacheDeleted]);
-            return;
-        }
+        completion(nil, 0, NO, [NSError MHVCacheDeleted]);
+        return;
     }
     
     [self.managedObjectContext performBlock:^
      {
          MHVCachedRecord *record = [self fetchCachedRecord:recordId];
-
+         
          if (record)
          {
              completion(record.lastSyncDate, record.lastOperationSequenceNumber, record.isValid, nil);
@@ -617,16 +589,13 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (void)setCacheInvalidForRecordId:(NSString *)recordId completion:(void (^_Nullable)(NSError *_Nullable error))completion;
 {
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
+        if (completion)
         {
-            if (completion)
-            {
-                completion([NSError MHVCacheDeleted]);
-            }
-            return;
+            completion([NSError MHVCacheDeleted]);
         }
+        return;
     }
     
     __block NSError *error;
@@ -644,14 +613,14 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              cachedRecord.things = [NSSet new];
              
              error = [self saveContext];
-
+             
              if (error)
              {
                  MHVLOG(@"ThingCacheDatabase: Error setting record as invalid %@", error);
                  
                  // If can't set record as invalid, something is wrong
                  // Delete database and reset so will not be returning invalid data
-                 [self deleteDatabaseWithCompletion:^(NSError * _Nullable deleteError)
+                 [self resetDatabaseWithCompletion:^(NSError * _Nullable deleteError)
                   {
                       if (deleteError)
                       {
@@ -672,7 +641,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                  }
              }
          }];
-    }    
+    }
 }
 
 - (void)updateRecordId:(NSString *)recordId
@@ -680,16 +649,13 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         sequenceNumber:(NSNumber *_Nullable)sequenceNumber
             completion:(void (^)(NSError *_Nullable error))completion;
 {
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
+        if (completion)
         {
-            if (completion)
-            {
-                completion([NSError MHVCacheDeleted]);
-            }
-            return;
+            completion([NSError MHVCacheDeleted]);
         }
+        return;
     }
     
     // Make sure properties are updated with the correct context
@@ -717,7 +683,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              
              error = [self saveContext];
          }
-
+         
          if (completion)
          {
              completion(error);
@@ -729,12 +695,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (NSError *)saveContext
 {
-    @synchronized (self.lockObject)
+    if (!self.isDatabaseReady)
     {
-        if (self.deleted)
-        {
-            return [NSError MHVCacheDeleted];
-        }
+        return [NSError MHVCacheDeleted];
     }
     
     __block NSError *error = nil;
@@ -755,12 +718,11 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (void)setupDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 {
-    NSError *error;
-    
+    // Check if database already exists
     @synchronized (self.lockObject)
     {
-        // Check if database already exists
-        if (self.managedObjectContext && !self.deleted)
+        if (self.persistentStoreCoordinator &&
+            self.managedObjectContext)
         {
             if (completion)
             {
@@ -769,94 +731,99 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
             return;
         }
         
-        //Setup database URL
-        NSURL *applicationSupportURL = [[self.fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-        
-        [self.fileManager createDirectoryAtURL:applicationSupportURL withIntermediateDirectories:YES attributes:nil error:nil];
-        
-        self.databaseUrl = [applicationSupportURL URLByAppendingPathComponent:@"mhvcache.db"];
-        
-        //If new database, create password
-        if (![self.fileManager fileExistsAtPath:self.databaseUrl.path])
+        [self openDatabaseWithCompletion:completion];
+    }
+}
+
+- (void)openDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion
+{
+    NSError *error;
+    
+    //Setup database URL
+    NSURL *applicationSupportURL = [[self.fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
+    
+    [self.fileManager createDirectoryAtURL:applicationSupportURL withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    self.databaseUrl = [applicationSupportURL URLByAppendingPathComponent:@"mhv-cache.db"];
+    
+    //If new database, create password
+    if (![self.fileManager fileExistsAtPath:self.databaseUrl.path])
+    {
+        //Generate a new password and store in the keychain
+        [self.keychainService setString:[self generateRandomPassword]
+                                 forKey:kMHVCachePasswordKey];
+    }
+    
+    // Object Model
+    NSBundle *bundle = [NSBundle bundleForClass:[MHVCachedThing class]];
+    NSURL *modelURL = [bundle URLForResource:@"MHVThingCacheDatabase" withExtension:@"momd"];
+    
+    NSManagedObjectModel *objectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    if (!objectModel)
+    {
+        objectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    }
+    
+    if (!objectModel)
+    {
+        if (completion)
         {
-            //Generate a new password and store in the keychain
-            [self.keychainService setString:[self generateRandomPassword]
-                                     forKey:kMHVCachePasswordKey];
+            completion([NSError MHVCacheError:@"Could not create database object model"]);
         }
-        
-        // Object Model
-        NSBundle *bundle = [NSBundle bundleForClass:[MHVCachedThing class]];
-        NSURL *modelURL = [bundle URLForResource:@"MHVThingCacheDatabase" withExtension:@"momd"];
-        
-        NSManagedObjectModel *objectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-        if (!objectModel)
+        return;
+    }
+    
+    // PersistentSoreCoordinator
+    self.persistentStoreCoordinator = [EncryptedStore makeStoreWithOptions:@{
+                                                                             EncryptedStorePassphraseKey : [self.keychainService stringForKey:kMHVCachePasswordKey],
+                                                                             EncryptedStoreDatabaseLocation : self.databaseUrl,
+                                                                             }
+                                                        managedObjectModel:objectModel];
+    if (!self.persistentStoreCoordinator)
+    {
+        if (completion)
         {
-            objectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+            completion([NSError MHVCacheError:@"Could not create database storage"]);
         }
-        
-        if (!objectModel)
+        return;
+    }
+    
+    // Mark database as protected, and that it should not be backed up
+    [self.fileManager setAttributes:@{ NSFileProtectionKey : NSFileProtectionCompleteUntilFirstUserAuthentication }
+                       ofItemAtPath:self.databaseUrl.path
+                              error:&error];
+    if (error)
+    {
+        if (completion)
         {
-            if (completion)
-            {
-                completion([NSError MHVCacheError:@"Could not create database object model"]);
-            }
-            return;
+            completion(error);
         }
-        
-        // PersistentSoreCoordinator
-        self.persistentStoreCoordinator = [EncryptedStore makeStoreWithOptions:@{
-                                                                                 EncryptedStorePassphraseKey : [self.keychainService stringForKey:kMHVCachePasswordKey],
-                                                                                 EncryptedStoreDatabaseLocation : self.databaseUrl,
-                                                                                 }
-                                                            managedObjectModel:objectModel];
-        if (!self.persistentStoreCoordinator)
+        return;
+    }
+    
+    [self.databaseUrl setResourceValue:@(YES)
+                                forKey:NSURLIsExcludedFromBackupKey
+                                 error:&error];
+    if (error)
+    {
+        if (completion)
         {
-            if (completion)
-            {
-                completion([NSError MHVCacheError:@"Could not create database storage"]);
-            }
-            return;
+            completion(error);
         }
-        
-        // Mark database as protected, and that it should not be backed up
-        [self.fileManager setAttributes:@{ NSFileProtectionKey : NSFileProtectionCompleteUntilFirstUserAuthentication }
-                           ofItemAtPath:self.databaseUrl.path
-                                  error:&error];
-        if (error)
+        return;
+    }
+    
+    // NSManagedObjectContext
+    self.managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    self.managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator;
+    
+    if (!self.managedObjectContext)
+    {
+        if (completion)
         {
-            if (completion)
-            {
-                completion(error);
-            }
-            return;
+            completion([NSError MHVCacheError:@"Could not create database managed object context"]);
         }
-        
-        [self.databaseUrl setResourceValue:@(YES)
-                                    forKey:NSURLIsExcludedFromBackupKey
-                                     error:&error];
-        if (error)
-        {
-            if (completion)
-            {
-                completion(error);
-            }
-            return;
-        }
-        
-        // NSManagedObjectContext
-        self.managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        self.managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator;
-        
-        if (!self.managedObjectContext)
-        {
-            if (completion)
-            {
-                completion([NSError MHVCacheError:@"Could not create database managed object context"]);
-            }
-            return;
-        }
-        
-        self.deleted = NO;
+        return;
     }
     
     error = [self saveContext];
