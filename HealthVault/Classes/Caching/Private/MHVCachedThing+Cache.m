@@ -24,24 +24,33 @@
 
 - (void)populateWithThing:(MHVThing *)thing
 {
-    self.thingId = thing.key.thingID;
-    self.version = thing.key.version;
-    self.thingType = thing.type.typeID;
+#ifdef THING_CACHE
+    self.thingId = [thing.key.thingID lowercaseString];
+    self.version = [thing.key.version lowercaseString];
+    self.typeId = [thing.type.typeID lowercaseString];
     
-    self.createDate = thing.created.when;
-    self.createdByAppId = thing.created.appID;
-    //self.createdByPersonId;
-    self.effectiveDate = thing.effectiveDate;
-    self.updateDate = thing.updated.when;
-    self.updatedByAppId = thing.updated.appID;
-    //self.updatedByPersonId;
+    // Don't overwrite existing data with nil
+    self.createDate = thing.created.when ?: self.createDate;
+    self.createdByAppId = [thing.created.appID.UUIDString lowercaseString] ?: self.createdByAppId;
+    self.createdByPersonId = [thing.created.personID.UUIDString lowercaseString] ?: self.createdByPersonId;
+    
+    self.updateDate = thing.updated.when ?: self.updateDate;
+    self.updatedByAppId = [thing.updated.appID.UUIDString lowercaseString] ?: self.updatedByAppId;
+    self.updatedByPersonId = [thing.updated.personID.UUIDString lowercaseString] ?: self.updatedByPersonId;
+    
+    self.effectiveDate = thing.effectiveDate ?: self.effectiveDate;
     
     self.xmlString = [thing toXmlString];
+#endif
 }
 
 - (MHVThing *)toThing
 {
+#ifdef THING_CACHE
     return [MHVThing newFromXmlString:self.xmlString];
+#else
+    return nil;
+#endif
 }
 
 @end

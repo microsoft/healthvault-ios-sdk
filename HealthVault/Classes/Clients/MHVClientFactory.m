@@ -24,11 +24,13 @@
 #import "MHVSessionCredentialClient.h"
 #import "MHVVocabularyClient.h"
 #import "MHVCryptographer.h"
-#import "MHVThingCache.h"
-#import "MHVThingCacheDatabase.h"
 #import "MHVKeychainService.h"
 #import "MHVConfiguration.h"
 #import "MHVThingCacheConfiguration.h"
+#ifdef THING_CACHE
+#import "MHVThingCache.h"
+#import "MHVThingCacheDatabase.h"
+#endif
 
 @implementation MHVClientFactory
 

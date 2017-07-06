@@ -43,7 +43,7 @@
 #import "MHVCryptographer.h"
 #import "MHVClientInfo.h"
 #import "MHVThingCacheConfiguration.h"
-#import "MHVBackgroundTaskResult.h"
+#import "MHVConnectionTaskResult.h"
 #ifdef THING_CACHE
 #import "MHVThingClient.h"
 #import "MHVThingCacheProtocol.h"
@@ -580,25 +580,26 @@ static NSInteger kInternalServerError = 500;
     });
 }
 
-- (void)performBackgroundTasks:(void(^_Nullable)(MHVBackgroundTaskResult *taskResult))completion
+- (void)performBackgroundTasks:(void(^_Nullable)(MHVConnectionTaskResult *taskResult))completion
 {
 #ifdef THING_CACHE
     if (!self.personInfo)
     {
         if (completion)
         {
-            MHVBackgroundTaskResult *result = [MHVBackgroundTaskResult new];
+            MHVConnectionTaskResult *result = [MHVConnectionTaskResult new];
             result.error = [NSError error:[NSError MHVUnauthorizedError] withDescription:@"User has not authenticated, can not sync cache"];
             completion(result);
         }
         return;
     }
     
-    [((MHVThingClient *)self.thingClient).cache syncWithOptions:MHVCacheOptionsBackground completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+    [((MHVThingClient *)self.thingClient).cache syncWithOptions:MHVCacheOptionsBackground
+                                                     completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
      {
          if (completion)
          {
-             MHVBackgroundTaskResult *result = [MHVBackgroundTaskResult new];
+             MHVConnectionTaskResult *result = [MHVConnectionTaskResult new];
              result.thingCacheUpdateCount = syncedItemCount;
              result.error = error;
              
@@ -608,9 +609,15 @@ static NSInteger kInternalServerError = 500;
 #else
     if (completion)
     {
-        completion([MHVBackgroundTaskResult new]);
+        completion([MHVConnectionTaskResult new]);
     }
 #endif
+}
+
+- (void)performForegroundTasks:(void (^)(MHVConnectionTaskResult * _Nonnull))completion
+{
+    //May change in the future, right now foreground and background tasks are the same
+    [self performBackgroundTasks:completion];
 }
 
 - (MHVAuthSession *)authSession

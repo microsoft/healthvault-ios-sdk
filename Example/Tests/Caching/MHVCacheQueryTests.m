@@ -245,7 +245,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"effectiveDate >=[c] CAST(-978307200.000000, \"NSDate\") AND effectiveDate <=[c] CAST(-946771200.000000, \"NSDate\") AND createdByAppID ==[c] \"TEST_APP_ID\" AND createdByPersonID ==[c] \"TEST_PERSON_ID\""];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"effectiveDate >= CAST(-978307200.000000, \"NSDate\") AND effectiveDate <= CAST(-946771200.000000, \"NSDate\") AND createdByAppID == \"TEST_APP_ID\" AND createdByPersonID == \"TEST_PERSON_ID\""];
            });
         
         it(@"should have a nil error property", ^
@@ -285,7 +285,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"(effectiveDate >=[c] CAST(-978307200.000000, \"NSDate\") AND effectiveDate <=[c] CAST(-946771200.000000, \"NSDate\") AND createdByAppID ==[c] \"TEST_APP_ID_1\" AND createdByPersonID ==[c] \"TEST_PERSON_ID_1\") OR (updatedByAppID ==[c] \"TEST_APP_ID_2\" AND updatedByPersonID ==[c] \"TEST_PERSON_ID_2\" AND updateDate >=[c] CAST(-978307200.000000, \"NSDate\") AND updateDate <=[c] CAST(-946771200.000000, \"NSDate\"))"];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"(effectiveDate >= CAST(-978307200.000000, \"NSDate\") AND effectiveDate <= CAST(-946771200.000000, \"NSDate\") AND createdByAppID == \"TEST_APP_ID_1\" AND createdByPersonID == \"TEST_PERSON_ID_1\") OR (updatedByAppID == \"TEST_APP_ID_2\" AND updatedByPersonID == \"TEST_PERSON_ID_2\" AND updateDate >= CAST(-978307200.000000, \"NSDate\") AND updateDate <= CAST(-946771200.000000, \"NSDate\"))"];
            });
         
         it(@"should have a nil error property", ^
@@ -311,7 +311,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"thingId ==[c] \"TEST_THING_ID\""];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"thingId == \"TEST_THING_ID\""];
            });
         
         it(@"should have a nil error property", ^
@@ -339,7 +339,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"thingId ==[c] \"TEST_THING_ID_1\" OR thingId ==[c] \"TEST_THING_ID_2\" OR thingId ==[c] \"TEST_THING_ID_3\""];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"thingId == \"TEST_THING_ID_1\" OR thingId == \"TEST_THING_ID_2\" OR thingId == \"TEST_THING_ID_3\""];
            });
         
         it(@"should have a nil error property", ^
@@ -367,7 +367,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"thingId ==[c] \"TEST_THING_ID\" AND version ==[c] \"1.1.1.1\""];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"thingId == \"TEST_THING_ID\" AND version == \"1.1.1.1\""];
            });
         
         it(@"should have a nil error property", ^
@@ -399,7 +399,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"(thingId ==[c] \"TEST_THING_ID_1\" AND version ==[c] \"1.1.1.1\") OR (thingId ==[c] \"TEST_THING_ID_2\" AND version ==[c] \"2.2.2.2\") OR (thingId ==[c] \"TEST_THING_ID_3\" AND version ==[c] \"3.3.3.3\")"];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"(thingId == \"TEST_THING_ID_1\" AND version == \"1.1.1.1\") OR (thingId == \"TEST_THING_ID_2\" AND version == \"2.2.2.2\") OR (thingId == \"TEST_THING_ID_3\" AND version == \"3.3.3.3\")"];
            });
         
         it(@"should have a nil error property", ^
@@ -444,7 +444,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"((thingId ==[c] \"TEST_THING_ID_1\" AND version ==[c] \"1.1.1.1\") OR (thingId ==[c] \"TEST_THING_ID_2\" AND version ==[c] \"2.2.2.2\") OR (thingId ==[c] \"TEST_THING_ID_3\" AND version ==[c] \"3.3.3.3\")) AND ((effectiveDate >=[c] CAST(-978307200.000000, \"NSDate\") AND effectiveDate <=[c] CAST(-946771200.000000, \"NSDate\") AND createdByAppID ==[c] \"TEST_APP_ID_1\" AND createdByPersonID ==[c] \"TEST_PERSON_ID_1\") OR ((typeId ==[c] \"TEST_TYPE_ID_1\" OR typeId ==[c] \"TEST_TYPE_ID_2\") AND createDate >=[c] CAST(-978307200.000000, \"NSDate\") AND createDate <=[c] CAST(-946771200.000000, \"NSDate\")))"];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"((thingId == \"TEST_THING_ID_1\" AND version == \"1.1.1.1\") OR (thingId == \"TEST_THING_ID_2\" AND version == \"2.2.2.2\") OR (thingId == \"TEST_THING_ID_3\" AND version == \"3.3.3.3\")) AND ((effectiveDate >= CAST(-978307200.000000, \"NSDate\") AND effectiveDate <= CAST(-946771200.000000, \"NSDate\") AND createdByAppID == \"TEST_APP_ID_1\" AND createdByPersonID == \"TEST_PERSON_ID_1\") OR ((typeId == \"TEST_TYPE_ID_1\" OR typeId == \"TEST_TYPE_ID_2\") AND createDate >= CAST(-978307200.000000, \"NSDate\") AND createDate <= CAST(-946771200.000000, \"NSDate\")))"];
            });
         
         it(@"should have a nil error property", ^
@@ -512,6 +512,14 @@ describe(@"MHVCacheQuery", ^
                 it(@"should set the canQueryCache property to NO", ^
                    {
                        [[theValue(cacheQuery.canQueryCache) should] beFalse];
+                   });
+                it(@"should have a nil predicate", ^
+                   {
+                       [[cacheQuery.predicate should] beNil];
+                   });                
+                it(@"should have a nil error property", ^
+                   {
+                       [[cacheQuery.error should] beNil];
                    });
             });
 });

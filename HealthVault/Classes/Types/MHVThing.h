@@ -194,6 +194,8 @@ enum MHVThingFlags
 // -------------------------
 @interface MHVThingCollection : MHVCollection<MHVThing *> <XSerializable>
 
+@property (nonatomic, assign) BOOL isCachedResult;
+
 - (instancetype)initWithThing:(MHVThing *)thing;
 - (instancetype)initWithThings:(NSArray *)things;
 
