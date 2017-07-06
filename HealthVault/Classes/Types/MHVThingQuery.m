@@ -36,7 +36,6 @@ static NSString *const c_element_view = @"format";
 @property (readwrite, nonatomic, strong) MHVThingKeyCollection *keys;
 @property (readwrite, nonatomic, strong) MHVStringCollection *clientIDs;
 @property (readwrite, nonatomic, strong) MHVThingFilterCollection *filters;
-@property (readwrite, nonatomic, strong) MHVInt *max;
 
 @end
 
@@ -54,6 +53,8 @@ static NSString *const c_element_view = @"format";
         _keys = [[MHVThingKeyCollection alloc] init];
         _clientIDs = [[MHVStringCollection alloc] init];
         _filters = [[MHVThingFilterCollection alloc] init];
+        _maxResults = 500;
+        _offset = 0;
         _shouldUseCachedResults = YES;
     }
     
@@ -150,25 +151,19 @@ static NSString *const c_element_view = @"format";
     }
 }
 
-- (int)maxResults
+- (void)setMaxResults:(int)maxResults
 {
-    return (self.max != nil) ? self.max.value : -1;
+    if (maxResults >= 0 && maxResults <= 500)
+    {
+        _maxResults = maxResults;
+    }
 }
 
-- (void)setMaxResults:(int)maxResultsValue
+- (void)setOffset:(int)offset
 {
-    if (maxResultsValue >= 0)
+    if (offset >= 0)
     {
-        if (!self.max)
-        {
-            self.max = [[MHVInt alloc] init];
-        }
-        
-        self.max.value = maxResultsValue;
-    }
-    else
-    {
-        self.max = nil;
+        _offset = offset;
     }
 }
 
@@ -182,8 +177,6 @@ static NSString *const c_element_view = @"format";
     MHVVALIDATE_ARRAYOPTIONAL(self.keys, MHVClientError_InvalidThingQuery);
     MHVVALIDATE_ARRAYOPTIONAL(self.filters, MHVClientError_InvalidThingQuery);
     
-    MHVVALIDATE_OPTIONAL(self.max);
-    
     MHVVALIDATE_SUCCESS;
 }
 
@@ -191,9 +184,16 @@ static NSString *const c_element_view = @"format";
 {
     [writer writeAttribute:c_attribute_name value:self.name];
 
-    if (self.max)
+    // If the offset property is greater than zero, only partial things will
+    // be fetched initially, and subsequent calls to retrieve full things
+    // will be issued.
+    if (self.offset <= 0)
     {
-        [writer writeAttribute:c_attribute_maxfull intValue:self.max.value];
+        [writer writeAttribute:c_attribute_maxfull intValue:self.maxResults];
+    }
+    else
+    {
+        [writer writeAttribute:c_attribute_maxfull intValue:0];
     }
 }
 

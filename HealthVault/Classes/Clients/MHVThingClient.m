@@ -31,6 +31,9 @@
 #import "MHVBlobUploadRequest.h"
 #import "MHVLogger.h"
 #import "MHVThingCacheProtocol.h"
+#import "MHVThingQueryResults.h"
+#import "MHVThingQueryResult.h"
+#import "MHVThingQueryResultInternal.h"
 
 @interface MHVThingClient ()
 
@@ -75,7 +78,10 @@
         return;
     }
     
-    [self getThingsWithQuery:[[MHVThingQuery alloc] initWithThingID:[thingId UUIDString]]
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingID:[thingId UUIDString]];
+    query.maxResults = 1;
+    
+    [self getThingsWithQuery:query
                     recordId:recordId
                   completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
      {
@@ -119,7 +125,7 @@
          }
          else
          {
-             completion(results.firstObject.things, nil);
+             completion(results.firstObject.results, nil);
          }
      }];
 }
@@ -152,48 +158,49 @@
         }
     }
     
-#ifdef THING_CACHE
-    // Check for cached results for the GetThings queries
-    if (self.cache)
-    {
-        [self.cache cachedResultsForQueries:queries
-                                   recordId:recordId
-                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
-         {
-             // If error is because cache not ready or deleted, send request to HealthVault
-             if (error && error.code != MHVErrorTypeCacheNotReady && error.code != MHVErrorTypeCacheDeleted)
-             {
-                 completion(nil, error);
-             }
-             else if (resultCollection)
-             {
-                 completion(resultCollection, nil);
-             }
-             else
-             {
-                 //No resultCollection or error, query HealthVault
-                 [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
-             }
-         }];
-    }
-    else
-    {
-        [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
-    }
-    
-#else
+//#ifdef THING_CACHE
+//    // Check for cached results for the GetThings queries
+//    if (self.cache)
+//    {
+//        [self.cache cachedResultsForQueries:queries
+//                                   recordId:recordId
+//                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
+//         {
+//             // If error is because cache not ready or deleted, send request to HealthVault
+//             if (error && error.code != MHVErrorTypeCacheNotReady && error.code != MHVErrorTypeCacheDeleted)
+//             {
+//                 completion(nil, error);
+//             }
+//             else if (resultCollection)
+//             {
+//                 completion(resultCollection, nil);
+//             }
+//             else
+//             {
+//                 //No resultCollection or error, query HealthVault
+//                 [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+//             }
+//         }];
+//    }
+//    else
+//    {
+//        [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+//    }
+//    
+//#else
     // No caching
     [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
-#endif
+//#endif
 }
 
 // Internal method that will fetch more pending items if not all results are returned for the query.
 - (void)getThingsWithQueries:(MHVThingQueryCollection *)queries
                     recordId:(NSUUID *)recordId
-              currentResults:(MHVThingQueryResultCollection *_Nullable)currentResults
+              currentResults:(MHVThingQueryResultCollectionInternal *_Nullable)currentResults
                   completion:(void(^)(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error))completion
 {
-    __block MHVThingQueryResultCollection *results = currentResults;
+    __block MHVThingQueryCollection *initialQueries = queries;
+    __block MHVThingQueryResultCollectionInternal *results = currentResults;
     
     MHVMethod *method = [MHVMethod getThings];
     method.recordId = recordId;
@@ -218,20 +225,34 @@
              MHVThingQueryCollection *queriesForPendingThings = [[MHVThingQueryCollection alloc] init];
              
              // Check for any Pending things, and build queries to fetch remaining things
-             for (MHVThingQueryResult *result in queryResults.results)
+             for (MHVThingQueryResultInternal *result in queryResults.results)
              {
-                 if (result.hasPendingThings)
+                 MHVThingQuery *queryForResult = [initialQueries queryWithName:result.name];
+                 
+                 NSInteger pendingCount = queryForResult.maxResults - result.things.count;
+                 
+                 if (result.hasPendingThings && pendingCount > 0)
                  {
                      MHVThingKeyCollection *keys = [MHVThingKeyCollection new];
                      
-                     for (MHVPendingThing *thing in result.pendingThings)
+                     for (NSInteger i = queryForResult.offset; i < result.pendingThings.count; i++)
                      {
+                         MHVPendingThing *thing = result.pendingThings[i];
+                         
                          [keys addObject:thing.key];
+                         
+                         if (keys.count == pendingCount)
+                         {
+                             break;
+                         }
                      }
                      
-                     MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingKeys:keys];
-                     query.name = result.name;
-                     [queriesForPendingThings addObject:query];
+                     if (keys.count > 0)
+                     {
+                         MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingKeys:keys];
+                         query.name = result.name;
+                         [queriesForPendingThings addObject:query];
+                     }
                  }
              }
              
@@ -256,7 +277,20 @@
              }
              else
              {
-                 completion(results, nil);
+                 
+                 MHVThingQueryResultCollection *resultCollection = [MHVThingQueryResultCollection new];
+                 
+                 for (MHVThingQueryResultInternal *result in results)
+                 {
+                     MHVThingQueryResult *externalResult = [[MHVThingQueryResult alloc] initWithName:result.name
+                                                                                             results:result.things
+                                                                                           remaining:result.pendingCount
+                                                                                      isCachedResult:result.isCachedResult];
+                     [resultCollection addObject:externalResult];
+                 }
+                 
+                 
+                 completion(resultCollection, nil);
              }
          }
      }];

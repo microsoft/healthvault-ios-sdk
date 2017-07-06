@@ -1,6 +1,6 @@
 //
 // MHVThingQueryResult.h
-// MHVLib
+// healthvault-ios-sdk
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -16,47 +16,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
 #import "MHVType.h"
-#import "MHVThing.h"
-#import "MHVPendingThing.h"
-#import "MHVThingView.h"
 
-@class MHVGetThingsTask;
+@class MHVThingCollection;
 
 @interface MHVThingQueryResult : MHVType
-//
-// Collection of things found
-//
-@property (readwrite, nonatomic, strong) MHVThingCollection *things;
-//
-// If there were too many matches (depends on server quotas & buffer sizes), HealthVault will
-// return only the first chunk of matches. It will also return the keys of the 'pending' things
-// You must issue a fresh query to retrieve these pending things. This is easily done using
-// convenient init methods on MHVThingQuery
-//
-@property (readwrite, nonatomic, strong) MHVPendingThingCollection *pendingThings;
-//
-// When you issue multiple queries simultaneously, you can give them names
-//
-@property (readwrite, nonatomic, strong) NSString *name;
-//
-// Indicates whether the query result is from the cache
-//
-@property (readwrite, nonatomic, assign) BOOL isCachedResult;
-//
-// Convenience properties
-//
-@property (readonly, nonatomic) BOOL hasThings;
-@property (readonly, nonatomic) BOOL hasPendingThings;
-@property (readonly, nonatomic) NSUInteger thingCount;
-@property (readonly, nonatomic) NSUInteger pendingCount;
-@property (readonly, nonatomic) NSUInteger resultCount;
+
+/**
+ A unique string to identify a given result. When using an MHVThingQueryCollection a unique name can be assigned to each query and the corresponding result will have the same name. If the name property on the MHVThingQuery is not set a GUID will be assigned to the name property.
+ */
+@property (nonatomic, strong, readonly) NSString *name;
+
+/**
+ A collection of Things resulting from a given query.
+ */
+@property (nonatomic, strong, readonly) MHVThingCollection *results;
+
+/**
+ The number of unfetched Things resulting from a given query. The HealthVault iOS SDK will return a maximum of 500 Things for any given request. The 'remaining' property can be used to determine if there are more Things that can be fetched for a given query so data can be paged. For example, if an MHVThingQuery would result in 800 Things, the maximum of 500 things would be provided in the 'results' collection, and the 'remaining' property would be set to 300. A subsequest query can be made to fetch the remaining Things by setting the MHVThingQuery 'offset' property to 500 and the 'maxResults' property to 300.
+ */
+@property (nonatomic, assign, readonly) NSInteger remaining;
+
+/**
+ Indicates whether the query result is from the cache.
+ */
+@property (nonatomic, assign, readonly) BOOL isCachedResult;
+
+- (instancetype)initWithName:(NSString *)name
+                     results:(MHVThingCollection *)results
+                   remaining:(NSInteger)remaining
+              isCachedResult:(BOOL)isCachedResult;
 
 @end
 
 @interface MHVThingQueryResultCollection : MHVCollection<MHVThingQueryResult *>
-
-- (void)mergeThingQueryResultCollection:(MHVThingQueryResultCollection *)collection;
 
 @end

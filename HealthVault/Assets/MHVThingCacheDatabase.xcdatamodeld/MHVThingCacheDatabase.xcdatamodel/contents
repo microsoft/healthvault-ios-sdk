@@ -33,7 +33,7 @@
     </entity>
     <elements>
         <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="150"/>
-        <element name="MHVCachedThing" positionX="-63" positionY="-18" width="128" height="223"/>
+        <element name="MHVCachedThing" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="MHVPendingCreateThing" positionX="-225" positionY="-63" width="128" height="75"/>
         <element name="MHVPendingDeleteThing" positionX="-216" positionY="-54" width="128" height="75"/>
     </elements>

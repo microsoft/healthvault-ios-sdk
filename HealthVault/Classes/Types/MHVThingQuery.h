@@ -63,10 +63,15 @@
 
 
 /**
- Sets the maximum number of things that will be retrieved for a given request (Optional). If not explicitly set by the caller, all Things maching the filter criteria will be fetched.
- @note It's highly recommended that large data sets be paged by setting the maxResults property.
+ Sets the maximum number of things that will be retrieved for a given request (Optional). The maximum value is 500 items per request. If not explicitly set by the caller, or set to more than 500 the property is set to 500.
+ @note It's highly recommended that large data sets be paged by setting the maxResults property. and
 */
 @property (readwrite, nonatomic) int maxResults;
+
+/**
+ Specifies an offset at which Things will begin being returned (Optional). Effectively, the request skips the specified number of matching Things. For example, given a fetch that typically returns a, b, c, d, specifying an offset of 1 will return b, c, d, and an offset of 4 will return an empty array. The default value is 0;
+ */
+@property (readwrite, nonatomic) int offset;
 
 /**
  Flag to indicate if the query should used the Thing cache for results

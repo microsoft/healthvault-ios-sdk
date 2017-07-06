@@ -197,7 +197,6 @@ static const NSInteger c_numSecondsInDay = 86400;
     
     //Include Blob metadata, so can show size
     MHVThingQuery *query = [[MHVThingQuery alloc] init];
-    query.maxResults = 500;
     query.view.sections |= MHVThingSection_Blobs;
     
     // Send request to get all things for the type class set for this view controller.
