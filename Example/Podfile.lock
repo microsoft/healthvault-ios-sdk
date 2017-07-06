@@ -18,7 +18,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   HealthVault:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   EncryptedCoreData: f6762fb05f88a52f36c5648659abc91b57f244b4

@@ -27,17 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol MHVThingCacheProtocol <NSObject>
 
 /**
- Start the cache processes.  This should be called after the user has authenticated
- */
-- (void)startCache;
-
-/**
- Remove all cached data, for example if the app has been deauthorized
- @return NSError if any error occurred
- */
-- (NSError *_Nullable)clearAllCachedData;
-
-/**
  Retrieve the cached results for a query collection
  
  @param queries The collection of queries for things
@@ -47,6 +36,39 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cachedResultsForQueries:(MHVThingQueryCollection *)queries
                        recordId:(NSUUID *)recordId
                      completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error))completion;
+
+/**
+ Add things to the cache for a recordId
+
+ @param things The things to be added
+ @param recordId The record ID of the person
+ @param completion Envoked when adding is complete, with any error that occurred
+ */
+- (void)addThings:(MHVThingCollection *)things
+         recordId:(NSUUID *)recordId
+       completion:(void(^)(NSError *_Nullable error))completion;
+
+/**
+ Update things in cache for a recordId
+ 
+ @param things The things to be update
+ @param recordId The record ID of the person
+ @param completion Envoked when updating is complete, with any error that occurred
+ */
+- (void)updateThings:(MHVThingCollection *)things
+            recordId:(NSUUID *)recordId
+          completion:(void(^)(NSError *_Nullable error))completion;
+
+/**
+ Delete things to the cache for a recordId
+ 
+ @param things The things to be deleted
+ @param recordId The record ID of the person
+ @param completion Envoked when deleting is complete, with any error that occurred
+ */
+- (void)deleteThings:(MHVThingCollection *)things
+            recordId:(NSUUID *)recordId
+          completion:(void(^)(NSError *_Nullable error))completion;
 
 /**
  Sync the HealthVault database

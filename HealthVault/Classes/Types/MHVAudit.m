@@ -21,6 +21,7 @@
 
 static NSString *const c_element_when = @"timestamp";
 static NSString *const c_element_appID = @"app-id";
+static NSString *const c_element_personID = @"person-id";
 static NSString *const c_element_action = @"audit-action";
 
 @implementation MHVAudit
@@ -28,14 +29,16 @@ static NSString *const c_element_action = @"audit-action";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_when dateValue:self.when];
-    [writer writeElement:c_element_appID value:self.appID];
+    [writer writeElement:c_element_appID value:self.appID.UUIDString];
+    [writer writeElement:c_element_personID value:self.personID.UUIDString];
     [writer writeElement:c_element_action value:self.action];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.when = [reader readDateElement:c_element_when];
-    self.appID = [reader readStringElement:c_element_appID];
+    self.appID = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_appID]];
+    self.personID = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_personID]];
     self.action = [reader readStringElement:c_element_action];
 }
 

@@ -15,7 +15,7 @@
         <attribute name="createdByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="effectiveDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="thingId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="thingType" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="typeId" optional="YES" attributeType="String" indexed="YES" elementID="thingType" syncable="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="updatedByAppId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="updatedByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -33,8 +33,8 @@
     </entity>
     <elements>
         <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="150"/>
-        <element name="MHVCachedThing" positionX="-63" positionY="-18" width="128" height="225"/>
-        <element name="MHVPendingCreateThing" positionX="-225" positionY="-63" width="128" height="75"/>
-        <element name="MHVPendingDeleteThing" positionX="-216" positionY="-54" width="128" height="75"/>
+        <element name="MHVCachedThing" positionX="7" positionY="-36" width="128" height="225"/>
+        <element name="MHVPendingCreateThing" positionX="-702" positionY="-90" width="128" height="75"/>
+        <element name="MHVPendingDeleteThing" positionX="-596" positionY="123" width="128" height="75"/>
     </elements>
 </model>

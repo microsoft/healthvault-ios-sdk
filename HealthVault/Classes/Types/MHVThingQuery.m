@@ -181,7 +181,7 @@ static NSString *const c_element_view = @"format";
     // will be issued.
     if (self.offset <= 0)
     {
-        [writer writeAttribute:c_attribute_maxfull intValue:self.limit];
+        [writer writeAttribute:c_attribute_maxfull intValue:(int)self.limit];
     }
     else
     {

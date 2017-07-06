@@ -31,6 +31,7 @@
 @property (nonatomic, assign) BOOL useMetric;
 @property (nonatomic, assign) NSInteger maxDaysOffsetRandomData;  // Create new data for a day with max this offset from today. (1)
 @property (nonatomic, assign) BOOL createMultiple;                // Whether to create one or multiple random things
+@property (nonatomic, assign) BOOL useCache;
 
 @property (nonatomic, strong) MHVThingDataTypedFeatures* moreFeatures;
 @property (nonatomic, strong) NSObject *lockObject;
@@ -53,6 +54,7 @@ static const NSUInteger c_thingLimit = 50;
         
         _typeClass = typeClass;
         _useMetric = metric;
+        _useCache = YES;
         _things = [MHVThingCollection new];
         _lockObject = [NSObject new];
         _totalThingsCount = -1;
@@ -202,6 +204,7 @@ static const NSUInteger c_thingLimit = 50;
     @synchronized (self.lockObject)
     {
         [self.things removeAllObjects];
+        [self.thingTable reloadData];
         self.totalThingsCount = -1;
     }
     
@@ -222,11 +225,22 @@ static const NSUInteger c_thingLimit = 50;
     
     [self.statusLabel showBusy];
     
-    //Include Blob metadata, so can show size
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+
+    NSDate *startDate = [NSDate date];
+    
     __block MHVThingQuery *query = [[MHVThingQuery alloc] init];
     query.limit = range.length;
     query.offset = range.location;
-    query.view.sections |= MHVThingSection_Blobs;
+
+    //Include Blob metadata, so can show size for Files
+    if (self.typeClass == [MHVFile class])
+    {
+        query.view.sections |= MHVThingSection_Blobs;
+    }
     
     // Send request to get all things for the type class set for this view controller.
     [self.connection.thingClient getThingsForThingClass:self.typeClass
@@ -251,9 +265,20 @@ static const NSUInteger c_thingLimit = 50;
                   [self.thingTable reloadData];
                   
                   [self.statusLabel showStatus:[NSString stringWithFormat:@"Loaded %li of %li", self.things.count, result.count]];
+
+                  NSDate *endDate = [NSDate date];
+                  
+                  // Show duration and data source as right button item.
+                  NSString *message = [NSString stringWithFormat:@"%@%0.3f", result.isCachedResult ? @"📱" : @"☁️", [endDate timeIntervalSinceDate:startDate]];
+                  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:message
+                                                                                            style:UIBarButtonItemStylePlain
+                                                                                           target:self
+                                                                                           action:@selector(reloadData:)];
               }
               else
               {
+                  self.navigationItem.rightBarButtonItem = nil;
+
                   [self.statusLabel showStatus:@"Failed"];
               }
               
@@ -264,6 +289,13 @@ static const NSUInteger c_thingLimit = 50;
               }
           }];
      }];
+}
+
+- (void)reloadData:(id)sender
+{
+    self.useCache = !self.useCache;
+    
+    [self refreshAll];
 }
 
 - (void)addRandomData:(BOOL)isMetric

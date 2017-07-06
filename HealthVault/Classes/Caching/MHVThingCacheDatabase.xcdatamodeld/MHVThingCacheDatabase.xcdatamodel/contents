@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <entity name="MHVRecordObject" representedClassName="MHVRecordObject" syncable="YES" codeGenerationType="class">
+    <entity name="MHVCachedRecord" representedClassName="MHVCachedRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="isValid" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastOperationSequenceNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastSyncDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="recordId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="things" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MHVThingObject" inverseName="record" inverseEntity="MHVThingObject" syncable="YES"/>
+        <relationship name="pendingCreateThings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVPendingCreateThing" inverseName="record" inverseEntity="MHVPendingCreateThing" syncable="YES"/>
+        <relationship name="pendingDeleteThing" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVPendingDeleteThing" inverseName="record" inverseEntity="MHVPendingDeleteThing" syncable="YES"/>
+        <relationship name="things" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MHVCachedThing" inverseName="record" inverseEntity="MHVCachedThing" syncable="YES"/>
     </entity>
-    <entity name="MHVThingObject" representedClassName="MHVThingObject" syncable="YES" codeGenerationType="class">
+    <entity name="MHVCachedThing" representedClassName="MHVCachedThing" syncable="YES" codeGenerationType="class">
+        <attribute name="createDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="createdByAppId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="createdByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="effectiveDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
         <attribute name="thingId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="typeId" optional="YES" attributeType="String" indexed="YES" elementID="thingType" syncable="YES"/>
+        <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="updatedByAppId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="updatedByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="xmlString" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVRecordObject" inverseName="things" inverseEntity="MHVRecordObject" syncable="YES"/>
-        <relationship name="thingType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVThingTypeObject" inverseName="things" inverseEntity="MHVThingTypeObject" syncable="YES"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="things" inverseEntity="MHVCachedRecord" syncable="YES"/>
     </entity>
-    <entity name="MHVThingTypeObject" representedClassName="MHVThingTypeObject" syncable="YES" codeGenerationType="class">
-        <attribute name="lastUpdated" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="thingTypeId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="things" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MHVThingObject" inverseName="thingType" inverseEntity="MHVThingObject" syncable="YES"/>
+    <entity name="MHVPendingCreateThing" representedClassName="MHVPendingCreateThing" syncable="YES" codeGenerationType="class">
+        <attribute name="xmlString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="pendingCreateThings" inverseEntity="MHVCachedRecord" syncable="YES"/>
+    </entity>
+    <entity name="MHVPendingDeleteThing" representedClassName="MHVPendingDeleteThing" syncable="YES" codeGenerationType="class">
+        <attribute name="thingId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="pendingDeleteThing" inverseEntity="MHVCachedRecord" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MHVRecordObject" positionX="-389" positionY="-217" width="128" height="73"/>
-        <element name="MHVThingObject" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="MHVThingTypeObject" positionX="-443" positionY="47" width="128" height="90"/>
+        <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="150"/>
+        <element name="MHVCachedThing" positionX="7" positionY="-36" width="128" height="225"/>
+        <element name="MHVPendingCreateThing" positionX="-702" positionY="-90" width="128" height="75"/>
+        <element name="MHVPendingDeleteThing" positionX="-659" positionY="36" width="128" height="75"/>
     </elements>
 </model>

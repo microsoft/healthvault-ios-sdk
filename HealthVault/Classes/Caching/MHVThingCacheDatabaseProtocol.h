@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-@class MHVThingCollection;
+@class MHVThingCollection, MHVThingQuery, MHVThingQueryResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,56 +29,51 @@ NS_ASSUME_NONNULL_BEGIN
  Initialize and setup database if needed.
  This is called after a user has authenticated, and may be called after deleteDatabase
  when signing out and signing in again
-
- @return Error if there was an error
- */
-- (NSError *_Nullable)setupDatabase;
-
-/**
- Delete the current database
  
- @return NSError for any errors deleting the database
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)deleteDatabase;
+- (void)setupDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Determine if a record exists
+ Delete all contents and resets the current database
  
- @param recordId the RecordID to find
- @return CachedRecord matching the ID or nil
- @note This operation is synchronous
+ @param completion Envoked when the operation is complete
  */
-- (BOOL)hasRecordId:(NSString *)recordId;
+- (void)resetDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Create a new database record given a recordId if it does not exist
-
- @param recordId The record ID
- @return Error if there was an error 
+ Ensure records exist for an array of recordIds, creating if needed.
+ 
+ @param recordIds The record IDs
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)newRecordForRecordId:(NSString *)recordId;
+- (void)setupRecordIds:(NSArray<NSString *> *)recordIds
+            completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Delete a record from the current database
-
+ 
  @param recordId id of the record to be deleted
- @note This operation is synchronous
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)deleteRecord:(NSString *)recordId;
+- (void)deleteRecord:(NSString *)recordId
+          completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Delete Things given an array of IDs
-
+ 
  @param thingIds the IDs of the things to be deleted
  @param recordId the RecordId of the owner of the things
- @note This operation is synchronous
- @return error for any save errors
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)deleteThingIds:(NSArray<NSString *> *)thingIds recordId:(NSString *)recordId;
+- (void)deleteThingIds:(NSArray<NSString *> *)thingIds
+              recordId:(NSString *)recordId
+            completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  Update or create things in the cache database for a Thing collection
-
+ If the thingId is found, it will be updated; if not it will be added
+ 
  @param things collection of Things to be added or updated
  @param recordId the owner record of the Things
  @param lastSequenceNumber the new sequence number to use after updating
@@ -90,53 +85,44 @@ NS_ASSUME_NONNULL_BEGIN
                completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion;
 
 /**
- Fetch all cached records
+ Retrieve things for a query
+ 
+ @param query The GetThings query
+ @param recordId the owner record of the Things
+ @param completion Envoked with the MHVThingQueryResult
+ */
+- (void)cachedResultsForQuery:(MHVThingQuery *)query
+                     recordId:(NSString *)recordId
+                   completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion;
 
+/**
+ Fetch all cached records
+ 
  @param completion Envoked with the array of records
  */
 - (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion;
 
 /**
- Get the last sync date from an id<MHVCachedRecord> object
+ Retrieve status information about a cached record
  
  @param recordId The record ID
- @return NSDate of the last sync
+ @param completion Envoked with the results or error
  */
-- (NSDate *_Nullable)lastSyncDateFromRecordId:(NSString *)recordId;
-
-/**
- Get the last sync date from an id<MHVCachedRecord> object
-
- @param recordId The record ID
- @return NSInteger for last sequence number
- */
-- (NSInteger)lastSequenceNumberFromRecordId:(NSString *)recordId;
-
-/**
- Determine if the cache is valid for a record
- 
- @param recordId The record ID
- @return BOOL if cache is valid
- */
-- (BOOL)isCacheValidForRecordId:(NSString *)recordId;
-
-/**
- Set the cache info for a record to be invalid
- Setting to invalid will reset the sequence number to 0 so all data will be re-synced
-
- @param recordId The record ID
- */
-- (void)setCacheInvalidForRecordId:(NSString *)recordId;
+- (void)cacheStatusForRecordId:(NSString *)recordId
+                    completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion;
 
 /**
  Update a record with a new date and/or sequence number
-
- @param record The record
+ 
+ @param recordId The record
  @param lastSyncDate NSDate to update, should not update date on the record if nil
  @param sequenceNumber NSNumber sequence number, should not update number on the record if nil
- @return NSError if any error occurred
+ @param completion Envoked when the operation is complete
  */
-- (NSError *_Nullable)updateRecordId:(NSString *)record lastSyncDate:(NSDate *_Nullable)lastSyncDate sequenceNumber:(NSNumber *_Nullable)sequenceNumber;
+- (void)updateRecordId:(NSString *)recordId
+          lastSyncDate:(NSDate *_Nullable)lastSyncDate
+        sequenceNumber:(NSNumber *_Nullable)sequenceNumber
+            completion:(void (^)(NSError *_Nullable error))completion;
 
 @end
 
