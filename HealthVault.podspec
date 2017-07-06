@@ -45,6 +45,7 @@ The healthvault-ios-sdk framework simplifies developing apps that use the Micros
   s.subspec 'Tests' do |ss|
     ss.source_files = 'HealthVault/Classes/**/*.{h,m,xcdatamodeld}'
     ss.resources    = 'HealthVault/Assets/**/*'
+    ss.private_header_files = 'none'
 
     ss.frameworks = 'CoreData'
     ss.compiler_flags = '-D THING_CACHE=1'

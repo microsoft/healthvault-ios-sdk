@@ -1,0 +1,258 @@
+//
+//  MHVThingCacheQueryTests.m
+//  healthvault-ios-sdk
+//
+//  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+#import <XCTest/XCTest.h>
+#import "MHVMockDatabase.h"
+#import "MHVThingCache.h"
+#import "Kiwi.h"
+
+static NSString *kRecordUUID = @"11111111-aaaa-aaaa-aaaa-111111111111";
+
+SPEC_BEGIN(MHVThingCacheQueryTests)
+
+describe(@"MHVThingCache", ^
+{
+    __block MHVMockDatabase *database;
+    __block MHVThingCache *thingCache;
+    __block MHVThingQueryResultCollection *returnedCollection;
+    __block NSError *returnedError;
+    
+    MHVPersonInfo *testPerson = [MHVPersonInfo new];
+    testPerson.records = [MHVRecordCollection new];
+    
+    MHVRecord *record = [MHVRecord new];
+    record.ID = [[NSUUID alloc] initWithUUIDString:kRecordUUID];
+    [testPerson.records addObject:record];
+    
+    MHVThingCacheConfiguration *cacheConfig = [MHVThingCacheConfiguration new];
+    cacheConfig.cacheTypeIds = @[[MHVAllergy typeID],
+                                 [MHVWeight typeID]];
+    
+    KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
+    [mockConnection stub:@selector(cacheConfiguration) andReturn:cacheConfig];
+    [mockConnection stub:@selector(personInfo) andReturn:testPerson];
+    [mockConnection stub:@selector(thingClient) andReturn:nil];
+    [mockConnection stub:@selector(applicationId) andReturn:@"app-id-1"];
+    
+    beforeEach(^
+               {
+                   database = nil;
+                   thingCache = nil;
+                   returnedCollection = nil;
+                   returnedError = nil;
+               });
+    
+    context(@"when query record has not synced", ^
+            {
+                beforeEach(^
+                           {
+                               [mockConnection stub:@selector(personInfo) andReturn:testPerson];
+                               
+                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:[[MHVMockDatabase alloc] initWithRecordIds:@[kRecordUUID]
+                                                                                                                          hasSynced:NO
+                                                                                                                   shouldHaveThings:NO]
+                                                                              connection:mockConnection
+                                                                      automaticStartStop:NO];
+                               
+                               [thingCache cachedResultsForQueries:[[MHVThingQueryCollection alloc] init]
+                                                          recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
+                                                        completion:^(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error)
+                                {
+                                    returnedCollection = resultCollection;
+                                    returnedError = error;
+                                }];
+                           });
+                
+                it(@"thing collection should be nil", ^
+                   {
+                       [[expectFutureValue(returnedCollection) shouldEventually] beNil];
+                   });
+                it(@"should have error", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNonNil];
+                   });
+            });
+    
+    context(@"when query record has synced and has things", ^
+            {
+                beforeEach(^
+                           {
+                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:[[MHVMockDatabase alloc] initWithRecordIds:@[kRecordUUID]
+                                                                                                                          hasSynced:YES
+                                                                                                                   shouldHaveThings:YES]
+                                                                              connection:mockConnection
+                                                                      automaticStartStop:NO];
+                               
+                               [thingCache cachedResultsForQueries:[[MHVThingQueryCollection alloc] initWithObject:[MHVThingQuery new]]
+                                                          recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
+                                                        completion:^(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error)
+                                {
+                                    returnedCollection = resultCollection;
+                                    returnedError = error;
+                                }];
+                           });
+                
+                it(@"error should be nil", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNil];
+                   });
+                it(@"thing collection should have 1 thing", ^
+                   {
+                       [[expectFutureValue(returnedCollection) shouldEventually] beNonNil];
+                       [[expectFutureValue(theValue(returnedCollection.count)) shouldEventually] equal:theValue(1)];
+                   });
+            });
+    
+    context(@"when database has error", ^
+            {
+                beforeEach(^
+                           {
+                               database = [[MHVMockDatabase alloc] initWithRecordIds:@[kRecordUUID]
+                                                                           hasSynced:NO
+                                                                    shouldHaveThings:NO];
+                               database.errorToReturn = [NSError MHVCacheError:@"DBError"];
+                               
+                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
+                                                                              connection:mockConnection
+                                                                      automaticStartStop:NO];
+                               
+                               [thingCache cachedResultsForQueries:[[MHVThingQueryCollection alloc] init]
+                                                          recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
+                                                        completion:^(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error)
+                                {
+                                    returnedCollection = resultCollection;
+                                    returnedError = error;
+                                }];
+                           });
+                
+                it(@"cache should return the database error", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNonNil];
+                       [[expectFutureValue(returnedError.localizedDescription) shouldEventually] equal:@"The operation couldn’t be completed. DBError"];
+                   });
+                it(@"thing collection should be nil", ^
+                   {
+                       [[expectFutureValue(returnedCollection) shouldEventually] beNil];
+                   });
+            });
+    
+#pragma mark - Add/Update/Delete Things
+    
+    context(@"when adding things", ^
+            {
+                beforeEach(^
+                           {
+                               database = [[MHVMockDatabase alloc] initWithRecordIds:@[kRecordUUID]
+                                                                           hasSynced:YES
+                                                                    shouldHaveThings:NO];
+                               
+                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
+                                                                              connection:mockConnection
+                                                                      automaticStartStop:NO];
+                               
+                               [thingCache addThings:[[MHVThingCollection alloc] initWithThing:[MHVAllergy newThing]]
+                                            recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
+                                          completion:^(NSError *_Nullable error)
+                                {
+                                    returnedError = error;
+                                }];
+                           });
+                
+                it(@"error should be nil", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNil];
+                   });
+                it(@"database thing item count should be 1", ^
+                   {
+                       [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(1)];
+                   });
+            });
+    
+    context(@"when update things", ^
+            {
+                beforeEach(^
+                           {
+                               database = [[MHVMockDatabase alloc] initWithRecordIds:@[kRecordUUID]
+                                                                           hasSynced:YES
+                                                                    shouldHaveThings:YES];
+                               
+                               MHVThing *thingCopy = [database.database[kRecordUUID].things.firstObject newDeepCopy];
+                               thingCopy.key.version = @"NEWVERSION";
+                               
+                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
+                                                                              connection:mockConnection
+                                                                      automaticStartStop:NO];
+                               
+                               [thingCache addThings:[[MHVThingCollection alloc] initWithThing:thingCopy]
+                                            recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
+                                          completion:^(NSError *_Nullable error)
+                                {
+                                    returnedError = error;
+                                }];
+                           });
+                
+                it(@"error should be nil", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNil];
+                   });
+                it(@"database thing item count should be 1", ^
+                   {
+                       [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(1)];
+                   });
+                it(@"database thing item version should be changed", ^
+                   {
+                       [[expectFutureValue(database.database[kRecordUUID].things.firstObject.key.version) shouldEventually] equal:@"NEWVERSION"];
+                   });
+            });
+    
+    
+    context(@"when delete things", ^
+            {
+                beforeEach(^
+                           {
+                               database = [[MHVMockDatabase alloc] initWithRecordIds:@[kRecordUUID]
+                                                                           hasSynced:YES
+                                                                    shouldHaveThings:YES];
+                               
+                               MHVThing *thingCopy = [database.database[kRecordUUID].things.firstObject newDeepCopy];
+                               
+                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
+                                                                              connection:mockConnection
+                                                                      automaticStartStop:NO];
+                               
+                               [thingCache deleteThings:[[MHVThingCollection alloc] initWithThing:thingCopy]
+                                               recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
+                                             completion:^(NSError *_Nullable error)
+                                {
+                                    returnedError = error;
+                                }];
+                           });
+                
+                it(@"error should be nil", ^
+                   {
+                       [[expectFutureValue(returnedError) shouldEventually] beNil];
+                   });
+                it(@"database thing item count should be 0", ^
+                   {
+                       [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(0)];
+                   });
+            });
+});
+
+SPEC_END

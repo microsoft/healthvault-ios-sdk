@@ -72,13 +72,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Sync the HealthVault database
- This should be called by your UIApplicationDelegate's application:performFetchWithCompletionHandler: method.
- You will also need to add "Background fetch" to your app's "Background modes" capabilities
+ This should be called via the MHVConnection performBackgroundTasks and performForegroundTasks
  
  @param options Any options set for the sync process
  @param completion The callback to indicate the results of background syncing
  */
-- (void)syncWithOptions:(MHVCacheOptions)options completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion;
+- (void)syncWithOptions:(MHVCacheOptions)options
+             completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion;
 
 @end
 

@@ -65,7 +65,8 @@
     }
     
     MHVThingCache *thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                  connection:connection];
+                                                                  connection:connection
+                                                          automaticStartStop:YES];
         
     return [[MHVThingClient alloc] initWithConnection:connection cache:thingCache];
 #else
