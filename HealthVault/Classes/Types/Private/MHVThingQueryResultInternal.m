@@ -132,21 +132,17 @@ static NSString *const c_attribute_name = @"name";
         
         if (existingResult)
         {
-            // If the existing result did not contain things, new collections for things and pending things must be initialized
+            // If the existing result did not contain things, new collections for things must be initialized
             if (!existingResult.things)
             {
                 existingResult.things = [[MHVThingCollection alloc] initWithThings:result.things.toArray];
-                
-                if (result.pendingThings)
-                {
-                    existingResult.pendingThings = [[MHVPendingThingCollection alloc] initWithArray:result.pendingThings.toArray];
-                }
             }
             else
             {
                 [existingResult.things addObjectsFromCollection:result.things];
-                [existingResult.pendingThings removeThings:result.things];
             }
+            
+            [existingResult.pendingThings removeThings:result.things];
         }
         else
         {

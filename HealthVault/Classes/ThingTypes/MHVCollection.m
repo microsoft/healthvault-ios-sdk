@@ -131,6 +131,32 @@
     };
 }
 
+- (void)insertCollection:(MHVCollection *)collection atStartingIndex:(NSUInteger)startingIndex
+{
+    if (!collection)
+    {
+        MHVASSERT_PARAMETER(collection);
+        return;
+    }
+    
+    if (startingIndex > self.inner.count)
+    {
+        startingIndex = self.inner.count;
+    }
+    
+    for (int i = 0; i < collection.count; i++)
+    {
+        id obj = collection[i];
+        
+        if (![self validateNewObject:obj])
+        {
+            return;
+        }
+        
+        [self.inner insertObject:obj atIndex:startingIndex + i];
+    }
+}
+
 - (void)addObjectsFromArray:(NSArray *)array
 {
     if (!array)

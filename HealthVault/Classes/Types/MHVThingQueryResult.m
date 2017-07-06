@@ -21,8 +21,8 @@
 @implementation MHVThingQueryResult
 
 - (instancetype)initWithName:(NSString *)name
-                     results:(MHVThingCollection *)results
-                   remaining:(NSInteger)remaining
+                      things:(MHVThingCollection *)things
+                       count:(NSInteger)count
               isCachedResult:(BOOL)isCachedResult
 {
     self = [super init];
@@ -30,8 +30,8 @@
     if (self)
     {
         _name = name;
-        _results = results;
-        _remaining = remaining;
+        _things = things;
+        _count = count;
         _isCachedResult = isCachedResult;
     }
     

@@ -221,7 +221,7 @@
              {
                  [MHVUIAlert showInformationalMessage:@"File uploaded!"];
                  
-                 [self.controller getThingsFromHealthVault]; // Refresh
+                 [self.controller refreshAll]; // Refresh
              }
          }];
      }];

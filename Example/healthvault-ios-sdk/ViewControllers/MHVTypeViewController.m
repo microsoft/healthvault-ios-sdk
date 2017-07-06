@@ -33,10 +33,14 @@
 @property (nonatomic, assign) BOOL createMultiple;                // Whether to create one or multiple random things
 
 @property (nonatomic, strong) MHVThingDataTypedFeatures* moreFeatures;
+@property (nonatomic, strong) NSObject *lockObject;
+@property (nonatomic, assign) BOOL isLoading;
+@property (nonatomic, assign) NSInteger totalThingsCount;
 
 @end
 
 static const NSInteger c_numSecondsInDay = 86400;
+static const NSUInteger c_thingLimit = 50;
 
 @implementation MHVTypeViewController
 
@@ -49,6 +53,9 @@ static const NSInteger c_numSecondsInDay = 86400;
         
         _typeClass = typeClass;
         _useMetric = metric;
+        _things = [MHVThingCollection new];
+        _lockObject = [NSObject new];
+        _totalThingsCount = -1;
         
         _moreFeatures = [typeClass moreFeatures];
         if (_moreFeatures)
@@ -89,8 +96,6 @@ static const NSInteger c_numSecondsInDay = 86400;
         return;
     }
     
-    self.thingTable.dataSource = self;
-    
     //
     // When you click add, we add new things with random, but plausible data
     //
@@ -109,14 +114,11 @@ static const NSInteger c_numSecondsInDay = 86400;
         [self.moreActions setEnabled:FALSE];
     }
     
-    [self getThingsFromHealthVault];
+    [self refreshThingsInRange:NSMakeRange(0, c_thingLimit)];
 }
 
-// -------------------------------------
-//
-// UITableViewDataSource
-//
-// -------------------------------------
+#pragma mark - UITableViewDataSource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.things.count;
@@ -162,16 +164,20 @@ static const NSInteger c_numSecondsInDay = 86400;
     return cell;
 }
 
-- (void)refreshView
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self getThingsFromHealthVault];
+    CGFloat loadPosition = scrollView.contentOffset.y + scrollView.frame.size.height * 2;
+    
+    if (loadPosition >= scrollView.contentSize.height)
+    {
+        [self refreshThingsInRange:NSMakeRange(self.things.count, c_thingLimit)];
+    }
 }
 
-// -------------------------------------
-//
-// Methods
-//
-// -------------------------------------
+#pragma mark - Methods
+
 
 - (MHVThing *)getSelectedThing
 {
@@ -191,19 +197,42 @@ static const NSInteger c_numSecondsInDay = 86400;
     return self.things[selectedRow.row];
 }
 
-- (void)getThingsFromHealthVault
+- (void)refreshAll
 {
+    @synchronized (self.lockObject)
+    {
+        [self.things removeAllObjects];
+        self.totalThingsCount = -1;
+    }
+    
+    [self refreshThingsInRange:NSMakeRange(0, c_thingLimit)];
+}
+
+- (void)refreshThingsInRange:(NSRange)range;
+{
+    @synchronized (self.lockObject)
+    {
+        if (self.isLoading || self.things.count == self.totalThingsCount)
+        {
+            return;
+        }
+        
+        self.isLoading = YES;
+    }
+    
     [self.statusLabel showBusy];
     
     //Include Blob metadata, so can show size
-    MHVThingQuery *query = [[MHVThingQuery alloc] init];
+    __block MHVThingQuery *query = [[MHVThingQuery alloc] init];
+    query.limit = range.length;
+    query.offset = range.location;
     query.view.sections |= MHVThingSection_Blobs;
     
     // Send request to get all things for the type class set for this view controller.
     [self.connection.thingClient getThingsForThingClass:self.typeClass
                                                   query:query
                                                recordId:self.connection.personInfo.selectedRecordID
-                                             completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+                                             completion:^(MHVThingQueryResult * _Nullable result, NSError * _Nullable error)
      {
          // Completion will be called on arbitrary thread.
          // Dispatch to main thread to refresh the table or show error
@@ -211,16 +240,27 @@ static const NSInteger c_numSecondsInDay = 86400;
           {
               if (!error)
               {
-                  //No error, set things and reload the table
-                  self.things = things;
+                  @synchronized (self.lockObject)
+                  {
+                      if (result.things.count > 0)
+                      {
+                          [self.things insertCollection:result.things atStartingIndex:range.location];
+                      }
+                  }
                   
                   [self.thingTable reloadData];
                   
-                  [self.statusLabel showStatus:[NSString stringWithFormat:@"Count: %li", things.count]];
+                  [self.statusLabel showStatus:[NSString stringWithFormat:@"Loaded %li of %li", self.things.count, result.count]];
               }
               else
               {
                   [self.statusLabel showStatus:@"Failed"];
+              }
+              
+              @synchronized (self.lockObject)
+              {
+                  self.totalThingsCount = result.count;
+                  self.isLoading = NO;
               }
           }];
      }];
@@ -242,7 +282,7 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 - (void)removeCurrentThing
 {
-    MHVThing *selectedThing = [self getSelectedThing];
+    __block MHVThing *selectedThing = [self getSelectedThing];
     
     if (!selectedThing)
     {
@@ -271,7 +311,15 @@ static const NSInteger c_numSecondsInDay = 86400;
                        else
                        {
                            [self.statusLabel showStatus:@"Done"];
-                           [self refreshView];
+                           
+                           NSUInteger index = [self.things indexOfThingID:selectedThing.thingID];
+        
+                           @synchronized (self.lockObject)
+                           {
+                               [self.things removeObject:selectedThing];
+                           }
+                           
+                           [self refreshThingsInRange:NSMakeRange(index, 0)];
                        }
                    }];
               }];
@@ -302,7 +350,7 @@ static const NSInteger c_numSecondsInDay = 86400;
 
 - (void)addRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
 {
-    MHVThingCollection *things = [self createRandomForDay:start isMetric:metric];
+    __block MHVThingCollection *things = [self createRandomForDay:start isMetric:metric];
     
     if (things.count < 1)
     {
@@ -334,7 +382,7 @@ static const NSInteger c_numSecondsInDay = 86400;
                   else
                   {
                       [self.statusLabel showStatus:@"Done"];
-                      [self refreshView];
+                      [self refreshThingsInRange:NSMakeRange(0, things.count)];
                   }
               }
           }];

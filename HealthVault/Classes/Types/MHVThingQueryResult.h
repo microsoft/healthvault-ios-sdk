@@ -30,12 +30,12 @@
 /**
  A collection of Things resulting from a given query.
  */
-@property (nonatomic, strong, readonly) MHVThingCollection *results;
+@property (nonatomic, strong, readonly) MHVThingCollection *things;
 
 /**
- The number of unfetched Things resulting from a given query. The HealthVault iOS SDK will return a maximum of 500 Things for any given request. The 'remaining' property can be used to determine if there are more Things that can be fetched for a given query so data can be paged. For example, if an MHVThingQuery would result in 800 Things, the maximum of 500 things would be provided in the 'results' collection, and the 'remaining' property would be set to 300. A subsequest query can be made to fetch the remaining Things by setting the MHVThingQuery 'offset' property to 500 and the 'maxResults' property to 300.
+ The total number of Things resulting from a given query (this INCLUDES the Things in the 'things' collection). The HealthVault iOS SDK will return a maximum of 240 Things for any given request. The 'count' property can be used to determine if there are more Things that can be fetched for a given query so data can be paged. For example, if an MHVThingQuery would result in 400 Things, the maximum of 240 things would be provided in the 'things' collection, and the 'total' property would be set to 400. A subsequest query can be made to fetch the remaining Things by setting the MHVThingQuery 'offset' property to 240 and the 'limit' property to 160.
  */
-@property (nonatomic, assign, readonly) NSInteger remaining;
+@property (nonatomic, assign, readonly) NSInteger count;
 
 /**
  Indicates whether the query result is from the cache.
@@ -43,8 +43,8 @@
 @property (nonatomic, assign, readonly) BOOL isCachedResult;
 
 - (instancetype)initWithName:(NSString *)name
-                     results:(MHVThingCollection *)results
-                   remaining:(NSInteger)remaining
+                      things:(MHVThingCollection *)things
+                       count:(NSInteger)count
               isCachedResult:(BOOL)isCachedResult;
 
 @end

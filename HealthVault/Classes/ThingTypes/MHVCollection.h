@@ -41,6 +41,7 @@ typedef BOOL (^MHVFilter) (id value);
 - (ObjectType)lastObject;
 - (void)addObject:(ObjectType)anObject;
 - (void)insertObject:(ObjectType)anObject atIndex:(NSUInteger)index;
+- (void)insertCollection:(MHVCollection<ObjectType> *)collection atStartingIndex:(NSUInteger)startingIndex;
 - (void)setObject:(ObjectType)obj atIndexedSubscript:(NSUInteger)idx;
 - (void)addObjectsFromArray:(NSArray<ObjectType> *)array;
 - (void)addObjectsFromCollection:(MHVCollection<ObjectType> *)collection;

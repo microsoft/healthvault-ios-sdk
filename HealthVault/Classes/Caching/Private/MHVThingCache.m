@@ -30,6 +30,7 @@
 #import "MHVThingCacheDatabase+CoreDataModel.h"
 #import "MHVAsyncTask.h"
 #import "MHVAsyncTaskResult.h"
+#import "MHVThingQueryResult.h"
 
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 
@@ -548,7 +549,7 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
     
     [self.connection.thingClient getThingsWithQuery:query
                                            recordId:[[NSUUID alloc] initWithUUIDString:recordId]
-                                         completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+                                         completion:^(MHVThingQueryResult * _Nullable result, NSError * _Nullable error)
      {
          if (error)
          {
@@ -560,7 +561,7 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
          }
          else
          {
-             [weakSelf.database addOrUpdateThings:things
+             [weakSelf.database addOrUpdateThings:result.things
                                          recordId:recordId
                                lastSequenceNumber:lastSequenceNumber
                                        completion:^(NSInteger updateItemCount, NSError * _Nullable error)
@@ -579,6 +580,8 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
          }
      }];
 }
+
+
 
 #pragma mark - KVO on connection's personInfo
 

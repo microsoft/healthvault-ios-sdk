@@ -53,7 +53,7 @@ static NSString *const c_element_view = @"format";
         _keys = [[MHVThingKeyCollection alloc] init];
         _clientIDs = [[MHVStringCollection alloc] init];
         _filters = [[MHVThingFilterCollection alloc] init];
-        _maxResults = 500;
+        _limit = 240;
         _offset = 0;
         _shouldUseCachedResults = YES;
     }
@@ -151,19 +151,11 @@ static NSString *const c_element_view = @"format";
     }
 }
 
-- (void)setMaxResults:(int)maxResults
+- (void)setLimit:(NSUInteger)limit
 {
-    if (maxResults >= 0 && maxResults <= 500)
+    if (limit <= 500)
     {
-        _maxResults = maxResults;
-    }
-}
-
-- (void)setOffset:(int)offset
-{
-    if (offset >= 0)
-    {
-        _offset = offset;
+        _limit = limit;
     }
 }
 
@@ -189,7 +181,7 @@ static NSString *const c_element_view = @"format";
     // will be issued.
     if (self.offset <= 0)
     {
-        [writer writeAttribute:c_attribute_maxfull intValue:self.maxResults];
+        [writer writeAttribute:c_attribute_maxfull intValue:self.limit];
     }
     else
     {
@@ -227,7 +219,7 @@ static NSString *const c_element_view = @"format";
     
     if ([reader readIntAttribute:c_attribute_maxfull intValue:&intValue])
     {
-        self.maxResults = intValue;
+        self.limit = intValue;
     }
 }
 
