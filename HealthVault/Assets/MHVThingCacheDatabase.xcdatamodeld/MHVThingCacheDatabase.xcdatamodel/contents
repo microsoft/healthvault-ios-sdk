@@ -35,6 +35,6 @@
         <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="150"/>
         <element name="MHVCachedThing" positionX="7" positionY="-36" width="128" height="225"/>
         <element name="MHVPendingCreateThing" positionX="-702" positionY="-90" width="128" height="75"/>
-        <element name="MHVPendingDeleteThing" positionX="-596" positionY="69" width="128" height="75"/>
+        <element name="MHVPendingDeleteThing" positionX="-596" positionY="123" width="128" height="75"/>
     </elements>
 </model>
