@@ -10,10 +10,10 @@
 		4C54C8161EF342F100CAECFC /* MHVPersonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */; };
 		4C54C81B1EF41F2600CAECFC /* MHVPersonalImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */; };
 		4C54C81C1EF41F2600CAECFC /* MHVPersonalImageFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */; };
-		4C95AEBC1F093F7D00EA5A8F /* MHVMockDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AEBB1F093F7D00EA5A8F /* MHVMockDatabase.m */; };
 		4C95AEC11F0A872700EA5A8F /* MHVThingCacheSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AEC01F0A872700EA5A8F /* MHVThingCacheSyncTests.m */; };
 		4C95AF051F0D6C2B00EA5A8F /* MHVThingCacheQueryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AF041F0D6C2B00EA5A8F /* MHVThingCacheQueryTests.m */; };
 		4C95AF071F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AF061F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m */; };
+		4C95AF111F0EF20200EA5A8F /* MHVMockDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AEBB1F093F7D00EA5A8F /* MHVMockDatabase.m */; };
 		4C9DC867EC28E0AB74E00107 /* Pods_healthvault_ios_sdk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */; };
 		4CC5FFE41EF81786003B8690 /* MHVBrowserAuthBrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5FFE31EF81786003B8690 /* MHVBrowserAuthBrokerTests.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -884,7 +884,6 @@
 			files = (
 				A5DF652D1EF0527B009F5968 /* MHVWeightFactory.m in Sources */,
 				A5DF65171EF0527B009F5968 /* MHVBloodGlucoseFactory.m in Sources */,
-				4C95AEBC1F093F7D00EA5A8F /* MHVMockDatabase.m in Sources */,
 				A5DF64C61EF051FA009F5968 /* MHVActionPlanDetailViewController.m in Sources */,
 				6003F59E195388D20070C39A /* MHVAppDelegate.m in Sources */,
 				A5DF65231EF0527B009F5968 /* MHVImmunizationFactory.m in Sources */,
@@ -933,6 +932,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C95AF111F0EF20200EA5A8F /* MHVMockDatabase.m in Sources */,
 				A5DF65901EF05362009F5968 /* MHVXmlTests.m in Sources */,
 				A5385ACF1F040D05000D03C5 /* MHVCacheQueryTests.m in Sources */,
 				A5DF657E1EF0535A009F5968 /* MHVAerobicProfileTests.m in Sources */,
