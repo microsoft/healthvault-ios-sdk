@@ -55,6 +55,7 @@
       "name": "Tests",
       "source_files": "HealthVault/Classes/**/*.{h,m,xcdatamodeld}",
       "resources": "HealthVault/Assets/**/*",
+      "private_header_files": "none",
       "frameworks": "CoreData",
       "compiler_flags": "-D THING_CACHE=1",
       "dependencies": {

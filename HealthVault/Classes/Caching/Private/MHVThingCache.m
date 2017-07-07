@@ -40,6 +40,7 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
 @property (nonatomic, weak)   NSObject<MHVConnectionProtocol>                       *connection;
 @property (nonatomic, strong) MHVThingCacheConfiguration                            *cacheConfiguration;
 @property (nonatomic, strong) id<MHVThingCacheDatabaseProtocol>                     database;
+@property (nonatomic, assign) BOOL                                                  automaticStartStop;
 
 @property (nonatomic, strong) NSSet<NSString *>                                     *syncTypes;
 
@@ -53,6 +54,7 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
 
 - (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
                            connection:(id<MHVConnectionProtocol>)connection
+                   automaticStartStop:(BOOL)automaticStartStop
 {
     MHVASSERT_PARAMETER(database);
     MHVASSERT_PARAMETER(connection);
@@ -65,18 +67,25 @@ static NSString *kPersonInfoKeyPath = @"personInfo";
         _database = database;
         _connection = connection;
         _cacheConfiguration = connection.cacheConfiguration;
+        _automaticStartStop = automaticStartStop;
         
         _isSyncing = @(NO);
         _syncCompletionHandlers = [NSMutableArray new];
         
-        [self startObserving];
+        if (self.automaticStartStop)
+        {
+            [self startObserving];
+        }
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [self stopObserving];
+    if (self.automaticStartStop)
+    {
+        [self stopObserving];
+    }
 }
 
 - (void)startCache

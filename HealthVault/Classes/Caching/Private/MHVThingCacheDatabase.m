@@ -702,16 +702,24 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     
     __block NSError *error = nil;
     
-    [self.managedObjectContext performBlockAndWait:^
-     {
-         if ([self.managedObjectContext hasChanges])
+    // If CoreData database gets corrupted, it can throw an exception. Catch and return as error
+    @try
+    {
+        [self.managedObjectContext performBlockAndWait:^
          {
-             if (![self.managedObjectContext save:&error])
+             if ([self.managedObjectContext hasChanges])
              {
-                 MHVLOG(@"ThingCacheDatabase: Error saving to database: %@", error.localizedDescription);
+                 if (![self.managedObjectContext save:&error])
+                 {
+                     MHVLOG(@"ThingCacheDatabase: Error saving to database: %@", error.localizedDescription);
+                 }
              }
-         }
-     }];
+         }];
+    }
+    @catch (NSException *exception)
+    {
+        error = [NSError MHVCacheError:exception.description];
+    }
     
     return error;
 }
@@ -749,6 +757,16 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     //If new database, create password
     if (![self.fileManager fileExistsAtPath:self.databaseUrl.path])
     {
+        //Generate a new password and store in the keychain
+        [self.keychainService setString:[self generateRandomPassword]
+                                 forKey:kMHVCachePasswordKey];
+    }
+    
+    //If no password, set one and remove database file
+    if (![self.keychainService stringForKey:kMHVCachePasswordKey])
+    {
+        [self.fileManager removeItemAtURL:self.databaseUrl error:nil];
+
         //Generate a new password and store in the keychain
         [self.keychainService setString:[self generateRandomPassword]
                                  forKey:kMHVCachePasswordKey];
