@@ -85,7 +85,7 @@ describe(@"MHVThingCache", ^
                    [mockConnection stub:@selector(thingClient) andReturn:nil];
                });
     
-    context(@"when cache is synced to add things", ^
+    context(@"when syncWithOptions is called with valid record operations for thing creation", ^
             {
                 beforeEach(^
                            {
@@ -116,21 +116,21 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"error should be nil", ^
+                it(@"should have nil for error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNil];
                    });
-                it(@"synced item count should be 1", ^
+                it(@"should have synced item count equal 1", ^
                    {
                        [[expectFutureValue(theValue(returnedSyncedItemCount)) shouldEventually] equal:theValue(1)];
                    });
-                it(@"database thing item count should be 1", ^
+                it(@"should have database record's thing count equal 1", ^
                    {
                        [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(1)];
                    });
             });
     
-    context(@"when cache is synced to delete things", ^
+    context(@"when syncWithOptions is called with valid record operations for thing deletion", ^
             {
                 beforeEach(^
                            {
@@ -161,22 +161,22 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"error should be nil", ^
+                it(@"should have nil for error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNil];
                    });
-                it(@"synced item count should be 1", ^
+                it(@"should have synced item count equal 1", ^
                    {
                        [[expectFutureValue(theValue(returnedSyncedItemCount)) shouldEventually] equal:theValue(1)];
                    });
-                it(@"database thing item count should be 0", ^
+                it(@"should have database record's thing count equal 0", ^
                    {
                        [[expectFutureValue(theValue(returnedSyncedItemCount)) shouldEventually] equal:theValue(1)];
                        [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(0)];
                    });
             });
     
-    context(@"when cache is synced and GetRecordOperations has error", ^
+    context(@"when syncWithOptions is called with error for record operations", ^
             {
                 beforeEach(^
                            {
@@ -207,22 +207,22 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"error should be set", ^
+                it(@"should have an error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNonNil];
                        [[expectFutureValue(returnedError.localizedDescription) shouldEventually] equal:@"Test Error.\n(null)\n(null)"];
                    });
-                it(@"synced item count should be 0", ^
+                it(@"should have synced item count equal 0", ^
                    {
                        [[expectFutureValue(theValue(returnedSyncedItemCount)) shouldEventually] equal:theValue(0)];
                    });
-                it(@"database thing item count should be 1", ^
+                it(@"should have database record's thing count equal 1", ^
                    {
                        [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(1)];
                    });
             });
     
-    context(@"when cache is synced and GetThings has error", ^
+    context(@"when syncWithOptions is called with valid record operations and error for GetThings", ^
             {
                 beforeEach(^
                            {
@@ -253,16 +253,16 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"error should be set", ^
+                it(@"should have an error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNonNil];
                        [[expectFutureValue(returnedError.localizedDescription) shouldEventually] equal:@"Test Error.\n(null)\n(null)"];
                    });
-                it(@"synced item count should be 0", ^
+                it(@"should have synced item count equal 0", ^
                    {
                        [[expectFutureValue(theValue(returnedSyncedItemCount)) shouldEventually] equal:theValue(0)];
                    });
-                it(@"database thing item count should be 0", ^
+                it(@"should have database record's thing count equal 0", ^
                    {
                        [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(0)];
                    });

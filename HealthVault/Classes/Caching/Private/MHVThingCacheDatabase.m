@@ -702,6 +702,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     
     __block NSError *error = nil;
     
+    // If CoreData database gets corrupted, it can throw an exception. Catch and return as error
     @try
     {
         [self.managedObjectContext performBlockAndWait:^

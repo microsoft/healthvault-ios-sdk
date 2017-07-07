@@ -106,8 +106,31 @@ describe(@"MHVThingCacheDatabase", ^
     });
     
 #pragma mark - Records
-    
-    context(@"when new record created", ^
+
+    context(@"when setupDatabaseWithCompletion is called", ^
+            {
+                __block NSArray *returnedRecords;
+                __block NSError *returnedFetchRecordsError;
+                beforeEach(^
+                           {
+                               [database setupDatabaseWithCompletion:^(NSError *error)
+                                {
+                                    returnedSetupDatabaseError = error;
+                                }];
+                           });
+                
+                it(@"should have nil error", ^
+                   {
+                       [[expectFutureValue(returnedSetupDatabaseError) shouldEventually] beNil];
+                   });
+                it(@"should set file attributes to be protected", ^
+                   {
+                       [[expectFutureValue(fileAttributes) shouldEventually] beNonNil];
+                       [[expectFutureValue(fileAttributes[NSFileProtectionKey]) shouldEventually] equal:NSFileProtectionCompleteUntilFirstUserAuthentication];
+                   });
+            });
+
+    context(@"when setupRecordIds is called to create a new record", ^
             {
                 __block NSArray *returnedRecords;
                 __block NSError *returnedFetchRecordsError;
@@ -131,25 +154,21 @@ describe(@"MHVThingCacheDatabase", ^
                                 }];
                            });
                 
-                it(@"it should have no errors", ^
+                it(@"should have nil for all errors", ^
                    {
                        [[expectFutureValue(returnedSetupDatabaseError) shouldEventually] beNil];
                        [[expectFutureValue(returnedSetupRecordsError) shouldEventually] beNil];
+                       [[expectFutureValue(returnedFetchRecordsError) shouldEventually] beNil];
                    });
-                it(@"it should return the record added", ^
+                it(@"fetchCachedRecordIds should return the newly added record", ^
                    {
                        [[expectFutureValue(returnedFetchRecordsError) shouldEventually] beNil];
                        [[expectFutureValue(theValue(returnedRecords.count)) shouldEventually] equal:@(1)];
                        [[expectFutureValue(theValue([returnedRecords containsObject:kTestRecordId])) shouldEventually] equal:@(YES)];
                    });
-                it(@"it should set file attributes to be protected", ^
-                    {
-                        [[expectFutureValue(fileAttributes) shouldEventually] beNonNil];
-                        [[expectFutureValue(fileAttributes[NSFileProtectionKey]) shouldEventually] equal:NSFileProtectionCompleteUntilFirstUserAuthentication];
-                    });
             });
     
-    context(@"when get status for new record", ^
+    context(@"when cacheStatusForRecordId is called for a new record", ^
             {
                 beforeEach(^
                            {
@@ -174,13 +193,13 @@ describe(@"MHVThingCacheDatabase", ^
                                 }];
                            });
                 
-                it(@"it should have no errors", ^
+                it(@"should have nil for all errors", ^
                    {
                        [[expectFutureValue(returnedSetupDatabaseError) shouldEventually] beNil];
                        [[expectFutureValue(returnedSetupRecordsError) shouldEventually] beNil];
                        [[expectFutureValue(returnedCacheStatusError) shouldEventually] beNil];
                    });
-                it(@"it should return record is valid and not synced", ^
+                it(@"should return record that is valid and has not been synced", ^
                    {
                        [[expectFutureValue(returnedLastSyncDate) shouldEventually] beNil];
                        [[expectFutureValue(theValue(returnedLastSequenceNumber)) shouldEventually] equal:@(0)];
@@ -188,7 +207,7 @@ describe(@"MHVThingCacheDatabase", ^
                    });
             });
     
-        context(@"when record is updated", ^
+        context(@"when updateRecordId is called", ^
                 {
                     __block NSError *returnedUpdateRecordInfoError;
 
@@ -223,18 +242,18 @@ describe(@"MHVThingCacheDatabase", ^
                                     }];
                                });
     
-                    it(@"should have no errors", ^
+                    it(@"should have nil for all errors", ^
                        {
                            [[expectFutureValue(returnedSetupDatabaseError) shouldEventually] beNil];
                            [[expectFutureValue(returnedSetupRecordsError) shouldEventually] beNil];
                            [[expectFutureValue(returnedUpdateRecordInfoError) shouldEventually] beNil];
                            [[expectFutureValue(returnedCacheStatusError) shouldEventually] beNil];
                        });
-                    it(@"date should should be changed", ^
+                    it(@"date should should be the updated date", ^
                        {
                            [[expectFutureValue(returnedLastSyncDate) shouldEventually] equal:[NSDate dateWithTimeIntervalSince1970:60]];
                        });
-                    it(@"sequence number should be changed", ^
+                    it(@"sequence number should be updated number", ^
                        {
                            [[expectFutureValue(theValue(returnedLastSequenceNumber)) shouldEventually] equal:@(3)];
                        });
@@ -246,7 +265,7 @@ describe(@"MHVThingCacheDatabase", ^
     
     #pragma mark - Things
     
-        context(@"when things added", ^
+        context(@"when addOrUpdateThings is called to add a thing", ^
                 {
                     beforeEach(^
                                {
@@ -270,9 +289,9 @@ describe(@"MHVThingCacheDatabase", ^
                                              MHVThingCollection *things = [[MHVThingCollection alloc] initWithThing:thing];
                                              
                                              [weakDatabase addOrUpdateThings:things
-                                                                recordId:kTestRecordId
-                                                      lastSequenceNumber:99
-                                                              completion:^(NSInteger updateItemCount, NSError *_Nullable error)
+                                                                    recordId:kTestRecordId
+                                                          lastSequenceNumber:99
+                                                                  completion:^(NSInteger updateItemCount, NSError *_Nullable error)
                                               {
                                                   returnedUpdateItemCount = @(updateItemCount);
                                                   returnedUpdateThingsError = error;
@@ -290,24 +309,24 @@ describe(@"MHVThingCacheDatabase", ^
                                     }];
                                });
     
-                    it(@"it should be successful", ^
+                    it(@"should have nil for all errors", ^
                        {
                            [[expectFutureValue(returnedUpdateItemCount) shouldEventually] beNonNil];
                            [[expectFutureValue(returnedUpdateThingsError) shouldEventually] beNil];
                        });
-                    it(@"added item count should be correct", ^
+                    it(@"added item count should be 1", ^
                        {
                            [[expectFutureValue(returnedUpdateItemCount) shouldEventually] beNonNil];
                            [[expectFutureValue(returnedUpdateItemCount) shouldEventually] equal:@(1)];
                        });
-                    it(@"it should return record is valid with correct sequence", ^
+                    it(@"cacheStatusForRecordId should have updated sequence number", ^
                        {
                            [[expectFutureValue(returnedLastSyncDate) shouldEventually] beNonNil];
                            [[expectFutureValue(theValue(returnedLastSequenceNumber)) shouldEventually] equal:@(99)];
                            [[expectFutureValue(theValue(returnedIsCacheValid)) shouldEventually] equal:@(YES)];
                        });
                     
-                    it(@"can query the added item", ^
+                    it(@"cachedResultsForQuery can retrieve the new thing", ^
                        {
                            __block MHVThingQueryResult *returnedQueryResult;
                            __block NSError *returnedQueryError;
@@ -331,7 +350,7 @@ describe(@"MHVThingCacheDatabase", ^
     
 #pragma mark - Reset
     
-        context(@"when database reset", ^
+        context(@"when resetDatabaseWithCompletion is called", ^
                 {
                     __block NSError *returnedResetDatabaseError;
                     
@@ -365,21 +384,21 @@ describe(@"MHVThingCacheDatabase", ^
                                     }];
                                });
                     
-                    it(@"should have no errors for reset database", ^
+                    it(@"should have nil for all reset errors", ^
                        {
                            [[expectFutureValue(returnedSetupDatabaseError) shouldEventually] beNil];
                            [[expectFutureValue(returnedSetupRecordsError) shouldEventually] beNil];
                            [[expectFutureValue(returnedResetDatabaseError) shouldEventually] beNil];
                        });
-                    it(@"it should have deleted file", ^
+                    it(@"should have deleted the database file", ^
                        {
                            [[expectFutureValue(removedItemAtURL) shouldEventually] beNonNil];
                        });
-                    it(@"it should have deleted from keychain", ^
+                    it(@"should have deleted the password from the keychain", ^
                        {
                            [[expectFutureValue(theValue(deletedFromKeychain)) shouldEventually] beYes];
                        });
-                    it(@"it should return error for cache status for deleted record", ^
+                    it(@"should have error calling cacheStatusForRecordId for deleted record", ^
                        {
                            [[expectFutureValue(returnedCacheStatusError) shouldEventually] beNonNil];
                            

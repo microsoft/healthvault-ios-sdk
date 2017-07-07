@@ -58,7 +58,7 @@ describe(@"MHVThingCache", ^
                    returnedError = nil;
                });
     
-    context(@"when query record has not synced", ^
+    context(@"when cachedResultsForQueries is called and record has not synced", ^
             {
                 beforeEach(^
                            {
@@ -79,7 +79,7 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"thing collection should be nil", ^
+                it(@"should have nil query result collection", ^
                    {
                        [[expectFutureValue(returnedCollection) shouldEventually] beNil];
                    });
@@ -89,7 +89,7 @@ describe(@"MHVThingCache", ^
                    });
             });
     
-    context(@"when query record has synced and has things", ^
+    context(@"when cachedResultsForQueries is called and record has things", ^
             {
                 beforeEach(^
                            {
@@ -108,18 +108,18 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"error should be nil", ^
+                it(@"should have nil error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNil];
                    });
-                it(@"thing collection should have 1 thing", ^
+                it(@"should have 1 thing in query result collection", ^
                    {
                        [[expectFutureValue(returnedCollection) shouldEventually] beNonNil];
                        [[expectFutureValue(theValue(returnedCollection.count)) shouldEventually] equal:theValue(1)];
                    });
             });
     
-    context(@"when database has error", ^
+    context(@"when cachedResultsForQueries is called and database returns error", ^
             {
                 beforeEach(^
                            {
@@ -141,12 +141,12 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"cache should return the database error", ^
+                it(@"should return the database error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNonNil];
                        [[expectFutureValue(returnedError.localizedDescription) shouldEventually] equal:@"The operation couldn’t be completed. DBError"];
                    });
-                it(@"thing collection should be nil", ^
+                it(@"should have nil query result collection", ^
                    {
                        [[expectFutureValue(returnedCollection) shouldEventually] beNil];
                    });
@@ -154,7 +154,7 @@ describe(@"MHVThingCache", ^
     
 #pragma mark - Add/Update/Delete Things
     
-    context(@"when adding things", ^
+    context(@"when addThings is called for thing record with no things", ^
             {
                 beforeEach(^
                            {
@@ -174,17 +174,17 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"error should be nil", ^
+                it(@"should have nil error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNil];
                    });
-                it(@"database thing item count should be 1", ^
+                it(@"should have 1 thing for record", ^
                    {
                        [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(1)];
                    });
             });
     
-    context(@"when update things", ^
+    context(@"when updateThings is called for existing database thing", ^
             {
                 beforeEach(^
                            {
@@ -199,30 +199,30 @@ describe(@"MHVThingCache", ^
                                                                               connection:mockConnection
                                                                       automaticStartStop:NO];
                                
-                               [thingCache addThings:[[MHVThingCollection alloc] initWithThing:thingCopy]
-                                            recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
-                                          completion:^(NSError *_Nullable error)
+                               [thingCache updateThings:[[MHVThingCollection alloc] initWithThing:thingCopy]
+                                               recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
+                                             completion:^(NSError *_Nullable error)
                                 {
                                     returnedError = error;
                                 }];
                            });
                 
-                it(@"error should be nil", ^
+                it(@"should have nil error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNil];
                    });
-                it(@"database thing item count should be 1", ^
+                it(@"should have database record with 1 thing", ^
                    {
                        [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(1)];
                    });
-                it(@"database thing item version should be changed", ^
+                it(@"should change existing thing version", ^
                    {
                        [[expectFutureValue(database.database[kRecordUUID].things.firstObject.key.version) shouldEventually] equal:@"NEWVERSION"];
                    });
             });
     
     
-    context(@"when delete things", ^
+    context(@"when deleteThings is called for a thing that exists", ^
             {
                 beforeEach(^
                            {
@@ -244,11 +244,11 @@ describe(@"MHVThingCache", ^
                                 }];
                            });
                 
-                it(@"error should be nil", ^
+                it(@"should have nil error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNil];
                    });
-                it(@"database thing item count should be 0", ^
+                it(@"should have deleted thing and database thing item count is 0", ^
                    {
                        [[expectFutureValue(theValue(database.database[kRecordUUID].things.count)) shouldEventually] equal:theValue(0)];
                    });
