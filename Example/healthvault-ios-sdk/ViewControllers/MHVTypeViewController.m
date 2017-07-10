@@ -236,7 +236,7 @@ static const NSUInteger c_thingLimit = 50;
     query.shouldUseCachedResults = self.useCache;
     query.limit = range.length;
     query.offset = range.location;
-
+    
     //Include Blob metadata, so can show size for Files
     if (self.typeClass == [MHVFile class])
     {
@@ -246,7 +246,7 @@ static const NSUInteger c_thingLimit = 50;
     // Send request to get all things for the type class set for this view controller.
     [self.connection.thingClient getThingsForThingClass:self.typeClass
                                                   query:query
-                                               recordId:self.connection.personInfo.selectedRecordID
+                                             recordId:self.connection.personInfo.selectedRecordID
                                              completion:^(MHVThingQueryResult * _Nullable result, NSError * _Nullable error)
      {
          // Completion will be called on arbitrary thread.

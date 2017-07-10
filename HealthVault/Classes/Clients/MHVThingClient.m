@@ -149,6 +149,9 @@
         return;
     }
     
+    __block MHVThingQueryCollection *queriesForCloud = [MHVThingQueryCollection new];
+    MHVThingQueryCollection *queriesForCache = [MHVThingQueryCollection new];
+    
     //Give each query a unique name if it isn't already set
     for (MHVThingQuery *query in queries)
     {
@@ -156,13 +159,22 @@
         {
             query.name = [[NSUUID UUID] UUIDString];
         }
+        
+        if (query.shouldUseCachedResults)
+        {
+            [queriesForCache addObject:query];
+        }
+        else
+        {
+            [queriesForCloud addObject:query];
+        }
     }
     
 #ifdef THING_CACHE
     // Check for cached results for the GetThings queries
-    if (self.cache)
+    if (self.cache && queriesForCache > 0)
     {
-        [self.cache cachedResultsForQueries:queries
+        [self.cache cachedResultsForQueries:queriesForCache
                                    recordId:recordId
                                  completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
          {
@@ -171,14 +183,35 @@
              {
                  completion(nil, error);
              }
-             else if (resultCollection)
+             else if (resultCollection && queriesForCloud.count < 1)
              {
                  completion(resultCollection, nil);
              }
              else
              {
+                 // If there is no resultsCollection from the cache issue ALL queries to the cloud.
+                 if (!resultCollection)
+                 {
+                     queriesForCloud = queries;
+                 }
+                 
                  //No resultCollection or error, query HealthVault
-                 [self.cache cachedResultsForQueries:queries recordId:recordId completion:completion];
+                 [self getThingsWithQueries:queriesForCloud recordId:recordId currentResults:nil completion:^(MHVThingQueryResultCollection * _Nullable results, NSError * _Nullable error)
+                 {
+                     if (error)
+                     {
+                         completion(nil, error);
+                     }
+                     else
+                     {
+                         if (resultCollection.count > 0)
+                         {
+                             [results addObjectsFromCollection:resultCollection];
+                         }
+                         
+                         completion(results, nil);
+                     }
+                 }];
              }
          }];
     }

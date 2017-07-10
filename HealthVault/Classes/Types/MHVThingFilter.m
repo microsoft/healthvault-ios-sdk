@@ -115,6 +115,7 @@ static NSString *const c_element_xpath = @"xpath";
             MHVCHECK_NOTNULL(_typeIDs);
         }
         
+        
         self.state = MHVThingStateActive;
     }
     return self;

@@ -70,11 +70,6 @@ static NSString *const c_element_view = @"format";
     if (self)
     {
         [_filters addObject:filter];
-        
-        if (![MHVCollection isNilOrEmpty:filter.typeIDs])
-        {
-            [_view.typeVersions addObjectsFromArray:filter.typeIDs.toArray];
-        }
     }
     return self;
 }
