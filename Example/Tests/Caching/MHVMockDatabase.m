@@ -25,7 +25,10 @@
 @interface MHVMockRecord ()
 
 @property (nonatomic, strong) NSDate *lastSyncDate;
-@property (nonatomic, assign) NSInteger lastSequenceNumber;
+@property (nonatomic, strong) NSDate *lastConsistencyDate;
+@property (nonatomic, assign) NSInteger lastCacheSequenceNumber;
+@property (nonatomic, assign) NSInteger lastHealthVaultSequenceNumber;
+@property (nonatomic, assign) BOOL isValid;
 
 @property (nonatomic, strong) MHVThingCollection *things;
 
@@ -40,6 +43,33 @@
         _things = [MHVThingCollection new];
     }
     return _things;
+}
+
+#pragma mark MHVCacheStatusProtocol
+
+- (NSDate *)lastCompletedSyncDate;
+{
+    return self.lastSyncDate;
+}
+
+- (NSDate *)lastCacheConsistencyDate;
+{
+    return self.lastConsistencyDate;
+}
+
+- (NSInteger)newestCacheSequenceNumber;
+{
+    return self.lastCacheSequenceNumber;
+}
+
+- (NSInteger)newestHealthVaultSequenceNumber;
+{
+    return self.lastHealthVaultSequenceNumber;
+}
+
+- (BOOL)isCacheValid
+{
+    return self.isValid;
 }
 
 @end
@@ -68,11 +98,15 @@
             NSString *recordId = [recordIdString lowercaseString];
             
             MHVMockRecord *record = [MHVMockRecord new];
+            record.isValid = YES;
             
             if (hasSynced)
             {
-                record.lastSequenceNumber = 1;
-                record.lastSyncDate = [NSDate date];
+                NSDate *now = [NSDate date];
+                record.lastCacheSequenceNumber = 1;
+                record.lastHealthVaultSequenceNumber = 1;
+                record.lastSyncDate = now;
+                record.lastConsistencyDate = now;
             }
             
             if (shouldHaveThings)
@@ -128,8 +162,8 @@
     completion(nil);
 }
 
-- (void)setupRecordIds:(NSArray<NSString *> *)recordIds
-            completion:(void (^)(NSError *_Nullable error))completion
+- (void)setupCacheForRecordIds:(NSArray<NSString *> *)recordIds
+                    completion:(void (^)(NSError *_Nullable error))completion
 {
     if (self.errorToReturn)
     {
@@ -149,7 +183,7 @@
     completion(nil);
 }
 
-- (void)deleteRecord:(NSString *)recordId
+- (void)deleteCacheForRecordId:(NSString *)recordId
           completion:(void (^)(NSError *_Nullable error))completion
 {
     recordId = [recordId lowercaseString];
@@ -170,9 +204,9 @@
     completion(nil);
 }
 
-- (void)deleteThingIds:(NSArray<NSString *> *)thingIds
-              recordId:(NSString *)recordId
-            completion:(void (^)(NSError *_Nullable error))completion
+- (void)deleteCachedThingsWithThingIds:(NSArray<NSString *> *)thingIds
+                              recordId:(NSString *)recordId
+                            completion:(void (^)(NSError *_Nullable error))completion
 {
     recordId = [recordId lowercaseString];
 
@@ -200,10 +234,47 @@
     completion(nil);
 }
 
-- (void)addOrUpdateThings:(MHVThingCollection *)things
+- (void)createCachedThings:(MHVThingCollection *)things
+                  recordId:(NSString *)recordId
+                completion:(void (^)(NSError *_Nullable error))completion
+{
+    [self synchronizeThings:things
+                   recordId:recordId
+        batchSequenceNumber:-1
+       latestSequenceNumber:-1
+                 completion:^(NSInteger synchronizedItemCount, NSError * _Nullable error)
+     {
+         if (completion)
+         {
+             completion(error);
+         }
+     }];
+}
+
+
+- (void)updateCachedThings:(MHVThingCollection *)things
+                  recordId:(NSString *)recordId
+                completion:(void (^)(NSError *_Nullable error))completion
+{
+    [self synchronizeThings:things
+                   recordId:recordId
+        batchSequenceNumber:-1
+       latestSequenceNumber:-1
+                 completion:^(NSInteger synchronizedItemCount, NSError * _Nullable error)
+     {
+         if (completion)
+         {
+             completion(error);
+         }
+     }];
+}
+
+
+- (void)synchronizeThings:(MHVThingCollection *)things
                  recordId:(NSString *)recordId
-       lastSequenceNumber:(NSInteger)lastSequenceNumber
-               completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion
+      batchSequenceNumber:(NSInteger)batchSequenceNumber
+       latestSequenceNumber:(NSInteger)latestSequenceNumber
+               completion:(void (^)(NSInteger synchronizedItemCount, NSError *_Nullable error))completion
 {
     recordId = [recordId lowercaseString];
 
@@ -237,9 +308,9 @@
     completion(things.count, nil);
 }
 
-- (void)cachedResultsForQuery:(MHVThingQuery *)query
-                     recordId:(NSString *)recordId
-                   completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion
+- (void)cachedResultForQuery:(MHVThingQuery *)query
+                    recordId:(NSString *)recordId
+                completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion
 {
     recordId = [recordId lowercaseString];
 
@@ -264,7 +335,7 @@
     completion(result, nil);
 }
 
-- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion
+- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable recordIds, NSError *_Nullable error))completion
 {
     if (self.errorToReturn)
     {
@@ -276,30 +347,32 @@
 }
 
 - (void)cacheStatusForRecordId:(NSString *)recordId
-                    completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion
+                    completion:(void (^)(id<MHVCacheStatusProtocol> _Nullable status, NSError *_Nullable error))completion
 {
     recordId = [recordId lowercaseString];
     
     if (self.errorToReturn)
     {
-        completion(nil, 0, NO, self.errorToReturn);
+        completion(nil, self.errorToReturn);
         return;
     }
     
     if (self.database[recordId] == nil)
     {
-        completion(nil, 0, NO, [NSError MHVCacheError:@"Record does not exist"]);
+        completion(nil, [NSError MHVCacheError:@"Record does not exist"]);
         return;
     }
     
     MHVMockRecord *record = self.database[recordId];
-    completion(record.lastSyncDate, record.lastSequenceNumber, YES, nil);
+    
+    completion(record, nil);
 }
 
-- (void)updateRecordId:(NSString *)recordId
-          lastSyncDate:(NSDate *_Nullable)lastSyncDate
-        sequenceNumber:(NSNumber *_Nullable)sequenceNumber
-            completion:(void (^)(NSError *_Nullable error))completion
+- (void)updateLastCompletedSyncDate:(NSDate *)lastCompletedSyncDate
+           lastCacheConsistencyDate:(NSDate *)lastCacheConsistencyDate
+                     sequenceNumber:(NSInteger)sequenceNumber
+                           recordId:(NSString *)recordId
+                         completion:(void (^)(NSError *_Nullable error))completion
 {
     recordId = [recordId lowercaseString];
 
@@ -316,8 +389,11 @@
     }
     
     MHVMockRecord *record = self.database[recordId];
-    record.lastSyncDate = lastSyncDate;
-    record.lastSequenceNumber = sequenceNumber.integerValue;
+    record.lastSyncDate = lastCompletedSyncDate;
+    record.lastConsistencyDate = lastCacheConsistencyDate;
+    record.lastCacheSequenceNumber = sequenceNumber;
+    record.lastHealthVaultSequenceNumber = sequenceNumber;
+    
     completion(nil);
 }
 

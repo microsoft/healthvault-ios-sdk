@@ -30,6 +30,8 @@
 #import "MHVCachedThing+Cache.h"
 #import "MHVCachedRecord+Cache.h"
 #import "MHVCacheQuery.h"
+#import "MHVCacheStatusProtocol.h"
+#import "MHVCacheStatus.h"
 
 static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
@@ -113,8 +115,8 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     return thing;
 }
 
-- (void)setupRecordIds:(NSArray<NSString *> *)recordIds
-            completion:(void (^)(NSError *_Nullable error))completion
+- (void)setupCacheForRecordIds:(NSArray<NSString *> *)recordIds
+                    completion:(void (^)(NSError *_Nullable error))completion
 {
     if (!self.isDatabaseReady)
     {
@@ -153,8 +155,10 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                      return;
                  }
                  record.recordId = [recordId lowercaseString];
-                 record.lastOperationSequenceNumber = 0;
+                 record.newestHealthVaultSequenceNumber = 1;
+                 record.newestCacheSequenceNumber = 0;
                  record.lastSyncDate = nil;
+                 record.lastConsistencyDate = nil;
                  record.isValid = YES;
                  
                  NSError *error = [self saveContext];
@@ -176,10 +180,27 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
      }];
 }
 
+- (void)createCachedThings:(MHVThingCollection *)things
+                  recordId:(NSString *)recordId
+                completion:(void (^)(NSError *_Nullable error))completion
+{
+    [self synchronizeThings:things
+                   recordId:recordId
+        batchSequenceNumber:-1
+       latestSequenceNumber:-1
+                 completion:^(NSInteger synchronizedItemCount, NSError * _Nullable error)
+     {
+         if (completion)
+         {
+             completion(error);
+         }
+     }];
+}
+
 #pragma mark - Delete
 
-- (void)deleteRecord:(NSString *)recordId
-          completion:(void (^)(NSError *_Nullable error))completion;
+- (void)deleteCacheForRecordId:(NSString *)recordId
+                    completion:(void (^)(NSError *_Nullable error))completion;
 {
     MHVASSERT_PARAMETER(recordId);
     
@@ -220,9 +241,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     
 }
 
-- (void)deleteThingIds:(NSArray<NSString *> *)thingIds
-              recordId:(NSString *)recordId
-            completion:(void (^)(NSError *_Nullable error))completion;
+- (void)deleteCachedThingsWithThingIds:(NSArray<NSString *> *)thingIds
+                              recordId:(NSString *)recordId
+                            completion:(void (^)(NSError *_Nullable error))completion;
 {
     MHVASSERT_PARAMETER(thingIds);
     MHVASSERT_PARAMETER(recordId);
@@ -291,9 +312,11 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
      }];
 }
 
-- (void)cachedResultsForQuery:(MHVThingQuery *)query
-                     recordId:(NSString *)recordId
-                   completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion
+#pragma mark - Read
+
+- (void)cachedResultForQuery:(MHVThingQuery *)query
+                    recordId:(NSString *)recordId
+                  completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion
 {
     NSDate *startDate = [NSDate date];
     
@@ -374,9 +397,31 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
      }];
 }
 
-- (void)addOrUpdateThings:(MHVThingCollection *)things
+#pragma mark - Update
+
+- (void)updateCachedThings:(MHVThingCollection *)things
+                  recordId:(NSString *)recordId
+                completion:(void (^)(NSError *_Nullable error))completion
+{
+    [self synchronizeThings:things
+                   recordId:recordId
+        batchSequenceNumber:-1
+       latestSequenceNumber:-1
+                 completion:^(NSInteger synchronizedItemCount, NSError * _Nullable error)
+    {
+        if (completion)
+        {
+            completion(error);
+        }
+    }];
+}
+
+#pragma mark - Synchronize
+
+- (void)synchronizeThings:(MHVThingCollection *)things
                  recordId:(NSString *)recordId
-       lastSequenceNumber:(NSInteger)lastSequenceNumber
+      batchSequenceNumber:(NSInteger)batchSequenceNumber
+     latestSequenceNumber:(NSInteger)latestSequenceNumber
                completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion
 {
     if (!self.isDatabaseReady)
@@ -444,11 +489,20 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          
          // Sync complete, update record with date and sequence number
          // Will be < 0 for PutThing that shouldn't update the sync info
-         if (lastSequenceNumber >= 0)
+         if (batchSequenceNumber >= 0 && latestSequenceNumber >= 0)
          {
-             record.lastOperationSequenceNumber = lastSequenceNumber;
-             record.lastSyncDate = [NSDate date];
+             NSDate *now = [NSDate date];
+             
+             record.newestHealthVaultSequenceNumber = latestSequenceNumber;
+             record.newestCacheSequenceNumber = batchSequenceNumber;
+             record.lastSyncDate = now;
              record.isValid = YES;
+             
+             // Consistency has been achieved when the latest sequence is equal to the batch sequence
+             if (latestSequenceNumber == batchSequenceNumber)
+             {
+                 record.lastConsistencyDate = now;
+             }
          }
          
          NSError *error = [self saveContext];
@@ -473,10 +527,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              }
          }
      }];
-    
 }
 
-- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion
+- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable recordIds, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
     
@@ -559,7 +612,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 #pragma mark - Properties
 
 - (void)cacheStatusForRecordId:(NSString *)recordId
-                    completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion
+                    completion:(void (^)(id<MHVCacheStatusProtocol> _Nullable status, NSError *_Nullable error))completion
 {
     if (!completion)
     {
@@ -568,7 +621,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     
     if (!self.isDatabaseReady)
     {
-        completion(nil, 0, NO, [NSError MHVCacheDeleted]);
+        completion(nil, [NSError MHVCacheDeleted]);
         return;
     }
     
@@ -578,11 +631,11 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          
          if (record)
          {
-             completion(record.lastSyncDate, record.lastOperationSequenceNumber, record.isValid, nil);
+             completion([[MHVCacheStatus alloc] initWithCachedRecord:record], nil);
          }
          else
          {
-             completion(nil, 0, NO, [NSError MHVCacheError:@"Record does not exist"]);
+             completion(nil, [NSError MHVCacheError:@"Record does not exist"]);
          }
      }];
 }
@@ -609,7 +662,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              
              cachedRecord.isValid = NO;
              cachedRecord.lastSyncDate = nil;
-             cachedRecord.lastOperationSequenceNumber = 0;
+             cachedRecord.lastConsistencyDate = nil;
+             cachedRecord.newestCacheSequenceNumber = 0;
+             cachedRecord.newestHealthVaultSequenceNumber = 1;
              cachedRecord.things = [NSSet new];
              
              error = [self saveContext];
@@ -644,10 +699,11 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     }
 }
 
-- (void)updateRecordId:(NSString *)recordId
-          lastSyncDate:(NSDate *_Nullable)lastSyncDate
-        sequenceNumber:(NSNumber *_Nullable)sequenceNumber
-            completion:(void (^)(NSError *_Nullable error))completion;
+- (void)updateLastCompletedSyncDate:(NSDate *_Nullable)lastCompletedSyncDate
+           lastCacheConsistencyDate:(NSDate *_Nullable)lastCacheConsistencyDate
+                     sequenceNumber:(NSInteger)sequenceNumber
+                           recordId:(NSString *_Nullable)recordId
+                         completion:(void (^)(NSError *_Nullable error))completion
 {
     if (!self.isDatabaseReady)
     {
@@ -670,15 +726,17 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          }
          else
          {
-             if (lastSyncDate)
+             if (lastCompletedSyncDate)
              {
-                 cachedRecord.lastSyncDate = lastSyncDate;
+                 cachedRecord.lastSyncDate = lastCompletedSyncDate;
              }
-             if (sequenceNumber >= 0)
+             if (lastCacheConsistencyDate)
              {
-                 cachedRecord.lastOperationSequenceNumber = sequenceNumber.integerValue;
+                 cachedRecord.lastConsistencyDate = lastCacheConsistencyDate;
              }
              
+             cachedRecord.newestCacheSequenceNumber = sequenceNumber;
+             cachedRecord.newestHealthVaultSequenceNumber = sequenceNumber;
              cachedRecord.isValid = YES;
              
              error = [self saveContext];
