@@ -105,7 +105,7 @@ describe(@"MHVThingClient", ^
                        [thingClient getThingsForThingClass:[MHVAllergy class]
                                                      query:[MHVThingQuery new]
                                                   recordId:recordId
-                                                completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error) { }];
+                                                completion:^(MHVThingQueryResult *_Nullable result, NSError *_Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
@@ -153,7 +153,7 @@ describe(@"MHVThingClient", ^
                    {
                        [thingClient createNewThing:allergyThing
                                           recordId:recordId
-                                        completion:^(NSError *error) { }];
+                                        completion:^(MHVThingKey *_Nullable thingKey, NSError *error) { }];
                        
                        MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
@@ -203,21 +203,27 @@ describe(@"MHVThingClient", ^
     context(@"createNewThing called with invalid Thing", ^
             {
                 __block NSError *returnedError;
+                __block MHVThingKey *returnedKey;
                 
                 beforeEach(^{
                     returnedError = nil;
                     
                     [thingClient createNewThing:invalidThing
                                        recordId:recordId
-                                     completion:^(NSError *error)
+                                     completion:^(MHVThingKey *thingKey, NSError *error)
                      {
                          returnedError = error;
+                         returnedKey = thingKey;
                      }];
                 });
                 
                 it(@"should have error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNonNil];
+                   });
+                it(@"should have a nil thingKey", ^
+                   {
+                       [[expectFutureValue(returnedKey) shouldEventually] beNil];
                    });
                 it(@"should have RequiredParameter error code", ^
                    {

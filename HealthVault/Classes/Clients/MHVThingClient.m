@@ -158,39 +158,39 @@
         }
     }
     
-//#ifdef THING_CACHE
-//    // Check for cached results for the GetThings queries
-//    if (self.cache)
-//    {
-//        [self.cache cachedResultsForQueries:queries
-//                                   recordId:recordId
-//                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
-//         {
-//             // If error is because cache not ready or deleted, send request to HealthVault
-//             if (error && error.code != MHVErrorTypeCacheNotReady && error.code != MHVErrorTypeCacheDeleted)
-//             {
-//                 completion(nil, error);
-//             }
-//             else if (resultCollection)
-//             {
-//                 completion(resultCollection, nil);
-//             }
-//             else
-//             {
-//                 //No resultCollection or error, query HealthVault
-//                 [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
-//             }
-//         }];
-//    }
-//    else
-//    {
-//        [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
-//    }
-//    
-//#else
+#ifdef THING_CACHE
+    // Check for cached results for the GetThings queries
+    if (self.cache)
+    {
+        [self.cache cachedResultsForQueries:queries
+                                   recordId:recordId
+                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
+         {
+             // If error is because cache not ready or deleted, send request to HealthVault
+             if (error && error.code != MHVErrorTypeCacheNotReady && error.code != MHVErrorTypeCacheDeleted)
+             {
+                 completion(nil, error);
+             }
+             else if (resultCollection)
+             {
+                 completion(resultCollection, nil);
+             }
+             else
+             {
+                 //No resultCollection or error, query HealthVault
+                 [self.cache cachedResultsForQueries:queries recordId:recordId completion:completion];
+             }
+         }];
+    }
+    else
+    {
+        [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
+    }
+    
+#else
     // No caching
     [self getThingsWithQueries:queries recordId:recordId currentResults:nil completion:completion];
-//#endif
+#endif
 }
 
 // Internal method that will fetch more pending items if not all results are returned for the query.
@@ -340,7 +340,7 @@
 
 - (void)createNewThing:(MHVThing *)thing
               recordId:(NSUUID *)recordId
-            completion:(void(^_Nullable)(NSError *_Nullable error))completion
+            completion:(void(^_Nullable)(MHVThingKey *_Nullable thingKey, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(thing);
     MHVASSERT_PARAMETER(recordId);
@@ -349,7 +349,7 @@
     {
         if (completion)
         {
-            completion([NSError MVHRequiredParameterIsNil]);
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -357,12 +357,15 @@
     
     [self createNewThings:[[MHVThingCollection alloc] initWithThing:thing]
                  recordId:recordId
-               completion:completion];
+               completion:^(MHVThingKeyCollection * _Nullable thingKeys, NSError * _Nullable error)
+    {
+        completion([thingKeys firstKey], error);
+    }];
 }
 
 - (void)createNewThings:(MHVThingCollection *)things
                recordId:(NSUUID *)recordId
-             completion:(void(^_Nullable)(NSError *_Nullable error))completion
+             completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
@@ -371,7 +374,7 @@
     {
         if (completion)
         {
-            completion([NSError MVHRequiredParameterIsNil]);
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -386,7 +389,7 @@
         {
             if (completion)
             {
-                completion([NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
+                completion(nil, [NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
             }
             
             return;
@@ -402,40 +405,37 @@
      {
          MHVThingKeyCollection *keys = [self thingKeyResultsFromResponse:response];
          
-         if (keys.count != things.count)
-         {
-             if (completion)
-             {
-                 completion([NSError error:[NSError MHVUnknownError]
-                           withDescription:@"Mismatch between added Thing count and Thing Keys"]);
-             }
-             return;
-         }
-         
-         // Set Key on the added things
-         for (NSInteger i = 0; i < things.count; i++)
-         {
-             things[i].key = keys[i];
-         }
-
 #ifdef THING_CACHE
-         if (!error && self.cache)
+         if (keys.count == things.count)
          {
-             [self.cache addThings:things
-                          recordId:recordId
-                        completion:^(NSError * _Nullable error)
-              {
-                  if (completion)
+             // Set Key on the added things
+             for (NSInteger i = 0; i < things.count; i++)
+             {
+                 things[i].key = keys[i];
+             }
+             
+             if (!error && self.cache)
+             {
+                 [self.cache addThings:things
+                              recordId:recordId
+                            completion:^(NSError * _Nullable error)
                   {
-                      completion(error);
-                  }
-              }];
-             return;
+                      if (completion)
+                      {
+                          completion(keys, error);
+                      }
+                  }];
+                 return;
+             }
+         }
+         else
+         {
+             MHVASSERT_MESSAGE(@"Mismatch between added Thing count and Thing Keys");
          }
 #endif
          if (completion)
          {
-             completion(error);
+             completion(keys, error);
          }
      }];
 }

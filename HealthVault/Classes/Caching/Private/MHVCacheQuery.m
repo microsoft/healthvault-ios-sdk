@@ -228,9 +228,15 @@ static NSString *const kPredicateVariable = @"predicateVariable";
         {
             id value = [object valueForKey:propertyName];
             
-            if ([propertyName isEqualToString:@"maxResults"])
+            if ([propertyName isEqualToString:@"limit"])
             {
                 _fetchLimit = ((NSNumber *)value).integerValue;
+                
+                continue;
+            }
+            else if ([propertyName isEqualToString:@"offset"])
+            {
+                _fetchOffset = ((NSNumber *)value).integerValue;
                 
                 continue;
             }

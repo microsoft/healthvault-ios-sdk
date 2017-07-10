@@ -233,6 +233,7 @@ static const NSUInteger c_thingLimit = 50;
     NSDate *startDate = [NSDate date];
     
     __block MHVThingQuery *query = [[MHVThingQuery alloc] init];
+    query.shouldUseCachedResults = self.useCache;
     query.limit = range.length;
     query.offset = range.location;
 
@@ -393,7 +394,7 @@ static const NSUInteger c_thingLimit = 50;
     // Send request to create new thing objects
     [self.connection.thingClient createNewThings:things
                                         recordId:self.connection.personInfo.selectedRecordID
-                                      completion:^(NSError * _Nullable error)
+                                      completion:^(MHVThingKeyCollection *_Nullable thingKeys, NSError * _Nullable error)
      {
          // Completion will be called on arbitrary thread.
          // Dispatch to main thread to refresh the table or show error

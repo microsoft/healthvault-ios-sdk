@@ -29,9 +29,11 @@
  
  @param database The Database for the cache
  @param connection The connection object for the current authenticated person
+ @param automaticStartStop Whether the cache should automatically sync and reset based on connection.personInfo 
  @return The cache object
  */
 - (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
-                           connection:(id<MHVConnectionProtocol>)connection;
+                           connection:(id<MHVConnectionProtocol>)connection
+                   automaticStartStop:(BOOL)automaticStartStop;
 
 @end

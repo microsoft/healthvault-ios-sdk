@@ -109,6 +109,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Perform background tasks.  
  This should be called in application:performFetchWithCompletionHandler:
+ You will also need to add "Background fetch" to your app's "Background modes" capabilities
+ if you wish to have HealthVault data updated in the background
 
  @param completion Envoked when the tasks are complete
  */

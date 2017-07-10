@@ -19,7 +19,8 @@
 #import <UIKit/UIKit.h>
 #import "MHVClientProtocol.h"
 
-@class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingQueryResult, MHVBlobPayloadThing, MHVGetRecordOperationsResult;
+@class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingQueryResult, MHVBlobPayloadThing, MHVGetRecordOperationsResult, MHVThingKeyCollection, MHVThingKey;
+
 @protocol MHVThingCacheProtocol, MHVBlobSourceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -87,11 +88,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param thing The thing to be added
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
+          MHVThingKey thingKey A Thing Key for the Thing that was created or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)createNewThing:(MHVThing *)thing
               recordId:(NSUUID *)recordId
-            completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+            completion:(void(^_Nullable)(MHVThingKey *_Nullable thingKeys, NSError *_Nullable error))completion;
 
 /**
  * Store several new Things in the HealthVault service
@@ -99,11 +101,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param things Collection of things to be added
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
+ +        MHVThingKeyCollection thingKeys A collection of Thing Keys for Things that were created or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)createNewThings:(MHVThingCollection *)things
                recordId:(NSUUID *)recordId
-             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+             completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion;
 
 /**
  * Update an existing Thing in the HealthVault service
