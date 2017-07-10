@@ -15,8 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSFetchRequest<MHVCachedRecord *> *)fetchRequest;
 
 @property (nonatomic) BOOL isValid;
-@property (nonatomic) int64_t lastOperationSequenceNumber;
+@property (nonatomic) int64_t newestHealthVaultSequenceNumber;
+@property (nonatomic) int64_t newestCacheSequenceNumber;
 @property (nullable, nonatomic, copy) NSDate *lastSyncDate;
+@property (nullable, nonatomic, copy) NSDate *lastConsistencyDate;
 @property (nullable, nonatomic, copy) NSString *recordId;
 @property (nullable, nonatomic, retain) MHVPendingCreateThing *pendingCreateThings;
 @property (nullable, nonatomic, retain) MHVPendingDeleteThing *pendingDeleteThing;

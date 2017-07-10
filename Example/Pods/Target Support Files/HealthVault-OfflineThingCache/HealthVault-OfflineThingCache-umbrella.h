@@ -24,6 +24,7 @@
 #import "MHVShellAuthService.h"
 #import "MHVShellAuthServiceProtocol.h"
 #import "MHVCacheConstants.h"
+#import "MHVCacheStatusProtocol.h"
 #import "MHVThingCacheConfiguration.h"
 #import "MHVThingCacheDatabaseProtocol.h"
 #import "MHVThingCacheProtocol.h"

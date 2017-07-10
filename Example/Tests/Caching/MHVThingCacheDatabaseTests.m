@@ -35,9 +35,7 @@ describe(@"MHVThingCacheDatabase", ^
     __block NSError *returnedSetupRecordsError;
     __block NSNumber *returnedUpdateItemCount;
     __block NSError *returnedUpdateThingsError;
-    __block NSDate *returnedLastSyncDate;
-    __block NSInteger returnedLastSequenceNumber;
-    __block BOOL returnedIsCacheValid;
+    __block id<MHVCacheStatusProtocol> returnedStatus;
     __block NSURL *removedItemAtURL;
     __block NSError *returnedCacheStatusError;
     __block BOOL fileExistsAtPathReturnValue = YES;
@@ -91,9 +89,7 @@ describe(@"MHVThingCacheDatabase", ^
 
                    returnedUpdateItemCount = nil;
                    returnedUpdateThingsError = nil;
-                   returnedLastSyncDate = nil;
-                   returnedLastSequenceNumber = -1;
-                   returnedIsCacheValid = NO;
+                   returnedStatus = nil;
                    returnedCacheStatusError = nil;
                    removedItemAtURL = nil;
                    fileExistsAtPathReturnValue = YES;
@@ -107,10 +103,8 @@ describe(@"MHVThingCacheDatabase", ^
     
 #pragma mark - Records
 
-    context(@"when setupDatabaseWithCompletion is called", ^
+    context(@"when the setupDatabaseWithCompletion called is successful", ^
             {
-                __block NSArray *returnedRecords;
-                __block NSError *returnedFetchRecordsError;
                 beforeEach(^
                            {
                                [database setupDatabaseWithCompletion:^(NSError *error)
@@ -119,7 +113,7 @@ describe(@"MHVThingCacheDatabase", ^
                                 }];
                            });
                 
-                it(@"should have nil error", ^
+                it(@"should have a nil error", ^
                    {
                        [[expectFutureValue(returnedSetupDatabaseError) shouldEventually] beNil];
                    });
@@ -130,7 +124,7 @@ describe(@"MHVThingCacheDatabase", ^
                    });
             });
 
-    context(@"when setupRecordIds is called to create a new record", ^
+    context(@"when the setupRecordIds call to create a new record", ^
             {
                 __block NSArray *returnedRecords;
                 __block NSError *returnedFetchRecordsError;
@@ -140,14 +134,14 @@ describe(@"MHVThingCacheDatabase", ^
                                 {
                                     returnedSetupDatabaseError = error;
                                     
-                                    [database setupRecordIds:@[kTestRecordId]
-                                                  completion:^(NSError *error)
+                                    [database setupCacheForRecordIds:@[kTestRecordId]
+                                                          completion:^(NSError *error)
                                      {
                                          returnedSetupRecordsError = error;
 
-                                         [database fetchCachedRecordIds:^(NSArray<NSString *> *_Nullable records, NSError *_Nullable error)
+                                         [database fetchCachedRecordIds:^(NSArray<NSString *> *_Nullable recordIds, NSError *_Nullable error)
                                           {
-                                              returnedRecords = records;
+                                              returnedRecords = recordIds;
                                               returnedFetchRecordsError = error;
                                           }];
                                      }];
@@ -176,17 +170,15 @@ describe(@"MHVThingCacheDatabase", ^
                                 {
                                     returnedSetupDatabaseError = error;
                                     
-                                    [database setupRecordIds:@[kTestRecordId]
-                                                  completion:^(NSError *error)
+                                    [database setupCacheForRecordIds:@[kTestRecordId]
+                                                          completion:^(NSError *error)
                                      {
                                          returnedSetupRecordsError = error;
                                          
                                          [database cacheStatusForRecordId:kTestRecordId
-                                                               completion:^(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error)
+                                                               completion:^(id<MHVCacheStatusProtocol> _Nonnull status, NSError *_Nullable error)
                                           {
-                                              returnedLastSyncDate = lastSyncDate;
-                                              returnedLastSequenceNumber = lastSequenceNumber;
-                                              returnedIsCacheValid = isCacheValid;
+                                              returnedStatus = status;
                                               returnedCacheStatusError = error;
                                           }];
                                      }];
@@ -201,15 +193,18 @@ describe(@"MHVThingCacheDatabase", ^
                    });
                 it(@"should return record that is valid and has not been synced", ^
                    {
-                       [[expectFutureValue(returnedLastSyncDate) shouldEventually] beNil];
-                       [[expectFutureValue(theValue(returnedLastSequenceNumber)) shouldEventually] equal:@(0)];
-                       [[expectFutureValue(theValue(returnedIsCacheValid)) shouldEventually] equal:@(YES)];
+                       [[expectFutureValue(returnedStatus.lastCompletedSyncDate) shouldEventually] beNil];
+                       [[expectFutureValue(returnedStatus.lastCacheConsistencyDate) shouldEventually] beNil];
+                       [[expectFutureValue(theValue(returnedStatus.newestCacheSequenceNumber)) shouldEventually] equal:theValue(0)];
+                       [[expectFutureValue(theValue(returnedStatus.newestHealthVaultSequenceNumber)) shouldEventually] equal:theValue(1)];
+                       [[expectFutureValue(theValue(returnedStatus.isCacheValid)) shouldEventually] equal:theValue(YES)];
                    });
             });
     
         context(@"when updateRecordId is called", ^
                 {
                     __block NSError *returnedUpdateRecordInfoError;
+                    __block NSDate *testDate = [NSDate dateWithTimeIntervalSince1970:60];
 
                     beforeEach(^
                                {
@@ -217,24 +212,23 @@ describe(@"MHVThingCacheDatabase", ^
                                     {
                                         returnedSetupDatabaseError = error;
                                         
-                                        [database setupRecordIds:@[kTestRecordId]
-                                                      completion:^(NSError *error)
+                                        [database setupCacheForRecordIds:@[kTestRecordId]
+                                                              completion:^(NSError *error)
                                          {
                                              returnedSetupRecordsError = error;
 
-                                             [database updateRecordId:kTestRecordId
-                                                         lastSyncDate:[NSDate dateWithTimeIntervalSince1970:60]
-                                                       sequenceNumber:@(3)
-                                                           completion:^(NSError *_Nullable error)
+                                             [database updateLastCompletedSyncDate:testDate
+                                                          lastCacheConsistencyDate:testDate
+                                                                    sequenceNumber:3
+                                                                          recordId:kTestRecordId
+                                                                        completion:^(NSError *_Nullable error)
                                               {
                                                   returnedUpdateRecordInfoError = error;
                                                   
                                                   [database cacheStatusForRecordId:kTestRecordId
-                                                                        completion:^(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error)
+                                                                        completion:^(id<MHVCacheStatusProtocol> _Nonnull status, NSError *_Nullable error)
                                                    {
-                                                       returnedLastSyncDate = lastSyncDate;
-                                                       returnedLastSequenceNumber = lastSequenceNumber;
-                                                       returnedIsCacheValid = isCacheValid;
+                                                       returnedStatus = status;
                                                        returnedCacheStatusError = error;
                                                    }];
                                               }];
@@ -249,17 +243,13 @@ describe(@"MHVThingCacheDatabase", ^
                            [[expectFutureValue(returnedUpdateRecordInfoError) shouldEventually] beNil];
                            [[expectFutureValue(returnedCacheStatusError) shouldEventually] beNil];
                        });
-                    it(@"date should should be the updated date", ^
+                    it(@"should provide an updated MHVCacheStatusProtocol object", ^
                        {
-                           [[expectFutureValue(returnedLastSyncDate) shouldEventually] equal:[NSDate dateWithTimeIntervalSince1970:60]];
-                       });
-                    it(@"sequence number should be updated number", ^
-                       {
-                           [[expectFutureValue(theValue(returnedLastSequenceNumber)) shouldEventually] equal:@(3)];
-                       });
-                    it(@"record should be valid", ^
-                       {
-                           [[expectFutureValue(theValue(returnedIsCacheValid)) shouldEventually] beYes];
+                           [[expectFutureValue(returnedStatus.lastCompletedSyncDate) shouldEventually] equal:testDate];
+                           [[expectFutureValue(returnedStatus.lastCacheConsistencyDate) shouldEventually] equal:testDate];
+                           [[expectFutureValue(theValue(returnedStatus.newestCacheSequenceNumber)) shouldEventually] equal:theValue(3)];
+                           [[expectFutureValue(theValue(returnedStatus.newestHealthVaultSequenceNumber)) shouldEventually] equal:theValue(3)];
+                           [[expectFutureValue(theValue(returnedStatus.isCacheValid)) shouldEventually] equal:theValue(YES)];
                        });
                 });
     
@@ -269,14 +259,12 @@ describe(@"MHVThingCacheDatabase", ^
                 {
                     beforeEach(^
                                {
-                                   __weak __typeof__(database)weakDatabase = database;
-                                   
                                    [database setupDatabaseWithCompletion:^(NSError *error)
                                     {
                                         returnedSetupDatabaseError = error;
                                         
-                                        [database setupRecordIds:@[kTestRecordId]
-                                                      completion:^(NSError *error)
+                                        [database setupCacheForRecordIds:@[kTestRecordId]
+                                                              completion:^(NSError *error)
                                          {
                                              MHVThing *thing = [MHVAllergy newThing];
                                              [thing ensureKey];
@@ -288,20 +276,19 @@ describe(@"MHVThingCacheDatabase", ^
                                              
                                              MHVThingCollection *things = [[MHVThingCollection alloc] initWithThing:thing];
                                              
-                                             [weakDatabase addOrUpdateThings:things
-                                                                    recordId:kTestRecordId
-                                                          lastSequenceNumber:99
-                                                                  completion:^(NSInteger updateItemCount, NSError *_Nullable error)
+                                             [database synchronizeThings:things
+                                                                recordId:kTestRecordId
+                                                     batchSequenceNumber:99
+                                                    latestSequenceNumber:99
+                                                              completion:^(NSInteger updateItemCount, NSError *_Nullable error)
                                               {
                                                   returnedUpdateItemCount = @(updateItemCount);
                                                   returnedUpdateThingsError = error;
                                                   
-                                                  [weakDatabase cacheStatusForRecordId:kTestRecordId
-                                                                            completion:^(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error)
+                                                  [database cacheStatusForRecordId:kTestRecordId
+                                                                        completion:^(id<MHVCacheStatusProtocol> _Nonnull status, NSError *_Nullable error)
                                                    {
-                                                       returnedLastSyncDate = lastSyncDate;
-                                                       returnedLastSequenceNumber = lastSequenceNumber;
-                                                       returnedIsCacheValid = isCacheValid;
+                                                       returnedStatus = status;
                                                        returnedCacheStatusError = error;
                                                    }];
                                               }];
@@ -321,12 +308,12 @@ describe(@"MHVThingCacheDatabase", ^
                        });
                     it(@"cacheStatusForRecordId should have updated sequence number", ^
                        {
-                           [[expectFutureValue(returnedLastSyncDate) shouldEventually] beNonNil];
-                           [[expectFutureValue(theValue(returnedLastSequenceNumber)) shouldEventually] equal:@(99)];
-                           [[expectFutureValue(theValue(returnedIsCacheValid)) shouldEventually] equal:@(YES)];
+                           [[expectFutureValue(theValue(returnedStatus.newestCacheSequenceNumber)) shouldEventually] equal:theValue(99)];
+                           [[expectFutureValue(theValue(returnedStatus.newestHealthVaultSequenceNumber)) shouldEventually] equal:theValue(99)];
+                           [[expectFutureValue(theValue(returnedStatus.isCacheValid)) shouldEventually] equal:theValue(YES)];
                        });
                     
-                    it(@"cachedResultsForQuery can retrieve the new thing", ^
+                    it(@"cachedResultForQuery can retrieve the new thing", ^
                        {
                            __block MHVThingQueryResult *returnedQueryResult;
                            __block NSError *returnedQueryError;
@@ -334,9 +321,9 @@ describe(@"MHVThingCacheDatabase", ^
                            //Wait for beforeEach above to add the thing
                            [[expectFutureValue(returnedUpdateItemCount) shouldEventually] beNonNil];
                            
-                           [database cachedResultsForQuery:[[MHVThingQuery alloc] initWithThingID:kTestThingId]
-                                                  recordId:kTestRecordId
-                                                completion:^(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error)
+                           [database cachedResultForQuery:[[MHVThingQuery alloc] initWithThingID:kTestThingId]
+                                                 recordId:kTestRecordId
+                                               completion:^(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error)
                             {
                                 returnedQueryResult = queryResult;
                                 returnedQueryError = error;
@@ -350,7 +337,7 @@ describe(@"MHVThingCacheDatabase", ^
     
 #pragma mark - Reset
     
-        context(@"when resetDatabaseWithCompletion is called", ^
+        context(@"when the resetDatabaseWithCompletion call is successful", ^
                 {
                     __block NSError *returnedResetDatabaseError;
                     
@@ -360,8 +347,8 @@ describe(@"MHVThingCacheDatabase", ^
                                     {
                                         returnedSetupDatabaseError = error;
                                         
-                                        [database setupRecordIds:@[kTestRecordId]
-                                                      completion:^(NSError *error)
+                                        [database setupCacheForRecordIds:@[kTestRecordId]
+                                                              completion:^(NSError *error)
                                          {
                                              returnedSetupRecordsError = error;
                                              
@@ -372,11 +359,9 @@ describe(@"MHVThingCacheDatabase", ^
                                                   returnedResetDatabaseError = error;
                                                   
                                                   [database cacheStatusForRecordId:kTestRecordId
-                                                                            completion:^(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error)
+                                                                        completion:^(id<MHVCacheStatusProtocol> _Nonnull status, NSError *_Nullable error)
                                                    {
-                                                       returnedLastSyncDate = lastSyncDate;
-                                                       returnedLastSequenceNumber = lastSequenceNumber;
-                                                       returnedIsCacheValid = isCacheValid;
+                                                       returnedStatus = status;
                                                        returnedCacheStatusError = error;
                                                    }];
                                               }];
@@ -402,9 +387,7 @@ describe(@"MHVThingCacheDatabase", ^
                        {
                            [[expectFutureValue(returnedCacheStatusError) shouldEventually] beNonNil];
                            
-                           [[expectFutureValue(returnedLastSyncDate) shouldEventually] beNil];
-                           [[expectFutureValue(theValue(returnedLastSequenceNumber)) shouldEventually] equal:@(0)];
-                           [[expectFutureValue(theValue(returnedIsCacheValid)) shouldEventually] equal:@(NO)];
+                           [[expectFutureValue(returnedStatus) shouldEventually] beNil];
                        });
                 });
 });

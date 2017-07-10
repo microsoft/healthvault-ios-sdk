@@ -14,8 +14,10 @@
 }
 
 @dynamic isValid;
-@dynamic lastOperationSequenceNumber;
 @dynamic lastSyncDate;
+@dynamic lastConsistencyDate;
+@dynamic newestHealthVaultSequenceNumber;
+@dynamic newestCacheSequenceNumber;
 @dynamic recordId;
 @dynamic pendingCreateThings;
 @dynamic pendingDeleteThing;

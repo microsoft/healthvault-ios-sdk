@@ -19,110 +19,140 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+
 @class MHVThingCollection, MHVThingQuery, MHVThingQueryResult;
+@protocol MHVCacheStatusProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVThingCacheDatabaseProtocol <NSObject>
 
 /**
- Initialize and setup database if needed.
- This is called after a user has authenticated, and may be called after deleteDatabase
- when signing out and signing in again
+ Called to Initialize and setup database if needed.
+ @note This is called immediately after a user has authenticated the application.
  
- @param completion Envoked when the operation is complete
+ @param completion Must be envoked when the operation is complete or if an error occurs.
  */
 - (void)setupDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Delete all contents and resets the current database
+ Called after a user has completely de-authorized an application. All user data should be removed from the database.
+ @note For multi-record apps this method is called only after the application has been de-authorized for ALL records.
  
- @param completion Envoked when the operation is complete
+ @param completion Must be envoked when the operation is complete or if an error occurs.
  */
 - (void)resetDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Ensure records exist for an array of recordIds, creating if needed.
+ This method is called after a user has authenticated the application (also after setupDatabaseWithCompletion:) and after the application has been authorized for additional records (multi-record apps).
  
- @param recordIds The record IDs
- @param completion Envoked when the operation is complete
+ @param recordIds The record ids
+ @param completion Must be envoked when the operation is complete or if an error occurs.
  */
-- (void)setupRecordIds:(NSArray<NSString *> *)recordIds
-            completion:(void (^)(NSError *_Nullable error))completion;
+- (void)setupCacheForRecordIds:(NSArray<NSString *> *)recordIds
+                    completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Delete a record from the current database
+ Deletes all cached Things for a given recordId. This method will be called when a single record is de-authorized.
  
  @param recordId id of the record to be deleted
- @param completion Envoked when the operation is complete
+ @param completion Must be envoked when the operation is complete or if an error occurs.
  */
-- (void)deleteRecord:(NSString *)recordId
-          completion:(void (^)(NSError *_Nullable error))completion;
+- (void)deleteCacheForRecordId:(NSString *)recordId
+                    completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Delete Things given an array of IDs
+ This method is called AFTER a Thing (or Things) have been created and successfully added to HealthVault.
+
+ @param things A collection of new things to be added to the cache database.
+ @param recordId the RecordId of the owner of the things.
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if the creation process could not be completed.
+ */
+- (void)createCachedThings:(MHVThingCollection *)things
+                  recordId:(NSString *)recordId
+                completion:(void (^)(NSError *_Nullable error))completion;
+
+/**
+ This method is called AFTER a Thing (or Things) have been successfully updated in HealthVault.
+
+ @param things A collection of existing things to be updated in the cache database.
+ @param recordId the RecordId of the owner of the things.
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if the creation process could not be completed.
+ */
+- (void)updateCachedThings:(MHVThingCollection *)things
+                  recordId:(NSString *)recordId
+                completion:(void (^)(NSError *_Nullable error))completion;
+
+/**
+ This method is called AFTER a Thing (or Things) have been successfully deleted from HealthVault.
  
  @param thingIds the IDs of the things to be deleted
  @param recordId the RecordId of the owner of the things
  @param completion Envoked when the operation is complete
  */
-- (void)deleteThingIds:(NSArray<NSString *> *)thingIds
-              recordId:(NSString *)recordId
-            completion:(void (^)(NSError *_Nullable error))completion;
+- (void)deleteCachedThingsWithThingIds:(NSArray<NSString *> *)thingIds
+                              recordId:(NSString *)recordId
+                            completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- Update or create things in the cache database for a Thing collection
- If the thingId is found, it will be updated; if not it will be added
+ This method will be called to synchronize Things from HealthVault to the cache database for a given recordId.
  
- @param things collection of Things to be added or updated
- @param recordId the owner record of the Things
- @param lastSequenceNumber the new sequence number to use after updating
- @param completion Envoked when the operation is complete
+ @note the synchronization may include a large number of Things from HealthVault. In this case, the data is split into batches that are processed serially. The batchSequenceNumber and latestSequenceNumber parameters are used to determine if all batches have been processed - Where, batchSequenceNumber represents the greatest sequence number for a given batch, and latestSequenceNumber represents the greatest sequence number for all batches. During initial setup of the cache, or after long periods where a sync did not happen, this method will be called repeatedly until batchSequenceNumber = latestSequenceNumber. It's recommended that batchSequenceNumber be saved so if the sync is interupted the process can be continued.
+ @param things collection of Things to be synchronized.
+ @param recordId the owner record of the Things.
+ @param batchSequenceNumber the sequence number with the highest value for all sequences included in the batch.
+ @param latestSequenceNumber the newest sequence number for all sequences.
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSInteger updateItemCount the number of Things successfully syncronized. NSError error a detailed error if the synchronization process could not be completed.
  */
-- (void)addOrUpdateThings:(MHVThingCollection *)things
+- (void)synchronizeThings:(MHVThingCollection *)things
                  recordId:(NSString *)recordId
-       lastSequenceNumber:(NSInteger)lastSequenceNumber
-               completion:(void (^)(NSInteger updateItemCount, NSError *_Nullable error))completion;
+      batchSequenceNumber:(NSInteger)batchSequenceNumber
+     latestSequenceNumber:(NSInteger)latestSequenceNumber
+               completion:(void (^)(NSInteger synchronizedItemCount, NSError *_Nullable error))completion;
 
 /**
- Retrieve things for a query
+ This method is called BEFORE issuing a given request to HealthVault and AFTER cacheStatusForRecordId:completion:. Once a cache for a given record has been syncronized, queries will be issued to the cache only.
+ @note Before calling this method, cacheStatusForRecordId:completion: will be called to check the status of the cache, If MHVCacheStatusProtocol.isCacheValid == NO or MHVCacheStatusProtocol.lastCacheConsistencyDate == nil, the query will be made directly to HealthVault.
  
  @param query The GetThings query
  @param recordId the owner record of the Things
  @param completion Envoked with the MHVThingQueryResult
  */
-- (void)cachedResultsForQuery:(MHVThingQuery *)query
-                     recordId:(NSString *)recordId
-                   completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion;
+- (void)cachedResultForQuery:(MHVThingQuery *)query
+                    recordId:(NSString *)recordId
+                  completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion;
 
 /**
- Fetch all cached records
+ This method is called before the start of the sync process to determine which records to sync.
+ @note The order the record ids are returned are the order they will be synchronized (The synchronization of each record happens serially).
  
- @param completion Envoked with the array of records
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSArray<NSString *> recordIds The record ids that have associated Thing caches. NSError error a detailed error if the operations to get record ids fails.
  */
-- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable records, NSError *_Nullable error))completion;
+- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable recordIds, NSError *_Nullable error))completion;
 
 /**
  Retrieve status information about a cached record
  
  @param recordId The record ID
- @param completion Envoked with the results or error
+ @param completion MUST be envoked when the operation is complete or an error occurs. id<MHVCacheStatusProtocol> status The status of the cache for a given record id. NSError error a detailed error if the operations to get the cache status fails.
  */
 - (void)cacheStatusForRecordId:(NSString *)recordId
-                    completion:(void (^)(NSDate *_Nullable lastSyncDate, NSInteger lastSequenceNumber, BOOL isCacheValid, NSError *_Nullable error))completion;
+                    completion:(void (^)(id<MHVCacheStatusProtocol> _Nullable status, NSError *_Nullable error))completion;
 
 /**
- Update a record with a new date and/or sequence number
+ This method is called if a sync operation occurs and there is no new data from HealthVault.
  
- @param recordId The record
- @param lastSyncDate NSDate to update, should not update date on the record if nil
- @param sequenceNumber NSNumber sequence number, should not update number on the record if nil
- @param completion Envoked when the operation is complete
+ @param lastCompletedSyncDate NSDate the date that the sync operation completed.
+ @param lastCacheConsistencyDate NSDate If it can be determined that the cache and HealthVault are consistent after the sync operation this date will be the same as lastCompletedSyncDate. Otherwise it will be nil.
+ @param sequenceNumber NSInteger The latest sequence number from HealthVault.
+ @param recordId NSString The record Id used to identify a specific cache of Things
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if the update process could not be completed.
  */
-- (void)updateRecordId:(NSString *)recordId
-          lastSyncDate:(NSDate *_Nullable)lastSyncDate
-        sequenceNumber:(NSNumber *_Nullable)sequenceNumber
-            completion:(void (^)(NSError *_Nullable error))completion;
+- (void)updateLastCompletedSyncDate:(NSDate *_Nullable)lastCompletedSyncDate
+           lastCacheConsistencyDate:(NSDate *_Nullable)lastCacheConsistencyDate
+                     sequenceNumber:(NSInteger)sequenceNumber
+                           recordId:(NSString *_Nullable)recordId
+                         completion:(void (^)(NSError *_Nullable error))completion;
 
 @end
 

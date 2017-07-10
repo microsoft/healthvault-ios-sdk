@@ -19,11 +19,15 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVThingCacheDatabaseProtocol.h"
+#import "MHVCacheStatusProtocol.h"
 
-@interface MHVMockRecord : NSObject
+@interface MHVMockRecord : NSObject<MHVCacheStatusProtocol>
 
-@property (readonly, nonatomic, strong) NSDate *lastSyncDate;
-@property (readonly, nonatomic, assign) NSInteger lastSequenceNumber;
+@property (nonatomic, strong, readonly) NSDate *lastSyncDate;
+@property (nonatomic, strong, readonly) NSDate *lastConsistencyDate;
+@property (nonatomic, assign, readonly) NSInteger lastCacheSequenceNumber;
+@property (nonatomic, assign, readonly) NSInteger lastHealthVaultSequenceNumber;
+@property (nonatomic, assign, readonly) BOOL isValid;
 
 @property (readonly, nonatomic, strong) MHVThingCollection *things;
 

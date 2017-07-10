@@ -122,14 +122,7 @@ static CGFloat kAnimationTime = 0.15;
 
 - (void)cancelButtonPressed:(id)sender
 {
-    if (self.webView.canGoBack)
-    {
-        [self.webView goBack];
-    }
-    else
-    {
-        [self.authBroker userCancelled];
-    }
+    [self.authBroker userCancelled];
 }
 
 #pragma mark - Activity spinner

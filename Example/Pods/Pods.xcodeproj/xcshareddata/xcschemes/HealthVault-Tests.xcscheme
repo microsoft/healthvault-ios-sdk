@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "672F150AEB23DF9177C19550F43F45C4"
+               BlueprintIdentifier = "783E2F4D94A14B25853D1AD4D65ED0FF"
                BuildableName = "HealthVault.framework"
                BlueprintName = "HealthVault-Tests"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "672F150AEB23DF9177C19550F43F45C4"
+            BlueprintIdentifier = "783E2F4D94A14B25853D1AD4D65ED0FF"
             BuildableName = "HealthVault.framework"
             BlueprintName = "HealthVault-Tests"
             ReferencedContainer = "container:Pods.xcodeproj">
