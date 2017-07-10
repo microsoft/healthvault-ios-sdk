@@ -35,7 +35,7 @@
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 
 static NSString *const kPersonInfoKeyPath = @"personInfo";
-static NSUInteger const kMaxRecordBatch = 240;
+static NSUInteger const kMaxRecordBatchSize = 240;
 
 @interface MHVThingCache ()
 
@@ -565,14 +565,14 @@ static NSUInteger const kMaxRecordBatch = 240;
     
     NSMutableSet *syncThingIds = [NSMutableSet new];
     NSMutableSet *removeThingIds = [NSMutableSet new];
-    NSUInteger count = MIN(kMaxRecordBatch, recordOperations.count);
+    NSUInteger count = MIN(kMaxRecordBatchSize, recordOperations.count);
     NSInteger batchSequenceNumber = sequenceNumber;
     NSInteger latestSequenceNumber = [recordOperations lastObject].sequenceNumber;
     
     NSInteger totalItemsSynced = syncedItemCount;
     
     // Loop through operations to build sets of changes and deletes
-    while (syncThingIds.count + removeThingIds.count < count && recordOperations > 0)
+    while (syncThingIds.count + removeThingIds.count < count && recordOperations.count > 0)
     {
         MHVRecordOperation *operation = [recordOperations firstObject];
         
@@ -628,7 +628,7 @@ static NSUInteger const kMaxRecordBatch = 240;
                  
                  if (completion)
                  {
-                     completion(0, error);
+                     completion(totalItemsSynced, error);
                  }
              }];
         }
@@ -756,13 +756,7 @@ static NSUInteger const kMaxRecordBatch = 240;
                                          recordId:recordId
                               batchSequenceNumber:batchSequenceNumber
                              latestSequenceNumber:latestSequenceNumber
-                                       completion:^(NSInteger synchronizedItemCount, NSError * _Nullable error)
-              {
-                  if (completion)
-                  {
-                      completion(synchronizedItemCount, error);
-                  }
-              }];
+                                       completion:completion];
          }
      }];
 }

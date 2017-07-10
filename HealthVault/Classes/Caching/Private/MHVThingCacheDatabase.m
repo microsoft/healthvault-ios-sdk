@@ -662,6 +662,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              
              cachedRecord.isValid = NO;
              cachedRecord.lastSyncDate = nil;
+             cachedRecord.lastConsistencyDate = nil;
              cachedRecord.newestCacheSequenceNumber = 0;
              cachedRecord.newestHealthVaultSequenceNumber = 1;
              cachedRecord.things = [NSSet new];
