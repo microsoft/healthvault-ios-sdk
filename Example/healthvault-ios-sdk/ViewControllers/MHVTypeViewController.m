@@ -346,7 +346,7 @@ static const NSInteger c_numSecondsInDay = 86400;
     // Send request to create new thing objects
     [self.connection.thingClient createNewThings:things
                                         recordId:self.connection.personInfo.selectedRecordID
-                                      completion:^(NSError * _Nullable error)
+                                      completion:^(MHVThingKeyCollection *_Nullable thingKeys, NSError * _Nullable error)
      {
          // Completion will be called on arbitrary thread.
          // Dispatch to main thread to refresh the table or show error
