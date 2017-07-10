@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param thing The thing to be added
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
-          MHVThingKey thingKey A Thing key for thing Thing that created or nil if there was an error.
+          MHVThingKey thingKey A Thing Key for the Thing that was created or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)createNewThing:(MHVThing *)thing
@@ -99,7 +99,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param things Collection of things to be added
  * @param recordId an authorized person's record ID.
- * @param completion Envoked when the operation
+ * @param completion Envoked when the operation completes.
+ +        MHVThingKeyCollection thingKeys A collection of Thing Keys for Things that were created or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)createNewThings:(MHVThingCollection *)things
