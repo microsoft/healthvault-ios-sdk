@@ -71,7 +71,6 @@
 		08EE4533A7CEECB1A8F08DBD5955AB13 /* MHVBrowserAuthBrokerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 00CA1B5A081111C6FFCE93B3ED2A1E69 /* MHVBrowserAuthBrokerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08FD9C51F86C4AC6479FEABAF8A6CB77 /* MHVClients.h in Headers */ = {isa = PBXBuildFile; fileRef = 79EE87E723407E7A609D83CB4E174BB8 /* MHVClients.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09098001778E87C556853685770EA71A /* XNodeType.m in Sources */ = {isa = PBXBuildFile; fileRef = D7BCECCA8E7C9EDB7D5BDD336E0CD3EA /* XNodeType.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		09304602C7150615F2B11A7353B9579A /* MHVPendingDeleteThing+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = C0556DE605F818AA786DF8CEB9670EAE /* MHVPendingDeleteThing+CoreDataProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0933A25136206D4FF45BCD6F09242EAC /* MHVAppointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C345C6F7262900EFEA35B5819957C71 /* MHVAppointment.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		0941998803720374AD8FBD06BBA4F81D /* MHVRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F86A4B521D73B9106CAC6650032DBB /* MHVRecord.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		099648148058A49B56CBB2BA4BEDC6EB /* MHVInsight.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC3BB20293E6C8CA929C1372F64B0A6 /* MHVInsight.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,7 +78,6 @@
 		09D050332330BE7E5427FA993E89C980 /* MHVNonNegativeInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 116976D24781A6350667505CFF4E1AFD /* MHVNonNegativeInt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09E7AE641A4D5605329015ED111DD789 /* MHVConcentrationValue.h in Headers */ = {isa = PBXBuildFile; fileRef = B2592B5A6099E7DEBAF2D3D38CE65F1F /* MHVConcentrationValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A5E17B6708E4C060AD8D09863D8F5A4 /* MHVGoalRangeType.h in Headers */ = {isa = PBXBuildFile; fileRef = 79689AAE25B954583C0F21A2BA1C382D /* MHVGoalRangeType.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A87231690E9815FDF954717DC147951 /* MHVPendingDeleteThing+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 0819B235C2D21859F85EDEA18F36D7FF /* MHVPendingDeleteThing+CoreDataClass.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		0A9E6FF53AC59A0D8E61CC3E5602DDAE /* MHVClients.h in Headers */ = {isa = PBXBuildFile; fileRef = 79EE87E723407E7A609D83CB4E174BB8 /* MHVClients.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0AA8C42DA96B46C6CBE8CA3775F9096C /* MHVAsyncBlockOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D967B53239792CC0933F0286406282D /* MHVAsyncBlockOperation.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		0AADC5259EBCE9267E4CACEAFC420F78 /* MHVStringNZNW.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E6C3C09329828F29579AFEB10B9F89B /* MHVStringNZNW.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -502,7 +500,7 @@
 		43EDCA0CA7C5301C9A8FBADC7FA050BE /* MHVDietaryIntake.h in Headers */ = {isa = PBXBuildFile; fileRef = 566C21091060530A86F5B1AFFEDE73E5 /* MHVDietaryIntake.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		43F17AE4BDEC4CA98B329F2A98069922 /* MHVThingKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 637B827CE57425EF419CF2C264B05A9E /* MHVThingKey.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		43F861F7686FC6A70BC68F46274CFC0F /* MHVPlanOutcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 2572258149BD8E488B1802477FFA7D54 /* MHVPlanOutcome.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		440AF2E933E99D394059194AB6BB067F /* MHVPendingCreateThing+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2366CEE7349A594D6E547EECD4D8E05 /* MHVPendingCreateThing+CoreDataClass.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
+		440AF2E933E99D394059194AB6BB067F /* MHVPendingThingOperation+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2366CEE7349A594D6E547EECD4D8E05 /* MHVPendingThingOperation+CoreDataClass.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		4425BFC8B2CF9AB54234EDA521B9E1E6 /* KWGenericMatchEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = 6204B260416BEA24A751043AB4B5B38F /* KWGenericMatchEvaluator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4435E0F7BE315EEEBE6C8DAD22D9C6AE /* KWMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D84DD1D70493DB405219BFBC89D0CE78 /* KWMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44618E42A249FE30D9D0A54D4AF897D5 /* MHVBlobDownloadRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E8EC39C3831B1369EEC42AE2D2CBF8 /* MHVBlobDownloadRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -737,7 +735,7 @@
 		68F697F8B41107DBD90ABB2495ED2412 /* MHVEncounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15886A26E908824FD2F3F299303C1B9C /* MHVEncounter.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		691BB00FC466350485083DA3C862B04C /* MHVApproxDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D5A01932D2B5161C97AE73F4795BEFF /* MHVApproxDateTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		693BA2DF466EC1BF476893F2E0EFD21C /* MHVClientFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC9A46CC8785599ACF7C894A5A0C3E /* MHVClientFactory.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		695D09856BAE71C794F3793783440667 /* MHVPendingCreateThing+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D60D31C9088CA79524ECD8631159BE72 /* MHVPendingCreateThing+CoreDataClass.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		695D09856BAE71C794F3793783440667 /* MHVPendingThingOperation+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D60D31C9088CA79524ECD8631159BE72 /* MHVPendingThingOperation+CoreDataClass.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		699ED2A1651DEE8977416CCCFFAAED1A /* MHVBrowserAuthBrokerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 00CA1B5A081111C6FFCE93B3ED2A1E69 /* MHVBrowserAuthBrokerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		69A3B3A9454025296CDC82E97F6D51C1 /* MHVObjectiveAdherenceSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 018439AF71E825601F91A0839208AB34 /* MHVObjectiveAdherenceSummary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		69B74E5212BD5714A701084C8637758D /* MHVEmotionalState.m in Sources */ = {isa = PBXBuildFile; fileRef = F4975DD99B1B041DE37DFBCB50C56196 /* MHVEmotionalState.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
@@ -755,7 +753,6 @@
 		6CB8C717EB6C421B8347429FFC03397A /* MHVCondition.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C90C7217302E1A658ED02017199F51C /* MHVCondition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CC48118FBE50CF95E2AA2F9B796E0FA /* MHVBaseTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = EF42D94EC110518038A3D759EC090216 /* MHVBaseTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CF934D1B305BDF50780187B752C167C /* KWEqualMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB31F812C323426494964C7005E5842 /* KWEqualMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		6CFCE0A9033021BFFEDC75F7DAC31F14 /* MHVPendingDeleteThing+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C4595AC1A9EB6E42CD74628409475D /* MHVPendingDeleteThing+CoreDataClass.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		6D10B9B7287C173A4ED230C81BE03C9C /* MHVThingTypeDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = B3F34860E2E5905FE86C27AC47308FC2 /* MHVThingTypeDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D3E5C68753B34B318BDC555DD6F0F65 /* MHVTaskThing.h in Headers */ = {isa = PBXBuildFile; fileRef = 922157963D1DDB87899AC2075FF5B018 /* MHVTaskThing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D5E7EC5E4B26BD86F39A7CE2A69B71E /* MHVQueuedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0EE7C21362EE220D8B89E73EBD1447 /* MHVQueuedDictionary.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
@@ -796,7 +793,6 @@
 		736F4CB52542AE7A4693C64306C20D65 /* MHVTaskOccurrenceMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = E5144081AD4EF101DCC216130B09DB80 /* MHVTaskOccurrenceMetrics.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		73924EA640EAD3E9BB5FA7F19090FCBE /* MHVUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5C86AAA6798F73EBEE8BC398A2C452 /* MHVUUID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		742845245BDA3FDE06CC2981491485A4 /* MHVSodaConnectionProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4784265D7C5D0CD4EFCED5213854D93E /* MHVSodaConnectionProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		743BCECB540AD20C32373C5397CB916A /* MHVPendingDeleteThing+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C575FB8FC2F827AB68B88BA3F1775C /* MHVPendingDeleteThing+CoreDataProperties.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		744062D15858ACDAC46AE9BEFF44A687 /* MHVMedicalImageStudy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B33F82342A01750C72AB05127EB3101 /* MHVMedicalImageStudy.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		745A7A755CA58B7E074906BD9B693CDB /* MHVThingDataCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C627B028950BBB90969185E0B9D1662 /* MHVThingDataCommon.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		747487EC85090C549846B868B5761034 /* MHVDateExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C9106DC24CD6141698AEAB6EF679A18 /* MHVDateExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -838,7 +834,6 @@
 		7A7746C96D8B236C8087A2427317FD93 /* MHVNutritionFact.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF398E70CF650A21E91886650848CAE /* MHVNutritionFact.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		7AE06993B2D740BBF67222868ABD6DB5 /* MHVNonNegativeInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 116976D24781A6350667505CFF4E1AFD /* MHVNonNegativeInt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B1F4DA9A476823BED81F5A392925119 /* MHVBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CE3707FC4DD998D91850742A5D2474 /* MHVBrowserController.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		7B234BECB83AA66D9DD6FD8AF3376B6B /* MHVPendingDeleteThing+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C575FB8FC2F827AB68B88BA3F1775C /* MHVPendingDeleteThing+CoreDataProperties.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		7B372F8C68E9AE0E787AF877590995A5 /* MHVString1024.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA94AF62B198C6C71794B3965201BC7 /* MHVString1024.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		7B9706E84C0DF0DFA266AF60DEBDD664 /* MHVDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C191DFD2B9B7782507668E66BC03BF /* MHVDate.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		7C038F55DFDABC33D15DED7ADFDB391F /* MHVThingCacheDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92901AF3CC2CCECB36993F8B48753BEA /* MHVThingCacheDatabase.xcdatamodeld */; };
@@ -1063,7 +1058,7 @@
 		99A0F20E65D7E9B41484A538F72C7F36 /* KWBlockRaiseMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 60147B54CA0490BC69B139BF486E805E /* KWBlockRaiseMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		99A1A102D8DD9440B360E9064EC8D57B /* MHVAsyncTaskCompletionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B584221B6497EB947400F8798AA9930 /* MHVAsyncTaskCompletionSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99AFACFF103E34AB38AA51B3FC9FF77E /* MHVAppointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C345C6F7262900EFEA35B5819957C71 /* MHVAppointment.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		99AFD7CAEC8AB6D908618A99B722C5C1 /* MHVPendingCreateThing+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D60D31C9088CA79524ECD8631159BE72 /* MHVPendingCreateThing+CoreDataClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		99AFD7CAEC8AB6D908618A99B722C5C1 /* MHVPendingThingOperation+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D60D31C9088CA79524ECD8631159BE72 /* MHVPendingThingOperation+CoreDataClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99BFD7D6F616981879A1C874798F7271 /* MHVLengthMeasurement.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA5D0FA74F2682195199C8E79CB18D8 /* MHVLengthMeasurement.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99CBCB556F62FB8E80DA4F0739423529 /* MHVCacheQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B62272353C01B30F3240F6C69180A3 /* MHVCacheQuery.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		99E9F3736687D593731DFED37DFE854A /* MHVRelative.m in Sources */ = {isa = PBXBuildFile; fileRef = 01862D885E8D1D90D7364525939D3A83 /* MHVRelative.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
@@ -1072,7 +1067,7 @@
 		9A6BFC02D56469A1E69317F7E9D9344A /* MHVActionPlansResponseActionPlanInstance_.h in Headers */ = {isa = PBXBuildFile; fileRef = 05072A0BFB421B166D1193F947076D17 /* MHVActionPlansResponseActionPlanInstance_.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AD865A228C5CBFAD5B05A0B22C7FD98 /* MHVCholesterol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F60AB29C0479144496F49E588848961 /* MHVCholesterol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B5F50B22572D79B691CF3A8A29199A9 /* KWChangeMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 477B5A682E6F7CE54F87A61D57FB614A /* KWChangeMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		9B76DAF69DEE12F9E73BF132CAADA5A9 /* MHVPendingCreateThing+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 42574311606FB978F39CBC81BDEC4E04 /* MHVPendingCreateThing+CoreDataProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9B76DAF69DEE12F9E73BF132CAADA5A9 /* MHVPendingThingOperation+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 42574311606FB978F39CBC81BDEC4E04 /* MHVPendingThingOperation+CoreDataProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B90D6DE0973F53453495A1FD74B8153 /* MHVRemoteMonitoringClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BA05617FF8343A4BBA1AF7D510A93D0 /* MHVRemoteMonitoringClientProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9BF37AAE22BBE096813E4B139867CA49 /* MHVCholesterol.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F60AB29C0479144496F49E588848961 /* MHVCholesterol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9C0E4CB7DA4849DCAEB0B0BE809D5265 /* MHVActionPlanTaskOccurrenceMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = DE87B89CDEC409687F2A627E395BC97B /* MHVActionPlanTaskOccurrenceMetrics.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
@@ -1306,7 +1301,6 @@
 		BC69CBA3C9A43F9F1BE3B3A90D4AE20A /* MHVThingTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 214AAE9394BDEF24370E70A227CCA83D /* MHVThingTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC8CCE24E583DFF4F7922EE69C6EFDC2 /* KWRegularExpressionPatternMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 12344FE7C27356B911C94717C9E8CE62 /* KWRegularExpressionPatternMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		BCA89B2354332B592D38BBFF2EA29899 /* MHVVocabularySearchString.h in Headers */ = {isa = PBXBuildFile; fileRef = E23E893BA0AA3498CD9A501C07C45A99 /* MHVVocabularySearchString.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BCCF4979F93B0AA3277459F82CBDE1F6 /* MHVPendingDeleteThing+CoreDataClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 0819B235C2D21859F85EDEA18F36D7FF /* MHVPendingDeleteThing+CoreDataClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BCDBA3F69670939A01B377F18103CB9F /* MHVApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C43753C32183A29070AB3DFFBE6F61E /* MHVApplicationSettings.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		BCFABFA3D9B10E2A013C267764F5BEBB /* MHVOperationEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 06162BD597022DF533E821615FB6702B /* MHVOperationEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD01C1466FD9087FA6A3B23408AB393A /* MHVAsthmaInhalerUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A07B79162A9D2D843EC51A943A3C7D8 /* MHVAsthmaInhalerUsage.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
@@ -1419,7 +1413,7 @@
 		CFB42D46DC5009E685D54D4E635124AE /* MHVRemoteMonitoringClientProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BA05617FF8343A4BBA1AF7D510A93D0 /* MHVRemoteMonitoringClientProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D01F625D1E2FB6538E205D4E1DEBEA60 /* MHVDynamicEnum.m in Sources */ = {isa = PBXBuildFile; fileRef = 657F04F1448537CA251BD9BF3F775D2C /* MHVDynamicEnum.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D02D54A575FE58FB247C9C347F425C28 /* MHVGetAuthorizedPeopleResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 947A678D11E6007728B63E04549645D6 /* MHVGetAuthorizedPeopleResult.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		D0478278F6010B23362A8E79140C7EBD /* MHVPendingCreateThing+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A772A6E17741A4D8662E53D841378AF /* MHVPendingCreateThing+CoreDataProperties.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
+		D0478278F6010B23362A8E79140C7EBD /* MHVPendingThingOperation+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A772A6E17741A4D8662E53D841378AF /* MHVPendingThingOperation+CoreDataProperties.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D09873968107F9E3C785D7710D97E5EB /* MHVHttpServiceRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5F6A018E3F52C52587429AA5FDAF8B /* MHVHttpServiceRequest.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D0B73DFBC77A3CB92C03ACBFF7E46DCF /* MHVMonth.h in Headers */ = {isa = PBXBuildFile; fileRef = 14011B1BA831C7D9D2E5941759ABF784 /* MHVMonth.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0DFE4E812C83B1356273F263CC1B1FE /* MHVOneToFive.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA66198BD9A819C4996936ACE40362 /* MHVOneToFive.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
@@ -1460,7 +1454,7 @@
 		D7396CD2A35C60C674E97304AF678654 /* MHVHealthJournalEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = BAFBA343EC3BE8AAB2228E8C9E8BACB8 /* MHVHealthJournalEntry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D79458CE50869C2B632579876406BAA5 /* MHVTrackingTriggerTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = B47E20C5B03D1D1ED4182C48A3B1D252 /* MHVTrackingTriggerTypes.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D79ADDB5E229DC23DE9CC9668031C987 /* MHVAudit.h in Headers */ = {isa = PBXBuildFile; fileRef = 611A0E677D5B8B8C7F7827834E3FAF63 /* MHVAudit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D7AF3E0C6363FF0C295228629269CF99 /* MHVPendingCreateThing+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2366CEE7349A594D6E547EECD4D8E05 /* MHVPendingCreateThing+CoreDataClass.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
+		D7AF3E0C6363FF0C295228629269CF99 /* MHVPendingThingOperation+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A2366CEE7349A594D6E547EECD4D8E05 /* MHVPendingThingOperation+CoreDataClass.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D7B3AEE6204645A834A2D8241E6D2052 /* KWGenericMatchingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C47B86616312B77737010AE5F167 /* KWGenericMatchingAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		D7D304750D3656DC555A8A6B751B3504 /* MHVStringNZ256.h in Headers */ = {isa = PBXBuildFile; fileRef = 42A69734145317C36DEDDF9BE4DF5AD2 /* MHVStringNZ256.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7DA22393B9316AC8CBCBE7DE0582B0D /* MHVEmergencyOrProviderContact.h in Headers */ = {isa = PBXBuildFile; fileRef = C88FFB4526AD9DC8150FD97C967F4FF9 /* MHVEmergencyOrProviderContact.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1502,7 +1496,7 @@
 		DD42886669A7123895BB9B59E8C1EAC7 /* MHVBool.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B9C0E4E77CBF2F7624204680A1612B /* MHVBool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DD4CC4C4E06EDE8809F57420F6472111 /* MHVHeartRate.h in Headers */ = {isa = PBXBuildFile; fileRef = 120A3FBCAFF773319F99E2896E3431C5 /* MHVHeartRate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DD50C370377FBAE3C73227729F77B17D /* MHVTaskTrackingPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A8F823472CAB6CA8548BB4862E11FF4 /* MHVTaskTrackingPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DD7EF8A16F1D90E43B9840F35E960600 /* MHVPendingCreateThing+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A772A6E17741A4D8662E53D841378AF /* MHVPendingCreateThing+CoreDataProperties.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
+		DD7EF8A16F1D90E43B9840F35E960600 /* MHVPendingThingOperation+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A772A6E17741A4D8662E53D841378AF /* MHVPendingThingOperation+CoreDataProperties.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		DDEAFAE935F82242C06A87300B18CACD /* MHVAsyncTaskCompletionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B584221B6497EB947400F8798AA9930 /* MHVAsyncTaskCompletionSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DE12A0A46797BF8060E09703E8507AEE /* KWMessagePattern.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C308BE3808E1805F72AFA185995A2D /* KWMessagePattern.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		DE46FB77CCB40BEB3500D10248974147 /* MHVAsyncTaskResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B1F3F648B73B6EEC96EF0B11A22B00A /* MHVAsyncTaskResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1513,11 +1507,10 @@
 		DE8D6406F529835E71025A5F34522FA5 /* MHVResponseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F7E4EDE63A9FE89B89D0729284F39C /* MHVResponseStatus.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		DECB5E3BFC68F85B7E47A4B8D9335FDB /* MHVThingState.m in Sources */ = {isa = PBXBuildFile; fileRef = C3915D974B4DA6B3F36FFF6EAA1A85A9 /* MHVThingState.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		DEDF60414C1BD3B77EDA4A564916AE49 /* MHVInsightAttribution.h in Headers */ = {isa = PBXBuildFile; fileRef = B6D94A8F4A8706B369C6F28253051A58 /* MHVInsightAttribution.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DF1084750C8D510CF155B936F714BCC7 /* MHVPendingCreateThing+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 42574311606FB978F39CBC81BDEC4E04 /* MHVPendingCreateThing+CoreDataProperties.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		DF1084750C8D510CF155B936F714BCC7 /* MHVPendingThingOperation+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 42574311606FB978F39CBC81BDEC4E04 /* MHVPendingThingOperation+CoreDataProperties.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		DF1E6FB88B5B214633E8FD1B95846072 /* MHVObjective.h in Headers */ = {isa = PBXBuildFile; fileRef = BE8953BE70A5FD434742EA77D63D70AD /* MHVObjective.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DF41E7C5AFC60B64535CA17C20644A5F /* MHVTaskSchedule.h in Headers */ = {isa = PBXBuildFile; fileRef = C8DBD2E2A0013E687F2A6497FD994D81 /* MHVTaskSchedule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DF7C255D02B3ECDD646FBD8E902F486A /* MHVAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F16A8C34168E3CB5A0AAB0980C0AD9 /* MHVAddress.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		DF7C7799A16A8B25EC302258BDFBA455 /* MHVPendingDeleteThing+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C4595AC1A9EB6E42CD74628409475D /* MHVPendingDeleteThing+CoreDataClass.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		DFD83E98D05055A4266814CA66309AD5 /* MHVGetAuthorizedPeopleResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 065B138CF76B637DF6E75C2AC15E578C /* MHVGetAuthorizedPeopleResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DFECAF5105240D41894963D5F14EFCDA /* MHVThingData.m in Sources */ = {isa = PBXBuildFile; fileRef = 544C55035555EDDB142FB958C9470BC6 /* MHVThingData.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		DFF3459DF28EB14291AC443E06B3A3EA /* MHVConcern.m in Sources */ = {isa = PBXBuildFile; fileRef = E786AD9837BBB2F1D1AC66E409C65FDC /* MHVConcern.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
@@ -1545,7 +1538,6 @@
 		E3ADFD68A6A2756F44F838DD12C95BD1 /* KWContextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5125940B821D066126EF8A24E6D39DF4 /* KWContextNode.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		E3F9C86EED885A410B0BC900CD4E740D /* MHVActionPlanTasksApi.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C6AD78DA8C52583D6064AD493D3806 /* MHVActionPlanTasksApi.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		E4012D6111BF89CED125CFB0AFEB45C8 /* MHVSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AE1EA4FF8CE340884FB4F7002A4B526 /* MHVSchedule.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		E40D3F25F75337CA51F020B7FA25CB24 /* MHVPendingDeleteThing+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = C0556DE605F818AA786DF8CEB9670EAE /* MHVPendingDeleteThing+CoreDataProperties.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		E411E072A38FCD7629F3491BBD3EAE71 /* NSNull+DataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A3DE80A3BB4111911510CD69991661A /* NSNull+DataModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E42D9230E7E747538D4BCD415445C35F /* MHVHttpServiceResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 40A6F9FEBE6EE5FA8157E0570469470C /* MHVHttpServiceResponse.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		E43EDC37BD762CCE20364D37ED7AE539 /* MHVAppSpecificInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B56C73C73F0CB15D8DACC83C65B8BCC /* MHVAppSpecificInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1849,7 +1841,7 @@
 		041AA0434A8D4686E4E8C02AA633FCC1 /* MHVTrackingSourceTypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVTrackingSourceTypes.m; sourceTree = "<group>"; };
 		04AB3D62BFEAF5016A7BCCFD1EF3D540 /* MHVHeartrateZone.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVHeartrateZone.m; sourceTree = "<group>"; };
 		04CEA7C29F261D065EEA68B767AF776E /* KWObjCUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWObjCUtilities.m; path = Classes/Core/KWObjCUtilities.m; sourceTree = "<group>"; };
-		04D7CE772F262CC3503048940B3A4A82 /* SQLCipher.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SQLCipher.modulemap; sourceTree = "<group>"; };
+		04D7CE772F262CC3503048940B3A4A82 /* SQLCipher.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SQLCipher.modulemap; sourceTree = "<group>"; };
 		04E6ECD0A791494270FF6D1BC1AA98A8 /* KWSuiteConfigurationBase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWSuiteConfigurationBase.m; path = Classes/Config/KWSuiteConfigurationBase.m; sourceTree = "<group>"; };
 		05072A0BFB421B166D1193F947076D17 /* MHVActionPlansResponseActionPlanInstance_.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVActionPlansResponseActionPlanInstance_.h; sourceTree = "<group>"; };
 		0530DA8D32A01122AAA3547CA7E84094 /* KWAfterAllNode.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWAfterAllNode.m; path = Classes/Nodes/KWAfterAllNode.m; sourceTree = "<group>"; };
@@ -1869,7 +1861,6 @@
 		075A8E71A7D413617FB1D244E15280DA /* MHVEmail.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVEmail.m; sourceTree = "<group>"; };
 		079DC5AB062AA71ADB29EC026448EA52 /* MHVObjectiveAdherenceSummary.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVObjectiveAdherenceSummary.m; sourceTree = "<group>"; };
 		07B0E7E321324BE060B2D49C12837521 /* MHVString1024.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVString1024.h; sourceTree = "<group>"; };
-		0819B235C2D21859F85EDEA18F36D7FF /* MHVPendingDeleteThing+CoreDataClass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MHVPendingDeleteThing+CoreDataClass.h"; sourceTree = "<group>"; };
 		08EF6156404E0373B9101260CED0E89A /* MHVCCD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVCCD.h; sourceTree = "<group>"; };
 		08F86A4B521D73B9106CAC6650032DBB /* MHVRecord.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVRecord.m; sourceTree = "<group>"; };
 		0947F3B57E6DE05558E67CE95631E5F7 /* KWInvocationCapturer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWInvocationCapturer.h; path = Classes/Core/KWInvocationCapturer.h; sourceTree = "<group>"; };
@@ -1877,7 +1868,7 @@
 		09D394B6D1C498601313A1D4B9B1CA18 /* MHVCholesterol.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVCholesterol.m; sourceTree = "<group>"; };
 		09E45A6D3F907A56CBB9D819CE852A41 /* NSInvocation+OCMAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSInvocation+OCMAdditions.m"; path = "Classes/Core/NSInvocation+OCMAdditions.m"; sourceTree = "<group>"; };
 		09F49F6F7B5B6A4A4AA0B5E4735736BD /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A772A6E17741A4D8662E53D841378AF /* MHVPendingCreateThing+CoreDataProperties.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MHVPendingCreateThing+CoreDataProperties.m"; sourceTree = "<group>"; };
+		0A772A6E17741A4D8662E53D841378AF /* MHVPendingThingOperation+CoreDataProperties.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MHVPendingThingOperation+CoreDataProperties.m"; sourceTree = "<group>"; };
 		0A921B83D78CC28AEF1E07FDC54CDD30 /* MHVActionPlanInstance.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanInstance.h; sourceTree = "<group>"; };
 		0A9BC11A983D6A253740FD9017651668 /* MHVRestRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVRestRequest.m; sourceTree = "<group>"; };
 		0ADDB1F9E1D36ED143A0C857715639DC /* MHVActionPlanTrackingPolicy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTrackingPolicy.h; sourceTree = "<group>"; };
@@ -1989,7 +1980,7 @@
 		2572258149BD8E488B1802477FFA7D54 /* MHVPlanOutcome.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVPlanOutcome.m; sourceTree = "<group>"; };
 		258F0F370A10DE8E9D4101A98322A8EF /* XLib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = XLib.h; sourceTree = "<group>"; };
 		2635460E7A24ACFA9D0A70DFC81D045D /* MHVCore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVCore.m; sourceTree = "<group>"; };
-		26AC1ABFA8721A7FA85C638D255D57A5 /* HealthVault-Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; name = "HealthVault-Tests.modulemap"; path = "../HealthVault-Tests/HealthVault-Tests.modulemap"; sourceTree = "<group>"; };
+		26AC1ABFA8721A7FA85C638D255D57A5 /* HealthVault-Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; name = "HealthVault-Tests.modulemap"; path = "../HealthVault-Tests/HealthVault-Tests.modulemap"; sourceTree = "<group>"; };
 		274A30C3BBD695944F859C84AFCEAE44 /* KWNull.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWNull.h; path = Classes/Core/KWNull.h; sourceTree = "<group>"; };
 		27A6383708038480F688951539AD0F11 /* Pods-healthvault-ios-sdk_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-healthvault-ios-sdk_Example-frameworks.sh"; sourceTree = "<group>"; };
 		27AB71B1D97803276B8DE2493C457381 /* MHVThingRaw.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVThingRaw.h; sourceTree = "<group>"; };
@@ -2054,7 +2045,7 @@
 		37C858D0CA351DE079A4D1901C06AEED /* NSMethodSignature+KiwiAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMethodSignature+KiwiAdditions.m"; path = "Classes/Core/NSMethodSignature+KiwiAdditions.m"; sourceTree = "<group>"; };
 		37E7BD2E5F06B2C2AC7CC744442875C8 /* MHVCollection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVCollection.h; sourceTree = "<group>"; };
 		3810ECD7F593DB08658676630CAA8FD3 /* MHVThingCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVThingCache.m; sourceTree = "<group>"; };
-		38222EFC9D9B625D3A2600BC5AC2B6DC /* Kiwi.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = Kiwi.modulemap; sourceTree = "<group>"; };
+		38222EFC9D9B625D3A2600BC5AC2B6DC /* Kiwi.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Kiwi.modulemap; sourceTree = "<group>"; };
 		3845DA3287A3C93AD888016BDB55D3ED /* KWExampleSuite.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWExampleSuite.m; path = Classes/Core/KWExampleSuite.m; sourceTree = "<group>"; };
 		3889955A520FBCEB648B178F6D076C70 /* MHVMinute.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVMinute.m; sourceTree = "<group>"; };
 		38ABB3E7864B5F1C5E756F3A7F45A37F /* MHVClaimAmounts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVClaimAmounts.h; sourceTree = "<group>"; };
@@ -2085,14 +2076,14 @@
 		3D5A01932D2B5161C97AE73F4795BEFF /* MHVApproxDateTime.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVApproxDateTime.h; sourceTree = "<group>"; };
 		3D6FB014FDE32C459C37E83593B1B073 /* KWMatchVerifier.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWMatchVerifier.m; path = Classes/Verifiers/KWMatchVerifier.m; sourceTree = "<group>"; };
 		3E8C8808D6611B178979EAA5A7320087 /* MHVBlobPayloadThing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVBlobPayloadThing.m; sourceTree = "<group>"; };
-		3EBDBF6D95054C61E6DE9D5781551FD4 /* HealthVault-OfflineThingCache.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "HealthVault-OfflineThingCache.modulemap"; sourceTree = "<group>"; };
+		3EBDBF6D95054C61E6DE9D5781551FD4 /* HealthVault-OfflineThingCache.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "HealthVault-OfflineThingCache.modulemap"; sourceTree = "<group>"; };
 		3FAD88EE14136A446639FCB997059A7B /* MHVAsyncTaskCompletionSource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVAsyncTaskCompletionSource.m; sourceTree = "<group>"; };
 		408631B893CEE14E0CD9391A2E1B8D0D /* MHVDataModelDynamicClass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVDataModelDynamicClass.h; sourceTree = "<group>"; };
 		40A6F9FEBE6EE5FA8157E0570469470C /* MHVHttpServiceResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVHttpServiceResponse.m; sourceTree = "<group>"; };
 		413524DA58BBDB34CAE70CFE170DB4F1 /* MHVServiceInstance.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVServiceInstance.m; sourceTree = "<group>"; };
 		419BDF78EAE5817D2B9FB7C2C2BAB9E8 /* MHVCollection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVCollection.m; sourceTree = "<group>"; };
 		41BC377E0CE865C7F2D4BD91CAE0E39F /* NSData+DataModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSData+DataModel.h"; sourceTree = "<group>"; };
-		42574311606FB978F39CBC81BDEC4E04 /* MHVPendingCreateThing+CoreDataProperties.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MHVPendingCreateThing+CoreDataProperties.h"; sourceTree = "<group>"; };
+		42574311606FB978F39CBC81BDEC4E04 /* MHVPendingThingOperation+CoreDataProperties.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MHVPendingThingOperation+CoreDataProperties.h"; sourceTree = "<group>"; };
 		42A69734145317C36DEDDF9BE4DF5AD2 /* MHVStringNZ256.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVStringNZ256.h; sourceTree = "<group>"; };
 		42D3F8F6F31F7F3BFAF195DD9F699C58 /* MHVClientInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVClientInfo.h; sourceTree = "<group>"; };
 		4312CE449E506FB3B3A809F5DFAB52FC /* MHVThingSection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVThingSection.m; sourceTree = "<group>"; };
@@ -2102,7 +2093,7 @@
 		445F873183819FCD31867A167EF5C17D /* MHVThingQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVThingQuery.h; sourceTree = "<group>"; };
 		44794CE712C4C5299529B7032B888130 /* MHVActionPlansApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVActionPlansApi.h; sourceTree = "<group>"; };
 		44A095E9BC8B1786CCB1D3A30BF63B74 /* MHVObjective.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVObjective.m; sourceTree = "<group>"; };
-		44D5980F59E2EA9752E1D2E0A27EE7B1 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SQLCipher.framework; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		44D5980F59E2EA9752E1D2E0A27EE7B1 /* SQLCipher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLCipher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		456F630B68E65DF2C85DA73D723526FA /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45BADD51D52D487CA1AAA2568E626C9E /* NSData+Utils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSData+Utils.m"; sourceTree = "<group>"; };
 		45CDAC6E9E7FB92AE2D82B13F799ADA0 /* MHVDailyMedicationUsage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVDailyMedicationUsage.h; sourceTree = "<group>"; };
@@ -2223,7 +2214,7 @@
 		611A0E677D5B8B8C7F7827834E3FAF63 /* MHVAudit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVAudit.h; sourceTree = "<group>"; };
 		612E31529EA8123F53DEFD562023CE86 /* EncryptedCoreData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EncryptedCoreData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6159D7C47D4539A82F776A0CAFA7CD8A /* KWGenericMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWGenericMatcher.h; path = Classes/Matchers/KWGenericMatcher.h; sourceTree = "<group>"; };
-		61680D69684D7E6D26B3EF210856F3AE /* Pods_healthvault_ios_sdk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_healthvault_ios_sdk_Example.framework; path = "Pods-healthvault-ios-sdk_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61680D69684D7E6D26B3EF210856F3AE /* Pods_healthvault_ios_sdk_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DEF60A6EC6A32079A9D3F9DB9B07BE /* MHVMedicalImageStudySeriesImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVMedicalImageStudySeriesImage.m; sourceTree = "<group>"; };
 		6203530F68C25C1B0C9A73A90A831335 /* MHVZoneBoundary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVZoneBoundary.h; sourceTree = "<group>"; };
 		6204B260416BEA24A751043AB4B5B38F /* KWGenericMatchEvaluator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWGenericMatchEvaluator.h; path = Classes/Matchers/KWGenericMatchEvaluator.h; sourceTree = "<group>"; };
@@ -2317,7 +2308,7 @@
 		773E532D75454BD79077CB5ADFF4E75D /* KWExampleSuiteBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWExampleSuiteBuilder.h; path = Classes/Core/KWExampleSuiteBuilder.h; sourceTree = "<group>"; };
 		776B5A9877FBE7EEE8D45FB8B7ADC033 /* MHVPerson.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVPerson.h; sourceTree = "<group>"; };
 		77EADD49070F4BF11EBC4F2364A455D8 /* MHVLocalDateTime.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVLocalDateTime.m; sourceTree = "<group>"; };
-		7801C25EC8E926967C93A156C49B2ACF /* EncryptedCoreData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = EncryptedCoreData.framework; path = EncryptedCoreData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7801C25EC8E926967C93A156C49B2ACF /* EncryptedCoreData.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EncryptedCoreData.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		780395396885F55F6560E591560E44C1 /* MHVConstrainedInt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVConstrainedInt.h; sourceTree = "<group>"; };
 		78295ABC1A3190C64D998BE56B1B7C41 /* KWLetNode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWLetNode.h; path = Classes/Nodes/KWLetNode.h; sourceTree = "<group>"; };
 		78534C07F1053A5C0761CF123CA54087 /* MHVActionPlanTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTask.m; sourceTree = "<group>"; };
@@ -2418,7 +2409,7 @@
 		8EE2E0BB9F863BB8183612504AFFAA4E /* MHVHeartrateZone.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVHeartrateZone.h; sourceTree = "<group>"; };
 		8F40F449E63F621AB7FC13377E5E4FAF /* MHVPersonalContactInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVPersonalContactInfo.h; sourceTree = "<group>"; };
 		8FCC9A46CC8785599ACF7C894A5A0C3E /* MHVClientFactory.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVClientFactory.m; sourceTree = "<group>"; };
-		90819E0F5547335DD2E293E72ED067C1 /* Pods-healthvault-ios-sdk_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-healthvault-ios-sdk_Example.modulemap"; sourceTree = "<group>"; };
+		90819E0F5547335DD2E293E72ED067C1 /* Pods-healthvault-ios-sdk_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-healthvault-ios-sdk_Example.modulemap"; sourceTree = "<group>"; };
 		90B604528F6BA23DD3A0C9864F45A5A0 /* XSerializableType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XSerializableType.m; sourceTree = "<group>"; };
 		90B878FEE5438EE71D8603691A1A9C5B /* MHVSleepJournalPM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVSleepJournalPM.m; sourceTree = "<group>"; };
 		9196F2E21B2DBBF25D6BFC4E9C400827 /* MHVMedicalImageStudySeries.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVMedicalImageStudySeries.h; sourceTree = "<group>"; };
@@ -2428,7 +2419,7 @@
 		9269FB163ACF1B17EC15529185C78939 /* MHVPeakFlow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVPeakFlow.h; sourceTree = "<group>"; };
 		937B016C42752E49A13407A7D6E7EDE3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../HealthVault-Tests/Info.plist"; sourceTree = "<group>"; };
 		93881254B4454F8F76EF61CA9F078711 /* KWSymbolicator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWSymbolicator.m; path = Classes/Core/KWSymbolicator.m; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9455BC25307E2842FF6E3B32157C3E97 /* KWBeBetweenMatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWBeBetweenMatcher.m; path = Classes/Matchers/KWBeBetweenMatcher.m; sourceTree = "<group>"; };
 		947A678D11E6007728B63E04549645D6 /* MHVGetAuthorizedPeopleResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVGetAuthorizedPeopleResult.m; sourceTree = "<group>"; };
 		947FCCDD83F05E40B3EC90E448A84A05 /* MHVOccurence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVOccurence.h; sourceTree = "<group>"; };
@@ -2483,7 +2474,7 @@
 		A15F3A5F3190A2751BF331C003295D27 /* KWBlockRaiseMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWBlockRaiseMatcher.h; path = Classes/Matchers/KWBlockRaiseMatcher.h; sourceTree = "<group>"; };
 		A19809FA67810B50DD0EAF1E47BF3A53 /* MHVThingTypeDefinitionRequestParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVThingTypeDefinitionRequestParameters.h; sourceTree = "<group>"; };
 		A1ED0C1B3D04AD5A1C81EF753FCC5F2D /* MHVNonNegativeInt.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVNonNegativeInt.m; sourceTree = "<group>"; };
-		A2366CEE7349A594D6E547EECD4D8E05 /* MHVPendingCreateThing+CoreDataClass.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MHVPendingCreateThing+CoreDataClass.m"; sourceTree = "<group>"; };
+		A2366CEE7349A594D6E547EECD4D8E05 /* MHVPendingThingOperation+CoreDataClass.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MHVPendingThingOperation+CoreDataClass.m"; sourceTree = "<group>"; };
 		A24E2E4A78ACB0E6B97FD39E9C2190A3 /* MHVPregnancy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVPregnancy.h; sourceTree = "<group>"; };
 		A2659D5760F2030DC2171C22120FF629 /* MHVErrorConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVErrorConstants.h; sourceTree = "<group>"; };
 		A2760EDED1EAAA6A90CCEC1908CCE072 /* MHVHealthGoal.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVHealthGoal.m; sourceTree = "<group>"; };
@@ -2500,7 +2491,6 @@
 		A47ABC84489D31BE3F0FEF897ABEA71F /* MHVNutritionFact.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVNutritionFact.h; sourceTree = "<group>"; };
 		A48967F79171A108C712DF504C509691 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4AF8687BBDE3D5AE81C046861447168 /* MHVActionPlanTasksResponseTimelineTask_.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTasksResponseTimelineTask_.m; sourceTree = "<group>"; };
-		A4C575FB8FC2F827AB68B88BA3F1775C /* MHVPendingDeleteThing+CoreDataProperties.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MHVPendingDeleteThing+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A54A31827381E9BC470B02DAB58D07AC /* KWRespondToSelectorMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWRespondToSelectorMatcher.h; path = Classes/Matchers/KWRespondToSelectorMatcher.h; sourceTree = "<group>"; };
 		A5576193391B6FF9FEB96DD40BE33047 /* MHVTaskCompletionMetrics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVTaskCompletionMetrics.h; sourceTree = "<group>"; };
 		A5832809FFBFAA446B2BBF5273675C1E /* MHVThingCacheDatabaseProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVThingCacheDatabaseProtocol.h; sourceTree = "<group>"; };
@@ -2521,7 +2511,7 @@
 		AABCE0D7017E90033E68C4EC1746FE07 /* MHVGoalRange.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVGoalRange.m; sourceTree = "<group>"; };
 		AAE64BFDD86565DBDD8322BA23D9D3CE /* KWNull.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWNull.m; path = Classes/Core/KWNull.m; sourceTree = "<group>"; };
 		AB47C44955C2C93154F91B0A60A3153C /* MHVPersonalImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVPersonalImage.h; sourceTree = "<group>"; };
-		AB951FF2C94458E9FC29332249972B11 /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_healthvault_ios_sdk_Tests.framework; path = "Pods-healthvault-ios-sdk_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB951FF2C94458E9FC29332249972B11 /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC067F721AA7BFA8D357BADA674C6CBE /* MHVName.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVName.h; sourceTree = "<group>"; };
 		AC363A2B142E1AF20D3655A5224F1434 /* MHVQueuedDictionary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVQueuedDictionary.h; sourceTree = "<group>"; };
 		AC60C8C5C36A835BD7B444EE0593A209 /* MHVDictionaryExtensions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVDictionaryExtensions.m; sourceTree = "<group>"; };
@@ -2539,11 +2529,11 @@
 		AFC36277D3C0F07D3710AFBAA7B5D611 /* KWCaptureSpy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWCaptureSpy.h; path = Classes/Core/KWCaptureSpy.h; sourceTree = "<group>"; };
 		B023BC846E8B0D6BBD374A6BE6E0E78A /* KWPendingNode.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWPendingNode.h; path = Classes/Nodes/KWPendingNode.h; sourceTree = "<group>"; };
 		B06B41719C2F36E8B93733E9D1EB574D /* NSArray+DataModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSArray+DataModel.m"; sourceTree = "<group>"; };
-		B0828AB2ABE4EA69DD2389F8E9DB73A3 /* HealthVault.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HealthVault.framework; path = "HealthVault-Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0828AB2ABE4EA69DD2389F8E9DB73A3 /* HealthVault.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HealthVault.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0DCAE9E533AAFF2502A298C2B27AC18 /* KWIntercept.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWIntercept.h; path = Classes/Stubbing/KWIntercept.h; sourceTree = "<group>"; };
 		B0EF3504C5BBFEC4FDFD121B8721D352 /* MHVAllergicEpisode.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVAllergicEpisode.m; sourceTree = "<group>"; };
 		B0F77F46DA567F10C345A2D4FE8AD35D /* MHVConstrainedInt.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVConstrainedInt.m; sourceTree = "<group>"; };
-		B15CF23C9960C0A0BF4C986E7B29E424 /* EncryptedCoreData.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = EncryptedCoreData.modulemap; sourceTree = "<group>"; };
+		B15CF23C9960C0A0BF4C986E7B29E424 /* EncryptedCoreData.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = EncryptedCoreData.modulemap; sourceTree = "<group>"; };
 		B171B2485AAE0CEF4828BBD6B2456572 /* KWMatchers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWMatchers.h; path = Classes/Core/KWMatchers.h; sourceTree = "<group>"; };
 		B1BD44E9DE2939B629AE12F09384000C /* NSNumber+KiwiAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+KiwiAdditions.m"; path = "Classes/Core/NSNumber+KiwiAdditions.m"; sourceTree = "<group>"; };
 		B2592B5A6099E7DEBAF2D3D38CE65F1F /* MHVConcentrationValue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVConcentrationValue.h; sourceTree = "<group>"; };
@@ -2604,7 +2594,6 @@
 		BF14DCDB4C51B74838FAF7A866C87DE1 /* MHVInsurance.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVInsurance.m; sourceTree = "<group>"; };
 		BF8DC25F3B9DB90772CA21AAF747B220 /* MHVCacheQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVCacheQuery.h; sourceTree = "<group>"; };
 		C005F2939E4E4141C1E5812DA2B691EA /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C0556DE605F818AA786DF8CEB9670EAE /* MHVPendingDeleteThing+CoreDataProperties.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MHVPendingDeleteThing+CoreDataProperties.h"; sourceTree = "<group>"; };
 		C13FE9BDDA2A163B124FAA1AECA7028F /* MHVThingType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVThingType.m; sourceTree = "<group>"; };
 		C14B9A0AF963B835F15C4743D9675734 /* Pods-healthvault-ios-sdk_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-healthvault-ios-sdk_Tests-umbrella.h"; sourceTree = "<group>"; };
 		C19DB7DA288DA64B0B25A844688F8EA1 /* MHVPlatformInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVPlatformInfo.m; sourceTree = "<group>"; };
@@ -2654,7 +2643,7 @@
 		D0260F02C52246B97E6FAEC3E3DF986C /* MHVTaskSchedule.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVTaskSchedule.m; sourceTree = "<group>"; };
 		D0704A269818F5A7A547B1CC6AE1EB34 /* MHVLabTestResultValue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVLabTestResultValue.h; sourceTree = "<group>"; };
 		D098DF39A8F59D8EEB178C99CC3FD298 /* NSArray+Utils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSArray+Utils.h"; sourceTree = "<group>"; };
-		D09BBC750E60DD6220D5AFE6CE518AAD /* HealthVault.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HealthVault.framework; path = "HealthVault-OfflineThingCache.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D09BBC750E60DD6220D5AFE6CE518AAD /* HealthVault.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HealthVault.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09E5A95B21485984E35262750C73AD7 /* MHVBlobPayload.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVBlobPayload.m; sourceTree = "<group>"; };
 		D0D72424405A2C1031D723611D42C73A /* MHVName.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVName.m; sourceTree = "<group>"; };
 		D15ED3689B647A3E7CFFF004B87C50E9 /* NSUUID+DataModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSUUID+DataModel.h"; sourceTree = "<group>"; };
@@ -2679,7 +2668,7 @@
 		D59B82A4ECF5A7989938EF092F310967 /* NSDictionary+DataModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DataModel.h"; sourceTree = "<group>"; };
 		D5ED949AD9009916D0301DCB65487CDC /* Pods-healthvault-ios-sdk_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-healthvault-ios-sdk_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		D6063D6AA1F942E3E93C7AD00A668E7F /* NSObject+KiwiMockAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+KiwiMockAdditions.h"; path = "Classes/Mocking/NSObject+KiwiMockAdditions.h"; sourceTree = "<group>"; };
-		D60D31C9088CA79524ECD8631159BE72 /* MHVPendingCreateThing+CoreDataClass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MHVPendingCreateThing+CoreDataClass.h"; sourceTree = "<group>"; };
+		D60D31C9088CA79524ECD8631159BE72 /* MHVPendingThingOperation+CoreDataClass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MHVPendingThingOperation+CoreDataClass.h"; sourceTree = "<group>"; };
 		D67C682F659475A52339BF3F9438A710 /* MHVMaxVO2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVMaxVO2.h; sourceTree = "<group>"; };
 		D70610AC5F55CCF2CB2CF73B1EC2D08F /* MHVTime.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVTime.h; sourceTree = "<group>"; };
 		D794C210A647559DED7960E526DD7D92 /* MHVWeightMeasurement.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVWeightMeasurement.h; sourceTree = "<group>"; };
@@ -2698,7 +2687,7 @@
 		DAE15DAE9070D7C17A883C2BF8B749A8 /* MHVProcedure.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVProcedure.h; sourceTree = "<group>"; };
 		DB6A024C619FEDEE70870347627C883C /* MHVBlob.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVBlob.h; sourceTree = "<group>"; };
 		DBBE02C451AB6EEC9980D55CBB477210 /* MHVPrescription.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVPrescription.m; sourceTree = "<group>"; };
-		DBD92CAF957AFC517E3473D386F55EAE /* Pods-healthvault-ios-sdk_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-healthvault-ios-sdk_Tests.modulemap"; sourceTree = "<group>"; };
+		DBD92CAF957AFC517E3473D386F55EAE /* Pods-healthvault-ios-sdk_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-healthvault-ios-sdk_Tests.modulemap"; sourceTree = "<group>"; };
 		DC88D9D3DB3C84FB3D8171B74BD1D18A /* KWRegisterMatchersNode.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWRegisterMatchersNode.m; path = Classes/Nodes/KWRegisterMatchersNode.m; sourceTree = "<group>"; };
 		DC9F07AAC82892237B34B12DB58FB8AB /* MHVVocabularyCodeSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVVocabularyCodeSet.h; sourceTree = "<group>"; };
 		DDC302385A2A59E11144F06E1A9D25BE /* NSObject+KiwiStubAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+KiwiStubAdditions.m"; path = "Classes/Stubbing/NSObject+KiwiStubAdditions.m"; sourceTree = "<group>"; };
@@ -2778,7 +2767,7 @@
 		F03EE1AACBD1AF2E3EDC80A04FD61940 /* KWConformToProtocolMatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWConformToProtocolMatcher.m; path = Classes/Matchers/KWConformToProtocolMatcher.m; sourceTree = "<group>"; };
 		F078652FAD70B334C999A42203038DF3 /* MHVConfigurationEntry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVConfigurationEntry.h; sourceTree = "<group>"; };
 		F07F67CBD530E214FB22870F12159D85 /* MHVActionPlan.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVActionPlan.h; sourceTree = "<group>"; };
-		F09C5E216DC6161C4DE8FC55406B06CC /* sqlite3.c */ = {isa = PBXFileReference; includeInIndex = 1; path = sqlite3.c; sourceTree = "<group>"; };
+		F09C5E216DC6161C4DE8FC55406B06CC /* sqlite3.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		F151E68692A8EBEF068AA186D3624EAD /* MHVGoalRecurrenceMetrics.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVGoalRecurrenceMetrics.m; sourceTree = "<group>"; };
 		F18A4CC57734C56325619952AF300A02 /* NSNumber+KiwiAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSNumber+KiwiAdditions.h"; path = "Classes/Core/NSNumber+KiwiAdditions.h"; sourceTree = "<group>"; };
 		F19D4B138C0DDCE07FC858DCC52DDEC5 /* MHVActionPlanTaskTracking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTaskTracking.m; sourceTree = "<group>"; };
@@ -2796,7 +2785,6 @@
 		F4139AFCB5CFB31E47A4C5A8AB14540D /* MHVRecordReference.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVRecordReference.m; sourceTree = "<group>"; };
 		F4975DD99B1B041DE37DFBCB50C56196 /* MHVEmotionalState.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVEmotionalState.m; sourceTree = "<group>"; };
 		F4B4C517D2EF04F615BCA72E238B698A /* MHVThingFilter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVThingFilter.h; sourceTree = "<group>"; };
-		F4C4595AC1A9EB6E42CD74628409475D /* MHVPendingDeleteThing+CoreDataClass.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MHVPendingDeleteThing+CoreDataClass.m"; sourceTree = "<group>"; };
 		F4D6DE79F0C1DA5912E3ABC3302E3878 /* MHVCachedRecord+CoreDataProperties.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MHVCachedRecord+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F4D811A4DADDCA6BCFEA0534EA8A2A57 /* MHVThingKey.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVThingKey.h; sourceTree = "<group>"; };
 		F4D9BE1E026438E141E284E0E0F24B89 /* NSObject+KiwiMockAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+KiwiMockAdditions.m"; path = "Classes/Mocking/NSObject+KiwiMockAdditions.m"; sourceTree = "<group>"; };
@@ -2815,7 +2803,7 @@
 		F9F17215438FF03A77FB53487B4B3CB2 /* MHVString255.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVString255.h; sourceTree = "<group>"; };
 		FAE10A9EEA64E4C901E91EF21462BC95 /* MHVTime.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVTime.m; sourceTree = "<group>"; };
 		FB987FD7D0E85643EFF60AF98B92CDAD /* KWExampleDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWExampleDelegate.h; path = Classes/Core/KWExampleDelegate.h; sourceTree = "<group>"; };
-		FBE6B7648468DFC7D5C328C83474317C /* Kiwi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Kiwi.framework; path = Kiwi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBE6B7648468DFC7D5C328C83474317C /* Kiwi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kiwi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBF40C95B774E39127D672F4EBA20A65 /* KWExample.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWExample.h; path = Classes/Core/KWExample.h; sourceTree = "<group>"; };
 		FC1B0058301E59E07C91B50014E55FC1 /* MHVActionPlanAdherenceSummary.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanAdherenceSummary.m; sourceTree = "<group>"; };
 		FC6D44865EE9B47E828ABC1D8D82AD9B /* KWAsyncVerifier.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWAsyncVerifier.h; path = Classes/Verifiers/KWAsyncVerifier.h; sourceTree = "<group>"; };
@@ -2918,7 +2906,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = HTTP;
 			path = HTTP;
 			sourceTree = "<group>";
 		};
@@ -2926,7 +2913,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = PlatformInformation;
 			path = PlatformInformation;
 			sourceTree = "<group>";
 		};
@@ -2934,7 +2920,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = CoreData;
 			path = CoreData;
 			sourceTree = "<group>";
 		};
@@ -2942,7 +2927,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Json;
 			path = Json;
 			sourceTree = "<group>";
 		};
@@ -2951,7 +2935,6 @@
 			children = (
 				92901AF3CC2CCECB36993F8B48753BEA /* MHVThingCacheDatabase.xcdatamodeld */,
 			);
-			name = Assets;
 			path = Assets;
 			sourceTree = "<group>";
 		};
@@ -2959,7 +2942,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = AsyncTask;
 			path = AsyncTask;
 			sourceTree = "<group>";
 		};
@@ -3026,7 +3008,6 @@
 				31EE8B0024666C9347D1F3EC198D43F5 /* MHVYear.h */,
 				BE6F1C816A8722D5841AB34661C4581C /* MHVYear.m */,
 			);
-			name = Base;
 			path = Base;
 			sourceTree = "<group>";
 		};
@@ -3037,7 +3018,6 @@
 				57B60ABF56A8B4810BD924456C41DA55 /* MHVLinearItemTypePropertyConverer.h */,
 				C8ED5EF28723F19F62CA8F69E603D4F7 /* MHVLinearItemTypePropertyConverer.m */,
 			);
-			name = Converter;
 			path = Converter;
 			sourceTree = "<group>";
 		};
@@ -3054,7 +3034,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Vocabulary;
 			path = Vocabulary;
 			sourceTree = "<group>";
 		};
@@ -3072,7 +3051,6 @@
 				C76962506513CA141C6289EA00EF3545 /* MHVViewExtensions.h */,
 				94DEBB7F2659C31D1451A335CDB67443 /* MHVViewExtensions.m */,
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
@@ -3088,7 +3066,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Blob;
 			path = Blob;
 			sourceTree = "<group>";
 		};
@@ -3109,7 +3086,6 @@
 				0733697EC38CA1F8FCB68EA47F9C7CB4 /* MHVVocabularySearchParams.h */,
 				A031BD4ED96BED5EBFE83C033842EB85 /* MHVVocabularySearchParams.m */,
 			);
-			name = Vocabulary;
 			path = Vocabulary;
 			sourceTree = "<group>";
 		};
@@ -3120,7 +3096,6 @@
 				5B0BE416E4B4E6E9F7209678F8AD72AE /* MHVRestApi.h */,
 				DDC87C52BCF81CC11E06F689EC73D340 /* Public */,
 			);
-			name = Headers;
 			path = Headers;
 			sourceTree = "<group>";
 		};
@@ -3131,7 +3106,6 @@
 				4390BA21BB6AD47CE838487B2326505C /* MHVConfiguration.m */,
 				7CF535182A300EAFDCE06F8BD99D8E79 /* MHVConfigurationConstants.h */,
 			);
-			name = Configuration;
 			path = Configuration;
 			sourceTree = "<group>";
 		};
@@ -3139,7 +3113,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Xml;
 			path = Xml;
 			sourceTree = "<group>";
 		};
@@ -3189,7 +3162,6 @@
 				D15ED3689B647A3E7CFFF004B87C50E9 /* NSUUID+DataModel.h */,
 				53A9A3E47754EF60C74634CEBD493C26 /* NSUUID+DataModel.m */,
 			);
-			name = Categories;
 			path = Categories;
 			sourceTree = "<group>";
 		};
@@ -3208,7 +3180,6 @@
 				567F723C096537F15681FDDC811AAADF /* MHVRestRequest.h */,
 				0A9BC11A983D6A253740FD9017651668 /* MHVRestRequest.m */,
 			);
-			name = Methods;
 			path = Methods;
 			sourceTree = "<group>";
 		};
@@ -3229,7 +3200,6 @@
 				B572DECDD4EFE5393645F603EB39B69C /* Converter */,
 				641EBBECEAE228A8257F9590375A1146 /* ServiceDef */,
 			);
-			name = Types;
 			path = Types;
 			sourceTree = "<group>";
 		};
@@ -3244,18 +3214,13 @@
 				C8FCC35EC03D8D581F2D0F1A9B954743 /* MHVCachedThing+CoreDataClass.m */,
 				648EB9168823B85FE4DD7F26130B42A8 /* MHVCachedThing+CoreDataProperties.h */,
 				37C450EE2F93F20A34C4A5B9ADA122F0 /* MHVCachedThing+CoreDataProperties.m */,
-				D60D31C9088CA79524ECD8631159BE72 /* MHVPendingCreateThing+CoreDataClass.h */,
-				A2366CEE7349A594D6E547EECD4D8E05 /* MHVPendingCreateThing+CoreDataClass.m */,
-				42574311606FB978F39CBC81BDEC4E04 /* MHVPendingCreateThing+CoreDataProperties.h */,
-				0A772A6E17741A4D8662E53D841378AF /* MHVPendingCreateThing+CoreDataProperties.m */,
-				0819B235C2D21859F85EDEA18F36D7FF /* MHVPendingDeleteThing+CoreDataClass.h */,
-				F4C4595AC1A9EB6E42CD74628409475D /* MHVPendingDeleteThing+CoreDataClass.m */,
-				C0556DE605F818AA786DF8CEB9670EAE /* MHVPendingDeleteThing+CoreDataProperties.h */,
-				A4C575FB8FC2F827AB68B88BA3F1775C /* MHVPendingDeleteThing+CoreDataProperties.m */,
+				D60D31C9088CA79524ECD8631159BE72 /* MHVPendingThingOperation+CoreDataClass.h */,
+				A2366CEE7349A594D6E547EECD4D8E05 /* MHVPendingThingOperation+CoreDataClass.m */,
+				42574311606FB978F39CBC81BDEC4E04 /* MHVPendingThingOperation+CoreDataProperties.h */,
+				0A772A6E17741A4D8662E53D841378AF /* MHVPendingThingOperation+CoreDataProperties.m */,
 				7715D69F16B69923A263BA62FE445125 /* MHVThingCacheDatabase+CoreDataModel.h */,
 				FFBDD6696ABE29635E98EA8EDB5663B0 /* MHVThingCacheDatabase+CoreDataModel.m */,
 			);
-			name = CoreData;
 			path = CoreData;
 			sourceTree = "<group>";
 		};
@@ -3273,7 +3238,6 @@
 				95BF45780A052E652E307CEAC554BDBE /* MHVTimelineApi.h */,
 				BD96E3B87976FB92B15892F5AD894AD3 /* MHVTimelineApi.m */,
 			);
-			name = Categories;
 			path = Categories;
 			sourceTree = "<group>";
 		};
@@ -3295,7 +3259,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = ServiceDef;
 			path = ServiceDef;
 			sourceTree = "<group>";
 		};
@@ -3303,7 +3266,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Store;
 			path = Store;
 			sourceTree = "<group>";
 		};
@@ -3311,7 +3273,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Authentication;
 			path = Authentication;
 			sourceTree = "<group>";
 		};
@@ -3329,7 +3290,6 @@
 				47BD1B27A39CB7B1EC4D7C57526EE48C /* MHVServiceResponse.h */,
 				8C434A879B83ADA373156A7814C1B84F /* MHVServiceResponse.m */,
 			);
-			name = HTTP;
 			path = HTTP;
 			sourceTree = "<group>";
 		};
@@ -3350,7 +3310,6 @@
 				A6EEF0F1F12A72CE63375F8F37F2661C /* MHVThingCacheDatabase.m */,
 				56BEA1749E1C0FB77B80EBA43C757703 /* CoreData */,
 			);
-			name = Private;
 			path = Private;
 			sourceTree = "<group>";
 		};
@@ -3361,7 +3320,6 @@
 				46F75259DE6163899296D7C11EB647D9 /* NSError+MHVError.h */,
 				E7522CFFF9147A2A333DF9AFF5DE93BF /* NSError+MHVError.m */,
 			);
-			name = Errors;
 			path = Errors;
 			sourceTree = "<group>";
 		};
@@ -3369,7 +3327,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
@@ -3377,7 +3334,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Categories;
 			path = Categories;
 			sourceTree = "<group>";
 		};
@@ -3386,7 +3342,6 @@
 			children = (
 				C77CCB78974589312409196C925A8D81 /* Assets */,
 			);
-			name = HealthVault;
 			path = HealthVault;
 			sourceTree = "<group>";
 		};
@@ -3436,7 +3391,6 @@
 				50BF129B86F0179E012CCB2E6ACA086B /* Categories */,
 				FB5E069F4E2D76BB22707B09259EC795 /* Generated */,
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -3445,7 +3399,6 @@
 			children = (
 				73FA209EDAD8E623E25A58B7119B13B1 /* Categories */,
 			);
-			name = Generated;
 			path = Generated;
 			sourceTree = "<group>";
 		};
@@ -3459,7 +3412,6 @@
 				B8095DE753F991F72EB2409CD02616CD /* MHVServiceDefinitionRequestParameters.m */,
 				17A388F2FB254E893E46547DD2306914 /* MHVThingConstants.h */,
 			);
-			name = PlatformInformation;
 			path = PlatformInformation;
 			sourceTree = "<group>";
 		};
@@ -3468,7 +3420,6 @@
 			children = (
 				F7B7504C72313A80EBDCCDDA2C62403A /* Classes */,
 			);
-			name = HealthVault;
 			path = HealthVault;
 			sourceTree = "<group>";
 		};
@@ -3477,7 +3428,6 @@
 			children = (
 				0BCFFB634FA0CDD50A13117B85DB248C /* Assets */,
 			);
-			name = HealthVault;
 			path = HealthVault;
 			sourceTree = "<group>";
 		};
@@ -3485,7 +3435,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Definition;
 			path = Definition;
 			sourceTree = "<group>";
 		};
@@ -3504,7 +3453,6 @@
 				8D753B5170D4F11A0391F33B32C69C9C /* MHVPropertyIntrospection.h */,
 				236D23A7B7126ECC0D78713F7EE80547 /* MHVPropertyIntrospection.m */,
 			);
-			name = Json;
 			path = Json;
 			sourceTree = "<group>";
 		};
@@ -3515,7 +3463,6 @@
 				4BB9E176EE33FB5F7EE9F64C5E8E7B24 /* EncryptedStore.m */,
 				EF5885F3BC8AF5DAE6E0A226E8E63DCE /* Support Files */,
 			);
-			name = EncryptedCoreData;
 			path = EncryptedCoreData;
 			sourceTree = "<group>";
 		};
@@ -3640,7 +3587,6 @@
 				52766C8B1BA42968BEA273CA71F071DF /* MHVWeight.m */,
 				927F8FB8E00028D55030F59275A814D4 /* Definition */,
 			);
-			name = ThingTypes;
 			path = ThingTypes;
 			sourceTree = "<group>";
 		};
@@ -3657,7 +3603,6 @@
 				7FF5F87CBEB1FF172E5D95E6629428DA /* MHVThingTypeVersionInfo.h */,
 				0B6B30E3C881B7BD66DDC034BF4F934A /* MHVThingTypeVersionInfo.m */,
 			);
-			name = Definition;
 			path = Definition;
 			sourceTree = "<group>";
 		};
@@ -3665,7 +3610,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Configuration;
 			path = Configuration;
 			sourceTree = "<group>";
 		};
@@ -3686,7 +3630,6 @@
 				9C730931639BEBE1405F1D68545EA2BD /* MHVSystemInstances.h */,
 				0D8DFCFA1020972C6B1A2430BAA8C599 /* MHVSystemInstances.m */,
 			);
-			name = ServiceDef;
 			path = ServiceDef;
 			sourceTree = "<group>";
 		};
@@ -3699,7 +3642,6 @@
 				E734F8FDCAD51A255A6063749B3C6545 /* MHVRequestMessageCreator.m */,
 				C4B2C0174428424074340F912F1B3CF3 /* MHVRequestMessageCreatorProtocol.h */,
 			);
-			name = Transport;
 			path = Transport;
 			sourceTree = "<group>";
 		};
@@ -3708,7 +3650,6 @@
 			children = (
 				CDB0D550A1EF6C260F4184B24D119999 /* Classes */,
 			);
-			name = HealthVault;
 			path = HealthVault;
 			sourceTree = "<group>";
 		};
@@ -3716,7 +3657,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Categories;
 			path = Categories;
 			sourceTree = "<group>";
 		};
@@ -3909,7 +3849,6 @@
 				CDCAD949B6F85350F9CCA7C8ABB54057 /* NSValue+KiwiAdditions.m */,
 				DFEC612232E71D96E1843A147C804E97 /* Support Files */,
 			);
-			name = Kiwi;
 			path = Kiwi;
 			sourceTree = "<group>";
 		};
@@ -3935,7 +3874,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Clients;
 			path = Clients;
 			sourceTree = "<group>";
 		};
@@ -3943,7 +3881,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Methods;
 			path = Methods;
 			sourceTree = "<group>";
 		};
@@ -3962,7 +3899,6 @@
 			children = (
 				C453349ABE250C9745063B8D82F9DD08 /* Private */,
 			);
-			name = Caching;
 			path = Caching;
 			sourceTree = "<group>";
 		};
@@ -3990,7 +3926,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Public;
 			path = Public;
 			sourceTree = "<group>";
 		};
@@ -4000,7 +3935,6 @@
 				9CE0B429FF6B9BF65B70F51DCFEDBB09 /* Categories */,
 				84842EA09F4B697B876C09028E08E1C9 /* Generated */,
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -4008,7 +3942,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Converter;
 			path = Converter;
 			sourceTree = "<group>";
 		};
@@ -4032,7 +3965,6 @@
 				8BDAC7E479AC85054EC5B75F3C72BC12 /* MHVValidator.h */,
 				5BC3198D82277A41EA8B442AA4104764 /* MHVValidator.m */,
 			);
-			name = Utilities;
 			path = Utilities;
 			sourceTree = "<group>";
 		};
@@ -4040,7 +3972,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Base;
 			path = Base;
 			sourceTree = "<group>";
 		};
@@ -4257,7 +4188,6 @@
 				0DB457675D95854AAE156C0022848F74 /* Converter */,
 				960FA77120A50FE3C11FDEB0AEC79282 /* ServiceDef */,
 			);
-			name = Types;
 			path = Types;
 			sourceTree = "<group>";
 		};
@@ -4265,7 +4195,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Transport;
 			path = Transport;
 			sourceTree = "<group>";
 		};
@@ -4289,7 +4218,6 @@
 				5C0EBEDD1C470120D1D86BFA152C2436 /* MHVThingCacheProtocol.h */,
 				6A8B616FAA63BE4562EC2100730C2780 /* Private */,
 			);
-			name = Caching;
 			path = Caching;
 			sourceTree = "<group>";
 		};
@@ -4323,7 +4251,6 @@
 				E88359DF171C2AE7E1E9DB456E3875B7 /* MHVOperationBase.m */,
 				06162BD597022DF533E821615FB6702B /* MHVOperationEnums.h */,
 			);
-			name = AsyncTask;
 			path = AsyncTask;
 			sourceTree = "<group>";
 		};
@@ -4346,7 +4273,6 @@
 			children = (
 				05549170C0A15AF2ED4655F65CEED45B /* CoreData */,
 			);
-			name = Private;
 			path = Private;
 			sourceTree = "<group>";
 		};
@@ -4354,7 +4280,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Assets;
 			path = Assets;
 			sourceTree = "<group>";
 		};
@@ -4387,7 +4312,6 @@
 				18A6C7CEAC06D4CB67AE218BE4EBF4AC /* MHVKeychainService.m */,
 				7109C4CFF5C4F9EC0E8FE989B1A92A1B /* MHVKeychainServiceProtocol.h */,
 			);
-			name = Store;
 			path = Store;
 			sourceTree = "<group>";
 		};
@@ -4416,7 +4340,6 @@
 				3B53F1C397D2C0393F123001F5EC1186 /* Vocabulary */,
 				E0146DE2A31838612FAD8F3AC8103D14 /* Xml */,
 			);
-			name = Classes;
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -4443,7 +4366,6 @@
 				3BE275E23F69BACA0AA8B37657C75A12 /* MHVVocabularyClient.m */,
 				22BB70F85CB0C9A8629B452703A228E4 /* MHVVocabularyClientProtocol.h */,
 			);
-			name = Clients;
 			path = Clients;
 			sourceTree = "<group>";
 		};
@@ -4453,7 +4375,6 @@
 				BA5296A7BA7B9CADF745B401E7EDC0CD /* common */,
 				5ED72D5EAF24CE145554E2CAB1B76C24 /* Support Files */,
 			);
-			name = SQLCipher;
 			path = SQLCipher;
 			sourceTree = "<group>";
 		};
@@ -4462,7 +4383,6 @@
 			children = (
 				799680C30F1F499D035988947F51650B /* HealthVault.h */,
 			);
-			name = Public;
 			path = Public;
 			sourceTree = "<group>";
 		};
@@ -4499,7 +4419,6 @@
 				7DAD193E837506696F48D30C70FC41C4 /* XWriter.h */,
 				CBBCC5D58F183B39064C5AE8CE76DC4D /* XWriter.m */,
 			);
-			name = Xml;
 			path = Xml;
 			sourceTree = "<group>";
 		};
@@ -4507,7 +4426,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Connection;
 			path = Connection;
 			sourceTree = "<group>";
 		};
@@ -4515,7 +4433,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Errors;
 			path = Errors;
 			sourceTree = "<group>";
 		};
@@ -4539,7 +4456,6 @@
 				8942E004E51DCC8476052C66655B20D1 /* MHVShellAuthService.m */,
 				F8DDA7288942562706DA2B4A13EFAC0E /* MHVShellAuthServiceProtocol.h */,
 			);
-			name = Authentication;
 			path = Authentication;
 			sourceTree = "<group>";
 		};
@@ -4564,7 +4480,6 @@
 				5454FC63BF6AD24E5C51AB821EE1703D /* MHVSodaConnection.m */,
 				4784265D7C5D0CD4EFCED5213854D93E /* MHVSodaConnectionProtocol.h */,
 			);
-			name = Connection;
 			path = Connection;
 			sourceTree = "<group>";
 		};
@@ -4587,7 +4502,6 @@
 			children = (
 				8B0D44CBDB41450CDC5DFBF090A3CC1B /* Definition */,
 			);
-			name = ThingTypes;
 			path = ThingTypes;
 			sourceTree = "<group>";
 		};
@@ -4625,7 +4539,6 @@
 				1D66EE668EAA1F4C9385305EFAA53B98 /* Vocabulary */,
 				4D7D3B2EC19379F86EF3D7FE4789001B /* Xml */,
 			);
-			name = Classes;
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -4710,7 +4623,6 @@
 				0E9CA04F03960E638CEB013F438848BB /* MHVWeeklyAdherenceSummary.m */,
 				58AA395FC241492A5A1549A5CE4711C8 /* Categories */,
 			);
-			name = Generated;
 			path = Generated;
 			sourceTree = "<group>";
 		};
@@ -4731,7 +4643,6 @@
 				6555CCB47393B73A557BADC15038187F /* MHVBlobSource.h */,
 				27DFE50234EB99B196321422F193E2F4 /* MHVBlobSource.m */,
 			);
-			name = Blob;
 			path = Blob;
 			sourceTree = "<group>";
 		};
@@ -4740,7 +4651,6 @@
 			children = (
 				AF3C4D9808C2D2C2CF9A88794EBCA53C /* Public */,
 			);
-			name = Headers;
 			path = Headers;
 			sourceTree = "<group>";
 		};
@@ -4748,7 +4658,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Utilities;
 			path = Utilities;
 			sourceTree = "<group>";
 		};
@@ -5010,10 +4919,8 @@
 				BCFABFA3D9B10E2A013C267764F5BEBB /* MHVOperationEnums.h in Headers */,
 				C420D8FBD020211175D670DA8402878D /* MHVOrganization.h in Headers */,
 				C42FCF6C455D48A3E11621F091355603 /* MHVPeakFlow.h in Headers */,
-				695D09856BAE71C794F3793783440667 /* MHVPendingCreateThing+CoreDataClass.h in Headers */,
-				DF1084750C8D510CF155B936F714BCC7 /* MHVPendingCreateThing+CoreDataProperties.h in Headers */,
-				0A87231690E9815FDF954717DC147951 /* MHVPendingDeleteThing+CoreDataClass.h in Headers */,
-				E40D3F25F75337CA51F020B7FA25CB24 /* MHVPendingDeleteThing+CoreDataProperties.h in Headers */,
+				695D09856BAE71C794F3793783440667 /* MHVPendingThingOperation+CoreDataClass.h in Headers */,
+				DF1084750C8D510CF155B936F714BCC7 /* MHVPendingThingOperation+CoreDataProperties.h in Headers */,
 				EE60C26B03AA3174786E82BD88807834 /* MHVPendingThing.h in Headers */,
 				83A83088A9AC232BA83EE6B317752B3F /* MHVPercentage.h in Headers */,
 				17693247B3E210A51106D102ED249A71 /* MHVPerson.h in Headers */,
@@ -5539,10 +5446,8 @@
 				255DF10FEA9FA3AE93ACAB450DFE57A0 /* MHVOperationEnums.h in Headers */,
 				D17D28893E7FBDF3D59E39341C14D0FB /* MHVOrganization.h in Headers */,
 				775B41C2909006FA40AE6796F9A79C0A /* MHVPeakFlow.h in Headers */,
-				99AFD7CAEC8AB6D908618A99B722C5C1 /* MHVPendingCreateThing+CoreDataClass.h in Headers */,
-				9B76DAF69DEE12F9E73BF132CAADA5A9 /* MHVPendingCreateThing+CoreDataProperties.h in Headers */,
-				BCCF4979F93B0AA3277459F82CBDE1F6 /* MHVPendingDeleteThing+CoreDataClass.h in Headers */,
-				09304602C7150615F2B11A7353B9579A /* MHVPendingDeleteThing+CoreDataProperties.h in Headers */,
+				99AFD7CAEC8AB6D908618A99B722C5C1 /* MHVPendingThingOperation+CoreDataClass.h in Headers */,
+				9B76DAF69DEE12F9E73BF132CAADA5A9 /* MHVPendingThingOperation+CoreDataProperties.h in Headers */,
 				8E6F89F66EFA671D1C845579290DF564 /* MHVPendingThing.h in Headers */,
 				8A232CA485D8C82DF2A149BB2D55AAF9 /* MHVPercentage.h in Headers */,
 				54BAF714EB71DD23494336ADA2610C89 /* MHVPerson.h in Headers */,
@@ -6179,10 +6084,8 @@
 				07B189B00B9B6DD6F141B9C637300E79 /* MHVOperationBase.m in Sources */,
 				D69DA6CC29AB5EECF522F0618F228B17 /* MHVOrganization.m in Sources */,
 				E1809659F2AA9A2767C8C5821AAECC88 /* MHVPeakFlow.m in Sources */,
-				440AF2E933E99D394059194AB6BB067F /* MHVPendingCreateThing+CoreDataClass.m in Sources */,
-				D0478278F6010B23362A8E79140C7EBD /* MHVPendingCreateThing+CoreDataProperties.m in Sources */,
-				6CFCE0A9033021BFFEDC75F7DAC31F14 /* MHVPendingDeleteThing+CoreDataClass.m in Sources */,
-				7B234BECB83AA66D9DD6FD8AF3376B6B /* MHVPendingDeleteThing+CoreDataProperties.m in Sources */,
+				440AF2E933E99D394059194AB6BB067F /* MHVPendingThingOperation+CoreDataClass.m in Sources */,
+				D0478278F6010B23362A8E79140C7EBD /* MHVPendingThingOperation+CoreDataProperties.m in Sources */,
 				C77F91874BF86CAA1AEB77A697C8A097 /* MHVPendingThing.m in Sources */,
 				F41173508A78774C796DD48E1789BEFA /* MHVPercentage.m in Sources */,
 				B77E17EA3CE38C1969F6735C48EB10D6 /* MHVPerson.m in Sources */,
@@ -6541,10 +6444,8 @@
 				3EE915397709DCF429482BC3F82B6744 /* MHVOperationBase.m in Sources */,
 				E35F7E3AD2EDEFCE6AFC63959A3544C1 /* MHVOrganization.m in Sources */,
 				068B29C7D87FF4E3B69FA3AF4E21859F /* MHVPeakFlow.m in Sources */,
-				D7AF3E0C6363FF0C295228629269CF99 /* MHVPendingCreateThing+CoreDataClass.m in Sources */,
-				DD7EF8A16F1D90E43B9840F35E960600 /* MHVPendingCreateThing+CoreDataProperties.m in Sources */,
-				DF7C7799A16A8B25EC302258BDFBA455 /* MHVPendingDeleteThing+CoreDataClass.m in Sources */,
-				743BCECB540AD20C32373C5397CB916A /* MHVPendingDeleteThing+CoreDataProperties.m in Sources */,
+				D7AF3E0C6363FF0C295228629269CF99 /* MHVPendingThingOperation+CoreDataClass.m in Sources */,
+				DD7EF8A16F1D90E43B9840F35E960600 /* MHVPendingThingOperation+CoreDataProperties.m in Sources */,
 				21AD5C3C46E579710EB3BBF472601F2A /* MHVPendingThing.m in Sources */,
 				00A47D00AAB0A86BDE5E97C1487A79C9 /* MHVPercentage.m in Sources */,
 				89B660655F501DC06DAE688BA6AC5DBE /* MHVPerson.m in Sources */,
@@ -7447,6 +7348,7 @@
 			children = (
 				3ACB0E24A598DE26AF58CDDC8B22DC18 /* MHVThingCacheDatabase.xcdatamodel */,
 			);
+			currentVersion = 3ACB0E24A598DE26AF58CDDC8B22DC18 /* MHVThingCacheDatabase.xcdatamodel */;
 			path = MHVThingCacheDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
