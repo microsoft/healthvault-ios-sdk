@@ -257,4 +257,12 @@ static NSString *const c_element_view = @"format";
     return nil;
 }
 
+- (NSUInteger)indexOfQueryWithName:(NSString *)name
+{
+    return [self indexOfMatchingObject:^BOOL(MHVThingQuery *query)
+    {
+        return [query.name isEqualToString:name];
+    }];
+}
+
 @end

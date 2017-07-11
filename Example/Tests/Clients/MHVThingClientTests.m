@@ -27,6 +27,7 @@
 #import "MHVRestRequest.h"
 #import "MHVBlobDownloadRequest.h"
 #import "MHVErrorConstants.h"
+#import "MHVThingCacheProtocol.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVThingClientTests)
@@ -34,23 +35,72 @@ SPEC_BEGIN(MHVThingClientTests)
 describe(@"MHVThingClient", ^
 {
     __block id<MHVHttpServiceOperationProtocol> requestedServiceOperation;
+    __block MHVServiceResponse *serviceResponse;
+    __block NSError *serviceError;
     
+    __block MHVThingQueryResultCollection *cachedResultCollection;
+    __block NSError *cacheError;
+    
+    __block NSError *requestError;
+    
+    beforeEach(^
+    {
+        serviceResponse = nil;
+        serviceError = nil;
+        
+        cachedResultCollection = nil;
+        cacheError = nil;
+        
+        requestError = nil;
+    });
+    
+    // Mock for HTTP service
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
     [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id(NSArray *params)
     {
         requestedServiceOperation = params[0];
         
         void (^completion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error) = params[1];
-        completion(nil, nil);
+        completion(serviceResponse, serviceError);
         return nil;
     }];
+    
+    // Mocks for Cache
+    KWMock<MHVThingCacheProtocol> *cache = [KWMock mockForProtocol:@protocol(MHVThingCacheProtocol)];
+    [cache stub:@selector(cachedResultsForQueries:recordId:completion:) withBlock:^id(NSArray *params)
+    {
+        void (^completion)(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error) = params[2];
+        completion(cachedResultCollection, cacheError);
+        return nil;
+    }];
+    
+    [cache stub:@selector(addThings:recordId:completion:) withBlock:^id(NSArray *params)
+    {
+        void (^completion)(NSError *_Nullable error) = params[2];
+        completion(cacheError);
+        return nil;
+    }];
+    
+    [cache stub:@selector(updateThings:recordId:completion:) withBlock:^id(NSArray *params)
+    {
+        void (^completion)(NSError *_Nullable error) = params[2];
+        completion(cacheError);
+        return nil;
+    }];
+    
+    [cache stub:@selector(deleteThings:recordId:completion:) withBlock:^id(NSArray *params)
+     {
+         void (^completion)(NSError *_Nullable error) = params[2];
+         completion(cacheError);
+         return nil;
+     }];
     
     NSUUID *recordId = [[NSUUID alloc] initWithUUIDString:@"20000000-2000-2000-2000-200000000000"];
     
     let(thingClient, ^
         {
             return [[MHVThingClient alloc] initWithConnection:mockConnection
-                                                        cache:nil];
+                                                        cache:cache];
         });
     
     let(allergyThing, ^
@@ -197,6 +247,77 @@ describe(@"MHVThingClient", ^
                        [[method.parameters should] equal:@"<info><thing-id version-stamp=\"AllergyVersion\">AllergyThingKey</thing-id></info>"];
                    });
             });
+    
+    context(@"when getThingsWithQueries is called with multiple queries that have various cache requirements and is successful", ^
+            {
+                __block MHVThingQueryCollection *queries;
+                __block MHVThingQueryResultCollection *resultsCollection;
+                
+                beforeEach(^
+                {
+                    // Mock the queries
+                    MHVThingQuery *query1 = [MHVThingQuery new];
+                    query1.name = @"query1";
+                    query1.shouldUseCachedResults = NO;
+                    
+                    MHVThingQuery *query2 = [MHVThingQuery new];
+                    query2.name = @"query2";
+                    
+                    MHVThingQuery *query3 = [MHVThingQuery new];
+                    query3.name = @"query3";
+                    query3.shouldUseCachedResults = NO;
+                    
+                    MHVThingQuery *query4 = [MHVThingQuery new];
+                    query4.name = @"query4";
+                    
+                    queries = [[MHVThingQueryCollection alloc] initWithArray:@[query1, query2, query3, query4]];
+                    
+                    // Mock the service response
+                    NSString *response = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"query3\"></group><group name=\"query1\"></group></wc:info></response>";
+                    
+                    MHVHttpServiceResponse *httpResponse = [[MHVHttpServiceResponse alloc]initWithResponseData:[response dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                                            statusCode:0];
+                    
+                    serviceResponse = [[MHVServiceResponse alloc]initWithWebResponse:httpResponse isXML:YES];
+                    
+                    // Mock the cache results
+                    MHVThingQueryResult *result2 = [[MHVThingQueryResult alloc]initWithName:query2.name
+                                                                                     things:nil
+                                                                                      count:0
+                                                                             isCachedResult:query2.shouldUseCachedResults];
+                    
+                    MHVThingQueryResult *result4 = [[MHVThingQueryResult alloc]initWithName:query4.name
+                                                                                     things:nil
+                                                                                      count:0
+                                                                             isCachedResult:query4.shouldUseCachedResults];
+                    
+                    cachedResultCollection = [[MHVThingQueryResultCollection alloc]initWithArray:@[result4, result2]];
+
+                    
+                    // Make the request
+                    [thingClient getThingsWithQueries:queries
+                                             recordId:recordId
+                                           completion:^(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error)
+                     {
+                         resultsCollection = results;
+                         requestError = error;
+                     }];
+                });
+                
+                it(@"should have no error", ^
+                   {
+                        [[expectFutureValue(requestError) shouldEventually] beNil];
+                   });
+                
+                it(@"should order the responses in the same order as the queries", ^
+                   {
+                       [[expectFutureValue(queries[0].name) shouldEventually] equal:resultsCollection[0].name];
+                       [[expectFutureValue(queries[1].name) shouldEventually] equal:resultsCollection[1].name];
+                       [[expectFutureValue(queries[2].name) shouldEventually] equal:resultsCollection[2].name];
+                       [[expectFutureValue(queries[3].name) shouldEventually] equal:resultsCollection[3].name];
+                   });
+            });
+    
     
 #pragma mark - Invalid Things
     

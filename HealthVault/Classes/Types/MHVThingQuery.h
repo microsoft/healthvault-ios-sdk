@@ -73,7 +73,7 @@
 @property (readwrite, nonatomic) NSUInteger offset;
 
 /**
- Flag to indicate if the query should used the Thing cache for results
+ Flag to indicate if the query should used the Thing cache for results. The default value is YES.
  */
 @property (readwrite, nonatomic) BOOL shouldUseCachedResults;
 
@@ -129,7 +129,20 @@
 
 @interface MHVThingQueryCollection : MHVCollection<MHVThingQuery *>
 
+/**
+ Returns a query contained in the collection with the given name or nil if no queries are found with the name.
 
+ @param name NSString the name of the query. *Case Sensitive.
+ @return MHVThingQuery the thing query with the given name.
+ */
 - (MHVThingQuery *)queryWithName:(NSString *)name;
+
+/**
+ Returns the index of the MHVThingQuery with the given name or NSNotFound if no queries are found with the name.
+ 
+ @param name NSString the name of the query. *Case Sensitive.
+ @return NSUInteger the index of the thing query with the given name.
+ */
+- (NSUInteger)indexOfQueryWithName:(NSString *)name;
 
 @end

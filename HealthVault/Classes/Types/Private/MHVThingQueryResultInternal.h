@@ -32,8 +32,7 @@
 //
 // If there were too many matches (depends on server quotas & buffer sizes), HealthVault will
 // return only the first chunk of matches. It will also return the keys of the 'pending' things
-// You must issue a fresh query to retrieve these pending things. This is easily done using
-// convenient init methods on MHVThingQuery
+// You must issue a fresh query to retrieve these pending things.
 //
 @property (readwrite, nonatomic, strong) MHVPendingThingCollection *pendingThings;
 //

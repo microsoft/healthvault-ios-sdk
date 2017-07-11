@@ -207,6 +207,12 @@
                          if (resultCollection.count > 0)
                          {
                              [results addObjectsFromCollection:resultCollection];
+                            
+                             // Sort the results collection based on the original order of the query collection
+                             [results sortUsingComparator:^NSComparisonResult(MHVThingQueryResult *result1, MHVThingQueryResult *result2)
+                             {
+                                 return [@([queries indexOfQueryWithName:result1.name]) compare:@([queries indexOfQueryWithName:result2.name])];
+                             }];
                          }
                          
                          completion(results, nil);
