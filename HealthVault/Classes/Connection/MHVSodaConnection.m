@@ -27,7 +27,6 @@
 #import "MHVShellAuthServiceProtocol.h"
 #import "MHVServiceInstance.h"
 #import "MHVConfiguration.h"
-#import "MHVThingCacheConfigurationProtocol.h"
 #import "MHVPersonClientProtocol.h"
 #import "MHVPlatformConstants.h"
 #import "MHVServiceDefinition.h"

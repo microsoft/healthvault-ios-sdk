@@ -30,7 +30,9 @@
 #import "MHVPersonalImage.h"
 #import "MHVBlobUploadRequest.h"
 #import "MHVLogger.h"
+#ifdef THING_CACHE
 #import "MHVThingCacheProtocol.h"
+#endif
 
 @interface MHVThingClient ()
 
