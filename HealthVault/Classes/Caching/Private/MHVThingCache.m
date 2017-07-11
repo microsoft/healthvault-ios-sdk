@@ -30,6 +30,7 @@
 #import "MHVThingCacheDatabase+CoreDataModel.h"
 #import "MHVAsyncTask.h"
 #import "MHVAsyncTaskResult.h"
+#import "MHVThingQueryResult.h"
 #import "MHVCacheStatusProtocol.h"
 
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
@@ -740,7 +741,7 @@ static NSUInteger const kMaxRecordBatchSize = 240;
     
     [self.connection.thingClient getThingsWithQuery:query
                                            recordId:[[NSUUID alloc] initWithUUIDString:recordId]
-                                         completion:^(MHVThingCollection * _Nullable things, NSError * _Nullable error)
+                                         completion:^(MHVThingQueryResult * _Nullable result, NSError * _Nullable error)
      {
          if (error)
          {
@@ -752,7 +753,7 @@ static NSUInteger const kMaxRecordBatchSize = 240;
          }
          else
          {
-             [weakSelf.database synchronizeThings:things
+             [weakSelf.database synchronizeThings:result.things
                                          recordId:recordId
                               batchSequenceNumber:batchSequenceNumber
                              latestSequenceNumber:latestSequenceNumber
@@ -760,6 +761,8 @@ static NSUInteger const kMaxRecordBatchSize = 240;
          }
      }];
 }
+
+
 
 #pragma mark - KVO on connection's personInfo
 

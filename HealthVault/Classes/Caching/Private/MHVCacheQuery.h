@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign, readonly) BOOL canQueryCache;
 @property (nonatomic, assign, readonly) NSInteger fetchLimit;
+@property (nonatomic, assign, readonly) NSInteger fetchOffset;
 @property (nonatomic, strong, readonly, nullable) NSPredicate *predicate;
 @property (nonatomic, strong, readonly, nullable) NSError *error;
 

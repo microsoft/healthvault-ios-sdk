@@ -63,13 +63,17 @@
 
 
 /**
- Sets the maximum number of things that will be retrieved for a given request (Optional). If not explicitly set by the caller, all Things maching the filter criteria will be fetched.
- @note It's highly recommended that large data sets be paged by setting the maxResults property.
+ Sets the maximum number of things that will be retrieved for a given request (Optional). The maximum value is 500 items per request. If not explicitly set by the caller, or set to more than 500 the property is set to 240.
 */
-@property (readwrite, nonatomic) int maxResults;
+@property (readwrite, nonatomic) NSUInteger limit;
 
 /**
- Flag to indicate if the query should used the Thing cache for results
+ Specifies an offset at which Things will begin being returned (Optional). Effectively, the request skips the specified number of matching Things. For example, given a fetch that typically returns a, b, c, d, specifying an offset of 1 will return b, c, d, and an offset of 4 will return an empty array. The default value is 0;
+ */
+@property (readwrite, nonatomic) NSUInteger offset;
+
+/**
+ Flag to indicate if the query should used the Thing cache for results. The default value is YES.
  */
 @property (readwrite, nonatomic) BOOL shouldUseCachedResults;
 
@@ -125,7 +129,20 @@
 
 @interface MHVThingQueryCollection : MHVCollection<MHVThingQuery *>
 
+/**
+ Returns a query contained in the collection with the given name or nil if no queries are found with the name.
 
+ @param name NSString the name of the query. *Case Sensitive.
+ @return MHVThingQuery the thing query with the given name.
+ */
 - (MHVThingQuery *)queryWithName:(NSString *)name;
+
+/**
+ Returns the index of the MHVThingQuery with the given name or NSNotFound if no queries are found with the name.
+ 
+ @param name NSString the name of the query. *Case Sensitive.
+ @return NSUInteger the index of the thing query with the given name.
+ */
+- (NSUInteger)indexOfQueryWithName:(NSString *)name;
 
 @end

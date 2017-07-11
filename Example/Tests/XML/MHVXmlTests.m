@@ -98,7 +98,7 @@ describe(@"XML", ^
                        [[theValue(results.results.count) should] equal:@(1)];
                        
                        //The Result should have one thing
-                       MHVThingQueryResult *result = [results.results objectAtIndex:0];
+                       MHVThingQueryResultInternal *result = [results.results objectAtIndex:0];
                        [[theValue(result.hasThings) should] beYes];
                        [[theValue(result.things.count) should] equal:@(1)];
                        

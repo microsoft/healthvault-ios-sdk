@@ -19,7 +19,8 @@
 #import <UIKit/UIKit.h>
 #import "MHVClientProtocol.h"
 
-@class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVBlobPayloadThing, MHVGetRecordOperationsResult, MHVThingKeyCollection, MHVThingKey;
+@class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingQueryResult, MHVBlobPayloadThing, MHVGetRecordOperationsResult, MHVThingKeyCollection, MHVThingKey;
+
 @protocol MHVThingCacheProtocol, MHVBlobSourceProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -45,12 +46,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param query A thing query to perform
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
- *        MHVThingCollection object will have the requested things, or nil if no things were retrieved.
+ *        MHVThingQueryResult object will have the requested things, or nil if no things were retrieved.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getThingsWithQuery:(MHVThingQuery *)query
                   recordId:(NSUUID *)recordId
-                completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+                completion:(void(^)(MHVThingQueryResult *_Nullable result, NSError *_Nullable error))completion;
 
 /**
  * Get several collections of things
@@ -73,13 +74,13 @@ NS_ASSUME_NONNULL_BEGIN
  * @param query A query to use with this request; for example to add a filter to get all thingClass objects after a date
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
- *        MHVThingCollection object will have the requested things, or nil if no things were retrieved.
+ *        MHVThingQueryResult object will have the requested things, or nil if no things were retrieved.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getThingsForThingClass:(Class )thingClass
                          query:(MHVThingQuery *_Nullable)query
                       recordId:(NSUUID *)recordId
-                    completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+                    completion:(void(^)(MHVThingQueryResult *_Nullable result, NSError *_Nullable error))completion;
 
 /**
  * Store a new Thing in the HealthVault service
