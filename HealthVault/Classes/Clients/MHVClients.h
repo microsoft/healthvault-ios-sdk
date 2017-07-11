@@ -23,7 +23,6 @@
 #import "MHVPlatformClientProtocol.h"
 #import "MHVRemoteMonitoringClientProtocol.h"
 #import "MHVThingClientProtocol.h"
-#import "MHVThingCacheProtocol.h"
 #import "MHVVocabularyClientProtocol.h"
 
 #endif /* MHVClients_h */

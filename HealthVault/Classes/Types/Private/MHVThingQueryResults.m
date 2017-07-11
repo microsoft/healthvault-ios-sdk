@@ -28,7 +28,7 @@ static NSString *const c_element_result = @"group";
     return !([MHVCollection isNilOrEmpty:self.results]);
 }
 
-- (MHVThingQueryResult *)firstResult
+- (MHVThingQueryResultInternal *)firstResult
 {
     return (self.hasResults) ? [self.results objectAtIndex:0] : nil;
 }
@@ -40,9 +40,9 @@ static NSString *const c_element_result = @"group";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.results = (MHVThingQueryResultCollection *)[reader readElementArray:c_element_result
-                                                                    asClass:[MHVThingQueryResult class]
-                                                              andArrayClass:[MHVThingQueryResultCollection class]];
+    self.results = (MHVThingQueryResultCollectionInternal *)[reader readElementArray:c_element_result
+                                                                             asClass:[MHVThingQueryResultInternal class]
+                                                                       andArrayClass:[MHVThingQueryResultCollectionInternal class]];
 }
 
 @end

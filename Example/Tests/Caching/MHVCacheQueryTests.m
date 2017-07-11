@@ -458,12 +458,12 @@ describe(@"MHVCacheQuery", ^
            });
     });
     
-    context(@"when the maxResults property is set on the thing query", ^
+    context(@"when the limit property is set on the thing query", ^
     {
         beforeEach(^
         {
             MHVThingQuery *thingQuery = [[MHVThingQuery alloc] initWithThingID:@"TEST_THING_ID"];
-            thingQuery.maxResults = 50;
+            thingQuery.limit = 50;
             
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
@@ -479,7 +479,7 @@ describe(@"MHVCacheQuery", ^
            });
     });
     
-    context(@"when the maxResults property is not set on the thing query", ^
+    context(@"when the limit property is not set on the thing query", ^
     {
         beforeEach(^
         {
@@ -490,7 +490,7 @@ describe(@"MHVCacheQuery", ^
         
         it(@"should set the fetchLimit property", ^
            {
-               [[theValue(cacheQuery.fetchLimit) should] equal:theValue(-1)];
+               [[theValue(cacheQuery.fetchLimit) should] equal:theValue(240)];
            });
         
         it(@"should set the canQueryCache property to YES", ^
@@ -498,6 +498,47 @@ describe(@"MHVCacheQuery", ^
                [[theValue(cacheQuery.canQueryCache) should] beTrue];
            });
     });
+    
+    context(@"when the offset property is set on the thing query", ^
+            {
+                beforeEach(^
+                           {
+                               MHVThingQuery *thingQuery = [[MHVThingQuery alloc] initWithThingID:@"TEST_THING_ID"];
+                               thingQuery.offset = 150;
+                               
+                               cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
+                           });
+                
+                it(@"should set the fetchLimit property", ^
+                   {
+                       [[theValue(cacheQuery.fetchOffset) should] equal:theValue(150)];
+                   });
+                
+                it(@"should set the canQueryCache property to YES", ^
+                   {
+                       [[theValue(cacheQuery.canQueryCache) should] beTrue];
+                   });
+            });
+    
+    context(@"when the offset property is not set on the thing query", ^
+            {
+                beforeEach(^
+                           {
+                               MHVThingQuery *thingQuery = [[MHVThingQuery alloc] initWithThingID:@"TEST_THING_ID"];
+                               
+                               cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
+                           });
+                
+                it(@"should set the fetchLimit property", ^
+                   {
+                       [[theValue(cacheQuery.fetchOffset) should] equal:theValue(0)];
+                   });
+                
+                it(@"should set the canQueryCache property to YES", ^
+                   {
+                       [[theValue(cacheQuery.canQueryCache) should] beTrue];
+                   });
+            });
 
     context(@"when the shouldUseCachedResults property is set on the thing query", ^
             {

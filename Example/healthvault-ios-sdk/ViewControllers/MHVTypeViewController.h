@@ -22,9 +22,8 @@
 #import "MHVThingDataTypedFeatures.h"
 #import "MHVUIAlert.h"
 
-@interface MHVTypeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface MHVTypeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property (readonly, nonatomic, strong) MHVThingCollection *things;
 @property (readonly, nonatomic, strong) IBOutlet MHVStatusLabel *statusLabel;
 
 - (instancetype)initWithTypeClass:(Class)typeClass useMetric:(BOOL)metric;
@@ -34,7 +33,7 @@
 //
 - (MHVThing *)getSelectedThing;
 
-- (void)getThingsFromHealthVault;
+- (void)refreshAll;
 - (void)showActivityAndStatus:(NSString *)status;
 - (void)clearStatus;
 
