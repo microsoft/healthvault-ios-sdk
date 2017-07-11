@@ -27,7 +27,7 @@
 #import "MHVShellAuthServiceProtocol.h"
 #import "MHVServiceInstance.h"
 #import "MHVConfiguration.h"
-#import "MHVThingCacheConfiguration.h"
+#import "MHVThingCacheConfigurationProtocol.h"
 #import "MHVPersonClientProtocol.h"
 #import "MHVPlatformConstants.h"
 #import "MHVServiceDefinition.h"
@@ -63,7 +63,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 @synthesize personInfo = _personInfo;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                   cacheConfiguration:(MHVThingCacheConfiguration *_Nullable)cacheConfiguration
+                   cacheConfiguration:(id<MHVThingCacheConfigurationProtocol>_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
                       keychainService:(id<MHVKeychainServiceProtocol>)keychainService

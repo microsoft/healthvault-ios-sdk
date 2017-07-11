@@ -26,6 +26,7 @@
 #import "MHVCacheConstants.h"
 #import "MHVCacheStatusProtocol.h"
 #import "MHVThingCacheConfiguration.h"
+#import "MHVThingCacheConfigurationProtocol.h"
 #import "MHVThingCacheDatabaseProtocol.h"
 #import "MHVThingCacheProtocol.h"
 #import "MHVCachedRecord+CoreDataClass.h"

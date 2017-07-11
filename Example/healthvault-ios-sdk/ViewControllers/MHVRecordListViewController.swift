@@ -62,7 +62,7 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        if let personInfo = self.connection.personInfo
+        if let personInfo = self.connection?.personInfo
         {
             return Int(personInfo.records.count())
         }
@@ -77,7 +77,7 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
             cell = UITableViewCell.init(style: .default, reuseIdentifier: "MHVRecordCell")
         }
         
-        if let personInfo = self.connection.personInfo
+        if let personInfo = self.connection?.personInfo
         {
             if let record = personInfo.records .object(at: UInt(indexPath.row))
             {
@@ -102,7 +102,7 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
         {
             cell?.tag = recordId.hashValue
             
-            self.connection.thingClient()?.getPersonalImage(withRecord: recordId,
+            self.connection?.thingClient()?.getPersonalImage(withRecord: recordId,
                                                             completion:
                 { (image: UIImage?, error: Error?) in
                     
@@ -130,7 +130,7 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
     {
         tableView .deselectRow(at: indexPath, animated: true)
         
-        guard let personInfo = self.connection.personInfo else {
+        guard let personInfo = self.connection?.personInfo else {
             return
         }
         

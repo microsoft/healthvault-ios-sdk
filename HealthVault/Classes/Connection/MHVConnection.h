@@ -21,7 +21,7 @@
 
 @class MHVConfiguration, MHVThingCacheConfiguration, MHVClientFactory, MHVServiceInstance, MHVApplicationCreationInfo;
 
-@protocol MHVHttpServiceProtocol;
+@protocol MHVHttpServiceProtocol, MHVThingCacheConfigurationProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) MHVConfiguration *configuration;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                   cacheConfiguration:(MHVThingCacheConfiguration *_Nullable)cacheConfiguration
+                   cacheConfiguration:(id<MHVThingCacheConfigurationProtocol>_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService;
 

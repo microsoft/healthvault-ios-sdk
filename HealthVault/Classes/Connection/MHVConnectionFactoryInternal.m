@@ -25,7 +25,9 @@
 #import "MHVShellAuthService.h"
 #import "MHVBrowserAuthBroker.h"
 #import "MHVClientFactory.h"
+#ifdef THING_CACHE
 #import "MHVThingCacheConfiguration.h"
+#endif
 
 @interface MHVConnectionFactoryInternal ()
 
@@ -48,7 +50,7 @@
     return self;
 }
 
-- (id<MHVSodaConnectionProtocol>)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration
+- (id<MHVSodaConnectionProtocol> _Nullable)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration
 {
     MHVASSERT_PARAMETER(configuration);
     
@@ -62,8 +64,13 @@
         
         if (!self.connection)
         {
+            id thingCacheConfiguration = nil;
+#ifdef THING_CACHE
+            thingCacheConfiguration = [MHVThingCacheConfiguration new];
+#endif
+
             self.connection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
-                                                            cacheConfiguration:[MHVThingCacheConfiguration new]
+                                                            cacheConfiguration:thingCacheConfiguration
                                                                  clientFactory:[MHVClientFactory new]
                                                                    httpService:[[MHVHttpService alloc] initWithConfiguration:configuration]
                                                                keychainService:[MHVKeychainService new]
