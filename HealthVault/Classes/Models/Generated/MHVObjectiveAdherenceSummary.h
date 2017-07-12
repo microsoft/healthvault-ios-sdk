@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* outcomeName;
 /* The Tasks associated with this plan [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskAdherenceSummary*>* associatedTasks;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskAdherenceSummary *>* associatedTasks;
 
 @end
 

@@ -44,13 +44,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Collection of schedules for the timeline entry [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVTimelineSchedule*>* schedules;
+@property(strong,nonatomic,nullable) NSArray<MHVTimelineSchedule *>* schedules;
 /* Completion metrics specifying the recurrence and type for the timeline entry [optional]
  */
 @property(strong,nonatomic,nullable) MHVTimelineSnapshotCompletionMetrics* completionMetrics;
 /* The occurrences which are marked as out of window and are thus not associated with a schedule [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVTimelineScheduleOccurrence*>* unscheduledOccurrences;
+@property(strong,nonatomic,nullable) NSArray<MHVTimelineScheduleOccurrence *>* unscheduledOccurrences;
 /* The effective start time instant for the timeline snapshot [optional]
  */
 @property(strong,nonatomic,nullable) MHVInstant* effectiveStartInstant;

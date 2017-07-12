@@ -64,10 +64,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) MHVActionPlanCategoryEnum* category;
 /* The Collection of objectives for the plan 
  */
-@property(strong,nonatomic) NSArray<MHVObjective*>* objectives;
+@property(strong,nonatomic) NSArray<MHVObjective *>* objectives;
 /* The Tasks associated with this plan [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTask*>* associatedTasks;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTask *>* associatedTasks;
 
 @end
 

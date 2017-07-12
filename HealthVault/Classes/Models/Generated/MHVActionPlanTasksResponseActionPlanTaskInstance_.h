@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The collection of tasks [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskInstance*>* tasks;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskInstance *>* tasks;
 /* The URI for the next page of data [optional]
  */
 @property(strong,nonatomic,nullable) NSString* nextLink;

@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(strong,nonatomic,nullable) NSString* target;
 
-@property(strong,nonatomic,nullable) NSArray<MHVErrorInformation*>* details;
+@property(strong,nonatomic,nullable) NSArray<MHVErrorInformation *>* details;
 
 @property(strong,nonatomic,nullable) MHVErrorInformation* innererror;
 

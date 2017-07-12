@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) MHVGoalRange* range;
 /* Other ranges of achievement for the goal. [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVGoalRange*>* additionalRanges;
+@property(strong,nonatomic,nullable) NSArray<MHVGoalRange *>* additionalRanges;
 
 @end
 

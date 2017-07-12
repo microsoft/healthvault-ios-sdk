@@ -89,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) MHVActionPlanFrequencyTaskCompletionMetrics* frequencyTaskCompletionMetrics;
 /* Schedules for when a task should be completed. [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVSchedule*>* schedules;
+@property(strong,nonatomic,nullable) NSArray<MHVSchedule *>* schedules;
 
 @end
 

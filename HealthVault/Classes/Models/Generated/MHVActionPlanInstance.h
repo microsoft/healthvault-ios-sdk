@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* organizationName;
 /* The Task instances associated with this plan [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskInstance*>* associatedTasks;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskInstance *>* associatedTasks;
 /* The name of the plan, localized [optional]
  */
 @property(strong,nonatomic,nullable) NSString* name;
@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) MHVActionPlanInstanceCategoryEnum* category;
 /* The Collection of objectives for the plan 
  */
-@property(strong,nonatomic) NSArray<MHVObjective*>* objectives;
+@property(strong,nonatomic) NSArray<MHVObjective *>* objectives;
 
 @end
 
