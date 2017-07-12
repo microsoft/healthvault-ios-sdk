@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class MHVThingCollection, MHVThingQuery, MHVThingQueryResult;
+@class MHVThingCollection, MHVThingQuery, MHVThingQueryResult, MHVPendingMethod;
 @protocol MHVCacheStatusProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -85,6 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called AFTER a Thing (or Things) have been successfully deleted from HealthVault.
+ @note This method may also be called once during the synchronization process to remove Things that have been deleted from HealthVault but still exsist in the cache.
  
  @param thingIds the IDs of the things to be deleted
  @param recordId the RecordId of the owner of the things
@@ -97,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This method will be called to synchronize Things from HealthVault to the cache database for a given recordId.
  
- @note the synchronization may include a large number of Things that have been either added or updated in HealthVault. In this case, the data is split into batches that are processed serially. The batchSequenceNumber and latestSequenceNumber parameters are used to determine if all batches have been processed - Where, batchSequenceNumber represents the greatest sequence number for a given batch, and latestSequenceNumber represents the greatest sequence number for all batches. During initial setup of the cache, or after long periods where a sync did not happen, this method will be called repeatedly until batchSequenceNumber = latestSequenceNumber. It's recommended that batchSequenceNumber be saved so if the sync is interupted the process can be continued.
+ @note The synchronization may include a large number of Things that have been either added or updated in HealthVault. In this case, the data is split into batches that are processed serially. The batchSequenceNumber and latestSequenceNumber parameters are used to determine if all batches have been processed - Where, batchSequenceNumber represents the greatest sequence number for a given batch, and latestSequenceNumber represents the greatest sequence number for all batches. During initial setup of the cache, or after long periods where a sync did not happen, this method will be called repeatedly until batchSequenceNumber = latestSequenceNumber. It's recommended that batchSequenceNumber be saved so if the sync is interupted the process can be continued.
  @param things collection of Things to be synchronized.
  @param recordId the owner record of the Things.
  @param batchSequenceNumber the sequence number with the highest value for all sequences included in the batch.
@@ -120,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)cachedResultForQuery:(MHVThingQuery *)query
                     recordId:(NSString *)recordId
-                  completion:(void(^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion;
+                  completion:(void (^)(MHVThingQueryResult *_Nullable queryResult, NSError *_Nullable error))completion;
 
 /**
  This method is called before the start of the sync process to determine which records to sync.
@@ -128,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param completion MUST be envoked when the operation is complete or an error occurs. NSArray<NSString *> recordIds The record ids that have associated Thing caches. NSError error a detailed error if the operations to get record ids fails.
  */
-- (void)fetchCachedRecordIds:(void(^)(NSArray<NSString *> *_Nullable recordIds, NSError *_Nullable error))completion;
+- (void)fetchCachedRecordIds:(void (^)(NSArray<NSString *> *_Nullable recordIds, NSError *_Nullable error))completion;
 
 /**
  Retrieve status information about a cached record
@@ -153,6 +154,32 @@ NS_ASSUME_NONNULL_BEGIN
                      sequenceNumber:(NSInteger)sequenceNumber
                            recordId:(NSString *_Nullable)recordId
                          completion:(void (^)(NSError *_Nullable error))completion;
+
+/**
+ This method is called if a CREATE, UPDATE or DELETE operation is attempted while there is no internet connection. If The MHVPendingMethod is cached it will be re-issued at the start of the next synchronization.
+
+ @param method MHVPendinMethod the method to be cached.
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if caching the method fails.
+ */
+- (void)cachePendingMethod:(MHVPendingMethod *)method
+                completion:(void (^)(NSError *_Nullable error))completion;
+
+/**
+ This method is called at the start of the synchronization process to re-issue any MHVPendingMethod requests.
+ @note The synchronization process starts by re-issuing pending methods in the original order they were originally issued. Once all pending methods are processed, DELETEs that occured in HealthVault are processed and finally, CREATEs and UPDATEs
+
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSArray<MHVPendingMethod *> methods an array of pending methods to be processed. NSError error a detailed error if the fetch process could not be completed.
+ */
+- (void)fetchPendingMethodsWithCompletion:(void (^)(NSArray<MHVPendingMethod *> *_Nullable methods, NSError *_Nullable error))completion;
+
+/**
+ This method is called after an MHVPendingMethod is successfully re-issued, and should be removed from the cache.
+
+ @param methods NSArray<MHVPendingMethod *> An array of pending methods to be processed
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if caching the method fails.
+ */
+- (void)deletePendingMethods:(NSArray<MHVPendingMethod *> *)methods
+                  completion:(void (^)(NSError *_Nullable error))completion;
 
 @end
 

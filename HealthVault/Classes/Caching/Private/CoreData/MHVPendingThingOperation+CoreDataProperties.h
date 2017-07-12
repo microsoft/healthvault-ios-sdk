@@ -14,9 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<MHVPendingThingOperation *> *)fetchRequest;
 
+@property (nullable, nonatomic, copy) NSString *identifier;
 @property (nullable, nonatomic, copy) NSDate *originalRequestDate;
-@property (nullable, nonatomic, copy) NSString *verb;
-@property (nullable, nonatomic, copy) NSString *xmlString;
+@property (nullable, nonatomic, copy) NSString *name;
+@property (nonatomic) int64_t version;
+@property (nullable, nonatomic, copy) NSString *parameters;
+@property (nullable, nonatomic, copy) NSString *correlationId;
 @property (nullable, nonatomic, retain) MHVCachedRecord *record;
 
 @end

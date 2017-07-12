@@ -13,9 +13,12 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"MHVPendingThingOperation"];
 }
 
+@dynamic identifier;
 @dynamic originalRequestDate;
-@dynamic verb;
-@dynamic xmlString;
+@dynamic name;
+@dynamic version;
+@dynamic parameters;
+@dynamic correlationId;
 @dynamic record;
 
 @end

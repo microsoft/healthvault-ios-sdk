@@ -25,14 +25,17 @@
         <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="things" inverseEntity="MHVCachedRecord" syncable="YES"/>
     </entity>
     <entity name="MHVPendingThingOperation" representedClassName="MHVPendingThingOperation" syncable="YES">
+        <attribute name="correlationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="originalRequestDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="verb" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="xmlString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parameters" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="pendingThingOperations" inverseEntity="MHVCachedRecord" syncable="YES"/>
     </entity>
     <elements>
         <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="163"/>
         <element name="MHVCachedThing" positionX="7" positionY="-36" width="128" height="223"/>
-        <element name="MHVPendingThingOperation" positionX="-702" positionY="-90" width="128" height="103"/>
+        <element name="MHVPendingThingOperation" positionX="-702" positionY="-90" width="128" height="148"/>
     </elements>
 </model>
