@@ -158,27 +158,29 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This method is called if a CREATE, UPDATE or DELETE operation is attempted while there is no internet connection. If The MHVPendingMethod is cached it will be re-issued at the start of the next synchronization.
 
- @param method MHVPendingMethod the method to be cached.
+ @param pendingMethod MHVPendingMethod the method to be cached.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if caching the method fails.
  */
-- (void)cachePendingMethod:(MHVPendingMethod *)method
+- (void)cachePendingMethod:(MHVPendingMethod *)pendingMethod
                 completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  This method is called at the start of the synchronization process to re-issue any MHVPendingMethod requests.
  @note The synchronization process starts by re-issuing pending methods in the original order they were originally issued. Once all pending methods are processed, DELETEs that occured in HealthVault are processed and finally, CREATEs and UPDATEs
-
+ 
+ @param recordId the RecordId of the owner of the pending methods.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSArray<MHVPendingMethod *> methods an array of pending methods to be processed. NSError error a detailed error if the fetch process could not be completed.
  */
-- (void)fetchPendingMethodsWithCompletion:(void (^)(NSArray<MHVPendingMethod *> *_Nullable methods, NSError *_Nullable error))completion;
+- (void)fetchPendingMethodsForRecordId:(NSString *)recordId
+                            completion:(void (^)(NSArray<MHVPendingMethod *> *_Nullable methods, NSError *_Nullable error))completion;
 
 /**
  This method is called after an MHVPendingMethod is successfully re-issued, and should be removed from the cache.
 
- @param methods NSArray<MHVPendingMethod *> An array of pending methods to be processed
+ @param pendingMethods NSArray<MHVPendingMethod *> An array of pending methods to be processed. *Note - All MHVPendingMethod objects in the array must have the same recordId.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if caching the method fails.
  */
-- (void)deletePendingMethods:(NSArray<MHVPendingMethod *> *)methods
+- (void)deletePendingMethods:(NSArray<MHVPendingMethod *> *)pendingMethods
                   completion:(void (^)(NSError *_Nullable error))completion;
 
 @end

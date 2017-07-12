@@ -25,13 +25,13 @@
 #import "MHVLogger.h"
 #import "EncryptedStore.h"
 #import "MHVThingTypes.h"
-#import "MHVThingCacheDatabase+CoreDataModel.h"
 #import "NSError+MHVError.h"
 #import "MHVCachedThing+Cache.h"
 #import "MHVCachedRecord+Cache.h"
 #import "MHVCacheQuery.h"
 #import "MHVCacheStatusProtocol.h"
 #import "MHVCacheStatus.h"
+#import "MHVPendingMethod.h"
 
 static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
@@ -113,6 +113,25 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
      }];
     
     return thing;
+}
+
+- (MHVPendingThingOperation *)newPendingThingOperationForRecord:(MHVCachedRecord *)record
+{
+    if (!self.isDatabaseReady || !record)
+    {
+        return nil;
+    }
+    
+    __block MHVPendingThingOperation *operation;
+    
+    [self.managedObjectContext performBlockAndWait:^
+     {
+         operation = [NSEntityDescription insertNewObjectForEntityForName:@"MHVPendingThingOperation"
+                                                   inManagedObjectContext:self.managedObjectContext];
+         operation.record = record;
+     }];
+    
+    return operation;
 }
 
 - (void)setupCacheForRecordIds:(NSArray<NSString *> *)recordIds
@@ -476,7 +495,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          
          for (MHVThing *thing in things)
          {
-             MHVCachedThing *cachedThing = [record findThingWithThingId:thing.thingID];
+             MHVCachedThing *cachedThing = [record thingWithThingId:thing.thingID];
              if (!cachedThing)
              {
                  //Not found, need to create...
@@ -757,6 +776,231 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              completion(error);
          }
      }];
+}
+
+- (void)cachePendingMethod:(MHVPendingMethod *)pendingMethod
+                completion:(void (^)(NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(pendingMethod);
+    
+    if (!pendingMethod)
+    {
+        if (completion)
+        {
+            completion([NSError MVHRequiredParameterIsNil]);
+        }
+        
+        return;
+    }
+    
+    if (!self.isDatabaseReady)
+    {
+        if (completion)
+        {
+            completion([NSError MHVCacheDeleted]);
+        }
+        return;
+    }
+    
+    [self.managedObjectContext performBlock:^
+    {
+        MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:pendingMethod.recordId.UUIDString];
+        
+        if (!record)
+        {
+            if (completion)
+            {
+                completion([NSError MHVCacheError:@"Record could not be found"]);
+            }
+            
+            return;
+        }
+        
+        // Support for updating a pending method request - If a pending method with the same identifier exists update rather
+        // than creating a new one.
+        MHVPendingThingOperation *operation = [record pendingThingOpertaionWithIdentifier:pendingMethod.identifier];
+        
+        if (!operation)
+        {
+            operation = [self newPendingThingOperationForRecord:record];
+            
+            if (!operation)
+            {
+                if (completion)
+                {
+                    completion([NSError MHVCacheError:@"Could not create a new MHVPendingThingOperation."]);
+                }
+                return;
+            }
+            
+        }
+        
+        operation.name = pendingMethod.name;
+        operation.version = pendingMethod.version;
+        operation.originalRequestDate = pendingMethod.originalRequestDate;
+        operation.parameters = pendingMethod.parameters;
+        operation.identifier = pendingMethod.identifier;
+        operation.correlationId = pendingMethod.correlationId.UUIDString;
+        
+        NSError *error = [self saveContext];
+        
+        if (completion)
+        {
+            completion(error);
+        }
+
+    }];
+}
+
+- (void)fetchPendingMethodsForRecordId:(NSString *)recordId
+                            completion:(void (^)(NSArray<MHVPendingMethod *> *_Nullable methods, NSError *_Nullable error))completion
+{
+    if ([NSString isNilOrEmpty:recordId])
+    {
+        if (completion)
+        {
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
+        }
+        return;
+    }
+    
+    if (!self.isDatabaseReady)
+    {
+        if (completion)
+        {
+            completion(nil, [NSError MHVCacheDeleted]);
+        }
+        return;
+    }
+    
+    [self.managedObjectContext performBlock:^
+    {
+        //Create query to filter & order Things
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"record.recordId == %@", [recordId lowercaseString]];
+        
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVPendingThingOperation"];
+        fetchRequest.predicate = predicate;
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"originalRequestDate" ascending:NO]];
+        
+        NSError *error;
+        NSUInteger fetchCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        if (error)
+        {
+            completion(nil, [NSError MHVCacheError:@"Could not calculate the number of pending thing operations."]);
+            return;
+        }
+        
+        NSMutableArray<MHVPendingMethod *> *pendingMethods = [NSMutableArray new];
+        
+        if (fetchCount > 0)
+        {
+            NSArray<MHVPendingThingOperation *> *operations = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+            
+            if (error)
+            {
+                completion(nil, [NSError MHVCacheError:@"Could not fetch things from cache database"]);
+                return;
+            }
+            
+            //Convert cached things back into MHVThings
+            for (int i = 0; i < operations.count; i ++)
+            {
+                MHVPendingThingOperation *operation = operations[i];
+                
+                MHVPendingMethod *pendingMethod = [[MHVPendingMethod alloc] initWithOriginalRequestDate:operation.originalRequestDate
+                                                                                             identifier:operation.identifier
+                                                                                             methodName:operation.name];
+                pendingMethod.version = operation.version;
+                pendingMethod.correlationId =  [[NSUUID alloc] initWithUUIDString:operation.correlationId];
+                pendingMethod.parameters = operation.parameters;
+                pendingMethod.recordId = [[NSUUID alloc] initWithUUIDString:recordId];
+                
+                [pendingMethods addObject:pendingMethod];
+            }
+        }
+        
+        completion(pendingMethods, nil);
+    }];
+}
+
+- (void)deletePendingMethods:(NSArray<MHVPendingMethod *> *)pendingMethods
+                  completion:(void (^)(NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(pendingMethods);
+    MHVASSERT_TRUE(pendingMethods.count > 0);
+    
+    if ([NSArray isNilOrEmpty:pendingMethods])
+    {
+        if (completion)
+        {
+            completion([NSError error:[NSError MVHInvalidParameter] withDescription:@"The 'pendingsMethods' array must not be nil and must contain at least 1 MHVPendingMethod."]);
+        }
+        
+        return;
+    }
+    
+    if (!self.isDatabaseReady)
+    {
+        if (completion)
+        {
+            completion([NSError MHVCacheDeleted]);
+        }
+        return;
+    }
+    
+    [self.managedObjectContext performBlock:^
+    {
+        NSString *recordId = nil;
+        NSMutableArray<NSString *> *methodIds = [NSMutableArray new];
+    
+        for (MHVPendingMethod *pendingMethod in pendingMethods)
+        {
+            if (recordId != nil && ![recordId isEqualToString:pendingMethod.recordId.UUIDString])
+            {
+                completion([NSError MHVCacheError:@"There is a recordId mismatch in the array of pending methods. All pending methods within this array must have the same recordId."]);
+                return;
+            }
+            
+            recordId = pendingMethod.recordId.UUIDString;
+            
+            [methodIds addObject:pendingMethod.identifier];
+        }
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier IN %@ AND record.recordId == %@", methodIds, [recordId lowercaseString]];
+        
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVPendingThingOperation"];
+        
+        [fetchRequest setPredicate:predicate];
+        
+        NSError *error = nil;
+        NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        
+        if (error)
+        {
+            MHVLOG(@"ThingCacheDatabase: Setting record as invalid, error fetching objects when deleting pending thing operation %@", error);
+            [self setCacheInvalidForRecordId:recordId
+                                  completion:nil];
+        }
+        
+        for (MHVCachedRecord *record in fetchedObjects)
+        {
+            [self.managedObjectContext deleteObject:record];
+        }
+        
+        error = [self saveContext];
+        
+        if (error)
+        {
+            MHVLOG(@"ThingCacheDatabase: Setting record as invalid, saving context when deleting pending thing operation %@", error);
+            [self setCacheInvalidForRecordId:recordId
+                                  completion:nil];
+        }
+        
+        if (completion)
+        {
+            completion(error);
+        }
+    }];
 }
 
 #pragma mark - Core Data

@@ -19,7 +19,8 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVCacheConstants.h"
-@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingCollection, MHVMethod;
+
+@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingCollection, MHVMethod, MHVPendingMethod;
 @protocol MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -84,17 +85,17 @@ NS_ASSUME_NONNULL_BEGIN
  Adds a method call to the cache to be replayed when the connection is online. This method is called if there is a 'PutThings' or 'RemoveThings' method request when there is no connection to the internet.
 
  @param method MHVMethod The method to be re-issued.
- @param completion Envoked once the process of caching the method has completed or an error occured. NSError error A detailed error about the operation failure.
+ @param completion Envoked once the process of caching the method has completed or an error occured. MHVPendingMethod pendingMethod The pending method that was saved cached. NSError error A detailed error about the operation failure.
  */
-- (void)cacheMethod:(MHVMethod *)method completion:(void (^)(NSError *_Nullable error))completion;
+- (void)cacheMethod:(MHVMethod *)method completion:(void (^)(MHVPendingMethod *_Nullable pendingMethod, NSError *_Nullable error))completion;
 
 /**
- Deletes a method call that was previously added to the cache.
+ Deletes a pending method call that was previously added to the cache.
  
- @param method MHVMethod The method to be deleted.
- @param completion Envoked once the process of deleting the method has completed or an error occured. NSError error A detailed error about the operation failure.
+ @param pendingMethod MHVPendingMethod The pending method to be deleted.
+ @param completion Envoked once the process of deleting the pending method has completed or an error occured. NSError error A detailed error about the operation failure.
  */
-- (void)deleteMethod:(MHVMethod *)method completion:(void (^)(NSError *_Nullable error))completion;
+- (void)deletePendingMethod:(MHVPendingMethod *)pendingMethod completion:(void (^)(NSError *_Nullable error))completion;
 
 @end
 

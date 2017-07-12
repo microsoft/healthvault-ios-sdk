@@ -21,12 +21,14 @@
 
 @interface MHVPendingMethod : MHVMethod
 
+@property (nonatomic, strong, readonly) NSString *identifier;
 @property (nonatomic, strong, readonly) NSDate *originalRequestDate;
 
 - (instancetype)initWithOriginalRequestDate:(NSDate *)originalRequestDate
                                      method:(MHVMethod *)method;
 
 - (instancetype)initWithOriginalRequestDate:(NSDate *)originalRequestDate
+                                 identifier:(NSString *)identifier
                                  methodName:(NSString *)methodName;
 
 @end

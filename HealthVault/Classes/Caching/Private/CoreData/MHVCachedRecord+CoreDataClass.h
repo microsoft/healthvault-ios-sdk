@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class MHVCachedThing, MHVPendingCreateThing, MHVPendingDeleteThing;
+@class MHVCachedThing, MHVPendingThingOperation;
 
 NS_ASSUME_NONNULL_BEGIN
 
