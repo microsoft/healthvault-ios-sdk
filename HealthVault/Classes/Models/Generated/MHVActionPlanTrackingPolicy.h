@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) MHVActionPlanTaskOccurrenceMetrics* occurrenceMetrics;
 /* The target events to track against [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskTargetEvent>* targetEvents;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskTargetEvent *>* targetEvents;
 
 @end
 

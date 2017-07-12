@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The collection of goals [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVGoal>* goals;
+@property(strong,nonatomic,nullable) NSArray<MHVGoal *>* goals;
 
 @end
 
