@@ -723,7 +723,6 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
               networkError:(NSError *)networkError
                 completion:(void (^)(NSError *_Nullable error))completion
 {
-#ifdef THING_CACHE
     if (!self.cache)
     {
         if (completion)
@@ -734,6 +733,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
         return;
     }
     
+#ifdef THING_CACHE
     // Add the method call to the cache...
     MHVAsyncTask<id, NSError *> *cacheMethodTask = [self taskForCacheMethod:method];
     
@@ -782,20 +782,13 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
         
         return nil;
     }];
-    
-#else
-    
-    if (completion)
-    {
-        completion(networkError);
-    }
 #endif
 }
 
+#ifdef THING_CACHE
 // Adds a method to the cache to be re-issued next sync
 - (MHVAsyncTask<id, NSError *> *)taskForCacheMethod:(MHVMethod *)method
 {
-#ifdef THING_CACHE
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
             {
                 [self.cache cacheMethod:method
@@ -811,16 +804,12 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
                      }
                  }];
             }];
-#else
-    return nil;
-#endif
 }
 
 // Adds new things to the cache. *Note - These new things will have no keys and will be purged during the next sync.
 - (MHVAsyncTask<id, NSError *> *)taskForAddPendingThings:(MHVThingCollection *)things
                                                   method:(MHVMethod *)method
 {
-#ifdef THING_CACHE
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
     {
         [self.cache addThings:things
@@ -837,16 +826,12 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
              }
          }];
     }];
-#else
-    return nil;
-#endif
 }
 
 // Updates existing things in the cache.
 - (MHVAsyncTask<id, NSError *> *)taskForUpdatePendingThings:(MHVThingCollection *)things
                                                      method:(MHVMethod *)method
 {
-#ifdef THING_CACHE
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
     {
         [self.cache updateThings:things
@@ -863,16 +848,12 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
              }
          }];
     }];
-#else
-    return nil;
-#endif
 }
 
 // Deletes things from the cache.
 - (MHVAsyncTask<id, NSError *> *)taskForDeletePendingThings:(MHVThingCollection *)things
                                                      method:(MHVMethod *)method
 {
-#ifdef THING_CACHE
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
     {
         [self.cache deleteThings:things
@@ -889,15 +870,11 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
              }
          }];
     }];
-#else
-    return nil;
-#endif
 }
 
 // If an error occurs during a previous step, the method that was added is deleted
 - (MHVAsyncTask<NSError *, NSArray<NSError *> *> *)taskForFailureToCacheMethod:(MHVMethod *)method
 {
-#ifdef THING_CACHE
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSError *inputError, void (^finish)(NSArray<NSError *> *), void (^cancel)(NSArray<NSError *> *))
     {
         NSMutableArray *errors = [NSMutableArray new];
@@ -922,10 +899,8 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
             finish(nil);
         }
     }];
-#else
-    return nil;
-#endif
 }
+#endif
 
 #pragma mark - Blobs: URL Refresh
 
