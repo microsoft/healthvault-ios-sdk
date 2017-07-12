@@ -533,7 +533,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     {
         if (completion)
         {
-            completion(thingKeys.firstKey, error);
+            completion(thingKeys ? thingKeys.firstKey : nil, error);
         }
     }];
 }
