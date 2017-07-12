@@ -88,12 +88,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param thing The thing to be added
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
-          MHVThingKey thingKey A Thing Key for the Thing that was created or nil if there was an error.
+ *        MHVThingKey thingKey A Thing Key for the Thing that was created or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)createNewThing:(MHVThing *)thing
               recordId:(NSUUID *)recordId
-            completion:(void(^_Nullable)(MHVThingKey *_Nullable thingKeys, NSError *_Nullable error))completion;
+            completion:(void(^_Nullable)(MHVThingKey *_Nullable thingKey, NSError *_Nullable error))completion;
 
 /**
  * Store several new Things in the HealthVault service
@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param things Collection of things to be added
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
- +        MHVThingKeyCollection thingKeys A collection of Thing Keys for Things that were created or nil if there was an error.
+ *        MHVThingKeyCollection thingKeys A collection of Thing Keys for Things that were created or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)createNewThings:(MHVThingCollection *)things
@@ -114,11 +114,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param thing The thing to be updated
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
+ *        MHVThingKey thingKey A new Thing Key (including updated version) for the Thing that was updated or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)updateThing:(MHVThing *)thing
            recordId:(NSUUID *)recordId
-         completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+         completion:(void(^_Nullable)(MHVThingKey *_Nullable thingKey, NSError *_Nullable error))completion;
 
 /**
  * Update a collection of existing Things in the HealthVault service
@@ -126,11 +127,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param things Collection of things to be updated
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
+ *        MHVThingKeyCollection thingKeys A collection of Thing Keys (including updated versions) for Things that were updated or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)updateThings:(MHVThingCollection *)things
             recordId:(NSUUID *)recordId
-          completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+          completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion;
 
 /**
  * Remove an existing Thing from the HealthVault service

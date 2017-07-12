@@ -218,7 +218,7 @@ describe(@"MHVThingClient", ^
                    {
                        [thingClient updateThing:allergyThing
                                        recordId:recordId
-                                     completion:^(NSError *error) { }];
+                                     completion:^(MHVThingKey *thingKey, NSError *error) { }];
                        
                        MHVMethod *method = (MHVMethod *)requestedServiceOperation;
                        
@@ -361,7 +361,7 @@ describe(@"MHVThingClient", ^
                     
                     [thingClient updateThing:invalidThing
                                     recordId:recordId
-                                  completion:^(NSError *error)
+                                  completion:^(MHVThingKey *thingKey, NSError *error)
                      {
                          returnedError = error;
                      }];
