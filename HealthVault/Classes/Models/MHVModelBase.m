@@ -463,7 +463,7 @@ Class classFromProperty(objc_property_t property);
             
             const char *cPropertyName = property_getName(properties[i]);
             NSString *propertyName = [NSString stringWithUTF8String:cPropertyName];
-            NSString *propertyNameInDictionary = propertyName;
+            NSString *propertyNameInDictionary;
             
             if (propertyNameMap[propertyName])
             {
