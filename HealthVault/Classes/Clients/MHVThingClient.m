@@ -467,7 +467,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
              {
                  if (completion)
                  {
-                     completion(keys, error);
+                     completion(nil, error);
                  }
              }];
             

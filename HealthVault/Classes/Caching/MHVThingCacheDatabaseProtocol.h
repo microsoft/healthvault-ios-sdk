@@ -158,7 +158,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This method is called if a CREATE, UPDATE or DELETE operation is attempted while there is no internet connection. If The MHVPendingMethod is cached it will be re-issued at the start of the next synchronization.
 
- @param method MHVPendinMethod the method to be cached.
+ @param method MHVPendingMethod the method to be cached.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if caching the method fails.
  */
 - (void)cachePendingMethod:(MHVPendingMethod *)method
