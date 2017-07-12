@@ -327,11 +327,10 @@
     }
     
     // For testing cache, not database so return all things
-    MHVThingQueryResult *result = [[MHVThingQueryResult alloc] init];
-    result.things = self.database[recordId].things;
-    result.isCachedResult = YES;
-    result.name = query.name;
-    
+    MHVThingQueryResult *result = [[MHVThingQueryResult alloc] initWithName:query.name
+                                                                     things:self.database[recordId].things
+                                                                      count:self.database[recordId].things.count
+                                                             isCachedResult:YES];
     completion(result, nil);
 }
 

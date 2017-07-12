@@ -42,9 +42,9 @@
 #import "MHVLogger.h"
 #import "MHVCryptographer.h"
 #import "MHVClientInfo.h"
-#import "MHVThingCacheConfiguration.h"
 #import "MHVConnectionTaskResult.h"
 #ifdef THING_CACHE
+#import "MHVThingCacheConfigurationProtocol.h"
 #import "MHVThingClient.h"
 #import "MHVThingCacheProtocol.h"
 #endif
@@ -81,7 +81,7 @@ static NSInteger kInternalServerError = 500;
 @synthesize cacheConfiguration = _cacheConfiguration;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
-                   cacheConfiguration:(MHVThingCacheConfiguration *_Nullable)cacheConfiguration
+                   cacheConfiguration:(id<MHVThingCacheConfigurationProtocol>_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
 {

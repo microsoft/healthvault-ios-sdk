@@ -356,39 +356,49 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
          fetchRequest.predicate = predicate;
          fetchRequest.propertiesToFetch = @[@"xmlString"];
          fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"effectiveDate" ascending:NO]];
-         fetchRequest.fetchLimit = cacheQuery.fetchLimit;
          
          NSError *error;
-         NSArray<MHVCachedThing *> *fetchedThings = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+         NSUInteger fetchCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
          if (error)
          {
-             completion(nil, [NSError MHVCacheError:@"Could not fetch things from cache database"]);
+             completion(nil, [NSError MHVCacheError:@"Could not calculate thing count for fetch."]);
              return;
          }
          
-         MHVThingCollection *thingCollection = [[MHVThingCollection alloc] init];
-         thingCollection.isCachedResult = YES;
+         MHVThingCollection *thingCollection = [MHVThingCollection new];
          
-         //Convert cached things back into MHVThings
-         for (MHVCachedThing *cachedThing in fetchedThings)
+         if (fetchCount > 0)
          {
-             MHVThing *thing = [cachedThing toThing];
-             if (thing)
+             fetchRequest.fetchLimit = cacheQuery.fetchLimit;
+             fetchRequest.fetchOffset = cacheQuery.fetchOffset;
+             
+             NSArray<MHVCachedThing *> *fetchedThings = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+             if (error)
              {
-                 [thingCollection addObject:thing];
-             }
-             else
-             {
-                 completion(nil, [NSError MHVCacheError:@"Could not convert database object back to a Thing"]);
+                 completion(nil, [NSError MHVCacheError:@"Could not fetch things from cache database"]);
                  return;
+             }
+             
+             //Convert cached things back into MHVThings
+             for (MHVCachedThing *cachedThing in fetchedThings)
+             {
+                 MHVThing *thing = [cachedThing toThing];
+                 if (thing)
+                 {
+                     [thingCollection addObject:thing];
+                 }
+                 else
+                 {
+                     completion(nil, [NSError MHVCacheError:@"Could not convert database object back to a Thing"]);
+                     return;
+                 }
              }
          }
          
-         MHVThingQueryResult *queryResult = [MHVThingQueryResult new];
-         queryResult.things = thingCollection;
-         queryResult.name = query.name;
-         queryResult.isCachedResult = YES;
-         
+         MHVThingQueryResult *queryResult = [[MHVThingQueryResult alloc] initWithName:query.name
+                                                                               things:thingCollection
+                                                                                count:fetchCount
+                                                                       isCachedResult:YES];
          NSDate *endDate = [NSDate date];
          
          MHVLOG(@"ThingCacheDatabase: Returning %li cached things in %0.4f seconds", queryResult.things.count, [endDate timeIntervalSinceDate:startDate]);

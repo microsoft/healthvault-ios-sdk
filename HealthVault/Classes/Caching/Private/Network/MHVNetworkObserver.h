@@ -26,7 +26,7 @@
  Creates a new instance of MHVNetworkObserver that observes network connectivity for a given host.
 
  @param hostName The host, conforming to RFC 1808. For example, in the URL http://www.example.com/index.html, the host is www.example.com.
- @return A new intance of MHVNetworkObserver.
+ @return A new instance of MHVNetworkObserver.
  */
 + (instancetype)observerWithHostName:(NSString *)hostName;
 

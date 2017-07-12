@@ -18,14 +18,14 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVType.h"
-#import "MHVThingQueryResult.h"
+#import "MHVThingQueryResultInternal.h"
 
 @interface MHVThingQueryResults : MHVType
 //
 // You can send multiple queries in a single MHVGetThingsTask
 //
-@property (readwrite, nonatomic, strong) MHVThingQueryResultCollection *results;
+@property (readwrite, nonatomic, strong) MHVThingQueryResultCollectionInternal *results;
 @property (readonly, nonatomic) BOOL hasResults;
-@property (readonly, nonatomic, strong) MHVThingQueryResult *firstResult;
+@property (readonly, nonatomic, strong) MHVThingQueryResultInternal *firstResult;
 
 @end
