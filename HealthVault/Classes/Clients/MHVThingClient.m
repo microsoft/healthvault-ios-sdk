@@ -512,7 +512,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
 
 - (void)updateThing:(MHVThing *)thing
            recordId:(NSUUID *)recordId
-         completion:(void(^_Nullable)(NSError *_Nullable error))completion
+         completion:(void(^_Nullable)(MHVThingKey *_Nullable thingKey, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(thing);
     MHVASSERT_PARAMETER(recordId);
@@ -521,7 +521,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     {
         if (completion)
         {
-            completion([NSError MVHRequiredParameterIsNil]);
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -529,12 +529,18 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     
     [self updateThings:[[MHVThingCollection alloc] initWithThing:thing]
               recordId:recordId
-            completion:completion];
+            completion:^(MHVThingKeyCollection * _Nullable thingKeys, NSError * _Nullable error)
+    {
+        if (completion)
+        {
+            completion(thingKeys ? thingKeys.firstKey : nil, error);
+        }
+    }];
 }
 
 - (void)updateThings:(MHVThingCollection *)things
             recordId:(NSUUID *)recordId
-          completion:(void(^_Nullable)(NSError *_Nullable error))completion
+          completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
@@ -543,7 +549,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     {
         if (completion)
         {
-            completion([NSError MVHRequiredParameterIsNil]);
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -558,7 +564,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
         {
             if (completion)
             {
-                completion([NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
+                completion(nil, [NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
             }
             
             return;
@@ -572,6 +578,8 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
+         MHVThingKeyCollection *keys = [self thingKeyResultsFromResponse:response];
+         
 #ifdef THING_CACHE
          // If the connection is offline cache the pending request.
          if ([self isOfflineError:error])
@@ -580,28 +588,47 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
                                things:things
                         operationType:MHVThingOpertaionTypeUpdate
                          networkError:error
-                           completion:completion];
+                           completion:^(NSError * _Nullable error)
+             {
+                 if (completion)
+                 {
+                     completion(nil, error);
+                 }
+             }];
              
              return;
          }
          
-         if (!error && self.cache)
+         if (keys.count == things.count)
          {
-             [self.cache updateThings:things
-                             recordId:recordId
-                           completion:^(NSError * _Nullable error)
-              {
-                  if (completion)
+             // Set Key on the updated things to update in cache
+             for (NSInteger i = 0; i < things.count; i++)
+             {
+                 things[i].key = keys[i];
+             }
+             
+             if (!error && self.cache)
+             {
+                 [self.cache updateThings:things
+                                 recordId:recordId
+                               completion:^(NSError * _Nullable error)
                   {
-                      completion(error);
-                  }
-              }];
-             return;
+                      if (completion)
+                      {
+                          completion(keys, error);
+                      }
+                  }];
+                 return;
+             }
+         }
+         else
+         {
+             MHVASSERT_MESSAGE(@"Mismatch between updated Thing count and Thing Keys");
          }
 #endif
          if (completion)
          {
-             completion(error);
+             completion(keys, error);
          }
      }];
 }
@@ -1251,8 +1278,13 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
              
              [self updateThing:toThing
                       recordId:recordId
-                    completion:^(NSError * _Nullable error)
+                    completion:^(MHVThingKey *_Nullable thingKey, NSError * _Nullable error)
              {
+                 if (!error && thingKey)
+                 {
+                     toThing.key = thingKey;
+                 }
+                 
                  completion(error == nil ? toThing : nil, error);
              }];
          }];
