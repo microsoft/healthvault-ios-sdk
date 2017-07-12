@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The collection of action plans [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanInstance>* plans;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanInstance*>* plans;
 /* The URI for the next page of data [optional]
  */
 @property(strong,nonatomic,nullable) NSString* nextLink;

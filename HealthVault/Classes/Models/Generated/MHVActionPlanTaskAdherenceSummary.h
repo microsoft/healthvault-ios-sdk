@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSDate* endDate;
 /* A list of weekly adherence summaries [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVWeeklyAdherenceSummary>* weeklyAdherence;
+@property(strong,nonatomic,nullable) NSArray<MHVWeeklyAdherenceSummary*>* weeklyAdherence;
 
 @end
 

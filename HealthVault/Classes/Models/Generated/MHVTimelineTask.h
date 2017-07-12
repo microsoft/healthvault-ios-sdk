@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSString* taskImageUrl;
 /* Collection of timeline snapshots for the task [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVTimelineSnapshot>* timelineSnapshots;
+@property(strong,nonatomic,nullable) NSArray<MHVTimelineSnapshot*>* timelineSnapshots;
 
 @end
 

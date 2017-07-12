@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSDate* endDate;
 /* The Collection of objectives for the plan [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVObjectiveAdherenceSummary>* objectives;
+@property(strong,nonatomic,nullable) NSArray<MHVObjectiveAdherenceSummary*>* objectives;
 
 @end
 
