@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param configuration configuration Configuration required for authenticating the connection.
  @return An instance of MHVSodaConnectionProtocol.
  */
-- (id<MHVSodaConnectionProtocol>)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration;
+- (id<MHVSodaConnectionProtocol> _Nullable)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration;
 
 @end
 

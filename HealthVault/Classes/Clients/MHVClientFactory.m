@@ -26,8 +26,8 @@
 #import "MHVCryptographer.h"
 #import "MHVKeychainService.h"
 #import "MHVConfiguration.h"
-#import "MHVThingCacheConfiguration.h"
 #ifdef THING_CACHE
+#import "MHVThingCacheConfiguration.h"
 #import "MHVThingCache.h"
 #import "MHVThingCacheDatabase.h"
 #endif

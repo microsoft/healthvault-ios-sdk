@@ -24,5 +24,8 @@
 #import "MHVRemoteMonitoringClientProtocol.h"
 #import "MHVThingClientProtocol.h"
 #import "MHVVocabularyClientProtocol.h"
+#ifdef THING_CACHE
+#import "MHVThingCacheProtocol.h"
+#endif
 
 #endif /* MHVClients_h */

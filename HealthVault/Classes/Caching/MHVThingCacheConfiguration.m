@@ -24,6 +24,10 @@ static NSInteger const kDefaultSyncIntervalSeconds = 60*60; // 1 hour
 
 @implementation MHVThingCacheConfiguration
 
+@synthesize cacheTypeIds = _cacheTypeIds;
+@synthesize syncIntervalSeconds = _syncIntervalSeconds;
+@synthesize database = _database;
+
 - (instancetype)init
 {
     self = [super init];

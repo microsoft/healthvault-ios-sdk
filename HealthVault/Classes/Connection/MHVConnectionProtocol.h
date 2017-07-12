@@ -19,9 +19,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class MHVSessionCredential, MHVConfiguration, MHVThingCacheConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient, MHVConnectionTaskResult;
+@class MHVSessionCredential, MHVConfiguration, MHVPersonInfo, MHVServiceResponse, MHVMethod, MHVRemoteMonitoringClient, MHVConnectionTaskResult;
 
-@protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVRemoteMonitoringClient;
+@protocol MHVHttpServiceOperationProtocol, MHVPersonClientProtocol, MHVPlatformClientProtocol, MHVThingClientProtocol, MHVVocabularyClientProtocol, MHVRemoteMonitoringClient, MHVThingCacheConfigurationProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
  The cache configuration object.
  It must be set before calling authenticateWithViewController.
  */
-@property (nonatomic, strong) MHVThingCacheConfiguration *cacheConfiguration;
+@property (nonatomic, strong, nullable) id<MHVThingCacheConfigurationProtocol> cacheConfiguration;
 
 /**
  The person info for the current session.
