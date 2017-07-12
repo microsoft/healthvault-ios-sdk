@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVCacheConstants.h"
-@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingCollection, MHVHostReachability;
+@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingCollection, MHVMethod;
 @protocol MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -79,6 +79,22 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)syncWithOptions:(MHVCacheOptions)options
              completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion;
+
+/**
+ Adds a method call to the cache to be replayed when the connection is online. This method is called if there is a 'PutThings' or 'RemoveThings' method request when there is no connection to the internet.
+
+ @param method MHVMethod The method to be re-issued.
+ @param completion Envoked once the process of caching the method has completed or an error occured. NSError error A detailed error about the operation failure.
+ */
+- (void)cacheMethod:(MHVMethod *)method completion:(void (^)(NSError *_Nullable error))completion;
+
+/**
+ Deletes a method call that was previously added to the cache.
+ 
+ @param method MHVMethod The method to be deleted.
+ @param completion Envoked once the process of deleting the method has completed or an error occured. NSError error A detailed error about the operation failure.
+ */
+- (void)deleteMethod:(MHVMethod *)method completion:(void (^)(NSError *_Nullable error))completion;
 
 @end
 

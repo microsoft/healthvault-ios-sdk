@@ -42,20 +42,6 @@
     return self;
 }
 
-- (instancetype)initWithURL:(NSURL *)url filePath:(NSString *)filePath isAnonymous:(BOOL)isAnonymous
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _url = url;
-        _filePath = filePath;
-        _isAnonymous = isAnonymous;
-    }
-    
-    return self;
-}
-
 - (NSString *)getCacheKey
 {
     return (self.parameters != nil) ? [self.name stringByAppendingString:self.parameters] : self.name;

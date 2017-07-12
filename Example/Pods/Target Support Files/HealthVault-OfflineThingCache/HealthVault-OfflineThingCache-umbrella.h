@@ -82,6 +82,7 @@
 #import "MHVHttpServiceOperationProtocol.h"
 #import "MHVHttpServiceRequest.h"
 #import "MHVMethod.h"
+#import "MHVPendingMethod.h"
 #import "MHVRestRequest.h"
 #import "NSArray+DataModel.h"
 #import "NSArray+MHVEnum.h"

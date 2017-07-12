@@ -73,9 +73,9 @@ extern NSString *const c_usdaFamily;
 //
 // Create a codedValue for the vocabThing
 //
-- (MHVCodedValue *)codedValueForThing:(MHVVocabularyCodeItem *)vocabThing;
-- (MHVCodedValue *)codedValueForCode:(NSString *)code;
-- (MHVCodableValue *)codableValueForText:(NSString *)text andCode:(NSString *)code;
+- (MHVCodedValue * _Nullable)codedValueForThing:(MHVVocabularyCodeItem *)vocabThing;
+- (MHVCodedValue * _Nullable)codedValueForCode:(NSString *)code;
+- (MHVCodableValue * _Nullable)codableValueForText:(NSString *)text andCode:(NSString *)code;
 //
 // Generate a single string representing this vocab identifier
 //

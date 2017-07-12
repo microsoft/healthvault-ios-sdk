@@ -30,17 +30,25 @@
 #import "MHVPersonalImage.h"
 #import "MHVBlobUploadRequest.h"
 #import "MHVLogger.h"
-#ifdef THING_CACHE
-#import "MHVThingCacheProtocol.h"
-#endif
 #import "MHVThingQueryResults.h"
 #import "MHVThingQueryResult.h"
 #import "MHVThingQueryResultInternal.h"
+#import "MHVAsyncTask.h"
+#ifdef THING_CACHE
+#import "MHVThingCacheProtocol.h"
+#endif
+
+typedef NS_ENUM(NSUInteger, MHVThingOperationType)
+{
+    MHVThingOpertaionTypeCreate = 0,
+    MHVThingOpertaionTypeUpdate,
+    MHVThingOpertaionTypeDelete
+};
 
 @interface MHVThingClient ()
 
-@property (nonatomic, weak) id<MHVConnectionProtocol>     connection;
-@property (nonatomic, strong) id<MHVThingCacheProtocol>   cache;
+@property (nonatomic, weak) id<MHVConnectionProtocol> connection;
+@property (nonatomic, strong) id<MHVThingCacheProtocol> cache;
 
 @end
 
@@ -447,6 +455,25 @@
          MHVThingKeyCollection *keys = [self thingKeyResultsFromResponse:response];
          
 #ifdef THING_CACHE
+         
+         // If the connection is offline cache the pending request.
+         if ([self isOfflineError:error])
+         {
+             [self cachePendingMethod:method
+                               things:things
+                        operationType:MHVThingOpertaionTypeCreate
+                         networkError:error
+                          completion:^(NSError * _Nullable error)
+             {
+                 if (completion)
+                 {
+                     completion(nil, error);
+                 }
+             }];
+            
+            return;
+         }
+         
          if (keys.count == things.count)
          {
              // Set Key on the added things
@@ -546,6 +573,18 @@
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
 #ifdef THING_CACHE
+         // If the connection is offline cache the pending request.
+         if ([self isOfflineError:error])
+         {
+             [self cachePendingMethod:method
+                               things:things
+                        operationType:MHVThingOpertaionTypeUpdate
+                         networkError:error
+                           completion:completion];
+             
+             return;
+         }
+         
          if (!error && self.cache)
          {
              [self.cache updateThings:things
@@ -616,6 +655,18 @@
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
 #ifdef THING_CACHE
+         // If the connection is offline cache the pending request.
+         if ([self isOfflineError:error])
+         {
+             [self cachePendingMethod:method
+                               things:things
+                        operationType:MHVThingOpertaionTypeDelete
+                         networkError:error
+                           completion:completion];
+             
+             return;
+         }
+         
          if (!error && self.cache)
          {
              [self.cache deleteThings:things
@@ -635,6 +686,189 @@
              completion(error);
          }
      }];
+}
+
+#pragma mark - Cache Pending Thing Operations
+
+- (void)cachePendingMethod:(MHVMethod *)method
+                    things:(MHVThingCollection *)things
+             operationType:(MHVThingOperationType)operationType
+              networkError:(NSError *)networkError
+                completion:(void (^)(NSError *_Nullable error))completion
+{
+    if (!self.cache)
+    {
+        if (completion)
+        {
+            completion(networkError);
+        }
+        
+        return;
+    }
+    
+    // Add the method call to the cache...
+    MHVAsyncTask<id, NSError *> *cacheMethodTask = [self taskForCacheMethod:method];
+    
+    MHVAsyncTask<id, NSError *> *addUpdateOrDeleteTask;
+
+    if (operationType == MHVThingOpertaionTypeCreate)
+    {
+        // Add things to the cache (with no keys - They will be purged the next sync)
+        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                task:[self taskForAddPendingThings:things method:method]];
+        
+    }
+    else if (operationType == MHVThingOpertaionTypeUpdate)
+    {
+        // Update things in the cache
+        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                task:[self taskForUpdatePendingThings:things method:method]];
+    }
+    else if (operationType == MHVThingOpertaionTypeDelete)
+    {
+        // Delete things from the cache
+        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                task:[self taskForDeletePendingThings:things method:method]];
+    }
+    
+    // If an error occurs during the caching process we need to cleanup the cache by removing the cached method.
+    MHVAsyncTask<NSError *, NSArray<NSError *> *> *failureTask = [addUpdateOrDeleteTask continueWithTask:[self taskForFailureToCacheMethod:method]];
+    
+    [failureTask continueWithBlock:^id(NSArray<NSError *> *errors)
+    {
+        if (errors)
+        {
+            for (NSError *error in errors)
+            {
+                // Print any errors that occur during the process of caching a method or things
+                MHVASSERT_MESSAGE(error.localizedDescription);
+            }
+            
+            // Complete with the original network error, so caching does not interfere with the normal app behavior for no network.
+            completion(networkError);
+        }
+        else
+        {
+            completion(nil);
+        }
+        
+        return nil;
+    }];
+}
+
+// Adds a method to the cache to be re-issued next sync
+- (MHVAsyncTask<id, NSError *> *)taskForCacheMethod:(MHVMethod *)method
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
+            {
+                [self.cache cacheMethod:method
+                             completion:^(NSError * _Nullable error)
+                 {
+                     if (error)
+                     {
+                         cancel(error);
+                     }
+                     else
+                     {
+                         finish(nil);
+                     }
+                 }];
+            }];
+}
+
+// Adds new things to the cache. *Note - These new things will have no keys and will be purged during the next sync.
+- (MHVAsyncTask<id, NSError *> *)taskForAddPendingThings:(MHVThingCollection *)things
+                                                  method:(MHVMethod *)method
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
+    {
+        [self.cache addThings:things
+                     recordId:method.recordId
+                   completion:^(NSError * _Nullable error)
+         {
+             if (error)
+             {
+                 cancel(error);
+             }
+             else
+             {
+                 finish(nil);
+             }
+         }];
+    }];
+}
+
+// Updates existing things in the cache.
+- (MHVAsyncTask<id, NSError *> *)taskForUpdatePendingThings:(MHVThingCollection *)things
+                                                     method:(MHVMethod *)method
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
+    {
+        [self.cache updateThings:things
+                        recordId:method.recordId
+                      completion:^(NSError * _Nullable error)
+         {
+             if (error)
+             {
+                 cancel(error);
+             }
+             else
+             {
+                 finish(nil);
+             }
+         }];
+    }];
+}
+
+// Deletes things from the cache.
+- (MHVAsyncTask<id, NSError *> *)taskForDeletePendingThings:(MHVThingCollection *)things
+                                                     method:(MHVMethod *)method
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
+    {
+        [self.cache deleteThings:things
+                        recordId:method.recordId
+                      completion:^(NSError * _Nullable error)
+         {
+             if (error)
+             {
+                 cancel(error);
+             }
+             else
+             {
+                 finish(nil);
+             }
+         }];
+    }];
+}
+
+// If an error occurs during a previous step, the method that was added is deleted 
+- (MHVAsyncTask<NSError *, NSArray<NSError *> *> *)taskForFailureToCacheMethod:(MHVMethod *)method
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSError *inputError, void (^finish)(NSArray<NSError *> *), void (^cancel)(NSArray<NSError *> *))
+    {
+        NSMutableArray *errors = [NSMutableArray new];
+        
+        if (inputError)
+        {
+            [errors addObject:inputError];
+            
+            [self.cache deleteMethod:method
+                          completion:^(NSError * _Nullable error)
+            {
+                if (error)
+                {
+                    [errors addObject:error];
+                }
+                 
+                cancel(errors);
+            }];
+        }
+        else
+        {
+            finish(nil);
+        }
+    }];
 }
 
 #pragma mark - Blobs: URL Refresh
@@ -1156,6 +1390,11 @@
     }
     
     return YES;
+}
+
+- (BOOL)isOfflineError:(NSError *)error
+{    
+    return [error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorNotConnectedToInternet;
 }
 
 @end

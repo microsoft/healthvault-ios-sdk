@@ -7,8 +7,7 @@
         <attribute name="newestCacheSequenceNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="newestHealthVaultSequenceNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="recordId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="pendingCreateThings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVPendingCreateThing" inverseName="record" inverseEntity="MHVPendingCreateThing" syncable="YES"/>
-        <relationship name="pendingDeleteThing" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVPendingDeleteThing" inverseName="record" inverseEntity="MHVPendingDeleteThing" syncable="YES"/>
+        <relationship name="pendingThingOperations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MHVPendingThingOperation" inverseName="record" inverseEntity="MHVPendingThingOperation" syncable="YES"/>
         <relationship name="things" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MHVCachedThing" inverseName="record" inverseEntity="MHVCachedThing" syncable="YES"/>
     </entity>
     <entity name="MHVCachedThing" representedClassName="MHVCachedThing" syncable="YES">
@@ -25,18 +24,18 @@
         <attribute name="xmlString" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="things" inverseEntity="MHVCachedRecord" syncable="YES"/>
     </entity>
-    <entity name="MHVPendingCreateThing" representedClassName="MHVPendingCreateThing" syncable="YES">
-        <attribute name="xmlString" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="pendingCreateThings" inverseEntity="MHVCachedRecord" syncable="YES"/>
-    </entity>
-    <entity name="MHVPendingDeleteThing" representedClassName="MHVPendingDeleteThing" syncable="YES">
-        <attribute name="thingId" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="pendingDeleteThing" inverseEntity="MHVCachedRecord" syncable="YES"/>
+    <entity name="MHVPendingThingOperation" representedClassName="MHVPendingThingOperation" syncable="YES">
+        <attribute name="correlationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="originalRequestDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="parameters" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MHVCachedRecord" inverseName="pendingThingOperations" inverseEntity="MHVCachedRecord" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="180"/>
+        <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="163"/>
         <element name="MHVCachedThing" positionX="7" positionY="-36" width="128" height="223"/>
-        <element name="MHVPendingCreateThing" positionX="-702" positionY="-90" width="128" height="73"/>
-        <element name="MHVPendingDeleteThing" positionX="-596" positionY="123" width="128" height="73"/>
+        <element name="MHVPendingThingOperation" positionX="-702" positionY="-90" width="128" height="148"/>
     </elements>
 </model>
