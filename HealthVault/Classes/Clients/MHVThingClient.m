@@ -733,6 +733,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
         return;
     }
     
+#ifdef THING_CACHE
     // Add the method call to the cache...
     MHVAsyncTask<id, NSError *> *cacheMethodTask = [self taskForCacheMethod:method];
     
@@ -781,8 +782,10 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
         
         return nil;
     }];
+#endif
 }
 
+#ifdef THING_CACHE
 // Adds a method to the cache to be re-issued next sync
 - (MHVAsyncTask<id, NSError *> *)taskForCacheMethod:(MHVMethod *)method
 {
@@ -869,7 +872,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     }];
 }
 
-// If an error occurs during a previous step, the method that was added is deleted 
+// If an error occurs during a previous step, the method that was added is deleted
 - (MHVAsyncTask<NSError *, NSArray<NSError *> *> *)taskForFailureToCacheMethod:(MHVMethod *)method
 {
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSError *inputError, void (^finish)(NSArray<NSError *> *), void (^cancel)(NSArray<NSError *> *))
@@ -897,6 +900,7 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
         }
     }];
 }
+#endif
 
 #pragma mark - Blobs: URL Refresh
 
