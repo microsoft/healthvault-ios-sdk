@@ -142,6 +142,6 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
         
         let typeListController = MHVTypeListViewController.init()
         
-        self.navigationController?.pushViewController(typeListController, animated: true)
+        self.navigationController?.pushViewController(typeListController, animated: true) 
     }
 }
