@@ -30,7 +30,7 @@ typedef BOOL (^MHVFilter) (id value);
 @property (readwrite, nonatomic, strong) Class  type;
 
 - (instancetype)initWithCapacity:(NSUInteger)numThings;
-- (instancetype)initWithArray:(NSArray *)array;
+- (instancetype)initWithArray:(NSArray<ObjectType> *)array;
 - (instancetype)initWithObject:(ObjectType)object;
 
 + (BOOL)isNilOrEmpty:(MHVCollection *)collection;
@@ -56,7 +56,7 @@ typedef BOOL (^MHVFilter) (id value);
 - (NSUInteger)binarySearch:(ObjectType)object options:(NSBinarySearchingOptions)opts usingComparator:(NSComparator)cmp;
 - (NSUInteger)indexOfMatchingObject:(MHVFilter)filter;
 
-- (NSArray *)toArray;
+- (NSArray<ObjectType> *)toArray;
 
 // -----------------
 //
