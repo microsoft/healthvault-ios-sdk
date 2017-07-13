@@ -24,6 +24,7 @@
 @dynamic updatedByPersonId;
 @dynamic version;
 @dynamic xmlString;
+@dynamic isPlaceholder;
 @dynamic record;
 
 @end

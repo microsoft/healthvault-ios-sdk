@@ -38,6 +38,8 @@ typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nul
 
 static NSString *const kPersonInfoKeyPath = @"personInfo";
 static NSUInteger const kMaxRecordBatchSize = 240;
+static NSString *const kCacheStatusKey = @"CacheStatus";
+static NSString *const kRecordOperationsKey = @"RecordOperations";
 
 @interface MHVThingCache ()
 
@@ -239,6 +241,28 @@ static NSUInteger const kMaxRecordBatchSize = 240;
          recordId:(NSUUID *)recordId
        completion:(void (^)(NSError * _Nullable))completion
 {
+    MHVASSERT_PARAMETER(things);
+    MHVASSERT_TRUE(things.count > 0);
+    MHVASSERT_PARAMETER(recordId);
+    
+    if ([MHVCollection isNilOrEmpty:things])
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"The 'things' collection is nil or empty."]);
+        }
+        return;
+    }
+    
+    if (!recordId)
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"The 'recordId' parameter is nil"]);
+        }
+        return;
+    }
+    
     [self fillThingsMetadata:things created:YES updated:YES];
     
     [self.database createCachedThings:things
@@ -250,6 +274,28 @@ static NSUInteger const kMaxRecordBatchSize = 240;
             recordId:(NSUUID *)recordId
           completion:(void (^)(NSError * _Nullable))completion
 {
+    MHVASSERT_PARAMETER(things);
+    MHVASSERT_TRUE(things.count > 0);
+    MHVASSERT_PARAMETER(recordId);
+    
+    if ([MHVCollection isNilOrEmpty:things])
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"The 'things' collection is nil or empty."]);
+        }
+        return;
+    }
+    
+    if (!recordId)
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"The 'recordId' parameter is nil"]);
+        }
+        return;
+    }
+    
     [self fillThingsMetadata:things created:NO updated:YES];
     
     [self.database updateCachedThings:things
@@ -261,6 +307,28 @@ static NSUInteger const kMaxRecordBatchSize = 240;
             recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion
 {
+    MHVASSERT_PARAMETER(things);
+    MHVASSERT_TRUE(things.count > 0);
+    MHVASSERT_PARAMETER(recordId);
+    
+    if ([MHVCollection isNilOrEmpty:things])
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"The 'things' collection is nil or empty."]);
+        }
+        return;
+    }
+    
+    if (!recordId)
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"The 'recordId' parameter is nil"]);
+        }
+        return;
+    }
+    
     [self.database deleteCachedThingsWithThingIds:things.thingIDs.toArray
                                          recordId:recordId.UUIDString
                                        completion:completion];
@@ -295,7 +363,7 @@ static NSUInteger const kMaxRecordBatchSize = 240;
 {
     MHVASSERT_PARAMETER(method);
     
-    if (method)
+    if (!method)
     {
         if (completion)
         {
@@ -323,11 +391,44 @@ static NSUInteger const kMaxRecordBatchSize = 240;
     }];
 }
 
+- (void)addPendingThings:(MHVThingCollection *)things
+                recordId:(NSUUID *)recordId
+              completion:(void(^)(NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(things);
+    MHVASSERT_TRUE(things.count > 0);
+    MHVASSERT_PARAMETER(recordId);
+    
+    if ([MHVCollection isNilOrEmpty:things])
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"The 'things' collection is nil or empty."]);
+        }
+        return;
+    }
+    
+    if (!recordId)
+    {
+        if (completion)
+        {
+            completion([NSError MVHInvalidParameter:@"The 'recordId' parameter is nil"]);
+        }
+        return;
+    }
+    
+    [self fillThingsMetadata:things created:YES updated:YES];
+    
+    [self.database createPendingCachedThings:things
+                                    recordId:recordId.UUIDString
+                                  completion:completion];
+}
+
 - (void)deletePendingMethod:(MHVPendingMethod *)pendingMethod completion:(void (^)(NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(pendingMethod);
     
-    if (pendingMethod)
+    if (!pendingMethod)
     {
         if (completion)
         {
@@ -477,68 +578,55 @@ static NSUInteger const kMaxRecordBatchSize = 240;
         self.isSyncing = @(YES);
     }
     
-    NSMutableArray<MHVAsyncTask *> *tasks = [NSMutableArray new];
+    NSMutableArray<MHVAsyncTask *> *endTasks = [NSMutableArray new];
     
     MHVLOG(@"ThingCache: %li Records to sync", recordIds.count);
     
-    // Create array of tasks, one sync process for each Record
+    // Create array of tasks, one complete sync group for each Record. If any task within a group cancels (if there is an error) all the remaining tasks
+    // are cancelled.
     for (NSString *recordId in recordIds)
     {
-        [tasks addObject:[[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
-                          {
-                              [self.database cacheStatusForRecordId:recordId
-                                                         completion:^(id<MHVCacheStatusProtocol> _Nullable status, NSError * _Nullable error)
-                               {
-                                   // If the cache last sync time is still valid, don't need to sync yet
-                                   if (!status.lastCacheConsistencyDate || fabs([status.lastCompletedSyncDate timeIntervalSinceNow]) >= self.cacheConfiguration.syncIntervalSeconds)
-                                   {
-                                       [self.connection.thingClient getRecordOperations:status.newestCacheSequenceNumber
-                                                                               recordId:[[NSUUID alloc] initWithUUIDString:recordId]
-                                                                             completion:^(MHVGetRecordOperationsResult * _Nullable result, NSError * _Nullable error)
-                                        {
-                                            if (error)
-                                            {
-                                                MHVLOG(@"ThingCache: Error performing GetRecordOperations: %@", error);
-                                                finish([MHVAsyncTaskResult withError:error]);
-                                            }
-                                            else
-                                            {
-                                                [self syncRecordOperations:result.operations
-                                                                  recordId:recordId
-                                                           syncedItemCount:0
-                                                            sequenceNumber:status.newestCacheSequenceNumber
-                                                                completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
-                                                 {
-                                                     if (error)
-                                                     {
-                                                         MHVLOG(@"ThingCache: Error syncing records: %@", error);
-                                                         finish([MHVAsyncTaskResult withError:error]);
-                                                     }
-                                                     else
-                                                     {
-                                                         finish([MHVAsyncTaskResult withResult:@(syncedItemCount)]);
-                                                     }
-                                                 }];
-                                            }
-                                        }];
-                                   }
-                                   else
-                                   {
-                                       //Last sync date is current, done
-                                       MHVLOG(@"ThingCache: Record is up to date, synced %li seconds ago", (long)fabs([status.lastCompletedSyncDate timeIntervalSinceNow]));
-                                       finish([MHVAsyncTaskResult withResult:@(0)]);
-                                   }
-                               }];
-                          }]];
+        MHVAsyncTask *cacheStatusTask = nil;
+        
+        MHVAsyncTask *lastTask = [endTasks lastObject];
+        
+        if (lastTask)
+        {
+            // If there is more than one record, append the start of the next record sync task group to the end of the previous sync task group
+            cacheStatusTask = [lastTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                       task:[self taskForCacheStatusWithRecordId:recordId]];
+        }
+        else
+        {
+            // 1. Check the status of the cache and pass the status object to the next task or cancel with an error.
+            cacheStatusTask = [[self taskForCacheStatusWithRecordId:recordId] start];
+        }
+        
+        // 2. Check for any pending method requests, execute them and delete the pending method after successful execution. Pass
+        //    The status object onto the next task, or cancel with an error if any occur.
+        MHVAsyncTask *pendingMethodsTask = [cacheStatusTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                           task:[self taskForPendingMethodsWithRecordId:recordId]];
+        
+        // 3. Fetch the latest record operations sync the last sync. Finish with nil if no sync is needed or pass the status object
+        //    and record operations. Cancel with an error should an error occur.
+        MHVAsyncTask *recordOperationsTask = [pendingMethodsTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                                task:[self taskForRecordOperationsWithRecordId:recordId]];
+        
+        // 4. Sync the record operations. Finish with the count of the items synced or cancel with an error.
+        MHVAsyncTask *syncRecordsTask = [recordOperationsTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                             task:[self taskForSyncRecordOperationsWithRecordId:recordId]];
+        
+        MHVAsyncTask *clearPlaceholderThingsTask = [syncRecordsTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                                   task:[self taskForClearingPlaceholderThings:recordId]];
+        
+        // Add the last task of each sync group so the total number of synced items can be calculated at the end of ALL sync groups
+        [endTasks addObject:clearPlaceholderThingsTask];
     }
     
-    
-    // Sync sequentially, so sync processes are not all accessing HealthVault at once
-    [MHVAsyncTask startSequenceOfTasks:tasks];
-    
-    // Wait for all sync processes to complete, then merge the results
-    [MHVAsyncTask waitForAll:tasks beforeBlock:^id(NSArray<MHVAsyncTaskResult *> *taskResults)
-     {
+    // Wait for all sync groups to complete, then merge the results *Note there shold only be one error as all tasks are set to continue
+    // only if the previous task was not cancelled.
+    [MHVAsyncTask waitForAll:endTasks beforeBlock:^id(NSArray<MHVAsyncTaskResult *> *taskResults)
+    {
          NSError *error = nil;
          NSInteger syncedItemTotal = 0;
          
@@ -566,7 +654,7 @@ static NSUInteger const kMaxRecordBatchSize = 240;
          [self startSyncTimer];
          
          return nil;
-     }];
+    }];
 }
 
 - (void)addSyncCompletion:(MHVSyncResultCompletion)completion
@@ -596,6 +684,241 @@ static NSUInteger const kMaxRecordBatchSize = 240;
     }
 }
 
+#pragma mark - Sync Tasks
+
+// Task to get the status of the cache. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<id<MHVCacheStatusProtocol>>.
+- (MHVAsyncTask *)taskForCacheStatusWithRecordId:(NSString *)recordId
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
+    {
+        [self.database cacheStatusForRecordId:recordId
+                                   completion:^(id<MHVCacheStatusProtocol> _Nullable status, NSError * _Nullable error)
+        {
+            if (error)
+            {
+                cancel([MHVAsyncTaskResult withError:error]);
+            }
+            else
+            {
+                finish([MHVAsyncTaskResult withResult:status]);
+            }
+        }];
+    }];
+}
+
+// Task to get pending methods. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<id<MHVCacheStatusProtocol>>.
+- (MHVAsyncTask *)taskForPendingMethodsWithRecordId:(NSString *)recordId
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
+    {
+        [self.database fetchPendingMethodsForRecordId:recordId
+                                           completion:^(NSArray<MHVPendingMethod *> * _Nullable pendingMethods, NSError * _Nullable error)
+        {
+            if (error)
+            {
+                cancel([MHVAsyncTaskResult withError:error]);
+            }
+            else
+            {
+                if (pendingMethods.count < 1)
+                {
+                    // Pass the database status to the next task
+                    finish(input);
+                    return;
+                }
+                
+                // Make sure the methods are sorted in the order they were originally attempted.
+                NSArray<MHVPendingMethod *> *methods = [pendingMethods sortedArrayUsingComparator:^NSComparisonResult(MHVPendingMethod *method1, MHVPendingMethod *method2)
+                {
+                    return [method1.originalRequestDate compare:method2.originalRequestDate];
+                }];
+                
+                NSMutableArray<MHVAsyncTask *> *methodsTasks = [NSMutableArray new];
+                
+                for (int i = 0; i < methods.count; i++)
+                {
+                    MHVPendingMethod *method = methods[i];
+                    
+                    [methodsTasks addObject:[self taskToExecutePendingMethod:method]];
+                }
+                
+                // Execute the sequence of methods in order. If a task is cancelled (an error occurs) stop execution
+                [MHVAsyncTask startSequenceOfTasks:methodsTasks withContinuationOption:MHVTaskContinueIfPreviousTaskWasNotCanceled];
+                
+                [MHVAsyncTask waitForAll:methodsTasks beforeBlock:^id(NSArray<MHVAsyncTaskResult *> *taskResults)
+                {
+                    for (MHVAsyncTaskResult *taskResult in taskResults)
+                    {
+                        if (taskResult.error)
+                        {
+                            cancel(taskResult);
+                            return nil;
+                        }
+                    }
+                    
+                    // Pass the database status to the next task
+                    finish(input);
+                    return nil;
+                }];
+            }
+        }];
+    }];
+}
+
+// Task to execute pending methods. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<nil>.
+- (MHVAsyncTask *)taskToExecutePendingMethod:(MHVPendingMethod *)pendingMethod
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
+    {
+        [self.connection executeHttpServiceOperation:pendingMethod
+                                          completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
+        {
+            if (error)
+            {
+                cancel([MHVAsyncTaskResult withError:error]);
+            }
+            else
+            {
+                [self.database deletePendingMethods:@[pendingMethod]
+                                         completion:^(NSError * _Nullable error)
+                {
+                    if (error)
+                    {
+                        cancel([MHVAsyncTaskResult withError:error]);
+                    }
+                    else
+                    {
+                        finish([MHVAsyncTaskResult withResult:nil]);
+                    }
+                }];
+            }
+        }];
+    }];
+}
+
+// Task to get the record operations since the last sync. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSNumber *>.
+- (MHVAsyncTask *)taskForRecordOperationsWithRecordId:(NSString *)recordId
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    {
+        id<MHVCacheStatusProtocol> status = input.result;
+        
+        if (!status)
+        {
+            cancel([MHVAsyncTaskResult withError:[NSError MHVCacheError:@"Could not determine the status of the cache database."]]);
+            return;
+        }
+        
+        // If the lastCacheConsistencyDate value is set and the time between now and the lastCompletedSyncDate is < syncIntervalSeconds don't sync.
+        if (status.lastCacheConsistencyDate && fabs([status.lastCompletedSyncDate timeIntervalSinceNow]) < self.cacheConfiguration.syncIntervalSeconds)
+        {
+            MHVLOG(@"ThingCache: Record is up to date, synced %li seconds ago", (long)fabs([status.lastCompletedSyncDate timeIntervalSinceNow]));
+            
+            finish([MHVAsyncTaskResult withResult:nil]);
+            return;
+        }
+        
+        [self.connection.thingClient getRecordOperations:status.newestCacheSequenceNumber
+                                                recordId:[[NSUUID alloc] initWithUUIDString:recordId]
+                                              completion:^(MHVGetRecordOperationsResult * _Nullable result, NSError * _Nullable error)
+        {
+            if (error)
+            {
+                cancel([MHVAsyncTaskResult withError:error]);
+            }
+            else
+            {
+                if (result.operations.count < 1)
+                {
+                    // No record operations sync the last sync
+                    finish([MHVAsyncTaskResult withResult:nil]);
+                    return;
+                }
+                
+                finish([MHVAsyncTaskResult withResult:@{
+                                                        kCacheStatusKey : status,
+                                                        kRecordOperationsKey : result.operations
+                                                        }]);
+            }
+        }];
+    }];
+}
+
+// Task to sync record operations. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSDictionary *>.
+- (MHVAsyncTask *)taskForSyncRecordOperationsWithRecordId:(NSString *)recordId
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    {
+        id<MHVCacheStatusProtocol> status = [input.result objectForKey:kCacheStatusKey];
+        MHVRecordOperationCollection *operations = [input.result objectForKey:kRecordOperationsKey];
+        
+        // If there is no status or operations there is no data to be synced, update the las sync dates and finish with a count of 0.
+        if (!status || !operations)
+        {
+            NSDate *now = [NSDate date];
+            
+            [self.database updateLastCompletedSyncDate:now
+                              lastCacheConsistencyDate:now
+                                        sequenceNumber:status.newestHealthVaultSequenceNumber
+                                              recordId:recordId
+                                            completion:^(NSError * _Nullable error)
+            {
+                if (error)
+                {
+                    MHVLOG(@"ThingCache: Error updating record: %@", error);
+                    cancel([MHVAsyncTaskResult withError:error]);
+                    return;
+                }
+                
+                finish([MHVAsyncTaskResult withResult:@(0)]);
+            }];
+        }
+        else
+        {
+            [self syncRecordOperations:operations
+                              recordId:recordId
+                       syncedItemCount:0
+                        sequenceNumber:status.newestCacheSequenceNumber
+                            completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+             {
+                 if (error)
+                 {
+                     MHVLOG(@"ThingCache: Error syncing records: %@", error);
+                     cancel([MHVAsyncTaskResult withError:error]);
+                 }
+                 else
+                 {
+                     finish([MHVAsyncTaskResult withResult:@(syncedItemCount)]);
+                 }
+             }];
+        }
+    }];
+}
+
+// Task to delete Things that were created in the database as a 'placeholder' for offline use. When creating new things and there is no internet
+// connection placeholder things will be created and added to the database. These placeholder things will have a thingid property of nil. Will
+// CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSNumber *> (the total things synced).
+- (MHVAsyncTask *)taskForClearingPlaceholderThings:(NSString *)recordId
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSNumber *> *input, void (^finish)(id), void (^cancel)(id))
+    {
+        [self.database deletePendingThingsForRecordId:recordId
+                                           completion:^(NSError * _Nullable error)
+        {
+            if (error)
+            {
+                cancel([MHVAsyncTaskResult withError:error]);
+            }
+            else
+            {
+                finish(input);
+            }
+        }];
+    }];
+}
+
+#pragma mark - Sync Internal
+
 - (void)syncRecordOperations:(MHVRecordOperationCollection *)recordOperations
                     recordId:(NSString *)recordId
              syncedItemCount:(NSInteger)syncedItemCount
@@ -603,8 +926,18 @@ static NSUInteger const kMaxRecordBatchSize = 240;
                   completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(recordOperations);
+    MHVASSERT_TRUE(recordOperations.count > 0);
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
+    
+    if ([MHVCollection isNilOrEmpty:recordOperations])
+    {
+        if (completion)
+        {
+            completion(0, [NSError MVHInvalidParameter:@"The 'recordOperations' collection is nil or empty."]);
+        }
+        return;
+    }
     
     if ([NSString isNilOrEmpty:recordId])
     {
