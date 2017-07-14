@@ -32,6 +32,7 @@
 #import "MHVAsyncTaskResult.h"
 #import "MHVThingQueryResult.h"
 #import "MHVCacheStatusProtocol.h"
+#import "MHVPendingMethod.h"
 
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 
@@ -288,6 +289,56 @@ static NSUInteger const kMaxRecordBatchSize = 240;
         
         thing.effectiveDate = thing.effectiveDate ?: date;
     }
+}
+
+- (void)cacheMethod:(MHVMethod *)method completion:(void (^)(MHVPendingMethod *_Nullable pendingMethod, NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(method);
+    
+    if (method)
+    {
+        if (completion)
+        {
+            completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"'method' is a required parameter."]);
+        }
+        
+        return;
+    }
+    
+    __block MHVPendingMethod *pendingMethod = [[MHVPendingMethod alloc] initWithOriginalRequestDate:[NSDate date]
+                                                                                             method:method];
+    
+    [self.database cachePendingMethod:pendingMethod
+                           completion:^(NSError * _Nullable error)
+    {
+        if (error)
+        {
+            pendingMethod = nil;
+        }
+        
+        if (completion)
+        {
+            completion(pendingMethod, error);
+        }
+    }];
+}
+
+- (void)deletePendingMethod:(MHVPendingMethod *)pendingMethod completion:(void (^)(NSError *_Nullable error))completion
+{
+    MHVASSERT_PARAMETER(pendingMethod);
+    
+    if (pendingMethod)
+    {
+        if (completion)
+        {
+            completion([NSError error:[NSError MVHInvalidParameter] withDescription:@"'pendingMethod' is a required parameter."]);
+        }
+        
+        return;
+    }
+    
+    [self.database deletePendingMethods:@[pendingMethod]
+                             completion:completion];
 }
 
 #pragma mark - Syncing

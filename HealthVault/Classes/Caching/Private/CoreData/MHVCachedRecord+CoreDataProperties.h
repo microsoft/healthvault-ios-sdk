@@ -19,8 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSDate *lastSyncDate;
 @property (nullable, nonatomic, copy) NSDate *lastConsistencyDate;
 @property (nullable, nonatomic, copy) NSString *recordId;
-@property (nullable, nonatomic, retain) MHVPendingCreateThing *pendingCreateThings;
-@property (nullable, nonatomic, retain) MHVPendingDeleteThing *pendingDeleteThing;
+@property (nullable, nonatomic, retain) NSSet<MHVPendingThingOperation *> *pendingThingOperations;
 @property (nullable, nonatomic, retain) NSSet<MHVCachedThing *> *things;
 
 @end

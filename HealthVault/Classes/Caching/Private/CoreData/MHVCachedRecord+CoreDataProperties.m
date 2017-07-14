@@ -19,8 +19,7 @@
 @dynamic newestHealthVaultSequenceNumber;
 @dynamic newestCacheSequenceNumber;
 @dynamic recordId;
-@dynamic pendingCreateThings;
-@dynamic pendingDeleteThing;
+@dynamic pendingThingOperations;
 @dynamic things;
 
 @end

@@ -19,12 +19,12 @@
 
 #import "MHVCachedRecord+Cache.h"
 #import "MHVCachedThing+CoreDataClass.h"
+#import "MHVPendingThingOperation+CoreDataClass.h"
 
 @implementation MHVCachedRecord (Cache)
 
-- (MHVCachedThing *)findThingWithThingId:(NSString *)thingId
+- (MHVCachedThing *)thingWithThingId:(NSString *)thingId
 {
-#ifdef THING_CACHE
     for (MHVCachedThing *cachedThing in self.things)
     {
         if ([cachedThing.thingId isEqualToString:thingId])
@@ -32,7 +32,18 @@
             return cachedThing;
         }
     }
-#endif
+    return nil;
+}
+
+- (MHVPendingThingOperation *)pendingThingOperationWithIdentifier:(NSString *)identifier
+{
+    for (MHVPendingThingOperation *operation in self.pendingThingOperations)
+    {
+        if ([operation.identifier isEqualToString:identifier])
+        {
+            return operation;
+        }
+    }
     return nil;
 }
 

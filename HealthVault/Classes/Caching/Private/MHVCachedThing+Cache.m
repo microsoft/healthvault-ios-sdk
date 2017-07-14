@@ -24,7 +24,6 @@
 
 - (void)populateWithThing:(MHVThing *)thing
 {
-#ifdef THING_CACHE
     self.thingId = [thing.key.thingID lowercaseString];
     self.version = [thing.key.version lowercaseString];
     self.typeId = [thing.type.typeID lowercaseString];
@@ -41,16 +40,11 @@
     self.effectiveDate = thing.effectiveDate ?: self.effectiveDate;
     
     self.xmlString = [thing toXmlString];
-#endif
 }
 
 - (MHVThing *)toThing
 {
-#ifdef THING_CACHE
     return [MHVThing newFromXmlString:self.xmlString];
-#else
-    return nil;
-#endif
 }
 
 @end
