@@ -35,7 +35,7 @@
     return nil;
 }
 
-- (MHVPendingThingOperation *)pendingThingOpertaionWithIdentifier:(NSString *)identifier
+- (MHVPendingThingOperation *)pendingThingOperationWithIdentifier:(NSString *)identifier
 {
     for (MHVPendingThingOperation *operation in self.pendingThingOperations)
     {

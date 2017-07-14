@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param identifier NSString The identifier for the operation.
  @return MHVPendingThingOperation The operation with the given identifier.
  */
-- (MHVPendingThingOperation *_Nullable)pendingThingOpertaionWithIdentifier:(NSString *)identifier;
+- (MHVPendingThingOperation *_Nullable)pendingThingOperationWithIdentifier:(NSString *)identifier;
 
 @end
 
