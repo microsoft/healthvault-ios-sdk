@@ -902,7 +902,6 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                 return;
             }
             
-            //Convert cached things back into MHVThings
             for (int i = 0; i < operations.count; i ++)
             {
                 MHVPendingThingOperation *operation = operations[i];
