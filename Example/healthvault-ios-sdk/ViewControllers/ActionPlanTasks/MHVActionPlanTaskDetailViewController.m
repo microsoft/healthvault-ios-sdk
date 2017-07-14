@@ -34,6 +34,7 @@
 
 - (IBAction)updateTask:(id)sender;
 - (IBAction)deleteTask:(id)sender;
+- (IBAction)trackTask:(id)sender;
 
 @end
 
@@ -120,6 +121,32 @@
     self.task.shortDescription = self.shortDescriptionValue.text;
     
     [self.connection.remoteMonitoringClient actionPlanTasksUpdateWithActionPlanTask:self.task completion:^(MHVActionPlanTaskInstance * _Nullable output, NSError * _Nullable error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+         {
+             if (!error) {
+                 [self.statusLabel showStatus:@"Success"];
+             }
+             else
+             {
+                 [MHVUIAlert showInformationalMessage:error.description];
+                 [self.statusLabel showStatus:@"Failed"];
+             }
+         }];
+    }];
+}
+
+// uses the TaskTrackingApi
+- (void)trackTask:(id)sender
+{
+    [self.statusLabel showBusy];
+    
+    MHVZonedDateTime* dt = [[MHVZonedDateTime alloc] init];
+    
+    MHVTaskTrackingOccurrence* occurrence = [[MHVTaskTrackingOccurrence alloc] init];
+    occurrence.taskId = self.taskId;
+    occurrence.trackingDateTime = dt;
+    
+    [self.connection.remoteMonitoringClient taskTrackingPostWithTaskTrackingOccurrence:occurrence completion:^(NSObject * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error) {

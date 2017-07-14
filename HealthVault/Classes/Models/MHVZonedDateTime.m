@@ -1,5 +1,5 @@
 //
-// MHVDateTimeBase.m
+// MHVLocalDateTime.m
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,26 +17,19 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVDateTimeBase.h"
+#import "MHVZonedDateTime.h"
 
-@implementation MHVDateTimeBase
+@implementation MHVZonedDateTime
 
-- (instancetype)init
+- (NSString*)dateFormatString
 {
-    self = [super init];
-    if (self)
-    {
-        self.date = [NSDate date];
-    }
-
-    return self;
+    return @"yyyy-MM-dd'T'HH:mm:ssX VV";
 }
 
 - (instancetype)initWithObject:(id)object objectParameters:(NSObject *)parameters
 {
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:[self dateFormatString]];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     
     self = [super init];
     if (self)
@@ -46,25 +39,15 @@
             self.date = [dateFormatter dateFromString:object];
         }
     }
+    
     return self;
-}
-
-- (NSString*)dateFormatString
-{
-    return @"yyyy-MM-dd'T'HH:mm";
 }
 
 - (NSString*)description
 {
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat: self.dateFormatString];
-    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     return [formatter stringFromDate:self.date];
-}
-
-- (NSString *)jsonRepresentationWithObjectParameters:(NSObject *)ignored
-{
-    return [NSString stringWithFormat:@"\"%@\"", [self description]];
 }
 
 @end
