@@ -23,10 +23,16 @@
 
 - (instancetype)init
 {
+    return [self initWithDate:[NSDate date]];
+}
+
+- (instancetype)initWithDate:(NSDate *)date
+{
     self = [super init];
+
     if (self)
     {
-        self.date = [NSDate date];
+        self.date = date;
     }
 
     return self;
