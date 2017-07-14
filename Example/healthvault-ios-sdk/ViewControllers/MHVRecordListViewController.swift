@@ -39,6 +39,12 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
                                                selector: #selector(personalImageUpdated),
                                                name: NSNotification.Name(rawValue: kPersonalImageUpdateNotification),
                                                object: nil)
+        
+        let strings = MHVStringCollection()
+        strings.add("1")
+        strings.add("2")
+        strings.add("3")
+        strings.add("4")
     }
     
     deinit

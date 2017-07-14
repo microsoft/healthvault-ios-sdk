@@ -63,4 +63,6 @@
 
 - (NSInteger)indexOfRecordID:(NSUUID *)recordID;
 
+- (MHVRecord *)objectAtIndex:(NSUInteger)index;
+
 @end
