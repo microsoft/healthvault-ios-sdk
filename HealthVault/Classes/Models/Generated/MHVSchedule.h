@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) MHVScheduleReminderStateEnum* reminderState;
 /* The days that this will show for the user  Expected values: { 'Unknown', 'Everyday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' } [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVScheduleScheduledDaysEnum*>* scheduledDays;
+@property(strong,nonatomic,nullable) NSArray<MHVScheduleScheduledDaysEnum *>* scheduledDays;
 /* The time at which this task is scheduled [optional]
  */
 @property(strong,nonatomic,nullable) MHVTime* scheduledTime;

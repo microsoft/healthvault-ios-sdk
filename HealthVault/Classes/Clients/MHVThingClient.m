@@ -516,7 +516,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 
 - (void)updateThing:(MHVThing *)thing
            recordId:(NSUUID *)recordId
-         completion:(void(^_Nullable)(NSError *_Nullable error))completion
+         completion:(void(^_Nullable)(MHVThingKey *_Nullable thingKey, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(thing);
     MHVASSERT_PARAMETER(recordId);
@@ -525,7 +525,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     {
         if (completion)
         {
-            completion([NSError MVHRequiredParameterIsNil]);
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -533,12 +533,18 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     
     [self updateThings:[[MHVThingCollection alloc] initWithThing:thing]
               recordId:recordId
-            completion:completion];
+            completion:^(MHVThingKeyCollection * _Nullable thingKeys, NSError * _Nullable error)
+    {
+        if (completion)
+        {
+            completion(thingKeys ? thingKeys.firstKey : nil, error);
+        }
+    }];
 }
 
 - (void)updateThings:(MHVThingCollection *)things
             recordId:(NSUUID *)recordId
-          completion:(void(^_Nullable)(NSError *_Nullable error))completion
+          completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
@@ -547,7 +553,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     {
         if (completion)
         {
-            completion([NSError MVHRequiredParameterIsNil]);
+            completion(nil, [NSError MVHRequiredParameterIsNil]);
         }
         
         return;
@@ -562,7 +568,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         {
             if (completion)
             {
-                completion([NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
+                completion(nil, [NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
             }
             
             return;
@@ -576,6 +582,8 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
+         MHVThingKeyCollection *keys = [self thingKeyResultsFromResponse:response];
+         
 #ifdef THING_CACHE
          // If the connection is offline cache the pending request.
          if ([self isOfflineError:error])
@@ -584,28 +592,47 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                                things:things
                         operationType:MHVThingOpertaionTypeUpdate
                          networkError:error
-                           completion:completion];
+                           completion:^(NSError * _Nullable error)
+             {
+                 if (completion)
+                 {
+                     completion(nil, error);
+                 }
+             }];
              
              return;
          }
          
-         if (!error && self.cache)
+         if (keys.count == things.count)
          {
-             [self.cache updateThings:things
-                             recordId:recordId
-                           completion:^(NSError * _Nullable error)
-              {
-                  if (completion)
+             // Set Key on the updated things to update in cache
+             for (NSInteger i = 0; i < things.count; i++)
+             {
+                 things[i].key = keys[i];
+             }
+             
+             if (!error && self.cache)
+             {
+                 [self.cache updateThings:things
+                                 recordId:recordId
+                               completion:^(NSError * _Nullable error)
                   {
-                      completion(error);
-                  }
-              }];
-             return;
+                      if (completion)
+                      {
+                          completion(keys, error);
+                      }
+                  }];
+                 return;
+             }
+         }
+         else
+         {
+             MHVASSERT_MESSAGE(@"Mismatch between updated Thing count and Thing Keys");
          }
 #endif
          if (completion)
          {
-             completion(error);
+             completion(keys, error);
          }
      }];
 }
@@ -710,6 +737,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         return;
     }
     
+#ifdef THING_CACHE
     // Add the method call to the cache...
     MHVAsyncTask<id, NSDictionary *> *cacheMethodTask = [self taskForCacheMethod:method];
     
@@ -758,8 +786,10 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         
         return nil;
     }];
+#endif
 }
 
+#ifdef THING_CACHE
 // Adds a method to the cache to be re-issued next sync
 - (MHVAsyncTask<id, NSDictionary *> *)taskForCacheMethod:(MHVMethod *)method
 {
@@ -902,6 +932,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         }
     }];
 }
+#endif
 
 #pragma mark - Blobs: URL Refresh
 
@@ -1283,8 +1314,13 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
              
              [self updateThing:toThing
                       recordId:recordId
-                    completion:^(NSError * _Nullable error)
+                    completion:^(MHVThingKey *_Nullable thingKey, NSError * _Nullable error)
              {
+                 if (!error && thingKey)
+                 {
+                     toThing.key = thingKey;
+                 }
+                 
                  completion(error == nil ? toThing : nil, error);
              }];
          }];
