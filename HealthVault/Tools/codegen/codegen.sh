@@ -47,6 +47,9 @@ s/"MHVEnum.h"/"MHVEnum.h"\
 ' output/SwaggerClient/Model/MHVTimelineSnapshot.h > output/SwaggerClient/Model/MHVTimelineSnapshot.h2
 mv output/SwaggerClient/Model/MHVTimelineSnapshot.h2 output/SwaggerClient/Model/MHVTimelineSnapshot.h
 
-
-
-
+sed -E '
+s/NSObject\* trackingDateTime/MHVZonedDateTime\* trackingDateTime/g
+s/"MHVEnum.h"/"MHVEnum.h"\
+#import "MHVZonedDateTime.h"/g
+' output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h > output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h2
+mv output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h2 output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h

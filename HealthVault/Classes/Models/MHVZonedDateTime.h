@@ -1,5 +1,5 @@
 //
-// MHVDateTimeBase.h
+// MHVZonedDateTime.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -17,14 +17,8 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVModelBase.h"
+#import "MHVDateTimeBase.h"
 
-@interface MHVDateTimeBase : MHVModelBase
-
-@property (nonatomic, strong) NSDate* date;
-
-- (instancetype)initWithDate:(NSDate *)date;
-
-- (NSString*)dateFormatString;
+@interface MHVZonedDateTime : MHVDateTimeBase
 
 @end
