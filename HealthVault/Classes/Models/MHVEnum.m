@@ -39,9 +39,18 @@ static NSString *kEnumNSCodingKey = @"value";
     if (self)
     {
         NSNumber *value = [self.enumMap objectForKey:string];
+        
         if (!value)
         {
             value = [self.aliasMap objectForKey:string];
+        }
+        
+        // Value should be a number, but swagger code generation can't do incrementing numbers, so lookup index of string
+        if ([value isKindOfClass:[NSString class]])
+        {
+            NSUInteger index = [self.enumMap.allKeys indexOfObject:string];
+            // +1 since 0 is used for Undefined
+            value = index == NSNotFound ? nil : @(index + 1);
         }
         
         if (!value)
@@ -102,6 +111,13 @@ static NSString *kEnumNSCodingKey = @"value";
         {
             NSNumber *value = [self.enumMap objectForKey:key];
             
+            if ([value isKindOfClass:[NSString class]])
+            {
+                // Value should be a number, but swagger code generation can't do incrementing numbers, so set as in index
+                [self setValueByIndex:integer];
+                return self;
+            }
+            
             if (value.integerValue == integer)
             {
                 _integer = integer;
@@ -117,6 +133,23 @@ static NSString *kEnumNSCodingKey = @"value";
     }
     
     return self;
+}
+
+- (void)setValueByIndex:(NSInteger)index
+{
+    // -1 since 0 is used for Undefined
+    NSInteger enumIndex = index - 1;
+    NSString *key = (enumIndex >= 0 && enumIndex < self.enumMap.allKeys.count) ? self.enumMap.allKeys[enumIndex] : nil;
+    if (key)
+    {
+        _string = (NSString *)self.enumMap[key];
+        _integer = index;
+    }
+    else
+    {
+        _string = kEnumUndefined;
+        _integer = 0;
+    }
 }
 
 - (instancetype)initWithObject:(id)object
@@ -173,7 +206,7 @@ static NSString *kEnumNSCodingKey = @"value";
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    id enumCopy = [[self.class alloc] initWithInteger:self.integer];
+    id enumCopy = [[self.class alloc] initWithString:self.string];
     return enumCopy;
 }
 

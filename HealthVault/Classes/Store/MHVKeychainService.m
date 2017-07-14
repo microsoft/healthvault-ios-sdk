@@ -22,10 +22,22 @@
 #import "XSerializer.h"
 
 static NSString *const kKeychainRoot = @"root";
+static NSString *const kKeychainService = @"HealthVault";
+static NSString *const kAppReinstallCheck = @"AppReinstallCheck";
 
 @implementation MHVKeychainService
 
 #pragma mark - Public
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        [self checkForAppReinstall];
+    }
+    return self;
+}
 
 - (NSString *)stringForKey:(NSString *)key
 {
@@ -177,7 +189,7 @@ static NSString *const kKeychainRoot = @"root";
     
     [attrib setObject:key forKey:(__bridge id)kSecAttrGeneric];
     [attrib setObject:key forKey:(__bridge id)kSecAttrAccount];
-    [attrib setObject:@"HealthVault" forKey:(__bridge id)kSecAttrService];
+    [attrib setObject:kKeychainService forKey:(__bridge id)kSecAttrService];
     
     if (cls)
     {
@@ -234,6 +246,36 @@ static NSString *const kKeychainRoot = @"root";
     }
 
     return [self runQuery:query];
+}
+
+- (void)checkForAppReinstall
+{
+    // Check for sentinal values; if user defaults is not set and keychain value exists, the app was deleted and reinstalled.
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:kAppReinstallCheck] &&
+        [self stringForKey:kAppReinstallCheck])
+    {
+        [self resetKeychain];
+    }
+
+    // Add sentinel values
+    [self setString:@"installed" forKey:kAppReinstallCheck];
+    [[NSUserDefaults standardUserDefaults] setObject:@"installed" forKey:kAppReinstallCheck];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)resetKeychain
+{
+    //Delete everything in the keychain for HealthVault
+    NSDictionary *dictionary = @{
+                                 (__bridge id)kSecAttrService : kKeychainService,
+                                 (__bridge id)kSecClass : (__bridge id)kSecClassGenericPassword,
+                                 };
+
+    OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dictionary);
+    if (status != errSecSuccess)
+    {
+        NSLog(@"Error deleting keychain object: %i", (int)status);
+    }
 }
 
 @end
