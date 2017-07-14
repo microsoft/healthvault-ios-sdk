@@ -818,7 +818,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         
         // Support for updating a pending method request - If a pending method with the same identifier exists update rather
         // than creating a new one.
-        MHVPendingThingOperation *operation = [record pendingThingOpertaionWithIdentifier:pendingMethod.identifier];
+        MHVPendingThingOperation *operation = [record pendingThingOperationWithIdentifier:pendingMethod.identifier];
         
         if (!operation)
         {
@@ -902,7 +902,6 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                 return;
             }
             
-            //Convert cached things back into MHVThings
             for (int i = 0; i < operations.count; i ++)
             {
                 MHVPendingThingOperation *operation = operations[i];

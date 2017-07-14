@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) NSNumber* evaluateTargets;
 /* Gets or sets the targets to evaluate [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanRangeMetric>* targets;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanRangeMetric *>* targets;
 
 @end
 

@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic,nullable) MHVTimelineScheduleRecurrenceTypeEnum* recurrenceType;
 /* The occurrences which are bucketed into the schedule [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVTimelineScheduleOccurrence>* occurrences;
+@property(strong,nonatomic,nullable) NSArray<MHVTimelineScheduleOccurrence *>* occurrences;
 
 @end
 

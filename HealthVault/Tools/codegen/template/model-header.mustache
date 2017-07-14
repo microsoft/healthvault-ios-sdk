@@ -43,7 +43,12 @@ NS_ASSUME_NONNULL_BEGIN
 {{#vars}}
 {{#description}}/* {{{description}}} {{^required}}[optional]{{/required}}
  */{{/description}}
-@property(strong,nonatomic{{^required}},nullable{{/required}}) {{#isEnum}}{{#isContainer}}NSArray<{{/isContainer}}{{classname}}{{enumName}}{{#isContainer}}*>{{/isContainer}}*{{/isEnum}}{{^isEnum}}{{{ datatype }}}{{/isEnum}} {{name}};
+{{^isEnum}}
+@property(strong,nonatomic{{^required}},nullable{{/required}}) {{#isPrimitiveType}}{{{ datatype }}}{{/isPrimitiveType}}{{^isPrimitiveType}}{{#isContainer}}NSArray<{{complexType}} *>*{{/isContainer}}{{^isContainer}}{{datatype}}{{/isContainer}}{{/isPrimitiveType}} {{name}};
+{{/isEnum}}
+{{#isEnum}}
+@property(strong,nonatomic{{^required}},nullable{{/required}}) {{#isContainer}}NSArray<{{/isContainer}}{{classname}}{{enumName}}{{#isContainer}} *>{{/isContainer}}* {{name}};
+{{/isEnum}}
 {{/vars}}
 
 @end

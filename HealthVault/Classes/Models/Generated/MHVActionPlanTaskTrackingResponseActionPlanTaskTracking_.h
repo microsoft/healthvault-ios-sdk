@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The collection of tasks tracking occurrences [optional]
  */
-@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskTracking>* taskTrackingInstances;
+@property(strong,nonatomic,nullable) NSArray<MHVActionPlanTaskTracking *>* taskTrackingInstances;
 /* The URI for the next page of data [optional]
  */
 @property(strong,nonatomic,nullable) NSString* nextLink;

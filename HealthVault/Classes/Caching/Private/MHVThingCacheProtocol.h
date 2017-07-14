@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
  Adds a method call to the cache to be replayed when the connection is online. This method is called if there is a 'PutThings' or 'RemoveThings' method request when there is no connection to the internet.
 
  @param method MHVMethod The method to be re-issued.
- @param completion Envoked once the process of caching the method has completed or an error occured. MHVPendingMethod pendingMethod The pending method that was saved cached. NSError error A detailed error about the operation failure.
+ @param completion Envoked once the process of caching the method has completed or an error occured. MHVPendingMethod pendingMethod The pending method that was cached. NSError error A detailed error about the operation failure.
  */
 - (void)cacheMethod:(MHVMethod *)method completion:(void (^)(MHVPendingMethod *_Nullable pendingMethod, NSError *_Nullable error))completion;
 
