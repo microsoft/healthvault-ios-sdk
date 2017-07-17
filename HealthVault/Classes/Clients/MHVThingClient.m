@@ -739,7 +739,8 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     
 #ifdef THING_CACHE
     // Add the method call to the cache...
-    MHVAsyncTask<id, NSDictionary *> *cacheMethodTask = [self taskForCacheMethod:method];
+    MHVAsyncTask<id, NSDictionary *> *cacheMethodTask = [[self taskForCacheMethod:method] start];
+
     
     MHVAsyncTask<NSDictionary *, NSDictionary *> *addUpdateOrDeleteTask;
 
@@ -817,9 +818,9 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     {
         MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
         
-        [self.cache addThings:things
-                     recordId:pendingMethod.recordId
-                   completion:^(NSError * _Nullable error)
+        [self.cache addPendingThings:things
+                            recordId:pendingMethod.recordId
+                          completion:^(NSError * _Nullable error)
          {
              if (error)
              {

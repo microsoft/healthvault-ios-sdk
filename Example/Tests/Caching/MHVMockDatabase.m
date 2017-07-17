@@ -396,4 +396,50 @@
     completion(nil);
 }
 
+- (void)cachePendingMethod:(MHVPendingMethod *)pendingMethod
+                completion:(void (^)(NSError *_Nullable error))completion;
+{
+    if (completion)
+    {
+        completion(nil);
+    }
+}
+
+- (void)fetchPendingMethodsForRecordId:(NSString *)recordId
+                            completion:(void (^)(NSArray<MHVPendingMethod *> *_Nullable methods, NSError *_Nullable error))completion
+{
+    if (completion)
+    {
+        completion(self.database[recordId].methods, self.errorToReturn);
+    }
+}
+
+- (void)deletePendingMethods:(NSArray<MHVPendingMethod *> *)pendingMethods
+                  completion:(void (^)(NSError *_Nullable error))completion;
+{
+    if (completion)
+    {
+        completion(self.errorToReturn);
+    }
+}
+
+- (void)createPendingCachedThings:(MHVThingCollection *)things
+                         recordId:(NSString *)recordId
+                       completion:(void (^)(NSError *_Nullable error))completion;
+{
+    if (completion)
+    {
+        completion(self.errorToReturn);
+    }
+}
+
+-(void)deletePendingThingsForRecordId:(NSString *)recordId
+                            completion:(void (^)(NSError *_Nullable error))completion;
+{
+    if (completion)
+    {
+        completion(self.errorToReturn);
+    }
+}
+
 @end
