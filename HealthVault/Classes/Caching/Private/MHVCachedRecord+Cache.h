@@ -31,7 +31,15 @@ NS_ASSUME_NONNULL_BEGIN
  @param thingId The thingId to find
  @return the thing
  */
-- (MHVCachedThing *_Nullable)findThingWithThingId:(NSString *)thingId;
+- (MHVCachedThing *_Nullable)thingWithThingId:(NSString *)thingId;
+
+/**
+ Returns a MHVPendingThingOperation with a given identifier, or nil if one does not exist.
+
+ @param identifier NSString The identifier for the operation.
+ @return MHVPendingThingOperation The operation with the given identifier.
+ */
+- (MHVPendingThingOperation *_Nullable)pendingThingOperationWithIdentifier:(NSString *)identifier;
 
 @end
 

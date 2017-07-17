@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The method version. The version will default to the latest method version at the time of the SDK release.
  */
-@property (nonatomic, assign) int version;
+@property (nonatomic, assign) NSInteger version;
 
 /**
  Method parameters, which will be serialized into infoxml - Optional.

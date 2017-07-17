@@ -34,6 +34,7 @@
     
     if (self)
     {
+        _identifier = [[NSUUID UUID] UUIDString];
         _originalRequestDate = originalRequestDate;
         _name = method.name;
         _version = method.version;
@@ -47,12 +48,14 @@
 }
 
 - (instancetype)initWithOriginalRequestDate:(NSDate *)originalRequestDate
+                                 identifier:(NSString *)identifier
                                  methodName:(NSString *)methodName
 {
     self = [super init];
     
     if (self)
     {
+        _identifier = identifier;
         _originalRequestDate = originalRequestDate;
         _name = methodName;
     }

@@ -47,7 +47,7 @@ static NSString *const kDefaultHealthVaultRootUrlString = @"https://platform.hea
 /*
  Default sleep duration in seconds.
  */
-static NSTimeInterval const kDefaultRetryOnInternal500SleepDurationInSeconds = 60;
+static NSTimeInterval const kDefaultRetryOnInternal500SleepDurationInSeconds = 1;
 
 /*
  The default request time to live value.

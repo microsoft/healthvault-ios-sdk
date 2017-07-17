@@ -1,5 +1,5 @@
 //
-// MVHServiceRequest.m
+// MHVRequestMessageCreator.m
 // MHVLib
 //
 // Copyright 2017 Microsoft Corp.
@@ -111,7 +111,7 @@
 {
     [header appendXmlElement:@"method" text:self.method.name];
     [header appendXmlElementStart:@"method-version"];
-    [header appendFormat:@"%.0d", self.method.version];
+    [header appendFormat:@"%li",(long)self.method.version];
     [header appendXmlElementEnd:@"method-version"];
 }
 

@@ -34,6 +34,7 @@
 #import "MHVThingQueryResult.h"
 #import "MHVThingQueryResultInternal.h"
 #import "MHVAsyncTask.h"
+#import "MHVPendingMethod.h"
 #ifdef THING_CACHE
 #import "MHVThingCacheProtocol.h"
 #endif
@@ -44,6 +45,9 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     MHVThingOpertaionTypeUpdate,
     MHVThingOpertaionTypeDelete
 };
+
+static NSString *const kErrorKey = @"Error";
+static NSString *const kPendingMethodKey = @"PendingMethod";
 
 @interface MHVThingClient ()
 
@@ -735,32 +739,32 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     
 #ifdef THING_CACHE
     // Add the method call to the cache...
-    MHVAsyncTask<id, NSError *> *cacheMethodTask = [self taskForCacheMethod:method];
+    MHVAsyncTask<id, NSDictionary *> *cacheMethodTask = [self taskForCacheMethod:method];
     
-    MHVAsyncTask<id, NSError *> *addUpdateOrDeleteTask;
+    MHVAsyncTask<NSDictionary *, NSDictionary *> *addUpdateOrDeleteTask;
 
     if (operationType == MHVThingOpertaionTypeCreate)
     {
         // Add things to the cache (with no keys - They will be purged the next sync)
         addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
-                                                                task:[self taskForAddPendingThings:things method:method]];
+                                                                task:[self taskForAddPendingThings:things]];
         
     }
     else if (operationType == MHVThingOpertaionTypeUpdate)
     {
         // Update things in the cache
         addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
-                                                                task:[self taskForUpdatePendingThings:things method:method]];
+                                                                task:[self taskForUpdatePendingThings:things]];
     }
     else if (operationType == MHVThingOpertaionTypeDelete)
     {
         // Delete things from the cache
         addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
-                                                                task:[self taskForDeletePendingThings:things method:method]];
+                                                                task:[self taskForDeletePendingThings:things]];
     }
     
     // If an error occurs during the caching process we need to cleanup the cache by removing the cached method.
-    MHVAsyncTask<NSError *, NSArray<NSError *> *> *failureTask = [addUpdateOrDeleteTask continueWithTask:[self taskForFailureToCacheMethod:method]];
+    MHVAsyncTask<NSDictionary *, NSArray<NSError *> *> *failureTask = [addUpdateOrDeleteTask continueWithTask:[self taskForFailureToCacheMethod]];
     
     [failureTask continueWithBlock:^id(NSArray<NSError *> *errors)
     {
@@ -787,38 +791,44 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
 
 #ifdef THING_CACHE
 // Adds a method to the cache to be re-issued next sync
-- (MHVAsyncTask<id, NSError *> *)taskForCacheMethod:(MHVMethod *)method
+- (MHVAsyncTask<id, NSDictionary *> *)taskForCacheMethod:(MHVMethod *)method
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
             {
                 [self.cache cacheMethod:method
-                             completion:^(NSError * _Nullable error)
+                             completion:^(MHVPendingMethod * _Nullable pendingMethod, NSError * _Nullable error)
                  {
                      if (error)
                      {
-                         cancel(error);
+                         cancel(@{kErrorKey : error});
                      }
                      else
                      {
-                         finish(nil);
+                         finish(@{kPendingMethodKey : pendingMethod});
                      }
                  }];
             }];
 }
 
 // Adds new things to the cache. *Note - These new things will have no keys and will be purged during the next sync.
-- (MHVAsyncTask<id, NSError *> *)taskForAddPendingThings:(MHVThingCollection *)things
-                                                  method:(MHVMethod *)method
+- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForAddPendingThings:(MHVThingCollection *)things
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
     {
+        MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
+        
         [self.cache addThings:things
-                     recordId:method.recordId
+                     recordId:pendingMethod.recordId
                    completion:^(NSError * _Nullable error)
          {
              if (error)
              {
-                 cancel(error);
+                 MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
+                 
+                 cancel(@{
+                          kPendingMethodKey : pendingMethod,
+                          kErrorKey : error
+                          });
              }
              else
              {
@@ -829,18 +839,22 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
 }
 
 // Updates existing things in the cache.
-- (MHVAsyncTask<id, NSError *> *)taskForUpdatePendingThings:(MHVThingCollection *)things
-                                                     method:(MHVMethod *)method
+- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForUpdatePendingThings:(MHVThingCollection *)things
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
     {
+        MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
+
         [self.cache updateThings:things
-                        recordId:method.recordId
+                        recordId:pendingMethod.recordId
                       completion:^(NSError * _Nullable error)
          {
              if (error)
              {
-                 cancel(error);
+                 cancel(@{
+                          kPendingMethodKey : pendingMethod,
+                          kErrorKey : error
+                          });
              }
              else
              {
@@ -851,18 +865,22 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
 }
 
 // Deletes things from the cache.
-- (MHVAsyncTask<id, NSError *> *)taskForDeletePendingThings:(MHVThingCollection *)things
-                                                     method:(MHVMethod *)method
+- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForDeletePendingThings:(MHVThingCollection *)things
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(NSError *), void (^cancel)(NSError *))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
     {
+        MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
+        
         [self.cache deleteThings:things
-                        recordId:method.recordId
+                        recordId:pendingMethod.recordId
                       completion:^(NSError * _Nullable error)
          {
              if (error)
              {
-                 cancel(error);
+                 cancel(@{
+                          kPendingMethodKey : pendingMethod,
+                          kErrorKey : error
+                          });
              }
              else
              {
@@ -872,27 +890,41 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
     }];
 }
 
-// If an error occurs during a previous step, the method that was added is deleted
-- (MHVAsyncTask<NSError *, NSArray<NSError *> *> *)taskForFailureToCacheMethod:(MHVMethod *)method
+// If an error occurs during a previous step, the method that was added is deleted 
+- (MHVAsyncTask<NSDictionary *, NSArray<NSError *> *> *)taskForFailureToCacheMethod
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSError *inputError, void (^finish)(NSArray<NSError *> *), void (^cancel)(NSArray<NSError *> *))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *errorInfo, void (^finish)(NSArray<NSError *> *), void (^cancel)(NSArray<NSError *> *))
     {
-        NSMutableArray *errors = [NSMutableArray new];
-        
-        if (inputError)
+        if (errorInfo)
         {
-            [errors addObject:inputError];
+            NSMutableArray *errors = [NSMutableArray new];
             
-            [self.cache deleteMethod:method
-                          completion:^(NSError * _Nullable error)
+            NSError *inputError = errorInfo[kErrorKey];
+            
+            if (inputError)
             {
-                if (error)
+                [errors addObject:inputError];
+            }
+            
+            MHVPendingMethod *pendingMethod = errorInfo[kPendingMethodKey];
+            
+            if (pendingMethod)
+            {
+                [self.cache deletePendingMethod:pendingMethod
+                                     completion:^(NSError * _Nullable error)
                 {
-                    [errors addObject:error];
-                }
-                 
+                    if (error)
+                    {
+                        [errors addObject:error];
+                    }
+                    
+                    cancel(errors);
+                }];
+            }
+            else
+            {
                 cancel(errors);
-            }];
+            }
         }
         else
         {
