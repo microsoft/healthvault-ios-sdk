@@ -19,6 +19,12 @@
 #import <Foundation/Foundation.h>
 #import "MHVZonedDateTime.h"
 
+@interface MHVZonedDateTime()
+
+@property (nonatomic, strong) NSTimeZone* timeZone;
+
+@end
+
 @implementation MHVZonedDateTime
 
 - (NSString*)dateFormatString
@@ -37,6 +43,21 @@
         if ([object isKindOfClass:[NSString class]])
         {
             self.date = [dateFormatter dateFromString:object];
+
+            if (self.date != nil)
+            {
+                NSArray* parts = [object componentsSeparatedByString:@" "];
+
+                if (parts.count > 1)
+                {
+                    NSTimeZone* zone = [NSTimeZone timeZoneWithName:[parts objectAtIndex:1]];
+
+                    if (zone != nil)
+                    {
+                        self.timeZone = zone;
+                    }
+                }
+            }
         }
     }
     
@@ -47,6 +68,12 @@
 {
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateFormat: self.dateFormatString];
+
+    if (self.timeZone != nil)
+    {
+        [formatter setTimeZone:self.timeZone];
+    }
+
     return [formatter stringFromDate:self.date];
 }
 
