@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param startDate The start time.
 /// @param endDate The end time. (optional)
 /// 
-- (void)timelineGetWithStartDate:(MHVLocalDate*)startDate
+- (void)timelineGetWithStartDate:(MHVLocalDate* )startDate
     endDate:(MHVLocalDate* _Nullable)endDate
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseTimelineTask_* _Nullable output, NSError* _Nullable error))completion;
 

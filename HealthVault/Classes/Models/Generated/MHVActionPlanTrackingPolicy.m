@@ -44,15 +44,6 @@
 
 
 
-/**
- * Maps json key to property name.
- * This method is used by `JSONModel`.
-
-+ (JSONKeyMapper *)keyMapper {
-  return [[JSONKeyMapper alloc] initWithModelToJSONDictionary:@{ @"isAutoTrackable": @"isAutoTrackable", @"occurrenceMetrics": @"occurrenceMetrics", @"targetEvents": @"targetEvents" }];
-}
- */
-
 + (NSDictionary *)propertyNameMap
 {
     static dispatch_once_t once;
@@ -67,7 +58,6 @@
     });
     return names;
 }
-
 
 + (NSDictionary *)objectParametersMap
 {
