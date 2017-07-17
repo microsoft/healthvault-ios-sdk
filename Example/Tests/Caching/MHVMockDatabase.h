@@ -30,6 +30,7 @@
 @property (nonatomic, assign, readonly) BOOL isValid;
 
 @property (readonly, nonatomic, strong) MHVThingCollection *things;
+@property (readonly, nonatomic, strong) NSArray<MHVPendingMethod *> *methods;
 
 @end
 

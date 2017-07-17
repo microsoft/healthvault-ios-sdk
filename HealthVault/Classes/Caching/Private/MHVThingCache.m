@@ -40,6 +40,7 @@ static NSString *const kPersonInfoKeyPath = @"personInfo";
 static NSUInteger const kMaxRecordBatchSize = 240;
 static NSString *const kCacheStatusKey = @"CacheStatus";
 static NSString *const kRecordOperationsKey = @"RecordOperations";
+static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 
 @interface MHVThingCache ()
 
@@ -451,7 +452,7 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
         [self.syncTimer invalidate];
     }
     
-    self.syncTimer = [NSTimer scheduledTimerWithTimeInterval:_cacheConfiguration.syncIntervalSeconds
+    self.syncTimer = [NSTimer scheduledTimerWithTimeInterval:self.cacheConfiguration.syncIntervalSeconds
                                                       target:self
                                                     selector:@selector(syncTimerAction)
                                                     userInfo:nil
@@ -603,19 +604,19 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
         }
         
         // 2. Check for any pending method requests, execute them and delete the pending method after successful execution. Pass
-        //    The status object onto the next task, or cancel with an error if any occur.
+        //    The status object onto the next task, or cancel with an error (if any occur).
         MHVAsyncTask *pendingMethodsTask = [cacheStatusTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
                                                                            task:[self taskForPendingMethodsWithRecordId:recordId]];
         
-        // 3. Fetch the latest record operations sync the last sync. Finish with nil if no sync is needed or pass the status object
-        //    and record operations. Cancel with an error should an error occur.
+        // 3. Fetch the latest record operations since the last sync. Finish and pass the status object and record operations to the next task. Cancel
+        // with an error should an error occur.
         MHVAsyncTask *recordOperationsTask = [pendingMethodsTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
                                                                                 task:[self taskForRecordOperationsWithRecordId:recordId]];
         
         // 4. Sync the record operations. Finish with the count of the items synced or cancel with an error.
         MHVAsyncTask *syncRecordsTask = [recordOperationsTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
                                                                              task:[self taskForSyncRecordOperationsWithRecordId:recordId]];
-        
+        // 5. Delete any 'placeholder' things from the cache and
         MHVAsyncTask *clearPlaceholderThingsTask = [syncRecordsTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
                                                                                    task:[self taskForClearingPlaceholderThings:recordId]];
         
@@ -625,12 +626,12 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
     
     // Wait for all sync groups to complete, then merge the results *Note there shold only be one error as all tasks are set to continue
     // only if the previous task was not cancelled.
-    [MHVAsyncTask waitForAll:endTasks beforeBlock:^id(NSArray<MHVAsyncTaskResult *> *taskResults)
+    [MHVAsyncTask waitForAll:endTasks beforeBlock:^id(NSArray<MHVAsyncTaskResult<NSDictionary *> *> *taskResults)
     {
          NSError *error = nil;
          NSInteger syncedItemTotal = 0;
          
-         for (MHVAsyncTaskResult<NSNumber *> *result in taskResults)
+         for (MHVAsyncTaskResult<NSDictionary *> *result in taskResults)
          {
              if (result.error)
              {
@@ -638,7 +639,12 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
              }
              else
              {
-                 syncedItemTotal += result.result.integerValue;
+                 NSNumber *syncedItemTotalNumber = result.result[kSyncedItemCountKey];
+                 
+                 if (syncedItemTotalNumber)
+                 {
+                     syncedItemTotal += syncedItemTotalNumber.integerValue;
+                 }
              }
          }
          
@@ -686,7 +692,7 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
 
 #pragma mark - Sync Tasks
 
-// Task to get the status of the cache. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<id<MHVCacheStatusProtocol>>.
+// Task to get the status of the cache. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSDictionary *>.
 - (MHVAsyncTask *)taskForCacheStatusWithRecordId:(NSString *)recordId
 {
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
@@ -698,18 +704,24 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
             {
                 cancel([MHVAsyncTaskResult withError:error]);
             }
+            if (!status)
+            {
+                cancel([MHVAsyncTaskResult withError:[NSError MHVCacheError:@"The call to fetch the cache status fauled to return a valid id<MHVCacheStatusProtocol> object."]]);
+            }
             else
             {
-                finish([MHVAsyncTaskResult withResult:status]);
+                finish([MHVAsyncTaskResult withResult:@{
+                                                        kCacheStatusKey : status
+                                                        }]);
             }
         }];
     }];
 }
 
-// Task to get pending methods. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<id<MHVCacheStatusProtocol>>.
+// Task to get pending methods. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSDictionary *>.
 - (MHVAsyncTask *)taskForPendingMethodsWithRecordId:(NSString *)recordId
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSDictionary *> *input, void (^finish)(id), void (^cancel)(id))
     {
         [self.database fetchPendingMethodsForRecordId:recordId
                                            completion:^(NSArray<MHVPendingMethod *> * _Nullable pendingMethods, NSError * _Nullable error)
@@ -756,7 +768,7 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
                         }
                     }
                     
-                    // Pass the database status to the next task
+                    // Pass the dictionary containing the database status to the next task
                     finish(input);
                     return nil;
                 }];
@@ -799,9 +811,9 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
 // Task to get the record operations since the last sync. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSNumber *>.
 - (MHVAsyncTask *)taskForRecordOperationsWithRecordId:(NSString *)recordId
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSDictionary *> *input, void (^finish)(id), void (^cancel)(id))
     {
-        id<MHVCacheStatusProtocol> status = input.result;
+        id<MHVCacheStatusProtocol> status = input.result[kCacheStatusKey];
         
         if (!status)
         {
@@ -826,15 +838,15 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
             {
                 cancel([MHVAsyncTaskResult withError:error]);
             }
+            else if (!result.operations)
+            {
+                // No record operations object
+                finish([MHVAsyncTaskResult withResult:@{
+                                                        kCacheStatusKey : status
+                                                        }]);
+            }
             else
             {
-                if (result.operations.count < 1)
-                {
-                    // No record operations sync the last sync
-                    finish([MHVAsyncTaskResult withResult:nil]);
-                    return;
-                }
-                
                 finish([MHVAsyncTaskResult withResult:@{
                                                         kCacheStatusKey : status,
                                                         kRecordOperationsKey : result.operations
@@ -852,8 +864,8 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
         id<MHVCacheStatusProtocol> status = [input.result objectForKey:kCacheStatusKey];
         MHVRecordOperationCollection *operations = [input.result objectForKey:kRecordOperationsKey];
         
-        // If there is no status or operations there is no data to be synced, update the las sync dates and finish with a count of 0.
-        if (!status || !operations)
+        // If there are bo operations there is no data to be synced, update the last sync dates and finish with a count of 0.
+        if (!operations)
         {
             NSDate *now = [NSDate date];
             
@@ -870,7 +882,9 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
                     return;
                 }
                 
-                finish([MHVAsyncTaskResult withResult:@(0)]);
+                finish([MHVAsyncTaskResult withResult:@{
+                                                        kSyncedItemCountKey : @(0)
+                                                        }]);
             }];
         }
         else
@@ -888,7 +902,9 @@ static NSString *const kRecordOperationsKey = @"RecordOperations";
                  }
                  else
                  {
-                     finish([MHVAsyncTaskResult withResult:@(syncedItemCount)]);
+                     finish([MHVAsyncTaskResult withResult:@{
+                                                             kSyncedItemCountKey : @(syncedItemCount)
+                                                             }]);
                  }
              }];
         }

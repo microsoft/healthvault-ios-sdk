@@ -1099,7 +1099,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     {
         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedThing"];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPlaceholder == YES", [recordId lowercaseString]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPlaceholder == YES && record.recordId == %@", [recordId lowercaseString]];
         [fetchRequest setPredicate:predicate];
         
         NSError *error = nil;

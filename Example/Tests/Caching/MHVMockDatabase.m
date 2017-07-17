@@ -410,7 +410,7 @@
 {
     if (completion)
     {
-        completion(nil, nil);
+        completion(self.database[recordId].methods, self.errorToReturn);
     }
 }
 
@@ -419,7 +419,7 @@
 {
     if (completion)
     {
-        completion(nil);
+        completion(self.errorToReturn);
     }
 }
 
@@ -429,7 +429,7 @@
 {
     if (completion)
     {
-        completion(nil);
+        completion(self.errorToReturn);
     }
 }
 
@@ -438,7 +438,7 @@
 {
     if (completion)
     {
-        completion(nil);
+        completion(self.errorToReturn);
     }
 }
 

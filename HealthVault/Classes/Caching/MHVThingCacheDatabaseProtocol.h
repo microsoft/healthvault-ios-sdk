@@ -184,7 +184,7 @@ NS_ASSUME_NONNULL_BEGIN
                   completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
- This method is called AFTER a Thing (or Things) have been created and the internet connection is offline. The Thing(s) in the collection should be cached with an identifier that can be used to fetch and delete all 'pending' Things once the internet connection is restored and the database is synced.
+ This method is called AFTER a call to createNewThing:recordId:completion: or createNewThings:recordId:completion: occurs and the internet connection is offline. The Thing(s) in the collection should be cached with an identifier that can be used to fetch and delete all 'pending' Things once the internet connection is restored and the database is synced.
  
  @param things A collection of new things to be added to the cache database.
  @param recordId the RecordId of the owner of the things.
