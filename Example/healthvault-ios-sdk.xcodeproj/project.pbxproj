@@ -114,6 +114,7 @@
 		A5DF658E1EF0535A009F5968 /* MHVTaskThingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF654F1EF052DD009F5968 /* MHVTaskThingTests.m */; };
 		A5DF658F1EF0535A009F5968 /* MHVTaskTrackingEntryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */; };
 		A5DF65901EF05362009F5968 /* MHVXmlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF65521EF052DD009F5968 /* MHVXmlTests.m */; };
+		BA179A991F1D2F7900F8C789 /* MHVZonedDateTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA179A981F1D2F7900F8C789 /* MHVZonedDateTimeTests.m */; };
 		BA774D9D1F0571B80036228C /* MHVTimelineSnapshotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA774D9C1F0571B80036228C /* MHVTimelineSnapshotViewController.xib */; };
 		BA774DA01F0571E70036228C /* MHVTimelineSnapshotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA774D9F1F0571E70036228C /* MHVTimelineSnapshotViewController.m */; };
 		EC63189E52528368EEFB7FEE /* Pods_healthvault_ios_sdk_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */; };
@@ -288,6 +289,7 @@
 		A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTrackingEntryTests.m; sourceTree = "<group>"; };
 		A5DF65521EF052DD009F5968 /* MHVXmlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVXmlTests.m; sourceTree = "<group>"; };
 		B3A8DCF4594CD372C82292F5 /* Pods-healthvault-ios-sdk_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthvault-ios-sdk_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-healthvault-ios-sdk_Example/Pods-healthvault-ios-sdk_Example.release.xcconfig"; sourceTree = "<group>"; };
+		BA179A981F1D2F7900F8C789 /* MHVZonedDateTimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVZonedDateTimeTests.m; sourceTree = "<group>"; };
 		BA774D9C1F0571B80036228C /* MHVTimelineSnapshotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVTimelineSnapshotViewController.xib; sourceTree = "<group>"; };
 		BA774D9E1F0571D70036228C /* MHVTimelineSnapshotViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHVTimelineSnapshotViewController.h; sourceTree = "<group>"; };
 		BA774D9F1F0571E70036228C /* MHVTimelineSnapshotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVTimelineSnapshotViewController.m; sourceTree = "<group>"; };
@@ -445,6 +447,7 @@
 				A5DF65381EF052DD009F5968 /* HTTP */,
 				A5DF653B1EF052DD009F5968 /* MHVLibTests.m */,
 				A5DF653C1EF052DD009F5968 /* MHVPlatformClientTests.m */,
+				BA179A971F1D2F3500F8C789 /* Models */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				A5DF653D1EF052DD009F5968 /* ThingTypes */,
 				A5DF65511EF052DD009F5968 /* XML */,
@@ -647,6 +650,14 @@
 				A5DF65521EF052DD009F5968 /* MHVXmlTests.m */,
 			);
 			path = XML;
+			sourceTree = "<group>";
+		};
+		BA179A971F1D2F3500F8C789 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BA179A981F1D2F7900F8C789 /* MHVZonedDateTimeTests.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		BA774D9B1F0570E50036228C /* Timeline */ = {
@@ -937,6 +948,7 @@
 				A5385ACF1F040D05000D03C5 /* MHVCacheQueryTests.m in Sources */,
 				A5DF657E1EF0535A009F5968 /* MHVAerobicProfileTests.m in Sources */,
 				A5DF657D1EF0535A009F5968 /* MHVAdvanceDirectiveTests.m in Sources */,
+				BA179A991F1D2F7900F8C789 /* MHVZonedDateTimeTests.m in Sources */,
 				A5DF658A1EF0535A009F5968 /* MHVMedicalImageStudyTests.m in Sources */,
 				A5DF658D1EF0535A009F5968 /* MHVPregnancyTests.m in Sources */,
 				4C54C8161EF342F100CAECFC /* MHVPersonClientTests.m in Sources */,
