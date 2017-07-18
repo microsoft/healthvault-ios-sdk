@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVThingQueryResultInternal.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_thing = @"thing";
 static NSString *const c_element_pending = @"unprocessed-thing-key-info";

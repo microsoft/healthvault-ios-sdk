@@ -72,7 +72,6 @@
 #import "MHVSodaConnectionProtocol.h"
 #import "MHVErrorConstants.h"
 #import "NSError+MHVError.h"
-#import "MHVArrayExtensions.h"
 #import "MHVDateExtensions.h"
 #import "MHVDictionaryExtensions.h"
 #import "MHVStringExtensions.h"

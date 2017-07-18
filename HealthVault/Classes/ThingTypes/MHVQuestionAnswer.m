@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVQuestionAnswer.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"55d33791-58de-4cae-8c78-819e12ba5059";
 static NSString *const c_typename = @"question-answer";

@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVAddress.h"
+#import "NSArray+Utils.h"
 #import "NSArray+MHVThing.h"
 
 static NSString *const c_element_description = @"description";

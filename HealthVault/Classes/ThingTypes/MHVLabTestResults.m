@@ -18,6 +18,7 @@
 //
 #import "MHVCommon.h"
 #import "MHVLabTestResults.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"5800eab5-a8c2-482a-a4d6-f1db25ae08c3";
 static NSString *const c_typename = @"lab-test-results";

@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVMessage.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"72dc49e1-1486-4634-b651-ef560ed051e5";
 static NSString *const c_typename = @"message";

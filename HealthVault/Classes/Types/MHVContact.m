@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVContact.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_address = @"address";
 static NSString *const c_element_phone = @"phone";

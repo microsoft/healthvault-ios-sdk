@@ -443,7 +443,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"((thingId == \"TEST_THING_ID_1\" AND version == \"1.1.1.1\") OR (thingId == \"TEST_THING_ID_2\" AND version == \"2.2.2.2\") OR (thingId == \"TEST_THING_ID_3\" AND version == \"3.3.3.3\")) AND ((effectiveDate >= CAST(-978307200.000000, \"NSDate\") AND effectiveDate <= CAST(-946771200.000000, \"NSDate\") AND createdByAppID == \"TEST_APP_ID_1\" AND createdByPersonID == \"TEST_PERSON_ID_1\") OR (createDate >= CAST(-978307200.000000, \"NSDate\") AND createDate <= CAST(-946771200.000000, \"NSDate\") AND (typeId == \"TEST_TYPE_ID_1\" OR typeId == \"TEST_TYPE_ID_2\")))"];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"((thingId == \"TEST_THING_ID_1\" AND version == \"1.1.1.1\") OR (thingId == \"TEST_THING_ID_2\" AND version == \"2.2.2.2\") OR (thingId == \"TEST_THING_ID_3\" AND version == \"3.3.3.3\")) AND ((effectiveDate >= CAST(-978307200.000000, \"NSDate\") AND effectiveDate <= CAST(-946771200.000000, \"NSDate\") AND createdByAppID == \"TEST_APP_ID_1\" AND createdByPersonID == \"TEST_PERSON_ID_1\") OR ((typeId == \"TEST_TYPE_ID_1\" OR typeId == \"TEST_TYPE_ID_2\") AND createDate >= CAST(-978307200.000000, \"NSDate\") AND createDate <= CAST(-946771200.000000, \"NSDate\")))"];
            });
         
         it(@"should have a nil error property", ^

@@ -18,6 +18,7 @@
 
 #import "MHVStringExtensions.h"
 #import "MHVCommon.h"
+#import "NSArray+Utils.h"
 
 NSString *const c_emptyString = @"";
 

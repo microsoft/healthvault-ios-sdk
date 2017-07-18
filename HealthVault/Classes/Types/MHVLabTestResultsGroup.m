@@ -19,6 +19,7 @@
 
 #import "MHVCommon.h"
 #import "MHVLabTestResultsGroup.h"
+#import "NSArray+Utils.h"
 
 static const xmlChar *x_element_groupName = XMLSTRINGCONST("group-name");
 static const xmlChar *x_element_laboratory = XMLSTRINGCONST("laboratory-name");

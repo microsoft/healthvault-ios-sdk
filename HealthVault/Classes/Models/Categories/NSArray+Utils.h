@@ -29,4 +29,6 @@
 
 - (BOOL)areAllObjectsOfClass:(Class)theClass;
 
++ (BOOL)isNilOrEmpty:(NSArray *)array;
+
 @end

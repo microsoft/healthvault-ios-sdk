@@ -19,6 +19,7 @@
 #import "MHVCommon.h"
 #import "XSerializer.h"
 #import "MHVLogger.h"
+#import "NSArray+Utils.h"
 
 @implementation XSerializer
 

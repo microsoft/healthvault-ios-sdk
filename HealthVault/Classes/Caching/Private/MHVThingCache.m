@@ -34,6 +34,7 @@
 #import "MHVCacheStatusProtocol.h"
 #import "MHVPendingMethod.h"
 #import "NSArray+MHVThing.h"
+#import "NSArray+Utils.h"
 
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 

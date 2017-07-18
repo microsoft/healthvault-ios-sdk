@@ -18,7 +18,7 @@
 
 #import "MHVThingQuery.h"
 #import "MHVStringExtensions.h"
-#import "MHVArrayExtensions.h"
+#import "NSArray+Utils.h"
 #import "MHVValidator.h"
 #import "MHVType.h"
 #import "MHVPendingThing.h"

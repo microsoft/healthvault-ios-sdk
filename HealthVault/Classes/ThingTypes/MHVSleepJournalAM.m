@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVSleepJournalAM.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"11c52484-7f1a-11db-aeac-87d355d89593";
 static NSString *const c_typename = @"sleep-am";

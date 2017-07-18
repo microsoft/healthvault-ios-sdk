@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVThingView.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_section = @"section";
 static NSString *const c_element_xml = @"xml";

@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVPersonInfo.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_id = @"person-id";
 static NSString *const c_element_name = @"name";

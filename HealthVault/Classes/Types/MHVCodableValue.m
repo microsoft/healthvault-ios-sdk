@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVCodableValue.h"
+#import "NSArray+Utils.h"
 
 static const xmlChar *x_element_text = XMLSTRINGCONST("text");
 static NSString *const c_element_code = @"code";

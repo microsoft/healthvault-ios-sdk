@@ -16,6 +16,7 @@
 
 #import "MHVCommon.h"
 #import "MHVSleepJournalPM.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"031f5706-7f1a-11db-ad56-7bd355d89593";
 static NSString *const c_typename = @"sleep-pm";

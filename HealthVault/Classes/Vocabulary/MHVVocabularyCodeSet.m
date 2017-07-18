@@ -19,6 +19,7 @@
 #import "MHVCommon.h"
 #import "MHVVocabularyCodeSet.h"
 #import "NSArray+MHVVocabularyCodeItem.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_family = @"family";

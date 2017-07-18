@@ -18,6 +18,7 @@
 //
 #import "MHVCommon.h"
 #import "MHVVitalSigns.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"73822612-c15f-4b49-9e65-6af369e55c65";
 static NSString *const c_typename = @"vital-signs";

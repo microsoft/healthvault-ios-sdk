@@ -58,4 +58,8 @@
     return YES;
 }
 
++ (BOOL)isNilOrEmpty:(NSArray *)array;
+{
+    return array == nil || array.count == 0;
+}
 @end

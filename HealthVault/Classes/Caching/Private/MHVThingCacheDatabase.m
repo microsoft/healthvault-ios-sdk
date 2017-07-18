@@ -32,6 +32,7 @@
 #import "MHVCacheStatusProtocol.h"
 #import "MHVCacheStatus.h"
 #import "MHVPendingMethod.h"
+#import "NSArray+Utils.h"
 
 static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 

@@ -19,6 +19,7 @@
 //
 #import "MHVCommon.h"
 #import "MHVLabTestResultValue.h"
+#import "NSArray+Utils.h"
 
 static const xmlChar *x_element_measurement = XMLSTRINGCONST("measurement");
 static NSString *const c_element_ranges = @"ranges";

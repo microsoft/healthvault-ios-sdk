@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVFamilyHistory.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"4a04fcc8-19c1-4d59-a8c7-2031a03f21de";
 static NSString *const c_typename = @"family-history";

@@ -21,7 +21,7 @@
 #import <objc/runtime.h>
 #import "MHVValidator.h"
 #import "MHVStringExtensions.h"
-#import "MHVArrayExtensions.h"
+#import "NSArray+Utils.h"
 #import "MHVThingQuery.h"
 #import "NSError+MHVError.h"
 

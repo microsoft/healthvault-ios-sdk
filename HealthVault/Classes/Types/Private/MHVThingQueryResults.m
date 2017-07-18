@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVThingQueryResults.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_result = @"group";
 
