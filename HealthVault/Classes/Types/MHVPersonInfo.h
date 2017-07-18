@@ -28,7 +28,7 @@
 @property (readwrite, nonatomic, strong) NSString *name;
 @property (readwrite, nonatomic, strong) NSUUID *selectedRecordID;
 @property (readwrite, nonatomic, strong) MHVBool *moreRecords;
-@property (readwrite, nonatomic, strong) MHVRecordCollection *records;
+@property (readwrite, nonatomic, strong) NSArray<MHVRecord *> *records;
 @property (readwrite, nonatomic, strong) NSString *groupsXml;
 @property (readwrite, nonatomic, strong) NSString *preferredCultureXml;
 @property (readwrite, nonatomic, strong) NSString *preferredUICultureXml;
@@ -42,6 +42,3 @@
 
 @end
 
-@interface MHVPersonInfoCollection : MHVCollection<MHVPersonInfo *>
-
-@end

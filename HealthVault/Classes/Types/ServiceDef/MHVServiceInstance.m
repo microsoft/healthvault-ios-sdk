@@ -49,38 +49,3 @@ static const xmlChar *x_element_shell = XMLSTRINGCONST("shell-url");
 
 @end
 
-@implementation MHVServiceInstanceCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVServiceInstance class];
-    }
-
-    return self;
-}
-
-- (MHVServiceInstance *)indexOfInstance:(NSUInteger)index
-{
-    return (MHVServiceInstance *)[self objectAtIndex:index];
-}
-
-- (NSInteger)indexOfInstanceNamed:(NSString *)name
-{
-    return [self indexOfMatchingObject:^BOOL (id value)
-    {
-        return [((MHVServiceInstance *)value).name isEqualToString:name];
-    }];
-}
-
-- (NSInteger)indexOfInstanceWithID:(NSString *)instanceID
-{
-    return [self indexOfMatchingObject:^BOOL (id value)
-    {
-        return [((MHVServiceInstance *)value).instanceID isEqualToString:instanceID];
-    }];
-}
-
-@end

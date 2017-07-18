@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "MHVArrayExtensions.h"
+#import "MHVValidator.h"
 
 @implementation NSArray (MHVArrayExtensions)
 
@@ -25,12 +26,81 @@
     return array == nil || array.count == 0;
 }
 
+- (NSArray *)arrayByAddingObjectsFromArray:(NSArray *)array atStartingIndex:(NSUInteger)startingIndex
+{
+    if (!array)
+    {
+        return self;
+    }
     
+    if (startingIndex > self.count)
+    {
+        startingIndex = self.count;
+    }
+    
+    NSMutableArray *copy = [self mutableCopy];
+    
+    for (int i = 0; i < array.count; i++)
+    {
+        id obj = array[i];
+
+        [copy insertObject:obj atIndex:startingIndex + i];
+    }
+    
+    return copy;
+}
+
+- (NSArray *)arrayByRemovingObject:(id)anObject
+{
+    NSUInteger index = [self indexOfObject:anObject];
+    if (index == NSNotFound)
+    {
+        return self;
+    }
+    
+    NSMutableArray *copy = [self mutableCopy];
+
+    [copy removeObjectAtIndex:index];
+    
+    return copy;
+}
+
+- (BOOL)hasElementsOfType:(Class)type
+{
+    for (id obj in self)
+    {
+        if (![self validateObject:obj isType:type])
+        {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)validateObject:(id)obj isType:(Class)type
+{
+    if (!obj)
+    {
+        MHVASSERT_PARAMETER(obj);
+        return NO;
+    }
+    
+    if (type)
+    {
+        if (obj != [NSNull null] && ![obj isKindOfClass:type])
+        {
+            NSString *message = [NSString stringWithFormat:@"%@ expected", NSStringFromClass(type)];
+            MHVASSERT_MESSAGE(message);
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 @end
 
 @implementation NSMutableArray (MHVArrayExtensions)
-    
-
 
 - (void)addFromEnumerator:(NSEnumerator *)enumerator
 {

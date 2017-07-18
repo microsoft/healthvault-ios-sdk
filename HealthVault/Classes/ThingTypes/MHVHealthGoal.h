@@ -55,7 +55,7 @@
 //
 // (Optional) Allows specifying additional ranges for the goal.
 //
-@property (readwrite, nonatomic, strong) MHVGoalRangeTypeCollection *goalAdditionalRanges;
+@property (readwrite, nonatomic, strong) NSArray<MHVGoalRangeType *> *goalAdditionalRanges;
 //
 // (Optional) This field allows defining recurrence for goals.	
 //

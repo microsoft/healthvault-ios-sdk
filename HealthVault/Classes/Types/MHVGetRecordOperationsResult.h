@@ -24,6 +24,6 @@
 @interface MHVGetRecordOperationsResult : MHVType
 
 @property (readwrite, nonatomic, assign) NSInteger latestRecordOperationSequenceNumber;
-@property (readwrite, nonatomic, strong) MHVRecordOperationCollection *operations;
+@property (readwrite, nonatomic, strong) NSArray<MHVRecordOperation *> *operations;
 
 @end

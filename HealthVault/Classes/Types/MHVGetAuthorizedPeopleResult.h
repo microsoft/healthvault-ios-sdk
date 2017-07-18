@@ -23,7 +23,7 @@
 
 @interface MHVGetAuthorizedPeopleResult : MHVType
 
-@property (readwrite, nonatomic, strong) MHVPersonInfoCollection *persons;
+@property (readwrite, nonatomic, strong) NSArray<MHVPersonInfo *> *persons;
 @property (readwrite, nonatomic, strong) MHVBool *moreResults;
 
 @end

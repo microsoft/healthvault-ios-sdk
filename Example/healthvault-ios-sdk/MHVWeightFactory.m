@@ -20,9 +20,9 @@
 
 @implementation MHVWeight (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date
 {
-    MHVThingCollection* things = [[MHVThingCollection alloc] init];
+    NSMutableArray<MHVThing *> *things = [[NSMutableArray alloc] init];
     
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:6 max:8];
@@ -33,9 +33,9 @@
     return things;
 }
 
-+(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomMetricForDay:(NSDate *)date
 {
-    MHVThingCollection* things = [[MHVThingCollection alloc] init];
+    NSMutableArray<MHVThing *> *things = [[NSMutableArray alloc] init];
     
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];
     dateTime.time.hour = [MHVRandom randomIntInRangeMin:6 max:8];

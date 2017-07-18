@@ -42,9 +42,3 @@
 
 @end
 
-@interface MHVRelatedThingCollection : MHVCollection<MHVRelatedThing *>
-
-- (NSUInteger)indexOfRelation:(NSString *)name;
-- (MHVRelatedThing *)addRelation:(NSString *)name toThing:(MHVThing *)thing;
-
-@end

@@ -19,13 +19,13 @@
 #import "MHVCommon.h"
 #import "MHVCollection.h"
 
-@interface MHVCollection ()
+@interface MHVCollectionInternal ()
 
 @property (nonatomic, strong) NSMutableArray *inner;
 
 @end
 
-@implementation MHVCollection
+@implementation MHVCollectionInternal
 
 - (instancetype)init
 {
@@ -77,7 +77,7 @@
     return self;
 }
 
-+ (BOOL)isNilOrEmpty:(MHVCollection *)collection
++ (BOOL)isNilOrEmpty:(MHVCollectionInternal *)collection
 {
     return (!collection|| collection.count == 0);
 }
@@ -131,7 +131,7 @@
     };
 }
 
-- (void)insertCollection:(MHVCollection *)collection atStartingIndex:(NSUInteger)startingIndex
+- (void)insertCollection:(MHVCollectionInternal *)collection atStartingIndex:(NSUInteger)startingIndex
 {
     if (!collection)
     {
@@ -176,7 +176,7 @@
     [self.inner addObjectsFromArray:array];
 }
 
-- (void)addObjectsFromCollection:(MHVCollection *)collection
+- (void)addObjectsFromCollection:(MHVCollectionInternal *)collection
 {
     if (!collection)
     {
@@ -328,7 +328,7 @@
 
 - (id)mutableCopy
 {
-    MHVCollection *copy = [[[self class] alloc] init];
+    MHVCollectionInternal *copy = [[[self class] alloc] init];
 
     for (NSUInteger i = 0, count = self.count; i < count; ++i)
     {
@@ -336,110 +336,6 @@
     }
 
     return copy;
-}
-
-@end
-
-@implementation MHVStringCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        self.type = [NSString class];
-    }
-
-    return self;
-}
-
-- (BOOL)containsString:(NSString *)string
-{
-    return [self indexOfString:string] != NSNotFound;
-}
-
-- (NSUInteger)indexOfString:(NSString *)string
-{
-    return [self indexOfString:string startingAt:0];
-}
-
-- (NSUInteger)indexOfString:(NSString *)string startingAt:(NSUInteger)index
-{
-    if (!string)
-    {
-        return NSNotFound;
-    }
-
-    for (NSUInteger i = index, count = self.count; i < count; ++i)
-    {
-        if ([[self objectAtIndex:i] isEqualToString:string])
-        {
-            return i;
-        }
-    }
-
-    return NSNotFound;
-}
-
-- (BOOL)removeString:(NSString *)string
-{
-    if (!string)
-    {
-        return NO;
-    }
-
-    NSUInteger index = [self indexOfString:string];
-    if (index == NSNotFound)
-    {
-        return NO;
-    }
-
-    [self removeObjectAtIndex:index];
-    
-    return YES;
-}
-
-- (MHVStringCollection *)selectStringsFoundInSet:(NSArray *)testSet
-{
-    MHVStringCollection *matches = nil;
-
-    for (int i = 0, count = (int)testSet.count; i < count; ++i)
-    {
-        NSString *testString = [testSet objectAtIndex:i];
-        if ([self containsString:testString])
-        {
-            if (!matches)
-            {
-                matches = [[MHVStringCollection alloc] init];
-            }
-
-            [matches addObject:testString];
-        }
-    }
-
-    return matches;
-}
-
-- (MHVStringCollection *)selectStringsNotFoundInSet:(NSArray *)testSet
-{
-    MHVStringCollection *matches = nil;
-
-    for (int i = 0, count = (int)testSet.count; i < count; ++i)
-    {
-        NSString *testString = [testSet objectAtIndex:i];
-        if (![self containsString:testString])
-        {
-            if (!matches)
-            {
-                matches = [[MHVStringCollection alloc] init];
-            }
-
-            [matches addObject:testString];
-        }
-    }
-
-    return matches;
 }
 
 @end

@@ -26,6 +26,3 @@
 
 @end
 
-@interface MHVStructuredInsightValueCollection : MHVCollection<MHVStructuredInsightValue *>
-
-@end

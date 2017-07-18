@@ -168,17 +168,3 @@ NSString *const c_usdaFamily = @"usda";
 
 @end
 
-@implementation MHVVocabularyIdentifierCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVVocabularyIdentifier class];
-    }
-
-    return self;
-}
-
-@end

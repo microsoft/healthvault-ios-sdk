@@ -30,19 +30,24 @@
 @property (nonatomic, assign) NSInteger lastHealthVaultSequenceNumber;
 @property (nonatomic, assign) BOOL isValid;
 
-@property (nonatomic, strong) MHVThingCollection *things;
+@property (nonatomic, strong) NSMutableArray<MHVThing *> *thingsInternal;
 
 @end
 
 @implementation MHVMockRecord
 
-- (MHVThingCollection *)things
+- (NSArray<MHVThing *> *)things
 {
-    if (!_things)
+    return _thingsInternal;
+}
+
+- (NSMutableArray<MHVThing *> *)thingsInternal
+{
+    if (!_thingsInternal)
     {
-        _things = [MHVThingCollection new];
+        _thingsInternal = [NSMutableArray new];
     }
-    return _things;
+    return _thingsInternal;
 }
 
 #pragma mark MHVCacheStatusProtocol
@@ -120,7 +125,7 @@
                 allergy.allergenType = [MHVCodableValue fromText:@"food"];
                 allergy.reaction = [MHVCodableValue fromText:@"anaphylactic shock"];
                 
-                [record.things addObject:thing];
+                [record.thingsInternal addObject:thing];
             }
             
             _database[[recordId lowercaseString]] = record;
@@ -224,17 +229,17 @@
     
     for (NSString *thingId in thingIds)
     {
-        NSInteger index = [self.database[recordId].things indexOfThingID:thingId];
+        NSInteger index = [self.database[recordId].thingsInternal indexOfThingID:thingId];
         if (index != NSNotFound)
         {
-            [self.database[recordId].things removeObjectAtIndex:index];
+            [self.database[recordId].thingsInternal removeObjectAtIndex:index];
         }
     }
     
     completion(nil);
 }
 
-- (void)createCachedThings:(MHVThingCollection *)things
+- (void)createCachedThings:(NSArray<MHVThing *> *)things
                   recordId:(NSString *)recordId
                 completion:(void (^)(NSError *_Nullable error))completion
 {
@@ -252,7 +257,7 @@
 }
 
 
-- (void)updateCachedThings:(MHVThingCollection *)things
+- (void)updateCachedThings:(NSArray<MHVThing *> *)things
                   recordId:(NSString *)recordId
                 completion:(void (^)(NSError *_Nullable error))completion
 {
@@ -270,7 +275,7 @@
 }
 
 
-- (void)synchronizeThings:(MHVThingCollection *)things
+- (void)synchronizeThings:(NSArray<MHVThing *> *)things
                  recordId:(NSString *)recordId
       batchSequenceNumber:(NSInteger)batchSequenceNumber
        latestSequenceNumber:(NSInteger)latestSequenceNumber
@@ -292,16 +297,16 @@
     
     for (MHVThing *thing in things)
     {
-        NSInteger index = [self.database[recordId].things indexOfThingID:thing.key.thingID];
+        NSInteger index = [self.database[recordId].thingsInternal indexOfThingID:thing.key.thingID];
         if (index == NSNotFound)
         {
             //Add
-            [self.database[recordId].things addObject:thing];
+            [self.database[recordId].thingsInternal addObject:thing];
         }
         else
         {
             //Update
-            [self.database[recordId].things setObject:thing atIndexedSubscript:index];
+            self.database[recordId].thingsInternal[index] = thing;
         }
     }
     
@@ -328,8 +333,8 @@
     
     // For testing cache, not database so return all things
     MHVThingQueryResult *result = [[MHVThingQueryResult alloc] initWithName:query.name
-                                                                     things:self.database[recordId].things
-                                                                      count:self.database[recordId].things.count
+                                                                     things:self.database[recordId].thingsInternal
+                                                                      count:self.database[recordId].thingsInternal.count
                                                              isCachedResult:YES];
     completion(result, nil);
 }
@@ -394,6 +399,52 @@
     record.lastHealthVaultSequenceNumber = sequenceNumber;
     
     completion(nil);
+}
+
+- (void)cachePendingMethod:(MHVPendingMethod *)pendingMethod
+                completion:(void (^)(NSError *_Nullable error))completion;
+{
+    if (completion)
+    {
+        completion(nil);
+    }
+}
+
+- (void)fetchPendingMethodsForRecordId:(NSString *)recordId
+                            completion:(void (^)(NSArray<MHVPendingMethod *> *_Nullable methods, NSError *_Nullable error))completion
+{
+    if (completion)
+    {
+        completion(self.database[recordId].methods, self.errorToReturn);
+    }
+}
+
+- (void)deletePendingMethods:(NSArray<MHVPendingMethod *> *)pendingMethods
+                  completion:(void (^)(NSError *_Nullable error))completion;
+{
+    if (completion)
+    {
+        completion(self.errorToReturn);
+    }
+}
+
+- (void)createPendingCachedThings:(NSArray<MHVThing *> *)things
+                         recordId:(NSString *)recordId
+                       completion:(void (^)(NSError *_Nullable error))completion;
+{
+    if (completion)
+    {
+        completion(self.errorToReturn);
+    }
+}
+
+-(void)deletePendingThingsForRecordId:(NSString *)recordId
+                            completion:(void (^)(NSError *_Nullable error))completion;
+{
+    if (completion)
+    {
+        completion(self.errorToReturn);
+    }
 }
 
 @end

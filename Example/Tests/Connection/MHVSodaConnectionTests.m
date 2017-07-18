@@ -155,14 +155,14 @@ describe(@"MHVSodaConnection", ^
         serviceDefinition.systemInstances = [MHVSystemInstances new];
         MHVServiceInstance *testInstance = [MHVServiceInstance new];
         testInstance.instanceID = kDefaultInstanceId;
-        serviceDefinition.systemInstances.instances = [[MHVServiceInstanceCollection alloc] initWithObject:testInstance];
+        serviceDefinition.systemInstances.instances = @[testInstance];
         serviceDefinitionError = nil;
         credential = [[MHVSessionCredential alloc]initWithToken:kDefaultToken sharedSecret:kDefaultSharedSecret];
         credentialError = nil;
         personInfo = [MHVPersonInfo new];
         MHVRecord *record = [MHVRecord new];
         record.ID = [NSUUID UUID];
-        personInfo.records = [[MHVRecordCollection alloc] initWithObject:record];
+        personInfo.records = @[record];
         personInfo.selectedRecordID = record.ID;
         authorizedPeopleError = nil;
         didSaveServiceInstance = NO;
@@ -314,9 +314,9 @@ describe(@"MHVSodaConnection", ^
     // Mock the getAuthorizedPeopleWithCompletion call
     [(id)personClient stub:@selector(getAuthorizedPeopleWithCompletion:) withBlock:^id(NSArray *params)
     {
-        void (^peopleBlk)(MHVPersonInfoCollection *_Nullable personInfos, NSError * _Nullable error) = params[0];
+        void (^peopleBlk)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error) = params[0];
         
-        peopleBlk(personInfo ? [[MHVPersonInfoCollection alloc] initWithObject:personInfo] : nil, authorizedPeopleError);
+        peopleBlk(personInfo ? @[personInfo] : nil, authorizedPeopleError);
         
         return nil;
     }];
@@ -915,9 +915,9 @@ describe(@"MHVSodaConnection", ^
             {
                 beforeEach(^
                            {
-                               [personInfo.records addObject:[MHVRecord new]];
-                               [personInfo.records addObject:[MHVRecord new]];
-                               [personInfo.records addObject:[MHVRecord new]];
+                               personInfo.records = @[[MHVRecord new],
+                                                      [MHVRecord new],
+                                                      [MHVRecord new]];
                                
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
@@ -1032,8 +1032,7 @@ describe(@"MHVSodaConnection", ^
                                [connection authenticateWithViewController:nil completion:^(NSError * _Nullable error)
                                 {
                                     originalRecordCount = connection.personInfo.records.count;
-                                    [personInfo.records addObject:[MHVRecord new]];
-                                    [personInfo.records addObject:[MHVRecord new]];
+                                    personInfo.records = [personInfo.records arrayByAddingObjectsFromArray:@[[MHVRecord new], [MHVRecord new]]];
                                     
                                     [connection authorizeAdditionalRecordsWithViewController:nil
                                                                                   completion:^(NSError * _Nullable error)

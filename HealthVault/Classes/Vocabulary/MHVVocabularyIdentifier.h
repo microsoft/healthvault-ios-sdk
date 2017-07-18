@@ -87,6 +87,3 @@ extern NSString *const c_usdaFamily;
 
 NS_ASSUME_NONNULL_END
 
-@interface MHVVocabularyIdentifierCollection : MHVCollection<MHVVocabularyIdentifier *>
-
-@end

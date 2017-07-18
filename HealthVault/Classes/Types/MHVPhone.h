@@ -62,11 +62,3 @@
 
 @end
 
-// -------------------------
-//
-// MHVPhoneCollection
-//
-// -------------------------
-@interface MHVPhoneCollection : MHVCollection<MHVPhone *>
-
-@end

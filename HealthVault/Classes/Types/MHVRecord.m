@@ -69,39 +69,3 @@ static NSString* const c_element_auth_action = @"app-record-auth-action";
 
 @end
 
-@interface MHVRecordCollection ()
-
-@property (nonatomic, strong) NSMutableArray *inner;
-
-@end
-
-@implementation MHVRecordCollection
-
-- (instancetype)init
-{
-    self = [super init];    
-    if (self)
-    {
-        _inner = [NSMutableArray new];
-        
-        self.type = [MHVRecord class];
-    }
-    return self;
-}
-
-- (NSInteger)indexOfRecordID:(NSUUID *)recordID
-{
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
-    {
-        MHVRecord *record = [self objectAtIndex:i];
-        
-        if ([record.ID isEqual:recordID])
-        {
-            return i;
-        }
-    }
-
-    return NSNotFound;
-}
-
-@end

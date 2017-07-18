@@ -59,7 +59,7 @@ void MHVLogEventFromCode(NSString *message, const char *fileName, NSUInteger lin
     MHVLogEvent(logLine);
 }
 
-MHVClientResult* MHVValidateCollection(MHVCollection *collection, MHVClientResultCode error)
+MHVClientResult* MHVValidateCollection(MHVCollectionInternal *collection, MHVClientResultCode error)
 {
     MHVVALIDATE_BEGIN;
 
@@ -83,5 +83,32 @@ MHVClientResult* MHVValidateCollection(MHVCollection *collection, MHVClientResul
         }
     }
 
+    MHVVALIDATE_SUCCESS;
+}
+
+MHVClientResult* MHVValidateArray(NSArray *array, MHVClientResultCode error)
+{
+    MHVVALIDATE_BEGIN;
+    
+    MHVVALIDATE_PTR(array, error);
+    
+    Class hvClass = [MHVType class];
+    Class stringClass = [NSString class];
+    
+    for (id obj in array)
+    {
+        MHVVALIDATE_PTR(obj, error);
+        
+        if ([obj isKindOfClass:hvClass])
+        {
+            MHVType *hvType = (MHVType *)obj;
+            MHVCHECK_RESULT([hvType validate]);
+        }
+        else if ([obj isKindOfClass:stringClass])
+        {
+            MHVVALIDATE_STRING((NSString *)obj, error);
+        }
+    }
+    
     MHVVALIDATE_SUCCESS;
 }

@@ -67,8 +67,8 @@ describe(@"MHVCacheQuery", ^
         {
             MHVThingQuery *thingQuery = [MHVThingQuery new];
             
-            [thingQuery.thingIDs addObject:@"TEST_THING_ID"];
-            [thingQuery.clientIDs addObject:@"TEST_CLIENT_ID"];
+            thingQuery.thingIDs = @[@"TEST_THING_ID"];
+            thingQuery.clientIDs = @[@"TEST_CLIENT_ID"];
             
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
@@ -152,7 +152,7 @@ describe(@"MHVCacheQuery", ^
         beforeEach(^
                    {
                        MHVThingQuery *thingQuery = [MHVThingQuery new];
-                       [thingQuery.view.transforms addObject:@"TEST_TRANSFORM"];
+                       thingQuery.view.transforms = @[@"TEST_TRANSFORM"];
                        
                        cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
                    });
@@ -179,7 +179,7 @@ describe(@"MHVCacheQuery", ^
         beforeEach(^
                    {
                        MHVThingQuery *thingQuery = [MHVThingQuery new];
-                       [thingQuery.view.typeVersions addObject:@"1.1.1.1"];
+                       thingQuery.view.typeVersions = @[@"1.1.1.1"];
                        
                        cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
                    });
@@ -275,7 +275,7 @@ describe(@"MHVCacheQuery", ^
             filter2.updatedByAppID = @"TEST_APP_ID_2";
             filter2.updatedByPersonID = @"TEST_PERSON_ID_2";
             
-            MHVThingFilterCollection *filters = [[MHVThingFilterCollection alloc] initWithArray:@[filter1, filter2]];
+            NSArray<MHVThingFilter *> *filters = @[filter1, filter2];
             
             MHVThingQuery *thingQuery = [[MHVThingQuery alloc] initWithFilters:filters];
             
@@ -329,7 +329,7 @@ describe(@"MHVCacheQuery", ^
     {
         beforeEach(^
         {
-            MHVStringCollection *collection = [[MHVStringCollection alloc] initWithArray:@[@"TEST_THING_ID_1", @"TEST_THING_ID_2", @"TEST_THING_ID_3"]];
+            NSArray<NSString *> *collection = @[@"TEST_THING_ID_1", @"TEST_THING_ID_2", @"TEST_THING_ID_3"];
             
             MHVThingQuery *thingQuery = [[MHVThingQuery alloc] initWithThingIDs:collection];
             
@@ -389,7 +389,7 @@ describe(@"MHVCacheQuery", ^
             MHVThingKey *key2 = [[MHVThingKey alloc] initWithID:@"TEST_THING_ID_2" andVersion:@"2.2.2.2"];
             MHVThingKey *key3 = [[MHVThingKey alloc] initWithID:@"TEST_THING_ID_3" andVersion:@"3.3.3.3"];
             
-            MHVThingKeyCollection *keys = [[MHVThingKeyCollection alloc] initWithArray:@[key1, key2, key3]];
+            NSArray<MHVThingKey *> *keys = @[key1, key2, key3];
             
             MHVThingQuery *thingQuery = [[MHVThingQuery alloc] initWithThingKeys:keys];
             
@@ -430,13 +430,13 @@ describe(@"MHVCacheQuery", ^
             MHVThingFilter *filter2 = [[MHVThingFilter alloc] initWithTypeID:@"TEST_TYPE_ID_1"];
             filter2.createDateMin = [NSDate dateWithTimeIntervalSince1970:0];
             filter2.createDateMax = [NSDate dateWithTimeIntervalSince1970:60*60*24*365];
-            [filter2.typeIDs addObject:@"TEST_TYPE_ID_2"];
+            filter2.typeIDs = [filter2.typeIDs arrayByAddingObject:@"TEST_TYPE_ID_2"];
             
-            MHVThingKeyCollection *keys = [[MHVThingKeyCollection alloc] initWithArray:@[key1, key2, key3]];
+            NSArray<MHVThingKey *> *keys = @[key1, key2, key3];
             
             MHVThingQuery *thingQuery = [[MHVThingQuery alloc] initWithThingKeys:keys];
             
-            [thingQuery.filters addObjectsFromArray:@[filter1, filter2]];
+            thingQuery.filters = [thingQuery.filters arrayByAddingObjectsFromArray:@[filter1, filter2]];
             
             cacheQuery = [[MHVCacheQuery alloc] initWithQuery:thingQuery];
         });
@@ -444,7 +444,7 @@ describe(@"MHVCacheQuery", ^
         it(@"should have a valid predicate", ^
            {
                [[cacheQuery.predicate should] beNonNil];
-               [[cacheQuery.predicate.predicateFormat should] equal:@"((thingId == \"TEST_THING_ID_1\" AND version == \"1.1.1.1\") OR (thingId == \"TEST_THING_ID_2\" AND version == \"2.2.2.2\") OR (thingId == \"TEST_THING_ID_3\" AND version == \"3.3.3.3\")) AND ((effectiveDate >= CAST(-978307200.000000, \"NSDate\") AND effectiveDate <= CAST(-946771200.000000, \"NSDate\") AND createdByAppID == \"TEST_APP_ID_1\" AND createdByPersonID == \"TEST_PERSON_ID_1\") OR ((typeId == \"TEST_TYPE_ID_1\" OR typeId == \"TEST_TYPE_ID_2\") AND createDate >= CAST(-978307200.000000, \"NSDate\") AND createDate <= CAST(-946771200.000000, \"NSDate\")))"];
+               [[cacheQuery.predicate.predicateFormat should] equal:@"((thingId == \"TEST_THING_ID_1\" AND version == \"1.1.1.1\") OR (thingId == \"TEST_THING_ID_2\" AND version == \"2.2.2.2\") OR (thingId == \"TEST_THING_ID_3\" AND version == \"3.3.3.3\")) AND ((effectiveDate >= CAST(-978307200.000000, \"NSDate\") AND effectiveDate <= CAST(-946771200.000000, \"NSDate\") AND createdByAppID == \"TEST_APP_ID_1\" AND createdByPersonID == \"TEST_PERSON_ID_1\") OR (createDate >= CAST(-978307200.000000, \"NSDate\") AND createDate <= CAST(-946771200.000000, \"NSDate\") AND (typeId == \"TEST_TYPE_ID_1\" OR typeId == \"TEST_TYPE_ID_2\")))"];
            });
         
         it(@"should have a nil error property", ^

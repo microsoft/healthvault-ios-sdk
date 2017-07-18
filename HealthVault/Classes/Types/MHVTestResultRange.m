@@ -54,17 +54,3 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 @end
 
-@implementation MHVTestResultRangeCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVTestResultRange class];
-    }
-
-    return self;
-}
-
-@end

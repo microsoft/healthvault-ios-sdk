@@ -58,11 +58,11 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 @implementation MHVSleepJournalPM
 
-- (MHVTimeCollection *)caffeineIntakeTimes
+- (NSArray<MHVTime *> *)caffeineIntakeTimes
 {
     if (!_caffeineIntakeTimes)
     {
-        _caffeineIntakeTimes = [[MHVTimeCollection alloc] init];
+        _caffeineIntakeTimes = @[];
     }
     
     return _caffeineIntakeTimes;
@@ -70,14 +70,14 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 - (BOOL)hasCaffeineIntakeTimes
 {
-    return ![MHVCollection isNilOrEmpty:self.caffeineIntakeTimes];
+    return ![NSArray isNilOrEmpty:self.caffeineIntakeTimes];
 }
 
-- (MHVTimeCollection *)alcoholIntakeTimes
+- (NSArray<MHVTime *> *)alcoholIntakeTimes
 {
     if (!_alcoholIntakeTimes)
     {
-        _alcoholIntakeTimes = [[MHVTimeCollection alloc] init];
+        _alcoholIntakeTimes = @[];
     }
     
     return _alcoholIntakeTimes;
@@ -85,14 +85,14 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 - (BOOL)hasAlcoholIntakeTimes
 {
-    return ![MHVCollection isNilOrEmpty:self.alcoholIntakeTimes];
+    return ![NSArray isNilOrEmpty:self.alcoholIntakeTimes];
 }
 
-- (MHVOccurenceCollection *)naps
+- (NSArray<MHVOccurence *> *)naps
 {
     if (!_naps)
     {
-        _naps = [[MHVOccurenceCollection alloc] init];
+        _naps = @[];
     }
     
     return _naps;
@@ -100,14 +100,14 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 - (BOOL)hasNaps
 {
-    return ![MHVCollection isNilOrEmpty:self.naps];
+    return ![NSArray isNilOrEmpty:self.naps];
 }
 
-- (MHVOccurenceCollection *)exercise
+- (NSArray<MHVOccurence *> *)exercise
 {
     if (!_exercise)
     {
-        _exercise = [[MHVOccurenceCollection alloc] init];
+        _exercise = @[];
     }
     
     return _exercise;
@@ -115,7 +115,7 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 
 - (BOOL)hasExercise
 {
-    return ![MHVCollection isNilOrEmpty:self.exercise];
+    return ![NSArray isNilOrEmpty:self.exercise];
 }
 
 - (MHVSleepiness)sleepiness
@@ -171,20 +171,20 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_when content:self.when];
-    [writer writeElementArray:c_element_caffeine elements:self.caffeineIntakeTimes.toArray];
-    [writer writeElementArray:c_element_alcohol elements:self.alcoholIntakeTimes.toArray];
-    [writer writeElementArray:c_element_nap elements:self.naps.toArray];
-    [writer writeElementArray:c_element_exercise elements:self.exercise.toArray];
+    [writer writeElementArray:c_element_caffeine elements:self.caffeineIntakeTimes];
+    [writer writeElementArray:c_element_alcohol elements:self.alcoholIntakeTimes];
+    [writer writeElementArray:c_element_nap elements:self.naps];
+    [writer writeElementArray:c_element_exercise elements:self.exercise];
     [writer writeElement:c_element_sleepiness content:self.sleepinessValue];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
-    self.caffeineIntakeTimes = (MHVTimeCollection *)[reader readElementArray:c_element_caffeine asClass:[MHVTime class] andArrayClass:[MHVTimeCollection class]];
-    self.alcoholIntakeTimes = (MHVTimeCollection *)[reader readElementArray:c_element_alcohol asClass:[MHVTime class] andArrayClass:[MHVTimeCollection class]];
-    self.naps = (MHVOccurenceCollection *)[reader readElementArray:c_element_nap asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
-    self.exercise = (MHVOccurenceCollection *)[reader readElementArray:c_element_exercise asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
+    self.caffeineIntakeTimes = [reader readElementArray:c_element_caffeine asClass:[MHVTime class] andArrayClass:[NSMutableArray class]];
+    self.alcoholIntakeTimes = [reader readElementArray:c_element_alcohol asClass:[MHVTime class] andArrayClass:[NSMutableArray class]];
+    self.naps = [reader readElementArray:c_element_nap asClass:[MHVOccurence class] andArrayClass:[NSMutableArray class]];
+    self.exercise = [reader readElementArray:c_element_exercise asClass:[MHVOccurence class] andArrayClass:[NSMutableArray class]];
     self.sleepinessValue = [reader readElement:c_element_sleepiness asClass:[MHVPositiveInt class]];
 }
 

@@ -21,7 +21,7 @@
 @implementation MHVThingQueryResult
 
 - (instancetype)initWithName:(NSString *)name
-                      things:(MHVThingCollection *)things
+                      things:(NSArray<MHVThing *> *)things
                        count:(NSInteger)count
               isCachedResult:(BOOL)isCachedResult
 {
@@ -40,6 +40,3 @@
 
 @end
 
-@implementation MHVThingQueryResultCollection
-
-@end

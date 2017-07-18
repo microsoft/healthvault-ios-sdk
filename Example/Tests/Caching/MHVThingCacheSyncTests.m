@@ -36,11 +36,11 @@ describe(@"MHVThingCache", ^
     __block MHVMockDatabase *database =  nil;
     
     MHVPersonInfo *testPerson = [MHVPersonInfo new];
-    testPerson.records = [MHVRecordCollection new];
+    testPerson.records = @[];
     
     MHVRecord *record = [MHVRecord new];
     record.ID = [[NSUUID alloc] initWithUUIDString:kRecordUUID];
-    [testPerson.records addObject:record];
+    testPerson.records = @[record];
     
     MHVThingCacheConfiguration *cacheConfig = [MHVThingCacheConfiguration new];
     cacheConfig.cacheTypeIds = @[[MHVAllergy typeID],

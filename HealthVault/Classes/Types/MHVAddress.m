@@ -32,14 +32,14 @@ static NSString *const c_element_county = @"county";
 
 -(BOOL)hasStreet
 {
-    return ![MHVCollection isNilOrEmpty:self.street];
+    return ![NSArray isNilOrEmpty:self.street];
 }
 
-- (MHVStringCollection *)street
+- (NSArray<NSString *> *)street
 {
     if (!_street)
     {
-        _street = [[MHVStringCollection alloc] init];
+        _street = [[NSArray alloc] init];
     }
     
     return _street;
@@ -98,7 +98,7 @@ static NSString *const c_element_county = @"county";
 {
     [writer writeElement:c_element_description value:self.type];
     [writer writeElement:c_element_isPrimary content:self.isPrimary];
-    [writer writeElementArray:c_element_street elements:self.street.toArray];
+    [writer writeElementArray:c_element_street elements:self.street];
     [writer writeElement:c_element_city value:self.city];
     [writer writeElement:c_element_state value:self.state];
     [writer writeElement:c_element_postalCode value:self.postalCode];
@@ -120,16 +120,3 @@ static NSString *const c_element_county = @"county";
 
 @end
 
-@implementation MHVAddressCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVAddress class];
-    }
-    return self;
-}
-
-@end

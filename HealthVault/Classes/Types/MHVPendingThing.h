@@ -20,7 +20,7 @@
 #import "MHVType.h"
 #import "MHVThingKey.h"
 #import "MHVThingType.h"
-@class MHVThingCollection;
+@class MHVThing;
 
 @interface MHVPendingThing : MHVType
 
@@ -30,8 +30,3 @@
 
 @end
 
-@interface MHVPendingThingCollection : MHVCollection<MHVPendingThing *>
-
-- (void)removeThings:(MHVThingCollection *)things;
-
-@end

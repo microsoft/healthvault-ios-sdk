@@ -25,18 +25,15 @@ static NSString *const c_element_versions = @"type-version-format";
 
 @interface MHVThingView ()
 
-@property (readwrite, nonatomic, strong) MHVStringCollection *transforms;
-@property (readwrite, nonatomic, strong) MHVStringCollection *typeVersions;
-
 @end
 
 @implementation MHVThingView
 
-- (MHVStringCollection *)transforms
+- (NSArray<NSString *> *)transforms
 {
     if (!_transforms)
     {
-        _transforms = [[MHVStringCollection alloc] init];
+        _transforms = [[NSArray alloc] init];
     }
 
     return _transforms;
@@ -49,7 +46,7 @@ static NSString *const c_element_versions = @"type-version-format";
     {
         _sections = MHVThingSection_Standard;
 
-        _typeVersions = [[MHVStringCollection alloc] init];
+        _typeVersions = [[NSArray alloc] init];
 
         MHVCHECK_NOTNULL(_typeVersions);
     }
@@ -68,36 +65,36 @@ static NSString *const c_element_versions = @"type-version-format";
 
 - (void)serialize:(XWriter *)writer
 {
-    MHVStringCollection *sections = [self createStringsFromSections];
-    [writer writeElementArray:c_element_section elements:sections.toArray];
+    NSArray<NSString *> *sections = [self createStringsFromSections];
+    [writer writeElementArray:c_element_section elements:sections];
     if (self.sections & MHVThingSection_Data)
     {
         [writer writeEmptyElement:c_element_xml];
     }
     
-    [writer writeElementArray:c_element_xml elements:self.transforms.toArray];
-    [writer writeElementArray:c_element_versions elements:self.typeVersions.toArray];
+    [writer writeElementArray:c_element_xml elements:self.transforms];
+    [writer writeElementArray:c_element_versions elements:self.typeVersions];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    MHVStringCollection *sections = [reader readStringElementArray:c_element_section];
+    NSArray<NSString *> *sections = [reader readStringElementArray:c_element_section];
     self.transforms = [reader readStringElementArray:c_element_xml];
     self.typeVersions = [reader readStringElementArray:c_element_versions];
     
     self.sections = [self stringsToSections:sections];
-    if ([self.transforms containsString:c_emptyString])
+    if ([self.transforms containsObject:c_emptyString])
     {
         self.sections |= MHVThingSection_Data;
-        [self.transforms removeString:c_emptyString];
+        self.transforms = [self.transforms arrayByRemovingObject:c_emptyString];
     }
 }
 
 #pragma mark - Internal methods
 
-- (MHVStringCollection *)createStringsFromSections
+- (NSArray<NSString *> *)createStringsFromSections
 {
-    MHVStringCollection *array = [[MHVStringCollection alloc] init];
+    NSMutableArray<NSString *> *array = [[NSMutableArray alloc] init];
 
     if (self.sections & MHVThingSection_Core)
     {
@@ -132,11 +129,11 @@ static NSString *const c_element_versions = @"type-version-format";
     return array;
 }
 
-- (MHVThingSection)stringsToSections:(MHVStringCollection *)strings
+- (MHVThingSection)stringsToSections:(NSArray<NSString *> *)strings
 {
     MHVThingSection section = MHVThingSection_None;
 
-    if (![MHVStringCollection isNilOrEmpty:strings])
+    if (![NSArray isNilOrEmpty:strings])
     {
         for (NSString *string in strings)
         {

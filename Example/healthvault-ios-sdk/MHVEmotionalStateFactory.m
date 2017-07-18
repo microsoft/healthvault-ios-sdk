@@ -21,9 +21,9 @@
 
 @implementation MHVEmotionalState (MHVFactoryMethods)
 
-+(MHVThingCollection *)createRandomForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomForDay:(NSDate *)date
 {
-    MHVThingCollection* things = [[MHVThingCollection alloc] init];
+    NSMutableArray<MHVThing *> *things = [[NSMutableArray alloc] init];
     //
     // Two mood checks per day
     //
@@ -39,7 +39,7 @@
     return things;
 }
 
-+(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVEmotionalState createRandomForDay:date];
 }

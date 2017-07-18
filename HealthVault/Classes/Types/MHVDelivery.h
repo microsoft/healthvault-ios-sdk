@@ -26,8 +26,8 @@
 @property (readwrite, nonatomic, strong) MHVOrganization *location;
 @property (readwrite, nonatomic, strong) MHVApproxDateTime *timeOfDelivery;
 @property (readwrite, nonatomic, strong) MHVPositiveDouble *laborDuration;
-@property (readwrite, nonatomic, strong) MHVCodableValueCollection *complications;
-@property (readwrite, nonatomic, strong) MHVCodableValueCollection *anesthesia;
+@property (readwrite, nonatomic, strong) NSArray<MHVCodableValue *> *complications;
+@property (readwrite, nonatomic, strong) NSArray<MHVCodableValue *> *anesthesia;
 @property (readwrite, nonatomic, strong) MHVCodableValue *deliveryMethod;
 @property (readwrite, nonatomic, strong) MHVCodableValue *outcome;
 @property (readwrite, nonatomic, strong) MHVBaby *baby;
@@ -35,6 +35,3 @@
 
 @end
 
-@interface MHVDeliveryCollection : MHVCollection<MHVDelivery *>
-
-@end

@@ -35,13 +35,9 @@
 
 @end
 
-@interface MHVTaskScheduleCollection : MHVCollection<MHVTaskSchedule *>
-
-@end
-
 @interface MHVTaskSchedules : MHVType
 
-@property (readwrite, nonatomic, strong) MHVTaskScheduleCollection *schedule;
+@property (readwrite, nonatomic, strong) NSArray<MHVTaskSchedule *> *schedule;
 
 @end
 

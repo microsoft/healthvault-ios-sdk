@@ -47,10 +47,15 @@ static NSString *const c_element_clientID = @"client-thing-id";
 {
     if (!self.relatedThings)
     {
-        self.relatedThings = [[MHVRelatedThingCollection alloc] init];
+        self.relatedThings = @[];
     }
     
-    return [self.relatedThings addRelation:name toThing:thing];
+    MHVRelatedThing *relation = [MHVRelatedThing relationNamed:name toThing:thing];
+    
+    MHVCHECK_NOTNULL(relation);
+    self.relatedThings = [self.relatedThings arrayByAddingObject:relation];
+    
+    return relation;
 }
 
 - (MHVClientResult *)validate
@@ -70,7 +75,7 @@ static NSString *const c_element_clientID = @"client-thing-id";
     [writer writeElement:c_element_note value:self.note];
     [writer writeElement:c_element_tags content:self.tags];
     [writer writeRawElementArray:c_element_extension elements:self.extensions];
-    [writer writeElementArray:c_element_related elements:self.relatedThings.toArray];
+    [writer writeElementArray:c_element_related elements:self.relatedThings];
     [writer writeElement:c_element_clientID content:self.clientID];
 }
 
@@ -80,7 +85,7 @@ static NSString *const c_element_clientID = @"client-thing-id";
     self.note = [reader readStringElement:c_element_note];
     self.tags = [reader readElement:c_element_tags asClass:[MHVStringZ512 class]];
     self.extensions = [reader readRawElementArray:c_element_extension];
-    self.relatedThings = (MHVRelatedThingCollection *)[reader readElementArray:c_element_related asClass:[MHVRelatedThing class] andArrayClass:[MHVRelatedThingCollection class]];
+    self.relatedThings = [reader readElementArray:c_element_related asClass:[MHVRelatedThing class] andArrayClass:[NSMutableArray class]];
     self.clientID = [reader readElement:c_element_clientID asClass:[MHVString255 class]];
 }
 

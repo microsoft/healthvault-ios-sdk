@@ -45,7 +45,7 @@ describe(@"MHVVocabularyClient", ^
             {
                 it(@"should get vocabulary keys", ^
                    {
-                       [vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       [vocabularyClient getVocabularyKeysWithCompletion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        
@@ -57,7 +57,7 @@ describe(@"MHVVocabularyClient", ^
                 it(@"should handle caching enabled", ^
                    {
                        [vocabularyClient setCacheEnabled:YES];
-                       [vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       [vocabularyClient getVocabularyKeysWithCompletion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        [[method.cache shouldNot] beNil];
                    });
@@ -65,7 +65,7 @@ describe(@"MHVVocabularyClient", ^
                 it(@"should handle caching disabled", ^
                    {
                        [vocabularyClient setCacheEnabled:NO];
-                       [vocabularyClient getVocabularyKeysWithCompletion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       [vocabularyClient getVocabularyKeysWithCompletion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        [[method.cache should] beNil];
                    });
@@ -108,10 +108,11 @@ describe(@"MHVVocabularyClient", ^
                        [testKey2 setVersion:@"Version 2"];
                        [testKey2 setCode:@"Code 2"];
                        
-                       MHVVocabularyKeyCollection *keys = [[MHVVocabularyKeyCollection alloc]initWithArray:@[testKey1, testKey2]];
+                       NSArray<MHVVocabularyKey *> *keys = @[testKey1, testKey2];
                        
-                       [vocabularyClient getVocabulariesWithVocabularyKeys:keys cultureIsFixed:NO completion:
-                        ^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error) {}];
+                       [vocabularyClient getVocabulariesWithVocabularyKeys:keys
+                                                            cultureIsFixed:NO
+                                                                completion:^(NSArray<MHVVocabularyCodeSet *> * _Nullable vocabularies, NSError * _Nullable error) {}];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        
@@ -148,7 +149,10 @@ describe(@"MHVVocabularyClient", ^
             {
                 it(@"should search without vocabulary key", ^
                    {
-                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains maxResults:[NSNumber numberWithInteger:10] completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText"
+                                                                  searchMode:MHVSearchModeContains
+                                                                  maxResults:[NSNumber numberWithInteger:10]
+                                                                  completion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        
@@ -159,7 +163,10 @@ describe(@"MHVVocabularyClient", ^
                 
                 it(@"should search without vocabulary key and nil maxResults", ^
                    {
-                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains maxResults:nil completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText"
+                                                                  searchMode:MHVSearchModeContains
+                                                                  maxResults:nil
+                                                                  completion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        
@@ -178,7 +185,11 @@ describe(@"MHVVocabularyClient", ^
                        [testKey setVersion:@"Test version"];
                        [testKey setCode:@"Test code"];
                        
-                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains vocabularyKey:testKey maxResults:nil completion:^(MHVVocabularyCodeSetCollection * _Nullable codeSet, NSError * _Nullable error) {}];
+                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText"
+                                                              searchMode:MHVSearchModeContains
+                                                           vocabularyKey:testKey
+                                                              maxResults:nil
+                                                              completion:^(NSArray<MHVVocabularyCodeSet *> * _Nullable codeSet, NSError * _Nullable error) {}];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        
@@ -190,7 +201,10 @@ describe(@"MHVVocabularyClient", ^
                 it(@"should handle caching enabled when searching without vocabulary key", ^
                    {
                        [vocabularyClient setCacheEnabled:YES];
-                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains maxResults:[NSNumber numberWithInteger:10] completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText"
+                                                                  searchMode:MHVSearchModeContains
+                                                                  maxResults:[NSNumber numberWithInteger:10]
+                                                                  completion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        [[method.cache shouldNot] beNil];
@@ -199,7 +213,10 @@ describe(@"MHVVocabularyClient", ^
                 it(@"should handle caching disabled when searching without vocabulary key", ^
                    {
                        [vocabularyClient setCacheEnabled:NO];
-                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains maxResults:[NSNumber numberWithInteger:10] completion:^(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
+                       [vocabularyClient searchVocabularyKeysWithSearchValue:@"SearchText"
+                                                                  searchMode:MHVSearchModeContains
+                                                                  maxResults:[NSNumber numberWithInteger:10]
+                                                                  completion:^(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable error) { }];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        [[method.cache should] beNil];
@@ -209,7 +226,11 @@ describe(@"MHVVocabularyClient", ^
                    {
                        MHVVocabularyKey *testKey = [[MHVVocabularyKey alloc]init];
                        [vocabularyClient setCacheEnabled:YES];
-                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains vocabularyKey:testKey maxResults:nil completion:^(MHVVocabularyCodeSetCollection * _Nullable codeSet, NSError * _Nullable error) {}];
+                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText"
+                                                              searchMode:MHVSearchModeContains
+                                                           vocabularyKey:testKey
+                                                              maxResults:nil
+                                                              completion:^(NSArray<MHVVocabularyCodeSet *> * _Nullable codeSet, NSError * _Nullable error) {}];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        [[method.cache shouldNot] beNil];
@@ -218,7 +239,11 @@ describe(@"MHVVocabularyClient", ^
                    {
                        MHVVocabularyKey *testKey = [[MHVVocabularyKey alloc]init];
                        [vocabularyClient setCacheEnabled:NO];
-                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText" searchMode:MHVSearchModeContains vocabularyKey:testKey maxResults:nil completion:^(MHVVocabularyCodeSetCollection * _Nullable codeSet, NSError * _Nullable error) {}];
+                       [vocabularyClient searchVocabularyWithSearchValue:@"SearchText"
+                                                              searchMode:MHVSearchModeContains
+                                                           vocabularyKey:testKey
+                                                              maxResults:nil
+                                                              completion:^(NSArray<MHVVocabularyCodeSet *> * _Nullable codeSet, NSError * _Nullable error) {}];
                        
                        MHVMethod *method = (MHVMethod *)spyExecuteMethod.argument;
                        [[method.cache should] beNil];

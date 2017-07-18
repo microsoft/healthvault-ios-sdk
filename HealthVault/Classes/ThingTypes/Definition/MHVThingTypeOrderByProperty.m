@@ -42,16 +42,3 @@ static NSString *const c_element_converter = @"converter";
 
 @end
 
-@implementation MHVThingTypeOrderByPropertyCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVThingTypeOrderByProperty class];
-    }
-    return self;
-}
-
-@end

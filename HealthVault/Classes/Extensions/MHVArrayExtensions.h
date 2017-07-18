@@ -23,6 +23,12 @@
 
 + (BOOL)isNilOrEmpty:(NSArray *)array;
 
+- (NSArray *)arrayByAddingObjectsFromArray:(NSArray *)array atStartingIndex:(NSUInteger)startingIndex;
+
+- (NSArray *)arrayByRemovingObject:(id)anObject;
+
+- (BOOL)hasElementsOfType:(Class)type;
+
 @end
 
 @interface NSMutableArray (MHVArrayExtensions)

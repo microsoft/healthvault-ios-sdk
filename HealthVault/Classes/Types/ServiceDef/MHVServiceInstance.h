@@ -54,11 +54,3 @@
 
 @end
 
-@interface MHVServiceInstanceCollection : MHVCollection<MHVServiceInstance *>
-
-- (MHVServiceInstance *)indexOfInstance:(NSUInteger)index;
-
-- (NSInteger)indexOfInstanceNamed:(NSString *)name;
-- (NSInteger)indexOfInstanceWithID:(NSString *)instanceID;
-
-@end

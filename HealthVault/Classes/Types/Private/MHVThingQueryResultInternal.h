@@ -28,13 +28,13 @@
 //
 // Collection of things found
 //
-@property (readwrite, nonatomic, strong) MHVThingCollection *things;
+@property (readwrite, nonatomic, strong) NSArray<MHVThing *> *things;
 //
 // If there were too many matches (depends on server quotas & buffer sizes), HealthVault will
 // return only the first chunk of matches. It will also return the keys of the 'pending' things
 // You must issue a fresh query to retrieve these pending things.
 //
-@property (readwrite, nonatomic, strong) MHVPendingThingCollection *pendingThings;
+@property (readwrite, nonatomic, strong) NSArray<MHVPendingThing *> *pendingThings;
 //
 // When you issue multiple queries simultaneously, you can give them names
 //
@@ -54,7 +54,7 @@
 
 @end
 
-@interface MHVThingQueryResultCollectionInternal : MHVCollection<MHVThingQueryResultInternal *>
+@interface MHVThingQueryResultCollectionInternal : MHVCollectionInternal<MHVThingQueryResultInternal *>
 
 - (void)mergeThingQueryResultCollection:(MHVThingQueryResultCollectionInternal *)collection;
 

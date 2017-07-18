@@ -30,15 +30,15 @@ describe(@"MHVThingCache", ^
 {
     __block MHVMockDatabase *database;
     __block MHVThingCache *thingCache;
-    __block MHVThingQueryResultCollection *returnedCollection;
+    __block NSArray<MHVThingQueryResult *> *returnedCollection;
     __block NSError *returnedError;
     
     MHVPersonInfo *testPerson = [MHVPersonInfo new];
-    testPerson.records = [MHVRecordCollection new];
+    testPerson.records = @[];
     
     MHVRecord *record = [MHVRecord new];
     record.ID = [[NSUUID alloc] initWithUUIDString:kRecordUUID];
-    [testPerson.records addObject:record];
+    testPerson.records = @[record];
     
     MHVThingCacheConfiguration *cacheConfig = [MHVThingCacheConfiguration new];
     cacheConfig.cacheTypeIds = @[[MHVAllergy typeID],
@@ -70,9 +70,9 @@ describe(@"MHVThingCache", ^
                                                                               connection:mockConnection
                                                                       automaticStartStop:NO];
                                
-                               [thingCache cachedResultsForQueries:[[MHVThingQueryCollection alloc] init]
+                               [thingCache cachedResultsForQueries:@[]
                                                           recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
-                                                        completion:^(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error)
+                                                        completion:^(NSArray<MHVThingQueryResult *> *_Nullable resultCollection, NSError *_Nullable error)
                                 {
                                     returnedCollection = resultCollection;
                                     returnedError = error;
@@ -99,9 +99,9 @@ describe(@"MHVThingCache", ^
                                                                               connection:mockConnection
                                                                       automaticStartStop:NO];
                                
-                               [thingCache cachedResultsForQueries:[[MHVThingQueryCollection alloc] initWithObject:[MHVThingQuery new]]
+                               [thingCache cachedResultsForQueries:@[[MHVThingQuery new]]
                                                           recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
-                                                        completion:^(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error)
+                                                        completion:^(NSArray<MHVThingQueryResult *> *_Nullable resultCollection, NSError *_Nullable error)
                                 {
                                     returnedCollection = resultCollection;
                                     returnedError = error;
@@ -132,9 +132,9 @@ describe(@"MHVThingCache", ^
                                                                               connection:mockConnection
                                                                       automaticStartStop:NO];
                                
-                               [thingCache cachedResultsForQueries:[[MHVThingQueryCollection alloc] init]
+                               [thingCache cachedResultsForQueries:@[]
                                                           recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
-                                                        completion:^(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error)
+                                                        completion:^(NSArray<MHVThingQueryResult *> *_Nullable resultCollection, NSError *_Nullable error)
                                 {
                                     returnedCollection = resultCollection;
                                     returnedError = error;
@@ -166,7 +166,7 @@ describe(@"MHVThingCache", ^
                                                                               connection:mockConnection
                                                                       automaticStartStop:NO];
                                
-                               [thingCache addThings:[[MHVThingCollection alloc] initWithThing:[MHVAllergy newThing]]
+                               [thingCache addThings:@[[MHVAllergy newThing]]
                                             recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
                                           completion:^(NSError *_Nullable error)
                                 {
@@ -199,7 +199,7 @@ describe(@"MHVThingCache", ^
                                                                               connection:mockConnection
                                                                       automaticStartStop:NO];
                                
-                               [thingCache updateThings:[[MHVThingCollection alloc] initWithThing:thingCopy]
+                               [thingCache updateThings:@[thingCopy]
                                                recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
                                              completion:^(NSError *_Nullable error)
                                 {
@@ -236,7 +236,7 @@ describe(@"MHVThingCache", ^
                                                                               connection:mockConnection
                                                                       automaticStartStop:NO];
                                
-                               [thingCache deleteThings:[[MHVThingCollection alloc] initWithThing:thingCopy]
+                               [thingCache deleteThings:@[thingCopy]
                                                recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
                                              completion:^(NSError *_Nullable error)
                                 {

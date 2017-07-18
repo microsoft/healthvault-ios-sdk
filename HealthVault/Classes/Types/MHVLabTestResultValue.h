@@ -24,9 +24,9 @@
 
 @interface MHVLabTestResultValue : MHVType
 
-@property (readwrite, nonatomic, strong) MHVApproxMeasurement* measurement;
-@property (readwrite, nonatomic, strong) MHVTestResultRangeCollection* ranges;
-@property (readwrite, nonatomic, strong) MHVCodableValue* flag;
+@property (readwrite, nonatomic, strong) MHVApproxMeasurement *measurement;
+@property (readwrite, nonatomic, strong) NSArray<MHVTestResultRange *> *ranges;
+@property (readwrite, nonatomic, strong) MHVCodableValue *flag;
 
 @property (readonly, nonatomic) BOOL hasRanges;
 

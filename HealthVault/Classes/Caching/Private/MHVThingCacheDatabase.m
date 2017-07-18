@@ -199,7 +199,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
      }];
 }
 
-- (void)createCachedThings:(MHVThingCollection *)things
+- (void)createCachedThings:(NSArray<MHVThing *> *)things
                   recordId:(NSString *)recordId
                 completion:(void (^)(NSError *_Nullable error))completion
 {
@@ -384,9 +384,9 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              return;
          }
          
-         MHVThingCollection *thingCollection = [MHVThingCollection new];
+         NSMutableArray<MHVThing *> *thingCollection = [NSMutableArray new];
          
-         if (fetchCount > 0)
+         if (fetchCount != NSNotFound && fetchCount > 0)
          {
              fetchRequest.fetchLimit = cacheQuery.fetchLimit;
              fetchRequest.fetchOffset = cacheQuery.fetchOffset;
@@ -428,7 +428,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 #pragma mark - Update
 
-- (void)updateCachedThings:(MHVThingCollection *)things
+- (void)updateCachedThings:(NSArray<MHVThing *> *)things
                   recordId:(NSString *)recordId
                 completion:(void (^)(NSError *_Nullable error))completion
 {
@@ -447,7 +447,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 #pragma mark - Synchronize
 
-- (void)synchronizeThings:(MHVThingCollection *)things
+- (void)synchronizeThings:(NSArray<MHVThing *> *)things
                  recordId:(NSString *)recordId
       batchSequenceNumber:(NSInteger)batchSequenceNumber
      latestSequenceNumber:(NSInteger)latestSequenceNumber
@@ -471,7 +471,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         return;
     }
     
-    if ([MHVCollection isNilOrEmpty:things])
+    if ([NSArray isNilOrEmpty:things])
     {
         //No things to add or update
         if (completion)
@@ -892,7 +892,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         
         NSMutableArray<MHVPendingMethod *> *pendingMethods = [NSMutableArray new];
         
-        if (fetchCount > 0)
+        if (fetchCount != NSNotFound && fetchCount > 0)
         {
             NSArray<MHVPendingThingOperation *> *operations = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
             
@@ -991,6 +991,133 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         if (error)
         {
             MHVLOG(@"ThingCacheDatabase: Setting record as invalid, saving context when deleting pending thing operation %@", error);
+            [self setCacheInvalidForRecordId:recordId
+                                  completion:nil];
+        }
+        
+        if (completion)
+        {
+            completion(error);
+        }
+    }];
+}
+
+- (void)createPendingCachedThings:(NSArray<MHVThing *> *)things
+                         recordId:(NSString *)recordId
+                       completion:(void (^)(NSError *_Nullable error))completion
+{
+    if (!self.isDatabaseReady)
+    {
+        if (completion)
+        {
+            completion([NSError MHVCacheDeleted]);
+        }
+        return;
+    }
+    
+    if ([NSString isNilOrEmpty:recordId])
+    {
+        if (completion)
+        {
+            completion([NSError MVHRequiredParameterIsNil]);
+        }
+        return;
+    }
+    
+    if ([NSArray isNilOrEmpty:things])
+    {
+        //No things to add or update
+        if (completion)
+        {
+            completion(nil);
+        }
+        return;
+    }
+    
+    [self.managedObjectContext performBlock:^
+    {
+        MHVCachedRecord *record = (MHVCachedRecord *)[self fetchCachedRecord:recordId];
+        if (!record)
+        {
+            if (completion)
+            {
+                completion([NSError MHVCacheError:@"Record could not be found"]);
+            }
+            return;
+        }
+        
+        for (MHVThing *thing in things)
+        {
+            MHVCachedThing *cachedThing = [self newThingForRecord:record];
+            if (!cachedThing)
+            {
+                MHVLOG(@"ThingCacheDatabase: Setting record as invalid, error creating placeholder thing");
+                [self setCacheInvalidForRecordId:recordId
+                                      completion:nil];
+                if (completion)
+                {
+                    completion([NSError MHVCacheError:@"New cache placeholder thing could not be created"]);
+                }
+                return;
+            }
+            
+            [cachedThing populateWithThing:thing];
+            cachedThing.isPlaceholder = YES;
+        }
+
+        NSError *error = [self saveContext];
+        
+        if (completion)
+        {
+            completion(error);
+        }
+    }];
+}
+
+- (void)deletePendingThingsForRecordId:(NSString *)recordId
+                            completion:(void (^)(NSError *_Nullable error))completion
+{
+    if (!self.isDatabaseReady)
+    {
+        if (completion)
+        {
+            completion([NSError MHVCacheDeleted]);
+        }
+        return;
+    }
+    
+    if ([NSString isNilOrEmpty:recordId])
+    {
+        if (completion)
+        {
+            completion([NSError MVHRequiredParameterIsNil]);
+        }
+        return;
+    }
+    
+    [self.managedObjectContext performBlock:^
+    {
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"MHVCachedThing"];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isPlaceholder == YES && record.recordId == %@", [recordId lowercaseString]];
+        [fetchRequest setPredicate:predicate];
+        
+        NSError *error = nil;
+        NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        
+        if (!error)
+        {
+            for (MHVCachedRecord *record in fetchedObjects)
+            {
+                [self.managedObjectContext deleteObject:record];
+            }
+            
+            error = [self saveContext];
+        }
+
+        if (error)
+        {
+            MHVLOG(@"ThingCacheDatabase: Setting record as invalid, error deleting things %@", error);
             [self setCacheInvalidForRecordId:recordId
                                   completion:nil];
         }

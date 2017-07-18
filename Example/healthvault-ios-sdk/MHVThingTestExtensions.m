@@ -77,7 +77,7 @@ NSString *pickRandomDrug(void)
     
     MHVAddress *address = [[MHVAddress alloc] init];
     
-    [address.street addObject:@"1234 Princess Street"];
+    address.street = @[@"1234 Princess Street"];
     address.city = @"Edinburgh";
     address.postalCode = @"ABCDEF";
     address.country = @"Scotland";
@@ -85,9 +85,9 @@ NSString *pickRandomDrug(void)
     MHVEmail *email = [[MHVEmail alloc] initWithEmailAddress:@"foo@bar.xyz"];
     MHVPhone *phone = [[MHVPhone alloc] initWithNumber:@"555-555-5555"];
     
-    [contact.address addObject:address];
-    [contact.email addObject:email];
-    [contact.phone addObject:phone];
+    contact.address = @[address];
+    contact.email = @[email];
+    contact.phone = @[phone];
     
     return contact;
 }
@@ -467,8 +467,7 @@ NSString *pickRandomDrug(void)
             detailCode = [MHVExercise detailNameForSteps];
         }
         
-        MHVNameValue *details = [MHVNameValue fromName:detailCode andValue:measurement];
-        [exercise.details addOrUpdate:details];
+        [exercise addOrUpdateDetailWithNameCode:detailCode.code andValue:measurement];
     }
     
     if (caloriesBurned > 0)
@@ -486,8 +485,7 @@ NSString *pickRandomDrug(void)
             detailCode = [MHVExercise detailNameForCaloriesBurned];
         }
         
-        MHVNameValue *details = [MHVNameValue fromName:detailCode andValue:measurement];
-        [exercise.details addOrUpdate:details];
+        [exercise addOrUpdateDetailWithNameCode:detailCode.code andValue:measurement];
     }
     
     return thing;
@@ -616,8 +614,8 @@ NSString *pickRandomDrug(void)
         immunization.name = [MHVCodableValue fromText:@"influenza virus vaccine, whole virus" code:@"16" andVocab:@"vaccines-cvx"];
     }
     
-    immunization.name.codes.firstCode.vocabularyFamily = @"HL7";
-    immunization.name.codes.firstCode.vocabularyVersion = @"2.3 09_2008";
+    immunization.name.codes.firstObject.vocabularyFamily = @"HL7";
+    immunization.name.codes.firstObject.vocabularyVersion = @"2.3 09_2008";
     
     if ([MHVRandom randomDouble] > 0.5)
     {
@@ -674,7 +672,7 @@ NSString *pickRandomDrug(void)
     MHVVitalSignResult *result = [[MHVVitalSignResult alloc] initWithTemperature:temperature inCelsius:FALSE];
     
     vitals.when = createRandomMHVDateTime();
-    [vitals.results addObject:result];
+    vitals.results = @[result];
     
     return thing;
 }
@@ -722,8 +720,11 @@ NSString *pickRandomDrug(void)
     assessment.when = createRandomMHVDateTime();
     assessment.category = [MHVCodableValue fromText:@"Self Assessment"];
     assessment.name = pickRandomString(3, @"Stress Assessment", @"Aerobic Fitness", @"Mental Fitness");
-    [assessment.results addObject:[MHVAssessmentField from:@"Status" andValue:pickRandomString(2, @"Good", @"Bad")]];
-    [assessment.results addObject:[MHVAssessmentField from:@"Needs Help" andValue:pickRandomString(2, @"Yes", @"No")]];
+    
+    assessment.results = @[[MHVAssessmentField from:@"Status"
+                                           andValue:pickRandomString(2, @"Good", @"Bad")]];
+    assessment.results = @[[MHVAssessmentField from:@"Needs Help"
+                                           andValue:pickRandomString(2, @"Yes", @"No")]];
     
     return thing;
 }
@@ -806,7 +807,8 @@ NSString *pickRandomDrug(void)
     if (awakeMinutes > 0 && doAwakenings)
     {
         MHVOccurence *awakening = [MHVOccurence forDuration:awakeMinutes atHour:((bedtime.hour) + 2) % 24 andMinute:bedtime.minute];
-        [journal.awakenings addObject:awakening];
+        
+        journal.awakenings = @[awakening];
     }
     
     int bedMinutes = journal.settlingMinutesValue + journal.sleepMinutesValue + [MHVRandom randomIntInRangeMin:5 max:55];
@@ -833,11 +835,14 @@ NSString *pickRandomDrug(void)
     journal.when = createRandomMHVDateTime();
     journal.sleepiness = (MHVSleepiness)[MHVRandom randomIntInRangeMin:1 max:4];
     
+    NSMutableArray<MHVTime *> *times = [NSMutableArray new];
     for (int i = 0, count = [MHVRandom randomIntInRangeMin:3 max:5]; i < count; ++i)
     {
         MHVTime *time = [MHVTime fromHour:[MHVRandom randomIntInRangeMin:7 max:20] andMinute:[MHVRandom randomIntInRangeMin:1 max:59]];
-        [journal.caffeineIntakeTimes addObject:time];
+        
+        [times addObject:time];
     }
+    journal.caffeineIntakeTimes = times;
     
     return thing;
 }

@@ -40,6 +40,8 @@
     self.effectiveDate = thing.effectiveDate ?: self.effectiveDate;
     
     self.xmlString = [thing toXmlString];
+    
+    self.isPlaceholder = NO;
 }
 
 - (MHVThing *)toThing

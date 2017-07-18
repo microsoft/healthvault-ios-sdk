@@ -34,7 +34,7 @@
 //
 // (Optional) Any conditions this relative had
 //
-@property (readwrite, nonatomic, strong) MHVConditionEntryCollection *conditions;
+@property (readwrite, nonatomic, strong) NSArray<MHVConditionEntry *> *conditions;
 //
 // Convenience
 //

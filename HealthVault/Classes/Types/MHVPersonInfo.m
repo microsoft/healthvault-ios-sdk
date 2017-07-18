@@ -39,7 +39,7 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
 
 - (BOOL)hasRecords
 {
-    return !([MHVCollection isNilOrEmpty:self.records]);
+    return !([NSArray isNilOrEmpty:self.records]);
 }
 
 - (NSString *)applicationSettings
@@ -74,7 +74,7 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
     [writer writeElement:c_element_settings content:self.applicationSettingsInternal];
     [writer writeElement:c_element_selectedID value:self.selectedRecordID.UUIDString];
     [writer writeElement:c_element_more content:self.moreRecords];
-    [writer writeElementArray:c_element_record elements:self.records.toArray];
+    [writer writeElementArray:c_element_record elements:self.records];
     [writer writeRaw:self.groupsXml];
     [writer writeRaw:self.preferredCultureXml];
     [writer writeRaw:self.preferredUICultureXml];
@@ -87,7 +87,7 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
     self.applicationSettingsInternal = [reader readElement:c_element_settings asClass:[MHVApplicationSettings class]];
     self.selectedRecordID = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_selectedID]];
     self.moreRecords = [reader readElement:c_element_more asClass:[MHVBool class]];
-    self.records = (MHVRecordCollection *)[reader readElementArray:c_element_record asClass:[MHVRecord class] andArrayClass:[MHVRecordCollection class]];
+    self.records = [reader readElementArray:c_element_record asClass:[MHVRecord class] andArrayClass:[NSMutableArray class]];
     self.groupsXml = [reader readElementRaw:c_element_groups];
     self.preferredCultureXml = [reader readElementRaw:c_element_culture];
     self.preferredUICultureXml = [reader readElementRaw:c_element_uiculture];
@@ -109,16 +109,3 @@ static NSString *const c_element_uiculture = @"preferred-uiculture";
 
 @end
 
-@implementation MHVPersonInfoCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVPersonInfo class];
-    }
-    return self;
-}
-
-@end

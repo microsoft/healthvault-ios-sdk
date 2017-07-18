@@ -55,20 +55,3 @@
 
 @end
 
-// -------------------------
-//
-// Collection of Named Measurements
-//
-// -------------------------
-@interface MHVNameValueCollection : MHVCollection<MHVNameValue *>
-
-- (NSUInteger)indexOfThingWithName:(MHVCodedValue *)code;
-//
-// Name codes should typically be from [MHVExercise vocabForDetails]
-//
-- (NSUInteger)indexOfThingWithNameCode:(NSString *)nameCode;
-- (MHVNameValue *)getThingWithNameCode:(NSString *)nameCode;
-
-- (void)addOrUpdate:(MHVNameValue *)value;
-
-@end

@@ -61,11 +61,11 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
     }
 }
 
-- (MHVOccurenceCollection *)awakenings
+- (NSArray<MHVOccurence *> *)awakenings
 {
     if (!_awakenings)
     {
-        _awakenings = [[MHVOccurenceCollection alloc] init];
+        _awakenings = @[];
     }
     
     return _awakenings;
@@ -73,7 +73,7 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
 
 - (BOOL)hasAwakenings
 {
-    return ![MHVCollection isNilOrEmpty:self.awakenings];
+    return ![NSArray isNilOrEmpty:self.awakenings];
 }
 
 - (int)sleepMinutesValue
@@ -165,7 +165,7 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
     [writer writeElementXmlName:x_element_waketime content:self.wakeTime];
     [writer writeElementXmlName:x_element_sleepMins content:self.sleepMinutes];
     [writer writeElementXmlName:x_element_settlingMins content:self.settlingMinutes];
-    [writer writeElementArray:c_element_awakening elements:self.awakenings.toArray];
+    [writer writeElementArray:c_element_awakening elements:self.awakenings];
     [writer writeElementXmlName:x_element_medications content:self.medicationsBeforeBed];
     [writer writeElementXmlName:x_element_state content:self.wakeStateValue];
 }
@@ -177,7 +177,7 @@ static const xmlChar *x_element_state = XMLSTRINGCONST("wake-state");
     self.wakeTime = [reader readElementWithXmlName:x_element_waketime asClass:[MHVTime class]];
     self.sleepMinutes = [reader readElementWithXmlName:x_element_sleepMins asClass:[MHVNonNegativeInt class]];
     self.settlingMinutes = [reader readElementWithXmlName:x_element_settlingMins asClass:[MHVNonNegativeInt class]];
-    self.awakenings = (MHVOccurenceCollection *)[reader readElementArray:c_element_awakening asClass:[MHVOccurence class] andArrayClass:[MHVOccurenceCollection class]];
+    self.awakenings = [reader readElementArray:c_element_awakening asClass:[MHVOccurence class] andArrayClass:[NSMutableArray class]];
     self.medicationsBeforeBed = [reader readElementWithXmlName:x_element_medications asClass:[MHVCodableValue class]];
     self.wakeStateValue = [reader readElementWithXmlName:x_element_state asClass:[MHVPositiveInt class]];
 }

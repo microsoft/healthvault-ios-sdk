@@ -20,19 +20,19 @@
 
 @implementation MHVCholesterol (MHVFactoryMethods)
 
-+(MHVThingCollection *)createRandomForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomForDay:(NSDate *)date
 {
     return [MHVCholesterol createRandomForDay:date metric:FALSE];
 }
 
-+(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVCholesterol createRandomForDay:date metric:TRUE];
 }
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date metric:(BOOL)metric
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date metric:(BOOL)metric
 {
-    MHVThingCollection* things = [[MHVThingCollection alloc] init];
+    NSMutableArray<MHVThing *> *things = [[NSMutableArray alloc] init];
     
     // Typically 1 a day
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];

@@ -31,15 +31,15 @@
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVAddressCollection *address;
+@property (readwrite, nonatomic, strong) NSArray<MHVAddress *> *address;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVPhoneCollection *phone;
+@property (readwrite, nonatomic, strong) NSArray<MHVPhone *> *phone;
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVEmailCollection *email;
+@property (readwrite, nonatomic, strong) NSArray<MHVEmail *> *email;
 
 //
 // Convenience

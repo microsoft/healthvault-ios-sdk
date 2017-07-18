@@ -27,14 +27,14 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 
 - (BOOL)hasCodes
 {
-    return ![MHVCollection isNilOrEmpty:self.codes];
+    return ![NSArray isNilOrEmpty:self.codes];
 }
 
-- (MHVCodedValueCollection *)codes
+- (NSArray<MHVCodedValue *> *)codes
 {
     if (!_codes)
     {
-        _codes = [[MHVCodedValueCollection alloc] init];
+        _codes = @[];
     }
     
     return _codes;
@@ -58,11 +58,14 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
     if (self)
     {
         _text = textValue;
-        _codes = [[MHVCodedValueCollection alloc] init];
         
         if (code)
         {
-            [_codes addObject:code];
+            _codes = @[code];
+        }
+        else
+        {
+            _codes = @[];
         }
     }
     
@@ -107,12 +110,20 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
         return FALSE;
     }
     
-    return [self.codes containsCode:code];
+    for (MHVCodedValue *codedValue in self.codes)
+    {
+        if ([codedValue isEqualToCodedValue:code])
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (BOOL)addCode:(MHVCodedValue *)code
 {
-    [self.codes addObject:code];
+    self.codes = [self.codes arrayByAddingObject:code];
     
     return TRUE;
 }
@@ -121,7 +132,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 {
     if (self.codes)
     {
-        [self.codes removeAllObjects];
+        self.codes = @[];
     }
 }
 
@@ -133,10 +144,9 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
     
     if (self.hasCodes)
     {
-        MHVCodedValueCollection *codes = self.codes;
-        for (NSUInteger i = 0; i < codes.count; ++i)
+        for (NSUInteger i = 0; i < self.codes.count; ++i)
         {
-            MHVCodedValue *clonedCode = [[codes objectAtIndex:i] clone];
+            MHVCodedValue *clonedCode = [[self.codes objectAtIndex:i] clone];
             MHVCHECK_NOTNULL(clonedCode);
             
             [cloned addCode:clonedCode];
@@ -180,28 +190,14 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_text value:self.text];
-    [writer writeElementArray:c_element_code elements:self.codes.toArray];
+    [writer writeElementArray:c_element_code elements:self.codes];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.text = [reader readStringElementWithXmlName:x_element_text];
-    self.codes = (MHVCodedValueCollection *)[reader readElementArrayWithXmlName:x_element_code asClass:[MHVCodedValue class] andArrayClass:[MHVCodedValueCollection class]];
+    self.codes = [reader readElementArrayWithXmlName:x_element_code asClass:[MHVCodedValue class] andArrayClass:[NSMutableArray class]];
 }
 
 @end
 
-@implementation MHVCodableValueCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVCodableValue class];
-    }
-    
-    return self;
-}
-
-@end

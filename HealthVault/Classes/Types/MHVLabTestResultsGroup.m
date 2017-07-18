@@ -32,12 +32,13 @@ static const xmlChar *x_element_results = XMLSTRINGCONST("results");
 
 - (BOOL)hasSubGroups
 {
-    return ![MHVCollection isNilOrEmpty:self.subGroups];
+    return ![NSArray isNilOrEmpty:self.subGroups];
 }
 
-- (void)addToCollection:(MHVLabTestResultsGroupCollection *)groups
+- (void)addToCollection:(NSMutableArray *)groups
 {
     [groups addObject:self];
+    
     if (self.hasSubGroups)
     {
         for (NSUInteger i = 0; i < self.subGroups.count; ++i)
@@ -65,8 +66,8 @@ static const xmlChar *x_element_results = XMLSTRINGCONST("results");
     [writer writeElementXmlName:x_element_groupName content:self.groupName];
     [writer writeElementXmlName:x_element_laboratory content:self.laboratory];
     [writer writeElementXmlName:x_element_status content:self.status];
-    [writer writeElementArray:c_element_subGroups elements:self.subGroups.toArray];
-    [writer writeElementArray:c_element_results elements:self.results.toArray];
+    [writer writeElementArray:c_element_subGroups elements:self.subGroups];
+    [writer writeElementArray:c_element_results elements:self.results];
 }
 
 - (void)deserialize:(XReader *)reader
@@ -74,35 +75,12 @@ static const xmlChar *x_element_results = XMLSTRINGCONST("results");
     self.groupName = [reader readElementWithXmlName:x_element_groupName asClass:[MHVCodableValue class]];
     self.laboratory = [reader readElementWithXmlName:x_element_laboratory asClass:[MHVOrganization class]];
     self.status = [reader readElementWithXmlName:x_element_status asClass:[MHVCodableValue class]];
-    self.subGroups = (MHVLabTestResultsGroupCollection *)[reader readElementArrayWithXmlName:x_element_subGroups
-                                                                                     asClass:[MHVLabTestResultsGroup class]
-                                                                               andArrayClass:[MHVLabTestResultsGroupCollection class]];
-    self.results = (MHVLabTestResultsDetailsCollection *)[reader readElementArrayWithXmlName:x_element_results
-                                                                                     asClass:[MHVLabTestResultsDetails class]
-                                                                               andArrayClass:[MHVLabTestResultsDetailsCollection class]];
-}
-
-@end
-
-@implementation MHVLabTestResultsGroupCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVLabTestResultsGroup class];
-    }
-
-    return self;
-}
-
-- (void)addThingsToCollection:(MHVLabTestResultsGroupCollection *)groups
-{
-    for (NSUInteger i = 0; i < self.count; ++i)
-    {
-        [[self objectAtIndex:i] addToCollection:groups];
-    }
+    self.subGroups = [reader readElementArrayWithXmlName:x_element_subGroups
+                                                 asClass:[MHVLabTestResultsGroup class]
+                                           andArrayClass:[NSMutableArray class]];
+    self.results = [reader readElementArrayWithXmlName:x_element_results
+                                               asClass:[MHVLabTestResultsDetails class]
+                                         andArrayClass:[NSMutableArray class]];
 }
 
 @end

@@ -28,6 +28,3 @@
 
 @end
 
-@interface MHVEOBServiceCollection : MHVCollection<MHVEOBService *>;
-
-@end

@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVCacheConstants.h"
 
-@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingCollection, MHVMethod, MHVPendingMethod;
+@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryResult, MHVThing, MHVMethod, MHVPendingMethod;
 @protocol MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -34,9 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Returns the results
  */
-- (void)cachedResultsForQueries:(MHVThingQueryCollection *)queries
+- (void)cachedResultsForQueries:(NSArray<MHVThingQuery *> *)queries
                        recordId:(NSUUID *)recordId
-                     completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error))completion;
+                     completion:(void(^)(NSArray<MHVThingQueryResult *> *_Nullable resultCollection, NSError *_Nullable error))completion;
 
 /**
  Add things to the cache for a recordId
@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Envoked when adding is complete, with any error that occurred
  */
-- (void)addThings:(MHVThingCollection *)things
+- (void)addThings:(NSArray<MHVThing *> *)things
          recordId:(NSUUID *)recordId
        completion:(void(^)(NSError *_Nullable error))completion;
 
@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Envoked when updating is complete, with any error that occurred
  */
-- (void)updateThings:(MHVThingCollection *)things
+- (void)updateThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion;
 
@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Envoked when deleting is complete, with any error that occurred
  */
-- (void)deleteThings:(MHVThingCollection *)things
+- (void)deleteThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion;
 
@@ -88,6 +88,18 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion Envoked once the process of caching the method has completed or an error occured. MHVPendingMethod pendingMethod The pending method that was cached. NSError error A detailed error about the operation failure.
  */
 - (void)cacheMethod:(MHVMethod *)method completion:(void (^)(MHVPendingMethod *_Nullable pendingMethod, NSError *_Nullable error))completion;
+
+/**
+ Adds 'placeholder' things to the cache for a recordId.
+ @note A 'placeholder' thing is a thing that was created while offline. Once the internet connection is restored the original thing creation request will be issued to the cloud and the 'placeholder' will be replaced with the HealthVault version of the thing. 'placeholder' Things do not have a Thing Key property set.
+ 
+ @param things The things to be added
+ @param recordId The record ID of the person
+ @param completion Envoked when adding is complete, with any error that occurred
+ */
+- (void)addPendingThings:(NSArray<MHVThing *> *)things
+                recordId:(NSUUID *)recordId
+              completion:(void(^)(NSError *_Nullable error))completion;
 
 /**
  Deletes a pending method call that was previously added to the cache.

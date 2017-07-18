@@ -24,7 +24,7 @@ static NSString *const c_element_souce_type = @"source-type";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_souce_type elements:self.sourceType.toArray];
+    [writer writeElementArray:c_element_souce_type elements:self.sourceType];
 }
 
 - (void)deserialize:(XReader *)reader

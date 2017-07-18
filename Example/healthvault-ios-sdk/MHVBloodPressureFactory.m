@@ -20,9 +20,9 @@
 
 @implementation MHVBloodPressure (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date
 {
-    MHVThingCollection* things = [[MHVThingCollection alloc] init];
+    NSMutableArray<MHVThing *> *things = [[NSMutableArray alloc] init];
     
     // Typically 1 a day
     MHVDateTime* dateTime = [MHVDateTime fromDate:date];

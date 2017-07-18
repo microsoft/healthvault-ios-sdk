@@ -25,6 +25,6 @@
 
 @property (readwrite, nonatomic, strong) NSString *url;
 @property (readwrite, nonatomic, strong) NSString *version;
-@property (readwrite, nonatomic, strong) MHVConfigurationEntryCollection *config;
+@property (readwrite, nonatomic, strong) NSArray<MHVConfigurationEntry *> *config;
 
 @end

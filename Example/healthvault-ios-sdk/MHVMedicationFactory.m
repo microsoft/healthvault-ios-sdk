@@ -21,14 +21,14 @@
 
 @implementation MHVMedication (MHVFactoryMethods)
 
-+(MHVThingCollection *)createRandomForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomForDay:(NSDate *)date
 {
     MHVThing* thing = [MHVMedication createRandomForDate:[MHVApproxDateTime fromDate:date]];
 
-    return [[MHVThingCollection alloc] initWithThing:thing];
+    return @[thing];
 }
 
-+(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVMedication createRandomForDay:date];
 }

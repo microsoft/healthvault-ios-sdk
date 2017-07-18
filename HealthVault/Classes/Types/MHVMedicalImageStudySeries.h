@@ -26,7 +26,7 @@
 
 @property (readwrite, nonatomic, strong) MHVDateTime *acquisitionDatetime;
 @property (readwrite, nonatomic, strong) MHVStringNZNW *descriptionText;
-@property (readwrite, nonatomic, strong) MHVMedicalImageStudySeriesImageCollection *images;
+@property (readwrite, nonatomic, strong) NSArray<MHVMedicalImageStudySeriesImage *> *images;
 @property (readwrite, nonatomic, strong) MHVOrganization *institutionName;
 @property (readwrite, nonatomic, strong) MHVCodableValue *modality;
 @property (readwrite, nonatomic, strong) MHVCodableValue *bodyPart;
@@ -35,6 +35,3 @@
 
 @end
 
-@interface MHVMedicalImageStudySeriesCollection : MHVCollection<MHVMedicalImageStudySeries *>
-
-@end

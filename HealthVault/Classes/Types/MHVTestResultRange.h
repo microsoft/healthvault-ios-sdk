@@ -32,6 +32,3 @@
 
 @end
 
-@interface MHVTestResultRangeCollection : MHVCollection<MHVTestResultRange *>
-
-@end

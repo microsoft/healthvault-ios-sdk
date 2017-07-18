@@ -36,7 +36,7 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) MHVStringCollection *street;
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *street;
 //
 // (Required)
 //
@@ -75,16 +75,5 @@
 //
 // -------------------------
 - (NSString *)toString;
-
-@end
-
-
-// -------------------------
-//
-// MHVAddressCollection
-//
-// -------------------------
-
-@interface MHVAddressCollection : MHVCollection<MHVAddress *>
 
 @end

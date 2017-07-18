@@ -29,11 +29,11 @@ static NSString *const c_element_result = @"result";
 
 @implementation MHVAssessment
 
-- (MHVAssessmentFieldCollection *)results
+- (NSArray<MHVAssessmentField *> *)results
 {
     if (!_results)
     {
-        _results = [MHVAssessmentFieldCollection new];
+        _results = @[];
     }
 
     return _results;
@@ -76,7 +76,7 @@ static NSString *const c_element_result = @"result";
     [writer writeElement:c_element_when content:self.when];
     [writer writeElement:c_element_name value:self.name];
     [writer writeElement:c_element_category content:self.category];
-    [writer writeElementArray:c_element_result elements:self.results.toArray];
+    [writer writeElementArray:c_element_result elements:self.results];
 }
 
 - (void)deserialize:(XReader *)reader
@@ -84,7 +84,9 @@ static NSString *const c_element_result = @"result";
     self.when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
     self.name = [reader readStringElement:c_element_name];
     self.category = [reader readElement:c_element_category asClass:[MHVCodableValue class]];
-    self.results = (MHVAssessmentFieldCollection *)[reader readElementArray:c_element_result asClass:[MHVAssessmentField class] andArrayClass:[MHVAssessmentFieldCollection class]];
+    self.results = [reader readElementArray:c_element_result
+                                    asClass:[MHVAssessmentField class]
+                              andArrayClass:[NSMutableArray class]];
 }
 
 + (NSString *)typeID

@@ -123,7 +123,7 @@
      }];
 }
 
-- (void)getAuthorizedPeopleWithCompletion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion;
+- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 {
     MHVASSERT_PARAMETER(completion);
     
@@ -138,7 +138,7 @@
 }
 
 - (void)getAuthorizedPeopleWithAuthorizationsCreatedSince:(NSDate *)authorizationsCreatedSince
-                                               completion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion
+                                               completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(authorizationsCreatedSince);
     MHVASSERT_PARAMETER(completion);
@@ -163,8 +163,8 @@
 }
 
 - (void)getAuthorizedPeopleWithSettings:(MHVGetAuthorizedPeopleSettings *)settings
-                            personInfos:(MHVPersonInfoCollection *_Nullable)personInfos
-                             completion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion
+                            personInfos:(NSArray<MHVPersonInfo *> *_Nullable)personInfos
+                             completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(settings);
     MHVASSERT_PARAMETER(completion);
@@ -197,14 +197,14 @@
          }
          
          //Add to the personInfos array
-         MHVPersonInfoCollection *personInfosResult = personInfos;
+         NSArray<MHVPersonInfo *> *personInfosResult = personInfos;
          if (!personInfosResult)
          {
              personInfosResult = authorizedPeople.persons;
          }
          else
          {
-             [personInfosResult addObjectsFromCollection:authorizedPeople.persons];
+             personInfosResult = [personInfosResult arrayByAddingObjectsFromArray:authorizedPeople.persons];
          }
          
          //If more results flag is set, need to recurse; otherwise done
@@ -264,7 +264,7 @@
 }
 
 - (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
-                               completion:(void(^)(MHVRecordCollection *_Nullable records, NSError *_Nullable error))completion
+                               completion:(void(^)(NSArray<MHVRecord *> *_Nullable records, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(recordIds);
     MHVASSERT_PARAMETER(completion);
@@ -293,11 +293,11 @@
              return;
          }
          
-         MHVRecordCollection *healthRecords = (MHVRecordCollection *)[XSerializer newFromString:response.infoXml
-                                                                                       withRoot:@"info"
-                                                                                 andElementName:@"record"
-                                                                                        asClass:[MHVRecord class]
-                                                                                  andArrayClass:[MHVRecordCollection class]];
+         NSArray<MHVRecord *> *healthRecords = (NSArray *)[XSerializer newFromString:response.infoXml
+                                                                            withRoot:@"info"
+                                                                      andElementName:@"record"
+                                                                             asClass:[MHVRecord class]
+                                                                       andArrayClass:[NSMutableArray class]];
          
          if (healthRecords.count != recordIds.count)
          {

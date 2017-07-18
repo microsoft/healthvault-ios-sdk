@@ -22,7 +22,7 @@
 
 @interface MHVBlobPayload : MHVType
 
-@property (strong, readonly, nonatomic) MHVBlobPayloadThingCollection *things;
+@property (strong, readonly, nonatomic) NSArray<MHVBlobPayloadThing *> *things;
 @property (readonly, nonatomic) BOOL hasThings;
 
 - (MHVBlobPayloadThing *)getDefaultBlob;

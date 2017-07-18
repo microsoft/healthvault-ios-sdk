@@ -25,7 +25,7 @@ typedef BOOL (^MHVFilter) (id value);
 // Collections allow objects of a particular type only
 // They enforce the type
 //
-@interface MHVCollection<__covariant ObjectType> : NSObject<NSFastEnumeration>
+@interface MHVCollectionInternal<__covariant ObjectType> : NSMutableArray
 
 @property (readwrite, nonatomic, strong) Class  type;
 
@@ -33,7 +33,7 @@ typedef BOOL (^MHVFilter) (id value);
 - (instancetype)initWithArray:(NSArray<ObjectType> *)array;
 - (instancetype)initWithObject:(ObjectType)object;
 
-+ (BOOL)isNilOrEmpty:(MHVCollection *)collection;
++ (BOOL)isNilOrEmpty:(MHVCollectionInternal *)collection;
 - (NSUInteger)count;
 - (ObjectType)objectAtIndex:(NSUInteger)index;
 - (ObjectType)objectAtIndexedSubscript:(NSUInteger)idx;
@@ -41,10 +41,10 @@ typedef BOOL (^MHVFilter) (id value);
 - (ObjectType)lastObject;
 - (void)addObject:(ObjectType)anObject;
 - (void)insertObject:(ObjectType)anObject atIndex:(NSUInteger)index;
-- (void)insertCollection:(MHVCollection<ObjectType> *)collection atStartingIndex:(NSUInteger)startingIndex;
+- (void)insertCollection:(MHVCollectionInternal<ObjectType> *)collection atStartingIndex:(NSUInteger)startingIndex;
 - (void)setObject:(ObjectType)obj atIndexedSubscript:(NSUInteger)idx;
 - (void)addObjectsFromArray:(NSArray<ObjectType> *)array;
-- (void)addObjectsFromCollection:(MHVCollection<ObjectType> *)collection;
+- (void)addObjectsFromCollection:(MHVCollectionInternal<ObjectType> *)collection;
 - (void)replaceObjectAtIndex:(NSUInteger)index withObject:(ObjectType)anObject;
 - (void)removeObjectAtIndex:(NSUInteger)index;
 - (void)removeObject:(ObjectType)object;
@@ -64,20 +64,5 @@ typedef BOOL (^MHVFilter) (id value);
 //
 // -----------------
 - (NSString *)toString;
-
-@end
-
-@interface MHVStringCollection : MHVCollection<NSString *>
-
-- (BOOL)containsString:(NSString *)value;
-- (NSUInteger)indexOfString:(NSString *)value;
-- (NSUInteger)indexOfString:(NSString *)value startingAt:(NSUInteger)index;
-- (BOOL)removeString:(NSString *)value;
-
-//
-// NOTE: these do a linear N^2 scan
-//
-- (MHVStringCollection *)selectStringsFoundInSet:(NSArray *)testSet;
-- (MHVStringCollection *)selectStringsNotFoundInSet:(NSArray *)testSet;
 
 @end

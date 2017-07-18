@@ -26,7 +26,7 @@
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *moreActions;
 
 @property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
-@property (nonatomic, strong) MHVThingCollection *things;
+@property (nonatomic, strong) NSArray<MHVThing *> *things;
 @property (nonatomic, strong) Class typeClass;
 @property (nonatomic, assign) BOOL useMetric;
 @property (nonatomic, assign) NSInteger maxDaysOffsetRandomData;  // Create new data for a day with max this offset from today. (1)
@@ -55,7 +55,7 @@ static const NSUInteger c_thingLimit = 50;
         _typeClass = typeClass;
         _useMetric = metric;
         _useCache = YES;
-        _things = [MHVThingCollection new];
+        _things = [NSArray new];
         _lockObject = [NSObject new];
         _totalThingsCount = -1;
         
@@ -203,7 +203,7 @@ static const NSUInteger c_thingLimit = 50;
 {
     @synchronized (self.lockObject)
     {
-        [self.things removeAllObjects];
+        self.things = @[];
         [self.thingTable reloadData];
         self.totalThingsCount = -1;
     }
@@ -259,7 +259,8 @@ static const NSUInteger c_thingLimit = 50;
                   {
                       if (result.things.count > 0)
                       {
-                          [self.things insertCollection:result.things atStartingIndex:range.location];
+                          self.things = [self.things arrayByAddingObjectsFromArray:result.things
+                                                                   atStartingIndex:range.location];
                       }
                   }
                   
@@ -349,7 +350,7 @@ static const NSUInteger c_thingLimit = 50;
         
                            @synchronized (self.lockObject)
                            {
-                               [self.things removeObject:selectedThing];
+                               self.things = [self.things arrayByRemovingObject:selectedThing];
                            }
                            
                            [self refreshThingsInRange:NSMakeRange(index, 0)];
@@ -371,7 +372,7 @@ static const NSUInteger c_thingLimit = 50;
     [self.statusLabel clearStatus];
 }
 
-- (MHVThingCollection *)createRandomForDay:(NSDate *)date isMetric:(BOOL)metric
+- (NSArray<MHVThing *> *)createRandomForDay:(NSDate *)date isMetric:(BOOL)metric
 {
     if (metric)
     {
@@ -383,7 +384,7 @@ static const NSUInteger c_thingLimit = 50;
 
 - (void)addRandomForDaysFrom:(NSDate *)start to:(NSDate *)end isMetric:(BOOL)metric
 {
-    __block MHVThingCollection *things = [self createRandomForDay:start isMetric:metric];
+    __block NSArray<MHVThing *> *things = [self createRandomForDay:start isMetric:metric];
     
     if (things.count < 1)
     {
@@ -394,7 +395,7 @@ static const NSUInteger c_thingLimit = 50;
     // Send request to create new thing objects
     [self.connection.thingClient createNewThings:things
                                         recordId:self.connection.personInfo.selectedRecordID
-                                      completion:^(MHVThingKeyCollection *_Nullable thingKeys, NSError * _Nullable error)
+                                      completion:^(NSArray<MHVThingKey *> *_Nullable thingKeys, NSError * _Nullable error)
      {
          // Completion will be called on arbitrary thread.
          // Dispatch to main thread to refresh the table or show error
@@ -415,6 +416,8 @@ static const NSUInteger c_thingLimit = 50;
                   else
                   {
                       [self.statusLabel showStatus:@"Done"];
+                      
+                      self.totalThingsCount += things.count;
                       [self refreshThingsInRange:NSMakeRange(0, things.count)];
                   }
               }

@@ -15,6 +15,7 @@
         <attribute name="createdByAppId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="createdByPersonId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="effectiveDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="isPlaceholder" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="thingId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="typeId" optional="YES" attributeType="String" indexed="YES" elementID="thingType" syncable="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
@@ -35,7 +36,7 @@
     </entity>
     <elements>
         <element name="MHVCachedRecord" positionX="-389" positionY="-217" width="128" height="163"/>
-        <element name="MHVCachedThing" positionX="7" positionY="-36" width="128" height="223"/>
+        <element name="MHVCachedThing" positionX="7" positionY="-36" width="128" height="240"/>
         <element name="MHVPendingThingOperation" positionX="-702" positionY="-90" width="128" height="148"/>
     </elements>
 </model>

@@ -72,6 +72,8 @@ static NSString *const kPredicateVariable = @"predicateVariable";
     
     kIgnoreMap = @{
                    @"shouldUseCachedResults" : @"ignore",
+                   @"keys" : @"ignore",
+                   @"filters" : @"ignore",
                    @"view" : @"ignore",
                    };
 }
@@ -132,12 +134,12 @@ static NSString *const kPredicateVariable = @"predicateVariable";
         return NO;
     }
     
-    if (![NSArray isNilOrEmpty:query.view.transforms.toArray])
+    if (![NSArray isNilOrEmpty:query.view.transforms])
     {
         return NO;
     }
     
-    if (![NSArray isNilOrEmpty:query.view.typeVersions.toArray])
+    if (![NSArray isNilOrEmpty:query.view.typeVersions])
     {
         return NO;
     }
@@ -182,9 +184,9 @@ static NSString *const kPredicateVariable = @"predicateVariable";
 }
 
 - (NSPredicate *)predicateWithPropertyName:(NSString *)propertyName
-                                 variables:(MHVCollection *)variables
+                                 variables:(NSArray *)variables
 {
-    if ([NSArray isNilOrEmpty:variables.toArray])
+    if ([NSArray isNilOrEmpty:variables])
     {
         return nil;
     }
@@ -256,7 +258,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                 propertyClass = NSClassFromString(typeClassName);
             }
             
-            if (propertyClass == [MHVThingFilterCollection class] || propertyClass == [MHVThingKeyCollection class])
+            if (propertyClass == [MHVThingFilterCollectionInternal class] || propertyClass == [MHVThingKeyCollectionInternal class])
             {
                 NSMutableArray<NSPredicate *> *subPredicates = [NSMutableArray new];
                 
@@ -275,7 +277,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                     predicate = [NSCompoundPredicate orPredicateWithSubpredicates:subPredicates];
                 }
             }
-            else if ([propertyClass isSubclassOfClass:[MHVCollection class]])
+            else if ([propertyClass isSubclassOfClass:[NSArray class]])
             {
                 predicate = [self predicateWithPropertyName:propertyName
                                                   variables:value];

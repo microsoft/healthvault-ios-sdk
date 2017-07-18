@@ -53,14 +53,3 @@
 @property (readwrite, nonatomic, strong) NSString *authStatus;
 
 @end
-
-// -------------------------
-//
-// Collection of Records
-//
-// -------------------------
-@interface MHVRecordCollection : MHVCollection<MHVRecord *>
-
-- (NSInteger)indexOfRecordID:(NSUUID *)recordID;
-
-@end

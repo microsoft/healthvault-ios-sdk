@@ -37,17 +37,3 @@ static NSString *const c_element_time = @"time";
 
 @end
 
-@implementation MHVAlertCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVAlert class];
-    }
-    
-    return self;
-}
-
-@end

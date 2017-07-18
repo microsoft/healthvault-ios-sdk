@@ -40,8 +40,8 @@ describe(@"MHVPersonClient", ^
     __block NSString *secondResponseString;
     __block NSString *returnedSettings;
     __block MHVPersonInfo *returnedPersonInfo;
-    __block MHVPersonInfoCollection *returnedPersonInfos;
-    __block MHVRecordCollection *returnedRecords;
+    __block NSArray<MHVPersonInfo *> *returnedPersonInfos;
+    __block NSArray<MHVRecord *> *returnedRecords;
     __block NSError *returnedError;
     
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
@@ -191,7 +191,7 @@ describe(@"MHVPersonClient", ^
                                // Mock response for GetPersonInfo
                                responseString = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetAuthorizedPeople\"><response-results><person-info><person-id>5370f5ce-de91-4fff-b830-90c40d483941</person-id><name>Mike B</name><record id=\"4c4c84fd-b5d0-48ff-8038-17c8f1b084d5\" record-custodian=\"true\" rel-type=\"1\" rel-name=\"Self\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Mike B\" state=\"Active\" date-created=\"2015-10-09T15:28:42.397Z\" max-size-bytes=\"4294967296\" size-bytes=\"30065480\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793271\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.333Z\" latest-operation-sequence-number=\"860\" record-app-auth-created-date=\"2017-06-13T00:24:30.333Z\">Mike B</record><record id=\"8698144d-c29a-46c2-a20c-baa9c847140d\" record-custodian=\"true\" rel-type=\"2\" rel-name=\"Other\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test\" state=\"Active\" date-created=\"2017-04-28T20:44:46.537Z\" max-size-bytes=\"4294967296\" size-bytes=\"31586376\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793272\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.4Z\" latest-operation-sequence-number=\"146\" record-app-auth-created-date=\"2017-06-13T00:24:30.4Z\">Test SubPerson</record><record id=\"432f684f-26f9-4e25-a9fe-5375ddaa0bc0\" record-custodian=\"true\" rel-type=\"13\" rel-name=\"Pet\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test2\" state=\"Active\" date-created=\"2017-06-06T15:23:40.533Z\" max-size-bytes=\"4294967296\" size-bytes=\"57470\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793273\" location-country=\"US\" location-state-province=\"WA\" date-updated=\"2017-06-13T00:24:30.46Z\" latest-operation-sequence-number=\"14\" record-app-auth-created-date=\"2017-06-13T00:24:30.46Z\">Test2 Test2</record><preferred-culture><language>en-US</language></preferred-culture><preferred-uiculture><language>en-US</language></preferred-uiculture><location><country>US</country></location></person-info><more-results>false</more-results></response-results></wc:info></response>";
                                
-                               [personClient getAuthorizedPeopleWithCompletion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error)
+                               [personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error)
                                 {
                                     returnedPersonInfos = personInfos;
                                     returnedError = error;
@@ -225,7 +225,7 @@ describe(@"MHVPersonClient", ^
                                // Mock response for GetApplicationSettings
                                responseString = kHealthVaultErrorXml;
                                
-                               [personClient getAuthorizedPeopleWithCompletion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error)
+                               [personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error)
                                 {
                                     returnedPersonInfos = personInfos;
                                     returnedError = error;
@@ -250,7 +250,7 @@ describe(@"MHVPersonClient", ^
                                responseString = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetAuthorizedPeople\"><response-results><person-info><person-id>5370f5ce-de91-4fff-b830-90c40d483941</person-id><name>Mike B</name><record id=\"4c4c84fd-b5d0-48ff-8038-17c8f1b084d5\" record-custodian=\"true\" rel-type=\"1\" rel-name=\"Self\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Mike B\" state=\"Active\" date-created=\"2015-10-09T15:28:42.397Z\" max-size-bytes=\"4294967296\" size-bytes=\"30065480\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793271\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.333Z\" latest-operation-sequence-number=\"860\" record-app-auth-created-date=\"2017-06-13T00:24:30.333Z\">Mike B</record><record id=\"8698144d-c29a-46c2-a20c-baa9c847140d\" record-custodian=\"true\" rel-type=\"2\" rel-name=\"Other\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test\" state=\"Active\" date-created=\"2017-04-28T20:44:46.537Z\" max-size-bytes=\"4294967296\" size-bytes=\"31586376\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793272\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.4Z\" latest-operation-sequence-number=\"146\" record-app-auth-created-date=\"2017-06-13T00:24:30.4Z\">Test SubPerson</record><record id=\"432f684f-26f9-4e25-a9fe-5375ddaa0bc0\" record-custodian=\"true\" rel-type=\"13\" rel-name=\"Pet\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test2\" state=\"Active\" date-created=\"2017-06-06T15:23:40.533Z\" max-size-bytes=\"4294967296\" size-bytes=\"57470\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793273\" location-country=\"US\" location-state-province=\"WA\" date-updated=\"2017-06-13T00:24:30.46Z\" latest-operation-sequence-number=\"14\" record-app-auth-created-date=\"2017-06-13T00:24:30.46Z\">Test2 Test2</record><preferred-culture><language>en-US</language></preferred-culture><preferred-uiculture><language>en-US</language></preferred-uiculture><location><country>US</country></location></person-info><more-results>false</more-results></response-results></wc:info></response>";
                                
                                [personClient getAuthorizedPeopleWithAuthorizationsCreatedSince:[NSDate new]
-                                                                                    completion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error)
+                                                                                    completion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error)
                                 {
                                     returnedPersonInfos = personInfos;
                                     returnedError = error;
@@ -287,7 +287,7 @@ describe(@"MHVPersonClient", ^
                                // Mock 2nd response for GetAuthorizedPeople, has <more-results>false</more-results>
                                secondResponseString = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetAuthorizedPeople\"><response-results><person-info><person-id>22222222-2222-2222-2222-222222222222</person-id><name>Mike C</name><record id=\"22222222-2222-2222-2222-222222222222\" record-custodian=\"true\" rel-type=\"1\" rel-name=\"Self\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Mike C\" state=\"Active\" date-created=\"2015-10-09T15:28:42.397Z\" max-size-bytes=\"4294967296\" size-bytes=\"30065480\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793271\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.333Z\" latest-operation-sequence-number=\"860\" record-app-auth-created-date=\"2017-06-13T00:24:30.333Z\">Mike C</record><record id=\"8698144d-c29a-46c2-a20c-baa9c847140d\" record-custodian=\"true\" rel-type=\"2\" rel-name=\"Other\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test\" state=\"Active\" date-created=\"2017-04-28T20:44:46.537Z\" max-size-bytes=\"4294967296\" size-bytes=\"31586376\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793272\" location-country=\"US\" date-updated=\"2017-06-13T00:24:30.4Z\" latest-operation-sequence-number=\"146\" record-app-auth-created-date=\"2017-06-13T00:24:30.4Z\">Test SubPerson</record><record id=\"432f684f-26f9-4e25-a9fe-5375ddaa0bc0\" record-custodian=\"true\" rel-type=\"13\" rel-name=\"Pet\" auth-expires=\"9999-12-31T23:59:59.999Z\" display-name=\"Test2\" state=\"Active\" date-created=\"2017-06-06T15:23:40.533Z\" max-size-bytes=\"4294967296\" size-bytes=\"57470\" app-record-auth-action=\"NoActionRequired\" app-specific-record-id=\"793273\" location-country=\"US\" location-state-province=\"WA\" date-updated=\"2017-06-13T00:24:30.46Z\" latest-operation-sequence-number=\"14\" record-app-auth-created-date=\"2017-06-13T00:24:30.46Z\">Test2 Test2</record><preferred-culture><language>en-US</language></preferred-culture><preferred-uiculture><language>en-US</language></preferred-uiculture><location><country>US</country></location></person-info><more-results>false</more-results></response-results></wc:info></response>";
                                
-                               [personClient getAuthorizedPeopleWithCompletion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error)
+                               [personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error)
                                 {
                                     returnedPersonInfos = personInfos;
                                     returnedError = error;
@@ -330,7 +330,7 @@ describe(@"MHVPersonClient", ^
                                responseString = kHealthVaultErrorXml;
                                
                                [personClient getAuthorizedPeopleWithAuthorizationsCreatedSince:[NSDate new]
-                                                                                    completion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error)
+                                                                                    completion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error)
                                 {
                                     returnedPersonInfos = personInfos;
                                     returnedError = error;
@@ -357,7 +357,7 @@ describe(@"MHVPersonClient", ^
                                NSDate *nilDate = nil;
                                
                                [personClient getAuthorizedPeopleWithAuthorizationsCreatedSince:nilDate
-                                                                                    completion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error)
+                                                                                    completion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error)
                                 {
                                     returnedPersonInfos = personInfos;
                                     returnedError = error;
@@ -445,7 +445,7 @@ describe(@"MHVPersonClient", ^
                                [personClient getAuthorizedRecordsWithRecordIds:@[[[NSUUID alloc] initWithUUIDString:@"6c812547-d1d0-439c-bb0a-f6e6b756547a"],
                                                                                  [[NSUUID alloc] initWithUUIDString:@"88d8a957-b8e4-426f-8fc7-dae8b76da6ef"],
                                                                                  [[NSUUID alloc] initWithUUIDString:@"d5f885e6-30f1-47f2-9abd-7bce6142bd73"]]
-                                                                    completion:^(MHVRecordCollection *_Nullable records, NSError *_Nullable error)
+                                                                    completion:^(NSArray<MHVRecord *> *_Nullable records, NSError *_Nullable error)
                                 {
                                     returnedRecords = records;
                                     returnedError = error;
@@ -476,7 +476,7 @@ describe(@"MHVPersonClient", ^
                                [personClient getAuthorizedRecordsWithRecordIds:@[[[NSUUID alloc] initWithUUIDString:@"6c812547-d1d0-439c-bb0a-f6e6b756547a"],
                                                                                  [[NSUUID alloc] initWithUUIDString:@"88d8a957-b8e4-426f-8fc7-dae8b76da6ef"],
                                                                                  [[NSUUID alloc] initWithUUIDString:@"d5f885e6-30f1-47f2-9abd-7bce6142bd73"]]
-                                                                    completion:^(MHVRecordCollection *_Nullable records, NSError *_Nullable error)
+                                                                    completion:^(NSArray<MHVRecord *> *_Nullable records, NSError *_Nullable error)
                                 {
                                     returnedRecords = records;
                                     returnedError = error;
@@ -499,7 +499,7 @@ describe(@"MHVPersonClient", ^
                            {
                                NSArray *nilArray = nil;
                                [personClient getAuthorizedRecordsWithRecordIds:nilArray
-                                                                    completion:^(MHVRecordCollection *_Nullable records, NSError *_Nullable error)
+                                                                    completion:^(NSArray<MHVRecord *> *_Nullable records, NSError *_Nullable error)
                                 {
                                     returnedRecords = records;
                                     returnedError = error;

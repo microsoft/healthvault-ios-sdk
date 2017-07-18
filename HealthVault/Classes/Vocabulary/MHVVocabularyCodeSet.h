@@ -26,7 +26,7 @@
 @property (readwrite, nonatomic, strong) NSString *name;
 @property (readwrite, nonatomic, strong) NSString *family;
 @property (readwrite, nonatomic, strong) NSString *version;
-@property (readwrite, nonatomic, strong) MHVVocabularyCodeItemCollection *vocabularyCodeItems;
+@property (readwrite, nonatomic, strong) NSArray<MHVVocabularyCodeItem *> *vocabularyCodeItems;
 @property (readwrite, nonatomic, strong) MHVBool *isTruncated;
 
 @property (readonly, nonatomic) BOOL hasThings;
@@ -37,11 +37,6 @@
 - (MHVVocabularyIdentifier *)getVocabularyID;
 
 @end
-
-@interface MHVVocabularyCodeSetCollection : MHVCollection<MHVVocabularyCodeSet *>
-
-@end
-
 
 @interface MHVVocabularySearchResults : MHVType
 

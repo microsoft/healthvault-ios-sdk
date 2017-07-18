@@ -21,6 +21,6 @@
 
 @interface MHVTrackingTriggerTypes : MHVType
 
-@property (readwrite, nonatomic, strong) MHVStringCollection *triggerType;
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *triggerType;
 
 @end

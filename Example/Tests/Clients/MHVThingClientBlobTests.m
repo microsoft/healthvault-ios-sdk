@@ -30,6 +30,7 @@
 #import "MHVErrorConstants.h"
 #import "MHVServiceResponse.h"
 #import "MHVHttpServiceResponse.h"
+#import "NSArray+MHVThing.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(MHVThingClientBlobTests)
@@ -48,7 +49,7 @@ describe(@"MHVThingClient", ^
     
     //Results
     __block MHVThing *resultThing;
-    __block MHVThingCollection *resultThings;
+    __block NSArray<MHVThing *> *resultThings;
     __block NSError *resultError;
     __block NSData *resultData;
     __block UIImage *resultImage;
@@ -211,9 +212,9 @@ describe(@"MHVThingClient", ^
                     
                     serviceResponse = [[MHVServiceResponse alloc] initWithWebResponse:refreshBlobResponse isXML:YES];
                     
-                    [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThings:@[allergyThing, fileThing]]
+                    [thingClient refreshBlobUrlsForThings:@[allergyThing, fileThing]
                                                  recordId:recordId
-                                               completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+                                               completion:^(NSArray<MHVThing *> *_Nullable things, NSError *_Nullable error)
                     {
                         resultThings = things;
                         resultError = error;
@@ -250,10 +251,10 @@ describe(@"MHVThingClient", ^
             {
                 it(@"should fail if thing collection is nil", ^
                    {
-                       MHVThingCollection *nilThings = nil;
+                       NSArray<MHVThing *> *nilThings = nil;
                        [thingClient refreshBlobUrlsForThings:nilThings
                                                     recordId:recordId
-                                                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+                                                  completion:^(NSArray<MHVThing *> *_Nullable things, NSError *_Nullable error)
                         {
                             resultError = error;
                         }];
@@ -266,9 +267,9 @@ describe(@"MHVThingClient", ^
                 it(@"should fail if record id is nil", ^
                    {
                        NSUUID *nilRecordId = nil;
-                       [thingClient refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThing:allergyThing]
+                       [thingClient refreshBlobUrlsForThings:@[allergyThing]
                                                     recordId:nilRecordId
-                                                  completion:^(MHVThingCollection *_Nullable things, NSError *_Nullable error)
+                                                  completion:^(NSArray<MHVThing *> *_Nullable things, NSError *_Nullable error)
                         {
                             resultError = error;
                         }];

@@ -70,17 +70,3 @@ static const xmlChar *x_element_note = XMLSTRINGCONST("note");
 
 @end
 
-@implementation MHVLabTestResultsDetailsCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVLabTestResultsDetails class];
-    }
-
-    return self;
-}
-
-@end

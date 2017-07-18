@@ -29,6 +29,3 @@
 
 @end
 
-@interface MHVTaskRangeMetricsCollection : MHVCollection<MHVTaskRangeMetrics *>
-
-@end

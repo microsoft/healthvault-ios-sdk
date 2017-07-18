@@ -37,6 +37,3 @@
 
 @end
 
-@interface MHVClaimAmountsCollection : MHVCollection<MHVClaimAmounts *>
-
-@end

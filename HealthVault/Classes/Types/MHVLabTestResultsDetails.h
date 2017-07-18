@@ -37,6 +37,3 @@
 
 @end
 
-@interface MHVLabTestResultsDetailsCollection : MHVCollection<MHVLabTestResultsDetails *>
-
-@end

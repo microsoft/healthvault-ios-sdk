@@ -30,16 +30,16 @@ static NSString *c_element_config = @"configuration";
 {
     [writer writeElementXmlName:x_element_url value:self.url];
     [writer writeElementXmlName:x_element_version value:self.version];
-    [writer writeElementArray:c_element_config elements:self.config.toArray];
+    [writer writeElementArray:c_element_config elements:self.config];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.url = [reader readStringElementWithXmlName:x_element_url];
     self.version = [reader readStringElementWithXmlName:x_element_version];
-    self.config = (MHVConfigurationEntryCollection *)[reader readElementArray:c_element_config
-                                                                      asClass:[MHVConfigurationEntry class]
-                                                                andArrayClass:[MHVConfigurationEntryCollection class]];
+    self.config = [reader readElementArray:c_element_config
+                                   asClass:[MHVConfigurationEntry class]
+                             andArrayClass:[NSMutableArray class]];
 }
 
 @end

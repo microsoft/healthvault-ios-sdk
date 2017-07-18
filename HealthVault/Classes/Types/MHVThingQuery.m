@@ -18,6 +18,7 @@
 
 #import "MHVThingQuery.h"
 #import "MHVStringExtensions.h"
+#import "MHVArrayExtensions.h"
 #import "MHVValidator.h"
 #import "MHVType.h"
 #import "MHVPendingThing.h"
@@ -32,10 +33,8 @@ static NSString *const c_element_view = @"format";
 
 @interface MHVThingQuery ()
 
-@property (readwrite, nonatomic, strong) MHVStringCollection *thingIDs;
-@property (readwrite, nonatomic, strong) MHVThingKeyCollection *keys;
-@property (readwrite, nonatomic, strong) MHVStringCollection *clientIDs;
-@property (readwrite, nonatomic, strong) MHVThingFilterCollection *filters;
+@property (readwrite, nonatomic, strong) MHVThingKeyCollectionInternal *keysInternal;
+@property (readwrite, nonatomic, strong) MHVThingFilterCollectionInternal *filtersInternal;
 
 @end
 
@@ -49,10 +48,10 @@ static NSString *const c_element_view = @"format";
     if (self)
     {
         _view = [[MHVThingView alloc] init];
-        _thingIDs = [[MHVStringCollection alloc] init];
-        _keys = [[MHVThingKeyCollection alloc] init];
-        _clientIDs = [[MHVStringCollection alloc] init];
-        _filters = [[MHVThingFilterCollection alloc] init];
+        _thingIDs = @[];
+        _keysInternal = [MHVThingKeyCollectionInternal new];
+        _clientIDs = @[];
+        _filtersInternal = [MHVThingFilterCollectionInternal new];
         _limit = 240;
         _offset = 0;
         _shouldUseCachedResults = YES;
@@ -61,6 +60,33 @@ static NSString *const c_element_view = @"format";
     return self;
 }
 
+- (NSArray<MHVThingKey *> *)keys
+{
+    if (!self.keysInternal)
+    {
+        self.keysInternal = [MHVThingKeyCollectionInternal new];
+    }
+    return self.keysInternal.toArray;
+}
+
+- (void)setKeys:(NSArray<MHVThingKey *> *)keys
+{
+    self.keysInternal = [[MHVThingKeyCollectionInternal alloc] initWithArray:keys];
+}
+
+- (NSArray<MHVThingFilter *> *)filters
+{
+    if (!self.filtersInternal)
+    {
+        self.filtersInternal = [MHVThingFilterCollectionInternal new];
+    }
+    return self.filtersInternal.toArray;
+}
+
+- (void)setFilters:(NSArray<MHVThingFilter *> *)filters
+{
+    self.filtersInternal = [[MHVThingFilterCollectionInternal alloc] initWithArray:filters];
+}
 
 - (instancetype)initWithFilter:(MHVThingFilter *)filter
 {
@@ -69,12 +95,12 @@ static NSString *const c_element_view = @"format";
     self = [self init];
     if (self)
     {
-        [_filters addObject:filter];
+        _filtersInternal = [[MHVThingFilterCollectionInternal alloc] initWithArray:@[filter]];
     }
     return self;
 }
 
-- (instancetype)initWithFilters:(MHVThingFilterCollection *)filters
+- (instancetype)initWithFilters:(NSArray<MHVThingFilter *> *)filters
 {
     MHVCHECK_NOTNULL(filters);
     
@@ -82,7 +108,7 @@ static NSString *const c_element_view = @"format";
     
     if (self)
     {
-        _filters = filters;
+        _filtersInternal = [[MHVThingFilterCollectionInternal alloc] initWithArray:filters];
     }
     return self;
 }
@@ -94,12 +120,12 @@ static NSString *const c_element_view = @"format";
     self = [self init];
     if (self)
     {
-        [_thingIDs addObject:thingID];
+        _thingIDs = @[thingID];
     }
     return self;
 }
 
-- (instancetype)initWithThingIDs:(MHVStringCollection *)ids
+- (instancetype)initWithThingIDs:(NSArray<NSString *> *)ids
 {
     MHVCHECK_NOTNULL(ids);
     
@@ -118,20 +144,20 @@ static NSString *const c_element_view = @"format";
     self = [self init];
     if (self)
     {
-        [_keys addObject:key];
+        _keysInternal = [[MHVThingKeyCollectionInternal alloc] initWithArray:@[key]];
     }
     
     return self;
 }
 
-- (instancetype)initWithThingKeys:(MHVThingKeyCollection *)keys
+- (instancetype)initWithThingKeys:(NSArray<MHVThingKey *> *)keys
 {
     MHVCHECK_NOTNULL(keys);
     
     self = [self init];
     if (self)
     {
-        _keys = keys;
+        _keysInternal = [[MHVThingKeyCollectionInternal alloc] initWithArray:keys];
     }
     return self;
 }
@@ -161,8 +187,8 @@ static NSString *const c_element_view = @"format";
     MHVVALIDATE(self.view, MHVClientError_InvalidThingQuery);
     
     MHVVALIDATE_ARRAYOPTIONAL(self.thingIDs, MHVClientError_InvalidThingQuery);
-    MHVVALIDATE_ARRAYOPTIONAL(self.keys, MHVClientError_InvalidThingQuery);
-    MHVVALIDATE_ARRAYOPTIONAL(self.filters, MHVClientError_InvalidThingQuery);
+    MHVVALIDATE_ARRAYOPTIONAL(self.keysInternal.toArray, MHVClientError_InvalidThingQuery);
+    MHVVALIDATE_ARRAYOPTIONAL(self.filtersInternal.toArray, MHVClientError_InvalidThingQuery);
     
     MHVVALIDATE_SUCCESS;
 }
@@ -189,20 +215,20 @@ static NSString *const c_element_view = @"format";
     //
     // Query xml schema says - ids are a choice element
     //
-    if (![MHVCollection isNilOrEmpty:self.thingIDs])
+    if (![NSArray isNilOrEmpty:self.thingIDs])
     {
-        [writer writeElementArray:c_element_id elements:self.thingIDs.toArray];
+        [writer writeElementArray:c_element_id elements:self.thingIDs];
     }
-    else if (![MHVCollection isNilOrEmpty:self.keys])
+    else if (![MHVCollectionInternal isNilOrEmpty:self.keysInternal])
     {
-        [writer writeElementArray:c_element_key elements:self.keys.toArray];
+        [writer writeElementArray:c_element_key elements:self.keysInternal];
     }
-    else if (![MHVCollection isNilOrEmpty:self.clientIDs])
+    else if (![NSArray isNilOrEmpty:self.clientIDs])
     {
-        [writer writeElementArray:c_element_clientID elements:self.clientIDs.toArray];
+        [writer writeElementArray:c_element_clientID elements:self.clientIDs];
     }
     
-    [writer writeElementArray:c_element_filter elements:self.filters.toArray];
+    [writer writeElementArray:c_element_filter elements:self.filters];
     [writer writeElement:c_element_view content:self.view];
 }
 
@@ -221,48 +247,15 @@ static NSString *const c_element_view = @"format";
 - (void)deserialize:(XReader *)reader
 {
     self.thingIDs = [reader readStringElementArray:c_element_id];
-    self.keys = (MHVThingKeyCollection *)[reader readElementArray:c_element_key
-                                                         asClass:[MHVThingKey class]
-                                                   andArrayClass:[MHVThingKeyCollection class]];
+    self.keysInternal = (MHVThingKeyCollectionInternal *)[reader readElementArray:c_element_key
+                                                                          asClass:[MHVThingKey class]
+                                                                    andArrayClass:[MHVThingKeyCollectionInternal class]];
     self.clientIDs = [reader readStringElementArray:c_element_clientID];
-    self.filters = (MHVThingFilterCollection *)[reader readElementArray:c_element_filter
-                                                               asClass:[MHVThingFilter class]
-                                                         andArrayClass:[MHVThingFilterCollection class]];
+    self.filters = [reader readElementArray:c_element_filter
+                                    asClass:[MHVThingFilter class]
+                              andArrayClass:[MHVThingFilterCollectionInternal class]];
     self.view = [reader readElement:c_element_view asClass:[MHVThingView class]];
 }
 
 @end
 
-@implementation MHVThingQueryCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVThingQuery class];
-    }
-    return self;
-}
-
-- (MHVThingQuery *)queryWithName:(NSString *)name
-{
-    for (MHVThingQuery *query in self)
-    {
-        if ([query.name isEqualToString:name])
-        {
-            return query;
-        }
-    }
-    return nil;
-}
-
-- (NSUInteger)indexOfQueryWithName:(NSString *)name
-{
-    return [self indexOfMatchingObject:^BOOL(MHVThingQuery *query)
-    {
-        return [query.name isEqualToString:name];
-    }];
-}
-
-@end

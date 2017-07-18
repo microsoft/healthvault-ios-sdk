@@ -50,6 +50,3 @@
 
 @end
 
-@interface MHVOccurenceCollection : MHVCollection<MHVOccurence *>
-
-@end

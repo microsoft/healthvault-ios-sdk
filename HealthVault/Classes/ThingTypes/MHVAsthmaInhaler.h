@@ -68,6 +68,6 @@
 //
 // (Optional) A set of the alert times that the device should activate its feature.
 //
-@property (readwrite, nonatomic, strong) MHVAlertCollection *alert;
+@property (readwrite, nonatomic, strong) NSArray<MHVAlert *> *alert;
 
 @end

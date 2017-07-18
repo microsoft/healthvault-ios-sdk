@@ -50,7 +50,7 @@
     return self;
 }
 
-- (void)getVocabularyKeysWithCompletion:(void(^)(MHVVocabularyKeyCollection *_Nullable vocabularyKeys, NSError *_Nullable error))completion
+- (void)getVocabularyKeysWithCompletion:(void(^)(NSArray<MHVVocabularyKey *> *_Nullable vocabularyKeys, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
     
@@ -70,11 +70,15 @@
             return;
         }
         
-        MHVVocabularyKeyCollection *vocabularyKeys = (MHVVocabularyKeyCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"vocabulary-key" asClass:[MHVVocabularyKey class] andArrayClass:[MHVVocabularyKeyCollection class]];
+        NSArray<MHVVocabularyKey *> *vocabularyKeys = (NSArray *)[XSerializer newFromString:response.infoXml
+                                                                                   withRoot:@"info"
+                                                                             andElementName:@"vocabulary-key"
+                                                                                    asClass:[MHVVocabularyKey class]
+                                                                              andArrayClass:[NSMutableArray class]];
         
         if (!vocabularyKeys)
         {
-            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The MHVVocabularyKeyCollection response is invalid."]);
+            completion(nil, [NSError error:[NSError MHVUnknownError] withDescription:@"The Vocabulary Key response is invalid."]);
             return;
         }
         
@@ -109,7 +113,10 @@
         return;
     }
     
-    [self getVocabulariesWithVocabularyKeys:[[MHVVocabularyKeyCollection alloc]initWithArray:@[key]] cultureIsFixed:cultureIsFixed ensureTruncatedValues:ensureTruncatedValues completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error)
+    [self getVocabulariesWithVocabularyKeys:@[key]
+                             cultureIsFixed:cultureIsFixed
+                      ensureTruncatedValues:ensureTruncatedValues
+                                 completion:^(NSArray<MHVVocabularyCodeSet *> * _Nullable vocabularies, NSError * _Nullable error)
     {
         if (error)
         {
@@ -130,17 +137,17 @@
     return;
 }
 
-- (void)getVocabulariesWithVocabularyKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+- (void)getVocabulariesWithVocabularyKeys:(NSArray<MHVVocabularyKey *> *)vocabularyKeys
                            cultureIsFixed:(BOOL)cultureIsFixed
-                               completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
+                               completion:(void(^)(NSArray<MHVVocabularyCodeSet *>* _Nullable vocabularies, NSError *_Nullable error))completion
 {
     [self getVocabulariesWithVocabularyKeys:vocabularyKeys cultureIsFixed:cultureIsFixed ensureTruncatedValues:NO completion:completion];
 }
 
-- (void)getVocabulariesWithVocabularyKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+- (void)getVocabulariesWithVocabularyKeys:(NSArray<MHVVocabularyKey *> *)vocabularyKeys
                            cultureIsFixed:(BOOL)cultureIsFixed
                     ensureTruncatedValues:(BOOL)ensureTruncatedValues
-                               completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
+                               completion:(void(^)(NSArray<MHVVocabularyCodeSet *>* _Nullable vocabularies, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(vocabularyKeys);
     MHVASSERT_PARAMETER(completion);
@@ -156,7 +163,11 @@
         return;
     }
     
-    [self getVocabulariesWithKeys:vocabularyKeys cultureIsFixed:cultureIsFixed ensureTruncatedValues:ensureTruncatedValues completion:^(MHVVocabularyCodeSetCollection * _Nullable vocabularies, NSError * _Nullable error) {
+    [self getVocabulariesWithKeys:vocabularyKeys
+                   cultureIsFixed:cultureIsFixed
+            ensureTruncatedValues:ensureTruncatedValues
+                       completion:^(NSArray<MHVVocabularyCodeSet *> * _Nullable vocabularies, NSError * _Nullable error)
+    {
         if (error)
         {
             completion(nil, error);
@@ -176,7 +187,7 @@
 - (void)searchVocabularyKeysWithSearchValue:(NSString *)searchValue
                                  searchMode:(MHVSearchMode)searchMode
                                  maxResults:(NSNumber * _Nullable)maxResults
-                                 completion:(void(^)(MHVVocabularyKeyCollection * _Nullable vocabularyKeys, NSError * _Nullable))completion
+                                 completion:(void(^)(NSArray<MHVVocabularyKey *> * _Nullable vocabularyKeys, NSError * _Nullable))completion
 {
     MHVASSERT_PARAMETER(searchValue);
     MHVASSERT_PARAMETER(searchMode);
@@ -210,7 +221,11 @@
              return;
          }
          
-         MHVVocabularyKeyCollection *vocabularyKeys = (MHVVocabularyKeyCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"vocabulary-key" asClass:[MHVVocabularyKey class] andArrayClass:[MHVVocabularyKeyCollection class]];
+         NSArray<MHVVocabularyKey *> *vocabularyKeys = (NSArray *)[XSerializer newFromString:response.infoXml
+                                                                                    withRoot:@"info"
+                                                                              andElementName:@"vocabulary-key"
+                                                                                     asClass:[MHVVocabularyKey class]
+                                                                               andArrayClass:[NSMutableArray class]];
          
          completion(vocabularyKeys, nil);
          return;
@@ -221,7 +236,7 @@
                              searchMode:(MHVSearchMode)searchMode
                           vocabularyKey:(MHVVocabularyKey *)vocabularyKey
                              maxResults:(NSNumber *_Nullable)maxResults
-                             completion:(void(^)(MHVVocabularyCodeSetCollection *_Nullable vocabularyKeys, NSError *_Nullable error))completion
+                             completion:(void(^)(NSArray<MHVVocabularyCodeSet *> *_Nullable vocabularyKeys, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(searchValue);
     MHVASSERT_PARAMETER(searchMode);
@@ -262,7 +277,11 @@
              return;
          }
          
-         MHVVocabularyCodeSetCollection *vocabularyCodeSet = (MHVVocabularyCodeSetCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"code-set-result" asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularyCodeSetCollection class]];
+         NSArray<MHVVocabularyCodeSet *> *vocabularyCodeSet = (NSArray *)[XSerializer newFromString:response.infoXml
+                                                                                           withRoot:@"info"
+                                                                                     andElementName:@"code-set-result"
+                                                                                            asClass:[MHVVocabularyCodeSet class]
+                                                                                      andArrayClass:[NSMutableArray class]];
          
          completion(vocabularyCodeSet, nil);
          return;
@@ -288,7 +307,7 @@
     }
 }
 /**
- * Gets a MHVVocabularyCodeSetCollection with VocabularyCodeSets for each of the VocabularyKeys provided
+ * Gets a NSArray<MHVVocabularyCodeSet *> with VocabularyCodeSets for each of the VocabularyKeys provided
  *
  * @param vocabularyKeys The keys to get the VocabularyCodeSets for
  * @param cultureIsFixed Is the culture fixed
@@ -297,10 +316,10 @@
           than the server configured max return count, any VocabularyCodeSets over the max will be omitted.
  * @param completion The completion called when the method execution is complete.
  */
-- (void)getVocabulariesWithKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+- (void)getVocabulariesWithKeys:(NSArray<MHVVocabularyKey *> *)vocabularyKeys
                  cultureIsFixed:(BOOL)cultureIsFixed
           ensureTruncatedValues:(BOOL)ensureTruncatedValues
-                     completion:(void(^)(MHVVocabularyCodeSetCollection* _Nullable vocabularies, NSError *_Nullable error))completion
+                     completion:(void(^)(NSArray<MHVVocabularyCodeSet *>* _Nullable vocabularies, NSError *_Nullable error))completion
 {
     MHVMethod *method = [self getVocabularyGetMethodWithKeys:vocabularyKeys withCultureIsFixed:cultureIsFixed];
     [self applyCachingIfEnabledForMethod:method];
@@ -313,7 +332,11 @@
             return;
         }
         
-        MHVVocabularyCodeSetCollection *vocabularies = (MHVVocabularyCodeSetCollection*)[XSerializer newFromString:response.infoXml withRoot:@"info" andElementName:@"vocabulary" asClass:[MHVVocabularyCodeSet class] andArrayClass:[MHVVocabularyCodeSetCollection class]];
+        NSArray<MHVVocabularyCodeSet *> *vocabularies = (NSArray *)[XSerializer newFromString:response.infoXml
+                                                                                     withRoot:@"info"
+                                                                               andElementName:@"vocabulary"
+                                                                                      asClass:[MHVVocabularyCodeSet class]
+                                                                                andArrayClass:[NSMutableArray class]];
         
         // 2) If we are not interested in truncated values, return the current list as in (no recursion)
         if (!ensureTruncatedValues)
@@ -324,7 +347,7 @@
         
         // 3) If we are interested in resolving truncated properties then we start by filtering all remaining
         //    truncated vocabs into a new list
-        MHVVocabularyKeyCollection *truncatedKeys = [[MHVVocabularyKeyCollection alloc] init];
+        NSMutableArray<MHVVocabularyKey *> *truncatedKeys = [NSMutableArray new];
         for (MHVVocabularyCodeSet *vocabulary in vocabularies)
         {
             if (vocabulary.isTruncated)
@@ -337,7 +360,11 @@
         {
             // 4) If there are truncated vocabs remaining, we recursively call back into this method but this
             //    time we only include the keys which are still truncated
-            [self getVocabulariesWithKeys:truncatedKeys cultureIsFixed:cultureIsFixed ensureTruncatedValues:ensureTruncatedValues completion:^(MHVVocabularyCodeSetCollection * _Nullable truncatedVocabularies, NSError * _Nullable error) {
+            [self getVocabulariesWithKeys:truncatedKeys
+                           cultureIsFixed:cultureIsFixed
+                    ensureTruncatedValues:ensureTruncatedValues
+                               completion:^(NSArray<MHVVocabularyCodeSet *> * _Nullable truncatedVocabularies, NSError * _Nullable error)
+            {
                 
                 if (error)
                 {
@@ -358,7 +385,7 @@
                 }
                 
                 // 7) Here we have to map and copy the newly received MHVVocabularyCodeSets to the existing
-                //    MHVVocabularyCodeSetCollection so the consume gets a single uniform collection
+                //    NSArray<MHVVocabularyCodeSet *> so the consume gets a single uniform collection
                 for (MHVVocabularyCodeSet *vocab in truncatedVocabularies)
                 {
                     MHVVocabularyIdentifier *identifier = [vocab getVocabularyID];
@@ -368,9 +395,9 @@
                     {
                         if ([[targetVocab getVocabularyID] isEqual:identifier])
                         {
-                            [targetVocab.vocabularyCodeItems addObjectsFromArray:[[vocab vocabularyCodeItems] toArray]];
+                            targetVocab.vocabularyCodeItems = [targetVocab.vocabularyCodeItems arrayByAddingObjectsFromArray:vocab.vocabularyCodeItems];
                             
-                            // 8) It is important to constantly update the vocab in the main MHVVocabularyCodeSetCollection
+                            // 8) It is important to constantly update the vocab in the main NSArray<MHVVocabularyCodeSet *>
                             // to note whether it is truncated or not. When we receive the final set of vocabs from the
                             // endpoint the vocab goes from a Truncated to Non-truncated state and we need to track this.
                             [targetVocab setIsTruncated:vocab.isTruncated];
@@ -394,7 +421,7 @@
     }];
 }
 
-- (MHVMethod *) getVocabularyGetMethodWithKeys:(MHVVocabularyKeyCollection *)vocabularyKeys
+- (MHVMethod *) getVocabularyGetMethodWithKeys:(NSArray<MHVVocabularyKey *> *)vocabularyKeys
                             withCultureIsFixed:(BOOL)cultureIsFixed
 {
     XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];

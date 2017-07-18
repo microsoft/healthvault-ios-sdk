@@ -21,6 +21,6 @@
 
 @interface MHVTrackingSourceTypes : MHVType
 
-@property (readwrite, nonatomic, strong) MHVStringCollection *sourceType;
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *sourceType;
 
 @end

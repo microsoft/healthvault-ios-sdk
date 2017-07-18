@@ -64,11 +64,3 @@
 
 @end
 
-// -------------------------
-//
-// Collection of Vocabulary keys
-//
-// -------------------------
-@interface MHVVocabularyKeyCollection : MHVCollection<MHVVocabularyKey *>
-
-@end

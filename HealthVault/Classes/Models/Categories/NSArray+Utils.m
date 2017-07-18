@@ -101,6 +101,13 @@
     return array;
 }
 
+- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)index
+{
+    NSMutableArray *array = [self mutableCopy];
+    [array removeObjectAtIndex:index];
+    return array;
+}
+
 - (NSUInteger)indexOfCaseInsensitiveString:(NSString *)aString
 {
     return [self indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop)

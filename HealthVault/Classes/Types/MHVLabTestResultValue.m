@@ -29,7 +29,7 @@ static const xmlChar *x_element_flag = XMLSTRINGCONST("flag");
 
 - (BOOL)hasRanges
 {
-    return ![MHVCollection isNilOrEmpty:self.ranges];
+    return ![NSArray isNilOrEmpty:self.ranges];
 }
 
 - (MHVClientResult *)validate
@@ -46,16 +46,16 @@ static const xmlChar *x_element_flag = XMLSTRINGCONST("flag");
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_measurement content:self.measurement];
-    [writer writeElementArray:c_element_ranges elements:self.ranges.toArray];
+    [writer writeElementArray:c_element_ranges elements:self.ranges];
     [writer writeElementXmlName:x_element_flag content:self.flag];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.measurement = [reader readElementWithXmlName:x_element_measurement asClass:[MHVApproxMeasurement class]];
-    self.ranges = (MHVTestResultRangeCollection *)[reader readElementArrayWithXmlName:x_element_ranges
-                                                   asClass:[MHVTestResultRange class]
-                                                   andArrayClass:[MHVTestResultRangeCollection class]];
+    self.ranges = [reader readElementArrayWithXmlName:x_element_ranges
+                                              asClass:[MHVTestResultRange class]
+                                        andArrayClass:[NSMutableArray class]];
     self.flag = [reader readElementWithXmlName:x_element_flag asClass:[MHVCodableValue class]];
 }
 

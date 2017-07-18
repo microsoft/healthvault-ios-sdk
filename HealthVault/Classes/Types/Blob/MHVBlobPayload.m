@@ -18,22 +18,23 @@
 //
 #import "MHVCommon.h"
 #import "MHVBlobPayload.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_blob = @"blob";
 
 @interface MHVBlobPayload ()
 
-@property (readwrite, nonatomic, strong) MHVBlobPayloadThingCollection *things;
+@property (readwrite, nonatomic, strong) NSArray<MHVBlobPayloadThing *> *things;
 
 @end
 
 @implementation MHVBlobPayload
 
-- (MHVBlobPayloadThingCollection *)things
+- (NSArray<MHVBlobPayloadThing *> *)things
 {
     if (!_things)
     {
-        _things = [[MHVBlobPayloadThingCollection alloc] init];
+        _things = @[];
     }
     
     return _things;
@@ -41,7 +42,7 @@ static NSString *const c_element_blob = @"blob";
 
 - (BOOL)hasThings
 {
-    return ![MHVCollection isNilOrEmpty:self.things];
+    return ![NSArray isNilOrEmpty:self.things];
 }
 
 - (MHVBlobPayloadThing *)getDefaultBlob
@@ -56,7 +57,13 @@ static NSString *const c_element_blob = @"blob";
         return nil;
     }
     
-    return [self.things getBlobNamed:name];
+    NSUInteger index = [self indexOfBlobNamed:name];
+    if (index == NSNotFound)
+    {
+        return nil;
+    }
+    
+    return self.things[index];
 }
 
 - (NSURL *)getUrlForBlobNamed:(NSString *)name
@@ -77,23 +84,38 @@ static NSString *const c_element_blob = @"blob";
     
     if (self.things)
     {
-        NSUInteger existingIndex = [self.things indexOfBlobNamed:blob.name];
+        NSUInteger existingIndex = [self indexOfBlobNamed:blob.name];
         if (existingIndex != NSNotFound)
         {
-            [self.things removeObjectAtIndex:existingIndex];
+            self.things = [self.things arrayByRemovingObjectAtIndex:existingIndex];
         }
     }
     
     if (!self.things)
     {
-        self.things = [[MHVBlobPayloadThingCollection alloc] init];
+        self.things = @[];
     }
 
     MHVCHECK_NOTNULL(self.things);
     
-    [self.things addObject:blob];
+    self.things = [self.things arrayByAddingObject:blob];
     
     return TRUE;
+}
+
+- (NSUInteger)indexOfBlobNamed:(NSString *)name
+{
+    for (NSUInteger i = 0; i < self.things.count; ++i)
+    {
+        MHVBlobPayloadThing *thing = [self.things objectAtIndex:i];
+        NSString *blobName = thing.name;
+        if ([blobName isEqualToString:name])
+        {
+            return i;
+        }
+    }
+    
+    return NSNotFound;
 }
 
 - (MHVClientResult *)validate
@@ -107,14 +129,14 @@ static NSString *const c_element_blob = @"blob";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_blob elements:self.things.toArray];
+    [writer writeElementArray:c_element_blob elements:self.things];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.things = (MHVBlobPayloadThingCollection *)[reader readElementArray:c_element_blob
-                                                                  asClass:[MHVBlobPayloadThing class]
-                                                            andArrayClass:[MHVBlobPayloadThingCollection class]];
+    self.things = [reader readElementArray:c_element_blob
+                                   asClass:[MHVBlobPayloadThing class]
+                             andArrayClass:[NSMutableArray class]];
 }
 
 @end

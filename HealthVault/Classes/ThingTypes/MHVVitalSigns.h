@@ -33,7 +33,7 @@
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVVitalSignResultCollection *results;
+@property (readwrite, nonatomic, strong) NSArray<MHVVitalSignResult *> *results;
 //
 // (Optional)
 //

@@ -76,16 +76,3 @@ static NSString *const c_element_address = @"address";
 
 @end
 
-@implementation MHVEmailCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVEmail class];
-    }
-    return self;
-}
-
-@end

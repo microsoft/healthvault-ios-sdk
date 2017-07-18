@@ -61,11 +61,3 @@
 
 @end
 
-// -------------------------
-//
-// MHVEmailCollection
-//
-// -------------------------
-@interface MHVEmailCollection : MHVCollection<MHVEmail *>
-
-@end

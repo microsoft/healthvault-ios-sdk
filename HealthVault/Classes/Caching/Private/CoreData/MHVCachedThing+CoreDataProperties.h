@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *updatedByPersonId;
 @property (nullable, nonatomic, copy) NSString *version;
 @property (nullable, nonatomic, copy) NSString *xmlString;
+@property (nonatomic) BOOL isPlaceholder;
 @property (nullable, nonatomic, retain) MHVCachedRecord *record;
 
 @end

@@ -28,10 +28,3 @@
 
 @end
 
-@interface MHVMessageHeaderThingCollection : MHVCollection<MHVMessageHeaderThing *>
-
-- (NSUInteger)indexOfHeaderWithName:(NSString *)name;
-
-- (MHVMessageHeaderThing *)headerWithName:(NSString *)name;
-
-@end

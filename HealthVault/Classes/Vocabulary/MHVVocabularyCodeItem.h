@@ -57,29 +57,3 @@
 
 @end
 
-// -------------------------
-//
-// Collection of Vocabulary Things
-//
-// -------------------------
-@interface MHVVocabularyCodeItemCollection : MHVCollection<MHVVocabularyCodeItem *>
-
-- (void)sortByDisplayText;
-- (void)sortByCode;
-
-// ------------------------
-//
-// Search vocabs
-//
-// Basic linear scans
-// You'll be working with small vocabs locally
-//
-// ------------------------
-- (NSUInteger)indexOfVocabCode:(NSString *)code;
-- (MHVVocabularyCodeItem *)getThingWithCode:(NSString *)code;
-- (NSString *)displayTextForCode:(NSString *)code;
-
-- (NSArray *)displayStrings;
-- (void)addDisplayStringsTo:(NSMutableArray *)strings;
-
-@end

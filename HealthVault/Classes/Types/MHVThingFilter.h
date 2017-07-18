@@ -96,13 +96,14 @@
  Only Things that are of the given Type Id(s) contained in the collection will be returned.
  @note The Type Ids in this collection are logically ORed.
  */
-@property (readonly, nonatomic, strong)  MHVStringCollection *typeIDs;
+@property (readwrite, nonatomic, strong)  NSArray<NSString *> *typeIDs;
 
 - (instancetype)initWithTypeID:(NSString *)typeID;
 - (instancetype)initWithTypeClass:(Class)typeClass;
 
 @end
 
-@interface MHVThingFilterCollection : MHVCollection<MHVThingFilter *>
+@interface MHVThingFilterCollectionInternal : MHVCollectionInternal<MHVThingFilter *>
 
 @end
+

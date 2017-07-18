@@ -22,8 +22,8 @@
 
 @interface MHVDietaryIntake (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date;
-+(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date;
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date;
++(NSArray<MHVThing *> *) createRandomMetricForDay:(NSDate *) date;
 
 +(MHVThing *) makeBreakfastFor:(MHVDateTime *) breakfastTime;
 +(MHVThing *) makeLunchEntreeFor:(MHVDateTime *) lunchTime;

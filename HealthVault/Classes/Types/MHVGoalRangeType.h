@@ -30,6 +30,3 @@
 
 @end
 
-@interface MHVGoalRangeTypeCollection : MHVCollection<MHVGoalRangeType *>
-
-@end

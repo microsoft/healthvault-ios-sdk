@@ -25,7 +25,7 @@ static NSString *const c_element_result = @"group";
 
 - (BOOL)hasResults
 {
-    return !([MHVCollection isNilOrEmpty:self.results]);
+    return !([MHVCollectionInternal isNilOrEmpty:self.results]);
 }
 
 - (MHVThingQueryResultInternal *)firstResult

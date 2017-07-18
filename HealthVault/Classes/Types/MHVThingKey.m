@@ -150,13 +150,13 @@ static NSString *const c_localIDPrefix = @"L";
 
 static NSString *const c_element_key = @"thing-id";
 
-@interface MHVThingKeyCollection ()
+@interface MHVThingKeyCollectionInternal ()
 
 @property (nonatomic, strong) NSMutableArray *inner;
 
 @end
 
-@implementation MHVThingKeyCollection
+@implementation MHVThingKeyCollectionInternal
 
 - (instancetype)init
 {

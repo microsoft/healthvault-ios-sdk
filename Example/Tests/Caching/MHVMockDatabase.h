@@ -29,7 +29,8 @@
 @property (nonatomic, assign, readonly) NSInteger lastHealthVaultSequenceNumber;
 @property (nonatomic, assign, readonly) BOOL isValid;
 
-@property (readonly, nonatomic, strong) MHVThingCollection *things;
+@property (readonly, nonatomic, strong) NSArray<MHVThing *> *things;
+@property (readonly, nonatomic, strong) NSArray<MHVPendingMethod *> *methods;
 
 @end
 

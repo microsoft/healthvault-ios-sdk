@@ -33,7 +33,7 @@ static NSString *const c_element_series_instance_uid = @"series-instance-uid";
 {
     [writer writeElement:c_element_acquisition_datetime content:self.acquisitionDatetime];
     [writer writeElement:c_element_description content:self.descriptionText];
-    [writer writeElementArray:c_element_images elements:self.images.toArray];
+    [writer writeElementArray:c_element_images elements:self.images];
     [writer writeElement:c_element_institution_name content:self.institutionName];
     [writer writeElement:c_element_modality content:self.modality];
     [writer writeElement:c_element_body_part content:self.bodyPart];
@@ -45,7 +45,7 @@ static NSString *const c_element_series_instance_uid = @"series-instance-uid";
 {
     self.acquisitionDatetime = [reader readElement:c_element_acquisition_datetime asClass:[MHVDateTime class]];
     self.descriptionText = [reader readElement:c_element_description asClass:[MHVStringNZNW class]];
-    self.images = (MHVMedicalImageStudySeriesImageCollection *)[reader readElementArray:c_element_images asClass:[MHVMedicalImageStudySeriesImage class] andArrayClass:[MHVMedicalImageStudySeriesImageCollection class]];
+    self.images = [reader readElementArray:c_element_images asClass:[MHVMedicalImageStudySeriesImage class] andArrayClass:[NSMutableArray class]];
     self.institutionName = [reader readElement:c_element_institution_name asClass:[MHVOrganization class]];
     self.modality = [reader readElement:c_element_modality asClass:[MHVCodableValue class]];
     self.bodyPart = [reader readElement:c_element_body_part asClass:[MHVCodableValue class]];
@@ -55,17 +55,3 @@ static NSString *const c_element_series_instance_uid = @"series-instance-uid";
 
 @end
 
-@implementation MHVMedicalImageStudySeriesCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVMedicalImageStudySeries class];
-    }
-    
-    return self;
-}
-
-@end

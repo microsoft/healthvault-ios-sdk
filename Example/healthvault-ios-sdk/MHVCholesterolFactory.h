@@ -20,9 +20,9 @@
 
 @interface MHVCholesterol (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date;
-+(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date;
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date metric:(BOOL) metric;
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date;
++(NSArray<MHVThing *> *) createRandomMetricForDay:(NSDate *) date;
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date metric:(BOOL) metric;
 
 @end
 

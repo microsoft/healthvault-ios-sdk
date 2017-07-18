@@ -85,17 +85,3 @@ static NSString *const c_element_severity = @"severity";
 }
 
 @end
-
-@implementation MHVConditionEntryCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVConditionEntry class];
-    }
-    return self;
-}
-
-@end

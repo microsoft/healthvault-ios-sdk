@@ -25,8 +25,8 @@
 //
 @interface MHVThingDataTyped (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date;
-+(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date;
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date;
++(NSArray<MHVThing *> *) createRandomMetricForDay:(NSDate *) date;
 
 +(MHVThingDataTypedFeatures *) moreFeatures;
 

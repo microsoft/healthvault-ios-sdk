@@ -274,7 +274,7 @@ describe(@"MHVThingCacheDatabase", ^
                                              allergy.name = [MHVCodableValue fromText:@"Allergy to Nuts"];
                                              allergy.allergenType = [MHVCodableValue fromText:@"food"];
                                              
-                                             MHVThingCollection *things = [[MHVThingCollection alloc] initWithThing:thing];
+                                             NSArray<MHVThing *> *things = @[thing];
                                              
                                              [database synchronizeThings:things
                                                                 recordId:kTestRecordId

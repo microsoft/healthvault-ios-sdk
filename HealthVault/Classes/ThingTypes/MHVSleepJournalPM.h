@@ -43,10 +43,10 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness);
 //
 // Optional
 //
-@property (readwrite, nonatomic, strong) MHVTimeCollection *caffeineIntakeTimes;
-@property (readwrite, nonatomic, strong) MHVTimeCollection *alcoholIntakeTimes;
-@property (readwrite, nonatomic, strong) MHVOccurenceCollection *naps;
-@property (readwrite, nonatomic, strong) MHVOccurenceCollection *exercise;
+@property (readwrite, nonatomic, strong) NSArray<MHVTime *> *caffeineIntakeTimes;
+@property (readwrite, nonatomic, strong) NSArray<MHVTime *> *alcoholIntakeTimes;
+@property (readwrite, nonatomic, strong) NSArray<MHVOccurence *> *naps;
+@property (readwrite, nonatomic, strong) NSArray<MHVOccurence *> *exercise;
 
 @property (readonly, nonatomic) BOOL hasCaffeineIntakeTimes;
 @property (readonly, nonatomic) BOOL hasAlcoholIntakeTimes;

@@ -41,6 +41,8 @@
 
 - (NSArray *)arrayByRemovingObject:(id)object;
 
+- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)index;
+
 /**
  * Perform a case insensitive search for 'aString' on an array of NSString objects.
  * Returns :

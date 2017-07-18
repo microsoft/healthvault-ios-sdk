@@ -22,7 +22,7 @@
 
 @interface MHVHeartRate (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date;
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date;
 
 @end
 

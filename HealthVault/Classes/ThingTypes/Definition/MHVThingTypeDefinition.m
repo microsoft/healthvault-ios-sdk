@@ -50,11 +50,11 @@ static NSString *const c_element_allow_readonly = @"allow-readonly";
     _xmlSchemaDefinition = [reader readStringElement:c_element_xsd];
     
     NSString *versions = [reader readElementRaw:c_element_versions];
-    _versions = (MHVThingTypeVersionInfoCollection *)[XSerializer newFromString:versions
-                                                                       withRoot:c_element_versions
-                                                                 andElementName:c_element_version_info
-                                                                        asClass:[MHVThingTypeVersionInfo class]
-                                                                  andArrayClass:[MHVThingTypeVersionInfoCollection class]];
+    _versions = (NSArray *)[XSerializer newFromString:versions
+                                             withRoot:c_element_versions
+                                       andElementName:c_element_version_info
+                                              asClass:[MHVThingTypeVersionInfo class]
+                                        andArrayClass:[NSMutableArray class]];
     
     _effectiveDateXPath = [reader readStringElement:c_element_effective_date_xpath];
     _updatedEndDateXPath = [reader readStringElement:c_element_updated_end_date_xpath];

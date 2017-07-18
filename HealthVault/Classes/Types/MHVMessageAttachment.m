@@ -70,18 +70,3 @@ static const xmlChar *x_element_contentid = XMLSTRINGCONST("content-id");
 }
 
 @end
-
-@implementation MHVMessageAttachmentCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVMessageAttachment class];
-    }
-
-    return self;
-}
-
-@end

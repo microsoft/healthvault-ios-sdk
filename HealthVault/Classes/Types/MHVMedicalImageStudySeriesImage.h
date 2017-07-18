@@ -26,6 +26,3 @@
 
 @end
 
-@interface MHVMedicalImageStudySeriesImageCollection : MHVCollection<MHVMedicalImageStudySeriesImage *>
-
-@end

@@ -67,7 +67,7 @@ typedef NS_ENUM (NSInteger, MHVWakeState)
 //
 // (Optional) - how many times you woke up or had your sleep interrupted
 //
-@property (readwrite, nonatomic, strong) MHVOccurenceCollection *awakenings;
+@property (readwrite, nonatomic, strong) NSArray<MHVOccurence *> *awakenings;
 //
 // (Optional) - medications you took before going to bed
 //

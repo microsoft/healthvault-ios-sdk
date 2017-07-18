@@ -35,8 +35,8 @@ static NSString *const c_element_note = @"note";
     [writer writeElement:c_element_location content:self.location];
     [writer writeElement:c_element_time_of_delivery content:self.timeOfDelivery];
     [writer writeElement:c_element_labor_duration content:self.laborDuration];
-    [writer writeElementArray:c_element_complications elements:self.complications.toArray];
-    [writer writeElementArray:c_element_anesthesia elements:self.anesthesia.toArray];
+    [writer writeElementArray:c_element_complications elements:self.complications];
+    [writer writeElementArray:c_element_anesthesia elements:self.anesthesia];
     [writer writeElement:c_element_delivery_method content:self.deliveryMethod];
     [writer writeElement:c_element_outcome content:self.outcome];
     [writer writeElement:c_element_baby content:self.baby];
@@ -48,8 +48,8 @@ static NSString *const c_element_note = @"note";
     self.location = [reader readElement:c_element_location asClass:[MHVOrganization class]];
     self.timeOfDelivery = [reader readElement:c_element_time_of_delivery asClass:[MHVApproxDateTime class]];
     self.laborDuration = [reader readElement:c_element_labor_duration asClass:[MHVPositiveDouble class]];
-    self.complications = (MHVCodableValueCollection *)[reader readElementArray:c_element_complications asClass:[MHVCodableValue class] andArrayClass:[MHVCodableValueCollection class]];
-    self.anesthesia = (MHVCodableValueCollection *)[reader readElementArray:c_element_anesthesia asClass:[MHVCodableValue class] andArrayClass:[MHVCodableValueCollection class]];
+    self.complications = [reader readElementArray:c_element_complications asClass:[MHVCodableValue class] andArrayClass:[NSMutableArray class]];
+    self.anesthesia = [reader readElementArray:c_element_anesthesia asClass:[MHVCodableValue class] andArrayClass:[NSMutableArray class]];
     self.deliveryMethod = [reader readElement:c_element_delivery_method asClass:[MHVCodableValue class]];
     self.outcome = [reader readElement:c_element_outcome asClass:[MHVCodableValue class]];
     self.baby = [reader readElement:c_element_baby asClass:[MHVBaby class]];
@@ -58,17 +58,3 @@ static NSString *const c_element_note = @"note";
 
 @end
 
-@implementation MHVDeliveryCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVDelivery class];
-    }
-    
-    return self;
-}
-
-@end

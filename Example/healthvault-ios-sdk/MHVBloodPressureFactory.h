@@ -21,7 +21,7 @@
 
 @interface MHVBloodPressure (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date;
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date;
 
 @end
 

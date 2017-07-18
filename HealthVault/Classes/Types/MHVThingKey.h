@@ -40,7 +40,7 @@
 
 @end
 
-@interface MHVThingKeyCollection : MHVCollection<MHVThingKey *> <XSerializable>
+@interface MHVThingKeyCollectionInternal : MHVCollectionInternal<MHVThingKey *> <XSerializable>
 
 - (instancetype)initWithKey:(MHVThingKey *)key;
 

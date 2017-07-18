@@ -45,6 +45,6 @@
 //
 // (Optional) Details about the resolution for each fetus.	
 //
-@property (readwrite, nonatomic, strong) MHVDeliveryCollection *delivery;
+@property (readwrite, nonatomic, strong) NSArray<MHVDelivery *> *delivery;
 
 @end
