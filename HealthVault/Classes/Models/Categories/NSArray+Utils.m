@@ -21,12 +21,6 @@
 
 @implementation NSArray (Utils)
 
-- (NSArray*)arrayOfObjectsPassingTest:(BOOL (^)(id obj, NSUInteger idx, BOOL *stop))predicate
-{
-	NSIndexSet *indexSet = [self indexesOfObjectsPassingTest:predicate];
-	return [self objectsAtIndexes:indexSet];
-}
-
 - (NSArray *)convertAll:(id (^)(id obj))converter
 {
     MHVASSERT_PARAMETER(converter);
@@ -50,70 +44,6 @@
     }];
 
     return mappedArray;
-}
-
-- (double)averageOfValues
-{
-    //Avoid /0 below
-    if (self.count == 0)
-    {
-        return 0;
-    }
-    
-    float sum = 0;
-    for (NSNumber *number in self)
-    {
-        MHVASSERT_TRUE([number isKindOfClass:[NSNumber class]], @"Only NSNumbers are supported for averageOfValues!");
-        
-        sum += [number doubleValue];
-    }
-    
-    return (sum / (double)self.count);
-}
-
-- (NSArray *)arrayWithUniqueValues
-{
-    return [[[NSSet new] setByAddingObjectsFromArray:self] allObjects];
-}
-
-- (NSArray *)arrayAlphabeticallySortedAscending:(BOOL)ascending
-{
-    NSSortDescriptor *alphabeticalSort = [NSSortDescriptor sortDescriptorWithKey:nil ascending:ascending];
-    return [self sortedArrayUsingDescriptors:@[alphabeticalSort]];
-}
-
-- (NSArray *)arrayWithSortedValuesUsingSortDescriptor:(NSSortDescriptor *)sd
-{
-    return [self sortedArrayUsingDescriptors:@[sd]];
-}
-
-- (NSArray *)arrayWithUniqueAlphabeticallySortedValues:(BOOL)ascending
-{
-    NSSortDescriptor *alphabeticalSort = [NSSortDescriptor sortDescriptorWithKey:nil ascending:ascending];
-    NSSet *uniqueValues = [[NSSet new] setByAddingObjectsFromArray:self];
-    return [uniqueValues sortedArrayUsingDescriptors:@[alphabeticalSort]];
-}
-
-- (NSArray *)arrayByRemovingObject:(id)object
-{
-    NSMutableArray *array = [self mutableCopy];
-    [array removeObject:object];
-    return array;
-}
-
-- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)index
-{
-    NSMutableArray *array = [self mutableCopy];
-    [array removeObjectAtIndex:index];
-    return array;
-}
-
-- (NSUInteger)indexOfCaseInsensitiveString:(NSString *)aString
-{
-    return [self indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop)
-            {
-                return [[obj lowercaseString] isEqualToString:[aString lowercaseString]];
-            }];
 }
 
 - (BOOL)areAllObjectsOfClass:(Class)theClass

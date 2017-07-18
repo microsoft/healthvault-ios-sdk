@@ -36,6 +36,8 @@ static NSString *const c_element_xpath = @"xpath";
 
 @interface MHVThingFilter ()
 
+@property (readwrite, nonatomic, strong)  NSArray<NSString *> *typeIDs;
+
 @end
 
 @implementation MHVThingFilter
@@ -109,6 +111,21 @@ static NSString *const c_element_xpath = @"xpath";
         if (typeID)
         {
             _typeIDs = @[typeID];
+        }
+        
+        self.state = MHVThingStateActive;
+    }
+    return self;
+}
+
+- (instancetype)initWithTypeIDs:(NSArray<NSString *> *)typeIDs
+{
+    self = [super init];
+    if (self)
+    {
+        if (typeIDs)
+        {
+            _typeIDs = typeIDs;
         }
         
         self.state = MHVThingStateActive;

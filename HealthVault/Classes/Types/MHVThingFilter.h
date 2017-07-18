@@ -95,9 +95,10 @@
  Only Things that are of the given Type Id(s) contained in the collection will be returned.
  @note The Type Ids in this collection are logically ORed.
  */
-@property (readwrite, nonatomic, strong)  NSArray<NSString *> *typeIDs;
+@property (readonly, nonatomic, strong)  NSArray<NSString *> *typeIDs;
 
 - (instancetype)initWithTypeID:(NSString *)typeID;
+- (instancetype)initWithTypeIDs:(NSArray<NSString *> *)typeIDs;
 - (instancetype)initWithTypeClass:(Class)typeClass;
 
 @end

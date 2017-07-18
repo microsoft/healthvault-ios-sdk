@@ -33,6 +33,7 @@
 #import "MHVThingQueryResult.h"
 #import "MHVCacheStatusProtocol.h"
 #import "MHVPendingMethod.h"
+#import "NSArray+MHVThing.h"
 
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 

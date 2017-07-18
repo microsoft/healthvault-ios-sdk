@@ -259,8 +259,8 @@ static const NSUInteger c_thingLimit = 50;
                   {
                       if (result.things.count > 0)
                       {
-                          self.things = [self.things arrayByAddingObjectsFromArray:result.things
-                                                                   atStartingIndex:range.location];
+                          [self addThingsFromArray:result.things
+                                   atStartingIndex:range.location];
                       }
                   }
                   
@@ -298,6 +298,30 @@ static const NSUInteger c_thingLimit = 50;
     self.useCache = !self.useCache;
     
     [self refreshAll];
+}
+
+- (void)addThingsFromArray:(NSArray<MHVThing *> *)array atStartingIndex:(NSUInteger)startingIndex
+{
+    if (!array || array.count == 0)
+    {
+        return;
+    }
+    
+    if (startingIndex > self.things.count)
+    {
+        startingIndex = self.things.count;
+    }
+    
+    NSMutableArray *thingsCopy = [self.things mutableCopy];
+    
+    for (int i = 0; i < array.count; i++)
+    {
+        id obj = array[i];
+        
+        [thingsCopy insertObject:obj atIndex:startingIndex + i];
+    }
+    
+    self.things = thingsCopy;
 }
 
 - (void)addRandomData:(BOOL)isMetric
@@ -350,7 +374,9 @@ static const NSUInteger c_thingLimit = 50;
         
                            @synchronized (self.lockObject)
                            {
-                               self.things = [self.things arrayByRemovingObject:selectedThing];
+                               NSMutableArray *thingsCopy = [self.things mutableCopy];
+                               [thingsCopy removeObject:selectedThing];
+                               self.things = thingsCopy;
                            }
                            
                            [self refreshThingsInRange:NSMakeRange(index, 0)];

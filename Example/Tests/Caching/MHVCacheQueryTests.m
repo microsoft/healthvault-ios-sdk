@@ -427,10 +427,9 @@ describe(@"MHVCacheQuery", ^
             filter1.createdByAppID = @"TEST_APP_ID_1";
             filter1.createdByPersonID = @"TEST_PERSON_ID_1";
             
-            MHVThingFilter *filter2 = [[MHVThingFilter alloc] initWithTypeID:@"TEST_TYPE_ID_1"];
+            MHVThingFilter *filter2 = [[MHVThingFilter alloc] initWithTypeIDs:@[@"TEST_TYPE_ID_1", @"TEST_TYPE_ID_2"]];
             filter2.createDateMin = [NSDate dateWithTimeIntervalSince1970:0];
             filter2.createDateMax = [NSDate dateWithTimeIntervalSince1970:60*60*24*365];
-            filter2.typeIDs = [filter2.typeIDs arrayByAddingObject:@"TEST_TYPE_ID_2"];
             
             NSArray<MHVThingKey *> *keys = @[key1, key2, key3];
             

@@ -87,7 +87,9 @@ static NSString *const c_element_blob = @"blob";
         NSUInteger existingIndex = [self indexOfBlobNamed:blob.name];
         if (existingIndex != NSNotFound)
         {
-            self.things = [self.things arrayByRemovingObjectAtIndex:existingIndex];
+            NSMutableArray *thingsCopy = [self.things mutableCopy];
+            [thingsCopy removeObjectAtIndex:existingIndex];
+            self.things = thingsCopy;
         }
     }
     

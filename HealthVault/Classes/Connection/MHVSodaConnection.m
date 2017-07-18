@@ -492,7 +492,8 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
             MHVASSERT_MESSAGE(error.localizedDescription);
         }
         
-        NSArray *remainingRecords = [records arrayByRemovingObject:record];
+        NSMutableArray *remainingRecords = [records mutableCopy];
+        [remainingRecords removeObject:record];
         
         // Recurse through the record collection until there are no more records.
         [self removeAuthRecords:remainingRecords completion:completion];

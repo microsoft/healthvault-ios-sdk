@@ -50,21 +50,6 @@
     return copy;
 }
 
-- (NSArray *)arrayByRemovingObject:(id)anObject
-{
-    NSUInteger index = [self indexOfObject:anObject];
-    if (index == NSNotFound)
-    {
-        return self;
-    }
-    
-    NSMutableArray *copy = [self mutableCopy];
-
-    [copy removeObjectAtIndex:index];
-    
-    return copy;
-}
-
 - (BOOL)hasElementsOfType:(Class)type
 {
     for (id obj in self)

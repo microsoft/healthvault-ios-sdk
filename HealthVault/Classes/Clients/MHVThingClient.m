@@ -35,6 +35,7 @@
 #import "MHVThingQueryResultInternal.h"
 #import "MHVAsyncTask.h"
 #import "MHVPendingMethod.h"
+#import "NSArray+MHVThing.h"
 #import "NSArray+MHVThingQuery.h"
 #import "NSArray+MHVThingQueryResultInternal.h"
 #ifdef THING_CACHE

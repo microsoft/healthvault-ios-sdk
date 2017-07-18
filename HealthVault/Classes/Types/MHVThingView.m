@@ -86,7 +86,10 @@ static NSString *const c_element_versions = @"type-version-format";
     if ([self.transforms containsObject:c_emptyString])
     {
         self.sections |= MHVThingSection_Data;
-        self.transforms = [self.transforms arrayByRemovingObject:c_emptyString];
+        
+        NSMutableArray *transformsCopy = [self.transforms mutableCopy];
+        [transformsCopy removeObject:c_emptyString];
+        self.transforms = transformsCopy;
     }
 }
 

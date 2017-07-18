@@ -25,8 +25,6 @@
 
 - (NSArray *)arrayByAddingObjectsFromArray:(NSArray *)array atStartingIndex:(NSUInteger)startingIndex;
 
-- (NSArray *)arrayByRemovingObject:(id)anObject;
-
 - (BOOL)hasElementsOfType:(Class)type;
 
 @end
