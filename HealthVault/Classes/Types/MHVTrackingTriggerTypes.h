@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVCollection.h"
 
 @interface MHVTrackingTriggerTypes : MHVType
 

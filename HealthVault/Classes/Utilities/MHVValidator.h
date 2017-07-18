@@ -19,8 +19,6 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "MHVClientResult.h"
 
-@class MHVCollectionInternal;
-
 //-----------------------------
 //
 // Basic Event Logging
@@ -158,6 +156,5 @@ while(NO)
                                                 return hr; \
                                             } \
 
-MHVClientResult* MHVValidateCollection(MHVCollectionInternal *collection, MHVClientResultCode error);
 MHVClientResult* MHVValidateArray(NSArray *array, MHVClientResultCode error);
 

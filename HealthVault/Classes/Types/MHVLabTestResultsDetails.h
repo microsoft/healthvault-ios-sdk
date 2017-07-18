@@ -22,7 +22,6 @@
 #import "MHVApproxDateTime.h"
 #import "MHVCodableValue.h"
 #import "MHVLabTestResultValue.h"
-#import "MHVCollection.h"
 
 @interface MHVLabTestResultsDetails : MHVType
 

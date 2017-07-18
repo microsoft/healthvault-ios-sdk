@@ -76,18 +76,21 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (void)resetDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 {
-    NSError *error = nil;
-    
     @synchronized (self.lockObject)
     {
-        [self.fileManager removeItemAtURL:self.databaseUrl
-                                    error:&error];
-        
-        [self.keychainService removeObjectForKey:kMHVCachePasswordKey];
-        
-        _persistentStoreCoordinator = nil;
-        _managedObjectContext = nil;
-        _databaseUrl = nil;
+        [self.managedObjectContext performBlockAndWait:^
+        {
+            NSError *error = nil;
+            
+            [self.fileManager removeItemAtURL:self.databaseUrl
+                                        error:&error];
+            
+            [self.keychainService removeObjectForKey:kMHVCachePasswordKey];
+            
+            _persistentStoreCoordinator = nil;
+            _managedObjectContext = nil;
+            _databaseUrl = nil;
+        }];
         
         [self openDatabaseWithCompletion:completion];
     }

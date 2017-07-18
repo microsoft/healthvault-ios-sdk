@@ -28,6 +28,7 @@
 static NSDictionary *kPropertyMap;
 static NSDictionary *kOperatorMap;
 static NSDictionary *kIgnoreMap;
+static NSDictionary *kSubPredicatesMap;
 static NSString *const kPredicateVariable = @"predicateVariable";
 
 @implementation MHVCacheQuery
@@ -76,6 +77,11 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                    @"filters" : @"ignore",
                    @"view" : @"ignore",
                    };
+
+    kSubPredicatesMap = @{
+                          @"keys" : @(YES),
+                          @"filters" : @(YES),
+                          };
 }
 
 - (instancetype)initWithQuery:(MHVThingQuery *)query
@@ -258,7 +264,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                 propertyClass = NSClassFromString(typeClassName);
             }
             
-            if (propertyClass == [MHVThingFilterCollectionInternal class] || propertyClass == [MHVThingKeyCollectionInternal class])
+            if (kSubPredicatesMap[propertyName])
             {
                 NSMutableArray<NSPredicate *> *subPredicates = [NSMutableArray new];
                 

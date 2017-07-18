@@ -22,7 +22,6 @@
 #import "MHVType.h"
 #import "MHVCodableValue.h"
 #import "MHVTestResultRangeValue.h"
-#import "MHVCollection.h"
 
 @interface MHVTestResultRange : MHVType
 

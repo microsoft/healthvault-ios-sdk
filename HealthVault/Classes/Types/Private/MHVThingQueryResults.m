@@ -25,7 +25,7 @@ static NSString *const c_element_result = @"group";
 
 - (BOOL)hasResults
 {
-    return !([MHVCollectionInternal isNilOrEmpty:self.results]);
+    return !([NSArray isNilOrEmpty:self.results]);
 }
 
 - (MHVThingQueryResultInternal *)firstResult
@@ -35,14 +35,14 @@ static NSString *const c_element_result = @"group";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_result elements:self.results.toArray];
+    [writer writeElementArray:c_element_result elements:self.results];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.results = (MHVThingQueryResultCollectionInternal *)[reader readElementArray:c_element_result
-                                                                             asClass:[MHVThingQueryResultInternal class]
-                                                                       andArrayClass:[MHVThingQueryResultCollectionInternal class]];
+    self.results = [reader readElementArray:c_element_result
+                                    asClass:[MHVThingQueryResultInternal class]
+                              andArrayClass:[NSMutableArray class]];
 }
 
 @end

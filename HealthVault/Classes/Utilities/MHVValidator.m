@@ -19,7 +19,6 @@
 #import "MHVValidator.h"
 #import "MHVStringExtensions.h"
 #import "MHVType.h"
-#import "MHVCollection.h"
 
 static id<MHVEventLog> s_eventLog;
 
@@ -57,33 +56,6 @@ void MHVLogEventFromCode(NSString *message, const char *fileName, NSUInteger lin
                          fileNameString,
                          (unsigned long)line];
     MHVLogEvent(logLine);
-}
-
-MHVClientResult* MHVValidateCollection(MHVCollectionInternal *collection, MHVClientResultCode error)
-{
-    MHVVALIDATE_BEGIN;
-
-    MHVVALIDATE_PTR(collection, error);
-
-    Class hvClass = [MHVType class];
-    Class stringClass = [NSString class];
-
-    for (id obj in collection)
-    {
-        MHVVALIDATE_PTR(obj, error);
-
-        if ([obj isKindOfClass:hvClass])
-        {
-            MHVType *hvType = (MHVType *)obj;
-            MHVCHECK_RESULT([hvType validate]);
-        }
-        else if ([obj isKindOfClass:stringClass])
-        {
-            MHVVALIDATE_STRING((NSString *)obj, error);
-        }
-    }
-
-    MHVVALIDATE_SUCCESS;
 }
 
 MHVClientResult* MHVValidateArray(NSArray *array, MHVClientResultCode error)

@@ -19,7 +19,6 @@
 #import "MHVBaseTypes.h"
 #import "MHVType.h"
 #import "MHVThingKey.h"
-#import "MHVCollection.h"
 
 @class MHVThing;
 

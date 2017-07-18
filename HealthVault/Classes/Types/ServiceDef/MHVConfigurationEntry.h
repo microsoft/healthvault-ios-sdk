@@ -18,7 +18,6 @@
 //
 
 #import "MHVType.h"
-#import "MHVCollection.h"
 
 @interface MHVConfigurationEntry : MHVType
 

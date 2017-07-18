@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
-#import "MHVCollection.h"
 #import "XReader.h"
 #import "XWriter.h"
 

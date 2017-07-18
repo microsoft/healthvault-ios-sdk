@@ -18,7 +18,6 @@
 
 #import "MHVType.h"
 #import "MHVStringNZNW.h"
-#import "MHVCollection.h"
 
 @interface MHVPlanOutcome : MHVType
 

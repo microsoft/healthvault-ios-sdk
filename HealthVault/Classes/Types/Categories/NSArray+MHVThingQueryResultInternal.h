@@ -1,5 +1,5 @@
 //
-// MHVPlatformInfo.h
+// NSArray+MHVThingQueryResultInternal.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -15,15 +15,21 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
-#import "MHVType.h"
-#import "MHVConfigurationEntry.h"
 
-@interface MHVPlatformInfo : MHVType
+#import <Foundation/Foundation.h>
 
-@property (readwrite, nonatomic, strong) NSString *url;
-@property (readwrite, nonatomic, strong) NSString *version;
-@property (readwrite, nonatomic, strong) NSArray<MHVConfigurationEntry *> *config;
+@class MHVThingQueryResultInternal;
+
+@interface NSArray (MHVThingQueryResultInternal)
+
+/**
+ Returns an array with merged MHVThingQueryResultInternal
+ Should only be used with arrays with objects of type MHVThingQueryResultInternal
+ 
+ @param array NSArray the array to merge with the self array
+ @return NSArray the merged thing query results
+ */
+- (NSArray<MHVThingQueryResultInternal *> *)mergeThingQueryResultArray:(NSArray<MHVThingQueryResultInternal *> *)array;
 
 @end

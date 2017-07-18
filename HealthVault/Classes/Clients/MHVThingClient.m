@@ -36,6 +36,7 @@
 #import "MHVAsyncTask.h"
 #import "MHVPendingMethod.h"
 #import "NSArray+MHVThingQuery.h"
+#import "NSArray+MHVThingQueryResultInternal.h"
 #ifdef THING_CACHE
 #import "MHVThingCacheProtocol.h"
 #endif
@@ -250,11 +251,11 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 // Internal method that will fetch more pending items if not all results are returned for the query.
 - (void)getThingsWithQueries:(NSArray<MHVThingQuery *> *)queries
                     recordId:(NSUUID *)recordId
-              currentResults:(MHVThingQueryResultCollectionInternal *_Nullable)currentResults
+              currentResults:(NSArray<MHVThingQueryResultInternal *> *_Nullable)currentResults
                   completion:(void(^)(NSArray<MHVThingQueryResult *> *_Nullable results, NSError *_Nullable error))completion
 {
     __block NSArray<MHVThingQuery *> *initialQueries = queries;
-    __block MHVThingQueryResultCollectionInternal *results = currentResults;
+    __block NSArray<MHVThingQueryResultInternal *> *results = currentResults;
     
     MHVMethod *method = [MHVMethod getThings];
     method.recordId = recordId;
@@ -313,9 +314,9 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
              // Merge with existing results, creating results object if needed
              if (!results)
              {
-                 results = [MHVThingQueryResultCollectionInternal new];
+                 results = @[];
              }
-             [results mergeThingQueryResultCollection:queryResults.results];
+             results = [results mergeThingQueryResultArray:queryResults.results];
              
              // If there are queries to get more pending items, repeat; otherwise can call completion
              if (queriesForPendingThings.count > 0)
@@ -454,7 +455,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
-         MHVThingKeyCollectionInternal *keys = [self thingKeyResultsFromResponse:response];
+         NSArray<MHVThingKey *> *keys = [self thingKeyResultsFromResponse:response];
          
 #ifdef THING_CACHE
          
@@ -492,7 +493,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                   {
                       if (completion)
                       {
-                          completion(keys.toArray, error);
+                          completion(keys, error);
                       }
                   }];
                  return;
@@ -580,7 +581,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
-         MHVThingKeyCollectionInternal *keys = [self thingKeyResultsFromResponse:response];
+         NSArray<MHVThingKey *> *keys = [self thingKeyResultsFromResponse:response];
          
 #ifdef THING_CACHE
          // If the connection is offline cache the pending request.
@@ -617,7 +618,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                   {
                       if (completion)
                       {
-                          completion(keys.toArray, error);
+                          completion(keys, error);
                       }
                   }];
                  return;
@@ -1372,12 +1373,13 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                                                    asClass:[MHVThingQueryResults class]];
 }
 
-- (MHVThingKeyCollectionInternal *)thingKeyResultsFromResponse:(MHVServiceResponse *)response
+- (NSArray<MHVThingKey *> *)thingKeyResultsFromResponse:(MHVServiceResponse *)response
 {
-    XReader *reader = [[XReader alloc] initFromString:response.infoXml];
-    return (MHVThingKeyCollectionInternal *)[NSObject newFromReader:reader
-                                                   withRoot:@"info"
-                                                    asClass:[MHVThingKeyCollectionInternal class]];
+    return (NSArray *)[NSObject newFromString:response.infoXml
+                                     withRoot:@"info"
+                               andElementName:@"thing-id"
+                                      asClass:[MHVThingKey class]
+                                andArrayClass:[NSMutableArray class]];
 }
 
 - (MHVBlobPutParameters *)blobPutParametersResultsFromResponse:(MHVServiceResponse *)response

@@ -19,7 +19,6 @@
 
 #import "NSArray+MHVThing.h"
 #import "MHVThing.h"
-#import "MHVCollection.h"
 
 @implementation NSArray (MHVThing)
 

@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVType.h"
-#import "MHVCollection.h"
 #import "MHVThingState.h"
 
 /**
@@ -100,10 +99,6 @@
 
 - (instancetype)initWithTypeID:(NSString *)typeID;
 - (instancetype)initWithTypeClass:(Class)typeClass;
-
-@end
-
-@interface MHVThingFilterCollectionInternal : MHVCollectionInternal<MHVThingFilter *>
 
 @end
 

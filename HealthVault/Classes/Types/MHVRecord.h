@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVRecordReference.h"
-#import "MHVCollection.h"
 
 // -------------------------
 //

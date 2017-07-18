@@ -39,13 +39,3 @@
 + (MHVThingKey *)newLocal;
 
 @end
-
-@interface MHVThingKeyCollectionInternal : MHVCollectionInternal<MHVThingKey *> <XSerializable>
-
-- (instancetype)initWithKey:(MHVThingKey *)key;
-
-- (MHVThingKey *)firstKey;
-
-- (MHVClientResult *)validate;
-
-@end

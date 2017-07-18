@@ -53,9 +53,3 @@
 @property (readonly, nonatomic) NSUInteger resultCount;
 
 @end
-
-@interface MHVThingQueryResultCollectionInternal : MHVCollectionInternal<MHVThingQueryResultInternal *>
-
-- (void)mergeThingQueryResultCollection:(MHVThingQueryResultCollectionInternal *)collection;
-
-@end

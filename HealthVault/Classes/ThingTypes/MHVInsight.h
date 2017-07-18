@@ -18,7 +18,6 @@
 
 #import "MHVThing.h"
 #import "MHVString128.h"
-#import "MHVCollection.h"
 #import "MHVString1024.h"
 #import "MHVStructuredInsightValue.h"
 #import "MHVInsightMessages.h"
