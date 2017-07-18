@@ -42,12 +42,12 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
 ///
 /// Post a task tracking
 /// 
-///  @param taskTrackingOccurrence  
+///  @param taskTrackingOccurrence The plan task tracking occurrence. 
 ///
-///  @returns NSObject*
+///  @returns NSNumber*
 ///
 - (void)taskTrackingPostWithTaskTrackingOccurrence:(MHVTaskTrackingOccurrence* _Nonnull)taskTrackingOccurrence
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'taskTrackingOccurrence' is set
     if (taskTrackingOccurrence == nil)
@@ -76,7 +76,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[NSObject class]
+                     resultClass:[NSNumber class]
                       completion:completion];
 }
 

@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param taskTrackingOccurrence The plan task tracking occurrence.
 /// 
 - (void)taskTrackingPostWithTaskTrackingOccurrence:(MHVTaskTrackingOccurrence* )taskTrackingOccurrence
-    completion:(void(^_Nonnull)(NSObject* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion;
 
 
 
