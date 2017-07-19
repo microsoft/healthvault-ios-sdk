@@ -18,7 +18,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "NSArray+Utils.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(SampleTest)

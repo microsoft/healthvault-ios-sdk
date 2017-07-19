@@ -309,7 +309,7 @@
 		2CCD28F7CC9B45C28ED0062E4ED878CE /* MHVPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = A051FC2CFF0EC6559DE4CD4498813E45 /* MHVPerson.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		2CE066CF6D47A78B9C6296FA33BFA286 /* Pods-healthvault-ios-sdk_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDF929F44468CE5020A141A5AFEAD6B /* Pods-healthvault-ios-sdk_Tests-dummy.m */; };
 		2CF1DFAAFE1B31768B7B32F4AC81A94A /* MHVTrackingValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = A5A03BADA61B1359AF135788D96945CE /* MHVTrackingValidation.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		2D06DBAC28614CF71CB1C36537E2C514 /* HealthVault-OfflineThingCache-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F6887D54B6D75134EF7D0D662AE49EE5 /* HealthVault-OfflineThingCache-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2D06DBAC28614CF71CB1C36537E2C514 /* HealthVault-OfflineThingCache-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E1F7618231CB220E144A1550C56F1366 /* HealthVault-OfflineThingCache-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D183F1B3328F9CED0FE1341E6BD550C /* MHVErrorConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 39EC20C23DFA5D5D468595E2ABAD3E8A /* MHVErrorConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D41DA4103E603B263BD5151B9145AE0 /* KWMatching.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C2196006C063E8C7828D5A0B8530A5 /* KWMatching.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D8C34670E26D08F907EB46BB5E27149 /* KWBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = A07FF3D8BBFC043CF3AD37838F7A0377 /* KWBlock.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -776,7 +776,7 @@
 		7702E2CA37AE234F55E8EC5693378CC6 /* MHVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EB83B476B20AC0D88762580CE0F3D4DC /* MHVConnection.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		772152819CF113F83D87E556A9F10D90 /* MHVPendingThingOperation+CoreDataProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 89B0CAC8A3AD61765F58B477DFD96209 /* MHVPendingThingOperation+CoreDataProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7721C75384A428C97ED4729483E154BE /* MHVString255.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E16AD876F78D23EA556E953C52491B8 /* MHVString255.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7779A079492FA7898BA9ED2C97F3E677 /* HealthVault-Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F36DA3D1225D352881F13D85463D51 /* HealthVault-Tests-dummy.m */; };
+		7779A079492FA7898BA9ED2C97F3E677 /* HealthVault-Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9151B619D27519E3CF75C4E5E469FD /* HealthVault-Tests-dummy.m */; };
 		77A9041B35FB0305B63DB6877AFF103B /* MHVThingQueryResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 0170486D2B0CE9FAA5D9CBD3090E45FA /* MHVThingQueryResults.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		77AA4A038C34F60004551156ADF36677 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034649093C71C5F88F02C36DA33FF507 /* Foundation.framework */; };
 		77AAAF03E9D0888842B68C4829B0C041 /* MHVThingType.h in Headers */ = {isa = PBXBuildFile; fileRef = CCD985ECC0533159A8C91E752A62E586 /* MHVThingType.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1436,7 +1436,7 @@
 		D010AFC16FF5042BC7CA4936FA659A76 /* MHVGoalRecurrenceMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B870564061E1A996E929B418CE56DDF /* MHVGoalRecurrenceMetrics.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D03C443C55F804AE12C19F1E72D824C0 /* MHVFoodEnergyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FDDDA7D960E1D8FA0CFE6B4BB77981 /* MHVFoodEnergyValue.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D0816C15BC6BAC458A7D26F78E9A9AA1 /* MHVAsyncTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 72421B7E740AD7FD6AA3A09A4FE27C1B /* MHVAsyncTaskOperation.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
-		D087D89B0EEBBD53487379D495FB0B69 /* HealthVault-Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 83A6F0D94DC86EE33FA31BBE75383A52 /* HealthVault-Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D087D89B0EEBBD53487379D495FB0B69 /* HealthVault-Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 022E242561D6BB9ADD0FB11B732AED69 /* HealthVault-Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D08DD11887322EA48EFF1EE5ECC3BD94 /* MHVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 981430BFE48D7B71C2B2D06CA0A4A400 /* MHVLocation.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D0ACBFBAC742A74DFA1723C11D2029CE /* MHVPercentage.m in Sources */ = {isa = PBXBuildFile; fileRef = 487A5722962B732804B76906DEEE6839 /* MHVPercentage.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		D0CA8B36F85BB6C49701608F79E932B3 /* MHVPregnancy.h in Headers */ = {isa = PBXBuildFile; fileRef = B24CD8CFC3DA3027EF767CA52E445940 /* MHVPregnancy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1708,7 +1708,7 @@
 		F71A839A4049A16FED68F44DFAB65132 /* MHVErrorInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = A411ED6D1BEBCAB604F4BE2AFFB16F09 /* MHVErrorInformation.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		F74D3055042B4AC72A7E863F751FAC66 /* MHVActionPlanAdherenceSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2B5E938B663120B82289E77A7F583B /* MHVActionPlanAdherenceSummary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F74FBDC7491459DE3309B6C4DCC5D386 /* KWEqualMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 35700B00DED9CFB0AFED19CB2F2C5249 /* KWEqualMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F765428B6CED8CD06A010FC99F656CC2 /* HealthVault-OfflineThingCache-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 87327C88BCC7AA8A135E864F13C0F3C3 /* HealthVault-OfflineThingCache-dummy.m */; };
+		F765428B6CED8CD06A010FC99F656CC2 /* HealthVault-OfflineThingCache-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 47AFB141D50714AC7990BD4DDC9FA93F /* HealthVault-OfflineThingCache-dummy.m */; };
 		F775BB6D1DA5BBD99D175B44B7AD68E6 /* MHVActionPlansApi.m in Sources */ = {isa = PBXBuildFile; fileRef = F0929080E647C42001D04A5942EA6005 /* MHVActionPlansApi.m */; settings = {COMPILER_FLAGS = "-D THING_CACHE=1"; }; };
 		F7F16E97E182086C213877C53DE7D032 /* MHVActionPlanTaskInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C0323E4AC720F3317A39CAED05C7D7 /* MHVActionPlanTaskInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F7F4455F3BA5CA43038AE647C4755731 /* MHVPositiveInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 89D77F5941C3E60302FDEE59A0DC3070 /* MHVPositiveInt.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1867,6 +1867,7 @@
 		01ECEF84E785AFB9EBD9B6492DF04CBC /* MHVYear.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVYear.h; sourceTree = "<group>"; };
 		01F3A33E3BF0D8737BF8964EE300CECD /* MHVConstrainedString.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVConstrainedString.m; sourceTree = "<group>"; };
 		021C551F4D7EB47C811AC45F2FACC5AE /* MHVBaby.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVBaby.m; sourceTree = "<group>"; };
+		022E242561D6BB9ADD0FB11B732AED69 /* HealthVault-Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "HealthVault-Tests-umbrella.h"; path = "../HealthVault-Tests/HealthVault-Tests-umbrella.h"; sourceTree = "<group>"; };
 		0248B0C8D148F0FB3B3E540D579D4C2D /* KWBeWithinMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWBeWithinMatcher.h; path = Classes/Matchers/KWBeWithinMatcher.h; sourceTree = "<group>"; };
 		025FD178D1F6876040FA31B018538146 /* MHVHealthJournalEntry.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVHealthJournalEntry.m; sourceTree = "<group>"; };
 		028CBA1CCADA8B0560FBAF4B674B402E /* MHVBodyComposition.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVBodyComposition.m; sourceTree = "<group>"; };
@@ -2001,6 +2002,7 @@
 		2501C1C516A2D11C4298AD2089770A14 /* MHVActionPlanTasksResponseActionPlanTaskInstance_.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTasksResponseActionPlanTaskInstance_.h; sourceTree = "<group>"; };
 		250AE5163C741B85A5F62B152B8A137B /* MHVActionPlanTasksResponseActionPlanTaskInstance_.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTasksResponseActionPlanTaskInstance_.m; sourceTree = "<group>"; };
 		266D1A972873FDE4F7ADEA105AD9139E /* MHVRecord.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVRecord.h; sourceTree = "<group>"; };
+		26AC1ABFA8721A7FA85C638D255D57A5 /* HealthVault-Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; name = "HealthVault-Tests.modulemap"; path = "../HealthVault-Tests/HealthVault-Tests.modulemap"; sourceTree = "<group>"; };
 		274A30C3BBD695944F859C84AFCEAE44 /* KWNull.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWNull.h; path = Classes/Core/KWNull.h; sourceTree = "<group>"; };
 		279B18E12B86F25D022847FBC51F9293 /* NSData+DataModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSData+DataModel.m"; sourceTree = "<group>"; };
 		27A6383708038480F688951539AD0F11 /* Pods-healthvault-ios-sdk_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-healthvault-ios-sdk_Example-frameworks.sh"; sourceTree = "<group>"; };
@@ -2059,6 +2061,7 @@
 		3467BF6222ACC4B39ED11E620054BB71 /* MHVTimelineTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVTimelineTask.m; sourceTree = "<group>"; };
 		3479E937593295B8E5E19083AB520130 /* KWInvocationCapturer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWInvocationCapturer.m; path = Classes/Core/KWInvocationCapturer.m; sourceTree = "<group>"; };
 		34A9222CDE1F68949F4AAFD8A65571EA /* MHVActionPlansResponseActionPlanInstance_.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVActionPlansResponseActionPlanInstance_.h; sourceTree = "<group>"; };
+		352E7414F46366B35D1394001040D7DB /* HealthVault-Tests-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "HealthVault-Tests-prefix.pch"; path = "../HealthVault-Tests/HealthVault-Tests-prefix.pch"; sourceTree = "<group>"; };
 		35700B00DED9CFB0AFED19CB2F2C5249 /* KWEqualMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWEqualMatcher.h; path = Classes/Matchers/KWEqualMatcher.h; sourceTree = "<group>"; };
 		3580BFCE4B3997F68915425933266BED /* MHVResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVResponse.h; sourceTree = "<group>"; };
 		3580C3FC4249500EEB64362B087425FA /* MHVGoalAssociatedTypeInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVGoalAssociatedTypeInfo.h; sourceTree = "<group>"; };
@@ -2102,6 +2105,7 @@
 		3DE5B3138368FCA00D0B6C9F522DF38B /* MHVDailyMedicationUsage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVDailyMedicationUsage.m; sourceTree = "<group>"; };
 		3DE64BFC527509143EE159AE6656300E /* MHVViewExtensions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVViewExtensions.m; sourceTree = "<group>"; };
 		3E7B63A2964BBD271F4899FBDB34EF69 /* MHVMillisecond.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVMillisecond.h; sourceTree = "<group>"; };
+		3EBDBF6D95054C61E6DE9D5781551FD4 /* HealthVault-OfflineThingCache.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "HealthVault-OfflineThingCache.modulemap"; sourceTree = "<group>"; };
 		3ED0CAE0CF8994F13A2708C9B02DF21A /* NSData+Utils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSData+Utils.h"; sourceTree = "<group>"; };
 		3FE3E6574D26051F1F7D407270929D7C /* MHVThingDataTyped.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVThingDataTyped.m; sourceTree = "<group>"; };
 		403B8E667165B8FF647BE27E012E1A17 /* MHVTaskTrackingEntry.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTrackingEntry.m; sourceTree = "<group>"; };
@@ -2124,6 +2128,7 @@
 		471F90B91FCB519D8E687A4D61571711 /* MHVActionPlanTaskTrackingEvidence.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanTaskTrackingEvidence.m; sourceTree = "<group>"; };
 		474C88751E733874940C062C3F8100C0 /* MHVCryptographer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVCryptographer.m; sourceTree = "<group>"; };
 		477B5A682E6F7CE54F87A61D57FB614A /* KWChangeMatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWChangeMatcher.m; path = Classes/Matchers/KWChangeMatcher.m; sourceTree = "<group>"; };
+		47AFB141D50714AC7990BD4DDC9FA93F /* HealthVault-OfflineThingCache-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HealthVault-OfflineThingCache-dummy.m"; sourceTree = "<group>"; };
 		4807821E801FD698A40B5F1F05338336 /* MHVGetRecordOperationsResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVGetRecordOperationsResult.h; sourceTree = "<group>"; };
 		480EA3F81D9706B35F18D9D9A6966D8B /* MHVBlobPayloadThing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVBlobPayloadThing.m; sourceTree = "<group>"; };
 		483C2C76683F6F7B5FAB3529F0189C43 /* KWCaptureSpy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWCaptureSpy.m; path = Classes/Core/KWCaptureSpy.m; sourceTree = "<group>"; };
@@ -2187,7 +2192,6 @@
 		55D9EDADDA12EA29695D1729A2600FBB /* MHVApproxDate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVApproxDate.m; sourceTree = "<group>"; };
 		55EC9E31ACA27A756D437E1561551A98 /* MHVHttpServiceResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVHttpServiceResponse.h; sourceTree = "<group>"; };
 		566A2A6C3B3F06D3AF1916CB80E8A0CE /* MHVApproxDateTime.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVApproxDateTime.m; sourceTree = "<group>"; };
-		566D6C1A5D1196DAFF35CB237754251F /* HealthVault-Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; name = "HealthVault-Tests.modulemap"; path = "../HealthVault-Tests/HealthVault-Tests.modulemap"; sourceTree = "<group>"; };
 		56A3F6A4A62832ECEA6A848494D922E0 /* MHVSleepJournalAM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVSleepJournalAM.m; sourceTree = "<group>"; };
 		57184DA49A6E23F0FA303EE3DC35356E /* KWContainMatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWContainMatcher.m; path = Classes/Matchers/KWContainMatcher.m; sourceTree = "<group>"; };
 		572134D3D1D59F2BBFAE67603701CFBA /* MHVAsyncOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVAsyncOperation.m; sourceTree = "<group>"; };
@@ -2284,10 +2288,8 @@
 		6B46EAF60C5B6B72867CAB333844C21D /* MHVHeartrateZone.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVHeartrateZone.m; sourceTree = "<group>"; };
 		6B7A055E66CF7910192E174B535D5392 /* KWBeKindOfClassMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWBeKindOfClassMatcher.h; path = Classes/Matchers/KWBeKindOfClassMatcher.h; sourceTree = "<group>"; };
 		6C0A074E07BD40129746EC9E0A897767 /* KWFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWFormatter.h; path = Classes/Core/KWFormatter.h; sourceTree = "<group>"; };
-		6C34DC46A6EBEA0748E991876F4B63D3 /* HealthVault-OfflineThingCache.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "HealthVault-OfflineThingCache.xcconfig"; sourceTree = "<group>"; };
 		6C6F790D3C2548C22DDD6EF6486E346C /* MHVDataModelDynamicClass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVDataModelDynamicClass.h; sourceTree = "<group>"; };
 		6CE03D78215176CE452F57EAF1C9ACCA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		6DD37B514214481872B7B59E882FDCD6 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../HealthVault-Tests/Info.plist"; sourceTree = "<group>"; };
 		6E28DE0583A636D5D81D8CC1BA094721 /* MHVAssessment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVAssessment.h; sourceTree = "<group>"; };
 		6E35542D617834A0C8CC84533BDB2546 /* MHVAssessment.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVAssessment.m; sourceTree = "<group>"; };
 		6E5BA8B5B457F85B1D5836488A6F535D /* NSInvocation+OCMAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSInvocation+OCMAdditions.h"; path = "Classes/Core/NSInvocation+OCMAdditions.h"; sourceTree = "<group>"; };
@@ -2307,7 +2309,6 @@
 		705ED287EFED9D45B5375795F029AE20 /* MHVInsurance.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVInsurance.h; sourceTree = "<group>"; };
 		71A9FCEDD8A4E339F7CF0261047D5369 /* MHVEncounter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVEncounter.m; sourceTree = "<group>"; };
 		71EC9021B0B9948C508A9E0D6EA9000E /* MHVAsyncBlockOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVAsyncBlockOperation.m; sourceTree = "<group>"; };
-		71F36DA3D1225D352881F13D85463D51 /* HealthVault-Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "HealthVault-Tests-dummy.m"; path = "../HealthVault-Tests/HealthVault-Tests-dummy.m"; sourceTree = "<group>"; };
 		72054B79D1FB59A3EFA1ACB1D560C313 /* MHVInsight.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVInsight.m; sourceTree = "<group>"; };
 		722352615D676C4526C981EC8393E084 /* MHVMethod.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVMethod.m; sourceTree = "<group>"; };
 		72421B7E740AD7FD6AA3A09A4FE27C1B /* MHVAsyncTaskOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVAsyncTaskOperation.m; sourceTree = "<group>"; };
@@ -2354,6 +2355,7 @@
 		7C6DD9DFC0F9E993B978AAA94B776963 /* MHVClaimAmounts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVClaimAmounts.h; sourceTree = "<group>"; };
 		7C7F59116BEE54AFBE8DAE743106C865 /* KWBeBetweenMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWBeBetweenMatcher.h; path = Classes/Matchers/KWBeBetweenMatcher.h; sourceTree = "<group>"; };
 		7C8D19EC69F49CCDA63FAA73F1B24AEE /* MHVRequestMessageCreator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVRequestMessageCreator.m; sourceTree = "<group>"; };
+		7C9151B619D27519E3CF75C4E5E469FD /* HealthVault-Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "HealthVault-Tests-dummy.m"; path = "../HealthVault-Tests/HealthVault-Tests-dummy.m"; sourceTree = "<group>"; };
 		7CA0C242DD0438EBD530B48BA65EE3FC /* MHVTaskTrackingPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTrackingPolicy.m; sourceTree = "<group>"; };
 		7D09D7EAED7D245ACF133ACC8D575ADC /* KWExpectationType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWExpectationType.h; path = Classes/Core/KWExpectationType.h; sourceTree = "<group>"; };
 		7D845B56E63F31A4C213002D5C05FED6 /* MHVTaskThing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVTaskThing.h; sourceTree = "<group>"; };
@@ -2377,7 +2379,6 @@
 		825357D3FD30A21DB780BAADA90479C9 /* NSArray+Utils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Utils.m"; sourceTree = "<group>"; };
 		82AD35504D58ED077BCDF1063FBEF083 /* MHVThingCacheConfigurationProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVThingCacheConfigurationProtocol.h; sourceTree = "<group>"; };
 		82DFC690CD8B2589308DB5EC507073E7 /* MHVTimelineApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVTimelineApi.h; sourceTree = "<group>"; };
-		83A6F0D94DC86EE33FA31BBE75383A52 /* HealthVault-Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "HealthVault-Tests-umbrella.h"; path = "../HealthVault-Tests/HealthVault-Tests-umbrella.h"; sourceTree = "<group>"; };
 		83C9A26454F56D90F2931A46737E9F90 /* MHVActionPlanTasksApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVActionPlanTasksApi.h; sourceTree = "<group>"; };
 		84CC791DED15DD616F06FD393C43DAC5 /* KWReporting.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWReporting.h; path = Classes/Core/KWReporting.h; sourceTree = "<group>"; };
 		85736A65805EDC86041CC426B11A2552 /* MHVGetAuthorizedPeopleSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVGetAuthorizedPeopleSettings.h; sourceTree = "<group>"; };
@@ -2389,7 +2390,6 @@
 		864BF2F24ADFC17EAA73CA5039C0A5E0 /* MHVJsonCacheService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVJsonCacheService.h; sourceTree = "<group>"; };
 		866CB681D88629617F692157D622B21F /* KWValue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWValue.h; path = Classes/Core/KWValue.h; sourceTree = "<group>"; };
 		869016D935C23ADA7A6017A7F072055C /* MHVGoalRange.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVGoalRange.m; sourceTree = "<group>"; };
-		87327C88BCC7AA8A135E864F13C0F3C3 /* HealthVault-OfflineThingCache-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HealthVault-OfflineThingCache-dummy.m"; sourceTree = "<group>"; };
 		87329A52E77E6054B82A6B144180BECF /* SQLCipher.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SQLCipher.xcconfig; sourceTree = "<group>"; };
 		875A4CD79623E434AC89BFEF269F34D2 /* MHVAsyncOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVAsyncOperation.h; sourceTree = "<group>"; };
 		875EA5C95C6084087A58EE5D3EB2A8FB /* KWContainMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWContainMatcher.h; path = Classes/Matchers/KWContainMatcher.h; sourceTree = "<group>"; };
@@ -2432,6 +2432,7 @@
 		91255EC8857907EB74C367166A06A259 /* MHVMinute.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVMinute.h; sourceTree = "<group>"; };
 		914737B5567C4BBEB3DCDDD7EE9BF162 /* MHVPlatformClientProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVPlatformClientProtocol.h; sourceTree = "<group>"; };
 		91FC96D753B6FAD808118925419670CD /* MHVThingCacheDatabase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVThingCacheDatabase.h; sourceTree = "<group>"; };
+		937B016C42752E49A13407A7D6E7EDE3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../HealthVault-Tests/Info.plist"; sourceTree = "<group>"; };
 		93881254B4454F8F76EF61CA9F078711 /* KWSymbolicator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWSymbolicator.m; path = Classes/Core/KWSymbolicator.m; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		93CFDAF83527887658CB9C212A35370E /* MHVSleepJournalPM.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVSleepJournalPM.m; sourceTree = "<group>"; };
@@ -2440,9 +2441,9 @@
 		95076339A5C459AA3C93AB1128A152CA /* NSArray+DataModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSArray+DataModel.m"; sourceTree = "<group>"; };
 		955F0A88CFAB94AC0CFBC380A8F565AE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		95AE99F7E47E7F40BE0D2253DFC1B1D9 /* MHVThingKey.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVThingKey.m; sourceTree = "<group>"; };
-		96514CAE8AFF3C277BD075F0391283EB /* HealthVault-OfflineThingCache.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "HealthVault-OfflineThingCache.modulemap"; sourceTree = "<group>"; };
 		965C13CFB442E6F82D84995159504507 /* MHVAerobicProfile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVAerobicProfile.h; sourceTree = "<group>"; };
 		975A7846EA8356A1AF44DA968E1ABA8C /* KWBeZeroMatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWBeZeroMatcher.m; path = Classes/Matchers/KWBeZeroMatcher.m; sourceTree = "<group>"; };
+		979B006B7514F387B7A6EBD46B5F093F /* HealthVault-OfflineThingCache-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HealthVault-OfflineThingCache-prefix.pch"; sourceTree = "<group>"; };
 		97BB4C78B232B607D9CBDF82DAC14725 /* MHVGoalRecommendation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVGoalRecommendation.m; sourceTree = "<group>"; };
 		97CDD1346C155957A3963E22951BD4FB /* MHVActionPlanRangeMetric.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlanRangeMetric.m; sourceTree = "<group>"; };
 		97F43D1954DC0938E58349E051C161F9 /* MHVHttpServiceResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVHttpServiceResponse.m; sourceTree = "<group>"; };
@@ -2541,7 +2542,6 @@
 		A9FF5179527181B2B831185189FC406C /* NSArray+MHVThing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MHVThing.m"; sourceTree = "<group>"; };
 		AA755CA3BA004A7C8F7333C41EB690E4 /* KWStub.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWStub.m; path = Classes/Stubbing/KWStub.m; sourceTree = "<group>"; };
 		AA9D68911ECD514EB860A9216E27C810 /* MHVGoalRecommendation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVGoalRecommendation.h; sourceTree = "<group>"; };
-		AAB6F93D117EB6B2F3A136424C7BC7CB /* HealthVault-OfflineThingCache-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HealthVault-OfflineThingCache-prefix.pch"; sourceTree = "<group>"; };
 		AAE64BFDD86565DBDD8322BA23D9D3CE /* KWNull.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWNull.m; path = Classes/Core/KWNull.m; sourceTree = "<group>"; };
 		AAEE28E5A915489A37E53A460FCE5614 /* MHVActionPlan.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVActionPlan.m; sourceTree = "<group>"; };
 		AB4DCB4427D3927806B240814F964CFE /* MHVPlatformInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVPlatformInfo.m; sourceTree = "<group>"; };
@@ -2586,7 +2586,6 @@
 		B3E0E584B2F7FDDC6D7E528FA241A2C4 /* XString.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XString.m; sourceTree = "<group>"; };
 		B3F2F295CDE9279BF02CE034BC491587 /* XSerializableType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = XSerializableType.h; sourceTree = "<group>"; };
 		B3F87DD00E4EB14BBD83002062F89A38 /* MHVCachedRecord+CoreDataClass.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MHVCachedRecord+CoreDataClass.m"; sourceTree = "<group>"; };
-		B3F9C7BFE7FA494958FA736212B0BD63 /* HealthVault-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "HealthVault-Tests.xcconfig"; path = "../HealthVault-Tests/HealthVault-Tests.xcconfig"; sourceTree = "<group>"; };
 		B41E49A1D5EDC383D2FF39BE2EF14B98 /* MHVDateTime.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVDateTime.m; sourceTree = "<group>"; };
 		B42668AEAB461E4A776DAEE824F0B81C /* MHVJsonCacheItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVJsonCacheItem.h; sourceTree = "<group>"; };
 		B45A409AE94B6EA63F71A702EFBDD9EF /* MHVTaskTrackingApi.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVTaskTrackingApi.m; sourceTree = "<group>"; };
@@ -2631,6 +2630,7 @@
 		BFE7D15F02A42F2E83D7038754EAA53D /* MHVRestRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVRestRequest.m; sourceTree = "<group>"; };
 		BFE9BDF7F9B83999C0CB843182F90438 /* MHVPercentage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVPercentage.h; sourceTree = "<group>"; };
 		C001FC98E2A4C316E34EC71997D24FF9 /* MHVConcern.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVConcern.h; sourceTree = "<group>"; };
+		C005F2939E4E4141C1E5812DA2B691EA /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C04E3B7DFD39FD78A1CB20EE23391426 /* MHVServiceDefinitionRequestParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVServiceDefinitionRequestParameters.h; sourceTree = "<group>"; };
 		C05FC3C7472FE299E2680DD21B213CDA /* XConverter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XConverter.m; sourceTree = "<group>"; };
 		C14B9A0AF963B835F15C4743D9675734 /* Pods-healthvault-ios-sdk_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-healthvault-ios-sdk_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -2763,7 +2763,8 @@
 		E142CB5E2DBA6B7DC41AA5AF000486AE /* MHVTaskTrackingApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVTaskTrackingApi.h; sourceTree = "<group>"; };
 		E17B83A5E870035A9D9164CD3C0A3FE3 /* MHVInsightMessages.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVInsightMessages.h; sourceTree = "<group>"; };
 		E1B93B85517E8EE9E7009D3825F351A0 /* KWExampleSuite.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWExampleSuite.h; path = Classes/Core/KWExampleSuite.h; sourceTree = "<group>"; };
-		E1F94A19FB3D3751933DE84CB1271CBE /* HealthVault-Tests-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "HealthVault-Tests-prefix.pch"; path = "../HealthVault-Tests/HealthVault-Tests-prefix.pch"; sourceTree = "<group>"; };
+		E1C09859F80383A66B8062C7DEB3D838 /* HealthVault-OfflineThingCache.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "HealthVault-OfflineThingCache.xcconfig"; sourceTree = "<group>"; };
+		E1F7618231CB220E144A1550C56F1366 /* HealthVault-OfflineThingCache-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HealthVault-OfflineThingCache-umbrella.h"; sourceTree = "<group>"; };
 		E279C853F0E335DB4D93A1C16A617547 /* KWLetNode.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWLetNode.m; path = Classes/Nodes/KWLetNode.m; sourceTree = "<group>"; };
 		E2CDC2E784E4135C0FC92B1241262EF0 /* MHVErrorResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVErrorResponse.h; sourceTree = "<group>"; };
 		E32A75336C3009FA5DE7EC609C65D6EF /* MHVAsyncBlockOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVAsyncBlockOperation.h; sourceTree = "<group>"; };
@@ -2815,7 +2816,6 @@
 		F1890BA5239D77D118EB4E08FF5AC589 /* MHVDateTimeDuration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVDateTimeDuration.h; sourceTree = "<group>"; };
 		F18A4CC57734C56325619952AF300A02 /* NSNumber+KiwiAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSNumber+KiwiAdditions.h"; path = "Classes/Core/NSNumber+KiwiAdditions.h"; sourceTree = "<group>"; };
 		F1A88420B1419CEB8706CF1EB4687256 /* NSProxy+KiwiVerifierAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSProxy+KiwiVerifierAdditions.m"; path = "Classes/Core/NSProxy+KiwiVerifierAdditions.m"; sourceTree = "<group>"; };
-		F1AB8523322D7D366CF3C8CEE3C0DA20 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1C8C0D13F736D2488538A77FA00D9C3 /* Kiwi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Kiwi.h; path = Classes/Core/Kiwi.h; sourceTree = "<group>"; };
 		F1D3E69353B95CCE934ED4ECD9664349 /* MHVLengthMeasurement.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVLengthMeasurement.h; sourceTree = "<group>"; };
 		F202A6EC55F07DCAF5AFA933694FEB4C /* MHVSecond.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVSecond.h; sourceTree = "<group>"; };
@@ -2833,7 +2833,6 @@
 		F58760AECC8B65DA964695E433D74547 /* MHVHour.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVHour.h; sourceTree = "<group>"; };
 		F5EC57AC63A5F37D57EB7EDBD3E35DD2 /* KWUserDefinedMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWUserDefinedMatcher.h; path = Classes/Matchers/KWUserDefinedMatcher.h; sourceTree = "<group>"; };
 		F643B19D9000A39B4C64511E721F195B /* MHVSodaConnection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVSodaConnection.m; sourceTree = "<group>"; };
-		F6887D54B6D75134EF7D0D662AE49EE5 /* HealthVault-OfflineThingCache-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HealthVault-OfflineThingCache-umbrella.h"; sourceTree = "<group>"; };
 		F7A619F416FEA774EAA5D6A01E6F97BF /* MHVThingCacheDatabase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheDatabase.m; sourceTree = "<group>"; };
 		F7C2FA4EF47CF994C303BE7CBB1B70C1 /* MHVAppSpecificInformation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVAppSpecificInformation.m; sourceTree = "<group>"; };
 		F80A003386F7FA37AFE762D8665C31AC /* MHVVitalSigns.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVVitalSigns.h; sourceTree = "<group>"; };
@@ -2869,6 +2868,7 @@
 		FE0EA18C2C385581FAD86D347CD6AA54 /* MHVBloodGlucose.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVBloodGlucose.m; sourceTree = "<group>"; };
 		FE2D6C00C35862E5D138386B22D1E1C2 /* Pods-healthvault-ios-sdk_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-healthvault-ios-sdk_Example-dummy.m"; sourceTree = "<group>"; };
 		FE60F0066ED1CFD89412D8BB6379AED7 /* MHVMenstruation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVMenstruation.m; sourceTree = "<group>"; };
+		FE668B8FA241E23AE6AF056F149C0CC6 /* HealthVault-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "HealthVault-Tests.xcconfig"; path = "../HealthVault-Tests/HealthVault-Tests.xcconfig"; sourceTree = "<group>"; };
 		FE7D933C8A3E3BB78B0A8DDF8B8124C6 /* MHVAdvanceDirective.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MHVAdvanceDirective.h; sourceTree = "<group>"; };
 		FE850159E5668ADE87ED7F9336CD0D49 /* MHVInstant.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVInstant.m; sourceTree = "<group>"; };
 		FE9A435551949D063D7EC61C654A10F7 /* MHVKeychainService.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MHVKeychainService.m; sourceTree = "<group>"; };
@@ -4337,6 +4337,26 @@
 			path = PlatformInformation;
 			sourceTree = "<group>";
 		};
+		AA82595157928C173FE7F316A51E84DA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3EBDBF6D95054C61E6DE9D5781551FD4 /* HealthVault-OfflineThingCache.modulemap */,
+				E1C09859F80383A66B8062C7DEB3D838 /* HealthVault-OfflineThingCache.xcconfig */,
+				47AFB141D50714AC7990BD4DDC9FA93F /* HealthVault-OfflineThingCache-dummy.m */,
+				979B006B7514F387B7A6EBD46B5F093F /* HealthVault-OfflineThingCache-prefix.pch */,
+				E1F7618231CB220E144A1550C56F1366 /* HealthVault-OfflineThingCache-umbrella.h */,
+				26AC1ABFA8721A7FA85C638D255D57A5 /* HealthVault-Tests.modulemap */,
+				FE668B8FA241E23AE6AF056F149C0CC6 /* HealthVault-Tests.xcconfig */,
+				7C9151B619D27519E3CF75C4E5E469FD /* HealthVault-Tests-dummy.m */,
+				352E7414F46366B35D1394001040D7DB /* HealthVault-Tests-prefix.pch */,
+				022E242561D6BB9ADD0FB11B732AED69 /* HealthVault-Tests-umbrella.h */,
+				937B016C42752E49A13407A7D6E7EDE3 /* Info.plist */,
+				C005F2939E4E4141C1E5812DA2B691EA /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/HealthVault-OfflineThingCache";
+			sourceTree = "<group>";
+		};
 		AC59E7551786DE1C8F138555B4E116FB /* Xml */ = {
 			isa = PBXGroup;
 			children = (
@@ -4444,7 +4464,7 @@
 			isa = PBXGroup;
 			children = (
 				F329795EE35B555CB6AF040A86552AD8 /* OfflineThingCache */,
-				C58419BE28D7816A60D9D582559B1C31 /* Support Files */,
+				AA82595157928C173FE7F316A51E84DA /* Support Files */,
 				52E9603DC7054159A442735EB49056F4 /* Tests */,
 			);
 			name = HealthVault;
@@ -4463,26 +4483,6 @@
 				9E0C8815881F2C88D84D6045DE856BA2 /* XCTest.framework */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		C58419BE28D7816A60D9D582559B1C31 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				96514CAE8AFF3C277BD075F0391283EB /* HealthVault-OfflineThingCache.modulemap */,
-				6C34DC46A6EBEA0748E991876F4B63D3 /* HealthVault-OfflineThingCache.xcconfig */,
-				87327C88BCC7AA8A135E864F13C0F3C3 /* HealthVault-OfflineThingCache-dummy.m */,
-				AAB6F93D117EB6B2F3A136424C7BC7CB /* HealthVault-OfflineThingCache-prefix.pch */,
-				F6887D54B6D75134EF7D0D662AE49EE5 /* HealthVault-OfflineThingCache-umbrella.h */,
-				566D6C1A5D1196DAFF35CB237754251F /* HealthVault-Tests.modulemap */,
-				B3F9C7BFE7FA494958FA736212B0BD63 /* HealthVault-Tests.xcconfig */,
-				71F36DA3D1225D352881F13D85463D51 /* HealthVault-Tests-dummy.m */,
-				E1F94A19FB3D3751933DE84CB1271CBE /* HealthVault-Tests-prefix.pch */,
-				83A6F0D94DC86EE33FA31BBE75383A52 /* HealthVault-Tests-umbrella.h */,
-				F1AB8523322D7D366CF3C8CEE3C0DA20 /* Info.plist */,
-				6DD37B514214481872B7B59E882FDCD6 /* Info.plist */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/HealthVault-OfflineThingCache";
 			sourceTree = "<group>";
 		};
 		C77CCB78974589312409196C925A8D81 /* Assets */ = {
@@ -7188,7 +7188,7 @@
 		};
 		899637CAA159690E2D20515CE27A2DC5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B3F9C7BFE7FA494958FA736212B0BD63 /* HealthVault-Tests.xcconfig */;
+			baseConfigurationReference = FE668B8FA241E23AE6AF056F149C0CC6 /* HealthVault-Tests.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7337,7 +7337,7 @@
 		};
 		CABCF1B42BFBF92E89C3F5B3B841A9DF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C34DC46A6EBEA0748E991876F4B63D3 /* HealthVault-OfflineThingCache.xcconfig */;
+			baseConfigurationReference = E1C09859F80383A66B8062C7DEB3D838 /* HealthVault-OfflineThingCache.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7406,7 +7406,7 @@
 		};
 		D040B5CDA55E20402DB817EFDFF653E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C34DC46A6EBEA0748E991876F4B63D3 /* HealthVault-OfflineThingCache.xcconfig */;
+			baseConfigurationReference = E1C09859F80383A66B8062C7DEB3D838 /* HealthVault-OfflineThingCache.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -7439,7 +7439,7 @@
 		};
 		E93435E6255CB6AD62B5C481D9EFB913 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B3F9C7BFE7FA494958FA736212B0BD63 /* HealthVault-Tests.xcconfig */;
+			baseConfigurationReference = FE668B8FA241E23AE6AF056F149C0CC6 /* HealthVault-Tests.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";

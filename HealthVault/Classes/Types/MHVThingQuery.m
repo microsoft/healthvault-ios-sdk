@@ -30,7 +30,6 @@ static NSString *const c_element_key = @"key";
 static NSString *const c_element_clientID = @"client-thing-id";
 static NSString *const c_element_filter = @"filter";
 static NSString *const c_element_view = @"format";
-static NSString *const c_element_thing_id = @"thing-id";
 
 @interface MHVThingQuery ()
 
@@ -208,7 +207,7 @@ static NSString *const c_element_thing_id = @"thing-id";
     }
     else if (![NSArray isNilOrEmpty:self.keys])
     {
-        [writer writeElementArray:c_element_key thingName:c_element_thing_id elements:self.keys];
+        [writer writeElementArray:c_element_key elements:self.keys];
     }
     else if (![NSArray isNilOrEmpty:self.clientIDs])
     {
