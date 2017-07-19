@@ -21,13 +21,14 @@
 #import <objc/runtime.h>
 #import "MHVValidator.h"
 #import "MHVStringExtensions.h"
-#import "MHVArrayExtensions.h"
+#import "NSArray+Utils.h"
 #import "MHVThingQuery.h"
 #import "NSError+MHVError.h"
 
 static NSDictionary *kPropertyMap;
 static NSDictionary *kOperatorMap;
 static NSDictionary *kIgnoreMap;
+static NSDictionary *kSubPredicatesMap;
 static NSString *const kPredicateVariable = @"predicateVariable";
 
 @implementation MHVCacheQuery
@@ -72,8 +73,15 @@ static NSString *const kPredicateVariable = @"predicateVariable";
     
     kIgnoreMap = @{
                    @"shouldUseCachedResults" : @"ignore",
+                   @"keys" : @"ignore",
+                   @"filters" : @"ignore",
                    @"view" : @"ignore",
                    };
+
+    kSubPredicatesMap = @{
+                          @"keys" : @(YES),
+                          @"filters" : @(YES),
+                          };
 }
 
 - (instancetype)initWithQuery:(MHVThingQuery *)query
@@ -132,12 +140,12 @@ static NSString *const kPredicateVariable = @"predicateVariable";
         return NO;
     }
     
-    if (![NSArray isNilOrEmpty:query.view.transforms.toArray])
+    if (![NSArray isNilOrEmpty:query.view.transforms])
     {
         return NO;
     }
     
-    if (![NSArray isNilOrEmpty:query.view.typeVersions.toArray])
+    if (![NSArray isNilOrEmpty:query.view.typeVersions])
     {
         return NO;
     }
@@ -182,9 +190,9 @@ static NSString *const kPredicateVariable = @"predicateVariable";
 }
 
 - (NSPredicate *)predicateWithPropertyName:(NSString *)propertyName
-                                 variables:(MHVCollection *)variables
+                                 variables:(NSArray *)variables
 {
-    if ([NSArray isNilOrEmpty:variables.toArray])
+    if ([NSArray isNilOrEmpty:variables])
     {
         return nil;
     }
@@ -256,7 +264,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                 propertyClass = NSClassFromString(typeClassName);
             }
             
-            if (propertyClass == [MHVThingFilterCollection class] || propertyClass == [MHVThingKeyCollection class])
+            if (kSubPredicatesMap[propertyName])
             {
                 NSMutableArray<NSPredicate *> *subPredicates = [NSMutableArray new];
                 
@@ -275,7 +283,7 @@ static NSString *const kPredicateVariable = @"predicateVariable";
                     predicate = [NSCompoundPredicate orPredicateWithSubpredicates:subPredicates];
                 }
             }
-            else if ([propertyClass isSubclassOfClass:[MHVCollection class]])
+            else if ([propertyClass isSubclassOfClass:[NSArray class]])
             {
                 predicate = [self predicateWithPropertyName:propertyName
                                                   variables:value];

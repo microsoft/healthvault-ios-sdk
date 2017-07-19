@@ -38,7 +38,7 @@
 //
 // (Required) A collection of series.
 //
-@property (readwrite, nonatomic, strong) MHVMedicalImageStudySeriesCollection *series;
+@property (readwrite, nonatomic, strong) NSArray<MHVMedicalImageStudySeries *> *series;
 //
 // (Optional) The reason for the study.
 //
@@ -50,7 +50,7 @@
 //
 // (Optional) The important images in the study.
 //
-@property (readwrite, nonatomic, strong) MHVMedicalImageStudySeriesImageCollection *keyImages;
+@property (readwrite, nonatomic, strong) NSArray<MHVMedicalImageStudySeriesImage *> *keyImages;
 //
 // (Optional) The study instance UID.
 //

@@ -32,6 +32,7 @@
 #import "MHVCacheStatusProtocol.h"
 #import "MHVCacheStatus.h"
 #import "MHVPendingMethod.h"
+#import "NSArray+Utils.h"
 
 static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
@@ -76,18 +77,21 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 - (void)resetDatabaseWithCompletion:(void (^)(NSError *_Nullable error))completion;
 {
-    NSError *error = nil;
-    
     @synchronized (self.lockObject)
     {
-        [self.fileManager removeItemAtURL:self.databaseUrl
-                                    error:&error];
-        
-        [self.keychainService removeObjectForKey:kMHVCachePasswordKey];
-        
-        _persistentStoreCoordinator = nil;
-        _managedObjectContext = nil;
-        _databaseUrl = nil;
+        [self.managedObjectContext performBlockAndWait:^
+        {
+            NSError *error = nil;
+            
+            [self.fileManager removeItemAtURL:self.databaseUrl
+                                        error:&error];
+            
+            [self.keychainService removeObjectForKey:kMHVCachePasswordKey];
+            
+            _persistentStoreCoordinator = nil;
+            _managedObjectContext = nil;
+            _databaseUrl = nil;
+        }];
         
         [self openDatabaseWithCompletion:completion];
     }
@@ -199,7 +203,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
      }];
 }
 
-- (void)createCachedThings:(MHVThingCollection *)things
+- (void)createCachedThings:(NSArray<MHVThing *> *)things
                   recordId:(NSString *)recordId
                 completion:(void (^)(NSError *_Nullable error))completion
 {
@@ -384,7 +388,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
              return;
          }
          
-         MHVThingCollection *thingCollection = [MHVThingCollection new];
+         NSMutableArray<MHVThing *> *thingCollection = [NSMutableArray new];
          
          if (fetchCount != NSNotFound && fetchCount > 0)
          {
@@ -428,7 +432,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 #pragma mark - Update
 
-- (void)updateCachedThings:(MHVThingCollection *)things
+- (void)updateCachedThings:(NSArray<MHVThing *> *)things
                   recordId:(NSString *)recordId
                 completion:(void (^)(NSError *_Nullable error))completion
 {
@@ -447,7 +451,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
 
 #pragma mark - Synchronize
 
-- (void)synchronizeThings:(MHVThingCollection *)things
+- (void)synchronizeThings:(NSArray<MHVThing *> *)things
                  recordId:(NSString *)recordId
       batchSequenceNumber:(NSInteger)batchSequenceNumber
      latestSequenceNumber:(NSInteger)latestSequenceNumber
@@ -471,7 +475,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         return;
     }
     
-    if ([MHVCollection isNilOrEmpty:things])
+    if ([NSArray isNilOrEmpty:things])
     {
         //No things to add or update
         if (completion)
@@ -1002,7 +1006,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
     }];
 }
 
-- (void)createPendingCachedThings:(MHVThingCollection *)things
+- (void)createPendingCachedThings:(NSArray<MHVThing *> *)things
                          recordId:(NSString *)recordId
                        completion:(void (^)(NSError *_Nullable error))completion
 {
@@ -1024,7 +1028,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
         return;
     }
     
-    if ([MHVCollection isNilOrEmpty:things])
+    if ([NSArray isNilOrEmpty:things])
     {
         //No things to add or update
         if (completion)

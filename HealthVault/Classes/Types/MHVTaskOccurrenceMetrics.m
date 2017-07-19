@@ -26,13 +26,13 @@ static NSString *const c_element_targets = @"targets";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_evaluate_targets content:self.evaulateTargets];
-    [writer writeElementArray:c_element_targets elements:self.targets.toArray];
+    [writer writeElementArray:c_element_targets elements:self.targets];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.evaulateTargets = [reader readElement:c_element_evaluate_targets asClass:[MHVBool class]];
-    self.targets = (MHVTaskRangeMetricsCollection *)[reader readElementArray:c_element_targets asClass:[MHVTaskRangeMetrics class] andArrayClass:[MHVTaskRangeMetricsCollection class]];
+    self.targets = [reader readElementArray:c_element_targets asClass:[MHVTaskRangeMetrics class] andArrayClass:[NSMutableArray class]];
 }
 
 @end

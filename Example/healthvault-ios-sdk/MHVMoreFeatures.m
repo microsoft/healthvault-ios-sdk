@@ -151,7 +151,7 @@
     }
     
     [connection.personClient getAuthorizedRecordsWithRecordIds:recordIds
-                                                    completion:^(MHVRecordCollection *_Nullable records, NSError * _Nullable error)
+                                                    completion:^(NSArray<MHVRecord *> *_Nullable records, NSError * _Nullable error)
     {
         if (error)
         {
@@ -178,7 +178,7 @@
 {
     id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
     
-    [connection.personClient getAuthorizedPeopleWithCompletion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError * _Nullable error)
+    [connection.personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
     {
         if (error)
         {

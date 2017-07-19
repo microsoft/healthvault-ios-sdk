@@ -18,6 +18,7 @@
 //
 #import "MHVCommon.h"
 #import "MHVVitalSigns.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"73822612-c15f-4b49-9e65-6af369e55c65";
 static NSString *const c_typename = @"vital-signs";
@@ -31,14 +32,14 @@ static NSString *const c_element_position = @"position";
 
 - (BOOL)hasResults
 {
-    return ![MHVCollection isNilOrEmpty:self.results];
+    return ![NSArray isNilOrEmpty:self.results];
 }
 
-- (MHVVitalSignResultCollection *)results
+- (NSArray<MHVVitalSignResult *> *)results
 {
     if (!_results)
     {
-        _results = [[MHVVitalSignResultCollection alloc] init];
+        _results = @[];
     }
     
     return _results;
@@ -76,7 +77,7 @@ static NSString *const c_element_position = @"position";
         
         if (result)
         {
-            [self.results addObject:result];
+            _results = @[result];
             MHVCHECK_NOTNULL(_results);
         }
     }
@@ -99,7 +100,7 @@ static NSString *const c_element_position = @"position";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_when content:self.when];
-    [writer writeElementArray:c_element_results elements:self.results.toArray];
+    [writer writeElementArray:c_element_results elements:self.results];
     [writer writeElement:c_element_site value:self.site];
     [writer writeElement:c_element_position value:self.position];
 }
@@ -107,7 +108,7 @@ static NSString *const c_element_position = @"position";
 - (void)deserialize:(XReader *)reader
 {
     self.when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
-    self.results = (MHVVitalSignResultCollection *)[reader readElementArray:c_element_results asClass:[MHVVitalSignResult class] andArrayClass:[MHVVitalSignResultCollection class]];
+    self.results = [reader readElementArray:c_element_results asClass:[MHVVitalSignResult class] andArrayClass:[NSMutableArray class]];
     self.site = [reader readStringElement:c_element_site];
     self.position = [reader readStringElement:c_element_position];
 }

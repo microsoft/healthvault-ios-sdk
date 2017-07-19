@@ -1,5 +1,5 @@
 //
-// MHVArrayExtensions.m
+// NSArray+MHVThingQueryResultInternal.h
 // MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -16,30 +16,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVArrayExtensions.h"
 
-@implementation NSArray (MHVArrayExtensions)
+#import <Foundation/Foundation.h>
 
-+ (BOOL)isNilOrEmpty:(NSArray *)array;
-{
-    return array == nil || array.count == 0;
-}
+@class MHVThingQueryResultInternal;
 
-    
-@end
+@interface NSArray (MHVThingQueryResultInternal)
 
-@implementation NSMutableArray (MHVArrayExtensions)
-    
-
-
-- (void)addFromEnumerator:(NSEnumerator *)enumerator
-{
-    id obj;
-
-    while ((obj = enumerator.nextObject) != nil)
-    {
-        [self addObject:obj];
-    }
-}
+/**
+ Returns an array with merged MHVThingQueryResultInternal
+ Should only be used with arrays with objects of type MHVThingQueryResultInternal
+ 
+ @param array NSArray the array to merge with the self array
+ @return NSArray the merged thing query results
+ */
+- (NSArray<MHVThingQueryResultInternal *> *)mergeThingQueryResultArray:(NSArray<MHVThingQueryResultInternal *> *)array;
 
 @end

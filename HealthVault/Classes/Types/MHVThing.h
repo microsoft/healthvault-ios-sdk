@@ -187,31 +187,3 @@ enum MHVThingFlags
 
 @end
 
-// -------------------------
-//
-// A serializable collection of things
-//
-// -------------------------
-@interface MHVThingCollection : MHVCollection<MHVThing *> <XSerializable>
-
-- (instancetype)initWithThing:(MHVThing *)thing;
-- (instancetype)initWithThings:(NSArray *)things;
-
-- (BOOL)containsThingID:(NSString *)thingID;
-- (NSUInteger)indexOfThingID:(NSString *)thingID;
-
-- (NSMutableDictionary *)newIndexByID;
-- (NSMutableDictionary *)getThingsIndexedByID;
-
-- (NSUInteger)indexOfTypeID:(NSString *)typeID;
-- (MHVThing *)firstThingOfType:(NSString *)typeID;
-
-- (MHVStringCollection *)thingIDs;
-
-- (MHVClientResult *)validate;
-
-- (BOOL)shallowCloneThings;
-- (void)prepareForUpdate;
-- (void)prepareForNew;
-
-@end

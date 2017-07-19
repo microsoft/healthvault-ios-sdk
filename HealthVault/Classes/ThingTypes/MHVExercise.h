@@ -54,7 +54,7 @@
 // This collection of Name Value Pairs uses standardized names
 // Standardized names should be taken from the vocabulary: exercise-detail-names
 //
-@property (readwrite, nonatomic, strong) MHVNameValueCollection *details;
+@property (readwrite, nonatomic, strong) NSArray<MHVNameValue *> *details;
 //
 // (Optional): Information about exercise segments
 //

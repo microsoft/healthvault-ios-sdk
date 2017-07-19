@@ -47,19 +47,3 @@ static NSString *const c_element_updated_end_date = @"updated-end-date";
 }
 
 @end
-
-@implementation MHVRecordOperationCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVRecordOperation class];
-    }
-    
-    return self;
-}
-
-@end
-

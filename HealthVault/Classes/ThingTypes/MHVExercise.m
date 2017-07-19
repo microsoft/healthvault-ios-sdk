@@ -64,11 +64,11 @@ static MHVVocabularyIdentifier *s_vocabIDUnits;
     return self.details && self.details.count > 0;
 }
 
-- (MHVNameValueCollection *)details
+- (NSArray<MHVNameValue *> *)details
 {
     if (!_details)
     {
-        _details = [MHVNameValueCollection new];
+        _details = @[];
     }
 
     return _details;
@@ -139,14 +139,14 @@ static MHVVocabularyIdentifier *s_vocabIDUnits;
         return nil;
     }
 
-    NSUInteger index = [self.details indexOfThingWithNameCode:name];
-    
-    if (index == NSNotFound)
+    for (MHVNameValue *nameValue in self.details)
     {
-        return nil;
+        if ([nameValue.name.code isEqualToString:name])
+        {
+            return nameValue;
+        }
     }
-
-    return [self.details objectAtIndex:index];
+    return nil;
 }
 
 - (BOOL)addOrUpdateDetailWithNameCode:(NSString *)name andValue:(MHVMeasurement *)value
@@ -158,7 +158,18 @@ static MHVVocabularyIdentifier *s_vocabIDUnits;
         return NO;
     }
 
-    [self.details addOrUpdate:detail];
+    MHVNameValue *existing = [self getDetailWithNameCode:name];
+    if (existing)
+    {
+        NSMutableArray *detailsCopy = [self.details mutableCopy];
+        [detailsCopy replaceObjectAtIndex:[self.details indexOfObject:existing]
+                               withObject:detail];
+        self.details = detailsCopy;
+    }
+    else
+    {
+        self.details = [self.details arrayByAddingObject:detail];
+    }
 
     return YES;
 }
@@ -284,7 +295,7 @@ static MHVVocabularyIdentifier *s_vocabIDUnits;
     [writer writeElementXmlName:x_element_title value:self.title];
     [writer writeElementXmlName:x_element_distance content:self.distance];
     [writer writeElementXmlName:x_element_duration content:self.duration];
-    [writer writeElementArray:c_element_detail elements:self.details.toArray];
+    [writer writeElementArray:c_element_detail elements:self.details];
 
     [writer writeRawElementArray:c_element_segment elements:self.segmentsXml];
 }
@@ -296,7 +307,7 @@ static MHVVocabularyIdentifier *s_vocabIDUnits;
     self.title = [reader readStringElementWithXmlName:x_element_title];
     self.distance = [reader readElementWithXmlName:x_element_distance asClass:[MHVLengthMeasurement class]];
     self.duration = [reader readElementWithXmlName:x_element_duration asClass:[MHVPositiveDouble class]];
-    self.details = (MHVNameValueCollection *)[reader readElementArray:c_element_detail asClass:[MHVNameValue class] andArrayClass:[MHVNameValueCollection class]];
+    self.details = [reader readElementArray:c_element_detail asClass:[MHVNameValue class] andArrayClass:[NSMutableArray class]];
 
     self.segmentsXml = [reader readRawElementArray:c_element_segment];
 }

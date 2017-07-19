@@ -18,7 +18,7 @@
 
 #import "MHVType.h"
 
-@class MHVThingTypeVersionInfoCollection, MHVBool;
+@class MHVThingTypeVersionInfo, MHVBool;
 
 
 /**
@@ -64,7 +64,7 @@
 /**
  A collection of version information for the thing type. *The object will be nil if MHVThingTypeSectionsVersions is not requested.
  */
-@property (nonatomic, strong, readonly) MHVThingTypeVersionInfoCollection *versions;
+@property (nonatomic, strong, readonly) NSArray<MHVThingTypeVersionInfo *> *versions;
 
 /**
  A string repersentation of the XPath. *The object will be nil if MHVThingTypeSectionsEffectiveDateXPath is not requested.

@@ -27,7 +27,3 @@
 
 @end
 
-@interface MHVString1024NWCollection : MHVCollection<MHVString1024NW*>
-
-@end
-

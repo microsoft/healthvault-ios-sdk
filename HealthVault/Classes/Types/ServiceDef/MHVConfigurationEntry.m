@@ -45,17 +45,3 @@ static const xmlChar *x_attribute_key = XMLSTRINGCONST("key");
 }
 
 @end
-
-@implementation MHVConfigurationEntryCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVConfigurationEntry class];
-    }
-    return self;
-}
-
-@end

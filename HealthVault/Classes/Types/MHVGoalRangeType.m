@@ -42,17 +42,3 @@ static NSString *const c_element_maximum = @"maximum";
 }
 @end
 
-@implementation MHVGoalRangeTypeCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVGoalRangeType class];
-    }
-    
-    return self;
-}
-
-@end

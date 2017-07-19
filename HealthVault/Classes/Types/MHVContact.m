@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVContact.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_address = @"address";
 static NSString *const c_element_phone = @"phone";
@@ -27,14 +28,14 @@ static NSString *const c_element_email = @"email";
 
 - (BOOL)hasAddress
 {
-    return ![MHVCollection isNilOrEmpty:self.address];
+    return ![NSArray isNilOrEmpty:self.address];
 }
 
-- (MHVAddressCollection *)address
+- (NSArray<MHVAddress *> *)address
 {
     if (!_address)
     {
-        _address = [[MHVAddressCollection alloc] init];
+        _address = @[];
     }
     
     return _address;
@@ -42,14 +43,14 @@ static NSString *const c_element_email = @"email";
 
 - (BOOL)hasPhone
 {
-    return ![MHVCollection isNilOrEmpty:self.phone];
+    return ![NSArray isNilOrEmpty:self.phone];
 }
 
-- (MHVPhoneCollection *)phone
+- (NSArray<MHVPhone *> *)phone
 {
     if (!_phone)
     {
-        _phone = [[MHVPhoneCollection alloc] init];
+        _phone = @[];
     }
     
     return _phone;
@@ -57,14 +58,14 @@ static NSString *const c_element_email = @"email";
 
 - (BOOL)hasEmail
 {
-    return ![MHVCollection isNilOrEmpty:self.email];
+    return ![NSArray isNilOrEmpty:self.email];
 }
 
-- (MHVEmailCollection *)email
+- (NSArray<MHVEmail *> *)email
 {
     if (!_email)
     {
-        _email = [[MHVEmailCollection alloc] init];
+        _email = @[];
     }
     
     return _email;
@@ -105,7 +106,7 @@ static NSString *const c_element_email = @"email";
             MHVPhone *phoneObj = [[MHVPhone alloc] initWithNumber:phone];
             MHVCHECK_NOTNULL(phoneObj);
             
-            [self.phone addObject:phoneObj];
+            self.phone = @[phoneObj];
             
             MHVCHECK_NOTNULL(self.phone);
         }
@@ -114,7 +115,8 @@ static NSString *const c_element_email = @"email";
         {
             MHVEmail *emailObj = [[MHVEmail alloc] initWithEmailAddress:email];
             MHVCHECK_NOTNULL(emailObj);
-            [self.email addObject:emailObj];
+            
+            self.email = @[emailObj];
             
             MHVCHECK_NOTNULL(self.email);
         }
@@ -135,22 +137,22 @@ static NSString *const c_element_email = @"email";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_address elements:self.address.toArray];
-    [writer writeElementArray:c_element_phone elements:self.phone.toArray];
-    [writer writeElementArray:c_element_email elements:self.email.toArray];
+    [writer writeElementArray:c_element_address elements:self.address];
+    [writer writeElementArray:c_element_phone elements:self.phone];
+    [writer writeElementArray:c_element_email elements:self.email];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.address = (MHVAddressCollection *)[reader readElementArray:c_element_address
-                                                            asClass:[MHVAddress class]
-                                                      andArrayClass:[MHVAddressCollection class]];
-    self.phone = (MHVPhoneCollection *)[reader readElementArray:c_element_phone
-                                                        asClass:[MHVPhone class]
-                                                  andArrayClass:[MHVPhoneCollection class]];
-    self.email = (MHVEmailCollection *)[reader readElementArray:c_element_email
-                                                        asClass:[MHVEmail class]
-                                                  andArrayClass:[MHVEmailCollection class]];
+    self.address = [reader readElementArray:c_element_address
+                                    asClass:[MHVAddress class]
+                              andArrayClass:[NSMutableArray class]];
+    self.phone = [reader readElementArray:c_element_phone
+                                  asClass:[MHVPhone class]
+                            andArrayClass:[NSMutableArray class]];
+    self.email = [reader readElementArray:c_element_email
+                                  asClass:[MHVEmail class]
+                            andArrayClass:[NSMutableArray class]];
 }
 
 @end

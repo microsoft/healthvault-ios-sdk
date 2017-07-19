@@ -18,6 +18,8 @@
 
 #import "MHVCommon.h"
 #import "MHVVocabularyCodeSet.h"
+#import "NSArray+MHVVocabularyCodeItem.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_family = @"family";
@@ -30,14 +32,14 @@ static NSString *const c_element_codeset = @"code-set-result";
 
 - (BOOL)hasThings
 {
-    return (![NSArray isNilOrEmpty:self.things.toArray]);
+    return (![NSArray isNilOrEmpty:self.things]);
 }
 
-- (MHVVocabularyCodeItemCollection *)things
+- (NSArray<MHVVocabularyCodeItem *> *)things
 {
     if (!_vocabularyCodeItems)
     {
-        _vocabularyCodeItems = [[MHVVocabularyCodeItemCollection alloc] init];
+        _vocabularyCodeItems = @[];
     }
     
     return _vocabularyCodeItems;
@@ -52,7 +54,7 @@ static NSString *const c_element_codeset = @"code-set-result";
 {
     if (self.vocabularyCodeItems)
     {
-        [self.vocabularyCodeItems sortByDisplayText];
+        self.vocabularyCodeItems = [self.vocabularyCodeItems sortedByDisplayText];
     }
 }
 
@@ -66,7 +68,7 @@ static NSString *const c_element_codeset = @"code-set-result";
     [writer writeElement:c_element_name value:self.name];
     [writer writeElement:c_element_family value:self.family];
     [writer writeElement:c_element_version value:self.version];
-    [writer writeElementArray:c_element_thing elements:self.things.toArray];
+    [writer writeElementArray:c_element_thing elements:self.things];
     [writer writeElement:c_element_truncated content:self.isTruncated];
 }
 
@@ -75,23 +77,8 @@ static NSString *const c_element_codeset = @"code-set-result";
     self.name = [reader readStringElement:c_element_name];
     self.family = [reader readStringElement:c_element_family];
     self.version = [reader readStringElement:c_element_version];
-    self.vocabularyCodeItems = (MHVVocabularyCodeItemCollection *)[reader readElementArray:c_element_thing asClass:[MHVVocabularyCodeItem class] andArrayClass:[MHVVocabularyCodeItemCollection class]];
+    self.vocabularyCodeItems = [reader readElementArray:c_element_thing asClass:[MHVVocabularyCodeItem class] andArrayClass:[NSMutableArray class]];
     self.isTruncated = [reader readElement:c_element_truncated asClass:[MHVBool class]];
-}
-
-@end
-
-@implementation MHVVocabularyCodeSetCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVVocabularyCodeSet class];
-    }
-    
-    return self;
 }
 
 @end

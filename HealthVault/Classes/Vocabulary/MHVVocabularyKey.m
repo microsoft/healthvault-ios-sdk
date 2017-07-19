@@ -76,17 +76,3 @@ static const xmlChar *x_element_description = XMLSTRINGCONST("description");
 
 @end
 
-@implementation MHVVocabularyKeyCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVVocabularyKey class];
-    }
-    
-    return self;
-}
-
-@end

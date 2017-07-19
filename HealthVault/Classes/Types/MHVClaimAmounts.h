@@ -19,7 +19,6 @@
 #import "MHVType.h"
 #import "MHVDouble.h"
 #import "MHVPercentage.h"
-#import "MHVCollection.h"
 
 @interface MHVClaimAmounts : MHVType
 
@@ -37,6 +36,3 @@
 
 @end
 
-@interface MHVClaimAmountsCollection : MHVCollection<MHVClaimAmounts *>
-
-@end

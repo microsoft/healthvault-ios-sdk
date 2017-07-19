@@ -30,12 +30,8 @@
 
 @end
 
-@interface MHVPlanObjectiveCollection : MHVCollection<MHVPlanObjective *>
-
-@end
-
 @interface MHVPlanObjectiveList : MHVType
 
-@property (readwrite, nonatomic, strong) MHVPlanObjectiveCollection *objective;
+@property (readwrite, nonatomic, strong) NSArray<MHVPlanObjective *> *objective;
 
 @end

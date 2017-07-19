@@ -29,7 +29,4 @@
 
 @end
 
-@interface MHVRecordOperationCollection : MHVCollection<MHVRecordOperation *>
-
-@end
 

@@ -35,6 +35,6 @@
 @interface MHVServiceDefinitionParams : MHVType
 
 @property (readwrite, nonatomic, strong) NSDate *updatedSince;
-@property (readwrite, nonatomic, strong) MHVStringCollection *sections;
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *sections;
 
 @end

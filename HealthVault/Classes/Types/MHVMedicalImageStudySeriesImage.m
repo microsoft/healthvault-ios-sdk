@@ -37,17 +37,3 @@ static NSString *const c_element_image_preview_blob_name = @"image-preview-blob-
 
 @end
 
-@implementation MHVMedicalImageStudySeriesImageCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVMedicalImageStudySeriesImage class];
-    }
-    
-    return self;
-}
-
-@end

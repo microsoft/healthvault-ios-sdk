@@ -18,6 +18,7 @@
 //
 #import "MHVCommon.h"
 #import "MHVLabTestResults.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"5800eab5-a8c2-482a-a4d6-f1db25ae08c3";
 static NSString *const c_typename = @"lab-test-results";
@@ -31,7 +32,7 @@ static const xmlChar *x_element_orderedBy = XMLSTRINGCONST("ordered-by");
 
 - (MHVLabTestResultsGroup *)firstGroup
 {
-    if ([MHVCollection isNilOrEmpty:self.labGroup])
+    if ([NSArray isNilOrEmpty:self.labGroup])
     {
         return nil;
     }
@@ -39,15 +40,15 @@ static const xmlChar *x_element_orderedBy = XMLSTRINGCONST("ordered-by");
     return [self.labGroup objectAtIndex:0];
 }
 
-- (MHVLabTestResultsGroupCollection *)getAllGroups
+- (NSArray<MHVLabTestResultsGroup *> *)getAllGroups
 {
-    MHVLabTestResultsGroupCollection *allGroups = [[MHVLabTestResultsGroupCollection alloc] init];
+    NSMutableArray *allGroups = [[NSMutableArray alloc] init];
 
     MHVCHECK_NOTNULL(allGroups);
 
-    if (self.labGroup)
+    for (MHVLabTestResultsGroup *group in self.labGroup)
     {
-        [self.labGroup addThingsToCollection:allGroups];
+        [group addToCollection:allGroups];
     }
 
     return allGroups;
@@ -67,14 +68,14 @@ static const xmlChar *x_element_orderedBy = XMLSTRINGCONST("ordered-by");
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_when content:self.when];
-    [writer writeElementArray:c_element_labGroup elements:self.labGroup.toArray];
+    [writer writeElementArray:c_element_labGroup elements:self.labGroup];
     [writer writeElementXmlName:x_element_orderedBy content:self.orderedBy];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVApproxDateTime class]];
-    self.labGroup = (MHVLabTestResultsGroupCollection *)[reader readElementArrayWithXmlName:x_element_labGroup asClass:[MHVLabTestResultsGroup class] andArrayClass:[MHVLabTestResultsGroupCollection class]];
+    self.labGroup = [reader readElementArrayWithXmlName:x_element_labGroup asClass:[MHVLabTestResultsGroup class] andArrayClass:[NSMutableArray class]];
     self.orderedBy = [reader readElementWithXmlName:x_element_orderedBy asClass:[MHVOrganization class]];
 }
 

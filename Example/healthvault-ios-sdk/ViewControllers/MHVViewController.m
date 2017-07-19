@@ -58,6 +58,7 @@
                                                    [MHVBloodPressure typeID],
                                                    [MHVCondition typeID],
                                                    [MHVCholesterol typeID],
+                                                   [MHVPersonalContactInfo typeID],
                                                    [MHVDietaryIntake typeID],
                                                    [MHVDailyMedicationUsage typeID],
                                                    [MHVImmunization typeID],
@@ -69,7 +70,7 @@
                                                    [MHVWeight typeID],
                                                    [MHVFile typeID],
                                                    [MHVPersonalImage typeID],
-                                                   [MHVHeartRate typeID]];;
+                                                   [MHVHeartRate typeID]];
         
     [connection authenticateWithViewController:self
                                     completion:^(NSError *_Nullable error)

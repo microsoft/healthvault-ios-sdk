@@ -64,12 +64,3 @@
 
 @end
 
-@interface MHVBlobPayloadThingCollection : MHVCollection<MHVBlobPayloadThing *>
-
-- (NSUInteger)indexofDefaultBlob;
-- (NSUInteger)indexOfBlobNamed:(NSString *)name;
-
-- (MHVBlobPayloadThing *)getDefaultBlob;
-- (MHVBlobPayloadThing *)getBlobNamed:(NSString *)name;
-
-@end

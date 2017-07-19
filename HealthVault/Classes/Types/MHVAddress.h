@@ -18,7 +18,6 @@
 
 #import "MHVType.h"
 #import "MHVBaseTypes.h"
-#import "MHVCollection.h"
 #import "MHVVocabulary.h"
 
 @interface MHVAddress : MHVType
@@ -36,7 +35,7 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) MHVStringCollection *street;
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *street;
 //
 // (Required)
 //
@@ -75,16 +74,5 @@
 //
 // -------------------------
 - (NSString *)toString;
-
-@end
-
-
-// -------------------------
-//
-// MHVAddressCollection
-//
-// -------------------------
-
-@interface MHVAddressCollection : MHVCollection<MHVAddress *>
 
 @end

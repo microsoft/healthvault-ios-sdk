@@ -18,7 +18,6 @@
 
 #import "MHVType.h"
 #import "MHVStringNZNW.h"
-#import "MHVCollection.h"
 
 @interface MHVPlanOutcome : MHVType
 
@@ -27,12 +26,8 @@
 
 @end
 
-@interface MHVPlanOutcomeCollection : MHVCollection<MHVPlanOutcome *>
-
-@end
-
 @interface MHVPlanOutcomeList : MHVType
 
-@property (readwrite, nonatomic, strong) MHVPlanOutcomeCollection *outcome;
+@property (readwrite, nonatomic, strong) NSArray<MHVPlanOutcome *> *outcome;
 
 @end

@@ -20,8 +20,6 @@
 #import "MHVType.h"
 #import "MHVVocabularyCodeItem.h"
 
-@class MHVCodedValueCollection;
-
 // -------------------------
 //
 // A code from a standard vocabulary
@@ -78,11 +76,3 @@
 
 @end
 
-@interface MHVCodedValueCollection : MHVCollection<MHVCodedValue *>
-
-- (MHVCodedValue *)firstCode;
-
-- (NSUInteger)indexOfCode:(MHVCodedValue *)code;
-- (BOOL)containsCode:(MHVCodedValue *)code;
-
-@end

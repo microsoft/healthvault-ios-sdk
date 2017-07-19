@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVMessage.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"72dc49e1-1486-4634-b651-ef560ed051e5";
 static NSString *const c_typename = @"message";
@@ -34,12 +35,12 @@ static NSString *const c_element_attachments = @"attachments";
 
 - (BOOL)hasHeaders
 {
-    return ![MHVCollection isNilOrEmpty:self.headers];
+    return ![NSArray isNilOrEmpty:self.headers];
 }
 
 - (BOOL)hasAttachments
 {
-    return ![MHVCollection isNilOrEmpty:self.attachments];
+    return ![NSArray isNilOrEmpty:self.attachments];
 }
 
 - (BOOL)hasHtmlBody
@@ -83,14 +84,16 @@ static NSString *const c_element_attachments = @"attachments";
     {
         return nil;
     }
-
-    MHVMessageHeaderThing *header = [self.headers headerWithName:name];
-    if (!header)
+    
+    for (MHVMessageHeaderThing *header in self.headers)
     {
-        return c_emptyString;
+        if ([header.name isEqualToStringCaseInsensitive:name])
+        {
+            return header.value;
+        }
     }
-
-    return header.value;
+    
+    return c_emptyString;
 }
 
 - (NSDate *)getDate
@@ -118,27 +121,27 @@ static NSString *const c_element_attachments = @"attachments";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElementXmlName:x_element_when content:self.when];
-    [writer writeElementArray:c_element_headers elements:self.headers.toArray];
+    [writer writeElementArray:c_element_headers elements:self.headers];
     [writer writeElementXmlName:x_element_size content:self.size];
     [writer writeElementXmlName:x_element_summary value:self.summary];
     [writer writeElementXmlName:x_element_htmlBlob value:self.htmlBlobName];
     [writer writeElementXmlName:x_element_textBlob value:self.textBlobName];
-    [writer writeElementArray:c_element_attachments elements:self.attachments.toArray];
+    [writer writeElementArray:c_element_attachments elements:self.attachments];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.when = [reader readElementWithXmlName:x_element_when asClass:[MHVDateTime class]];
-    self.headers = (MHVMessageHeaderThingCollection *)[reader readElementArray:c_element_headers
-                                                      asClass:[MHVMessageHeaderThing class]
-                                                      andArrayClass:[MHVMessageHeaderThingCollection class]];
+    self.headers = [reader readElementArray:c_element_headers
+                                    asClass:[MHVMessageHeaderThing class]
+                              andArrayClass:[NSMutableArray class]];
     self.size = [reader readElementWithXmlName:x_element_size asClass:[MHVPositiveInt class]];
     self.summary = [reader readStringElementWithXmlName:x_element_summary];
     self.htmlBlobName = [reader readStringElementWithXmlName:x_element_htmlBlob];
     self.textBlobName = [reader readStringElementWithXmlName:x_element_textBlob];
-    self.attachments = (MHVMessageAttachmentCollection *)[reader readElementArray:c_element_attachments
-                                                          asClass:[MHVMessageAttachment class]
-                                                          andArrayClass:[MHVMessageAttachmentCollection class]];
+    self.attachments = [reader readElementArray:c_element_attachments
+                                        asClass:[MHVMessageAttachment class]
+                                  andArrayClass:[NSMutableArray class]];
 }
 
 + (NSString *)typeID

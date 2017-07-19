@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVCollection.h"
 
 typedef NS_ENUM (NSInteger, MHVThingSection)
 {

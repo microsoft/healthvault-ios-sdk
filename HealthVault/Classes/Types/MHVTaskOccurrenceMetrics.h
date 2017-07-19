@@ -23,6 +23,6 @@
 @interface MHVTaskOccurrenceMetrics : MHVType
 
 @property (readwrite, nonatomic, strong) MHVBool *evaulateTargets;
-@property (readwrite, nonatomic, strong) MHVTaskRangeMetricsCollection *targets;
+@property (readwrite, nonatomic, strong) NSArray<MHVTaskRangeMetrics *> *targets;
 
 @end

@@ -15,7 +15,6 @@
 // limitations under the License.
 
 #import "MHVTypes.h"
-#import "MHVCollection.h"
 
 @interface MHVEOBService : MHVType
 
@@ -28,6 +27,3 @@
 
 @end
 
-@interface MHVEOBServiceCollection : MHVCollection<MHVEOBService *>;
-
-@end

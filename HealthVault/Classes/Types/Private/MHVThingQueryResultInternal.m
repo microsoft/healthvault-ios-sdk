@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVThingQueryResultInternal.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_element_thing = @"thing";
 static NSString *const c_element_pending = @"unprocessed-thing-key-info";
@@ -37,12 +38,12 @@ static NSString *const c_attribute_name = @"name";
 
 - (BOOL)hasThings
 {
-    return !([MHVCollection isNilOrEmpty:self.things]);
+    return !([NSArray isNilOrEmpty:self.things]);
 }
 
 - (BOOL)hasPendingThings
 {
-    return !([MHVCollection isNilOrEmpty:self.pendingThings]);
+    return !([NSArray isNilOrEmpty:self.pendingThings]);
 }
 
 - (NSUInteger)thingCount
@@ -67,8 +68,8 @@ static NSString *const c_attribute_name = @"name";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_thing elements:self.things.toArray];
-    [writer writeElementArray:c_element_pending elements:self.pendingThings.toArray];
+    [writer writeElementArray:c_element_thing elements:self.things];
+    [writer writeElementArray:c_element_pending elements:self.pendingThings];
 }
 
 - (void)deserializeAttributes:(XReader *)reader
@@ -78,77 +79,23 @@ static NSString *const c_attribute_name = @"name";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.things = (MHVThingCollection *)[reader readElementArray:c_element_thing
-                                                       asClass:[MHVThing class]
-                                                 andArrayClass:[MHVThingCollection class]];
-    self.pendingThings = (MHVPendingThingCollection *)[reader readElementArray:c_element_pending
-                                                                     asClass:[MHVPendingThing class]
-                                                               andArrayClass:[MHVPendingThingCollection class]];
+    self.things = [reader readElementArray:c_element_thing
+                                   asClass:[MHVThing class]
+                             andArrayClass:[NSMutableArray class]];
+    self.pendingThings = [reader readElementArray:c_element_pending
+                                          asClass:[MHVPendingThing class]
+                                    andArrayClass:[NSMutableArray class]];
 }
 
 #pragma mark - Internal methods
 
-- (void)appendFoundThings:(MHVThingCollection *)things
+- (void)appendFoundThings:(NSArray<MHVThing *> *)things
 {
     if (!self.things)
     {
-        self.things = [[MHVThingCollection alloc] init];
+        self.things = @[];
     }
-    
-    [self.things addObjectsFromCollection:things];
-}
-
-@end
-
-@implementation MHVThingQueryResultCollectionInternal
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVThingQueryResultInternal class];
-    }
-    return self;
-}
-
-- (MHVThingQueryResultInternal *)resultWithName:(NSString *)name
-{
-    for (MHVThingQueryResultInternal *result in self)
-    {
-        if ([result.name isEqualToString:name])
-        {
-            return result;
-        }
-    }
-    return nil;
-}
-
-- (void)mergeThingQueryResultCollection:(MHVThingQueryResultCollectionInternal *)collection
-{
-    for (MHVThingQueryResultInternal *result in collection)
-    {
-        MHVThingQueryResultInternal *existingResult = [self resultWithName:result.name];
-        
-        if (existingResult)
-        {
-            // If the existing result did not contain things, new collections for things must be initialized
-            if (!existingResult.things)
-            {
-                existingResult.things = [[MHVThingCollection alloc] initWithThings:result.things.toArray];
-            }
-            else
-            {
-                [existingResult.things addObjectsFromCollection:result.things];
-            }
-            
-            [existingResult.pendingThings removeThings:result.things];
-        }
-        else
-        {
-            [self addObject:result];
-        }
-    }
+    self.things = [self.things arrayByAddingObjectsFromArray:things];
 }
 
 @end

@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVCacheConstants.h"
 
-@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingCollection, MHVMethod, MHVPendingMethod;
+@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryResult, MHVThing, MHVMethod, MHVPendingMethod;
 @protocol MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -34,9 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Returns the results
  */
-- (void)cachedResultsForQueries:(MHVThingQueryCollection *)queries
+- (void)cachedResultsForQueries:(NSArray<MHVThingQuery *> *)queries
                        recordId:(NSUUID *)recordId
-                     completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error))completion;
+                     completion:(void(^)(NSArray<MHVThingQueryResult *> *_Nullable resultCollection, NSError *_Nullable error))completion;
 
 /**
  Add things to the cache for a recordId
@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Envoked when adding is complete, with any error that occurred
  */
-- (void)addThings:(MHVThingCollection *)things
+- (void)addThings:(NSArray<MHVThing *> *)things
          recordId:(NSUUID *)recordId
        completion:(void(^)(NSError *_Nullable error))completion;
 
@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Envoked when updating is complete, with any error that occurred
  */
-- (void)updateThings:(MHVThingCollection *)things
+- (void)updateThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion;
 
@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Envoked when deleting is complete, with any error that occurred
  */
-- (void)deleteThings:(MHVThingCollection *)things
+- (void)deleteThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion;
 
@@ -97,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId The record ID of the person
  @param completion Envoked when adding is complete, with any error that occurred
  */
-- (void)addPendingThings:(MHVThingCollection *)things
+- (void)addPendingThings:(NSArray<MHVThing *> *)things
                 recordId:(NSUUID *)recordId
               completion:(void(^)(NSError *_Nullable error))completion;
 

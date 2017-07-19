@@ -25,6 +25,6 @@
 @interface MHVSystemInstances : MHVType
 
 @property (readwrite, nonatomic, strong) NSString *currentInstanceID;
-@property (readwrite, nonatomic, strong) MHVServiceInstanceCollection *instances;
+@property (readwrite, nonatomic, strong) NSArray<MHVServiceInstance *> *instances;
 
 @end

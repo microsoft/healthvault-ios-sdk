@@ -52,27 +52,12 @@ static NSString *const c_element_objective = @"objective";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_objective elements:self.objective.toArray];
+    [writer writeElementArray:c_element_objective elements:self.objective];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.objective = (MHVPlanObjectiveCollection *)[reader readElementArray:c_element_objective asClass:[MHVPlanObjective class] andArrayClass:[MHVPlanObjectiveCollection class]];
-}
-
-@end
-
-@implementation MHVPlanObjectiveCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVPlanObjective class];
-    }
-    
-    return self;
+    self.objective = [reader readElementArray:c_element_objective asClass:[MHVPlanObjective class] andArrayClass:[NSMutableArray class]];
 }
 
 @end

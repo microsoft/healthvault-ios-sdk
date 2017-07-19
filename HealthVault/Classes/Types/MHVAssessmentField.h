@@ -52,7 +52,3 @@
 
 @end
 
-
-@interface MHVAssessmentFieldCollection : MHVCollection<MHVAssessmentField *>
-
-@end

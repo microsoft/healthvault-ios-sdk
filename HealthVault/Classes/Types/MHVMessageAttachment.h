@@ -29,7 +29,3 @@
 - (instancetype)initWithName:(NSString *)name andBlobName:(NSString *)blobName;
 
 @end
-
-@interface MHVMessageAttachmentCollection : MHVCollection<MHVMessageAttachment *>
-
-@end

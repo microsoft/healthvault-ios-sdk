@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVQuestionAnswer.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"55d33791-58de-4cae-8c78-819e12ba5059";
 static NSString *const c_typename = @"question-answer";
@@ -29,21 +30,21 @@ static NSString *const c_element_answer = @"answer";
 
 @implementation MHVQuestionAnswer
 
-- (MHVCodableValueCollection *)answerChoices
+- (NSArray<MHVCodableValue *> *)answerChoices
 {
     if (!_answerChoices)
     {
-        _answerChoices = [[MHVCodableValueCollection alloc] init];
+        _answerChoices = @[];
     }
     
     return _answerChoices;
 }
 
-- (MHVCodableValueCollection *)answers
+- (NSArray<MHVCodableValue *> *)answers
 {
     if (!_answers)
     {
-        _answers = [[MHVCodableValueCollection alloc] init];
+        _answers = @[];
     }
     
     return _answers;
@@ -56,12 +57,12 @@ static NSString *const c_element_answer = @"answer";
 
 - (BOOL)hasAnswerChoices
 {
-    return ![MHVCollection isNilOrEmpty:self.answerChoices];
+    return ![NSArray isNilOrEmpty:self.answerChoices];
 }
 
 - (BOOL)hasAnswers
 {
-    return ![MHVCollection isNilOrEmpty:self.answers];
+    return ![NSArray isNilOrEmpty:self.answers];
 }
 
 - (instancetype)initWithQuestion:(NSString *)question andDate:(NSDate *)date
@@ -88,8 +89,8 @@ static NSString *const c_element_answer = @"answer";
             MHVCodableValue *answerValue = [[MHVCodableValue alloc] initWithText:answer];
             MHVCHECK_NOTNULL(answerValue);
             
-            [self.answers addObject:answerValue];
-            MHVCHECK_NOTNULL(self.answers);
+            _answers = @[answerValue];
+            MHVCHECK_NOTNULL(_answers);
         }
     }
     
@@ -134,16 +135,16 @@ static NSString *const c_element_answer = @"answer";
 {
     [writer writeElement:c_element_when content:self.when];
     [writer writeElement:c_element_question content:self.question];
-    [writer writeElementArray:c_element_choice elements:self.answerChoices.toArray];
-    [writer writeElementArray:c_element_answer elements:self.answers.toArray];
+    [writer writeElementArray:c_element_choice elements:self.answerChoices];
+    [writer writeElementArray:c_element_answer elements:self.answers];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.when = [reader readElement:c_element_when asClass:[MHVDateTime class]];
     self.question = [reader readElement:c_element_question asClass:[MHVCodableValue class]];
-    self.answerChoices = (MHVCodableValueCollection *)[reader readElementArray:c_element_choice asClass:[MHVCodableValue class] andArrayClass:[MHVCodableValueCollection class]];
-    self.answers = (MHVCodableValueCollection *)[reader readElementArray:c_element_answer asClass:[MHVCodableValue class] andArrayClass:[MHVCodableValueCollection class]];
+    self.answerChoices = [reader readElementArray:c_element_choice asClass:[MHVCodableValue class] andArrayClass:[NSMutableArray class]];
+    self.answers = [reader readElementArray:c_element_answer asClass:[MHVCodableValue class] andArrayClass:[NSMutableArray class]];
 }
 
 + (NSString *)typeID

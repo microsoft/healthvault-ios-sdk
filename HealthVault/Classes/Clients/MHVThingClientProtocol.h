@@ -19,7 +19,7 @@
 #import <UIKit/UIKit.h>
 #import "MHVClientProtocol.h"
 
-@class MHVThing, MHVThingQuery, MHVThingCollection, MHVThingQueryCollection, MHVThingQueryResultCollection, MHVThingQueryResult, MHVBlobPayloadThing, MHVGetRecordOperationsResult, MHVThingKeyCollection, MHVThingKey;
+@class MHVThing, MHVThingQuery, MHVThing, MHVThingQueryResult, MHVBlobPayloadThing, MHVGetRecordOperationsResult, MHVThingKey;
 
 @protocol MHVThingCacheProtocol, MHVBlobSourceProtocol;
 
@@ -59,12 +59,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param queries A collection of thing queries to perform
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
- *        MHVThingQueryResultCollection object will have a collection of the requested query results, or nil if no results retrieved.
+ *        NSArray<MHVThingQueryResult *> object will have a collection of the requested query results, or nil if no results retrieved.
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)getThingsWithQueries:(MHVThingQueryCollection *)queries
+- (void)getThingsWithQueries:(NSArray<MHVThingQuery *> *)queries
                     recordId:(NSUUID *)recordId
-                  completion:(void(^)(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error))completion;
+                  completion:(void(^)(NSArray<MHVThingQueryResult *> *_Nullable results, NSError *_Nullable error))completion;
 
 /**
  * Get a collection of things of a particular class, optionally associated with a query
@@ -101,12 +101,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param things Collection of things to be added
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
- *        MHVThingKeyCollection thingKeys A collection of Thing Keys for Things that were created or nil if there was an error.
+ *        NSArray<MHVThingKey *> thingKeys A collection of Thing Keys for Things that were created or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)createNewThings:(MHVThingCollection *)things
+- (void)createNewThings:(NSArray<MHVThing *> *)things
                recordId:(NSUUID *)recordId
-             completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion;
+             completion:(void(^_Nullable)(NSArray<MHVThingKey *> *_Nullable thingKeys, NSError *_Nullable error))completion;
 
 /**
  * Update an existing Thing in the HealthVault service
@@ -127,12 +127,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param things Collection of things to be updated
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
- *        MHVThingKeyCollection thingKeys A collection of Thing Keys (including updated versions) for Things that were updated or nil if there was an error.
+ *        NSArray<MHVThingKey *> thingKeys A collection of Thing Keys (including updated versions) for Things that were updated or nil if there was an error.
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)updateThings:(MHVThingCollection *)things
+- (void)updateThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
-          completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion;
+          completion:(void(^_Nullable)(NSArray<MHVThingKey *> *_Nullable thingKeys, NSError *_Nullable error))completion;
 
 /**
  * Remove an existing Thing from the HealthVault service
@@ -154,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion Envoked when the operation completes.
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)removeThings:(MHVThingCollection *)things
+- (void)removeThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
@@ -181,12 +181,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param things The things to refresh
  * @param recordId an authorized person's record ID.
  * @param completion Envoked when the operation completes.
- *        MHVThingCollection things updated with their .blobs objects refreshed
+ *        NSArray<MHVThing *> things updated with their .blobs objects refreshed
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)refreshBlobUrlsForThings:(MHVThingCollection *)things
+- (void)refreshBlobUrlsForThings:(NSArray<MHVThing *> *)things
                         recordId:(NSUUID *)recordId
-                      completion:(void(^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion;
+                      completion:(void(^)(NSArray<MHVThing *> *_Nullable things, NSError *_Nullable error))completion;
 
 /**
  * Download a blob as NSData

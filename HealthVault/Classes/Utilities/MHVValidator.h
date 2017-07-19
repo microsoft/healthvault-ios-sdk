@@ -19,8 +19,6 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "MHVClientResult.h"
 
-@class MHVCollection;
-
 //-----------------------------
 //
 // Basic Event Logging
@@ -149,7 +147,7 @@ while(NO)
 
 #define MHVVALIDATE_STRINGOPTIONAL(string, error)
 
-#define MHVVALIDATE_ARRAY(var, error) MHVCHECK_RESULT(MHVValidateCollection(var, error));
+#define MHVVALIDATE_ARRAY(var, error) MHVCHECK_RESULT(MHVValidateArray(var, error));
 #define MHVVALIDATE_ARRAYOPTIONAL(var, error) if (var) { MHVVALIDATE_ARRAY(var, error);}
 
 #define MHVVALIDATE_TRUE(condition, error)   if (!condition) \
@@ -158,5 +156,5 @@ while(NO)
                                                 return hr; \
                                             } \
 
-MHVClientResult* MHVValidateCollection(MHVCollection *collection, MHVClientResultCode error);
+MHVClientResult* MHVValidateArray(NSArray *array, MHVClientResultCode error);
 

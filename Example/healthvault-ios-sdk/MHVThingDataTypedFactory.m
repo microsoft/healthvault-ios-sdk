@@ -24,12 +24,12 @@
 //
 @implementation MHVThingDataTyped (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date
 {
     return nil;
 }
 
-+(MHVThingCollection *) createRandomMetricForDay:(NSDate *) date
++(NSArray<MHVThing *> *) createRandomMetricForDay:(NSDate *) date
 {
     return nil;
 }

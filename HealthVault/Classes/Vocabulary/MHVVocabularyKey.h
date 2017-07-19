@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVCollection.h"
 #import "MHVVocabularyCodeSet.h"
 
 @interface MHVVocabularyKey : MHVType
@@ -64,11 +63,3 @@
 
 @end
 
-// -------------------------
-//
-// Collection of Vocabulary keys
-//
-// -------------------------
-@interface MHVVocabularyKeyCollection : MHVCollection<MHVVocabularyKey *>
-
-@end

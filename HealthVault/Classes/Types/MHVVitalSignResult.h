@@ -74,7 +74,3 @@
 
 @end
 
-
-@interface MHVVitalSignResultCollection : MHVCollection<MHVVitalSignResult *>
-
-@end

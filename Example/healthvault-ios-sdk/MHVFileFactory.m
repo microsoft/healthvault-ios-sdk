@@ -22,7 +22,7 @@
 
 @implementation MHVFile(MHVFactoryMethods)
 
-+(MHVThingCollection *)createRandomForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomForDay:(NSDate *)date
 {
     return nil;
 }

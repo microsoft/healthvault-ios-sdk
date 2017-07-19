@@ -35,6 +35,9 @@
 #import "MHVThingQueryResultInternal.h"
 #import "MHVAsyncTask.h"
 #import "MHVPendingMethod.h"
+#import "NSArray+MHVThing.h"
+#import "NSArray+MHVThingQuery.h"
+#import "NSArray+MHVThingQueryResultInternal.h"
 #ifdef THING_CACHE
 #import "MHVThingCacheProtocol.h"
 #endif
@@ -129,9 +132,9 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         return;
     }
     
-    [self getThingsWithQueries:[[MHVThingQueryCollection alloc] initWithObject:query]
+    [self getThingsWithQueries:@[query]
                       recordId:recordId
-                    completion:^(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error)
+                    completion:^(NSArray<MHVThingQueryResult *> *_Nullable results, NSError *_Nullable error)
      {
          if (error)
          {
@@ -144,9 +147,9 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
      }];
 }
 
-- (void)getThingsWithQueries:(MHVThingQueryCollection *)queries
+- (void)getThingsWithQueries:(NSArray<MHVThingQuery *> *)queries
                     recordId:(NSUUID *)recordId
-                  completion:(void (^)(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error))completion
+                  completion:(void (^)(NSArray<MHVThingQueryResult *> *_Nullable results, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(queries);
     MHVASSERT_PARAMETER(recordId);
@@ -163,8 +166,8 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         return;
     }
     
-    __block MHVThingQueryCollection *queriesForCloud = [MHVThingQueryCollection new];
-    MHVThingQueryCollection *queriesForCache = [MHVThingQueryCollection new];
+    __block NSMutableArray<MHVThingQuery *> *queriesForCloud = [NSMutableArray new];
+    NSMutableArray<MHVThingQuery *> *queriesForCache = [NSMutableArray new];
     
     //Give each query a unique name if it isn't already set
     for (MHVThingQuery *query in queries)
@@ -190,7 +193,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     {
         [self.cache cachedResultsForQueries:queriesForCache
                                    recordId:recordId
-                                 completion:^(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error)
+                                 completion:^(NSArray<MHVThingQueryResult *> * _Nullable resultCollection, NSError *_Nullable error)
          {
              // If error is because cache not ready or deleted, send request to HealthVault
              if (error && error.code != MHVErrorTypeCacheNotReady && error.code != MHVErrorTypeCacheDeleted)
@@ -206,11 +209,11 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                  // If there is no resultsCollection from the cache issue ALL queries to the cloud.
                  if (!resultCollection)
                  {
-                     queriesForCloud = queries;
+                     queriesForCloud = [queries mutableCopy];
                  }
                  
                  //No resultCollection or error, query HealthVault
-                 [self getThingsWithQueries:queriesForCloud recordId:recordId currentResults:nil completion:^(MHVThingQueryResultCollection * _Nullable results, NSError * _Nullable error)
+                 [self getThingsWithQueries:queriesForCloud recordId:recordId currentResults:nil completion:^(NSArray<MHVThingQueryResult *> * _Nullable results, NSError * _Nullable error)
                  {
                      if (error)
                      {
@@ -220,13 +223,13 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                      {
                          if (resultCollection.count > 0)
                          {
-                             [results addObjectsFromCollection:resultCollection];
+                             results = [results arrayByAddingObjectsFromArray:resultCollection];
                             
                              // Sort the results collection based on the original order of the query collection
-                             [results sortUsingComparator:^NSComparisonResult(MHVThingQueryResult *result1, MHVThingQueryResult *result2)
-                             {
-                                 return [@([queries indexOfQueryWithName:result1.name]) compare:@([queries indexOfQueryWithName:result2.name])];
-                             }];
+                             results = [results sortedArrayUsingComparator:^NSComparisonResult(MHVThingQueryResult *result1, MHVThingQueryResult *result2)
+                                        {
+                                            return [@([queries indexOfQueryWithName:result1.name]) compare:@([queries indexOfQueryWithName:result2.name])];
+                                        }];
                          }
                          
                          completion(results, nil);
@@ -247,13 +250,13 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 }
 
 // Internal method that will fetch more pending items if not all results are returned for the query.
-- (void)getThingsWithQueries:(MHVThingQueryCollection *)queries
+- (void)getThingsWithQueries:(NSArray<MHVThingQuery *> *)queries
                     recordId:(NSUUID *)recordId
-              currentResults:(MHVThingQueryResultCollectionInternal *_Nullable)currentResults
-                  completion:(void(^)(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error))completion
+              currentResults:(NSArray<MHVThingQueryResultInternal *> *_Nullable)currentResults
+                  completion:(void(^)(NSArray<MHVThingQueryResult *> *_Nullable results, NSError *_Nullable error))completion
 {
-    __block MHVThingQueryCollection *initialQueries = queries;
-    __block MHVThingQueryResultCollectionInternal *results = currentResults;
+    __block NSArray<MHVThingQuery *> *initialQueries = queries;
+    __block NSArray<MHVThingQueryResultInternal *> *results = currentResults;
     
     MHVMethod *method = [MHVMethod getThings];
     method.recordId = recordId;
@@ -275,7 +278,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                  return;
              }
              
-             MHVThingQueryCollection *queriesForPendingThings = [[MHVThingQueryCollection alloc] init];
+             NSMutableArray<MHVThingQuery *> *queriesForPendingThings = [NSMutableArray new];
              
              // Check for any Pending things, and build queries to fetch remaining things
              for (MHVThingQueryResultInternal *result in queryResults.results)
@@ -286,7 +289,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                  
                  if (result.hasPendingThings && pendingCount > 0)
                  {
-                     MHVThingKeyCollection *keys = [MHVThingKeyCollection new];
+                     NSMutableArray *keys = [NSMutableArray new];
                      
                      for (NSInteger i = queryForResult.offset; i < result.pendingThings.count; i++)
                      {
@@ -309,15 +312,12 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                  }
              }
              
-             // Merge with existing results if needed
-             if (results)
+             // Merge with existing results, creating results object if needed
+             if (!results)
              {
-                 [results mergeThingQueryResultCollection:queryResults.results];
+                 results = @[];
              }
-             else
-             {
-                 results = queryResults.results;
-             }
+             results = [results mergeThingQueryResultArray:queryResults.results];
              
              // If there are queries to get more pending items, repeat; otherwise can call completion
              if (queriesForPendingThings.count > 0)
@@ -331,7 +331,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
              else
              {
                  
-                 MHVThingQueryResultCollection *resultCollection = [MHVThingQueryResultCollection new];
+                 NSMutableArray<MHVThingQueryResult *> *resultCollection = [NSMutableArray new];
                  
                  for (MHVThingQueryResultInternal *result in results)
                  {
@@ -379,7 +379,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     // Add filter to query argument, or create if argument is nil
     if (query)
     {
-        [query.filters addObject:filter];
+        query.filters = [query.filters arrayByAddingObject:filter];
     }
     else
     {
@@ -408,17 +408,17 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         return;
     }
     
-    [self createNewThings:[[MHVThingCollection alloc] initWithThing:thing]
+    [self createNewThings:@[thing]
                  recordId:recordId
-               completion:^(MHVThingKeyCollection * _Nullable thingKeys, NSError * _Nullable error)
+               completion:^(NSArray<MHVThingKey *> * _Nullable thingKeys, NSError * _Nullable error)
     {
-        completion([thingKeys firstKey], error);
+        completion([thingKeys firstObject], error);
     }];
 }
 
-- (void)createNewThings:(MHVThingCollection *)things
+- (void)createNewThings:(NSArray<MHVThing *> *)things
                recordId:(NSUUID *)recordId
-             completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion
+             completion:(void(^_Nullable)(NSArray<MHVThingKey *> *_Nullable thingKeys, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
@@ -456,7 +456,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
-         MHVThingKeyCollection *keys = [self thingKeyResultsFromResponse:response];
+         NSArray<MHVThingKey *> *keys = [self thingKeyResultsFromResponse:response];
          
 #ifdef THING_CACHE
          
@@ -531,20 +531,20 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         return;
     }
     
-    [self updateThings:[[MHVThingCollection alloc] initWithThing:thing]
+    [self updateThings:@[thing]
               recordId:recordId
-            completion:^(MHVThingKeyCollection * _Nullable thingKeys, NSError * _Nullable error)
+            completion:^(NSArray<MHVThingKey *> * _Nullable thingKeys, NSError * _Nullable error)
     {
         if (completion)
         {
-            completion(thingKeys ? thingKeys.firstKey : nil, error);
+            completion(thingKeys ? thingKeys.firstObject : nil, error);
         }
     }];
 }
 
-- (void)updateThings:(MHVThingCollection *)things
+- (void)updateThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
-          completion:(void(^_Nullable)(MHVThingKeyCollection *_Nullable thingKeys, NSError *_Nullable error))completion
+          completion:(void(^_Nullable)(NSArray<MHVThingKey *> *_Nullable thingKeys, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
@@ -582,7 +582,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
-         MHVThingKeyCollection *keys = [self thingKeyResultsFromResponse:response];
+         NSArray<MHVThingKey *> *keys = [self thingKeyResultsFromResponse:response];
          
 #ifdef THING_CACHE
          // If the connection is offline cache the pending request.
@@ -656,12 +656,12 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         return;
     }
     
-    [self removeThings:[[MHVThingCollection alloc] initWithThing:thing]
+    [self removeThings:@[thing]
               recordId:recordId
             completion:completion];
 }
 
-- (void)removeThings:(MHVThingCollection *)things
+- (void)removeThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
@@ -722,7 +722,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 #pragma mark - Cache Pending Thing Operations
 
 - (void)cachePendingMethod:(MHVMethod *)method
-                    things:(MHVThingCollection *)things
+                    things:(NSArray<MHVThing *> *)things
              operationType:(MHVThingOperationType)operationType
               networkError:(NSError *)networkError
                 completion:(void (^)(NSError *_Nullable error))completion
@@ -812,7 +812,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 }
 
 // Adds new things to the cache. *Note - These new things will have no keys and will be purged during the next sync.
-- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForAddPendingThings:(MHVThingCollection *)things
+- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForAddPendingThings:(NSArray<MHVThing *> *)things
 {
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
     {
@@ -840,7 +840,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 }
 
 // Updates existing things in the cache.
-- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForUpdatePendingThings:(MHVThingCollection *)things
+- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForUpdatePendingThings:(NSArray<MHVThing *> *)things
 {
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
     {
@@ -866,7 +866,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 }
 
 // Deletes things from the cache.
-- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForDeletePendingThings:(MHVThingCollection *)things
+- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForDeletePendingThings:(NSArray<MHVThing *> *)things
 {
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
     {
@@ -960,9 +960,9 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         return;
     }
     
-    [self refreshBlobUrlsForThings:[[MHVThingCollection alloc] initWithThing:thing]
+    [self refreshBlobUrlsForThings:@[thing]
                           recordId:recordId
-                        completion:^(MHVThingCollection *_Nullable resultThings, NSError *_Nullable error)
+                        completion:^(NSArray<MHVThing *> *_Nullable resultThings, NSError *_Nullable error)
      {
          if (error)
          {
@@ -978,9 +978,9 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
      }];
 }
 
-- (void)refreshBlobUrlsForThings:(MHVThingCollection *)things
+- (void)refreshBlobUrlsForThings:(NSArray<MHVThing *> *)things
                         recordId:(NSUUID *)recordId
-                      completion:(void (^)(MHVThingCollection *_Nullable things, NSError *_Nullable error))completion
+                      completion:(void (^)(NSArray<MHVThing *> *_Nullable things, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(things);
     MHVASSERT_PARAMETER(recordId);
@@ -1001,7 +1001,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         return;
     }
     
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[things thingIDs]];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[things arrayOfThingIds]];
     query.view.sections = MHVThingSection_Standard | MHVThingSection_Blobs;
     
     [self getThingsWithQuery:query
@@ -1374,12 +1374,13 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                                                    asClass:[MHVThingQueryResults class]];
 }
 
-- (MHVThingKeyCollection *)thingKeyResultsFromResponse:(MHVServiceResponse *)response
+- (NSArray<MHVThingKey *> *)thingKeyResultsFromResponse:(MHVServiceResponse *)response
 {
-    XReader *reader = [[XReader alloc] initFromString:response.infoXml];
-    return (MHVThingKeyCollection *)[NSObject newFromReader:reader
-                                                   withRoot:@"info"
-                                                    asClass:[MHVThingKeyCollection class]];
+    return (NSArray *)[NSObject newFromString:response.infoXml
+                                     withRoot:@"info"
+                               andElementName:@"thing-id"
+                                      asClass:[MHVThingKey class]
+                                andArrayClass:[NSMutableArray class]];
 }
 
 - (MHVBlobPutParameters *)blobPutParametersResultsFromResponse:(MHVServiceResponse *)response
@@ -1390,7 +1391,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
                                                    asClass:[MHVBlobPutParameters class]];
 }
 
-- (NSString *)bodyForQueryCollection:(MHVThingQueryCollection *)queries
+- (NSString *)bodyForQueryCollection:(NSArray<MHVThingQuery *> *)queries
 {
     XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
     
@@ -1409,7 +1410,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     return [writer newXmlString];
 }
 
-- (NSString *)bodyForThingCollection:(MHVThingCollection *)things
+- (NSString *)bodyForThingCollection:(NSArray<MHVThing *> *)things
 {
     XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
     
@@ -1428,7 +1429,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
     return [writer newXmlString];
 }
 
-- (NSString *)bodyForThingIdsFromThingCollection:(MHVThingCollection *)things
+- (NSString *)bodyForThingIdsFromThingCollection:(NSArray<MHVThing *> *)things
 {
     XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
     

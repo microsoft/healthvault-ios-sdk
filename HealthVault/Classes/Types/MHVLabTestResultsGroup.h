@@ -29,17 +29,11 @@
 @property (readwrite, nonatomic, strong) MHVCodableValue *groupName;
 @property (readwrite, nonatomic, strong) MHVOrganization *laboratory;
 @property (readwrite, nonatomic, strong) MHVCodableValue *status;
-@property (readwrite, nonatomic, strong) MHVLabTestResultsGroupCollection *subGroups;
-@property (readwrite, nonatomic, strong) MHVLabTestResultsDetailsCollection *results;
+@property (readwrite, nonatomic, strong) NSArray<MHVLabTestResultsGroup *> *subGroups;
+@property (readwrite, nonatomic, strong) NSArray<MHVLabTestResultsDetails *> *results;
 
 @property (readonly, nonatomic) BOOL hasSubGroups;
 
-- (void)addToCollection:(MHVLabTestResultsGroupCollection *)groups;
-
-@end
-
-@interface MHVLabTestResultsGroupCollection : MHVCollection<MHVLabTestResultsGroup *>
-
-- (void)addThingsToCollection:(MHVLabTestResultsGroupCollection *)groups;
+- (void)addToCollection:(NSMutableArray *)groups;
 
 @end

@@ -64,7 +64,7 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
     {
         if let personInfo = self.connection?.personInfo
         {
-            return Int(personInfo.records.count())
+            return Int(personInfo.records.count)
         }
         return 0
     }
@@ -79,12 +79,18 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
         
         if let personInfo = self.connection?.personInfo
         {
-            if let record = personInfo.records .object(at: UInt(indexPath.row))
+            
+            guard indexPath.row < personInfo.records.count else
             {
-                cell?.textLabel?.text = record.displayName;
-                
-                self.loadImage(cell, recordId: record.id)
+                return cell!
             }
+
+            let record = personInfo.records[indexPath.row]
+            
+            cell?.textLabel?.text = record.displayName;
+            
+            self.loadImage(cell, recordId: record.id)
+            
         }
         
         return cell!
@@ -130,18 +136,22 @@ class MHVRecordListViewController: UIViewController, UITableViewDelegate, UITabl
     {
         tableView .deselectRow(at: indexPath, animated: true)
         
-        guard let personInfo = self.connection?.personInfo else {
+        guard let personInfo = self.connection?.personInfo else
+        {
             return
         }
         
-        guard let record = personInfo.records .object(at: UInt(indexPath.row)) else {
+        guard indexPath.row < personInfo.records.count else
+        {
             return
         }
+        
+        let record = personInfo.records[indexPath.row]
         
         personInfo.selectedRecordID = record.id
         
         let typeListController = MHVTypeListViewController.init()
         
-        self.navigationController?.pushViewController(typeListController, animated: true)
+        self.navigationController?.pushViewController(typeListController, animated: true) 
     }
 }

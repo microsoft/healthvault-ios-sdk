@@ -47,6 +47,3 @@
 
 @end
 
-@interface MHVThingTypeOrderByPropertyCollection : MHVCollection<MHVThingTypeOrderByProperty *>
-
-@end

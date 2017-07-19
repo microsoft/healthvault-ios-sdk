@@ -24,7 +24,7 @@ static NSString *const c_element_trigger_type = @"trigger-type";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_trigger_type elements:self.triggerType.toArray];
+    [writer writeElementArray:c_element_trigger_type elements:self.triggerType];
 }
 
 - (void)deserialize:(XReader *)reader

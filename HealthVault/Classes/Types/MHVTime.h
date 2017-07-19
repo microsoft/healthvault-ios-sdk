@@ -82,6 +82,3 @@
 
 @end
 
-@interface MHVTimeCollection : MHVCollection<MHVTime *>
-
-@end

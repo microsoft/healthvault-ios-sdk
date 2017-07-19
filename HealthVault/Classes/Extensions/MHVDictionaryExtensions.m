@@ -21,6 +21,7 @@
 #import "MHVStringExtensions.h"
 #import "NSDate+DataModel.h"
 #import "MHVDateTimeBase.h"
+#import "NSArray+Utils.h"
 
 @implementation NSDictionary (MHVDictionaryExtensions)
 

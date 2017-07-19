@@ -18,6 +18,7 @@
 
 #import "MHVCommon.h"
 #import "MHVFamilyHistory.h"
+#import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"4a04fcc8-19c1-4d59-a8c7-2031a03f21de";
 static NSString *const c_typename = @"family-history";
@@ -27,11 +28,11 @@ static NSString *const c_element_relative = @"relative";
 
 @implementation MHVFamilyHistory
 
-- (MHVConditionEntryCollection *)conditions
+- (NSArray<MHVConditionEntry *> *)conditions
 {
     if (!_conditions)
     {
-        _conditions = [MHVConditionEntryCollection new];
+        _conditions = @[];
     }
 
     return _conditions;
@@ -39,7 +40,7 @@ static NSString *const c_element_relative = @"relative";
 
 - (BOOL)hasConditions
 {
-    return ![MHVCollection isNilOrEmpty:self.conditions];
+    return ![NSArray isNilOrEmpty:self.conditions];
 }
 
 - (MHVConditionEntry *)firstCondition
@@ -94,7 +95,7 @@ static NSString *const c_element_relative = @"relative";
     if (self)
     {
         _relative = relative;
-        [self.conditions addObject:condition];
+        _conditions = @[condition];
     }
     
     return self;
@@ -113,13 +114,15 @@ static NSString *const c_element_relative = @"relative";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_condition elements:self.conditions.toArray];
+    [writer writeElementArray:c_element_condition elements:self.conditions];
     [writer writeElement:c_element_relative content:self.relative];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.conditions = (MHVConditionEntryCollection *)[reader readElementArray:c_element_condition asClass:[MHVConditionEntry class] andArrayClass:[MHVConditionEntryCollection class]];
+    self.conditions = [reader readElementArray:c_element_condition
+                                       asClass:[MHVConditionEntry class]
+                                 andArrayClass:[NSMutableArray class]];
     self.relative = [reader readElement:c_element_relative asClass:[MHVRelative class]];
 }
 

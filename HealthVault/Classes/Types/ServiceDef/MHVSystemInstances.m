@@ -33,9 +33,9 @@ static NSString *const c_element_instance = @"instance";
 
 - (void)deserialize:(XReader *)reader
 {
-    self.instances = (MHVServiceInstanceCollection *)[reader readElementArray:c_element_instance
-                                                               asClass:[MHVServiceInstance class]
-                                                         andArrayClass:[MHVServiceInstanceCollection class]];
+    self.instances = [reader readElementArray:c_element_instance
+                                      asClass:[MHVServiceInstance class]
+                                andArrayClass:[NSMutableArray class]];
 }
 
 - (void)serializeAttributes:(XWriter *)writer
@@ -45,7 +45,7 @@ static NSString *const c_element_instance = @"instance";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_instance elements:self.instances.toArray];
+    [writer writeElementArray:c_element_instance elements:self.instances];
 }
 
 @end

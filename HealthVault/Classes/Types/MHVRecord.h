@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVRecordReference.h"
-#import "MHVCollection.h"
 
 // -------------------------
 //
@@ -51,16 +50,5 @@
 // (Optional) Such as NoAuthNeeded...
 //
 @property (readwrite, nonatomic, strong) NSString *authStatus;
-
-@end
-
-// -------------------------
-//
-// Collection of Records
-//
-// -------------------------
-@interface MHVRecordCollection : MHVCollection<MHVRecord *>
-
-- (NSInteger)indexOfRecordID:(NSUUID *)recordID;
 
 @end

@@ -274,7 +274,7 @@ describe(@"MHVThingCacheDatabase", ^
                                              allergy.name = [MHVCodableValue fromText:@"Allergy to Nuts"];
                                              allergy.allergenType = [MHVCodableValue fromText:@"food"];
                                              
-                                             MHVThingCollection *things = [[MHVThingCollection alloc] initWithThing:thing];
+                                             NSArray<MHVThing *> *things = @[thing];
                                              
                                              [database synchronizeThings:things
                                                                 recordId:kTestRecordId
@@ -340,6 +340,7 @@ describe(@"MHVThingCacheDatabase", ^
         context(@"when the resetDatabaseWithCompletion call is successful", ^
                 {
                     __block NSError *returnedResetDatabaseError;
+                    __block NSNumber *tasksFinished;
                     
                     beforeEach(^
                                {
@@ -361,6 +362,7 @@ describe(@"MHVThingCacheDatabase", ^
                                                   [database cacheStatusForRecordId:kTestRecordId
                                                                         completion:^(id<MHVCacheStatusProtocol> _Nonnull status, NSError *_Nullable error)
                                                    {
+                                                       tasksFinished = @(YES);
                                                        returnedStatus = status;
                                                        returnedCacheStatusError = error;
                                                    }];
@@ -371,24 +373,31 @@ describe(@"MHVThingCacheDatabase", ^
                     
                     it(@"should have nil for all errors", ^
                        {
+                           [[expectFutureValue(tasksFinished) shouldEventually] beNonNil];
+                           
                            [[expectFutureValue(returnedSetupDatabaseError) shouldEventually] beNil];
                            [[expectFutureValue(returnedSetupRecordsError) shouldEventually] beNil];
                            [[expectFutureValue(returnedResetDatabaseError) shouldEventually] beNil];
                        });
                     it(@"should have deleted the database file", ^
                        {
+                           [[expectFutureValue(tasksFinished) shouldEventually] beNonNil];
+                           
                            [[expectFutureValue(removedItemAtURL) shouldEventually] beNonNil];
                        });
                     it(@"should have deleted the password from the keychain", ^
                        {
+                           [[expectFutureValue(tasksFinished) shouldEventually] beNonNil];
+
                            [[expectFutureValue(theValue(deletedFromKeychain)) shouldEventually] beYes];
                        });
                     it(@"should delete the cache for the given record id", ^
                        {
+                           [[expectFutureValue(tasksFinished) shouldEventually] beNonNil];
+
                            [[expectFutureValue(returnedCacheStatusError) shouldEventually] beNonNil];
                            [[expectFutureValue(theValue(returnedCacheStatusError.code)) shouldEventually] equal:theValue(MHVErrorTypeCacheError)];
                            [[expectFutureValue(returnedCacheStatusError.localizedDescription) shouldEventually] equal:@"The operation couldn’t be completed. Record does not exist"];
-                           
                            
                            [[expectFutureValue(returnedStatus) shouldEventually] beNil];
                        });

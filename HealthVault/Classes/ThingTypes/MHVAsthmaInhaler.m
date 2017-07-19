@@ -49,7 +49,7 @@ static NSString *const c_element_alert = @"alert";
     [writer writeElement:c_element_min_daily_dose intValue:self.minDailyDoses];
     [writer writeElement:c_element_max_daily_dose intValue:self.maxDailyDoses];
     [writer writeElement:c_element_can_alert content:self.canAlert];
-    [writer writeElementArray:c_element_alert elements:self.alert.toArray];
+    [writer writeElementArray:c_element_alert elements:self.alert];
 }
 
 -(void)deserialize:(XReader *)reader
@@ -65,7 +65,9 @@ static NSString *const c_element_alert = @"alert";
     self.minDailyDoses = [reader readIntElement:c_element_min_daily_dose];
     self.maxDailyDoses = [reader readIntElement:c_element_max_daily_dose];
     self.canAlert = [reader readElement:c_element_can_alert asClass:[MHVBool class]];
-    self.alert = (MHVAlertCollection *)[reader readElementArray:c_element_alert asClass:[MHVAlert class] andArrayClass:[MHVAlertCollection class]];
+    self.alert = [reader readElementArray:c_element_alert
+                                  asClass:[MHVAlert class]
+                            andArrayClass:[NSMutableArray class]];
 }
 
 + (NSString *)typeID

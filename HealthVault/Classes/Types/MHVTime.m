@@ -345,17 +345,3 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
 
 @end
 
-@implementation MHVTimeCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVTime class];
-    }
-    
-    return self;
-}
-
-@end

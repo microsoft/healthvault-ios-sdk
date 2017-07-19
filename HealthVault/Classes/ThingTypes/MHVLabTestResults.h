@@ -23,7 +23,7 @@
 @interface MHVLabTestResults : MHVThingDataTyped
 
 @property (readwrite, nonatomic, strong) MHVApproxDateTime *when;
-@property (readwrite, nonatomic, strong) MHVLabTestResultsGroupCollection *labGroup;
+@property (readwrite, nonatomic, strong) NSArray<MHVLabTestResultsGroup *> *labGroup;
 @property (readwrite, nonatomic, strong) MHVOrganization *orderedBy;
 //
 // Convenience properties
@@ -33,7 +33,7 @@
 // Lab groups can be nested.
 // This returns all of them in a single collection
 //
-- (MHVLabTestResultsGroupCollection *)getAllGroups;
+- (NSArray<MHVLabTestResultsGroup *> *)getAllGroups;
 
 // -------------------------
 //

@@ -61,28 +61,12 @@ static NSString *const c_element_schedule = @"schedule";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_schedule elements:self.schedule.toArray];
+    [writer writeElementArray:c_element_schedule elements:self.schedule];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.schedule = (MHVTaskScheduleCollection *)[reader readElementArray:c_element_schedule asClass:[MHVTaskSchedule class] andArrayClass:[MHVTaskScheduleCollection class]];
-}
-
-@end
-
-
-@implementation MHVTaskScheduleCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVTaskSchedule class];
-    }
-    
-    return self;
+    self.schedule = [reader readElementArray:c_element_schedule asClass:[MHVTaskSchedule class] andArrayClass:[NSMutableArray class]];
 }
 
 @end

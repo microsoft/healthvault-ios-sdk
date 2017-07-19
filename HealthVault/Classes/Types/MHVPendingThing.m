@@ -51,34 +51,3 @@ static const xmlChar *x_element_edate = XMLSTRINGCONST("eff-date");
 }
 
 @end
-
-@implementation MHVPendingThingCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVPendingThing class];
-    }
-    return self;
-}
-
-- (void)removeThings:(MHVThingCollection *)things
-{
-    for (MHVThing *thing in things)
-    {
-        for (NSInteger i = 0; i < self.count; i++)
-        {
-            MHVPendingThing *pendingThing = self[i];
-            
-            if ([pendingThing.key.thingID isEqualToString:thing.key.thingID])
-            {
-                [self removeObjectAtIndex:i];
-                break;
-            }
-        }
-    }
-}
-
-@end

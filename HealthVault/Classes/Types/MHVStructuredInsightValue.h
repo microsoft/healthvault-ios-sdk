@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVCollection.h"
 
 @interface MHVStructuredInsightValue : MHVType
 
@@ -26,6 +25,3 @@
 
 @end
 
-@interface MHVStructuredInsightValueCollection : MHVCollection<MHVStructuredInsightValue *>
-
-@end

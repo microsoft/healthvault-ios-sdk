@@ -36,7 +36,7 @@ static NSString *const c_element_xpath = @"xpath";
 
 @interface MHVThingFilter ()
 
-@property (readwrite, nonatomic, strong)  MHVStringCollection *typeIDs;
+@property (readwrite, nonatomic, strong)  NSArray<NSString *> *typeIDs;
 
 @end
 
@@ -44,7 +44,7 @@ static NSString *const c_element_xpath = @"xpath";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_typeID elements:self.typeIDs.toArray];
+    [writer writeElementArray:c_element_typeID elements:self.typeIDs];
     
     if (self.state != MHVThingStateNone)
     {
@@ -88,11 +88,11 @@ static NSString *const c_element_xpath = @"xpath";
     self.xpath = [reader readStringElement:c_element_xpath];
 }
 
-- (MHVStringCollection *)typeIDs
+- (NSArray<NSString *> *)typeIDs
 {
     if (!_typeIDs)
     {
-        _typeIDs = [[MHVStringCollection alloc] init];
+        _typeIDs = @[];
     }
     
     return _typeIDs;
@@ -110,11 +110,23 @@ static NSString *const c_element_xpath = @"xpath";
     {
         if (typeID)
         {
-            _typeIDs = [MHVStringCollection new];
-            [_typeIDs addObject:typeID];
-            MHVCHECK_NOTNULL(_typeIDs);
+            _typeIDs = @[typeID];
         }
         
+        self.state = MHVThingStateActive;
+    }
+    return self;
+}
+
+- (instancetype)initWithTypeIDs:(NSArray<NSString *> *)typeIDs
+{
+    self = [super init];
+    if (self)
+    {
+        if (typeIDs)
+        {
+            _typeIDs = typeIDs;
+        }
         
         self.state = MHVThingStateActive;
     }
@@ -132,16 +144,3 @@ static NSString *const c_element_xpath = @"xpath";
 
 @end
 
-@implementation MHVThingFilterCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVThingFilter class];
-    }
-    return self;
-}
-
-@end

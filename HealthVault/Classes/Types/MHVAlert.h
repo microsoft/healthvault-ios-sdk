@@ -26,7 +26,3 @@
 @property (readwrite, nonatomic, strong) MHVTime *time;
 
 @end
-
-@interface MHVAlertCollection : MHVCollection<MHVAlert *>
-
-@end

@@ -24,7 +24,7 @@
 //
 // You can send multiple queries in a single MHVGetThingsTask
 //
-@property (readwrite, nonatomic, strong) MHVThingQueryResultCollectionInternal *results;
+@property (readwrite, nonatomic, strong) NSArray<MHVThingQueryResultInternal *> *results;
 @property (readonly, nonatomic) BOOL hasResults;
 @property (readonly, nonatomic, strong) MHVThingQueryResultInternal *firstResult;
 

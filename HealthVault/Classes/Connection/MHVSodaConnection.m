@@ -33,6 +33,7 @@
 #import "MHVSessionCredentialClientProtocol.h"
 #import "MHVAuthSession.h"
 #import "MHVClientFactory.h"
+#import "NSArray+Utils.h"
 
 static NSString *const kServiceInstanceKey = @"ServiceInstance";
 static NSString *const kApplicationCreationInfoKey = @"ApplicationCreationInfo";
@@ -354,9 +355,12 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
             return;
         }
         
-        MHVServiceInstanceCollection *instances = serviceDefinition.systemInstances.instances;
+        NSArray<MHVServiceInstance *> *instances = serviceDefinition.systemInstances.instances;
         
-        NSInteger index = [instances indexOfInstanceWithID:instanceId];
+        NSUInteger index = [instances indexOfObjectPassingTest:^BOOL(MHVServiceInstance *obj, NSUInteger idx, BOOL * _Nonnull stop)
+        {
+            return [obj.instanceID isEqualToString:instanceId];
+        }];
         
         if (index == NSNotFound)
         {
@@ -427,7 +431,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 
 - (void)getAuthorizedPersonInfoWithCompletion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
-    [self.personClient getAuthorizedPeopleWithCompletion:^(MHVPersonInfoCollection *_Nullable personInfos, NSError * _Nullable error)
+    [self.personClient getAuthorizedPeopleWithCompletion:^(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError * _Nullable error)
     {
          if (error)
          {
@@ -466,7 +470,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     }];
 }
 
-- (void)removeAuthRecords:(MHVRecordCollection *)records completion:(void(^_Nullable)(NSError *_Nullable error))completion
+- (void)removeAuthRecords:(NSArray<MHVRecord *> *)records completion:(void(^_Nullable)(NSError *_Nullable error))completion
 {
     if (records.count < 1)
     {
@@ -488,10 +492,11 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
             MHVASSERT_MESSAGE(error.localizedDescription);
         }
         
-        [records removeObject:record];
+        NSMutableArray *remainingRecords = [records mutableCopy];
+        [remainingRecords removeObject:record];
         
         // Recurse through the record collection until there are no more records.
-        [self removeAuthRecords:records completion:completion];
+        [self removeAuthRecords:remainingRecords completion:completion];
         
     }];
 }

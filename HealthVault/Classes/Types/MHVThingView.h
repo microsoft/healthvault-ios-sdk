@@ -27,7 +27,7 @@
  You can reduce the amount of data (by a small amount) by requesting only those sections you need for processing in your application.
  */
 @property (readwrite, nonatomic) MHVThingSection sections;
-@property (readonly, nonatomic) MHVStringCollection *transforms;
-@property (readonly, nonatomic) MHVStringCollection *typeVersions;
+@property (readwrite, nonatomic) NSArray<NSString *> *transforms;
+@property (readwrite, nonatomic) NSArray<NSString *> *typeVersions;
 
 @end

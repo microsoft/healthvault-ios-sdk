@@ -26,9 +26,9 @@ static MHVVocabularyIdentifier* s_vocabForMeals;
 //
 // Creates all 3 meals
 //
-+(MHVThingCollection *)createRandomForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomForDay:(NSDate *)date
 {
-    MHVThingCollection* things = [[MHVThingCollection alloc] init];
+    NSMutableArray<MHVThing *> *things = [[NSMutableArray alloc] init];
     //
     // Breakfast
     //
@@ -58,7 +58,7 @@ static MHVVocabularyIdentifier* s_vocabForMeals;
     return things;
 }
 
-+(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVDietaryIntake createRandomForDay:date]; // No metric specific units
 }

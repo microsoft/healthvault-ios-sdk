@@ -63,18 +63,3 @@ static NSString *const c_element_patient_responsibility = @"patient-responsibili
 }
 
 @end
-
-@implementation MHVClaimAmountsCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVClaimAmounts class];
-    }
-    
-    return self;
-}
-
-@end

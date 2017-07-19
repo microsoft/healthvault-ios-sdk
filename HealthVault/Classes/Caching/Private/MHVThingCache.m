@@ -33,6 +33,8 @@
 #import "MHVThingQueryResult.h"
 #import "MHVCacheStatusProtocol.h"
 #import "MHVPendingMethod.h"
+#import "NSArray+MHVThing.h"
+#import "NSArray+Utils.h"
 
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 
@@ -148,9 +150,9 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 
 #pragma mark - Cached Results
 
-- (void)cachedResultsForQueries:(MHVThingQueryCollection *)queries
+- (void)cachedResultsForQueries:(NSArray<MHVThingQuery *> *)queries
                        recordId:(NSUUID *)recordId
-                     completion:(void(^)(MHVThingQueryResultCollection *_Nullable resultCollection, NSError *_Nullable error))completion;
+                     completion:(void(^)(NSArray<MHVThingQueryResult *> *_Nullable resultCollection, NSError *_Nullable error))completion;
 {
     // No completion, don't need to do a query that won't be returned
     if (!completion)
@@ -207,10 +209,10 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
          // Run them in a sequence
          [MHVAsyncTask startSequenceOfTasks:tasks];
          
-         // When all results have been retrieved, build MHVThingQueryResultCollection
+         // When all results have been retrieved, build NSArray<MHVThingQueryResult *>
          [MHVAsyncTask waitForAll:tasks beforeBlock:^id(NSArray<MHVAsyncTaskResult *> *taskResults)
           {
-              MHVThingQueryResultCollection *resultCollection = [MHVThingQueryResultCollection new];
+              NSMutableArray<MHVThingQueryResult *> *combinedResults = [NSMutableArray new];
               for (MHVAsyncTaskResult *taskResult in taskResults)
               {
                   if (taskResult.error)
@@ -220,17 +222,20 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
                       return nil;
                   }
                   
-                  [resultCollection addObject:taskResult.result];
+                  if (taskResult.result)
+                  {
+                      [combinedResults addObject:taskResult.result];
+                  }
               }
               
-              if (resultCollection.count != queries.count)
+              if (combinedResults.count != queries.count)
               {
                   //No error, but results not equal to queries (not all quaries are cacheable?), don't return partial results
                   completion(nil, nil);
               }
               else
               {
-                  completion(resultCollection, nil);
+                  completion(combinedResults, nil);
               }
               
               return nil;
@@ -238,7 +243,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
      }];
 }
 
-- (void)addThings:(MHVThingCollection *)things
+- (void)addThings:(NSArray<MHVThing *> *)things
          recordId:(NSUUID *)recordId
        completion:(void (^)(NSError * _Nullable))completion
 {
@@ -246,7 +251,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     MHVASSERT_TRUE(things.count > 0);
     MHVASSERT_PARAMETER(recordId);
     
-    if ([MHVCollection isNilOrEmpty:things])
+    if ([NSArray isNilOrEmpty:things])
     {
         if (completion)
         {
@@ -271,7 +276,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
                            completion:completion];
 }
 
-- (void)updateThings:(MHVThingCollection *)things
+- (void)updateThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void (^)(NSError * _Nullable))completion
 {
@@ -279,7 +284,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     MHVASSERT_TRUE(things.count > 0);
     MHVASSERT_PARAMETER(recordId);
     
-    if ([MHVCollection isNilOrEmpty:things])
+    if ([NSArray isNilOrEmpty:things])
     {
         if (completion)
         {
@@ -304,7 +309,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
                            completion:completion];
 }
 
-- (void)deleteThings:(MHVThingCollection *)things
+- (void)deleteThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion
 {
@@ -312,7 +317,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     MHVASSERT_TRUE(things.count > 0);
     MHVASSERT_PARAMETER(recordId);
     
-    if ([MHVCollection isNilOrEmpty:things])
+    if ([NSArray isNilOrEmpty:things])
     {
         if (completion)
         {
@@ -330,12 +335,12 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
         return;
     }
     
-    [self.database deleteCachedThingsWithThingIds:things.thingIDs.toArray
+    [self.database deleteCachedThingsWithThingIds:[things arrayOfThingIds]
                                          recordId:recordId.UUIDString
                                        completion:completion];
 }
 
-- (void)fillThingsMetadata:(MHVThingCollection *)things created:(BOOL)created updated:(BOOL)updated
+- (void)fillThingsMetadata:(NSArray<MHVThing *> *)things created:(BOOL)created updated:(BOOL)updated
 {
     for (MHVThing *thing in things)
     {
@@ -392,7 +397,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     }];
 }
 
-- (void)addPendingThings:(MHVThingCollection *)things
+- (void)addPendingThings:(NSArray<MHVThing *> *)things
                 recordId:(NSUUID *)recordId
               completion:(void(^)(NSError *_Nullable error))completion
 {
@@ -400,7 +405,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     MHVASSERT_TRUE(things.count > 0);
     MHVASSERT_PARAMETER(recordId);
     
-    if ([MHVCollection isNilOrEmpty:things])
+    if ([NSArray isNilOrEmpty:things])
     {
         if (completion)
         {
@@ -473,7 +478,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
      }];
 }
 
-- (void)prepareCacheForRecords:(MHVRecordCollection *)records
+- (void)prepareCacheForRecords:(NSArray<MHVRecord *> *)records
                     completion:(void (^)(NSError *_Nullable error))completion
 {
     [self.database setupDatabaseWithCompletion:^(NSError * _Nullable error)
@@ -862,7 +867,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
     {
         id<MHVCacheStatusProtocol> status = [input.result objectForKey:kCacheStatusKey];
-        MHVRecordOperationCollection *operations = [input.result objectForKey:kRecordOperationsKey];
+        NSArray<MHVRecordOperation *> *operations = [input.result objectForKey:kRecordOperationsKey];
         
         // If there are bo operations there is no data to be synced, update the last sync dates and finish with a count of 0.
         if (!operations)
@@ -935,7 +940,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 
 #pragma mark - Sync Internal
 
-- (void)syncRecordOperations:(MHVRecordOperationCollection *)recordOperations
+- (void)syncRecordOperations:(NSArray<MHVRecordOperation *> *)recordOperations
                     recordId:(NSString *)recordId
              syncedItemCount:(NSInteger)syncedItemCount
               sequenceNumber:(NSInteger)sequenceNumber
@@ -946,7 +951,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     MHVASSERT_PARAMETER(recordId);
     MHVASSERT_PARAMETER(completion);
     
-    if ([MHVCollection isNilOrEmpty:recordOperations])
+    if ([NSArray isNilOrEmpty:recordOperations])
     {
         if (completion)
         {
@@ -971,13 +976,14 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     NSInteger latestSequenceNumber = [recordOperations lastObject].sequenceNumber;
     
     NSInteger totalItemsSynced = syncedItemCount;
+    NSMutableArray *mutableRecordOperations = [recordOperations mutableCopy];
     
     // Loop through operations to build sets of changes and deletes
-    while (syncThingIds.count + removeThingIds.count < count && recordOperations.count > 0)
+    while (syncThingIds.count + removeThingIds.count < count && mutableRecordOperations.count > 0)
     {
-        MHVRecordOperation *operation = [recordOperations firstObject];
+        MHVRecordOperation *operation = [mutableRecordOperations firstObject];
         
-        [recordOperations removeObject:operation];
+        [mutableRecordOperations removeObject:operation];
         
         if ([operation.operation isEqualToString:@"Delete"])
         {
@@ -988,7 +994,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
             [syncThingIds addObject:operation.thingId];
         }
         
-        MHVRecordOperation *nextOperation = [recordOperations firstObject];
+        MHVRecordOperation *nextOperation = [mutableRecordOperations firstObject];
         
         // Several operations may share the same sequence number. To ensure all operations for a
         // given sequence are included in the batch, we increment the batch sequence number only
@@ -1004,9 +1010,9 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     
     if (removeThingIds.count == 0 && syncThingIds.count == 0)
     {
-        if (recordOperations.count > 0)
+        if (mutableRecordOperations.count > 0)
         {
-            [self syncRecordOperations:recordOperations
+            [self syncRecordOperations:mutableRecordOperations
                               recordId:recordId
                        syncedItemCount:totalItemsSynced
                         sequenceNumber:batchSequenceNumber
@@ -1046,9 +1052,9 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
         {
             NSInteger totalSynced = syncedItemCount + totalItemsSynced;
             
-            if (recordOperations.count > 0)
+            if (mutableRecordOperations.count > 0)
             {
-                [self syncRecordOperations:recordOperations
+                [self syncRecordOperations:mutableRecordOperations
                                   recordId:recordId
                            syncedItemCount:totalSynced
                             sequenceNumber:batchSequenceNumber
@@ -1134,7 +1140,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
         return;
     }
     
-    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:[[MHVStringCollection alloc] initWithArray:thingIds]];
+    MHVThingQuery *query = [[MHVThingQuery alloc] initWithThingIDs:thingIds];
     query.shouldUseCachedResults = NO;
     
     __weak __typeof__(self)weakSelf = self;

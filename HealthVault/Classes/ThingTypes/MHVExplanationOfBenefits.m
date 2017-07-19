@@ -51,7 +51,7 @@ static NSString *const c_element_services = @"services";
     [writer writeElement:c_element_provider content:self.provider];
     [writer writeElement:c_element_currency content:self.currency];
     [writer writeElement:c_element_claim_totals content:self.claimTotals];
-    [writer writeElementArray:c_element_services elements:self.services.toArray];
+    [writer writeElementArray:c_element_services elements:self.services];
 }
 
 - (void)deserialize:(XReader *)reader
@@ -68,7 +68,7 @@ static NSString *const c_element_services = @"services";
     self.provider = [reader readElement:c_element_provider asClass:[MHVOrganization class]];
     self.currency = [reader readElement:c_element_currency asClass:[MHVCodableValue class]];
     self.claimTotals = [reader readElement:c_element_claim_totals asClass:[MHVClaimAmounts class]];
-    self.services = (MHVEOBServiceCollection *)[reader readElementArray:c_element_services asClass:[MHVEOBService class] andArrayClass:[MHVEOBServiceCollection class]];
+    self.services = [reader readElementArray:c_element_services asClass:[MHVEOBService class] andArrayClass:[NSMutableArray class]];
 }
 
 + (NSString *)typeID

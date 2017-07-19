@@ -78,17 +78,3 @@ static NSString *const c_element_number = @"number";
 
 @end
 
-@implementation MHVPhoneCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVPhone class];
-    }
-
-    return self;
-}
-
-@end

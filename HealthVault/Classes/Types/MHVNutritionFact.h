@@ -28,15 +28,11 @@
 
 @end
 
-@interface MHVNutritionFactCollection : MHVCollection<MHVNutritionFact *>
-
-@end
-
 @interface MHVAdditionalNutritionFacts : MHVType
 
 //
 // Required
 //
-@property (readwrite, nonatomic, strong) MHVNutritionFactCollection *facts;
+@property (readwrite, nonatomic, strong) NSArray<MHVNutritionFact *> *facts;
 
 @end

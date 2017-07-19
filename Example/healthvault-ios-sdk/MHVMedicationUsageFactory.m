@@ -20,9 +20,9 @@
 
 @implementation MHVDailyMedicationUsage (MHVFactoryMethods)
 
-+(MHVThingCollection *)createRandomForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomForDay:(NSDate *)date
 {
-    MHVThingCollection* things = [[MHVThingCollection alloc] init];
+    NSMutableArray<MHVThing *> *things = [[NSMutableArray alloc] init];
     
     MHVDate* hvDate = [MHVDate fromDate:date];
     //
@@ -37,7 +37,7 @@
     return things;
 }
 
-+(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVDailyMedicationUsage createRandomForDay:date];
 }

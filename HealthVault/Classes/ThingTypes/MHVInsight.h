@@ -18,7 +18,6 @@
 
 #import "MHVThing.h"
 #import "MHVString128.h"
-#import "MHVCollection.h"
 #import "MHVString1024.h"
 #import "MHVStructuredInsightValue.h"
 #import "MHVInsightMessages.h"
@@ -73,7 +72,7 @@
 //
 // (Optional) Represents a list of data types used as input to the insight calculation.
 //
-@property (readwrite, nonatomic, strong) MHVStringCollection *dataUsedPivot;
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *dataUsedPivot;
 //
 // (Optional) Describes how we got to this conclusion and why this Insight is relevant to the user.
 //
@@ -93,15 +92,15 @@
 //
 // (Optional) Tags associated with this insight. Can be used by clients for grouping, filtering etc.
 //
-@property (readwrite, nonatomic, strong) MHVString1024NWCollection *tags;
+@property (readwrite, nonatomic, strong) NSArray<MHVString1024NW *> *tags;
 //
 // (Optional) Values associated with the insight message. Each value will be a parameter to a format string.
 //
-@property (readwrite, nonatomic, strong) MHVStructuredInsightValueCollection *values;
+@property (readwrite, nonatomic, strong) NSArray<MHVStructuredInsightValue *> *values;
 //
 // (Optional) List of actions associated with this insight.
 //
-@property (readwrite, nonatomic, strong) MHVStructuredInsightValueCollection *links;
+@property (readwrite, nonatomic, strong) NSArray<MHVStructuredInsightValue *> *links;
 //
 // (Optional) Collection of message strings associated with this Insight.
 //

@@ -36,25 +36,25 @@
  A collection of Thing Ids for items to be fetched (Optional).
  @note thingIDs, keys, and clientIDs collections are mutually exclusive - A single query can only contain thingIDs OR keys OR clientIDs.
  */
-@property (readonly, nonatomic, strong) MHVStringCollection *thingIDs;
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *thingIDs;
 
 /**
  A collection of Thing keys for items to be fetched (Optional). A Thing key is an object containing the Thing Id and Version for a given item - See MHVThingKey.
  @note thingIDs, keys, and clientIDs collections are mutually exclusive - A single query can only contain thingIDs OR keys OR clientIDs.
  */
-@property (readonly, nonatomic, strong) MHVThingKeyCollection *keys;
+@property (readwrite, nonatomic, strong) NSArray<MHVThingKey *> *keys;
 
 /**
   A collection of Client Ids keys for items to be fetched (Optional).
  @note thingIDs, keys, and clientIDs collections are mutually exclusive - A single query can only contain thingIDs OR keys OR clientIDs.
  */
-@property (readonly, nonatomic, strong) MHVStringCollection *clientIDs;
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *clientIDs;
 
 /**
  A collection of Thing Filters that will be applied to the request (Optional).
  @note Filters are logically ANDed together within the collection. For example, if you add two filters, with the first filter having the type identifier for weight things and the other filter having the type identifier for height, you would get no results because there are no things that are of both types. However, if you specified one of the filters having the type identifier for weight and the other with a created date minimum, then you’d get all weight things that were created after the specified date.
  */
-@property (readonly, nonatomic, strong) MHVThingFilterCollection *filters;
+@property (readwrite, nonatomic, strong) NSArray<MHVThingFilter *> *filters;
 
 /**
  Sets the content and format of the thing data retrieved (Optional).
@@ -91,7 +91,7 @@
  @param filters The collection of MHVThingFilters to be applied to the request.
  @return A new instance of MHVThingQuery.
  */
-- (instancetype)initWithFilters:(MHVThingFilterCollection *)filters;
+- (instancetype)initWithFilters:(NSArray<MHVThingFilter *> *)filters;
 
 /**
  Initializes a new query and adds the given Thing Key to the keys collection.
@@ -107,7 +107,7 @@
  @param keys The collection of MHVThingKeys for the items to be fetched.
  @return A new instance of MHVThingQuery.
  */
-- (instancetype)initWithThingKeys:(MHVThingKeyCollection *)keys;
+- (instancetype)initWithThingKeys:(NSArray<MHVThingKey *> *)keys;
 
 /**
  Initializes a new query and adds the given Thing Id to the keys collection.
@@ -123,26 +123,7 @@
  @param ids The collection of unique identifiers for Things to be fetched.
  @return A new instance of MHVThingQuery.
  */
-- (instancetype)initWithThingIDs:(MHVStringCollection *)ids;
+- (instancetype)initWithThingIDs:(NSArray<NSString *> *)ids;
 
 @end
 
-@interface MHVThingQueryCollection : MHVCollection<MHVThingQuery *>
-
-/**
- Returns a query contained in the collection with the given name or nil if no queries are found with the name.
-
- @param name NSString the name of the query. *Case Sensitive.
- @return MHVThingQuery the thing query with the given name.
- */
-- (MHVThingQuery *)queryWithName:(NSString *)name;
-
-/**
- Returns the index of the MHVThingQuery with the given name or NSNotFound if no queries are found with the name.
- 
- @param name NSString the name of the query. *Case Sensitive.
- @return NSUInteger the index of the thing query with the given name.
- */
-- (NSUInteger)indexOfQueryWithName:(NSString *)name;
-
-@end

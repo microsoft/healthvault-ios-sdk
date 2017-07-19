@@ -137,39 +137,3 @@ static const xmlChar *x_element_version = XMLSTRINGCONST("version");
 
 @end
 
-@implementation MHVCodedValueCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVCodedValue class];
-    }
-    return self;
-}
-
-- (MHVCodedValue *)firstCode
-{
-    return [self objectAtIndex:0];
-}
-
-- (NSUInteger)indexOfCode:(MHVCodedValue *)code
-{
-    for (NSUInteger i = 0, count = self.count; i < count; ++i)
-    {
-        if ([[self objectAtIndex:i] isEqualToCodedValue:code])
-        {
-            return i;
-        }
-    }
-
-    return NSNotFound;
-}
-
-- (BOOL)containsCode:(MHVCodedValue *)code
-{
-    return [self indexOfCode:code] != NSNotFound;
-}
-
-@end

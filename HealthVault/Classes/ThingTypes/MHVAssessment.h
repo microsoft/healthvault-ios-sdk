@@ -41,7 +41,7 @@
 //
 // (Required)
 //
-@property (readwrite, nonatomic, strong) MHVAssessmentFieldCollection *results;
+@property (readwrite, nonatomic, strong) NSArray<MHVAssessmentField *> *results;
 
 // -------------------------
 //

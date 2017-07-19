@@ -18,7 +18,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "MHVArrayExtensions.h"
 #import "Kiwi.h"
 
 SPEC_BEGIN(SampleTest)

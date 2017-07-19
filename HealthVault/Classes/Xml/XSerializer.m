@@ -19,6 +19,7 @@
 #import "MHVCommon.h"
 #import "XSerializer.h"
 #import "MHVLogger.h"
+#import "NSArray+Utils.h"
 
 @implementation XSerializer
 
@@ -655,6 +656,12 @@
     const xmlChar *xName = [name toXmlString];
 
     MHVCHECK_OOM(xName);
+    
+    if (arrayClassObj == [NSArray class])
+    {
+        MHVASSERT_MESSAGE(@"Expected NSMutableArray class");
+        arrayClassObj = [NSMutableArray class];
+    }
 
     return [self readElementArrayWithXmlName:xName asClass:classObj andArrayClass:arrayClassObj];
 }
@@ -672,15 +679,15 @@
     return array;
 }
 
-- (MHVStringCollection *)readStringElementArray:(NSString *)name
+- (NSArray<NSString *> *)readStringElementArray:(NSString *)name
 {
-    MHVStringCollection *elements = nil;
+    NSMutableArray<NSString *> *elements = nil;
 
     while ([self isStartElementWithName:name])
     {
         if (elements == nil)
         {
-            elements = [[MHVStringCollection alloc] init];
+            elements = [[NSMutableArray alloc] init];
             MHVCHECK_OOM(elements);
         }
 

@@ -40,7 +40,7 @@
 //
 // (Optional)
 //
-@property (readwrite, nonatomic, strong) MHVCodedValueCollection *codes;
+@property (readwrite, nonatomic, strong) NSArray<MHVCodedValue *> *codes;
 //
 // Convenience properties
 //
@@ -89,6 +89,3 @@
 
 @end
 
-@interface MHVCodableValueCollection : MHVCollection<MHVCodableValue *>
-
-@end

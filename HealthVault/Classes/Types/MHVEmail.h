@@ -18,7 +18,6 @@
 
 #import "MHVType.h"
 #import "MHVBaseTypes.h"
-#import "MHVCollection.h"
 #import "MHVVocabulary.h"
 
 @interface MHVEmail : MHVType
@@ -61,11 +60,3 @@
 
 @end
 
-// -------------------------
-//
-// MHVEmailCollection
-//
-// -------------------------
-@interface MHVEmailCollection : MHVCollection<MHVEmail *>
-
-@end

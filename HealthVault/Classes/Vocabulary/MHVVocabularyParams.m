@@ -24,17 +24,17 @@ static NSString *const c_element_culture = @"fixed-culture";
 
 @interface MHVVocabularyParams ()
 
-@property (readwrite, nonatomic, strong) MHVVocabularyIdentifierCollection *vocabIDs;
+@property (readwrite, nonatomic, strong) NSArray<MHVVocabularyIdentifier *> *vocabIDs;
 
 @end
 
 @implementation MHVVocabularyParams
 
-- (MHVVocabularyIdentifierCollection *)vocabIDs
+- (NSArray<MHVVocabularyIdentifier *> *)vocabIDs
 {
     if (!_vocabIDs)
     {
-        _vocabIDs = [[MHVVocabularyIdentifierCollection alloc] init];
+        _vocabIDs = @[];
     }
     
     return _vocabIDs;
@@ -47,12 +47,12 @@ static NSString *const c_element_culture = @"fixed-culture";
     self = [super init];
     if (self)
     {
-        [_vocabIDs addObject:vocabID];
+        _vocabIDs = @[vocabID];
     }
     return self;
 }
 
-- (instancetype)initWithVocabIDs:(MHVVocabularyIdentifierCollection *)vocabIDs
+- (instancetype)initWithVocabIDs:(NSArray<MHVVocabularyIdentifier *> *)vocabIDs
 {
     MHVCHECK_NOTNULL(vocabIDs);
     
@@ -76,13 +76,13 @@ static NSString *const c_element_culture = @"fixed-culture";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_vocabkey elements:self.vocabIDs.toArray];
+    [writer writeElementArray:c_element_vocabkey elements:self.vocabIDs];
     [writer writeElement:c_element_culture boolValue:self.fixedCulture];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.vocabIDs = (MHVVocabularyIdentifierCollection *)[reader readElementArray:c_element_vocabkey asClass:[MHVVocabularyIdentifier class] andArrayClass:[MHVVocabularyIdentifierCollection class]];
+    self.vocabIDs = [reader readElementArray:c_element_vocabkey asClass:[MHVVocabularyIdentifier class] andArrayClass:[NSMutableArray class]];
     self.fixedCulture = [reader readBoolElement:c_element_culture];
 }
 

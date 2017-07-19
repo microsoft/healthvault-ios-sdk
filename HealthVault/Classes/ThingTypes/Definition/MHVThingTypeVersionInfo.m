@@ -39,25 +39,11 @@ static NSString* const c_element_property = @"property";
 - (void)deserialize:(XReader *)reader
 {
     NSString *orderByProperties = [reader readElementRaw:c_element_order_by_properties];
-    _orderByProperties = (MHVThingTypeOrderByPropertyCollection *)[XSerializer newFromString:orderByProperties
-                                                                                    withRoot:c_element_order_by_properties
-                                                                              andElementName:c_element_property
-                                                                                     asClass:[MHVThingTypeOrderByProperty class]
-                                                                               andArrayClass:[MHVThingTypeOrderByPropertyCollection class]];
-}
-
-@end
-
-@implementation MHVThingTypeVersionInfoCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVThingTypeVersionInfo class];
-    }
-    return self;
+    _orderByProperties = (NSArray *)[XSerializer newFromString:orderByProperties
+                                                      withRoot:c_element_order_by_properties
+                                                andElementName:c_element_property
+                                                       asClass:[MHVThingTypeOrderByProperty class]
+                                                 andArrayClass:[NSMutableArray class]];
 }
 
 @end

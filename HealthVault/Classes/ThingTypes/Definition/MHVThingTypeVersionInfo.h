@@ -18,7 +18,7 @@
 
 #import "MHVType.h"
 
-@class MHVThingTypeOrderByPropertyCollection;
+@class MHVThingTypeOrderByProperty;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,11 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The set of properties that the thing-type can be ordered by in the result.
  */
-@property (nonatomic, strong, readonly, nullable) MHVThingTypeOrderByPropertyCollection *orderByProperties;
-
-@end
-
-@interface MHVThingTypeVersionInfoCollection : MHVCollection<MHVThingTypeVersionInfo *>
+@property (nonatomic, strong, readonly, nullable) NSArray<MHVThingTypeOrderByProperty *> *orderByProperties;
 
 @end
 

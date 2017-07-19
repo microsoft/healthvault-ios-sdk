@@ -36,18 +36,3 @@ static NSString *const c_element_value = @"value";
 }
 
 @end
-
-@implementation MHVStructuredInsightValueCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVStructuredInsightValue class];
-    }
-    
-    return self;
-}
-
-@end

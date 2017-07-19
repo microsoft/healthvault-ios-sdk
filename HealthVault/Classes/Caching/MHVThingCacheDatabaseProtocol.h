@@ -20,7 +20,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class MHVThingCollection, MHVThingQuery, MHVThingQueryResult, MHVPendingMethod;
+@class MHVThing, MHVThingQuery, MHVThingQueryResult, MHVPendingMethod;
 @protocol MHVCacheStatusProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId the RecordId of the owner of the things.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if the creation process could not be completed.
  */
-- (void)createCachedThings:(MHVThingCollection *)things
+- (void)createCachedThings:(NSArray<MHVThing *> *)things
                   recordId:(NSString *)recordId
                 completion:(void (^)(NSError *_Nullable error))completion;
 
@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId the RecordId of the owner of the things.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if the creation process could not be completed.
  */
-- (void)updateCachedThings:(MHVThingCollection *)things
+- (void)updateCachedThings:(NSArray<MHVThing *> *)things
                   recordId:(NSString *)recordId
                 completion:(void (^)(NSError *_Nullable error))completion;
 
@@ -105,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param latestSequenceNumber the newest sequence number for all sequences.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSInteger updateItemCount the number of Things successfully syncronized. NSError error a detailed error if the synchronization process could not be completed.
  */
-- (void)synchronizeThings:(MHVThingCollection *)things
+- (void)synchronizeThings:(NSArray<MHVThing *> *)things
                  recordId:(NSString *)recordId
       batchSequenceNumber:(NSInteger)batchSequenceNumber
      latestSequenceNumber:(NSInteger)latestSequenceNumber
@@ -190,7 +190,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param recordId the RecordId of the owner of the things.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if the creation process could not be completed.
  */
-- (void)createPendingCachedThings:(MHVThingCollection *)things
+- (void)createPendingCachedThings:(NSArray<MHVThing *> *)things
                          recordId:(NSString *)recordId
                        completion:(void (^)(NSError *_Nullable error))completion;
 

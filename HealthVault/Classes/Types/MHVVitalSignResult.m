@@ -109,18 +109,3 @@ static NSString *const c_element_flag = @"flag";
 }
 
 @end
-
-@implementation MHVVitalSignResultCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVVitalSignResult class];
-    }
-
-    return self;
-}
-
-@end

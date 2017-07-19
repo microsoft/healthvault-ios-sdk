@@ -40,7 +40,7 @@ static NSString *const c_element_recurrence = @"recurrence";
     [writer writeElement:c_element_end_date content:self.endDate];
     [writer writeElement:c_element_associated_type_info content:self.associatedTypeInfo];
     [writer writeElement:c_element_target_range content:self.targetRange];
-    [writer writeElementArray:c_element_goal_additional_ranges elements:self.goalAdditionalRanges.toArray];
+    [writer writeElementArray:c_element_goal_additional_ranges elements:self.goalAdditionalRanges];
     [writer writeElement:c_element_recurrence content:self.recurrence];
 }
 
@@ -52,7 +52,7 @@ static NSString *const c_element_recurrence = @"recurrence";
     self.endDate = [reader readElement:c_element_end_date asClass:[MHVApproxDateTime class]];
     self.associatedTypeInfo = [reader readElement:c_element_associated_type_info asClass:[MHVGoalAssociatedTypeInfo class]];
     self.targetRange = [reader readElement:c_element_target_range asClass:[MHVGoalRangeType class]];
-    self.goalAdditionalRanges = (MHVGoalRangeTypeCollection *)[reader readElementArray:c_element_goal_additional_ranges asClass:[MHVGoalRangeType class] andArrayClass:[MHVGoalRangeTypeCollection class]];
+    self.goalAdditionalRanges = [reader readElementArray:c_element_goal_additional_ranges asClass:[MHVGoalRangeType class] andArrayClass:[NSMutableArray class]];
     self.recurrence = [reader readElement:c_element_recurrence asClass:[MHVGoalRecurrence class]];
 }
 

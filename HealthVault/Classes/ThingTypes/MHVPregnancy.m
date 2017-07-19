@@ -37,7 +37,7 @@ static NSString *const c_element_delivery = @"delivery";
     [writer writeElement:c_element_conception_method content:self.conceptionMethod];
     [writer writeElement:c_element_fetus_count content:self.feteusCount];
     [writer writeElement:c_element_gestational_age content:self.gestationalAge];
-    [writer writeElementArray:c_element_delivery elements:self.delivery.toArray];
+    [writer writeElementArray:c_element_delivery elements:self.delivery];
 }
 
 - (void)deserialize:(XReader *)reader
@@ -47,7 +47,7 @@ static NSString *const c_element_delivery = @"delivery";
     self.conceptionMethod = [reader readElement:c_element_conception_method asClass:[MHVCodableValue class]];
     self.feteusCount = [reader readElement:c_element_fetus_count asClass:[MHVNonNegativeInt class]];
     self.gestationalAge = [reader readElement:c_element_gestational_age asClass:[MHVPositiveInt class]];
-    self.delivery = (MHVDeliveryCollection *)[reader readElementArray:c_element_delivery asClass:[MHVDelivery class] andArrayClass:[MHVDeliveryCollection class]];
+    self.delivery = [reader readElementArray:c_element_delivery asClass:[MHVDelivery class] andArrayClass:[NSMutableArray class]];
 }
 
 + (NSString *)typeID

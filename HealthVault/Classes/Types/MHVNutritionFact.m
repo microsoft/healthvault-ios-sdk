@@ -40,21 +40,6 @@ static NSString *const c_element_nutritionFact = @"nutrition-fact";
 
 @end
 
-@implementation MHVNutritionFactCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVNutritionFact class];
-    }
-    
-    return self;
-}
-
-@end
-
 @implementation MHVAdditionalNutritionFacts
 
 - (MHVClientResult *)validate
@@ -68,14 +53,14 @@ static NSString *const c_element_nutritionFact = @"nutrition-fact";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElementArray:c_element_nutritionFact elements:self.facts.toArray];
+    [writer writeElementArray:c_element_nutritionFact elements:self.facts];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.facts = (MHVNutritionFactCollection *)[reader readElementArray:c_element_nutritionFact
-                                                                asClass:[MHVNutritionFact class]
-                                                          andArrayClass:[MHVNutritionFactCollection class]];
+    self.facts = [reader readElementArray:c_element_nutritionFact
+                                  asClass:[MHVNutritionFact class]
+                            andArrayClass:[NSMutableArray class]];
 }
 
 @end

@@ -20,19 +20,19 @@
 
 @implementation MHVExercise (MHVFactoryMethods)
 
-+(MHVThingCollection *) createRandomForDay:(NSDate *) date
++(NSArray<MHVThing *> *) createRandomForDay:(NSDate *) date
 {
     return [MHVExercise createRandomForDay:date metric:FALSE];
 }
 
-+(MHVThingCollection *)createRandomMetricForDay:(NSDate *)date
++(NSArray<MHVThing *> *)createRandomMetricForDay:(NSDate *)date
 {
     return [MHVExercise createRandomForDay:date metric:TRUE];
 }
 
-+(MHVThingCollection *)createRandomForDay:(NSDate *)date metric:(BOOL)metric
++(NSArray<MHVThing *> *)createRandomForDay:(NSDate *)date metric:(BOOL)metric
 {
-    MHVThingCollection* things = [[MHVThingCollection alloc] init];
+    NSMutableArray<MHVThing *> *things = [[NSMutableArray alloc] init];
     //
     // Create 2 entries per day - MOST days. This person really likes to exercise!
     // 

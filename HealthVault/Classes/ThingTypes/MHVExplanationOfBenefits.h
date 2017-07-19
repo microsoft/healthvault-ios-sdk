@@ -81,6 +81,6 @@
 //
 // (Required) The service included in this claim.
 //
-@property (readwrite, nonatomic, strong) MHVEOBServiceCollection *services;
+@property (readwrite, nonatomic, strong) NSArray<MHVEOBService *> *services;
 
 @end

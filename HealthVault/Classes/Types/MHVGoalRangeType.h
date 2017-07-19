@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVCollection.h"
 #import "MHVCodableValue.h"
 #import "MHVGeneralMeasurement.h"
 
@@ -30,6 +29,3 @@
 
 @end
 
-@interface MHVGoalRangeTypeCollection : MHVCollection<MHVGoalRangeType *>
-
-@end

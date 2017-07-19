@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVType.h"
-#import "MHVCollection.h"
 #import "MHVStringNZNW.h"
 #import "MHVBool.h"
 
@@ -25,16 +24,12 @@
 
 @property (readwrite, nonatomic, strong) MHVStringNZNW *elementXPath;
 @property (readwrite, nonatomic, strong) MHVBool *isNegated;
-@property (readwrite, nonatomic, strong) MHVStringCollection *elementValues;
-
-@end
-
-@interface MHVTaskTargetEventCollection : MHVCollection<MHVTaskTargetEvent *>
+@property (readwrite, nonatomic, strong) NSArray<NSString *> *elementValues;
 
 @end
 
 @interface MHVTaskTargetEvents : MHVType
 
-@property (readwrite, nonatomic, strong) MHVTaskTargetEventCollection *targetEvent;
+@property (readwrite, nonatomic, strong) NSArray<MHVTaskTargetEvent *> *targetEvent;
 
 @end

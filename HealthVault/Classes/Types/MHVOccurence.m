@@ -78,17 +78,3 @@ static NSString *const c_element_minutes = @"minutes";
 
 @end
 
-@implementation MHVOccurenceCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVOccurence class];
-    }
-
-    return self;
-}
-
-@end

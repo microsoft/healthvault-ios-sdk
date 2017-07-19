@@ -28,7 +28,7 @@ static NSString *const c_element_record_operation = @"record-operation";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_latest_sequence intValue:(int)self.latestRecordOperationSequenceNumber];
-    [writer writeElementArray:c_element_operations elements:self.operations.toArray];
+    [writer writeElementArray:c_element_operations elements:self.operations];
 }
 
 - (void)deserialize:(XReader *)reader
@@ -37,10 +37,10 @@ static NSString *const c_element_record_operation = @"record-operation";
     
     if ([reader isStartElementWithName:c_element_operations])
     {
-        self.operations = (MHVRecordOperationCollection *)[reader readElementArray:c_element_operations
-                                                                         thingName:c_element_record_operation
-                                                                           asClass:[MHVRecordOperation class]
-                                                                     andArrayClass:[MHVRecordOperationCollection class]];
+        self.operations = [reader readElementArray:c_element_operations
+                                         thingName:c_element_record_operation
+                                           asClass:[MHVRecordOperation class]
+                                     andArrayClass:[NSMutableArray class]];
     }
 }
 

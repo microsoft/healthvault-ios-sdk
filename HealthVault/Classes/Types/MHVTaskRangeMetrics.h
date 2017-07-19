@@ -19,7 +19,6 @@
 #import "MHVType.h"
 #import "MHVStringNZNW.h"
 #import "MHVDouble.h"
-#import "MHVCollection.h"
 
 @interface MHVTaskRangeMetrics : MHVType
 
@@ -29,6 +28,3 @@
 
 @end
 
-@interface MHVTaskRangeMetricsCollection : MHVCollection<MHVTaskRangeMetrics *>
-
-@end

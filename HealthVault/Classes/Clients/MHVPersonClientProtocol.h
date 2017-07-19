@@ -18,7 +18,7 @@
 
 #import "MHVClientProtocol.h"
 
-@class MHVPersonInfo, MHVPersonInfoCollection, MHVRecordCollection;
+@class MHVPersonInfo, MHVRecord;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,21 +48,21 @@ NS_ASSUME_NONNULL_BEGIN
  * Gets information about people authorized for an application.
  *
  * @param completion Envoked when the operation completes.
- *        MHVPersonInfoCollection of MHVPersonInfo objects representing people authorized for the application.
+ *        NSArray<MHVPersonInfo *> of MHVPersonInfo objects representing people authorized for the application.
  *        NSError object will be nil if there is no error when performing the operation.
  */
-- (void)getAuthorizedPeopleWithCompletion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion;
+- (void)getAuthorizedPeopleWithCompletion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 
 /**
  * Gets information about people authorized for an application whose authorization was created after a date.
  *
  * @param authorizationsCreatedSince Get authorized people whose authorization was created after date
  * @param completion Envoked when the operation completes. 
- *        MHVPersonInfoCollection array of MHVPersonInfo objects representing people authorized for the application.
+ *        NSArray<MHVPersonInfo *> array of MHVPersonInfo objects representing people authorized for the application.
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getAuthorizedPeopleWithAuthorizationsCreatedSince:(NSDate *)authorizationsCreatedSince
-                                               completion:(void(^)(MHVPersonInfoCollection *_Nullable personInfos, NSError *_Nullable error))completion;
+                                               completion:(void(^)(NSArray<MHVPersonInfo *> *_Nullable personInfos, NSError *_Nullable error))completion;
 
 /**
  * Gets information about current person for an application.
@@ -78,11 +78,11 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param recordIds Array of recordIds to retrieve recordInfo
  * @param completion Envoked when the operation completes.
- *        MHVRecordCollection the records for the IDs if successful
+ *        NSArray<MHVRecord *> the records for the IDs if successful
  *        NSError object will be nil if there is no error when performing the operation.
  */
 - (void)getAuthorizedRecordsWithRecordIds:(NSArray<NSUUID *> *)recordIds
-                               completion:(void(^)(MHVRecordCollection *_Nullable records, NSError *_Nullable error))completion;
+                               completion:(void(^)(NSArray<MHVRecord *> *_Nullable records, NSError *_Nullable error))completion;
 
 @end
 

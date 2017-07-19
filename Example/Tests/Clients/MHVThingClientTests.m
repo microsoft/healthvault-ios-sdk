@@ -38,7 +38,7 @@ describe(@"MHVThingClient", ^
     __block MHVServiceResponse *serviceResponse;
     __block NSError *serviceError;
     
-    __block MHVThingQueryResultCollection *cachedResultCollection;
+    __block NSArray<MHVThingQueryResult *> *cachedResultCollection;
     __block NSError *cacheError;
     
     __block NSError *requestError;
@@ -69,7 +69,7 @@ describe(@"MHVThingClient", ^
     KWMock<MHVThingCacheProtocol> *cache = [KWMock mockForProtocol:@protocol(MHVThingCacheProtocol)];
     [cache stub:@selector(cachedResultsForQueries:recordId:completion:) withBlock:^id(NSArray *params)
     {
-        void (^completion)(MHVThingQueryResultCollection * _Nullable resultCollection, NSError *_Nullable error) = params[2];
+        void (^completion)(NSArray<MHVThingQueryResult *> * _Nullable resultCollection, NSError *_Nullable error) = params[2];
         completion(cachedResultCollection, cacheError);
         return nil;
     }];
@@ -250,8 +250,8 @@ describe(@"MHVThingClient", ^
     
     context(@"when getThingsWithQueries is called with multiple queries that have various cache requirements and is successful", ^
             {
-                __block MHVThingQueryCollection *queries;
-                __block MHVThingQueryResultCollection *resultsCollection;
+                __block NSArray<MHVThingQuery *> *queries;
+                __block NSArray<MHVThingQueryResult *> *resultsCollection;
                 
                 beforeEach(^
                 {
@@ -270,7 +270,7 @@ describe(@"MHVThingClient", ^
                     MHVThingQuery *query4 = [MHVThingQuery new];
                     query4.name = @"query4";
                     
-                    queries = [[MHVThingQueryCollection alloc] initWithArray:@[query1, query2, query3, query4]];
+                    queries = @[query1, query2, query3, query4];
                     
                     // Mock the service response
                     NSString *response = @"<response><status><code>0</code></status><wc:info xmlns:wc=\"urn:com.microsoft.wc.methods.response.GetThings3\"><group name=\"query3\"></group><group name=\"query1\"></group></wc:info></response>";
@@ -291,13 +291,13 @@ describe(@"MHVThingClient", ^
                                                                                       count:0
                                                                              isCachedResult:query4.shouldUseCachedResults];
                     
-                    cachedResultCollection = [[MHVThingQueryResultCollection alloc]initWithArray:@[result4, result2]];
+                    cachedResultCollection = @[result4, result2];
 
                     
                     // Make the request
                     [thingClient getThingsWithQueries:queries
                                              recordId:recordId
-                                           completion:^(MHVThingQueryResultCollection *_Nullable results, NSError *_Nullable error)
+                                           completion:^(NSArray<MHVThingQueryResult *> *_Nullable results, NSError *_Nullable error)
                      {
                          resultsCollection = results;
                          requestError = error;

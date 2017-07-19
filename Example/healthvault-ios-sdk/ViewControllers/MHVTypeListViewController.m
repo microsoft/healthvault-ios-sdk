@@ -93,7 +93,11 @@
 
 - (NSString *)personName
 {
-    NSUInteger index = [self.connection.personInfo.records indexOfRecordID:self.connection.personInfo.selectedRecordID];
+    NSUInteger index = [self.connection.personInfo.records indexOfObjectPassingTest:^BOOL(MHVRecord * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+    {
+        return [obj.ID isEqual:self.connection.personInfo.selectedRecordID];
+    }];
+    
     if (index != NSNotFound)
     {
         return self.connection.personInfo.records[index].displayName;

@@ -82,17 +82,3 @@ static NSString *const c_element_group = @"group";
 }
 
 @end
-
-@implementation MHVAssessmentFieldCollection
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.type = [MHVAssessmentField class];
-    }
-    return self;
-}
-
-@end

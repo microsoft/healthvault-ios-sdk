@@ -23,10 +23,10 @@
 
 @interface MHVVocabularyParams : MHVType
 
-@property (readonly, nonatomic, strong) MHVVocabularyIdentifierCollection *vocabIDs;
+@property (readonly, nonatomic, strong) NSArray<MHVVocabularyIdentifier *> *vocabIDs;
 @property (readwrite, nonatomic) BOOL fixedCulture;
 
 - (instancetype)initWithVocabID:(MHVVocabularyIdentifier *)vocabID;
-- (instancetype)initWithVocabIDs:(MHVVocabularyIdentifierCollection *)vocabIDs;
+- (instancetype)initWithVocabIDs:(NSArray<MHVVocabularyIdentifier *> *)vocabIDs;
 
 @end

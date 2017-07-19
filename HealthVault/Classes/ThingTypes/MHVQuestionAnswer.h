@@ -38,12 +38,12 @@
 // (Optional)
 // Was this a multiple choice question. If so, useful to capture the original choices
 //
-@property (readwrite, nonatomic, strong) MHVCodableValueCollection *answerChoices;
+@property (readwrite, nonatomic, strong) NSArray<MHVCodableValue *> *answerChoices;
 //
 // (Optional)
 // One or more answers
 //
-@property (readwrite, nonatomic, strong) MHVCodableValueCollection *answers;
+@property (readwrite, nonatomic, strong) NSArray<MHVCodableValue *> *answers;
 //
 // Convenience Properties
 //

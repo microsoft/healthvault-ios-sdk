@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVClientResult.h"
-#import "MHVCollection.h"
 #import "XLib.h"
 
 @interface MHVType : XSerializableType

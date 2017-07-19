@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
-#import "MHVCollection.h"
 #import "XReader.h"
 #import "XWriter.h"
 
@@ -108,7 +107,7 @@
 - (NSMutableArray *)readElementArray:(NSString *)name asClass:(Class)classObj andArrayClass:(Class)arrayClassObj;
 - (NSMutableArray *)readElementArray:(NSString *)name thingName:(NSString *)thingName asClass:(Class)classObj andArrayClass:(Class)arrayClassObj;
 
-- (MHVStringCollection *)readStringElementArray:(NSString *)name;
+- (NSArray<NSString *> *)readStringElementArray:(NSString *)name;
 - (NSMutableArray<NSUUID *> *)readUUIDElementArray:(NSString *)name;
 
 - (NSMutableArray *)readRawElementArray:(NSString *)name;

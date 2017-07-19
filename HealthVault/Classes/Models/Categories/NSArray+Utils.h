@@ -20,8 +20,6 @@
 
 @interface NSArray (Utils)
 
-- (NSArray *)arrayOfObjectsPassingTest:(BOOL (^)(id obj, NSUInteger idx, BOOL *stop))predicate;
-
 /**
  * Converts the element in the current NSArray to another type, and returns a NSArray containing the converted elements.
  */
@@ -29,26 +27,8 @@
 
 - (NSArray *)map:(id (^)(id obj, NSUInteger idx, BOOL *stop))mapper;
 
-- (double)averageOfValues;
-
-- (NSArray *)arrayWithUniqueValues;
-
-- (NSArray *)arrayAlphabeticallySortedAscending:(BOOL)ascending;
-
-- (NSArray *)arrayWithSortedValuesUsingSortDescriptor:(NSSortDescriptor *)sd;
-
-- (NSArray *)arrayWithUniqueAlphabeticallySortedValues:(BOOL)ascending;
-
-- (NSArray *)arrayByRemovingObject:(id)object;
-
-/**
- * Perform a case insensitive search for 'aString' on an array of NSString objects.
- * Returns :
- *     index of 'aString' if found, 
- *     else returns 'NSNotFound'
- */
-- (NSUInteger)indexOfCaseInsensitiveString:(NSString *)aString;
-
 - (BOOL)areAllObjectsOfClass:(Class)theClass;
+
++ (BOOL)isNilOrEmpty:(NSArray *)array;
 
 @end

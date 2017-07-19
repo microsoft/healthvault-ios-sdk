@@ -55,7 +55,7 @@
 //
 // (Optional) Things related to the MHVThing
 //
-@property (readwrite, nonatomic, strong) MHVRelatedThingCollection *relatedThings;
+@property (readwrite, nonatomic, strong) NSArray<MHVRelatedThing *> *relatedThings;
 //
 // (Optional) Application injected ID
 //
