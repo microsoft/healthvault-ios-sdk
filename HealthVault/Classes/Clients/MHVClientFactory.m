@@ -30,6 +30,7 @@
 #import "MHVThingCacheConfiguration.h"
 #import "MHVThingCache.h"
 #import "MHVThingCacheDatabase.h"
+#import "MHVNetworkObserver.h"
 #endif
 
 @implementation MHVClientFactory
@@ -50,6 +51,7 @@
 }
 
 - (id<MHVThingClientProtocol>)thingClientWithConnection:(id<MHVConnectionProtocol>)connection
+                                          configuration:(MHVConfiguration *)configuration
 {
 #ifdef THING_CACHE
     //Use database from configuration, or create MHVThingCacheDatabase
@@ -66,6 +68,7 @@
     
     MHVThingCache *thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
                                                                   connection:connection
+                                                             networkObserver:[MHVNetworkObserver observerWithHostName:configuration.defaultHealthVaultUrl.host]
                                                           automaticStartStop:YES];
         
     return [[MHVThingClient alloc] initWithConnection:connection cache:thingCache];

@@ -171,7 +171,8 @@ static NSInteger kInternalServerError = 500;
 {
     if (!_thingClient)
     {
-        _thingClient = [self.clientFactory thingClientWithConnection:self];
+        _thingClient = [self.clientFactory thingClientWithConnection:self
+                                                       configuration:self.configuration];
     }
     
     return _thingClient;

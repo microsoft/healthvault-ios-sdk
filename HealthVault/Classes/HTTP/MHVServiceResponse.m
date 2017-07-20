@@ -20,6 +20,7 @@
 #import "MHVServiceResponse.h"
 #import "MHVResponse.h"
 #import "NSError+MHVError.h"
+#import "MHVErrorConstants.h"
 #import "MHVHttpServiceResponse.h"
 
 @implementation MHVServiceResponse
@@ -82,7 +83,11 @@
             
             if (error)
             {
-                self.error = [NSError error:[NSError MHVUnknownError] withDescription:[NSString stringWithFormat:@"%@\n%@\n%@",error.message, error.context, error.errorInfo]];
+                self.error = [NSError errorWithDomain:kMHVErrorDomain
+                                                 code:status.code
+                                             userInfo:@{
+                                                        NSLocalizedFailureReasonErrorKey : [NSString stringWithFormat:@"%@\n%@\n%@",error.message, error.context, error.errorInfo]
+                                                        }];
             }
         }
     }

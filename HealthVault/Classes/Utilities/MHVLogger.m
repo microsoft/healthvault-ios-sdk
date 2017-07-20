@@ -34,7 +34,7 @@
 	
 #if (TARGET_IPHONE_SIMULATOR == 0 ) // real device
 	
-	[MHVLogger redirectConsoleLogToDocumentFolder];
+//	[MHVLogger redirectConsoleLogToDocumentFolder];
 	
 #endif
 }

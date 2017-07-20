@@ -152,23 +152,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateLastCompletedSyncDate:(NSDate *_Nullable)lastCompletedSyncDate
            lastCacheConsistencyDate:(NSDate *_Nullable)lastCacheConsistencyDate
                      sequenceNumber:(NSInteger)sequenceNumber
-                           recordId:(NSString *_Nullable)recordId
+                           recordId:(NSString *)recordId
                          completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  This method is called if a CREATE, UPDATE or DELETE operation is attempted while there is no internet connection. If The MHVPendingMethod is cached it will be re-issued at the start of the next synchronization.
 
- @param pendingMethod MHVPendingMethod the method to be cached.
- @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if caching the method fails.
+ @param pendingMethods NSArray<MHVPendingMethod *> a collection of methods to be cached.
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if caching the methods fails.
  */
-- (void)cachePendingMethod:(MHVPendingMethod *)pendingMethod
+- (void)cachePendingMethods:(NSArray<MHVPendingMethod *> *)pendingMethods
                 completion:(void (^)(NSError *_Nullable error))completion;
 
 /**
  This method is called at the start of the synchronization process to re-issue any MHVPendingMethod requests.
  @note The synchronization process starts by re-issuing pending methods in the original order they were originally issued. Once all pending methods are processed, DELETEs that occured in HealthVault are processed and finally, CREATEs and UPDATEs
  
- @param recordId the RecordId of the owner of the pending methods.
+ @param recordId The record Id used to identify a specific cache of pending methods.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSArray<MHVPendingMethod *> pendingMethods an array of pending methods to be processed. NSError error a detailed error if the fetch process could not be completed.
  */
 - (void)fetchPendingMethodsForRecordId:(NSString *)recordId
@@ -187,19 +187,27 @@ NS_ASSUME_NONNULL_BEGIN
  This method is called AFTER a call to createNewThing:recordId:completion: or createNewThings:recordId:completion: occurs and the internet connection is offline. The Thing(s) in the collection should be cached with an identifier that can be used to fetch and delete all 'pending' Things once the internet connection is restored and the database is synced.
  
  @param things A collection of new things to be added to the cache database.
- @param recordId the RecordId of the owner of the things.
+ @param recordId The record Id used to identify a specific cache of pending Things.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if the creation process could not be completed.
  */
 - (void)createPendingCachedThings:(NSArray<MHVThing *> *)things
                          recordId:(NSString *)recordId
                        completion:(void (^)(NSError *_Nullable error))completion;
 
+/**
+ This called before caching any pending method. If multiple operations are performed on a 'placeholder' Thing before the internet connection is restored, previous pending methods may be updated or deleted.
+
+ @param recordId The record Id used to identify a specific cache of pending Things.
+ @param completion MUST be envoked when the operation is complete or an error occurs. NSArray<MHVThing *> things An array of ALL pending Things for a given record id. NSError error A detailed error if the creation process could not be completed.
+ */
+- (void)fetchPendingThingsForRecordId:(NSString *)recordId
+                           completion:(void (^)(NSArray<MHVThing *> *_Nullable things, NSError *_Nullable error))completion;
 
 /**
  This method is called after the database is fully synced to clean-up 'placeholder' Things that may have been created if createNewThing:recordId:completion: or createNewThings:recordId:completion: was called when there was no connection to the internet.
  @note If a create things method call is made when there is no connection to the internet, a pending method will be saved by calling cachePendingMethod: and 'placeholder' Things will be saved by calling createPendingCachedThings:recordId:completion:.
  
- @param recordId NSString The RecordId of the owner of the pending things.
+ @param recordId NSString The record Id used to identify a specific cache of pending Things.
  @param completion MUST be envoked when the operation is complete or an error occurs. NSError error a detailed error if deleting 'placeholder' Things fails.
  */
 - (void)deletePendingThingsForRecordId:(NSString *)recordId

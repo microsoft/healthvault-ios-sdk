@@ -23,8 +23,8 @@
 + (MHVConfiguration *)configuration
 {
     MHVConfiguration *config = [MHVConfiguration new];
-    
-    config.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"7c81b435-f091-4444-9534-59eb53da66c9"];
+
+    config.masterApplicationId = [[NSUUID alloc] initWithUUIDString:@"d6318dff-5352-4a10-a140-6c82c6536a3b"];
     config.defaultHealthVaultUrl = [[NSURL alloc] initWithString:@"https://platform.healthvault-ppe.com/platform"];
     config.defaultShellUrl = [[NSURL alloc] initWithString:@"https://account.healthvault-ppe.com"];
     config.restHealthVaultUrl = [[NSURL alloc] initWithString:@"https://data.ppe.microsofthealth.net"];

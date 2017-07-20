@@ -14,6 +14,6 @@ target 'healthvault-ios-sdk_Example' do
     inherit! :search_paths
 
     pod 'HealthVault/Tests', :path => '../'
-    pod 'Kiwi'
+    pod 'Kiwi', :inhibit_warnings => true
   end
 end

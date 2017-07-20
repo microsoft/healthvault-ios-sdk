@@ -35,6 +35,16 @@
 #import "MHVPendingMethod.h"
 #import "NSArray+MHVThing.h"
 #import "NSArray+Utils.h"
+#import "MHVErrorConstants.h"
+#import "MHVServiceResponse.h"
+#import "MHVNetworkObserverProtocol.h"
+
+typedef NS_ENUM(NSUInteger, MHVThingOperationType)
+{
+    MHVThingOpertaionTypeCreate = 0,
+    MHVThingOpertaionTypeUpdate,
+    MHVThingOpertaionTypeDelete
+};
 
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 
@@ -47,6 +57,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 @interface MHVThingCache ()
 
 @property (nonatomic, weak)   NSObject<MHVConnectionProtocol>                       *connection;
+@property (nonatomic, strong) id<MHVNetworkObserverProtocol>                        networkObserver;
 @property (nonatomic, strong) MHVThingCacheConfiguration                            *cacheConfiguration;
 @property (nonatomic, strong) id<MHVThingCacheDatabaseProtocol>                     database;
 @property (nonatomic, assign) BOOL                                                  automaticStartStop;
@@ -63,9 +74,11 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 
 - (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
                            connection:(id<MHVConnectionProtocol>)connection
+                      networkObserver:(id<MHVNetworkObserverProtocol>)networkObserver
                    automaticStartStop:(BOOL)automaticStartStop
 {
     MHVASSERT_PARAMETER(database);
+    MHVASSERT_PARAMETER(networkObserver);
     MHVASSERT_PARAMETER(connection);
     MHVASSERT_PARAMETER(connection.cacheConfiguration);
     MHVASSERT_PARAMETER(connection.cacheConfiguration.cacheTypeIds);
@@ -75,6 +88,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     {
         _database = database;
         _connection = connection;
+        _networkObserver = networkObserver;
         _cacheConfiguration = connection.cacheConfiguration;
         _automaticStartStop = automaticStartStop;
         
@@ -247,28 +261,19 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
          recordId:(NSUUID *)recordId
        completion:(void (^)(NSError * _Nullable))completion
 {
-    MHVASSERT_PARAMETER(things);
-    MHVASSERT_TRUE(things.count > 0);
-    MHVASSERT_PARAMETER(recordId);
+    // Validate the input parameters
+    NSError *error = [self errorForAddUpdateDeleteThings:things recordId:recordId];
     
-    if ([NSArray isNilOrEmpty:things])
+    if (error)
     {
         if (completion)
         {
-            completion([NSError MVHInvalidParameter:@"The 'things' collection is nil or empty."]);
+            completion(error);
         }
         return;
     }
     
-    if (!recordId)
-    {
-        if (completion)
-        {
-            completion([NSError MVHInvalidParameter:@"The 'recordId' parameter is nil"]);
-        }
-        return;
-    }
-    
+    // Add Thing metadata
     [self fillThingsMetadata:things created:YES updated:YES];
     
     [self.database createCachedThings:things
@@ -280,38 +285,153 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
             recordId:(NSUUID *)recordId
           completion:(void (^)(NSError * _Nullable))completion
 {
-    MHVASSERT_PARAMETER(things);
-    MHVASSERT_TRUE(things.count > 0);
-    MHVASSERT_PARAMETER(recordId);
+    NSError *error = [self errorForAddUpdateDeleteThings:things recordId:recordId];
     
-    if ([NSArray isNilOrEmpty:things])
+    if (error)
     {
         if (completion)
         {
-            completion([NSError MVHInvalidParameter:@"The 'things' collection is nil or empty."]);
+            completion(error);
         }
         return;
     }
     
-    if (!recordId)
-    {
-        if (completion)
-        {
-            completion([NSError MVHInvalidParameter:@"The 'recordId' parameter is nil"]);
-        }
-        return;
-    }
-    
+    // Add Thing metadata
     [self fillThingsMetadata:things created:NO updated:YES];
     
     [self.database updateCachedThings:things
                              recordId:recordId.UUIDString
-                           completion:completion];
+                           completion:^(NSError * _Nullable error)
+    {
+        // Check if any of the Things have a pending method (A Thing who's thingID property is the same as a pendingMethods
+        // identifier property has not been synchronized with HealthVault.)
+        [self pendingMethodsForThings:things
+                             recordId:recordId
+                         shouldUpdate:YES
+                           completion:^(NSArray<MHVPendingMethod *> * _Nullable pendingMethods, NSError * _Nullable error)
+         {
+             if (error)
+             {
+                 if (completion)
+                 {
+                     completion(error);
+                 }
+                 return;
+             }
+             else if (pendingMethods.count > 0)
+             {
+                 // Update any pending methods in the cache. The pending Thing has been updated before a synchronization has
+                 // occured - Update the pending method to ensure the local cache and HealthVault remain in sync.
+                 [self.database cachePendingMethods:pendingMethods
+                                         completion:completion];
+                 return;
+             }
+             
+             if (completion)
+             {
+                 completion(nil);
+             }
+         }];
+    }];
 }
 
 - (void)deleteThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion
+{
+    // Validate the input parameters
+    NSError *error = [self errorForAddUpdateDeleteThings:things recordId:recordId];
+    
+    if (error)
+    {
+        if (completion)
+        {
+            completion(error);
+        }
+        return;
+    }
+    
+    // Delete the things from the cache
+    [self.database deleteCachedThingsWithThingIds:[things arrayOfThingIds]
+                                         recordId:recordId.UUIDString
+                                       completion:^(NSError * _Nullable error)
+    {
+        // Check if any of the Things have a pending method (A Thing who's thingID property is the same as a pendingMethods
+        // identifier property has not been synchronized with HealthVault.)
+        [self pendingMethodsForThings:things
+                             recordId:recordId
+                         shouldUpdate:NO
+                           completion:^(NSArray<MHVPendingMethod *> * _Nullable pendingMethods, NSError * _Nullable error)
+        {
+            if (error)
+            {
+                if (completion)
+                {
+                    completion(error);
+                }
+                return;
+            }
+            else if (pendingMethods.count > 0)
+            {
+                // Delete any pending methods in the cache. The pending Thing has been deleted before a synchronization has
+                // occured - Delete the pending method to ensure the local cache and HealthVault remain in sync.
+                [self.database deletePendingMethods:pendingMethods
+                                         completion:completion];
+                return;
+            }
+            
+            if (completion)
+            {
+                completion(nil);
+            }
+        }];
+    }];
+}
+
+- (void)pendingMethodsForThings:(NSArray<MHVThing *> *)things
+                       recordId:(NSUUID *)recordId
+                   shouldUpdate:(BOOL)shouldUpdate
+                     completion:(void (^)(NSArray<MHVPendingMethod *> *_Nullable pendingMethods, NSError *_Nullable error))completion
+{
+    [self.database fetchPendingMethodsForRecordId:recordId.UUIDString
+                                       completion:^(NSArray<MHVPendingMethod *> * _Nullable pendingMethods, NSError * _Nullable error)
+     {
+         NSMutableArray<MHVPendingMethod *> *methods = [NSMutableArray new];
+         
+         for (MHVPendingMethod *method in pendingMethods)
+         {
+             for (MHVThing *thing in things)
+             {
+                 if ([thing.thingID isEqualToString:method.identifier])
+                 {
+                     if (shouldUpdate)
+                     {
+                         // Remove the temporary key
+                         thing.key = nil;
+                         
+                         // Create new parameters
+                         XWriter *writer = [XWriter new];
+                         [writer writeStartElement:@"info"];
+                         [XSerializer serialize:thing withRoot:@"thing" toWriter:writer];
+                         [writer writeEndElement];
+                         method.parameters = [writer newXmlString];
+                     }
+                     
+                     [methods addObject:method];
+                 }
+             }
+         }
+         
+         if (completion)
+         {
+             completion(methods, error);
+         }
+         
+     }];
+}
+
+- (NSError *)errorForAddUpdateDeleteThings:(NSArray<MHVThing *> *)things
+                                  recordId:(NSUUID *)recordId
 {
     MHVASSERT_PARAMETER(things);
     MHVASSERT_TRUE(things.count > 0);
@@ -319,25 +439,15 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
     
     if ([NSArray isNilOrEmpty:things])
     {
-        if (completion)
-        {
-            completion([NSError MVHInvalidParameter:@"The 'things' collection is nil or empty."]);
-        }
-        return;
+        return [NSError MVHInvalidParameter:@"The 'things' collection is nil or empty."];
     }
     
     if (!recordId)
     {
-        if (completion)
-        {
-            completion([NSError MVHInvalidParameter:@"The 'recordId' parameter is nil"]);
-        }
-        return;
+        return[NSError MVHInvalidParameter:@"The 'recordId' parameter is nil"];
     }
     
-    [self.database deleteCachedThingsWithThingIds:[things arrayOfThingIds]
-                                         recordId:recordId.UUIDString
-                                       completion:completion];
+    return nil;
 }
 
 - (void)fillThingsMetadata:(NSArray<MHVThing *> *)things created:(BOOL)created updated:(BOOL)updated
@@ -363,38 +473,6 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
         
         thing.effectiveDate = thing.effectiveDate ?: date;
     }
-}
-
-- (void)cacheMethod:(MHVMethod *)method completion:(void (^)(MHVPendingMethod *_Nullable pendingMethod, NSError *_Nullable error))completion
-{
-    MHVASSERT_PARAMETER(method);
-    
-    if (!method)
-    {
-        if (completion)
-        {
-            completion(nil, [NSError error:[NSError MVHInvalidParameter] withDescription:@"'method' is a required parameter."]);
-        }
-        
-        return;
-    }
-    
-    __block MHVPendingMethod *pendingMethod = [[MHVPendingMethod alloc] initWithOriginalRequestDate:[NSDate date]
-                                                                                             method:method];
-    
-    [self.database cachePendingMethod:pendingMethod
-                           completion:^(NSError * _Nullable error)
-    {
-        if (error)
-        {
-            pendingMethod = nil;
-        }
-        
-        if (completion)
-        {
-            completion(pendingMethod, error);
-        }
-    }];
 }
 
 - (void)addPendingThings:(NSArray<MHVThing *> *)things
@@ -448,6 +526,385 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
                              completion:completion];
 }
 
+#pragma mark - Method caching
+
+- (void)cacheMethod:(MHVMethod *)method
+             things:(NSArray<MHVThing *> *)things
+         completion:(void (^)(NSArray<MHVThingKey *> *_Nullable keys, NSError *_Nullable error))completion
+{
+    MHVThingOperationType operationType = [self operationTypeForMethod:method things:things];
+    
+    // 1. Prepare the method by removing any 'placeholder' Things.
+    MHVAsyncTask *prepareMethodTask = [[self taskToPrepareMethod:method
+                                                   operationType:operationType
+                                                   thingsToCache:things] start];
+    
+    // 2. Add the method call to the cache.
+    MHVAsyncTask *cacheMethodTask = [prepareMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                      task:[self taskToCacheMethods]];
+    
+    // 3. Add, update, or delete things from the cache.
+    MHVAsyncTask *addUpdateOrDeleteTask;
+    
+    if (operationType == MHVThingOpertaionTypeCreate)
+    {
+        // Add things to the cache (with no keys - They will be purged the next sync)
+        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                task:[self taskToAddPendingThings:things recordId:method.recordId]];
+        
+    }
+    else if (operationType == MHVThingOpertaionTypeUpdate)
+    {
+        // Update things in the cache
+        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                task:[self taskToUpdatePendingThings:things recordId:method.recordId]];
+    }
+    else if (operationType == MHVThingOpertaionTypeDelete)
+    {
+        // Delete things from the cache
+        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
+                                                                task:[self taskToDeletePendingThings:things recordId:method.recordId]];
+    }
+    
+    // 4. If an error occurs during the caching process we need to cleanup the cache by removing the cached methods.
+    MHVAsyncTask *failureTask = [addUpdateOrDeleteTask continueWithTask:[self taskForFailureToCacheMethod]];
+    
+    // 5. Complete with any errors
+    [failureTask continueWithBlock:^id(NSArray<NSError *> *errors)
+    {
+        NSError *error = nil;
+        
+        NSMutableArray<MHVThingKey *> *keys = nil;
+        
+        if (errors)
+        {
+            NSMutableString *errorMessage = [NSMutableString new];
+            for (NSError *error in errors)
+            {
+                // Print any errors that occur during the process of caching a method or things
+                MHVASSERT_MESSAGE(error.localizedDescription);
+                
+                [errorMessage appendFormat:@"%@ ", error.localizedDescription];
+            }
+            
+            error = [NSError MHVCacheError:errorMessage];
+        }
+        else
+        {
+            keys = [NSMutableArray new];
+            
+            for (int i = 0; i < things.count; i++)
+            {
+                MHVThingKey *key = things[i].key;
+                
+                if (key)
+                {
+                    [keys addObject:things[i].key];
+                }
+            }
+        }
+        
+        if (completion)
+        {
+            completion(keys, error);
+        }
+        
+        return nil;
+    }];
+}
+
+// Creates new, cacheble method for the things in a given thing collection.
+// A thing collection might contain 'placeholder' Things (Newly created things that have been added to the cache but
+// not synchronized with HealthVault). References to 'placeholder' Things will be removed from the method, and the
+// original pending method will be updated or deleted.
+- (MHVAsyncTask*)taskToPrepareMethod:(MHVMethod *)method
+                       operationType:(MHVThingOperationType)operationType
+                       thingsToCache:(NSArray<MHVThing *> *)thingsToCache
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
+    {
+        NSDate *now = [NSDate date];
+        NSMutableArray<MHVPendingMethod *> *pendingMethods = [NSMutableArray new];
+        
+        // To support updating and deleting Things that have been created locally ('placeholder' Things), if there are multiple things
+        // in a things collection, they must be separated into individual methods.
+        if (operationType == MHVThingOpertaionTypeCreate)
+        {
+            for (int i = 0; i < thingsToCache.count; i++)
+            {
+                MHVPendingMethod *pendingMethod = [[MHVPendingMethod alloc] initWithOriginalRequestDate:now
+                                                                                                 method:method];
+                
+                MHVThing *newThing = thingsToCache[i];
+
+                // Create new method parameters for a single Thing create.
+                pendingMethod.parameters = [self parametersForThings:@[newThing]];
+                
+                // Associate the thing and the pending method by setting the thing id to the pending method identifier.
+                newThing.key = [[MHVThingKey alloc] initWithID:pendingMethod.identifier];
+                
+                [pendingMethods addObject:pendingMethod];
+            }
+            
+            finish([MHVAsyncTaskResult withResult:pendingMethods]);
+            return;
+        }
+        
+        // Fetch the 'placeholder' Things for the record id.
+        [self.database fetchPendingThingsForRecordId:method.recordId.UUIDString
+                                          completion:^(NSArray<MHVThing *> * _Nullable things, NSError * _Nullable error)
+        {
+            if (error)
+            {
+                cancel([MHVAsyncTaskResult withError:error]);
+            }
+            else
+            {
+                NSMutableArray<MHVThing *> *thingsArray = [NSMutableArray new];
+                
+                // Check all Things to cache for any 'placeholder' Things so they can be removed from the method parameters
+                for (MHVThing *thingToCache in thingsToCache)
+                {
+                    if (![things containsThingID:thingToCache.thingID])
+                    {
+                        [thingsArray addObject:thingToCache];
+                    }
+                }
+                
+                if (thingsArray.count == 0)
+                {
+                    // If all Things to cache are 'placeholder' Things do not cache the method. (Just finish with nil).
+                    finish([MHVAsyncTaskResult withResult:nil]);
+                    return;
+                }
+                else if (thingsArray.count < thingsToCache.count)
+                {
+                    // If a Thing to cache has been removed re-create the method parameters without 'placeholder' Things.
+                    if (operationType == MHVThingOpertaionTypeDelete)
+                    {
+                        method.parameters = [self parameterOfThingIdsFromThings:thingsArray];
+                    }
+                    else
+                    {
+                        method.parameters = [self parametersForThings:thingsArray];
+                    }
+                }
+                
+                [pendingMethods addObject:[[MHVPendingMethod alloc] initWithOriginalRequestDate:now method:method]];
+                
+                finish([MHVAsyncTaskResult withResult:pendingMethods]);
+            }
+        }];
+    }];
+}
+
+// Add methods to the cache to be re-issued next sync
+- (MHVAsyncTask *)taskToCacheMethods
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    {
+        NSArray<MHVPendingMethod *> *pendingMethods = input.result;
+        
+        if (pendingMethods && pendingMethods.count > 0)
+        {
+            [self.database cachePendingMethods:pendingMethods
+                                    completion:^(NSError * _Nullable error)
+            {
+                MHVAsyncTaskResult *result = [MHVAsyncTaskResult withError:error];
+                
+                if (error)
+                {
+                    cancel(result);
+                }
+                else
+                {
+                    result.result = pendingMethods;
+                    finish(result);
+                }
+            }];
+        }
+        else
+        {
+            finish(input);
+        }
+    }];
+}
+
+// Adds new things to the cache. *Note - These new things will have no keys and will be purged during the next sync.
+- (MHVAsyncTask *)taskToAddPendingThings:(NSArray<MHVThing *> *)things
+                                recordId:(NSUUID *)recordId
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    {
+        [self addPendingThings:things
+                      recordId:recordId
+                    completion:^(NSError * _Nullable error)
+         {
+             input.error = error;
+             
+             if (error)
+             {
+                 cancel(input);
+             }
+             else
+             {
+                 finish(input);
+             }
+         }];
+    }];
+}
+
+// Updates existing things in the cache.
+- (MHVAsyncTask *)taskToUpdatePendingThings:(NSArray<MHVThing *> *)things
+                                   recordId:(NSUUID *)recordId
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    {
+        [self updateThings:things
+                  recordId:recordId
+                completion:^(NSError * _Nullable error)
+         {
+             input.error = error;
+             
+             if (error)
+             {
+                 cancel(input);
+             }
+             else
+             {
+                 finish(input);
+             }
+         }];
+    }];
+}
+
+// Deletes things from the cache.
+- (MHVAsyncTask *)taskToDeletePendingThings:(NSArray<MHVThing *> *)things
+                                   recordId:(NSUUID *)recordId
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    {
+        [self deleteThings:things
+                  recordId:recordId
+                completion:^(NSError * _Nullable error)
+         {
+             input.error = error;
+             
+             if (error)
+             {
+                 cancel(input);
+             }
+             else
+             {
+                 finish(input);
+             }
+         }];
+    }];
+}
+
+// If an error occurs during a previous step, the method that was added is deleted
+- (MHVAsyncTask *)taskForFailureToCacheMethod
+{
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    {
+        if (input.error)
+        {
+            NSMutableArray *errors = [NSMutableArray new];
+            
+            [errors addObject:input.error];
+            
+            if (input.result)
+            {
+                [self.database deletePendingMethods:input.result
+                                         completion:^(NSError * _Nullable error)
+                 {
+                     if (error)
+                     {
+                         [errors addObject:error];
+                     }
+                     
+                     cancel(errors);
+                 }];
+            }
+            else
+            {
+                cancel(errors);
+            }
+        }
+        else
+        {
+            finish(nil);
+        }
+    }];
+}
+
+- (MHVThingOperationType)operationTypeForMethod:(MHVMethod *)method
+                                         things:(NSArray<MHVThing *> *)things
+{
+    if ([method.name isEqualToString:@"RemoveThings"])
+    {
+        return MHVThingOpertaionTypeDelete;
+    }
+    else if (things.firstObject.key)
+    {
+        return MHVThingOpertaionTypeUpdate;
+    }
+    
+    return MHVThingOpertaionTypeCreate;
+}
+
+- (NSString *)parametersForThings:(NSArray<MHVThing *> *)things
+{
+    XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+    
+    [writer writeStartElement:@"info"];
+    {
+        for (MHVThing *thing in things)
+        {
+            if ([self isValidObject:thing])
+            {
+                [XSerializer serialize:thing withRoot:@"thing" toWriter:writer];
+            }
+        }
+    }
+    [writer writeEndElement];
+    
+    return [writer newXmlString];
+}
+
+- (NSString *)parameterOfThingIdsFromThings:(NSArray<MHVThing *> *)things
+{
+    XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+    
+    [writer writeStartElement:@"info"];
+    {
+        for (MHVThing *thing in things)
+        {
+            if ([self isValidObject:thing.key])
+            {
+                [XSerializer serialize:thing.key withRoot:@"thing-id" toWriter:writer];
+            }
+        }
+    }
+    [writer writeEndElement];
+    
+    return [writer newXmlString];
+}
+
+- (BOOL)isValidObject:(id)obj
+{
+    if ([obj respondsToSelector:@selector(validate)])
+    {
+        MHVClientResult *validationResult = [obj validate];
+        if (validationResult.isError)
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 #pragma mark - Syncing
 
 - (void)startSyncTimer
@@ -457,11 +914,13 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
         [self.syncTimer invalidate];
     }
     
-    self.syncTimer = [NSTimer scheduledTimerWithTimeInterval:self.cacheConfiguration.syncIntervalSeconds
-                                                      target:self
-                                                    selector:@selector(syncTimerAction)
-                                                    userInfo:nil
-                                                     repeats:NO];
+    self.syncTimer = [NSTimer timerWithTimeInterval:self.cacheConfiguration.syncIntervalSeconds
+                                             target:self
+                                           selector:@selector(syncTimerAction)
+                                           userInfo:nil
+                                            repeats:NO];
+    
+    [[NSRunLoop mainRunLoop] addTimer:self.syncTimer forMode:NSDefaultRunLoopMode];
 }
 
 - (void)syncTimerAction
@@ -569,6 +1028,21 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
             completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion
 {
     MHVASSERT_PARAMETER(completion);
+    
+    if (self.networkObserver.currentNetworkStatus == MHVNetworkStatusNoNetwork)
+    {
+        MHVLOG(@"\nCould not complete sync because the internet connection is offline.\n");
+        
+        if (completion)
+        {
+            completion(0, [NSError error:[NSError MHVNetworkError] withDescription:@"The internet connection is offline."]);
+        }
+        
+        // Sync complete, start timer for next sync
+        [self startSyncTimer];
+        
+        return;
+    }
     
     [self addSyncCompletion:completion];
     
@@ -702,22 +1176,32 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 {
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
     {
+        MHVLOG(@"\nChecking the status of the Thing cache...\n");
+        
         [self.database cacheStatusForRecordId:recordId
                                    completion:^(id<MHVCacheStatusProtocol> _Nullable status, NSError * _Nullable error)
         {
             if (error)
             {
+                MHVLOG(@"\nThe Thing cache returned an error while checking the status:%@\n", error.localizedDescription);
+                
                 cancel([MHVAsyncTaskResult withError:error]);
             }
             if (!status)
             {
-                cancel([MHVAsyncTaskResult withError:[NSError MHVCacheError:@"The call to fetch the cache status fauled to return a valid id<MHVCacheStatusProtocol> object."]]);
+                MHVLOG(@"\nThe Thing cache failed to return a valid id<MHVCacheStatusProtocol> object.");
+                
+                cancel([MHVAsyncTaskResult withError:[NSError MHVCacheError:@"The call to fetch the cache status failed to return a valid id<MHVCacheStatusProtocol> object."]]);
             }
             else
             {
-                finish([MHVAsyncTaskResult withResult:@{
-                                                        kCacheStatusKey : status
-                                                        }]);
+                MHVLOG(@"\nThe Thing cache status check completed successfully. The cache is %@ and the last sync date was %@.\n", status.isCacheValid ? @"valid" : @"invalid", status.lastCompletedSyncDate);
+                
+                // Create a new mutable dictionary that will be passed through to the next tasks.
+                NSMutableDictionary *result = [NSMutableDictionary new];
+                [result setObject:status forKey:kCacheStatusKey];
+                
+                finish([MHVAsyncTaskResult withResult:result]);
             }
         }];
     }];
@@ -726,23 +1210,31 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 // Task to get pending methods. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSDictionary *>.
 - (MHVAsyncTask *)taskForPendingMethodsWithRecordId:(NSString *)recordId
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSDictionary *> *input, void (^finish)(id), void (^cancel)(id))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSMutableDictionary *> *input, void (^finish)(id), void (^cancel)(id))
     {
+        MHVLOG(@"\nChecking the Thing cache for pending methods...\n");
+        
         [self.database fetchPendingMethodsForRecordId:recordId
                                            completion:^(NSArray<MHVPendingMethod *> * _Nullable pendingMethods, NSError * _Nullable error)
         {
             if (error)
             {
+                MHVLOG(@"\nThe Thing cache returned an error while checking for pending methods:%@\n", error.localizedDescription);
+                
                 cancel([MHVAsyncTaskResult withError:error]);
             }
             else
             {
                 if (pendingMethods.count < 1)
                 {
+                    MHVLOG(@"\nThe Thing cache has no pending methods.\n");
+                    
                     // Pass the database status to the next task
                     finish(input);
                     return;
                 }
+                
+                MHVLOG(@"\nFound %li pending %@. Preparing for execution.\n", pendingMethods.count, pendingMethods.count == 1 ? @"method" : @"methods");
                 
                 // Make sure the methods are sorted in the order they were originally attempted.
                 NSArray<MHVPendingMethod *> *methods = [pendingMethods sortedArrayUsingComparator:^NSComparisonResult(MHVPendingMethod *method1, MHVPendingMethod *method2)
@@ -773,7 +1265,9 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
                         }
                     }
                     
-                    // Pass the dictionary containing the database status to the next task
+                    // Set the synced item count and pass the dictionary containing the database status to the next task.
+                    [input.result setObject:@(pendingMethods.count) forKey:kSyncedItemCountKey];
+                    
                     finish(input);
                     return nil;
                 }];
@@ -787,28 +1281,34 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 {
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
     {
+        MHVLOG(@"\nExecuting pending method %@ with identifier: %@.\n", pendingMethod.name, pendingMethod.identifier);
+        
         [self.connection executeHttpServiceOperation:pendingMethod
                                           completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
         {
             if (error)
             {
-                cancel([MHVAsyncTaskResult withError:error]);
+                MHVLOG(@"\nAn error occured while attempting to execute the pending method:%@\n", error.localizedDescription);
             }
-            else
+
+            MHVLOG(@"\nDeleting the pending method from the Thing cache.\n");
+            
+            [self.database deletePendingMethods:@[pendingMethod]
+                                     completion:^(NSError * _Nullable error)
             {
-                [self.database deletePendingMethods:@[pendingMethod]
-                                         completion:^(NSError * _Nullable error)
+                if (error)
                 {
-                    if (error)
-                    {
-                        cancel([MHVAsyncTaskResult withError:error]);
-                    }
-                    else
-                    {
-                        finish([MHVAsyncTaskResult withResult:nil]);
-                    }
-                }];
-            }
+                    MHVLOG(@"\nAn error occured while attempting to delete the pending method:%@\n", error.localizedDescription);
+                    
+                    cancel([MHVAsyncTaskResult withError:error]);
+                }
+                else
+                {
+                    MHVLOG(@"\nPending method deleted.\n");
+                    
+                    finish([MHVAsyncTaskResult withResult:nil]);
+                }
+            }];
         }];
     }];
 }
@@ -816,7 +1316,7 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 // Task to get the record operations since the last sync. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSNumber *>.
 - (MHVAsyncTask *)taskForRecordOperationsWithRecordId:(NSString *)recordId
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSDictionary *> *input, void (^finish)(id), void (^cancel)(id))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSMutableDictionary *> *input, void (^finish)(id), void (^cancel)(id))
     {
         id<MHVCacheStatusProtocol> status = input.result[kCacheStatusKey];
         
@@ -835,27 +1335,33 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
             return;
         }
         
+        MHVLOG(@"\nChecking HealthVault for new record operations created since %@.\n", status.lastCacheConsistencyDate);
+        
         [self.connection.thingClient getRecordOperations:status.newestCacheSequenceNumber
                                                 recordId:[[NSUUID alloc] initWithUUIDString:recordId]
                                               completion:^(MHVGetRecordOperationsResult * _Nullable result, NSError * _Nullable error)
         {
             if (error)
             {
+                MHVLOG(@"\nAn error occured while attempting to fetch the record operations:%@\n", error.localizedDescription);
+                
                 cancel([MHVAsyncTaskResult withError:error]);
             }
             else if (!result.operations)
             {
+                MHVLOG(@"\nNo new record operations were found.\n");
+                
                 // No record operations object
-                finish([MHVAsyncTaskResult withResult:@{
-                                                        kCacheStatusKey : status
-                                                        }]);
+                finish(input);
             }
             else
             {
-                finish([MHVAsyncTaskResult withResult:@{
-                                                        kCacheStatusKey : status,
-                                                        kRecordOperationsKey : result.operations
-                                                        }]);
+                MHVLOG(@"\nFound %li new record %@\n", result.operations.count, result.operations.count == 1 ? @"operation" : @"operations");
+                
+                // Add the result operations to the result dictionary.
+                [input.result setObject:result.operations forKey:kRecordOperationsKey];
+                
+                finish(input);
             }
         }];
     }];
@@ -864,15 +1370,18 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 // Task to sync record operations. Will CANCEL with an MHVAsyncTaskResult<NSError *> or FINISH with MHVAsyncTaskResult<NSDictionary *>.
 - (MHVAsyncTask *)taskForSyncRecordOperationsWithRecordId:(NSString *)recordId
 {
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult *input, void (^finish)(id), void (^cancel)(id))
+    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSMutableDictionary *> *input, void (^finish)(id), void (^cancel)(id))
     {
         id<MHVCacheStatusProtocol> status = [input.result objectForKey:kCacheStatusKey];
         NSArray<MHVRecordOperation *> *operations = [input.result objectForKey:kRecordOperationsKey];
+        NSInteger syncedCount = ([input.result objectForKey:kSyncedItemCountKey] != nil) ? ((NSNumber *)input.result[kSyncedItemCountKey]).integerValue : 0;
         
         // If there are bo operations there is no data to be synced, update the last sync dates and finish with a count of 0.
         if (!operations)
         {
             NSDate *now = [NSDate date];
+            
+            MHVLOG(@"\nNo new record operations were found, updating cache sync date %@.\n", now);
             
             [self.database updateLastCompletedSyncDate:now
                               lastCacheConsistencyDate:now
@@ -883,17 +1392,20 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
                 if (error)
                 {
                     MHVLOG(@"ThingCache: Error updating record: %@", error);
+                    
                     cancel([MHVAsyncTaskResult withError:error]);
                     return;
                 }
                 
-                finish([MHVAsyncTaskResult withResult:@{
-                                                        kSyncedItemCountKey : @(0)
-                                                        }]);
+                MHVLOG(@"\nUpdating cache's last sync date was successful.\n");
+                
+                finish(input);
             }];
         }
         else
         {
+            MHVLOG(@"\nStarting cache synchronization...\n");
+            
             [self syncRecordOperations:operations
                               recordId:recordId
                        syncedItemCount:0
@@ -903,13 +1415,17 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
                  if (error)
                  {
                      MHVLOG(@"ThingCache: Error syncing records: %@", error);
+                     
                      cancel([MHVAsyncTaskResult withError:error]);
                  }
                  else
                  {
-                     finish([MHVAsyncTaskResult withResult:@{
-                                                             kSyncedItemCountKey : @(syncedItemCount)
-                                                             }]);
+                     MHVLOG(@"\nSuccessfully synchronized %li %@.\n", syncedItemCount, syncedItemCount == 1 ? @"Thing" : @"Things");
+                     
+                     // Add the synced items.
+                     [input.result setObject:@(syncedCount + syncedItemCount) forKey:kSyncedItemCountKey];
+                     
+                     finish(input);
                  }
              }];
         }
@@ -923,15 +1439,21 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
 {
     return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(MHVAsyncTaskResult<NSNumber *> *input, void (^finish)(id), void (^cancel)(id))
     {
+        MHVLOG(@"\nDeleting 'placeholder' Things from the Thing cache...\n");
+        
         [self.database deletePendingThingsForRecordId:recordId
                                            completion:^(NSError * _Nullable error)
         {
             if (error)
             {
+                MHVLOG(@"\nAn error occurred while deleting 'placeholder' Things:%@.\n", error.localizedDescription);
+                
                 cancel([MHVAsyncTaskResult withError:error]);
             }
             else
             {
+                MHVLOG(@"\nSuccessfully deleted 'placeholder' Things.\n");
+                
                 finish(input);
             }
         }];
@@ -1167,8 +1689,6 @@ static NSString *const kSyncedItemCountKey = @"SyncedItemCount";
          }
      }];
 }
-
-
 
 #pragma mark - KVO on connection's personInfo
 

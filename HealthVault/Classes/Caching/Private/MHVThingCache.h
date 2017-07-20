@@ -34,6 +34,7 @@
  */
 - (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
                            connection:(id<MHVConnectionProtocol>)connection
+                      networkObserver:(id<MHVNetworkObserverProtocol>)networkObserver
                    automaticStartStop:(BOOL)automaticStartStop;
 
 @end
