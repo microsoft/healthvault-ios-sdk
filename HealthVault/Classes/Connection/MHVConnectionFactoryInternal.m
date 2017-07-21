@@ -25,8 +25,12 @@
 #import "MHVShellAuthService.h"
 #import "MHVBrowserAuthBroker.h"
 #import "MHVClientFactory.h"
+#import "MHVConfiguration.h"
 #ifdef THING_CACHE
 #import "MHVThingCacheConfiguration.h"
+#import "MHVThingCacheSynchronizer.h"
+#import "MHVThingCacheDatabase.h"
+#import "MHVNetworkObserver.h"
 #endif
 
 @interface MHVConnectionFactoryInternal ()
@@ -64,21 +68,68 @@
         
         if (!self.connection)
         {
-            id thingCacheConfiguration = nil;
 #ifdef THING_CACHE
-            thingCacheConfiguration = [MHVThingCacheConfiguration new];
-#endif
-
+            return [self getOrCreateSodaConnectionWithAppConfiguration:configuration
+                                               thingCacheConfiguration:[MHVThingCacheConfiguration new]];
+#else
             self.connection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
-                                                            cacheConfiguration:thingCacheConfiguration
+                                                             cacheSynchronizer:nil
+                                                            cacheConfiguration:nil
                                                                  clientFactory:[MHVClientFactory new]
                                                                    httpService:[[MHVHttpService alloc] initWithConfiguration:configuration]
                                                                keychainService:[MHVKeychainService new]
                                                               shellAuthService:[[MHVShellAuthService alloc] initWithConfiguration:configuration authBroker:[MHVBrowserAuthBroker new]]];
+#endif
         }
         
         return self.connection;
     }
 }
+
+#ifdef THING_CACHE
+- (id<MHVSodaConnectionProtocol> _Nullable)getOrCreateSodaConnectionWithAppConfiguration:(MHVConfiguration *)appConfiguration
+                                                                 thingCacheConfiguration:(id<MHVThingCacheConfigurationProtocol>)thingCacheConfiguration
+{
+    MHVASSERT_PARAMETER(appConfiguration);
+    MHVASSERT_PARAMETER(thingCacheConfiguration);
+    
+    @synchronized (self.lockObject)
+    {
+        // The configuration parameter is required.
+        if (!appConfiguration || !thingCacheConfiguration)
+        {
+            return nil;
+        }
+        
+        if (!self.connection)
+        {
+            MHVThingCacheDatabase *database = nil;
+            
+            if (thingCacheConfiguration.database)
+            {
+                database = thingCacheConfiguration.database;
+            }
+            else
+            {
+                database = [[MHVThingCacheDatabase alloc] initWithKeychainService:[MHVKeychainService new] fileManager:[NSFileManager defaultManager]];
+            }
+            
+            MHVNetworkObserver *networkObserver = [MHVNetworkObserver observerWithHostName:appConfiguration.defaultHealthVaultUrl.host];
+            MHVThingCacheSynchronizer *cacheSynchronizer = [[MHVThingCacheSynchronizer alloc] initWithCacheDatabase:database
+                                                                                                    networkObserver:networkObserver];
+            
+            self.connection = [[MHVSodaConnection alloc] initWithConfiguration:appConfiguration
+                                                             cacheSynchronizer:cacheSynchronizer
+                                                            cacheConfiguration:thingCacheConfiguration
+                                                                 clientFactory:[MHVClientFactory new]
+                                                                   httpService:[[MHVHttpService alloc] initWithConfiguration:appConfiguration]
+                                                               keychainService:[MHVKeychainService new]
+                                                              shellAuthService:[[MHVShellAuthService alloc] initWithConfiguration:appConfiguration authBroker:[MHVBrowserAuthBroker new]]];
+        }
+        
+        return self.connection;
+    }
+}
+#endif
 
 @end

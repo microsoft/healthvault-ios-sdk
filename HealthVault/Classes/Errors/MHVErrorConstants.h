@@ -23,7 +23,7 @@ static NSString *const kMHVErrorDomain = @"com.microsoft.healthvault";
 
 typedef NS_ENUM(NSUInteger, MHVErrorType)
 {
-    MHVErrorTypeRequiredParameter = 0,
+    MHVErrorTypeRequiredParameter = 1000,
     MHVErrorTypeOperationCannotBePerformed,
     MHVErrorTypeIOError,
     MHVErrorTypeUnauthorized,

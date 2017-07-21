@@ -82,20 +82,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
-    // App becoming active is a good time to sync
-    id<MHVSodaConnectionProtocol> connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:[MHVFeaturesConfiguration configuration]];
-    
-    if (connection)
-    {
-        [connection performForegroundTasks:^(MHVConnectionTaskResult *taskResult)
-         {
-             if (taskResult.error)
-             {
-                 MHVLOG(@"applicationDidBecomeActive: Error %@", taskResult.error.localizedDescription);
-             }
-         }];
-    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

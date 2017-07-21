@@ -1,5 +1,5 @@
 //
-//  MHVThingCacheSyncTests.m
+//  MHVThingCacheSynchronizerTests.m
 //  healthvault-ios-sdk
 //
 //  Copyright (c) 2017 Microsoft Corporation. All rights reserved.
@@ -19,22 +19,20 @@
 
 #import <XCTest/XCTest.h>
 #import "MHVMockDatabase.h"
-#import "MHVThingCache.h"
 #import "Kiwi.h"
 
 static NSString *kRecordUUID = @"11111111-aaaa-aaaa-aaaa-111111111111";
 
-SPEC_BEGIN(MHVThingCacheSyncTests)
+SPEC_BEGIN(MHVThingCacheSynchronizerTests)
 
-describe(@"MHVThingCache", ^
+describe(@"MHVThingCacheSynchronizerTests", ^
 {
     __block NSString *xmlResponseGetRecordOperations;
     __block NSString *xmlResponseGetThings;
-    __block MHVThingCache *thingCache;
+    __block MHVThingCacheSynchronizer *thingCacheSynchronizer;
     __block NSError *returnedError;
     __block NSInteger returnedSyncedItemCount = 0;
     __block MHVMockDatabase *database =  nil;
-    
     MHVPersonInfo *testPerson = [MHVPersonInfo new];
     
     MHVRecord *record = [MHVRecord new];
@@ -45,12 +43,19 @@ describe(@"MHVThingCache", ^
     cacheConfig.cacheTypeIds = @[[MHVAllergy typeID],
                                  [MHVWeight typeID]];
     
+    KWMock<MHVNetworkObserverProtocol> *networkObserver = [KWMock mockForProtocol:@protocol(MHVNetworkObserverProtocol)];
+    [networkObserver stub:@selector(currentNetworkStatus) andReturn:theValue(1)];
+    
     KWMock<MHVConnectionProtocol> *mockConnection = [KWMock mockForProtocol:@protocol(MHVConnectionProtocol)];
     [mockConnection stub:@selector(cacheConfiguration) andReturn:cacheConfig];
     [mockConnection stub:@selector(personInfo) andReturn:testPerson];
     
+    MHVThingClient *thingClient = [[MHVThingClient alloc] initWithConnection:mockConnection
+                                                       cache:nil];
+    [mockConnection stub:@selector(thingClient) andReturn:thingClient];
+    
     [mockConnection stub:@selector(executeHttpServiceOperation:completion:) withBlock:^id(NSArray *params)
-     {
+    {
          NSString *xmlResponse;
          if (xmlResponseGetRecordOperations)
          {
@@ -71,7 +76,7 @@ describe(@"MHVThingCache", ^
          void (^completion)(MHVServiceResponse *_Nullable response, NSError *_Nullable error) = params[1];
          completion(serviceResponse, serviceResponse.error);
          return nil;
-     }];
+    }];
     
     beforeEach(^
                {
@@ -80,8 +85,6 @@ describe(@"MHVThingCache", ^
                    returnedError = nil;
                    returnedSyncedItemCount = 0;
                    database =  nil;
-                   
-                   [mockConnection stub:@selector(thingClient) andReturn:nil];
                });
     
     context(@"when syncWithOptions is called with valid record operations for thing creation", ^
@@ -98,17 +101,13 @@ describe(@"MHVThingCache", ^
                                                                            hasSynced:NO
                                                                     shouldHaveThings:NO];
                                
-                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                               thingCacheSynchronizer = [[MHVThingCacheSynchronizer alloc] initWithCacheDatabase:database
+                                                                                                 networkObserver:networkObserver];
                                
-                               MHVThingClient *thingClient = [[MHVThingClient alloc] initWithConnection:mockConnection
-                                                                                                  cache:thingCache];
+                               thingCacheSynchronizer.connection = mockConnection;
                                
-                               [mockConnection stub:@selector(thingClient) andReturn:thingClient];
-                               
-                               [thingCache syncWithOptions:MHVCacheOptionsForeground
-                                                completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+                               [thingCacheSynchronizer syncWithOptions:MHVCacheOptionsForeground
+                                                            completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
                                 {
                                     returnedSyncedItemCount = syncedItemCount;
                                     returnedError = error;
@@ -143,17 +142,13 @@ describe(@"MHVThingCache", ^
                                                                            hasSynced:NO
                                                                     shouldHaveThings:YES];
                                
-                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                               thingCacheSynchronizer = [[MHVThingCacheSynchronizer alloc] initWithCacheDatabase:database
+                                                                                                 networkObserver:networkObserver];
                                
-                               MHVThingClient *thingClient = [[MHVThingClient alloc] initWithConnection:mockConnection
-                                                                                                  cache:thingCache];
+                               thingCacheSynchronizer.connection = mockConnection;
                                
-                               [mockConnection stub:@selector(thingClient) andReturn:thingClient];
-                               
-                               [thingCache syncWithOptions:MHVCacheOptionsForeground
-                                                completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+                               [thingCacheSynchronizer syncWithOptions:MHVCacheOptionsForeground
+                                                            completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
                                 {
                                     returnedSyncedItemCount = syncedItemCount;
                                     returnedError = error;
@@ -189,17 +184,13 @@ describe(@"MHVThingCache", ^
                                                                            hasSynced:NO
                                                                     shouldHaveThings:YES];
                                
-                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                               thingCacheSynchronizer = [[MHVThingCacheSynchronizer alloc] initWithCacheDatabase:database
+                                                                                                 networkObserver:networkObserver];
                                
-                               MHVThingClient *thingClient = [[MHVThingClient alloc] initWithConnection:mockConnection
-                                                                                                  cache:thingCache];
+                               thingCacheSynchronizer.connection = mockConnection;
                                
-                               [mockConnection stub:@selector(thingClient) andReturn:thingClient];
-                               
-                               [thingCache syncWithOptions:MHVCacheOptionsForeground
-                                                completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+                               [thingCacheSynchronizer syncWithOptions:MHVCacheOptionsForeground
+                                                            completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
                                 {
                                     returnedSyncedItemCount = syncedItemCount;
                                     returnedError = error;
@@ -209,7 +200,7 @@ describe(@"MHVThingCache", ^
                 it(@"should have an error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNonNil];
-                       [[expectFutureValue(returnedError.localizedDescription) shouldEventually] equal:@"Test Error.\n(null)\n(null)"];
+                       [[expectFutureValue(returnedError.localizedDescription) shouldEventually] equal:@"The operation couldn’t be completed. Test Error.\n(null)\n(null)"];
                    });
                 it(@"should have synced item count equal 0", ^
                    {
@@ -235,17 +226,13 @@ describe(@"MHVThingCache", ^
                                                                            hasSynced:NO
                                                                     shouldHaveThings:NO];
                                
-                               thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                               thingCacheSynchronizer = [[MHVThingCacheSynchronizer alloc] initWithCacheDatabase:database
+                                                                                                 networkObserver:networkObserver];
                                
-                               MHVThingClient *thingClient = [[MHVThingClient alloc] initWithConnection:mockConnection
-                                                                                                  cache:thingCache];
+                               thingCacheSynchronizer.connection = mockConnection;
                                
-                               [mockConnection stub:@selector(thingClient) andReturn:thingClient];
-                               
-                               [thingCache syncWithOptions:MHVCacheOptionsForeground
-                                                completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+                               [thingCacheSynchronizer syncWithOptions:MHVCacheOptionsForeground
+                                                            completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
                                 {
                                     returnedSyncedItemCount = syncedItemCount;
                                     returnedError = error;
@@ -255,7 +242,7 @@ describe(@"MHVThingCache", ^
                 it(@"should have an error", ^
                    {
                        [[expectFutureValue(returnedError) shouldEventually] beNonNil];
-                       [[expectFutureValue(returnedError.localizedDescription) shouldEventually] equal:@"Test Error.\n(null)\n(null)"];
+                       [[expectFutureValue(returnedError.localizedDescription) shouldEventually] equal:@"The operation couldn’t be completed. Test Error.\n(null)\n(null)"];
                    });
                 it(@"should have synced item count equal 0", ^
                    {

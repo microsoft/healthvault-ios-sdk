@@ -42,16 +42,6 @@
 #import "MHVThingCacheProtocol.h"
 #endif
 
-typedef NS_ENUM(NSUInteger, MHVThingOperationType)
-{
-    MHVThingOpertaionTypeCreate = 0,
-    MHVThingOpertaionTypeUpdate,
-    MHVThingOpertaionTypeDelete
-};
-
-static NSString *const kErrorKey = @"Error";
-static NSString *const kPendingMethodKey = @"PendingMethod";
-
 @interface MHVThingClient ()
 
 @property (nonatomic, weak) id<MHVConnectionProtocol> connection;
@@ -442,7 +432,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         {
             if (completion)
             {
-                completion(nil, [NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
+                completion(nil, [NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", (long)[thing validate].error]]);
             }
             
             return;
@@ -461,24 +451,31 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 #ifdef THING_CACHE
          
          // If the connection is offline cache the pending request.
-         if ([self isOfflineError:error])
+         if ([self isOfflineError:error] && self.cache)
          {
-             [self cachePendingMethod:method
-                               things:things
-                        operationType:MHVThingOpertaionTypeCreate
-                         networkError:error
-                          completion:^(NSError * _Nullable error)
-             {
-                 if (completion)
-                 {
-                     completion(nil, error);
-                 }
-             }];
-            
-            return;
+             [self.cache cacheMethod:method
+                              things:things
+                          completion:^(NSArray<MHVThingKey *> *_Nullable keys, NSError *_Nullable cacheError)
+              {
+                  if (cacheError)
+                  {
+                      if (completion)
+                      {
+                          completion(nil, error);
+                      }
+                  }
+                  else
+                  {
+                      if (completion)
+                      {
+                          completion(keys, nil);
+                      }
+                  }
+              }];
+             
+             return;
          }
-         
-         if (keys.count == things.count)
+         else if (keys.count == things.count)
          {
              // Set Key on the added things
              for (NSInteger i = 0; i < things.count; i++)
@@ -568,7 +565,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
         {
             if (completion)
             {
-                completion(nil, [NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", [thing validate].error]]);
+                completion(nil, [NSError MVHInvalidParameter:[NSString stringWithFormat:@"Thing is not valid, code %li", (long)[thing validate].error]]);
             }
             
             return;
@@ -586,24 +583,31 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
          
 #ifdef THING_CACHE
          // If the connection is offline cache the pending request.
-         if ([self isOfflineError:error])
+         if ([self isOfflineError:error] && self.cache)
          {
-             [self cachePendingMethod:method
-                               things:things
-                        operationType:MHVThingOpertaionTypeUpdate
-                         networkError:error
-                           completion:^(NSError * _Nullable error)
-             {
-                 if (completion)
-                 {
-                     completion(nil, error);
-                 }
-             }];
+             [self.cache cacheMethod:method
+                              things:things
+                          completion:^(NSArray<MHVThingKey *> *_Nullable keys, NSError *_Nullable cacheError)
+              {
+                  if (cacheError)
+                  {
+                      if (completion)
+                      {
+                          completion(nil, error);
+                      }
+                  }
+                  else
+                  {
+                      if (completion)
+                      {
+                          completion(keys, nil);
+                      }
+                  }
+              }];
              
              return;
          }
-         
-         if (keys.count == things.count)
+         else if (keys.count == things.count)
          {
              // Set Key on the updated things to update in cache
              for (NSInteger i = 0; i < things.count; i++)
@@ -687,18 +691,31 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
      {
 #ifdef THING_CACHE
          // If the connection is offline cache the pending request.
-         if ([self isOfflineError:error])
+         if ([self isOfflineError:error] && self.cache)
          {
-             [self cachePendingMethod:method
-                               things:things
-                        operationType:MHVThingOpertaionTypeDelete
-                         networkError:error
-                           completion:completion];
+             [self.cache cacheMethod:method
+                              things:things
+                          completion:^(NSArray<MHVThingKey *> *_Nullable keys, NSError * _Nullable cacheError)
+             {
+                 if (cacheError)
+                 {
+                     if (completion)
+                     {
+                         completion(error);
+                     }
+                 }
+                 else
+                 {
+                     if (completion)
+                     {
+                         completion(nil);
+                     }
+                 }
+             }];
              
              return;
          }
-         
-         if (!error && self.cache)
+         else if (!error && self.cache)
          {
              [self.cache deleteThings:things
                              recordId:recordId
@@ -718,222 +735,6 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
          }
      }];
 }
-
-#pragma mark - Cache Pending Thing Operations
-
-- (void)cachePendingMethod:(MHVMethod *)method
-                    things:(NSArray<MHVThing *> *)things
-             operationType:(MHVThingOperationType)operationType
-              networkError:(NSError *)networkError
-                completion:(void (^)(NSError *_Nullable error))completion
-{
-    if (!self.cache)
-    {
-        if (completion)
-        {
-            completion(networkError);
-        }
-        
-        return;
-    }
-    
-#ifdef THING_CACHE
-    // Add the method call to the cache...
-    MHVAsyncTask<id, NSDictionary *> *cacheMethodTask = [[self taskForCacheMethod:method] start];
-
-    
-    MHVAsyncTask<NSDictionary *, NSDictionary *> *addUpdateOrDeleteTask;
-
-    if (operationType == MHVThingOpertaionTypeCreate)
-    {
-        // Add things to the cache (with no keys - They will be purged the next sync)
-        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
-                                                                task:[self taskForAddPendingThings:things]];
-        
-    }
-    else if (operationType == MHVThingOpertaionTypeUpdate)
-    {
-        // Update things in the cache
-        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
-                                                                task:[self taskForUpdatePendingThings:things]];
-    }
-    else if (operationType == MHVThingOpertaionTypeDelete)
-    {
-        // Delete things from the cache
-        addUpdateOrDeleteTask = [cacheMethodTask continueWithOptions:MHVTaskContinueIfPreviousTaskWasNotCanceled
-                                                                task:[self taskForDeletePendingThings:things]];
-    }
-    
-    // If an error occurs during the caching process we need to cleanup the cache by removing the cached method.
-    MHVAsyncTask<NSDictionary *, NSArray<NSError *> *> *failureTask = [addUpdateOrDeleteTask continueWithTask:[self taskForFailureToCacheMethod]];
-    
-    [failureTask continueWithBlock:^id(NSArray<NSError *> *errors)
-    {
-        if (errors)
-        {
-            for (NSError *error in errors)
-            {
-                // Print any errors that occur during the process of caching a method or things
-                MHVASSERT_MESSAGE(error.localizedDescription);
-            }
-            
-            // Complete with the original network error, so caching does not interfere with the normal app behavior for no network.
-            completion(networkError);
-        }
-        else
-        {
-            completion(nil);
-        }
-        
-        return nil;
-    }];
-#endif
-}
-
-#ifdef THING_CACHE
-// Adds a method to the cache to be re-issued next sync
-- (MHVAsyncTask<id, NSDictionary *> *)taskForCacheMethod:(MHVMethod *)method
-{
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(id input, void (^finish)(id), void (^cancel)(id))
-            {
-                [self.cache cacheMethod:method
-                             completion:^(MHVPendingMethod * _Nullable pendingMethod, NSError * _Nullable error)
-                 {
-                     if (error)
-                     {
-                         cancel(@{kErrorKey : error});
-                     }
-                     else
-                     {
-                         finish(@{kPendingMethodKey : pendingMethod});
-                     }
-                 }];
-            }];
-}
-
-// Adds new things to the cache. *Note - These new things will have no keys and will be purged during the next sync.
-- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForAddPendingThings:(NSArray<MHVThing *> *)things
-{
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
-    {
-        MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
-        
-        [self.cache addPendingThings:things
-                            recordId:pendingMethod.recordId
-                          completion:^(NSError * _Nullable error)
-         {
-             if (error)
-             {
-                 MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
-                 
-                 cancel(@{
-                          kPendingMethodKey : pendingMethod,
-                          kErrorKey : error
-                          });
-             }
-             else
-             {
-                 finish(nil);
-             }
-         }];
-    }];
-}
-
-// Updates existing things in the cache.
-- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForUpdatePendingThings:(NSArray<MHVThing *> *)things
-{
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
-    {
-        MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
-
-        [self.cache updateThings:things
-                        recordId:pendingMethod.recordId
-                      completion:^(NSError * _Nullable error)
-         {
-             if (error)
-             {
-                 cancel(@{
-                          kPendingMethodKey : pendingMethod,
-                          kErrorKey : error
-                          });
-             }
-             else
-             {
-                 finish(nil);
-             }
-         }];
-    }];
-}
-
-// Deletes things from the cache.
-- (MHVAsyncTask<NSDictionary *, NSDictionary *> *)taskForDeletePendingThings:(NSArray<MHVThing *> *)things
-{
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *userInfo, void (^finish)(NSDictionary *), void (^cancel)(NSDictionary *))
-    {
-        MHVPendingMethod *pendingMethod = userInfo[kPendingMethodKey];
-        
-        [self.cache deleteThings:things
-                        recordId:pendingMethod.recordId
-                      completion:^(NSError * _Nullable error)
-         {
-             if (error)
-             {
-                 cancel(@{
-                          kPendingMethodKey : pendingMethod,
-                          kErrorKey : error
-                          });
-             }
-             else
-             {
-                 finish(nil);
-             }
-         }];
-    }];
-}
-
-// If an error occurs during a previous step, the method that was added is deleted 
-- (MHVAsyncTask<NSDictionary *, NSArray<NSError *> *> *)taskForFailureToCacheMethod
-{
-    return [[MHVAsyncTask alloc] initWithIndeterminateBlock:^(NSDictionary *errorInfo, void (^finish)(NSArray<NSError *> *), void (^cancel)(NSArray<NSError *> *))
-    {
-        if (errorInfo)
-        {
-            NSMutableArray *errors = [NSMutableArray new];
-            
-            NSError *inputError = errorInfo[kErrorKey];
-            
-            if (inputError)
-            {
-                [errors addObject:inputError];
-            }
-            
-            MHVPendingMethod *pendingMethod = errorInfo[kPendingMethodKey];
-            
-            if (pendingMethod)
-            {
-                [self.cache deletePendingMethod:pendingMethod
-                                     completion:^(NSError * _Nullable error)
-                {
-                    if (error)
-                    {
-                        [errors addObject:error];
-                    }
-                    
-                    cancel(errors);
-                }];
-            }
-            else
-            {
-                cancel(errors);
-            }
-        }
-        else
-        {
-            finish(nil);
-        }
-    }];
-}
-#endif
 
 #pragma mark - Blobs: URL Refresh
 
@@ -1343,7 +1144,7 @@ static NSString *const kPendingMethodKey = @"PendingMethod";
 
     MHVMethod *method = [MHVMethod getRecordOperations];
     method.recordId = recordId;
-    method.parameters = [NSString stringWithFormat:@"<info><record-operation-sequence-number>%li</record-operation-sequence-number></info>", sequenceNumber];
+    method.parameters = [NSString stringWithFormat:@"<info><record-operation-sequence-number>%li</record-operation-sequence-number></info>", (unsigned long)sequenceNumber];
     
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)

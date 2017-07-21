@@ -401,12 +401,12 @@
     completion(nil);
 }
 
-- (void)cachePendingMethod:(MHVPendingMethod *)pendingMethod
-                completion:(void (^)(NSError *_Nullable error))completion;
+- (void)cachePendingMethods:(NSArray<MHVPendingMethod *> *)pendingMethods
+                 completion:(void (^)(NSError *_Nullable error))completion;
 {
     if (completion)
     {
-        completion(nil);
+        completion(self.errorToReturn);
     }
 }
 
@@ -435,6 +435,15 @@
     if (completion)
     {
         completion(self.errorToReturn);
+    }
+}
+
+- (void)fetchPendingThingsForRecordId:(NSString *)recordId
+                           completion:(void (^)(NSArray<MHVThing *> *_Nullable things, NSError *_Nullable error))completion
+{
+    if (completion)
+    {
+        completion(self.database[recordId].things, self.errorToReturn);
     }
 }
 

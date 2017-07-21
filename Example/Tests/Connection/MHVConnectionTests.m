@@ -78,6 +78,7 @@ describe(@"MHVConnectionTests", ^
     
     // Test Connection
     MHVConnection *testConnection = [[MHVSodaConnection alloc] initWithConfiguration:configuration
+                                                                   cacheSynchronizer:nil
                                                                   cacheConfiguration:nil
                                                                        clientFactory:clientFactory
                                                                          httpService:httpService

@@ -62,7 +62,9 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 @synthesize sessionCredential = _sessionCredential;
 @synthesize personInfo = _personInfo;
 
+
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
+                    cacheSynchronizer:(id<MHVThingCacheSynchronizerProtocol>_Nullable)cacheSynchronizer
                    cacheConfiguration:(id<MHVThingCacheConfigurationProtocol>_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
@@ -73,6 +75,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     MHVASSERT_PARAMETER(shellAuthService);
     
     self = [super initWithConfiguration:configuration
+                      cacheSynchronizer:cacheSynchronizer
                      cacheConfiguration:cacheConfiguration
                           clientFactory:clientFactory
                             httpService:httpService];
@@ -105,6 +108,16 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
                        
         [self setConnectionPropertiesFromKeychain];
         
+        if (self.serviceInstance &&
+            self.applicationCreationInfo &&
+            self.sessionCredential &&
+            self.personInfo)
+        {
+            // The user is already authenticated
+            [self finishAuthWithError:nil completion:completion];
+            return;
+        }
+        
         [self provisionForSodaWithViewController:viewController completion:^(NSError * _Nullable error)
         {
             if (error)
@@ -125,22 +138,15 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
                     return;
                 }
                 
-                if (!self.personInfo)
+                [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
                 {
-                    [self getAuthorizedPersonInfoWithCompletion:^(NSError * _Nullable error)
-                     {
-                         if (error)
-                         {
-                             [self clearConnectionProperties];
-                         }
-                         
-                         [self finishAuthWithError:error completion:completion];
-                     }];
-                }
-                else
-                {
-                    [self finishAuthWithError:nil completion:completion];
-                }
+                    if (error)
+                    {
+                        [self clearConnectionProperties];
+                    }
+                    
+                    [self finishAuthWithError:error completion:completion];
+                }];
             }];
         }];
     });

@@ -19,19 +19,33 @@
 #import <Foundation/Foundation.h>
 
 @class MHVConfiguration;
-@protocol MHVSodaConnectionProtocol;
+@protocol MHVSodaConnectionProtocol, MHVThingCacheConfigurationProtocol;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol MHVConnectionFactoryProtocol <NSObject>
 
 /**
- Gets an instance of MHVSodaConnectionProtocol used to connect to HealthVault;
+ Gets an instance of MHVSodaConnectionProtocol used to connect to HealthVault.
 
+ @note If Thing caching is enabled, calling this method will return a connection using the default cache configuration. To change the configuration of the Thing cache use getOrCreateSodaConnectionWithAppConfiguration:thingCacheConfiguration:.
  @param configuration configuration Configuration required for authenticating the connection.
  @return An instance of MHVSodaConnectionProtocol.
  */
 - (id<MHVSodaConnectionProtocol> _Nullable)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration;
+
+#ifdef THING_CACHE
+/**
+ Gets an instance of MHVSodaConnectionProtocol used to connect to HealthVault using a custom cache configuration.
+ 
+ @note If Thing caching is enabled, calling this method will return a connection using the default cache configuration. To change the configuration of the Thing cache use getOrCreateSodaConnectionWithAppConfiguration:thingCacheConfiguration:.
+ @param appConfiguration configuration MHVConfiguration Configuration required for authenticating the connection.
+ @param thingCacheConfiguration id<MHVThingCacheConfigurationProtocol> The configuration object for the Thing cache.
+ @return An instance of MHVSodaConnectionProtocol.
+ */
+- (id<MHVSodaConnectionProtocol> _Nullable)getOrCreateSodaConnectionWithAppConfiguration:(MHVConfiguration *)appConfiguration
+                                                                 thingCacheConfiguration:(id<MHVThingCacheConfigurationProtocol>)thingCacheConfiguration;
+#endif
 
 @end
 

@@ -20,7 +20,7 @@
 #import "MHVThingCacheConfiguration.h"
 #import "MHVConfigurationConstants.h"
 
-static NSInteger const kDefaultSyncIntervalSeconds = 60*60; // 1 hour
+static NSInteger const kDefaultSyncIntervalSeconds = 30 * 10; // 10 minutes
 
 @implementation MHVThingCacheConfiguration
 

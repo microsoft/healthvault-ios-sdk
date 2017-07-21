@@ -35,12 +35,12 @@
     if (self)
     {
         _identifier = [[NSUUID UUID] UUIDString];
-        _originalRequestDate = originalRequestDate;
-        _name = method.name;
+        _originalRequestDate = [originalRequestDate copy];
+        _name = [method.name copy];
         _version = method.version;
-        _parameters = method.parameters;
-        _recordId = method.recordId;
-        _correlationId = method.correlationId;
+        _parameters = [method.parameters copy];
+        _recordId = [method.recordId copy];
+        _correlationId = [method.correlationId copy];
 
     }
     
@@ -55,9 +55,9 @@
     
     if (self)
     {
-        _identifier = identifier;
-        _originalRequestDate = originalRequestDate;
-        _name = methodName;
+        _identifier = [identifier copy];
+        _originalRequestDate = [originalRequestDate copy];
+        _name = [methodName copy];
     }
     
     return self;

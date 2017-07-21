@@ -29,7 +29,7 @@
 #ifdef THING_CACHE
 #import "MHVThingCacheConfiguration.h"
 #import "MHVThingCache.h"
-#import "MHVThingCacheDatabase.h"
+#import "MHVNetworkObserver.h"
 #endif
 
 @implementation MHVClientFactory
@@ -50,23 +50,11 @@
 }
 
 - (id<MHVThingClientProtocol>)thingClientWithConnection:(id<MHVConnectionProtocol>)connection
+                                     thingCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)thingCacheDatabase
 {
 #ifdef THING_CACHE
-    //Use database from configuration, or create MHVThingCacheDatabase
-    id<MHVThingCacheDatabaseProtocol> database;
-    if (connection.cacheConfiguration.database)
-    {
-        database = connection.cacheConfiguration.database;
-    }
-    else
-    {
-        database = [[MHVThingCacheDatabase alloc] initWithKeychainService:[MHVKeychainService new]
-                                                              fileManager:[NSFileManager defaultManager]];
-    }
-    
-    MHVThingCache *thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                  connection:connection
-                                                          automaticStartStop:YES];
+    MHVThingCache *thingCache = [[MHVThingCache alloc] initWithCacheDatabase:thingCacheDatabase
+                                                                  connection:connection];
         
     return [[MHVThingClient alloc] initWithConnection:connection cache:thingCache];
 #else

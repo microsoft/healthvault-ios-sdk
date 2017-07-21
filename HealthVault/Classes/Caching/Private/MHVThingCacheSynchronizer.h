@@ -1,6 +1,6 @@
 //
-//  MHVThingCache.h
-//  MHVLib
+// MHVThingCacheSynchronizer.h
+// healthvault-ios-sdk
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -18,20 +18,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVThingCacheProtocol.h"
+#import "MHVThingCacheSynchronizerProtocol.h"
 
-@protocol MHVThingCacheDatabaseProtocol, MHVConnectionProtocol;
+@protocol MHVThingCacheDatabaseProtocol, MHVConnectionProtocol, MHVNetworkObserverProtocol;
 
-@interface MHVThingCache : NSObject <MHVThingCacheProtocol>
+@interface MHVThingCacheSynchronizer : NSObject<MHVThingCacheSynchronizerProtocol>
 
-/**
- Create the Thing Cache
- 
- @param database The Database for the cache.
- @param connection The connection object for the current authenticated person.
- @return The cache object
- */
 - (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
-                           connection:(id<MHVConnectionProtocol>)connection;
+                      networkObserver:(id<MHVNetworkObserverProtocol>)networkObserver;
 
 @end

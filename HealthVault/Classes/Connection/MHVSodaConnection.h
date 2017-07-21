@@ -22,13 +22,14 @@
 
 @class MHVConfiguration, MHVThingCacheConfiguration, MHVClientFactory;
 
-@protocol MHVSessionCredentialClientProtocol, MHVHttpServiceProtocol, MHVKeychainServiceProtocol, MHVShellAuthServiceProtocol;
+@protocol MHVSessionCredentialClientProtocol, MHVHttpServiceProtocol, MHVKeychainServiceProtocol, MHVShellAuthServiceProtocol, MHVThingCacheSyncronizer;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVSodaConnection : MHVConnection<MHVSodaConnectionProtocol>
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
+                    cacheSynchronizer:(id<MHVThingCacheSynchronizerProtocol>_Nullable)cacheSynchronizer
                    cacheConfiguration:(id<MHVThingCacheConfigurationProtocol>_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
