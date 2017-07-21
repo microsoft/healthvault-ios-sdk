@@ -23,7 +23,7 @@
 
 @property (nonatomic, strong) NSString *taskId;
 @property (nonatomic, strong) MHVActionPlanTaskInstance *task;
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
 
@@ -99,7 +99,7 @@
                  self.nameValue.text = output.name;
                  self.statusValue.text = output.status.stringValue;
                  self.shortDescriptionValue.text = output.shortDescription;
-                 self.startDate.text = output.startDate.toString;
+                 self.startDate.text = output.startDate.description;
                  
                  [self.statusLabel clearStatus];
              }

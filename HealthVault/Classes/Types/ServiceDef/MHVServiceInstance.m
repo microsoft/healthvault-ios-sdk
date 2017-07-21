@@ -18,7 +18,7 @@
 //
 //
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVServiceInstance.h"
 
 static const xmlChar *x_element_id = XMLSTRINGCONST("id");

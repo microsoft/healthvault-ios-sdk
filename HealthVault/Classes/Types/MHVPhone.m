@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVPhone.h"
 
 static NSString *const c_element_description = @"description";
@@ -45,7 +45,7 @@ static NSString *const c_element_number = @"number";
 
 - (NSString *)toString
 {
-    return (self.number) ? self.number : c_emptyString;
+    return (self.number) ? self.number : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForType

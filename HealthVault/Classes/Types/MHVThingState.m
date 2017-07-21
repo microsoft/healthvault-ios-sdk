@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVThingState.h"
 
 NSString *const c_thingstate_active = @"Active";
@@ -41,7 +41,7 @@ NSString *MHVThingStateToString(MHVThingState state)
 
 MHVThingState MHVThingStateFromString(NSString *value)
 {
-    if ([NSString isNilOrEmpty:value])
+    if (!value || ![value isEqualToString:@""])
     {
         return MHVThingStateNone;
     }

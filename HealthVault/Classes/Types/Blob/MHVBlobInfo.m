@@ -16,8 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#import "MHVCommon.h"
+
 #import "MHVBlobInfo.h"
+#import "MHVValidator.h"
 
 static NSString *const c_element_name = @"name";
 static NSString *const c_element_contentType = @"content-type";
@@ -35,7 +36,7 @@ static NSString *const c_element_contentType = @"content-type";
 {
     NSString *blobName = (_nameValue) ? _nameValue.value : nil;
 
-    return (blobName) ? blobName : c_emptyString;
+    return (blobName) ? blobName : @"";
 }
 
 - (void)setName:(NSString *)name

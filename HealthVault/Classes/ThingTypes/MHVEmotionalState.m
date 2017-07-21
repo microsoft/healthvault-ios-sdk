@@ -16,9 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVEmotionalState.h"
-
+#import "MHVValidator.h"
 
 NSString *stringFromMood(MHVMood mood)
 {
@@ -43,7 +42,7 @@ NSString *stringFromMood(MHVMood mood)
             break;
     }
     
-    return c_emptyString;
+    return @"";
 }
 
 NSString *stringFromWellBeing(MHVWellBeing wellBeing)
@@ -69,7 +68,7 @@ NSString *stringFromWellBeing(MHVWellBeing wellBeing)
             break;
     }
     
-    return c_emptyString;
+    return @"";
 }
 
 static NSString *const c_typeid = @"4b7971d6-e427-427d-bf2c-2fbcf76606b3";

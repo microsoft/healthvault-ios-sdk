@@ -18,7 +18,7 @@
 //
 //
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVSystemInstances.h"
 
 static const xmlChar *x_attribute_currentinstance = XMLSTRINGCONST("current-instance-id");

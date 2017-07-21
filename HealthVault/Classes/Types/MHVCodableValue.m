@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVCodableValue.h"
+#import "MHVValidator.h"
 #import "NSArray+Utils.h"
 
 static const xmlChar *x_element_text = XMLSTRINGCONST("text");
@@ -101,7 +101,7 @@ static const xmlChar *x_element_code = XMLSTRINGCONST("code");
 
 - (BOOL)matchesDisplayText:(NSString *)text
 {
-    return [self.text caseInsensitiveCompare:[text trim]] == NSOrderedSame;
+    return [self.text caseInsensitiveCompare:[text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]] == NSOrderedSame;
 }
 
 - (BOOL)containsCode:(MHVCodedValue *)code

@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVLabTestResultsGroup.h"
 #import "NSArray+Utils.h"
 

@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVThingKey.h"
 #import "MHVValidator.h"
 
@@ -27,7 +27,7 @@ static NSString *const c_localIDPrefix = @"L";
 
 - (BOOL)hasVersion
 {
-    return ![NSString isNilOrEmpty:self.version];
+    return self.version != nil && ![self.version isEqualToString:@""];
 }
 
 - (instancetype)initWithID:(NSString *)thingID

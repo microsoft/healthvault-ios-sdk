@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVThingDataTyped.h"
 #import "MHVThingTypes.h"
 
@@ -54,17 +54,17 @@
 
 + (NSString *)typeID
 {
-    return c_emptyString;
+    return @"";
 }
 
 + (NSString *)XRootElement
 {
-    return c_emptyString;
+    return @"";
 }
 
 - (NSString *)typeName
 {
-    return c_emptyString;
+    return @"";
 }
 
 + (BOOL)isSingletonType

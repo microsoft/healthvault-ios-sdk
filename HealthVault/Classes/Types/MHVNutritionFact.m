@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVNutritionFact.h"
 
 static NSString *const c_element_name = @"name";

@@ -18,6 +18,7 @@
 //
 
 #import "MHVEmotionalStateFactory.h"
+#import "MHVRandom.h"
 
 @implementation MHVEmotionalState (MHVFactoryMethods)
 

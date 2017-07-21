@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVEmail.h"
+#import "MHVValidator.h"
 
 static NSString *const c_element_description = @"description";
 static NSString *const c_element_isPrimary = @"is-primary";
@@ -43,7 +43,7 @@ static NSString *const c_element_address = @"address";
 
 - (NSString *)toString
 {
-    return (self.address) ? self.address.value : c_emptyString;
+    return (self.address) ? self.address.value : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForType

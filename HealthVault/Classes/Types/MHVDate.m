@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVDate.h"
+#import "MHVValidator.h"
 
 static const xmlChar *x_element_year  = XMLSTRINGCONST("y");
 static const xmlChar *x_element_month = XMLSTRINGCONST("m");
@@ -108,7 +108,7 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 {
     MHVCHECK_NOTNULL(date);
     
-    return [self initWithComponents:[NSCalendar componentsFromDate:date]];
+    return [self initWithComponents:[self componentsFromDate:date]];
 }
 
 - (instancetype)initWithComponents:(NSDateComponents *)components
@@ -146,7 +146,7 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 
 - (BOOL)setWithDate:(NSDate *)date
 {
-    return [self setWithComponents:[NSCalendar componentsFromDate:date]];
+    return [self setWithComponents:[self componentsFromDate:date]];
 }
 
 - (BOOL)setWithComponents:(NSDateComponents *)components
@@ -177,22 +177,38 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
     return [[MHVDate alloc] initNow];
 }
 
+- (NSDateComponents *)componentsFromDate:(NSDate *)date
+{
+    if (!date)
+    {
+        return nil;
+    }
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    return [calendar components:NSCalendarUnitDay       |
+                                NSCalendarUnitMonth     |
+                                NSCalendarUnitYear      |
+                                NSCalendarUnitHour      |
+                                NSCalendarUnitMinute    |
+                                NSCalendarUnitSecond
+                       fromDate:date];
+}
+
 - (NSDateComponents *)toComponents
 {
-    NSDateComponents *components = [NSCalendar newComponents];
-    
-    MHVCHECK_NOTNULL(components);
-    
-    MHVCHECK_SUCCESS([self getComponents:components]);
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [NSDateComponents new];
+    [components setCalendar:calendar];
     
     return components;
 }
 
 - (NSDateComponents *)toComponentsForCalendar:(NSCalendar *)calendar
 {
-    NSDateComponents *components = [calendar componentsForCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
     
-    MHVCHECK_NOTNULL(components);
+    [components setCalendar:calendar];
     
     MHVCHECK_SUCCESS([self getComponents:components]);
     
@@ -223,7 +239,7 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 
 - (NSDate *)toDate
 {
-    NSCalendar *calendar = [NSCalendar newGregorian];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
     MHVCHECK_NOTNULL(calendar);
     
@@ -263,7 +279,10 @@ static const xmlChar *x_element_day   = XMLSTRINGCONST("d");
 {
     NSDate *date = [self toDate];
     
-    return [date toStringWithFormat:format];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setDateFormat:format];
+    
+    return [formatter stringFromDate:date];
 }
 
 - (MHVClientResult *)validate

@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "MHVWeightFactory.h"
+#import "MHVRandom.h"
 
 @implementation MHVWeight (MHVFactoryMethods)
 

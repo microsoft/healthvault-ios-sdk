@@ -38,7 +38,7 @@
 
 -(NSString *) detailsString
 {
-    return [NSString stringWithFormat:@"%@ [Administered: %@]", self.name.description, self.administeredDate ? self.administeredDate.description : c_emptyString];
+    return [NSString stringWithFormat:@"%@ [Administered: %@]", self.name.description, self.administeredDate ? self.administeredDate.description : @""];
 }
 
 -(NSString *) detailsStringMetric

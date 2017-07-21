@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVThingSection.h"
 
 NSString *const c_thingsection_core = @"core";
@@ -57,7 +57,7 @@ NSString *MHVThingSectionToString(MHVThingSection section)
 
 MHVThingSection MHVThingSectionFromString(NSString *value)
 {
-    if ([NSString isNilOrEmpty:value])
+    if (!value || [value isEqualToString:@""])
     {
         return MHVThingSection_None;
     }

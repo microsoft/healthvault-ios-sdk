@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "MHVCholesterolFactory.h"
+#import "MHVRandom.h"
 
 @implementation MHVCholesterol (MHVFactoryMethods)
 

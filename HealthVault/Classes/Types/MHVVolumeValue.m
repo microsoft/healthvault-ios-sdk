@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVVolumeValue.h"
 
 static const xmlChar *x_element_liters = XMLSTRINGCONST("liters");
@@ -81,7 +81,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 {
     if (!self.liters)
     {
-        return c_emptyString;
+        return @"";
     }
     
     return [NSString localizedStringWithFormat:format, self.litersValue];

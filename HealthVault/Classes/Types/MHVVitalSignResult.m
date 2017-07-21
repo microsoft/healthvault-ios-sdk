@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVVitalSignResult.h"
 
 static NSString *const c_element_title = @"title";
@@ -66,9 +66,9 @@ static NSString *const c_element_flag = @"flag";
 - (NSString *)toString
 {
     return [NSString stringWithFormat:@"%@, %@ %@",
-            (self.title) ? [self.title toString] : c_emptyString,
-            (self.value) ? [self.value toStringWithFormat:@"%.2f"] : c_emptyString,
-            (self.unit) ? [self.unit toString] : c_emptyString];
+            (self.title) ? [self.title toString] : @"",
+            (self.value) ? [self.value toStringWithFormat:@"%.2f"] : @"",
+            (self.unit) ? [self.unit toString] : @""];
 }
 
 - (MHVClientResult *)validate

@@ -16,8 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#import "MHVCommon.h"
+
 #import "MHVCCD.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"9c48a2b8-952c-4f5a-935d-f3292326bf54";
 static NSString *const c_typename = @"ClinicalDocument";

@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVThingType.h"
 
 static NSString *const c_attribute_name = @"name";
@@ -38,7 +38,7 @@ static NSString *const c_attribute_name = @"name";
 
 - (BOOL)isType:(NSString *)typeID
 {
-    return [self.typeID isEqualToStringCaseInsensitive:typeID];
+    return [self.typeID caseInsensitiveCompare:typeID] == NSOrderedSame;
 }
 
 - (MHVClientResult *)validate

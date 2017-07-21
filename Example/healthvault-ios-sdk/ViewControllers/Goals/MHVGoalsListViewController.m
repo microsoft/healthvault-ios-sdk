@@ -26,7 +26,7 @@
 @property (nonatomic, strong) NSArray<MHVGoal *> *goals;
 @property (nonatomic, strong) MHVFeatureActions *actions;
 @property (nonatomic, strong) MHVMoreFeatures *features;
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;

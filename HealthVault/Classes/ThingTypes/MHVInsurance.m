@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVInsurance.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"9366440c-ec81-4b89-b231-308a4c4d70ed";
 static NSString *const c_typename = @"payer";
@@ -39,7 +39,7 @@ static NSString *const c_element_contact = @"contact";
 
 - (NSString *)toString
 {
-    return (self.planName) ? self.planName : c_emptyString;
+    return (self.planName) ? self.planName : @"";
 }
 
 - (NSString *)description

@@ -17,7 +17,6 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
 #import "MHVConfigurationEntry.h"
 
 static const xmlChar *x_attribute_key = XMLSTRINGCONST("key");

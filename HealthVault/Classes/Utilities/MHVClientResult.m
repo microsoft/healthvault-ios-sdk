@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVClientResult.h"
-#import "MHVCore.h"
 #import "MHVValidator.h"
 
 static MHVClientResult *s_success = nil;

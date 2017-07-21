@@ -19,7 +19,8 @@
 
 #import "MHVThingCacheDatabase.h"
 #import <Security/Security.h>
-#import "MHVCommon.h"
+#import "MHVValidator.h"
+#import "MHVStringExtensions.h"
 #import "MHVThingCacheDatabase+CoreDataModel.h"
 #import "MHVKeychainServiceProtocol.h"
 #import "MHVLogger.h"

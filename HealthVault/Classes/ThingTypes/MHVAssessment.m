@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVAssessment.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"58fd8ac4-6c47-41a3-94b2-478401f0e26c";
 static NSString *const c_typename = @"health-assessment";
@@ -56,7 +56,7 @@ static NSString *const c_element_result = @"result";
 
 - (NSString *)toString
 {
-    return self.name ? self.name : c_emptyString;
+    return self.name ? self.name : @"";
 }
 
 - (MHVClientResult *)validate

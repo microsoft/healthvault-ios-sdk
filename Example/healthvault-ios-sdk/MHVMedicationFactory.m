@@ -39,7 +39,7 @@
 
 -(NSString *) detailsString
 {
-    return [NSString stringWithFormat:@"%@ [Dose: %@]", self.name.description, self.dose ? self.dose.description : c_emptyString];
+    return [NSString stringWithFormat:@"%@ [Dose: %@]", self.name.description, self.dose ? self.dose.description : @""];
 }
 
 -(NSString *) detailsStringMetric

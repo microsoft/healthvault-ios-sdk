@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
-#import "MHVStringExtensions.h"
 #import "XNodeType.h"
 #import "XString.h"
 #import "XConverter.h"

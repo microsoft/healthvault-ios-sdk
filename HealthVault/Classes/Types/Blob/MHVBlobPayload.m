@@ -16,8 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#import "MHVCommon.h"
+
 #import "MHVBlobPayload.h"
+#import "MHVValidator.h"
 #import "NSArray+Utils.h"
 
 static NSString *const c_element_blob = @"blob";
@@ -47,7 +48,7 @@ static NSString *const c_element_blob = @"blob";
 
 - (MHVBlobPayloadThing *)getDefaultBlob
 {
-    return [self getBlobNamed:c_emptyString];
+    return [self getBlobNamed:@""];
 }
 
 - (MHVBlobPayloadThing *)getBlobNamed:(NSString *)name

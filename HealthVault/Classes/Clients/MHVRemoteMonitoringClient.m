@@ -18,7 +18,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVRemoteMonitoringClient.h"
 #import "MHVJsonSerializer.h"
 #import "MHVConnectionProtocol.h"

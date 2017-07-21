@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "MHVSleepJournalAMFactory.h"
+#import "MHVRandom.h"
 
 @implementation MHVSleepJournalAM (MHVFactoryMethods)
 

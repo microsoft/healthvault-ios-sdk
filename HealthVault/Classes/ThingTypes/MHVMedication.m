@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVMedication.h"
 
 static NSString *const c_typeid = @"30cafccc-047d-4288-94ef-643571f7919d";
@@ -60,7 +60,7 @@ static NSString *const c_element_prescription = @"prescription";
 
 - (NSString *)toString
 {
-    return (self.name) ? [self.name toString] : c_emptyString;
+    return (self.name) ? [self.name toString] : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForName

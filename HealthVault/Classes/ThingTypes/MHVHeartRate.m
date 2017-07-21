@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVHeartRate.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeID = @"b81eb4a6-6eac-4292-ae93-3872d6870994";
 static NSString *const c_typeName = @"heart-rate";

@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVCondition.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"7ea7a1f9-880b-4bd4-b593-f5660f20eda8";
 static NSString *const c_typename = @"condition";
@@ -51,7 +51,7 @@ static NSString *const c_element_reason = @"stop-reason";
 
 - (NSString *)toString
 {
-    return (self.name) ? [self.name toString] : c_emptyString;
+    return (self.name) ? [self.name toString] : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForStatus

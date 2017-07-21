@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVAddress.h"
+#import "MHVValidator.h"
 #import "NSArray+Utils.h"
 #import "NSArray+MHVThing.h"
 
@@ -51,17 +51,44 @@ static NSString *const c_element_county = @"county";
 {
     NSMutableString *text = [[NSMutableString alloc] init];
     
-    [text appendOptionalWords:[self.street toString]];
+    [self appendWords:[self.street toString] toString:text];
     
-    [text appendOptionalStringOnNewLine:self.city];
-    [text appendOptionalStringOnNewLine:self.county];
+    [self appendStringOnNewLine:self.city toString:text];
+    [self appendStringOnNewLine:self.county toString:text];
     
-    [text appendOptionalStringOnNewLine:self.state];
-    [text appendOptionalWords:self.postalCode];
-    [text appendOptionalStringOnNewLine:self.country];
+    [self appendStringOnNewLine:self.state toString:text];
+    [self appendWords:self.postalCode toString:text];
+    [self appendStringOnNewLine:self.country toString:text];
     
     return text;
 }
+
+- (void)appendWords:(NSString *)words toString:(NSMutableString *)toString
+{
+    if (words && ![words isEqualToString:@""])
+    {
+        if (toString.length > 0)
+        {
+            [toString appendString:@" "];
+        }
+        
+        [toString appendString:words];
+    }
+}
+
+- (void)appendStringOnNewLine:(NSString *)string toString:(NSMutableString *)toString
+{
+    if (string && ![string isEqualToString:@""])
+    {
+        if (toString.length > 0)
+        {
+            [toString appendString:@"\r\n"];
+        }
+        
+        [toString appendString:string];
+    }
+}
+
 
 - (NSString *)description
 {

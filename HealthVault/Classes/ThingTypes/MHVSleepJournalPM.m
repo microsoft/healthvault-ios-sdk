@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVSleepJournalPM.h"
 #import "NSArray+Utils.h"
 
@@ -48,7 +48,7 @@ NSString *stringFromSleepiness(MHVSleepiness sleepiness)
             break;
     }
     
-    return c_emptyString;
+    return @"";
 }
 
 @interface MHVSleepJournalPM ()

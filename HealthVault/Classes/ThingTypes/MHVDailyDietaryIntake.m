@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVDailyDietaryIntake.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"9c29c6b9-f40e-44ff-b24e-fba6f3074638";
 static NSString *const c_typename = @"dietary-intake-daily";

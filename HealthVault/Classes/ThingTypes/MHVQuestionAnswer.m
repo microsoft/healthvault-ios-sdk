@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVQuestionAnswer.h"
 #import "NSArray+Utils.h"
 
@@ -115,8 +115,8 @@ static NSString *const c_element_answer = @"answer";
 - (NSString *)toString
 {
     return [NSString stringWithFormat:@"%@ %@",
-            self.question ? [self.question toString] : c_emptyString,
-            self.firstAnswer ? [self.firstAnswer toString] : c_emptyString];
+            self.question ? [self.question toString] : @"",
+            self.firstAnswer ? [self.firstAnswer toString] : @""];
 }
 
 - (MHVClientResult *)validate

@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVVocabularySearchParams.h"
 
 static NSString *const c_element_text = @"search-string";

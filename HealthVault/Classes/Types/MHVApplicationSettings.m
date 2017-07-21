@@ -18,7 +18,6 @@
 //
 
 
-#import "MHVCommon.h"
 #import "MHVApplicationSettings.h"
 
 @implementation MHVApplicationSettings

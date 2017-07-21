@@ -22,7 +22,7 @@
 #import "MHVThingCacheDatabaseProtocol.h"
 #import "MHVConnections.h"
 #import "MHVClients.h"
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVLogger.h"
 #import "NSError+MHVError.h"
 #import "MHVTypes.h"

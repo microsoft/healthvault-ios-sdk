@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVImmunization.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"cd3587b5-b6e1-4565-ab3b-1c3ad45eb04f";
 static NSString *const c_typename = @"immunization";
@@ -67,7 +67,7 @@ static NSString *const c_element_consent = @"consent";
 
 - (NSString *)toString
 {
-    return (self.name) ? [self.name toString] : c_emptyString;
+    return (self.name) ? [self.name toString] : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForName

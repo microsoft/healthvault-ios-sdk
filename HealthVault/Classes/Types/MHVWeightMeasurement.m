@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVWeightMeasurement.h"
 
 static double const c_PoundsPerKg = 2.20462262185;

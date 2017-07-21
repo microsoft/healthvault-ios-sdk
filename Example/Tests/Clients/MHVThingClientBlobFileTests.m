@@ -18,7 +18,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "MHVCommon.h"
 #import "MHVThingClient.h"
 #import "MHVBlobPayloadThing.h"
 #import "MHVErrorConstants.h"

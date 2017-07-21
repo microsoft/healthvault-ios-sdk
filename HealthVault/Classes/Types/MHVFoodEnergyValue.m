@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
 #import "MHVFoodEnergyValue.h"
+#import "MHVValidator.h"
 
 static const xmlChar *x_element_calories = XMLSTRINGCONST("calories");
 static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
@@ -82,7 +82,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 {
     if (!self.calories)
     {
-        return c_emptyString;
+        return @"";
     }
     
     return [NSString localizedStringWithFormat:format, self.caloriesValue];

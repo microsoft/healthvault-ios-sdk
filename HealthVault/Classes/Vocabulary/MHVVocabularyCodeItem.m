@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVVocabularyCodeItem.h"
 
 static const xmlChar *x_element_code = XMLSTRINGCONST("code-value");
@@ -38,7 +38,7 @@ static NSString *const c_element_data = @"info-xml";
 
 - (BOOL)matchesDisplayText:(NSString *)text
 {
-    return [self.displayText caseInsensitiveCompare:[text trim]] == NSOrderedSame;
+    return [self.displayText caseInsensitiveCompare:[text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]] == NSOrderedSame;
 }
 
 - (MHVClientResult *)validate

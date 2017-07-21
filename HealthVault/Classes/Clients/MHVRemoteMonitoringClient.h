@@ -19,7 +19,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MHVRemoteMonitoringClientProtocol.h"
-#import "MHVConnection.h"
 
 @protocol MHVConnectionProtocol;
 

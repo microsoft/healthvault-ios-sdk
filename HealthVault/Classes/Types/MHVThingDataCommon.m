@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVThingDataCommon.h"
 
 static NSString *const c_element_source = @"source";
@@ -36,7 +36,7 @@ static NSString *const c_element_clientID = @"client-thing-id";
 - (void)setClientIDValue:(NSString *)clientIDValue
 {
     _clientID = nil;
-    if (![NSString isNilOrEmpty:clientIDValue])
+    if (clientIDValue && ![clientIDValue isEqualToString:@""])
     {
         MHVString255 *clientID = [[MHVString255 alloc] initWith:clientIDValue];
         _clientID = clientID;

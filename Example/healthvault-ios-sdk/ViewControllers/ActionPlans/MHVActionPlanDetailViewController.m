@@ -23,7 +23,7 @@
 
 @property (nonatomic, strong) NSString *planId;
 @property (nonatomic, strong) MHVActionPlanInstance *plan;
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;

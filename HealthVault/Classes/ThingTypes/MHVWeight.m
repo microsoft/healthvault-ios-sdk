@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVWeight.h"
 
 static NSString *const c_typeid = @"3d34d87e-7fc1-4153-800f-f56592cb0d17";
@@ -113,17 +113,17 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 - (NSString *)stringInPoundsWithFormat:(NSString *)format
 {
-    return (self.value) ? [self.value stringInPounds:format] : c_emptyString;
+    return (self.value) ? [self.value stringInPounds:format] : @"";
 }
 
 - (NSString *)stringInKgWithFormat:(NSString *)format
 {
-    return (self.value) ? [self.value stringInKg:format] : c_emptyString;
+    return (self.value) ? [self.value stringInKg:format] : @"";
 }
 
 - (NSString *)toString
 {
-    return (self.value) ? [self.value toString] : c_emptyString;
+    return (self.value) ? [self.value toString] : @"";
 }
 
 - (NSString *)description

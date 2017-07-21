@@ -17,7 +17,7 @@
 // limitations under the License.
 
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVPersonalDemographics.h"
 
 static NSString *const c_typeid = @"92ba621e-66b3-4a01-bd73-74844aed4f5b";
@@ -47,7 +47,7 @@ static NSString *const c_element_donor = @"organ-donor";
 
 - (NSString *)toString
 {
-    return (self.name) ? [self.name toString] : c_emptyString;
+    return (self.name) ? [self.name toString] : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForBloodType

@@ -26,7 +26,7 @@
 
 @property (nonatomic, strong) NSString *recommendationId;
 @property (nonatomic, strong) MHVGoalRecommendationInstance *recommendation;
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;
 
@@ -81,9 +81,9 @@
              {
                  self.nameValue.text = output.associatedGoal.name;
                  self.typeValue.text = output.associatedGoal.goalType.stringValue;
-                 self.startDate.text = output.associatedGoal.startDate.toString;
+                 self.startDate.text = output.associatedGoal.startDate.description;
                  
-                 self.expirationDate.text = output.expirationDate.toString;
+                 self.expirationDate.text = output.expirationDate.description;
                  self.acknowledgedValue.text = output.acknowledged.stringValue;
                  
                  if (output.associatedGoal.range)

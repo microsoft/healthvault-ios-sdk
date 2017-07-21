@@ -18,7 +18,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "MHVCommon.h"
 #import "MHVThingCacheDatabase.h"
 #import "MHVKeychainService.h"
 #import "Kiwi.h"

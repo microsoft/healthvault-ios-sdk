@@ -251,7 +251,10 @@
     //
     [picker dismissViewControllerAnimated:TRUE completion:^
     {
-        NSString *fileName = [NSString stringWithFormat:@"Picture_%@.jpg", [[NSDate date] toStringWithFormat:@"yyyyMMdd_HHmmss"]];
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+        
+        NSString *fileName = [NSString stringWithFormat:@"Picture_%@.jpg", [formatter stringFromDate:[NSDate date]]];
         
         [self uploadFileWithName:fileName data:fileData andMediaType:fileMediaType];
     }];
