@@ -20,21 +20,18 @@
 #import <Foundation/Foundation.h>
 #import "MHVThingCacheProtocol.h"
 
-@protocol MHVThingCacheDatabaseProtocol, MHVConnectionProtocol, MHVNetworkObserverProtocol;
+@protocol MHVThingCacheDatabaseProtocol, MHVConnectionProtocol;
 
 @interface MHVThingCache : NSObject <MHVThingCacheProtocol>
 
 /**
  Create the Thing Cache
  
- @param database The Database for the cache
- @param connection The connection object for the current authenticated person
- @param automaticStartStop Whether the cache should automatically sync and reset based on connection.personInfo 
+ @param database The Database for the cache.
+ @param connection The connection object for the current authenticated person.
  @return The cache object
  */
 - (instancetype)initWithCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)database
-                           connection:(id<MHVConnectionProtocol>)connection
-                      networkObserver:(id<MHVNetworkObserverProtocol>)networkObserver
-                   automaticStartStop:(BOOL)automaticStartStop;
+                           connection:(id<MHVConnectionProtocol>)connection;
 
 @end

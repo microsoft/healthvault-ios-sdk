@@ -18,10 +18,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MHVCacheConstants.h"
 
-@class MHVThingCacheConfiguration, MHVThingQuery, MHVThingQueryResult, MHVThing, MHVMethod, MHVPendingMethod, MHVThingKey;
-@protocol MHVConnectionProtocol, MHVNetworkObserverProtocol;
+@class MHVThingQuery, MHVThingQueryResult, MHVThing, MHVMethod, MHVThingKey;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -70,16 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteThings:(NSArray<MHVThing *> *)things
             recordId:(NSUUID *)recordId
           completion:(void(^)(NSError *_Nullable error))completion;
-
-/**
- Sync the HealthVault database
- This should be called via the MHVConnection performBackgroundTasks and performForegroundTasks
- 
- @param options Any options set for the sync process
- @param completion The callback to indicate the results of background syncing
- */
-- (void)syncWithOptions:(MHVCacheOptions)options
-             completion:(void (^)(NSInteger syncedItemCount, NSError *_Nullable error))completion;
 
 /**
  Adds a method call to the cache to be replayed when the connection is online and adds or deletes Things from the cache. This method is called if there is a 'PutThings' or 'RemoveThings' method request when there is no connection to the internet.

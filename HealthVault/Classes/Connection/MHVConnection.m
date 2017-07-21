@@ -47,6 +47,7 @@
 #import "MHVThingCacheConfigurationProtocol.h"
 #import "MHVThingClient.h"
 #import "MHVThingCacheProtocol.h"
+#import "MHVThingCacheSynchronizerProtocol.h"
 #endif
 
 static NSString *const kCorrelationIdContextKey = @"WC_CorrelationId";
@@ -72,6 +73,10 @@ static NSInteger kInternalServerError = 500;
 @property (nonatomic, strong) MHVClientFactory *clientFactory;
 @property (nonatomic, strong) id<MHVHttpServiceProtocol> httpService;
 
+#ifdef THING_CACHE
+@property (nonatomic, strong) id<MHVThingCacheSynchronizerProtocol> cacheSynchronizer;
+#endif
+
 @end
 
 @implementation MHVConnection
@@ -81,6 +86,7 @@ static NSInteger kInternalServerError = 500;
 @synthesize cacheConfiguration = _cacheConfiguration;
 
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
+                    cacheSynchronizer:(id<MHVThingCacheSynchronizerProtocol>_Nullable)cacheSynchronizer
                    cacheConfiguration:(id<MHVThingCacheConfigurationProtocol>_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
@@ -99,6 +105,11 @@ static NSInteger kInternalServerError = 500;
         _httpService = httpService;
         _requests = [NSMutableArray new];
         _completionQueue = dispatch_queue_create("MHVConnection.requestQueue", DISPATCH_QUEUE_SERIAL);
+        
+#ifdef THING_CACHE
+        _cacheSynchronizer = cacheSynchronizer;
+        _cacheSynchronizer.connection = self;
+#endif
     }
     
     return self;
@@ -172,7 +183,7 @@ static NSInteger kInternalServerError = 500;
     if (!_thingClient)
     {
         _thingClient = [self.clientFactory thingClientWithConnection:self
-                                                       configuration:self.configuration];
+                                                  thingCacheDatabase:self.cacheSynchronizer.database];
     }
     
     return _thingClient;
@@ -595,8 +606,8 @@ static NSInteger kInternalServerError = 500;
         return;
     }
     
-    [((MHVThingClient *)self.thingClient).cache syncWithOptions:MHVCacheOptionsBackground
-                                                     completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
+    [self.cacheSynchronizer syncWithOptions:MHVCacheOptionsBackground
+                                 completion:^(NSInteger syncedItemCount, NSError *_Nullable error)
      {
          if (completion)
          {

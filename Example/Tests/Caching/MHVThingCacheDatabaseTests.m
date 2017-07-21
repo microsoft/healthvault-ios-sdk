@@ -303,7 +303,6 @@ describe(@"MHVThingCacheDatabase", ^
                        });
                     it(@"should retrun a synchronizedItemCount of exactly 1", ^
                        {
-                           [[expectFutureValue(returnedUpdateItemCount) shouldEventually] beNonNil];
                            [[expectFutureValue(returnedUpdateItemCount) shouldEventually] equal:@(1)];
                        });
                     it(@"should update the sequence number for the cache", ^

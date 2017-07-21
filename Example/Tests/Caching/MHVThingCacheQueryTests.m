@@ -67,8 +67,7 @@ describe(@"MHVThingCache", ^
                                thingCache = [[MHVThingCache alloc] initWithCacheDatabase:[[MHVMockDatabase alloc] initWithRecordIds:@[kRecordUUID]
                                                                                                                           hasSynced:NO
                                                                                                                    shouldHaveThings:NO]
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                                                                              connection:mockConnection];
                                
                                [thingCache cachedResultsForQueries:@[]
                                                           recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
@@ -96,8 +95,7 @@ describe(@"MHVThingCache", ^
                                thingCache = [[MHVThingCache alloc] initWithCacheDatabase:[[MHVMockDatabase alloc] initWithRecordIds:@[kRecordUUID]
                                                                                                                           hasSynced:YES
                                                                                                                    shouldHaveThings:YES]
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                                                                              connection:mockConnection];
                                
                                [thingCache cachedResultsForQueries:@[[MHVThingQuery new]]
                                                           recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
@@ -129,8 +127,7 @@ describe(@"MHVThingCache", ^
                                database.errorToReturn = [NSError MHVCacheError:@"DBError"];
                                
                                thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                                                                              connection:mockConnection];
                                
                                [thingCache cachedResultsForQueries:@[]
                                                           recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
@@ -163,8 +160,7 @@ describe(@"MHVThingCache", ^
                                                                     shouldHaveThings:NO];
                                
                                thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                                                                              connection:mockConnection];
                                
                                [thingCache addThings:@[[MHVAllergy newThing]]
                                             recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
@@ -196,8 +192,7 @@ describe(@"MHVThingCache", ^
                                thingCopy.key.version = @"NEWVERSION";
                                
                                thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                                                                              connection:mockConnection];
                                
                                [thingCache updateThings:@[thingCopy]
                                                recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]
@@ -233,8 +228,7 @@ describe(@"MHVThingCache", ^
                                MHVThing *thingCopy = [database.database[kRecordUUID].things.firstObject newDeepCopy];
                                
                                thingCache = [[MHVThingCache alloc] initWithCacheDatabase:database
-                                                                              connection:mockConnection
-                                                                      automaticStartStop:NO];
+                                                                              connection:mockConnection];
                                
                                [thingCache deleteThings:@[thingCopy]
                                                recordId:[[NSUUID alloc] initWithUUIDString:kRecordUUID]

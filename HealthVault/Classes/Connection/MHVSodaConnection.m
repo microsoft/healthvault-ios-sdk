@@ -62,7 +62,9 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
 @synthesize sessionCredential = _sessionCredential;
 @synthesize personInfo = _personInfo;
 
+
 - (instancetype)initWithConfiguration:(MHVConfiguration *)configuration
+                    cacheSynchronizer:(id<MHVThingCacheSynchronizerProtocol>_Nullable)cacheSynchronizer
                    cacheConfiguration:(id<MHVThingCacheConfigurationProtocol>_Nullable)cacheConfiguration
                         clientFactory:(MHVClientFactory *)clientFactory
                           httpService:(id<MHVHttpServiceProtocol>)httpService
@@ -73,6 +75,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     MHVASSERT_PARAMETER(shellAuthService);
     
     self = [super initWithConfiguration:configuration
+                      cacheSynchronizer:cacheSynchronizer
                      cacheConfiguration:cacheConfiguration
                           clientFactory:clientFactory
                             httpService:httpService];

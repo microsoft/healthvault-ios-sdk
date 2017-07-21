@@ -130,6 +130,7 @@ describe(@"MHVSodaConnection", ^
         // Setup the default state and create a new instance of the connection
         // The default values setup the authentication flow to a passing state
         connection = [[MHVSodaConnection alloc] initWithConfiguration:config
+                                                    cacheSynchronizer:nil
                                                    cacheConfiguration:nil
                                                         clientFactory:clientFactory
                                                           httpService:httpservice
