@@ -41,7 +41,7 @@ NSString *MHVThingStateToString(MHVThingState state)
 
 MHVThingState MHVThingStateFromString(NSString *value)
 {
-    if (!value || ![value isEqualToString:@""])
+    if (!value || [value isEqualToString:@""])
     {
         return MHVThingStateNone;
     }
