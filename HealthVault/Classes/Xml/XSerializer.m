@@ -231,6 +231,12 @@
 
 @end
 
+@interface XReader ()
+
+- (BOOL)isNilOrEmptyString:(NSString *)string;
+
+@end
+
 @implementation XReader (XSerializer)
 
 - (NSString *)readValue
@@ -996,13 +1002,6 @@
     }
 
     return TRUE;
-}
-
-#pragma mark - Helpers
-
-- (BOOL)isNilOrEmptyString:(NSString *)string
-{
-    return !string || [string isEqualToString:@""];
 }
 
 @end

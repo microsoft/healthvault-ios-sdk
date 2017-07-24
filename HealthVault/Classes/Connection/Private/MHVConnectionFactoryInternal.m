@@ -68,7 +68,7 @@
         
         if (!self.connection)
         {
-#ifdef THING_CACHE
+#if THING_CACHE
             return [self getOrCreateSodaConnectionWithAppConfiguration:configuration
                                                thingCacheConfiguration:[MHVThingCacheConfiguration new]];
 #else

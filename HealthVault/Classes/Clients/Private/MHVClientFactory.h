@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(id<MHVRemoteMonitoringClientProtocol>)remoteMonitoringClientWithConnection:(id<MHVConnectionProtocol>)connection;
 
 - (id<MHVThingClientProtocol>)thingClientWithConnection:(id<MHVConnectionProtocol>)connection
-                                     thingCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)thingCacheDatabase;
+                                     thingCacheDatabase:(id<MHVThingCacheDatabaseProtocol>_Nullable)thingCacheDatabase;
 
 - (id<MHVVocabularyClientProtocol>)vocabularyClientWithConnection:(id<MHVConnectionProtocol>)connection;
 

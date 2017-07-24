@@ -24,31 +24,33 @@ The healthvault-ios-sdk framework simplifies developing apps that use the Micros
   s.xcconfig         = { 'HEADER_SEARCH_PATHS' => '$(inherited) $(SDKROOT)/usr/include/libxml2', 'OTHER_LDFLAGS' => '-lxml2' }
   s.frameworks       = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
 
-  s.default_subspec = 'OfflineThingCache'
+# Default podspecs include 'Core' and 'CachingSupport'.
+  s.default_subspec = 'Core', 'CachingSupport'
 
+# Core subspec includes only basic HealthVault functionality (no caching or offline support).
   s.subspec 'Core' do |ss|
     ss.source_files = 'HealthVault/Classes/**/*.{h,m}'
     ss.exclude_files = 'HealthVault/Classes/Caching/**/*.{h,m}'
     ss.private_header_files = '**/Private/**/*.h'
   end
 
-  s.subspec 'OfflineThingCache' do |ss|
-    ss.source_files = 'HealthVault/Classes/**/*.{h,m,xcdatamodeld}'
+# CachingSupport subspec includes caching and offline support.
+  s.subspec 'CachingSupport' do |ss|
     ss.resources    = 'HealthVault/Assets/**/*'
+    ss.source_files = 'HealthVault/Classes/Caching/**/*.{h,m,xcdatamodeld}'
     ss.private_header_files = '**/Private/**/*.h'
-    
+    ss.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'THING_CACHE=1' }
     ss.frameworks = 'CoreData'
-    ss.compiler_flags = '-D THING_CACHE=1'
     ss.dependency 'EncryptedCoreData', '~> 3.1'
-  end
+end
 
+# Tests subspec for testing only - Exposes private interfaces.
   s.subspec 'Tests' do |ss|
     ss.source_files = 'HealthVault/Classes/**/*.{h,m,xcdatamodeld}'
-    ss.resources    = 'HealthVault/Assets/**/*'
+    ss.resources = 'HealthVault/Assets/**/*'
     ss.private_header_files = 'none'
-
+    ss.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'THING_CACHE=1' }
     ss.frameworks = 'CoreData'
-    ss.compiler_flags = '-D THING_CACHE=1'
     ss.dependency 'EncryptedCoreData', '~> 3.1'
   end
 end

@@ -262,6 +262,17 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
         return;
     }
     
+    NSArray<NSString *> *thingIds = [things arrayOfThingIds];
+    
+    if ([NSArray isNilOrEmpty:thingIds])
+    {
+        if (completion)
+        {
+            completion([NSError MHVCacheError:@"Unable to find valid thignIDs for the items in the 'things' array."]);
+        }
+        return;
+    }
+    
     // Delete the things from the cache
     [self.database deleteCachedThingsWithThingIds:[things arrayOfThingIds]
                                          recordId:recordId.UUIDString

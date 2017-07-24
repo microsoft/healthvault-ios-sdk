@@ -50,7 +50,7 @@
 }
 
 - (id<MHVThingClientProtocol>)thingClientWithConnection:(id<MHVConnectionProtocol>)connection
-                                     thingCacheDatabase:(id<MHVThingCacheDatabaseProtocol>)thingCacheDatabase
+                                     thingCacheDatabase:(id<MHVThingCacheDatabaseProtocol>_Nullable)thingCacheDatabase
 {
 #ifdef THING_CACHE
     MHVThingCache *thingCache = [[MHVThingCache alloc] initWithCacheDatabase:thingCacheDatabase
