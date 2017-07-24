@@ -43,8 +43,9 @@
     },
     {
       "name": "CachingSupport",
-      "resources": "HealthVault/Assets/**/*",
-      "source_files": "HealthVault/Classes/Caching/**/*.{h,m,xcdatamodeld}",
+      "resources": "HealthVault/Assets/MHVThingCacheDatabase.xcdatamodeld",
+      "preserve_paths": "HealthVault/Assets/MHVThingCacheDatabase.xcdatamodeld",
+      "source_files": "HealthVault/Classes/Caching/**/*.{h,m}",
       "private_header_files": "**/Private/**/*.h",
       "xcconfig": {
         "GCC_PREPROCESSOR_DEFINITIONS": "THING_CACHE=1"

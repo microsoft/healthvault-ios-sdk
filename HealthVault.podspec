@@ -36,8 +36,9 @@ The healthvault-ios-sdk framework simplifies developing apps that use the Micros
 
 # CachingSupport subspec includes caching and offline support.
   s.subspec 'CachingSupport' do |ss|
-    ss.resources    = 'HealthVault/Assets/**/*'
-    ss.source_files = 'HealthVault/Classes/Caching/**/*.{h,m,xcdatamodeld}'
+    ss.resources = 'HealthVault/Assets/MHVThingCacheDatabase.xcdatamodeld'
+    ss.preserve_paths = 'HealthVault/Assets/MHVThingCacheDatabase.xcdatamodeld'
+    ss.source_files = 'HealthVault/Classes/Caching/**/*.{h,m}'
     ss.private_header_files = '**/Private/**/*.h'
     ss.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'THING_CACHE=1' }
     ss.frameworks = 'CoreData'
