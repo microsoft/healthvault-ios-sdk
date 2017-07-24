@@ -18,9 +18,6 @@
 
 #import "MHVConfiguration.h"
 #import "MHVConfigurationConstants.h"
-#ifdef THING_CACHE
-#import "MHVThingCacheConfiguration.h"
-#endif
 
 @implementation MHVConfiguration
 

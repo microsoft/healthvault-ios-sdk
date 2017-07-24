@@ -182,8 +182,13 @@ static NSInteger kInternalServerError = 500;
 {
     if (!_thingClient)
     {
+#ifdef THING_CACHE
         _thingClient = [self.clientFactory thingClientWithConnection:self
                                                   thingCacheDatabase:self.cacheSynchronizer.database];
+#else
+        _thingClient = [self.clientFactory thingClientWithConnection:self
+                                                  thingCacheDatabase:nil];
+#endif
     }
     
     return _thingClient;
