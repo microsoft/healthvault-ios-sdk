@@ -43,7 +43,7 @@
 #import "MHVClientInfo.h"
 #import "MHVConnectionTaskResult.h"
 #import "MHVStringExtensions.h"
-#ifdef THING_CACHE
+#if THING_CACHE
 #import "MHVThingCacheConfigurationProtocol.h"
 #import "MHVThingClient.h"
 #import "MHVThingCacheProtocol.h"
@@ -73,7 +73,7 @@ static NSInteger kInternalServerError = 500;
 @property (nonatomic, strong) MHVClientFactory *clientFactory;
 @property (nonatomic, strong) id<MHVHttpServiceProtocol> httpService;
 
-#ifdef THING_CACHE
+#if THING_CACHE
 @property (nonatomic, strong) id<MHVThingCacheSynchronizerProtocol> cacheSynchronizer;
 #endif
 
@@ -106,7 +106,7 @@ static NSInteger kInternalServerError = 500;
         _requests = [NSMutableArray new];
         _completionQueue = dispatch_queue_create("MHVConnection.requestQueue", DISPATCH_QUEUE_SERIAL);
         
-#ifdef THING_CACHE
+#if THING_CACHE
         _cacheSynchronizer = cacheSynchronizer;
         _cacheSynchronizer.connection = self;
 #endif
@@ -182,7 +182,7 @@ static NSInteger kInternalServerError = 500;
 {
     if (!_thingClient)
     {
-#ifdef THING_CACHE
+#if THING_CACHE
         _thingClient = [self.clientFactory thingClientWithConnection:self
                                                   thingCacheDatabase:self.cacheSynchronizer.database];
 #else
@@ -599,7 +599,7 @@ static NSInteger kInternalServerError = 500;
 
 - (void)performBackgroundTasks:(void(^_Nullable)(MHVConnectionTaskResult *taskResult))completion
 {
-#ifdef THING_CACHE
+#if THING_CACHE
     if (!self.personInfo)
     {
         if (completion)

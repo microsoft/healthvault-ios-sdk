@@ -26,7 +26,7 @@
 #import "MHVCryptographer.h"
 #import "MHVKeychainService.h"
 #import "MHVConfiguration.h"
-#ifdef THING_CACHE
+#if THING_CACHE
 #import "MHVThingCacheConfiguration.h"
 #import "MHVThingCache.h"
 #import "MHVNetworkObserver.h"
@@ -52,7 +52,7 @@
 - (id<MHVThingClientProtocol>)thingClientWithConnection:(id<MHVConnectionProtocol>)connection
                                      thingCacheDatabase:(id<MHVThingCacheDatabaseProtocol>_Nullable)thingCacheDatabase
 {
-#ifdef THING_CACHE
+#if THING_CACHE
     MHVThingCache *thingCache = [[MHVThingCache alloc] initWithCacheDatabase:thingCacheDatabase
                                                                   connection:connection];
         

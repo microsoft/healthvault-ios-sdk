@@ -26,7 +26,7 @@
 #import "MHVBrowserAuthBroker.h"
 #import "MHVClientFactory.h"
 #import "MHVConfiguration.h"
-#ifdef THING_CACHE
+#if THING_CACHE
 #import "MHVThingCacheConfiguration.h"
 #import "MHVThingCacheSynchronizer.h"
 #import "MHVThingCacheDatabase.h"
@@ -86,7 +86,7 @@
     }
 }
 
-#ifdef THING_CACHE
+#if THING_CACHE
 - (id<MHVSodaConnectionProtocol> _Nullable)getOrCreateSodaConnectionWithAppConfiguration:(MHVConfiguration *)appConfiguration
                                                                  thingCacheConfiguration:(id<MHVThingCacheConfigurationProtocol>)thingCacheConfiguration
 {

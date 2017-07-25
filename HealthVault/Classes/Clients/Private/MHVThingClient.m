@@ -40,7 +40,7 @@
 #import "NSArray+MHVThing.h"
 #import "NSArray+MHVThingQuery.h"
 #import "NSArray+MHVThingQueryResultInternal.h"
-#ifdef THING_CACHE
+#if THING_CACHE
 #import "MHVThingCacheProtocol.h"
 #endif
 
@@ -179,7 +179,7 @@
         }
     }
     
-#ifdef THING_CACHE
+#if THING_CACHE
     // Check for cached results for the GetThings queries
     if (self.cache && queriesForCache > 0)
     {
@@ -450,7 +450,7 @@
      {
          NSArray<MHVThingKey *> *keys = [self thingKeyResultsFromResponse:response];
          
-#ifdef THING_CACHE
+#if THING_CACHE
          
          // If the connection is offline cache the pending request.
          if ([self isOfflineError:error] && self.cache)
@@ -583,7 +583,7 @@
      {
          NSArray<MHVThingKey *> *keys = [self thingKeyResultsFromResponse:response];
          
-#ifdef THING_CACHE
+#if THING_CACHE
          // If the connection is offline cache the pending request.
          if ([self isOfflineError:error] && self.cache)
          {
@@ -691,7 +691,7 @@
     [self.connection executeHttpServiceOperation:method
                                       completion:^(MHVServiceResponse *_Nullable response, NSError *_Nullable error)
      {
-#ifdef THING_CACHE
+#if THING_CACHE
          // If the connection is offline cache the pending request.
          if ([self isOfflineError:error] && self.cache)
          {
