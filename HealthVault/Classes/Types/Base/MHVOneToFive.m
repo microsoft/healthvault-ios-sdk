@@ -41,7 +41,7 @@ NSString *stringFromRating(MHVRelativeRating rating)
             break;
     }
 
-    return c_emptyString;
+    return @"";
 }
 
 NSString *stringFromNormalcy(MHVNormalcyRating rating)
@@ -67,7 +67,7 @@ NSString *stringFromNormalcy(MHVNormalcyRating rating)
             break;
     }
 
-    return c_emptyString;
+    return @"";
 }
 
 @implementation MHVOneToFive

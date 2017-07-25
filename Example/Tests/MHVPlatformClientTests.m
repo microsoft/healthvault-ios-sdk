@@ -18,7 +18,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVPlatformClient.h"
 #import "MHVConnectionProtocol.h"
 #import "MHVErrorConstants.h"

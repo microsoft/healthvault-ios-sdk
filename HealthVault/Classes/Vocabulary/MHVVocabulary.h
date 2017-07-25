@@ -20,5 +20,4 @@
 #import "MHVVocabularyIdentifier.h"
 #import "MHVVocabularyCodeItem.h"
 #import "MHVVocabularyCodeSet.h"
-#import "MHVVocabularyParams.h"
 #import "MHVVocabularySearchParams.h"

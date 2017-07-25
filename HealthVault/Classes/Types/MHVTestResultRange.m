@@ -18,7 +18,7 @@
 //
 //
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVTestResultRange.h"
 
 static const xmlChar *x_element_type = XMLSTRINGCONST("type");

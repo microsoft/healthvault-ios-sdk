@@ -23,7 +23,7 @@
 
 @property (nonatomic, strong) NSString *goalId;
 @property (nonatomic, strong) MHVGoal *goal;
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;
@@ -120,7 +120,7 @@
               {
                   self.nameValue.text = output.name;
                   self.typeValue.text = output.goalType.stringValue;
-                  self.startDate.text = output.startDate.toString;
+                  self.startDate.text = output.startDate.description;
                   
                   if (output.range)
                   {

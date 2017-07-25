@@ -16,8 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#import "MHVCommon.h"
+
 #import "MHVLabTestResults.h"
+#import "MHVValidator.h"
 #import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"5800eab5-a8c2-482a-a4d6-f1db25ae08c3";
@@ -85,7 +86,7 @@ static const xmlChar *x_element_orderedBy = XMLSTRINGCONST("ordered-by");
 
     if (!group)
     {
-        return c_emptyString;
+        return @"";
     }
 
     return [[group groupName] toString];

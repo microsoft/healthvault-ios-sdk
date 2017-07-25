@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVBloodPressure.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeID = @"ca3c57f4-f4c1-4e15-be67-0a3caf5414ed";
 static NSString *const c_typeName = @"blood-pressure";

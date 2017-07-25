@@ -14,8 +14,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVAllergy.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"52bf9104-2c5e-4f1f-a66d-552ebcc53df7";
 static NSString *const c_typename = @"allergy";
@@ -62,7 +62,7 @@ static NSString *const c_element_negated = @"is-negated";
 
 - (NSString *)toString
 {
-    return (self.name) ? [self.name toString] : c_emptyString;
+    return (self.name) ? [self.name toString] : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForType

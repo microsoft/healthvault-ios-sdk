@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVVocabularySearchString.h"
 
 NSString *MHVSearchModeToString(MHVSearchMode type)
@@ -36,7 +36,7 @@ NSString *MHVSearchModeToString(MHVSearchMode type)
             break;
     }
 
-    return c_emptyString;
+    return @"";
 }
 
 MHVSearchMode MHVSearchModeFromString(NSString *string)
@@ -75,7 +75,7 @@ static NSString *const c_attribute_matchType = @"search-mode";
     NSString *mode = nil;
 
     mode = [reader readAttribute:c_attribute_matchType];
-    if (![NSString isNilOrEmpty:mode])
+    if (mode && ![mode isEqualToString:@""])
     {
         self.matchType = MHVSearchModeFromString(mode);
     }

@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVProcedure.h"
 
 static NSString *const c_typeid = @"df4db479-a1ba-42a2-8714-2b083b88150f";
@@ -51,7 +51,7 @@ static NSString *const c_element_secondaryprovider = @"secondary-provider";
 
 - (NSString *)toString
 {
-    return (self.name) ? [self.name toString] : c_emptyString;
+    return (self.name) ? [self.name toString] : @"";
 }
 
 - (NSDate *)getDate

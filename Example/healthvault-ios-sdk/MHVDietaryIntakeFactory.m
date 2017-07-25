@@ -134,7 +134,7 @@ static MHVVocabularyIdentifier* s_vocabForMeals;
 
 -(NSString *)detailsString
 {
-    return [NSString stringWithFormat:@"%@ [%.0f calories] %@", self.foodThing.description, self.calories.caloriesValue, self.meal ? self.meal.description : c_emptyString];
+    return [NSString stringWithFormat:@"%@ [%.0f calories] %@", self.foodThing.description, self.calories.caloriesValue, self.meal ? self.meal.description : @""];
 }
 
 -(NSString *)detailsStringMetric

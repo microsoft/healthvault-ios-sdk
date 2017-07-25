@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVPerson.h"
 
 static NSString* const c_element_name = @"name";
@@ -84,7 +84,7 @@ static NSString* const c_element_type = @"type";
 
 -(NSString *)toString
 {
-    return (self.name) ? [self.name toString] : c_emptyString;
+    return (self.name) ? [self.name toString] : @"";
 }
 
 +(MHVVocabularyIdentifier *)vocabForPersonType

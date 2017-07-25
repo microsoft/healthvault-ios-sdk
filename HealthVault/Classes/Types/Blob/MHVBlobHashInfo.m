@@ -16,8 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#import "MHVCommon.h"
+
 #import "MHVBlobHashInfo.h"
+#import "MHVValidator.h"
 
 static NSString *const c_element_blockSize = @"block-size";
 static NSString *const c_element_algorithm = @"algorithm";

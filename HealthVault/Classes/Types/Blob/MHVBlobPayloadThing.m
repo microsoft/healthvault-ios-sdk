@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
 #import "MHVBlobPayloadThing.h"
+#import "MHVValidator.h"
 
 static NSString *const c_element_blobInfo = @"blob-info";
 static NSString *const c_element_length = @"content-length";
@@ -39,12 +39,12 @@ static NSString *const c_element_currentEncoding = @"current-content-encoding";
 
 - (NSString *)name
 {
-    return (self.blobInfo) ? self.blobInfo.name : c_emptyString;
+    return (self.blobInfo) ? self.blobInfo.name : @"";
 }
 
 - (NSString *)contentType
 {
-    return (self.blobInfo) ? self.blobInfo.contentType : c_emptyString;
+    return (self.blobInfo) ? self.blobInfo.contentType : @"";
 }
 
 - (instancetype)init

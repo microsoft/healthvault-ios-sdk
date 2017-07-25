@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
 #import "MHVDailyMedicationUsage.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"a9a76456-0357-493e-b840-598bbb9483fd";
 static NSString *const c_typename = @"daily-medication-usage";
@@ -109,7 +109,7 @@ static const xmlChar *x_element_singleDoseDescr = XMLSTRINGCONST("single-dose-de
 
 - (NSString *)toString
 {
-    return (self.drugName) ? [self.drugName toString] : c_emptyString;
+    return (self.drugName) ? [self.drugName toString] : @"";
 }
 
 - (MHVClientResult *)validate

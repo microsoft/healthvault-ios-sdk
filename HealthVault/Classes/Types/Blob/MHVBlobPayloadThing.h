@@ -20,7 +20,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVType.h"
 #import "MHVBlobInfo.h"
-#import "MHVBlobPutParameters.h"
 
 @interface MHVBlobPayloadThing : MHVType
 

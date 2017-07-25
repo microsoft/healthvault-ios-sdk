@@ -22,7 +22,7 @@
 
 @interface MHVGoalAddViewController ()
 
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet UITextField *nameValue;
 @property (strong, nonatomic) IBOutlet UITextField *typeValue;

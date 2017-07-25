@@ -18,7 +18,7 @@
 
 #import <libxml/xmlwriter.h>
 #import <libxml/xmlreader.h>
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVStringExtensions.h"
 #import "XWriter.h"
 

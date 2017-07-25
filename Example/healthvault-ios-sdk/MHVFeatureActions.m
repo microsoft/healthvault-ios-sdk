@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
 #import "MHVFeatureActions.h"
+#import "MHVValidator.h"
 #import "MHVUIAlert.h"
 
 @interface MHVFeatureActions ()<UIActionSheetDelegate>

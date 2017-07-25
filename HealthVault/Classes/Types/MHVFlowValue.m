@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVFlowValue.h"
+#import "MHVValidator.h"
 
 static const xmlChar *x_element_litersPerSecond = XMLSTRINGCONST("liters-per-second");
 static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
@@ -81,7 +81,7 @@ static const xmlChar *x_element_displayValue = XMLSTRINGCONST("display");
 {
     if (!self.litersPerSecond)
     {
-        return c_emptyString;
+        return @"";
     }
     
     return [NSString localizedStringWithFormat:format, self.litersPerSecondValue];

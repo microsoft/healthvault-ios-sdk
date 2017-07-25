@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVThingView.h"
 #import "NSArray+Utils.h"
 
@@ -84,12 +84,12 @@ static NSString *const c_element_versions = @"type-version-format";
     self.typeVersions = [reader readStringElementArray:c_element_versions];
     
     self.sections = [self stringsToSections:sections];
-    if ([self.transforms containsObject:c_emptyString])
+    if ([self.transforms containsObject:@""])
     {
         self.sections |= MHVThingSection_Data;
         
         NSMutableArray *transformsCopy = [self.transforms mutableCopy];
-        [transformsCopy removeObject:c_emptyString];
+        [transformsCopy removeObject:@""];
         self.transforms = transformsCopy;
     }
 }

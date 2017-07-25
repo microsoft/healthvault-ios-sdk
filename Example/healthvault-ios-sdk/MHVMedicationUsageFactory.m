@@ -17,6 +17,7 @@
 // limitations under the License.
 
 #import "MHVMedicationUsageFactory.h"
+#import "MHVRandom.h"
 
 @implementation MHVDailyMedicationUsage (MHVFactoryMethods)
 

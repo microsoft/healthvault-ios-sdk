@@ -75,14 +75,14 @@
     {
         id obj = [self objectAtIndex:i];
         NSString *descr = [obj description];
-        if ([NSString isNilOrEmpty:descr])
+        if (!descr || [descr isEqualToString:@""])
         {
             continue;
         }
         
         if (i > 0)
         {
-            [text appendNewLine];
+            [text appendString:@"\r\n"];
         }
         
         [text appendString:descr];

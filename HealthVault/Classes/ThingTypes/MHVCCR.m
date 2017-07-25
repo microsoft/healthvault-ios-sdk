@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
 #import "MHVCCR.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"1e1ccbfc-a55d-4d91-8940-fa2fbf73c195";
 static NSString *const c_typename = @"ContinuityOfCareRecord";

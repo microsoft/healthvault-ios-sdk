@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVApproxMeasurement.h"
+#import "MHVValidator.h"
 
 static NSString *const c_element_display = @"display";
 static NSString *const c_element_structured = @"structured";
@@ -91,7 +91,7 @@ static NSString *const c_element_structured = @"structured";
         return [self.measurement toString];
     }
 
-    return c_emptyString;
+    return @"";
 }
 
 - (NSString *)toStringWithFormat:(NSString *)format
@@ -101,7 +101,7 @@ static NSString *const c_element_structured = @"structured";
         return [self.measurement toStringWithFormat:format];
     }
 
-    return (self.displayText) ? self.displayText : c_emptyString;
+    return (self.displayText) ? self.displayText : @"";
 }
 
 - (MHVClientResult *)validate

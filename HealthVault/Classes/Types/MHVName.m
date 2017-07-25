@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVName.h"
 
 static NSString *const c_element_fullName = @"full";
@@ -82,27 +82,40 @@ static NSString *const c_element_suffix = @"suffix";
 
     if (self.title)
     {
-        [fullName appendOptionalString:self.title.text];
+        [self appendString:self.title.text toString:fullName];
     }
 
-    [fullName appendOptionalString:self.first withSeparator:@" "];
+    [self appendString:self.first toString:fullName];
     
-    if (![NSString isNilOrEmpty:self.middle])
+    if (!self.middle || [self.middle isEqualToString:@""])
     {
         NSString *middleInitial = [[self.middle substringWithRange:[self.middle rangeOfComposedCharacterSequenceAtIndex:0]] uppercaseString];
-        [fullName appendOptionalString:middleInitial withSeparator:@" "];
+        [self appendString:middleInitial toString:fullName];
     }
 
-    [fullName appendOptionalString:self.last withSeparator:@" "];
+    [self appendString:self.last toString:fullName];
     
     if (self.suffix)
     {
-        [fullName appendOptionalString:self.suffix.text withSeparator:@" "];
+        [self appendString:self.suffix.text toString:fullName];
     }
 
     self.fullName = fullName;
 
     return TRUE;
+}
+
+- (void)appendString:(NSString *)string toString:(NSMutableString *)toString
+{
+    if (string && ![string isEqualToString:@""])
+    {
+        if (toString.length > 0)
+        {
+            [toString appendString:@" "];
+        }
+        
+        [toString appendString:string];
+    }
 }
 
 - (NSString *)description
@@ -112,7 +125,7 @@ static NSString *const c_element_suffix = @"suffix";
 
 - (NSString *)toString
 {
-    return (self.fullName) ? self.fullName : c_emptyString;
+    return (self.fullName) ? self.fullName : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForTitle

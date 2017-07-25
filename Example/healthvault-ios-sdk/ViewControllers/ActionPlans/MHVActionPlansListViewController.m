@@ -23,7 +23,7 @@
 @interface MHVActionPlansListViewController ()
 
 @property (nonatomic, strong) NSArray<MHVActionPlanInstance *> *actionPlans;
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addButton;

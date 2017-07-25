@@ -137,9 +137,12 @@ static const NSUInteger c_thingLimit = 50;
     
     MHVThing *thing = self.things[indexPath.row];
     NSString *whenString = [thing.data.typed dateString];
-    if ([NSString isNilOrEmpty:whenString])
+    if (!whenString || [whenString isEqualToString:@""])
     {
-        whenString = [thing.effectiveDate toStringWithStyle:NSDateFormatterShortStyle];
+        NSDateFormatter *dateFormatter =[NSDateFormatter new];
+        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        
+        whenString = [dateFormatter stringFromDate:thing.effectiveDate];
     }
     
     cell.textLabel.text = whenString;

@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVMessage.h"
 #import "NSArray+Utils.h"
 
@@ -45,12 +45,12 @@ static NSString *const c_element_attachments = @"attachments";
 
 - (BOOL)hasHtmlBody
 {
-    return !([NSString isNilOrEmpty:self.htmlBlobName]);
+    return self.htmlBlobName != nil && ![self.htmlBlobName isEqualToString:@""];
 }
 
 - (BOOL)hasTextBody
 {
-    return !([NSString isNilOrEmpty:self.textBlobName]);
+    return self.textBlobName != nil && ![self.textBlobName isEqualToString:@""];
 }
 
 - (NSString *)getFrom
@@ -87,13 +87,13 @@ static NSString *const c_element_attachments = @"attachments";
     
     for (MHVMessageHeaderThing *header in self.headers)
     {
-        if ([header.name isEqualToStringCaseInsensitive:name])
+        if ([header.name caseInsensitiveCompare:name] == NSOrderedSame)
         {
             return header.value;
         }
     }
     
-    return c_emptyString;
+    return @"";
 }
 
 - (NSDate *)getDate

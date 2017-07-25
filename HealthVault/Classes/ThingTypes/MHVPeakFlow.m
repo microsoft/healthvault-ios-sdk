@@ -18,7 +18,7 @@
 //
 //
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVPeakFlow.h"
 
 static NSString *const c_typeID = @"5d8419af-90f0-4875-a370-0f881c18f6b3";
@@ -79,8 +79,8 @@ static const xmlChar *x_element_flags = XMLSTRINGCONST("measurement-flags");
 - (NSString *)toString
 {
     return [NSString localizedStringWithFormat:@"pef: %@, fev1: %@",
-            self.peakExpiratoryFlow ? [self.peakExpiratoryFlow toString] : c_emptyString,
-            self.forcedExpiratoryVolume1 ? [self.forcedExpiratoryVolume1 toString] : c_emptyString];
+            self.peakExpiratoryFlow ? [self.peakExpiratoryFlow toString] : @"",
+            self.forcedExpiratoryVolume1 ? [self.forcedExpiratoryVolume1 toString] : @""];
 }
 
 - (NSString *)description

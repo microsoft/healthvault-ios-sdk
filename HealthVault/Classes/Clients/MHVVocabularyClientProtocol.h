@@ -20,7 +20,6 @@
 #import "MHVVocabularyKey.h"
 #import "MHVVocabularyCodeItem.h"
 #import "MHVVocabularySearchString.h"
-#import "MHVVocabularySearchParams.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

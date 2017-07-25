@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "XConverter.h"
 #import "MHVLogger.h"
 
@@ -65,8 +65,10 @@ static NSString *const c_FALSE = @"false";
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
+    
+    NSScanner *scanner = [[NSScanner alloc] initWithString:source];
 
-    return [source parseInt:result];
+    return [scanner scanInt:result];
 }
 
 - (int)stringToInt:(NSString *)source
@@ -109,8 +111,10 @@ static NSString *const c_FALSE = @"false";
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
+    
+    NSScanner *scanner = [[NSScanner alloc] initWithString:source];
 
-    if ([source parseFloat:result])
+    if ([scanner scanFloat:result])
     {
         return TRUE;
     }
@@ -182,8 +186,10 @@ static NSString *const c_FALSE = @"false";
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
+    
+    NSScanner *scanner = [[NSScanner alloc] initWithString:source];
 
-    if ([source parseDouble:result])
+    if ([scanner scanDouble:result])
     {
         return TRUE;
     }
@@ -278,8 +284,10 @@ static NSString *const c_FALSE = @"false";
 {
     MHVCHECK_STRING(source);
     MHVCHECK_NOTNULL(result);
+    
+    [self.stringBuffer setString:source];
 
-    MHVCHECK_SUCCESS([self.stringBuffer setStringAndVerify:source]);
+    MHVCHECK_TRUE((self.stringBuffer.length == source.length));
 
     if ([self.stringBuffer isEqualToString:c_TRUE])
     {
@@ -336,7 +344,10 @@ static NSString *const c_FALSE = @"false";
     //
     // Use a mutable string, so we don't have to keep allocating new strings
     //
-    MHVCHECK_SUCCESS([self.stringBuffer setStringAndVerify:source]);
+    [self.stringBuffer setString:source];
+    
+    MHVCHECK_TRUE((self.stringBuffer.length == source.length));
+    
     [self.stringBuffer replaceOccurrencesOfString:@":"
      withString:@""
      options:0
@@ -430,7 +441,10 @@ static NSString *const c_FALSE = @"false";
 {
     if (!self.formatter)
     {
-        self.formatter = [NSDateFormatter newZuluFormatter]; // always emit Zulu form
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH:mm:ss.SSS'Z'"]; // Zulu time format
+        
+        self.formatter = formatter;
         MHVCHECK_OOM(self.formatter);
         [self.formatter setLocale:[self ensureLocale]];
     }
@@ -442,7 +456,7 @@ static NSString *const c_FALSE = @"false";
 {
     if (!self.parser)
     {
-        self.parser = [[NSDateFormatter alloc] init];
+        self.parser = [NSDateFormatter new];
         MHVCHECK_OOM(self.parser);
         [self.parser setLocale:[self ensureLocale]];
     }
@@ -454,7 +468,10 @@ static NSString *const c_FALSE = @"false";
 {
     if (!self.utcParser)
     {
-        self.utcParser = [NSDateFormatter newUtcFormatter];
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        
+        self.utcParser = formatter;
         MHVCHECK_OOM(self.utcParser);
         [self.utcParser setLocale:[self ensureLocale]];
     }
@@ -466,7 +483,7 @@ static NSString *const c_FALSE = @"false";
 {
     if (!self.calendar)
     {
-        self.calendar = [NSCalendar newGregorian];
+        self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         MHVCHECK_OOM(self.calendar);
     }
 
@@ -477,7 +494,7 @@ static NSString *const c_FALSE = @"false";
 {
     if (!self.dateLocale)
     {
-        self.dateLocale = [NSDateFormatter newCultureNeutralLocale];
+        self.dateLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
         MHVCHECK_OOM(self.dateLocale);
     }
 
@@ -512,8 +529,16 @@ static NSString *const c_FALSE = @"false";
         {
             NSTimeInterval daylightSavingsOffset = [tz daylightSavingTimeOffset];
             utcDate = [utcDate dateByAddingTimeInterval:daylightSavingsOffset];
-
-            NSDateComponents *components = [NSCalendar utcComponentsFromDate:utcDate];
+            
+            [calendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+            
+            NSDateComponents *components = [calendar components:NSCalendarUnitDay       |
+                                                                NSCalendarUnitMonth     |
+                                                                NSCalendarUnitYear      |
+                                                                NSCalendarUnitHour      |
+                                                                NSCalendarUnitMinute    |
+                                                                NSCalendarUnitSecond
+                                                       fromDate:utcDate];
             [components setCalendar:calendar];
             [components setTimeZone:tz];
 

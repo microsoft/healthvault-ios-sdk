@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
 #import "MHVConstrainedXmlDate.h"
+#import "MHVValidator.h"
 
 static NSString *const c_maxDate = @"9999-12-31T00:00:00";
 static NSString *const c_maxDatePrefix = @"9999";
@@ -64,8 +64,11 @@ static NSString *const c_maxDatePrefix = @"9999";
     {
         return nil;
     }
+    
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setDateFormat:format];
 
-    return [self.value toStringWithFormat:format];
+    return [formatter stringFromDate:self.value];
 }
 
 - (void)serialize:(XWriter *)writer
@@ -85,7 +88,7 @@ static NSString *const c_maxDatePrefix = @"9999";
 {
     NSString *text = [reader readString];
 
-    if ([NSString isNilOrEmpty:text] || [text hasPrefix:c_maxDatePrefix])
+    if ((!text || [text isEqualToString:@""])|| [text hasPrefix:c_maxDatePrefix])
     {
         self.value = nil;
         return;

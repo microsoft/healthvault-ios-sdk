@@ -67,7 +67,7 @@
              MHVConfigurationEntry* configEntry2 = [serviceDefinition.platform.config objectAtIndex:1];
              NSMutableString* output = [[NSMutableString alloc] init];
              
-             [output appendLines:17, @"Some data from ServiceDefinition",
+             [self appendToString:output lines:17, @"Some data from ServiceDefinition",
               @"[PlatformUrl]", serviceDefinition.platform.url,
               @"[PlatformVersion]", serviceDefinition.platform.version,
               @"[ShellUrl]", serviceDefinition.shell.url,
@@ -251,6 +251,24 @@
               }];
          }
      }];
+}
+
+- (void)appendToString:(NSMutableString *)string lines:(int)count, ...
+{
+    va_list args;
+    va_start(args, count);
+    
+    for (int i = 0; i < count; ++i)
+    {
+        NSString *str = va_arg(args, NSString *);
+        if (str && ![str isEqualToString:@""])
+        {
+            [string appendString:string];
+            [string appendString:@"\n\r"];
+        }
+    }
+    
+    va_end(args);
 }
 
 @end

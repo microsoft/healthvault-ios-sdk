@@ -16,9 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-#import "MHVCommon.h"
 #import "MHVHeight.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"40750a6a-89b2-455c-bd8d-b420a4cb500b";
 static NSString *const c_typename = @"height";
@@ -100,22 +99,22 @@ static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 
 - (NSString *)stringInMeters:(NSString *)format
 {
-    return (self.value) ? [self.value stringInMeters:format] : c_emptyString;
+    return (self.value) ? [self.value stringInMeters:format] : @"";
 }
 
 - (NSString *)stringInInches:(NSString *)format
 {
-    return (self.value) ? [self.value stringInInches:format] : c_emptyString;
+    return (self.value) ? [self.value stringInInches:format] : @"";
 }
 
 - (NSString *)stringInFeetAndInches:(NSString *)format
 {
-    return (self.value) ? [self.value stringInFeetAndInches:format] : c_emptyString;
+    return (self.value) ? [self.value stringInFeetAndInches:format] : @"";
 }
 
 - (NSString *)toString
 {
-    return (self.value) ? [self.value toString] : c_emptyString;
+    return (self.value) ? [self.value toString] : @"";
 }
 
 - (NSString *)description

@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "XSerializer.h"
 #import "MHVLogger.h"
 #import "NSArray+Utils.h"
@@ -50,32 +50,10 @@
     MHVCHECK_STRING(root);
     MHVCHECK_NOTNULL(writer);
     MHVCHECK_SUCCESS([obj conformsToProtocol:@protocol(XSerializable)]);
-
-    //
-    // Alloc pool manually. If we use @autoreleasepool, and the serializer throws an exception, which
-    // could happen, then the pool won't be released
-    // So we release the pool ourselves in the finally block
-    // DO NOT replace with @autoreleasepool
-    //
-    @autoreleasepool
-    {
-        id savedEx = nil;
-
-        @try
-        {
-            [writer writeElementRequired:root content:(id < XSerializable >)obj];
-            return TRUE;
-        }
-        @catch (id ex)
-        {
-            savedEx = ex;
-            [ex log];
-
-            @throw;
-        }
-    }
-
-    return FALSE;
+    
+    [writer writeElementRequired:root content:(id < XSerializable >)obj];
+    
+    return YES;
 }
 
 + (BOOL)serialize:(id)obj withRoot:(NSString *)root toFilePath:(NSString *)filePath
@@ -109,28 +87,15 @@
     MHVCHECK_NOTNULL(writer);
 
     NSData *rawData = nil;
-    @try
-    {
-        MHVCHECK_SUCCESS([XSerializer serialize:obj withRoot:root toWriter:writer]);
 
-        rawData = [[NSData alloc] initWithBytesNoCopy:[writer getXml] length:[writer getLength] freeWhenDone:FALSE];
-        MHVCHECK_NOTNULL(rawData);
-
-        return [rawData writeToFile:filePath
-                options:NSDataWritingAtomic | NSDataWritingFileProtectionComplete
-                error:nil];
-    }
-    @catch (id exception)
-    {
-        [exception log];
-    }
-    @finally
-    {
-        rawData = nil;
-        writer = nil;
-    }
-
-    return FALSE;
+    MHVCHECK_SUCCESS([XSerializer serialize:obj withRoot:root toWriter:writer]);
+    
+    rawData = [[NSData alloc] initWithBytesNoCopy:[writer getXml] length:[writer getLength] freeWhenDone:FALSE];
+    MHVCHECK_NOTNULL(rawData);
+    
+    return [rawData writeToFile:filePath
+                        options:NSDataWritingAtomic | NSDataWritingFileProtectionComplete
+                          error:nil];
 }
 
 + (BOOL)deserialize:(XReader *)reader withRoot:(NSString *)root into:(id)obj
@@ -138,26 +103,9 @@
     MHVCHECK_NOTNULL(reader);
     MHVCHECK_STRING(root);
     MHVCHECK_NOTNULL(obj);
-
-    @autoreleasepool
-    {
-        id savedEx = nil;
-
-        @try
-        {
-            [reader readElementRequired:root intoObject:obj];
-            return TRUE;
-        }
-        @catch (id ex)
-        {
-            savedEx = ex;
-            [ex log];
-
-            @throw;
-        }
-    }
-
-    return FALSE;
+    
+    [reader readElementRequired:root intoObject:obj];
+    return YES;
 }
 
 @end
@@ -177,16 +125,8 @@
 
     XReader *reader = [[XReader alloc] initFromString:xml];
     MHVCHECK_NOTNULL(reader);
-    @try
-    {
-        return [NSObject newFromReader:reader withRoot:root asClass:classObj];
-    }
-    @finally
-    {
-        reader = nil;
-    }
 
-    return nil;
+    return [NSObject newFromReader:reader withRoot:root asClass:classObj];
 }
 
 + (id)newFromString:(NSString *)xml withRoot:(NSString *)root andElementName:(NSString *)name asClass:(Class)classObj andArrayClass:(Class)arrayClassObj
@@ -222,16 +162,9 @@
     obj = [[classObj alloc] init]; // Ownership is passed to caller
     MHVCHECK_NOTNULL(obj);
 
-    @try
+    if ([XSerializer deserialize:reader withRoot:root into:obj])
     {
-        if ([XSerializer deserialize:reader withRoot:root into:obj])
-        {
-            return obj;
-        }
-    }
-    @finally
-    {
-        obj = nil;
+        return obj;
     }
 
     return nil;
@@ -249,21 +182,8 @@
 
     XReader *reader = [[XReader alloc] initFromFile:filePath];
     MHVCHECK_NOTNULL(reader);
-    @try
-    {
-        return [NSObject newFromReader:reader withRoot:root asClass:classObj];
-    }
-    @catch (id ex)
-    {
-        // Eat deserialization exceptions for now.
-        [ex log];
-    }
-    @finally
-    {
-        reader = nil;
-    }
 
-    return nil;
+    return [NSObject newFromReader:reader withRoot:root asClass:classObj];
 }
 
 + (id)newFromSecureFilePath:(NSString *)filePath withRoot:(NSString *)root asClass:(Class)classObj
@@ -277,30 +197,17 @@
 
     XReader *reader = nil;
     NSData *fileData = nil;
-    @try
-    {
-        fileData = [[NSData alloc] initWithContentsOfFile:filePath];
-        if (!fileData)
-        {
-            return nil;
-        }
 
-        reader = [[XReader alloc] initFromMemory:fileData withConverter:converter];
-        MHVCHECK_NOTNULL(reader);
-
-        return [NSObject newFromReader:reader withRoot:root asClass:classObj];
-    }
-    @catch (id ex)
+    fileData = [[NSData alloc] initWithContentsOfFile:filePath];
+    if (!fileData)
     {
-        [ex log];
+        return nil;
     }
-    @finally
-    {
-        fileData = nil;
-        reader = nil;
-    }
-
-    return nil;
+    
+    reader = [[XReader alloc] initFromMemory:fileData withConverter:converter];
+    MHVCHECK_NOTNULL(reader);
+    
+    return [NSObject newFromReader:reader withRoot:root asClass:classObj];
 }
 
 + (id)newFromFileUrl:(NSURL *)url withRoot:(NSString *)root asClass:(Class)classObj
@@ -314,13 +221,19 @@
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"xml"];
 
-    if ([NSString isNilOrEmpty:path])
+    if (!path || [path isEqualToString:@""])
     {
         return nil;
     }
 
     return [NSObject newFromFilePath:path withRoot:root asClass:classObj];
 }
+
+@end
+
+@interface XReader ()
+
+- (BOOL)isNilOrEmptyString:(NSString *)string;
 
 @end
 
@@ -401,7 +314,7 @@
         }
     }
 
-    return (value != nil) ? value : c_emptyString;
+    return (value != nil) ? value : @"";
 }
 
 - (NSString *)readStringElementRequired:(NSString *)name
@@ -418,7 +331,7 @@
         }
     }
 
-    return (value != nil) ? value : c_emptyString;
+    return (value != nil) ? value : @"";
 }
 
 - (NSString *)readStringElement:(NSString *)name
@@ -435,7 +348,7 @@
 {
     NSString *string = [self readNextElement];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return nil;
     }
@@ -447,7 +360,7 @@
 {
     NSString *string = [self readStringElement:name];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return nil;
     }
@@ -459,7 +372,7 @@
 {
     NSString *string = [self readNextElement];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0;
     }
@@ -471,7 +384,7 @@
 {
     NSString *string = [self readStringElement:name];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0;
     }
@@ -494,7 +407,7 @@
 {
     NSString *string = [self readNextElement];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0.0;
     }
@@ -506,7 +419,7 @@
 {
     NSString *string = [self readStringElement:name];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0.0;
     }
@@ -529,7 +442,7 @@
 {
     NSString *string = [self readNextElement];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0;
     }
@@ -541,7 +454,7 @@
 {
     NSString *string = [self readStringElement:name];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0;
     }
@@ -930,7 +843,7 @@
 {
     NSString *string = [self readStringElementWithXmlName:xmlName];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return nil;
     }
@@ -942,7 +855,7 @@
 {
     NSString *string = [self readStringElementWithXmlName:xmlName];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0;
     }
@@ -965,7 +878,7 @@
 {
     NSString *string = [self readStringElementWithXmlName:xmlName];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0.0;
     }
@@ -988,7 +901,7 @@
 {
     NSString *string = [self readStringElementWithXmlName:xmlName];
 
-    if ([NSString isNilOrEmpty:string])
+    if ([self isNilOrEmptyString:string])
     {
         return 0;
     }
@@ -1092,7 +1005,6 @@
 }
 
 @end
-
 
 void logWriterError(void)
 {
@@ -1302,7 +1214,7 @@ void logWriterError(void)
 
 - (void)writeText:(NSString *)value
 {
-    if ([NSString isNilOrEmpty:value])
+    if ([self isNilOrEmptyString:value])
     {
         return;
     }
@@ -1378,6 +1290,13 @@ void logWriterError(void)
         [self writeBool:value];
     }
     MHVCHECK_XWRITE([self writeEndElement]);
+}
+
+#pragma mark - Helpers
+
+- (BOOL)isNilOrEmptyString:(NSString *)string
+{
+    return !string || [string isEqualToString:@""];
 }
 
 @end

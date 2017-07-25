@@ -22,7 +22,7 @@
 #import "MHVThingCacheDatabaseProtocol.h"
 #import "MHVConnections.h"
 #import "MHVClients.h"
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVLogger.h"
 #import "NSError+MHVError.h"
 #import "MHVTypes.h"
@@ -258,6 +258,17 @@ typedef NS_ENUM(NSUInteger, MHVThingOperationType)
         if (completion)
         {
             completion(error);
+        }
+        return;
+    }
+    
+    NSArray<NSString *> *thingIds = [things arrayOfThingIds];
+    
+    if ([NSArray isNilOrEmpty:thingIds])
+    {
+        if (completion)
+        {
+            completion([NSError MHVCacheError:@"Unable to find valid thignIDs for the items in the 'things' array."]);
         }
         return;
     }

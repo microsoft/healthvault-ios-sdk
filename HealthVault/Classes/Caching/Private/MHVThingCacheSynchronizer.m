@@ -39,6 +39,7 @@
 #import "MHVValidator.h"
 #import "MHVRecord.h"
 #import "MHVLogger.h"
+#import "MHVStringExtensions.h"
 
 typedef void (^MHVSyncResultCompletion)(NSInteger syncedItemCount, NSError *_Nullable error);
 

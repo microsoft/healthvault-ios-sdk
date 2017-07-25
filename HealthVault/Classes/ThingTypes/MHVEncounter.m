@@ -16,8 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#import "MHVCommon.h"
+
 #import "MHVEncounter.h"
+#import "MHVValidator.h"
 
 static NSString *const c_typeid = @"464083cc-13de-4f3e-a189-da8e47d5651b";
 static NSString *const c_typename = @"encounter";

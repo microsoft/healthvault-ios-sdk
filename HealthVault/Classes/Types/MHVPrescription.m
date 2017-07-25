@@ -15,7 +15,7 @@
 // limitations under the License.
 
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVPrescription.h"
 
 static NSString *const c_element_prescribedBy = @"prescribed-by";

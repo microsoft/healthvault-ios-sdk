@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (id<MHVSodaConnectionProtocol> _Nullable)getOrCreateSodaConnectionWithConfiguration:(MHVConfiguration *)configuration;
 
-#ifdef THING_CACHE
+#if THING_CACHE
 /**
  Gets an instance of MHVSodaConnectionProtocol used to connect to HealthVault using a custom cache configuration.
  

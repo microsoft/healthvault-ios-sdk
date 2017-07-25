@@ -31,6 +31,7 @@
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		A52EBA351EF0653500A174CE /* MHVThingTestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */; };
 		A5385ACF1F040D05000D03C5 /* MHVCacheQueryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A5385ACE1F040D05000D03C5 /* MHVCacheQueryTests.m */; };
+		A554A5B51F22A4B70090441B /* MHVRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = A554A5B41F22A4B70090441B /* MHVRandom.m */; };
 		A56404FC1EF2E9E6002D870B /* MHVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A56404FB1EF2E9E6002D870B /* MHVViewController.xib */; };
 		A5937CE51EF4359C00B5F047 /* HealthVault.podspec in Resources */ = {isa = PBXBuildFile; fileRef = A5937CE41EF4359C00B5F047 /* HealthVault.podspec */; };
 		A5DF64C61EF051FA009F5968 /* MHVActionPlanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5DF649D1EF051FA009F5968 /* MHVActionPlanDetailViewController.m */; };
@@ -167,6 +168,8 @@
 		A52EBA331EF0653500A174CE /* MHVThingTestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVThingTestExtensions.h; sourceTree = "<group>"; };
 		A52EBA341EF0653500A174CE /* MHVThingTestExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingTestExtensions.m; sourceTree = "<group>"; };
 		A5385ACE1F040D05000D03C5 /* MHVCacheQueryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVCacheQueryTests.m; sourceTree = "<group>"; };
+		A554A5B31F22A4B70090441B /* MHVRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVRandom.h; sourceTree = "<group>"; };
+		A554A5B41F22A4B70090441B /* MHVRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVRandom.m; sourceTree = "<group>"; };
 		A56404FB1EF2E9E6002D870B /* MHVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHVViewController.xib; sourceTree = "<group>"; };
 		A5937CE41EF4359C00B5F047 /* HealthVault.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HealthVault.podspec; path = ../HealthVault.podspec; sourceTree = "<group>"; };
 		A5DF64981EF05196009F5968 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -405,6 +408,8 @@
 				4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */,
 				A5DF65051EF0527B009F5968 /* MHVProcedureFactory.h */,
 				A5DF65061EF0527B009F5968 /* MHVProcedureFactory.m */,
+				A554A5B31F22A4B70090441B /* MHVRandom.h */,
+				A554A5B41F22A4B70090441B /* MHVRandom.m */,
 				A5DF65071EF0527B009F5968 /* MHVSleepJournalAMFactory.h */,
 				A5DF65081EF0527B009F5968 /* MHVSleepJournalAMFactory.m */,
 				A5DF65091EF0527B009F5968 /* MHVStatusLabel.h */,
@@ -895,6 +900,7 @@
 			files = (
 				A5DF652D1EF0527B009F5968 /* MHVWeightFactory.m in Sources */,
 				A5DF65171EF0527B009F5968 /* MHVBloodGlucoseFactory.m in Sources */,
+				A554A5B51F22A4B70090441B /* MHVRandom.m in Sources */,
 				A5DF64C61EF051FA009F5968 /* MHVActionPlanDetailViewController.m in Sources */,
 				6003F59E195388D20070C39A /* MHVAppDelegate.m in Sources */,
 				A5DF65231EF0527B009F5968 /* MHVImmunizationFactory.m in Sources */,

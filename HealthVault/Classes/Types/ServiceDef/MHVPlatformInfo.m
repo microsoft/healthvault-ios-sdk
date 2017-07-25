@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVPlatformInfo.h"
 
 static const xmlChar *x_element_url = XMLSTRINGCONST("url");

@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVCodedValue.h"
+#import "MHVValidator.h"
 
 static const xmlChar *x_element_value = XMLSTRINGCONST("value");
 static const xmlChar *x_element_family = XMLSTRINGCONST("family");

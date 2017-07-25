@@ -1,6 +1,0 @@
-framework module HealthVault {
-  umbrella header "HealthVault-OfflineThingCache-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -27,7 +27,7 @@
 @interface MHVTimelineSnapshotViewController ()
 
 @property (nonatomic, strong) MHVActionPlanTasksResponseTimelineTask_ *timeline;
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet UITextField *numberOfTasksLabel;
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;

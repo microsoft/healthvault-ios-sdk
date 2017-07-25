@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVConcentrationValue.h"
+#import "MHVValidator.h"
 
 NSString *const c_element_mmolPL = @"mmolPerL";
 NSString *const c_element_display = @"display";
@@ -29,6 +29,24 @@ NSString *const c_mmolPlUnits = @"mmol/L";
 NSString *const c_mmolUnitsCode = @"mmol-per-l";
 NSString *const c_mgDLUnits = @"mg/dL";
 NSString *const c_mgDLUnitsCode = @"mg-per-dl";
+
+double mgDLToMmolPerL(double mgDLValue, double molarWeight)
+{
+    //
+    // DL = 0.1 Liters
+    // (10 * mgDL)/1000 = g/L
+    // Molar weight = grams/mole
+    //
+    // ((10 * mgDL)/1000 / molarWeight) * 1000)
+    
+    return (10 * mgDLValue) / molarWeight;
+}
+
+double mmolPerLToMgDL(double mmolPerL, double molarWeight)
+{
+    return (mmolPerL * molarWeight) / 10;
+}
+
 
 @interface MHVConcentrationValue ()
 

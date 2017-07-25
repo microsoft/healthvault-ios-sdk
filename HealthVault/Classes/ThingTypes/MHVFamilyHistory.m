@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVFamilyHistory.h"
+#import "MHVValidator.h"
 #import "NSArray+Utils.h"
 
 static NSString *const c_typeid = @"4a04fcc8-19c1-4d59-a8c7-2031a03f21de";
@@ -52,7 +52,7 @@ static NSString *const c_element_relative = @"relative";
 {
     if (!self.hasConditions)
     {
-        return c_emptyString;
+        return @"";
     }
 
     if (self.conditions.count == 1)

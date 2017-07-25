@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong) NSArray<MHVActionPlanTaskInstance *> *taskList;
 @property (nonatomic, strong) MHVActionPlanInstance *plan;
-@property (nonatomic, strong) MHVConnection *connection;
+@property (nonatomic, strong) id<MHVSodaConnectionProtocol> connection;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet MHVStatusLabel *statusLabel;

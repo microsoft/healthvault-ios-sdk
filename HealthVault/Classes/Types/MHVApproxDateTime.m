@@ -16,9 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-#import "MHVCommon.h"
 #import "MHVApproxDateTime.h"
+#import "MHVValidator.h"
 
 static NSString *const c_element_descriptive = @"descriptive";
 static NSString *const c_element_structured = @"structured";
@@ -27,7 +26,7 @@ static NSString *const c_element_structured = @"structured";
 
 - (void)setDescriptive:(NSString *)descriptive
 {
-    if (![NSString isNilOrEmpty:descriptive])
+    if (!descriptive || [descriptive isEqualToString:@""])
     {
         _dateTime = nil;
     }
@@ -118,7 +117,7 @@ static NSString *const c_element_structured = @"structured";
         return [self.dateTime toString];
     }
     
-    return (self.descriptive) ? self.descriptive : c_emptyString;
+    return (self.descriptive) ? self.descriptive : @"";
 }
 
 - (NSString *)toStringWithFormat:(NSString *)format
@@ -128,7 +127,7 @@ static NSString *const c_element_structured = @"structured";
         return [self.dateTime toStringWithFormat:format];
     }
     
-    return (self.descriptive) ? self.descriptive : c_emptyString;
+    return (self.descriptive) ? self.descriptive : @"";
 }
 
 - (NSDate *)toDate

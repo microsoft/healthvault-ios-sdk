@@ -76,7 +76,7 @@ while(NO)
 #endif
 
 #define MHVASSERT_NOTNULL(obj) MHVASSERT(obj != nil)
-#define MHVASSERT_STRING(string) MHVASSERT(!([NSString isNilOrEmpty:string]))
+#define MHVASSERT_STRING(string) MHVASSERT(!(!string || [string isEqualToString:@""]))
 
 #define MHVCHECK_TRUE(condition) if (!(condition)) \
                                 { \
@@ -87,7 +87,7 @@ while(NO)
 
 #define MHVCHECK_NOTNULL(obj) MHVCHECK_TRUE(obj != nil)
 #define MHVCHECK_SELF MHVCHECK_TRUE(self != nil) 
-#define MHVCHECK_STRING(string) MHVCHECK_FALSE([NSString isNilOrEmpty:string])
+#define MHVCHECK_STRING(string) MHVCHECK_FALSE(!string || [string isEqualToString:@""])
 
 #define MHVCHECK_OOM(obj) if (obj == nil) \
                          { \

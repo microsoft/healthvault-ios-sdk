@@ -17,7 +17,6 @@
 // limitations under the License.
 
 #import "MHVValidator.h"
-#import "MHVStringExtensions.h"
 #import "MHVType.h"
 
 static id<MHVEventLog> s_eventLog;

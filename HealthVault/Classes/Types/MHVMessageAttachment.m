@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVMessageAttachment.h"
 
 static const xmlChar *x_element_name = XMLSTRINGCONST("name");

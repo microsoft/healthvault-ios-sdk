@@ -18,7 +18,7 @@
 
 #import <libxml/tree.h>
 #import <libxml/xmlreader.h>
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "XReader.h"
 #import "MHVLogger.h"
 
@@ -49,7 +49,7 @@ xmlTextReader *XAllocStringReader(NSString *string)
 
 xmlTextReader *XAllocFileReader(NSString *fileName)
 {
-    if ([NSString isNilOrEmpty:fileName])
+    if (!fileName || [fileName isEqualToString:@""])
     {
         return nil;
     }
@@ -459,7 +459,7 @@ xmlTextReader *XAllocFileReader(NSString *fileName)
 
 - (BOOL)readStartElementWithName:(NSString *)name
 {
-    if ([NSString isNilOrEmpty:name])
+    if ([self isNilOrEmptyString:name])
     {
         MHVLOG(@"Cannot read the start element because the element name parameter is nil or empty.");
         return FALSE;
@@ -482,8 +482,8 @@ xmlTextReader *XAllocFileReader(NSString *fileName)
 
 - (BOOL)readStartElementWithName:(NSString *)name NS:(NSString *)ns
 {
-    if ([NSString isNilOrEmpty:name] ||
-        [NSString isNilOrEmpty:ns])
+    if ([self isNilOrEmptyString:name] ||
+        [self isNilOrEmptyString:ns])
     {
         MHVLOG(@"The name (%@) or namespace (%@) parameter is nil.", name, ns);
         return FALSE;
@@ -567,7 +567,7 @@ xmlTextReader *XAllocFileReader(NSString *fileName)
     if ([self isEmptyElement])
     {
         [self read];
-        return c_emptyString;
+        return @"";
     }
 
     [self read];
@@ -662,6 +662,11 @@ xmlTextReader *XAllocFileReader(NSString *fileName)
 - (BOOL)isSuccess:(int)result
 {
     return result == READER_TRUE;
+}
+
+- (BOOL)isNilOrEmptyString:(NSString *)string
+{
+    return !string || [string isEqualToString:@""];
 }
 
 @end

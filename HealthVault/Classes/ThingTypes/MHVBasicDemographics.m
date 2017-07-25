@@ -16,8 +16,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
 #import "MHVBasicDemographics.h"
+#import "MHVValidator.h"
 
 static NSString *const c_gender_female = @"f";
 static NSString *const c_gender_male = @"m";

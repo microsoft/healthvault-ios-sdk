@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVCommon.h"
+#import "MHVValidator.h"
 #import "MHVRelative.h"
 
 static NSString *const c_element_relationship = @"relationship";
@@ -63,7 +63,7 @@ static NSString *const c_element_region = @"region-of-origin";
         return [self.person toString];
     }
 
-    return (self.relationship) ? [self.relationship toString] : c_emptyString;
+    return (self.relationship) ? [self.relationship toString] : @"";
 }
 
 + (MHVVocabularyIdentifier *)vocabForRelationship
