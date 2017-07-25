@@ -21,6 +21,7 @@
 static NSString *const c_element_element_xpath = @"element-xpath";
 static NSString *const c_element_is_negated = @"is-negated";
 static NSString *const c_element_element_values = @"element-values";
+static NSString *const c_element_string = @"string";
 
 @implementation MHVTaskTargetEvent
 
@@ -28,14 +29,19 @@ static NSString *const c_element_element_values = @"element-values";
 {
     [writer writeElement:c_element_element_xpath content:self.elementXPath];
     [writer writeElement:c_element_is_negated content:self.isNegated];
-    [writer writeElementArray:c_element_element_values elements:self.elementValues];
+    [writer writeElementArray:c_element_element_values
+                    thingName:c_element_string
+                     elements:self.elementValues];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.elementXPath = [reader readElement:c_element_element_xpath asClass:[MHVStringNZNW class]];
     self.isNegated = [reader readElement:c_element_is_negated asClass:[MHVBool class]];
-    self.elementValues = [reader readStringElementArray:c_element_element_values];
+    self.elementValues = [reader readElementArray:c_element_element_values
+                                        thingName:c_element_string
+                                          asClass:[MHVString class]
+                                    andArrayClass:[NSMutableArray class]];
 }
 
 @end
@@ -49,7 +55,7 @@ static NSString *const c_element_target_event = @"target-event";
     [writer writeElementArray:c_element_target_event elements:self.targetEvent];
 }
 
-- (void) deserialize:(XReader *)reader
+- (void)deserialize:(XReader *)reader
 {
     self.targetEvent = [reader readElementArray:c_element_target_event asClass:[MHVTaskTargetEvent class] andArrayClass:[NSMutableArray class]];
 }

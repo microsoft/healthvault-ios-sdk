@@ -82,4 +82,46 @@ describe(@"MHVTaskThing", ^
                      });
          });
 
+describe(@"MHVTaskThing with tracking-policy values", ^
+         {
+             NSString *objectDefinition = @"<task><type>11111111-1111-1111-1111-000000000000</type><tracking-policy>"\
+             "<target-events><target-event><element-xpath>/thing/data-xml/medication/name/text</element-xpath><is-negated>false</is-negated>"\
+             "<element-values><string>Another Drug</string></element-values></target-event></target-events>"\
+             "</tracking-policy></task>";
+             
+             context(@"XML Deserialize", ^
+                     {
+                         it(@"should deserialize correctly", ^
+                            {
+                                MHVTaskThing *task = (MHVTaskThing*)[XReader newFromString:objectDefinition withRoot:[MHVTaskThing XRootElement] asClass:[MHVTaskThing class]];
+                                
+                                MHVTaskTargetEvent *targetEvent = task.trackingPolicy.targetEvents.targetEvent.firstObject;
+                                
+                                [[theValue(targetEvent.isNegated.value) should] equal:theValue(NO)];
+                                [[targetEvent.elementXPath should] equal:@"/thing/data-xml/medication/name/text"];
+                                
+                                [[theValue(targetEvent.elementValues.count) should] equal:@(1)];
+                                [[targetEvent.elementValues.firstObject should] equal:@"Another Drug"];
+                                
+                            });
+                     });
+             
+             context(@"Serialize", ^
+                     {
+                         it(@"should serialize correctly", ^
+                            {
+                                MHVTaskThing *task = (MHVTaskThing*)[XReader newFromString:objectDefinition withRoot:[MHVTaskThing XRootElement] asClass:[MHVTaskThing class]];
+                                
+                                XWriter *writer = [[XWriter alloc] initWithBufferSize:2048];
+                                [writer writeStartElement:[MHVTaskThing XRootElement]];
+                                [task serialize:writer];
+                                [writer writeEndElement];
+                                
+                                NSString *result = [writer newXmlString];
+                                
+                                [[result should] equal:objectDefinition];
+                            });
+                     });
+         });
+
 SPEC_END

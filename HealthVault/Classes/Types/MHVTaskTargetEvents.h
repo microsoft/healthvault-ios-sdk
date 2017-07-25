@@ -24,7 +24,7 @@
 
 @property (readwrite, nonatomic, strong) MHVStringNZNW *elementXPath;
 @property (readwrite, nonatomic, strong) MHVBool *isNegated;
-@property (readwrite, nonatomic, strong) NSArray<NSString *> *elementValues;
+@property (readwrite, nonatomic, strong) NSArray<MHVString *> *elementValues;
 
 @end
 
