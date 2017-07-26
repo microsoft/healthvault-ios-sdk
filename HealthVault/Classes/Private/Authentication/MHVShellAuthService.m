@@ -84,7 +84,7 @@ static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
         
         if (self.isAuthInProgress)
         {
-            completion(nil, [NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currently in progress."]);
+            completion(nil, [NSError MHVAuthorizationInProgress]);
             
             return;
         }
@@ -160,7 +160,7 @@ static NSString *const kAuthorizeRecordsArgs = @"?appid=%@&ismra=%@";
         
         if (self.isAuthInProgress)
         {
-            completion([NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currenlty in progress."]);
+            completion([NSError MHVAuthorizationInProgress]);
             
             return;
         }

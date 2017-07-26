@@ -57,6 +57,15 @@
                                       }];
 }
 
++ (NSError *)MHVAuthorizationInProgress
+{
+    return [NSError errorWithDomain:kMHVErrorDomain
+                               code:MHVErrorTypeAuthorizationInProgress
+                           userInfo:@{
+                                      NSLocalizedFailureReasonErrorKey : @"Another authentication operation is currently in progress."
+                                      }];
+}
+
 + (NSError *)MHVIOError
 {
     return [NSError errorWithDomain:kMHVErrorDomain

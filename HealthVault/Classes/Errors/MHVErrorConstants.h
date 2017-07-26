@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, MHVErrorType)
     MHVErrorTypeCacheError,
     MHVErrorTypeCacheNotReady,
     MHVErrorTypeCacheDeleted,
+    MHVErrorTypeAuthorizationInProgress,
 };
 
 #endif /* MHVErrorConstants_h */

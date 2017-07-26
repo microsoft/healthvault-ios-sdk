@@ -670,8 +670,8 @@ describe(@"MHVSodaConnection", ^
                        }];
                        
                        [[expectFutureValue(expectedError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeOperationCannotBePerformed)];
-                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"Another authentication operation is currenlty running."];
+                       [[expectFutureValue(theValue(expectedError.code)) shouldEventually] equal:theValue(MHVErrorTypeAuthorizationInProgress)];
+                       [[expectFutureValue(expectedError.localizedDescription) shouldEventually] containString:@"Another authentication operation is currently in progress."];
                    });
             });
     
