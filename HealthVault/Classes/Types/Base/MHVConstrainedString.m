@@ -51,6 +51,19 @@
     self.value = [reader readValue];
 }
 
+- (BOOL)isEqual:(id)string
+{
+    if ([string isKindOfClass:[NSString class]])
+    {
+        return [self.value isEqualToString:(NSString *)string];
+    }
+    else if ([string isKindOfClass:[MHVString class]])
+    {
+        return [self.value isEqualToString:((MHVString *)string).value];
+    }
+    return NO;
+}
+
 @end
 
 
