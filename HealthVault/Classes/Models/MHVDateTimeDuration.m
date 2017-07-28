@@ -26,4 +26,24 @@
     return @"HH:mm:ss";
 }
 
+- (NSInteger)durationInMinutes
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *components = [calendar components:NSCalendarUnitMinute | NSCalendarUnitHour
+                                               fromDate:self.date];
+
+    return components.minute + components.hour * 60;
+}
+
+- (NSInteger)durationInSeconds
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *components = [calendar components:NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond
+                                               fromDate:self.date];
+    
+    return components.second + ((components.minute + components.hour * 60) * 60);
+}
+
 @end

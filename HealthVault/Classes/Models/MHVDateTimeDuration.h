@@ -21,4 +21,7 @@
 
 @interface MHVDateTimeDuration : MHVDateTimeBase
 
+@property (readonly, assign) NSInteger durationInMinutes;
+@property (readonly, assign) NSInteger durationInSeconds;
+
 @end
