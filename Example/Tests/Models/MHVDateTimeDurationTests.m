@@ -28,9 +28,9 @@ describe(@"MHVDateTimeDuration", ^
              let(testDate, ^{
                  NSDateComponents *dateComponents = [NSDateComponents new];
                  
-                 dateComponents.year = 2017;
-                 dateComponents.month = 7;
-                 dateComponents.day = 28;
+                 dateComponents.year = 2000;
+                 dateComponents.month = 1;
+                 dateComponents.day = 1;
                  dateComponents.hour = 1;
                  dateComponents.minute = 10;
                  dateComponents.second = 30;
@@ -38,15 +38,6 @@ describe(@"MHVDateTimeDuration", ^
                  return [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
              });
              
-             context(@"Converting to duration in minutes", ^
-                     {
-                         it(@"should return correct value", ^
-                            {
-                                MHVDateTimeDuration *dt = [[MHVDateTimeDuration alloc] initWithDate:testDate];
-                                
-                                [[theValue(dt.durationInMinutes) should] equal:theValue(70)];
-                            });
-                     });
              context(@"Converting to duration in seconds", ^
                      {
                          it(@"should return correct value", ^
