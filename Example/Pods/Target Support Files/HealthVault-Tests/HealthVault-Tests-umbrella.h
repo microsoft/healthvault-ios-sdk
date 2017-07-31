@@ -70,6 +70,7 @@
 #import "MHVJsonEnums.h"
 #import "MHVJsonSerializer.h"
 #import "MHVPropertyIntrospection.h"
+#import "MHVScheduleScheduledDaysEnum+Utils.h"
 #import "NSArray+DataModel.h"
 #import "NSArray+MHVEnum.h"
 #import "NSArray+Utils.h"
