@@ -82,12 +82,13 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"trackingPolicy": [MHVActionPlanTrackingPolicy class],
+            @"status": [MHVActionPlanTaskInstanceStatusEnum class],
+            @"taskType": [MHVActionPlanTaskInstanceTaskTypeEnum class],
+            @"trackingPolicy": [MHVActionPlanTrackingPolicy class],
+            @"completionType": [MHVActionPlanTaskInstanceCompletionTypeEnum class],
+            @"frequencyTaskCompletionMetrics": [MHVActionPlanFrequencyTaskCompletionMetrics class],
+            @"schedules": [MHVSchedule class]
 
-              @"frequencyTaskCompletionMetrics": [MHVActionPlanFrequencyTaskCompletionMetrics class],
-
-              @"schedules": [MHVSchedule class]
         }];
     });
     return types;

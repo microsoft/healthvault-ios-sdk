@@ -51,8 +51,7 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"goalRecommendations": @"goalRecommendations",
-            @"nextLink": @"nextLink"
+            @"goalRecommendations": @"goalRecommendations"
         }];
     });
     return names;
@@ -65,8 +64,8 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"goalRecommendations": [MHVGoalRecommendationInstance class],
+            @"goalRecommendations": [MHVGoalRecommendationInstance class]
+
         }];
     });
     return types;

@@ -66,8 +66,10 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"scheduledTime": [MHVTime class]
+            @"reminderState": [MHVScheduleReminderStateEnum class],
+            @"scheduledDays": [MHVScheduleScheduledDaysEnum class],
+            @"scheduledTime": [MHVTime class]
+
         }];
     });
     return types;

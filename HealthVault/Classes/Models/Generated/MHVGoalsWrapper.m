@@ -64,8 +64,8 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"goals": [MHVGoal class]
+            @"goals": [MHVGoal class]
+
         }];
     });
     return types;

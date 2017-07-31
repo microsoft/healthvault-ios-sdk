@@ -65,7 +65,9 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-                    }];
+            @"windowType": [MHVActionPlanFrequencyTaskCompletionMetricsWindowTypeEnum class],
+
+        }];
     });
     return types;
 }

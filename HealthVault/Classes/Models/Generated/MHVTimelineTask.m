@@ -68,8 +68,9 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"timelineSnapshots": [MHVTimelineSnapshot class]
+            @"taskType": [MHVTimelineTaskTaskTypeEnum class],
+            @"timelineSnapshots": [MHVTimelineSnapshot class]
+
         }];
     });
     return types;

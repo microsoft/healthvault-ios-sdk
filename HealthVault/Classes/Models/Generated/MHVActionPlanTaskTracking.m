@@ -76,8 +76,10 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"evidence": [MHVActionPlanTaskTrackingEvidence class]
+            @"trackingType": [MHVActionPlanTaskTrackingTrackingTypeEnum class],
+            @"trackingStatus": [MHVActionPlanTaskTrackingTrackingStatusEnum class],
+            @"evidence": [MHVActionPlanTaskTrackingEvidence class]
+
         }];
     });
     return types;

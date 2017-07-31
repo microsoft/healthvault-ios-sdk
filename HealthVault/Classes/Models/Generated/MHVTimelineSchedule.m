@@ -68,8 +68,10 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"occurrences": [MHVTimelineScheduleOccurrence class]
+            @"type": [MHVTimelineScheduleTypeEnum class],
+            @"recurrenceType": [MHVTimelineScheduleRecurrenceTypeEnum class],
+            @"occurrences": [MHVTimelineScheduleOccurrence class]
+
         }];
     });
     return types;

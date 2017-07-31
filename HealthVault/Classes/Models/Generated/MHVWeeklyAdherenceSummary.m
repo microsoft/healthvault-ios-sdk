@@ -70,7 +70,8 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-                    }];
+
+        }];
     });
     return types;
 }
