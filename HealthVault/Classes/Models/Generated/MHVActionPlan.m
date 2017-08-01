@@ -70,10 +70,10 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"objectives": [MHVObjective class],
+            @"category": [MHVActionPlanCategoryEnum class],
+            @"objectives": [MHVObjective class],
+            @"associatedTasks": [MHVActionPlanTask class]
 
-              @"associatedTasks": [MHVActionPlanTask class]
         }];
     });
     return types;

@@ -69,10 +69,9 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"details": [MHVErrorInformation class],
+            @"details": [MHVErrorInformation class],
+            @"innererror": [MHVErrorInformation class],
 
-              @"innererror": [MHVErrorInformation class],
         }];
     });
     return types;

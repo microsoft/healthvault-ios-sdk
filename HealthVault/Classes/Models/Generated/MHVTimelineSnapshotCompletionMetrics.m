@@ -66,7 +66,10 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-                    }];
+            @"recurrenceType": [MHVTimelineSnapshotCompletionMetricsRecurrenceTypeEnum class],
+            @"completionType": [MHVTimelineSnapshotCompletionMetricsCompletionTypeEnum class],
+
+        }];
     });
     return types;
 }

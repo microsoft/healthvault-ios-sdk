@@ -51,8 +51,7 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"taskTrackingInstances": @"taskTrackingInstances",
-            @"nextLink": @"nextLink"
+            @"taskTrackingInstances": @"taskTrackingInstances"
         }];
     });
     return names;
@@ -65,8 +64,8 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"taskTrackingInstances": [MHVActionPlanTaskTracking class],
+            @"taskTrackingInstances": [MHVActionPlanTaskTracking class]
+
         }];
     });
     return types;

@@ -66,10 +66,9 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"occurrenceMetrics": [MHVActionPlanTaskOccurrenceMetrics class],
+            @"occurrenceMetrics": [MHVActionPlanTaskOccurrenceMetrics class],
+            @"targetEvents": [MHVActionPlanTaskTargetEvent class]
 
-              @"targetEvents": [MHVActionPlanTaskTargetEvent class]
         }];
     });
     return types;

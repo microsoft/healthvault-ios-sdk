@@ -68,12 +68,10 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"schedules": [MHVTimelineSchedule class],
+            @"schedules": [MHVTimelineSchedule class],
+            @"completionMetrics": [MHVTimelineSnapshotCompletionMetrics class],
+            @"unscheduledOccurrences": [MHVTimelineScheduleOccurrence class],
 
-              @"completionMetrics": [MHVTimelineSnapshotCompletionMetrics class],
-
-              @"unscheduledOccurrences": [MHVTimelineScheduleOccurrence class],
         }];
     });
     return types;

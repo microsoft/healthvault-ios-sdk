@@ -72,12 +72,11 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"recurrenceMetrics": [MHVGoalRecurrenceMetrics class],
+            @"goalType": [MHVGoalGoalTypeEnum class],
+            @"recurrenceMetrics": [MHVGoalRecurrenceMetrics class],
+            @"range": [MHVGoalRange class],
+            @"additionalRanges": [MHVGoalRange class]
 
-              @"range": [MHVGoalRange class],
-
-              @"additionalRanges": [MHVGoalRange class]
         }];
     });
     return types;

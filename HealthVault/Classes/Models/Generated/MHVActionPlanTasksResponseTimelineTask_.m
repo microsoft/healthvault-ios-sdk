@@ -51,8 +51,7 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
-            @"tasks": @"tasks",
-            @"nextLink": @"nextLink"
+            @"tasks": @"tasks"
         }];
     });
     return names;
@@ -65,8 +64,8 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"tasks": [MHVTimelineTask class],
+            @"tasks": [MHVTimelineTask class]
+
         }];
     });
     return types;

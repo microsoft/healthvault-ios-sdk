@@ -67,8 +67,8 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"associatedTasks": [MHVActionPlanTaskAdherenceSummary class]
+            @"associatedTasks": [MHVActionPlanTaskAdherenceSummary class]
+
         }];
     });
     return types;

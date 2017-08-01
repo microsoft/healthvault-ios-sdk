@@ -42,9 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 /* The collection of goal recommendations [optional]
  */
 @property(strong,nonatomic,nullable) NSArray<MHVGoalRecommendationInstance *>* goalRecommendations;
-/* The URI for the next page of data [optional]
- */
-@property(strong,nonatomic,nullable) NSString* nextLink;
 
 @end
 

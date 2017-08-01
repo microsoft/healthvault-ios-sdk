@@ -68,8 +68,8 @@
     dispatch_once(&once, ^{
         types = [[super objectParametersMap] mutableCopy];
         [types addEntriesFromDictionary:@{
-            
-              @"objectives": [MHVObjectiveAdherenceSummary class]
+            @"objectives": [MHVObjectiveAdherenceSummary class]
+
         }];
     });
     return types;
