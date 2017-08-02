@@ -1,6 +1,6 @@
 //
-// MHVDateTimeDuration.h
-// MHVLib
+// MHVScheduleScheduledDaysEnum+Utils.h
+// healthvault-ios-sdk
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -16,11 +16,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
-#import "MHVDateTimeBase.h"
+#import <HealthVault/HealthVault.h>
 
-@interface MHVDateTimeDuration : MHVDateTimeBase
+@interface MHVScheduleScheduledDaysEnum (Utils)
 
-@property (readonly, assign) NSInteger durationInSeconds;
+/**
+ * Check if a MHVScheduleScheduledDaysEnum day matches the weekday property for an NSCalendarComponents object
+ *
+ * @param weekday Day from 1 to 7, with 1 == Sunday
+ * @return indicates if the weekday equals the enum
+ */
+- (BOOL)isEqualToCalendarComponentsWeekday:(NSInteger)weekday;
 
 @end

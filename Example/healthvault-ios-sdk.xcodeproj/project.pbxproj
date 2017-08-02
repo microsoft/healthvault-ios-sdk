@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C4DA3E91F2B8F7600A45238 /* MHVDateTimeDurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4DA3E81F2B8F7600A45238 /* MHVDateTimeDurationTests.m */; };
 		4C54C8161EF342F100CAECFC /* MHVPersonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */; };
 		4C54C81B1EF41F2600CAECFC /* MHVPersonalImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */; };
 		4C54C81C1EF41F2600CAECFC /* MHVPersonalImageFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */; };
@@ -15,6 +16,7 @@
 		4C95AF071F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AF061F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m */; };
 		4C95AF111F0EF20200EA5A8F /* MHVMockDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AEBB1F093F7D00EA5A8F /* MHVMockDatabase.m */; };
 		4C9DC867EC28E0AB74E00107 /* Pods_healthvault_ios_sdk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */; };
+		4CA4B0AE1F2FA10800B7AD9C /* MHVScheduleScheduledDaysEnumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4B0AD1F2FA10800B7AD9C /* MHVScheduleScheduledDaysEnumTests.m */; };
 		4CC5FFE41EF81786003B8690 /* MHVBrowserAuthBrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5FFE31EF81786003B8690 /* MHVBrowserAuthBrokerTests.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -133,6 +135,7 @@
 
 /* Begin PBXFileReference section */
 		1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C4DA3E81F2B8F7600A45238 /* MHVDateTimeDurationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVDateTimeDurationTests.m; sourceTree = "<group>"; };
 		4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonClientTests.m; sourceTree = "<group>"; };
 		4C54C8171EF41F2600CAECFC /* MHVPersonalImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonalImageFactory.h; sourceTree = "<group>"; };
 		4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonalImageFactory.m; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 		4C95AEC01F0A872700EA5A8F /* MHVThingCacheSynchronizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheSynchronizerTests.m; sourceTree = "<group>"; };
 		4C95AF041F0D6C2B00EA5A8F /* MHVThingCacheQueryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheQueryTests.m; sourceTree = "<group>"; };
 		4C95AF061F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheDatabaseTests.m; sourceTree = "<group>"; };
+		4CA4B0AD1F2FA10800B7AD9C /* MHVScheduleScheduledDaysEnumTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVScheduleScheduledDaysEnumTests.m; sourceTree = "<group>"; };
 		4CC5FFE31EF81786003B8690 /* MHVBrowserAuthBrokerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBrowserAuthBrokerTests.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* healthvault-ios-sdk_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "healthvault-ios-sdk_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -661,6 +665,8 @@
 			isa = PBXGroup;
 			children = (
 				BA179A981F1D2F7900F8C789 /* MHVZonedDateTimeTests.m */,
+				4C4DA3E81F2B8F7600A45238 /* MHVDateTimeDurationTests.m */,
+				4CA4B0AD1F2FA10800B7AD9C /* MHVScheduleScheduledDaysEnumTests.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -963,7 +969,9 @@
 				A5DF65831EF0535A009F5968 /* MHVAsthmaInhalerUsageTests.m in Sources */,
 				A5DF65861EF0535A009F5968 /* MHVConcernsTests.m in Sources */,
 				A5DF65841EF0535A009F5968 /* MHVBodyCompositionTests.m in Sources */,
+				4C4DA3E91F2B8F7600A45238 /* MHVDateTimeDurationTests.m in Sources */,
 				A5DF65781EF05340009F5968 /* MHVSodaConnectionTests.m in Sources */,
+				4CA4B0AE1F2FA10800B7AD9C /* MHVScheduleScheduledDaysEnumTests.m in Sources */,
 				A5DF658F1EF0535A009F5968 /* MHVTaskTrackingEntryTests.m in Sources */,
 				A5DF65801EF0535A009F5968 /* MHVAppointmentTests.m in Sources */,
 				A5DF65761EF05338009F5968 /* MHVVocabularyClientTests.m in Sources */,

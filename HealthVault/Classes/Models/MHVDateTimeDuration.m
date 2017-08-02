@@ -26,4 +26,25 @@
     return @"HH:mm:ss";
 }
 
+- (NSInteger)durationInSeconds
+{
+    static dispatch_once_t onceToken;
+    static NSDate *baseDate = nil;
+    dispatch_once(&onceToken, ^
+    {
+        //MHVDateTimeDuration is since base date 2000-01-01 0:00:00
+        NSDateComponents *dateComponents = [NSDateComponents new];
+        dateComponents.year = 2000;
+        dateComponents.month = 1;
+        dateComponents.day = 1;
+        dateComponents.hour = 0;
+        dateComponents.minute = 0;
+        dateComponents.second = 0;
+        
+        baseDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    });
+    
+    return [self.date timeIntervalSinceDate:baseDate];
+}
+
 @end
