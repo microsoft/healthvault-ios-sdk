@@ -518,6 +518,11 @@ Class classFromProperty(objc_property_t property);
 
 #pragma mark - NSCoding
 
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
 + (NSArray*)hadIncorrectPropertyMapping
 {
     //Hacky, to not assert for properties that had the wrong type in the JSON serializer & got persisted wrong.
@@ -565,8 +570,9 @@ Class classFromProperty(objc_property_t property);
                     
                     if ([self respondsToSelector:NSSelectorFromString(propertySetter)])
                     {
-                        id value = [aDecoder decodeObjectForKey:propertyName];
                         Class propertyClass = classFromProperty(properties[i]);
+                        id value = [aDecoder decodeObjectOfClass:propertyClass forKey:propertyName];
+                        
                         if ([propertyClass isSubclassOfClass:[MHVDynamicEnum class]] && ![[value class] isSubclassOfClass:[MHVDynamicEnum class]])
                         {
                             if ([value isKindOfClass:[NSNumber class]]) {

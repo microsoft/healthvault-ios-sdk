@@ -22,7 +22,7 @@
 #import <Foundation/Foundation.h>
 #import "MHVDataModelProtocol.h"
 
-@interface MHVModelBase : NSObject<MHVDataModelProtocol, NSCoding, NSCopying>
+@interface MHVModelBase : NSObject<MHVDataModelProtocol, NSCoding, NSSecureCoding, NSCopying>
 
 /*!
  * @brief Helper to initialize an object from json.

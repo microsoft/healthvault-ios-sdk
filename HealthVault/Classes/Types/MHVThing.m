@@ -19,7 +19,9 @@
 #import "MHVValidator.h"
 #import "MHVThing.h"
 
-static NSString* const c_element_state = @"thing-state";
+static NSString *const c_element_state = @"thing-state";
+static NSString *const kInfoKey = @"info";
+static NSString *const kThingKey = @"Thing";
 
 static const xmlChar  *x_element_key = XMLSTRINGCONST("thing-id");
 static const xmlChar  *x_element_type = XMLSTRINGCONST("type-id");
@@ -383,12 +385,42 @@ static const xmlChar  *x_element_updatedEndDate = XMLSTRINGCONST("updated-end-da
 
 - (NSString *)toXmlString
 {
-    return [self toXmlStringWithRoot:@"info"];
+    return [self toXmlStringWithRoot:kInfoKey];
 }
 
 + (MHVThing *)newFromXmlString:(NSString *)xml
 {
-    return (MHVThing *)[NSObject newFromString:xml withRoot:@"info" asClass:[MHVThing class]];
+    return (MHVThing *)[NSObject newFromString:xml withRoot:kInfoKey asClass:[MHVThing class]];
+}
+
+#pragma mark - NSCoding, NSSecureCoding
+
++ (BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:[self toXmlString] forKey:kThingKey];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self)
+    {
+        NSString *xmlString = [aDecoder decodeObjectOfClass:[NSString class] forKey:kThingKey];
+        if (!xmlString)
+        {
+            return nil;
+        }
+        
+        XReader *reader = [[XReader alloc] initFromString:xmlString];
+        
+        [XSerializer deserialize:reader withRoot:kInfoKey into:self];
+    }
+    return self;
 }
 
 @end

@@ -51,7 +51,7 @@ enum MHVThingFlags
 // - A collection of named blob streams.
 //
 // -------------------------
-@interface MHVThing : MHVType
+@interface MHVThing : MHVType <NSCoding, NSSecureCoding>
 
 // -------------------------
 //

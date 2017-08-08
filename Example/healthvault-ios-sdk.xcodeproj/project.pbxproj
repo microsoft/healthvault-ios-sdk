@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C42C7B21F3A37E700719556 /* NSCodingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C42C7B11F3A37E700719556 /* NSCodingTests.m */; };
 		4C54C8161EF342F100CAECFC /* MHVPersonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */; };
 		4C54C81B1EF41F2600CAECFC /* MHVPersonalImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */; };
 		4C54C81C1EF41F2600CAECFC /* MHVPersonalImageFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */; };
@@ -133,6 +134,7 @@
 
 /* Begin PBXFileReference section */
 		1E1BEE93EDBD6057F21D44DF /* Pods_healthvault_ios_sdk_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_healthvault_ios_sdk_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C42C7B11F3A37E700719556 /* NSCodingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCodingTests.m; sourceTree = "<group>"; };
 		4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonClientTests.m; sourceTree = "<group>"; };
 		4C54C8171EF41F2600CAECFC /* MHVPersonalImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonalImageFactory.h; sourceTree = "<group>"; };
 		4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonalImageFactory.m; sourceTree = "<group>"; };
@@ -661,6 +663,7 @@
 			isa = PBXGroup;
 			children = (
 				BA179A981F1D2F7900F8C789 /* MHVZonedDateTimeTests.m */,
+				4C42C7B11F3A37E700719556 /* NSCodingTests.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -967,6 +970,7 @@
 				A5DF658F1EF0535A009F5968 /* MHVTaskTrackingEntryTests.m in Sources */,
 				A5DF65801EF0535A009F5968 /* MHVAppointmentTests.m in Sources */,
 				A5DF65761EF05338009F5968 /* MHVVocabularyClientTests.m in Sources */,
+				4C42C7B21F3A37E700719556 /* NSCodingTests.m in Sources */,
 				4C95AF071F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m in Sources */,
 				A5DF657A1EF05345009F5968 /* MHVPlatformClientTests.m in Sources */,
 				A5DF65741EF05333009F5968 /* MHVThingClientBlobTests.m in Sources */,
