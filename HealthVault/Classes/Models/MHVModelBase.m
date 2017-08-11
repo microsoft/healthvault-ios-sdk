@@ -237,6 +237,16 @@ Class classFromProperty(objc_property_t property);
                             [object setValue:dictionary[propertyNameInDictionary] forKey:propertyName];
                         }
                     }
+                    else if ([propertyClass isSubclassOfClass:[MHVEnum class]])
+                    {
+                        // Enums should have "Unknown" if not included in the JSON
+                        id value = [[propertyClass alloc] initWithObject:@"Unknown"
+                                                        objectParameters:nil];
+                        if (value)
+                        {
+                            [object setValue:value forKey:propertyName];
+                        }
+                    }
                 }
 #if DEBUG
                 else

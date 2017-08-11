@@ -10,6 +10,7 @@
 		4C54C8161EF342F100CAECFC /* MHVPersonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8151EF342F100CAECFC /* MHVPersonClientTests.m */; };
 		4C54C81B1EF41F2600CAECFC /* MHVPersonalImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */; };
 		4C54C81C1EF41F2600CAECFC /* MHVPersonalImageFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */; };
+		4C8527D41F3CED95008CB7EC /* MHVModelBaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8527D31F3CED95008CB7EC /* MHVModelBaseTests.m */; };
 		4C95AEC11F0A872700EA5A8F /* MHVThingCacheSynchronizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AEC01F0A872700EA5A8F /* MHVThingCacheSynchronizerTests.m */; };
 		4C95AF051F0D6C2B00EA5A8F /* MHVThingCacheQueryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AF041F0D6C2B00EA5A8F /* MHVThingCacheQueryTests.m */; };
 		4C95AF071F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AF061F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m */; };
@@ -138,6 +139,7 @@
 		4C54C8181EF41F2600CAECFC /* MHVPersonalImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonalImageFactory.m; sourceTree = "<group>"; };
 		4C54C8191EF41F2600CAECFC /* MHVPersonalImageFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVPersonalImageFeatures.h; sourceTree = "<group>"; };
 		4C54C81A1EF41F2600CAECFC /* MHVPersonalImageFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVPersonalImageFeatures.m; sourceTree = "<group>"; };
+		4C8527D31F3CED95008CB7EC /* MHVModelBaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVModelBaseTests.m; sourceTree = "<group>"; };
 		4C95AEBA1F093F7D00EA5A8F /* MHVMockDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHVMockDatabase.h; sourceTree = "<group>"; };
 		4C95AEBB1F093F7D00EA5A8F /* MHVMockDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVMockDatabase.m; sourceTree = "<group>"; };
 		4C95AEC01F0A872700EA5A8F /* MHVThingCacheSynchronizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheSynchronizerTests.m; sourceTree = "<group>"; };
@@ -661,6 +663,7 @@
 			isa = PBXGroup;
 			children = (
 				BA179A981F1D2F7900F8C789 /* MHVZonedDateTimeTests.m */,
+				4C8527D31F3CED95008CB7EC /* MHVModelBaseTests.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -949,6 +952,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8527D41F3CED95008CB7EC /* MHVModelBaseTests.m in Sources */,
 				4C95AF111F0EF20200EA5A8F /* MHVMockDatabase.m in Sources */,
 				A5DF65901EF05362009F5968 /* MHVXmlTests.m in Sources */,
 				A5385ACF1F040D05000D03C5 /* MHVCacheQueryTests.m in Sources */,
