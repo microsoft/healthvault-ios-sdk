@@ -39,10 +39,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVTaskTrackingOccurrence : MHVModelBase
 
+/* Gets or sets the Id of the task tracking occurrence [optional]
+ */
+@property(strong,nonatomic,nullable) NSString* identifier;
 /* Gets or sets the Id of the task [optional]
  */
 @property(strong,nonatomic,nullable) NSString* taskId;
-/* The date and time of the task occurance. [optional]
+/* The date and time of the task occurance [optional]
  */
 @property(strong,nonatomic,nullable) MHVZonedDateTime* trackingDateTime;
 

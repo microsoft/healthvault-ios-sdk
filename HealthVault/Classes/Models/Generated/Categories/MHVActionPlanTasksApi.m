@@ -63,6 +63,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
@@ -104,6 +106,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks/{actionPlanTaskId}"];
@@ -131,12 +135,9 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// 
 ///  @param actionPlanTaskStatus An optional status used to filter the results. (optional)
 ///
-///  @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
-///
 ///  @returns MHVActionPlanTasksResponseActionPlanTaskInstance_*
 ///
 - (void)actionPlanTasksGetWithActionPlanTaskStatus:(NSString* _Nullable)actionPlanTaskStatus
-    maxPageSize:(NSNumber* _Nullable)maxPageSize
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstance_* _Nullable output, NSError* _Nullable error))completion
 {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
@@ -147,10 +148,6 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
     if (actionPlanTaskStatus != nil)
     {
         queryParams[@"actionPlanTaskStatus"] = actionPlanTaskStatus;
-    }
-    if (maxPageSize != nil)
-    {
-        queryParams[@"maxPageSize"] = maxPageSize;
     }
 
     NSData *bodyParam = nil;
@@ -184,6 +181,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks/{actionPlanTaskId}"];
@@ -227,6 +226,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
@@ -268,6 +269,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
@@ -309,6 +312,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks/ValidateTracking"];

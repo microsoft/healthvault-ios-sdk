@@ -61,6 +61,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals"];
@@ -102,6 +104,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
             completion(error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals/{goalId}"];
@@ -234,6 +238,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals/{goalId}"];
@@ -277,6 +283,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals"];
@@ -318,6 +326,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVGoalsApiErrorDomain code:kMHVGoalsApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Goals"];

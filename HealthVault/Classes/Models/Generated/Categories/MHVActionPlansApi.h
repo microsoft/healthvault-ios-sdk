@@ -69,10 +69,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Get a collection of action plans
 /// 
 ///
-/// @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
 /// 
-- (void)actionPlansGetWithMaxPageSize:(NSNumber* _Nullable)maxPageSize
-    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstance_* _Nullable output, NSError* _Nullable error))completion;
+- (void)actionPlansGetWithCompletion:
+    (void(^_Nonnull)(MHVActionPlansResponseActionPlanInstance_* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Gets adherence information for an action plan.
