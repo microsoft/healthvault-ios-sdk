@@ -34,6 +34,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVRemoteMonitoringClient (MHVTaskTrackingApi)
 
+/// Delete a task tracking occurrence
+/// 
+///
+/// @param occurrenceId The task tracking occurrence id.
+/// 
+- (void)taskTrackingDeleteWithOccurrenceId:(NSString* )occurrenceId
+    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion;
+
+
+/// Patch an task tracking occurrence
+/// 
+///
+/// @param occurrenceId The task tracking occurrence id.
+/// @param taskTrackingOccurrence The occurence to patch
+/// 
+- (void)taskTrackingPatchWithOccurrenceId:(NSString* )occurrenceId
+    taskTrackingOccurrence:(MHVTaskTrackingOccurrence* )taskTrackingOccurrence
+    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion;
+
+
 /// Post a task tracking
 /// 
 ///

@@ -60,10 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 
 ///
 /// @param actionPlanTaskStatus An optional status used to filter the results. (optional)
-/// @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
 /// 
 - (void)actionPlanTasksGetWithActionPlanTaskStatus:(NSString* _Nullable)actionPlanTaskStatus
-    maxPageSize:(NSNumber* _Nullable)maxPageSize
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstance_* _Nullable output, NSError* _Nullable error))completion;
 
 

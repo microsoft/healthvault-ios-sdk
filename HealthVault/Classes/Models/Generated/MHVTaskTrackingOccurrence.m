@@ -51,6 +51,7 @@
     dispatch_once(&once, ^{
         names = [[super propertyNameMap] mutableCopy];
         [names addEntriesFromDictionary:@{
+            @"identifier": @"id",
             @"taskId": @"taskId",
             @"trackingDateTime": @"trackingDateTime"
         }];

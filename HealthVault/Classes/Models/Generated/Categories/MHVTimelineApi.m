@@ -47,10 +47,16 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
 ///
 ///  @param endDate The end time. (optional)
 ///
+///  @param planId The plan ID to filter the tasks against. (optional)
+///
+///  @param objectiveId The objective ID to filter the tasks against. (optional)
+///
 ///  @returns MHVActionPlanTasksResponseTimelineTask_*
 ///
 - (void)timelineGetWithStartDate:(MHVLocalDate* _Nonnull)startDate
     endDate:(MHVLocalDate* _Nullable)endDate
+    planId:(NSString* _Nullable)planId
+    objectiveId:(NSString* _Nullable)objectiveId
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseTimelineTask_* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'startDate' is set
@@ -73,10 +79,19 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
     if (startDate != nil)
     {
         queryParams[@"startDate"] = startDate;
+        queryParams[@"timeZone"] = startDate.timeZone;
     }
     if (endDate != nil)
     {
         queryParams[@"endDate"] = endDate;
+    }
+    if (planId != nil)
+    {
+        queryParams[@"planId"] = planId;
+    }
+    if (objectiveId != nil)
+    {
+        queryParams[@"objectiveId"] = objectiveId;
     }
 
     NSData *bodyParam = nil;

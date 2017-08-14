@@ -189,22 +189,16 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 ///
 /// Get a collection of action plans
 /// 
-///  @param maxPageSize The maximum number of entries to return per page. Defaults to 1000. (optional)
-///
 ///  @returns MHVActionPlansResponseActionPlanInstance_*
 ///
-- (void)actionPlansGetWithMaxPageSize:(NSNumber* _Nullable)maxPageSize
-    completion:(void(^_Nonnull)(MHVActionPlansResponseActionPlanInstance_* _Nullable output, NSError* _Nullable error))completion
+- (void)actionPlansGetWithCompletion:
+    (void(^_Nonnull)(MHVActionPlansResponseActionPlanInstance_* _Nullable output, NSError* _Nullable error))completion
 {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlans"];
 
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
-    if (maxPageSize != nil)
-    {
-        queryParams[@"maxPageSize"] = maxPageSize;
-    }
 
     NSData *bodyParam = nil;
 

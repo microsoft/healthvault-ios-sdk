@@ -21,4 +21,6 @@
 
 @interface MHVLocalDate : MHVDateTimeBase
 
+- (NSString*)timeZone;
+
 @end

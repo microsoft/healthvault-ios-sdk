@@ -45,7 +45,7 @@
         MHVConfiguration *config = MHVFeaturesConfiguration.configuration;
         self.connection = [[MHVConnectionFactory current] getOrCreateSodaConnectionWithConfiguration:config];
     }
-    
+
     return self;
 }
 
@@ -68,9 +68,10 @@
     [self.statusLabel showBusy];
     
     MHVLocalDate* startDate = [[MHVLocalDate alloc] initWithObject:@"2017-05-29" objectParameters:nil];
-    MHVLocalDate* endDate = [[MHVLocalDate alloc] initWithObject:@"2017-06-17" objectParameters:nil];
     
-    [self.connection.remoteMonitoringClient timelineGetWithStartDate:startDate endDate:endDate completion:^(MHVActionPlanTasksResponseTimelineTask_ * _Nullable output, NSError * _Nullable error)
+    MHVLocalDate* endDate = [[MHVLocalDate alloc] init];
+    
+    [self.connection.remoteMonitoringClient timelineGetWithStartDate:startDate endDate:endDate planId:nil objectiveId:nil completion:^(MHVActionPlanTasksResponseTimelineTask_ * _Nullable output, NSError * _Nullable error)
     {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {

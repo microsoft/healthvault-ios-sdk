@@ -40,9 +40,13 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param startDate The start time.
 /// @param endDate The end time. (optional)
+/// @param planId The plan ID to filter the tasks against. (optional)
+/// @param objectiveId The objective ID to filter the tasks against. (optional)
 /// 
 - (void)timelineGetWithStartDate:(MHVLocalDate* )startDate
     endDate:(MHVLocalDate* _Nullable)endDate
+    planId:(NSString* _Nullable)planId
+    objectiveId:(NSString* _Nullable)objectiveId
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseTimelineTask_* _Nullable output, NSError* _Nullable error))completion;
 
 

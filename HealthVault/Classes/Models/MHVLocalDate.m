@@ -26,4 +26,35 @@
     return @"yyyy-MM-dd";
 }
 
+- (instancetype)initWithObject:(id)object objectParameters:(NSObject *)parameters
+{
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:[self dateFormatString]];
+    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    
+    self = [super init];
+    if (self)
+    {
+        if ([object isKindOfClass:[NSString class]])
+        {
+            self.date = [dateFormatter dateFromString:object];
+        }
+    }
+    return self;
+}
+
+- (NSString*)description
+{
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setDateFormat: self.dateFormatString];
+    [formatter setTimeZone:[NSTimeZone systemTimeZone]];
+    return [formatter stringFromDate:self.date];
+}
+
+- (NSString*)timeZone
+{
+    NSTimeZone* zone = [NSTimeZone systemTimeZone];
+    return zone.name;
+}
+
 @end

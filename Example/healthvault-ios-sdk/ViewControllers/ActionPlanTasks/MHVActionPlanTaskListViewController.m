@@ -121,7 +121,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient actionPlanTasksGetWithActionPlanTaskStatus:@"InProgress" maxPageSize:nil completion:^(MHVActionPlanTasksResponseActionPlanTaskInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksGetWithActionPlanTaskStatus:@"InProgress" completion:^(MHVActionPlanTasksResponseActionPlanTaskInstance_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)
@@ -142,7 +142,7 @@
 
 - (void)loadActionPlan
 {
-    [self.connection.remoteMonitoringClient actionPlansGetWithMaxPageSize:@(10) completion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlansGetWithCompletion:^(MHVActionPlansResponseActionPlanInstance_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)

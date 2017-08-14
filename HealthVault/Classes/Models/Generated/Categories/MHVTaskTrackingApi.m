@@ -40,6 +40,109 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
 #pragma mark - Api Methods
 
 ///
+/// Delete a task tracking occurrence
+/// 
+///  @param occurrenceId The task tracking occurrence id. 
+///
+///  @returns NSNumber*
+///
+- (void)taskTrackingDeleteWithOccurrenceId:(NSString* _Nonnull)occurrenceId
+    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion
+{
+    // verify the required parameter 'occurrenceId' is set
+    if (occurrenceId == nil)
+    {
+        NSParameterAssert(occurrenceId);
+        if(completion)
+        {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"occurrenceId"] };
+            NSError* error = [NSError errorWithDomain:kMHVTaskTrackingApiErrorDomain code:kMHVTaskTrackingApiMissingParamErrorCode userInfo:userInfo];
+            completion(nil, error);
+        }
+    }
+
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/TaskTracking/{occurrenceId}"];
+
+    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
+    if (occurrenceId != nil)
+    {
+        pathParams[@"occurrenceId"] = occurrenceId;
+    }
+
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+
+    NSData *bodyParam = nil;
+
+    [self requestWithPath:resourcePath
+                      httpMethod:@"DELETE"
+                      pathParams:pathParams
+                     queryParams:queryParams
+                            body:bodyParam
+                     resultClass:[NSNumber class]
+                      completion:completion];
+}
+
+///
+/// Patch an task tracking occurrence
+/// 
+///  @param occurrenceId The task tracking occurrence id. 
+///
+///  @param taskTrackingOccurrence  
+///
+///  @returns NSNumber*
+///
+- (void)taskTrackingPatchWithOccurrenceId:(NSString* _Nonnull)occurrenceId
+    taskTrackingOccurrence:(MHVTaskTrackingOccurrence* _Nonnull)taskTrackingOccurrence
+    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion
+{
+    // verify the required parameter 'occurrenceId' is set
+    if (occurrenceId == nil)
+    {
+        NSParameterAssert(occurrenceId);
+        if(completion)
+        {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"occurrenceId"] };
+            NSError* error = [NSError errorWithDomain:kMHVTaskTrackingApiErrorDomain code:kMHVTaskTrackingApiMissingParamErrorCode userInfo:userInfo];
+            completion(nil, error);
+        }
+    }
+
+    // verify the required parameter 'taskTrackingOccurrence' is set
+    if (taskTrackingOccurrence == nil)
+    {
+        NSParameterAssert(taskTrackingOccurrence);
+        if(completion)
+        {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"taskTrackingOccurrence"] };
+            NSError* error = [NSError errorWithDomain:kMHVTaskTrackingApiErrorDomain code:kMHVTaskTrackingApiMissingParamErrorCode userInfo:userInfo];
+            completion(nil, error);
+        }
+    }
+
+    NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/TaskTracking/{occurrenceId}"];
+
+    NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
+    if (occurrenceId != nil)
+    {
+        pathParams[@"occurrenceId"] = occurrenceId;
+    }
+
+    NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+
+    NSData *bodyParam = nil;
+    NSString *json = [MHVJsonSerializer serialize:taskTrackingOccurrence];
+    bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
+
+    [self requestWithPath:resourcePath
+                      httpMethod:@"PATCH"
+                      pathParams:pathParams
+                     queryParams:queryParams
+                            body:bodyParam
+                     resultClass:[NSNumber class]
+                      completion:completion];
+}
+
+///
 /// Post a task tracking
 /// 
 ///  @param taskTrackingOccurrence The plan task tracking occurrence. 
