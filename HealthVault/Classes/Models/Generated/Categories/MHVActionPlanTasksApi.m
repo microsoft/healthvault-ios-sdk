@@ -63,6 +63,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
@@ -104,6 +106,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks/{actionPlanTaskId}"];
@@ -177,6 +181,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks/{actionPlanTaskId}"];
@@ -220,6 +226,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
@@ -261,6 +269,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
@@ -302,6 +312,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVActionPlanTasksApiErrorDomain code:kMHVActionPlanTasksApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks/ValidateTracking"];

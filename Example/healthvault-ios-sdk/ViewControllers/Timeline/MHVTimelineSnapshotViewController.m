@@ -66,8 +66,10 @@
 - (void)loadTimeline
 {
     [self.statusLabel showBusy];
+    NSDate *now = [[NSDate alloc] init];
+    NSDate *minusSixty = [now dateByAddingTimeInterval:-60*24*60*60];
     
-    MHVLocalDate* startDate = [[MHVLocalDate alloc] initWithObject:@"2017-05-29" objectParameters:nil];
+    MHVLocalDate* startDate = [[MHVLocalDate alloc] initWithDate:minusSixty];
     
     MHVLocalDate* endDate = [[MHVLocalDate alloc] init];
     

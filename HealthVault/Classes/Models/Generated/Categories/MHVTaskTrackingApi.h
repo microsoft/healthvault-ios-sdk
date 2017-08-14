@@ -47,11 +47,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 
 ///
 /// @param occurrenceId The task tracking occurrence id.
-/// @param taskTrackingOccurrence The occurence to patch
+/// @param taskTrackingOccurrence The occurrence to patch
 /// 
 - (void)taskTrackingPatchWithOccurrenceId:(NSString* )occurrenceId
     taskTrackingOccurrence:(MHVTaskTrackingOccurrence* )taskTrackingOccurrence
-    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVTaskTrackingOccurrence* _Nullable output, NSError* _Nullable error))completion;
 
 
 /// Post a task tracking
@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param taskTrackingOccurrence The plan task tracking occurrence.
 /// 
 - (void)taskTrackingPostWithTaskTrackingOccurrence:(MHVTaskTrackingOccurrence* )taskTrackingOccurrence
-    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion;
+    completion:(void(^_Nonnull)(MHVTaskTrackingOccurrence* _Nullable output, NSError* _Nullable error))completion;
 
 
 

@@ -44,6 +44,8 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:k{{classname}}ErrorDomain code:k{{classname}}MissingParamErrorCode userInfo:userInfo];
             completion({{#returnType}}nil, {{/returnType}}error);
         }
+
+        return;
     }
 
     {{/required}}

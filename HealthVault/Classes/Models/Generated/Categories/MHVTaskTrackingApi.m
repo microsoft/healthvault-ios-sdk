@@ -59,6 +59,8 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVTaskTrackingApiErrorDomain code:kMHVTaskTrackingApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/TaskTracking/{occurrenceId}"];
@@ -89,11 +91,11 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
 ///
 ///  @param taskTrackingOccurrence  
 ///
-///  @returns NSNumber*
+///  @returns MHVTaskTrackingOccurrence*
 ///
 - (void)taskTrackingPatchWithOccurrenceId:(NSString* _Nonnull)occurrenceId
     taskTrackingOccurrence:(MHVTaskTrackingOccurrence* _Nonnull)taskTrackingOccurrence
-    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVTaskTrackingOccurrence* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'occurrenceId' is set
     if (occurrenceId == nil)
@@ -105,6 +107,8 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVTaskTrackingApiErrorDomain code:kMHVTaskTrackingApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     // verify the required parameter 'taskTrackingOccurrence' is set
@@ -117,6 +121,8 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVTaskTrackingApiErrorDomain code:kMHVTaskTrackingApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/TaskTracking/{occurrenceId}"];
@@ -138,7 +144,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[NSNumber class]
+                     resultClass:[MHVTaskTrackingOccurrence class]
                       completion:completion];
 }
 
@@ -147,10 +153,10 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
 /// 
 ///  @param taskTrackingOccurrence The plan task tracking occurrence. 
 ///
-///  @returns NSNumber*
+///  @returns MHVTaskTrackingOccurrence*
 ///
 - (void)taskTrackingPostWithTaskTrackingOccurrence:(MHVTaskTrackingOccurrence* _Nonnull)taskTrackingOccurrence
-    completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion
+    completion:(void(^_Nonnull)(MHVTaskTrackingOccurrence* _Nullable output, NSError* _Nullable error))completion
 {
     // verify the required parameter 'taskTrackingOccurrence' is set
     if (taskTrackingOccurrence == nil)
@@ -162,6 +168,8 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVTaskTrackingApiErrorDomain code:kMHVTaskTrackingApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/TaskTracking"];
@@ -179,7 +187,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
                       pathParams:pathParams
                      queryParams:queryParams
                             body:bodyParam
-                     resultClass:[NSNumber class]
+                     resultClass:[MHVTaskTrackingOccurrence class]
                       completion:completion];
 }
 
