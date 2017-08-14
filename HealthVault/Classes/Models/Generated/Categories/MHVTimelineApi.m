@@ -69,6 +69,8 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVTimelineApiErrorDomain code:kMHVTimelineApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
+        
+        return;
     }
 
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/Timeline"];
