@@ -34,20 +34,20 @@ describe(@"MHVPlan", ^
                                 MHVPlan *plan = (MHVPlan*)[XReader newFromString:objectDefinition withRoot:[MHVPlan XRootElement] asClass:[MHVPlan class]];
                                 
                                 [[plan.name.description should] equal:@"Sleep better"];
-                                [[plan.status.description should] equal:@"InProgress"];
+                                [[plan.status should] equal:[MHVPlanStatusEnum MHVInProgress]];
                                 [[plan.descriptionText.description should] equal:@"sleep plan"];
-                                [[plan.category.description should] equal:@"Sleep"];
+                                [[plan.category should] equal:[MHVPlanCategoryEnum MHVSleep]];
                                 [[theValue(plan.objectives.objective.count) should] equal:theValue(2)];
                                 MHVPlanObjective *objective = [plan.objectives.objective objectAtIndex:0];
                                 [[objective.identifier.description should] equal:@"1C71CED0-3F55-4A66-A8C9-189836304BB2"];
                                 [[objective.name.description should] equal:@"Get more sleep"];
                                 [[objective.descriptionText.description should] equal:@"Work on habits that help you maximize how much you sleep."];
-                                [[objective.state.description should] equal:@"Inactive"];
+                                [[objective.state should] equal:[MHVPlanObjectiveStateEnum MHVInactive]];
                                 
                                 [[theValue(objective.outcomes.outcome.count) should] equal:theValue(1)];
                                 MHVPlanOutcome *outcome = [objective.outcomes.outcome objectAtIndex:0];
                                 [[outcome.name.description should] equal:@"Hours asleep / night"];
-                                [[outcome.type.description should] equal:@"SleepHoursPerNight"];
+                                [[outcome.type should] equal:[MHVPlanOutcomeTypeEnum MHVSleepHoursPerNight]];
                                 
                             });
                      });
