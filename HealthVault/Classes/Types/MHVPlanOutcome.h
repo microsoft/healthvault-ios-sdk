@@ -18,11 +18,12 @@
 
 #import "MHVType.h"
 #import "MHVStringNZNW.h"
+#import "MHVPlanOutcomeTypeEnum.h"
 
 @interface MHVPlanOutcome : MHVType
 
 @property (readwrite, nonatomic, strong) MHVStringNZNW *name;
-@property (readwrite, nonatomic, strong) NSString *type;
+@property (readwrite, nonatomic, strong) MHVPlanOutcomeTypeEnum *type;
 
 @end
 

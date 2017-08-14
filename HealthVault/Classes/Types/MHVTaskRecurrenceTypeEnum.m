@@ -1,5 +1,6 @@
 //
-//  MHVTaskCompletionMetrics.h
+// MHVTaskRecurrenceTypeEnum.m
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,15 +16,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVPositiveInt.h"
 #import "MHVTaskRecurrenceTypeEnum.h"
-#import "MHVTaskCompletionTypeEnum.h"
 
-@interface MHVTaskCompletionMetrics : MHVType
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 
-@property (readwrite, nonatomic, strong) MHVTaskRecurrenceTypeEnum *recurrenceType;
-@property (readwrite, nonatomic, strong) MHVTaskCompletionTypeEnum *completionType;
-@property (readwrite, nonatomic, strong) MHVPositiveInt *occurrenceCount;
+@implementation MHVTaskRecurrenceTypeEnum
 
++ (NSDictionary *)enumMap
+{
+    return @{
+             @"Unknown": @(0),
+             @"None": @(1),
+             @"Minute": @(2),
+             @"Hourly": @(3),
+             @"Daily": @(4),
+             @"Weekly": @(5),
+             @"Monthly": @(6),
+             @"Annually": @(7),
+             };
+}
 @end
+
+#pragma clang diagnostic pop

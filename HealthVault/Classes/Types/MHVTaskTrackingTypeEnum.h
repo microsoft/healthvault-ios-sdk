@@ -1,5 +1,5 @@
 //
-//  MHVTaskCompletionMetrics.h
+//  MHVTaskTrackingTypeEnum.h
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,15 +15,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVPositiveInt.h"
-#import "MHVTaskRecurrenceTypeEnum.h"
-#import "MHVTaskCompletionTypeEnum.h"
+#import "MHVDynamicEnum.h"
 
-@interface MHVTaskCompletionMetrics : MHVType
+@interface MHVTaskTrackingTypeEnum : MHVDynamicEnum
 
-@property (readwrite, nonatomic, strong) MHVTaskRecurrenceTypeEnum *recurrenceType;
-@property (readwrite, nonatomic, strong) MHVTaskCompletionTypeEnum *completionType;
-@property (readwrite, nonatomic, strong) MHVPositiveInt *occurrenceCount;
++ (MHVTaskTrackingTypeEnum *)MHVUnknown;
++ (MHVTaskTrackingTypeEnum *)MHVManual;
++ (MHVTaskTrackingTypeEnum *)MHVAuto;
 
 @end

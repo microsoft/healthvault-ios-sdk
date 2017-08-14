@@ -22,6 +22,7 @@
 #import "MHVString128.h"
 #import "MHVTaskTrackingPolicy.h"
 #import "MHVUUID.h"
+#import "MHVTaskStatusEnum.h"
 
 @interface MHVTaskThing : MHVThingDataTyped
 
@@ -48,7 +49,7 @@
 //
 // (Required) The task status.
 //
-@property (readwrite, nonatomic, strong) NSString *status;
+@property (readwrite, nonatomic, strong) MHVTaskStatusEnum *status;
 //
 // (Optional) For a task whose completion is tied to recording a specific health measurement or other piece of data, this indicates the item type to be recorded.
 //

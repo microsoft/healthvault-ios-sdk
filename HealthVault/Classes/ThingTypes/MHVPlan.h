@@ -19,6 +19,8 @@
 #import "MHVThing.h"
 #import "MHVStringNZNW.h"
 #import "MHVPlanObjective.h"
+#import "MHVPlanStatusEnum.h"
+#import "MHVPlanCategoryEnum.h"
 
 @interface MHVPlan : MHVThingDataTyped
 
@@ -33,11 +35,11 @@
 //
 // (Required) The plan status.
 //
-@property (readwrite, nonatomic, strong) NSString *status;
+@property (readwrite, nonatomic, strong) MHVPlanStatusEnum *status;
 //
 // (Required) The plan category.
 //
-@property (readwrite, nonatomic, strong) NSString *category;
+@property (readwrite, nonatomic, strong) MHVPlanCategoryEnum *category;
 //
 // (Required) The plan objectives.
 //

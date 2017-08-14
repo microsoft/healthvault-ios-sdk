@@ -21,13 +21,15 @@
 #import "MHVStringNZNW.h"
 #import "MHVPositiveInt.h"
 #import "MHVNonNegativeDouble.h"
+#import "MHVTaskScheduleTypeEnum.h"
+#import "MHVTaskRecurrenceTypeEnum.h"
 
 @interface MHVTaskSchedule : MHVType
 
 @property (readwrite, nonatomic, strong) MHVDateTime *startDateTime;
 @property (readwrite, nonatomic, strong) MHVDateTime *endDateTime;
-@property (readwrite, nonatomic, strong) NSString *scheduleType;
-@property (readwrite, nonatomic, strong) NSString *recurrenceType;
+@property (readwrite, nonatomic, strong) MHVTaskScheduleTypeEnum *scheduleType;
+@property (readwrite, nonatomic, strong) MHVTaskRecurrenceTypeEnum *recurrenceType;
 @property (readwrite, nonatomic, strong) MHVStringNZNW *groupId;
 @property (readwrite, nonatomic, strong) MHVPositiveInt *multiple;
 @property (readwrite, nonatomic, strong) MHVNonNegativeDouble *minutesToRemindBefore;

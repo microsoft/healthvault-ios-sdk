@@ -25,15 +25,15 @@ static NSString *const c_element_occurrence_count = @"occurrence-count";
 
 - (void)serialize:(XWriter *)writer
 {
-    [writer writeElement:c_element_recurrence_type value:self.recurrenceType];
-    [writer writeElement:c_element_completion_type value:self.completionType];
+    [writer writeElement:c_element_recurrence_type value:self.recurrenceType.stringValue];
+    [writer writeElement:c_element_completion_type value:self.completionType.stringValue];
     [writer writeElement:c_element_occurrence_count content:self.occurrenceCount];
 }
 
 - (void)deserialize:(XReader *)reader
 {
-    self.recurrenceType = [reader readStringElement:c_element_recurrence_type];
-    self.completionType = [reader readStringElement:c_element_completion_type];
+    self.recurrenceType = [[MHVTaskRecurrenceTypeEnum alloc] initWithString:[reader readStringElement:c_element_recurrence_type]];
+    self.completionType =  [[MHVTaskCompletionTypeEnum alloc] initWithString:[reader readStringElement:c_element_completion_type]];
     self.occurrenceCount = [reader readElement:c_element_occurrence_count asClass:[MHVPositiveInt class]];
 }
 

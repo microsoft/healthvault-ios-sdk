@@ -41,7 +41,7 @@ static NSString *const c_element_associated_objective_ids = @"associated-objecti
     [writer writeElement:c_element_short_description content:self.shortDescription];
     [writer writeElement:c_element_long_descrption content:self.longDescription];
     [writer writeElement:c_element_is_reminder_enabled content:self.isReminderEnabled];
-    [writer writeElement:c_element_status value:self.status];
+    [writer writeElement:c_element_status value:self.status.stringValue];
     [writer writeElement:c_element_type value:self.taskType.UUIDString];
     [writer writeElement:c_element_schedules content:self.schedules];
     [writer writeElement:c_element_tracking_policy content:self.trackingPolicy];
@@ -55,7 +55,7 @@ static NSString *const c_element_associated_objective_ids = @"associated-objecti
     self.shortDescription = [reader readElement:c_element_short_description asClass:[MHVString128 class]];
     self.longDescription = [reader readElement:c_element_long_descrption asClass:[MHVStringNZNW class]];
     self.isReminderEnabled = [reader readElement:c_element_is_reminder_enabled asClass:[MHVBool class]];
-    self.status = [reader readStringElement:c_element_status];
+    self.status = [[MHVTaskStatusEnum alloc] initWithString:[reader readStringElement:c_element_status]];
     self.taskType = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_type]];
     self.schedules = [reader readElement:c_element_schedules asClass:[MHVTaskSchedules class]];
     self.trackingPolicy = [reader readElement:c_element_tracking_policy asClass:[MHVTaskTrackingPolicy class]];

@@ -34,8 +34,8 @@ static NSString *const c_element_completion_end_time = @"completion-end-time";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_tracking_time content:self.trackingTime];
-    [writer writeElement:c_element_tracking_type value:self.trackingType];
-    [writer writeElement:c_element_tracking_status value:self.trackingStatus];
+    [writer writeElement:c_element_tracking_type value:self.trackingType.stringValue];
+    [writer writeElement:c_element_tracking_status value:self.trackingStatus.stringValue];
     [writer writeElement:c_element_occurrence_start_time content:self.occurrenceStartTime];
     [writer writeElement:c_element_occurrence_end_time content:self.occurrenceEndTime];
     [writer writeElement:c_element_completion_start_time content:self.completionStartTime];
@@ -45,8 +45,8 @@ static NSString *const c_element_completion_end_time = @"completion-end-time";
 - (void)deserialize:(XReader *)reader
 {
     self.trackingTime = [reader readElement:c_element_tracking_time asClass:[MHVDateTime class]];
-    self.trackingType = [reader readStringElement:c_element_tracking_type];
-    self.trackingStatus = [reader readStringElement:c_element_tracking_status];
+    self.trackingType = [[MHVTaskTrackingTypeEnum alloc] initWithString:[reader readStringElement:c_element_tracking_type]];
+    self.trackingStatus = [[MHVTaskTrackingStatusEnum alloc] initWithString:[reader readStringElement:c_element_tracking_status]];
     self.occurrenceStartTime = [reader readElement:c_element_occurrence_start_time asClass:[MHVDateTime class]];
     self.occurrenceEndTime = [reader readElement:c_element_occurrence_end_time asClass:[MHVDateTime class]];
     self.completionStartTime = [reader readElement:c_element_completion_start_time asClass:[MHVDateTime class]];

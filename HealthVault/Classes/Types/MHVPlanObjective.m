@@ -31,7 +31,7 @@ static NSString *const c_element_outcomes = @"outcomes";
     [writer writeElement:c_element_id value:self.identifier.UUIDString];
     [writer writeElement:c_element_name content:self.name];
     [writer writeElement:c_element_description content:self.descriptionText];
-    [writer writeElement:c_element_state value:self.state];
+    [writer writeElement:c_element_state value:self.state.stringValue];
     [writer writeElement:c_element_outcomes content:self.outcomes];
 }
 
@@ -40,7 +40,7 @@ static NSString *const c_element_outcomes = @"outcomes";
     self.identifier = [[NSUUID alloc] initWithUUIDString:[reader readStringElement:c_element_id]];
     self.name = [reader readElement:c_element_name asClass:[MHVStringNZNW class]];
     self.descriptionText = [reader readElement:c_element_description asClass:[MHVStringNZNW class]];
-    self.state = [reader readStringElement:c_element_state];
+    self.state = [[MHVPlanObjectiveStateEnum alloc] initWithString:[reader readStringElement:c_element_state]];
     self.outcomes = [reader readElement:c_element_outcomes asClass:[MHVPlanOutcomeList class]];
 }
 
