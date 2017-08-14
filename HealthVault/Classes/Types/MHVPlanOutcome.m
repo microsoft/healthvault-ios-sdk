@@ -26,13 +26,13 @@ static NSString *const c_element_type = @"type";
 - (void)serialize:(XWriter *)writer
 {
     [writer writeElement:c_element_name content:self.name];
-    [writer writeElement:c_element_type value:self.type];
+    [writer writeElement:c_element_type value:self.type.stringValue];
 }
 
 - (void)deserialize:(XReader *)reader
 {
     self.name = [reader readElement:c_element_name asClass:[MHVStringNZNW class]];
-    self.type = [reader readStringElement:c_element_type];
+    self.type = [[MHVPlanOutcomeTypeEnum alloc] initWithString:[reader readStringElement:c_element_type]];
 }
 
 @end

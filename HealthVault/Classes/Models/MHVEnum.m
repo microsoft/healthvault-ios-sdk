@@ -33,7 +33,11 @@ static NSString *kEnumNSCodingKey = @"value";
 
 - (instancetype)initWithString:(NSString *)string
 {
-    NSAssert(string, @"string must not be nil");
+    //Nil for enum is converted to Unknown
+    if (string == nil)
+    {
+        string = @"Unknown";
+    }
     
     self = [super init];
     if (self)

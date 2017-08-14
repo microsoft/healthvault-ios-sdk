@@ -37,14 +37,14 @@ describe(@"MHVTaskThing", ^
                                 [[task.shortDescription.description should] equal:@"Set a consistent wake time to help regulate your body's internal clock."];
                                 [[task.longDescription.description should] equal:@"Studies show that waking up at a consistent time every day, even on weekends, is one of the best ways to ensure a good night’s sleep."];
                                 [[theValue(task.isReminderEnabled.value) should] equal:theValue(YES)];
-                                [[task.status.description should] equal:@"InProgress"];
+                                [[task.status should] equal:[MHVTaskStatusEnum MHVInProgress]];
                                 [[task.taskType.description should] equal:@"12340000-0000-0000-0000-000000000000"];
                                 
                                 [[theValue(task.schedules.schedule.count) should] equal:theValue(10)];
                                 MHVTaskSchedule *schedule = [task.schedules.schedule objectAtIndex:0];
                                 [[schedule.startDateTime.description should] equal:@"06/12/17 08:30 AM"];
-                                [[schedule.scheduleType.description should] equal:@"Local"];
-                                [[schedule.recurrenceType.description should] equal:@"Weekly"];
+                                [[schedule.scheduleType should] equal:[MHVTaskScheduleTypeEnum MHVLocal]];
+                                [[schedule.recurrenceType should] equal:[MHVTaskRecurrenceTypeEnum MHVWeekly]];
                                 [[schedule.groupId.description should] equal:@"17b303ab-dd8d-4ba6-839f-da24487949aa"];
                                 [[schedule.multiple.description should] equal:@"1"];
                                 [[schedule.adherenceWindowInMinutes.description should] equal:@"30.000000"];
@@ -54,8 +54,8 @@ describe(@"MHVTaskThing", ^
                                 [[[task.trackingPolicy.sourceTypes.sourceType objectAtIndex:0].description should] equal:@"Manual"];
                                 [[theValue(task.trackingPolicy.triggerTypes.triggerType.count) should] equal:theValue(1)];
                                 [[[task.trackingPolicy.triggerTypes.triggerType objectAtIndex:0].description should] equal:@"Manual"];
-                                [[task.trackingPolicy.completionMetrics.recurrenceType.description should] equal:@"Daily"];
-                                [[task.trackingPolicy.completionMetrics.completionType.description should] equal:@"Scheduled"];
+                                [[task.trackingPolicy.completionMetrics.recurrenceType should] equal:[MHVTaskRecurrenceTypeEnum MHVDaily]];
+                                [[task.trackingPolicy.completionMetrics.completionType should] equal:[MHVTaskCompletionTypeEnum MHVScheduled]];
                                 [[theValue(task.trackingPolicy.completionMetrics.occurrenceCount.value) should] equal:theValue(1)];
                                 
                                 [[theValue(task.associatedObjectiveIds.identifier.count) should] equal:theValue(1)];
@@ -84,7 +84,7 @@ describe(@"MHVTaskThing", ^
 
 describe(@"MHVTaskThing with tracking-policy values", ^
          {
-             NSString *objectDefinition = @"<task><type>11111111-1111-1111-1111-000000000000</type><tracking-policy>"\
+             NSString *objectDefinition = @"<task><status>Unknown</status><type>11111111-1111-1111-1111-000000000000</type><tracking-policy>"\
              "<target-events><target-event><element-xpath>/thing/data-xml/medication/name/text</element-xpath><is-negated>false</is-negated>"\
              "<element-values><string>Another Drug</string></element-values></target-event></target-events>"\
              "</tracking-policy></task>";

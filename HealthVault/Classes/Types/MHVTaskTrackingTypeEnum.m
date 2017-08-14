@@ -1,5 +1,5 @@
 //
-//  MHVTaskCompletionMetrics.h
+//  MHVTaskTrackingTypeEnum.m
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,15 +15,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVPositiveInt.h"
-#import "MHVTaskRecurrenceTypeEnum.h"
-#import "MHVTaskCompletionTypeEnum.h"
 
-@interface MHVTaskCompletionMetrics : MHVType
+#import "MHVTaskTrackingTypeEnum.h"
 
-@property (readwrite, nonatomic, strong) MHVTaskRecurrenceTypeEnum *recurrenceType;
-@property (readwrite, nonatomic, strong) MHVTaskCompletionTypeEnum *completionType;
-@property (readwrite, nonatomic, strong) MHVPositiveInt *occurrenceCount;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
+
+@implementation MHVTaskTrackingTypeEnum
+
++ (NSDictionary *)enumMap
+{
+    return @{
+             @"Unknown": @(0),
+             @"Manual": @(1),
+             @"Auto": @(2),
+             };
+}
 
 @end
+
+#pragma clang diagnostic pop

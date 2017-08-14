@@ -33,8 +33,8 @@ describe(@"MHVTaskTrackingEntry", ^
                                 MHVTaskTrackingEntry *entry = (MHVTaskTrackingEntry*)[XReader newFromString:objectDefinition withRoot:[MHVTaskTrackingEntry XRootElement] asClass:[MHVTaskTrackingEntry class]];
                                 
                                 [[entry.trackingTime.description should] equal:@"06/09/17 02:26 PM"];
-                                [[entry.trackingType.description should] equal:@"Manual"];
-                                [[entry.trackingStatus.description should] equal:@"Occurrence"];
+                                [[entry.trackingType should] equal:[MHVTaskTrackingTypeEnum MHVManual]];
+                                [[entry.trackingStatus should] equal:[MHVTaskTrackingStatusEnum MHVOccurrence]];
                                 [[entry.occurrenceStartTime.description should] equal:@"06/09/17 12:00 AM"];
                                 [[entry.occurrenceEndTime.description should] equal:@"06/10/17 12:00 AM"];
                                 [[entry.completionStartTime.description should] equal:@"06/09/17 12:00 AM"];

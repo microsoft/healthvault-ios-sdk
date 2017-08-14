@@ -19,13 +19,14 @@
 #import "MHVType.h"
 #import "MHVStringNZNW.h"
 #import "MHVPlanOutcome.h"
+#import "MHVPlanObjectiveStateEnum.h"
 
 @interface MHVPlanObjective : MHVType
 
 @property (readwrite, nonatomic, strong) NSUUID *identifier;
 @property (readwrite, nonatomic, strong) MHVStringNZNW *name;
 @property (readwrite, nonatomic, strong) MHVStringNZNW *descriptionText;
-@property (readwrite, nonatomic, strong) NSString *state;
+@property (readwrite, nonatomic, strong) MHVPlanObjectiveStateEnum *state;
 @property (readwrite, nonatomic, strong) MHVPlanOutcomeList *outcomes;
 
 @end

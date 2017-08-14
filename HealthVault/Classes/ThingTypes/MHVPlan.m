@@ -31,8 +31,8 @@ static NSString *const c_element_objectives = @"objectives";
 {
     [writer writeElement:c_element_name content:self.name];
     [writer writeElement:c_element_description content:self.descriptionText];
-    [writer writeElement:c_element_status value:self.status];
-    [writer writeElement:c_element_category value:self.category];
+    [writer writeElement:c_element_status value:self.status.stringValue];
+    [writer writeElement:c_element_category value:self.category.stringValue];
     [writer writeElement:c_element_objectives content:self.objectives];
 }
 
@@ -40,8 +40,8 @@ static NSString *const c_element_objectives = @"objectives";
 {
     self.name = [reader readElement:c_element_name asClass:[MHVStringNZNW class]];
     self.descriptionText = [reader readElement:c_element_description asClass:[MHVStringNZNW class]];
-    self.status = [reader readStringElement:c_element_status];
-    self.category = [reader readStringElement:c_element_category];
+    self.status = [[MHVPlanStatusEnum alloc] initWithString:[reader readStringElement:c_element_status]];
+    self.category = [[MHVPlanCategoryEnum alloc] initWithString:[reader readStringElement:c_element_category]];
     self.objectives = [reader readElement:c_element_objectives asClass:[MHVPlanObjectiveList class]];
 }
 

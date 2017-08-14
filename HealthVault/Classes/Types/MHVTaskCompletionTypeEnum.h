@@ -1,5 +1,6 @@
 //
-//  MHVTaskCompletionMetrics.h
+// MHVTaskCompletionTypeEnum.h
+// MHVLib
 //
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 //
@@ -15,15 +16,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVType.h"
-#import "MHVPositiveInt.h"
-#import "MHVTaskRecurrenceTypeEnum.h"
-#import "MHVTaskCompletionTypeEnum.h"
+#import "MHVDynamicEnum.h"
 
-@interface MHVTaskCompletionMetrics : MHVType
+@interface MHVTaskCompletionTypeEnum : MHVDynamicEnum
 
-@property (readwrite, nonatomic, strong) MHVTaskRecurrenceTypeEnum *recurrenceType;
-@property (readwrite, nonatomic, strong) MHVTaskCompletionTypeEnum *completionType;
-@property (readwrite, nonatomic, strong) MHVPositiveInt *occurrenceCount;
++ (MHVTaskCompletionTypeEnum *)MHVUnknown;
++ (MHVTaskCompletionTypeEnum *)MHVFrequency;
++ (MHVTaskCompletionTypeEnum *)MHVScheduled;
 
 @end
