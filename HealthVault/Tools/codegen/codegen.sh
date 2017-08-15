@@ -10,14 +10,16 @@ swagger-codegen generate -i ./KHV.json -l objc -o output -c ./swagger.config -t 
 
 # fix Nodatime types
 sed -E '
-s/NSDictionary<NSString\*, NSString\*>\*/MHVLocalDate\*/g
+s/NSString\* )startDate/MHVLocalDate\* _Nonnull)startDate/g
+s/NSString\* _Nullable)endDate/MHVLocalDate\* _Nullable)endDate/g
 s/"MHVErrorResponse.h"/"MHVErrorResponse.h"\
 #import "MHVLocalDate.h"/g
 ' output/SwaggerClient/Api/MHVTimelineApi.h > output/SwaggerClient/Api/MHVTimelineApi.h2
 mv output/SwaggerClient/Api/MHVTimelineApi.h2 output/SwaggerClient/Api/MHVTimelineApi.h
 
 sed -E '
-s/NSDictionary<NSString\*, NSString\*>\*/MHVLocalDate\*/g
+s/NSString\* _Nonnull)startDate/MHVLocalDate\* _Nonnull)startDate/g
+s/NSString\* _Nullable)endDate/MHVLocalDate\* _Nullable)endDate/g
 s/"MHVErrorResponse.h"/"MHVErrorResponse.h"\
 #import "MHVLocalDate.h"/g
 ' output/SwaggerClient/Api/MHVTimelineApi.m > output/SwaggerClient/Api/MHVTimelineApi.m2
@@ -53,3 +55,17 @@ s/"MHVEnum.h"/"MHVEnum.h"\
 #import "MHVZonedDateTime.h"/g
 ' output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h > output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h2
 mv output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h2 output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h
+
+sed -E '
+s/NSString\* _Nullable)actionPlanTaskStatus/MHVPlanStatusEnum* _Nullable)actionPlanTaskStatus/g
+s/"MHVTrackingValidation.h"/"MHVTrackingValidation.h"\
+#import "MHVPlanStatusEnum.h"/g
+' output/SwaggerClient/Api/MHVActionPlanTasksApi.h > output/SwaggerClient/Api/MHVActionPlanTasksApi.h2
+mv output/SwaggerClient/Api/MHVActionPlanTasksApi.h2 output/SwaggerClient/Api/MHVActionPlanTasksApi.h
+
+sed -E '
+s/NSString\* _Nullable)actionPlanTaskStatus/MHVPlanStatusEnum* _Nullable)actionPlanTaskStatus/g
+s/"MHVTrackingValidation.h"/"MHVTrackingValidation.h"\
+#import "MHVPlanStatusEnum.h"/g
+' output/SwaggerClient/Api/MHVActionPlanTasksApi.m > output/SwaggerClient/Api/MHVActionPlanTasksApi.m2
+mv output/SwaggerClient/Api/MHVActionPlanTasksApi.m2 output/SwaggerClient/Api/MHVActionPlanTasksApi.m

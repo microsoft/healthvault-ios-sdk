@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 
 ///
 /// @param occurrenceId The task tracking occurrence id.
-/// @param taskTrackingOccurrence The occurrence to patch
+/// @param taskTrackingOccurrence The plan task tracking occurrence.
 /// 
 - (void)taskTrackingPatchWithOccurrenceId:(NSString* )occurrenceId
     taskTrackingOccurrence:(MHVTaskTrackingOccurrence* )taskTrackingOccurrence

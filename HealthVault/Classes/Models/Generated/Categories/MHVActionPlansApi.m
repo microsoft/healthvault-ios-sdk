@@ -46,11 +46,8 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// Remove an action plan objective
 /// 
 ///  @param actionPlanId The instance of the plan that the objective belongs to. 
-///
 ///  @param objectiveId The instance of the objective to delete. 
-///
-///  @returns void
-///
+/// 
 - (void)actionPlanObjectivesDeleteWithActionPlanId:(NSString* _Nonnull)actionPlanId
     objectiveId:(NSString* _Nonnull)objectiveId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion
@@ -111,9 +108,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// Post an action plan instance
 /// 
 ///  @param actionPlan The instance of the plan to create. 
-///
-///  @returns MHVActionPlanInstance*
-///
+/// 
 - (void)actionPlansCreateWithActionPlan:(MHVActionPlan* _Nonnull)actionPlan
     completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion
 {
@@ -154,9 +149,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// Delete an action plan instance
 /// 
 ///  @param actionPlanId The instance of the plan to delete. 
-///
-///  @returns void
-///
+/// 
 - (void)actionPlansDeleteWithActionPlanId:(NSString* _Nonnull)actionPlanId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
@@ -197,8 +190,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 ///
 /// Get a collection of action plans
 /// 
-///  @returns MHVActionPlansResponseActionPlanInstance_*
-///
+/// 
 - (void)actionPlansGetWithCompletion:
     (void(^_Nonnull)(MHVActionPlansResponseActionPlanInstance_* _Nullable output, NSError* _Nullable error))completion
 {
@@ -223,17 +215,11 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// Gets adherence information for an action plan.
 /// 
 ///  @param startTime The start time. 
-///
 ///  @param endTime The end time. 
-///
 ///  @param actionPlanId The action plan identifier. 
-///
 ///  @param objectiveId The objective to filter the report to. (optional)
-///
 ///  @param taskId The task to filter the report to. (optional)
-///
-///  @returns MHVActionPlanAdherenceSummary*
-///
+/// 
 - (void)actionPlansGetAdherenceWithStartTime:(NSDate* _Nonnull)startTime
     endTime:(NSDate* _Nonnull)endTime
     actionPlanId:(NSString* _Nonnull)actionPlanId
@@ -324,9 +310,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// Get an instance of a specific action plan
 /// 
 ///  @param actionPlanId The action plan to update. 
-///
-///  @returns MHVActionPlanInstance*
-///
+/// 
 - (void)actionPlansGetByIdWithActionPlanId:(NSString* _Nonnull)actionPlanId
     completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion
 {
@@ -369,9 +353,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// Update/Replace a complete action plan instance with no merge.
 /// 
 ///  @param actionPlan The instance of the plan to update. The entire plan will be replaced with this version. 
-///
-///  @returns MHVActionPlanInstance*
-///
+/// 
 - (void)actionPlansReplaceWithActionPlan:(MHVActionPlanInstance* _Nonnull)actionPlan
     completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion
 {
@@ -412,9 +394,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
 /// Update an action plan instance with merge
 /// 
 ///  @param actionPlan The instance of the plan to update. Only the fields present in the passed in model will be updated. All other fields and colelctions              will be left, as is, unless invalid. 
-///
-///  @returns MHVActionPlanInstance*
-///
+/// 
 - (void)actionPlansUpdateWithActionPlan:(MHVActionPlanInstance* _Nonnull)actionPlan
     completion:(void(^_Nonnull)(MHVActionPlanInstance* _Nullable output, NSError* _Nullable error))completion
 {

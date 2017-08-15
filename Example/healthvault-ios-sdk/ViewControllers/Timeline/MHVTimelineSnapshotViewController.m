@@ -73,7 +73,7 @@
     
     MHVLocalDate* endDate = [[MHVLocalDate alloc] init];
     
-    [self.connection.remoteMonitoringClient timelineGetWithStartDate:startDate endDate:endDate planId:nil objectiveId:nil completion:^(MHVActionPlanTasksResponseTimelineTask_ * _Nullable output, NSError * _Nullable error)
+    [self.connection.remoteMonitoringClient timelineGetWithTimeZone:startDate.timeZone startDate:startDate endDate:endDate planId:nil objectiveId:nil completion:^(MHVActionPlanTasksResponseTimelineTask_ * _Nullable output, NSError * _Nullable error)
     {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {

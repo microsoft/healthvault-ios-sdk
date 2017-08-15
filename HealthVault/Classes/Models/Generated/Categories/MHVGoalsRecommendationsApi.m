@@ -45,9 +45,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// Updates the goal recommendation to acknowledged state
 /// 
 ///  @param goalRecommendationId The identifier of the goal recommendation to acknowledge. 
-///
-///  @returns void
-///
+/// 
 - (void)goalRecommendationsAcknowledgeWithGoalRecommendationId:(NSString* _Nonnull)goalRecommendationId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
@@ -89,9 +87,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// Post a goal recommendation instance
 /// 
 ///  @param goalRecommendation The instance of the goal recommendation to create. 
-///
-///  @returns MHVGoalRecommendationInstance*
-///
+/// 
 - (void)goalRecommendationsCreateWithGoalRecommendation:(MHVGoalRecommendation* _Nonnull)goalRecommendation
     completion:(void(^_Nonnull)(MHVGoalRecommendationInstance* _Nullable output, NSError* _Nullable error))completion
 {
@@ -132,9 +128,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// Delete a goal recommendation instance
 /// 
 ///  @param goalRecommendationId The identifier of the goal recommendation to delete. 
-///
-///  @returns void
-///
+/// 
 - (void)goalRecommendationsDeleteWithGoalRecommendationId:(NSString* _Nonnull)goalRecommendationId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
@@ -176,11 +170,8 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// Get a collection of all goal recommendations
 /// 
 ///  @param goalTypes The goal types(e.g Steps, CaloriesBurned) filter. (optional)
-///
 ///  @param goalWindowTypes The goal window types(e.g Daily, Weekly) filter. (optional)
-///
-///  @returns MHVGoalRecommendationsResponse*
-///
+/// 
 - (void)goalRecommendationsGetWithGoalTypes:(NSString* _Nullable)goalTypes
     goalWindowTypes:(NSString* _Nullable)goalWindowTypes
     completion:(void(^_Nonnull)(MHVGoalRecommendationsResponse* _Nullable output, NSError* _Nullable error))completion
@@ -214,9 +205,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 /// Get an instance of a specific goal recommendation
 /// 
 ///  @param goalRecommendationId The goal recommendation identifier. 
-///
-///  @returns MHVGoalRecommendationInstance*
-///
+/// 
 - (void)goalRecommendationsGetByIdWithGoalRecommendationId:(NSString* _Nonnull)goalRecommendationId
     completion:(void(^_Nonnull)(MHVGoalRecommendationInstance* _Nullable output, NSError* _Nullable error))completion
 {

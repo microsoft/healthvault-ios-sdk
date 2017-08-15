@@ -43,9 +43,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
 /// Delete a task tracking occurrence
 /// 
 ///  @param occurrenceId The task tracking occurrence id. 
-///
-///  @returns NSNumber*
-///
+/// 
 - (void)taskTrackingDeleteWithOccurrenceId:(NSString* _Nonnull)occurrenceId
     completion:(void(^_Nonnull)(NSNumber* _Nullable output, NSError* _Nullable error))completion
 {
@@ -88,11 +86,8 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
 /// Patch an task tracking occurrence
 /// 
 ///  @param occurrenceId The task tracking occurrence id. 
-///
-///  @param taskTrackingOccurrence  
-///
-///  @returns MHVTaskTrackingOccurrence*
-///
+///  @param taskTrackingOccurrence The plan task tracking occurrence. 
+/// 
 - (void)taskTrackingPatchWithOccurrenceId:(NSString* _Nonnull)occurrenceId
     taskTrackingOccurrence:(MHVTaskTrackingOccurrence* _Nonnull)taskTrackingOccurrence
     completion:(void(^_Nonnull)(MHVTaskTrackingOccurrence* _Nullable output, NSError* _Nullable error))completion
@@ -152,9 +147,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
 /// Post a task tracking
 /// 
 ///  @param taskTrackingOccurrence The plan task tracking occurrence. 
-///
-///  @returns MHVTaskTrackingOccurrence*
-///
+/// 
 - (void)taskTrackingPostWithTaskTrackingOccurrence:(MHVTaskTrackingOccurrence* _Nonnull)taskTrackingOccurrence
     completion:(void(^_Nonnull)(MHVTaskTrackingOccurrence* _Nullable output, NSError* _Nullable error))completion
 {

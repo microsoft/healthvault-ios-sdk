@@ -32,6 +32,7 @@
 #import "MHVActionPlanTasksResponseActionPlanTaskInstance_.h"
 #import "MHVErrorResponse.h"
 #import "MHVTrackingValidation.h"
+#import "MHVPlanStatusEnum.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -61,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @param actionPlanTaskStatus An optional status used to filter the results. (optional)
 /// 
-- (void)actionPlanTasksGetWithActionPlanTaskStatus:(NSString* _Nullable)actionPlanTaskStatus
+- (void)actionPlanTasksGetWithActionPlanTaskStatus:(MHVPlanStatusEnum* _Nullable)actionPlanTaskStatus
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstance_* _Nullable output, NSError* _Nullable error))completion;
 
 

@@ -22,6 +22,7 @@
 #import "NSDate+DataModel.h"
 #import "MHVDateTimeBase.h"
 #import "NSArray+Utils.h"
+#import "MHVEnum.h"
 
 @implementation NSDictionary (MHVDictionaryExtensions)
 
@@ -92,6 +93,10 @@
             [formatter setDateFormat: kISODateWithTimeZoneFormatterString];
             NSString *strDate = [formatter stringFromDate: self[key]];
             [query appendFormat:@"%@=%@", key, [strDate urlEncode]];
+        }
+        else if ([self[key] isKindOfClass:[MHVEnum class]])
+        {
+            [query appendFormat:@"%@=%@", key, [self[key] stringValue]];
         }
         else
         {
