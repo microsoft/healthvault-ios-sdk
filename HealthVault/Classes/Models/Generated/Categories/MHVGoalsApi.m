@@ -45,9 +45,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// Post a collection of goal instances
 /// 
 ///  @param goalsWrapper The collection of goal instances to create. 
-///
-///  @returns MHVGoalsResponse*
-///
+/// 
 - (void)goalsCreateWithGoalsWrapper:(MHVGoalsWrapper* _Nonnull)goalsWrapper
     completion:(void(^_Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion
 {
@@ -88,9 +86,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// Delete a goal instance
 /// 
 ///  @param goalId The identifier of the goal to delete. 
-///
-///  @returns void
-///
+/// 
 - (void)goalsDeleteWithGoalId:(NSString* _Nonnull)goalId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
@@ -132,15 +128,10 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// Get a collection of all goals
 /// 
 ///  @param types The goal types(e.g Steps, CaloriesBurned) filter. (optional)
-///
 ///  @param windowTypes The goal window types(e.g Daily, Weekly) filter. (optional)
-///
 ///  @param startDate The start date for date range filter. (optional)
-///
 ///  @param endDate The end date for date range filter. (optional)
-///
-///  @returns MHVGoalsResponse*
-///
+/// 
 - (void)goalsGetWithTypes:(NSString* _Nullable)types
     windowTypes:(NSString* _Nullable)windowTypes
     startDate:(NSDate* _Nullable)startDate
@@ -184,11 +175,8 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// Get a collection of the active goals
 /// 
 ///  @param types The goal types(e.g Steps, CaloriesBurned) filter. (optional)
-///
 ///  @param windowTypes The goal window types(e.g Daily, Weekly) filter. (optional)
-///
-///  @returns MHVGoalsResponse*
-///
+/// 
 - (void)goalsGetActiveWithTypes:(NSString* _Nullable)types
     windowTypes:(NSString* _Nullable)windowTypes
     completion:(void(^_Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion
@@ -222,9 +210,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// Get an instance of a specific goal
 /// 
 ///  @param goalId The goal identifier. 
-///
-///  @returns MHVGoal*
-///
+/// 
 - (void)goalsGetByIdWithGoalId:(NSString* _Nonnull)goalId
     completion:(void(^_Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error))completion
 {
@@ -267,9 +253,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// Update/Replace a complete goal instance with no merge
 /// 
 ///  @param goal The instance of the goal to update. The entire goal will be replaced with this version. 
-///
-///  @returns MHVGoal*
-///
+/// 
 - (void)goalsReplaceWithGoal:(MHVGoal* _Nonnull)goal
     completion:(void(^_Nonnull)(MHVGoal* _Nullable output, NSError* _Nullable error))completion
 {
@@ -310,9 +294,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 /// Update collection of goal instances with merge
 /// 
 ///  @param goalsWrapper The collection of goal instances to update. Only the fields present in the passed in model will be updated. All other fields and colelctions              will be left, as is, unless invalid. 
-///
-///  @returns MHVGoalsResponse*
-///
+/// 
 - (void)goalsUpdateWithGoalsWrapper:(MHVGoalsWrapper* _Nonnull)goalsWrapper
     completion:(void(^_Nonnull)(MHVGoalsResponse* _Nullable output, NSError* _Nullable error))completion
 {

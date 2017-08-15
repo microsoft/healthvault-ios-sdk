@@ -43,22 +43,33 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
 ///
 /// Get the task timeline for a given timerange
 /// 
+///  @param timeZone The time zone of the timeline requester. 
 ///  @param startDate The start time. 
-///
 ///  @param endDate The end time. (optional)
-///
 ///  @param planId The plan ID to filter the tasks against. (optional)
-///
 ///  @param objectiveId The objective ID to filter the tasks against. (optional)
-///
-///  @returns MHVActionPlanTasksResponseTimelineTask_*
-///
-- (void)timelineGetWithStartDate:(MHVLocalDate* _Nonnull)startDate
+/// 
+- (void)timelineGetWithTimeZone:(NSString* _Nonnull)timeZone
+    startDate:(MHVLocalDate* _Nonnull)startDate
     endDate:(MHVLocalDate* _Nullable)endDate
     planId:(NSString* _Nullable)planId
     objectiveId:(NSString* _Nullable)objectiveId
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseTimelineTask_* _Nullable output, NSError* _Nullable error))completion
 {
+    // verify the required parameter 'timeZone' is set
+    if (timeZone == nil)
+    {
+        NSParameterAssert(timeZone);
+        if(completion)
+        {
+            NSDictionary * userInfo = @{NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Missing required parameter '%@'", nil),@"timeZone"] };
+            NSError* error = [NSError errorWithDomain:kMHVTimelineApiErrorDomain code:kMHVTimelineApiMissingParamErrorCode userInfo:userInfo];
+            completion(nil, error);
+        }
+
+        return;
+    }
+
     // verify the required parameter 'startDate' is set
     if (startDate == nil)
     {
@@ -69,7 +80,7 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
             NSError* error = [NSError errorWithDomain:kMHVTimelineApiErrorDomain code:kMHVTimelineApiMissingParamErrorCode userInfo:userInfo];
             completion(nil, error);
         }
-        
+
         return;
     }
 
@@ -78,10 +89,13 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
     NSMutableDictionary *pathParams = [[NSMutableDictionary alloc] init];
 
     NSMutableDictionary* queryParams = [[NSMutableDictionary alloc] init];
+    if (timeZone != nil)
+    {
+        queryParams[@"timeZone"] = timeZone;
+    }
     if (startDate != nil)
     {
         queryParams[@"startDate"] = startDate;
-        queryParams[@"timeZone"] = startDate.timeZone;
     }
     if (endDate != nil)
     {

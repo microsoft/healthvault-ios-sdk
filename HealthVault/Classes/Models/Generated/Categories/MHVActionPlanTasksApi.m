@@ -34,6 +34,7 @@
 #import "MHVActionPlanTasksResponseActionPlanTaskInstance_.h"
 #import "MHVErrorResponse.h"
 #import "MHVTrackingValidation.h"
+#import "MHVPlanStatusEnum.h"
 
 
 @implementation MHVRemoteMonitoringClient (MHVActionPlanTasksApi)
@@ -47,9 +48,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// Post a new action plan task
 /// 
 ///  @param actionPlanTask The action plan task to create. 
-///
-///  @returns MHVActionPlanTaskInstance*
-///
+/// 
 - (void)actionPlanTasksCreateWithActionPlanTask:(MHVActionPlanTask* _Nonnull)actionPlanTask
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion
 {
@@ -90,9 +89,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// Delete a task by id
 /// 
 ///  @param actionPlanTaskId The unique identifer of the task. 
-///
-///  @returns void
-///
+/// 
 - (void)actionPlanTasksDeleteWithActionPlanTaskId:(NSString* _Nonnull)actionPlanTaskId
     completion:(void(^_Nonnull)(NSError* _Nullable error))completion
 {
@@ -134,10 +131,8 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// Get a collection of task definitions
 /// 
 ///  @param actionPlanTaskStatus An optional status used to filter the results. (optional)
-///
-///  @returns MHVActionPlanTasksResponseActionPlanTaskInstance_*
-///
-- (void)actionPlanTasksGetWithActionPlanTaskStatus:(NSString* _Nullable)actionPlanTaskStatus
+/// 
+- (void)actionPlanTasksGetWithActionPlanTaskStatus:(MHVPlanStatusEnum* _Nullable)actionPlanTaskStatus
     completion:(void(^_Nonnull)(MHVActionPlanTasksResponseActionPlanTaskInstance_* _Nullable output, NSError* _Nullable error))completion
 {
     NSMutableString* resourcePath = [NSMutableString stringWithFormat:@"/ActionPlanTasks"];
@@ -165,9 +160,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// Get a task by id
 /// 
 ///  @param actionPlanTaskId The unique identifer of the task. 
-///
-///  @returns MHVActionPlanTaskInstance*
-///
+/// 
 - (void)actionPlanTasksGetByIdWithActionPlanTaskId:(NSString* _Nonnull)actionPlanTaskId
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion
 {
@@ -210,9 +203,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// Put an update for an action plan task
 /// 
 ///  @param actionPlanTask The updated action plan task. 
-///
-///  @returns MHVActionPlanTaskInstance*
-///
+/// 
 - (void)actionPlanTasksReplaceWithActionPlanTask:(MHVActionPlanTaskInstance* _Nonnull)actionPlanTask
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion
 {
@@ -253,9 +244,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// Patch an update for an action plan task
 /// 
 ///  @param actionPlanTask The updated task 
-///
-///  @returns MHVActionPlanTaskInstance*
-///
+/// 
 - (void)actionPlanTasksUpdateWithActionPlanTask:(MHVActionPlanTaskInstance* _Nonnull)actionPlanTask
     completion:(void(^_Nonnull)(MHVActionPlanTaskInstance* _Nullable output, NSError* _Nullable error))completion
 {
@@ -296,9 +285,7 @@ NSInteger kMHVActionPlanTasksApiMissingParamErrorCode = 234513;
 /// Validate tracking for an action plan task
 /// 
 ///  @param trackingValidation The tracking validation information. 
-///
-///  @returns MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_*
-///
+/// 
 - (void)actionPlanTasksValidateTrackingWithTrackingValidation:(MHVTrackingValidation* _Nonnull)trackingValidation
     completion:(void(^_Nonnull)(MHVActionPlanTaskTrackingResponseActionPlanTaskTracking_* _Nullable output, NSError* _Nullable error))completion
 {

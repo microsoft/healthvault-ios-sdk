@@ -38,12 +38,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// Get the task timeline for a given timerange
 /// 
 ///
+/// @param timeZone The time zone of the timeline requester.
 /// @param startDate The start time.
 /// @param endDate The end time. (optional)
 /// @param planId The plan ID to filter the tasks against. (optional)
 /// @param objectiveId The objective ID to filter the tasks against. (optional)
 /// 
-- (void)timelineGetWithStartDate:(MHVLocalDate* )startDate
+- (void)timelineGetWithTimeZone:(NSString* )timeZone
+    startDate:(MHVLocalDate* _Nonnull)startDate
     endDate:(MHVLocalDate* _Nullable)endDate
     planId:(NSString* _Nullable)planId
     objectiveId:(NSString* _Nullable)objectiveId
