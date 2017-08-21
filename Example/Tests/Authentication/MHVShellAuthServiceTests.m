@@ -240,7 +240,7 @@ describe(@"MHVShellAuthService", ^
                 it(@"should provide a detailed error", ^
                    {
                        [[expectFutureValue(authError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(authError.code)) shouldEventually] equal:theValue(MHVErrorTypeOperationCannotBePerformed)];
+                       [[expectFutureValue(theValue(authError.code)) shouldEventually] equal:theValue(MHVErrorTypeAuthorizationInProgress)];
                        [[expectFutureValue(authError.localizedDescription) shouldEventually] containString:@"Another authentication operation is currently in progress."];
                    });
             });
@@ -373,8 +373,8 @@ describe(@"MHVShellAuthService", ^
                 it(@"should provide a detailed error", ^
                    {
                        [[expectFutureValue(authError) shouldEventually] beNonNil];
-                       [[expectFutureValue(theValue(authError.code)) shouldEventually] equal:theValue(MHVErrorTypeOperationCannotBePerformed)];
-                       [[expectFutureValue(authError.localizedDescription) shouldEventually] containString:@"Another authentication operation is currenlty in progress."];
+                       [[expectFutureValue(theValue(authError.code)) shouldEventually] equal:theValue(MHVErrorTypeAuthorizationInProgress)];
+                       [[expectFutureValue(authError.localizedDescription) shouldEventually] containString:@"Another authentication operation is currently in progress."];
                    });
             });
     

@@ -244,7 +244,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
     {
         if (completion)
         {
-            completion([NSError error:[NSError MHVOperationCannotBePerformed] withDescription:@"Another authentication operation is currenlty running."]);
+            completion([NSError MHVAuthorizationInProgress]);
         }
         
         return NO;
