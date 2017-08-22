@@ -86,6 +86,7 @@ static NSString *const kBlankUUID = @"00000000-0000-0000-0000-000000000000";
         _shellAuthService = shellAuthService;
         _credentialClient = [clientFactory credentialClientWithConnection:self];
         _authQueue = dispatch_queue_create("MHVSodaConnection.authQueue", DISPATCH_QUEUE_SERIAL);
+        [self setConnectionPropertiesFromKeychain];
     }
     
     return self;
