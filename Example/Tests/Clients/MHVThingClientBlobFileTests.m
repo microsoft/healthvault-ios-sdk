@@ -47,6 +47,7 @@ describe(@"MHVThingClient", ^
     
     MHVClientFactory *clientFactory = [MHVClientFactory new];
     [(id)keychainService stub:@selector(setXMLObject:forKey:) andReturn:theValue(YES)];
+    [(id)keychainService stub:@selector(xmlObjectForKey:) andReturn:nil];
     
     // Test http service
     MHVHttpService *httpService = [[MHVHttpService alloc] initWithURLSession:urlSession];

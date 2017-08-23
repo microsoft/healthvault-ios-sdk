@@ -68,6 +68,7 @@ describe(@"MHVConnectionTests", ^
     [(id)clientFactory stub:@selector(credentialClientWithConnection:) andReturn:credentialClient];
     [(id)clientFactory stub:@selector(personClientWithConnection:) andReturn:personClient];
     [(id)keychainService stub:@selector(setXMLObject:forKey:) andReturn:theValue(YES)];
+     [(id)keychainService stub:@selector(xmlObjectForKey:) andReturn:nil];
     
     MHVConfiguration *configuration = [MHVConfiguration new];
     configuration.retryOnInternal500SleepDuration = 1.0;
