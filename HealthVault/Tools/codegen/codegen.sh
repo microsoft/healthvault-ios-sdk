@@ -1,3 +1,4 @@
+#!/bin/sh
 
 rm -rf output
 mkdir output
@@ -7,6 +8,12 @@ curl https://hvc-dev-khvwus01.westus2.cloudapp.azure.com/swagger/docs/2.0-previe
 
 # run the generator
 swagger-codegen generate -i ./KHV.json -l objc -o output -c ./swagger.config -t ./template --reserved-words-mappings id=identifier,description=descriptionText --import-mappings Time=MHVTime
+
+# remove the models & apis that aren't applicable to a client SDK.
+API_PATH=output/SwaggerClient/Api
+MODEL_PATH=output/SwaggerClient/Model
+rm $API_PATH/MHVOnboardingApi.* $API_PATH/MHVSleepsApi.*
+rm $MODEL_PATH/MHVOnboarding* $MODEL_PATH/MHVSafeWaitHandle* $MODEL_PATH/MHVSleep* $MODEL_PATH/MHVAudit* $MODEL_PATH/MHVCancellationToken.* $MODEL_PATH/MHVWaitHandle.*
 
 # fix Nodatime types
 sed -E '
@@ -26,7 +33,7 @@ s/"MHVErrorResponse.h"/"MHVErrorResponse.h"\
 mv output/SwaggerClient/Api/MHVTimelineApi.m2 output/SwaggerClient/Api/MHVTimelineApi.m
 
 sed -E '
-s/NSObject\* localDateTime/MHVLocalDateTime\* localDateTime/g
+s/NSString\* localDateTime/MHVLocalDateTime\* localDateTime/g
 s/NSObject\* adherenceDelta/MHVDateTimeDuration\* adherenceDelta/g
 s/"MHVEnum.h"/"MHVEnum.h"\
 #import "MHVLocalDateTime.h"\
@@ -35,7 +42,7 @@ s/"MHVEnum.h"/"MHVEnum.h"\
 mv output/SwaggerClient/Model/MHVTimelineSchedule.h2 output/SwaggerClient/Model/MHVTimelineSchedule.h
 
 sed -E '
-s/NSObject\* localDateTime/MHVLocalDateTime\* localDateTime/g
+s/NSString\* localDateTime/MHVLocalDateTime\* localDateTime/g
 s/NSObject\* adherenceDelta/MHVDateTimeDuration\* adherenceDelta/g
 s/"MHVEnum.h"/"MHVEnum.h"\
 #import "MHVLocalDateTime.h"/g
@@ -43,7 +50,7 @@ s/"MHVEnum.h"/"MHVEnum.h"\
 mv output/SwaggerClient/Model/MHVTimelineScheduleOccurrence.h2 output/SwaggerClient/Model/MHVTimelineScheduleOccurrence.h
 
 sed -E '
-s/NSObject\* effective/MHVInstant\* effective/g
+s/NSString\* effective/MHVInstant\* effective/g
 s/"MHVEnum.h"/"MHVEnum.h"\
 #import "MHVInstant.h"/g
 ' output/SwaggerClient/Model/MHVTimelineSnapshot.h > output/SwaggerClient/Model/MHVTimelineSnapshot.h2
