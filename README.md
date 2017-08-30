@@ -66,7 +66,7 @@ import HealthVault
 ```
 
 ## Registering your applications
-All applications must be registered with the [HealthVault Application Configuration Center](https://go.microsoft.com/fwlink/?linkid=838954) before they can connect to the service. During registration, the ACC will request that you upload an appropriate certificate which will be used subsequently to secure communications between your app and the service. For more information on how to obtain an appropriate certificate, please see [Creating Key Pairs](https://docs.microsoft.com/en-us/healthvault/concepts/connectivity/creating-key-pairs). 
+All applications must be registered with the [HealthVault Application Configuration Center](https://go.microsoft.com/fwlink/?linkid=838954)(ACC) before they can connect to the service. During registration, the ACC will request that you upload an appropriate certificate which will be used subsequently to secure communications between your app and the service. For more information on how to obtain an appropriate certificate, please see [Creating Key Pairs](https://docs.microsoft.com/en-us/healthvault/concepts/connectivity/creating-key-pairs). 
 
 # Contribute
 Contributions to the **healthvault-ios-sdk** are welcome.  Here is how you can contribute:
