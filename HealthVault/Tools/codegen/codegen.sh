@@ -76,3 +76,9 @@ s/"MHVTrackingValidation.h"/"MHVTrackingValidation.h"\
 #import "MHVPlanStatusEnum.h"/g
 ' output/SwaggerClient/Api/MHVActionPlanTasksApi.m > output/SwaggerClient/Api/MHVActionPlanTasksApi.m2
 mv output/SwaggerClient/Api/MHVActionPlanTasksApi.m2 output/SwaggerClient/Api/MHVActionPlanTasksApi.m
+
+# Other nullability fixes
+sed -E '
+s/strong,nonatomic) NSString\* associatedPlanId/strong,nonatomic,nullable) NSString* associatedPlanId/g
+' output/SwaggerClient/Model/MHVActionPlanTask.h > output/SwaggerClient/Model/MHVActionPlanTask.h2
+mv output/SwaggerClient/Model/MHVActionPlanTask.h2 output/SwaggerClient/Model/MHVActionPlanTask.h

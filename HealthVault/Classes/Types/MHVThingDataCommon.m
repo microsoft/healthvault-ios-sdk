@@ -18,6 +18,7 @@
 
 #import "MHVValidator.h"
 #import "MHVThingDataCommon.h"
+#import "MHVThing.h"
 
 static NSString *const c_element_source = @"source";
 static NSString *const c_element_note = @"note";
@@ -56,6 +57,36 @@ static NSString *const c_element_clientID = @"client-thing-id";
     self.relatedThings = [self.relatedThings arrayByAddingObject:relation];
     
     return relation;
+}
+
+- (void)removeRelationsWithName:(NSString *)name
+{
+    NSMutableArray *relatedThings = [NSMutableArray new];
+    
+    for (MHVRelatedThing *relatedThing in self.relatedThings)
+    {
+        if (![relatedThing.relationship isEqualToString:name])
+        {
+            [relatedThings addObject:relatedThing];
+        }
+    }
+    
+    self.relatedThings = relatedThings;
+}
+
+- (void)removeRelationsToThing:(MHVThing *)thing
+{
+    NSMutableArray *relatedThings = [NSMutableArray new];
+    
+    for (MHVRelatedThing *relatedThing in self.relatedThings)
+    {
+        if (![relatedThing.thingID isEqualToString:thing.thingID])
+        {
+            [relatedThings addObject:relatedThing];
+        }
+    }
+    
+    self.relatedThings = relatedThings;
 }
 
 - (MHVClientResult *)validate

@@ -71,5 +71,7 @@
 //
 // ----------------------
 - (MHVRelatedThing *)addRelation:(NSString *)name toThing:(MHVThing *)thing;
+- (void)removeRelationsWithName:(NSString *)name;
+- (void)removeRelationsToThing:(MHVThing *)thing;
 
 @end
