@@ -51,6 +51,10 @@
 //
 @property (readwrite, nonatomic, strong) MHVTaskStatusEnum *status;
 //
+// (Required) The task status.
+//
+@property (readwrite, nonatomic, strong) NSString *taskKey;
+//
 // (Optional) For a task whose completion is tied to recording a specific health measurement or other piece of data, this indicates the item type to be recorded.
 //
 @property (readwrite, nonatomic, strong) NSUUID *taskType;
@@ -68,3 +72,4 @@
 @property (readwrite, nonatomic, strong) MHVUUID *associatedObjectiveIds;
 
 @end
+
