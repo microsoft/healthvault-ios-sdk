@@ -883,7 +883,7 @@ static NSString *kMHVCachePasswordKey = @"MHVCachePassword";
                 MHVPendingMethod *pendingMethod = [[MHVPendingMethod alloc] initWithOriginalRequestDate:operation.originalRequestDate
                                                                                              identifier:operation.identifier
                                                                                              methodName:operation.name];
-                pendingMethod.version = operation.version;
+                pendingMethod.version = (NSInteger)operation.version;
                 pendingMethod.correlationId =  [[NSUUID alloc] initWithUUIDString:operation.correlationId];
                 pendingMethod.parameters = operation.parameters;
                 pendingMethod.recordId = [[NSUUID alloc] initWithUUIDString:recordId];

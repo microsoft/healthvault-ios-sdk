@@ -38,8 +38,8 @@
     {
         _lastCompletedSyncDate = [cachedRecord.lastSyncDate copy];
         _lastCacheConsistencyDate = [cachedRecord.lastConsistencyDate copy];
-        _newestCacheSequenceNumber = cachedRecord.newestCacheSequenceNumber;
-        _newestHealthVaultSequenceNumber = cachedRecord.newestHealthVaultSequenceNumber;
+        _newestCacheSequenceNumber = (NSInteger)cachedRecord.newestCacheSequenceNumber;
+        _newestHealthVaultSequenceNumber = (NSInteger)cachedRecord.newestHealthVaultSequenceNumber;
         _isCacheValid = cachedRecord.isValid;
     }
     
