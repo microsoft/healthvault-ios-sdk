@@ -51,7 +51,7 @@
 //
 @property (readwrite, nonatomic, strong) MHVTaskStatusEnum *status;
 //
-// (Required) The task status.
+// (Optional) The task key a provider sets and maintains for a user's created task.
 //
 @property (readwrite, nonatomic, strong) NSString *taskKey;
 //
