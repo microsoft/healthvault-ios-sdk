@@ -59,12 +59,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MHVActionPlanTaskInstance : MHVModelBase
 
-/* The Id of the task instance [optional]
+/* The Id of the task instance 
  */
-@property(strong,nonatomic,nullable) NSString* identifier;
-/* The status of the task [optional]
+@property(strong,nonatomic) NSString* identifier;
+/* The status of the task 
  */
-@property(strong,nonatomic,nullable) MHVActionPlanTaskInstanceStatusEnum* status;
+@property(strong,nonatomic) MHVActionPlanTaskInstanceStatusEnum* status;
 /* The date that the task was started. Read-only [optional]
  */
 @property(strong,nonatomic,nullable) NSDate* startDate;
