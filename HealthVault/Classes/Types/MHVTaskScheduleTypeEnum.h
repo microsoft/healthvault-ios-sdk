@@ -16,9 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVDynamicEnum.h"
+#import "MHVEnum.h"
 
-@interface MHVTaskScheduleTypeEnum : MHVDynamicEnum
+@interface MHVTaskScheduleTypeEnum : MHVEnum
 
 + (MHVTaskScheduleTypeEnum *)MHVUnknown;
 + (MHVTaskScheduleTypeEnum *)MHVZoned;

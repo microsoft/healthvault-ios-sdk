@@ -17,9 +17,6 @@
 
 #import "MHVTaskTrackingStatusEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVTaskTrackingStatusEnum
 
 + (NSDictionary *)enumMap
@@ -32,6 +29,26 @@
              };
 }
 
++ (MHVTaskTrackingStatusEnum *)MHVUnknown
+{
+    return [[MHVTaskTrackingStatusEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVTaskTrackingStatusEnum *)MHVOccurrence
+{
+    return [[MHVTaskTrackingStatusEnum alloc] initWithString:@"Occurrence"];
+}
+
++ (MHVTaskTrackingStatusEnum *)MHVCompletion
+{
+    return [[MHVTaskTrackingStatusEnum alloc] initWithString:@"Completion"];
+}
+
++ (MHVTaskTrackingStatusEnum *)MHVOutOfWindow
+{
+    return [[MHVTaskTrackingStatusEnum alloc] initWithString:@"OutOfWindow"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+

@@ -15,9 +15,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVDynamicEnum.h"
+#import "MHVEnum.h"
 
-@interface MHVPlanObjectiveStateEnum : MHVDynamicEnum
+@interface MHVPlanObjectiveStateEnum : MHVEnum
 
 + (MHVPlanObjectiveStateEnum *)MHVUnknown;
 + (MHVPlanObjectiveStateEnum *)MHVInactive;

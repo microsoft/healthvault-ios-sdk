@@ -15,12 +15,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MHVDynamicEnum.h"
+#import "MHVEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
-@interface MHVPlanOutcomeTypeEnum : MHVDynamicEnum
+@interface MHVPlanOutcomeTypeEnum : MHVEnum
 
 + (MHVPlanOutcomeTypeEnum *)MHVUnknown;
 + (MHVPlanOutcomeTypeEnum *)MHVStepsPerDay;
@@ -32,4 +29,4 @@
 
 @end
 
-#pragma clang diagnostic pop
+

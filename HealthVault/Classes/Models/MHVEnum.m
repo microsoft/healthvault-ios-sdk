@@ -230,9 +230,15 @@ static NSString *kEnumNSCodingKey = @"value";
     return self;
 }
 
++ (NSDictionary<NSString *, NSNumber *> *)enumMap
+{
+    NSAssert(NO, @"MHVEnum subclasses must implement");
+    return nil;
+}
+
 - (NSDictionary<NSString *, NSNumber *> *)enumMap
 {
-    return nil;
+    return [[self class] enumMap];
 }
 
 - (NSDictionary<NSString *, NSNumber *> *)aliasMap

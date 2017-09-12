@@ -18,9 +18,6 @@
 
 #import "MHVTaskRecurrenceTypeEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVTaskRecurrenceTypeEnum
 
 + (NSDictionary *)enumMap
@@ -36,6 +33,47 @@
              @"Annually": @(7),
              };
 }
+
++ (MHVTaskRecurrenceTypeEnum *)MHVUnknown
+{
+    return [[MHVTaskRecurrenceTypeEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVTaskRecurrenceTypeEnum *)MHVNone
+{
+    return [[MHVTaskRecurrenceTypeEnum alloc] initWithString:@"None"];
+}
+
++ (MHVTaskRecurrenceTypeEnum *)MHVMinute
+{
+    return [[MHVTaskRecurrenceTypeEnum alloc] initWithString:@"Minute"];
+}
+
++ (MHVTaskRecurrenceTypeEnum *)MHVHourly
+{
+    return [[MHVTaskRecurrenceTypeEnum alloc] initWithString:@"Hourly"];
+}
+
++ (MHVTaskRecurrenceTypeEnum *)MHVDaily
+{
+    return [[MHVTaskRecurrenceTypeEnum alloc] initWithString:@"Daily"];
+}
+
++ (MHVTaskRecurrenceTypeEnum *)MHVWeekly
+{
+    return [[MHVTaskRecurrenceTypeEnum alloc] initWithString:@"Weekly"];
+}
+
++ (MHVTaskRecurrenceTypeEnum *)MHVMonthly
+{
+    return [[MHVTaskRecurrenceTypeEnum alloc] initWithString:@"Monthly"];
+}
+
++ (MHVTaskRecurrenceTypeEnum *)MHVAnnually
+{
+    return [[MHVTaskRecurrenceTypeEnum alloc] initWithString:@"Annually"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+

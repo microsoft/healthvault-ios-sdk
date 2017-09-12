@@ -17,9 +17,6 @@
 
 #import "MHVPlanStatusEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVPlanStatusEnum
 
 + (NSDictionary *)enumMap
@@ -34,6 +31,36 @@
              };
 }
 
++ (MHVPlanStatusEnum *)MHVUnknown
+{
+    return [[MHVPlanStatusEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVPlanStatusEnum *)MHVArchived
+{
+    return [[MHVPlanStatusEnum alloc] initWithString:@"Archived"];
+}
+
++ (MHVPlanStatusEnum *)MHVRecommended
+{
+    return [[MHVPlanStatusEnum alloc] initWithString:@"Recommended"];
+}
+
++ (MHVPlanStatusEnum *)MHVInProgress
+{
+    return [[MHVPlanStatusEnum alloc] initWithString:@"InProgress"];
+}
+
++ (MHVPlanStatusEnum *)MHVCompleted
+{
+    return [[MHVPlanStatusEnum alloc] initWithString:@"Completed"];
+}
+
++ (MHVPlanStatusEnum *)MHVTemplate
+{
+    return [[MHVPlanStatusEnum alloc] initWithString:@"Template"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+

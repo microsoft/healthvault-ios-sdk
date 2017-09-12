@@ -17,9 +17,9 @@
 // limitations under the License.
 
 
-#import "MHVDynamicEnum.h"
+#import "MHVEnum.h"
 
-@interface MHVTaskRecurrenceTypeEnum : MHVDynamicEnum
+@interface MHVTaskRecurrenceTypeEnum : MHVEnum
 
 + (MHVTaskRecurrenceTypeEnum *)MHVUnknown;
 + (MHVTaskRecurrenceTypeEnum *)MHVNone;

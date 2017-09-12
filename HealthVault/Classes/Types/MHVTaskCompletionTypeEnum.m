@@ -18,9 +18,6 @@
 
 #import "MHVTaskCompletionTypeEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVTaskCompletionTypeEnum
 
 + (NSDictionary *)enumMap
@@ -31,6 +28,22 @@
              @"Scheduled": @(2),
              };
 }
+
++ (MHVTaskCompletionTypeEnum *)MHVUnknown
+{
+    return [[MHVTaskCompletionTypeEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVTaskCompletionTypeEnum *)MHVFrequency
+{
+    return [[MHVTaskCompletionTypeEnum alloc] initWithString:@"Frequency"];
+}
+
++ (MHVTaskCompletionTypeEnum *)MHVScheduled
+{
+    return [[MHVTaskCompletionTypeEnum alloc] initWithString:@"Scheduled"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+

@@ -18,9 +18,6 @@
 
 #import "MHVTaskStatusEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVTaskStatusEnum
 
 + (NSDictionary *)enumMap
@@ -35,6 +32,36 @@
              };
 }
 
++ (MHVTaskStatusEnum *)MHVUnknown
+{
+    return [[MHVTaskStatusEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVTaskStatusEnum *)MHVArchived
+{
+    return [[MHVTaskStatusEnum alloc] initWithString:@"Archived"];
+}
+
++ (MHVTaskStatusEnum *)MHVRecommended
+{
+    return [[MHVTaskStatusEnum alloc] initWithString:@"Recommended"];
+}
+
++ (MHVTaskStatusEnum *)MHVInProgress
+{
+    return [[MHVTaskStatusEnum alloc] initWithString:@"InProgress"];
+}
+
++ (MHVTaskStatusEnum *)MHVCompleted
+{
+    return [[MHVTaskStatusEnum alloc] initWithString:@"Completed"];
+}
+
++ (MHVTaskStatusEnum *)MHVTemplate
+{
+    return [[MHVTaskStatusEnum alloc] initWithString:@"Template"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+

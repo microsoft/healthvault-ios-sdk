@@ -17,9 +17,6 @@
 
 #import "MHVPlanCategoryEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVPlanCategoryEnum
 
 + (NSDictionary *)enumMap
@@ -33,6 +30,31 @@
              };
 }
 
++ (MHVPlanCategoryEnum *)MHVUnknown
+{
+    return [[MHVPlanCategoryEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVPlanCategoryEnum *)MHVHealth
+{
+    return [[MHVPlanCategoryEnum alloc] initWithString:@"Health"];
+}
+
++ (MHVPlanCategoryEnum *)MHVSleep
+{
+    return [[MHVPlanCategoryEnum alloc] initWithString:@"Sleep"];
+}
+
++ (MHVPlanCategoryEnum *)MHVActivity
+{
+    return [[MHVPlanCategoryEnum alloc] initWithString:@"Activity"];
+}
+
++ (MHVPlanCategoryEnum *)MHVStress
+{
+    return [[MHVPlanCategoryEnum alloc] initWithString:@"Stress"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+

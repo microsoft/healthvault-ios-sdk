@@ -18,9 +18,6 @@
 
 #import "MHVTaskTrackingTypeEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVTaskTrackingTypeEnum
 
 + (NSDictionary *)enumMap
@@ -32,6 +29,21 @@
              };
 }
 
++ (MHVTaskTrackingTypeEnum *)MHVUnknown
+{
+    return [[MHVTaskTrackingTypeEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVTaskTrackingTypeEnum *)MHVManual
+{
+    return [[MHVTaskTrackingTypeEnum alloc] initWithString:@"Manual"];
+}
+
++ (MHVTaskTrackingTypeEnum *)MHVAuto
+{
+    return [[MHVTaskTrackingTypeEnum alloc] initWithString:@"Auto"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+

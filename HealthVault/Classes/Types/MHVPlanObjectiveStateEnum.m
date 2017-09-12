@@ -17,9 +17,6 @@
 
 #import "MHVPlanObjectiveStateEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVPlanObjectiveStateEnum
 
 + (NSDictionary *)enumMap
@@ -31,6 +28,21 @@
              };
 }
 
++ (MHVPlanObjectiveStateEnum *)MHVUnknown
+{
+    return [[MHVPlanObjectiveStateEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVPlanObjectiveStateEnum *)MHVInactive
+{
+    return [[MHVPlanObjectiveStateEnum alloc] initWithString:@"Inactive"];
+}
+
++ (MHVPlanObjectiveStateEnum *)MHVActive
+{
+    return [[MHVPlanObjectiveStateEnum alloc] initWithString:@"Active"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+

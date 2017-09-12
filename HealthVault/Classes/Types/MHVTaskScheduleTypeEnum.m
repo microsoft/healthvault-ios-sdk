@@ -18,9 +18,6 @@
 
 #import "MHVTaskScheduleTypeEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVTaskScheduleTypeEnum
 
 + (NSDictionary *)enumMap
@@ -34,7 +31,31 @@
              };
 }
 
++ (MHVTaskScheduleTypeEnum *)MHVUnknown
+{
+    return [[MHVTaskScheduleTypeEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVTaskScheduleTypeEnum *)MHVZoned
+{
+    return [[MHVTaskScheduleTypeEnum alloc] initWithString:@"Zoned"];
+}
+
++ (MHVTaskScheduleTypeEnum *)MHVLocal
+{
+    return [[MHVTaskScheduleTypeEnum alloc] initWithString:@"Local"];
+}
+
++ (MHVTaskScheduleTypeEnum *)MHVUnscheduled
+{
+    return [[MHVTaskScheduleTypeEnum alloc] initWithString:@"Unscheduled"];
+}
+
++ (MHVTaskScheduleTypeEnum *)MHVAnytime
+{
+    return [[MHVTaskScheduleTypeEnum alloc] initWithString:@"Anytime"];
+}
+
 @end
 
-#pragma clang diagnostic pop
 

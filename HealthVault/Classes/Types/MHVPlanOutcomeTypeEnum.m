@@ -17,9 +17,6 @@
 
 #import "MHVPlanOutcomeTypeEnum.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
-
 @implementation MHVPlanOutcomeTypeEnum
 
 + (NSDictionary *)enumMap
@@ -35,6 +32,41 @@
              };
 }
 
++ (MHVPlanOutcomeTypeEnum *)MHVUnknown
+{
+    return [[MHVPlanOutcomeTypeEnum alloc] initWithString:@"Unknown"];
+}
+
++ (MHVPlanOutcomeTypeEnum *)MHVStepsPerDay
+{
+    return [[MHVPlanOutcomeTypeEnum alloc] initWithString:@"StepsPerDay"];
+}
+
++ (MHVPlanOutcomeTypeEnum *)MHVCaloriesPerDay
+{
+    return [[MHVPlanOutcomeTypeEnum alloc] initWithString:@"CaloriesPerDay"];
+}
+
++ (MHVPlanOutcomeTypeEnum *)MHVExerciseHoursPerWeek
+{
+    return [[MHVPlanOutcomeTypeEnum alloc] initWithString:@"ExerciseHoursPerWeek"];
+}
+
++ (MHVPlanOutcomeTypeEnum *)MHVSleepHoursPerNight
+{
+    return [[MHVPlanOutcomeTypeEnum alloc] initWithString:@"SleepHoursPerNight"];
+}
+
++ (MHVPlanOutcomeTypeEnum *)MHVMinutesToFallAsleepPerNight
+{
+    return [[MHVPlanOutcomeTypeEnum alloc] initWithString:@"MinutesToFallAsleepPerNight"];
+}
+
++ (MHVPlanOutcomeTypeEnum *)MHVOther
+{
+    return [[MHVPlanOutcomeTypeEnum alloc] initWithString:@"Other"];
+}
+
 @end
 
-#pragma clang diagnostic pop
+
