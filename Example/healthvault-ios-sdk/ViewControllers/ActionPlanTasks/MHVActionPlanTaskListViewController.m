@@ -19,7 +19,6 @@
 #import <Foundation/Foundation.h>
 #import "MHVActionPlanTaskListViewController.h"
 #import "MHVActionPlanTaskDetailViewController.h"
-#import "MHVPlanStatusEnum.h"
 
 @interface MHVActionPlanTaskListViewController ()
 
@@ -122,7 +121,7 @@
 {
     [self.statusLabel showBusy];
     
-    [self.connection.remoteMonitoringClient actionPlanTasksGetWithActionPlanTaskStatus:MHVPlanStatusEnum.MHVInProgress completion:^(MHVActionPlanTasksResponseActionPlanTaskInstance_ * _Nullable output, NSError * _Nullable error) {
+    [self.connection.remoteMonitoringClient actionPlanTasksGetWithActionPlanTaskStatus:MHVActionPlanTaskInstanceStatusEnum.MHVInProgress completion:^(MHVActionPlanTasksResponseActionPlanTaskInstance_ * _Nullable output, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^
          {
              if (!error)

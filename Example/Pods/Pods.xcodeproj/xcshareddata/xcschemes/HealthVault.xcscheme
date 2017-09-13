@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '4C21F4D09F2DA79C8EC03741D1AA0369'
+               BlueprintIdentifier = '01098BDAAB93D9B244484836DD2CCBE6'
                BlueprintName = 'HealthVault'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'HealthVault.framework'>
