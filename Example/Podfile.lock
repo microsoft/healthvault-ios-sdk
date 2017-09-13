@@ -1,11 +1,11 @@
 PODS:
   - EncryptedCoreData (3.1):
     - SQLCipher (~> 3.4.0)
-  - HealthVault (3.0-preview):
-    - HealthVault/CachingSupport (= 3.0-preview)
-  - HealthVault/CachingSupport (3.0-preview):
+  - HealthVault (3.0-preview.4):
+    - HealthVault/CachingSupport (= 3.0-preview.4)
+  - HealthVault/CachingSupport (3.0-preview.4):
     - EncryptedCoreData (~> 3.1)
-  - HealthVault/Tests (3.0-preview):
+  - HealthVault/Tests (3.0-preview.4):
     - EncryptedCoreData (~> 3.1)
   - Kiwi (2.4.0)
   - SQLCipher (3.4.1):
@@ -15,20 +15,22 @@ PODS:
     - SQLCipher/common
 
 DEPENDENCIES:
+  - EncryptedCoreData
   - HealthVault (from `../`)
   - HealthVault/Tests (from `../`)
   - Kiwi
+  - SQLCipher
 
 EXTERNAL SOURCES:
   HealthVault:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   EncryptedCoreData: f6762fb05f88a52f36c5648659abc91b57f244b4
-  HealthVault: 2a695982b14528fdcf660f7795821c5b86cbf2b4
+  HealthVault: be22c598fda46b7009eaea76d3eee5cc84fe59b6
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   SQLCipher: 43d12c0eb9c57fb438749618fc3ce0065509a559
 
-PODFILE CHECKSUM: acdeff8c932604a241bd3ced8149b8060d867b5e
+PODFILE CHECKSUM: f686f6ab3ea9781f70d36d480a4438b218d8ef7b
 
 COCOAPODS: 1.2.1

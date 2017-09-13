@@ -22,7 +22,7 @@
 #import "MHVString128.h"
 #import "MHVTaskTrackingPolicy.h"
 #import "MHVUUID.h"
-#import "MHVTaskStatusEnum.h"
+#import "MHVActionPlanTaskInstance.h"
 
 @interface MHVTaskThing : MHVThingDataTyped
 
@@ -49,7 +49,7 @@
 //
 // (Required) The task status.
 //
-@property (readwrite, nonatomic, strong) MHVTaskStatusEnum *status;
+@property (readwrite, nonatomic, strong) MHVActionPlanTaskInstanceStatusEnum *status;
 //
 // (Optional) The task key a provider sets and maintains for a user's created task.
 //
