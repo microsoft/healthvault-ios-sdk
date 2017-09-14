@@ -3,7 +3,7 @@
 `healthvault-ios-sdk` adheres to [Semantic Versioning](http://semver.org/).
 
 #### 3.x Pre-release
-- `3.0-preview` - [3.0-preview](#30preview) | [3.0-preview.2](#30preview2) | [3.0-preview.3](#30preview3) | [3.0-preview.4](#30preview4)
+- `3.0-preview` - [3.0-preview](#30-preview) | [3.0-preview.2](#30-preview2) | [3.0-preview.3](#30-preview3) | [3.0-preview.4](#30-preview4)
 
 ---
 ## [3.0-preview.4](https://github.com/Microsoft/healthvault-ios-sdk/releases/tag/3.0-preview.4)
