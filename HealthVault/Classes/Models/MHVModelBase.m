@@ -654,7 +654,7 @@ Class classFromProperty(objc_property_t property);
             free(readOnly);
             NSString *propertyName = [NSString stringWithUTF8String:property_getName(properties[i])];
             char *type = property_copyAttributeValue(properties[i], "T");
-            if(strlen(type) > 0 && type[0] == '@')
+            if(type && type[0] == '@')
             {
                 id objectToEncode = [self valueForKey:propertyName];
                 if([objectToEncode conformsToProtocol:@protocol(NSCoding)])
