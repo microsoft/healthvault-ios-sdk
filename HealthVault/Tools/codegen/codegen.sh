@@ -64,15 +64,11 @@ s/"MHVEnum.h"/"MHVEnum.h"\
 mv output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h2 output/SwaggerClient/Model/MHVTaskTrackingOccurrence.h
 
 sed -E '
-s/NSString\* _Nullable)actionPlanTaskStatus/MHVPlanStatusEnum* _Nullable)actionPlanTaskStatus/g
-s/"MHVTrackingValidation.h"/"MHVTrackingValidation.h"\
-#import "MHVPlanStatusEnum.h"/g
+s/NSString\* _Nullable)actionPlanTaskStatus/MHVActionPlanTaskInstanceStatusEnum* _Nullable)actionPlanTaskStatus/g
 ' output/SwaggerClient/Api/MHVActionPlanTasksApi.h > output/SwaggerClient/Api/MHVActionPlanTasksApi.h2
 mv output/SwaggerClient/Api/MHVActionPlanTasksApi.h2 output/SwaggerClient/Api/MHVActionPlanTasksApi.h
 
 sed -E '
-s/NSString\* _Nullable)actionPlanTaskStatus/MHVPlanStatusEnum* _Nullable)actionPlanTaskStatus/g
-s/"MHVTrackingValidation.h"/"MHVTrackingValidation.h"\
-#import "MHVPlanStatusEnum.h"/g
+s/NSString\* _Nullable)actionPlanTaskStatus/MHVActionPlanTaskInstanceStatusEnum* _Nullable)actionPlanTaskStatus/g
 ' output/SwaggerClient/Api/MHVActionPlanTasksApi.m > output/SwaggerClient/Api/MHVActionPlanTasksApi.m2
 mv output/SwaggerClient/Api/MHVActionPlanTasksApi.m2 output/SwaggerClient/Api/MHVActionPlanTasksApi.m

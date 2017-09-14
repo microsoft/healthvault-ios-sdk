@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HealthVault'
-  s.version          = '3.0-preview'
+  s.version          = '3.0-preview.4'
   s.summary          = 'An iOS framework you can use to build applications that leverage the Microsoft HealthVault platform'
 
 
@@ -25,7 +25,7 @@ The healthvault-ios-sdk framework simplifies developing apps that use the Micros
   s.frameworks       = 'UIKit', 'Security', 'MobileCoreServices', 'SystemConfiguration'
 
 # Default podspecs include 'Core' and 'CachingSupport'.
-  s.default_subspec = 'Core', 'CachingSupport'
+  s.default_subspec = 'CachingSupport'
 
 # Core subspec includes only basic HealthVault functionality (no caching or offline support).
   s.subspec 'Core' do |ss|
@@ -38,7 +38,7 @@ The healthvault-ios-sdk framework simplifies developing apps that use the Micros
   s.subspec 'CachingSupport' do |ss|
     ss.resources = 'HealthVault/Assets/MHVThingCacheDatabase.xcdatamodeld'
     ss.preserve_paths = 'HealthVault/Assets/MHVThingCacheDatabase.xcdatamodeld'
-    ss.source_files = 'HealthVault/Classes/Caching/**/*.{h,m}'
+    ss.source_files = 'HealthVault/Classes/**/*.{h,m}'
     ss.private_header_files = '**/Private/**/*.h'
     ss.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'THING_CACHE=1' }
     ss.frameworks = 'CoreData'
@@ -49,7 +49,6 @@ end
   s.subspec 'Tests' do |ss|
     ss.source_files = 'HealthVault/Classes/**/*.{h,m,xcdatamodeld}'
     ss.resources = 'HealthVault/Assets/**/*'
-    ss.private_header_files = 'none'
     ss.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'THING_CACHE=1' }
     ss.frameworks = 'CoreData'
     ss.dependency 'EncryptedCoreData', '~> 3.1'

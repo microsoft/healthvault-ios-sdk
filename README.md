@@ -1,9 +1,9 @@
 # healthvault-ios-sdk
 
 [![CI Status](https://microsofthealth.visualstudio.com/_apis/public/build/definitions/f8da5110-49b1-4e9f-9022-2f58b6124ff9/194/badge)]
-[![Version](https://img.shields.io/cocoapods/v/healthvault-ios-sdk.svg?style=flat)](http://cocoapods.org/pods/healthvault-ios-sdk)
-[![License](https://img.shields.io/cocoapods/l/healthvault-ios-sdk.svg?style=flat)](http://cocoapods.org/pods/healthvault-ios-sdk)
-[![Platform](https://img.shields.io/cocoapods/p/healthvault-ios-sdk.svg?style=flat)](http://cocoapods.org/pods/healthvault-ios-sdk)
+[![Version](https://img.shields.io/cocoapods/v/HealthVault.svg?style=flat)](https://cocoapods.org/pods/HealthVault)
+[![License](https://img.shields.io/cocoapods/l/HealthVault.svg?style=flat)](https://cocoapods.org/pods/HealthVault)
+[![Platform](https://img.shields.io/cocoapods/p/HealthVault.svg?style=flat)](https://cocoapods.org/pods/HealthVault)
 
 # About
 
