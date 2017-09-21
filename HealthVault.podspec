@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HealthVault'
-  s.version          = '3.0-preview.4'
+  s.version          = '3.0-preview.5'
   s.summary          = 'An iOS framework you can use to build applications that leverage the Microsoft HealthVault platform'
 
 
