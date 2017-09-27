@@ -388,7 +388,7 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
 
 - (NSUInteger)hash
 {
-    //Convert to millisecond for hash value
+    // Convert to millisecond for hash value
     return self.hour * 3600000 + self.minute * 60000 + (self.hasSecond ? self.second * 1000 : 0) + (self.hasMillisecond ? self.millisecond : 0);
 }
 
