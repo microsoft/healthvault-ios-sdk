@@ -383,13 +383,13 @@ static const xmlChar *x_element_millis = XMLSTRINGCONST("f");
     
     MHVTime *time = (MHVTime *)object;
     
-    return self.hour == time.hour && self.minute == time.minute && self.second == time.second;
+    return self.hour == time.hour && self.minute == time.minute && self.second == time.second && self.millisecond == time.millisecond;
 }
 
 - (NSUInteger)hash
 {
-    //Convert to seconds for hash value
-    return self.hour * 3600 + self.minute * 60 + (self.hasSecond ? self.second : 0);
+    // Convert to millisecond for hash value
+    return self.hour * 3600000 + self.minute * 60000 + (self.hasSecond ? self.second * 1000 : 0) + (self.hasMillisecond ? self.millisecond : 0);
 }
 
 @end

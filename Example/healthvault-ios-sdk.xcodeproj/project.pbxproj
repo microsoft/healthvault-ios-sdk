@@ -15,6 +15,7 @@
 		4C95AF051F0D6C2B00EA5A8F /* MHVThingCacheQueryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AF041F0D6C2B00EA5A8F /* MHVThingCacheQueryTests.m */; };
 		4C95AF071F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AF061F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m */; };
 		4C95AF111F0EF20200EA5A8F /* MHVMockDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C95AEBB1F093F7D00EA5A8F /* MHVMockDatabase.m */; };
+		4C9BAD311F7C05F7002514A2 /* MHVTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BAD301F7C05F7002514A2 /* MHVTimeTests.m */; };
 		4C9DC867EC28E0AB74E00107 /* Pods_healthvault_ios_sdk_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D0C259B6A86A74D53D73A37 /* Pods_healthvault_ios_sdk_Example.framework */; };
 		4CC5FFE41EF81786003B8690 /* MHVBrowserAuthBrokerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5FFE31EF81786003B8690 /* MHVBrowserAuthBrokerTests.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -145,6 +146,7 @@
 		4C95AEC01F0A872700EA5A8F /* MHVThingCacheSynchronizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheSynchronizerTests.m; sourceTree = "<group>"; };
 		4C95AF041F0D6C2B00EA5A8F /* MHVThingCacheQueryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheQueryTests.m; sourceTree = "<group>"; };
 		4C95AF061F0D917D00EA5A8F /* MHVThingCacheDatabaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVThingCacheDatabaseTests.m; sourceTree = "<group>"; };
+		4C9BAD301F7C05F7002514A2 /* MHVTimeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHVTimeTests.m; sourceTree = "<group>"; };
 		4CC5FFE31EF81786003B8690 /* MHVBrowserAuthBrokerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHVBrowserAuthBrokerTests.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* healthvault-ios-sdk_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "healthvault-ios-sdk_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -647,6 +649,7 @@
 				A5DF654E1EF052DD009F5968 /* MHVPregnancyTests.m */,
 				A5DF654F1EF052DD009F5968 /* MHVTaskThingTests.m */,
 				A5DF65501EF052DD009F5968 /* MHVTaskTrackingEntryTests.m */,
+				4C9BAD301F7C05F7002514A2 /* MHVTimeTests.m */,
 			);
 			path = ThingTypes;
 			sourceTree = "<group>";
@@ -978,6 +981,7 @@
 				A5DF65771EF0533D009F5968 /* MHVConnectionTests.m in Sources */,
 				A5DF65791EF05342009F5968 /* MHVLibTests.m in Sources */,
 				4CC5FFE41EF81786003B8690 /* MHVBrowserAuthBrokerTests.m in Sources */,
+				4C9BAD311F7C05F7002514A2 /* MHVTimeTests.m in Sources */,
 				A5DF657B1EF0534A009F5968 /* MHVHttpServiceTests.m in Sources */,
 				A5DF65721EF05327009F5968 /* MHVShellAuthServiceTests.m in Sources */,
 				4C95AEC11F0A872700EA5A8F /* MHVThingCacheSynchronizerTests.m in Sources */,
