@@ -65,6 +65,7 @@
                                                             httpMethod:httpMethod
                                                             pathParams:pathParams
                                                            queryParams:queryParams
+                                                               headers:nil
                                                                   body:body
                                                            isAnonymous:NO];
     
@@ -108,6 +109,7 @@
                                                             httpMethod:httpMethod
                                                             pathParams:pathParams
                                                            queryParams:queryParams
+                                                               headers:nil
                                                                   body:body
                                                            isAnonymous:NO];
     
