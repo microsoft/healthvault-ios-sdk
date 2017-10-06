@@ -116,6 +116,7 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVActionPlanTasksResponseTimelineTask_ class]
                       completion:completion];

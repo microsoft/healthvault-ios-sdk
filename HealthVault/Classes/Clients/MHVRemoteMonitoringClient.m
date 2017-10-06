@@ -52,6 +52,7 @@
              httpMethod:(NSString *_Nonnull)httpMethod
              pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
             queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
+                headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
                    body:(NSData *_Nullable)body
             resultClass:(Class)resultClass
              completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion
@@ -65,7 +66,7 @@
                                                             httpMethod:httpMethod
                                                             pathParams:pathParams
                                                            queryParams:queryParams
-                                                               headers:nil
+                                                               headers:headers
                                                                   body:body
                                                            isAnonymous:NO];
     
@@ -97,6 +98,7 @@
              httpMethod:(NSString *)httpMethod
              pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
             queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
+                headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
                    body:(NSData *_Nullable)body
              completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 {
@@ -109,7 +111,7 @@
                                                             httpMethod:httpMethod
                                                             pathParams:pathParams
                                                            queryParams:queryParams
-                                                               headers:nil
+                                                               headers:headers
                                                                   body:body
                                                            isAnonymous:NO];
     

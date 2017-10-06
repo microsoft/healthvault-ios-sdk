@@ -100,6 +100,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
+                         headers:nil
                             body:bodyParam
                       completion:completion];
 }
@@ -140,6 +141,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVActionPlanInstance class]
                       completion:completion];
@@ -183,6 +185,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
+                         headers:nil
                             body:bodyParam
                       completion:completion];
 }
@@ -206,6 +209,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVActionPlansResponseActionPlanInstance_ class]
                       completion:completion];
@@ -301,6 +305,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVActionPlanAdherenceSummary class]
                       completion:completion];
@@ -344,6 +349,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVActionPlanInstance class]
                       completion:completion];
@@ -385,6 +391,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVActionPlanInstance class]
                       completion:completion];
@@ -426,6 +433,7 @@ NSInteger kMHVActionPlansApiMissingParamErrorCode = 234513;
                       httpMethod:@"PATCH"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVActionPlanInstance class]
                       completion:completion];
