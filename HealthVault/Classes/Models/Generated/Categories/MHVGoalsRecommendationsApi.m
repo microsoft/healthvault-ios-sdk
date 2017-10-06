@@ -79,6 +79,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
+                         headers:nil
                             body:bodyParam
                       completion:completion];
 }
@@ -119,6 +120,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoalRecommendationInstance class]
                       completion:completion];
@@ -162,6 +164,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
+                         headers:nil
                             body:bodyParam
                       completion:completion];
 }
@@ -196,6 +199,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoalRecommendationsResponse class]
                       completion:completion];
@@ -239,6 +243,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoalRecommendationInstance class]
                       completion:completion];

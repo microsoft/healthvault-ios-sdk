@@ -328,6 +328,12 @@ static NSInteger kInternalServerError = 500;
     headers[@"version"] = [MHVClientInfo telemetryInfo];
     
     headers[@"Content-Type"] = @"application/json";
+    
+    // Add extra headers from restRequest; last so it can override other header values
+    if (restRequest.headers.count > 0)
+    {
+        [headers addEntriesFromDictionary:restRequest.headers];
+    }
 
     [self.httpService sendRequestForURL:restRequest.url
                              httpMethod:restRequest.httpMethod

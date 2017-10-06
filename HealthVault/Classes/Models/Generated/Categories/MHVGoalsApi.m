@@ -77,6 +77,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoalsResponse class]
                       completion:completion];
@@ -120,6 +121,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
+                         headers:nil
                             body:bodyParam
                       completion:completion];
 }
@@ -166,6 +168,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoalsResponse class]
                       completion:completion];
@@ -201,6 +204,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoalsResponse class]
                       completion:completion];
@@ -244,6 +248,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"GET"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoal class]
                       completion:completion];
@@ -285,6 +290,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"PUT"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoal class]
                       completion:completion];
@@ -326,6 +332,7 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
                       httpMethod:@"PATCH"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVGoalsResponse class]
                       completion:completion];

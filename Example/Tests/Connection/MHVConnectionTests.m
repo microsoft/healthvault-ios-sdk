@@ -271,6 +271,7 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
+                                                                               headers:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:NO];
                     
@@ -316,6 +317,7 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
+                                                                               headers:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:YES];
                     
@@ -383,6 +385,7 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
+                                                                               headers:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:NO];
                     
@@ -476,6 +479,7 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
+                                                                               headers:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:NO];
                     [testConnection executeHttpServiceOperation:restRequest
@@ -550,6 +554,7 @@ describe(@"MHVConnectionTests", ^
                                                                             httpMethod:@"METHOD"
                                                                             pathParams:nil
                                                                            queryParams:@{ @"query1" : @"ABC" }
+                                                                               headers:nil
                                                                                   body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
                                                                            isAnonymous:YES];
                     [testConnection executeHttpServiceOperation:restRequest
@@ -571,6 +576,33 @@ describe(@"MHVConnectionTests", ^
                 it(@"Should get correct results", ^
                    {
                        [[expectFutureValue([[NSString alloc] initWithData:resultResponse.responseData encoding:NSUTF8StringEncoding]) shouldEventually] equal:@"ABCDEFG"];
+                   });
+            });
+    
+    context(@"MHVRestRequest with custom headers", ^
+            {
+                beforeEach(^{
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
+                                                                            httpMethod:@"METHOD"
+                                                                            pathParams:nil
+                                                                           queryParams:nil
+                                                                               headers:@{ @"Authorization" : @"TOKEN abcdef" }
+                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                           isAnonymous:NO];
+                    
+                    [testConnection executeHttpServiceOperation:restRequest
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
+                });
+                
+                it(@"sendRequest should have been performed", ^
+                   {
+                       [[expectFutureValue(requestedURL) shouldEventually] beKindOfClass:[NSURL class]];
+                   });
+                
+                it(@"custom authorization header should be set", ^
+                   {
+                       [[expectFutureValue(requestedHeaders) shouldEventually] beNonNil];
+                       [[expectFutureValue(requestedHeaders[@"Authorization"]) shouldEventually] equal:@"TOKEN abcdef"];
                    });
             });
     

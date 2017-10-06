@@ -77,6 +77,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
                       httpMethod:@"DELETE"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[NSNumber class]
                       completion:completion];
@@ -138,6 +139,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
                       httpMethod:@"PATCH"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVTaskTrackingOccurrence class]
                       completion:completion];
@@ -179,6 +181,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
                       httpMethod:@"POST"
                       pathParams:pathParams
                      queryParams:queryParams
+                        headers:nil
                             body:bodyParam
                      resultClass:[MHVTaskTrackingOccurrence class]
                       completion:completion];
