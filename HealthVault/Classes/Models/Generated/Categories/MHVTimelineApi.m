@@ -113,7 +113,7 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
     NSData *bodyParam = nil;
 
     [self requestWithBaseUrl:nil
-		    		    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"GET"
                   pathParams:pathParams
                  queryParams:queryParams

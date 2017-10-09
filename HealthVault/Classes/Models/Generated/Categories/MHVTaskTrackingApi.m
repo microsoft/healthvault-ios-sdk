@@ -74,7 +74,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
     NSData *bodyParam = nil;
 
     [self requestWithBaseUrl:nil
-		    		    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"DELETE"
                   pathParams:pathParams
                  queryParams:queryParams
@@ -137,7 +137,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
     [self requestWithBaseUrl:nil
-		    		    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"PATCH"
                   pathParams:pathParams
                  queryParams:queryParams
@@ -180,7 +180,7 @@ NSInteger kMHVTaskTrackingApiMissingParamErrorCode = 234513;
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
     [self requestWithBaseUrl:nil
-		    		    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"POST"
                   pathParams:pathParams
                  queryParams:queryParams

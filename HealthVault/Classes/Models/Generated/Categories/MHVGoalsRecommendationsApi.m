@@ -76,7 +76,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSData *bodyParam = nil;
 
     [self requestWithBaseUrl:nil
-			    	    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"PUT"
                   pathParams:pathParams
                  queryParams:queryParams
@@ -118,7 +118,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
     [self requestWithBaseUrl:nil
-		    		    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"POST"
                   pathParams:pathParams
                  queryParams:queryParams
@@ -163,7 +163,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSData *bodyParam = nil;
 
     [self requestWithBaseUrl:nil
-			    	    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"DELETE"
                   pathParams:pathParams
                  queryParams:queryParams
@@ -199,7 +199,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSData *bodyParam = nil;
 
     [self requestWithBaseUrl:nil
-		    		    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"GET"
                   pathParams:pathParams
                  queryParams:queryParams
@@ -244,7 +244,7 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSData *bodyParam = nil;
 
     [self requestWithBaseUrl:nil
-		    		    path:resourcePath
+                        path:resourcePath
                   httpMethod:@"GET"
                   pathParams:pathParams
                  queryParams:queryParams
