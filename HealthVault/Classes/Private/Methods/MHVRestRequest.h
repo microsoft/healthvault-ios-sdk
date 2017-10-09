@@ -33,16 +33,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly)           BOOL          isAnonymous;
 
 @property (nonatomic, strong, readonly)           NSURL         *url;
+@property (nonatomic, strong, readonly)           NSURL         *baseUrl;
 
-- (instancetype)initWithPath:(NSString *)path
-                  httpMethod:(NSString *)httpMethod
-                  pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
-                 queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-                     headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
-                        body:(NSData *_Nullable)body
-                 isAnonymous:(BOOL)isAnonymous;
+- (instancetype)initWithBaseUrl:(NSURL *_Nullable)baseUrl
+                           path:(NSString *)path
+                     httpMethod:(NSString *)httpMethod
+                     pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
+                    queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
+                        headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
+                           body:(NSData *_Nullable)body
+                    isAnonymous:(BOOL)isAnonymous;
 
 - (void)updateUrlWithServiceUrl:(NSURL *)serviceUrl;
+- (void)updateUrlFromBaseUrl;
 
 @end
 

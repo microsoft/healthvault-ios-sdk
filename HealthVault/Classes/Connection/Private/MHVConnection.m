@@ -308,10 +308,17 @@ static NSInteger kInternalServerError = 500;
     
     MHVLOG(@"Execute Request: %@", restRequest.path);
 
-    // If no URL is set, build it from serviceInstance
+    // If no URL is set, build it from serviceInstance or BaseUrl
     if (!restRequest.url)
     {
-        [restRequest updateUrlWithServiceUrl:self.configuration.restHealthVaultUrl];
+        if (restRequest.baseUrl)
+        {
+            [restRequest updateUrlFromBaseUrl];
+        }
+        else
+        {
+            [restRequest updateUrlWithServiceUrl:self.configuration.restHealthVaultUrl];
+        }
     }
     
     // Add authorization header

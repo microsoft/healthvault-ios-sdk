@@ -27,13 +27,14 @@
 
 @synthesize cache = _cache;
 
-- (instancetype)initWithPath:(NSString *)path
-                  httpMethod:(NSString *)httpMethod
-                  pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
-                 queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-                     headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
-                        body:(NSData *_Nullable)body
-                 isAnonymous:(BOOL)isAnonymous
+- (instancetype)initWithBaseUrl:(NSURL *)baseUrl
+                           path:(NSString *)path
+                     httpMethod:(NSString *)httpMethod
+                     pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
+                    queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
+                        headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
+                           body:(NSData *_Nullable)body
+                    isAnonymous:(BOOL)isAnonymous
 {
     MHVASSERT_PARAMETER(path);
     MHVASSERT_PARAMETER(httpMethod);
@@ -41,6 +42,7 @@
     self = [super init];
     if (self)
     {
+        _baseUrl = baseUrl;
         _path = path;
         _httpMethod = httpMethod;
         _pathParams = pathParams;
@@ -56,12 +58,24 @@
 {
     NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:serviceUrl resolvingAgainstBaseURL:YES];
     
-    //Path needs to start with / for NSURLComponents
-    if (![self.path hasPrefix:@"/"])
+    // Path needs to start with / for NSURLComponents.  (stringByAppendingPathComponent will add correctly if self.path already starts with "/")
+    urlComponents.path = [@"/" stringByAppendingPathComponent:self.path];
+
+    urlComponents.query = [self.queryParams queryString];
+    
+    _url = urlComponents.URL;
+}
+
+- (void)updateUrlFromBaseUrl
+{
+    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:self.baseUrl resolvingAgainstBaseURL:YES];
+    
+    // Append Path to base URL's path
+    if (self.path)
     {
-        _path = [NSString stringWithFormat:@"/%@", _path];
+        // Path needs to start with / for NSURLComponents.  (stringByAppendingPathComponent will add correctly if self.path already starts with "/")
+        urlComponents.path = [(urlComponents.path ?: @"/") stringByAppendingPathComponent:self.path];
     }
-    urlComponents.path = self.path;
     
     urlComponents.query = [self.queryParams queryString];
     

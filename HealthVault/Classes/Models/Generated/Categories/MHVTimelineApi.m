@@ -112,14 +112,15 @@ NSInteger kMHVTimelineApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"GET"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                        headers:nil
-                            body:bodyParam
-                     resultClass:[MHVActionPlanTasksResponseTimelineTask_ class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+		    		    path:resourcePath
+                  httpMethod:@"GET"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVActionPlanTasksResponseTimelineTask_ class]
+                  completion:completion];
 }
 
 

@@ -73,14 +73,15 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"POST"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                        headers:nil
-                            body:bodyParam
-                     resultClass:[MHVGoalsResponse class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+		    		    path:resourcePath
+                  httpMethod:@"POST"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoalsResponse class]
+                  completion:completion];
 }
 
 ///
@@ -117,13 +118,14 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"DELETE"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                         headers:nil
-                            body:bodyParam
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+			    	    path:resourcePath
+                  httpMethod:@"DELETE"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                  completion:completion];
 }
 
 ///
@@ -164,14 +166,15 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"GET"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                        headers:nil
-                            body:bodyParam
-                     resultClass:[MHVGoalsResponse class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+		    		    path:resourcePath
+                  httpMethod:@"GET"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoalsResponse class]
+                  completion:completion];
 }
 
 ///
@@ -200,14 +203,15 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"GET"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                        headers:nil
-                            body:bodyParam
-                     resultClass:[MHVGoalsResponse class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+		    		    path:resourcePath
+                  httpMethod:@"GET"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoalsResponse class]
+                  completion:completion];
 }
 
 ///
@@ -244,14 +248,15 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"GET"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                        headers:nil
-                            body:bodyParam
-                     resultClass:[MHVGoal class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+		    		    path:resourcePath
+                  httpMethod:@"GET"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoal class]
+                  completion:completion];
 }
 
 ///
@@ -286,14 +291,15 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:goal];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"PUT"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                        headers:nil
-                            body:bodyParam
-                     resultClass:[MHVGoal class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+		    		    path:resourcePath
+                  httpMethod:@"PUT"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoal class]
+                  completion:completion];
 }
 
 ///
@@ -328,14 +334,15 @@ NSInteger kMHVGoalsApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:goalsWrapper];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"PATCH"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                        headers:nil
-                            body:bodyParam
-                     resultClass:[MHVGoalsResponse class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+		    		    path:resourcePath
+                  httpMethod:@"PATCH"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoalsResponse class]
+                  completion:completion];
 }
 
 
