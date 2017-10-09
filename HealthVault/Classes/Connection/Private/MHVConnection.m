@@ -308,10 +308,17 @@ static NSInteger kInternalServerError = 500;
     
     MHVLOG(@"Execute Request: %@", restRequest.path);
 
-    // If no URL is set, build it from serviceInstance
+    // If no URL is set, build it from serviceInstance or BaseUrl
     if (!restRequest.url)
     {
-        [restRequest updateUrlWithServiceUrl:self.configuration.restHealthVaultUrl];
+        if (restRequest.baseUrl)
+        {
+            [restRequest updateUrlFromBaseUrl];
+        }
+        else
+        {
+            [restRequest updateUrlWithServiceUrl:self.configuration.restHealthVaultUrl];
+        }
     }
     
     // Add authorization header
@@ -328,6 +335,12 @@ static NSInteger kInternalServerError = 500;
     headers[@"version"] = [MHVClientInfo telemetryInfo];
     
     headers[@"Content-Type"] = @"application/json";
+    
+    // Add extra headers from restRequest; last so it can override other header values
+    if (restRequest.headers.count > 0)
+    {
+        [headers addEntriesFromDictionary:restRequest.headers];
+    }
 
     [self.httpService sendRequestForURL:restRequest.url
                              httpMethod:restRequest.httpMethod

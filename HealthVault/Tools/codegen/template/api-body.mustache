@@ -76,21 +76,25 @@ NSInteger k{{classname}}MissingParamErrorCode = 234513;
     {{/bodyParam}}
 
     {{#returnBaseType}}
-    [self requestWithPath:resourcePath
-                      httpMethod:@"{{httpMethod}}"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                            body:bodyParam
-                     resultClass:[{{{returnBaseType}}} class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+                        path:resourcePath
+                  httpMethod:@"{{httpMethod}}"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[{{{returnBaseType}}} class]
+                  completion:completion];
     {{/returnBaseType}}
     {{^returnBaseType}}
-    [self requestWithPath:resourcePath
-                      httpMethod:@"{{httpMethod}}"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                            body:bodyParam
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+                        path:resourcePath
+                  httpMethod:@"{{httpMethod}}"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                  completion:completion];
     {{/returnBaseType}}
 }
 

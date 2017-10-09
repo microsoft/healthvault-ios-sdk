@@ -267,12 +267,14 @@ describe(@"MHVConnectionTests", ^
     context(@"MHVRestRequest not anonymous", ^
             {
                 beforeEach(^{
-                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
-                                                                            httpMethod:@"METHOD"
-                                                                            pathParams:nil
-                                                                           queryParams:@{ @"query1" : @"ABC" }
-                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
-                                                                           isAnonymous:NO];
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithBaseUrl:nil
+                                                                                     path:@"path"
+                                                                               httpMethod:@"METHOD"
+                                                                               pathParams:nil
+                                                                              queryParams:@{ @"query1" : @"ABC" }
+                                                                                  headers:nil
+                                                                                     body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                              isAnonymous:NO];
                     
                     [testConnection executeHttpServiceOperation:restRequest
                                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
@@ -312,12 +314,14 @@ describe(@"MHVConnectionTests", ^
     context(@"MHVRestRequest anonymous", ^
             {
                 beforeEach(^{
-                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
-                                                                            httpMethod:@"METHOD"
-                                                                            pathParams:nil
-                                                                           queryParams:@{ @"query1" : @"ABC" }
-                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
-                                                                           isAnonymous:YES];
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithBaseUrl:nil
+                                                                                     path:@"path"
+                                                                               httpMethod:@"METHOD"
+                                                                               pathParams:nil
+                                                                              queryParams:@{ @"query1" : @"ABC" }
+                                                                                  headers:nil
+                                                                                     body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                              isAnonymous:YES];
                     
                     [testConnection executeHttpServiceOperation:restRequest
                                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
@@ -379,12 +383,14 @@ describe(@"MHVConnectionTests", ^
                          return nil;
                      }];
                     
-                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
-                                                                            httpMethod:@"METHOD"
-                                                                            pathParams:nil
-                                                                           queryParams:@{ @"query1" : @"ABC" }
-                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
-                                                                           isAnonymous:NO];
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithBaseUrl:nil
+                                                                                     path:@"path"
+                                                                               httpMethod:@"METHOD"
+                                                                               pathParams:nil
+                                                                              queryParams:@{ @"query1" : @"ABC" }
+                                                                                  headers:nil
+                                                                                     body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                              isAnonymous:NO];
                     
                     [testConnection executeHttpServiceOperation:restRequest
                                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
@@ -472,12 +478,14 @@ describe(@"MHVConnectionTests", ^
                     NSString *nilToken = nil;
                     testConnection.sessionCredential = [[MHVSessionCredential alloc] initWithToken:nilToken sharedSecret:kDefaultSharedSecret];
                     
-                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
-                                                                            httpMethod:@"METHOD"
-                                                                            pathParams:nil
-                                                                           queryParams:@{ @"query1" : @"ABC" }
-                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
-                                                                           isAnonymous:NO];
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithBaseUrl:nil
+                                                                                     path:@"path"
+                                                                               httpMethod:@"METHOD"
+                                                                               pathParams:nil
+                                                                              queryParams:@{ @"query1" : @"ABC" }
+                                                                                  headers:nil
+                                                                                     body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                              isAnonymous:NO];
                     [testConnection executeHttpServiceOperation:restRequest
                                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
                      {
@@ -546,12 +554,14 @@ describe(@"MHVConnectionTests", ^
                     requestCompletionResponse = [[MHVHttpServiceResponse alloc] initWithResponseData:[@"ABCDEFG" dataUsingEncoding:NSUTF8StringEncoding]
                                                                                           statusCode:0];
                     
-                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithPath:@"path"
-                                                                            httpMethod:@"METHOD"
-                                                                            pathParams:nil
-                                                                           queryParams:@{ @"query1" : @"ABC" }
-                                                                                  body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
-                                                                           isAnonymous:YES];
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithBaseUrl:nil
+                                                                                     path:@"path"
+                                                                               httpMethod:@"METHOD"
+                                                                               pathParams:nil
+                                                                              queryParams:@{ @"query1" : @"ABC" }
+                                                                                  headers:nil
+                                                                                     body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                              isAnonymous:YES];
                     [testConnection executeHttpServiceOperation:restRequest
                                                      completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error)
                      {
@@ -574,6 +584,54 @@ describe(@"MHVConnectionTests", ^
                    });
             });
     
+    context(@"MHVRestRequest should send custom headers", ^
+            {
+                beforeEach(^{
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithBaseUrl:nil
+                                                                                     path:@"path"
+                                                                               httpMethod:@"METHOD"
+                                                                               pathParams:nil
+                                                                              queryParams:nil
+                                                                                  headers:@{ @"Authorization" : @"TOKEN abcdef",
+                                                                                             @"x-xyz" : @"12345" }
+                                                                                     body:[@"Body" dataUsingEncoding:NSUTF8StringEncoding]
+                                                                              isAnonymous:NO];
+                    
+                    [testConnection executeHttpServiceOperation:restRequest
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
+                });
+                
+                it(@"custom authorization header should be set", ^
+                   {
+                       [[expectFutureValue(requestedHeaders) shouldEventually] beNonNil];
+                       [[expectFutureValue(requestedHeaders[@"Authorization"]) shouldEventually] equal:@"TOKEN abcdef"];
+                       [[expectFutureValue(requestedHeaders[@"x-xyz"]) shouldEventually] equal:@"12345"];
+                   });
+            });
+
+    context(@"MHVRestRequest should combine URL and Path", ^
+            {
+                beforeEach(^{
+                    MHVRestRequest *restRequest = [[MHVRestRequest alloc] initWithBaseUrl:[NSURL URLWithString:@"https://test.com/base"]
+                                                                                     path:@"path/file"
+                                                                               httpMethod:@"METHOD"
+                                                                               pathParams:nil
+                                                                              queryParams:nil
+                                                                                  headers:nil
+                                                                                     body:nil
+                                                                              isAnonymous:NO];
+                    
+                    [testConnection executeHttpServiceOperation:restRequest
+                                                     completion:^(MHVServiceResponse * _Nullable response, NSError * _Nullable error) { }];
+                });
+                
+                it(@"requestedURL should be base url plus path", ^
+                   {
+                       [[expectFutureValue(requestedURL) shouldEventually] beKindOfClass:[NSURL class]];
+                       [[expectFutureValue(requestedURL.absoluteString) shouldEventually] equal:@"https://test.com/base/path/file"];
+                   });
+            });
+
 });
 
 SPEC_END

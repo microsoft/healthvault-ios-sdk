@@ -75,12 +75,14 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"PUT"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                            body:bodyParam
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+                        path:resourcePath
+                  httpMethod:@"PUT"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                  completion:completion];
 }
 
 ///
@@ -115,13 +117,15 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
     NSString *json = [MHVJsonSerializer serialize:goalRecommendation];
     bodyParam = [json dataUsingEncoding:NSUTF8StringEncoding];
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"POST"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                            body:bodyParam
-                     resultClass:[MHVGoalRecommendationInstance class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+                        path:resourcePath
+                  httpMethod:@"POST"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoalRecommendationInstance class]
+                  completion:completion];
 }
 
 ///
@@ -158,12 +162,14 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"DELETE"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                            body:bodyParam
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+                        path:resourcePath
+                  httpMethod:@"DELETE"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                  completion:completion];
 }
 
 ///
@@ -192,13 +198,15 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"GET"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                            body:bodyParam
-                     resultClass:[MHVGoalRecommendationsResponse class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+                        path:resourcePath
+                  httpMethod:@"GET"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoalRecommendationsResponse class]
+                  completion:completion];
 }
 
 ///
@@ -235,13 +243,15 @@ NSInteger kMHVGoalsRecommendationsApiMissingParamErrorCode = 234513;
 
     NSData *bodyParam = nil;
 
-    [self requestWithPath:resourcePath
-                      httpMethod:@"GET"
-                      pathParams:pathParams
-                     queryParams:queryParams
-                            body:bodyParam
-                     resultClass:[MHVGoalRecommendationInstance class]
-                      completion:completion];
+    [self requestWithBaseUrl:nil
+                        path:resourcePath
+                  httpMethod:@"GET"
+                  pathParams:pathParams
+                 queryParams:queryParams
+                     headers:nil
+                        body:bodyParam
+                 resultClass:[MHVGoalRecommendationInstance class]
+                  completion:completion];
 }
 
 

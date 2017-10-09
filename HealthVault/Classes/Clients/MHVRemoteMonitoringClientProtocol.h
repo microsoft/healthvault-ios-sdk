@@ -26,7 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Performs a request
  *
- * @param path Request url.
+ * @param baseUrl Base URL, path parameter will be appended to this.  If nil the URL will be generated from the service URL
+ * @param path Request path.
  * @param httpMethod Request method, "GET", "POST", "PATCH", etc
  * @param pathParams Request path parameters.  Values in {brackets} in the path will be replaced by values from this dictionary
  *        pathParams { @"date" : @"2017-05-23" } with path @"endDate={date}" would result in @"endDate=2017-05-23"
@@ -35,18 +36,21 @@ NS_ASSUME_NONNULL_BEGIN
  * @param resultClass the class the response should be deserialized to.
  * @param completion The block will be executed when the request completed.
  */
-- (void)requestWithPath:(NSString *)path
-             httpMethod:(NSString *)httpMethod
-             pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
-            queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-                   body:(NSData *_Nullable)body
-            resultClass:(Class)resultClass
-             completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion;
+- (void)requestWithBaseUrl:(NSURL *_Nullable)baseUrl
+                      path:(NSString *)path
+                httpMethod:(NSString *)httpMethod
+                pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
+               queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
+                   headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
+                      body:(NSData *_Nullable)body
+               resultClass:(Class)resultClass
+                completion:(void(^_Nullable)(id _Nullable output, NSError *_Nullable error))completion;
 
 /**
  * Performs a request and does not expect a response object
  *
- * @param path Request url.
+ * @param baseUrl Base URL, path parameter will be appended to this.  If nil the URL will be generated from the service URL
+ * @param path Request path.
  * @param httpMethod Request method, "DELETE", etc.
  * @param pathParams Request path parameters.  Values in {brackets} in the path will be replaced by values from this dictionary
  *        pathParams { @"date" : @"2017-05-23" } with path @"endDate={date}" would result in @"endDate=2017-05-23"
@@ -54,12 +58,14 @@ NS_ASSUME_NONNULL_BEGIN
  * @param body Request body.
  * @param completion The block will be executed when the request completed.
  */
-- (void)requestWithPath:(NSString *)path
-             httpMethod:(NSString *)httpMethod
-             pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
-            queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
-                   body:(NSData *_Nullable)body
-             completion:(void(^_Nullable)(NSError *_Nullable error))completion;
+- (void)requestWithBaseUrl:(NSURL *_Nullable)baseUrl
+                      path:(NSString *)path
+                httpMethod:(NSString *)httpMethod
+                pathParams:(NSDictionary<NSString *, NSString *> *_Nullable)pathParams
+               queryParams:(NSDictionary<NSString *, NSString *> *_Nullable)queryParams
+                   headers:(NSDictionary<NSString *, NSString *> *_Nullable)headers
+                      body:(NSData *_Nullable)body
+                completion:(void(^_Nullable)(NSError *_Nullable error))completion;
 
 @end
 
