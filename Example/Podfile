@@ -6,7 +6,7 @@ use_frameworks!
 target 'healthvault-ios-sdk_Example' do
   platform :ios, '10.0'
   pod 'HealthVault', :path => '../'
-  pod 'EncryptedCoreData', :inhibit_warnings => true
+  pod 'EncryptedCoreData', :inhibit_warnings => true, :git => 'https://github.com/project-imas/encrypted-core-data.git', :commit => 'b97ffaf2f' # xcode 9 workaround
   pod 'SQLCipher', :inhibit_warnings => true
 
   target 'healthvault-ios-sdk_Tests' do
